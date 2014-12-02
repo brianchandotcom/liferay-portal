@@ -132,6 +132,15 @@ AUI.add(
 						];
 					},
 
+					_cancelTimer: function() {
+						var instance = this;
+
+						if (instance._timer) {
+							instance._timer.cancel();
+							instance._timer = null;
+						}
+					},
+
 					_cancelUpload: function() {
 						var instance = this;
 
@@ -163,6 +172,8 @@ AUI.add(
 						fileEntryIdNode.val(fileEntryId);
 
 						instance._fileEntryImageNode.setAttribute('src', fileEntryUrl);
+
+						instance._fileEntryId = fileEntryId;
 
 						var showImageControls = (fileEntryId !== 0 && fileEntryUrl !== '');
 
@@ -203,12 +214,16 @@ AUI.add(
 					_onFileSelect: function(event) {
 						var instance = this;
 
-						clearTimeout(instance._timeout);
+						instance._cancelTimer();
+
+						instance.rootNode.removeClass(CSS_DROP_ACTIVE);
+
+						var file = event.fileList[0];
 
 						var fileNameNode = instance._fileNameNode;
 
 						if (fileNameNode) {
-							var filename = event.fileList[0].get('name');
+							var filename = file.get('name');
 
 							var fileDataTemplate = A.Lang.sub(
 								TPL_FILE_NAME,
@@ -221,7 +236,21 @@ AUI.add(
 							fileNameNode.html(fileDataTemplate);
 						}
 
-						instance.rootNode.removeClass(CSS_DROP_ACTIVE);
+						var reader = new FileReader();
+
+						reader.addEventListener(
+							'loadend',
+							function() {
+								instance._updateImageData(
+									{
+										fileentryid: '-1',
+										url: reader.result
+									}
+								);
+							}
+						);
+
+						reader.readAsDataURL(file.get('file'));
 
 						var queue = instance._uploader.queue;
 
@@ -232,21 +261,27 @@ AUI.add(
 						instance._uploader.uploadThese(event.fileList);
 					},
 
-					_onImageLoaded: function() {
+					_onImageLoaded: function(event) {
 						var instance = this;
+						event.preventDefault();
 
 						var changeImageControls = instance.one('.change-image-controls');
 
 						instance.rootNode.addClass(CSS_CHECK_ACTIVE);
 
-						instance._timeout = setTimeout(
-							function() {
-								instance.rootNode.removeClass(CSS_CHECK_ACTIVE);
+						if (!instance._timer && instance._fileEntryId > 0 ) {
+							instance._timer = A.later(
+								CHANGE_IMAGE_CONTROLS_DELAY,
+								instance,
+								function() {
+									instance.rootNode.removeClass(CSS_CHECK_ACTIVE);
 
-								changeImageControls.toggle(true);
-							},
-							CHANGE_IMAGE_CONTROLS_DELAY
-						);
+									changeImageControls.toggle(true);
+								},
+								[],
+								false
+							);
+						}
 					},
 
 					_onUploadComplete: function(event) {
@@ -367,9 +402,12 @@ AUI.add(
 					_showErrorMessage: function(event) {
 						var instance = this;
 
+						instance._cancelTimer();
+
 						var error = event.error;
 
 						var errorType = error.errorType;
+
 						var message = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
 
 						if (errorType === STATUS_CODE.SC_FILE_ANTIVIRUS_EXCEPTION) {
@@ -392,6 +430,8 @@ AUI.add(
 						errorMessage.html(message);
 
 						errorWrapper.show();
+
+						instance.rootNode.removeClass(CSS_CHECK_ACTIVE);
 
 						instance._errorNodeAlert.show();
 

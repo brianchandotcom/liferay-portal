@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import java.io.IOException;
 
+import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -575,6 +576,10 @@ public interface Http {
 			return _contentLength;
 		}
 
+		public long getContentLengthLong() {
+			return _contentLengthLong;
+		}
+
 		public String getContentType() {
 			return _contentType;
 		}
@@ -604,6 +609,10 @@ public interface Http {
 			_contentLength = contentLength;
 		}
 
+		public void setContentLengthLong(long contentLengthLong) {
+			_contentLengthLong = contentLengthLong;
+		}
+
 		public void setContentType(String contentType) {
 			_contentType = contentType;
 		}
@@ -621,6 +630,7 @@ public interface Http {
 		}
 
 		private int _contentLength = -1;
+		private long _contentLengthLong = -1;
 		private String _contentType;
 		private Map<String, String> _headers;
 		private String _redirect;

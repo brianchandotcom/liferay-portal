@@ -15,7 +15,6 @@
 package com.liferay.portal.fabric.netty.handlers;
 
 import com.liferay.portal.fabric.agent.FabricAgent;
-import com.liferay.portal.fabric.local.agent.LocalFabricAgent;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentStub;
 import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
 import com.liferay.portal.fabric.netty.rpc.ChannelThreadLocal;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -76,19 +74,18 @@ public class NettyFabricWorkerExecutionChannelHandler
 	extends SimpleChannelInboundHandler<NettyFabricWorkerConfig<Serializable>> {
 
 	public NettyFabricWorkerExecutionChannelHandler(
-		Repository repository, ProcessExecutor processExecutor,
-		long executionTimeout) {
+		Repository repository, FabricAgent fabricAgent, long executionTimeout) {
 
 		if (repository == null) {
 			throw new NullPointerException("Repository is null");
 		}
 
-		if (processExecutor == null) {
-			throw new NullPointerException("Process executor is null");
+		if (fabricAgent == null) {
+			throw new NullPointerException("Fabric agent is null");
 		}
 
 		_repository = repository;
-		_fabricAgent = new LocalFabricAgent(processExecutor);
+		_fabricAgent = fabricAgent;
 		_executionTimeout = executionTimeout;
 	}
 

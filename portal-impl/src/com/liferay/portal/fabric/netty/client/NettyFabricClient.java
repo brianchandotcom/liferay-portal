@@ -15,6 +15,7 @@
 package com.liferay.portal.fabric.netty.client;
 
 import com.liferay.portal.fabric.client.FabricClient;
+import com.liferay.portal.fabric.local.agent.LocalFabricAgent;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentConfig;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectDecoder;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectEncoder;
@@ -281,7 +282,7 @@ public class NettyFabricClient implements FabricClient {
 			getEventExecutorGroup(
 				_channel, _executionEventExecutorGroupAttributeKey),
 			new NettyFabricWorkerExecutionChannelHandler(
-				repository, _processExecutor,
+				repository, new LocalFabricAgent(_processExecutor),
 				_nettyFabricClientConfig.getExecutionTimeout()));
 
 		Path repositoryPath = repository.getRepositoryPath();

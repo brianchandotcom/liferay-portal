@@ -144,10 +144,10 @@ AUI.add(
 					_checkImagesBeforeSave: function(draft, ajax) {
 						var instance = this;
 
-						if (instance._hasTemporalImages()) {
+						if (instance._hasTempImages()) {
 							if (confirm(instance.get('strings').confirmDiscardImages)) {
 
-								instance._getTemporalImages().each(
+								instance._getTempImages().each(
 									function(node) {
 										node.ancestor().remove();
 									}
@@ -187,16 +187,16 @@ AUI.add(
 						return instance.one('form[name=' + instance.ns(formName || 'fm') + ']');
 					},
 
-					_getTemporalImages: function() {
+					_getTempImages: function() {
 						var instance = this;
 
 						return instance.all('img[data-random-id]');
 					},
 
-					_hasTemporalImages: function() {
+					_hasTempImages: function() {
 						var instance = this;
 
-						return instance._getTemporalImages().getDOMNodes().length !== 0;
+						return instance._getTempImages().size() > 0;
 					},
 
 					_initDraftSaveInterval: function() {
@@ -206,11 +206,11 @@ AUI.add(
 							instance.get('saveInterval'),
 							instance,
 							function() {
-								if (!instance._hasTemporalImages()) {
+								if (!instance._hasTempImages()) {
 									instance._saveEntry(true, true);
 								}
 							},
-							[true, true],
+							null,
 							true
 						);
 
@@ -416,14 +416,15 @@ AUI.add(
 					_updateImages: function(persistentImages) {
 						var instance = this;
 
-						persistentImages.forEach(
-							function(image) {
-								var el = instance.one('img[' + image.dataImageIdAttribute + '="' + image.fileEntryId + '"]');
+						A.Array.each(
+							persistentImages,
+							function(item, index) {
+								var el = instance.one('img[' + item.dataImageIdAttribute + '="' + item.fileEntryId + '"]');
 
 								if (el) {
-									el.setAttribute('src', image.fileEntryUrl);
+									el.attr('src', item.fileEntryUrl);
 
-									el.removeAttribute(image.dataImageIdAttribute);
+									el.removeAttribute(item.dataImageIdAttribute);
 								}
 							}
 						);

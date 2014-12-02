@@ -296,6 +296,10 @@ public class CapabilityLocalRepository
 			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	@Override
 	public void updateAsset(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,

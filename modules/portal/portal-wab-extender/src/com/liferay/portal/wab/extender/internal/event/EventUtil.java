@@ -14,9 +14,7 @@
 
 package com.liferay.portal.wab.extender.internal.event;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.wab.extender.internal.WabUtil;
 
 import java.util.ArrayList;
@@ -50,35 +48,19 @@ public class EventUtil
 
 	public static final String UNDEPLOYING = "org/osgi/service/web/UNDEPLOYING";
 
-	public static void close() {
-		_instance._close();
+	public EventUtil(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 
-		_instance = null;
-	}
+		_webExtenderBundle = _bundleContext.getBundle();
 
-	public static void sendEvent(
-		Bundle bundle, String eventTopic, Exception exception,
-		boolean collision) {
+		Map<String, Object> properties = new Hashtable<String, Object>();
 
-		_instance._sendEvent(bundle, eventTopic, exception, collision);
-	}
+		properties.put(EventConstants.EVENT_TOPIC, _EVENT_TOPICS);
 
-	public static void start(BundleContext bundleContext) {
-		if (_instance != null) {
-			return;
-		}
+		_eventAdminServiceTracker = new ServiceTracker<EventAdmin, EventAdmin>(
+			_bundleContext, EventAdmin.class.getName(), this);
 
-		_instance = new EventUtil();
-
-		_instance._start(bundleContext);
-	}
-
-	public void _close() {
-		_eventAdminServiceTracker.close();
-
-		_bundleContext = null;
-		_eventAdminServiceTracker = null;
-		_webExtenderBundle = null;
+		_eventAdminServiceTracker.open();
 	}
 
 	@Override
@@ -90,6 +72,10 @@ public class EventUtil
 		return _eventAdmin;
 	}
 
+	public void close() {
+		_eventAdminServiceTracker.close();
+	}
+
 	@Override
 	public void modifiedService(
 		ServiceReference<EventAdmin> serviceReference, EventAdmin eventAdmin) {
@@ -99,13 +85,12 @@ public class EventUtil
 	public void removedService(
 		ServiceReference<EventAdmin> serviceReference, EventAdmin eventAdmin) {
 
+		_bundleContext.ungetService(serviceReference);
+
 		_eventAdmin = null;
 	}
 
-	private EventUtil() {
-	}
-
-	private void _sendEvent(
+	public void sendEvent(
 		Bundle bundle, String eventTopic, Exception exception,
 		boolean collision) {
 
@@ -116,14 +101,13 @@ public class EventUtil
 		properties.put("bundle.symbolicName", bundle.getSymbolicName());
 		properties.put("bundle.version", bundle.getVersion());
 
-		String servletContextName = WabUtil.getWebContextName(bundle);
-
-		String contextPath = StringPool.SLASH.concat(servletContextName);
+		String contextPath = GetterUtil.getString(
+			WabUtil.getWebContextPath(bundle));
 
 		if (collision) {
 			properties.put("collision", contextPath);
 
-			List<String> collidedBundleIds = new ArrayList<String>();
+			List<Long> collidedBundleIds = new ArrayList<Long>();
 
 			BundleContext bundleContext = bundle.getBundleContext();
 
@@ -134,14 +118,12 @@ public class EventUtil
 					continue;
 				}
 
-				String curServletContextName = WabUtil.getWebContextName(
-					bundle);
+				String curContextPath = WabUtil.getWebContextPath(curBundle);
 
-				if ((curServletContextName != null) &&
-					curServletContextName.equals(servletContextName)) {
+				if ((curContextPath != null) &&
+					curContextPath.equals(contextPath)) {
 
-					collidedBundleIds.add(
-						String.valueOf(curBundle.getBundleId()));
+					collidedBundleIds.add(curBundle.getBundleId());
 				}
 			}
 
@@ -161,14 +143,12 @@ public class EventUtil
 			_webExtenderBundle.getSymbolicName());
 		properties.put(
 			"extender.bundle.version", _webExtenderBundle.getVersion());
-		properties.put("servlet.context.name", servletContextName);
+		properties.put(
+			"servlet.context.name",
+			bundle.getSymbolicName().replaceAll("[^a-zA-Z0-9]", ""));
 		properties.put("timestamp", System.currentTimeMillis());
 
 		Event event = new Event(eventTopic, properties);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(event);
-		}
 
 		if (_eventAdmin == null) {
 			return;
@@ -177,32 +157,14 @@ public class EventUtil
 		_eventAdmin.sendEvent(event);
 	}
 
-	private void _start(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		_webExtenderBundle = _bundleContext.getBundle();
-
-		Map<String, Object> properties = new Hashtable<String, Object>();
-
-		properties.put(EventConstants.EVENT_TOPIC, _EVENT_TOPICS);
-
-		_eventAdminServiceTracker = new ServiceTracker<EventAdmin, EventAdmin>(
-			_bundleContext, EventAdmin.class.getName(), this);
-
-		_eventAdminServiceTracker.open();
-	}
-
 	private static final String[] _EVENT_TOPICS = new String[] {
 		DEPLOYED, DEPLOYING, FAILED, UNDEPLOYED, UNDEPLOYING
 	};
 
-	private static final Log _log = LogFactoryUtil.getLog(EventUtil.class);
-
-	private static EventUtil _instance;
-
-	private BundleContext _bundleContext;
+	private final BundleContext _bundleContext;
 	private EventAdmin _eventAdmin;
-	private ServiceTracker<EventAdmin, EventAdmin> _eventAdminServiceTracker;
-	private Bundle _webExtenderBundle;
+	private final ServiceTracker<EventAdmin, EventAdmin>
+		_eventAdminServiceTracker;
+	private final Bundle _webExtenderBundle;
 
 }

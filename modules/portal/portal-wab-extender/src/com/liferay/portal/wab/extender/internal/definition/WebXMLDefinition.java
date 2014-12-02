@@ -37,6 +37,10 @@ public class WebXMLDefinition {
 		return _filterDefinitions;
 	}
 
+	public Map<String, String> getJspTaglibMappings() {
+		return _jspTaglibMappings;
+	}
+
 	public List<ListenerDefinition> getListenerDefinitions() {
 		return _listenerDefinitions;
 	}
@@ -65,6 +69,14 @@ public class WebXMLDefinition {
 		_filterDefinitions = filterDefinitions;
 	}
 
+	public void setJspTaglibMappings(Map<String, String> jspTaglibMappings) {
+		_jspTaglibMappings = jspTaglibMappings;
+	}
+
+	public void setListenerDefinition(ListenerDefinition listenerDefinition) {
+		_listenerDefinitions.add(listenerDefinition);
+	}
+
 	public void setListenerDefinitions(
 		List<ListenerDefinition> listenerDefinitions) {
 
@@ -87,6 +99,7 @@ public class WebXMLDefinition {
 		new HashMap<String, String>();
 	private Map<String, FilterDefinition> _filterDefinitions =
 		new HashMap<String, FilterDefinition>();
+	private Map<String, String> _jspTaglibMappings;
 	private List<ListenerDefinition> _listenerDefinitions =
 		new ArrayList<ListenerDefinition>();
 	private Map<String, ServletDefinition> _servletDefinitions =

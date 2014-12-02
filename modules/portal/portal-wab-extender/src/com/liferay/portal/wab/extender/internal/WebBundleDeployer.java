@@ -14,13 +14,14 @@
 
 package com.liferay.portal.wab.extender.internal;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.wab.extender.internal.event.EventUtil;
 
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+import javax.xml.parsers.SAXParserFactory;
+
+import org.apache.felix.utils.log.Logger;
 
 import org.eclipse.equinox.http.servlet.ExtendedHttpService;
 
@@ -35,41 +36,59 @@ public class WebBundleDeployer {
 
 	public WebBundleDeployer(
 			BundleContext bundleContext,
-			ExtendedHttpService extendedHttpService)
+			ExtendedHttpService extendedHttpService,
+			SAXParserFactory saxParserFactory, EventUtil eventUtil,
+			Logger logger)
 		throws Exception {
 
 		_bundleContext = bundleContext;
 		_extendedHttpService = extendedHttpService;
+		_saxParserFactory = saxParserFactory;
+		_eventUtil = eventUtil;
+		_logger = logger;
 	}
 
 	public void close() {
-		Set<Bundle> bundles = _wabBundleProcessors.keySet();
-
-		for (Bundle bundle : bundles) {
-			try {
-				doStop(bundle);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		for (Bundle bundle : _wabBundleProcessors.keySet()) {
+			doStop(bundle);
 		}
 	}
 
-	public void doStart(Bundle bundle, String servletContextName) {
-		EventUtil.sendEvent(bundle, EventUtil.DEPLOYING, null, false);
+	public void doStart(Bundle bundle) {
+		_eventUtil.sendEvent(bundle, EventUtil.DEPLOYING, null, false);
+
+		String contextPath = WabUtil.getWebContextPath(bundle);
+
+		if (contextPath == null) {
+			return;
+		}
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		if (bundleContext == null) {
+			_eventUtil.sendEvent(bundle, EventUtil.FAILED, null, false);
+
+			return;
+		}
 
 		try {
-			String contextPath = WabUtil.getWebContextPath(bundle);
-
 			WabBundleProcessor wabBundleProcessor = new WabBundleProcessor(
-				bundle, servletContextName, contextPath, _extendedHttpService);
+				bundle, contextPath, _extendedHttpService, _saxParserFactory,
+				_logger);
+
+			WabBundleProcessor original = _wabBundleProcessors.putIfAbsent(
+				bundle, wabBundleProcessor);
+
+			if (original != null) {
+				_eventUtil.sendEvent(bundle, EventUtil.FAILED, null, false);
+
+				return;
+			}
 
 			wabBundleProcessor.init();
-
-			_wabBundleProcessors.put(bundle, wabBundleProcessor);
 		}
 		catch (Exception e) {
-			EventUtil.sendEvent(bundle, EventUtil.FAILED, e, false);
+			_eventUtil.sendEvent(bundle, EventUtil.FAILED, e, false);
 		}
 	}
 
@@ -78,53 +97,51 @@ public class WebBundleDeployer {
 			bundle);
 
 		if (wabBundleProcessor == null) {
-			throw new IllegalArgumentException("Bundle is not a WAB");
+			return;
 		}
 
-		EventUtil.sendEvent(bundle, EventUtil.UNDEPLOYING, null, false);
+		_eventUtil.sendEvent(bundle, EventUtil.UNDEPLOYING, null, false);
 
 		try {
 			wabBundleProcessor.destroy();
+
+			_eventUtil.sendEvent(bundle, EventUtil.UNDEPLOYED, null, false);
+
+			handleCollidedWABs(bundle);
 		}
 		catch (Exception e) {
-			EventUtil.sendEvent(bundle, EventUtil.FAILED, e, false);
+			_eventUtil.sendEvent(bundle, EventUtil.FAILED, e, false);
 		}
-
-		EventUtil.sendEvent(bundle, EventUtil.UNDEPLOYED, null, false);
-
-		handleCollidedWABs(bundle);
 	}
 
 	protected void handleCollidedWABs(Bundle bundle) {
-		String servletContextName = WabUtil.getWebContextName(bundle);
-
-		Set<Bundle> wabBundles = _wabBundleProcessors.keySet();
+		String contextPath = WabUtil.getWebContextPath(bundle);
 
 		for (Bundle curBundle : _bundleContext.getBundles()) {
-			if (WabUtil.isFragmentBundle(curBundle) ||
-				WabUtil.isNotActiveBundle(bundle) ||
-				wabBundles.contains(curBundle) ||
-				bundle.equals(curBundle)) {
+			if (bundle.equals(curBundle) ||
+				WabUtil.isFragmentBundle(curBundle) ||
+				_wabBundleProcessors.containsKey(curBundle)) {
 
 				continue;
 			}
 
-			String curServletContextName = WabUtil.getWebContextName(curBundle);
+			String curContextPath = WabUtil.getWebContextPath(curBundle);
 
-			if (servletContextName.equals(curServletContextName)) {
-				doStart(curBundle, servletContextName);
+			if (contextPath.equals(curContextPath)) {
+				doStart(curBundle);
 
 				break;
 			}
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		WebBundleDeployer.class);
-
 	private final BundleContext _bundleContext;
+	private final EventUtil _eventUtil;
 	private final ExtendedHttpService _extendedHttpService;
-	private final Map<Bundle, WabBundleProcessor> _wabBundleProcessors =
-		new ConcurrentHashMap<Bundle, WabBundleProcessor>();
+	private final Logger _logger;
+	private final SAXParserFactory _saxParserFactory;
+	private final ConcurrentMap<Bundle, WabBundleProcessor>
+		_wabBundleProcessors =
+			new ConcurrentHashMap<Bundle, WabBundleProcessor>();
 
 }

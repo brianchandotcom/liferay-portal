@@ -173,7 +173,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testSortMethodsWithAnnotatedParameters() throws Throwable {
+	public void testSortMethodsWithAnnotatedParameters() throws Exception {
 		test("SortMethodsWithAnnotatedParameters.testjava");
 	}
 

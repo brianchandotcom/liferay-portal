@@ -362,6 +362,10 @@ public class ArrayUtil {
 	}
 
 	public static boolean[] clone(boolean[] array, int from, int to) {
+		if (array == null) {
+			return null;
+		}
+
 		boolean[] newArray = new boolean[to - from];
 
 		System.arraycopy(
@@ -372,6 +376,10 @@ public class ArrayUtil {
 	}
 
 	public static byte[] clone(byte[] array) {
+		if (array == null) {
+			return null;
+		}
+
 		byte[] newArray = new byte[array.length];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -380,6 +388,10 @@ public class ArrayUtil {
 	}
 
 	public static byte[] clone(byte[] array, int from, int to) {
+		if (array == null) {
+			return null;
+		}
+
 		byte[] newArray = new byte[to - from];
 
 		System.arraycopy(
@@ -390,6 +402,10 @@ public class ArrayUtil {
 	}
 
 	public static char[] clone(char[] array) {
+		if (array == null) {
+			return null;
+		}
+
 		char[] newArray = new char[array.length];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -398,6 +414,10 @@ public class ArrayUtil {
 	}
 
 	public static char[] clone(char[] array, int from, int to) {
+		if (array == null) {
+			return null;
+		}
+
 		char[] newArray = new char[to - from];
 
 		System.arraycopy(
@@ -408,6 +428,10 @@ public class ArrayUtil {
 	}
 
 	public static double[] clone(double[] array) {
+		if (array == null) {
+			return null;
+		}
+
 		double[] newArray = new double[array.length];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -416,6 +440,10 @@ public class ArrayUtil {
 	}
 
 	public static double[] clone(double[] array, int from, int to) {
+		if (array == null) {
+			return null;
+		}
+
 		double[] newArray = new double[to - from];
 
 		System.arraycopy(
@@ -426,6 +454,10 @@ public class ArrayUtil {
 	}
 
 	public static float[] clone(float[] array) {
+		if (array == null) {
+			return null;
+		}
+
 		float[] newArray = new float[array.length];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -434,6 +466,10 @@ public class ArrayUtil {
 	}
 
 	public static float[] clone(float[] array, int from, int to) {
+		if (array == null) {
+			return null;
+		}
+
 		float[] newArray = new float[to - from];
 
 		System.arraycopy(
@@ -444,6 +480,10 @@ public class ArrayUtil {
 	}
 
 	public static int[] clone(int[] array) {
+		if (array == null) {
+			return null;
+		}
+
 		int[] newArray = new int[array.length];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -452,6 +492,10 @@ public class ArrayUtil {
 	}
 
 	public static int[] clone(int[] array, int from, int to) {
+		if (array == null) {
+			return null;
+		}
+
 		int[] newArray = new int[to - from];
 
 		System.arraycopy(
@@ -462,6 +506,10 @@ public class ArrayUtil {
 	}
 
 	public static long[] clone(long[] array) {
+		if (array == null) {
+			return null;
+		}
+
 		long[] newArray = new long[array.length];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -470,6 +518,10 @@ public class ArrayUtil {
 	}
 
 	public static long[] clone(long[] array, int from, int to) {
+		if (array == null) {
+			return null;
+		}
+
 		long[] newArray = new long[to - from];
 
 		System.arraycopy(
@@ -480,6 +532,10 @@ public class ArrayUtil {
 	}
 
 	public static short[] clone(short[] array) {
+		if (array == null) {
+			return null;
+		}
+
 		short[] newArray = new short[array.length];
 
 		System.arraycopy(array, 0, newArray, 0, array.length);
@@ -488,6 +544,10 @@ public class ArrayUtil {
 	}
 
 	public static short[] clone(short[] array, int from, int to) {
+		if (array == null) {
+			return null;
+		}
+
 		short[] newArray = new short[to - from];
 
 		System.arraycopy(
@@ -498,6 +558,10 @@ public class ArrayUtil {
 	}
 
 	public static <T> T[] clone(T[] array) {
+		if (array == null) {
+			return null;
+		}
+
 		Class<?> arrayClass = array.getClass();
 
 		T[] newArray = (T[])Array.newInstance(
@@ -509,6 +573,10 @@ public class ArrayUtil {
 	}
 
 	public static <T> T[] clone(T[] array, int from, int to) {
+		if (array == null) {
+			return null;
+		}
+
 		Class<?> arrayClass = array.getClass();
 
 		T[] newArray = (T[])Array.newInstance(
@@ -522,6 +590,10 @@ public class ArrayUtil {
 	}
 
 	public static <T> T[][] clone(T[][] array) {
+		if (array == null) {
+			return null;
+		}
+
 		Class<?> arrayClass = array.getClass();
 
 		T[][] newArray = (T[][])Array.newInstance(
@@ -533,6 +605,10 @@ public class ArrayUtil {
 	}
 
 	public static <T> T[][] clone(T[][] array, int from, int to) {
+		if (array == null) {
+			return null;
+		}
+
 		Class<?> arrayClass = array.getClass();
 
 		T[][] newArray = (T[][])Array.newInstance(

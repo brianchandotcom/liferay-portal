@@ -192,6 +192,11 @@ public abstract class BaseRepositoryImpl
 	}
 
 	@Override
+	public void deleteAll() throws PortalException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void deleteFileEntry(long folderId, String title)
 		throws PortalException {
 

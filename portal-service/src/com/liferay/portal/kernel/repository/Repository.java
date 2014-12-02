@@ -112,15 +112,11 @@ public interface Repository extends DocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteFileEntry(long fileEntryId) throws PortalException;
-
 	public void deleteFileEntry(long folderId, String title)
 		throws PortalException;
 
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException;
-
-	public void deleteFolder(long folderId) throws PortalException;
 
 	public void deleteFolder(long parentFolderId, String name)
 		throws PortalException;
@@ -156,21 +152,6 @@ public interface Repository extends DocumentRepository {
 		throws PortalException;
 
 	public int getFileEntriesCount(long folderId, String[] mimeTypes)
-		throws PortalException;
-
-	public FileEntry getFileEntry(long fileEntryId) throws PortalException;
-
-	public FileEntry getFileEntry(long folderId, String title)
-		throws PortalException;
-
-	public FileEntry getFileEntryByUuid(String uuid) throws PortalException;
-
-	public FileVersion getFileVersion(long fileVersionId)
-		throws PortalException;
-
-	public Folder getFolder(long folderId) throws PortalException;
-
-	public Folder getFolder(long parentFolderId, String name)
 		throws PortalException;
 
 	public List<Folder> getFolders(

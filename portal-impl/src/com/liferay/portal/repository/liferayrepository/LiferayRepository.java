@@ -328,6 +328,11 @@ public class LiferayRepository
 	}
 
 	@Override
+	public void deleteAll() throws PortalException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void deleteFileEntry(long fileEntryId) throws PortalException {
 		dlFileEntryService.deleteFileEntry(fileEntryId);
 	}

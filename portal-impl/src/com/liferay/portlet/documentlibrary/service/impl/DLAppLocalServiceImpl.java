@@ -947,10 +947,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			long[] assetLinkEntryIds)
 		throws PortalException {
 
-		LocalRepository localRepository = getFileEntryLocalRepository(
-			fileEntry.getFileEntryId());
-
-		localRepository.updateAsset(
+		dlAppHelperLocalService.updateAsset(
 			userId, fileEntry, fileVersion, assetCategoryIds, assetTagNames,
 			assetLinkEntryIds);
 	}

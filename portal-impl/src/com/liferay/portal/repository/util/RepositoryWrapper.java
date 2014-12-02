@@ -230,6 +230,11 @@ public class RepositoryWrapper implements Repository {
 	}
 
 	@Override
+	public void deleteAll() throws PortalException {
+		_repository.deleteAll();
+	}
+
+	@Override
 	public void deleteFileEntry(long fileEntryId) throws PortalException {
 		_repository.deleteFileEntry(fileEntryId);
 	}

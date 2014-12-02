@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.repository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
@@ -52,6 +54,27 @@ public interface DocumentRepository extends CapabilityProvider {
 	public FileEntry copyFileEntry(
 			long userId, long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public void deleteAll() throws PortalException;
+
+	public void deleteFileEntry(long fileEntryId) throws PortalException;
+
+	public void deleteFolder(long folderId) throws PortalException;
+
+	public FileEntry getFileEntry(long fileEntryId) throws PortalException;
+
+	public FileEntry getFileEntry(long folderId, String title)
+		throws PortalException;
+
+	public FileEntry getFileEntryByUuid(String uuid) throws PortalException;
+
+	public FileVersion getFileVersion(long fileVersionId)
+		throws PortalException;
+
+	public Folder getFolder(long folderId) throws PortalException;
+
+	public Folder getFolder(long parentFolderId, String name)
 		throws PortalException;
 
 	public long getRepositoryId();

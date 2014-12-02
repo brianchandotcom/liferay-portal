@@ -252,6 +252,11 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
+	public void deleteAll() throws PortalException {
+		_baseRepository.deleteAll();
+	}
+
+	@Override
 	public void deleteFileEntry(long fileEntryId) throws PortalException {
 		_baseRepository.deleteFileEntry(fileEntryId);
 	}

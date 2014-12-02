@@ -16,6 +16,7 @@ package com.liferay.portal.repository.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -303,6 +304,23 @@ public class CapabilityRepository
 			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
 				getUserId(),
 			groupId, fileEntryId, destFolderId, serviceContext);
+	}
+
+	@Override
+	public void deleteAll() throws PortalException {
+		Repository repository = getRepository();
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Delete.class, Repository.class, repository);
+
+		SyncCapability syncCapability = getInternalCapability(
+			SyncCapability.class);
+
+		if (syncCapability != null) {
+			syncCapability.destroyDocumentRepository(this);
+		}
+
+		repository.deleteAll();
 	}
 
 	@Override

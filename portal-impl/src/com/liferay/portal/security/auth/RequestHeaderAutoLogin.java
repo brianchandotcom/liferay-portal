@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.ldap.PortalLDAPImporterUtil;
+import com.liferay.portal.security.PortalUserImporterUtil;
 import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -85,7 +85,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 				PropsValues.REQUEST_HEADER_AUTH_IMPORT_FROM_LDAP)) {
 
 			try {
-				user = PortalLDAPImporterUtil.importLDAPUser(
+				user = PortalUserImporterUtil.importUser(
 					companyId, StringPool.BLANK, screenName);
 			}
 			catch (Exception e) {

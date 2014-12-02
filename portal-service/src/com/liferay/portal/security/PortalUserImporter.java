@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.security;
 
 import com.liferay.portal.model.User;
 
@@ -22,30 +22,29 @@ import javax.naming.ldap.LdapContext;
 /**
  * @author Michael C. Han
  */
-public interface PortalLDAPImporter {
+public interface PortalUserImporter {
 
-	public void importFromLDAP() throws Exception;
-
-	public void importFromLDAP(long companyId) throws Exception;
-
-	public void importFromLDAP(long ldapServerId, long companyId)
-		throws Exception;
-
-	public User importLDAPUser(
+	public User importUser(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			Attributes attributes, String password)
 		throws Exception;
 
-	public User importLDAPUser(
+	public User importUser(
 			long ldapServerId, long companyId, String emailAddress,
 			String screenName)
 		throws Exception;
 
-	public User importLDAPUser(
+	public User importUser(
 			long companyId, String emailAddress, String screenName)
 		throws Exception;
 
-	public User importLDAPUserByScreenName(long companyId, String screenName)
+	public User importUserByScreenName(long companyId, String screenName)
 		throws Exception;
+
+	public void importUsers() throws Exception;
+
+	public void importUsers(long companyId) throws Exception;
+
+	public void importUsers(long ldapServerId, long companyId) throws Exception;
 
 }

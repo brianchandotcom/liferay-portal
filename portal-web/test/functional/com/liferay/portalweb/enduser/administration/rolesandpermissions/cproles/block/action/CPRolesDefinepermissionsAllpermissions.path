@@ -567,6 +567,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_RESOURCE_PERMISSIONS_KALEO_FORMS_ALL_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -760,27 +765,37 @@
 </tr>
 <!--SITE_ADMIN_APPLICATIONS_KALEO_FORMS-->
 <tr>
-	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATIONS_PERMISSIONS_ALL_CHECKBOX</td>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_ALL_CHECKBOX</td>
 	<td>//input[@name='_128_allRowIds']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_ALL_CHECKBOX</td>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW</td>
+	<td>//input[@value='1_WAR_kaleoformsportletVIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_ALL_CHECKBOX</td>
 	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_PROCESS_COMPLETE_FORM</td>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_COMPLETE_FORM</td>
 	<td>//input[@value='com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessCOMPLETE_FORM']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_PROCESS_SUBMIT</td>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_SUBMIT</td>
 	<td>//input[@value='com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessSUBMIT']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_PROCESS_VIEW</td>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_UPDATE</td>
+	<td>//input[@value='com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessUPDATE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW</td>
 	<td>//input[@value='com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessVIEW']</td>
 	<td></td>
 </tr>

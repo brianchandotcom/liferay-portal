@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.security;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.ldap.LDAPOperation;
 
 import java.io.Serializable;
 
@@ -29,43 +30,42 @@ import java.util.Map;
  * @author Marcellus Tavares
  * @author Raymond Augé
  */
-public class PortalLDAPExporterUtil {
+public class PortalUserExporterUtil {
 
-	public static void exportToLDAP(
+	public static void exportUser(
 			Contact contact, Map<String, Serializable> contactExpandoAttributes)
 		throws Exception {
 
-		getPortalLDAPExporter().exportToLDAP(contact, contactExpandoAttributes);
+		getPortalUserExporter().exportUser(contact, contactExpandoAttributes);
 	}
 
-	public static void exportToLDAP(
+	public static void exportUser(
 			long userId, long userGroupId, LDAPOperation ldapOperation)
 		throws Exception {
 
-		getPortalLDAPExporter().exportToLDAP(
-			userId, userGroupId, ldapOperation);
+		getPortalUserExporter().exportUser(userId, userGroupId, ldapOperation);
 	}
 
-	public static void exportToLDAP(
+	public static void exportUser(
 			User user, Map<String, Serializable> userExpandoAttributes)
 		throws Exception {
 
-		getPortalLDAPExporter().exportToLDAP(user, userExpandoAttributes);
+		getPortalUserExporter().exportUser(user, userExpandoAttributes);
 	}
 
-	public static PortalLDAPExporter getPortalLDAPExporter() {
+	public static PortalUserExporter getPortalUserExporter() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			PortalLDAPExporterUtil.class);
+			PortalUserExporterUtil.class);
 
-		return _portalLDAPExporter;
+		return _portalUserExporter;
 	}
 
-	public void setPortalLDAPExporter(PortalLDAPExporter portalLDAPExporter) {
+	public void setPortalUserExporter(PortalUserExporter portalUserExporter) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_portalLDAPExporter = portalLDAPExporter;
+		_portalUserExporter = portalUserExporter;
 	}
 
-	private static PortalLDAPExporter _portalLDAPExporter;
+	private static PortalUserExporter _portalUserExporter;
 
 }

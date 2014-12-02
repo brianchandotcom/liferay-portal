@@ -52,7 +52,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 	</c:if>
 
 	<liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
-	<liferay-ui:error exception="<%= GroupNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= GroupKeyException.class %>" message="please-enter-a-valid-name" />
 	<liferay-ui:error exception="<%= MembershipRequestCommentsException.class %>" message="please-enter-valid-comments" />
 
 	<liferay-ui:error exception="<%= RequiredGroupException.class %>">

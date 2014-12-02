@@ -231,6 +231,21 @@ public interface GroupModel extends AttachedModel, BaseModel<Group>, MVCCModel {
 	public void setTreePath(String treePath);
 
 	/**
+	 * Returns the group key of this group.
+	 *
+	 * @return the group key of this group
+	 */
+	@AutoEscape
+	public String getGroupKey();
+
+	/**
+	 * Sets the group key of this group.
+	 *
+	 * @param groupKey the group key of this group
+	 */
+	public void setGroupKey(String groupKey);
+
+	/**
 	 * Returns the name of this group.
 	 *
 	 * @return the name of this group

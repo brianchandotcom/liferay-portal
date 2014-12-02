@@ -16,7 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.DuplicateGroupException;
 import com.liferay.portal.GroupFriendlyURLException;
-import com.liferay.portal.GroupNameException;
+import com.liferay.portal.GroupKeyException;
 import com.liferay.portal.GroupParentException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchGroupException;
@@ -213,7 +213,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public Group addGroup(
 			long userId, long parentGroupId, String className, long classPK,
-			long liveGroupId, String name, String description, int type,
+			long liveGroupId, String groupKey, String description, int type,
 			boolean manualMembership, int membershipRestriction,
 			String friendlyURL, boolean site, boolean inheritContent,
 			boolean active, ServiceContext serviceContext)
@@ -224,7 +224,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 		className = GetterUtil.getString(className);
 		long classNameId = classNameLocalService.getClassNameId(className);
-		String friendlyName = name;
+		String friendlyName = groupKey;
 
 		long groupId = 0;
 
@@ -252,10 +252,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			classPK = groupId;
 		}
 		else if (className.equals(Organization.class.getName())) {
-			name = getOrgGroupName(name);
+			groupKey = getOrgGroupName(groupKey);
 		}
-		else if (!GroupConstants.USER_PERSONAL_SITE.equals(name)) {
-			name = String.valueOf(classPK);
+		else if (!GroupConstants.USER_PERSONAL_SITE.equals(groupKey)) {
+			groupKey = String.valueOf(classPK);
 		}
 
 		if (className.equals(Organization.class.getName()) && staging) {
@@ -273,7 +273,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			friendlyURL);
 
 		if (staging) {
-			name = name.concat(ORGANIZATION_STAGING_SUFFIX);
+			groupKey = groupKey.concat(ORGANIZATION_STAGING_SUFFIX);
 			friendlyURL = getFriendlyURL(friendlyURL.concat("-staging"));
 		}
 
@@ -284,7 +284,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		if (className.equals(Group.class.getName())) {
 			if (!site && !inheritContent && (liveGroupId == 0) &&
-				!name.equals(GroupConstants.CONTROL_PANEL)) {
+				!groupKey.equals(GroupConstants.CONTROL_PANEL)) {
 
 				throw new IllegalArgumentException();
 			}
@@ -299,7 +299,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if ((classNameId <= 0) || className.equals(Group.class.getName())) {
-			validateName(groupId, user.getCompanyId(), name, site);
+			validateName(groupId, user.getCompanyId(), groupKey, site);
 		}
 
 		validateFriendlyURL(
@@ -320,7 +320,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		group.setParentGroupId(parentGroupId);
 		group.setLiveGroupId(liveGroupId);
 		group.setTreePath(group.buildTreePath());
-		group.setName(name);
+		group.setGroupKey(groupKey);
+		group.setName(groupKey);
 		group.setDescription(description);
 		group.setType(type);
 		group.setManualMembership(manualMembership);
@@ -396,7 +397,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  className the entity's class name
 	 * @param  classPK the primary key of the entity's instance
 	 * @param  liveGroupId the primary key of the live group
-	 * @param  name the entity's name
+	 * @param  groupKey the entity's groupKey
 	 * @param  description the group's description (optionally
 	 *         <code>null</code>)
 	 * @param  type the group's type. For more information see {@link
@@ -420,14 +421,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public Group addGroup(
 			long userId, long parentGroupId, String className, long classPK,
-			long liveGroupId, String name, String description, int type,
+			long liveGroupId, String groupKey, String description, int type,
 			boolean manualMembership, int membershipRestriction,
 			String friendlyURL, boolean site, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addGroup(
-			userId, parentGroupId, className, classPK, liveGroupId, name,
+			userId, parentGroupId, className, classPK, liveGroupId, groupKey,
 			description, type, manualMembership, membershipRestriction,
 			friendlyURL, site, false, active, serviceContext);
 	}
@@ -439,7 +440,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param      parentGroupId the primary key of the parent group
 	 * @param      className the entity's class name
 	 * @param      classPK the primary key of the entity's instance
-	 * @param      name the entity's name
+	 * @param      groupKey the entity's groupKey
 	 * @param      description the group's description (optionally
 	 *             <code>null</code>)
 	 * @param      type the group's type. For more information see {@link
@@ -463,15 +464,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public Group addGroup(
 			long userId, long parentGroupId, String className, long classPK,
-			String name, String description, int type, String friendlyURL,
+			String groupKey, String description, int type, String friendlyURL,
 			boolean site, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addGroup(
 			userId, parentGroupId, className, classPK,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, description, type, true,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL, site,
-			active, serviceContext);
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, groupKey, description, type,
+			true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL,
+			site, active, serviceContext);
 	}
 
 	/**
@@ -481,7 +482,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param      className the entity's class name
 	 * @param      classPK the primary key of the entity's instance
 	 * @param      liveGroupId the primary key of the live group
-	 * @param      name the entity's name
+	 * @param      groupKey the entity's groupKey
 	 * @param      description the group's description (optionally
 	 *             <code>null</code>)
 	 * @param      type the group's type. For more information see {@link
@@ -506,13 +507,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public Group addGroup(
 			long userId, String className, long classPK, long liveGroupId,
-			String name, String description, int type, String friendlyURL,
+			String groupKey, String description, int type, String friendlyURL,
 			boolean site, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, className, classPK,
-			liveGroupId, name, description, type, true,
+			liveGroupId, groupKey, description, type, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL, site,
 			active, serviceContext);
 	}
@@ -523,7 +524,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param      userId the primary key of the group's creator/owner
 	 * @param      className the entity's class name
 	 * @param      classPK the primary key of the entity's instance
-	 * @param      name the entity's name
+	 * @param      groupKey the entity's groupKey
 	 * @param      description the group's description (optionally
 	 *             <code>null</code>)
 	 * @param      type the group's type. For more information see {@link
@@ -546,16 +547,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Group addGroup(
-			long userId, String className, long classPK, String name,
+			long userId, String className, long classPK, String groupKey,
 			String description, int type, String friendlyURL, boolean site,
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addGroup(
 			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, className, classPK,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, description, type, true,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL, site,
-			active, serviceContext);
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, groupKey, description, type,
+			true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL,
+			site, active, serviceContext);
 	}
 
 	/**
@@ -629,20 +630,20 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		for (Group group : groupFinder.findBySystem(companyId)) {
 			_systemGroupsMap.put(
-				companyIdHexString.concat(group.getName()), group);
+				companyIdHexString.concat(group.getGroupKey()), group);
 		}
 
 		long defaultUserId = userLocalService.getDefaultUserId(companyId);
 
 		String[] systemGroups = PortalUtil.getSystemGroups();
 
-		for (String name : systemGroups) {
-			String groupCacheKey = companyIdHexString.concat(name);
+		for (String groupKey : systemGroups) {
+			String groupCacheKey = companyIdHexString.concat(groupKey);
 
 			Group group = _systemGroupsMap.get(groupCacheKey);
 
 			if (group == null) {
-				group = groupPersistence.fetchByC_N(companyId, name);
+				group = groupPersistence.fetchByC_GK(companyId, groupKey);
 			}
 
 			if (group == null) {
@@ -652,15 +653,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				String friendlyURL = null;
 				boolean site = true;
 
-				if (name.equals(GroupConstants.CONTROL_PANEL)) {
+				if (groupKey.equals(GroupConstants.CONTROL_PANEL)) {
 					type = GroupConstants.TYPE_SITE_PRIVATE;
 					friendlyURL = GroupConstants.CONTROL_PANEL_FRIENDLY_URL;
 					site = false;
 				}
-				else if (name.equals(GroupConstants.GUEST)) {
+				else if (groupKey.equals(GroupConstants.GUEST)) {
 					friendlyURL = "/guest";
 				}
-				else if (name.equals(GroupConstants.USER_PERSONAL_SITE)) {
+				else if (groupKey.equals(GroupConstants.USER_PERSONAL_SITE)) {
 					className = UserPersonalSite.class.getName();
 					classPK = defaultUserId;
 					type = GroupConstants.TYPE_SITE_PRIVATE;
@@ -672,11 +673,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				group = groupLocalService.addGroup(
 					defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 					className, classPK, GroupConstants.DEFAULT_LIVE_GROUP_ID,
-					name, null, type, true,
+					groupKey, null, type, true,
 					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL,
 					site, true, null);
 
-				if (name.equals(GroupConstants.USER_PERSONAL_SITE)) {
+				if (groupKey.equals(GroupConstants.USER_PERSONAL_SITE)) {
 					initUserPersonalSitePermissions(group);
 				}
 			}
@@ -690,7 +691,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				}
 			}
 
-			if (group.getName().equals(GroupConstants.GUEST)) {
+			if (group.getGroupKey().equals(GroupConstants.GUEST)) {
 				LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
 					group.getGroupId(), false);
 
@@ -727,7 +728,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			GroupThreadLocal.setDeleteInProcess(true);
 
 			if (((group.isCompany() && !group.isCompanyStagingGroup()) ||
-				 PortalUtil.isSystemGroup(group.getName())) &&
+				 PortalUtil.isSystemGroup(group.getGroupKey())) &&
 				!CompanyThreadLocal.isDeleteInProcess()) {
 
 				throw new RequiredGroupException(
@@ -1073,25 +1074,25 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the group with the matching group name by first searching the
+	 * Returns the group with the matching groupKey by first searching the
 	 * system groups and then using the finder cache.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  name the group's name
-	 * @return the group with the name and associated company, or
+	 * @param  groupKey the group's key
+	 * @return the group with the groupKey and associated company, or
 	 *         <code>null</code> if a matching group could not be found
 	 */
 	@Override
 	@Skip
-	public Group fetchGroup(long companyId, String name) {
+	public Group fetchGroup(long companyId, String groupKey) {
 		Group group = _systemGroupsMap.get(
-			StringUtil.toHexString(companyId).concat(name));
+			StringUtil.toHexString(companyId).concat(groupKey));
 
 		if (group != null) {
 			return group;
 		}
 
-		return groupLocalService.loadFetchGroup(companyId, name);
+		return groupLocalService.loadFetchGroup(companyId, groupKey);
 	}
 
 	/**
@@ -1209,112 +1210,52 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the group with the matching group name.
+	 * Returns the group with the matching groupKey.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  name the group's name
-	 * @return the group with the name
+	 * @param  groupKey the group's key
+	 * @return the group with the groupKey
 	 * @throws PortalException if a matching group could not be found
 	 */
 	@Override
 	@Skip
-	public Group getGroup(long companyId, String name) throws PortalException {
+	public Group getGroup(long companyId, String groupKey)
+		throws PortalException {
+
 		Group group = _systemGroupsMap.get(
-			StringUtil.toHexString(companyId).concat(name));
+			StringUtil.toHexString(companyId).concat(groupKey));
 
 		if (group != null) {
 			return group;
 		}
 
-		return groupLocalService.loadGetGroup(companyId, name);
+		return groupLocalService.loadGetGroup(companyId, groupKey);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.model.Group#getDescriptiveName(Locale)
+	 */
+	@Deprecated
 	@Override
 	public String getGroupDescriptiveName(Group group, Locale locale)
 		throws PortalException {
 
-		String name = group.getName();
-
-		if (group.isCompany() && !group.isCompanyStagingGroup()) {
-			name = LanguageUtil.get(locale, "global");
-		}
-		else if (group.isControlPanel()) {
-			name = LanguageUtil.get(locale, "control-panel");
-		}
-		else if (group.isLayout()) {
-			Layout layout = layoutLocalService.getLayout(group.getClassPK());
-
-			name = layout.getName(locale);
-		}
-		else if (group.isLayoutPrototype()) {
-			LayoutPrototype layoutPrototype =
-				layoutPrototypeLocalService.getLayoutPrototype(
-					group.getClassPK());
-
-			name = layoutPrototype.getName(locale);
-		}
-		else if (group.isLayoutSetPrototype()) {
-			LayoutSetPrototype layoutSetPrototype =
-				layoutSetPrototypePersistence.findByPrimaryKey(
-					group.getClassPK());
-
-			name = layoutSetPrototype.getName(locale);
-		}
-		else if (group.isOrganization()) {
-			long organizationId = group.getOrganizationId();
-
-			Organization organization =
-				organizationPersistence.findByPrimaryKey(organizationId);
-
-			name = organization.getName();
-
-			group = organization.getGroup();
-		}
-		else if (group.isUser()) {
-			long userId = group.getClassPK();
-
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			name = user.getFullName();
-		}
-		else if (group.isUserGroup()) {
-			long userGroupId = group.getClassPK();
-
-			UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
-				userGroupId);
-
-			name = userGroup.getName();
-		}
-		else if (group.isUserPersonalSite()) {
-			name = LanguageUtil.get(locale, "user-personal-site");
-		}
-		else if (name.equals(GroupConstants.GUEST)) {
-			Company company = companyPersistence.findByPrimaryKey(
-				group.getCompanyId());
-
-			Account account = company.getAccount();
-
-			name = account.getName();
-		}
-
-		if (group.isStaged() && !group.isStagedRemotely() &&
-			group.isStagingGroup()) {
-
-			Group liveGroup = group.getLiveGroup();
-
-			name = liveGroup.getDescriptiveName(locale);
-		}
-
-		return name;
+		return group.getDescriptiveName(locale);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.model.Group#getDescriptiveName(Locale)
+	 */
+	@Deprecated
 	@Override
 	public String getGroupDescriptiveName(long groupId, Locale locale)
 		throws PortalException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		return getGroupDescriptiveName(group, locale);
+		return group.getDescriptiveName(locale);
 	}
 
 	/**
@@ -1818,7 +1759,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  end the upper bound of the range of groups to return (not
 	 *         inclusive)
 	 * @return the range of the user's groups and immediate organization groups
-	 *         ordered by name
+	 *         ordered by groupKey
 	 * @throws PortalException if a user with the primary key could not be found
 	 */
 	@Override
@@ -2063,32 +2004,32 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the group with the matching group name by first searching the
+	 * Returns the group with the matching group key by first searching the
 	 * system groups and then using the finder cache.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  name the group's name
-	 * @return the group with the name and associated company, or
+	 * @param  groupKey the group's key
+	 * @return the group with the groupKey and associated company, or
 	 *         <code>null</code> if a matching group could not be found
 	 */
 	@Override
-	public Group loadFetchGroup(long companyId, String name) {
-		return groupPersistence.fetchByC_N(companyId, name);
+	public Group loadFetchGroup(long companyId, String groupKey) {
+		return groupPersistence.fetchByC_GK(companyId, groupKey);
 	}
 
 	/**
-	 * Returns the group with the matching group name.
+	 * Returns the group with the matching group key.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  name the group's name
-	 * @return the group with the name and associated company
+	 * @param  groupKey the group's key
+	 * @return the group with the groupKey and associated company
 	 * @throws PortalException if a matching group could not be found
 	 */
 	@Override
-	public Group loadGetGroup(long companyId, String name)
+	public Group loadGetGroup(long companyId, String groupKey)
 		throws PortalException {
 
-		return groupPersistence.findByC_N(companyId, name);
+		return groupPersistence.findByC_GK(companyId, groupKey);
 	}
 
 	/**
@@ -2150,7 +2091,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  start the lower bound of the range of groups to return
 	 * @param  end the upper bound of the range of groups to return (not
 	 *         inclusive)
-	 * @return the matching groups ordered by name
+	 * @return the matching groups ordered by groupKey
 	 */
 	@Override
 	public List<Group> search(
@@ -2434,7 +2375,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if (isUseComplexSQL(classNameIds)) {
-			return groupFinder.findByC_C_PG_N_D(
+			return groupFinder.findByC_C_PG_GK_D(
 				companyId, classNameIds, parentGroupId, keywordsArray,
 				keywordsArray, params, andOperator, start, end, obc);
 		}
@@ -2543,7 +2484,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
 		if (isUseComplexSQL(classNameIds)) {
-			return groupFinder.findByC_C_PG_N_D(
+			return groupFinder.findByC_C_PG_GK_D(
 				companyId, classNameIds, parentGroupId, names, descriptions,
 				params, andOperator, start, end, obc);
 		}
@@ -3003,7 +2944,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if (isUseComplexSQL(classNameIds)) {
-			return groupFinder.countByC_C_PG_N_D(
+			return groupFinder.countByC_C_PG_GK_D(
 				companyId, classNameIds, parentGroupId, keywordsArray,
 				keywordsArray, params, andOperator);
 		}
@@ -3049,7 +2990,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
 		if (isUseComplexSQL(classNameIds)) {
-			return groupFinder.countByC_C_PG_N_D(
+			return groupFinder.countByC_C_PG_GK_D(
 				companyId, classNameIds, parentGroupId, names, descriptions,
 				params, andOperator);
 		}
@@ -3299,7 +3240,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  parentGroupId the primary key of the parent group
-	 * @param  name the group's new name
+	 * @param  groupKey the group's key
 	 * @param  description the group's new description (optionally
 	 *         <code>null</code>)
 	 * @param  type the group's new type. For more information see {@link
@@ -3321,9 +3262,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public Group updateGroup(
-			long groupId, long parentGroupId, String name, String description,
-			int type, boolean manualMembership, int membershipRestriction,
-			String friendlyURL, boolean active, ServiceContext serviceContext)
+			long groupId, long parentGroupId, String groupKey,
+			String description, int type, boolean manualMembership,
+			int membershipRestriction, String friendlyURL, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
@@ -3337,20 +3279,23 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		if ((classNameId <= 0) || className.equals(Group.class.getName())) {
 			validateName(
-				group.getGroupId(), group.getCompanyId(), name, group.isSite());
+				group.getGroupId(), group.getCompanyId(), groupKey,
+				group.isSite());
 		}
 		else if (className.equals(Organization.class.getName())) {
 			Organization organization =
 				organizationPersistence.findByPrimaryKey(classPK);
 
-			name = getOrgGroupName(organization.getName());
+			groupKey = getOrgGroupName(organization.getName());
 		}
-		else if (!GroupConstants.USER_PERSONAL_SITE.equals(name)) {
-			name = String.valueOf(classPK);
+		else if (!GroupConstants.USER_PERSONAL_SITE.equals(
+					group.getGroupKey())) {
+
+			groupKey = String.valueOf(classPK);
 		}
 
-		if (PortalUtil.isSystemGroup(group.getName()) &&
-			!name.equals(group.getName())) {
+		if (PortalUtil.isSystemGroup(group.getGroupKey()) &&
+			!groupKey.equals(group.getGroupKey())) {
 
 			throw new RequiredGroupException(
 				String.valueOf(group.getGroupId()),
@@ -3365,7 +3310,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		group.setParentGroupId(parentGroupId);
 		group.setTreePath(group.buildTreePath());
-		group.setName(name);
+		group.setGroupKey(groupKey);
+		group.setName(groupKey);
 		group.setDescription(description);
 		group.setType(type);
 		group.setManualMembership(manualMembership);
@@ -3749,15 +3695,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				continue;
 			}
 
-			// Filter by name and description
-
-			String name = group.getName();
-
-			if (name.equals(GroupConstants.CONTROL_PANEL)) {
+			if (group.getGroupKey().equals(GroupConstants.CONTROL_PANEL)) {
 				iterator.remove();
 
 				continue;
 			}
+
+			// Filter by name and description
+
+			String name = group.getGroupKey();
 
 			boolean containsName = matches(name, names);
 			boolean containsDescription = matches(
@@ -4518,18 +4464,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected void validateName(
-			long groupId, long companyId, String name, boolean site)
+			long groupId, long companyId, String groupKey, boolean site)
 		throws PortalException {
 
-		if (Validator.isNull(name) || Validator.isNumber(name) ||
-			name.contains(StringPool.STAR) ||
-			name.contains(ORGANIZATION_NAME_SUFFIX)) {
+		if (Validator.isNull(groupKey) || Validator.isNumber(groupKey) ||
+			groupKey.contains(StringPool.STAR) ||
+			groupKey.contains(ORGANIZATION_NAME_SUFFIX)) {
 
-			throw new GroupNameException();
+			throw new GroupKeyException();
 		}
 
 		try {
-			Group group = groupFinder.findByC_N(companyId, name);
+			Group group = groupFinder.findByC_GK(companyId, groupKey);
 
 			if ((groupId <= 0) || (group.getGroupId() != groupId)) {
 				throw new DuplicateGroupException("{groupId=" + groupId + "}");
@@ -4541,7 +4487,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (site) {
 			Company company = companyLocalService.getCompany(companyId);
 
-			if (name.equals(company.getName())) {
+			if (groupKey.equals(company.getName())) {
 				throw new DuplicateGroupException();
 			}
 		}

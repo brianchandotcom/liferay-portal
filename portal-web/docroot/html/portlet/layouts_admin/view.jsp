@@ -209,7 +209,7 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 						groupId="<%= sharingContentGroup.getGroupId() %>"
 						portletURL="<%= editLayoutURL %>"
 						privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
-						rootNodeName="<%= sharingContentGroup.getName() %>"
+						rootNodeName="<%= sharingContentGroup.getGroupKey() %>"
 						selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
 						selectedLayoutIds="<%= selectedLayoutIds %>"
 						treeId="layoutsTree"

@@ -83,7 +83,7 @@ public class VirtualHostLocalServiceImpl
 		if ((layoutSet == null) &&
 			Validator.isNotNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
 
-			Group group = groupPersistence.fetchByC_N(
+			Group group = groupPersistence.fetchByC_GK(
 				companyId, PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
 			if (group != null) {

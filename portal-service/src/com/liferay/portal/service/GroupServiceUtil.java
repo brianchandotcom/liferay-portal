@@ -47,71 +47,20 @@ public class GroupServiceUtil {
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.Group addGroup(
-		java.lang.String name, java.lang.String description, int type,
+		java.lang.String groupKey, java.lang.String description, int type,
 		java.lang.String friendlyURL, boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addGroup(name, description, type, friendlyURL, site,
+				   .addGroup(groupKey, description, type, friendlyURL, site,
 			active, serviceContext);
-	}
-
-	/**
-	* Adds a group.
-	*
-	* @param parentGroupId the primary key of the parent group
-	* @param liveGroupId the primary key of the live group
-	* @param name the entity's name
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param type the group's type. For more information see {@link
-	GroupConstants}.
-	* @param manualMembership whether manual membership is allowed for the
-	group
-	* @param membershipRestriction the group's membership restriction. For
-	more information see {@link GroupConstants}.
-	* @param friendlyURL the group's friendlyURL (optionally
-	<code>null</code>)
-	* @param site whether the group is to be associated with a main site
-	* @param active whether the group is active
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set the asset category IDs and asset tag
-	names for the group, and can set whether the group is for staging
-	* @return the group
-	* @throws PortalException if the user did not have permission to add the
-	group, if a creator could not be found, if the group's
-	information was invalid, if a layout could not be found, or if a
-	valid friendly URL could not be created for the group
-	*/
-	public static com.liferay.portal.model.Group addGroup(long parentGroupId,
-		long liveGroupId, java.lang.String name, java.lang.String description,
-		int type, boolean manualMembership, int membershipRestriction,
-		java.lang.String friendlyURL, boolean site, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addGroup(parentGroupId, liveGroupId, name, description,
-			type, manualMembership, membershipRestriction, friendlyURL, site,
-			active, serviceContext);
-	}
-
-	public static com.liferay.portal.model.Group addGroup(long parentGroupId,
-		long liveGroupId, java.lang.String name, java.lang.String description,
-		int type, boolean manualMembership, int membershipRestriction,
-		java.lang.String friendlyURL, boolean site, boolean inheritContent,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addGroup(parentGroupId, liveGroupId, name, description,
-			type, manualMembership, membershipRestriction, friendlyURL, site,
-			inheritContent, active, serviceContext);
 	}
 
 	/**
 	* Adds the group using the group default live group ID.
 	*
 	* @param parentGroupId the primary key of the parent group
-	* @param name the entity's name
+	* @param groupKey the entity's groupKey
 	* @param description the group's description (optionally
 	<code>null</code>)
 	* @param type the group's type. For more information see {@link
@@ -134,13 +83,65 @@ public class GroupServiceUtil {
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.Group addGroup(long parentGroupId,
-		java.lang.String name, java.lang.String description, int type,
+		java.lang.String groupKey, java.lang.String description, int type,
 		java.lang.String friendlyURL, boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addGroup(parentGroupId, name, description, type,
+				   .addGroup(parentGroupId, groupKey, description, type,
 			friendlyURL, site, active, serviceContext);
+	}
+
+	/**
+	* Adds a group.
+	*
+	* @param parentGroupId the primary key of the parent group
+	* @param liveGroupId the primary key of the live group
+	* @param groupKey the entity's groupKey
+	* @param description the group's description (optionally
+	<code>null</code>)
+	* @param type the group's type. For more information see {@link
+	GroupConstants}.
+	* @param manualMembership whether manual membership is allowed for the
+	group
+	* @param membershipRestriction the group's membership restriction. For
+	more information see {@link GroupConstants}.
+	* @param friendlyURL the group's friendlyURL (optionally
+	<code>null</code>)
+	* @param site whether the group is to be associated with a main site
+	* @param active whether the group is active
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set the asset category IDs and asset tag
+	names for the group, and can set whether the group is for staging
+	* @return the group
+	* @throws PortalException if the user did not have permission to add the
+	group, if a creator could not be found, if the group's
+	information was invalid, if a layout could not be found, or if a
+	valid friendly URL could not be created for the group
+	*/
+	public static com.liferay.portal.model.Group addGroup(long parentGroupId,
+		long liveGroupId, java.lang.String groupKey,
+		java.lang.String description, int type, boolean manualMembership,
+		int membershipRestriction, java.lang.String friendlyURL, boolean site,
+		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addGroup(parentGroupId, liveGroupId, groupKey, description,
+			type, manualMembership, membershipRestriction, friendlyURL, site,
+			active, serviceContext);
+	}
+
+	public static com.liferay.portal.model.Group addGroup(long parentGroupId,
+		long liveGroupId, java.lang.String groupKey,
+		java.lang.String description, int type, boolean manualMembership,
+		int membershipRestriction, java.lang.String friendlyURL, boolean site,
+		boolean inheritContent, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addGroup(parentGroupId, liveGroupId, groupKey, description,
+			type, manualMembership, membershipRestriction, friendlyURL, site,
+			inheritContent, active, serviceContext);
 	}
 
 	/**
@@ -226,15 +227,15 @@ public class GroupServiceUtil {
 	* Returns the group with the name.
 	*
 	* @param companyId the primary key of the company
-	* @param name the group's name
-	* @return the group with the name
+	* @param groupKey the group's key
+	* @return the group with the groupKey
 	* @throws PortalException if a matching group could not be found or if the
 	current user did not have permission to view the group
 	*/
 	public static com.liferay.portal.model.Group getGroup(long companyId,
-		java.lang.String name)
+		java.lang.String groupKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getGroup(companyId, name);
+		return getService().getGroup(companyId, groupKey);
 	}
 
 	/**
@@ -768,7 +769,7 @@ public class GroupServiceUtil {
 	*
 	* @param groupId the primary key of the group
 	* @param parentGroupId the primary key of the parent group
-	* @param name the group's new name
+	* @param groupKey the group's key
 	* @param description the group's new description (optionally
 	<code>null</code>)
 	* @param type the group's new type. For more information see {@link
@@ -789,13 +790,13 @@ public class GroupServiceUtil {
 	friendly URL was invalid or could one not be created
 	*/
 	public static com.liferay.portal.model.Group updateGroup(long groupId,
-		long parentGroupId, java.lang.String name,
+		long parentGroupId, java.lang.String groupKey,
 		java.lang.String description, int type, boolean manualMembership,
 		int membershipRestriction, java.lang.String friendlyURL,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateGroup(groupId, parentGroupId, name, description,
+				   .updateGroup(groupId, parentGroupId, groupKey, description,
 			type, manualMembership, membershipRestriction, friendlyURL, active,
 			serviceContext);
 	}

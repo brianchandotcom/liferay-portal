@@ -187,19 +187,18 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 			ddmStructureActionableDynamicQuery.performActions();
 
+			ActionableDynamicQuery ddmTemplateActionableDynamicQuery =
+				getDDMTemplateActionableDynamicQuery(
+					portletDataContext, ddmTemplates, true);
+
+			ddmTemplateActionableDynamicQuery.performActions();
+
 			// Export templates that belong to structures
 
 			for (DDMTemplate ddmTemplate : ddmTemplates) {
 				StagedModelDataHandlerUtil.exportStagedModel(
 					portletDataContext, ddmTemplate);
 			}
-
-			// Export templates that do not belong to structures
-
-			ActionableDynamicQuery ddmTemplateActionableDynamicQuery =
-				getDDMTemplateActionableDynamicQuery(portletDataContext);
-
-			ddmTemplateActionableDynamicQuery.performActions();
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "web-content")) {
@@ -315,7 +314,10 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getManifestSummary();
 
 		ActionableDynamicQuery ddmTemplateActionableDynamicQuery =
-			getDDMTemplateActionableDynamicQuery(portletDataContext);
+			getDDMTemplateActionableDynamicQuery(
+				portletDataContext, ddmTemplates, false);
+
+		ddmTemplateActionableDynamicQuery.performActions();
 
 		manifestSummary.addModelAdditionCount(
 			new StagedModelType(DDMTemplate.class, DDMStructure.class),
@@ -452,7 +454,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getDDMTemplateActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
+		final PortletDataContext portletDataContext,
+		final List<DDMTemplate> ddmTemplates, final boolean export) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
 			DDMTemplateLocalServiceUtil.getExportActionableDynamicQuery(
@@ -475,6 +478,24 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 						DDMStructure.class);
 
 					dynamicQuery.add(classNameIdProperty.eq(classNameId));
+				}
+
+			});
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					DDMTemplate ddmTemplate = (DDMTemplate)object;
+
+					if (export) {
+						StagedModelDataHandlerUtil.exportStagedModel(
+							portletDataContext, ddmTemplate);
+					}
+
+					ddmTemplates.remove(ddmTemplate);
 				}
 
 			});

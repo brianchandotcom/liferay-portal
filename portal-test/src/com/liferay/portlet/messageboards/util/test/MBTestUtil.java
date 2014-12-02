@@ -268,8 +268,11 @@ public class MBTestUtil {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			new ArrayList<ObjectValuePair<String, InputStream>>(1);
 
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
+		if (!fileName.startsWith(StringPool.SLASH)) {
+			fileName = "dependencies/" + fileName;
+		}
+
+		InputStream inputStream = clazz.getResourceAsStream(fileName);
 
 		ObjectValuePair<String, InputStream> inputStreamOVP = null;
 

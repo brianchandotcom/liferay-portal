@@ -14,15 +14,26 @@
 
 package com.liferay.portal.kernel.servlet.taglib;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface TagKeyFactory {
+public interface TagDynamicInclude {
 
-	public String getKey(
-		HttpServletRequest request, HttpServletResponse response, Object tag);
+	public void include(
+		HttpServletRequest request, HttpServletResponse response,
+		String tagClassName, String tagKey, String tagPoint) throws IOException;
+
+	public void register(TagItemRegistry registry);
+
+	public interface TagItemRegistry {
+		public void register(
+			String tagClassName, String tagKey, String tagPoint);
+
+	}
 
 }

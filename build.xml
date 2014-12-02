@@ -214,7 +214,12 @@
 				</not>
 				<then>
 					<if>
-						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<and>
+							<equals arg1="${app.server.type}" arg2="tomcat" />
+							<not>
+								<equals arg1="${test.build.unit}" arg2="true" />
+							</not>
+						</and>
 						<then>
 							<ant antfile="build-dist.xml" target="unzip-tomcat" inheritAll="false" />
 						</then>
@@ -450,6 +455,9 @@
 				<equals arg1="${app.server.type}" arg2="tomcat" />
 				<not>
 					<available file="${app.server.tomcat.classes.global.dir}/catalina.jar" />
+				</not>
+				<not>
+					<equals arg1="${test.build.unit}" arg2="true" />
 				</not>
 			</and>
 			<then>

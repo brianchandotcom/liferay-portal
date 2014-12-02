@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.TrackedServletRequest;
-import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
+import com.liferay.portal.kernel.servlet.taglib.TagDynamicIncludeUtil;
 import com.liferay.portal.kernel.servlet.taglib.TagKeyFactory;
 import com.liferay.portal.kernel.servlet.taglib.TagKeyFactoryRegistry;
 import com.liferay.portal.kernel.staging.StagingUtil;
@@ -315,13 +315,13 @@ public class IncludeTag extends AttributesTagSupport {
 
 		String tagClassName = clazz.getName();
 
-		String dynamicIncludePrefixKey = tagClassName + "#";
+		String dynamicIncludePrefixKey;
 
 		if (doStartTag) {
-			dynamicIncludePrefixKey += "doStartTag#";
+			dynamicIncludePrefixKey = "doStartTag#";
 		}
 		else {
-			dynamicIncludePrefixKey += "doEndTag#";
+			dynamicIncludePrefixKey = "doEndTag#";
 		}
 
 		TagKeyFactory tagKeyResolver = TagKeyFactoryRegistry.getTagKeyFactory(
@@ -334,9 +334,9 @@ public class IncludeTag extends AttributesTagSupport {
 			tagKey = tagKeyResolver.getKey(
 				request, jspWriterHttpServletResponse, this);
 
-			DynamicIncludeUtil.include(
-				request, jspWriterHttpServletResponse,
-				dynamicIncludePrefixKey + "before#" + tagKey, doStartTag);
+			TagDynamicIncludeUtil.include(
+				request, jspWriterHttpServletResponse, tagClassName, tagKey,
+				dynamicIncludePrefixKey + "before", doStartTag);
 		}
 
 		RequestDispatcher requestDispatcher =
@@ -353,9 +353,9 @@ public class IncludeTag extends AttributesTagSupport {
 		request.removeAttribute(WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT);
 
 		if (tagKeyResolver != null) {
-			DynamicIncludeUtil.include(
-				request, jspWriterHttpServletResponse,
-				dynamicIncludePrefixKey + "after#" + tagKey, doStartTag);
+			TagDynamicIncludeUtil.include(
+				request, jspWriterHttpServletResponse, tagClassName, tagKey,
+				dynamicIncludePrefixKey + "after", doStartTag);
 		}
 	}
 

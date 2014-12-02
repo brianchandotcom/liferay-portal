@@ -37,7 +37,7 @@ public class SiteChecker extends RowChecker {
 
 		try {
 			if (group.isCompany() ||
-				PortalUtil.isSystemGroup(group.getName())) {
+				PortalUtil.isSystemGroup(group.getGroupKey())) {
 
 				return true;
 			}

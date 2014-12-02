@@ -64,12 +64,34 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class GroupServiceSoap {
+	public static com.liferay.portal.model.GroupSoap addGroup(
+		long parentGroupId, long liveGroupId, java.lang.String groupKey,
+		java.lang.String description, int type, boolean manualMembership,
+		int membershipRestriction, java.lang.String friendlyURL, boolean site,
+		boolean inheritContent, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portal.model.Group returnValue = GroupServiceUtil.addGroup(parentGroupId,
+					liveGroupId, groupKey, description, type, manualMembership,
+					membershipRestriction, friendlyURL, site, inheritContent,
+					active, serviceContext);
+
+			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Adds a group.
 	*
 	* @param parentGroupId the primary key of the parent group
 	* @param liveGroupId the primary key of the live group
-	* @param name the entity's name
+	* @param groupKey the entity's groupKey
 	* @param description the group's description (optionally
 	<code>null</code>)
 	* @param type the group's type. For more information see {@link
@@ -92,38 +114,16 @@ public class GroupServiceSoap {
 	valid friendly URL could not be created for the group
 	*/
 	public static com.liferay.portal.model.GroupSoap addGroup(
-		long parentGroupId, long liveGroupId, java.lang.String name,
+		long parentGroupId, long liveGroupId, java.lang.String groupKey,
 		java.lang.String description, int type, boolean manualMembership,
 		int membershipRestriction, java.lang.String friendlyURL, boolean site,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.Group returnValue = GroupServiceUtil.addGroup(parentGroupId,
-					liveGroupId, name, description, type, manualMembership,
+					liveGroupId, groupKey, description, type, manualMembership,
 					membershipRestriction, friendlyURL, site, active,
 					serviceContext);
-
-			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.portal.model.GroupSoap addGroup(
-		long parentGroupId, long liveGroupId, java.lang.String name,
-		java.lang.String description, int type, boolean manualMembership,
-		int membershipRestriction, java.lang.String friendlyURL, boolean site,
-		boolean inheritContent, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.portal.model.Group returnValue = GroupServiceUtil.addGroup(parentGroupId,
-					liveGroupId, name, description, type, manualMembership,
-					membershipRestriction, friendlyURL, site, inheritContent,
-					active, serviceContext);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
 		}
@@ -138,7 +138,7 @@ public class GroupServiceSoap {
 	* Adds the group using the group default live group ID.
 	*
 	* @param parentGroupId the primary key of the parent group
-	* @param name the entity's name
+	* @param groupKey the entity's groupKey
 	* @param description the group's description (optionally
 	<code>null</code>)
 	* @param type the group's type. For more information see {@link
@@ -161,14 +161,14 @@ public class GroupServiceSoap {
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.GroupSoap addGroup(
-		long parentGroupId, java.lang.String name,
+		long parentGroupId, java.lang.String groupKey,
 		java.lang.String description, int type, java.lang.String friendlyURL,
 		boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.Group returnValue = GroupServiceUtil.addGroup(parentGroupId,
-					name, description, type, friendlyURL, site, active,
+					groupKey, description, type, friendlyURL, site, active,
 					serviceContext);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
@@ -186,12 +186,12 @@ public class GroupServiceSoap {
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.GroupSoap addGroup(
-		java.lang.String name, java.lang.String description, int type,
+		java.lang.String groupKey, java.lang.String description, int type,
 		java.lang.String friendlyURL, boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Group returnValue = GroupServiceUtil.addGroup(name,
+			com.liferay.portal.model.Group returnValue = GroupServiceUtil.addGroup(groupKey,
 					description, type, friendlyURL, site, active, serviceContext);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
@@ -341,16 +341,16 @@ public class GroupServiceSoap {
 	* Returns the group with the name.
 	*
 	* @param companyId the primary key of the company
-	* @param name the group's name
-	* @return the group with the name
+	* @param groupKey the group's key
+	* @return the group with the groupKey
 	* @throws PortalException if a matching group could not be found or if the
 	current user did not have permission to view the group
 	*/
 	public static com.liferay.portal.model.GroupSoap getGroup(long companyId,
-		java.lang.String name) throws RemoteException {
+		java.lang.String groupKey) throws RemoteException {
 		try {
 			com.liferay.portal.model.Group returnValue = GroupServiceUtil.getGroup(companyId,
-					name);
+					groupKey);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
 		}
@@ -1054,7 +1054,7 @@ public class GroupServiceSoap {
 	*
 	* @param groupId the primary key of the group
 	* @param parentGroupId the primary key of the parent group
-	* @param name the group's new name
+	* @param groupKey the group's key
 	* @param description the group's new description (optionally
 	<code>null</code>)
 	* @param type the group's new type. For more information see {@link
@@ -1075,15 +1075,16 @@ public class GroupServiceSoap {
 	friendly URL was invalid or could one not be created
 	*/
 	public static com.liferay.portal.model.GroupSoap updateGroup(long groupId,
-		long parentGroupId, java.lang.String name,
+		long parentGroupId, java.lang.String groupKey,
 		java.lang.String description, int type, boolean manualMembership,
 		int membershipRestriction, java.lang.String friendlyURL,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.Group returnValue = GroupServiceUtil.updateGroup(groupId,
-					parentGroupId, name, description, type, manualMembership,
-					membershipRestriction, friendlyURL, active, serviceContext);
+					parentGroupId, groupKey, description, type,
+					manualMembership, membershipRestriction, friendlyURL,
+					active, serviceContext);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
 		}

@@ -122,7 +122,7 @@ public class GroupPersistenceTest {
 
 		newGroup.setTreePath(RandomTestUtil.randomString());
 
-		newGroup.setName(RandomTestUtil.randomString());
+		newGroup.setGroupKey(RandomTestUtil.randomString());
 
 		newGroup.setDescription(RandomTestUtil.randomString());
 
@@ -164,7 +164,7 @@ public class GroupPersistenceTest {
 		Assert.assertEquals(existingGroup.getLiveGroupId(),
 			newGroup.getLiveGroupId());
 		Assert.assertEquals(existingGroup.getTreePath(), newGroup.getTreePath());
-		Assert.assertEquals(existingGroup.getName(), newGroup.getName());
+		Assert.assertEquals(existingGroup.getGroupKey(), newGroup.getGroupKey());
 		Assert.assertEquals(existingGroup.getDescription(),
 			newGroup.getDescription());
 		Assert.assertEquals(existingGroup.getType(), newGroup.getType());
@@ -279,13 +279,13 @@ public class GroupPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_N() {
+	public void testCountByC_GK() {
 		try {
-			_persistence.countByC_N(RandomTestUtil.nextLong(), StringPool.BLANK);
+			_persistence.countByC_GK(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByC_N(0L, StringPool.NULL);
+			_persistence.countByC_GK(0L, StringPool.NULL);
 
-			_persistence.countByC_N(0L, (String)null);
+			_persistence.countByC_GK(0L, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -385,14 +385,14 @@ public class GroupPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_L_N() {
+	public void testCountByC_L_GK() {
 		try {
-			_persistence.countByC_L_N(RandomTestUtil.nextLong(),
+			_persistence.countByC_L_GK(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByC_L_N(0L, 0L, StringPool.NULL);
+			_persistence.countByC_L_GK(0L, 0L, StringPool.NULL);
 
-			_persistence.countByC_L_N(0L, 0L, (String)null);
+			_persistence.countByC_L_GK(0L, 0L, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -400,15 +400,15 @@ public class GroupPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C_L_N() {
+	public void testCountByC_C_L_GK() {
 		try {
-			_persistence.countByC_C_L_N(RandomTestUtil.nextLong(),
+			_persistence.countByC_C_L_GK(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 				StringPool.BLANK);
 
-			_persistence.countByC_C_L_N(0L, 0L, 0L, StringPool.NULL);
+			_persistence.countByC_C_L_GK(0L, 0L, 0L, StringPool.NULL);
 
-			_persistence.countByC_C_L_N(0L, 0L, 0L, (String)null);
+			_persistence.countByC_C_L_GK(0L, 0L, 0L, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -468,10 +468,11 @@ public class GroupPersistenceTest {
 			true, "uuid", true, "groupId", true, "companyId", true,
 			"creatorUserId", true, "classNameId", true, "classPK", true,
 			"parentGroupId", true, "liveGroupId", true, "treePath", true,
-			"name", true, "description", true, "type", true, "typeSettings",
-			true, "manualMembership", true, "membershipRestriction", true,
-			"friendlyURL", true, "site", true, "remoteStagingGroupCount", true,
-			"inheritContent", true, "active", true);
+			"groupKey", true, "description", true, "type", true,
+			"typeSettings", true, "manualMembership", true,
+			"membershipRestriction", true, "friendlyURL", true, "site", true,
+			"remoteStagingGroupCount", true, "inheritContent", true, "active",
+			true);
 	}
 
 	@Test
@@ -686,8 +687,9 @@ public class GroupPersistenceTest {
 
 		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
 			existingGroupModelImpl.getOriginalCompanyId());
-		Assert.assertTrue(Validator.equals(existingGroupModelImpl.getName(),
-				existingGroupModelImpl.getOriginalName()));
+		Assert.assertTrue(Validator.equals(
+				existingGroupModelImpl.getGroupKey(),
+				existingGroupModelImpl.getOriginalGroupKey()));
 
 		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
 			existingGroupModelImpl.getOriginalCompanyId());
@@ -706,8 +708,9 @@ public class GroupPersistenceTest {
 			existingGroupModelImpl.getOriginalCompanyId());
 		Assert.assertEquals(existingGroupModelImpl.getLiveGroupId(),
 			existingGroupModelImpl.getOriginalLiveGroupId());
-		Assert.assertTrue(Validator.equals(existingGroupModelImpl.getName(),
-				existingGroupModelImpl.getOriginalName()));
+		Assert.assertTrue(Validator.equals(
+				existingGroupModelImpl.getGroupKey(),
+				existingGroupModelImpl.getOriginalGroupKey()));
 
 		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
 			existingGroupModelImpl.getOriginalCompanyId());
@@ -715,8 +718,9 @@ public class GroupPersistenceTest {
 			existingGroupModelImpl.getOriginalClassNameId());
 		Assert.assertEquals(existingGroupModelImpl.getLiveGroupId(),
 			existingGroupModelImpl.getOriginalLiveGroupId());
-		Assert.assertTrue(Validator.equals(existingGroupModelImpl.getName(),
-				existingGroupModelImpl.getOriginalName()));
+		Assert.assertTrue(Validator.equals(
+				existingGroupModelImpl.getGroupKey(),
+				existingGroupModelImpl.getOriginalGroupKey()));
 	}
 
 	protected Group addGroup() throws Exception {
@@ -742,7 +746,7 @@ public class GroupPersistenceTest {
 
 		group.setTreePath(RandomTestUtil.randomString());
 
-		group.setName(RandomTestUtil.randomString());
+		group.setGroupKey(RandomTestUtil.randomString());
 
 		group.setDescription(RandomTestUtil.randomString());
 

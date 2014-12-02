@@ -73,7 +73,7 @@ decimalFormatSymbols.setDecimalSeparator('.');
 
 						Group group = layout.getGroup();
 
-						List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(layout.getGroup().getGroupId(), layout.isPrivateLayout(), group.getName(), locale);
+						List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(layout.getGroup().getGroupId(), layout.isPrivateLayout(), group.getGroupKey(), locale);
 
 						for (LayoutDescription layoutDescription : layoutDescriptions) {
 							Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());

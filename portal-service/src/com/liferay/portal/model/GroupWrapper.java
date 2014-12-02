@@ -60,7 +60,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		attributes.put("parentGroupId", getParentGroupId());
 		attributes.put("liveGroupId", getLiveGroupId());
 		attributes.put("treePath", getTreePath());
-		attributes.put("name", getName());
+		attributes.put("groupKey", getGroupKey());
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
@@ -137,10 +137,10 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 			setTreePath(treePath);
 		}
 
-		String name = (String)attributes.get("name");
+		String groupKey = (String)attributes.get("groupKey");
 
-		if (name != null) {
-			setName(name);
+		if (groupKey != null) {
+			setGroupKey(groupKey);
 		}
 
 		String description = (String)attributes.get("description");
@@ -408,6 +408,16 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.getGroupId();
 	}
 
+	/**
+	* Returns the group key of this group.
+	*
+	* @return the group key of this group
+	*/
+	@Override
+	public java.lang.String getGroupKey() {
+		return _group.getGroupKey();
+	}
+
 	@Override
 	public java.lang.String getIconCssClass() {
 		return _group.getIconCssClass();
@@ -484,16 +494,6 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public long getMvccVersion() {
 		return _group.getMvccVersion();
-	}
-
-	/**
-	* Returns the name of this group.
-	*
-	* @return the name of this group
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _group.getName();
 	}
 
 	@Override
@@ -1002,6 +1002,16 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	/**
+	* Sets the group key of this group.
+	*
+	* @param groupKey the group key of this group
+	*/
+	@Override
+	public void setGroupKey(java.lang.String groupKey) {
+		_group.setGroupKey(groupKey);
+	}
+
+	/**
 	* Sets whether this group is inherit content.
 	*
 	* @param inheritContent the inherit content of this group
@@ -1049,16 +1059,6 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_group.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Sets the name of this group.
-	*
-	* @param name the name of this group
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_group.setName(name);
 	}
 
 	@Override

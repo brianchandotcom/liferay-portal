@@ -48,8 +48,8 @@ public class GroupTypeComparator extends OrderByComparator<Group> {
 		}
 
 		if (value == 0) {
-			String name1 = group1.getName();
-			String name2 = group2.getName();
+			String name1 = group1.getGroupKey();
+			String name2 = group2.getGroupKey();
 
 			value = name1.compareTo(name2);
 		}

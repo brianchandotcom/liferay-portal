@@ -27,7 +27,13 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PwdGenerator" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %>
 
+<%@ page import="javax.portlet.WindowState" %>
+
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<%
+WindowState windowState = liferayPortletRequest.getWindowState();
+%>
 
 <%@ include file="/init-ext.jsp" %>

@@ -535,6 +535,7 @@
 		<column name="parentGroupId" type="long" />
 		<column name="liveGroupId" type="long" />
 		<column name="treePath" type="String" />
+		<column name="groupKey" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="type" type="int" />

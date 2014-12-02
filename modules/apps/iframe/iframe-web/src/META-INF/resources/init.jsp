@@ -14,12 +14,14 @@
  */
 --%>
 
-<%@ taglib uri="/META-INF/aui.tld" prefix="aui" %>
-<%@ taglib uri="/META-INF/c.tld" prefix="c" %>
-<%@ taglib uri="/META-INF/liferay-portlet-ext.tld" prefix="liferay-portlet" %>
-<%@ taglib uri="/META-INF/liferay-portlet_2_0.tld" prefix="portlet" %>
-<%@ taglib uri="/META-INF/liferay-theme.tld" prefix="liferay-theme" %>
-<%@ taglib uri="/META-INF/liferay-ui.tld" prefix="liferay-ui" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 
@@ -34,7 +36,8 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Enumeration" %><%@

@@ -2,8 +2,6 @@ Bundle-Name: Liferay Bookmarks Web
 Bundle-SymbolicName: com.liferay.bookmarks.web
 Bundle-Version: 1.0.0
 Import-Package: \
-	${bnd.jsp.support.imports},\
-	\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.xml,\
@@ -59,7 +57,6 @@ Import-Package: \
 	\
 	javax.portlet,\
 	javax.portlet.filter,\
-	javax.portlet.*,\
 	*
 Include-Resource:\
 	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\

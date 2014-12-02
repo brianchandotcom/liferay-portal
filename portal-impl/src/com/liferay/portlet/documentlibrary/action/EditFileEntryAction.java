@@ -455,8 +455,8 @@ public class EditFileEntryAction extends PortletAction {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put("groupId", fileEntry.getGroupId());
-			jsonObject.put("name", sourceFileName);
-			jsonObject.put("title", fileEntry.getTitle());
+			jsonObject.put("name", fileEntry.getTitle());
+			jsonObject.put("title", sourceFileName);
 			jsonObject.put("uuid", fileEntry.getUuid());
 
 			writeJSON(actionRequest, actionResponse, jsonObject);

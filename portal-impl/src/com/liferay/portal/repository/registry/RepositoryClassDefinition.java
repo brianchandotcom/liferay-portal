@@ -49,8 +49,17 @@ public class RepositoryClassDefinition
 	implements RepositoryEventRegistry, RepositoryEventTrigger,
 		RepositoryFactory, RepositoryFactoryRegistry {
 
-	public RepositoryClassDefinition(RepositoryDefiner repositoryDefiner) {
-		_repositoryDefiner = repositoryDefiner;
+	public static final RepositoryClassDefinition fromRepositoryDefiner(
+		RepositoryDefiner repositoryDefiner) {
+
+		RepositoryClassDefinition repositoryClassDefinition =
+			new RepositoryClassDefinition(repositoryDefiner);
+
+		repositoryDefiner.registerRepositoryFactory(repositoryClassDefinition);
+		repositoryDefiner.registerRepositoryEventListeners(
+			repositoryClassDefinition);
+
+		return repositoryClassDefinition;
 	}
 
 	@Override
@@ -141,6 +150,10 @@ public class RepositoryClassDefinition
 				repositoryEventListener.execute(model);
 			}
 		}
+	}
+
+	protected RepositoryClassDefinition(RepositoryDefiner repositoryDefiner) {
+		_repositoryDefiner = repositoryDefiner;
 	}
 
 	protected CMISRepositoryHandler getCMISRepositoryHandler(

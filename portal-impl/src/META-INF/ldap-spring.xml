@@ -16,9 +16,9 @@
 			</bean>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.security.ldap.PortalLDAPImporterUtil" class="com.liferay.portal.security.ldap.PortalLDAPImporterUtil">
-		<property name="portalLDAPImporter">
-			<bean class="com.liferay.portal.security.ldap.PortalLDAPImporterImpl">
+	<bean id="com.liferay.portal.security.ldap.PortalLDAPImporterUtil" class="com.liferay.portal.security.PortalUserImporterUtil">
+		<property name="portalUserImporter">
+			<bean class="com.liferay.portal.security.ldap.LDAPPortalUserImporterImpl">
 				<property name="LDAPToPortalConverter" ref="ldapToPortalConverter" />
 			</bean>
 		</property>

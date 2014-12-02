@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.security;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.User;
@@ -26,69 +26,68 @@ import javax.naming.ldap.LdapContext;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-public class PortalLDAPImporterUtil {
+public class PortalUserImporterUtil {
 
-	public static PortalLDAPImporter getPortalLDAPImporter() {
+	public static PortalUserImporter getPortalUserImporter() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			PortalLDAPImporterUtil.class);
+			PortalUserImporterUtil.class);
 
-		return _portalLDAPImporter;
+		return _portalUserImporter;
 	}
 
-	public static void importFromLDAP() throws Exception {
-		getPortalLDAPImporter().importFromLDAP();
-	}
-
-	public static void importFromLDAP(long companyId) throws Exception {
-		getPortalLDAPImporter().importFromLDAP(companyId);
-	}
-
-	public static void importFromLDAP(long ldapServerId, long companyId)
-		throws Exception {
-
-		getPortalLDAPImporter().importFromLDAP(ldapServerId, companyId);
-	}
-
-	public static User importLDAPUser(
+	public static User importUser(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			Attributes attributes, String password)
 		throws Exception {
 
-		return getPortalLDAPImporter().importLDAPUser(
+		return getPortalUserImporter().importUser(
 			ldapServerId, companyId, ldapContext, attributes, password);
 	}
 
-	public static User importLDAPUser(
+	public static User importUser(
 			long ldapServerId, long companyId, String emailAddress,
 			String screenName)
 		throws Exception {
 
-		return getPortalLDAPImporter().importLDAPUser(
+		return getPortalUserImporter().importUser(
 			ldapServerId, companyId, emailAddress, screenName);
 	}
 
-	public static User importLDAPUser(
+	public static User importUser(
 			long companyId, String emailAddress, String screenName)
 		throws Exception {
 
-		return getPortalLDAPImporter().importLDAPUser(
+		return getPortalUserImporter().importUser(
 			companyId, emailAddress, screenName);
 	}
 
-	public static User importLDAPUserByScreenName(
-			long companyId, String screenName)
+	public static User importUserByScreenName(long companyId, String screenName)
 		throws Exception {
 
-		return getPortalLDAPImporter().importLDAPUserByScreenName(
+		return getPortalUserImporter().importUserByScreenName(
 			companyId, screenName);
 	}
 
-	public void setPortalLDAPImporter(PortalLDAPImporter portalLDAPImporter) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_portalLDAPImporter = portalLDAPImporter;
+	public static void importUsers() throws Exception {
+		getPortalUserImporter().importUsers();
 	}
 
-	private static PortalLDAPImporter _portalLDAPImporter;
+	public static void importUsers(long companyId) throws Exception {
+		getPortalUserImporter().importUsers(companyId);
+	}
+
+	public static void importUsers(long ldapServerId, long companyId)
+		throws Exception {
+
+		getPortalUserImporter().importUsers(ldapServerId, companyId);
+	}
+
+	public void setPortalUserImporter(PortalUserImporter portalUserImporter) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		_portalUserImporter = portalUserImporter;
+	}
+
+	private static PortalUserImporter _portalUserImporter;
 
 }

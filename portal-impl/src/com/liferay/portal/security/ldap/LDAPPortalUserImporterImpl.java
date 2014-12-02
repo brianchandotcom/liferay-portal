@@ -44,6 +44,8 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.security.PortalUserImporter;
+import com.liferay.portal.security.PortalUserImporterUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
@@ -89,133 +91,10 @@ import javax.naming.ldap.LdapContext;
  * @author Hugo Huijser
  */
 @DoPrivileged
-public class PortalLDAPImporterImpl implements PortalLDAPImporter {
+public class LDAPPortalUserImporterImpl implements PortalUserImporter {
 
 	@Override
-	public void importFromLDAP() throws Exception {
-		List<Company> companies = CompanyLocalServiceUtil.getCompanies(false);
-
-		for (Company company : companies) {
-			importFromLDAP(company.getCompanyId());
-		}
-	}
-
-	@Override
-	public void importFromLDAP(long companyId) throws Exception {
-		if (!LDAPSettingsUtil.isImportEnabled(companyId)) {
-			return;
-		}
-
-		try {
-			ShardUtil.pushCompanyService(companyId);
-
-			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-				companyId);
-
-			if (LockLocalServiceUtil.hasLock(
-					defaultUserId, PortalLDAPImporterUtil.class.getName(),
-					companyId)) {
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Skipping LDAP import for company " + companyId +
-							" because another LDAP import is in process");
-				}
-
-				return;
-			}
-
-			LockLocalServiceUtil.lock(
-				defaultUserId, PortalLDAPImporterUtil.class.getName(),
-				companyId, PortalLDAPImporterImpl.class.getName(), false,
-				PropsValues.LDAP_IMPORT_LOCK_EXPIRATION_TIME);
-
-			long[] ldapServerIds = StringUtil.split(
-				PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
-
-			for (long ldapServerId : ldapServerIds) {
-				importFromLDAP(ldapServerId, companyId);
-			}
-
-			for (int ldapServerId = 0;; ldapServerId++) {
-				String postfix = LDAPSettingsUtil.getPropertyPostfix(
-					ldapServerId);
-
-				String providerUrl = PrefsPropsUtil.getString(
-					companyId, PropsKeys.LDAP_BASE_PROVIDER_URL + postfix);
-
-				if (Validator.isNull(providerUrl)) {
-					break;
-				}
-
-				importFromLDAP(ldapServerId, companyId);
-			}
-		}
-		finally {
-			LockLocalServiceUtil.unlock(
-				PortalLDAPImporterUtil.class.getName(), companyId);
-
-			ShardUtil.popCompanyService();
-		}
-	}
-
-	@Override
-	public void importFromLDAP(long ldapServerId, long companyId)
-		throws Exception {
-
-		if (!LDAPSettingsUtil.isImportEnabled(companyId)) {
-			return;
-		}
-
-		LdapContext ldapContext = PortalLDAPUtil.getContext(
-			ldapServerId, companyId);
-
-		if (ldapContext == null) {
-			return;
-		}
-
-		try {
-			Properties userMappings = LDAPSettingsUtil.getUserMappings(
-				ldapServerId, companyId);
-			Properties userExpandoMappings =
-				LDAPSettingsUtil.getUserExpandoMappings(
-					ldapServerId, companyId);
-			Properties contactMappings = LDAPSettingsUtil.getContactMappings(
-				ldapServerId, companyId);
-			Properties contactExpandoMappings =
-				LDAPSettingsUtil.getContactExpandoMappings(
-					ldapServerId, companyId);
-			Properties groupMappings = LDAPSettingsUtil.getGroupMappings(
-				ldapServerId, companyId);
-
-			String importMethod = PrefsPropsUtil.getString(
-				companyId, PropsKeys.LDAP_IMPORT_METHOD);
-
-			if (importMethod.equals(_IMPORT_BY_GROUP)) {
-				importFromLDAPByGroup(
-					ldapServerId, companyId, ldapContext, userMappings,
-					userExpandoMappings, contactMappings,
-					contactExpandoMappings, groupMappings);
-			}
-			else if (importMethod.equals(_IMPORT_BY_USER)) {
-				importFromLDAPByUser(
-					ldapServerId, companyId, ldapContext, userMappings,
-					userExpandoMappings, contactMappings,
-					contactExpandoMappings, groupMappings);
-			}
-		}
-		catch (Exception e) {
-			_log.error("Error importing LDAP users and groups", e);
-		}
-		finally {
-			if (ldapContext != null) {
-				ldapContext.close();
-			}
-		}
-	}
-
-	@Override
-	public User importLDAPUser(
+	public User importUser(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			Attributes attributes, String password)
 		throws Exception {
@@ -245,7 +124,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	}
 
 	@Override
-	public User importLDAPUser(
+	public User importUser(
 			long ldapServerId, long companyId, String emailAddress,
 			String screenName)
 		throws Exception {
@@ -317,7 +196,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 					PortalLDAPUtil.getNameInNamespace(
 						ldapServerId, companyId, binding));
 
-				return importLDAPUser(
+				return importUser(
 					ldapServerId, companyId, ldapContext, attributes,
 					StringPool.BLANK);
 			}
@@ -349,7 +228,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	}
 
 	@Override
-	public User importLDAPUser(
+	public User importUser(
 			long companyId, String emailAddress, String screenName)
 		throws Exception {
 
@@ -357,7 +236,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
 
 		for (long ldapServerId : ldapServerIds) {
-			User user = importLDAPUser(
+			User user = importUser(
 				ldapServerId, companyId, emailAddress, screenName);
 
 			if (user != null) {
@@ -375,7 +254,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 				break;
 			}
 
-			User user = importLDAPUser(
+			User user = importUser(
 				ldapServerId, companyId, emailAddress, screenName);
 
 			if (user != null) {
@@ -400,7 +279,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	}
 
 	@Override
-	public User importLDAPUserByScreenName(long companyId, String screenName)
+	public User importUserByScreenName(long companyId, String screenName)
 		throws Exception {
 
 		long ldapServerId = PortalLDAPUtil.getLdapServerId(
@@ -427,12 +306,135 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		Attributes attributes = PortalLDAPUtil.getUserAttributes(
 			ldapServerId, companyId, ldapContext, fullUserDN);
 
-		User user = importLDAPUser(
+		User user = importUser(
 			ldapServerId, companyId, ldapContext, attributes, StringPool.BLANK);
 
 		ldapContext.close();
 
 		return user;
+	}
+
+	@Override
+	public void importUsers() throws Exception {
+		List<Company> companies = CompanyLocalServiceUtil.getCompanies(false);
+
+		for (Company company : companies) {
+			importUsers(company.getCompanyId());
+		}
+	}
+
+	@Override
+	public void importUsers(long companyId) throws Exception {
+		if (!LDAPSettingsUtil.isImportEnabled(companyId)) {
+			return;
+		}
+
+		try {
+			ShardUtil.pushCompanyService(companyId);
+
+			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+				companyId);
+
+			if (LockLocalServiceUtil.hasLock(
+					defaultUserId, PortalUserImporterUtil.class.getName(),
+					companyId)) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipping LDAP import for company " + companyId +
+							" because another LDAP import is in process");
+				}
+
+				return;
+			}
+
+			LockLocalServiceUtil.lock(
+				defaultUserId, PortalUserImporterUtil.class.getName(),
+				companyId, LDAPPortalUserImporterImpl.class.getName(), false,
+				PropsValues.LDAP_IMPORT_LOCK_EXPIRATION_TIME);
+
+			long[] ldapServerIds = StringUtil.split(
+				PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
+
+			for (long ldapServerId : ldapServerIds) {
+				importUsers(ldapServerId, companyId);
+			}
+
+			for (int ldapServerId = 0;; ldapServerId++) {
+				String postfix = LDAPSettingsUtil.getPropertyPostfix(
+					ldapServerId);
+
+				String providerUrl = PrefsPropsUtil.getString(
+					companyId, PropsKeys.LDAP_BASE_PROVIDER_URL + postfix);
+
+				if (Validator.isNull(providerUrl)) {
+					break;
+				}
+
+				importUsers(ldapServerId, companyId);
+			}
+		}
+		finally {
+			LockLocalServiceUtil.unlock(
+				PortalUserImporterUtil.class.getName(), companyId);
+
+			ShardUtil.popCompanyService();
+		}
+	}
+
+	@Override
+	public void importUsers(long ldapServerId, long companyId)
+		throws Exception {
+
+		if (!LDAPSettingsUtil.isImportEnabled(companyId)) {
+			return;
+		}
+
+		LdapContext ldapContext = PortalLDAPUtil.getContext(
+			ldapServerId, companyId);
+
+		if (ldapContext == null) {
+			return;
+		}
+
+		try {
+			Properties userMappings = LDAPSettingsUtil.getUserMappings(
+				ldapServerId, companyId);
+			Properties userExpandoMappings =
+				LDAPSettingsUtil.getUserExpandoMappings(
+					ldapServerId, companyId);
+			Properties contactMappings = LDAPSettingsUtil.getContactMappings(
+				ldapServerId, companyId);
+			Properties contactExpandoMappings =
+				LDAPSettingsUtil.getContactExpandoMappings(
+					ldapServerId, companyId);
+			Properties groupMappings = LDAPSettingsUtil.getGroupMappings(
+				ldapServerId, companyId);
+
+			String importMethod = PrefsPropsUtil.getString(
+				companyId, PropsKeys.LDAP_IMPORT_METHOD);
+
+			if (importMethod.equals(_IMPORT_BY_GROUP)) {
+				importFromLDAPByGroup(
+					ldapServerId, companyId, ldapContext, userMappings,
+					userExpandoMappings, contactMappings,
+					contactExpandoMappings, groupMappings);
+			}
+			else if (importMethod.equals(_IMPORT_BY_USER)) {
+				importFromLDAPByUser(
+					ldapServerId, companyId, ldapContext, userMappings,
+					userExpandoMappings, contactMappings,
+					contactExpandoMappings, groupMappings);
+			}
+		}
+		catch (Exception e) {
+			_log.error("Error importing LDAP users and groups", e);
+		}
+		finally {
+			if (ldapContext != null) {
+				ldapContext.close();
+			}
+		}
 	}
 
 	public void setLDAPToPortalConverter(
@@ -1338,12 +1340,12 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	};
 
 	private static Log _log = LogFactoryUtil.getLog(
-		PortalLDAPImporterImpl.class);
+		LDAPPortalUserImporterImpl.class);
 
 	private LDAPToPortalConverter _ldapToPortalConverter;
 	private Set<String> _ldapUserIgnoreAttributes = SetUtil.fromArray(
 		PropsValues.LDAP_USER_IGNORE_ATTRIBUTES);
 	private PortalCache<String, Long> _portalCache = SingleVMPoolUtil.getCache(
-		PortalLDAPImporter.class.getName(), false);
+		PortalUserImporter.class.getName(), false);
 
 }

@@ -41,13 +41,13 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 		String fullName = buildFullName(firstName, middleName, lastName, false);
 
-		if (!exceedFullNameMaxLength(fullName)) {
+		if (!isFullNameTooLong(fullName)) {
 			return fullName;
 		}
 
 		fullName = buildFullName(firstName, middleName, lastName, true);
 
-		if (!exceedFullNameMaxLength(fullName)) {
+		if (!isFullNameTooLong(fullName)) {
 			return fullName;
 		}
 
@@ -61,14 +61,14 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		String fullName = buildLocalizedFullName(
 			firstName, middleName, lastName, locale, prefixId, suffixId, false);
 
-		if (!exceedFullNameMaxLength(fullName)) {
+		if (!isFullNameTooLong(fullName)) {
 			return fullName;
 		}
 
 		fullName = buildLocalizedFullName(
 			firstName, middleName, lastName, locale, prefixId, suffixId, true);
 
-		if (!exceedFullNameMaxLength(fullName)) {
+		if (!isFullNameTooLong(fullName)) {
 			return fullName;
 		}
 
@@ -203,12 +203,8 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		return sb.toString();
 	}
 
-	protected boolean exceedFullNameMaxLength(String fullName) {
-		if (fullName.length() <= UserConstants.FULL_NAME_MAX_LENGTH) {
-			return false;
-		}
-
-		return true;
+	protected boolean isFullNameTooLong(String fullName) {
+		return fullName.length() > UserConstants.FULL_NAME_MAX_LENGTH;
 	}
 
 	protected String shortenFullName(String fullName) {

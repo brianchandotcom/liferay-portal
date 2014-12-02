@@ -51,7 +51,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 			return fullName;
 		}
 
-		return fullName.substring(0, UserConstants.FULL_NAME_MAX_LENGTH);
+		return shortenFullName(fullName);
 	}
 
 	public String getLocalizedFullName(
@@ -72,7 +72,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 			return fullName;
 		}
 
-		return fullName.substring(0, UserConstants.FULL_NAME_MAX_LENGTH);
+		return shortenFullName(fullName);
 	}
 
 	@Override
@@ -208,6 +208,10 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 			return false;
 		}
 
+		return true;
+	}
+
+	protected String shortenFullName(String fullName) {
 		if (_log.isInfoEnabled()) {
 			StringBundler sb = new StringBundler(5);
 
@@ -220,7 +224,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 			_log.info(sb.toString());
 		}
 
-		return true;
+		return fullName.substring(0, UserConstants.FULL_NAME_MAX_LENGTH);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

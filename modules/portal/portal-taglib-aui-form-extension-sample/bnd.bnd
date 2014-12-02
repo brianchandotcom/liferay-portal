@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Taglib AUI Form Extension Sample
+Bundle-SymbolicName: com.liferay.portal.taglib.aui.form.extension.sample
+Bundle-Version: 1.0.0
+Include-Resource: classes

@@ -33,11 +33,19 @@
 					font-size: 1.5em;
 				}
 			}
+
+			.rating-element:before {
+				padding-right: 4px;
+			}
 		}
 	}
 
 	.rating-element {
 		padding-right: 4px;
+
+		&.rating-thumb-down {
+			margin-left: 5px;
+		}
 	}
 
 	.rating-input-container .rating-input {

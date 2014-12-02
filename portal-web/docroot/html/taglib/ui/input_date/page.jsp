@@ -34,10 +34,10 @@ boolean nullable = GetterUtil.getBoolean((String)request.getAttribute("liferay-u
 String yearParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:yearParam"));
 int yearValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:yearValue"));
 
-String dayParamId = namespace + HtmlUtil.getAUICompatibleId(dayParam);
-String monthParamId = namespace + HtmlUtil.getAUICompatibleId(monthParam);
-String nameId = namespace + HtmlUtil.getAUICompatibleId(name);
-String yearParamId = namespace + HtmlUtil.getAUICompatibleId(yearParam);
+String dayParamId = namespace + HtmlUtil.escapeAttribute(dayParam);
+String monthParamId = namespace + HtmlUtil.escapeAttribute(monthParam);
+String nameId = namespace + HtmlUtil.escapeAttribute(name);
+String yearParamId = namespace + HtmlUtil.escapeAttribute(yearParam);
 
 Calendar calendar = CalendarFactoryUtil.getCalendar(yearValue, monthValue, dayValue);
 

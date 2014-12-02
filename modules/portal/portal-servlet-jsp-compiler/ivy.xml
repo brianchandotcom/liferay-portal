@@ -11,7 +11,7 @@
 	</info>
 
 	<dependencies defaultconf="default">
-		<dependency name="javax.el"  org="org.glassfish" rev="3.0.1-b02" />
+		<dependency name="javax.el" org="org.glassfish" rev="3.0.1-b02" />
 		<dependency name="javax.servlet.jsp" org="org.glassfish.web" rev="2.3.3-b01" />
 		<dependency name="javax.servlet.jsp-api" org="javax.servlet.jsp" rev="2.3.2-b01" />
 		<dependency name="javax.servlet.jsp.jstl" org="org.glassfish.web" rev="1.2.3" />

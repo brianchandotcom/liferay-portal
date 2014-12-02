@@ -144,7 +144,7 @@ if (ratingsEntry != null) {
 							%>
 
 							<c:choose>
-								<c:when test="<%= TrashUtil.isInTrash(className, classPK) || !themeDisplay.isSignedIn() %>">
+								<c:when test="<%= !themeDisplay.isSignedIn() || TrashUtil.isInTrash(className, classPK) %>">
 									<span class="glyphicon glyphicon-thumbs-up icon-thumbs-up rating-element rating-thumb-up rating-<%= (yourScore > 0) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"><%= positiveVotes %></span>
 
 									<c:if test='<%= type.equals("thumbs") %>'>

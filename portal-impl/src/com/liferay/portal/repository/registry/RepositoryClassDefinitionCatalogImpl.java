@@ -121,13 +121,6 @@ public class RepositoryClassDefinitionCatalogImpl
 		unregisterRepositoryDefiner(className);
 	}
 
-	protected RepositoryClassDefinition createRepositoryClassDefinition(
-		RepositoryDefiner repositoryDefiner) {
-
-		return RepositoryClassDefinition.fromRepositoryDefiner(
-			repositoryDefiner);
-	}
-
 	protected ServiceRegistration<RepositoryDefiner>
 		registerRepositoryDefiner(
 			RepositoryDefiner repositoryDefiner) {
@@ -177,7 +170,9 @@ public class RepositoryClassDefinitionCatalogImpl
 			}
 
 			_repositoryClassDefinitions.put(
-				className, createRepositoryClassDefinition(repositoryDefiner));
+				className,
+				RepositoryClassDefinition.fromRepositoryDefiner(
+					repositoryDefiner));
 
 			return repositoryDefiner;
 		}
@@ -198,7 +193,8 @@ public class RepositoryClassDefinitionCatalogImpl
 
 			_repositoryClassDefinitions.put(
 				repositoryDefiner.getClassName(),
-				createRepositoryClassDefinition(repositoryDefiner));
+				RepositoryClassDefinition.fromRepositoryDefiner(
+					repositoryDefiner));
 		}
 
 		@Override

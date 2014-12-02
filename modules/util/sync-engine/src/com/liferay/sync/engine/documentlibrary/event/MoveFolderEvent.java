@@ -35,6 +35,11 @@ public class MoveFolderEvent extends BaseEvent {
 		return _handler;
 	}
 
+	@Override
+	protected void processRequest() throws Exception {
+		processAsynchronousRequest();
+	}
+
 	private static final String _URL_PATH =
 		"/sync-web.syncdlobject/move-folder";
 

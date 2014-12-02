@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.filesystem;
 
+import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
@@ -27,6 +28,7 @@ import com.liferay.sync.engine.util.OSDetector;
 
 import java.io.IOException;
 
+import java.nio.file.ClosedWatchServiceException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -249,6 +251,13 @@ public class Watcher implements Runnable {
 						break;
 					}
 				}
+			}
+			catch (ClosedWatchServiceException cwse) {
+				if (!SyncEngine.isRunning()) {
+					break;
+				}
+
+				_logger.error(cwse.getMessage(), cwse);
 			}
 			catch (Exception e) {
 				_logger.error(e.getMessage(), e);

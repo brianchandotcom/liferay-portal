@@ -46,7 +46,7 @@ public class AddFolderEvent extends BaseEvent {
 
 		SyncFileService.update(syncFile);
 
-		super.processRequest();
+		super.processAsynchronousRequest();
 	}
 
 	private static final String _URL_PATH = "/sync-web.syncdlobject/add-folder";

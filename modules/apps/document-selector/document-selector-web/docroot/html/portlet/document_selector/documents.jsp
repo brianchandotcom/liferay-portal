@@ -183,8 +183,8 @@ portletURL.setParameter("type", type);
 		</aui:nav>
 
 		<aui:nav-bar-search searchContainer="<%= fileEntrySearchContainer %>">
-            <%@ include file="/html/portlet/document_selector/search.jspf" %>
-        </aui:nav-bar-search>
+			<%@ include file="/html/portlet/document_selector/search.jspf" %>
+		</aui:nav-bar-search>
 	</aui:nav-bar>
 
 	<c:if test="<%= Validator.isNull(displayTerms.getKeywords()) %>">
@@ -364,7 +364,7 @@ portletURL.setParameter("type", type);
 				value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
 			/>
 
-			<c:if test="<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BUFFERED_INCREMENT_ENABLED, new Filter("DLFileEntry"))) %>">
+			<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BUFFERED_INCREMENT_ENABLED, new Filter("DLFileEntry"))) %>'>
 				<liferay-ui:search-container-column-text
 					name="downloads"
 					value="<%= String.valueOf(fileEntry.getReadCount()) %>"

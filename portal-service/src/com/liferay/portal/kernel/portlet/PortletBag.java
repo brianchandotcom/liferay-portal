@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
@@ -113,6 +114,9 @@ public interface PortletBag extends Cloneable {
 	public List<TrashHandler> getTrashHandlerInstances();
 
 	public List<URLEncoder> getURLEncoderInstances();
+
+	public List<UserNotificationDefinition>
+		getUserNotificationDefinitionInstances();
 
 	public List<UserNotificationHandler> getUserNotificationHandlerInstances();
 

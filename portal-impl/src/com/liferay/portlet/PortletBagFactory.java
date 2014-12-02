@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
-import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -143,10 +142,11 @@ public class PortletBagFactory {
 		List<SocialRequestInterpreter> socialRequestInterpreterInstances =
 			newSocialRequestInterpreterInstances(portlet);
 
+		List<UserNotificationDefinition> userNotificationDefinitionInstances =
+			newUserNotificationDefinitionInstances(portlet);
+
 		List<UserNotificationHandler> userNotificationHandlerInstances =
 			newUserNotificationHandlerInstances(portlet);
-
-		initUserNotificationDefinition(portlet);
 
 		List<WebDAVStorage> webDAVStorageInstances = newWebDAVStorageInstances(
 			portlet);
@@ -213,13 +213,14 @@ public class PortletBagFactory {
 			templateHandlerInstances, portletLayoutListenerInstances,
 			pollerProcessorInstances, popMessageListenerInstances,
 			socialActivityInterpreterInstances,
-			socialRequestInterpreterInstances, userNotificationHandlerInstances,
-			webDAVStorageInstances, xmlRpcMethodInstances,
-			controlPanelEntryInstances, assetRendererFactoryInstances,
-			atomCollectionAdapterInstances, customAttributesDisplayInstances,
-			ddmDisplayInstances, permissionPropagatorInstances,
-			trashHandlerInstances, workflowHandlerInstances,
-			preferencesValidatorInstances);
+			socialRequestInterpreterInstances,
+			userNotificationDefinitionInstances,
+			userNotificationHandlerInstances, webDAVStorageInstances,
+			xmlRpcMethodInstances, controlPanelEntryInstances,
+			assetRendererFactoryInstances, atomCollectionAdapterInstances,
+			customAttributesDisplayInstances, ddmDisplayInstances,
+			permissionPropagatorInstances, trashHandlerInstances,
+			workflowHandlerInstances, preferencesValidatorInstances);
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
@@ -411,62 +412,6 @@ public class PortletBagFactory {
 			if (_log.isWarnEnabled()) {
 				_log.warn(e.getMessage());
 			}
-		}
-	}
-
-	protected void initUserNotificationDefinition(Portlet portlet)
-		throws Exception {
-
-		if (Validator.isNull(portlet.getUserNotificationDefinitions())) {
-			return;
-		}
-
-		String xml = getContent(portlet.getUserNotificationDefinitions());
-
-		xml = JavaFieldsParser.parse(_classLoader, xml);
-
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		for (Element definitionElement : rootElement.elements("definition")) {
-			String modelName = definitionElement.elementText("model-name");
-
-			long classNameId = 0;
-
-			if (Validator.isNotNull(modelName)) {
-				classNameId = PortalUtil.getClassNameId(modelName);
-			}
-
-			int notificationType = GetterUtil.getInteger(
-				definitionElement.elementText("notification-type"));
-
-			String description = GetterUtil.getString(
-				definitionElement.elementText("description"));
-
-			UserNotificationDefinition userNotificationDefinition =
-				new UserNotificationDefinition(
-					portlet.getPortletId(), classNameId, notificationType,
-					description);
-
-			for (Element deliveryTypeElement :
-					definitionElement.elements("delivery-type")) {
-
-				String name = deliveryTypeElement.elementText("name");
-				int type = GetterUtil.getInteger(
-					deliveryTypeElement.elementText("type"));
-				boolean defaultValue = GetterUtil.getBoolean(
-					deliveryTypeElement.elementText("default"));
-				boolean modifiable = GetterUtil.getBoolean(
-					deliveryTypeElement.elementText("modifiable"));
-
-				userNotificationDefinition.addUserNotificationDeliveryType(
-					new UserNotificationDeliveryType(
-						name, type, defaultValue, modifiable));
-			}
-
-			UserNotificationManagerUtil.addUserNotificationDefinition(
-				portlet.getPortletId(), userNotificationDefinition);
 		}
 	}
 
@@ -960,6 +905,68 @@ public class PortletBagFactory {
 		}
 
 		return urlEncoderInstances;
+	}
+
+	protected List<UserNotificationDefinition>
+			newUserNotificationDefinitionInstances(Portlet portlet)
+		throws Exception {
+
+		ServiceTrackerList<UserNotificationDefinition>
+			userNotificationDefinitionInstances = getServiceTrackerList(
+				UserNotificationDefinition.class, portlet);
+
+		if (Validator.isNull(portlet.getUserNotificationDefinitions())) {
+			return userNotificationDefinitionInstances;
+		}
+
+		String xml = getContent(portlet.getUserNotificationDefinitions());
+
+		xml = JavaFieldsParser.parse(_classLoader, xml);
+
+		Document document = SAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element definitionElement : rootElement.elements("definition")) {
+			String modelName = definitionElement.elementText("model-name");
+
+			long classNameId = 0;
+
+			if (Validator.isNotNull(modelName)) {
+				classNameId = PortalUtil.getClassNameId(modelName);
+			}
+
+			int notificationType = GetterUtil.getInteger(
+				definitionElement.elementText("notification-type"));
+
+			String description = GetterUtil.getString(
+				definitionElement.elementText("description"));
+
+			UserNotificationDefinition userNotificationDefinition =
+				new UserNotificationDefinition(
+					portlet.getPortletId(), classNameId, notificationType,
+					description);
+
+			for (Element deliveryTypeElement :
+					definitionElement.elements("delivery-type")) {
+
+				String name = deliveryTypeElement.elementText("name");
+				int type = GetterUtil.getInteger(
+					deliveryTypeElement.elementText("type"));
+				boolean defaultValue = GetterUtil.getBoolean(
+					deliveryTypeElement.elementText("default"));
+				boolean modifiable = GetterUtil.getBoolean(
+					deliveryTypeElement.elementText("modifiable"));
+
+				userNotificationDefinition.addUserNotificationDeliveryType(
+					new UserNotificationDeliveryType(
+						name, type, defaultValue, modifiable));
+			}
+
+			userNotificationDefinitionInstances.add(userNotificationDefinition);
+		}
+
+		return userNotificationDefinitionInstances;
 	}
 
 	protected List<UserNotificationHandler> newUserNotificationHandlerInstances(

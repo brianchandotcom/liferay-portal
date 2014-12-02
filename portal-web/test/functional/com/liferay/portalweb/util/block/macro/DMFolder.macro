@@ -138,9 +138,7 @@
 					<execute action="CPDocumentsandmediaAdddocumenttypeSelect#assertClick" locator-key1="DOCUMENTS_TABLE_CHOOSE" value1="Choose" />
 
 					<execute action="CPDocumentsandmediaEditfolder#selectFrameTop" value1="relative=top" />
-
 					<execute action="CPDocumentsandmediaEditfolder#select" locator-key1="WORKFLOW_SPECIFIC_RESTRICTIONS_TYPE_WORKFLOW_SELECT" value1="${workflowDefinition}" />
-
 					<execute action="CPDocumentsandmediaEditfolder#assertClickNoError" locator-key1="SAVE_BUTTON" value1="Save" />
 					<execute action="CPDocumentsandmediaEditfolder#confirm" locator-key1="CONFIRMATION" value1="You are making changes to the document types. If a document in this folder or its subfolders is currently in draft or pending workflow states, you may lose some or all of its metadata. A new version will be created for all other documents. Are you sure you wish to continue?" />
 				</then>
@@ -150,7 +148,6 @@
 				<then>
 					<execute action="CPDocumentsandmediaEditfolder#click" locator-key1="WORKFLOW_DEFAULT_WORKFLOW_RADIO" />
 					<execute action="CPDocumentsandmediaEditfolder#select" locator-key1="WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT" value1="${workflowDefinition}" />
-
 					<execute action="CPDocumentsandmediaEditfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 				</then>
 			</elseif>

@@ -23,32 +23,29 @@ import com.liferay.portal.model.PortletURLListener;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.SpriteImage;
 
-import java.net.URL;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 import org.osgi.framework.Bundle;
-import org.osgi.service.http.context.ServletContextHelper;
 
 /**
  * @author Raymond Augé
  */
-public class BundlePortletApp extends ServletContextHelper
-	implements PortletApp {
+public class BundlePortletApp implements PortletApp, ServletContextListener {
 
 	public BundlePortletApp(
-		Bundle bundle, Portlet portalPortletModel, String servletContextName,
-		String contextPath, String httpServiceEndpoint) {
-
-		super(bundle);
+		Bundle bundle, Portlet portalPortletModel, String httpServiceEndpoint) {
 
 		_portalPortletModel = portalPortletModel;
-		_servletContextName = servletContextName;
+
+		_servletContextName = bundle.getSymbolicName().replaceAll(
+			"[^a-zA-Z0-9]", "");
 
 		if ((httpServiceEndpoint.length() > 0) &&
 			httpServiceEndpoint.endsWith("/")) {
@@ -57,7 +54,8 @@ public class BundlePortletApp extends ServletContextHelper
 				0, httpServiceEndpoint.length() - 1);
 		}
 
-		_contextPath = httpServiceEndpoint + contextPath;
+		_servletContextPath = httpServiceEndpoint.concat("/").concat(
+			_servletContextName);
 		_pluginPackage = new BundlePluginPackage(bundle, this);
 		_portletApp = portalPortletModel.getPortletApp();
 	}
@@ -100,13 +98,22 @@ public class BundlePortletApp extends ServletContextHelper
 	}
 
 	@Override
+	public void contextDestroyed(ServletContextEvent servletContextEvent) {
+	}
+
+	@Override
+	public void contextInitialized(ServletContextEvent servletContextEvent) {
+		setServletContext(servletContextEvent.getServletContext());
+	}
+
+	@Override
 	public Map<String, String[]> getContainerRuntimeOptions() {
 		return _portletApp.getContainerRuntimeOptions();
 	}
 
 	@Override
 	public String getContextPath() {
-		return _contextPath;
+		return _servletContextPath;
 	}
 
 	@Override
@@ -156,21 +163,6 @@ public class BundlePortletApp extends ServletContextHelper
 	@Override
 	public PublicRenderParameter getPublicRenderParameter(String identifier) {
 		return _portletApp.getPublicRenderParameter(identifier);
-	}
-
-	@Override
-	public URL getResource(String name) {
-		if (name.startsWith("/")) {
-			name = name.substring(1);
-		}
-
-		URL url = super.getResource("META-INF/resources/" + name);
-
-		if (url != null) {
-			return url;
-		}
-
-		return super.getResource(name);
 	}
 
 	public Map<String, String> getRoleMappers() {
@@ -227,11 +219,11 @@ public class BundlePortletApp extends ServletContextHelper
 		_portletApp.setWARFile(warFile);
 	}
 
-	private final String _contextPath;
 	private final BundlePluginPackage _pluginPackage;
 	private final Portlet _portalPortletModel;
 	private final PortletApp _portletApp;
 	private ServletContext _servletContext;
 	private final String _servletContextName;
+	private final String _servletContextPath;
 
 }

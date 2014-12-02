@@ -78,7 +78,7 @@ portletURL.setParameter("type", type);
 %>
 
 <c:if test="<%= showGroupsSelector %>">
-	<liferay-util:include page="/html/portlet/document_selector/group_selector.jsp">
+	<liferay-util:include page="/html/portlet/document_selector/group_selector.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="tabs1" value="documents" />
 	</liferay-util:include>
 </c:if>

@@ -14,12 +14,14 @@
  */
 --%>
 
-<%@ include file="/html/portlet/language/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
 <%
-Locale[] locales = LocaleUtil.fromLanguageIds(languageIds);
+Map<String,Object> contextObjects = ((Map<String,Object>)request.getAttribute("liferay-ui:ddm-template-renderer:contextObjects"));
+List<?> entries = (List<?>)request.getAttribute("liferay-ui:ddm-template-renderer:entries");
+long portletDisplayDDMTemplateId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:ddm-template-renderer:portletDisplayDDMTemplateId"));
 %>
 
-<liferay-ui:ddm-template-renderer displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= ListUtil.fromArray(locales) %>">
-	<liferay-ui:language displayCurrentLocale="<%= displayCurrentLocale %>" displayStyle="<%= displayStyle %>" languageIds="<%= languageIds %>" />
-</liferay-ui:ddm-template-renderer>
+<c:if test="<%= portletDisplayDDMTemplateId > 0 %>">
+	<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplateId, entries, contextObjects) %>
+</c:if>

@@ -17,35 +17,28 @@
 <%@ include file="/html/portlet/rss/init.jsp" %>
 
 <%
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(rssDisplayContext.getDisplayStyleGroupId(), rssDisplayContext.getDisplayStyle());
-
 List<RSSFeed> rssFeeds = rssDisplayContext.getRSSFeeds();
 %>
 
-<c:choose>
-	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplateId, rssFeeds) %>
-	</c:when>
-	<c:otherwise>
+<liferay-ui:ddm-template-renderer displayStyle="<%= rssDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>" entries="<%= rssFeeds %>">
 
-		<%
-		for (int i = 0; i < rssFeeds.size(); i++) {
-			RSSFeed rssFeed = rssFeeds.get(i);
+	<%
+	for (int i = 0; i < rssFeeds.size(); i++) {
+		RSSFeed rssFeed = rssFeeds.get(i);
 
-			boolean last = false;
+		boolean last = false;
 
-			if (i == (rssFeeds.size() - 1)) {
-				last = true;
-			}
-
-			SyndFeed syndFeed = rssFeed.getSyndFeed();
-		%>
-
-			<%@ include file="/html/portlet/rss/feed.jspf" %>
-
-		<%
+		if (i == (rssFeeds.size() - 1)) {
+			last = true;
 		}
-		%>
 
-	</c:otherwise>
-</c:choose>
+		SyndFeed syndFeed = rssFeed.getSyndFeed();
+	%>
+
+		<%@ include file="/html/portlet/rss/feed.jspf" %>
+
+	<%
+	}
+	%>
+
+</liferay-ui:ddm-template-renderer>

@@ -112,19 +112,9 @@ showSearch = showSearch && !results.isEmpty();
 	portletURL="<%= portletURL %>"
 />
 
-<%
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()), blogsPortletInstanceSettings.getDisplayStyle());
+<liferay-ui:ddm-template-renderer displayStyle="<%= blogsPortletInstanceSettings.getDisplayStyle() %>" displayStyleGroupId="<%= blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>" entries="<%= _convertToBlogEntries(results) %>">
 
-if (portletDisplayDDMTemplateId > 0) {
-%>
-
-	<div class="entry-body">
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplateId, _convertToBlogEntries(results)) %>
-	</div>
-
-<%
-}
-else {
+	<%
 	int index = 0;
 
 	for (Object result : results) {
@@ -156,18 +146,19 @@ else {
 		request.setAttribute("view_entry_content.jsp-entry", entry);
 
 		request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
-%>
+	%>
 
-	<liferay-util:include page="/html/portlet/blogs/view_entry_content.jsp" />
+<liferay-util:include page="/html/portlet/blogs/view_entry_content.jsp" />
 
-	<c:if test="<%= index < searchContainer.getTotal() %>">
-		<div class="separator"><!-- --></div>
-	</c:if>
+<c:if test="<%= index < searchContainer.getTotal() %>">
+	<div class="separator"><!-- --></div>
+</c:if>
 
 <%
-	}
 }
 %>
+
+</liferay-ui:ddm-template-renderer>
 
 <liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
 

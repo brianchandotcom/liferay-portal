@@ -4482,6 +4482,12 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<antelope:post to="http://localhost:14444/selenium-server/driver/?cmd=shutDownSeleniumServer" wantresponse="true" />
 	</target>
 
+	<target name="test-class-group">
+		<ant dir="portal-service" target="test-class-group" inheritAll="false" />
+		<ant dir="portal-impl" target="test-class-group" inheritAll="false" />
+		<ant dir="util-java" target="test-class-group" inheritAll="false" />
+	</target>
+
 	<target name="test-integration">
 		<ant dir="portal-service" target="test-integration" inheritAll="false" />
 		<ant dir="portal-impl" target="test-integration" inheritAll="false" />
@@ -4492,12 +4498,6 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<ant dir="portal-service" target="test-package" inheritAll="false" />
 		<ant dir="portal-impl" target="test-package" inheritAll="false" />
 		<ant dir="util-java" target="test-package" inheritAll="false" />
-	</target>
-
-	<target name="test-package-group">
-		<ant dir="portal-service" target="test-package-group" inheritAll="false" />
-		<ant dir="portal-impl" target="test-package-group" inheritAll="false" />
-		<ant dir="util-java" target="test-package-group" inheritAll="false" />
 	</target>
 
 	<target name="test-unit">

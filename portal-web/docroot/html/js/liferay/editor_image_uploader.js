@@ -78,12 +78,16 @@ AUI.add(
 					uploadImage: function(image, file) {
 						var instance = this;
 
+						image = A.one(image);
+
 						var randomId = Lang.now() + STR_UNDERSCORE + Liferay.Util.randomInt();
 
-						image.setAttribute('data-random-id', randomId);
+						image.attr('data-random-id', randomId);
+
 						image.addClass(CSS_UPLOADING_IMAGE);
 
 						file = new A.FileHTML5(file);
+
 						file.progressbar = instance._createProgressBar(image);
 
 						var uploader = instance._getUploader();
@@ -104,7 +108,7 @@ AUI.add(
 						var imageContainerNode = A.Node.create(TPL_IMAGE_CONTAINER);
 						var progressBarNode = A.Node.create(TPL_PROGRESS_BAR);
 
-						A.one(image.$).wrap(imageContainerNode);
+						image.wrap(imageContainerNode);
 
 						imageContainerNode.appendChild(progressBarNode);
 
@@ -173,8 +177,8 @@ AUI.add(
 							if (image) {
 								image.removeAttribute('data-random-id');
 								image.removeClass(CSS_UPLOADING_IMAGE);
-								image.setAttribute(data.image.dataImageIdAttribute, data.image.fileEntryId);
-								image.setAttribute('src', data.image.url);
+								image.attr(data.image.dataImageIdAttribute, data.image.fileEntryId);
+								image.attr('src', data.image.url);
 							}
 						}
 						else {

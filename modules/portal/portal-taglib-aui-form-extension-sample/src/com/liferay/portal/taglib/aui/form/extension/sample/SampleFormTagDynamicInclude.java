@@ -14,7 +14,7 @@
 
 package com.liferay.portal.taglib.aui.form.extension.sample;
 
-import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.TagDynamicInclude;
 import com.liferay.portal.util.PortletKeys;
 
 import java.io.IOException;
@@ -29,25 +29,27 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
-	property = {
-		"key=com.liferay.taglib.aui.FormTag#doStartTag#before#" +
-			PortletKeys.LOGIN + "-fm"
-	},
-	service = DynamicInclude.class
+	immediate = true, service = TagDynamicInclude.class
 )
-public class SampleFormTagDynamicInclude implements DynamicInclude {
+public class SampleFormTagDynamicInclude implements TagDynamicInclude {
 
 	@Override
 	public void include(
 			HttpServletRequest request, HttpServletResponse response,
-			String key)
+			String tagClassName, String tagKey, String tagPoint)
 		throws IOException {
 
 		PrintWriter printWriter = response.getWriter();
 
 		printWriter.println(
 			"<h2>Liferay Portal Taglib AUI Form Extension Sample</h2><br />");
+	}
+
+	@Override
+	public void register(TagItemRegistry registry) {
+		registry.register(
+			"com.liferay.taglib.aui.FormTag", PortletKeys.LOGIN + "-fm",
+			"doStartTag#before");
 	}
 
 }

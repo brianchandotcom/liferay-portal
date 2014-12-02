@@ -19,22 +19,22 @@ package com.liferay.portal.tools.sourceformatter.dependencies;
  */
 public class JavaClassMehodParameterAnnotated {
 
-	public static void method(@Annotation(parameter = 1)parameter) {
+	public static void method(@Annotation(parameter = 1) String parameter) {
 	}
 
-	public void method1(@Annotation(parameter = 1)parameter) {
+	public void method1(@Annotation(parameter = 1) String parameter) {
 	}
 
-	protected static void method2(@Annotation(parameter = 1)parameter) {
+	protected static void method2(@Annotation(parameter = 1) String parameter) {
 	}
 
-	protected void method3(@Annotation(parameter = 1)parameter) {
+	protected void method3(@Annotation(parameter = 1) String parameter) {
 	}
 
-	private static void _method4(@Annotation(parameter = 1)parameter) {
+	private static void _method4(@Annotation(parameter = 1) String parameter) {
 	}
 
-	private void _method5(@Annotation(parameter = 1)parameter) {
+	private void _method5(@Annotation(parameter = 1) String parameter) {
 	}
 
 }

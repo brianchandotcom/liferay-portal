@@ -170,6 +170,13 @@ public interface Http {
 
 	public String shortenURL(String url, int count);
 
+	public InputStream URLtoInputStream(Http.Options options) throws IOException;
+
+	public InputStream URLtoInputStream(String location) throws IOException;
+
+	public InputStream URLtoInputStream(String location, boolean post)
+		throws IOException;
+
 	public byte[] URLtoByteArray(Http.Options options) throws IOException;
 
 	public byte[] URLtoByteArray(String location) throws IOException;

@@ -1174,6 +1174,39 @@ public class HttpImpl implements Http {
 	}
 
 	@Override
+	public InputStream URLtoInputStream(Http.Options options)
+		throws IOException {
+
+		return URLtoInputStream(
+			options.getLocation(), options.getMethod(), options.getHeaders(),
+			options.getCookies(), options.getAuth(), options.getBody(),
+			options.getFileParts(), options.getParts(), options.getResponse(),
+			options.isFollowRedirects(), options.getProgressId(),
+			options.getPortletRequest());
+	}
+
+	@Override
+	public InputStream URLtoInputStream(String location) throws IOException {
+		Http.Options options = new Http.Options();
+
+		options.setLocation(location);
+
+		return URLtoInputStream(options);
+	}
+
+	@Override
+	public InputStream URLtoInputStream(String location, boolean post)
+		throws IOException {
+
+		Http.Options options = new Http.Options();
+
+		options.setLocation(location);
+		options.setPost(post);
+
+		return URLtoInputStream(options);
+	}
+
+	@Override
 	public String URLtoString(Http.Options options) throws IOException {
 		return new String(URLtoByteArray(options));
 	}

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission
 
 import java.io.IOException;
 
+import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Map;
@@ -284,6 +285,30 @@ public class HttpUtil {
 		PortalSocketPermission.checkConnect(options);
 
 		return getHttp().URLtoByteArray(options);
+	}
+
+	public static InputStream URLtoInputStream(String location)
+		throws IOException {
+
+		PortalSocketPermission.checkConnect(location);
+
+		return getHttp().URLtoInputStream(location);
+	}
+
+	public static InputStream URLtoInputStream(String location, boolean post)
+		throws IOException {
+
+		PortalSocketPermission.checkConnect(location);
+
+		return getHttp().URLtoInputStream(location, post);
+	}
+
+	public static InputStream URLtoInputStream(Http.Options options)
+		throws IOException {
+
+		PortalSocketPermission.checkConnect(options);
+
+		return getHttp().URLtoInputStream(options);
 	}
 
 	public static byte[] URLtoByteArray(String location) throws IOException {

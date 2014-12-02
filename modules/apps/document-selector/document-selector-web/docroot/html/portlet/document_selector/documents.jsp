@@ -182,10 +182,9 @@ portletURL.setParameter("type", type);
 			</aui:nav-item>
 		</aui:nav>
 
-		<aui:nav-bar-search
-			file="/html/portlet/document_selector/search.jsp"
-			searchContainer="<%= fileEntrySearchContainer %>"
-		/>
+		<aui:nav-bar-search searchContainer="<%= fileEntrySearchContainer %>">
+            <%@ include file="/html/portlet/document_selector/search.jspf" %>
+        </aui:nav-bar-search>
 	</aui:nav-bar>
 
 	<c:if test="<%= Validator.isNull(displayTerms.getKeywords()) %>">

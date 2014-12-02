@@ -484,7 +484,7 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_ALL_CHECKBOX" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_RESOURCE_PERMISSIONS_KALEO_FORMS_ALL_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Action" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />

@@ -62,11 +62,9 @@ pageContext.setAttribute("portletURL", portletURL);
 			<aui:option label='<%= "this-" + (group.isOrganization() ? "organization" : "site") %>' selected="<%= (groupId != 0) %>" value="<%= group.getGroupId() %>" />
 		</aui:select>
 
-		<liferay-ui:icon
-			iconCssClass="icon-search"
-			onClick='<%= randomNamespace + namespace + "search();" %>'
-			url="javascript:;"
-		/>
+		<aui:field-wrapper inlineField="<%= true %>">
+			<aui:button icon="icon-search" onClick='<%= randomNamespace + namespace + "search();" %>' value="search" />
+		</aui:field-wrapper>
 	</aui:fieldset>
 
 	<aui:script>

@@ -369,17 +369,13 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected void destroyProcess(String processIdentity) {
-		synchronized (DLPreviewableProcessor.class) {
-			Future<?> future = futures.get(processIdentity);
+		Future<?> future = futures.remove(processIdentity);
 
-			if (future != null) {
-				future.cancel(true);
+		if (future != null) {
+			future.cancel(true);
 
-				futures.remove(processIdentity);
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Cancellation requested for " + processIdentity);
-				}
+			if (_log.isInfoEnabled()) {
+				_log.info("Cancellation requested for " + processIdentity);
 			}
 		}
 	}

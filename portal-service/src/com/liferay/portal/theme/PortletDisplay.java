@@ -155,6 +155,7 @@ public class PortletDisplay implements Serializable {
 		slave.setShowPortletIcon(_showPortletIcon);
 		slave.setShowPrintIcon(_showPrintIcon);
 		slave.setShowRefreshIcon(_showRefreshIcon);
+		slave.setShowStagingIcon(_showStagingIcon);
 		slave.setStateExclusive(_stateExclusive);
 		slave.setStateMax(_stateMax);
 		slave.setStateMin(_stateMin);

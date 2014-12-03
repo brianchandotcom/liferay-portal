@@ -966,6 +966,18 @@ public class BaseRepositoryProxyBean
 
 	@Override
 	public Folder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Folder folder = _baseRepository.updateFolder(
+			folderId, parentFolderId, name, description, serviceContext);
+
+		return newFolderProxyBean(folder);
+	}
+
+	@Override
+	public Folder updateFolder(
 			long folderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {

@@ -647,6 +647,15 @@ public abstract class BaseRepositoryImpl
 	}
 
 	@Override
+	public Folder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public boolean verifyFileEntryLock(long fileEntryId, String lockUuid) {
 		throw new UnsupportedOperationException();
 	}

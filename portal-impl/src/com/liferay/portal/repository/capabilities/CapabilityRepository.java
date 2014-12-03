@@ -959,6 +959,23 @@ public class CapabilityRepository
 
 	@Override
 	public Folder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Repository repository = getRepository();
+
+		Folder folder = repository.updateFolder(
+			folderId, parentFolderId, name, description, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, Folder.class, folder);
+
+		return folder;
+	}
+
+	@Override
+	public Folder updateFolder(
 			long folderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {

@@ -1001,6 +1001,15 @@ public class LiferayRepository
 
 	@Override
 	public Folder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Folder updateFolder(
 			long folderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {

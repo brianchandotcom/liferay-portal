@@ -794,6 +794,16 @@ public class RepositoryWrapper implements Repository {
 
 	@Override
 	public Folder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _repository.updateFolder(
+			folderId, parentFolderId, name, description, serviceContext);
+	}
+
+	@Override
+	public Folder updateFolder(
 			long folderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {

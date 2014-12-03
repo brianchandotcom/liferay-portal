@@ -91,7 +91,8 @@ import javax.naming.ldap.LdapContext;
  * @author Hugo Huijser
  */
 @DoPrivileged
-public class LDAPPortalUserImporterImpl implements PortalUserImporter {
+public class LDAPPortalUserImporterImpl
+	implements PortalUserImporter, PortalLDAPUserImporter {
 
 	@Override
 	public User importUser(

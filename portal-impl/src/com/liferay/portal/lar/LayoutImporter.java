@@ -675,11 +675,11 @@ public class LayoutImporter {
 					companyId, portletId, parameterMap, portletDataElement,
 					manifestSummary);
 
-			try {
-				if (layout != null) {
-					portletPreferencesGroupId = layout.getGroupId();
-				}
+			if (layout != null) {
+				portletPreferencesGroupId = layout.getGroupId();
+			}
 
+			try {
 				ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 					ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_STARTED,
 					PortletDataContextFactoryUtil.clonePortletDataContext(

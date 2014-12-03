@@ -99,10 +99,10 @@ public class UnitConverterUtil {
 		else if (fromId == 1) {					// Celsius
 			return fromValue + 273.15;
 		}
-		else if (fromId == 2) { 				// Fahrenheit
+		else if (fromId == 2) {				// Fahrenheit
 			return .5555555555 * (fromValue + 459.67);
 		}
-		else if (fromId == 3) { 				// Rankine
+		else if (fromId == 3) {				// Rankine
 			return .5555555555 * fromValue;
 		}
 		else if (fromId == 4) {
@@ -146,10 +146,10 @@ public class UnitConverterUtil {
 		0.00110,			// Ton
 		0.02939497,			// Talent
 		1.763698,			// Mina
-		88.18491, 			// Shekel
-		132.2774, 			// Pim
-		176.2698, 			// Beka
-		1763.698, 			// Gerah
+		88.18491,			// Shekel
+		132.2774,			// Pim
+		176.2698,			// Beka
+		1763.698,			// Gerah
 	};
 
 	private static final double[] _VOLUME = new double[] {

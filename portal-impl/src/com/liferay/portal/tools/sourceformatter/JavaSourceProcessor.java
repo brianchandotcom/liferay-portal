@@ -1314,31 +1314,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				line = sortExceptions(line);
 
-				if (trimmedLine.startsWith("if (") ||
-					trimmedLine.startsWith("else if (") ||
-					trimmedLine.startsWith("while (") ||
-					Validator.isNotNull(ifClause)) {
-
-					ifClause = ifClause + line + StringPool.NEW_LINE;
-
-					if (line.endsWith(") {")) {
-						String newIfClause = checkIfClause(
-							ifClause, fileName, lineCount);
-
-						if (!ifClause.equals(newIfClause) &&
-							content.contains(ifClause)) {
-
-							return StringUtil.replace(
-								content, ifClause, newIfClause);
-						}
-
-						ifClause = StringPool.BLANK;
-					}
-					else if (line.endsWith(StringPool.SEMICOLON)) {
-						ifClause = StringPool.BLANK;
-					}
-				}
-
 				if (trimmedLine.startsWith("Pattern ") ||
 					Validator.isNotNull(regexPattern)) {
 
@@ -1354,7 +1329,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
-				if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
+				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
 					!trimmedLine.startsWith(StringPool.STAR)) {
 
 					String strippedQuotesLine = stripQuotes(
@@ -1388,12 +1363,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
-					while (trimmedLine.contains(StringPool.TAB)) {
-						line = StringUtil.replaceLast(
-							line, StringPool.TAB, StringPool.SPACE);
+					if (!line.contains(StringPool.DOUBLE_SLASH)) {
+						while (trimmedLine.contains(StringPool.TAB)) {
+							line = StringUtil.replaceLast(
+								line, StringPool.TAB, StringPool.SPACE);
 
-						trimmedLine = StringUtil.replaceLast(
-							trimmedLine, StringPool.TAB, StringPool.SPACE);
+							trimmedLine = StringUtil.replaceLast(
+								trimmedLine, StringPool.TAB, StringPool.SPACE);
+						}
 					}
 
 					if (line.contains(StringPool.TAB + StringPool.SPACE) &&
@@ -1414,6 +1391,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							StringPool.TAB);
 					}
 
+					if (line.contains(StringPool.SPACE + StringPool.TAB)) {
+						line = StringUtil.replace(
+							line, StringPool.SPACE + StringPool.TAB,
+							StringPool.TAB);
+					}
+
 					while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
 						   !trimmedLine.contains(
 							   StringPool.QUOTE + StringPool.DOUBLE_SPACE) &&
@@ -1428,6 +1411,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 
 					if (!line.contains(StringPool.AT) &&
+						!line.contains(StringPool.DOUBLE_SLASH) &&
 						!line.contains(StringPool.QUOTE)) {
 
 						int pos = line.indexOf(") ");
@@ -1625,6 +1609,31 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
 					processErrorMessage(
 						fileName, "{:" + fileName + " " + lineCount);
+				}
+
+				if (trimmedLine.startsWith("if (") ||
+					trimmedLine.startsWith("else if (") ||
+					trimmedLine.startsWith("while (") ||
+					Validator.isNotNull(ifClause)) {
+
+					ifClause = ifClause + line + StringPool.NEW_LINE;
+
+					if (line.endsWith(") {")) {
+						String newIfClause = checkIfClause(
+							ifClause, fileName, lineCount);
+
+						if (!ifClause.equals(newIfClause) &&
+							content.contains(ifClause)) {
+
+							return StringUtil.replace(
+								content, ifClause, newIfClause);
+						}
+
+						ifClause = StringPool.BLANK;
+					}
+					else if (line.endsWith(StringPool.SEMICOLON)) {
+						ifClause = StringPool.BLANK;
+					}
 				}
 
 				int lineLength = getLineLength(line);

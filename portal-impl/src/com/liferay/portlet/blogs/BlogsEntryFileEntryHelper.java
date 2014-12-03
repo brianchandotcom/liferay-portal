@@ -36,37 +36,37 @@ import java.util.regex.Pattern;
 /**
  * @author Sergio González
  */
-public class BlogsEntryAttachmentHelper {
+public class BlogsEntryFileEntryHelper {
 
-	public List<BlogsEntryAttachmentReference> addBlogsEntryAttachments(
+	public List<BlogsEntryFileEntryReference> addBlogsEntryFileEntries(
 			long groupId, long userId, long entryId,
-			List<FileEntry> tempBlogsEntryAttachments)
+			List<FileEntry> tempBlogsEntryFileEntries)
 		throws PortalException {
 
-		List<BlogsEntryAttachmentReference> blogsEntryAttachmentReferences =
+		List<BlogsEntryFileEntryReference> blogsEntryAttachmentReferences =
 			new ArrayList<>();
 
-		for (FileEntry tempBlogsEntryAttachment : tempBlogsEntryAttachments) {
-			FileEntry blogsEntryAttachment =
-				addBlogsEntryAttachment(
+		for (FileEntry tempBlogsEntryFileEntry : tempBlogsEntryFileEntries) {
+			FileEntry blogsEntryFileEntry =
+				addBlogsEntryFileEntry(
 					groupId, userId, entryId,
-					tempBlogsEntryAttachment.getTitle(),
-					tempBlogsEntryAttachment.getMimeType(),
-					tempBlogsEntryAttachment.getContentStream());
+					tempBlogsEntryFileEntry.getTitle(),
+					tempBlogsEntryFileEntry.getMimeType(),
+					tempBlogsEntryFileEntry.getContentStream());
 
 			blogsEntryAttachmentReferences.add(
-				new BlogsEntryAttachmentReference(
-					tempBlogsEntryAttachment.getFileEntryId(),
-					blogsEntryAttachment));
+				new BlogsEntryFileEntryReference(
+					tempBlogsEntryFileEntry.getFileEntryId(),
+					blogsEntryFileEntry));
 		}
 
 		return blogsEntryAttachmentReferences;
 	}
 
-	public List<FileEntry> getTempBlogsEntryAttachments(String content)
+	public List<FileEntry> getTempBlogsEntryFileEntries(String content)
 		throws PortalException {
 
-		List<FileEntry> blogsEntryAttachments = new ArrayList<>();
+		List<FileEntry> blogsEntryFileEntries = new ArrayList<>();
 
 		Pattern pattern = Pattern.compile(
 			EditorConstants.ATTRIBUTE_DATA_IMAGE_ID + "=.(\\d+)");
@@ -76,21 +76,20 @@ public class BlogsEntryAttachmentHelper {
 		while (matcher.find()) {
 			long fileEntryId = GetterUtil.getLong(matcher.group(1));
 
-			FileEntry blogEntryAttachment =
+			FileEntry blogEntryFileEntry =
 				PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
 
-			blogsEntryAttachments.add(blogEntryAttachment);
+			blogsEntryFileEntries.add(blogEntryFileEntry);
 		}
 
-		return blogsEntryAttachments;
+		return blogsEntryFileEntries;
 	}
 
 	public String updateContent(
-			String content,
-			List<BlogsEntryAttachmentReference> blogsEntryAttachmentReferences)
-		throws PortalException {
+		String content,
+		List<BlogsEntryFileEntryReference> blogsEntryAttachmentReferences) {
 
-		for (BlogsEntryAttachmentReference blogsEntryAttachmentReference :
+		for (BlogsEntryFileEntryReference blogsEntryAttachmentReference :
 				blogsEntryAttachmentReferences) {
 
 			StringBundler sb = new StringBundler(5);
@@ -103,14 +102,14 @@ public class BlogsEntryAttachmentHelper {
 
 			content = content.replaceAll(
 				sb.toString(),
-				getAttachmentLink(
+				getFileEntryLink(
 					blogsEntryAttachmentReference.getFileEntry()));
 		}
 
 		return content;
 	}
 
-	protected FileEntry addBlogsEntryAttachment(
+	protected FileEntry addBlogsEntryFileEntry(
 			long groupId, long userId, long entryId, String fileName,
 			String mimeType, InputStream is)
 		throws PortalException {
@@ -124,13 +123,11 @@ public class BlogsEntryAttachmentHelper {
 			true);
 	}
 
-	protected String getAttachmentLink(FileEntry blogsEntryAttachment)
-		throws PortalException {
+	protected String getFileEntryLink(FileEntry blogsEntryFileEntry) {
+		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
+			null, blogsEntryFileEntry, StringPool.BLANK);
 
-		String attachmentURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
-			null, blogsEntryAttachment, StringPool.BLANK);
-
-		return "<img src=\"" + attachmentURL + "\" />";
+		return "<img src=\"" + fileEntryURL + "\" />";
 	}
 
 }

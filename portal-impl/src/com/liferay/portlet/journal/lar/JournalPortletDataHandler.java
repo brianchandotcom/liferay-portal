@@ -490,6 +490,21 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 					DDMTemplate ddmTemplate = (DDMTemplate)object;
 
+					if (ddmTemplate.getClassPK() != 0) {
+						DDMStructure ddmStructure =
+							DDMStructureLocalServiceUtil.fetchDDMStructure(
+								ddmTemplate.getClassPK());
+
+						long classNameId = PortalUtil.getClassNameId(
+							JournalArticle.class);
+
+						if ((ddmStructure != null) &&
+							(ddmStructure.getClassNameId() != classNameId)) {
+
+							return;
+						}
+					}
+
 					if (export) {
 						StagedModelDataHandlerUtil.exportStagedModel(
 							portletDataContext, ddmTemplate);

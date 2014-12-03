@@ -17,7 +17,6 @@ package com.liferay.portal.security;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.ldap.LDAPOperation;
 
 import java.io.Serializable;
 
@@ -40,10 +39,10 @@ public class PortalUserExporterUtil {
 	}
 
 	public static void exportUser(
-			long userId, long userGroupId, LDAPOperation ldapOperation)
+			long userId, long userGroupId, UserOperation userOperation)
 		throws Exception {
 
-		getPortalUserExporter().exportUser(userId, userGroupId, ldapOperation);
+		getPortalUserExporter().exportUser(userId, userGroupId, userOperation);
 	}
 
 	public static void exportUser(

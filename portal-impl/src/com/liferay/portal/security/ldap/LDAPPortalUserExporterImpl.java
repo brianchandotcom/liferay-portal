@@ -23,6 +23,7 @@ import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.PortalUserExporter;
+import com.liferay.portal.security.UserOperation;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -135,7 +136,7 @@ public class LDAPPortalUserExporterImpl implements PortalUserExporter {
 
 	@Override
 	public void exportUser(
-			long userId, long userGroupId, LDAPOperation ldapOperation)
+			long userId, long userGroupId, UserOperation userOperation)
 		throws Exception {
 
 		User user = UserLocalServiceUtil.getUser(userId);
@@ -174,7 +175,7 @@ public class LDAPPortalUserExporterImpl implements PortalUserExporter {
 
 		try {
 			if (binding == null) {
-				if (ldapOperation == LDAPOperation.ADD) {
+				if (userOperation == UserOperation.ADD) {
 					addGroup(
 						ldapServerId, ldapContext, userGroup, user,
 						groupMappings, userMappings);
@@ -192,7 +193,7 @@ public class LDAPPortalUserExporterImpl implements PortalUserExporter {
 			Modifications modifications =
 				_portalToLDAPConverter.getLDAPGroupModifications(
 					ldapServerId, userGroup, user, groupMappings, userMappings,
-					ldapOperation);
+					userOperation);
 
 			ModificationItem[] modificationItems = modifications.getItems();
 
@@ -295,7 +296,7 @@ public class LDAPPortalUserExporterImpl implements PortalUserExporter {
 			for (UserGroup userGroup : userGroups) {
 				exportUser(
 					user.getUserId(), userGroup.getUserGroupId(),
-					LDAPOperation.ADD);
+					UserOperation.ADD);
 			}
 
 			Modifications groupModifications =

@@ -140,7 +140,7 @@ else {
 		<%@ include file="/html/portlet/users_admin/user/password_reminder_query_questions.jspf" %>
 
 		<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
-			<div id="<portlet:namespace />customQuestionDiv">
+			<div class="<%= hasCustomQuestion ? "" : "hide" %>" id="<portlet:namespace />customQuestionDiv">
 				<aui:input fieldParam="reminderQueryCustomQuestion" label="custom-question" name="reminderQueryQuestion" />
 			</div>
 		</c:if>
@@ -149,27 +149,22 @@ else {
 	</aui:fieldset>
 
 	<aui:script sandbox="<%= true %>">
-		var customQuestionDiv = $('#<portlet:namespace />customQuestionDiv');
-
-		if (<%= !hasCustomQuestion %> && customQuestionDiv.length) {
-			customQuestionDiv.addClass('hide');
-		}
+		var customQuestionDiv = $('#<portlet:namespace />customQuestionDiv')
 
 		$('#<portlet:namespace />reminderQueryQuestion').on(
 			'change',
 			function(event) {
-				if ($(event.target).val() == '<%= UsersAdmin.CUSTOM_QUESTION %>') {
-					var reminderQueryCustomQuestion = $('#<portlet:namespace />reminderQueryCustomQuestion');
+				var customQuestion = ($(event.currentTarget).val() == '<%= UsersAdmin.CUSTOM_QUESTION %>');
+				var focusInput;
 
-					if (customQuestionDiv.length) {
-						customQuestionDiv.removeClass('hide');
-					}
+				if (customQuestion) {
+					var reminderQueryCustomQuestion = $('#<portlet:namespace />reminderQueryCustomQuestion');
 
 					<%
 					for (String question : PropsValues.USERS_REMINDER_QUERIES_QUESTIONS) {
 					%>
 
-						if (reminderQueryCustomQuestion && (reminderQueryCustomQuestion.val() == '<%= UnicodeFormatter.toString(question) %>')) {
+						if (reminderQueryCustomQuestion.val() == '<%= UnicodeFormatter.toString(question) %>') {
 							reminderQueryCustomQuestion.val('');
 						}
 
@@ -177,15 +172,15 @@ else {
 					}
 					%>
 
-					Liferay.Util.focusFormField('#<portlet:namespace />reminderQueryCustomQuestion');
+					focusInput = reminderQueryCustomQuestion;
 				}
 				else {
-					if (customQuestionDiv.length) {
-						customQuestionDiv.addClass('hide');
-					}
-
-					Liferay.Util.focusFormField('#<portlet:namespace />reminderQueryAnswer');
+					focusInput = '#<portlet:namespace />reminderQueryAnswer';
 				}
+
+				customQuestionDiv.toggleClass('hide', !customQuestion);
+
+				Liferay.Util.focusFormField(focusInput);
 			}
 		);
 	</aui:script>

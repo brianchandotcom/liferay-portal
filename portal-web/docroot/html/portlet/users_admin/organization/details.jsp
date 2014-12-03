@@ -311,7 +311,7 @@ if (parentOrganization != null) {
 				for (String curType : PropsValues.ORGANIZATIONS_TYPES) {
 				%>
 
-					if ($(event.target).val() == '<%= curType %>') {
+					if ($(event.currentTarget).val() == '<%= curType %>') {
 						$('#<portlet:namespace />countryDiv').toggleClass('hide', !<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ORGANIZATIONS_COUNTRY_ENABLED, new Filter(String.valueOf(curType)))) %>);
 					}
 

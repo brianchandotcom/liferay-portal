@@ -100,31 +100,20 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 	var reminderQueriesChanged = false;
 	var reminderQueriesTemp = $('#<portlet:namespace />reminderQueries_temp');
 
-	function onReminderQueriesChanged() {
-		reminderQueriesChanged = true;
-	}
-
 	function updateReminderQueriesLanguage() {
 		var selLanguageId = $(document.<portlet:namespace />fm).fm('reminderQueryLanguageId').val();
 
-		if (lastLanguageId != '<%= defaultLanguageId %>') {
-			if (reminderQueriesChanged) {
-				var reminderQueriesValue = reminderQueriesTemp.val() || '';
+		if (reminderQueriesChanged && (lastLanguageId != '<%= defaultLanguageId %>')) {
+			$('#<portlet:namespace />reminderQueries_' + lastLanguageId).val(reminderQueriesTemp.val());
 
-				$('#<portlet:namespace />reminderQueries_' + lastLanguageId).val(reminderQueriesValue);
-
-				reminderQueriesChanged = false;
-			}
+			reminderQueriesChanged = false;
 		}
 
 		if (selLanguageId) {
 			updateReminderQueriesLanguageTemps(selLanguageId);
+		}
 
-			reminderQueriesTemp.removeClass('hide');
-		}
-		else {
-			reminderQueriesTemp.addClass('hide');
-		}
+		reminderQueriesTemp.toggleClass('hide', !selLanguageId);
 
 		lastLanguageId = selLanguageId;
 	}
@@ -132,14 +121,12 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 	function updateReminderQueriesLanguageTemps(lang) {
 		if (lang != '<%= defaultLanguageId %>') {
 			var reminderQueriesValue = $('#<portlet:namespace />reminderQueries_' + lang).val();
-			var defaultReminderQueriesValue = $('#<portlet:namespace />reminderQueries_<%= defaultLanguageId %>').val() || '';
 
 			if (!reminderQueriesValue) {
-				reminderQueriesTemp.val(defaultReminderQueriesValue);
+				reminderQueriesValue = $('#<portlet:namespace />reminderQueries_<%= defaultLanguageId %>').val();
 			}
-			else {
-				reminderQueriesTemp.val(reminderQueriesValue);
-			}
+
+			reminderQueriesTemp.val(reminderQueriesValue);
 		}
 	}
 
@@ -151,7 +138,7 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 
 			Liferay.detach('destroyPortlet', clearReminderQueriesHandle);
 		}
-	};
+	}
 
 	updateReminderQueriesLanguageTemps(lastLanguageId);
 
@@ -159,5 +146,10 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 
 	$('#<portlet:namespace />reminderQueryLanguageId').on('change', updateReminderQueriesLanguage);
 
-	reminderQueriesTemp.on('change', onReminderQueriesChanged);
+	reminderQueriesTemp.on(
+		'change',
+		function() {
+			reminderQueriesChanged = true;
+		}
+	);
 </aui:script>

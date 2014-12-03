@@ -40,7 +40,7 @@ public class IconStagingTag extends IconTag {
 		}
 
 		setCssClass("portlet-export-import portlet-export-import-icon");
-		setImage("../aui/upload");
+		setImage("../aui/share");
 		setMessage("staging");
 		setMethod("get");
 

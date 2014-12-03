@@ -418,32 +418,37 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	/**
 	 * Adds a group.
 	 *
-	 * @param  userId the primary key of the group's creator/owner
-	 * @param  parentGroupId the primary key of the parent group
-	 * @param  className the entity's class name
-	 * @param  classPK the primary key of the entity's instance
-	 * @param  liveGroupId the primary key of the live group
-	 * @param  groupKey the entity's groupKey
-	 * @param  description the group's description (optionally
-	 *         <code>null</code>)
-	 * @param  type the group's type. For more information see {@link
-	 *         GroupConstants}.
-	 * @param  manualMembership whether manual membership is allowed for the
-	 *         group
-	 * @param  membershipRestriction the group's membership restriction. For
-	 *         more information see {@link GroupConstants}.
-	 * @param  friendlyURL the group's friendlyURL (optionally
-	 *         <code>null</code>)
-	 * @param  site whether the group is to be associated with a main site
-	 * @param  active whether the group is active
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set asset category IDs and asset tag
-	 *         names for the group, and whether the group is for staging.
-	 * @return the group
-	 * @throws PortalException if a creator could not be found, if the group's
-	 *         information was invalid, if a layout could not be found, or if a
-	 *         valid friendly URL could not be created for the group
+	 * @param      userId the primary key of the group's creator/owner
+	 * @param      parentGroupId the primary key of the parent group
+	 * @param      className the entity's class name
+	 * @param      classPK the primary key of the entity's instance
+	 * @param      liveGroupId the primary key of the live group
+	 * @param      groupKey the entity's groupKey
+	 * @param      description the group's description (optionally
+	 *             <code>null</code>)
+	 * @param      type the group's type. For more information see {@link
+	 *             GroupConstants}.
+	 * @param      manualMembership whether manual membership is allowed for the
+	 *             group
+	 * @param      membershipRestriction the group's membership restriction. For
+	 *             more information see {@link GroupConstants}.
+	 * @param      friendlyURL the group's friendlyURL (optionally
+	 *             <code>null</code>)
+	 * @param      site whether the group is to be associated with a main site
+	 * @param      active whether the group is active
+	 * @param      serviceContext the service context to be applied (optionally
+	 *             <code>null</code>). Can set asset category IDs and asset tag
+	 *             names for the group, and whether the group is for staging.
+	 * @return     the group
+	 * @throws     PortalException if a creator could not be found, if the
+	 *             group's information was invalid, if a layout could not be
+	 *             found, or if a valid friendly URL could not be created for
+	 *             the group
+	 * @deprecated As of 7.0.0, replaced by {@link #addGroup(long, long, String,
+	 *             long, long, Map, Map, int, boolean, int, String, boolean,
+	 *             boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Group addGroup(
 			long userId, long parentGroupId, String className, long classPK,
@@ -493,8 +498,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *             found, or if a valid friendly URL could not be created for
 	 *             the group
 	 * @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
-	 *             long, long, Map, Map, int, boolean, int, String,
-	 *             boolean, boolean, ServiceContext)}
+	 *             long, long, Map, Map, int, boolean, int, String, boolean,
+	 *             boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -546,8 +551,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *             found, or if a valid friendly URL could not be created for
 	 *             the group
 	 * @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
-	 *             long, long, Map, Map, int, boolean, int, String,
-	 *             boolean, boolean, ServiceContext)}
+	 *             long, long, Map, Map, int, boolean, int, String, boolean,
+	 *             boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -597,8 +602,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *             found, or if a valid friendly URL could not be created for
 	 *             the group
 	 * @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
-	 *             long, long, Map, Map, int, boolean, int, String,
-	 *             boolean, boolean, ServiceContext)}
+	 *             long, long, Map, Map, int, boolean, int, String, boolean,
+	 *             boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -3415,28 +3420,31 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	/**
 	 * Updates the group.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  parentGroupId the primary key of the parent group
-	 * @param  groupKey the group's key
-	 * @param  description the group's new description (optionally
-	 *         <code>null</code>)
-	 * @param  type the group's new type. For more information see {@link
-	 *         GroupConstants}.
-	 * @param  manualMembership whether manual membership is allowed for the
-	 *         group
-	 * @param  membershipRestriction the group's membership restriction. For
-	 *         more information see {@link GroupConstants}.
-	 * @param  friendlyURL the group's new friendlyURL (optionally
-	 *         <code>null</code>)
-	 * @param  active whether the group is active
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set asset category IDs and asset tag
-	 *         names for the group.
-	 * @return the group
-	 * @throws PortalException if a group with the primary key could not be
-	 *         found or if the friendly URL was invalid or could one not be
-	 *         created
+	 * @param      groupId the primary key of the group
+	 * @param      parentGroupId the primary key of the parent group
+	 * @param      groupKey the group's key
+	 * @param      description the group's new description (optionally
+	 *             <code>null</code>)
+	 * @param      type the group's new type. For more information see {@link
+	 *             GroupConstants}.
+	 * @param      manualMembership whether manual membership is allowed for the
+	 *             group
+	 * @param      membershipRestriction the group's membership restriction. For
+	 *             more information see {@link GroupConstants}.
+	 * @param      friendlyURL the group's new friendlyURL (optionally
+	 *             <code>null</code>)
+	 * @param      active whether the group is active
+	 * @param      serviceContext the service context to be applied (optionally
+	 *             <code>null</code>). Can set asset category IDs and asset tag
+	 *             names for the group.
+	 * @return     the group
+	 * @throws     PortalException if a group with the primary key could not be
+	 *             found or if the friendly URL was invalid or could one not be
+	 *             created
+	 * @deprecated As of 7.0.0, replaced by {@link #updateGroup(long, long, Map,
+	 *             Map, int, boolean, int, String, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Group updateGroup(
 			long groupId, long parentGroupId, String groupKey,

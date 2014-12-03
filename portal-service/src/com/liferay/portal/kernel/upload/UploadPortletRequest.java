@@ -14,8 +14,13 @@
 
 package com.liferay.portal.kernel.upload;
 
+import javax.portlet.PortletRequest;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public interface UploadPortletRequest extends UploadRequest {
+
+	public PortletRequest getPortletRequest();
+
 }

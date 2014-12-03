@@ -29,6 +29,8 @@ public interface Constants {
 
 	public static final String ADD_TEMP = "add_temp";
 
+	public static final String ADD_WEBDAV = "add_webdav";
+
 	public static final String APPROVE = "approve";
 
 	public static final String ASSIGN = "assign";

@@ -179,7 +179,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 				ExportImportLifecycleConstants.
-					EVENT_PUBLICATION_LAYOUT_REMOTE_FINISHED,
+					EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED,
 				exportImportConfiguration);
 		}
 		catch (Throwable t) {

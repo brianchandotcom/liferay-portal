@@ -202,7 +202,7 @@ public class LayoutExporter {
 			File file = doExportLayoutsAsFile(portletDataContext, layoutIds);
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_FINISHED,
+				ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_SUCCEEDED,
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
 
@@ -574,7 +574,7 @@ public class LayoutExporter {
 
 				ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 					ExportImportLifecycleConstants.
-						EVENT_PORTLET_EXPORT_FINISHED,
+						EVENT_PORTLET_EXPORT_SUCCEEDED,
 					PortletDataContextFactoryUtil.clonePortletDataContext(
 						portletDataContext));
 			}

@@ -102,7 +102,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 				ExportImportLifecycleConstants.
-					EVENT_STAGED_MODEL_EXPORT_FINISHED,
+					EVENT_STAGED_MODEL_EXPORT_SUCCEEDED,
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				new TransientValue<T>(stagedModel));
@@ -334,7 +334,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 				ExportImportLifecycleConstants.
-					EVENT_STAGED_MODEL_IMPORT_FINISHED,
+					EVENT_STAGED_MODEL_IMPORT_SUCCEEDED,
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				new TransientValue<T>(stagedModel));

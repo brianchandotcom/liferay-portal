@@ -74,7 +74,7 @@ public class PortletStagingBackgroundTaskExecutor
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 				ExportImportLifecycleConstants.
-					EVENT_PUBLICATION_PORTLET_LOCAL_FINISHED,
+					EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED,
 				serializableTaskContextMap);
 		}
 		catch (Throwable t) {

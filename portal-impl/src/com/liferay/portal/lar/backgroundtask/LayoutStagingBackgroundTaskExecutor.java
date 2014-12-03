@@ -103,7 +103,7 @@ public class LayoutStagingBackgroundTaskExecutor
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 				ExportImportLifecycleConstants.
-					EVENT_PUBLICATION_LAYOUT_LOCAL_FINISHED,
+					EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED,
 				exportImportConfiguration);
 		}
 		catch (Throwable t) {

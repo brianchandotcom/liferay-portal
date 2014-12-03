@@ -218,7 +218,7 @@ public class PortletImporter {
 			doImportPortletInfo(portletDataContext, userId);
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_FINISHED,
+				ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_SUCCEEDED,
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
 		}

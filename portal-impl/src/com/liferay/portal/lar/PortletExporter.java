@@ -261,7 +261,7 @@ public class PortletExporter {
 			File file = doExportPortletInfoAsFile(portletDataContext);
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_FINISHED,
+				ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_SUCCEEDED,
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
 

@@ -136,7 +136,7 @@ public class LayoutImporter {
 			doImportLayouts(portletDataContext, userId);
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_FINISHED,
+				ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED,
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
 		}
@@ -710,7 +710,7 @@ public class LayoutImporter {
 
 				ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 					ExportImportLifecycleConstants.
-						EVENT_PORTLET_IMPORT_FINISHED,
+						EVENT_PORTLET_IMPORT_SUCCEEDED,
 					PortletDataContextFactoryUtil.clonePortletDataContext(
 						portletDataContext));
 			}

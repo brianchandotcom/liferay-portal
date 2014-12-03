@@ -432,6 +432,21 @@
 
 		<execute macro="KaleoFormsAdmin#next" />
 
+		<execute macro="KaleoFormsAdmin#addWorkflow">
+			<var name="kfProcessName" value="${kfProcessName}" />
+			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addSourceXMLBasicDefinition" />
+
+		<execute macro="KaleoFormsAdmin#publishWorkflow">
+			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#deactivateWorkflow">
+			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
+		</execute>
+
 		<execute macro="KaleoFormsAdmin#deactivateWorkflow">
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
@@ -444,7 +459,9 @@
 			<var name="portletName" value="Workflow" />
 		</execute>
 
-		<execute macro="Workflow#deleteWorkflowDefinition" />
+		<execute macro="Workflow#deleteSpecificWorkflowDefinition">
+			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />
@@ -469,6 +486,14 @@
 		<execute macro="KaleoFormsAdmin#viewNoPublishedWorkflowDefinitions" />
 
 		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#reactivateInactiveWorkflowDefinition">
+			<var name="workflowDefinitionName" value="Single Approver" />
+		</execute>
 	</command>
 
 	<command name="DeleteCreateFormViaDDL" priority="5">

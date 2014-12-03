@@ -2901,8 +2901,18 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 		<antcall target="compile" inheritAll="false" />
 
 		<if>
-			<equals arg1="${test.build.unit}" arg2="false" />
+			<equals arg1="${test.build.unit}" arg2="true" />
 			<then>
+				<antcall target="deploy" inheritAll="false" />
+
+				<delete includeemptydirs="true" failonerror="false">
+					<fileset
+						dir="${liferay.home}/osgi/modules"
+						includes="*.jar"
+					/>
+				</delete>
+			</then>
+			<else>
 				<if>
 					<matches pattern="http" string="${test.build.bundle.geronimo.zip.url}" />
 					<then>
@@ -3140,16 +3150,6 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 				</if>
 
 				<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />
-			</then>
-			<else>
-				<antcall target="deploy" inheritAll="false" />
-
-				<delete includeemptydirs="true" failonerror="false">
-					<fileset
-						dir="${liferay.home}/osgi/modules"
-						includes="*.jar"
-					/>
-				</delete>
 			</else>
 		</if>
 

@@ -43,7 +43,7 @@ public class BlogsEntryFileEntryHelper {
 			List<FileEntry> tempBlogsEntryFileEntries)
 		throws PortalException {
 
-		List<BlogsEntryFileEntryReference> blogsEntryAttachmentReferences =
+		List<BlogsEntryFileEntryReference> blogsEntryFileEntryReferences =
 			new ArrayList<>();
 
 		for (FileEntry tempBlogsEntryFileEntry : tempBlogsEntryFileEntries) {
@@ -54,13 +54,13 @@ public class BlogsEntryFileEntryHelper {
 					tempBlogsEntryFileEntry.getMimeType(),
 					tempBlogsEntryFileEntry.getContentStream());
 
-			blogsEntryAttachmentReferences.add(
+			blogsEntryFileEntryReferences.add(
 				new BlogsEntryFileEntryReference(
 					tempBlogsEntryFileEntry.getFileEntryId(),
 					blogsEntryFileEntry));
 		}
 
-		return blogsEntryAttachmentReferences;
+		return blogsEntryFileEntryReferences;
 	}
 
 	public List<FileEntry> getTempBlogsEntryFileEntries(String content)

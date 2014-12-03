@@ -1546,6 +1546,22 @@
 		<execute macro="KaleoFormsAdmin#viewProcess">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#editCP">
+			<var name="ddlDataDefinitionDescriptionEdit" value="To Do" />
+			<var name="ddlDataDefinitionName" value="Do" />
+			<var name="ddlDataDefinitionNameEdit" value="To Do" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#deleteField">
+			<var name="fieldFieldLabel" value="Boolean" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
 	</command>
 
 	<command name="EditProcessFieldSetPaginationAndViewSelectedForm" priority="4">

@@ -54,8 +54,8 @@ import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
-import com.liferay.portlet.blogs.BlogsEntryAttachmentHelper;
-import com.liferay.portlet.blogs.BlogsEntryAttachmentReference;
+import com.liferay.portlet.blogs.BlogsEntryFileEntryHelper;
+import com.liferay.portlet.blogs.BlogsEntryFileEntryReference;
 import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryDescriptionException;
 import com.liferay.portlet.blogs.EntryDisplayDateException;
@@ -112,7 +112,7 @@ public class EditEntryAction extends PortletAction {
 		try {
 			BlogsEntry entry = null;
 			String oldUrlTitle = StringPool.BLANK;
-			List<BlogsEntryAttachmentReference> blogsEntryAttachmentReferences =
+			List<BlogsEntryFileEntryReference> blogsEntryAttachmentReferences =
 				null;
 
 			UploadException uploadException =
@@ -141,7 +141,7 @@ public class EditEntryAction extends PortletAction {
 				entry = (BlogsEntry)returnValue[0];
 				oldUrlTitle = ((String)returnValue[1]);
 				blogsEntryAttachmentReferences =
-					((List<BlogsEntryAttachmentReference>)returnValue[2]);
+					((List<BlogsEntryFileEntryReference>)returnValue[2]);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteEntries(actionRequest, false);
@@ -206,7 +206,7 @@ public class EditEntryAction extends PortletAction {
 
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-				for (BlogsEntryAttachmentReference
+				for (BlogsEntryFileEntryReference
 						blogsEntryAttachmentReference :
 							blogsEntryAttachmentReferences) {
 
@@ -586,7 +586,7 @@ public class EditEntryAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			BlogsEntry.class.getName(), actionRequest);
 
-		List<BlogsEntryAttachmentReference> blogsEntryAttachmentReferences =
+		List<BlogsEntryFileEntryReference> blogsEntryAttachmentReferences =
 			new ArrayList<>();
 
 		if (entryId <= 0) {
@@ -600,16 +600,16 @@ public class EditEntryAction extends PortletAction {
 				coverImageImageSelector, smallImageImageSelector,
 				serviceContext);
 
-			BlogsEntryAttachmentHelper blogsEntryAttachmentHelper =
-				new BlogsEntryAttachmentHelper();
+			BlogsEntryFileEntryHelper blogsEntryAttachmentHelper =
+				new BlogsEntryFileEntryHelper();
 
 			List<FileEntry> tempBlogsEntryAttachments =
-				blogsEntryAttachmentHelper.getTempBlogsEntryAttachments(
+				blogsEntryAttachmentHelper.getTempBlogsEntryFileEntries(
 					content);
 
 			if (!tempBlogsEntryAttachments.isEmpty()) {
 				blogsEntryAttachmentReferences =
-					blogsEntryAttachmentHelper.addBlogsEntryAttachments(
+					blogsEntryAttachmentHelper.addBlogsEntryFileEntries(
 						entry.getGroupId(), themeDisplay.getUserId(),
 						entry.getEntryId(), tempBlogsEntryAttachments);
 
@@ -654,16 +654,16 @@ public class EditEntryAction extends PortletAction {
 
 			String tempOldUrlTitle = entry.getUrlTitle();
 
-			BlogsEntryAttachmentHelper blogsEntryAttachmentHelper =
-				new BlogsEntryAttachmentHelper();
+			BlogsEntryFileEntryHelper blogsEntryAttachmentHelper =
+				new BlogsEntryFileEntryHelper();
 
 			List<FileEntry> tempBlogsEntryAttachments =
-				blogsEntryAttachmentHelper.getTempBlogsEntryAttachments(
+				blogsEntryAttachmentHelper.getTempBlogsEntryFileEntries(
 					content);
 
 			if (!tempBlogsEntryAttachments.isEmpty()) {
 				blogsEntryAttachmentReferences =
-					blogsEntryAttachmentHelper.addBlogsEntryAttachments(
+					blogsEntryAttachmentHelper.addBlogsEntryFileEntries(
 						entry.getGroupId(), themeDisplay.getUserId(),
 						entry.getEntryId(), tempBlogsEntryAttachments);
 

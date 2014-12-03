@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 /**
  * @author Sergio González
  */
-public class BlogsEntryAttachmentReference {
+public class BlogsEntryFileEntryReference {
 
-	public BlogsEntryAttachmentReference(
+	public BlogsEntryFileEntryReference(
 		long tempFileEntryId, FileEntry fileEntry) {
 
 		_tempFileEntryId = tempFileEntryId;

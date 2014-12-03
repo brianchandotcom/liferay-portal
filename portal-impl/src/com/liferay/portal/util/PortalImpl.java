@@ -504,10 +504,14 @@ public class PortalImpl implements Portal {
 		_servletContextName =
 			PortalContextLoaderListener.getPortalServletContextName();
 
-		_validPortalDomainCheckDisabled =
-			ArrayUtil.isEmpty(PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) ||
+		_validPortalDomainCheckDisabled = false;
+
+		if (ArrayUtil.isEmpty(PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) ||
 			ArrayUtil.contains(
-				PropsValues.VIRTUAL_HOSTS_VALID_HOSTS, StringPool.STAR);
+				PropsValues.VIRTUAL_HOSTS_VALID_HOSTS, StringPool.STAR)) {
+
+			_validPortalDomainCheckDisabled = true;
+		}
 	}
 
 	@Override

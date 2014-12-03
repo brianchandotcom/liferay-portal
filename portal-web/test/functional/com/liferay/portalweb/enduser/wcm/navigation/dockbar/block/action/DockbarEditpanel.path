@@ -41,17 +41,17 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_PERMISSIONS</td>
-	<td>//li[@data-value='permissions']/a</td>
+	<td>//a[contains(@title,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_DELETE</td>
-	<td>//li[@data-value='delete']/a</td>
+	<td>//a[contains(@title,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_COPY_APPLICATIONS</td>
-	<td>//li[@data-value='copy-applications']/a</td>
+	<td>//a[contains(@title,'Copy Applications')]</td>
 	<td></td>
 </tr>
 <tr>

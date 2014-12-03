@@ -69,7 +69,7 @@ public class BlogsEntryAttachmentHelper {
 		List<FileEntry> blogsEntryAttachments = new ArrayList<>();
 
 		Pattern pattern = Pattern.compile(
-			EditorConstants.DATA_IMAGE_ID_ATTRIBUTE + "=.(\\d+)");
+			EditorConstants.ATTRIBUTE_DATA_IMAGE_ID + "=.(\\d+)");
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -96,7 +96,7 @@ public class BlogsEntryAttachmentHelper {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("<img.*");
-			sb.append(EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
+			sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 			sb.append("=\\s?\"");
 			sb.append(blogsEntryAttachmentReference.getTempFileEntryId());
 			sb.append("\".*src=\\s?\"(.*)\".*/>");

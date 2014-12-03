@@ -19,6 +19,6 @@ package com.liferay.portal.kernel.editor.util;
  */
 public class EditorConstants {
 
-	public static final String DATA_IMAGE_ID_ATTRIBUTE = "data-image-id";
+	public static final String ATTRIBUTE_DATA_IMAGE_ID = "data-image-id";
 
 }

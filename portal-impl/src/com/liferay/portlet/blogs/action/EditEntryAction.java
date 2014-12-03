@@ -218,7 +218,7 @@ public class EditEntryAction extends PortletAction {
 
 					blogsEntryAttachmentReferencesJSONObject.put(
 						"dataImageIdAttribute",
-						EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
+						EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 
 					blogsEntryAttachmentReferencesJSONObject.put(
 						"fileEntryId",

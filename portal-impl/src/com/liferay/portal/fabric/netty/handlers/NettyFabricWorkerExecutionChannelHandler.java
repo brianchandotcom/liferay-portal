@@ -74,7 +74,8 @@ public class NettyFabricWorkerExecutionChannelHandler
 	extends SimpleChannelInboundHandler<NettyFabricWorkerConfig<Serializable>> {
 
 	public NettyFabricWorkerExecutionChannelHandler(
-		Repository repository, FabricAgent fabricAgent, long executionTimeout) {
+		Repository<Channel> repository, FabricAgent fabricAgent,
+		long executionTimeout) {
 
 		if (repository == null) {
 			throw new NullPointerException("Repository is null");
@@ -118,7 +119,7 @@ public class NettyFabricWorkerExecutionChannelHandler
 		NettyFabricWorkerConfig<Serializable> nettyFabricWorkerConfig) {
 
 		NoticeableFuture<LoadedPaths> noticeableFuture = loadPaths(
-			nettyFabricWorkerConfig);
+			channelHandlerContext.channel(), nettyFabricWorkerConfig);
 
 		noticeableFuture.addFutureListener(
 			new PostLoadPathsFutureListener(
@@ -126,6 +127,7 @@ public class NettyFabricWorkerExecutionChannelHandler
 	}
 
 	protected NoticeableFuture<LoadedPaths> loadPaths(
+		Channel channel,
 		NettyFabricWorkerConfig<Serializable> nettyFabricWorkerConfig) {
 
 		Map<Path, Path> mergedPaths = new HashMap<Path, Path>();
@@ -157,7 +159,7 @@ public class NettyFabricWorkerExecutionChannelHandler
 		mergedPaths.putAll(inputPaths);
 
 		return new NoticeableFutureConverter<LoadedPaths, Map<Path, Path>>(
-			_repository.getFiles(mergedPaths, false)) {
+			_repository.getFiles(channel, mergedPaths, false)) {
 
 			@Override
 			protected LoadedPaths convert(Map<Path, Path> mergedPaths)
@@ -584,6 +586,6 @@ public class NettyFabricWorkerExecutionChannelHandler
 
 	private final long _executionTimeout;
 	private final FabricAgent _fabricAgent;
-	private final Repository _repository;
+	private final Repository<Channel> _repository;
 
 }

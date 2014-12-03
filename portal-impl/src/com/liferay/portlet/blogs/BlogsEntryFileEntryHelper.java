@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.blogs;
 
-import com.liferay.portal.kernel.editor.util.EditorConstants;
+import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -27,7 +27,6 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;

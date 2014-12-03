@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.editor.util;
+package com.liferay.portal.kernel.editor;
 
 /**
  * @author Roberto Díaz

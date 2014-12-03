@@ -16,7 +16,7 @@ package com.liferay.portal.model;
 
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.security.PortalUserExporterUtil;
-import com.liferay.portal.security.ldap.LDAPOperation;
+import com.liferay.portal.security.UserOperation;
 import com.liferay.portal.security.ldap.LDAPUserTransactionThreadLocal;
 
 /**
@@ -34,7 +34,7 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 			if (associationClassName.equals(User.class.getName())) {
 				exportToLDAP(
 					(Long)associationClassPK, (Long)userGroupId,
-					LDAPOperation.ADD);
+					UserOperation.ADD);
 			}
 		}
 		catch (Exception e) {
@@ -52,7 +52,7 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 			if (associationClassName.equals(User.class.getName())) {
 				exportToLDAP(
 					(Long)associationClassPK, (Long)userGroupId,
-					LDAPOperation.REMOVE);
+					UserOperation.REMOVE);
 			}
 		}
 		catch (Exception e) {
@@ -61,14 +61,14 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 	}
 
 	protected void exportToLDAP(
-			long userId, long userGroupId, LDAPOperation ldapOperation)
+			long userId, long userGroupId, UserOperation userOperation)
 		throws Exception {
 
 		if (LDAPUserTransactionThreadLocal.isOriginatesFromLDAP()) {
 			return;
 		}
 
-		PortalUserExporterUtil.exportUser(userId, userGroupId, ldapOperation);
+		PortalUserExporterUtil.exportUser(userId, userGroupId, userOperation);
 	}
 
 }

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.security;
 
 /**
  * @author Marcellus Tavares
  */
-public enum LDAPOperation {
+public enum UserOperation {
 
 	ADD, REMOVE, UPDATE
 

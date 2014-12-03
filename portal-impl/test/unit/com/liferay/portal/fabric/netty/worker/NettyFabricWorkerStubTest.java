@@ -83,7 +83,7 @@ public class NettyFabricWorkerStubTest {
 		try {
 			new NettyFabricWorkerStub<String>(
 				0, NettyTestUtil.createEmptyEmbeddedChannel(),
-				new MockRepository(), null, 0);
+				new MockRepository<Channel>(), null, 0);
 
 			Assert.fail();
 		}
@@ -99,7 +99,7 @@ public class NettyFabricWorkerStubTest {
 
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
 			new NettyFabricWorkerStub<String>(
-				0, channel, new MockRepository(),
+				0, channel, new MockRepository<Channel>(),
 				Collections.<Path, Path>emptyMap(), 0);
 
 		Assert.assertNotNull(
@@ -121,7 +121,7 @@ public class NettyFabricWorkerStubTest {
 		Assert.assertFalse(channelFuture.isDone());
 
 		nettyFabricWorkerStub = new NettyFabricWorkerStub<String>(
-			0, channel, new MockRepository(),
+			0, channel, new MockRepository<Channel>(),
 			Collections.<Path, Path>emptyMap(), 0);
 
 		Assert.assertNotNull(
@@ -141,7 +141,8 @@ public class NettyFabricWorkerStubTest {
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
 			new NettyFabricWorkerStub<String>(
 				0, NettyTestUtil.createEmptyEmbeddedChannel(),
-				new MockRepository(), Collections.<Path, Path>emptyMap(), 0);
+				new MockRepository<Channel>(),
+				Collections.<Path, Path>emptyMap(), 0);
 
 		FabricStatus fabricStatus = nettyFabricWorkerStub.getFabricStatus();
 
@@ -153,7 +154,8 @@ public class NettyFabricWorkerStubTest {
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
 			new NettyFabricWorkerStub<String>(
 				0, NettyTestUtil.createEmptyEmbeddedChannel(),
-				new MockRepository(), Collections.<Path, Path>emptyMap(), 0);
+				new MockRepository<Channel>(),
+				Collections.<Path, Path>emptyMap(), 0);
 
 		nettyFabricWorkerStub.setCancel();
 
@@ -168,7 +170,8 @@ public class NettyFabricWorkerStubTest {
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
 			new NettyFabricWorkerStub<String>(
 				0, NettyTestUtil.createEmptyEmbeddedChannel(),
-				new MockRepository(), Collections.<Path, Path>emptyMap(), 0);
+				new MockRepository<Channel>(),
+				Collections.<Path, Path>emptyMap(), 0);
 
 		Throwable throwable = new Throwable();
 
@@ -195,11 +198,12 @@ public class NettyFabricWorkerStubTest {
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
 			new NettyFabricWorkerStub<String>(
 				0, NettyTestUtil.createEmptyEmbeddedChannel(),
-				new MockRepository() {
+				new MockRepository<Channel>() {
 
 					@Override
 					public NoticeableFuture<Map<Path, Path>> getFiles(
-						Map<Path, Path> pathMap, boolean deleteAfterFetch) {
+						Channel channel, Map<Path, Path> pathMap,
+						boolean deleteAfterFetch) {
 
 						return defaultNoticeableFuture;
 					}
@@ -229,11 +233,12 @@ public class NettyFabricWorkerStubTest {
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
 			new NettyFabricWorkerStub<String>(
 				0, NettyTestUtil.createEmptyEmbeddedChannel(),
-				new MockRepository() {
+				new MockRepository<Channel>() {
 
 					@Override
 					public NoticeableFuture<Map<Path, Path>> getFiles(
-						Map<Path, Path> pathMap, boolean deleteAfterFetch) {
+						Channel channel, Map<Path, Path> pathMap,
+						boolean deleteAfterFetch) {
 
 						return defaultNoticeableFuture;
 					}
@@ -259,11 +264,12 @@ public class NettyFabricWorkerStubTest {
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
 			new NettyFabricWorkerStub<String>(
 				0, NettyTestUtil.createEmptyEmbeddedChannel(),
-				new MockRepository() {
+				new MockRepository<Channel>() {
 
 					@Override
 					public NoticeableFuture<Map<Path, Path>> getFiles(
-						Map<Path, Path> pathMap, boolean deleteAfterFetch) {
+						Channel channel, Map<Path, Path> pathMap,
+						boolean deleteAfterFetch) {
 
 						return defaultNoticeableFuture;
 					}
@@ -301,7 +307,7 @@ public class NettyFabricWorkerStubTest {
 
 		NettyFabricWorkerStub<String> nettyFabricWorkerStub =
 			new NettyFabricWorkerStub<String>(
-				0, embeddedChannel, new MockRepository(),
+				0, embeddedChannel, new MockRepository<Channel>(),
 				Collections.<Path, Path>emptyMap(), 0);
 
 		NettyChannelAttributes.putFabricWorker(

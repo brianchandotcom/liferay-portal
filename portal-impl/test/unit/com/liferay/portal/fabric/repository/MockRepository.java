@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author Shuyang Zhou
  */
-public class MockRepository implements Repository {
+public class MockRepository<T> implements Repository<T> {
 
 	@Override
 	public void dispose(boolean delete) {
@@ -32,14 +32,15 @@ public class MockRepository implements Repository {
 
 	@Override
 	public NoticeableFuture<Path> getFile(
-		Path remoteFilePath, Path localFilePath, boolean deleteAfterFetch) {
+		T t, Path remoteFilePath, Path localFilePath,
+		boolean deleteAfterFetch) {
 
 		return null;
 	}
 
 	@Override
 	public NoticeableFuture<Map<Path, Path>> getFiles(
-		Map<Path, Path> pathMap, boolean deleteAfterFetch) {
+		T t, Map<Path, Path> pathMap, boolean deleteAfterFetch) {
 
 		DefaultNoticeableFuture<Map<Path, Path>> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<Map<Path, Path>>();

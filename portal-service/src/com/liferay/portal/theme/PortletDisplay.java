@@ -87,6 +87,7 @@ public class PortletDisplay implements Serializable {
 		_showPortletIcon = master.isShowPortletIcon();
 		_showPrintIcon = master.isShowPrintIcon();
 		_showRefreshIcon = master.isShowRefreshIcon();
+		_showStagingIcon = master.isShowStagingIcon();
 		_stateExclusive = master.isStateExclusive();
 		_stateMax = master.isStateMax();
 		_stateMin = master.isStateMin();
@@ -108,6 +109,7 @@ public class PortletDisplay implements Serializable {
 		_urlPortletCss = master.getURLPortletCss();
 		_urlPrint = master.getURLPrint();
 		_urlRefresh = master.getURLRefresh();
+		_urlStaging = master.getURLStaging();
 		_webDAVEnabled = master.isWebDAVEnabled();
 	}
 
@@ -153,6 +155,7 @@ public class PortletDisplay implements Serializable {
 		slave.setShowPortletIcon(_showPortletIcon);
 		slave.setShowPrintIcon(_showPrintIcon);
 		slave.setShowRefreshIcon(_showRefreshIcon);
+		slave.setShowStagingIcon(_showStagingIcon);
 		slave.setStateExclusive(_stateExclusive);
 		slave.setStateMax(_stateMax);
 		slave.setStateMin(_stateMin);
@@ -173,6 +176,7 @@ public class PortletDisplay implements Serializable {
 		slave.setURLPortletCss(_urlPortletCss);
 		slave.setURLPrint(_urlPrint);
 		slave.setURLRefresh(_urlRefresh);
+		slave.setURLStaging(_urlStaging);
 		slave.setWebDAVEnabled(_webDAVEnabled);
 
 		slave._title = _title;
@@ -329,6 +333,10 @@ public class PortletDisplay implements Serializable {
 		return _urlRefresh;
 	}
 
+	public String getURLStaging() {
+		return _urlStaging;
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, with no direct replacement
 	 */
@@ -445,6 +453,10 @@ public class PortletDisplay implements Serializable {
 		return _showRefreshIcon;
 	}
 
+	public boolean isShowStagingIcon() {
+		return _showStagingIcon;
+	}
+
 	public boolean isStateExclusive() {
 		return _stateExclusive;
 	}
@@ -514,6 +526,7 @@ public class PortletDisplay implements Serializable {
 		_showPortletIcon = false;
 		_showPrintIcon = false;
 		_showRefreshIcon = false;
+		_showStagingIcon = false;
 		_stateExclusive = false;
 		_stateMax = false;
 		_stateMin = false;
@@ -715,6 +728,10 @@ public class PortletDisplay implements Serializable {
 		_showRefreshIcon = showRefreshIcon;
 	}
 
+	public void setShowStagingIcon(boolean showStagingIcon) {
+		_showStagingIcon = showStagingIcon;
+	}
+
 	public void setStateExclusive(boolean stateExclusive) {
 		_stateExclusive = stateExclusive;
 	}
@@ -805,6 +822,10 @@ public class PortletDisplay implements Serializable {
 		_urlRefresh = urlRefresh;
 	}
 
+	public void setURLStaging(String urlStaging) {
+		_urlStaging = urlStaging;
+	}
+
 	public void setWebDAVEnabled(boolean webDAVEnabled) {
 		_webDAVEnabled = webDAVEnabled;
 	}
@@ -859,6 +880,7 @@ public class PortletDisplay implements Serializable {
 	private boolean _showPortletIcon;
 	private boolean _showPrintIcon;
 	private boolean _showRefreshIcon;
+	private boolean _showStagingIcon;
 	private boolean _stateExclusive;
 	private boolean _stateMax;
 	private boolean _stateMin;
@@ -880,6 +902,7 @@ public class PortletDisplay implements Serializable {
 	private String _urlPortletCss = StringPool.BLANK;
 	private String _urlPrint = StringPool.BLANK;
 	private String _urlRefresh = StringPool.BLANK;
+	private String _urlStaging = StringPool.BLANK;
 	private boolean _webDAVEnabled;
 
 }

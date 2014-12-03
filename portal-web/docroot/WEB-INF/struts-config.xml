@@ -1538,6 +1538,11 @@
 
 		<action path="/portlet_configuration/select_structure_field" forward="portlet.asset_publisher.select_structure_field" />
 
+		<action path="/portlet_configuration/staging" type="com.liferay.portlet.portletconfiguration.action.ExportImportAction">
+			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
+			<forward name="portlet.portlet_configuration.staging" path="portlet.portlet_configuration.staging" />
+		</action>
+
 		<action path="/portlet_configuration/update_look_and_feel" type="com.liferay.portlet.portletconfiguration.action.UpdateLookAndFeelAction" />
 
 		<action path="/portlet_configuration/update_title" type="com.liferay.portlet.portletconfiguration.action.UpdateTitleAction" />

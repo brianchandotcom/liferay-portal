@@ -39,6 +39,8 @@
 
 	<liferay-portlet:icon-export-import />
 
+	<liferay-portlet:icon-staging />
+
 	<liferay-portlet:icon-help />
 
 	<liferay-portlet:icon-print />

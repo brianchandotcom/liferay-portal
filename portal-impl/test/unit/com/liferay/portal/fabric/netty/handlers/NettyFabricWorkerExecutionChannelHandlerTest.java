@@ -18,6 +18,7 @@ import com.liferay.portal.fabric.FabricPathMappingVisitor;
 import com.liferay.portal.fabric.InputResource;
 import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.fabric.local.agent.EmbeddedProcessExecutor;
+import com.liferay.portal.fabric.local.agent.LocalFabricAgent;
 import com.liferay.portal.fabric.local.worker.EmbeddedProcessChannel;
 import com.liferay.portal.fabric.local.worker.LocalFabricWorker;
 import com.liferay.portal.fabric.netty.NettyTestUtil;
@@ -138,11 +139,12 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 			Assert.fail();
 		}
 		catch (NullPointerException npe) {
-			Assert.assertEquals("Process executor is null", npe.getMessage());
+			Assert.assertEquals("Fabric agent is null", npe.getMessage());
 		}
 
 		new NettyFabricWorkerExecutionChannelHandler(
-			new MockRepository(), new EmbeddedProcessExecutor(), 0);
+			new MockRepository(),
+			new LocalFabricAgent(new EmbeddedProcessExecutor()), 0);
 	}
 
 	@Test
@@ -150,7 +152,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		NettyFabricWorkerExecutionChannelHandler
 			nettyFabricWorkerExecutionChannelHandler =
 				new NettyFabricWorkerExecutionChannelHandler(
-					new MockRepository(), new EmbeddedProcessExecutor(),
+					new MockRepository(),
+					new LocalFabricAgent(new EmbeddedProcessExecutor()),
 					Long.MAX_VALUE);
 
 		ChannelPipeline channelPipeline = _embeddedChannel.pipeline();
@@ -310,7 +313,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		NettyFabricWorkerExecutionChannelHandler
 			nettyFabricWorkerExecutionChannelHandler =
 				new NettyFabricWorkerExecutionChannelHandler(
-					new MockRepository(), new EmbeddedProcessExecutor(),
+					new MockRepository(),
+					new LocalFabricAgent(new EmbeddedProcessExecutor()),
 					Long.MAX_VALUE);
 
 		ChannelPipeline channelPipeline = _embeddedChannel.pipeline();
@@ -484,7 +488,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 						}
 
 					},
-					new EmbeddedProcessExecutor(), 0);
+					new LocalFabricAgent(new EmbeddedProcessExecutor()), 0);
 
 		Builder builder = new Builder();
 
@@ -575,7 +579,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 						}
 
 					},
-					new EmbeddedProcessExecutor(), 0);
+					new LocalFabricAgent(new EmbeddedProcessExecutor()), 0);
 
 		Builder builder = new Builder();
 
@@ -709,7 +713,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 						}
 
 					},
-					new EmbeddedProcessExecutor(), 0);
+					new LocalFabricAgent(new EmbeddedProcessExecutor()), 0);
 
 		Builder builder = new Builder();
 
@@ -790,7 +794,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 						}
 
 					},
-					new EmbeddedProcessExecutor(), 0);
+					new LocalFabricAgent(new EmbeddedProcessExecutor()), 0);
 
 		Builder builder = new Builder();
 
@@ -901,7 +905,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		NettyFabricWorkerExecutionChannelHandler
 			nettyFabricWorkerExecutionChannelHandler =
 				new NettyFabricWorkerExecutionChannelHandler(
-					new MockRepository(), new EmbeddedProcessExecutor(),
+					new MockRepository(),
+					new LocalFabricAgent(new EmbeddedProcessExecutor()),
 					Long.MAX_VALUE);
 
 		PostFabricWorkerExecutionFutureListener
@@ -1022,7 +1027,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		NettyFabricWorkerExecutionChannelHandler
 			nettyFabricWorkerExecutionChannelHandler =
 				new NettyFabricWorkerExecutionChannelHandler(
-					new MockRepository(), new EmbeddedProcessExecutor(),
+					new MockRepository(),
+					new LocalFabricAgent(new EmbeddedProcessExecutor()),
 					Long.MAX_VALUE);
 
 		Path inputPath1 = FileServerTestUtil.createEmptyFile(
@@ -1144,7 +1150,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		NettyFabricWorkerExecutionChannelHandler
 			nettyFabricWorkerExecutionChannelHandler =
 				new NettyFabricWorkerExecutionChannelHandler(
-					new MockRepository(), new EmbeddedProcessExecutor(),
+					new MockRepository(),
+					new LocalFabricAgent(new EmbeddedProcessExecutor()),
 					Long.MAX_VALUE);
 
 		channelPipeline.addLast(nettyFabricWorkerExecutionChannelHandler);
@@ -1220,7 +1227,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		NettyFabricWorkerExecutionChannelHandler
 			nettyFabricWorkerExecutionChannelHandler =
 				new NettyFabricWorkerExecutionChannelHandler(
-					new MockRepository(), new EmbeddedProcessExecutor(),
+					new MockRepository(),
+					new LocalFabricAgent(new EmbeddedProcessExecutor()),
 					Long.MAX_VALUE);
 
 		Channel channel = NettyTestUtil.createEmptyEmbeddedChannel();

@@ -17,9 +17,6 @@ package com.liferay.portal.security;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.User;
 
-import javax.naming.directory.Attributes;
-import javax.naming.ldap.LdapContext;
-
 /**
  * @author Edward Han
  * @author Michael C. Han
@@ -33,15 +30,6 @@ public class PortalUserImporterUtil {
 			PortalUserImporterUtil.class);
 
 		return _portalUserImporter;
-	}
-
-	public static User importUser(
-			long ldapServerId, long companyId, LdapContext ldapContext,
-			Attributes attributes, String password)
-		throws Exception {
-
-		return getPortalUserImporter().importUser(
-			ldapServerId, companyId, ldapContext, attributes, password);
 	}
 
 	public static User importUser(

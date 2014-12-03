@@ -662,6 +662,10 @@ public class ServicePreAction extends Action {
 
 		long scopeGroupId = PortalUtil.getScopeGroupId(request);
 
+		if (group.isInheritContent()) {
+			scopeGroupId = group.getParentGroupId();
+		}
+
 		if ((scopeGroupId <= 0) && (doAsGroupId > 0)) {
 			scopeGroupId = doAsGroupId;
 		}
@@ -1006,7 +1010,6 @@ public class ServicePreAction extends Action {
 				if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 					pageSettingsURL.setControlPanelCategory(
 						PortletCategoryKeys.PORTLET);
-					pageSettingsURL.setParameter("closeRedirect", currentURL);
 					pageSettingsURL.setWindowState(LiferayWindowState.POP_UP);
 				}
 				else {

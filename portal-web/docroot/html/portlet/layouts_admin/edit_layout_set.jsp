@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-String closeRedirect = ParamUtil.getString(request, "closeRedirect");
-
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
 Group group = layoutsAdminDisplayContext.getGroup();
@@ -132,7 +130,6 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 <aui:form action="<%= editLayoutSetURL %>" cssClass="edit-layoutset-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayoutset();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
-	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />

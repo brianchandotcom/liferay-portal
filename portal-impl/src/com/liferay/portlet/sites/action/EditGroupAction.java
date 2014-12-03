@@ -125,28 +125,16 @@ public class EditGroupAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
-		String closeRedirect = ParamUtil.getString(
-			actionRequest, "closeRedirect");
-
-		Group group = getLiveGroup(actionRequest);
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				String oldFriendlyURL = getGroupFriendlyURL(group);
-				String oldStagingFriendlyURL = getStagingGroupFriendlyURL(
-					group);
-
 				Callable<Group> groupCallable = new GroupCallable(
 					actionRequest);
 
-				group = TransactionalCallableUtil.call(
+				Group group = TransactionalCallableUtil.call(
 					_transactionAttribute, groupCallable);
 
-				Layout layout = themeDisplay.getLayout();
-
-				Group layoutGroup = layout.getGroup();
-
-				if (cmd.equals(Constants.ADD) && layoutGroup.isControlPanel()) {
+				if (cmd.equals(Constants.ADD)) {
 					themeDisplay.setScopeGroupId(group.getGroupId());
 
 					PortletURL siteAdministrationURL =
@@ -181,10 +169,6 @@ public class EditGroupAction extends PortletAction {
 						redirect, "doAsGroupId", group.getGroupId());
 					redirect = HttpUtil.setParameter(
 						redirect, "refererPlid", newRefererPlid);
-
-					closeRedirect = updateCloseRedirect(
-						closeRedirect, group, themeDisplay, oldFriendlyURL,
-						oldStagingFriendlyURL);
 				}
 			}
 			else if (cmd.equals(Constants.DEACTIVATE) ||
@@ -199,9 +183,7 @@ public class EditGroupAction extends PortletAction {
 				resetMergeFailCountAndMerge(actionRequest);
 			}
 
-			sendRedirect(
-				portletConfig, actionRequest, actionResponse, redirect,
-				closeRedirect);
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchGroupException ||
@@ -492,62 +474,6 @@ public class EditGroupAction extends PortletAction {
 			group.getDescription(), group.getType(), group.isManualMembership(),
 			group.getMembershipRestriction(), group.getFriendlyURL(), active,
 			serviceContext);
-	}
-
-	protected String updateCloseRedirect(
-			String closeRedirect, Group group, ThemeDisplay themeDisplay,
-			String oldFriendlyURL, String oldStagingFriendlyURL)
-		throws PortalException {
-
-		if (Validator.isNull(closeRedirect) || (group == null)) {
-			return closeRedirect;
-		}
-
-		String oldPath = null;
-		String newPath = null;
-
-		if (Validator.isNotNull(oldFriendlyURL)) {
-			oldPath = oldFriendlyURL;
-			newPath = group.getFriendlyURL();
-
-			if (closeRedirect.contains(oldPath)) {
-				closeRedirect = PortalUtil.updateRedirect(
-					closeRedirect, oldPath, newPath);
-			}
-			else {
-				closeRedirect = PortalUtil.getGroupFriendlyURL(
-					LayoutSetLocalServiceUtil.getLayoutSet(
-						group.getGroupId(), false),
-					themeDisplay);
-			}
-		}
-
-		if (Validator.isNotNull(oldStagingFriendlyURL)) {
-			Group stagingGroup = group.getStagingGroup();
-
-			if (GroupLocalServiceUtil.fetchGroup(
-					stagingGroup.getGroupId()) == null) {
-
-				oldPath = oldStagingFriendlyURL;
-				newPath = group.getFriendlyURL();
-			}
-			else {
-				oldPath = oldStagingFriendlyURL;
-				newPath = stagingGroup.getFriendlyURL();
-			}
-
-			if (closeRedirect.contains(oldPath)) {
-				closeRedirect = PortalUtil.updateRedirect(
-					closeRedirect, oldPath, newPath);
-			}
-			else {
-				closeRedirect = PortalUtil.getGroupFriendlyURL(
-					LayoutSetLocalServiceUtil.getLayoutSet(
-						group.getGroupId(), false), themeDisplay);
-			}
-		}
-
-		return closeRedirect;
 	}
 
 	protected Group updateGroup(ActionRequest actionRequest) throws Exception {

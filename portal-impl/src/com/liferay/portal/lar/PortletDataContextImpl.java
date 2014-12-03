@@ -1867,7 +1867,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
 
-		_rootPortletId = PortletConstants.getRootPortletId(portletId);
+		if (Validator.isNotNull(portletId)) {
+			_rootPortletId = PortletConstants.getRootPortletId(portletId);
+		}
+		else {
+			_rootPortletId = null;
+		}
 	}
 
 	@Override

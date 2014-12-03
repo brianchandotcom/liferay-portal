@@ -1329,7 +1329,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
-				if (!trimmedLine.contains(StringPool.DOUBLE_SLASH) &&
+				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
 					!trimmedLine.startsWith(StringPool.STAR)) {
 
 					String strippedQuotesLine = stripQuotes(
@@ -1363,12 +1363,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
-					while (trimmedLine.contains(StringPool.TAB)) {
-						line = StringUtil.replaceLast(
-							line, StringPool.TAB, StringPool.SPACE);
+					if (!line.contains(StringPool.DOUBLE_SLASH)) {
+						while (trimmedLine.contains(StringPool.TAB)) {
+							line = StringUtil.replaceLast(
+								line, StringPool.TAB, StringPool.SPACE);
 
-						trimmedLine = StringUtil.replaceLast(
-							trimmedLine, StringPool.TAB, StringPool.SPACE);
+							trimmedLine = StringUtil.replaceLast(
+								trimmedLine, StringPool.TAB, StringPool.SPACE);
+						}
 					}
 
 					if (line.contains(StringPool.TAB + StringPool.SPACE) &&
@@ -1389,6 +1391,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							StringPool.TAB);
 					}
 
+					if (line.contains(StringPool.SPACE + StringPool.TAB)) {
+						line = StringUtil.replace(
+							line, StringPool.SPACE + StringPool.TAB,
+							StringPool.TAB);
+					}
+
 					while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
 						   !trimmedLine.contains(
 							   StringPool.QUOTE + StringPool.DOUBLE_SPACE) &&
@@ -1403,6 +1411,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 
 					if (!line.contains(StringPool.AT) &&
+						!line.contains(StringPool.DOUBLE_SLASH) &&
 						!line.contains(StringPool.QUOTE)) {
 
 						int pos = line.indexOf(") ");

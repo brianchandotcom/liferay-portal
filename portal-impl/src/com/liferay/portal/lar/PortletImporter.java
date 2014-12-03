@@ -903,7 +903,7 @@ public class PortletImporter {
 		if (preserveScopeLayoutId && (layout != null)) {
 			javax.portlet.PortletPreferences jxPortletPreferences =
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-					layout, portletDataContext.getRootPortletId());
+					layout, portletDataContext.getPortletId());
 
 			try {
 				jxPortletPreferences.setValue("lfrScopeType", scopeType);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.security;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.InitialThreadLocal;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
  * @author Edward Han
  * @author Vilmos Papp
  */
-public class LDAPUserTransactionThreadLocal {
+public class UserImportTransactionThreadLocal {
 
 	public static String getOriginalEmailAddress() {
 		return _originalEmailAddress.get();
@@ -42,11 +42,11 @@ public class LDAPUserTransactionThreadLocal {
 
 	private static final ThreadLocal<String> _originalEmailAddress =
 		new AutoResetThreadLocal<String>(
-			LDAPUserTransactionThreadLocal.class + "._originalEmailAddress",
+			UserImportTransactionThreadLocal.class + "._originalEmailAddress",
 			StringPool.BLANK);
 	private static final ThreadLocal<Boolean> _originatesFromLDAP =
 		new InitialThreadLocal<Boolean>(
-			LDAPUserTransactionThreadLocal.class + "._originatesFromLDAP",
+			UserImportTransactionThreadLocal.class + "._originatesFromLDAP",
 			false);
 
 }

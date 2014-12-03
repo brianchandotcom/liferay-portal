@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.security;
 
 import com.liferay.portal.kernel.util.InitialThreadLocal;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class LDAPUserGroupTransactionThreadLocal {
+public class UserGroupImportTransactionThreadLocal {
 
 	public static boolean isOriginatesFromLDAP() {
 		return _originatesFromLDAP.get();
@@ -31,7 +31,7 @@ public class LDAPUserGroupTransactionThreadLocal {
 
 	private static final ThreadLocal<Boolean> _originatesFromLDAP =
 		new InitialThreadLocal<Boolean>(
-			LDAPUserGroupTransactionThreadLocal.class + "._originatesFromLDAP",
+			UserGroupImportTransactionThreadLocal.class + "._originatesFromLDAP",
 			false);
 
 }

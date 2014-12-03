@@ -16,7 +16,7 @@ package com.liferay.portal.model;
 
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.security.PortalUserExporterUtil;
-import com.liferay.portal.security.ldap.LDAPUserTransactionThreadLocal;
+import com.liferay.portal.security.UserImportTransactionThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 
@@ -52,7 +52,7 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 	}
 
 	protected void exportToLDAP(Contact contact) throws Exception {
-		if (LDAPUserTransactionThreadLocal.isOriginatesFromLDAP()) {
+		if (UserImportTransactionThreadLocal.isOriginatesFromLDAP()) {
 			return;
 		}
 

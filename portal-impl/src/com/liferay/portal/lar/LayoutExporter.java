@@ -278,9 +278,6 @@ public class LayoutExporter {
 
 		stopWatch.start();
 
-		portletDataContext.setPortetDataContextListener(
-			new PortletDataContextListenerImpl(portletDataContext));
-
 		Document document = SAXReaderUtil.createDocument();
 
 		Element rootElement = document.addElement("root");

@@ -21,17 +21,18 @@ import com.liferay.portal.kernel.util.InitialThreadLocal;
  */
 public class UserGroupImportTransactionThreadLocal {
 
-	public static boolean isOriginatesFromLDAP() {
-		return _originatesFromLDAP.get();
+	public static boolean isOriginatesFromImport() {
+		return _originatesFromImport.get();
 	}
 
-	public static void setOriginatesFromLDAP(boolean originatesFromLDAP) {
-		_originatesFromLDAP.set(originatesFromLDAP);
+	public static void setOriginatesFromImport(boolean originatesFromImport) {
+		_originatesFromImport.set(originatesFromImport);
 	}
 
-	private static final ThreadLocal<Boolean> _originatesFromLDAP =
+	private static final ThreadLocal<Boolean> _originatesFromImport =
 		new InitialThreadLocal<Boolean>(
-			UserGroupImportTransactionThreadLocal.class + "._originatesFromLDAP",
+			UserGroupImportTransactionThreadLocal.class +
+				"._originatesFromImport",
 			false);
 
 }

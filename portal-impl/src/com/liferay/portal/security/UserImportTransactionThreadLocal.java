@@ -28,25 +28,25 @@ public class UserImportTransactionThreadLocal {
 		return _originalEmailAddress.get();
 	}
 
-	public static boolean isOriginatesFromLDAP() {
-		return _originatesFromLDAP.get();
+	public static boolean isOriginatesFromImport() {
+		return _originatesFromImport.get();
 	}
 
 	public static void setOriginalEmailAddress(String originalEmailAddress) {
 		_originalEmailAddress.set(originalEmailAddress);
 	}
 
-	public static void setOriginatesFromLDAP(boolean originatesFromLDAP) {
-		_originatesFromLDAP.set(originatesFromLDAP);
+	public static void setOriginatesFromImport(boolean originatesFromImport) {
+		_originatesFromImport.set(originatesFromImport);
 	}
 
 	private static final ThreadLocal<String> _originalEmailAddress =
 		new AutoResetThreadLocal<String>(
 			UserImportTransactionThreadLocal.class + "._originalEmailAddress",
 			StringPool.BLANK);
-	private static final ThreadLocal<Boolean> _originatesFromLDAP =
+	private static final ThreadLocal<Boolean> _originatesFromImport =
 		new InitialThreadLocal<Boolean>(
-			UserImportTransactionThreadLocal.class + "._originatesFromLDAP",
+			UserImportTransactionThreadLocal.class + "._originatesFromImport",
 			false);
 
 }

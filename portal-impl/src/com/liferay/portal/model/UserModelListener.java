@@ -88,7 +88,7 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	protected void exportToLDAP(User user) throws Exception {
 		if (user.isDefaultUser() ||
-			UserImportTransactionThreadLocal.isOriginatesFromLDAP()) {
+			UserImportTransactionThreadLocal.isOriginatesFromImport()) {
 
 			return;
 		}

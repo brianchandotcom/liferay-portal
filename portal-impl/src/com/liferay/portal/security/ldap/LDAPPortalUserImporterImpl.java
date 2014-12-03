@@ -44,10 +44,10 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.security.UserGroupImportTransactionThreadLocal;
-import com.liferay.portal.security.UserImportTransactionThreadLocal;
 import com.liferay.portal.security.PortalUserImporter;
 import com.liferay.portal.security.PortalUserImporterUtil;
+import com.liferay.portal.security.UserGroupImportTransactionThreadLocal;
+import com.liferay.portal.security.UserImportTransactionThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
@@ -922,7 +922,7 @@ public class LDAPPortalUserImporterImpl
 			String password)
 		throws Exception {
 
-		UserImportTransactionThreadLocal.setOriginatesFromLDAP(true);
+		UserImportTransactionThreadLocal.setOriginatesFromImport(true);
 
 		try {
 			AttributesTransformer attributesTransformer =
@@ -965,7 +965,7 @@ public class LDAPPortalUserImporterImpl
 			return user;
 		}
 		finally {
-			UserImportTransactionThreadLocal.setOriginatesFromLDAP(false);
+			UserImportTransactionThreadLocal.setOriginatesFromImport(false);
 		}
 	}
 
@@ -1004,7 +1004,7 @@ public class LDAPPortalUserImporterImpl
 			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
 				companyId);
 
-			UserGroupImportTransactionThreadLocal.setOriginatesFromLDAP(true);
+			UserGroupImportTransactionThreadLocal.setOriginatesFromImport(true);
 
 			try {
 				userGroup = UserGroupLocalServiceUtil.addUserGroup(
@@ -1023,7 +1023,7 @@ public class LDAPPortalUserImporterImpl
 				}
 			}
 			finally {
-				UserGroupImportTransactionThreadLocal.setOriginatesFromLDAP(
+				UserGroupImportTransactionThreadLocal.setOriginatesFromImport(
 					false);
 			}
 		}

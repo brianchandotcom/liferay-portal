@@ -283,7 +283,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if (className.equals(Group.class.getName())) {
-			if (!site && !inheritContent && (liveGroupId == 0) &&
+			if (!site && (liveGroupId == 0) &&
 				!name.equals(GroupConstants.CONTROL_PANEL)) {
 
 				throw new IllegalArgumentException();

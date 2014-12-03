@@ -19,10 +19,6 @@
 <%
 Group group = layoutsAdminDisplayContext.getGroup();
 
-if (group.isInheritContent()) {
-	group = group.getParentGroup();
-}
-
 SitesUtil.addPortletBreadcrumbEntries(group, layoutsAdminDisplayContext.getPagesName(), layoutsAdminDisplayContext.getRedirectURL(), request, renderResponse);
 %>
 
@@ -192,41 +188,17 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 
 				<%
 				String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
-
-				List<Group> sharingContentGroups = new ArrayList<Group>();
-
-				sharingContentGroups.add(group);
-
-				sharingContentGroups.addAll(GroupLocalServiceUtil.getGroups(group.getCompanyId(), group.getGroupId(), false, true));
-
-				for (Group sharingContentGroup : sharingContentGroups) {
-					PortletURL editLayoutURL = layoutsAdminDisplayContext.getEditLayoutURL();
-
-					editLayoutURL.setParameter("groupId", String.valueOf(sharingContentGroup.getGroupId()));
 				%>
 
-					<liferay-ui:layouts-tree
-						groupId="<%= sharingContentGroup.getGroupId() %>"
-						portletURL="<%= editLayoutURL %>"
-						privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
-						rootNodeName="<%= sharingContentGroup.getName() %>"
-						selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
-						selectedLayoutIds="<%= selectedLayoutIds %>"
-						treeId="layoutsTree"
-					/>
-
-				<%
-				}
-				%>
-
-				<portlet:renderURL var="addGroupURL">
-					<portlet:param name="struts_action" value="/layouts_admin/add_group" />
-					<portlet:param name="parentGroupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-				</portlet:renderURL>
-
-				<aui:button-row>
-					<aui:button href="<%= addGroupURL %>" type="submit" value="add-new-group" />
-				</aui:button-row>
+				<liferay-ui:layouts-tree
+					groupId="<%= layoutsAdminDisplayContext.getGroupId() %>"
+					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
+					privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
+					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
+					selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+					selectedLayoutIds="<%= selectedLayoutIds %>"
+					treeId="layoutsTree"
+				/>
 			</div>
 		</c:if>
 

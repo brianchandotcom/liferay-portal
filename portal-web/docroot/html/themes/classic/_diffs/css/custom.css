@@ -423,7 +423,7 @@ html {
 		}
 
 		.dropdown-menu > li > a {
-			&:focus, &:hover {
+			&, &:focus, &:hover {
 				@include respond-to(phone, tablet) {
 					background-color: transparent;
 				}

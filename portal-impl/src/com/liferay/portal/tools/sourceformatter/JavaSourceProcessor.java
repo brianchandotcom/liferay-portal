@@ -1314,31 +1314,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				line = sortExceptions(line);
 
-				if (trimmedLine.startsWith("if (") ||
-					trimmedLine.startsWith("else if (") ||
-					trimmedLine.startsWith("while (") ||
-					Validator.isNotNull(ifClause)) {
-
-					ifClause = ifClause + line + StringPool.NEW_LINE;
-
-					if (line.endsWith(") {")) {
-						String newIfClause = checkIfClause(
-							ifClause, fileName, lineCount);
-
-						if (!ifClause.equals(newIfClause) &&
-							content.contains(ifClause)) {
-
-							return StringUtil.replace(
-								content, ifClause, newIfClause);
-						}
-
-						ifClause = StringPool.BLANK;
-					}
-					else if (line.endsWith(StringPool.SEMICOLON)) {
-						ifClause = StringPool.BLANK;
-					}
-				}
-
 				if (trimmedLine.startsWith("Pattern ") ||
 					Validator.isNotNull(regexPattern)) {
 
@@ -1625,6 +1600,31 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
 					processErrorMessage(
 						fileName, "{:" + fileName + " " + lineCount);
+				}
+
+				if (trimmedLine.startsWith("if (") ||
+					trimmedLine.startsWith("else if (") ||
+					trimmedLine.startsWith("while (") ||
+					Validator.isNotNull(ifClause)) {
+
+					ifClause = ifClause + line + StringPool.NEW_LINE;
+
+					if (line.endsWith(") {")) {
+						String newIfClause = checkIfClause(
+							ifClause, fileName, lineCount);
+
+						if (!ifClause.equals(newIfClause) &&
+							content.contains(ifClause)) {
+
+							return StringUtil.replace(
+								content, ifClause, newIfClause);
+						}
+
+						ifClause = StringPool.BLANK;
+					}
+					else if (line.endsWith(StringPool.SEMICOLON)) {
+						ifClause = StringPool.BLANK;
+					}
 				}
 
 				int lineLength = getLineLength(line);

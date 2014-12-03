@@ -52,7 +52,16 @@
 			</else>
 		</if>
 
-		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="CONTENT_FIELD" value1="${kbArticleContent}" />
+		<if>
+			<isset var="kbArticleContentSourceOn" />
+			<then>
+				<execute action="CPKnowledgebaseadminAddarticle#assertClick" locator-key1="SOURCE_BUTTON" value1="Source" />
+				<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="CONTENT_BODY_SOURCE_ON" value1="${kbArticleContentSourceOn}" />
+			</then>
+			<else>
+				<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="CONTENT_FIELD" value1="${kbArticleContent}" />
+			</else>
+		</if>
 
 		<if>
 			<isset var="kbArticleRelatedAssetType" />

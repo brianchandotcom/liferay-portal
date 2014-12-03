@@ -36,9 +36,11 @@ public class ExportImportLifecycleManager {
 		message.put("exportImportLifecycleEvent", exportImportLifecycleEvent);
 
 		MessageBusUtil.sendMessage(
-			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC, message);
+			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC,
+			message.clone());
 		MessageBusUtil.sendMessage(
-			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC, message);
+			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC,
+			message.clone());
 	}
 
 }

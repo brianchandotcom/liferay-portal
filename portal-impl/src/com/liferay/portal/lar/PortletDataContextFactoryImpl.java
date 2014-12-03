@@ -67,6 +67,7 @@ public class PortletDataContextFactoryImpl
 
 		clonePortletDataContext.setParameterMap(
 			portletDataContext.getParameterMap());
+		clonePortletDataContext.setPortletId(portletDataContext.getPortletId());
 		clonePortletDataContext.setScopeGroupId(
 			portletDataContext.getScopeGroupId());
 		clonePortletDataContext.setSourceCompanyId(

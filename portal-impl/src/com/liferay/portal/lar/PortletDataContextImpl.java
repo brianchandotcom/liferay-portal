@@ -63,6 +63,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletModel;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcedModel;
@@ -1042,6 +1043,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _plid;
 	}
 
+	@Override
+	public String getPortletId() {
+		return _portletId;
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             ExportImportPathUtil#getPortletPath(PortletDataContext,
@@ -1212,6 +1218,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public String getRootPath() {
 		return ExportImportPathUtil.getRootPath(this);
+	}
+
+	@Override
+	public String getRootPortletId() {
+		return _rootPortletId;
 	}
 
 	/**
@@ -1853,6 +1864,18 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public void setPortletId(String portletId) {
+		_portletId = portletId;
+
+		if (Validator.isNotNull(portletId)) {
+			_rootPortletId = PortletConstants.getRootPortletId(portletId);
+		}
+		else {
+			_rootPortletId = null;
+		}
+	}
+
+	@Override
 	public void setPrivateLayout(boolean privateLayout) {
 		_privateLayout = privateLayout;
 	}
@@ -2464,9 +2487,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 		new HashMap<String, List<KeyValuePair>>();
 	private long _plid;
 	private PortletDataContextListener _portletDataContextListener;
+	private String _portletId;
 	private final Set<String> _primaryKeys = new HashSet<String>();
 	private boolean _privateLayout;
 	private final Set<String> _references = new HashSet<String>();
+	private String _rootPortletId;
 	private final Set<String> _scopedPrimaryKeys = new HashSet<String>();
 	private long _scopeGroupId;
 	private String _scopeLayoutUuid;

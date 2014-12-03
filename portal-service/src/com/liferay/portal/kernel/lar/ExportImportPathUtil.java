@@ -305,6 +305,30 @@ public class ExportImportPathUtil {
 	 *
 	 * @param  portletDataContext the context of the current export/import
 	 *         process
+	 * @return a portlet path for the portlet ID
+	 */
+	public static String getPortletPath(PortletDataContext portletDataContext) {
+		return getPortletPath(
+			portletDataContext, portletDataContext.getPortletId());
+	}
+
+	/**
+	 * Returns a portlet path for the portlet ID.
+	 *
+	 * <p>
+	 * For example, a portlet path would resemble the following:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * /group/"queried groupId"/portlet/"portletId"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  portletDataContext the context of the current export/import
+	 *         process
 	 * @param  portletId the portlet ID the path is being generated for
 	 * @return a portlet path for the portlet ID
 	 */

@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
+import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
+import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
@@ -87,14 +89,29 @@ public class LayoutStagingBackgroundTaskExecutor
 		try {
 			ExportImportThreadLocal.setLayoutStagingInProcess(true);
 
+			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED,
+				exportImportConfiguration);
+
 			missingReferences = TransactionalCallableUtil.call(
 				transactionAttribute,
 				new LayoutStagingCallable(
 					backgroundTask.getBackgroundTaskId(),
 					exportImportConfiguration, sourceGroupId, targetGroupId,
 					userId));
+
+			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED,
+				exportImportConfiguration);
 		}
 		catch (Throwable t) {
+			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED,
+				exportImportConfiguration, t);
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(t, t);
 			}

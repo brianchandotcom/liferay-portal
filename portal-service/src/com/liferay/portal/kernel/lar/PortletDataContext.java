@@ -387,6 +387,8 @@ public interface PortletDataContext extends Serializable {
 
 	public long getPlid();
 
+	public String getPortletId();
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             ExportImportPathUtil#getPortletPath(PortletDataContext,
@@ -451,6 +453,8 @@ public interface PortletDataContext extends Serializable {
 	 */
 	@Deprecated
 	public String getRootPath();
+
+	public String getRootPortletId();
 
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
@@ -664,6 +668,8 @@ public interface PortletDataContext extends Serializable {
 
 	public void setPortetDataContextListener(
 		PortletDataContextListener portletDataContextListener);
+
+	public void setPortletId(String portletId);
 
 	public void setPrivateLayout(boolean privateLayout);
 

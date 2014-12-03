@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
+import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
+import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -31,6 +33,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -52,15 +55,34 @@ public class PortletStagingBackgroundTaskExecutor
 
 		MissingReferences missingReferences = null;
 
+		HashMap<String, Serializable> serializableTaskContextMap =
+			new HashMap<String, Serializable>(
+				backgroundTask.getTaskContextMap());
+
 		try {
 			ExportImportThreadLocal.setPortletStagingInProcess(true);
+
+			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_PORTLET_LOCAL_STARTED,
+				serializableTaskContextMap);
 
 			missingReferences = TransactionalCallableUtil.call(
 				transactionAttribute,
 				new PortletStagingCallable(
 					backgroundTask.getBackgroundTaskId()));
+
+			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED,
+				serializableTaskContextMap);
 		}
 		catch (Throwable t) {
+			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_PORTLET_LOCAL_FAILED,
+				serializableTaskContextMap);
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(t, t);
 			}

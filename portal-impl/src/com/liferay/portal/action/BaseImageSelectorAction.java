@@ -14,7 +14,7 @@
 
 package com.liferay.portal.action;
 
-import com.liferay.portal.kernel.editor.util.EditorConstants;
+import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

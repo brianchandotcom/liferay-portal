@@ -19,7 +19,7 @@
 <%
 String viewOrganizationsRedirect = ParamUtil.getString(request, "viewOrganizationsRedirect", themeDisplay.getURLControlPanel());
 String redirect = ParamUtil.getString(request, "redirect", viewOrganizationsRedirect);
-String closeRedirect = ParamUtil.getString(request, "closeRedirect");
+
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
@@ -182,7 +182,6 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 <aui:form action="<%= editSiteURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />

@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.util;
 
 import java.io.IOException;
-
 import java.io.InputStream;
+
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -170,18 +170,19 @@ public interface Http {
 
 	public String shortenURL(String url, int count);
 
-	public InputStream URLtoInputStream(Http.Options options) throws IOException;
-
-	public InputStream URLtoInputStream(String location) throws IOException;
-
-	public InputStream URLtoInputStream(String location, boolean post)
-		throws IOException;
-
 	public byte[] URLtoByteArray(Http.Options options) throws IOException;
 
 	public byte[] URLtoByteArray(String location) throws IOException;
 
 	public byte[] URLtoByteArray(String location, boolean post)
+		throws IOException;
+
+	public InputStream URLtoInputStream(Http.Options options)
+		throws IOException;
+
+	public InputStream URLtoInputStream(String location) throws IOException;
+
+	public InputStream URLtoInputStream(String location, boolean post)
 		throws IOException;
 
 	public String URLtoString(Http.Options options) throws IOException;

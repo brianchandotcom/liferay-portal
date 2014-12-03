@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -1618,7 +1616,7 @@ public class HttpImpl implements Http {
 					response.setContentLength(-1);
 				}
 				else {
-					int contentLength = (int) contentLengthLong;
+					int contentLength = (int)contentLengthLong;
 
 					response.setContentLength(contentLength);
 				}
@@ -1637,9 +1635,7 @@ public class HttpImpl implements Http {
 
 			InputStream inputStream = httpMethod.getResponseBodyAsStream();
 
-			if (Validator.isNotNull(progressId) &&
-				(portletRequest != null)) {
-
+			if (Validator.isNotNull(progressId) && (portletRequest != null)) {
 				ProgressInputStream progressInputStream =
 					new ProgressInputStream(
 						portletRequest, inputStream, contentLengthLong,

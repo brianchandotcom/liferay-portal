@@ -36,6 +36,6 @@ public class DeleteOnCloseFileInputStream extends FileInputStream {
 		_file.delete();
 	}
 
-	private File _file;
+	private final File _file;
 
 }

@@ -751,7 +751,10 @@
 
 	<target name="build-sql-file">
 		<if>
-			<isset property="sql.legacy.url" />
+			<and>
+				<isset property="portal.version" />
+				<isset property="sql.legacy.url" />
+			</and>
 			<then>
 				<delete dir="sql/legacy" failonerror="false" />
 

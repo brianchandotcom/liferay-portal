@@ -176,7 +176,7 @@ public class AssetUtil {
 
 		if (!viewInContext ||
 			(Validator.isNotNull(assetEntryLayoutUuid) &&
-		 	!assetEntryLayoutUuid.equals(layout.getUuid()))) {
+			 !assetEntryLayoutUuid.equals(layout.getUuid()))) {
 
 			viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
 		}

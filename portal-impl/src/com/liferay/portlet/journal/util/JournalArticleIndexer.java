@@ -333,7 +333,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		if ((latestIndexableArticle == null) ||
 			(PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS &&
-		 	(latestIndexableArticle.getVersion() > article.getVersion()))) {
+			 (latestIndexableArticle.getVersion() > article.getVersion()))) {
 
 			return;
 		}

@@ -10,6 +10,7 @@
 	<tear-down>
 		<execute macro="ReportsAdmin#tearDownReports" />
 		<execute macro="ReportsAdmin#tearDownDefinitions" />
+		<execute macro="ReportsAdmin#tearDownSources" />
 
 		<execute macro="ServerAdministration#tearDownMailServerSettings" />
 	</tear-down>
@@ -27,7 +28,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="${reportsDefinitionName}" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
@@ -61,7 +62,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addScheduleEntry">
@@ -76,7 +77,7 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#viewNoReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name" />
 		</execute>
 
 		<execute action="CPReportsadminViewreportentry#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Processing report. This may take several minutes." />
@@ -94,7 +95,7 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name" />
 			<var name="scheduled" value="true" />
 			<var name="userName" value="Test Test" />
 		</execute>
@@ -102,7 +103,7 @@
 
 	<command name="DeleteReportFile" priority="5">
 		<var name="reportsDefinitionName" value="Reports Definition Name" />
-		<var name="reportsFileName" value="reports_admin_template_source_sample.csv" />
+		<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
@@ -114,7 +115,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="${reportsDefinitionName}" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -176,7 +177,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -194,13 +195,13 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.pdf" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#deliverReportEntryFile">
 			<var name="emailRecipientAddress" value="${emailAddress3}" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.pdf" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
 		<execute action="BaseLiferay#pause" locator1="30000" />
@@ -214,13 +215,13 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="New Report: reports_admin_template_source_sample.pdf" />
-			<var name="gmailMailTableMessageTitle" value="New Report: reports_admin_template_source_sample.pdf" />
+			<var name="gmailAssetType" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="gmailMailTableMessageTitle" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMessageBody" value="Please review the attached report." />
 			<var name="gmailMessageBodyClosing" value="Sincerly, test@liferay.com" />
 			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress3}," />
-			<var name="gmailMessageTitle" value="New Report: reports_admin_template_source_sample.pdf" />
-			<var name="gmailMesssageAttachment" value="reports_admin_template_source_sample.pdf" />
+			<var name="gmailMessageTitle" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="gmailMesssageAttachment" value="reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
 		<execute macro="Gmail#tearDown">
@@ -242,7 +243,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -260,12 +261,65 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.csv" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample.csv" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
+		</execute>
+	</command>
+
+	<command name="DownloadReportFromOtherDataSource" priority="5">
+		<property name="database.sharding" value="true" />
+		<property name="databases.size" value="2" />
+
+		<var name="reportsDataSourceURL"><![CDATA[jdbc:mysql://localhost/lportal2?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false]]></var>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Reports Admin" />
+		</execute>
+
+		<execute macro="ReportsAdmin#gotoSources" />
+
+		<execute macro="ReportsAdmin#addSource">
+			<var name="reportsDataSourceClass" value="com.mysql.jdbc.Driver" />
+			<var name="reportsDataSourceName" value="New Source" />
+			<var name="reportsDataSourceURL" value="${reportsDataSourceURL}" />
+			<var name="reportsDataSourceUser" value="root" />
+		</execute>
+
+		<execute macro="ReportsAdmin#gotoDefinitions" />
+
+		<execute macro="ReportsAdmin#addReportDefinition">
+			<var name="dataSource" value="New Source" />
+			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+			<var name="templateFile" value="reports_admin_template_source_sample_list_type.jrxml" />
+		</execute>
+
+		<execute macro="ReportsAdmin#addReportEntry">
+			<var name="emailNotificationsAddress" value="test@liferay.com" />
+			<var name="emailRecipientAddress" value="test@liferay.com" />
+			<var name="reportFormat" value="pdf" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntry">
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<execute macro="ReportsAdmin#viewReportEntryFields">
+			<var name="dataSource" value="New Source" />
+			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
+			<var name="reportsDefinitionName" value="Reports Definition Name" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_list_type.pdf" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="ReportsAdmin#downloadReportEntryFile">
+			<var name="reportFormat" value="pdf" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_list_type.pdf" />
 		</execute>
 	</command>
 
@@ -280,7 +334,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -298,12 +352,12 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.html" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.html" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample.html" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.html" />
 		</execute>
 	</command>
 
@@ -318,7 +372,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -336,13 +390,13 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.pdf" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
 			<var name="reportFormat" value="pdf" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.pdf" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 	</command>
 
@@ -357,7 +411,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -375,12 +429,12 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.rtf" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.rtf" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample.rtf" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.rtf" />
 		</execute>
 	</command>
 
@@ -395,7 +449,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -413,12 +467,12 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.txt" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.txt" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample.txt" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.txt" />
 		</execute>
 	</command>
 
@@ -433,7 +487,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -451,12 +505,12 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.xls" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.xls" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample.xls" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.xls" />
 		</execute>
 	</command>
 
@@ -471,7 +525,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -489,12 +543,12 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.xml" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.xml" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#downloadReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample.xml" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.xml" />
 		</execute>
 	</command>
 
@@ -521,7 +575,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -542,15 +596,15 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="New Report: reports_admin_template_source_sample.pdf" />
-			<var name="gmailMailTableMessageTitle" value="New Report: reports_admin_template_source_sample.pdf" />
+			<var name="gmailAssetType" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="gmailMailTableMessageTitle" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMessageBody" value="You have a new report." />
 			<var name="gmailMessageBodyClosing" value="Sincerly, Joe Bloggs test@liferay.com" />
 			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress1}," />
-			<var name="gmailMessageTitle" value="New Report: reports_admin_template_source_sample.pdf" />
+			<var name="gmailMessageTitle" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
-		<var name="key_gmailAssetType" value="New Report: reports_admin_template_source_sample.pdf" />
+		<var name="key_gmailAssetType" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 		<var name="key_pageNameURL" value="report" />
 
 		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="report" />
@@ -561,7 +615,7 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.pdf" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
@@ -596,7 +650,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -617,16 +671,16 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="New Report: reports_admin_template_source_sample.pdf" />
-			<var name="gmailMailTableMessageTitle" value="New Report: reports_admin_template_source_sample.pdf" />
+			<var name="gmailAssetType" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="gmailMailTableMessageTitle" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMessageBody" value="Please review the attached report." />
 			<var name="gmailMessageBodyClosing" value="Sincerly, test@liferay.com" />
 			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress2}," />
-			<var name="gmailMessageTitle" value="New Report: reports_admin_template_source_sample.pdf" />
-			<var name="gmailMesssageAttachment" value="reports_admin_template_source_sample.pdf" />
+			<var name="gmailMessageTitle" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="gmailMesssageAttachment" value="reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
-		<var name="key_gmailAssetType" value="New Report: reports_admin_template_source_sample.pdf" />
+		<var name="key_gmailAssetType" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 		<var name="key_pageNameURL" value="report" />
 
 		<execute action="Gmail#assertElementNotPresent" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_LINK" />

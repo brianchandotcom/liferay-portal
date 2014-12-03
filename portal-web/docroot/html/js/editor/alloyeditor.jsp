@@ -208,10 +208,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		);
 	</c:if>
 
-	<portlet:actionURL var="imageSelectorURL">
-		<portlet:param name="struts_action" value="/blogs/image_selector" />
-	</portlet:actionURL>
-
 	nativeEditor.on(
 		'instanceReady',
 		function(event) {
@@ -226,6 +222,10 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			var uploader = new Liferay.BlogsUploader(
 				{
 					editor: nativeEditor,
+
+					<portlet:actionURL var="imageSelectorURL">
+						<portlet:param name="struts_action" value="/blogs/image_selector" />
+					</portlet:actionURL>
 
 					uploadUrl: '<%= imageSelectorURL %>'
 				}

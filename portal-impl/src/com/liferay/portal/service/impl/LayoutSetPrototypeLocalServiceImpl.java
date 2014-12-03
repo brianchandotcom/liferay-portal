@@ -101,7 +101,7 @@ public class LayoutSetPrototypeLocalServiceImpl
 			LayoutSetPrototype.class.getName(),
 			layoutSetPrototype.getLayoutSetPrototypeId(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			layoutSetPrototype.getName(LocaleUtil.getDefault()), null, 0, true,
+			layoutSetPrototype.getNameMap(), null, 0, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL, false,
 			true, serviceContext);
 

@@ -1069,14 +1069,19 @@ public class AssetPublisherImpl implements AssetPublisher {
 				scopeIdGroup = scopeIdLayout.getScopeGroup();
 			}
 			else {
+				Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+				nameMap.put(
+					LocaleUtil.getDefault(),
+					String.valueOf(scopeIdLayout.getPlid()));
+
 				scopeIdGroup = GroupLocalServiceUtil.addGroup(
 					PrincipalThreadLocal.getUserId(),
 					GroupConstants.DEFAULT_PARENT_GROUP_ID,
 					Layout.class.getName(), scopeIdLayout.getPlid(),
-					GroupConstants.DEFAULT_LIVE_GROUP_ID,
-					String.valueOf(scopeIdLayout.getPlid()), null, 0, true,
-					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
-					true, null);
+					GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null, 0,
+					true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null,
+					false, true, null);
 			}
 
 			return scopeIdGroup.getGroupId();

@@ -78,11 +78,11 @@ if (fileEntryId != 0) {
 	</div>
 
 	<div class="progress-wrapper">
-		<p id="file-name"></p>
+		<p class="file-name"></p>
 
 		<div class="progressbar"></div>
 
-		<p class="size" id="progress-data"></p>
+		<p class="size progress-data"></p>
 
 		<aui:button cssClass="btn-primary" id='<%= randomNamespace + "cancelUpload" %>' useNamespace="<%= false %>" value="cancel" />
 	</div>
@@ -115,6 +115,7 @@ if (!draggableImage.equals("none")) {
 		{
 			documentSelectorURL: '<%= documentSelectorURL.toString() %>',
 			errorNode: '#<%= randomNamespace + "errorAlert" %>',
+			fileEntryImageNode: '#<%= randomNamespace %>image',
 			namespace: '<%= randomNamespace %>',
 			maxFileSize: <%= maxFileSize %>,
 			paramName: '<portlet:namespace /><%= paramName %>',
@@ -130,7 +131,7 @@ if (!draggableImage.equals("none")) {
 			{
 				direction: '<%= draggableImage %>',
 				imageContainerSelector: '.image-wrapper',
-				imageSelector: '#image'
+				imageSelector: '#<%= randomNamespace %>image'
 			}
 		);
 	</c:if>

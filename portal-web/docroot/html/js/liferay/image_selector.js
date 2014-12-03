@@ -44,9 +44,13 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					fileEntryImageNode: {
+						validator: Lang.isString
+					},
+
 					fileNameNode: {
 						validator: Lang.isString,
-						value: '#file-name'
+						value: '.file-name'
 					},
 
 					maxFileSize: {
@@ -60,7 +64,7 @@ AUI.add(
 
 					progressDataNode: {
 						validator: Lang.isString,
-						value: '#progress-data'
+						value: '.progress-data'
 					},
 
 					uploadURL: {
@@ -263,13 +267,14 @@ AUI.add(
 
 					_onImageLoaded: function(event) {
 						var instance = this;
+
 						event.preventDefault();
 
 						var changeImageControls = instance.one('.change-image-controls');
 
 						instance.rootNode.addClass(CSS_CHECK_ACTIVE);
 
-						if (!instance._timer && instance._fileEntryId > 0 ) {
+						if (!instance._timer && instance._fileEntryId > 0) {
 							instance._timer = A.later(
 								CHANGE_IMAGE_CONTROLS_DELAY,
 								instance,

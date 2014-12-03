@@ -104,8 +104,6 @@ AUI.add(
 
 						instance._config = config;
 
-						instance._eventHandles = eventHandles;
-
 						instance._toggleTrashAction();
 
 						var hasPermission = (themeDisplay.isSignedIn() && instance.one('#addButtonContainer'));
@@ -113,8 +111,10 @@ AUI.add(
 						if (HTML5_UPLOAD && hasPermission && instance._entriesContainer.inDoc()) {
 							config.appViewEntryTemplates = instance.byId('appViewEntryTemplates');
 
-							A.getDoc().once('dragenter', instance._plugUpload, instance, config);
+							eventHandles.push(A.getDoc().once('dragenter', instance._plugUpload, instance, config));
 						}
+
+						instance._eventHandles = eventHandles;
 					},
 
 					destructor: function() {

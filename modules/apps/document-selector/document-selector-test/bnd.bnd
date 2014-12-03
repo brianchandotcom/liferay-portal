@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Document Selector Tests
-Bundle-SymbolicName: com.liferay.document.selector.test
-Bundle-Version: 1.0.0
-Include-Resource: classes

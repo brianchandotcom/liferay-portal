@@ -127,7 +127,7 @@ AUI.add(
 			'</ul>'
 		);
 
-		var TPL_IMAGE_THUMBNAIL = themeDisplay.getPathContext() + '/documents/' + themeDisplay.getScopeGroupId() + '/{0}/{1}';
+		var TPL_IMAGE_THUMBNAIL = themeDisplay.getPathContext() + '/documents/{0}/{1}/{2}';
 
 		var DocumentLibraryUpload = A.Component.create(
 			{
@@ -197,6 +197,11 @@ AUI.add(
 						value: STR_BLANK
 					},
 
+					scopeGroupId: {
+						validator: isNumber,
+						value: null
+					},
+
 					uploadURL: {
 						setter: '_decodeURI',
 						validator: isString,
@@ -229,6 +234,7 @@ AUI.add(
 						instance._displayStyle = instance.get('displayStyle');
 						instance._entriesContainer = instance.get('entriesContainer');
 						instance._maxFileSize = instance.get('maxFileSize');
+						instance._scopeGroupId = instance.get('scopeGroupId');
 
 						instance._handles = [];
 
@@ -782,7 +788,7 @@ AUI.add(
 						var thumbnailName = STR_THUMBNAIL_DEFAULT;
 
 						if (REGEX_IMAGE.test(fileName)) {
-							thumbnailName = sub(TPL_IMAGE_THUMBNAIL, [instance.get(STR_FOLDER_ID), fileName]);
+							thumbnailName = sub(TPL_IMAGE_THUMBNAIL, [instance._scopeGroupId, instance.get(STR_FOLDER_ID), fileName]);
 						}
 						else {
 							if (LString.endsWith(fileName.toLowerCase(), STR_EXTENSION_PDF)) {

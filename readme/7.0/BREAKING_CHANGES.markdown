@@ -666,3 +666,46 @@ decided not to provide this method any more because it is not being used
 anywhere inside the portal.
 
 ---------------------------------------
+
+### Portal LDAP Import and Export Interfaces have been restructured
+- **Date:** 2014-Dec-5
+- **JIRA Ticket:** LPS-51927
+
+#### What changed?
+- com.liferay.portal.security.ldap.PortalLDAPExporter moved to
+com.liferay.portal.security.PortalUserExporter 
+- com.liferay.portal.security.ldap.PortalLDAPExporterUtil moved to
+com.liferay.portal.security.PortalUserExporterUtil
+- com.liferay.portal.security.ldap.PortalLDAPImporter moved to
+com.liferay.portal.security.PortalUserImporter 
+- com.liferay.portal.security.ldap.PortalLDAPImporterUtil moved to
+com.liferay.portal.security.PortalUserImporterUtil
+- com.liferay.portal.security.ldap.LDAPOperation moved to 
+com.liferay.portal.security.LDAPOperation
+- com.liferay.portal.security.ldap.PortalLDAPUserExporterImpl moved to
+com.liferay.portal.security.ldap.LDAPPortalUserExporterImpl
+- com.liferay.portal.security.ldap.PortalLDAPUserImporterImpl moved to
+com.liferay.portal.security.ldap.LDAPPortalUserExporterImpl
+
+
+#### Who is affected?
+
+This will affect any plugin explicitly calling PortalLDAPUserExporterUtil and 
+PortalLDAPUserImporterUtil.
+
+This will affect any one extending PortalLDAPExporterImpl and 
+PortalLDAPImporterImpl
+
+#### How should I update my code?
+
+If you are extending PortalLDAPExporterImpl or PortalLDAPImporterImpl, you should
+extend LDAPPortalUserExporterImpl and LDAPPortalUserImporterImpl respectively.
+
+
+#### Why was this change made?
+
+This change was needed in order to provide a cleaner interface for user export 
+and import to an external system.  In theory, you could export and import users 
+to any external user repository, not simply LDAP.
+
+---------------------------------------

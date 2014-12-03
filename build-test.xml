@@ -751,60 +751,62 @@
 
 	<target name="build-sql-file">
 		<if>
-			<and>
-				<isset property="portal.version" />
-				<isset property="sql.legacy.url" />
-			</and>
+			<isset property="portal.version" />
 			<then>
-				<delete dir="sql/legacy" failonerror="false" />
-
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<get
-					dest="${tstamp.value}.zip"
-					src="${sql.legacy.url}"
-				/>
-
-				<unzip
-					dest="sql"
-					src="${tstamp.value}.zip"
-				/>
-
-				<delete file="${tstamp.value}.zip" />
-			</then>
-			<else>
 				<if>
-					<not>
-						<isset property="sql.legacy.zip" />
-					</not>
-					<then>
-						<fail>Please set "sql.legacy.zip" in test.properties to point to the legacy SQL ZIP file.</fail>
-					</then>
-				</if>
-
-				<if>
-					<not>
-						<and>
-							<available file="sql/legacy" />
-							<uptodate
-								srcfile="${sql.legacy.zip}"
-								targetfile="sql/legacy"
-							/>
-						</and>
-					</not>
+					<isset property="sql.legacy.url" />
 					<then>
 						<delete dir="sql/legacy" failonerror="false" />
 
-						<unzip src="${sql.legacy.zip}" dest="sql" />
+						<tstamp>
+							<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+						</tstamp>
 
-						<touch>
-							<fileset dir="sql/legacy" />
-						</touch>
+						<get
+							dest="${tstamp.value}.zip"
+							src="${sql.legacy.url}"
+						/>
+
+						<unzip
+							dest="sql"
+							src="${tstamp.value}.zip"
+						/>
+
+						<delete file="${tstamp.value}.zip" />
 					</then>
+					<else>
+						<if>
+							<not>
+								<isset property="sql.legacy.zip" />
+							</not>
+							<then>
+								<fail>Please set "sql.legacy.zip" in test.properties to point to the legacy SQL ZIP file.</fail>
+							</then>
+						</if>
+
+						<if>
+							<not>
+								<and>
+									<available file="sql/legacy" />
+									<uptodate
+										srcfile="${sql.legacy.zip}"
+										targetfile="sql/legacy"
+									/>
+								</and>
+							</not>
+							<then>
+								<delete dir="sql/legacy" failonerror="false" />
+
+								<unzip src="${sql.legacy.zip}" dest="sql" />
+
+								<touch>
+									<fileset dir="sql/legacy" />
+								</touch>
+							</then>
+						</if>
+					</else>
 				</if>
-			</else>
+			</then>
 		</if>
 
 		<if>

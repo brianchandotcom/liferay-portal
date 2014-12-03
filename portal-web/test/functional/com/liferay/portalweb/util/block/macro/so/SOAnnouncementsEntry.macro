@@ -328,6 +328,26 @@
 		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_MARK_LINK" value1="Mark as Read" />
 	</command>
 
+	<command name="previewEditPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="SOAnnouncements#click" locator-key1="ANNOUNCEMENTS_ENTRY_EDIT_LINK" />
+
+		<execute action="SOAnnouncementsAdd#selectFrame" locator-key1="ADD_ENTRY_IFRAME" />
+		<execute action="SOAnnouncementsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitleEdit}" />
+		<execute action="SOAnnouncementsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+		<execute action="SOAnnouncementsAdd#selectFrame" locator-key1="ADD_ENTRY_IFRAME" />
+		<execute action="SOAnnouncementsAdd#type" locator-key1="URL_FIELD" value1="${entryURL}" />
+		<execute action="SOAnnouncementsAdd#click" locator-key1="PREVIEW_BUTTON" value1="Preview" />
+		<execute action="SOAnnouncementsAdd#assertTextEquals" locator-key1="ANNOUNCEMENTS_PREVIEW_ENTRY_ACTION" value1="${entryAuthor} to ${distributionScope}" />
+		<execute action="SOAnnouncementsAdd#assertTextEquals" locator-key1="ANNOUNCEMENTS_PREVIEW_ENTRY_TITLE" value1="${entryTitleEdit}" />
+		<execute action="SOAnnouncementsAdd#assertTextEquals" locator-key1="ANNOUNCEMENTS_PREVIEW_ENTRY_CONTENT" value1="${entryContentEdit}" />
+		<execute action="SOAnnouncementsAdd#selectFrameTop" />
+	</command>
+
 	<command name="previewPG">
 		<execute action="SOAnnouncements#assertClick" locator-key1="ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
 

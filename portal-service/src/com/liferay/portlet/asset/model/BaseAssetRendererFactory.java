@@ -281,6 +281,11 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	@Override
+	public boolean isListable(long classPK) {
+		return true;
+	}
+
+	@Override
 	public boolean isSelectable() {
 		return _selectable;
 	}

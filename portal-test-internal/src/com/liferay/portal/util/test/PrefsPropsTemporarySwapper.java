@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util.test;
+package com.liferay.portal.util.test;
 
 import com.liferay.portal.util.PrefsPropsUtil;
 

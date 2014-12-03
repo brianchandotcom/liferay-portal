@@ -52,7 +52,7 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 	}
 
 	protected void exportToLDAP(Contact contact) throws Exception {
-		if (UserImportTransactionThreadLocal.isOriginatesFromLDAP()) {
+		if (UserImportTransactionThreadLocal.isOriginatesFromImport()) {
 			return;
 		}
 

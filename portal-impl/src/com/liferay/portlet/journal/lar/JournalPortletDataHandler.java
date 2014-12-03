@@ -475,11 +475,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 						DDMStructure.class);
 
 					dynamicQuery.add(classNameIdProperty.eq(classNameId));
-
-					Property classPKProperty = PropertyFactoryUtil.forName(
-						"classPK");
-
-					dynamicQuery.add(classPKProperty.eq(-1L));
 				}
 
 			});

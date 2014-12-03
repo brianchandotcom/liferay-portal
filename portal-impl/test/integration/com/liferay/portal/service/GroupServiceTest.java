@@ -580,8 +580,8 @@ public class GroupServiceTest {
 
 		try {
 			GroupLocalServiceUtil.updateGroup(
-				group1.getGroupId(), group11.getGroupId(), group1.getGroupKey(),
-				group1.getDescription(), group1.getType(),
+				group1.getGroupId(), group11.getGroupId(), group1.getNameMap(),
+				group1.getDescriptionMap(), group1.getType(),
 				group1.isManualMembership(), group1.getMembershipRestriction(),
 				group1.getFriendlyURL(), group1.isInheritContent(),
 				group1.isActive(), ServiceContextTestUtil.getServiceContext());
@@ -609,10 +609,11 @@ public class GroupServiceTest {
 		try {
 			GroupLocalServiceUtil.updateGroup(
 				group1.getGroupId(), group1111.getGroupId(),
-				group1.getGroupKey(), group1.getDescription(), group1.getType(),
-				group1.isManualMembership(), group1.getMembershipRestriction(),
-				group1.getFriendlyURL(), group1.isInheritContent(),
-				group1.isActive(), ServiceContextTestUtil.getServiceContext());
+				group1.getNameMap(), group1.getDescriptionMap(),
+				group1.getType(), group1.isManualMembership(),
+				group1.getMembershipRestriction(), group1.getFriendlyURL(),
+				group1.isInheritContent(), group1.isActive(),
+				ServiceContextTestUtil.getServiceContext());
 
 			Assert.fail("A child group cannot be its parent group");
 		}
@@ -635,7 +636,7 @@ public class GroupServiceTest {
 
 			GroupLocalServiceUtil.updateGroup(
 				stagingGroup.getGroupId(), group.getGroupId(),
-				stagingGroup.getGroupKey(), stagingGroup.getDescription(),
+				stagingGroup.getNameMap(), stagingGroup.getDescriptionMap(),
 				stagingGroup.getType(), stagingGroup.isManualMembership(),
 				stagingGroup.getMembershipRestriction(),
 				stagingGroup.getFriendlyURL(), stagingGroup.isInheritContent(),
@@ -656,8 +657,8 @@ public class GroupServiceTest {
 
 		try {
 			GroupLocalServiceUtil.updateGroup(
-				group.getGroupId(), group.getGroupId(), group.getGroupKey(),
-				group.getDescription(), group.getType(),
+				group.getGroupId(), group.getGroupId(), group.getNameMap(),
+				group.getDescriptionMap(), group.getType(),
 				group.isManualMembership(), group.getMembershipRestriction(),
 				group.getFriendlyURL(), group.isInheritContent(),
 				group.isActive(), ServiceContextTestUtil.getServiceContext());

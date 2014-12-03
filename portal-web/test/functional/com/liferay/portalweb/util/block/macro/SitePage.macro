@@ -183,6 +183,8 @@
 	<command name="changePageTypeLayoutCP">
 		<var name="key_pageType" value="${pageType}" />
 
+		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_2" />
+
 		<execute action="CPSitepagesAddpage#select" locator-key1="PAGE_TYPE_LAYOUT" value1="${pageType}" />
 
 		<if>

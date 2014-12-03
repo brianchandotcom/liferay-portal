@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleReference;
 import org.osgi.service.component.annotations.Component;
 
@@ -65,8 +66,10 @@ public class RSSPortletDisplayTemplateHandler
 		BundleReference bundleReference =
 			(BundleReference)getClass().getClassLoader();
 
+		Bundle bundle = bundleReference.getBundle();
+
 		return RSSPortletKeys.RSS.concat(PortletConstants.WAR_SEPARATOR).concat(
-			String.valueOf(bundleReference.getBundle().getBundleId()));
+			String.valueOf(bundle.getBundleId()));
 	}
 
 	@Override

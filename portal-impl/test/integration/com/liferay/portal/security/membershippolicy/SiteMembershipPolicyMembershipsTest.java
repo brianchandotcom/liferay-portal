@@ -16,6 +16,7 @@ package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
@@ -32,7 +33,10 @@ import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -281,12 +285,15 @@ public class SiteMembershipPolicyMembershipsTest
 	public void testVerifyWhenUpdatingGroup() throws Exception {
 		Group group = MembershipPolicyTestUtil.addGroup();
 
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
 		GroupServiceUtil.updateGroup(
-			group.getGroupId(), group.getParentGroupId(),
-			RandomTestUtil.randomString(), group.getDescription(),
-			group.getType(), group.isManualMembership(),
-			group.getMembershipRestriction(), group.getFriendlyURL(),
-			group.isInheritContent(), group.isActive(),
+			group.getGroupId(), group.getParentGroupId(), nameMap,
+			group.getDescriptionMap(), group.getType(),
+			group.isManualMembership(), group.getMembershipRestriction(),
+			group.getFriendlyURL(), group.isInheritContent(), group.isActive(),
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertTrue(isVerify());

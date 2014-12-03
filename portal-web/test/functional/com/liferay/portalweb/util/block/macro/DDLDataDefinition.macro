@@ -123,12 +123,9 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="NAME_FIELD" value1="${ddlDataDefinitionNameEdit}" />
 
-		<if>
-			<isset var="ddlDataDefinitionDescriptionEdit" />
-			<then>
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescriptionEdit}" />
-			</then>
-		</if>
+		<execute macro="CPDynamicdatalistsDatadefinitionsAdd#showDetails" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescriptionEdit}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
 	</command>

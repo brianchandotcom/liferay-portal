@@ -97,6 +97,16 @@
 		<execute action="CPContenttargetingAddcampaign#select" locator-key1="CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_TRACKING_ACTION_SELECT" value1="${youtubeTrackingActionSelect}" />
 	</command>
 
+	<command name="deleteAllCP">
+		<execute action="CPContenttargeting#click" locator-key1="NAVIGATION_CAMPAIGNS" />
+
+		<execute action="CPContenttargeting#click" locator-key1="CHECKBOX_ALL" />
+
+		<execute action="CPContenttargeting#click" locator-key1="DELETE_CAMPAIGN_BUTTON" />
+		<execute action="CPContenttargeting#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPContenttargeting#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="deleteCampaignCP">
 		<execute action="CPContenttargeting#click" locator-key1="NAVIGATION_CAMPAIGNS" />
 

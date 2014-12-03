@@ -39,6 +39,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_CAMPAIGN_BUTTON</td>
+	<td>//li[contains(@id,'deleteCampaigns')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_USER_SEGMENT_BUTTON</td>
+	<td>//li[contains(@id,'deleteUserSegments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX_ALL</td>
+	<td>//input[@title='Select All']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='alert alert-success']</td>
 	<td></td>
@@ -54,6 +69,11 @@
 	<td></td>
 </tr>
 <!--CAMPAIGN_TABLE-->
+<tr>
+	<td>CAMPAIGN_TABLE_CHECKBOX_ALL</td>
+	<td>//th[contains(@id,'campaigns')]/input[@title='Select All']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>CAMPAIGN_TABLE_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_campaignName}')]/td[1]/input</td>
@@ -116,6 +136,11 @@
 	<td></td>
 </tr>
 <!--USER_SEGMENT_TABLE-->
+<tr>
+	<td>USER_SEGMENT_TABLE_CHECKBOX_ALL</td>
+	<td>//th[contains(@id,'userSegments')]/input[@title='Select All']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>USER_SEGMENT_TABLE_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_userSegmentName}')]/td[1]/input</td>

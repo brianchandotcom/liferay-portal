@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -1356,9 +1357,18 @@ public class DLImpl implements DL {
 		Map<String, Serializable> workflowContext =
 			new HashMap<String, Serializable>();
 
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_URL,
-			getEntryURL(dlFileVersion, serviceContext));
+		String entryURL = null;
+		String command = serviceContext.getCommand();
+
+		if (command.equals(Constants.ADD_WEBDAV)) {
+			entryURL =
+				serviceContext.getPortalURL() + serviceContext.getCurrentURL();
+		}
+		else {
+			entryURL = getEntryURL(dlFileVersion, serviceContext);
+		}
+
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, entryURL);
 		workflowContext.put("event", syncEventType);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(

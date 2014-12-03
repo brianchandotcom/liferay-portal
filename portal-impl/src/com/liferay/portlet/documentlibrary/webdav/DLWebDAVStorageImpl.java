@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -727,6 +728,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					changeLog, false, file, serviceContext);
 			}
 			catch (NoSuchFileEntryException nsfee) {
+				serviceContext.setCommand(Constants.ADD_WEBDAV);
+
 				DLAppServiceUtil.addFileEntry(
 					groupId, parentFolderId, title, contentType, title,
 					description, changeLog, file, serviceContext);

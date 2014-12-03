@@ -177,7 +177,8 @@ AUI.add(
 							if (image) {
 								image.removeAttribute('data-random-id');
 								image.removeClass(CSS_UPLOADING_IMAGE);
-								image.attr(data.image.dataImageIdAttribute, data.image.fileEntryId);
+
+								image.attr(data.image.attributeDataImageId, data.image.fileEntryId);
 								image.attr('src', data.image.url);
 							}
 						}

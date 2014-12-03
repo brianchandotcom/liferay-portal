@@ -139,7 +139,7 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 				inputStream, mimeType);
 
 			imageJSONObject.put(
-				"dataImageIdAttribute",
+				"attributeDataImageId",
 				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());

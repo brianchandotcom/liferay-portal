@@ -44,6 +44,11 @@ public interface DocumentRepository extends CapabilityProvider {
 			long size, ServiceContext serviceContext)
 		throws PortalException;
 
+	public Folder addFolder(
+			long userId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void checkInFileEntry(
 			long userId, long fileEntryId, boolean major, String changeLog,
 			ServiceContext serviceContext)
@@ -86,6 +91,16 @@ public interface DocumentRepository extends CapabilityProvider {
 		throws PortalException;
 
 	public long getRepositoryId();
+
+	public FileEntry moveFileEntry(
+			long userId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public Folder moveFolder(
+			long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	public void revertFileEntry(
 			long userId, long fileEntryId, String version,

@@ -25,21 +25,6 @@ import com.liferay.portal.service.ServiceContext;
  */
 public interface LocalRepository extends DocumentRepository {
 
-	public Folder addFolder(
-			long userId, long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public FileEntry moveFileEntry(
-			long userId, long fileEntryId, long newFolderId,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public Folder moveFolder(
-			long userId, long folderId, long parentFolderId,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */

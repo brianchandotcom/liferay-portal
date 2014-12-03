@@ -28,12 +28,10 @@ portletURL.setParameter("struts_action", "/portlet_configuration/export_import")
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 portletURL.setParameter("portletResource", portletResource);
-
-String tabs2Names = "export,import";
 %>
 
 <liferay-ui:tabs
-	names="<%= tabs2Names %>"
+	names="export,import"
 	param="tabs2"
 	portletURL="<%= portletURL %>"
 />

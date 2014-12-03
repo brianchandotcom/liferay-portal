@@ -533,6 +533,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 		var deleteGroupRolesRoleIds = [];
 
 		function <portlet:namespace />deleteRegularRole(roleId) {
+			var A = AUI();
+
 			A.Array.removeItem(addRoleIds, roleId);
 
 			deleteRoleIds.push(roleId);

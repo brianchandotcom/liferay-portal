@@ -17,8 +17,11 @@ package com.liferay.portal.fabric.netty.handlers;
 import com.liferay.portal.fabric.agent.FabricAgentRegistry;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentConfig;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentStub;
+import com.liferay.portal.fabric.netty.fileserver.FileResponse;
+import com.liferay.portal.fabric.netty.fileserver.handlers.FileResponseChannelHandler;
 import com.liferay.portal.fabric.netty.repository.NettyRepository;
 import com.liferay.portal.fabric.repository.Repository;
+import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -28,6 +31,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.concurrent.EventExecutorGroup;
 
@@ -110,8 +114,16 @@ public class NettyFabricAgentRegistrationChannelHandler
 
 		Files.createDirectories(repositoryPath);
 
-		Repository repository = new NettyRepository(
-			repositoryPath, channel, _eventExecutorGroup, _getFileTimeout);
+		AsyncBroker<Path, FileResponse> asyncBroker =
+			new AsyncBroker<Path, FileResponse>();
+
+		ChannelPipeline channelPipeline = channel.pipeline();
+
+		channelPipeline.addLast(
+			new FileResponseChannelHandler(asyncBroker, _eventExecutorGroup));
+
+		Repository<Channel> repository = new NettyRepository(
+			repositoryPath, asyncBroker, _getFileTimeout);
 
 		NettyFabricAgentStub nettyFabricAgentStub =
 			new NettyFabricAgentStub(
@@ -139,7 +151,7 @@ public class NettyFabricAgentRegistrationChannelHandler
 
 		public OnRegistration(
 			Channel channel, NettyFabricAgentStub nettyFabricAgentStub,
-			Repository repository) {
+			Repository<Channel> repository) {
 
 			_channel = channel;
 			_nettyFabricAgentStub = nettyFabricAgentStub;
@@ -160,7 +172,7 @@ public class NettyFabricAgentRegistrationChannelHandler
 
 		private final Channel _channel;
 		private final NettyFabricAgentStub _nettyFabricAgentStub;
-		private final Repository _repository;
+		private final Repository<Channel> _repository;
 
 	}
 
@@ -169,7 +181,7 @@ public class NettyFabricAgentRegistrationChannelHandler
 
 		public PostDisconnectChannelFutureListener(
 			Channel channel, NettyFabricAgentStub nettyFabricAgentStub,
-			Repository repository) {
+			Repository<Channel> repository) {
 
 			_channel = channel;
 			_nettyFabricAgentStub = nettyFabricAgentStub;
@@ -194,7 +206,7 @@ public class NettyFabricAgentRegistrationChannelHandler
 
 		private final Channel _channel;
 		private final NettyFabricAgentStub _nettyFabricAgentStub;
-		private final Repository _repository;
+		private final Repository<Channel> _repository;
 
 	}
 

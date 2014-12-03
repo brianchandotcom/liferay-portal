@@ -43,7 +43,7 @@ public class NettyFabricWorkerStub<T extends Serializable>
 	implements FabricWorker<T> {
 
 	public NettyFabricWorkerStub(
-		long id, Channel channel, Repository repository,
+		long id, Channel channel, Repository<Channel> repository,
 		Map<Path, Path> outputPathMap, long rpcRelayTimeout) {
 
 		if (channel == null) {
@@ -111,7 +111,7 @@ public class NettyFabricWorkerStub<T extends Serializable>
 
 	public void setResult(final T result) {
 		NoticeableFuture<Map<Path, Path>> noticeableFuture =
-			_repository.getFiles(_outputPathMap, true);
+			_repository.getFiles(_channel, _outputPathMap, true);
 
 		noticeableFuture.addFutureListener(
 			new BaseFutureListener<Map<Path, Path>>() {
@@ -153,7 +153,7 @@ public class NettyFabricWorkerStub<T extends Serializable>
 		new DefaultNoticeableFuture<T>();
 	private final long _id;
 	private final Map<Path, Path> _outputPathMap;
-	private final Repository _repository;
+	private final Repository<Channel> _repository;
 	private final long _rpcRelayTimeout;
 
 }

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.process.local.ReturnProcessCallable;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
@@ -83,7 +84,7 @@ public class NettyFabricAgentStubTest {
 
 		try {
 			new NettyFabricAgentStub(
-				_embeddedChannel, new MockRepository(), null, 0, 0);
+				_embeddedChannel, new MockRepository<Channel>(), null, 0, 0);
 
 			Assert.fail();
 		}
@@ -93,15 +94,15 @@ public class NettyFabricAgentStubTest {
 		}
 
 		new NettyFabricAgentStub(
-			_embeddedChannel, new MockRepository(), Paths.get("RepositoryPath"),
-			0, 0);
+			_embeddedChannel, new MockRepository<Channel>(),
+			Paths.get("RepositoryPath"), 0, 0);
 	}
 
 	@Test
 	public void testEquals() {
 		NettyFabricAgentStub nettyFabricAgentStub = new NettyFabricAgentStub(
-			_embeddedChannel, new MockRepository(), Paths.get("RepositoryPath"),
-			0, 0);
+			_embeddedChannel, new MockRepository<Channel>(),
+			Paths.get("RepositoryPath"), 0, 0);
 
 		Assert.assertTrue(nettyFabricAgentStub.equals(nettyFabricAgentStub));
 		Assert.assertFalse(nettyFabricAgentStub.equals(new Object()));
@@ -109,14 +110,15 @@ public class NettyFabricAgentStubTest {
 		NettyFabricAgentStub anotherNettyFabricAgentStub =
 			new NettyFabricAgentStub(
 				NettyTestUtil.createEmptyEmbeddedChannel(),
-				new MockRepository(), Paths.get("AnotherRepositoryPath"), 0, 0);
+				new MockRepository<Channel>(),
+				Paths.get("AnotherRepositoryPath"), 0, 0);
 
 		Assert.assertFalse(
 			nettyFabricAgentStub.equals(anotherNettyFabricAgentStub));
 
 		anotherNettyFabricAgentStub =
 			new NettyFabricAgentStub(
-				_embeddedChannel, new MockRepository(),
+				_embeddedChannel, new MockRepository<Channel>(),
 				Paths.get("AnotherRepositoryPath"), 0, 0);
 
 		Assert.assertTrue(
@@ -127,7 +129,7 @@ public class NettyFabricAgentStubTest {
 	public void testExecute() throws Exception {
 		final NettyFabricAgentStub nettyFabricAgentStub =
 			new NettyFabricAgentStub(
-				_embeddedChannel, new MockRepository(),
+				_embeddedChannel, new MockRepository<Channel>(),
 				Paths.get("RepositoryPath"), 0, Long.MAX_VALUE);
 
 		AtomicLong idGenerator = ReflectionTestUtil.getFieldValue(
@@ -263,7 +265,7 @@ public class NettyFabricAgentStubTest {
 		try {
 			NettyFabricAgentStub nettyFabricAgentStub =
 				new NettyFabricAgentStub(
-					_embeddedChannel, new MockRepository(),
+					_embeddedChannel, new MockRepository<Channel>(),
 					Paths.get("RepositoryPath"), 0, Long.MAX_VALUE);
 
 			Builder builder = new Builder();
@@ -307,7 +309,7 @@ public class NettyFabricAgentStubTest {
 		try {
 			NettyFabricAgentStub nettyFabricAgentStub =
 				new NettyFabricAgentStub(
-					_embeddedChannel, new MockRepository(),
+					_embeddedChannel, new MockRepository<Channel>(),
 					Paths.get("RepositoryPath"), 0, Long.MAX_VALUE);
 
 			Builder builder = new Builder();
@@ -353,7 +355,7 @@ public class NettyFabricAgentStubTest {
 		try {
 			NettyFabricAgentStub nettyFabricAgentStub =
 				new NettyFabricAgentStub(
-					_embeddedChannel, new MockRepository(),
+					_embeddedChannel, new MockRepository<Channel>(),
 					Paths.get("RepositoryPath"), 0, Long.MAX_VALUE);
 
 			Builder builder = new Builder();
@@ -388,7 +390,7 @@ public class NettyFabricAgentStubTest {
 	public void testExecuteWithInterruption() throws Exception {
 		NettyFabricAgentStub nettyFabricAgentStub =
 			new NettyFabricAgentStub(
-				_embeddedChannel, new MockRepository(),
+				_embeddedChannel, new MockRepository<Channel>(),
 				Paths.get("RepositoryPath"), 0, Long.MAX_VALUE);
 
 		Thread currentThread = Thread.currentThread();
@@ -424,7 +426,7 @@ public class NettyFabricAgentStubTest {
 	public void testExecuteWithTimeout() throws InterruptedException {
 		NettyFabricAgentStub nettyFabricAgentStub =
 			new NettyFabricAgentStub(
-				_embeddedChannel, new MockRepository(),
+				_embeddedChannel, new MockRepository<Channel>(),
 				Paths.get("RepositoryPath"), 0, 0);
 
 		Builder builder = new Builder();
@@ -455,8 +457,8 @@ public class NettyFabricAgentStubTest {
 	@Test
 	public void testGetFabricStatus() {
 		NettyFabricAgentStub nettyFabricAgentStub = new NettyFabricAgentStub(
-			_embeddedChannel, new MockRepository(), Paths.get("RepositoryPath"),
-			0, 0);
+			_embeddedChannel, new MockRepository<Channel>(),
+			Paths.get("RepositoryPath"), 0, 0);
 
 		FabricStatus fabricStatus = nettyFabricAgentStub.getFabricStatus();
 
@@ -466,8 +468,8 @@ public class NettyFabricAgentStubTest {
 	@Test
 	public void testHashCode() {
 		NettyFabricAgentStub nettyFabricAgentStub = new NettyFabricAgentStub(
-			_embeddedChannel, new MockRepository(), Paths.get("RepositoryPath"),
-			0, 0);
+			_embeddedChannel, new MockRepository<Channel>(),
+			Paths.get("RepositoryPath"), 0, 0);
 
 		Assert.assertEquals(
 			_embeddedChannel.hashCode(), nettyFabricAgentStub.hashCode());

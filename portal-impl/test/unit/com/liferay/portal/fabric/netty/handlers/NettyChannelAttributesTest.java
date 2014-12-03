@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJNewEnvTestRule;
 
+import io.netty.channel.Channel;
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.util.Attribute;
 
@@ -182,7 +183,7 @@ public class NettyChannelAttributesTest {
 			NettyChannelAttributes.getNettyFabricAgentStub(_embeddedChannel));
 
 		NettyFabricAgentStub nettyFabricAgentStub = new NettyFabricAgentStub(
-			_embeddedChannel, new MockRepository(),
+			_embeddedChannel, new MockRepository<Channel>(),
 			Paths.get("remoteRepositoryPath"), 0, 0);
 
 		NettyChannelAttributes.setNettyFabricAgentStub(

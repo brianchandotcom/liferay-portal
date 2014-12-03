@@ -54,8 +54,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public class NettyFabricAgentStub implements FabricAgent {
 
 	public NettyFabricAgentStub(
-		Channel channel, Repository repository, Path remoteRepositoryPath,
-		long rpcRelayTimeout, long startupTimeout) {
+		Channel channel, Repository<Channel> repository,
+		Path remoteRepositoryPath, long rpcRelayTimeout, long startupTimeout) {
 
 		if (channel == null) {
 			throw new NullPointerException("Channel is null");
@@ -238,7 +238,7 @@ public class NettyFabricAgentStub implements FabricAgent {
 		_nettyFabricWorkerStubs =
 			new ConcurrentHashMap<Long, NettyFabricWorkerStub<?>>();
 	private final Path _remoteRepositoryPath;
-	private final Repository _repository;
+	private final Repository<Channel> _repository;
 	private final long _rpcRelayTimeout;
 	private final Map<Long, DefaultNoticeableFuture<?>>
 		_startupNoticeableFutures =

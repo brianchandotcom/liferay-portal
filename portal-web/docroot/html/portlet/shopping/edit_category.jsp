@@ -69,21 +69,12 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 			<div class="form-group">
 				<aui:input label="parent-category" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
 
-				<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/shopping/select_category" />
-					<portlet:param name="categoryId" value="<%= String.valueOf(parentCategoryId) %>" />
-				</portlet:renderURL>
-
-				<%
-				String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCategoryURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void('');categoryWindow.focus();";
-				%>
-
-				<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
+				<aui:button id="selectCategoryButton" value="select" />
 
 				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
 			</div>
 
-			<div id="<portlet:namespace />merge-with-parent-checkbox-div"
+			<div id="<portlet:namespace />mergeParentCheckboxDiv"
 				<c:if test="<%= category.getParentCategoryId() == ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
 					style="display: none;"
 				</c:if>
@@ -129,7 +120,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 			document.getElementById('<portlet:namespace />parentCategoryName').value = '';
 
-			var mergeWithParent = A.one('#<portlet:namespace />merge-with-parent-checkbox-div');
+			var mergeWithParent = A.one('#<portlet:namespace />mergeParentCheckboxDiv');
 			var mergeWithParentCategory = A.one('#<portlet:namespace />mergeWithParentCategory');
 
 			if (mergeWithParent) {
@@ -142,25 +133,41 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 		},
 		['aui-base']
 	);
+</aui:script>
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectCategory',
-		function(parentCategoryId, parentCategoryName) {
-			var A = AUI();
+<aui:script use="aui-base">
+	var categoryButton = A.one('#<portlet:namespace />selectCategoryButton');
 
-			document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
+	if (categoryButton) {
+		categoryButton.on(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							constrain: true,
+							modal: true,
+							width: 680
+						},
+						id: '<portlet:namespace />selectCategory',
+						title: '<liferay-ui:message arguments="category" key="select-x" />',
+						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(parentCategoryId) %>" /></portlet:renderURL>'
+					},
+					function(event) {
+						var parentCategoryId = event.categoryid;
 
-			document.getElementById('<portlet:namespace />parentCategoryName').value = parentCategoryName;
+						document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
 
-			if (parentCategoryId != <%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>) {
-				var mergeWithParent = A.one('#<portlet:namespace />merge-with-parent-checkbox-div');
+						document.getElementById('<portlet:namespace />parentCategoryName').value = event.name;
 
-				if (mergeWithParent) {
-					mergeWithParent.show();
-				}
+						var mergeWithParent = A.one('#<portlet:namespace />mergeParentCheckboxDiv');
+
+						if (mergeWithParent && (parentCategoryId != <%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>)) {
+							mergeWithParent.show();
+						}
+					}
+				);
 			}
-		},
-		['aui-base']
-	);
+		);
+	}
 </aui:script>

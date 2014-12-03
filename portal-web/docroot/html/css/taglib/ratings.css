@@ -28,21 +28,24 @@
 		.thumbrating {
 			height: 20px;
 
-			.rating-label {
-				display: inline-block;
-				padding: 0 5px;
-			}
-
 			@include respond-to(phone, tablet) {
 				a {
 					font-size: 1.5em;
 				}
+			}
+
+			.rating-element:before {
+				padding-right: 4px;
 			}
 		}
 	}
 
 	.rating-element {
 		padding-right: 4px;
+
+		&.rating-thumb-down {
+			margin-left: 5px;
+		}
 	}
 
 	.rating-input-container .rating-input {

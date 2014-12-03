@@ -794,6 +794,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	public boolean isCommandUpdate() {
 		if (Validator.equals(_command, Constants.UPDATE) ||
 			Validator.equals(_command, Constants.UPDATE_WEBDAV)) {
+
 			return true;
 		}
 		else {

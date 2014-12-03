@@ -27,7 +27,7 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.rss.RSSFeed" %><%@
+page import="com.liferay.rss.RSSFeed" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.rss.web.context.RSSDisplayContext" %>
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.rss;
+package com.liferay.rss;
 
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;

@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.rss.RSSFeed;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.rss.RSSFeed;
 import com.liferay.rss.web.configuration.RSSConfigurationValues;
 import com.liferay.rss.web.util.RSSPortletKeys;
 

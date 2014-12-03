@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.rss;
+package com.liferay.rss;
 
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Time;

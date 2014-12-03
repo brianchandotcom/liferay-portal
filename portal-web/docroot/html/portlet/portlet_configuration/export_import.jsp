@@ -36,7 +36,7 @@ portletURL.setParameter("portletResource", portletResource);
 	portletURL="<%= portletURL %>"
 />
 
-<liferay-util:include page="/html/portlet/portlet_configuration/handle_error.jsp" />
+<liferay-util:include page="/html/portlet/portlet_configuration/export_import_error.jsp" />
 
 <c:choose>
 	<c:when test='<%= tabs2.equals("export") %>'>

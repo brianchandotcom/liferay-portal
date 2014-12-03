@@ -70,7 +70,7 @@ PortletURL portletURL = currentURLObj;
 portletURL.setParameter("tabs3", "current-and-previous");
 %>
 
-<liferay-util:include page="/html/portlet/portlet_configuration/handle_error.jsp" />
+<liferay-util:include page="/html/portlet/portlet_configuration/export_import_error.jsp" />
 
 <c:choose>
 	<c:when test="<%= (themeDisplay.getURLPublishToLive() == null) && !layout.isTypeControlPanel() %>">

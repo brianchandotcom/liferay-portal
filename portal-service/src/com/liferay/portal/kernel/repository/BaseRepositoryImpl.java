@@ -130,6 +130,23 @@ public abstract class BaseRepositoryImpl
 	}
 
 	/**
+	 * @deprecated As of 7.0.0, see {@link #addFolder(long, long, String,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public Folder addFolder(
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFolder(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			name, description, serviceContext);
+	}
+
+	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
 	 *             boolean, String, ServiceContext)}
 	 */
@@ -431,6 +448,39 @@ public abstract class BaseRepositoryImpl
 			fileEntryId, owner, expirationTime, new ServiceContext());
 
 		return fileEntry.getLock();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, see {@link #moveFileEntry(long, long, long,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry moveFileEntry(
+			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+		throws PortalException {
+
+		return moveFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, newFolderId, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, see {@link #moveFolder(long, long, long,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public Folder moveFolder(
+			long folderId, long newParentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return moveFolder(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			folderId, newParentFolderId, serviceContext);
 	}
 
 	/**

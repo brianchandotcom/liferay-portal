@@ -126,14 +126,31 @@ public class BaseRepositoryProxyBean
 
 	@Override
 	public Folder addFolder(
-			long parentFolderId, String name, String description,
+			long userId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		Folder folder = _baseRepository.addFolder(
-			parentFolderId, name, description, serviceContext);
+			userId, parentFolderId, name, description, serviceContext);
 
 		return newFolderProxyBean(folder);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, see {@link #addFolder(long, long, String,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public Folder addFolder(
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFolder(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			parentFolderId, name, description, serviceContext);
 	}
 
 	@Override
@@ -678,25 +695,59 @@ public class BaseRepositoryProxyBean
 
 	@Override
 	public FileEntry moveFileEntry(
-			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+			long userId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		FileEntry fileEntry = _baseRepository.moveFileEntry(
-			fileEntryId, newFolderId, serviceContext);
+			userId, fileEntryId, newFolderId, serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link #moveFileEntry(long, long, long,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry moveFileEntry(
+			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+		throws PortalException {
+
+		return moveFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, newFolderId, serviceContext);
+	}
+
+	@Override
+	public Folder moveFolder(
+			long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Folder folder = _baseRepository.moveFolder(
+			userId, folderId, parentFolderId, serviceContext);
+
+		return newFolderProxyBean(folder);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, see {@link #moveFolder(long, long, long,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public Folder moveFolder(
 			long folderId, long newParentFolderId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Folder folder = _baseRepository.moveFolder(
+		return moveFolder(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			folderId, newParentFolderId, serviceContext);
-
-		return newFolderProxyBean(folder);
 	}
 
 	@Override

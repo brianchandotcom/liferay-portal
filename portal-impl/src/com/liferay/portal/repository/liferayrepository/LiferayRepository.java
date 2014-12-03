@@ -184,7 +184,7 @@ public class LiferayRepository
 
 	@Override
 	public Folder addFolder(
-			long parentFolderId, String name, String description,
+			long userId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -195,6 +195,23 @@ public class LiferayRepository
 			toFolderId(parentFolderId), name, description, serviceContext);
 
 		return new LiferayFolder(dlFolder);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, see {@link #addFolder(long, long, String,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public Folder addFolder(
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFolder(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			parentFolderId, name, description, serviceContext);
 	}
 
 	@Override
@@ -738,7 +755,8 @@ public class LiferayRepository
 
 	@Override
 	public FileEntry moveFileEntry(
-			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+			long userId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		DLFileEntry dlFileEntry = dlFileEntryService.moveFileEntry(
@@ -747,15 +765,49 @@ public class LiferayRepository
 		return new LiferayFileEntry(dlFileEntry);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link #moveFileEntry(long, long, long,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry moveFileEntry(
+			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+		throws PortalException {
+
+		return moveFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, newFolderId, serviceContext);
+	}
+
 	@Override
 	public Folder moveFolder(
-			long folderId, long parentFolderId, ServiceContext serviceContext)
+			long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		DLFolder dlFolder = dlFolderService.moveFolder(
 			toFolderId(folderId), toFolderId(parentFolderId), serviceContext);
 
 		return new LiferayFolder(dlFolder);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, see {@link #moveFolder(long, long,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public Folder moveFolder(
+			long folderId, long newParentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return moveFolder(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			folderId, newParentFolderId, serviceContext);
 	}
 
 	@Override

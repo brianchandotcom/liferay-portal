@@ -62,12 +62,12 @@ public abstract class CMISRepositoryHandler
 
 	@Override
 	public Folder addFolder(
-			long parentFolderId, String name, String description,
+			long userId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return _baseCmisRepository.addFolder(
-			parentFolderId, name, description, serviceContext);
+			userId, parentFolderId, name, description, serviceContext);
 	}
 
 	@Override
@@ -412,21 +412,22 @@ public abstract class CMISRepositoryHandler
 
 	@Override
 	public FileEntry moveFileEntry(
-			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+			long userId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return _baseCmisRepository.moveFileEntry(
-			fileEntryId, newFolderId, serviceContext);
+			userId, fileEntryId, newFolderId, serviceContext);
 	}
 
 	@Override
 	public Folder moveFolder(
-			long folderId, long newParentFolderId,
+			long userId, long folderId, long newParentFolderId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return _baseCmisRepository.moveFolder(
-			folderId, newParentFolderId, serviceContext);
+			userId, folderId, newParentFolderId, serviceContext);
 	}
 
 	@Override

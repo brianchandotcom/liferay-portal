@@ -42,7 +42,7 @@ for (FullNameField fullNameField: fullNameDefinition.getFields()) {
 		<%
 		String selected = StringPool.BLANK;
 
-		if (!Validator.isNull(selContact)) {
+		if (Validator.isNotNull(selContact)) {
 			int listTypeId = BeanParamUtil.getInteger(selContact, request, fieldName.concat("Id"));
 
 			try {

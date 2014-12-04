@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.attachments;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
@@ -393,11 +394,13 @@ public class MBAttachmentsTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		String fileName = TestResourceConstants.OSX_TEST_DOCX;
+		String fileName = FileUtil.getShortFileName(
+			TestResourceConstants.OSX_TEST_DOCX);
 
 		List<ObjectValuePair<String, InputStream>> objectValuePairs =
 			MBTestUtil.getInputStreamOVPs(
-				fileName, getClass(), StringPool.BLANK);
+				TestResourceConstants.OSX_TEST_DOCX, getClass(),
+				StringPool.BLANK);
 
 		_message = MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), _message.getMessageId(), "Subject",

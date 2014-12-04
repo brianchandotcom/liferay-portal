@@ -14,7 +14,9 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -178,7 +180,16 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 				namesMap.put("prefix", prefix);
 			}
-			catch (PortalException e) {}
+			catch (NoSuchListTypeException nslte) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Ignoring full name prefix " + prefixId + " because" +
+							" it cannot be found", nslte);
+				}
+			}
+			catch (PortalException pe) {
+				throw new SystemException(pe);
+			}
 		}
 
 		if (suffixId != 0) {
@@ -190,7 +201,16 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 				namesMap.put("suffix", suffix);
 			}
-			catch (PortalException e) {}
+			catch (NoSuchListTypeException nslte) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Ignoring full name suffix " + suffixId + " because" +
+							" it cannot be found", nslte);
+				}
+			}
+			catch (PortalException pe) {
+				throw new SystemException(pe);
+			}
 		}
 
 		for (FullNameField fullNameField : fullNameDefinition.getFields()) {

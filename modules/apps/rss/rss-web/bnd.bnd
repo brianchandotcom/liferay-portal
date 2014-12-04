@@ -1,9 +1,6 @@
 Bundle-Name: Liferay RSS Web
 Bundle-SymbolicName: com.liferay.rss.web
 Bundle-Version: 1.0.0
-Import-Package:\
-	${bnd.jsp.support.imports},\
-	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\

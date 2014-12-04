@@ -1725,6 +1725,12 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getIndexableArticlesByDDMStructureKey(
+		java.lang.String[] ddmStructureKeys) {
+		return getService()
+				   .getIndexableArticlesByDDMStructureKey(ddmStructureKeys);
+	}
+
 	/**
 	* Returns the indexable web content articles matching the resource primary
 	* key.

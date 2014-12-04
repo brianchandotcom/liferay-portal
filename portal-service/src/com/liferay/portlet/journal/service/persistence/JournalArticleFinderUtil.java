@@ -219,6 +219,14 @@ public class JournalArticleFinderUtil {
 			queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_C_S(
+		long groupId, long classNameId, java.lang.String[] ddmStructureKeys,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
+		return getFinder()
+				   .filterFindByG_C_S(groupId, classNameId, ddmStructureKeys,
+			queryDefinition);
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_F_C(
 		long groupId, long userId, java.util.List<java.lang.Long> folderIds,
 		long classNameId,
@@ -330,6 +338,14 @@ public class JournalArticleFinderUtil {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
 		return getFinder()
 				   .findByG_C_S(groupId, classNameId, ddmStructureKey,
+			queryDefinition);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_S(
+		long groupId, long classNameId, java.lang.String[] ddmStructureKeys,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
+		return getFinder()
+				   .findByG_C_S(groupId, classNameId, ddmStructureKeys,
 			queryDefinition);
 	}
 

@@ -326,12 +326,5 @@
 	<classpathentry kind="lib" path="lib/portal/xstream.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xuggle-xuggler-noarch.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xz.jar"/>
-	<classpathentry kind="lib" path="lib/portal/soy-excluding-deps-latest.jar"/>
-	<classpathentry kind="lib" path="lib/portal/javax.inject.jar"/>
-	<classpathentry kind="lib" path="lib/portal/guice-3.0.jar"/>
-	<classpathentry kind="lib" path="lib/portal/guice-assistedinject-3.0.jar"/>
-	<classpathentry kind="lib" path="lib/portal/guice-multibindings-3.0.jar"/>
-	<classpathentry kind="lib" path="lib/portal/icu4j-51_1.jar"/>
-	<classpathentry kind="lib" path="lib/portal/log4j-extras.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

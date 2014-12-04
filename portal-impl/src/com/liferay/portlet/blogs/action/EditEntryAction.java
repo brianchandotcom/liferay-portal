@@ -110,7 +110,7 @@ public class EditEntryAction extends PortletAction {
 		try {
 			BlogsEntry entry = null;
 			String oldUrlTitle = StringPool.BLANK;
-			List<BlogsEntryFileEntryReference> blogsEntryAttachmentReferences =
+			List<BlogsEntryFileEntryReference> blogsEntryFileEntryReferences =
 				null;
 
 			UploadException uploadException =
@@ -138,7 +138,7 @@ public class EditEntryAction extends PortletAction {
 
 				entry = (BlogsEntry)returnValue[0];
 				oldUrlTitle = ((String)returnValue[1]);
-				blogsEntryAttachmentReferences =
+				blogsEntryFileEntryReferences =
 					((List<BlogsEntryFileEntryReference>)returnValue[2]);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
@@ -205,31 +205,29 @@ public class EditEntryAction extends PortletAction {
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 				for (BlogsEntryFileEntryReference
-						blogsEntryAttachmentReference :
-							blogsEntryAttachmentReferences) {
+						blogsEntryFileEntryReference :
+							blogsEntryFileEntryReferences) {
 
-					JSONObject blogsEntryAttachmentReferencesJSONObject =
+					JSONObject blogsEntryFileEntryReferencesJSONObject =
 						JSONFactoryUtil.createJSONObject();
 
 					FileEntry fileEntry =
-						blogsEntryAttachmentReference.getFileEntry();
+						blogsEntryFileEntryReference.getFileEntry();
 
-					blogsEntryAttachmentReferencesJSONObject.put(
+					blogsEntryFileEntryReferencesJSONObject.put(
 						"attributeDataImageId",
 						EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-
-					blogsEntryAttachmentReferencesJSONObject.put(
+					blogsEntryFileEntryReferencesJSONObject.put(
 						"fileEntryId",
 						String.valueOf(
-							blogsEntryAttachmentReference.
+							blogsEntryFileEntryReference.
 								getTempFileEntryId()));
-
-					blogsEntryAttachmentReferencesJSONObject.put(
+					blogsEntryFileEntryReferencesJSONObject.put(
 						"fileEntryUrl",
 						PortletFileRepositoryUtil.getPortletFileEntryURL(
 							null, fileEntry, StringPool.BLANK));
 
-					jsonArray.put(blogsEntryAttachmentReferencesJSONObject);
+					jsonArray.put(blogsEntryFileEntryReferencesJSONObject);
 				}
 
 				jsonObject.put("blogsEntryAttachmentReferences", jsonArray);

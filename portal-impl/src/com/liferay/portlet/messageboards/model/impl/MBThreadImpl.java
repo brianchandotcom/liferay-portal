@@ -95,9 +95,9 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 
 		try {
 			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-				getUserId(), repository.getRepositoryId(),
+				repository.getRepositoryId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				String.valueOf(getThreadId()), serviceContext);
+				String.valueOf(getThreadId()));
 
 			_attachmentsFolderId = folder.getFolderId();
 		}

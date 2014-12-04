@@ -14,13 +14,19 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.liferay.portal.kernel.editor.util.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -32,9 +38,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.TrashedModel;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
+import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -45,6 +54,8 @@ import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.blogs.BlogsEntryAttachmentHelper;
+import com.liferay.portlet.blogs.BlogsEntryAttachmentReference;
 import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryDescriptionException;
 import com.liferay.portlet.blogs.EntryDisplayDateException;
@@ -61,6 +72,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -75,6 +87,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Brian Wing Shun Chan
@@ -98,6 +112,8 @@ public class EditEntryAction extends PortletAction {
 		try {
 			BlogsEntry entry = null;
 			String oldUrlTitle = StringPool.BLANK;
+			List<BlogsEntryAttachmentReference> blogsEntryAttachmentReferences =
+				null;
 
 			UploadException uploadException =
 				(UploadException)actionRequest.getAttribute(
@@ -116,10 +132,16 @@ public class EditEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				Object[] returnValue = updateEntry(actionRequest);
+				Callable<Object[]> updateEntryCallable =
+					new UpdateEntryCallable(actionRequest);
+
+				Object[] returnValue = TransactionalCallableUtil.call(
+					_transactionAttribute, updateEntryCallable);
 
 				entry = (BlogsEntry)returnValue[0];
 				oldUrlTitle = ((String)returnValue[1]);
+				blogsEntryAttachmentReferences =
+					((List<BlogsEntryAttachmentReference>)returnValue[2]);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteEntries(actionRequest, false);
@@ -182,6 +204,37 @@ public class EditEntryAction extends PortletAction {
 			if (ajax) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+				for (BlogsEntryAttachmentReference
+						blogsEntryAttachmentReference :
+							blogsEntryAttachmentReferences) {
+
+					JSONObject blogsEntryAttachmentReferencesJSONObject =
+						JSONFactoryUtil.createJSONObject();
+
+					FileEntry fileEntry =
+						blogsEntryAttachmentReference.getFileEntry();
+
+					blogsEntryAttachmentReferencesJSONObject.put(
+						"dataImageIdAttribute",
+						EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
+
+					blogsEntryAttachmentReferencesJSONObject.put(
+						"fileEntryId",
+						String.valueOf(
+							blogsEntryAttachmentReference.
+								getTempFileEntryId()));
+
+					blogsEntryAttachmentReferencesJSONObject.put(
+						"fileEntryUrl",
+						PortletFileRepositoryUtil.getPortletFileEntryURL(
+							null, fileEntry, StringPool.BLANK));
+
+					jsonArray.put(blogsEntryAttachmentReferencesJSONObject);
+				}
+
+				jsonObject.put("blogsEntryAttachmentReferences", jsonArray);
 				jsonObject.put("entryId", entry.getEntryId());
 				jsonObject.put("redirect", redirect);
 				jsonObject.put("updateRedirect", updateRedirect);
@@ -261,6 +314,11 @@ public class EditEntryAction extends PortletAction {
 					throw e;
 				}
 			}
+		}
+		catch (Throwable t) {
+			_log.error(t);
+
+			setForward(actionRequest, "portlet.blogs.error");
 		}
 	}
 
@@ -456,6 +514,9 @@ public class EditEntryAction extends PortletAction {
 	protected Object[] updateEntry(ActionRequest actionRequest)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
 		String title = ParamUtil.getString(actionRequest, "title");
@@ -525,6 +586,9 @@ public class EditEntryAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			BlogsEntry.class.getName(), actionRequest);
 
+		List<BlogsEntryAttachmentReference> blogsEntryAttachmentReferences =
+			new ArrayList<>();
+
 		if (entryId <= 0) {
 
 			// Add entry
@@ -535,6 +599,36 @@ public class EditEntryAction extends PortletAction {
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 				coverImageImageSelector, smallImageImageSelector,
 				serviceContext);
+
+			BlogsEntryAttachmentHelper blogsEntryAttachmentHelper =
+				new BlogsEntryAttachmentHelper();
+
+			List<FileEntry> tempBlogsEntryAttachments =
+				blogsEntryAttachmentHelper.getTempBlogsEntryAttachments(
+					content);
+
+			if (!tempBlogsEntryAttachments.isEmpty()) {
+				blogsEntryAttachmentReferences =
+					blogsEntryAttachmentHelper.addBlogsEntryAttachments(
+						entry.getGroupId(), themeDisplay.getUserId(),
+						entry.getEntryId(), tempBlogsEntryAttachments);
+
+				content = blogsEntryAttachmentHelper.updateContent(
+					content, blogsEntryAttachmentReferences);
+
+				entry.setContent(content);
+
+				BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
+			}
+
+			// Attachments
+
+			for (FileEntry tempBlogsEntryAttachment :
+					tempBlogsEntryAttachments) {
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					tempBlogsEntryAttachment.getFileEntryId());
+			}
 
 			AssetPublisherUtil.addAndStoreSelection(
 				actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
@@ -560,12 +654,38 @@ public class EditEntryAction extends PortletAction {
 
 			String tempOldUrlTitle = entry.getUrlTitle();
 
-			entry = BlogsEntryServiceUtil.updateEntry(
-				entryId, title, subtitle, description, content,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, allowPingbacks,
-				allowTrackbacks, trackbacks, coverImageImageSelector,
-				smallImageImageSelector, serviceContext);
+			BlogsEntryAttachmentHelper blogsEntryAttachmentHelper =
+				new BlogsEntryAttachmentHelper();
+
+			List<FileEntry> tempBlogsEntryAttachments =
+				blogsEntryAttachmentHelper.getTempBlogsEntryAttachments(
+					content);
+
+			if (!tempBlogsEntryAttachments.isEmpty()) {
+				blogsEntryAttachmentReferences =
+					blogsEntryAttachmentHelper.addBlogsEntryAttachments(
+						entry.getGroupId(), themeDisplay.getUserId(),
+						entry.getEntryId(), tempBlogsEntryAttachments);
+
+				content = blogsEntryAttachmentHelper.updateContent(
+					content, blogsEntryAttachmentReferences);
+
+				entry = BlogsEntryServiceUtil.updateEntry(
+					entryId, title, subtitle, description, content,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, allowPingbacks,
+					allowTrackbacks, trackbacks, coverImageImageSelector,
+					smallImageImageSelector, serviceContext);
+			}
+
+			// Attachments
+
+			for (FileEntry tempBlogsEntryAttachment :
+					tempBlogsEntryAttachments) {
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					tempBlogsEntryAttachment.getFileEntryId());
+			}
 
 			if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {
 				oldUrlTitle = tempOldUrlTitle;
@@ -576,7 +696,30 @@ public class EditEntryAction extends PortletAction {
 				-1);
 		}
 
-		return new Object[] {entry, oldUrlTitle};
+		return new Object[] {
+			entry, oldUrlTitle, blogsEntryAttachmentReferences
+		};
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(EditEntryAction.class);
+
+	private TransactionAttribute _transactionAttribute =
+		TransactionAttributeBuilder.build(
+			Propagation.REQUIRED, new Class<?>[]{Exception.class});
+
+	private class UpdateEntryCallable implements Callable<Object[]> {
+
+		@Override
+		public Object[] call() throws Exception {
+			return updateEntry(_actionRequest);
+		}
+
+		private UpdateEntryCallable(ActionRequest actionRequest) {
+			_actionRequest = actionRequest;
+		}
+
+		private ActionRequest _actionRequest;
+
 	}
 
 }

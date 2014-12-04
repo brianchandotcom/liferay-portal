@@ -33,6 +33,13 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder(
+		long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.addAttachmentsFolder(userId, groupId);
+	}
+
 	/**
 	* Adds the blogs entry to the database. Also notifies the appropriate model listeners.
 	*

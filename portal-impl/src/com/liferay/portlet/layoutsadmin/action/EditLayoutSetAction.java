@@ -19,11 +19,9 @@ import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -40,7 +38,6 @@ import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -84,22 +81,7 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 				updateLayoutSet(actionRequest, actionResponse);
 			}
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-			String closeRedirect = ParamUtil.getString(
-				actionRequest, "closeRedirect");
-
-			if (Validator.isNotNull(closeRedirect)) {
-				redirect = HttpUtil.setParameter(
-					redirect, "closeRedirect", closeRedirect);
-
-				SessionMessages.add(
-					actionRequest,
-					PortalUtil.getPortletId(actionRequest) +
-						SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT,
-					closeRedirect);
-			}
-
-			sendRedirect(actionRequest, actionResponse, redirect);
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException ||

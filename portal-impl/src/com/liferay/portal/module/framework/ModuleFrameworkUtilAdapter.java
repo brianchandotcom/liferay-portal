@@ -60,6 +60,10 @@ public class ModuleFrameworkUtilAdapter {
 		_moduleFramework.registerContext(context);
 	}
 
+	public static void registerExtraPackages() {
+		_moduleFramework.registerExtraPackages();
+	}
+
 	public static void setBundleStartLevel(long bundleId, int startLevel)
 		throws PortalException {
 

@@ -24,6 +24,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portal.util.test.TestResourceConstants;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
@@ -409,7 +410,7 @@ public class WikiTestUtil {
 		throws Exception {
 
 		byte[] fileBytes = FileUtil.getBytes(
-			clazz, "dependencies/OSX_Test.docx");
+			clazz, TestResourceConstants.OSX_TEST_DOCX);
 
 		File file = null;
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
+import com.liferay.portal.util.test.TestResourceConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -371,7 +372,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		"dependencies/OSX_Test_Delta.docx";
 
 	private static final String _OFFICE_TEST_DOCX =
-		"dependencies/OSX_Test.docx";
+		TestResourceConstants.OSX_TEST_DOCX;
 
 	private static final String _OFFICE_TEST_META_DOCX =
 		"dependencies/OSX_Test_Meta.docx";

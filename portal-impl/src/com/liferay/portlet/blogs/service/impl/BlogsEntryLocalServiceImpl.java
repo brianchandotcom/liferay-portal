@@ -122,6 +122,7 @@ import net.htmlparser.jericho.StartTag;
  */
 public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
+	@Override
 	public Folder addAttachmentsFolder(long userId, long groupId)
 		throws PortalException {
 

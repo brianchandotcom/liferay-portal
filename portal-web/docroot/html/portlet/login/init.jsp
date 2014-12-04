@@ -20,6 +20,7 @@
 page import="com.liferay.portal.AddressStreetException" %><%@
 page import="com.liferay.portal.AddressZipException" %><%@
 page import="com.liferay.portal.CompanyMaxUsersException" %><%@
+page import="com.liferay.portal.ContactBirthdayException" %><%@
 page import="com.liferay.portal.ContactFirstNameException" %><%@
 page import="com.liferay.portal.ContactFullNameException" %><%@
 page import="com.liferay.portal.ContactLastNameException" %><%@

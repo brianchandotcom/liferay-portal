@@ -147,6 +147,8 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 
 			<c:choose>
 				<c:when test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY) %>">
+					<liferay-ui:error exception="<%= ContactBirthdayException.class %>" message="please-enter-a-valid-date" />
+
 					<aui:input name="birthday" value="<%= birthdayCalendar %>" />
 				</c:when>
 				<c:otherwise>

@@ -20,26 +20,26 @@ import com.liferay.portal.model.Group;
 /**
  * @author Brian Wing Shun Chan
  */
-public class GroupNameComparator extends OrderByComparator<Group> {
+public class GroupKeyComparator extends OrderByComparator<Group> {
 
-	public static final String ORDER_BY_ASC = "groupName ASC";
+	public static final String ORDER_BY_ASC = "groupKey ASC";
 
-	public static final String ORDER_BY_DESC = "groupName DESC";
+	public static final String ORDER_BY_DESC = "groupKey DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"groupName"};
+	public static final String[] ORDER_BY_FIELDS = {"groupKey"};
 
-	public GroupNameComparator() {
+	public GroupKeyComparator() {
 		this(false);
 	}
 
-	public GroupNameComparator(boolean ascending) {
+	public GroupKeyComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(Group group1, Group group2) {
-		String name1 = group1.getName();
-		String name2 = group2.getName();
+		String name1 = group1.getGroupKey();
+		String name2 = group2.getGroupKey();
 
 		int value = name1.compareTo(name2);
 

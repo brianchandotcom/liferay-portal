@@ -1694,6 +1694,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			bodyLocalizedValuesMap = blogsSettings.getEmailEntryAddedBody();
 		}
 
+		Group group = groupPersistence.findByPrimaryKey(entry.getGroupId());
+
 		SubscriptionSender subscriptionSender =
 			new GroupSubscriptionCheckSubscriptionSender(
 				BlogsPermission.RESOURCE_NAME);
@@ -1711,8 +1713,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			Time.getSimpleDate(entry.getCreateDate(), "yyyy/MM/dd"),
 			"[$BLOGS_ENTRY_DESCRIPTION$]", entry.getDescription(),
 			"[$BLOGS_ENTRY_SITE_NAME$]",
-			groupLocalService.getGroupDescriptiveName(
-				entry.getGroupId(), serviceContext.getLocale()),
+				group.getDescriptiveName(serviceContext.getLocale()),
 			"[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]", entry.getStatusByUserName(),
 			"[$BLOGS_ENTRY_TITLE$]", entryTitle,
 			"[$BLOGS_ENTRY_UPDATE_COMMENT$]",

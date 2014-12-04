@@ -79,7 +79,7 @@ import com.liferay.portal.service.persistence.UserGroupRolePK;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.comparator.GroupNameComparator;
+import com.liferay.portal.util.comparator.GroupKeyComparator;
 import com.liferay.portal.util.comparator.GroupTypeComparator;
 import com.liferay.portal.util.comparator.OrganizationNameComparator;
 import com.liferay.portal.util.comparator.OrganizationTypeComparator;
@@ -631,13 +631,13 @@ public class UsersAdminImpl implements UsersAdmin {
 		OrderByComparator<Group> orderByComparator = null;
 
 		if (orderByCol.equals("name")) {
-			orderByComparator = new GroupNameComparator(orderByAsc);
+			orderByComparator = new GroupKeyComparator(orderByAsc);
 		}
 		else if (orderByCol.equals("type")) {
 			orderByComparator = new GroupTypeComparator(orderByAsc);
 		}
 		else {
-			orderByComparator = new GroupNameComparator(orderByAsc);
+			orderByComparator = new GroupKeyComparator(orderByAsc);
 		}
 
 		return orderByComparator;

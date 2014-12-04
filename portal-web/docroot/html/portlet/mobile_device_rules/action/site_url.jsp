@@ -31,7 +31,7 @@ long actionGroupId = GetterUtil.getLong(typeSettingsProperties.getProperty("grou
 			count++;
 	%>
 
-			<aui:option label="<%= HtmlUtil.escape(group.getName()) %>" selected="<%= group.getGroupId() == actionGroupId %>" value="<%= group.getGroupId() %>" />
+			<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" selected="<%= group.getGroupId() == actionGroupId %>" value="<%= group.getGroupId() %>" />
 
 	<%
 		}

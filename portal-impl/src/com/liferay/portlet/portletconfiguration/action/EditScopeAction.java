@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
@@ -37,6 +38,9 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -178,13 +182,17 @@ public class EditScopeAction extends PortletAction {
 			if (!scopeLayout.hasScopeGroup()) {
 				String name = String.valueOf(scopeLayout.getPlid());
 
+				Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+				nameMap.put(LocaleUtil.getDefault(), name);
+
 				GroupLocalServiceUtil.addGroup(
 					themeDisplay.getUserId(),
 					GroupConstants.DEFAULT_PARENT_GROUP_ID,
 					Layout.class.getName(), scopeLayout.getPlid(),
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, name, null, 0, true,
-					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
-					true, null);
+					GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null, 0,
+					true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null,
+					false, true, null);
 			}
 
 			scopeGroupId = scopeLayout.getGroupId();

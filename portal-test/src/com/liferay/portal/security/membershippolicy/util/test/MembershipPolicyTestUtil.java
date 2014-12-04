@@ -75,9 +75,19 @@ public class MembershipPolicyTestUtil {
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 
+		Locale locale = LocaleUtil.getDefault();
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(locale, name);
+
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		descriptionMap.put(locale, "This is a test group");
+
 		return GroupServiceUtil.addGroup(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, "This is a test group",
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, descriptionMap,
 			GroupConstants.TYPE_SITE_OPEN, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL, true,
 			true, populateServiceContext(Group.class, true));

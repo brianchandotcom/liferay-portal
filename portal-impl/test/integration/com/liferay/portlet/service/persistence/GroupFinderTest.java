@@ -34,7 +34,7 @@ import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.comparator.GroupNameComparator;
+import com.liferay.portal.util.comparator.GroupKeyComparator;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -156,7 +156,7 @@ public class GroupFinderTest {
 
 		List<Group> groups = GroupFinderUtil.findByCompanyId(
 			TestPropsValues.getCompanyId(), groupParams, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new GroupNameComparator(true));
+			QueryUtil.ALL_POS, new GroupKeyComparator(true));
 
 		Assert.assertFalse(groups.isEmpty());
 	}
@@ -239,7 +239,7 @@ public class GroupFinderTest {
 
 		long[] classNameIds = {PortalUtil.getClassNameId(Group.class)};
 
-		return GroupFinderUtil.findByC_C_PG_N_D(
+		return GroupFinderUtil.findByC_C_PG_GK_D(
 			TestPropsValues.getCompanyId(), classNameIds,
 			GroupConstants.ANY_PARENT_GROUP_ID, new String[] {null},
 			new String[] {null}, groupParams, true, QueryUtil.ALL_POS,
@@ -249,8 +249,7 @@ public class GroupFinderTest {
 	protected List<Group> findByLayouts(long parentGroupId) throws Exception {
 		return GroupFinderUtil.findByLayouts(
 			TestPropsValues.getCompanyId(), parentGroupId, true,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new GroupNameComparator(true));
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupKeyComparator(true));
 	}
 
 	private static ResourceAction _arbitraryResourceAction;

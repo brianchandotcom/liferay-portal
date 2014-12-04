@@ -465,7 +465,8 @@ public class CompanyLocalServiceTest {
 		GroupLocalServiceUtil.updateGroup(group);
 
 		testUpdateAccountNames(
-			company, new String[] {StringPool.BLANK, group.getName()}, true);
+			company,
+			new String[] {StringPool.BLANK, group.getDescriptiveName()}, true);
 
 		GroupLocalServiceUtil.deleteGroup(group);
 

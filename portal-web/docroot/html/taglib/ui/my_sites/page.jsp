@@ -40,8 +40,6 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 		portletURL.setWindowState(WindowState.NORMAL);
 
 		for (Group mySiteGroup : mySiteGroups) {
-			String escapedSiteName = HtmlUtil.escape(mySiteGroup.getName());
-
 			boolean showPublicSite = mySiteGroup.isShowSite(permissionChecker, false);
 			boolean showPrivateSite = mySiteGroup.isShowSite(permissionChecker, true);
 		%>
@@ -133,9 +131,6 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 									if (mySiteGroup.isUser()) {
 										siteName = LanguageUtil.get(request, "my-profile");
 									}
-									else if (escapedSiteName.equals(GroupConstants.GUEST)) {
-										siteName = themeDisplay.getAccount().getName();
-									}
 									else {
 										siteName = mySiteGroup.getDescriptiveName(locale);
 									}
@@ -193,9 +188,6 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 
 									if (mySiteGroup.isUser()) {
 										siteName = LanguageUtil.get(request, "my-dashboard");
-									}
-									else if (escapedSiteName.equals(GroupConstants.GUEST)) {
-										siteName = themeDisplay.getAccount().getName();
 									}
 									else {
 										siteName = mySiteGroup.getDescriptiveName(locale);
@@ -294,7 +286,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 								<c:when test="<%= mySiteGroup.isControlPanel() %>">
 									<h3>
 										<a href="<%= themeDisplay.getURLControlPanel() %>">
-											<%= escapedSiteName %>
+											<%= HtmlUtil.escape(mySiteGroup.getDescriptiveName(locale)) %>
 										</a>
 									</h3>
 								</c:when>
@@ -306,7 +298,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 													<liferay-ui:message key="my-site" />
 												</c:when>
 												<c:otherwise>
-													<%= escapedSiteName %>
+													<%= HtmlUtil.escape(mySiteGroup.getDescriptiveName(locale)) %>
 												</c:otherwise>
 											</c:choose>
 										</a>

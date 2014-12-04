@@ -48,6 +48,7 @@ create table ExportImportConfiguration (
 	statusDate DATE null
 );
 
+alter table Group_ add groupKey STRING;
 alter table Group_ add inheritContent BOOLEAN;
 
 alter table JournalFolder add restrictionType INTEGER;

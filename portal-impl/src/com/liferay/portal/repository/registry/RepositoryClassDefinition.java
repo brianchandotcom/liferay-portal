@@ -79,9 +79,12 @@ public class RepositoryClassDefinition
 		defaultCapabilityRegistry.registerCapabilityRepositoryEvents(
 			defaultRepositoryEventRegistry);
 
+		LocalRepository wrappedLocalRepository =
+			defaultCapabilityRegistry.invokeCapabilityWrappers(localRepository);
+
 		CapabilityLocalRepository capabilityLocalRepository =
 			new CapabilityLocalRepository(
-				localRepository, defaultCapabilityRegistry,
+				wrappedLocalRepository, defaultCapabilityRegistry,
 				defaultRepositoryEventRegistry);
 
 		return capabilityLocalRepository;
@@ -112,8 +115,11 @@ public class RepositoryClassDefinition
 		defaultCapabilityRegistry.registerCapabilityRepositoryEvents(
 			defaultRepositoryEventRegistry);
 
+		Repository wrappedRepository =
+			defaultCapabilityRegistry.invokeCapabilityWrappers(repository);
+
 		CapabilityRepository capabilityRepository = new CapabilityRepository(
-			repository, defaultCapabilityRegistry,
+			wrappedRepository, defaultCapabilityRegistry,
 			defaultRepositoryEventRegistry);
 
 		return capabilityRepository;

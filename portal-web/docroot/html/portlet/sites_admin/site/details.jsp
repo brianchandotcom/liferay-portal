@@ -115,6 +115,8 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
+<liferay-ui:error exception="<%= GroupInheritContentException.class %>" message="the-site-cannot-inherit-content-from-his-parent" />
+
 <liferay-ui:error exception="<%= GroupNameException.class %>" message="please-enter-a-valid-name" />
 
 <liferay-ui:error exception="<%= GroupParentException.class %>">

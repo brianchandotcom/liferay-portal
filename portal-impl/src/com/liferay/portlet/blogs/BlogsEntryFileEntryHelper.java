@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
  */
 public class BlogsEntryFileEntryHelper {
 
-	public List<BlogsEntryFileEntryReference> addBlogsEntryFileEntries(
+	public List<BlogsEntryFileEntryReference> addBlogsEntryAttachments(
 			long groupId, long userId, long blogsEntryId,
 			List<FileEntry> tempBlogsEntryFileEntries)
 		throws PortalException {
@@ -47,7 +47,7 @@ public class BlogsEntryFileEntryHelper {
 			new ArrayList<>();
 
 		for (FileEntry tempBlogsEntryFileEntry : tempBlogsEntryFileEntries) {
-			FileEntry blogsEntryFileEntry = addBlogsEntryFileEntry(
+			FileEntry blogsEntryFileEntry = addBlogsEntryAttachment(
 				groupId, userId, blogsEntryId,
 				tempBlogsEntryFileEntry.getTitle(),
 				tempBlogsEntryFileEntry.getMimeType(),
@@ -107,7 +107,7 @@ public class BlogsEntryFileEntryHelper {
 		return content;
 	}
 
-	protected FileEntry addBlogsEntryFileEntry(
+	protected FileEntry addBlogsEntryAttachment(
 			long groupId, long userId, long blogsEntryId, String fileName,
 			String mimeType, InputStream is)
 		throws PortalException {

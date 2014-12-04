@@ -606,7 +606,7 @@ public class EditEntryAction extends PortletAction {
 
 			if (!tempBlogsEntryAttachments.isEmpty()) {
 				blogsEntryAttachmentReferences =
-					blogsEntryAttachmentHelper.addBlogsEntryFileEntries(
+					blogsEntryAttachmentHelper.addBlogsEntryAttachments(
 						entry.getGroupId(), themeDisplay.getUserId(),
 						entry.getEntryId(), tempBlogsEntryAttachments);
 
@@ -660,7 +660,7 @@ public class EditEntryAction extends PortletAction {
 
 			if (!tempBlogsEntryAttachments.isEmpty()) {
 				blogsEntryAttachmentReferences =
-					blogsEntryAttachmentHelper.addBlogsEntryFileEntries(
+					blogsEntryAttachmentHelper.addBlogsEntryAttachments(
 						entry.getGroupId(), themeDisplay.getUserId(),
 						entry.getEntryId(), tempBlogsEntryAttachments);
 

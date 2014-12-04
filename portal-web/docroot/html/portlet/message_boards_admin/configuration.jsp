@@ -328,74 +328,64 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 					prioritiesChanged = true;
 				}
 
-				Liferay.provide(
-					window,
-					'<portlet:namespace />updatePrioritiesLanguage',
-					function() {
-						var A = AUI();
+				function <portlet:namespace />updatePrioritiesLanguage() {
+					var $ = AUI.$;
 
-						if (prioritiesLastLanguageId != '<%= defaultLanguageId %>') {
-							if (prioritiesChanged) {
-								for (var i = 0; i < 10; i++) {
-									var priorityName = A.one('#<portlet:namespace />priorityName' + i + '_temp').val();
-									var priorityImage = A.one('#<portlet:namespace />priorityImage' + i + '_temp').val();
-									var priorityValue = A.one('#<portlet:namespace />priorityValue' + i + '_temp').val();
-
-									A.one('#<portlet:namespace />priorityName' + i + '_' + prioritiesLastLanguageId).val(priorityName);
-									A.one('#<portlet:namespace />priorityImage' + i + '_' + prioritiesLastLanguageId).val(priorityImage);
-									A.one('#<portlet:namespace />priorityValue' + i + '_' + prioritiesLastLanguageId).val(priorityValue);
-								}
-
-								prioritiesChanged = false;
-							}
-						}
-
-						var selLanguageId = A.one(document.<portlet:namespace />fm.<portlet:namespace />prioritiesLanguageId).val();
-
-						var localizedPriorityTable = A.one('#<portlet:namespace />localized-priorities-table');
-
-						if ((selLanguageId != '') && (selLanguageId != 'null')) {
-							<portlet:namespace />updatePrioritiesLanguageTemps(selLanguageId);
-
-							localizedPriorityTable.show();
-						}
-						else {
-							localizedPriorityTable.hide();
-						}
-
-						prioritiesLastLanguageId = selLanguageId;
-					},
-					['aui-base']
-				);
-
-				Liferay.provide(
-					window,
-					'<portlet:namespace />updatePrioritiesLanguageTemps',
-					function(lang) {
-						var A = AUI();
-
-						if (lang != '<%= defaultLanguageId %>') {
+					if (prioritiesLastLanguageId != '<%= defaultLanguageId %>') {
+						if (prioritiesChanged) {
 							for (var i = 0; i < 10; i++) {
-								var defaultName = A.one('#<portlet:namespace />priorityName' + i + '_' + '<%= defaultLanguageId %>').val();
-								var defaultImage = A.one('#<portlet:namespace />priorityImage' + i + '_' + '<%= defaultLanguageId %>').val();
-								var defaultValue = A.one('#<portlet:namespace />priorityValue' + i + '_' + '<%= defaultLanguageId %>').val();
+								var priorityName = $('#<portlet:namespace />priorityName' + i + '_temp').val();
+								var priorityImage = $('#<portlet:namespace />priorityImage' + i + '_temp').val();
+								var priorityValue = $('#<portlet:namespace />priorityValue' + i + '_temp').val();
 
-								var priorityName = A.one('#<portlet:namespace />priorityName' + i + '_' + lang).val();
-								var priorityImage = A.one('#<portlet:namespace />priorityImage' + i + '_' + lang).val();
-								var priorityValue = A.one('#<portlet:namespace />priorityValue' + i + '_' + lang).val();
-
-								var name = priorityName || defaultName;
-								var image = priorityImage || defaultImage;
-								var value = priorityValue || defaultValue;
-
-								A.one('#<portlet:namespace />priorityName' + i + '_temp').val(name);
-								A.one('#<portlet:namespace />priorityImage' + i + '_temp').val(image);
-								A.one('#<portlet:namespace />priorityValue' + i + '_temp').val(value);
+								$('#<portlet:namespace />priorityName' + i + '_' + prioritiesLastLanguageId).val(priorityName);
+								$('#<portlet:namespace />priorityImage' + i + '_' + prioritiesLastLanguageId).val(priorityImage);
+								$('#<portlet:namespace />priorityValue' + i + '_' + prioritiesLastLanguageId).val(priorityValue);
 							}
+
+							prioritiesChanged = false;
 						}
-					},
-					['aui-base']
-				);
+					}
+
+					var selLanguageId = $(document.<portlet:namespace />fm.<portlet:namespace />prioritiesLanguageId).val();
+
+					var localizedPriorityTable = $('#<portlet:namespace />localized-priorities-table');
+
+					if ((selLanguageId != '') && (selLanguageId != 'null')) {
+						<portlet:namespace />updatePrioritiesLanguageTemps(selLanguageId);
+
+						localizedPriorityTable.removeClass('hide');
+					}
+					else {
+						localizedPriorityTable.addClass('hide');
+					}
+
+					prioritiesLastLanguageId = selLanguageId;
+				}
+
+				function <portlet:namespace />updatePrioritiesLanguageTemps(lang) {
+					var $ = AUI.$;
+
+					if (lang != '<%= defaultLanguageId %>') {
+						for (var i = 0; i < 10; i++) {
+							var defaultName = $('#<portlet:namespace />priorityName' + i + '_' + '<%= defaultLanguageId %>').val();
+							var defaultImage = $('#<portlet:namespace />priorityImage' + i + '_' + '<%= defaultLanguageId %>').val();
+							var defaultValue = $('#<portlet:namespace />priorityValue' + i + '_' + '<%= defaultLanguageId %>').val();
+
+							var priorityName = $('#<portlet:namespace />priorityName' + i + '_' + lang).val();
+							var priorityImage = $('#<portlet:namespace />priorityImage' + i + '_' + lang).val();
+							var priorityValue = $('#<portlet:namespace />priorityValue' + i + '_' + lang).val();
+
+							var name = priorityName || defaultName;
+							var image = priorityImage || defaultImage;
+							var value = priorityValue || defaultValue;
+
+							$('#<portlet:namespace />priorityName' + i + '_temp').val(name);
+							$('#<portlet:namespace />priorityImage' + i + '_temp').val(image);
+							$('#<portlet:namespace />priorityValue' + i + '_temp').val(value);
+						}
+					}
+				}
 
 				<portlet:namespace />updatePrioritiesLanguageTemps(prioritiesLastLanguageId);
 			</aui:script>
@@ -464,61 +454,51 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 					ranksChanged = true;
 				}
 
-				Liferay.provide(
-					window,
-					'<portlet:namespace />updateRanksLanguage',
-					function() {
-						var A = AUI();
+				function <portlet:namespace />updateRanksLanguage() {
+					var $ = AUI.$;
 
-						if (ranksLastLanguageId != '<%= defaultLanguageId %>') {
-							if (ranksChanged) {
-								var ranksValue = A.one('#<portlet:namespace />ranks_temp').val();
+					if (ranksLastLanguageId != '<%= defaultLanguageId %>') {
+						if (ranksChanged) {
+							var ranksValue = $('#<portlet:namespace />ranks_temp').val();
 
-								if (ranksValue == null) {
-									ranksValue = '';
-								}
-
-								A.one('#<portlet:namespace />ranks_' + ranksLastLanguageId).val(ranksValue);
-
-								ranksChanged = false;
+							if (ranksValue == null) {
+								ranksValue = '';
 							}
+
+							$('#<portlet:namespace />ranks_' + ranksLastLanguageId).val(ranksValue);
+
+							ranksChanged = false;
 						}
+					}
 
-						var selLanguageId = A.one(document.<portlet:namespace />fm.<portlet:namespace />ranksLanguageId).val();
+					var selLanguageId = $(document.<portlet:namespace />fm.<portlet:namespace />ranksLanguageId).val();
 
-						var ranksTemp = A.one('#<portlet:namespace />ranks_temp');
+					var ranksTemp = $('#<portlet:namespace />ranks_temp');
 
-						if ((selLanguageId != '') && (selLanguageId != 'null')) {
-							<portlet:namespace />updateRanksLanguageTemps(selLanguageId);
+					if ((selLanguageId != '') && (selLanguageId != 'null')) {
+						<portlet:namespace />updateRanksLanguageTemps(selLanguageId);
 
-							ranksTemp.show();
-						}
-						else {
-							ranksTemp.hide();
-						}
+						ranksTemp.removeClass('hide');
+					}
+					else {
+						ranksTemp.addClass('hide');
+					}
 
-						ranksLastLanguageId = selLanguageId;
-					},
-					['aui-base']
-				);
+					ranksLastLanguageId = selLanguageId;
+				}
 
-				Liferay.provide(
-					window,
-					'<portlet:namespace />updateRanksLanguageTemps',
-					function(lang) {
-						var A = AUI();
+				function <portlet:namespace />updateRanksLanguageTemps(lang) {
+					var $ = AUI.$;
 
-						if (lang != '<%= defaultLanguageId %>') {
-							var ranksValue = A.one('#<portlet:namespace />ranks_' + lang).val();
-							var defaultRanksValue = A.one('#<portlet:namespace />ranks_<%= defaultLanguageId %>').val();
+					if (lang != '<%= defaultLanguageId %>') {
+						var ranksValue = $('#<portlet:namespace />ranks_' + lang).val();
+						var defaultRanksValue = $('#<portlet:namespace />ranks_<%= defaultLanguageId %>').val();
 
-							var value = ranksValue || defaultRanksValue;
+						var value = ranksValue || defaultRanksValue;
 
-							A.one('#<portlet:namespace />ranks_temp').val(value);
-						}
-					},
-					['aui-base']
-				);
+						$('#<portlet:namespace />ranks_temp').val(value);
+					}
+				}
 
 				<portlet:namespace />updateRanksLanguageTemps(ranksLastLanguageId);
 			</aui:script>

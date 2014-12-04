@@ -2316,39 +2316,6 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, start, end, orderByComparator);
 	}
 
-	@Override
-	public List<JournalArticle> getIndexableArticlesByDDMStructureKey(
-		String[] ddmStructureKeys) {
-
-		if (PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-			return getStructureArticles(ddmStructureKeys);
-		}
-
-		QueryDefinition<JournalArticle> queryDefinitionApproved =
-			new QueryDefinition<JournalArticle>(
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new ArticleVersionComparator());
-
-		List<JournalArticle> articles = new ArrayList<JournalArticle>();
-
-		articles.addAll(
-			journalArticleFinder.findByG_C_S(
-				0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-				ListUtil.toList(ddmStructureKeys), queryDefinitionApproved));
-
-		QueryDefinition<JournalArticle> queryDefinitionTrash =
-			new QueryDefinition<JournalArticle>(
-				WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new ArticleVersionComparator());
-
-		articles.addAll(
-			journalArticleFinder.findByG_C_S(
-				0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-				ListUtil.toList(ddmStructureKeys), queryDefinitionTrash));
-
-		return articles;
-	}
-
 	/**
 	 * Returns all the web content articles matching the resource primary key.
 	 *
@@ -2641,6 +2608,39 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return articles.get(0);
+	}
+
+	@Override
+	public List<JournalArticle> getIndexableArticlesByDDMStructureKey(
+		String[] ddmStructureKeys) {
+
+		if (PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+			return getStructureArticles(ddmStructureKeys);
+		}
+
+		QueryDefinition<JournalArticle> queryDefinitionApproved =
+			new QueryDefinition<JournalArticle>(
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new ArticleVersionComparator());
+
+		List<JournalArticle> articles = new ArrayList<JournalArticle>();
+
+		articles.addAll(
+			journalArticleFinder.findByG_C_S(
+				0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+				ListUtil.toList(ddmStructureKeys), queryDefinitionApproved));
+
+		QueryDefinition<JournalArticle> queryDefinitionTrash =
+			new QueryDefinition<JournalArticle>(
+				WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new ArticleVersionComparator());
+
+		articles.addAll(
+			journalArticleFinder.findByG_C_S(
+				0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+				ListUtil.toList(ddmStructureKeys), queryDefinitionTrash));
+
+		return articles;
 	}
 
 	/**

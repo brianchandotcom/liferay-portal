@@ -224,10 +224,6 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -417,11 +413,6 @@
 	</command>
 
 	<command name="ViewPortletWCDShowAvailableLocales" priority="5">
-		<var name="languageKey" value="zh_CN" />
-		<var name="webContentTranslationContent" value="世界您好 Content" />
-		<var name="webContentTranslationLanguage" value="Chinese (China)" />
-		<var name="webContentTranslationTitle" value="世界您好 Title" />
-
 		<execute macro="WebContentDisplayPortlet#configureSetupPG">
 			<var name="wcdPortletShowAvailableLocales" value="true" />
 		</execute>
@@ -437,6 +428,7 @@
 		</execute>
 
 		<execute macro="WebContent#addTranslationPGViaWCD">
+			<var name="languageKey" value="zh_CN" />
 			<var name="lowercaseLanguageCode" value="zh" />
 			<var name="webContentTranslationContent" value="世界您好 Content" />
 			<var name="webContentTranslationLanguage" value="Chinese (China)" />

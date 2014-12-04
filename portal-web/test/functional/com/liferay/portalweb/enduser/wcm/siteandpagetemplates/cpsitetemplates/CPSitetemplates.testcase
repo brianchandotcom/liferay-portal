@@ -165,17 +165,17 @@
 		<execute macro="Portlet#dragAndDropPortletToColumnPG">
 			<var name="columnNumberFrom" value="2" />
 			<var name="columnNumberTo" value="1" />
-			<var name="portletName" value="Polls Display" />
+			<var name="portletName" value="User Statistics" />
 		</execute>
 
 		<execute macro="SiteTemplates#resetPageChanges">
 			<var name="columnNumberTo" value="1" />
-			<var name="portletName" value="Polls Display" />
+			<var name="portletName" value="User Statistics" />
 		</execute>
 
 		<execute macro="SiteTemplates#viewResetPageChanges">
 			<var name="columnNumberFrom" value="2" />
-			<var name="portletName" value="Polls Display" />
+			<var name="portletName" value="User Statistics" />
 		</execute>
 	</command>
 </definition>

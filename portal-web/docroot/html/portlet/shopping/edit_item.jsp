@@ -126,19 +126,39 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 			<div class="form-group">
 				<aui:input label="category" name="categoryName" type="resource" value="<%= categoryName %>" />
 
-				<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/shopping/select_category" />
-					<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-				</portlet:renderURL>
-
-				<%
-				String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCategoryURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); categoryWindow.focus();";
-				%>
-
-				<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
+				<aui:button id="selectCategoryButton" value="select" />
 
 				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
 			</div>
+
+			<aui:script use="aui-base">
+				var categoryButton = A.one('#<portlet:namespace />selectCategoryButton');
+
+				if (categoryButton) {
+					categoryButton.on(
+						'click',
+						function(event) {
+							Liferay.Util.selectEntity(
+								{
+									dialog: {
+										constrain: true,
+										modal: true,
+										width: 680
+									},
+									id: '<portlet:namespace />selectCategory',
+									title: '<liferay-ui:message arguments="category" key="select-x" />',
+									uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" /></portlet:renderURL>'
+								},
+								function(event) {
+									document.<portlet:namespace />fm.<portlet:namespace />categoryId.value = event.categoryid;
+
+									document.getElementById('<portlet:namespace />categoryName').value = A.Lang.String.unescapeEntities(event.name);
+								}
+							);
+						}
+					);
+				}
+			</aui:script>
 		</c:if>
 
 		<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="sku" />
@@ -568,11 +588,17 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 		}
 		%>
 
-		var itemQuantitiesWindow = window.open(itemQuantitiesURL, 'itemQuantities', 'directories=no,height=400,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no,width=300');
-
-		void('');
-
-		itemQuantitiesWindow.focus();
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					width: 680
+				},
+				id: '<portlet:namespace />itemQuantities',
+				refreshWindow: window,
+				title: '<%= UnicodeLanguageUtil.get(request, "edit-stock-quantity") %>',
+				uri: itemQuantitiesURL
+			}
+		);
 	}
 
 	function <portlet:namespace />removeCategory() {
@@ -585,12 +611,6 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (item == null) ? Constants.ADD : Constants.UPDATE %>';
 
 		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />selectCategory(categoryId, categoryName) {
-		document.<portlet:namespace />fm.<portlet:namespace />categoryId.value = categoryId;
-
-		document.getElementById('<portlet:namespace />categoryName').value = categoryName;
 	}
 
 	function <portlet:namespace />toggleInfiniteStock(checkbox) {

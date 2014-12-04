@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.security.auth.FullNameDefinition;
 
 import java.util.Locale;
 import java.util.Map;
@@ -94,6 +95,8 @@ public interface Localization {
 	public String getDefaultLanguageId(String xml);
 
 	public String getDefaultLanguageId(String xml, Locale defaultLocale);
+
+	public FullNameDefinition getFullNameDefinition(Locale locale);
 
 	/**
 	 * Returns the localized string from the localizations XML in the language.

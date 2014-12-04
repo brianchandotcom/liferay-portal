@@ -2324,14 +2324,29 @@ public class JournalArticleLocalServiceImpl
 			return getStructureArticles(ddmStructureKeys);
 		}
 
-		QueryDefinition<JournalArticle> queryDefinition =
+		QueryDefinition<JournalArticle> queryDefinitionApproved =
 			new QueryDefinition<JournalArticle>(
-				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new ArticleVersionComparator());
 
-		return journalArticleFinder.findByG_C_S(
-			0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-			ListUtil.toList(ddmStructureKeys), queryDefinition);
+		List<JournalArticle> articles = new ArrayList<JournalArticle>();
+
+		articles.addAll(
+			journalArticleFinder.findByG_C_S(
+				0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+				ListUtil.toList(ddmStructureKeys), queryDefinitionApproved));
+
+		QueryDefinition<JournalArticle> queryDefinitionTrash =
+			new QueryDefinition<JournalArticle>(
+				WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new ArticleVersionComparator());
+
+		articles.addAll(
+			journalArticleFinder.findByG_C_S(
+				0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+				ListUtil.toList(ddmStructureKeys), queryDefinitionTrash));
+
+		return articles;
 	}
 
 	/**

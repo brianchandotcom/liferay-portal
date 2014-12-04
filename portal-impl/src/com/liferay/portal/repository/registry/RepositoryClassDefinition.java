@@ -16,6 +16,7 @@ package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
@@ -25,12 +26,12 @@ import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
+import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portal.repository.capabilities.BaseCapabilityRepository;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.capabilities.ConfigurationCapabilityImpl;
@@ -69,12 +70,16 @@ public class RepositoryClassDefinition
 		LocalRepository localRepository =
 			_repositoryFactory.createLocalRepository(repositoryId);
 
+		DefaultCapabilityRegistry defaultCapabilityRegistry =
+			new DefaultCapabilityRegistry(localRepository);
+
+		_repositoryDefiner.registerCapabilities(defaultCapabilityRegistry);
+
+		setUpCommonCapabilities(localRepository, defaultCapabilityRegistry);
+
 		CapabilityLocalRepository capabilityLocalRepository =
-			new CapabilityLocalRepository(localRepository, this);
-
-		_repositoryDefiner.registerCapabilities(capabilityLocalRepository);
-
-		setUpCommonCapabilities(capabilityLocalRepository);
+			new CapabilityLocalRepository(
+				localRepository, defaultCapabilityRegistry, this);
 
 		return capabilityLocalRepository;
 	}
@@ -86,14 +91,18 @@ public class RepositoryClassDefinition
 		Repository repository = _repositoryFactory.createRepository(
 			repositoryId);
 
+		DefaultCapabilityRegistry defaultCapabilityRegistry =
+			new DefaultCapabilityRegistry(repository);
+
+		_repositoryDefiner.registerCapabilities(defaultCapabilityRegistry);
+
+		setUpCommonCapabilities(repository, defaultCapabilityRegistry);
+
+		setUpCapabilityRepositoryCapabilities(
+			repository, defaultCapabilityRegistry);
+
 		CapabilityRepository capabilityRepository = new CapabilityRepository(
-			repository, this);
-
-		_repositoryDefiner.registerCapabilities(capabilityRepository);
-
-		setUpCommonCapabilities(capabilityRepository);
-
-		setUpCapabilityRepositoryCapabilities(capabilityRepository);
+			repository, defaultCapabilityRegistry, this);
 
 		return capabilityRepository;
 	}
@@ -178,34 +187,33 @@ public class RepositoryClassDefinition
 	}
 
 	protected void setUpCapabilityRepositoryCapabilities(
-		CapabilityRepository capabilityRepository) {
-
-		Repository repository = capabilityRepository.getRepository();
+		Repository repository, CapabilityRegistry capabilityRegistry) {
 
 		CMISRepositoryHandler cmisRepositoryHandler = getCMISRepositoryHandler(
 			repository);
 
 		if (cmisRepositoryHandler != null) {
-			capabilityRepository.addExportedCapability(
+			capabilityRegistry.addExportedCapability(
 				CMISRepositoryHandler.class, cmisRepositoryHandler);
 		}
 	}
 
 	protected void setUpCommonCapabilities(
-		BaseCapabilityRepository<?> baseCapabilityRepository) {
+		DocumentRepository documentRepository,
+		DefaultCapabilityRegistry capabilityRegistry) {
 
-		if (!baseCapabilityRepository.isCapabilityProvided(
+		if (!capabilityRegistry.isCapabilityProvided(
 				ConfigurationCapability.class)) {
 
-			baseCapabilityRepository.addExportedCapability(
+			capabilityRegistry.addExportedCapability(
 				ConfigurationCapability.class,
-				new ConfigurationCapabilityImpl(baseCapabilityRepository));
+				new ConfigurationCapabilityImpl(documentRepository));
 		}
 
-		if (!baseCapabilityRepository.isCapabilityProvided(
+		if (!capabilityRegistry.isCapabilityProvided(
 				RepositoryEventTriggerCapability.class)) {
 
-			baseCapabilityRepository.addExportedCapability(
+			capabilityRegistry.addExportedCapability(
 				RepositoryEventTriggerCapability.class,
 				new LiferayRepositoryEventTriggerCapability(this));
 		}

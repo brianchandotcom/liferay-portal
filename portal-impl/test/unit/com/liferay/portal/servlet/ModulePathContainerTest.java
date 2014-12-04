@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortletKeys;
 
-import java.io.Serializable;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -34,17 +32,11 @@ public class ModulePathContainerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		MemoryPortalCacheManager<Serializable, Serializable>
-			memoryPortalCacheManager =
-				new MemoryPortalCacheManager<Serializable, Serializable>();
-
-		memoryPortalCacheManager.setName("SingleVMPortalCacheManager");
-
-		memoryPortalCacheManager.afterPropertiesSet();
-
 		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();
 
-		singleVMPoolImpl.setPortalCacheManager(memoryPortalCacheManager);
+		singleVMPoolImpl.setPortalCacheManager(
+			MemoryPortalCacheManager.createMemoryPortalCacheManager(
+				ModulePathContainerTest.class.getName()));
 
 		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
 

@@ -27,7 +27,6 @@ import com.liferay.portal.util.PortletKeys;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 
 import java.net.URI;
 import java.net.URL;
@@ -69,17 +68,11 @@ public class ComboServletTest extends PowerMockito {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		MemoryPortalCacheManager<Serializable, Serializable>
-			memoryPortalCacheManager =
-				new MemoryPortalCacheManager<Serializable, Serializable>();
-
-		memoryPortalCacheManager.setName("SingleVMPortalCacheManager");
-
-		memoryPortalCacheManager.afterPropertiesSet();
-
 		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();
 
-		singleVMPoolImpl.setPortalCacheManager(memoryPortalCacheManager);
+		singleVMPoolImpl.setPortalCacheManager(
+			MemoryPortalCacheManager.createMemoryPortalCacheManager(
+				ComboServletTest.class.getName()));
 
 		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
 

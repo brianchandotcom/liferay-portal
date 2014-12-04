@@ -245,12 +245,14 @@ AUI.add(
 						reader.addEventListener(
 							'loadend',
 							function() {
-								instance._updateImageData(
-									{
-										fileentryid: '-1',
-										url: reader.result
-									}
-								);
+								if (!instance._uploadCompleted) {
+									instance._updateImageData(
+										{
+											fileentryid: '-1',
+											url: reader.result
+										}
+									);
+								}
 							}
 						);
 
@@ -292,6 +294,8 @@ AUI.add(
 					_onUploadComplete: function(event) {
 						var instance = this;
 
+						instance._uploadCompleted = true;
+
 						instance._stopProgress(event);
 
 						var data = event.data;
@@ -313,7 +317,6 @@ AUI.add(
 									error: data.error
 								}
 							);
-
 						}
 					},
 
@@ -349,12 +352,14 @@ AUI.add(
 						}
 					},
 
-					_onUploadStart: function(event) {
+					_onUploadStart: function() {
 						var instance = this;
 
 						instance.rootNode.addClass(CSS_PROGRESS_ACTIVE);
 
 						instance._errorNodeAlert.hide();
+
+						instance._uploadCompleted = false;
 					},
 
 					_renderUploader: function() {

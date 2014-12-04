@@ -4685,7 +4685,9 @@ public class PortalImpl implements Portal {
 				scopeGroupId = doAsGroupId;
 			}
 
-			if ((group != null) && group.isInheritContent()) {
+			if ((group != null) && group.isInheritContent() &&
+				!layout.getGroup().isControlPanel()) {
+
 				scopeGroupId = group.getParentGroupId();
 			}
 

@@ -43,12 +43,6 @@
 		Map<String, List<Portlet>> siteAdministrationCategoriesMap = PortalUtil.getSiteAdministrationCategoriesMap(request);
 
 		for (String siteAdministrationCategory : siteAdministrationCategoriesMap.keySet()) {
-			Group curSite = themeDisplay.getSiteGroup();
-
-			if (curSite.isInheritContent() && siteAdministrationCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT)) {
-				continue;
-			}
-
 			String iconCssClass = "icon-file";
 
 			String panelPageCategoryId = "panel-manage-" + siteAdministrationCategory;
@@ -72,6 +66,8 @@
 
 					<%
 					List<Layout> scopeLayouts = new ArrayList<Layout>();
+
+					Group curSite = themeDisplay.getSiteGroup();
 
 					scopeLayouts.addAll(LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId(), false));
 					scopeLayouts.addAll(LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId(), true));

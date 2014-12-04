@@ -2449,7 +2449,7 @@ public interface PropsKeys {
 
 	public static final String SITES_FRIENDLY_URL_PAGE_NOT_FOUND = "sites.friendly.url.page.not.found";
 
-	public static final String SITES_SHOW_INHERIT_CONTENT = "sites.show.inherit.content";
+	public static final String SITES_SHOW_INHERIT_CONTENT_SCOPE_FROM_PARENT_SITE = "sites.show.inherit.content.scope.from.parent.site";
 
 	public static final String SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY = "sites.sitemap.default.change.frequency";
 

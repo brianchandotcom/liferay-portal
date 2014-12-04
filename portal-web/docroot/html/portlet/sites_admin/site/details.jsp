@@ -115,8 +115,7 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
-<liferay-ui:error exception="<%= GroupInheritContentException.class %>" message="the-site-cannot-inherit-content-from-his-parent" />
-
+<liferay-ui:error exception="<%= GroupInheritContentException.class %>" message="this-site-cannot-inherit-content-from-its-parent-site" />
 <liferay-ui:error exception="<%= GroupNameException.class %>" message="please-enter-a-valid-name" />
 
 <liferay-ui:error exception="<%= GroupParentException.class %>">
@@ -180,7 +179,7 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 		<aui:input name="active" value="<%= true %>" />
 	</c:if>
 
-	<c:if test="<%= ((parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) && PropsValues.SITES_SHOW_INHERIT_CONTENT) %>">
+	<c:if test="<%= ((parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) && PropsValues.SITES_SHOW_INHERIT_CONTENT_SCOPE_FROM_PARENT_SITE) %>">
 
 		<%
 		boolean disabled = false;
@@ -190,7 +189,7 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 		}
 		%>
 
-		<aui:input disabled="<%= disabled %>" helpMessage='<%= disabled ? "you-cannot-set-inherit-content-if-your-parent-is-inherit-content" : StringPool.BLANK %>' name="inheritContent" value="<%= false %>" />
+		<aui:input disabled="<%= disabled %>" helpMessage='<%= disabled ? "this-site-cannot-inherit-the-content-from-its-parent-site-since-the-parent-site-is-already-inheriting-the-content-from-its-parent" : StringPool.BLANK %>' name="inheritContent" value="<%= false %>" />
 	</c:if>
 
 	<h3><liferay-ui:message key="membership-options" /></h3>

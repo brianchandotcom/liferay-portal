@@ -1359,10 +1359,10 @@ public class DLImpl implements DL {
 
 		String entryURL = null;
 
-		String command = serviceContext.getCommand();
-
-		if (command.equals(Constants.ADD_WEBDAV) ||
-			command.equals(Constants.UPDATE_WEBDAV)) {
+		if (Validator.equals(
+				serviceContext.getCommand(), Constants.ADD_WEBDAV) ||
+			Validator.equals(
+				serviceContext.getCommand(), Constants.UPDATE_WEBDAV)) {
 
 			entryURL =
 				serviceContext.getPortalURL() + serviceContext.getCurrentURL();

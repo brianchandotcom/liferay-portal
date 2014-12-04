@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.TrackedServletRequest;
 import com.liferay.portal.kernel.servlet.taglib.TagDynamicIncludeUtil;
-import com.liferay.portal.kernel.servlet.taglib.TagKeyFactory;
-import com.liferay.portal.kernel.servlet.taglib.TagKeyFactoryRegistry;
+import com.liferay.portal.kernel.servlet.taglib.TagIdFactory;
+import com.liferay.portal.kernel.servlet.taglib.TagIdFactoryRegistry;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -324,14 +324,14 @@ public class IncludeTag extends AttributesTagSupport {
 			dynamicIncludePrefixKey = "doEndTag#";
 		}
 
-		TagKeyFactory tagKeyResolver = TagKeyFactoryRegistry.getTagKeyFactory(
+		TagIdFactory tagKeyResolver = TagIdFactoryRegistry.getTagIdFactory(
 			tagClassName);
 
 		if (tagKeyResolver != null) {
 			jspWriterHttpServletResponse = new JspWriterHttpServletResponse(
 				pageContext);
 
-			tagKey = tagKeyResolver.getKey(
+			tagKey = tagKeyResolver.getTagId(
 				request, jspWriterHttpServletResponse, this);
 
 			TagDynamicIncludeUtil.include(

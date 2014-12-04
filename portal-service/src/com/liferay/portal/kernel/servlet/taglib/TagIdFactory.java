@@ -20,9 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Carlos Sierra Andrés
  */
-public interface TagKeyFactory {
+public interface TagIdFactory {
 
-	public String getKey(
+	public String getTagId(
 		HttpServletRequest request, HttpServletResponse response, Object tag);
 
 }

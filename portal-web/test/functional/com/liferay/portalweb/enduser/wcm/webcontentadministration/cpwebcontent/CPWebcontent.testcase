@@ -182,6 +182,7 @@
 			<var name="localizedLanguage" value="Spanish (Spain)" />
 			<var name="unlocalizableField" value="Text Box" />
 			<var name="unlocalizableFieldLocator" value="TEXT_BOX_FIELD" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

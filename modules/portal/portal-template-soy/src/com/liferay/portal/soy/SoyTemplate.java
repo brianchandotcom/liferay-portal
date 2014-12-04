@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Writer;
 
@@ -54,8 +53,7 @@ public class SoyTemplate extends AbstractTemplate {
 
 		super(
 			templateResource, errorTemplateResource, context,
-			templateContextHelper, TemplateConstants.LANG_TYPE_SOY,
-			PropsValues.FREEMARKER_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
+			templateContextHelper, TemplateConstants.LANG_TYPE_SOY, 0);
 
 		_builder = builder;
 		_privileged = privileged;

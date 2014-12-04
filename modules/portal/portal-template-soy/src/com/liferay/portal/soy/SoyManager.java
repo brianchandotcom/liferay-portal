@@ -21,26 +21,34 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Bruno Basto
  */
+@Component(immediate = true, service = TemplateManager.class)
 @DoPrivileged
 public class SoyManager extends BaseTemplateManager {
 
 	@Override
 	public void destroy() {
 		_builder = null;
+
+		templateContextHelper.removeAllHelperUtilities();
+
+		templateContextHelper = null;
 	}
 
 	@Override
 	public void destroy(ClassLoader classLoader) {
-		_builder = null;
+		templateContextHelper.removeHelperUtilities(classLoader);
 	}
 
 	@Override
@@ -54,7 +62,7 @@ public class SoyManager extends BaseTemplateManager {
 			return;
 		}
 
-		_builder = SoyFileSet.builder();
+		_builder = new SoyFileSet.Builder();
 	}
 
 	@Override

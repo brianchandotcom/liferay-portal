@@ -18,7 +18,11 @@ import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BaseCapabilityProvider;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
+import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
+import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
+
+import java.util.Map;
 
 /**
  * @author Adolfo Pérez
@@ -48,6 +52,23 @@ public class DefaultCapabilityRegistry
 	@Override
 	public DocumentRepository getDocumentRepository() {
 		return _documentRepository;
+	}
+
+	public void registerCapabilityRepositoryEvents(
+		RepositoryEventRegistry repositoryEventRegistry) {
+
+		Map<Class<? extends Capability>, Capability> capabilities =
+			getCapabilities();
+
+		for (Capability capability : capabilities.values()) {
+			if (capability instanceof RepositoryEventAware) {
+				RepositoryEventAware repositoryEventAware =
+					(RepositoryEventAware)capability;
+
+				repositoryEventAware.registerRepositoryEventListeners(
+					repositoryEventRegistry);
+			}
+		}
 	}
 
 	@Override

@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -82,6 +84,8 @@ public class IncludeTag extends AttributesTagSupport {
 			}
 
 			if (!FileAvailabilityUtil.isAvailable(servletContext, page)) {
+				logWarnForNotFoundPage(page);
+
 				return processEndTag();
 			}
 
@@ -122,6 +126,8 @@ public class IncludeTag extends AttributesTagSupport {
 			}
 
 			if (!FileAvailabilityUtil.isAvailable(servletContext, page)) {
+				logWarnForNotFoundPage(page);
+
 				return processStartTag();
 			}
 
@@ -367,6 +373,66 @@ public class IncludeTag extends AttributesTagSupport {
 		return _useCustomPage;
 	}
 
+	protected void logWarnForNotFoundPage(String page) {
+		if ((page!= null) && _log.isWarnEnabled()) {
+			String contextPath = servletContext.getContextPath();
+
+			if (contextPath.equals(StringPool.BLANK)) {
+				contextPath = StringPool.SLASH;
+			}
+
+			StringBundler sb = new StringBundler(13);
+
+			sb.append("Unable to find ");
+			sb.append(page);
+			sb.append(" in context ");
+			sb.append(contextPath);
+			sb.append(".");
+
+			if (_isPortalTaglibPage(page)) {
+				if (contextPath.equals(StringPool.SLASH)) {
+					sb = null;
+				}
+				else {
+					sb.append(" It seems that you are trying to use an ");
+					sb.append("include-derived taglib from a module and ");
+					sb.append("setting the servletContext at the same time,");
+					sb.append(" which is not supported. Please consider ");
+					sb.append("inlining the nested content of the tag ");
+					sb.append(" directly in the JSP where the tag is invoked,");
+					sb.append(" instead of using the file and servletContext");
+					sb.append(" attributes.");
+				}
+			}
+			else {
+				if (contextPath.equals(StringPool.SLASH)) {
+					if (getClass().equals(IncludeTag.class)) {
+						sb.append(" It seems that you are trying to use an ");
+						sb.append("include taglib from a module without ");
+						sb.append("specifying the servletContext attribute, ");
+						sb.append("which is unsupported and will not render ");
+						sb.append("anything in the page. Please set the ");
+						sb.append("servletContext attribute of the tag to the");
+						sb.append(" value <%= application %> to make it work.");
+					}
+					else {
+						sb.append(" It seems that you are trying to use an ");
+						sb.append("include-derived taglib from a module using");
+						sb.append(" the file attribute of the taglib, which ");
+						sb.append("is unsupported and will not render ");
+						sb.append("anything in the page. Please consider ");
+						sb.append("nesting the content directly inside ");
+						sb.append("the tag.");
+					}
+				}
+			}
+
+			if (sb != null) {
+				_log.warn(sb.toString());
+			}
+		}
+	}
+
 	protected int processEndTag() throws Exception {
 		return EVAL_PAGE;
 	}
@@ -410,6 +476,17 @@ public class IncludeTag extends AttributesTagSupport {
 		}
 
 		return exists;
+	}
+
+	private boolean _isPortalTaglibPage(String page) {
+		if (page.startsWith("/html/taglib/") &&
+			(page.endsWith("/start.jsp") || page.endsWith("/end.jsp") ||
+			 page.endsWith("/page.jsp"))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = false;

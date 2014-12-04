@@ -4,7 +4,13 @@ AUI().use(
 	'querystring-parse',
 	function(A) {
 		CKEDITOR.editor.prototype.popup = function(url, width, height, options) {
-			options = A.QueryString.parse(options);
+            var params = A.QueryString.parse(url);
+
+            if (params.p_p_id) {
+                url = url.replace("CKEditorFuncNum=", "_" + params.p_p_id + "_CKEditorFuncNum=");
+            }
+
+            options = A.QueryString.parse(options);
 
 			Liferay.Util.openWindow(
 				{

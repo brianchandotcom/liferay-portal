@@ -78,7 +78,7 @@ portletURL.setParameter("type", type);
 %>
 
 <c:if test="<%= showGroupsSelector %>">
-	<liferay-util:include page="/html/portlet/document_selector/group_selector.jsp">
+	<liferay-util:include page="/html/portlet/document_selector/group_selector.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="tabs1" value="documents" />
 	</liferay-util:include>
 </c:if>
@@ -182,10 +182,9 @@ portletURL.setParameter("type", type);
 			</aui:nav-item>
 		</aui:nav>
 
-		<aui:nav-bar-search
-			file="/html/portlet/document_selector/search.jsp"
-			searchContainer="<%= fileEntrySearchContainer %>"
-		/>
+		<aui:nav-bar-search searchContainer="<%= fileEntrySearchContainer %>">
+			<%@ include file="/html/portlet/document_selector/search.jspf" %>
+		</aui:nav-bar-search>
 	</aui:nav-bar>
 
 	<c:if test="<%= Validator.isNull(displayTerms.getKeywords()) %>">
@@ -317,7 +316,7 @@ portletURL.setParameter("type", type);
 			searchContext.setAttribute("mimeTypes", DocumentSelectorUtil.getMimeTypes(request));
 			searchContext.setAttribute("paginationType", "regular");
 
-			int entryEnd = ParamUtil.getInteger(request, "entryEnd", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+			int entryEnd = ParamUtil.getInteger(request, "entryEnd", GetterUtil.getInteger(PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA), 20));
 
 			searchContext.setEnd(entryEnd);
 
@@ -365,7 +364,7 @@ portletURL.setParameter("type", type);
 				value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
 			/>
 
-			<c:if test="<%= PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED %>">
+			<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BUFFERED_INCREMENT_ENABLED, new Filter("DLFileEntry"))) %>'>
 				<liferay-ui:search-container-column-text
 					name="downloads"
 					value="<%= String.valueOf(fileEntry.getReadCount()) %>"

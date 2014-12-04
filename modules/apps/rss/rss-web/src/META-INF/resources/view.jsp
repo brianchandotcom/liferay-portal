@@ -35,7 +35,7 @@ List<RSSFeed> rssFeeds = rssDisplayContext.getRSSFeeds();
 		SyndFeed syndFeed = rssFeed.getSyndFeed();
 	%>
 
-		<%@ include file="/html/portlet/rss/feed.jspf" %>
+		<%@ include file="/feed.jspf" %>
 
 	<%
 	}

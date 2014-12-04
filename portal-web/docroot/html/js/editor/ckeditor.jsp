@@ -383,13 +383,13 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 							}
 						}
 
-                        PortletURL imageDocumentSelectorURL = PortletURLUtil.clone(documentSelectorURL, liferayPortletResponse);
+						PortletURL imageDocumentSelectorURL = PortletURLUtil.clone(documentSelectorURL, liferayPortletResponse);
 
-                        imageDocumentSelectorURL.setParameter("type", "image");
+						imageDocumentSelectorURL.setParameter("type", "image");
 
-                        PortletURL flashDocumentSelectorURL = PortletURLUtil.clone(documentSelectorURL, liferayPortletResponse);
+						PortletURL flashDocumentSelectorURL = PortletURLUtil.clone(documentSelectorURL, liferayPortletResponse);
 
-                        flashDocumentSelectorURL.setParameter("type", "flash");
+						flashDocumentSelectorURL.setParameter("type", "flash");
 						%>
 
 						filebrowserBrowseUrl: '<%= documentSelectorURL %>',

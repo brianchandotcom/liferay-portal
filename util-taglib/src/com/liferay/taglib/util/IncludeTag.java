@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -372,70 +374,63 @@ public class IncludeTag extends AttributesTagSupport {
 	}
 
 	protected void logWarnForNotFoundPage(String page) {
-		if ((page!=null) && _log.isWarnEnabled()) {
+		if ((page!= null) && _log.isWarnEnabled()) {
 			String contextPath = servletContext.getContextPath();
 
-			if (contextPath.equals("")) {
-				contextPath = "/";
+			if (contextPath.equals(StringPool.BLANK)) {
+				contextPath = StringPool.SLASH;
 			}
 
-			String message =
-				"Unable to find " + page + " in context " + contextPath + ".";
+			StringBundler sb = new StringBundler(13);
+
+			sb.append("Unable to find ");
+			sb.append(page);
+			sb.append(" in context ");
+			sb.append(contextPath);
+			sb.append(".");
 
 			if (_isPortalTaglibPage(page)) {
-				if (contextPath.equals("/")) {
-					message = null;
+				if (contextPath.equals(StringPool.SLASH)) {
+					sb = null;
 				}
 				else {
-					message +=
-						" It seems that you are trying to use an include-" +
-						"derived taglib from a module and setting the " +
-						"servletContext at the same time, which is not " +
-						"supported. Please consider inlining the nested " +
-						"content of the tag directly in the JSP where the " +
-						"tag is invoked, instead of using the file and " +
-						"servletContext attributes.";
+					sb.append(" It seems that you are trying to use an ");
+					sb.append("include-derived taglib from a module and ");
+					sb.append("setting the servletContext at the same time,");
+					sb.append(" which is not supported. Please consider ");
+					sb.append("inlining the nested content of the tag ");
+					sb.append(" directly in the JSP where the tag is invoked,");
+					sb.append(" instead of using the file and servletContext");
+					sb.append(" attributes.");
 				}
 			}
 			else {
-				if (contextPath.equals("/")) {
-					if (getClass() == IncludeTag.class) {
-						message +=
-							" It seems that you are trying to use an include " +
-							"taglib from a module without specifying the " +
-							"servletContext attribute, which is " +
-							"unsupported and will not render anything in the " +
-							"page. Please set the servletContext attribute " +
-							"of the tag to the value <%= application %> to " +
-							"make it work.";
+				if (contextPath.equals(StringPool.SLASH)) {
+					if (getClass().equals(IncludeTag.class)) {
+						sb.append(" It seems that you are trying to use an ");
+						sb.append("include taglib from a module without ");
+						sb.append("specifying the servletContext attribute, ");
+						sb.append("which is unsupported and will not render ");
+						sb.append("anything in the page. Please set the ");
+						sb.append("servletContext attribute of the tag to the");
+						sb.append(" value <%= application %> to make it work.");
 					}
 					else {
-						message +=
-							" It seems that you are trying to use an include-" +
-							"derived taglib from a module using the file " +
-							"attribute of the taglib, which is unsupported " +
-							"and will not render anything in the page. " +
-							"Please consider nesting the content directly " +
-							"inside the tag.";
+						sb.append(" It seems that you are trying to use an ");
+						sb.append("include-derived taglib from a module using");
+						sb.append(" the file attribute of the taglib, which ");
+						sb.append("is unsupported and will not render ");
+						sb.append("anything in the page. Please consider ");
+						sb.append("nesting the content directly inside ");
+						sb.append("the tag.");
 					}
 				}
 			}
 
-			if (message != null) {
-				_log.warn(message);
+			if (sb != null) {
+				_log.warn(sb.toString());
 			}
 		}
-	}
-
-	private boolean _isPortalTaglibPage(String page) {
-		if (page.startsWith("/html/taglib/") &&
-			(page.endsWith("/start.jsp") || page.endsWith("/end.jsp") ||
-			page.endsWith("/page.jsp"))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected int processEndTag() throws Exception {
@@ -481,6 +476,17 @@ public class IncludeTag extends AttributesTagSupport {
 		}
 
 		return exists;
+	}
+
+	private boolean _isPortalTaglibPage(String page) {
+		if (page.startsWith("/html/taglib/") &&
+			(page.endsWith("/start.jsp") || page.endsWith("/end.jsp") ||
+			 page.endsWith("/page.jsp"))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = false;

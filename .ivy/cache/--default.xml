@@ -4,50 +4,50 @@
 	<info
 		organisation=""
 		module=""
-		revision="working@bchan-lion-1.local"
+		revision="working@MigueLiferay"
 		conf="default"
 		confs="default"
-		date="20141110144050"/>
+		date="20141204114755"/>
 	<dependencies>
 		<module organisation="com.liferay" name="com.liferay.arquillian.extension">
 			<revision name="1.0.0-SNAPSHOT" status="integration" pubdate="20141007151017" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="system, default, optional, compile, *, provided, runtime, javadoc, sources, master" position="20">
 				<license name="LGPL 2.1" url="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt"/>
-				<metadata-artifact status="no" details="" size="2900" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/com.liferay/com.liferay.arquillian.extension/ivy-1.0.0-SNAPSHOT.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/com/liferay/com.liferay.arquillian.extension/1.0.0-SNAPSHOT/com.liferay.arquillian.extension-1.0.0-SNAPSHOT.pom"/>
-				<caller organisation="" name="" conf="default" rev="1.0.0-SNAPSHOT" rev-constraint-default="1.0.0-SNAPSHOT" rev-constraint-dynamic="1.0.0-SNAPSHOT" callerrev="working@bchan-lion-1.local"/>
+				<metadata-artifact status="no" details="" size="2900" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/com.liferay/com.liferay.arquillian.extension/ivy-1.0.0-SNAPSHOT.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/com/liferay/com.liferay.arquillian.extension/1.0.0-SNAPSHOT/com.liferay.arquillian.extension-1.0.0-SNAPSHOT.pom"/>
+				<caller organisation="" name="" conf="default" rev="1.0.0-SNAPSHOT" rev-constraint-default="1.0.0-SNAPSHOT" rev-constraint-dynamic="1.0.0-SNAPSHOT" callerrev="working@MigueLiferay"/>
 				<artifacts>
-					<artifact name="com.liferay.arquillian.extension" type="source" ext="jar" extra-classifier="sources" status="no" details="" size="6230" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/com.liferay/com.liferay.arquillian.extension/sources/com.liferay.arquillian.extension-1.0.0-SNAPSHOT-sources.jar">
-						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/com/liferay/com.liferay.arquillian.extension/1.0.0-SNAPSHOT/com.liferay.arquillian.extension-1.0.0-SNAPSHOT-sources.jar"/>
-					</artifact>
-					<artifact name="com.liferay.arquillian.extension" type="jar" ext="jar" status="no" details="" size="6685" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/com.liferay/com.liferay.arquillian.extension/jars/com.liferay.arquillian.extension-1.0.0-SNAPSHOT.jar">
+					<artifact name="com.liferay.arquillian.extension" type="jar" ext="jar" status="no" details="" size="6685" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/com.liferay/com.liferay.arquillian.extension/jars/com.liferay.arquillian.extension-1.0.0-SNAPSHOT.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/com/liferay/com.liferay.arquillian.extension/1.0.0-SNAPSHOT/com.liferay.arquillian.extension-1.0.0-SNAPSHOT.jar"/>
+					</artifact>
+					<artifact name="com.liferay.arquillian.extension" type="source" ext="jar" extra-classifier="sources" status="no" details="" size="6230" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/com.liferay/com.liferay.arquillian.extension/sources/com.liferay.arquillian.extension-1.0.0-SNAPSHOT-sources.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/com/liferay/com.liferay.arquillian.extension/1.0.0-SNAPSHOT/com.liferay.arquillian.extension-1.0.0-SNAPSHOT-sources.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>
 		</module>
 		<module organisation="org.jboss.arquillian.junit" name="arquillian-junit-container">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095915" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="system, default, optional, compile, *, provided, runtime, javadoc, sources, master" position="0">
-				<metadata-artifact status="no" details="" size="16615" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-container/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/junit/arquillian-junit-container/1.1.2.Final/arquillian-junit-container-1.1.2.Final.pom"/>
-				<caller organisation="" name="" conf="default" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="working@bchan-lion-1.local"/>
+				<metadata-artifact status="no" details="" size="16615" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-container/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/junit/arquillian-junit-container/1.1.2.Final/arquillian-junit-container-1.1.2.Final.pom"/>
+				<caller organisation="" name="" conf="default" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="working@MigueLiferay"/>
 				<artifacts>
-					<artifact name="arquillian-junit-container" type="javadoc" ext="jar" extra-classifier="javadoc" status="no" details="" size="78759" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-container/javadocs/arquillian-junit-container-1.1.2.Final-javadoc.jar">
-						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/junit/arquillian-junit-container/1.1.2.Final/arquillian-junit-container-1.1.2.Final-javadoc.jar"/>
+					<artifact name="arquillian-junit-container" type="jar" ext="jar" status="no" details="" size="8145" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-container/jars/arquillian-junit-container-1.1.2.Final.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/junit/arquillian-junit-container/1.1.2.Final/arquillian-junit-container-1.1.2.Final.jar"/>
 					</artifact>
-					<artifact name="arquillian-junit-container" type="source" ext="jar" extra-classifier="sources" status="no" details="" size="5319" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-container/sources/arquillian-junit-container-1.1.2.Final-sources.jar">
+					<artifact name="arquillian-junit-container" type="source" ext="jar" extra-classifier="sources" status="no" details="" size="5319" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-container/sources/arquillian-junit-container-1.1.2.Final-sources.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/junit/arquillian-junit-container/1.1.2.Final/arquillian-junit-container-1.1.2.Final-sources.jar"/>
 					</artifact>
-					<artifact name="arquillian-junit-container" type="jar" ext="jar" status="no" details="" size="8145" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-container/jars/arquillian-junit-container-1.1.2.Final.jar">
-						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/junit/arquillian-junit-container/1.1.2.Final/arquillian-junit-container-1.1.2.Final.jar"/>
+					<artifact name="arquillian-junit-container" type="javadoc" ext="jar" extra-classifier="javadoc" status="no" details="" size="78759" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-container/javadocs/arquillian-junit-container-1.1.2.Final-javadoc.jar">
+						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/junit/arquillian-junit-container/1.1.2.Final/arquillian-junit-container-1.1.2.Final-javadoc.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>
 		</module>
 		<module organisation="org.jboss.arquillian.container" name="arquillian-container-test-impl-base">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095805" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="17">
-				<metadata-artifact status="no" details="" size="16247" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-impl-base/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-test-impl-base/1.1.2.Final/arquillian-container-test-impl-base-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="16247" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-impl-base/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-test-impl-base/1.1.2.Final/arquillian-container-test-impl-base-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.junit" name="arquillian-junit-container" conf="default, compile, runtime, master" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="com.liferay" name="com.liferay.arquillian.extension" conf="default, compile, runtime, master" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.0.0-SNAPSHOT"/>
 				<artifacts>
-					<artifact name="arquillian-container-test-impl-base" type="jar" ext="jar" status="no" details="" size="100253" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-impl-base/jars/arquillian-container-test-impl-base-1.1.2.Final.jar">
+					<artifact name="arquillian-container-test-impl-base" type="jar" ext="jar" status="no" details="" size="100253" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-impl-base/jars/arquillian-container-test-impl-base-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-test-impl-base/1.1.2.Final/arquillian-container-test-impl-base-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -55,10 +55,10 @@
 		</module>
 		<module organisation="org.jboss.arquillian.container" name="arquillian-container-impl-base">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095707" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="16">
-				<metadata-artifact status="no" details="" size="16835" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-impl-base/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-impl-base/1.1.2.Final/arquillian-container-impl-base-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="16835" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-impl-base/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-impl-base/1.1.2.Final/arquillian-container-impl-base-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.junit" name="arquillian-junit-container" conf="default, compile, runtime, master" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="arquillian-container-impl-base" type="jar" ext="jar" status="no" details="" size="78427" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-impl-base/jars/arquillian-container-impl-base-1.1.2.Final.jar">
+					<artifact name="arquillian-container-impl-base" type="jar" ext="jar" status="no" details="" size="78427" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-impl-base/jars/arquillian-container-impl-base-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-impl-base/1.1.2.Final/arquillian-container-impl-base-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -66,12 +66,12 @@
 		</module>
 		<module organisation="org.jboss.arquillian.container" name="arquillian-container-test-spi">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095743" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="8">
-				<metadata-artifact status="no" details="" size="15069" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-spi/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-test-spi/1.1.2.Final/arquillian-container-test-spi-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="15069" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-spi/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-test-spi/1.1.2.Final/arquillian-container-test-spi-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.junit" name="arquillian-junit-container" conf="default, compile, runtime, master" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-test-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="com.liferay" name="com.liferay.arquillian.extension" conf="default, compile, runtime, master" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.0.0-SNAPSHOT"/>
 				<artifacts>
-					<artifact name="arquillian-container-test-spi" type="jar" ext="jar" status="no" details="" size="25775" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-spi/jars/arquillian-container-test-spi-1.1.2.Final.jar">
+					<artifact name="arquillian-container-test-spi" type="jar" ext="jar" status="no" details="" size="25775" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-spi/jars/arquillian-container-test-spi-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-test-spi/1.1.2.Final/arquillian-container-test-spi-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -79,12 +79,12 @@
 		</module>
 		<module organisation="org.jboss.arquillian.container" name="arquillian-container-spi">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095636" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="9">
-				<metadata-artifact status="no" details="" size="15794" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-spi/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-spi/1.1.2.Final/arquillian-container-spi-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="15794" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-spi/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-spi/1.1.2.Final/arquillian-container-spi-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-test-spi" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-test-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="arquillian-container-spi" type="jar" ext="jar" status="no" details="" size="52255" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-spi/jars/arquillian-container-spi-1.1.2.Final.jar">
+					<artifact name="arquillian-container-spi" type="jar" ext="jar" status="no" details="" size="52255" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-spi/jars/arquillian-container-spi-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-spi/1.1.2.Final/arquillian-container-spi-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -92,11 +92,11 @@
 		</module>
 		<module organisation="org.jboss.arquillian.config" name="arquillian-config-impl-base">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095501" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="12">
-				<metadata-artifact status="no" details="" size="15594" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.config/arquillian-config-impl-base/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/config/arquillian-config-impl-base/1.1.2.Final/arquillian-config-impl-base-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="15594" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.config/arquillian-config-impl-base/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/config/arquillian-config-impl-base/1.1.2.Final/arquillian-config-impl-base-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-spi" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="arquillian-config-impl-base" type="jar" ext="jar" status="no" details="" size="41035" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.config/arquillian-config-impl-base/jars/arquillian-config-impl-base-1.1.2.Final.jar">
+					<artifact name="arquillian-config-impl-base" type="jar" ext="jar" status="no" details="" size="41035" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.config/arquillian-config-impl-base/jars/arquillian-config-impl-base-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/config/arquillian-config-impl-base/1.1.2.Final/arquillian-config-impl-base-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -104,11 +104,11 @@
 		</module>
 		<module organisation="org.jboss.shrinkwrap.descriptors" name="shrinkwrap-descriptors-spi">
 			<revision name="2.0.0-alpha-3" status="release" pubdate="20120509234412" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="13">
-				<metadata-artifact status="no" details="" size="8811" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/ivy-2.0.0-alpha-3.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/descriptors/shrinkwrap-descriptors-spi/2.0.0-alpha-3/shrinkwrap-descriptors-spi-2.0.0-alpha-3.pom"/>
+				<metadata-artifact status="no" details="" size="8811" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/ivy-2.0.0-alpha-3.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/descriptors/shrinkwrap-descriptors-spi/2.0.0-alpha-3/shrinkwrap-descriptors-spi-2.0.0-alpha-3.pom"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-impl-base" conf="compile, runtime" rev="2.0.0-alpha-3" rev-constraint-default="2.0.0-alpha-3" rev-constraint-dynamic="2.0.0-alpha-3" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.config" name="arquillian-config-impl-base" conf="compile, runtime" rev="2.0.0-alpha-3" rev-constraint-default="2.0.0-alpha-3" rev-constraint-dynamic="2.0.0-alpha-3" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="shrinkwrap-descriptors-spi" type="jar" ext="jar" status="no" details="" size="37141" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/jars/shrinkwrap-descriptors-spi-2.0.0-alpha-3.jar">
+					<artifact name="shrinkwrap-descriptors-spi" type="jar" ext="jar" status="no" details="" size="37141" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/jars/shrinkwrap-descriptors-spi-2.0.0-alpha-3.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/descriptors/shrinkwrap-descriptors-spi/2.0.0-alpha-3/shrinkwrap-descriptors-spi-2.0.0-alpha-3.jar"/>
 					</artifact>
 				</artifacts>
@@ -116,12 +116,12 @@
 		</module>
 		<module organisation="org.jboss.arquillian.config" name="arquillian-config-api">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095420" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="10">
-				<metadata-artifact status="no" details="" size="14666" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.config/arquillian-config-api/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/config/arquillian-config-api/1.1.2.Final/arquillian-config-api-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="14666" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.config/arquillian-config-api/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/config/arquillian-config-api/1.1.2.Final/arquillian-config-api-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.config" name="arquillian-config-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-spi" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="arquillian-config-api" type="jar" ext="jar" status="no" details="" size="7147" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.config/arquillian-config-api/jars/arquillian-config-api-1.1.2.Final.jar">
+					<artifact name="arquillian-config-api" type="jar" ext="jar" status="no" details="" size="7147" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.config/arquillian-config-api/jars/arquillian-config-api-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/config/arquillian-config-api/1.1.2.Final/arquillian-config-api-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -129,12 +129,12 @@
 		</module>
 		<module organisation="org.jboss.shrinkwrap.descriptors" name="shrinkwrap-descriptors-api-base">
 			<revision name="2.0.0-alpha-3" status="release" pubdate="20120509234356" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="11">
-				<metadata-artifact status="no" details="" size="8277" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/ivy-2.0.0-alpha-3.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/descriptors/shrinkwrap-descriptors-api-base/2.0.0-alpha-3/shrinkwrap-descriptors-api-base-2.0.0-alpha-3.pom"/>
+				<metadata-artifact status="no" details="" size="8277" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/ivy-2.0.0-alpha-3.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/descriptors/shrinkwrap-descriptors-api-base/2.0.0-alpha-3/shrinkwrap-descriptors-api-base-2.0.0-alpha-3.pom"/>
 				<caller organisation="org.jboss.arquillian.config" name="arquillian-config-api" conf="compile, runtime" rev="2.0.0-alpha-3" rev-constraint-default="2.0.0-alpha-3" rev-constraint-dynamic="2.0.0-alpha-3" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-spi" conf="compile, runtime" rev="2.0.0-alpha-3" rev-constraint-default="2.0.0-alpha-3" rev-constraint-dynamic="2.0.0-alpha-3" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.shrinkwrap.descriptors" name="shrinkwrap-descriptors-spi" conf="compile, runtime" rev="2.0.0-alpha-3" rev-constraint-default="2.0.0-alpha-3" rev-constraint-dynamic="2.0.0-alpha-3" callerrev="2.0.0-alpha-3"/>
 				<artifacts>
-					<artifact name="shrinkwrap-descriptors-api-base" type="jar" ext="jar" status="no" details="" size="15237" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/jars/shrinkwrap-descriptors-api-base-2.0.0-alpha-3.jar">
+					<artifact name="shrinkwrap-descriptors-api-base" type="jar" ext="jar" status="no" details="" size="15237" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/jars/shrinkwrap-descriptors-api-base-2.0.0-alpha-3.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/descriptors/shrinkwrap-descriptors-api-base/2.0.0-alpha-3/shrinkwrap-descriptors-api-base-2.0.0-alpha-3.jar"/>
 					</artifact>
 				</artifacts>
@@ -142,12 +142,12 @@
 		</module>
 		<module organisation="org.jboss.arquillian.container" name="arquillian-container-test-api">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095726" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="6">
-				<metadata-artifact status="no" details="" size="14702" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-api/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-test-api/1.1.2.Final/arquillian-container-test-api-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="14702" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-api/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-test-api/1.1.2.Final/arquillian-container-test-api-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.junit" name="arquillian-junit-container" conf="default, compile, runtime, master" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-test-spi" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-test-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="arquillian-container-test-api" type="jar" ext="jar" status="no" details="" size="8643" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-api/jars/arquillian-container-test-api-1.1.2.Final.jar">
+					<artifact name="arquillian-container-test-api" type="jar" ext="jar" status="no" details="" size="8643" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.container/arquillian-container-test-api/jars/arquillian-container-test-api-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/container/arquillian-container-test-api/1.1.2.Final/arquillian-container-test-api-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -155,10 +155,10 @@
 		</module>
 		<module organisation="org.jboss.arquillian.junit" name="arquillian-junit-core">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095835" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="1">
-				<metadata-artifact status="no" details="" size="15450" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-core/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/junit/arquillian-junit-core/1.1.2.Final/arquillian-junit-core-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="15450" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-core/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/junit/arquillian-junit-core/1.1.2.Final/arquillian-junit-core-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.junit" name="arquillian-junit-container" conf="default, compile, runtime, master" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="arquillian-junit-core" type="jar" ext="jar" status="no" details="" size="26882" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-core/jars/arquillian-junit-core-1.1.2.Final.jar">
+					<artifact name="arquillian-junit-core" type="jar" ext="jar" status="no" details="" size="26882" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-core/jars/arquillian-junit-core-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/junit/arquillian-junit-core/1.1.2.Final/arquillian-junit-core-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -166,10 +166,10 @@
 		</module>
 		<module organisation="org.jboss.arquillian.test" name="arquillian-test-impl-base">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095606" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="15">
-				<metadata-artifact status="no" details="" size="15663" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.test/arquillian-test-impl-base/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/test/arquillian-test-impl-base/1.1.2.Final/arquillian-test-impl-base-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="15663" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.test/arquillian-test-impl-base/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/test/arquillian-test-impl-base/1.1.2.Final/arquillian-test-impl-base-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.junit" name="arquillian-junit-container" conf="default, compile, runtime, master" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="arquillian-test-impl-base" type="jar" ext="jar" status="no" details="" size="23428" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.test/arquillian-test-impl-base/jars/arquillian-test-impl-base-1.1.2.Final.jar">
+					<artifact name="arquillian-test-impl-base" type="jar" ext="jar" status="no" details="" size="23428" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.test/arquillian-test-impl-base/jars/arquillian-test-impl-base-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/test/arquillian-test-impl-base/1.1.2.Final/arquillian-test-impl-base-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -177,10 +177,10 @@
 		</module>
 		<module organisation="org.jboss.arquillian.core" name="arquillian-core-impl-base">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095348" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="14">
-				<metadata-artifact status="no" details="" size="15254" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.core/arquillian-core-impl-base/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/core/arquillian-core-impl-base/1.1.2.Final/arquillian-core-impl-base-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="15254" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.core/arquillian-core-impl-base/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/core/arquillian-core-impl-base/1.1.2.Final/arquillian-core-impl-base-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.junit" name="arquillian-junit-container" conf="default, compile, runtime, master" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="arquillian-core-impl-base" type="jar" ext="jar" status="no" details="" size="54141" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.core/arquillian-core-impl-base/jars/arquillian-core-impl-base-1.1.2.Final.jar">
+					<artifact name="arquillian-core-impl-base" type="jar" ext="jar" status="no" details="" size="54141" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.core/arquillian-core-impl-base/jars/arquillian-core-impl-base-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/core/arquillian-core-impl-base/1.1.2.Final/arquillian-core-impl-base-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -188,10 +188,10 @@
 		</module>
 		<module organisation="org.jboss.shrinkwrap" name="shrinkwrap-impl-base">
 			<revision name="1.1.2" status="release" pubdate="20130307010633" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="18">
-				<metadata-artifact status="no" details="" size="9303" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-impl-base/ivy-1.1.2.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/shrinkwrap-impl-base/1.1.2/shrinkwrap-impl-base-1.1.2.pom"/>
+				<metadata-artifact status="no" details="" size="9303" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-impl-base/ivy-1.1.2.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/shrinkwrap-impl-base/1.1.2/shrinkwrap-impl-base-1.1.2.pom"/>
 				<caller organisation="org.jboss.arquillian.junit" name="arquillian-junit-container" conf="default, compile, runtime, master" rev="1.1.2" rev-constraint-default="1.1.2" rev-constraint-dynamic="1.1.2" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="shrinkwrap-impl-base" type="jar" ext="jar" status="no" details="" size="146578" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-impl-base/jars/shrinkwrap-impl-base-1.1.2.jar">
+					<artifact name="shrinkwrap-impl-base" type="jar" ext="jar" status="no" details="" size="146578" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-impl-base/jars/shrinkwrap-impl-base-1.1.2.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/shrinkwrap-impl-base/1.1.2/shrinkwrap-impl-base-1.1.2.jar"/>
 					</artifact>
 				</artifacts>
@@ -199,10 +199,10 @@
 		</module>
 		<module organisation="org.jboss.shrinkwrap" name="shrinkwrap-spi">
 			<revision name="1.1.2" status="release" pubdate="20130307010605" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="19">
-				<metadata-artifact status="no" details="" size="8685" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-spi/ivy-1.1.2.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/shrinkwrap-spi/1.1.2/shrinkwrap-spi-1.1.2.pom"/>
+				<metadata-artifact status="no" details="" size="8685" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-spi/ivy-1.1.2.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/shrinkwrap-spi/1.1.2/shrinkwrap-spi-1.1.2.pom"/>
 				<caller organisation="org.jboss.shrinkwrap" name="shrinkwrap-impl-base" conf="compile, runtime" rev="1.1.2" rev-constraint-default="1.1.2" rev-constraint-dynamic="1.1.2" callerrev="1.1.2"/>
 				<artifacts>
-					<artifact name="shrinkwrap-spi" type="jar" ext="jar" status="no" details="" size="4033" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-spi/jars/shrinkwrap-spi-1.1.2.jar">
+					<artifact name="shrinkwrap-spi" type="jar" ext="jar" status="no" details="" size="4033" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-spi/jars/shrinkwrap-spi-1.1.2.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/shrinkwrap-spi/1.1.2/shrinkwrap-spi-1.1.2.jar"/>
 					</artifact>
 				</artifacts>
@@ -210,13 +210,13 @@
 		</module>
 		<module organisation="org.jboss.shrinkwrap" name="shrinkwrap-api">
 			<revision name="1.1.2" status="release" pubdate="20130307010548" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="7">
-				<metadata-artifact status="no" details="" size="8698" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-api/ivy-1.1.2.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/shrinkwrap-api/1.1.2/shrinkwrap-api-1.1.2.pom"/>
+				<metadata-artifact status="no" details="" size="8698" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-api/ivy-1.1.2.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/shrinkwrap-api/1.1.2/shrinkwrap-api-1.1.2.pom"/>
 				<caller organisation="org.jboss.shrinkwrap" name="shrinkwrap-impl-base" conf="compile, runtime" rev="1.1.2" rev-constraint-default="1.1.2" rev-constraint-dynamic="1.1.2" callerrev="1.1.2"/>
 				<caller organisation="org.jboss.shrinkwrap" name="shrinkwrap-spi" conf="compile, runtime" rev="1.1.2" rev-constraint-default="1.1.2" rev-constraint-dynamic="1.1.2" callerrev="1.1.2"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-test-api" conf="compile, runtime" rev="1.1.2" rev-constraint-default="1.1.2" rev-constraint-dynamic="1.1.2" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-spi" conf="compile, runtime" rev="1.1.2" rev-constraint-default="1.1.2" rev-constraint-dynamic="1.1.2" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="shrinkwrap-api" type="jar" ext="jar" status="no" details="" size="64919" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-api/jars/shrinkwrap-api-1.1.2.jar">
+					<artifact name="shrinkwrap-api" type="jar" ext="jar" status="no" details="" size="64919" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-api/jars/shrinkwrap-api-1.1.2.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/shrinkwrap/shrinkwrap-api/1.1.2/shrinkwrap-api-1.1.2.jar"/>
 					</artifact>
 				</artifacts>
@@ -224,13 +224,13 @@
 		</module>
 		<module organisation="org.jboss.arquillian.test" name="arquillian-test-spi">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095546" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="2">
-				<metadata-artifact status="no" details="" size="14801" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.test/arquillian-test-spi/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/test/arquillian-test-spi/1.1.2.Final/arquillian-test-spi-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="14801" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.test/arquillian-test-spi/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/test/arquillian-test-spi/1.1.2.Final/arquillian-test-spi-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.junit" name="arquillian-junit-core" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.junit" name="arquillian-junit-container" conf="default, compile, runtime, master" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-test-spi" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.test" name="arquillian-test-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="arquillian-test-spi" type="jar" ext="jar" status="no" details="" size="34823" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.test/arquillian-test-spi/jars/arquillian-test-spi-1.1.2.Final.jar">
+					<artifact name="arquillian-test-spi" type="jar" ext="jar" status="no" details="" size="34823" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.test/arquillian-test-spi/jars/arquillian-test-spi-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/test/arquillian-test-spi/1.1.2.Final/arquillian-test-spi-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -238,13 +238,13 @@
 		</module>
 		<module organisation="org.jboss.arquillian.test" name="arquillian-test-api">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095528" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="5">
-				<metadata-artifact status="no" details="" size="14638" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.test/arquillian-test-api/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/test/arquillian-test-api/1.1.2.Final/arquillian-test-api-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="14638" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.test/arquillian-test-api/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/test/arquillian-test-api/1.1.2.Final/arquillian-test-api-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.junit" name="arquillian-junit-container" conf="default, compile, runtime, master" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.test" name="arquillian-test-spi" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-test-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.test" name="arquillian-test-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="arquillian-test-api" type="jar" ext="jar" status="no" details="" size="3417" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.test/arquillian-test-api/jars/arquillian-test-api-1.1.2.Final.jar">
+					<artifact name="arquillian-test-api" type="jar" ext="jar" status="no" details="" size="3417" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.test/arquillian-test-api/jars/arquillian-test-api-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/test/arquillian-test-api/1.1.2.Final/arquillian-test-api-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -252,14 +252,14 @@
 		</module>
 		<module organisation="org.jboss.arquillian.core" name="arquillian-core-spi">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095328" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="3">
-				<metadata-artifact status="no" details="" size="14626" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.core/arquillian-core-spi/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/core/arquillian-core-spi/1.1.2.Final/arquillian-core-spi-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="14626" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.core/arquillian-core-spi/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/core/arquillian-core-spi/1.1.2.Final/arquillian-core-spi-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.test" name="arquillian-test-spi" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.config" name="arquillian-config-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.core" name="arquillian-core-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-spi" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="arquillian-core-spi" type="jar" ext="jar" status="no" details="" size="27142" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.core/arquillian-core-spi/jars/arquillian-core-spi-1.1.2.Final.jar">
+					<artifact name="arquillian-core-spi" type="jar" ext="jar" status="no" details="" size="27142" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.core/arquillian-core-spi/jars/arquillian-core-spi-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/core/arquillian-core-spi/1.1.2.Final/arquillian-core-spi-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>
@@ -267,14 +267,14 @@
 		</module>
 		<module organisation="org.jboss.arquillian.core" name="arquillian-core-api">
 			<revision name="1.1.2.Final" status="release" pubdate="20131115095310" resolver="liferay-public" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="compile, master(*), runtime, compile(*), runtime(*), master" position="4">
-				<metadata-artifact status="no" details="" size="14463" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.core/arquillian-core-api/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/core/arquillian-core-api/1.1.2.Final/arquillian-core-api-1.1.2.Final.pom"/>
+				<metadata-artifact status="no" details="" size="14463" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.core/arquillian-core-api/ivy-1.1.2.Final.xml" searched="false" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/core/arquillian-core-api/1.1.2.Final/arquillian-core-api-1.1.2.Final.pom"/>
 				<caller organisation="org.jboss.arquillian.container" name="arquillian-container-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.test" name="arquillian-test-api" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.config" name="arquillian-config-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.core" name="arquillian-core-impl-base" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<caller organisation="org.jboss.arquillian.core" name="arquillian-core-spi" conf="compile, runtime" rev="1.1.2.Final" rev-constraint-default="1.1.2.Final" rev-constraint-dynamic="1.1.2.Final" callerrev="1.1.2.Final"/>
 				<artifacts>
-					<artifact name="arquillian-core-api" type="jar" ext="jar" status="no" details="" size="8456" time="0" location="/Users/brian/dev/projects/github/liferay-portal/.ivy/cache/org.jboss.arquillian.core/arquillian-core-api/jars/arquillian-core-api-1.1.2.Final.jar">
+					<artifact name="arquillian-core-api" type="jar" ext="jar" status="no" details="" size="8456" time="0" location="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/.ivy/cache/org.jboss.arquillian.core/arquillian-core-api/jars/arquillian-core-api-1.1.2.Final.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/jboss/arquillian/core/arquillian-core-api/1.1.2.Final/arquillian-core-api-1.1.2.Final.jar"/>
 					</artifact>
 				</artifacts>

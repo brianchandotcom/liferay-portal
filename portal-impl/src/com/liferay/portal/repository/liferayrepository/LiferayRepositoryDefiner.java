@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.repository.model.FileContentReference;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
-import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.repository.util.ModelValidatorUtil;
 import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
@@ -69,16 +68,6 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			SyncCapability.class, _liferaySyncCapability);
 		capabilityRegistry.addSupportedCapability(
 			WorkflowCapability.class, _liferayWorkflowCapability);
-	}
-
-	@Override
-	public void registerRepositoryEventListeners(
-		RepositoryEventRegistry repositoryEventRegistry) {
-
-		_liferaySyncCapability.registerRepositoryEventListeners(
-			repositoryEventRegistry);
-		_liferayTrashCapability.registerRepositoryEventListeners(
-			repositoryEventRegistry);
 	}
 
 	@Override

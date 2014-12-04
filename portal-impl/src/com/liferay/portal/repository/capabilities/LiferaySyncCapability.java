@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
@@ -46,7 +47,8 @@ import java.util.concurrent.Callable;
 /**
  * @author Adolfo Pérez
  */
-public class LiferaySyncCapability implements SyncCapability {
+public class LiferaySyncCapability
+	implements RepositoryEventAware, SyncCapability {
 
 	@Override
 	public void destroyDocumentRepository(DocumentRepository documentRepository)
@@ -64,6 +66,7 @@ public class LiferaySyncCapability implements SyncCapability {
 		bulkOperationCapability.execute(new DeleteRepositoryModelOperation());
 	}
 
+	@Override
 	public void registerRepositoryEventListeners(
 		RepositoryEventRegistry repositoryEventRegistry) {
 

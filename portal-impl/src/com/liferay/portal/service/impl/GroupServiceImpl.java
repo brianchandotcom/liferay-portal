@@ -1051,36 +1051,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return groupLocalService.updateFriendlyURL(groupId, friendlyURL);
 	}
 
-	/**
-	 * Updates the group.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  parentGroupId the primary key of the parent group
-	 * @param  name the group's new name
-	 * @param  description the group's new description (optionally
-	 *         <code>null</code>)
-	 * @param  type the group's new type. For more information see {@link
-	 *         GroupConstants}.
-	 * @param  manualMembership whether manual membership is allowed for the
-	 *         group
-	 * @param  membershipRestriction the group's membership restriction. For
-	 *         more information see {@link GroupConstants}.
-	 * @param  friendlyURL the group's new friendlyURL (optionally
-	 *         <code>null</code>)
-	 * @param  active whether the group is active
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set the asset category IDs and asset tag
-	 *         names for the group.
-	 * @return the group
-	 * @throws PortalException if the user did not have permission to update the
-	 *         group, if a group with the primary key could not be found, if the
-	 *         friendly URL was invalid or could one not be created
-	 */
 	@Override
 	public Group updateGroup(
 			long groupId, long parentGroupId, String name, String description,
 			int type, boolean manualMembership, int membershipRestriction,
-			String friendlyURL, boolean active, ServiceContext serviceContext)
+			String friendlyURL, boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
@@ -1117,8 +1093,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 			group = groupLocalService.updateGroup(
 				groupId, parentGroupId, name, description, type,
-				manualMembership, membershipRestriction, friendlyURL, active,
-				serviceContext);
+				manualMembership, membershipRestriction, friendlyURL,
+				inheritContent, active, serviceContext);
 
 			SiteMembershipPolicyUtil.verifyPolicy(
 				group, oldGroup, oldAssetCategories, oldAssetTags,
@@ -1129,9 +1105,46 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		else {
 			return groupLocalService.updateGroup(
 				groupId, parentGroupId, name, description, type,
-				manualMembership, membershipRestriction, friendlyURL, active,
-				serviceContext);
+				manualMembership, membershipRestriction, friendlyURL,
+				inheritContent, active, serviceContext);
 		}
+	}
+
+	/**
+	 * Updates the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  parentGroupId the primary key of the parent group
+	 * @param  name the group's new name
+	 * @param  description the group's new description (optionally
+	 *         <code>null</code>)
+	 * @param  type the group's new type. For more information see {@link
+	 *         GroupConstants}.
+	 * @param  manualMembership whether manual membership is allowed for the
+	 *         group
+	 * @param  membershipRestriction the group's membership restriction. For
+	 *         more information see {@link GroupConstants}.
+	 * @param  friendlyURL the group's new friendlyURL (optionally
+	 *         <code>null</code>)
+	 * @param  active whether the group is active
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set the asset category IDs and asset tag
+	 *         names for the group.
+	 * @return the group
+	 * @throws PortalException if the user did not have permission to update the
+	 *         group, if a group with the primary key could not be found, if the
+	 *         friendly URL was invalid or could one not be created
+	 */
+	@Override
+	public Group updateGroup(
+			long groupId, long parentGroupId, String name, String description,
+			int type, boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean active, ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateGroup(
+			groupId, parentGroupId, name, description, type, manualMembership,
+			membershipRestriction, friendlyURL, false, active, serviceContext);
 	}
 
 	/**

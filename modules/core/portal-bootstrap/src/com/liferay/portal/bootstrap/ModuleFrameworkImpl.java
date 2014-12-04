@@ -322,6 +322,19 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	@Override
+	public void registerExtraPackages() {
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		Map<String, List<URL>> extraPackageMap = getExtraPackageMap();
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("jsp.compiler.resource.map", "portal.extra.packages");
+
+		bundleContext.registerService(Map.class, extraPackageMap, properties);
+	}
+
+	@Override
 	public void setBundleStartLevel(long bundleId, int startLevel)
 		throws PortalException {
 

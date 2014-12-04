@@ -44,6 +44,8 @@ public interface ModuleFramework {
 
 	public void registerContext(Object context);
 
+	public void registerExtraPackages();
+
 	public void setBundleStartLevel(long bundleId, int startLevel)
 		throws PortalException;
 

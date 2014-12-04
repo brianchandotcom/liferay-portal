@@ -16,8 +16,6 @@
 
 <%
 FullNameDefinition fullNameDefinition = LocalizationUtil.getFullNameDefinition(locale);
-
-List<String> existingFields = new ArrayList<String>();
 %>
 
 <liferay-ui:error exception="<%= ContactFirstNameException.class %>" message="please-enter-a-valid-first-name" />
@@ -30,49 +28,42 @@ for (FullNameField fullNameField: fullNameDefinition.getFields()) {
 	String[] options = fullNameField.getOptions();
 %>
 
-<c:if test="<%= !existingFields.contains(fieldName) %>">
-	<c:choose>
-		<c:when test="<%= ArrayUtil.isEmpty(options) %>">
-			<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" name="<%= fieldName %>">
-				<c:if test="<%= required %>">
-					<aui:validator name="required" />
-				</c:if>
-			</aui:input>
-		</c:when>
-		<c:otherwise>
-			<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("Id") %>' showEmptyOption="<%= true %>">
+<c:choose>
+	<c:when test="<%= ArrayUtil.isEmpty(options) %>">
+		<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" name="<%= fieldName %>">
+			<c:if test="<%= required %>">
+				<aui:validator name="required" />
+			</c:if>
+		</aui:input>
+	</c:when>
+	<c:otherwise>
+		<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("Id") %>' showEmptyOption="<%= true %>">
 
-			<%
-			String selected = StringPool.BLANK;
+		<%
+		String selected = StringPool.BLANK;
 
-			if (!Validator.isNull(selContact)) {
-				int listTypeId = BeanParamUtil.getInteger(selContact, request, fieldName.concat("Id"));
+		if (!Validator.isNull(selContact)) {
+			int listTypeId = BeanParamUtil.getInteger(selContact, request, fieldName.concat("Id"));
 
-				try {
-					selected = ListTypeServiceUtil.getListType(listTypeId).getName();
-				}
-				catch (Exception e) {
-				}
+			try {
+				selected = ListTypeServiceUtil.getListType(listTypeId).getName();
 			}
-
-			for (String option: options) {
-			%>
-
-				<aui:option label="<%= option %>" selected="<%= selected.equals(option) %>" value="<%= option %>" />
-
-			<%
+			catch (Exception e) {
 			}
-			%>
+		}
 
-			</aui:select>
-		</c:otherwise>
-	</c:choose>
+		for (String option: options) {
+		%>
 
-	<%
-	existingFields.add(fieldName);
-	%>
+			<aui:option label="<%= option %>" selected="<%= selected.equals(option) %>" value="<%= option %>" />
 
-</c:if>
+		<%
+		}
+		%>
+
+		</aui:select>
+	</c:otherwise>
+</c:choose>
 
 <%
 }

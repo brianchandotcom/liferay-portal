@@ -15,12 +15,15 @@
 package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.BaseCapabilityProvider;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
+import com.liferay.portal.repository.util.RepositoryWrapperAware;
 
 import java.util.Map;
 
@@ -52,6 +55,41 @@ public class DefaultCapabilityRegistry
 	@Override
 	public DocumentRepository getDocumentRepository() {
 		return _documentRepository;
+	}
+
+	public LocalRepository invokeCapabilityWrappers(
+		LocalRepository localRepository) {
+
+		Map<Class<? extends Capability>, Capability> capabilities =
+			getCapabilities();
+
+		for (Capability capability : capabilities.values()) {
+			if (capability instanceof RepositoryWrapperAware) {
+				RepositoryWrapperAware repositoryWrapperAware =
+					(RepositoryWrapperAware)capability;
+
+				localRepository = repositoryWrapperAware.wrapLocalRepository(
+					localRepository);
+			}
+		}
+
+		return localRepository;
+	}
+
+	public Repository invokeCapabilityWrappers(Repository repository) {
+		Map<Class<? extends Capability>, Capability> capabilities =
+			getCapabilities();
+
+		for (Capability capability : capabilities.values()) {
+			if (capability instanceof RepositoryWrapperAware) {
+				RepositoryWrapperAware repositoryWrapperAware =
+					(RepositoryWrapperAware)capability;
+
+				repository = repositoryWrapperAware.wrapRepository(repository);
+			}
+		}
+
+		return repository;
 	}
 
 	public void registerCapabilityRepositoryEvents(

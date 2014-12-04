@@ -821,6 +821,19 @@ public class GroupServiceWrapper implements GroupService,
 			friendlyURL, active, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.model.Group updateGroup(long groupId,
+		long parentGroupId, java.lang.String name,
+		java.lang.String description, int type, boolean manualMembership,
+		int membershipRestriction, java.lang.String friendlyURL,
+		boolean inheritContent, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _groupService.updateGroup(groupId, parentGroupId, name,
+			description, type, manualMembership, membershipRestriction,
+			friendlyURL, inheritContent, active, serviceContext);
+	}
+
 	/**
 	* Updates the group's type settings.
 	*

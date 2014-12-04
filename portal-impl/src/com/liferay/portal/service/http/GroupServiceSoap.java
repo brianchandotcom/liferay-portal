@@ -1049,6 +1049,28 @@ public class GroupServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.GroupSoap updateGroup(long groupId,
+		long parentGroupId, java.lang.String name,
+		java.lang.String description, int type, boolean manualMembership,
+		int membershipRestriction, java.lang.String friendlyURL,
+		boolean inheritContent, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portal.model.Group returnValue = GroupServiceUtil.updateGroup(groupId,
+					parentGroupId, name, description, type, manualMembership,
+					membershipRestriction, friendlyURL, inheritContent, active,
+					serviceContext);
+
+			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Updates the group.
 	*

@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.DuplicateGroupException;
 import com.liferay.portal.GroupFriendlyURLException;
+import com.liferay.portal.GroupInheritContentException;
 import com.liferay.portal.GroupNameException;
 import com.liferay.portal.GroupParentException;
 import com.liferay.portal.LocaleException;
@@ -283,7 +284,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if (className.equals(Group.class.getName())) {
-			if (!site && !inheritContent && (liveGroupId == 0) &&
+			if (!site && (liveGroupId == 0) &&
 				!name.equals(GroupConstants.CONTROL_PANEL)) {
 
 				throw new IllegalArgumentException();
@@ -301,6 +302,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if ((classNameId <= 0) || className.equals(Group.class.getName())) {
 			validateName(groupId, user.getCompanyId(), name, site);
 		}
+
+		validateInheritContent(parentGroupId, inheritContent);
 
 		validateFriendlyURL(
 			user.getCompanyId(), groupId, classNameId, classPK, friendlyURL);
@@ -3232,36 +3235,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return group;
 	}
 
-	/**
-	 * Updates the group.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  parentGroupId the primary key of the parent group
-	 * @param  name the group's new name
-	 * @param  description the group's new description (optionally
-	 *         <code>null</code>)
-	 * @param  type the group's new type. For more information see {@link
-	 *         GroupConstants}.
-	 * @param  manualMembership whether manual membership is allowed for the
-	 *         group
-	 * @param  membershipRestriction the group's membership restriction. For
-	 *         more information see {@link GroupConstants}.
-	 * @param  friendlyURL the group's new friendlyURL (optionally
-	 *         <code>null</code>)
-	 * @param  active whether the group is active
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set asset category IDs and asset tag
-	 *         names for the group.
-	 * @return the group
-	 * @throws PortalException if a group with the primary key could not be
-	 *         found or if the friendly URL was invalid or could one not be
-	 *         created
-	 */
 	@Override
 	public Group updateGroup(
 			long groupId, long parentGroupId, String name, String description,
 			int type, boolean manualMembership, int membershipRestriction,
-			String friendlyURL, boolean active, ServiceContext serviceContext)
+			String friendlyURL, boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
@@ -3309,6 +3288,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		group.setManualMembership(manualMembership);
 		group.setMembershipRestriction(membershipRestriction);
 		group.setFriendlyURL(friendlyURL);
+		group.setInheritContent(inheritContent);
 		group.setActive(active);
 
 		if ((serviceContext != null) && group.isSite()) {
@@ -3341,6 +3321,43 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			serviceContext.getAssetTagNames());
 
 		return group;
+	}
+
+	/**
+	 * Updates the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  parentGroupId the primary key of the parent group
+	 * @param  name the group's new name
+	 * @param  description the group's new description (optionally
+	 *         <code>null</code>)
+	 * @param  type the group's new type. For more information see {@link
+	 *         GroupConstants}.
+	 * @param  manualMembership whether manual membership is allowed for the
+	 *         group
+	 * @param  membershipRestriction the group's membership restriction. For
+	 *         more information see {@link GroupConstants}.
+	 * @param  friendlyURL the group's new friendlyURL (optionally
+	 *         <code>null</code>)
+	 * @param  active whether the group is active
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set asset category IDs and asset tag
+	 *         names for the group.
+	 * @return the group
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found or if the friendly URL was invalid or could one not be
+	 *         created
+	 */
+	@Override
+	public Group updateGroup(
+			long groupId, long parentGroupId, String name, String description,
+			int type, boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean active, ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateGroup(
+			groupId, parentGroupId, name, description, type, manualMembership,
+			membershipRestriction, friendlyURL, false, active, serviceContext);
 	}
 
 	/**
@@ -4416,6 +4433,25 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (StringUtil.count(friendlyURL, StringPool.SLASH) > 1) {
 			throw new GroupFriendlyURLException(
 				GroupFriendlyURLException.TOO_DEEP);
+		}
+	}
+
+	protected void validateInheritContent(
+			long parentGroupId, boolean inheritContent)
+		throws GroupInheritContentException {
+
+		if (!inheritContent) {
+			return;
+		}
+
+		if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+			throw new GroupInheritContentException();
+		}
+
+		Group parentGroup = groupPersistence.fetchByPrimaryKey(parentGroupId);
+
+		if (parentGroup.isInheritContent()) {
+			throw new GroupInheritContentException();
 		}
 	}
 

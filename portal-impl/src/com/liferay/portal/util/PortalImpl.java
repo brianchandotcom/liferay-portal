@@ -4685,7 +4685,9 @@ public class PortalImpl implements Portal {
 				scopeGroupId = doAsGroupId;
 			}
 
-			if (group.isInheritContent()) {
+			if ((group != null) && group.isInheritContent() &&
+				!layout.getGroup().isControlPanel()) {
+
 				scopeGroupId = group.getParentGroupId();
 			}
 
@@ -7624,7 +7626,16 @@ public class PortalImpl implements Portal {
 
 		categoriesMap = new LinkedHashMap<String, List<Portlet>>();
 
+		Group group = themeDisplay.getSiteGroup();
+
 		for (String category : categories) {
+			if (group.isInheritContent() &&
+				category.equals(
+					PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT)) {
+
+				continue;
+			}
+
 			List<Portlet> portlets = getControlPanelPortlets(
 				category, themeDisplay);
 

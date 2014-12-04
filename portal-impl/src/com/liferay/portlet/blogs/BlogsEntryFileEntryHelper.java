@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
 public class BlogsEntryFileEntryHelper {
 
 	public List<BlogsEntryFileEntryReference> addBlogsEntryFileEntries(
-			long groupId, long userId, long entryId,
+			long groupId, long userId, long blogsEntryId,
 			List<FileEntry> tempBlogsEntryFileEntries)
 		throws PortalException {
 
@@ -47,7 +47,8 @@ public class BlogsEntryFileEntryHelper {
 
 		for (FileEntry tempBlogsEntryFileEntry : tempBlogsEntryFileEntries) {
 			FileEntry blogsEntryFileEntry = addBlogsEntryFileEntry(
-				groupId, userId, entryId, tempBlogsEntryFileEntry.getTitle(),
+				groupId, userId, blogsEntryId,
+				tempBlogsEntryFileEntry.getTitle(),
 				tempBlogsEntryFileEntry.getMimeType(),
 				tempBlogsEntryFileEntry.getContentStream());
 
@@ -107,7 +108,7 @@ public class BlogsEntryFileEntryHelper {
 	}
 
 	protected FileEntry addBlogsEntryFileEntry(
-			long groupId, long userId, long entryId, String fileName,
+			long groupId, long userId, long blogsEntryId, String fileName,
 			String mimeType, InputStream is)
 		throws PortalException {
 
@@ -115,7 +116,7 @@ public class BlogsEntryFileEntryHelper {
 			userId, groupId);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, BlogsEntry.class.getName(), entryId,
+			groupId, userId, BlogsEntry.class.getName(), blogsEntryId,
 			PortletKeys.BLOGS, folder.getFolderId(), is, fileName, mimeType,
 			true);
 	}

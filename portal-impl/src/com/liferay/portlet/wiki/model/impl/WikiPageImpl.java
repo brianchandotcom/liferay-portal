@@ -157,9 +157,8 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 
 		try {
 			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-				getUserId(), repository.getRepositoryId(),
-				nodeAttachmentsFolderId, String.valueOf(getResourcePrimKey()),
-				serviceContext);
+				repository.getRepositoryId(), nodeAttachmentsFolderId,
+				String.valueOf(getResourcePrimKey()));
 
 			_attachmentsFolderId = folder.getFolderId();
 		}

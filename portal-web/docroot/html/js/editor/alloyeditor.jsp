@@ -113,7 +113,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 <div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
 
-<aui:script use="aui-base,alloy-editor">
+<aui:script use="aui-base,alloy-editor,liferay-editor-image-uploader">
 	document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
 	<%
@@ -218,6 +218,25 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			window['<%= name %>'].editor = alloyEditor;
 
 			window['<%= name %>'].instanceReady = true;
+
+			var uploader = new Liferay.BlogsUploader(
+				{
+					editor: nativeEditor,
+
+					<portlet:actionURL var="imageSelectorURL">
+						<portlet:param name="struts_action" value="/blogs/image_selector" />
+					</portlet:actionURL>
+
+					uploadUrl: '<%= imageSelectorURL %>'
+				}
+			);
+
+			nativeEditor.on(
+				'imagedrop',
+				function(event) {
+					uploader.uploadImage(event.data.el.$, event.data.file);
+				}
+			);
 		}
 	);
 

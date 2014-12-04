@@ -125,6 +125,18 @@
 				margin-bottom: 0;
 			}
 		}
+
+		.uploading-image-container {
+			display: inline-block;
+
+			.progressbar {
+				height: 20px;
+			}
+		}
+
+		.uploading-image {
+			opacity: 0.4;
+		}
 	}
 
 	.entry.draft, .entry.pending, .entry.scheduled {

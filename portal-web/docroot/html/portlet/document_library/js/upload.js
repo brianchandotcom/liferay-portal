@@ -20,6 +20,8 @@ AUI.add(
 
 		var CSS_ENTRY_DISPLAY_STYLE = 'entry-display-style';
 
+		var CSS_ENTRY_SELECTOR = 'entry-selector';
+
 		var CSS_ICON = 'icon';
 
 		var CSS_TAGLIB_ICON = 'taglib-icon';
@@ -57,6 +59,8 @@ AUI.add(
 		var SELECTOR_ENTRIES_EMPTY = '.entries-empty';
 
 		var SELECTOR_ENTRY_LINK = '.entry-link';
+
+		var SELECTOR_ENTRY_SELECTOR = STR_DOT + CSS_ENTRY_SELECTOR;
 
 		var SELECTOR_ENTRY_TITLE_TEXT = '.entry-title-text';
 
@@ -126,6 +130,8 @@ AUI.add(
 				'</tpl>',
 			'</ul>'
 		);
+
+		var TPL_HIDDEN_CHECK_BOX =  '<input class="hide ' + CSS_ENTRY_SELECTOR + '" name="{0}" type="checkbox" value="">';
 
 		var TPL_IMAGE_THUMBNAIL = themeDisplay.getPathContext() + '/documents/{0}/{1}/{2}';
 
@@ -473,6 +479,10 @@ AUI.add(
 
 							var entryTitle = entryLink.one(SELECTOR_ENTRY_TITLE_TEXT);
 
+							var hiddenCheckbox = sub(TPL_HIDDEN_CHECK_BOX, [instance.get(STR_HOST).ns('rowIdsFileEntry')]);
+
+							entryNode.append(hiddenCheckbox);
+
 							entryLink.attr('title', name);
 
 							entryTitle.setContent(name);
@@ -512,6 +522,9 @@ AUI.add(
 								}
 								else if (item == 'downloads') {
 									value = '0';
+								}
+								else if (index == 0) {
+									value = sub(TPL_HIDDEN_CHECK_BOX, [instance.get(STR_HOST).ns('rowIdsFileEntry')]);
 								}
 
 								return value;
@@ -698,6 +711,7 @@ AUI.add(
 							}
 
 							resultsNode.addClass(uploadResultClass);
+							resultsNode.addClass(CSS_ENTRY_DISPLAY_STYLE);
 						}
 					},
 
@@ -1060,11 +1074,15 @@ AUI.add(
 							else {
 								var displayStyleList = (displayStyle == STR_LIST);
 
+								var fileEntryId = A.JSON.parse(event.data).fileEntryId
+
 								if (!displayStyleList) {
 									instance._updateThumbnail(fileNode, file.name);
 								}
 
 								instance._updateFileLink(fileNode, response.message, displayStyleList);
+
+								instance._updateFileHiddenInput(fileNode, fileEntryId);
 							}
 
 							instance._displayResult(fileNode, displayStyle, hasErrors);
@@ -1186,6 +1204,12 @@ AUI.add(
 
 							dataSet.replace(key, data);
 						}
+					},
+
+					_updateFileHiddenInput: function(node, id) {
+						var instance = this;
+
+						node.one('input').val(id);
 					},
 
 					_updateFileLink: function(node, id, displayStyleList) {

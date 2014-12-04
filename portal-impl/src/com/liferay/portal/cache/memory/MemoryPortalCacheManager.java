@@ -40,6 +40,19 @@ import java.util.concurrent.ConcurrentMap;
 public class MemoryPortalCacheManager<K extends Serializable, V>
 	extends AbstractPortalCacheManager<K, V> {
 
+	public static <K extends Serializable, V> MemoryPortalCacheManager<K, V>
+		createMemoryPortalCacheManager(String name) {
+
+		MemoryPortalCacheManager<K, V> memoryPortalCacheManager =
+			new MemoryPortalCacheManager<K, V>();
+
+		memoryPortalCacheManager.setName(name);
+
+		memoryPortalCacheManager.afterPropertiesSet();
+
+		return memoryPortalCacheManager;
+	}
+
 	@Override
 	public String getName() {
 		return _name;

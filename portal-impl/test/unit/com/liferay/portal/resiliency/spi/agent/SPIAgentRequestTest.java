@@ -110,17 +110,12 @@ public class SPIAgentRequestTest {
 			}
 		);
 
-		MemoryPortalCacheManager<Serializable, Serializable>
-			memoryPortalCacheManager =
-				new MemoryPortalCacheManager<Serializable, Serializable>();
-
-		memoryPortalCacheManager.setName("MultiVMPortalCacheManager");
-
-		memoryPortalCacheManager.afterPropertiesSet();
-
 		MultiVMPoolImpl multiVMPoolImpl = new MultiVMPoolImpl();
 
-		multiVMPoolImpl.setPortalCacheManager(memoryPortalCacheManager);
+		multiVMPoolImpl.setPortalCacheManager(
+			MemoryPortalCacheManager.
+				<Serializable, Serializable>createMemoryPortalCacheManager(
+					SPIAgentRequestTest.class.getName()));
 
 		MultiVMPoolUtil multiVMPoolUtil = new MultiVMPoolUtil();
 

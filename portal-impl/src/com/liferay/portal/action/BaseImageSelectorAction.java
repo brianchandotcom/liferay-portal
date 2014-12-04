@@ -124,6 +124,10 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 		InputStream inputStream = null;
 
 		try {
+			imageJSONObject.put(
+				"attributeDataImageId",
+				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
+
 			inputStream = uploadPortletRequest.getFileAsStream(
 				"imageSelectorFileName");
 
@@ -137,10 +141,6 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				_TEMP_FOLDER_NAME, StringUtil.randomString() + fileName,
 				inputStream, mimeType);
-
-			imageJSONObject.put(
-				"attributeDataImageId",
-				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 

@@ -14,14 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
-
-<%
-FileEntrySearch searchContainer = (FileEntrySearch)request.getAttribute("liferay-ui:search:searchContainer");
-
-FileEntryDisplayTerms displayTerms = (FileEntryDisplayTerms)searchContainer.getDisplayTerms();
-%>
-
 <liferay-ui:search-toggle
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"

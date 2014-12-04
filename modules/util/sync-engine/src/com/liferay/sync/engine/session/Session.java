@@ -19,6 +19,9 @@ import com.btr.proxy.search.ProxySearch;
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
 import com.liferay.sync.engine.util.PropsValues;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import java.net.ProxySelector;
 import java.net.URL;
 
@@ -31,7 +34,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.commons.io.output.CountingOutputStream;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
@@ -125,6 +132,23 @@ public class Session {
 		_httpHost = new HttpHost(
 			url.getHost(), url.getPort(), url.getProtocol());
 		_token = null;
+
+		Runnable runnable = new Runnable() {
+
+			@Override
+			public void run() {
+
+				_downloadRate = _downloadedBytes.get();
+				_downloadedBytes.set(0);
+
+				_uploadRate = _uploadedBytes.get();
+				_uploadedBytes.set(0);
+			}
+
+		};
+
+		_scheduledExecutorService.scheduleAtFixedRate(
+			runnable, 0, 1000, TimeUnit.MILLISECONDS);
 	}
 
 	public HttpResponse execute(HttpRequest httpRequest) throws Exception {
@@ -260,8 +284,24 @@ public class Session {
 		return _basicHttpContext;
 	}
 
+	public int getDownloadRate() {
+		return _downloadRate;
+	}
+
 	public ExecutorService getExecutorService() {
 		return _executorService;
+	}
+
+	public int getUploadRate() {
+		return _uploadRate;
+	}
+
+	public void incrementDownloadedBytes(int bytes) {
+		_downloadedBytes.getAndAdd(bytes);
+	}
+
+	public void incrementUploadedBytes(int bytes) {
+		_uploadedBytes.getAndAdd(bytes);
 	}
 
 	public void setToken(String token) {
@@ -311,7 +351,24 @@ public class Session {
 		throws Exception {
 
 		return new FileBody(
-			filePath.toFile(), ContentType.create(mimeType), fileName);
+			filePath.toFile(), ContentType.create(mimeType), fileName) {
+
+			@Override
+			public void writeTo(OutputStream out) throws IOException {
+				CountingOutputStream output = new CountingOutputStream(out) {
+
+					@Override
+					protected void beforeWrite(int n) {
+						incrementUploadedBytes(n);
+
+						super.beforeWrite(n);
+					}
+
+				};
+
+				super.writeTo(output);
+			}
+		};
 	}
 
 	private HttpRoutePlanner _getHttpRoutePlanner() {
@@ -362,13 +419,19 @@ public class Session {
 		Session.class);
 
 	private static HttpRoutePlanner _httpRoutePlanner;
+	private static final ScheduledExecutorService _scheduledExecutorService =
+		Executors.newSingleThreadScheduledExecutor();
 
 	private BasicHttpContext _basicHttpContext;
+	private final AtomicInteger _downloadedBytes = new AtomicInteger(0);
+	private final int _downloadRate;
 	private final ExecutorService _executorService;
 	private final HttpClient _httpClient;
 	private final HttpHost _httpHost;
 	private final Set<String> _ignoredParameterKeys = new HashSet<String>(
 		Arrays.asList("filePath", "syncFile", "syncSite", "uiEvent"));
 	private String _token;
+	private final AtomicInteger _uploadedBytes = new AtomicInteger(0);
+	private final int _uploadRate;
 
 }

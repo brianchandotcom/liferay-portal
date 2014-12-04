@@ -37,6 +37,7 @@ import java.nio.file.StandardCopyOption;
 
 import java.util.List;
 
+import org.apache.commons.io.input.CountingInputStream;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -99,11 +100,11 @@ public class DownloadFileHandler extends BaseHandler {
 			handleSiteDeactivatedException();
 		}
 
+		Session session = SessionManager.getSession(getSyncAccountId());
+
 		Header tokenHeader = httpResponse.getFirstHeader("Sync-JWT");
 
 		if (tokenHeader != null) {
-			Session session = SessionManager.getSession(getSyncAccountId());
-
 			session.setToken(tokenHeader.getValue());
 		}
 
@@ -129,7 +130,16 @@ public class DownloadFileHandler extends BaseHandler {
 		try {
 			HttpEntity httpEntity = httpResponse.getEntity();
 
-			inputStream = httpEntity.getContent();
+			inputStream = new CountingInputStream(httpEntity.getContent()) {
+
+				@Override
+				protected synchronized void afterRead(int n) {
+					session.incrementDownloadedBytes(n);
+
+					super.afterRead(n);
+				}
+
+			};
 
 			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 				getSyncAccountId());

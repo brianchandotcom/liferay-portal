@@ -257,6 +257,10 @@ public class SyncFile extends StateAwareModel {
 		this.description = description;
 	}
 
+	public void setEvent(String event) {
+		this.event = event;
+	}
+
 	public void setExtension(String extension) {
 		this.extension = extension;
 	}

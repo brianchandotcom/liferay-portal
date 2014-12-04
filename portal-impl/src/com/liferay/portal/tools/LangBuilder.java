@@ -309,6 +309,19 @@ public class LangBuilder {
 						else if (key.equals("lang.line.end")) {
 							translatedText = "right";
 						}
+						else if (key.equals("lang.user.name.fields")) {
+							translatedText =
+							"prefix,first-name,middle-name,last-name,suffix";
+						}
+						else if (key.equals("lang.user.name.prefix.options")) {
+							translatedText = "dr,mr,ms,mrs";
+						}
+						else if (key.equals("lang.user.name.required.fields")) {
+							translatedText = "last-name";
+						}
+						else if (key.equals("lang.user.name.suffix.options")) {
+							translatedText = "ii,iii,iv,jr,phd,sr";
+						}
 						else if (languageId.equals("el") &&
 								 (key.equals("enabled") || key.equals("on") ||
 								  key.equals("on-date"))) {

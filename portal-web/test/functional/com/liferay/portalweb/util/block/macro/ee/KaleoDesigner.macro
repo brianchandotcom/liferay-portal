@@ -663,7 +663,19 @@
 	</command>
 
 	<command name="viewNoWorkflowDefinitionsViaKDCP">
-		<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No workflow definitions are defined." />
+		<var name="key_workflowDefinitionTitle" value="Single Approver" />
+
+		<if>
+			<condition action="CPKaleodesignerconfiguration#isElementPresent" locator-key1="DEFINITION_TABLE_TITLE" />
+			<then>
+				<execute macro="KaleoDesigner#viewTableDefinitionPublishedViaKDCP">
+					<var name="workflowDefinitionTitle" value="Single Approver" />
+				</execute>
+			</then>
+			<else>
+				<execute action="CPKaleodesignerconfiguration#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No workflow definitions are defined." />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewSourceXMLLine">

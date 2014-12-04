@@ -179,14 +179,16 @@
 	</command>
 
 	<command name="AddKBArticleWithSourceViaKBAdmin" priority="5">
-		<var name="kbArticleContentSourceOn"><![CDATA[<b>Knowledge Base&rsquo;s Article Content<b>]]></var>
+		<var name="kbArticleContentSourceOn">
+			<![CDATA[<b>Knowledge Base&rsquo;s Article Content<b>]]>
+		</var>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContentSourceOn" value ="${kbArticleContentSourceOn}" />
+			<var name="kbArticleContentSourceOn" value="${kbArticleContentSourceOn}" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 

@@ -307,9 +307,24 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			}
 		);
 	</c:if>
+	var currentToolbarSet;
+
+	var formatToolbarValue = '<%= TextFormatter.format(HtmlUtil.escapeJS(toolbarSet), TextFormatter.M) %>';
+
+	function getToolbarSet(toolbarSet) {
+		var Util = Liferay.Util;
+
+		if (Util.isPhone()) {
+			toolbarSet = 'phone';
+		}
+		else if (Util.isTablet()) {
+			toolbarSet = 'tablet';
+		}
+
+		return toolbarSet;
+	}
 
 	var createEditor = function() {
-		var Util = Liferay.Util;
 
 		var editorNode = A.one('#<%= name %>');
 
@@ -317,16 +332,8 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		editorNode.addClass('lfr-editable');
 
-		function getToolbarSet(toolbarSet) {
-			if (Util.isPhone()) {
-				toolbarSet = 'phone';
-			}
-			else if (Util.isTablet()) {
-				toolbarSet = 'tablet';
-			}
 
-			return toolbarSet;
-		}
+		currentToolbarSet = getToolbarSet(formatToolbarValue);
 
 		function initData() {
 			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
@@ -412,7 +419,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 				</c:choose>
 
 				filebrowserUploadUrl: null,
-				toolbar: getToolbarSet('<%= TextFormatter.format(HtmlUtil.escapeJS(toolbarSet), TextFormatter.M) %>')
+				toolbar: currentToolbarSet
 			}
 		);
 
@@ -622,6 +629,16 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			success();
 		}
 	};
+
+	A.getWin().on(
+		'resize', 
+		A.debounce(function() {
+			if (currentToolbarSet != getToolbarSet(formatToolbarValue)) {
+				CKEDITOR.instances.<%= name %>.destroy();
+				createEditor();
+			}
+		}, 250, this)
+	);
 </aui:script>
 
 <%!

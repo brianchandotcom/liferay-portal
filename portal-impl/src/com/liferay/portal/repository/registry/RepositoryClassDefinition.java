@@ -23,42 +23,36 @@ import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
-import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
-import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
-import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.capabilities.ConfigurationCapabilityImpl;
 import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerCapability;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Adolfo Pérez
  */
 public class RepositoryClassDefinition
-	implements RepositoryEventRegistry, RepositoryEventTrigger,
-		RepositoryFactory, RepositoryFactoryRegistry {
+	implements RepositoryFactory, RepositoryFactoryRegistry {
 
 	public static final RepositoryClassDefinition fromRepositoryDefiner(
 		RepositoryDefiner repositoryDefiner) {
 
+		DefaultRepositoryEventRegistry defaultRepositoryEventRegistry =
+			new DefaultRepositoryEventRegistry(null);
+
 		RepositoryClassDefinition repositoryClassDefinition =
-			new RepositoryClassDefinition(repositoryDefiner);
+			new RepositoryClassDefinition(
+				repositoryDefiner, defaultRepositoryEventRegistry);
 
 		repositoryDefiner.registerRepositoryFactory(repositoryClassDefinition);
 		repositoryDefiner.registerRepositoryEventListeners(
-			repositoryClassDefinition);
+			defaultRepositoryEventRegistry);
 
 		return repositoryClassDefinition;
 	}
@@ -75,13 +69,20 @@ public class RepositoryClassDefinition
 
 		_repositoryDefiner.registerCapabilities(defaultCapabilityRegistry);
 
-		setUpCommonCapabilities(localRepository, defaultCapabilityRegistry);
+		DefaultRepositoryEventRegistry defaultRepositoryEventRegistry =
+			new DefaultRepositoryEventRegistry(_rootRepositoryEventTrigger);
 
-		defaultCapabilityRegistry.registerCapabilityRepositoryEvents(this);
+		setUpCommonCapabilities(
+			localRepository, defaultCapabilityRegistry,
+			defaultRepositoryEventRegistry);
+
+		defaultCapabilityRegistry.registerCapabilityRepositoryEvents(
+			defaultRepositoryEventRegistry);
 
 		CapabilityLocalRepository capabilityLocalRepository =
 			new CapabilityLocalRepository(
-				localRepository, defaultCapabilityRegistry, this);
+				localRepository, defaultCapabilityRegistry,
+				defaultRepositoryEventRegistry);
 
 		return capabilityLocalRepository;
 	}
@@ -98,41 +99,24 @@ public class RepositoryClassDefinition
 
 		_repositoryDefiner.registerCapabilities(defaultCapabilityRegistry);
 
-		setUpCommonCapabilities(repository, defaultCapabilityRegistry);
+		DefaultRepositoryEventRegistry defaultRepositoryEventRegistry =
+			new DefaultRepositoryEventRegistry(_rootRepositoryEventTrigger);
+
+		setUpCommonCapabilities(
+			repository, defaultCapabilityRegistry,
+			defaultRepositoryEventRegistry);
 
 		setUpCapabilityRepositoryCapabilities(
 			repository, defaultCapabilityRegistry);
 
-		defaultCapabilityRegistry.registerCapabilityRepositoryEvents(this);
+		defaultCapabilityRegistry.registerCapabilityRepositoryEvents(
+			defaultRepositoryEventRegistry);
 
 		CapabilityRepository capabilityRepository = new CapabilityRepository(
-			repository, defaultCapabilityRegistry, this);
+			repository, defaultCapabilityRegistry,
+			defaultRepositoryEventRegistry);
 
 		return capabilityRepository;
-	}
-
-	@Override
-	public <S extends RepositoryEventType, T>
-		void registerRepositoryEventListener(
-			Class<S> repositoryEventTypeClass, Class<T> modelClass,
-			RepositoryEventListener<S, T> repositoryEventListener) {
-
-		if (repositoryEventListener == null) {
-			throw new NullPointerException("Repository event listener is null");
-		}
-
-		Tuple key = new Tuple(repositoryEventTypeClass, modelClass);
-
-		Collection<RepositoryEventListener<?, ?>> repositoryEventListeners =
-			_repositoryEventListeners.get(key);
-
-		if (repositoryEventListeners == null) {
-			repositoryEventListeners = new ArrayList<>();
-
-			_repositoryEventListeners.put(key, repositoryEventListeners);
-		}
-
-		repositoryEventListeners.add(repositoryEventListener);
 	}
 
 	@Override
@@ -145,28 +129,12 @@ public class RepositoryClassDefinition
 		_repositoryFactory = repositoryFactory;
 	}
 
-	@Override
-	public <S extends RepositoryEventType, T> void trigger(
-			Class<S> repositoryEventTypeClass, Class<T> modelClass, T model)
-		throws PortalException {
+	protected RepositoryClassDefinition(
+		RepositoryDefiner repositoryDefiner,
+		RepositoryEventTrigger rootRepositoryEventTrigger) {
 
-		Tuple key = new Tuple(repositoryEventTypeClass, modelClass);
-
-		@SuppressWarnings("rawtypes")
-		Collection<RepositoryEventListener<S, T>> repositoryEventListeners =
-			(Collection)_repositoryEventListeners.get(key);
-
-		if (repositoryEventListeners != null) {
-			for (RepositoryEventListener<S, T> repositoryEventListener :
-					repositoryEventListeners) {
-
-				repositoryEventListener.execute(model);
-			}
-		}
-	}
-
-	protected RepositoryClassDefinition(RepositoryDefiner repositoryDefiner) {
 		_repositoryDefiner = repositoryDefiner;
+		_rootRepositoryEventTrigger = rootRepositoryEventTrigger;
 	}
 
 	protected CMISRepositoryHandler getCMISRepositoryHandler(
@@ -204,7 +172,8 @@ public class RepositoryClassDefinition
 
 	protected void setUpCommonCapabilities(
 		DocumentRepository documentRepository,
-		DefaultCapabilityRegistry capabilityRegistry) {
+		DefaultCapabilityRegistry capabilityRegistry,
+		RepositoryEventTrigger repositoryEventTrigger) {
 
 		if (!capabilityRegistry.isCapabilityProvided(
 				ConfigurationCapability.class)) {
@@ -219,14 +188,13 @@ public class RepositoryClassDefinition
 
 			capabilityRegistry.addExportedCapability(
 				RepositoryEventTriggerCapability.class,
-				new LiferayRepositoryEventTriggerCapability(this));
+				new LiferayRepositoryEventTriggerCapability(
+					repositoryEventTrigger));
 		}
 	}
 
 	private final RepositoryDefiner _repositoryDefiner;
-	private final Map<Tuple, Collection<RepositoryEventListener<?, ?>>>
-		_repositoryEventListeners =
-			new HashMap<Tuple, Collection<RepositoryEventListener<?, ?>>>();
 	private RepositoryFactory _repositoryFactory;
+	private final RepositoryEventTrigger _rootRepositoryEventTrigger;
 
 }

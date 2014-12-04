@@ -347,7 +347,7 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 						}
 					}
 
-					var selLanguageId = $(document.<portlet:namespace />fm.<portlet:namespace />prioritiesLanguageId).val();
+					var selLanguageId = $(document.<portlet:namespace />fm).fm('prioritiesLanguageId').val();
 
 					var localizedPriorityTable = $('#<portlet:namespace />localized-priorities-table');
 
@@ -471,7 +471,7 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 						}
 					}
 
-					var selLanguageId = $(document.<portlet:namespace />fm.<portlet:namespace />ranksLanguageId).val();
+					var selLanguageId = $(document.<portlet:namespace />fm).fm('ranksLanguageId').val();
 
 					var ranksTemp = $('#<portlet:namespace />ranks_temp');
 
@@ -531,14 +531,16 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 	}
 
 	function <portlet:namespace />saveEmails() {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
 		try {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailMessageAddedBody--'].value = window['<portlet:namespace />emailMessageAdded'].getHTML();
+			form.fm('preferences--emailMessageAddedBody--').val(window['<portlet:namespace />emailMessageAdded'].getHTML());
 		}
 		catch (e) {
 		}
 
 		try {
-			document.<portlet:namespace />fm['<portlet:namespace />preferences--emailMessageUpdatedBody--'].value = window['<portlet:namespace />emailMessageUpdated'].getHTML();
+			form.fm('preferences--emailMessageUpdatedBody--').val(window['<portlet:namespace />emailMessageUpdated'].getHTML());
 		}
 		catch (e) {
 		}

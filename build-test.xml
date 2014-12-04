@@ -4365,6 +4365,17 @@ if (ppstate.equals("normal")) {
 		</if>
 	</target>
 
+	<target name="remove-plugins-osgi">
+		<if>
+			<isset property="plugin.name" />
+			<then>
+				<delete>
+					<fileset dir="${liferay.home}/osgi/modules" includes="${plugin.name}-*.war" />
+				</delete>
+			</then>
+		</if>
+	</target>
+
 	<target name="replace-file">
 		<fail message="Please set the property ${file}." unless="file" />
 		<fail message="Please set the property ${token}." unless="token" />

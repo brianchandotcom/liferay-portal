@@ -77,6 +77,8 @@ public class RepositoryClassDefinition
 
 		setUpCommonCapabilities(localRepository, defaultCapabilityRegistry);
 
+		defaultCapabilityRegistry.registerCapabilityRepositoryEvents(this);
+
 		CapabilityLocalRepository capabilityLocalRepository =
 			new CapabilityLocalRepository(
 				localRepository, defaultCapabilityRegistry, this);
@@ -100,6 +102,8 @@ public class RepositoryClassDefinition
 
 		setUpCapabilityRepositoryCapabilities(
 			repository, defaultCapabilityRegistry);
+
+		defaultCapabilityRegistry.registerCapabilityRepositoryEvents(this);
 
 		CapabilityRepository capabilityRepository = new CapabilityRepository(
 			repository, defaultCapabilityRegistry, this);

@@ -81,11 +81,13 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
@@ -220,8 +222,7 @@ public class EditEntryAction extends PortletAction {
 					blogsEntryFileEntryReferencesJSONObject.put(
 						"fileEntryId",
 						String.valueOf(
-							blogsEntryFileEntryReference.
-								getTempFileEntryId()));
+							blogsEntryFileEntryReference.getTempFileEntryId()));
 					blogsEntryFileEntryReferencesJSONObject.put(
 						"fileEntryUrl",
 						PortletFileRepositoryUtil.getPortletFileEntryURL(

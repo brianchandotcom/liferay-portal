@@ -46,12 +46,10 @@ public class BlogsEntryFileEntryHelper {
 			new ArrayList<>();
 
 		for (FileEntry tempBlogsEntryFileEntry : tempBlogsEntryFileEntries) {
-			FileEntry blogsEntryFileEntry =
-				addBlogsEntryFileEntry(
-					groupId, userId, entryId,
-					tempBlogsEntryFileEntry.getTitle(),
-					tempBlogsEntryFileEntry.getMimeType(),
-					tempBlogsEntryFileEntry.getContentStream());
+			FileEntry blogsEntryFileEntry = addBlogsEntryFileEntry(
+				groupId, userId, entryId, tempBlogsEntryFileEntry.getTitle(),
+				tempBlogsEntryFileEntry.getMimeType(),
+				tempBlogsEntryFileEntry.getContentStream());
 
 			blogsEntryFileEntryReferences.add(
 				new BlogsEntryFileEntryReference(
@@ -65,7 +63,7 @@ public class BlogsEntryFileEntryHelper {
 	public List<FileEntry> getTempBlogsEntryFileEntries(String content)
 		throws PortalException {
 
-		List<FileEntry> blogsEntryFileEntries = new ArrayList<>();
+		List<FileEntry> tempBlogsEntryFileEntries = new ArrayList<>();
 
 		Pattern pattern = Pattern.compile(
 			EditorConstants.ATTRIBUTE_DATA_IMAGE_ID + "=.(\\d+)");
@@ -75,34 +73,34 @@ public class BlogsEntryFileEntryHelper {
 		while (matcher.find()) {
 			long fileEntryId = GetterUtil.getLong(matcher.group(1));
 
-			FileEntry blogEntryFileEntry =
+			FileEntry tempBlogsEntryFileEntry =
 				PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
 
-			blogsEntryFileEntries.add(blogEntryFileEntry);
+			tempBlogsEntryFileEntries.add(tempBlogsEntryFileEntry);
 		}
 
-		return blogsEntryFileEntries;
+		return tempBlogsEntryFileEntries;
 	}
 
 	public String updateContent(
 		String content,
-		List<BlogsEntryFileEntryReference> blogsEntryAttachmentReferences) {
+		List<BlogsEntryFileEntryReference> blogsEntryFileEntryReferences) {
 
-		for (BlogsEntryFileEntryReference blogsEntryAttachmentReference :
-				blogsEntryAttachmentReferences) {
+		for (BlogsEntryFileEntryReference blogsEntryFileEntryReference :
+				blogsEntryFileEntryReferences) {
 
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("<img.*");
 			sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 			sb.append("=\\s?\"");
-			sb.append(blogsEntryAttachmentReference.getTempFileEntryId());
+			sb.append(blogsEntryFileEntryReference.getTempFileEntryId());
 			sb.append("\".*src=\\s?\"(.*)\".*/>");
 
 			content = content.replaceAll(
 				sb.toString(),
 				getFileEntryLink(
-					blogsEntryAttachmentReference.getFileEntry()));
+					blogsEntryFileEntryReference.getFileEntry()));
 		}
 
 		return content;

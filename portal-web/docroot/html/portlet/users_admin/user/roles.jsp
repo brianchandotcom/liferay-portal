@@ -99,8 +99,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 		url="javascript:;"
 	/>
 
-	<aui:script use="aui-base">
-		A.one('#<portlet:namespace />selectRegularRoleLink').on(
+	<aui:script>
+		AUI.$('#<portlet:namespace />selectRegularRoleLink').on(
 			'click',
 			function(event) {
 				Liferay.Util.selectEntity(
@@ -301,8 +301,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 		url="javascript:;"
 	/>
 
-	<aui:script use="aui-base">
-		A.one('#<portlet:namespace />selectOrganizationRoleLink').on(
+	<aui:script>
+		AUI.$('#<portlet:namespace />selectOrganizationRoleLink').on(
 			'click',
 			function(event) {
 				Liferay.Util.selectEntity(

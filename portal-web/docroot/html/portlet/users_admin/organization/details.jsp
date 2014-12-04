@@ -302,8 +302,8 @@ if (parentOrganization != null) {
 </aui:script>
 
 <c:if test="<%= organization == null %>">
-	<aui:script use="aui-base">
-		A.one('#<portlet:namespace />type').on(
+	<aui:script sandbox="<%= true %>">
+		$('#<portlet:namespace />type').on(
 			'change',
 			function(event) {
 
@@ -311,8 +311,8 @@ if (parentOrganization != null) {
 				for (String curType : PropsValues.ORGANIZATIONS_TYPES) {
 				%>
 
-					if (event.target.val() == '<%= curType %>') {
-						A.one('#<portlet:namespace />countryDiv').<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ORGANIZATIONS_COUNTRY_ENABLED, new Filter(String.valueOf(curType)))) ? "show" : "hide" %>();
+					if ($(event.currentTarget).val() == '<%= curType %>') {
+						$('#<portlet:namespace />countryDiv').toggleClass('hide', !<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ORGANIZATIONS_COUNTRY_ENABLED, new Filter(String.valueOf(curType)))) %>);
 					}
 
 				<%

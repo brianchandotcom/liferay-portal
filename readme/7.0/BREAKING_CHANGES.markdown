@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `6e26e7c`.*
+*This document has been reviewed through commit `87c168f`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -611,6 +611,31 @@ be used now in asset publishers and faceted search.
 
 ---------------------------------------
 
+### Removed the `getClassNamePortletId(String)` Method from `PortalUtil` Class
+- **Date:** 2014-Nov-11
+- **JIRA Ticket:** LPS-50604
+
+#### What changed?
+
+The `getClassNamePortletId(String)` method from the `PortalUtil` class has been
+removed.
+
+#### Who is affected?
+
+This affects any plugin using the method.
+
+#### How should I update my code?
+
+If you are using the method, you should implement it yourself in a private
+utility class.
+
+#### Why was this change made?
+
+This change was needed in order to modularize the portal. Also, the method is no
+longer being used inside Liferay Portal.
+
+---------------------------------------
+
 ### Removed the *Header Web Content* and *Footer Web Content* Preferences from the RSS Portlet
 - **Date:** 2014-Nov-12
 - **JIRA Ticket:** LPS-46984
@@ -618,51 +643,25 @@ be used now in asset publishers and faceted search.
 #### What changed?
 
 The *Header Web Content* and *Footer Web Content* preferences from the RSS
-portlet were removed. The portlet now supports Application Display Templates
-(ADT), which provide templating capabilities that cover the need to support
-these configuration preferences.
+portlet have been removed. The portlet now supports Application Display
+Templates (ADT), which provide templating capabilities that can apply web
+content to the portlet's header and footer.
 
 #### Who is affected?
 
-This affects RSS portlets displayed on pages using these preferences. The
-preferences will no longer be used in the RSS portlet.
+This affects RSS portlets that are displayed on pages and that use these
+preferences. These preferences are no longer used in the RSS portlet.
 
 #### How should I update my code?
 
-Even though these preferences were removed, an ADT can be created to obtain the
-same result. Liferay will publish this ADT so that it can be used in the RSS
-portlet.
+Even though these preferences have been removed, an ADT can be created to
+produce the same result. Liferay will publish this ADT so that it can be used in
+the RSS portlet.
 
 #### Why was this change made?
 
-The support for ADTs in the RSS portlet not only covers this use case, but many
-others, providing a much simpler way to create custom preferences.
-
----------------------------------------
-
-### Method getClassNamePortletId(String) in PortalUtil has been removed
-- **Date:** 2014-Nov-11
-- **JIRA Ticket:** LPS-50604
-
-#### What changed?
-
-The method getClassNamePortletId(String) from the class PortalUtil has
-been removed. 
-
-#### Who is affected?
-
-This will affect any plugin using the method.
-
-#### How should I update my code?
-
-If you are using that method, you should implement it yourself in a
-private utility class. The code is fairly simple so you shoul not have
-any problems with it.
-
-#### Why was this change made?
-
-This change was needed in order to modularize the portal and it has been 
-decided not to provide this method any more because it is not being used 
-anywhere inside the portal.
+The support for ADTs in the RSS portlet not only covers this use case, but also
+covers many other use cases, providing a much simpler way to create custom
+preferences.
 
 ---------------------------------------

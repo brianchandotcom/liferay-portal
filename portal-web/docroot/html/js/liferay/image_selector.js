@@ -3,8 +3,6 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var BYTE_SIZES = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-
 		var CSS_DROP_ACTIVE = 'drop-active';
 
 		var CSS_CHECK_ACTIVE = 'check-active';
@@ -25,7 +23,7 @@ AUI.add(
 
 		var STR_IMAGE_DATA = 'imageData';
 
-		var STR_NA = 'n/a';
+		var STR_SPACE = ' ';
 
 		var STR_VALUE = 'value';
 
@@ -95,6 +93,8 @@ AUI.add(
 						var errorNode = instance.rootNode.one(instance.get('errorNode'));
 
 						instance._errorNodeAlert = A.Widget.getByNode(errorNode);
+
+						instance.set('addSpaceBeforeSuffix', true);
 
 						instance._bindUI();
 
@@ -331,17 +331,17 @@ AUI.add(
 						var progressDataNode = instance._progressDataNode;
 
 						if (progressDataNode) {
-							var bytesLoaded = instance._parseBytesToSize(event.bytesLoaded);
+							var bytesLoaded = instance.formatStorage(event.bytesLoaded);
 
-							var bytesTotal = instance._parseBytesToSize(event.bytesTotal);
+							var bytesTotal = instance.formatStorage(event.bytesTotal);
 
 							var progressDataTemplate = A.Lang.sub(
 								TPL_PROGRESS_DATA,
 								{
-									loaded: bytesLoaded.size,
-									loadedUnit: bytesLoaded.unit,
-									total: bytesTotal.size,
-									totalUnit: bytesTotal.unit
+									loaded: bytesLoaded.substring(0, bytesLoaded.indexOf(STR_SPACE)),
+									loadedUnit: bytesLoaded.substring(bytesLoaded.indexOf(STR_SPACE) + 1),
+									total: bytesTotal.substring(0, bytesTotal.indexOf(STR_SPACE)),
+									totalUnit: bytesTotal.substring(bytesTotal.indexOf(STR_SPACE) + 1)
 								}
 							);
 
@@ -355,30 +355,6 @@ AUI.add(
 						instance.rootNode.addClass(CSS_PROGRESS_ACTIVE);
 
 						instance._errorNodeAlert.hide();
-					},
-
-					_parseBytesToSize: function(bytes) {
-						var data = {
-							size: STR_NA,
-							unit: ''
-						};
-
-						if (bytes === 0) {
-							return data;
-						}
-
-						var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-
-						if (i === 0) {
-							data.size = bytes;
-						}
-						else {
-							data.size = (bytes / Math.pow(1024, i)).toFixed(1);
-						}
-
-						data.unit = BYTE_SIZES[i];
-
-						return data;
 					},
 
 					_renderUploader: function() {

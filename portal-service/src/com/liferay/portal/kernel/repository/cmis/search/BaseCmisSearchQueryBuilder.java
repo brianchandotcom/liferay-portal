@@ -338,10 +338,12 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 			CMISConjunction cmisConjunction = new CMISConjunction();
 
 			for (String term : terms) {
-				CMISContainsValueExpression containsValueExpression =
-					new CMISContainsValueExpression(term);
+				if (Validator.isNotNull(term)) {
+					CMISContainsValueExpression containsValueExpression =
+						new CMISContainsValueExpression(term);
 
-				cmisConjunction.add(containsValueExpression);
+					cmisConjunction.add(containsValueExpression);
+				}
 			}
 
 			cmisJunction.add(cmisConjunction);

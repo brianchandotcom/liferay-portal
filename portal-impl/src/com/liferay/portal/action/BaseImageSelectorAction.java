@@ -166,12 +166,12 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 	}
 
 	protected abstract void handleUploadException(
-		ActionRequest actionRequest, ActionResponse actionResponse,
-		Exception e, JSONObject jsonObject)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			Exception e, JSONObject jsonObject)
 		throws Exception;
 
 	protected abstract void validateFile(
-		String fileName, String contentType, long size)
+			String fileName, String contentType, long size)
 		throws PortalException;
 
 	private static final String _TEMP_FOLDER_NAME =

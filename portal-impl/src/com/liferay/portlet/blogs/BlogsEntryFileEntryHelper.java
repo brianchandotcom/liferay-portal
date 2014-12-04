@@ -27,6 +27,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -100,8 +101,7 @@ public class BlogsEntryFileEntryHelper {
 
 			content = content.replaceAll(
 				sb.toString(),
-				getFileEntryLink(
-					blogsEntryFileEntryReference.getFileEntry()));
+				getFileEntryLink(blogsEntryFileEntryReference.getFileEntry()));
 		}
 
 		return content;

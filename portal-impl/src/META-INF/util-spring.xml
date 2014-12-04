@@ -326,17 +326,12 @@
 	<bean id="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil">
 		<property name="springFactory" ref="com.liferay.portal.kernel.spring.util.SpringFactory" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.template.TemplateManagerUtil" class="com.liferay.portal.kernel.template.TemplateManagerUtil">
+	<bean id="com.liferay.portal.kernel.template.TemplateManagerRegistryUtil" class="com.liferay.portal.kernel.template.TemplateManagerRegistryUtil">
 		<property name="templateManagers">
 			<list>
 				<bean class="com.liferay.portal.freemarker.FreeMarkerManager">
 					<property name="templateContextHelper">
 						<bean class="com.liferay.portal.freemarker.FreeMarkerTemplateContextHelper" />
-					</property>
-				</bean>
-				<bean class="com.liferay.portal.soy.SoyManager">
-					<property name="templateContextHelper">
-						<bean class="com.liferay.portal.soy.SoyTemplateContextHelper" />
 					</property>
 				</bean>
 				<bean class="com.liferay.portal.velocity.VelocityManager">

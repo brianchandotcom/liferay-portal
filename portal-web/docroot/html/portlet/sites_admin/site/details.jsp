@@ -178,6 +178,19 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 		<aui:input name="active" value="<%= true %>" />
 	</c:if>
 
+	<c:if test="<%= ((parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) && PropsValues.SITES_SHOW_INHERIT_CONTENT) %>">
+
+		<%
+		boolean disabled = false;
+
+		if ((parentGroup != null) && parentGroup.isInheritContent()) {
+			disabled = true;
+		}
+		%>
+
+		<aui:input disabled="<%= disabled %>" helpMessage='<%= disabled ? "you-cannot-set-inherit-content-if-your-parent-is-inherit-content" : StringPool.BLANK %>' name="inheritContent" value="<%= false %>" />
+	</c:if>
+
 	<h3><liferay-ui:message key="membership-options" /></h3>
 
 	<c:if test="<%= (group == null) || !group.isCompany() %>">

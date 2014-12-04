@@ -1722,6 +1722,8 @@ public class PropsValues {
 
 	public static final String SITES_FRIENDLY_URL_PAGE_NOT_FOUND = PropsUtil.get(PropsKeys.SITES_FRIENDLY_URL_PAGE_NOT_FOUND);
 
+	public static final boolean SITES_SHOW_INHERIT_CONTENT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SITES_SHOW_INHERIT_CONTENT));
+
 	public static String SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY = PropsUtil.get(PropsKeys.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY);
 
 	public static String SITES_SITEMAP_DEFAULT_PRIORITY = PropsUtil.get(PropsKeys.SITES_SITEMAP_DEFAULT_PRIORITY);

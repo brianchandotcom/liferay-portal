@@ -1372,6 +1372,7 @@ public class DLImpl implements DL {
 		}
 
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, entryURL);
+
 		workflowContext.put("event", syncEventType);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(

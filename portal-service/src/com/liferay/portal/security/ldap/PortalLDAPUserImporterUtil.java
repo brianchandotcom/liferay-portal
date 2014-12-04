@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.ldap;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.User;
 
 import javax.naming.directory.Attributes;
@@ -22,30 +23,30 @@ import javax.naming.ldap.LdapContext;
 /**
  * @author Michael C. Han
  */
-public interface PortalLDAPImporter {
+public class PortalLDAPUserImporterUtil {
 
-	public void importFromLDAP() throws Exception;
+	public static PortalLDAPUserImporter getPortalLDAPUserImporter() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortalLDAPUserImporterUtil.class);
 
-	public void importFromLDAP(long companyId) throws Exception;
+		return _portalLDAPUserImporter;
+	}
 
-	public void importFromLDAP(long ldapServerId, long companyId)
-		throws Exception;
-
-	public User importLDAPUser(
+	public static User importUser(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			Attributes attributes, String password)
-		throws Exception;
+		throws Exception {
 
-	public User importLDAPUser(
-			long ldapServerId, long companyId, String emailAddress,
-			String screenName)
-		throws Exception;
+		return getPortalLDAPUserImporter().importUser(
+			ldapServerId, companyId, ldapContext, attributes, password);
+	}
 
-	public User importLDAPUser(
-			long companyId, String emailAddress, String screenName)
-		throws Exception;
+	public void setPortalLDAPUserImporter(
+		PortalLDAPUserImporter portalLDAPUserImporter) {
 
-	public User importLDAPUserByScreenName(long companyId, String screenName)
-		throws Exception;
+		_portalLDAPUserImporter = portalLDAPUserImporter;
+	}
+
+	private static PortalLDAPUserImporter _portalLDAPUserImporter;
 
 }

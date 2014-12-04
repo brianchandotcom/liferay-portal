@@ -21,7 +21,7 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="10000"
-		name="com.liferay.portal.security.ldap.PortalLDAPImporter"
+		name="com.liferay.portal.security.PortalUserImporter"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	/>

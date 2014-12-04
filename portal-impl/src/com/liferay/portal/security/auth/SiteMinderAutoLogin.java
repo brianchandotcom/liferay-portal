@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.ldap.PortalLDAPImporterUtil;
+import com.liferay.portal.security.PortalUserImporterUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -71,11 +71,11 @@ public class SiteMinderAutoLogin extends BaseAutoLogin {
 
 			try {
 				if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-					user = PortalLDAPImporterUtil.importLDAPUser(
+					user = PortalUserImporterUtil.importUser(
 						companyId, siteMinderUserHeader, StringPool.BLANK);
 				}
 				else {
-					user = PortalLDAPImporterUtil.importLDAPUser(
+					user = PortalUserImporterUtil.importUser(
 						companyId, StringPool.BLANK, siteMinderUserHeader);
 				}
 			}

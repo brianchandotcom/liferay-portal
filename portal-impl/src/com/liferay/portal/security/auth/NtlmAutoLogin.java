@@ -16,7 +16,7 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.ldap.PortalLDAPImporterUtil;
+import com.liferay.portal.security.PortalUserImporterUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -53,7 +53,7 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 
 		request.removeAttribute(WebKeys.NTLM_REMOTE_USER);
 
-		User user = PortalLDAPImporterUtil.importLDAPUserByScreenName(
+		User user = PortalUserImporterUtil.importUserByScreenName(
 			companyId, screenName);
 
 		if (user == null) {

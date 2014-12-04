@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.security;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.InitialThreadLocal;
@@ -22,31 +22,31 @@ import com.liferay.portal.kernel.util.StringPool;
  * @author Edward Han
  * @author Vilmos Papp
  */
-public class LDAPUserTransactionThreadLocal {
+public class UserImportTransactionThreadLocal {
 
 	public static String getOriginalEmailAddress() {
 		return _originalEmailAddress.get();
 	}
 
-	public static boolean isOriginatesFromLDAP() {
-		return _originatesFromLDAP.get();
+	public static boolean isOriginatesFromImport() {
+		return _originatesFromImport.get();
 	}
 
 	public static void setOriginalEmailAddress(String originalEmailAddress) {
 		_originalEmailAddress.set(originalEmailAddress);
 	}
 
-	public static void setOriginatesFromLDAP(boolean originatesFromLDAP) {
-		_originatesFromLDAP.set(originatesFromLDAP);
+	public static void setOriginatesFromImport(boolean originatesFromImport) {
+		_originatesFromImport.set(originatesFromImport);
 	}
 
 	private static final ThreadLocal<String> _originalEmailAddress =
 		new AutoResetThreadLocal<String>(
-			LDAPUserTransactionThreadLocal.class + "._originalEmailAddress",
+			UserImportTransactionThreadLocal.class + "._originalEmailAddress",
 			StringPool.BLANK);
-	private static final ThreadLocal<Boolean> _originatesFromLDAP =
+	private static final ThreadLocal<Boolean> _originatesFromImport =
 		new InitialThreadLocal<Boolean>(
-			LDAPUserTransactionThreadLocal.class + "._originatesFromLDAP",
+			UserImportTransactionThreadLocal.class + "._originatesFromImport",
 			false);
 
 }

@@ -18,9 +18,9 @@ import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.impl.UserModelImpl;
+import com.liferay.portal.security.PortalUserExporterUtil;
+import com.liferay.portal.security.UserImportTransactionThreadLocal;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.security.ldap.LDAPUserTransactionThreadLocal;
-import com.liferay.portal.security.ldap.PortalLDAPExporterUtil;
 import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
@@ -82,13 +82,13 @@ public class UserModelListener extends BaseModelListener<User> {
 	public void onBeforeUpdate(User user) {
 		UserModelImpl userModelImpl = (UserModelImpl)user;
 
-		LDAPUserTransactionThreadLocal.setOriginalEmailAddress(
+		UserImportTransactionThreadLocal.setOriginalEmailAddress(
 			userModelImpl.getOriginalEmailAddress());
 	}
 
 	protected void exportToLDAP(User user) throws Exception {
 		if (user.isDefaultUser() ||
-			LDAPUserTransactionThreadLocal.isOriginatesFromLDAP()) {
+			UserImportTransactionThreadLocal.isOriginatesFromImport()) {
 
 			return;
 		}
@@ -103,7 +103,7 @@ public class UserModelListener extends BaseModelListener<User> {
 				serviceContext.getExpandoBridgeAttributes();
 		}
 
-		PortalLDAPExporterUtil.exportToLDAP(user, expandoBridgeAttributes);
+		PortalUserExporterUtil.exportUser(user, expandoBridgeAttributes);
 	}
 
 	protected void updateMembershipRequestStatus(long userId, long groupId)

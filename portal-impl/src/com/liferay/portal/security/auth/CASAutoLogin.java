@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.ldap.PortalLDAPImporterUtil;
+import com.liferay.portal.security.PortalUserImporterUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -44,11 +44,11 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             PortalLDAPImporterUtil#importLDAPUser(long, String, String)}
+	 *             com.liferay.portal.security.PortalUserImporterUtil#importUser(long, String, String)}
 	 */
 	@Deprecated
 	protected User addUser(long companyId, String screenName) throws Exception {
-		return PortalLDAPImporterUtil.importLDAPUser(
+		return PortalUserImporterUtil.importUser(
 			companyId, StringPool.BLANK, screenName);
 	}
 
@@ -121,11 +121,11 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 			try {
 				if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-					user = PortalLDAPImporterUtil.importLDAPUser(
+					user = PortalUserImporterUtil.importUser(
 						companyId, StringPool.BLANK, login);
 				}
 				else {
-					user = PortalLDAPImporterUtil.importLDAPUser(
+					user = PortalUserImporterUtil.importUser(
 						companyId, login, StringPool.BLANK);
 				}
 			}

@@ -17,6 +17,7 @@ package com.liferay.portal.security.ldap;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.security.UserOperation;
 
 import java.io.Serializable;
 
@@ -51,7 +52,7 @@ public interface PortalToLDAPConverter {
 	public Modifications getLDAPGroupModifications(
 			long ldapServerId, UserGroup userGroup, User user,
 			Properties groupMappings, Properties userMappings,
-			LDAPOperation ldapOperation)
+			UserOperation userOperation)
 		throws Exception;
 
 	public Attributes getLDAPUserAttributes(

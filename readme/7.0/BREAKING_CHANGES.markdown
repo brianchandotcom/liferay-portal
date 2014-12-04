@@ -643,24 +643,25 @@ longer being used inside Liferay Portal.
 #### What changed?
 
 The *Header Web Content* and *Footer Web Content* preferences from the RSS
-portlet were removed. The portlet now supports Application Display Templates
-(ADT), which provide templating capabilities that cover the need to support
-these configuration preferences.
+portlet have been removed. The portlet now supports Application Display
+Templates (ADT), which provide templating capabilities that can apply web
+content to the portlet's header and footer.
 
 #### Who is affected?
 
-This affects RSS portlets displayed on pages using these preferences. The
-preferences will no longer be used in the RSS portlet.
+This affects RSS portlets that are displayed on pages and that use these
+preferences. These preferences are no longer used in the RSS portlet.
 
 #### How should I update my code?
 
-Even though these preferences were removed, an ADT can be created to obtain the
-same result. Liferay will publish this ADT so that it can be used in the RSS
-portlet.
+Even though these preferences have been removed, an ADT can be created to
+produce the same result. Liferay will publish this ADT so that it can be used in
+the RSS portlet.
 
 #### Why was this change made?
 
-The support for ADTs in the RSS portlet not only covers this use case, but many
-others, providing a much simpler way to create custom preferences.
+The support for ADTs in the RSS portlet not only covers this use case, but also
+covers many other use cases, providing a much simpler way to create custom
+preferences.
 
 ---------------------------------------

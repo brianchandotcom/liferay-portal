@@ -754,58 +754,43 @@
 			<isset property="portal.version" />
 			<then>
 				<if>
-					<isset property="sql.legacy.url" />
+					<equals arg1="${portal.version}" arg2="6.1.2" />
 					<then>
-						<delete dir="sql/legacy" failonerror="false" />
-
-						<tstamp>
-							<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-						</tstamp>
-
-						<get
-							dest="${tstamp.value}.zip"
-							src="${sql.legacy.url}"
-						/>
-
-						<unzip
-							dest="sql"
-							src="${tstamp.value}.zip"
-						/>
-
-						<delete file="${tstamp.value}.zip" />
+						<property name="portal.version.url.path" value="6.1.2-ga3" />
 					</then>
 					<else>
-						<if>
-							<not>
-								<isset property="sql.legacy.zip" />
-							</not>
-							<then>
-								<fail>Please set "sql.legacy.zip" in test.properties to point to the legacy SQL ZIP file.</fail>
-							</then>
-						</if>
-
-						<if>
-							<not>
-								<and>
-									<available file="sql/legacy" />
-									<uptodate
-										srcfile="${sql.legacy.zip}"
-										targetfile="sql/legacy"
-									/>
-								</and>
-							</not>
-							<then>
-								<delete dir="sql/legacy" failonerror="false" />
-
-								<unzip src="${sql.legacy.zip}" dest="sql" />
-
-								<touch>
-									<fileset dir="sql/legacy" />
-								</touch>
-							</then>
-						</if>
+						<property name="portal.version.url.path" value="${portal.version}" />
 					</else>
 				</if>
+
+				<if>
+					<or>
+						<equals arg1="${portal.version}" arg2="6.0.6" />
+						<equals arg1="${portal.version}" arg2="6.1.2" />
+					</or>
+					<then>
+						<propertycopy from="sql.legacy.base.url[ce]" name="sql.legacy.base.url" />
+					</then>
+					<else>
+						<propertycopy from="sql.legacy.base.url[ee]" name="sql.legacy.base.url" />
+					</else>
+				</if>
+
+				<propertycopy from="sql.legacy.zip[${portal.version}]" name="sql.legacy.zip" />
+
+				<delete dir="sql/legacy" failonerror="false" />
+
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<get src="${sql.legacy.base.url}/${portal.version.url.path}/${sql.legacy.zip}" dest="${tstamp.value}.zip" />
+
+				<unzip dest="sql/legacy/${portal.version}" src="${tstamp.value}.zip">
+					<mapper from="[^/]+/(.*)" to="\1" type="regexp" />
+				</unzip>
+
+				<delete file="${tstamp.value}.zip" />
 			</then>
 		</if>
 

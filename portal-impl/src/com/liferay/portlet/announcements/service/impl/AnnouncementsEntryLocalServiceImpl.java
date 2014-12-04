@@ -399,7 +399,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			if (className.equals(Group.class.getName())) {
 				Group group = groupPersistence.findByPrimaryKey(classPK);
 
-				toName = group.getName();
+				toName = group.getDescriptiveName();
 
 				params.put("inherit", Boolean.TRUE);
 				params.put("usersGroups", classPK);

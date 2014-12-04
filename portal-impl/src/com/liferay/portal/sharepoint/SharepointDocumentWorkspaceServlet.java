@@ -172,7 +172,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 			Element schemaEl = root.addElement("Schema");
 
 			schemaEl.addAttribute("Name", "Documents");
-			schemaEl.addAttribute("Url", group.getName());
+			schemaEl.addAttribute("Url", group.getDescriptiveName());
 
 			Element fieldEl = schemaEl.addElement("Field");
 
@@ -248,7 +248,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 
 		Element resultsEl = root.addElement("Results");
 
-		resultsEl.addElement("Title").setText(group.getName());
+		resultsEl.addElement("Title").setText(group.getDescriptiveName());
 		resultsEl.addElement("LastUpdate");
 
 		User user = (User)request.getSession().getAttribute(WebKeys.USER);

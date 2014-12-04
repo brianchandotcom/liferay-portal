@@ -731,12 +731,22 @@ public class GroupLocalServiceUtil {
 		return getService().getGroupByUuidAndCompanyId(uuid, companyId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portal.model.Group#getDescriptiveName(Locale)
+	*/
+	@Deprecated
 	public static java.lang.String getGroupDescriptiveName(
 		com.liferay.portal.model.Group group, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getGroupDescriptiveName(group, locale);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portal.model.Group#getDescriptiveName(Locale)
+	*/
+	@Deprecated
 	public static java.lang.String getGroupDescriptiveName(long groupId,
 		java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {

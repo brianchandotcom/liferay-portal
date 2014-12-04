@@ -598,11 +598,21 @@ public interface GroupLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portal.model.Group#getDescriptiveName(Locale)
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getGroupDescriptiveName(
 		com.liferay.portal.model.Group group, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portal.model.Group#getDescriptiveName(Locale)
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getGroupDescriptiveName(long groupId,
 		java.util.Locale locale)

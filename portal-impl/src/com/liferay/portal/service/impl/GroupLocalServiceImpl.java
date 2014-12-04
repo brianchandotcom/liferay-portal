@@ -1229,92 +1229,30 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groupLocalService.loadGetGroup(companyId, name);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.model.Group#getDescriptiveName(Locale)
+	 */
+	@Deprecated
 	@Override
 	public String getGroupDescriptiveName(Group group, Locale locale)
 		throws PortalException {
 
-		String name = group.getName();
-
-		if (group.isCompany() && !group.isCompanyStagingGroup()) {
-			name = LanguageUtil.get(locale, "global");
-		}
-		else if (group.isControlPanel()) {
-			name = LanguageUtil.get(locale, "control-panel");
-		}
-		else if (group.isLayout()) {
-			Layout layout = layoutLocalService.getLayout(group.getClassPK());
-
-			name = layout.getName(locale);
-		}
-		else if (group.isLayoutPrototype()) {
-			LayoutPrototype layoutPrototype =
-				layoutPrototypeLocalService.getLayoutPrototype(
-					group.getClassPK());
-
-			name = layoutPrototype.getName(locale);
-		}
-		else if (group.isLayoutSetPrototype()) {
-			LayoutSetPrototype layoutSetPrototype =
-				layoutSetPrototypePersistence.findByPrimaryKey(
-					group.getClassPK());
-
-			name = layoutSetPrototype.getName(locale);
-		}
-		else if (group.isOrganization()) {
-			long organizationId = group.getOrganizationId();
-
-			Organization organization =
-				organizationPersistence.findByPrimaryKey(organizationId);
-
-			name = organization.getName();
-
-			group = organization.getGroup();
-		}
-		else if (group.isUser()) {
-			long userId = group.getClassPK();
-
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			name = user.getFullName();
-		}
-		else if (group.isUserGroup()) {
-			long userGroupId = group.getClassPK();
-
-			UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
-				userGroupId);
-
-			name = userGroup.getName();
-		}
-		else if (group.isUserPersonalSite()) {
-			name = LanguageUtil.get(locale, "user-personal-site");
-		}
-		else if (name.equals(GroupConstants.GUEST)) {
-			Company company = companyPersistence.findByPrimaryKey(
-				group.getCompanyId());
-
-			Account account = company.getAccount();
-
-			name = account.getName();
-		}
-
-		if (group.isStaged() && !group.isStagedRemotely() &&
-			group.isStagingGroup()) {
-
-			Group liveGroup = group.getLiveGroup();
-
-			name = liveGroup.getDescriptiveName(locale);
-		}
-
-		return name;
+		return group.getDescriptiveName(locale);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.model.Group#getDescriptiveName(Locale)
+	 */
+	@Deprecated
 	@Override
 	public String getGroupDescriptiveName(long groupId, Locale locale)
 		throws PortalException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		return getGroupDescriptiveName(group, locale);
+		return group.getDescriptiveName(locale);
 	}
 
 	/**

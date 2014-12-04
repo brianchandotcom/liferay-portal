@@ -294,7 +294,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 								<c:when test="<%= mySiteGroup.isControlPanel() %>">
 									<h3>
 										<a href="<%= themeDisplay.getURLControlPanel() %>">
-											<%= escapedSiteName %>
+											<%= HtmlUtil.escape(mySiteGroup.getDescriptiveName(locale)) %>
 										</a>
 									</h3>
 								</c:when>
@@ -306,7 +306,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 													<liferay-ui:message key="my-site" />
 												</c:when>
 												<c:otherwise>
-													<%= escapedSiteName %>
+													<%= HtmlUtil.escape(mySiteGroup.getDescriptiveName(locale)) %>
 												</c:otherwise>
 											</c:choose>
 										</a>

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -47,11 +48,17 @@ import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserPersonalSite;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -183,7 +190,81 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public String getDescriptiveName(Locale locale) throws PortalException {
-		return GroupLocalServiceUtil.getGroupDescriptiveName(this, locale);
+		Group curGroup = this;
+
+		String name = getName();
+
+		if (isCompany() && !isCompanyStagingGroup()) {
+			name = LanguageUtil.get(locale, "global");
+		}
+		else if (isControlPanel()) {
+			name = LanguageUtil.get(locale, "control-panel");
+		}
+		else if (isLayout()) {
+			Layout layout = LayoutLocalServiceUtil.getLayout(getClassPK());
+
+			name = layout.getName(locale);
+		}
+		else if (isLayoutPrototype()) {
+			LayoutPrototype layoutPrototype =
+				LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
+					getClassPK());
+
+			name = layoutPrototype.getName(locale);
+		}
+		else if (isLayoutSetPrototype()) {
+			LayoutSetPrototype layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
+					getClassPK());
+
+			name = layoutSetPrototype.getName(locale);
+		}
+		else if (isOrganization()) {
+			long organizationId = getOrganizationId();
+
+			Organization organization =
+				OrganizationLocalServiceUtil.getOrganization(organizationId);
+
+			name = organization.getName();
+
+			curGroup = organization.getGroup();
+		}
+		else if (isUser()) {
+			long userId = getClassPK();
+
+			User user = UserLocalServiceUtil.getUser(userId);
+
+			name = user.getFullName();
+		}
+		else if (isUserGroup()) {
+			long userGroupId = getClassPK();
+
+			UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
+				userGroupId);
+
+			name = userGroup.getName();
+		}
+		else if (isUserPersonalSite()) {
+			name = LanguageUtil.get(locale, "user-personal-site");
+		}
+		else if (name.equals(GroupConstants.GUEST)) {
+			Company company = CompanyLocalServiceUtil.getCompany(
+				getCompanyId());
+
+			Account account = company.getAccount();
+
+			name = account.getName();
+		}
+
+		if (curGroup.isStaged() && !curGroup.isStagedRemotely() &&
+			curGroup.isStagingGroup()) {
+
+			Group liveGroup = getLiveGroup();
+
+			name = liveGroup.getDescriptiveName(locale);
+		}
+
+		return name;
 	}
 
 	@Override

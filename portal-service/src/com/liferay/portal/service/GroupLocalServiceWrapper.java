@@ -783,6 +783,11 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getGroupByUuidAndCompanyId(uuid, companyId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portal.model.Group#getDescriptiveName(Locale)
+	*/
+	@Deprecated
 	@Override
 	public java.lang.String getGroupDescriptiveName(
 		com.liferay.portal.model.Group group, java.util.Locale locale)
@@ -790,6 +795,11 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getGroupDescriptiveName(group, locale);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portal.model.Group#getDescriptiveName(Locale)
+	*/
+	@Deprecated
 	@Override
 	public java.lang.String getGroupDescriptiveName(long groupId,
 		java.util.Locale locale)

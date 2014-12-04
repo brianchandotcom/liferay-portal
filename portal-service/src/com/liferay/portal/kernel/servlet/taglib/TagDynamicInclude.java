@@ -25,14 +25,15 @@ import javax.servlet.http.HttpServletResponse;
 public interface TagDynamicInclude {
 
 	public void include(
-		HttpServletRequest request, HttpServletResponse response,
-		String tagClassName, String tagKey, String tagPoint) throws IOException;
+			HttpServletRequest request, HttpServletResponse response,
+			String tagClassName, String tagDynamicId, String tagPoint)
+		throws IOException;
 
 	public void register(TagItemRegistry registry);
 
 	public interface TagItemRegistry {
 		public void register(
-			String tagClassName, String tagKey, String tagPoint);
+			String tagClassName, String tagDynamicId, String tagPoint);
 
 	}
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.taglib.aui.form.extension.sample;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.servlet.taglib.TagKeyFactory;
+import com.liferay.portal.kernel.servlet.taglib.TagDynamicIdFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
@@ -31,12 +31,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {"tagClassName=com.liferay.taglib.aui.FormTag"},
-	service = TagKeyFactory.class
+	service = TagDynamicIdFactory.class
 )
-public class SampleFormTagKeyFactory implements TagKeyFactory {
+public class SampleFormTagIdFactory implements TagDynamicIdFactory {
 
 	@Override
-	public String getKey(
+	public String getTagDynamicId(
 		HttpServletRequest request, HttpServletResponse response, Object tag) {
 
 		String portletId = PortalUtil.getPortletId(request);

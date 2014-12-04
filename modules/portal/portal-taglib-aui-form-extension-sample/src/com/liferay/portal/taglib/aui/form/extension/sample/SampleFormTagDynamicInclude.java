@@ -36,7 +36,7 @@ public class SampleFormTagDynamicInclude implements TagDynamicInclude {
 	@Override
 	public void include(
 			HttpServletRequest request, HttpServletResponse response,
-			String tagClassName, String tagKey, String tagPoint)
+			String tagClassName, String tagDynamicId, String tagPoint)
 		throws IOException {
 
 		PrintWriter printWriter = response.getWriter();

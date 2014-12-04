@@ -38,18 +38,18 @@ import javax.servlet.http.HttpServletResponse;
 public class TagDynamicIncludeUtil {
 
 	public static List<TagDynamicInclude> getDynamicIncludes(
-		String tagClassName, String tagKey, String tagPoint) {
+		String tagClassName, String tagDynamicId, String tagPoint) {
 
-		String key = _getKey(tagClassName, tagKey, tagPoint);
+		String key = _getKey(tagClassName, tagDynamicId, tagPoint);
 
 		return _instance._tagDynamicIncludes.getService(key);
 	}
 
 	public static boolean hasDynamicInclude(
-		String tagClassName, String tagKey, String tagPoint) {
+		String tagClassName, String tagDynamicId, String tagPoint) {
 
 		List<TagDynamicInclude> dynamicIncludes = getDynamicIncludes(
-			tagClassName, tagKey, tagPoint);
+			tagClassName, tagDynamicId, tagPoint);
 
 		if ((dynamicIncludes == null) || dynamicIncludes.isEmpty()) {
 			return false;
@@ -60,11 +60,11 @@ public class TagDynamicIncludeUtil {
 
 	public static void include(
 		HttpServletRequest request, HttpServletResponse response,
-		String tagClassName, String tagKey, String tagPoint,
+		String tagClassName, String tagDynamicId, String tagPoint,
 		boolean ascendingPriority) {
 
 		List<TagDynamicInclude> dynamicIncludes = getDynamicIncludes(
-			tagClassName, tagKey, tagPoint);
+			tagClassName, tagDynamicId, tagPoint);
 
 		if ((dynamicIncludes == null) || dynamicIncludes.isEmpty()) {
 			return;
@@ -84,7 +84,7 @@ public class TagDynamicIncludeUtil {
 
 			try {
 				dynamicInclude.include(
-					request, response, tagClassName, tagKey, tagPoint);
+					request, response, tagClassName, tagDynamicId, tagPoint);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -93,7 +93,7 @@ public class TagDynamicIncludeUtil {
 	}
 
 	private static String _getKey(
-		String tagClassName, String tagKey, String tagPoint) {
+		String tagClassName, String tagDynamicId, String tagPoint) {
 
 		StringBundler sb = new StringBundler(5);
 
@@ -101,7 +101,7 @@ public class TagDynamicIncludeUtil {
 		sb.append('#');
 		sb.append(tagPoint);
 		sb.append('#');
-		sb.append(tagKey);
+		sb.append(tagDynamicId);
 
 		return sb.toString();
 	}
@@ -127,11 +127,11 @@ public class TagDynamicIncludeUtil {
 
 								@Override
 								public void register(
-									String tagClassName, String tagKey,
+									String tagClassName, String tagDynamicId,
 									String tagPoint) {
 
 									String key = _getKey(
-										tagClassName, tagKey, tagPoint);
+										tagClassName, tagDynamicId, tagPoint);
 
 									emitter.emit(key);
 								}

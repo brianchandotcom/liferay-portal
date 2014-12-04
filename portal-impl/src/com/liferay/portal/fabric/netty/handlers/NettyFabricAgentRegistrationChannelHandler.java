@@ -17,11 +17,9 @@ package com.liferay.portal.fabric.netty.handlers;
 import com.liferay.portal.fabric.agent.FabricAgentRegistry;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentConfig;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentStub;
-import com.liferay.portal.fabric.netty.fileserver.FileResponse;
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileResponseChannelHandler;
 import com.liferay.portal.fabric.netty.repository.NettyRepository;
 import com.liferay.portal.fabric.repository.Repository;
-import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -114,16 +112,14 @@ public class NettyFabricAgentRegistrationChannelHandler
 
 		Files.createDirectories(repositoryPath);
 
-		AsyncBroker<Path, FileResponse> asyncBroker =
-			new AsyncBroker<Path, FileResponse>();
+		Repository<Channel> repository = new NettyRepository(
+			repositoryPath, _getFileTimeout);
 
 		ChannelPipeline channelPipeline = channel.pipeline();
 
 		channelPipeline.addLast(
-			new FileResponseChannelHandler(asyncBroker, _eventExecutorGroup));
-
-		Repository<Channel> repository = new NettyRepository(
-			repositoryPath, asyncBroker, _getFileTimeout);
+			new FileResponseChannelHandler(
+				repository.getAsyncBroker(), _eventExecutorGroup));
 
 		NettyFabricAgentStub nettyFabricAgentStub =
 			new NettyFabricAgentStub(

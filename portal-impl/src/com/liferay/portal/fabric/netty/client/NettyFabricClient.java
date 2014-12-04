@@ -19,7 +19,6 @@ import com.liferay.portal.fabric.local.agent.LocalFabricAgent;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentConfig;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectDecoder;
 import com.liferay.portal.fabric.netty.codec.serialization.AnnotatedObjectEncoder;
-import com.liferay.portal.fabric.netty.fileserver.FileResponse;
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileRequestChannelHandler;
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileResponseChannelHandler;
 import com.liferay.portal.fabric.netty.handlers.NettyChannelAttributes;
@@ -28,7 +27,6 @@ import com.liferay.portal.fabric.netty.repository.NettyRepository;
 import com.liferay.portal.fabric.netty.rpc.handlers.NettyRPCChannelHandler;
 import com.liferay.portal.fabric.repository.Repository;
 import com.liferay.portal.fabric.worker.FabricWorker;
-import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -262,19 +260,8 @@ public class NettyFabricClient implements FabricClient {
 
 			Files.createDirectories(repositoryPath);
 
-			AsyncBroker<Path, FileResponse> asyncBroker =
-				new AsyncBroker<Path, FileResponse>();
-
-			ChannelPipeline channelPipeline = channel.pipeline();
-
-			channelPipeline.addLast(
-				new FileResponseChannelHandler(
-					asyncBroker,
-					getEventExecutorGroup(
-						_channel, _fileServerEventExecutorGroupAttributeKey)));
-
 			repository = new NettyRepository(
-				repositoryPath, asyncBroker,
+				repositoryPath,
 				_nettyFabricClientConfig.getRepositoryGetFileTimeout());
 
 			Repository<Channel> previousRepository = attribute.setIfAbsent(
@@ -285,6 +272,14 @@ public class NettyFabricClient implements FabricClient {
 
 				repository = previousRepository;
 			}
+
+			ChannelPipeline channelPipeline = channel.pipeline();
+
+			channelPipeline.addLast(
+				new FileResponseChannelHandler(
+					repository.getAsyncBroker(),
+					getEventExecutorGroup(
+						_channel, _fileServerEventExecutorGroupAttributeKey)));
 		}
 
 		return repository;

@@ -32,7 +32,7 @@ for (FullNameField fullNameField: fullNameDefinition.getFields()) {
 
 <c:if test="<%= !existingFields.contains(fieldName) %>">
 	<c:choose>
-		<c:when test="<%= Validator.isNull(options) %>">
+		<c:when test="<%= ArrayUtil.isEmpty(options) %>">
 			<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" name="<%= fieldName %>">
 				<c:if test="<%= required %>">
 					<aui:validator name="required" />

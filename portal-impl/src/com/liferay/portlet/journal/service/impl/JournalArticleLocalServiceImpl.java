@@ -2317,7 +2317,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
-	public List<JournalArticle> getArticlesByDDMStructureKey(
+	public List<JournalArticle> getIndexableArticlesByDDMStructureKey(
 		String[] ddmStructureKeys) {
 
 		if (PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {

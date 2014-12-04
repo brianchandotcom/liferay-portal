@@ -14,6 +14,8 @@
 
 package com.liferay.portal.fabric.repository;
 
+import com.liferay.portal.fabric.netty.fileserver.FileResponse;
+import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 
@@ -28,6 +30,11 @@ public class MockRepository<T> implements Repository<T> {
 
 	@Override
 	public void dispose(boolean delete) {
+	}
+
+	@Override
+	public AsyncBroker<Path, FileResponse> getAsyncBroker() {
+		return _asyncBroker;
 	}
 
 	@Override
@@ -54,5 +61,8 @@ public class MockRepository<T> implements Repository<T> {
 	public Path getRepositoryPath() {
 		return null;
 	}
+
+	private final AsyncBroker<Path, FileResponse> _asyncBroker =
+		new AsyncBroker<Path, FileResponse>();
 
 }

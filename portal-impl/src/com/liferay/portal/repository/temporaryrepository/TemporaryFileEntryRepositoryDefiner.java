@@ -14,23 +14,17 @@
 
 package com.liferay.portal.repository.temporaryrepository;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.DocumentRepository;
-import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
-import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
 import com.liferay.portal.repository.capabilities.MinimalWorkflowCapability;
 import com.liferay.portal.repository.capabilities.TemporaryFileEntriesCapabilityImpl;
-import com.liferay.portal.repository.liferayrepository.LiferayWorkflowLocalRepositoryWrapper;
-import com.liferay.portal.repository.liferayrepository.LiferayWorkflowRepositoryWrapper;
 
 /**
  * @author Iván Zaera
@@ -65,11 +59,6 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	@Override
-	public void registerRepositoryEventListeners(
-		RepositoryEventRegistry repositoryEventRegistry) {
-	}
-
-	@Override
 	public void registerRepositoryFactory(
 		RepositoryFactoryRegistry repositoryFactoryRegistry) {
 
@@ -77,43 +66,9 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
-		_repositoryFactory = new TemporaryFileEntryRepositoryFactory(
-			repositoryFactory);
+		_repositoryFactory = repositoryFactory;
 	}
 
 	private RepositoryFactory _repositoryFactory;
-	private final WorkflowCapability _workflowCapability =
-		new MinimalWorkflowCapability();
-
-	private class TemporaryFileEntryRepositoryFactory
-		implements RepositoryFactory {
-
-		public TemporaryFileEntryRepositoryFactory(
-			RepositoryFactory repositoryFactory) {
-
-			_repositoryFactory = repositoryFactory;
-		}
-
-		@Override
-		public LocalRepository createLocalRepository(long repositoryId)
-			throws PortalException {
-
-			return new LiferayWorkflowLocalRepositoryWrapper(
-				_repositoryFactory.createLocalRepository(repositoryId),
-				_workflowCapability);
-		}
-
-		@Override
-		public Repository createRepository(long repositoryId)
-			throws PortalException {
-
-			return new LiferayWorkflowRepositoryWrapper(
-				_repositoryFactory.createRepository(repositoryId),
-				_workflowCapability);
-		}
-
-		private final RepositoryFactory _repositoryFactory;
-
-	}
 
 }

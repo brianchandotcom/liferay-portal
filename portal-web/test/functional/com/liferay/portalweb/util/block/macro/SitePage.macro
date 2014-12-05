@@ -552,8 +552,6 @@
 	</command>
 
 	<command name="viewLoadMoreResultsPages">
-		<var name="key_pageName" value="${pageName}" />
-
 		<if>
 			<equals arg1="${siteChildPages}" arg2="false" />
 			<then>

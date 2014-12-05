@@ -292,4 +292,159 @@
 			<var name="searchAssetType" value="Knowledge Base Article" />
 		</execute>
 	</command>
+
+	<command name="ViewKBArticleSuggestionsWorkflow" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignRegularRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#add">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
+
+		<execute macro="KBArticleSuggestion#gotoStatus">
+			<var name="status" value="New" />
+			<var name="suggestionCount" value="1" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#moveToStatusCP">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="status" value="In Progress" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#gotoStatus">
+			<var name="status" value="In Progress" />
+			<var name="suggestionCount" value="1" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#gotoArticleCP">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="KBArticle#goBackCP" />
+
+		<execute macro="KBArticleSuggestion#moveToStatusCP">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="status" value="Resolved" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#gotoStatus">
+			<var name="status" value="Resolved" />
+			<var name="suggestionCount" value="1" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#deleteCP">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
+
+		<execute macro="KBArticleSuggestion#gotoStatus">
+			<var name="status" value="New" />
+			<var name="suggestionCount" value="0" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#viewDefault">
+			<var name="status" value="New" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#gotoStatus">
+			<var name="status" value="In Progress" />
+			<var name="suggestionCount" value="0" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#viewDefault">
+			<var name="status" value="In Progress" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#gotoStatus">
+			<var name="status" value="Resolved" />
+			<var name="suggestionCount" value="0" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#viewDefault">
+			<var name="status" value="Resolved" />
+		</execute>
+	</command>
 </definition>

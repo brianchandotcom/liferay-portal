@@ -121,6 +121,18 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 
 		if ("/edit_configuration.ftl".equals(path)) {
 		}
+		else if ("factoryInstances".equals(viewType)) {
+			ConfigurationModel factoryModel = configurationHelper.getModel(
+				factoryPid);
+
+			renderRequest.setAttribute("factoryModel", factoryModel);
+
+			List<ConfigurationModel> models =
+				configurationHelper.getFactoryInstances(languageId, factoryPid);
+
+			renderRequest.setAttribute(
+				"modelIterator", new ConfigurationIterator(models));
+		}
 		else {
 			List<ConfigurationModel> models = configurationHelper.getModels();
 

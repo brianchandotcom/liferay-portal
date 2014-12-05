@@ -933,8 +933,8 @@ public class CapabilityRepository
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateFileEntry(long, long,
-	 *             String, String, String, String, String, boolean,
-	 *             InputStream, long, ServiceContext)}
+	 *             String, String, String, String, String, boolean, InputStream,
+	 *             long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

@@ -208,6 +208,10 @@ public class EhcacheConfigurationHelperUtil {
 		CacheConfiguration cacheConfiguration, boolean clusterAware,
 		boolean usingDefault) {
 
+		if (cacheConfiguration == null) {
+			return null;
+		}
+
 		String portalCacheName = cacheConfiguration.getName();
 
 		if (portalCacheName == null) {

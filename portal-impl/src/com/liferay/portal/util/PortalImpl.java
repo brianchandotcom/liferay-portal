@@ -4533,6 +4533,16 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public String getPortletTitle(
+		String portletId, ResourceBundle resourceBundle) {
+
+		return LanguageUtil.get(
+			resourceBundle,
+			JavaConstants.JAVAX_PORTLET_TITLE.concat(StringPool.PERIOD).concat(
+				portletId));
+	}
+
+	@Override
 	public String getPortletTitle(String portletId, String languageId) {
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 

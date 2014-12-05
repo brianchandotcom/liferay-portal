@@ -350,7 +350,7 @@
 
 		<action path="/blogs_admin/search" forward="portlet.blogs.search" />
 
-		<action path="/blogs/small_image_selector" type="com.liferay.portlet.blogs.action.SmallImageSelectorAction" />
+		<action path="/blogs_admin/small_image_selector" type="com.liferay.portlet.blogs.action.SmallImageSelectorAction" />
 
 		<action path="/blogs_admin/view" forward="portlet.blogs_admin.view" />
 

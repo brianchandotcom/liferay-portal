@@ -165,14 +165,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if (smallImage && Validator.isNotNull(smallImageFileName) &&
 			(smallImageInputStream != null)) {
 
-			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
+			FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
 				serviceContext.getScopeGroupId(), userId,
 				BlogsEntry.class.getName(), smallImageFileName,
 				smallImageInputStream,
 				MimeTypesUtil.getContentType(smallImageFileName));
 
 			smallImageImageSelector = new ImageSelector(
-				fileEntry.getFileEntryId(), smallImageURL, null);
+				tempFileEntry.getFileEntryId(), smallImageURL, null);
 		}
 
 		return addEntry(
@@ -1105,14 +1105,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			if (Validator.isNotNull(smallImageFileName) &&
 				(smallImageInputStream != null)) {
 
-				FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
+				FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
 					serviceContext.getScopeGroupId(), userId,
 					BlogsEntry.class.getName(), smallImageFileName,
 					smallImageInputStream,
 					MimeTypesUtil.getContentType(smallImageFileName));
 
 				smallImageImageSelector = new ImageSelector(
-					fileEntry.getFileEntryId(), smallImageURL, null);
+					tempFileEntry.getFileEntryId(), smallImageURL, null);
 			}
 		}
 		else {

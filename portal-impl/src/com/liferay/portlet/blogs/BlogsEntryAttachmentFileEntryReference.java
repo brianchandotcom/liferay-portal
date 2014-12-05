@@ -18,25 +18,26 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
-public class BlogsEntryFileEntryReference {
+public class BlogsEntryAttachmentFileEntryReference {
 
-	public BlogsEntryFileEntryReference(
-		long tempFileEntryId, FileEntry fileEntry) {
+	public BlogsEntryAttachmentFileEntryReference(
+		long tempAttachmentFileEntryId, FileEntry attachmentFileEntry) {
 
-		_tempFileEntryId = tempFileEntryId;
-		_fileEntry = fileEntry;
+		_tempAttachmentFileEntryId = tempAttachmentFileEntryId;
+		_attachmentFileEntry = attachmentFileEntry;
 	}
 
-	public FileEntry getFileEntry() {
-		return _fileEntry;
+	public FileEntry getAttachmentFileEntry() {
+		return _attachmentFileEntry;
 	}
 
-	public long getTempFileEntryId() {
-		return _tempFileEntryId;
+	public long getTempAttachmentFileEntryId() {
+		return _tempAttachmentFileEntryId;
 	}
 
-	private final FileEntry _fileEntry;
-	private final long _tempFileEntryId;
+	private final FileEntry _attachmentFileEntry;
+	private final long _tempAttachmentFileEntryId;
 
 }

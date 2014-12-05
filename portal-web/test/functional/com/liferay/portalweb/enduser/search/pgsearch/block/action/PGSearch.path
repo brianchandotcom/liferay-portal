@@ -30,8 +30,8 @@
 </tr>
 <!--The title attribute for the search comment changes depending on language.-->
 <tr>
-	<td>SEARCH_ICON</td>
-	<td>//input[@type='image' and @title='${key_searchIDName}'] | //a[contains(@class,'icon')]/i[@class='icon-search']</td>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'${key_searchIDName}')] | //button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 </tbody>

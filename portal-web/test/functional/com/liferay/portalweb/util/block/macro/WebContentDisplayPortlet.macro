@@ -272,6 +272,7 @@
 
 	<command name="selectWebContent">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Web Content Display" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

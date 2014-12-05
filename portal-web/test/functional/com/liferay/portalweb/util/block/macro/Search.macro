@@ -40,7 +40,7 @@
 				<execute action="PGSearch#keyPress" locator-key1="SEARCH_FIELD" value1="\RETURN" />
 			</then>
 			<else>
-				<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />
+				<execute action="PGSearch#click" locator-key1="SEARCH_BUTTON" />
 			</else>
 		</if>
 
@@ -83,7 +83,7 @@
 				<execute action="PGSearch#keyPress" locator-key1="SEARCH_FIELD" value1="\RETURN" />
 			</then>
 			<else>
-				<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />
+				<execute action="PGSearch#click" locator-key1="SEARCH_BUTTON" />
 			</else>
 		</if>
 	</command>

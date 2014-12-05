@@ -64,6 +64,8 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -130,6 +132,17 @@ public class FileEntryStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(FileEntry fileEntry) {
+		if (fileEntry.isInTrash()) {
+			try {
+				TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
+					DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+				return trashEntry.getTypeSettingsProperty("title");
+			}
+			catch (Exception e) {
+				return fileEntry.getTitle();
+			}
+		}
+
 		return fileEntry.getTitle();
 	}
 

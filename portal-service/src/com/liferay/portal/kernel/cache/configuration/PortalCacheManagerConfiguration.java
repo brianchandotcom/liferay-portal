@@ -15,10 +15,10 @@
 package com.liferay.portal.kernel.cache.configuration;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Tina Tian
@@ -41,13 +41,10 @@ public class PortalCacheManagerConfiguration {
 
 		_defaultPortalCacheConfiguration = defaultPortalCacheConfiguration;
 
-		if (portalCacheConfigurations == null) {
-			_portalCacheConfigurations = Collections.emptyMap();
-		}
-		else {
-			_portalCacheConfigurations =
-				new HashMap<String, PortalCacheConfiguration>();
+		_portalCacheConfigurations =
+			new ConcurrentHashMap<String, PortalCacheConfiguration>();
 
+		if (portalCacheConfigurations != null) {
 			for (PortalCacheConfiguration portalCacheConfiguration :
 					portalCacheConfigurations) {
 
@@ -76,6 +73,14 @@ public class PortalCacheManagerConfiguration {
 
 	public Set<String> getPortalCacheNames() {
 		return Collections.unmodifiableSet(_portalCacheConfigurations.keySet());
+	}
+
+	public PortalCacheConfiguration putPortalCacheConfiguration(
+		String portalCacheName,
+		PortalCacheConfiguration portalCacheConfiguration) {
+
+		return _portalCacheConfigurations.put(
+			portalCacheName, portalCacheConfiguration);
 	}
 
 	private final Set<CallbackConfiguration>

@@ -237,6 +237,13 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		for (String portalCacheName :
 				portalCacheManagerConfiguration.getPortalCacheNames()) {
 
+			PortalCacheConfiguration portalCacheConfiguration =
+				portalCacheManagerConfiguration.getPortalCacheConfiguration(
+					portalCacheName);
+
+			_portalCacheManagerConfiguration.putPortalCacheConfiguration(
+				portalCacheName, portalCacheConfiguration);
+
 			PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);
 
 			if (portalCache == null) {
@@ -245,10 +252,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 			portalCache.unregisterCacheListeners();
 
-			_initPortalCacheListeners(
-				portalCache,
-				portalCacheManagerConfiguration.getPortalCacheConfiguration(
-					portalCacheName));
+			_initPortalCacheListeners(portalCache, portalCacheConfiguration);
 		}
 	}
 

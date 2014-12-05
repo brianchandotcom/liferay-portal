@@ -41,12 +41,6 @@ public class PortletPreferencesFactoryImplTest {
 
 		htmlUtil.setHtml(new HtmlImpl());
 
-		PortletPreferencesFactoryUtil portletPreferencesFactoryUtil =
-			new PortletPreferencesFactoryUtil();
-
-		portletPreferencesFactoryUtil.setPortletPreferencesFactory(
-			new PortletPreferencesFactoryImpl());
-
 		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
 
 		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();
@@ -56,6 +50,12 @@ public class PortletPreferencesFactoryImplTest {
 				PortletPreferencesFactoryImplTest.class.getName()));
 
 		singleVMPoolUtil.setSingleVMPool(singleVMPoolImpl);
+
+		PortletPreferencesFactoryUtil portletPreferencesFactoryUtil =
+			new PortletPreferencesFactoryUtil();
+
+		portletPreferencesFactoryUtil.setPortletPreferencesFactory(
+			new PortletPreferencesFactoryImpl());
 	}
 
 	@Test

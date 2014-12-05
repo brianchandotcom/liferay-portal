@@ -92,6 +92,21 @@
 						method="post"
 						url="${editURL}"
 					/>
+
+					<#if model.getConfiguration()??>
+						<@portlet["actionURL"] name="deleteConfiguration" varImpl="deleteConfigActionURL">
+							<@portlet["param"] name="factoryPid" value="${model.getFactoryPid()}" />
+							<@portlet["param"] name="pid" value="${model.getID()}" />
+						</@>
+
+						<@liferay_ui["icon"]
+							image="delete"
+							label=true
+							message="delete"
+							method="post"
+							url="${deleteConfigActionURL}"
+						/>
+					</#if>
 				</#if>
 			</@>
 		</@>

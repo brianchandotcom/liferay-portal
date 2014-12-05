@@ -3372,6 +3372,7 @@
 		<exception>EmailAddress</exception>
 		<exception>ExpiredLock</exception>
 		<exception>GroupFriendlyURL</exception>
+		<exception>GroupInheritContent</exception>
 		<exception>GroupName</exception>
 		<exception>GroupParent</exception>
 		<exception>ImageType</exception>

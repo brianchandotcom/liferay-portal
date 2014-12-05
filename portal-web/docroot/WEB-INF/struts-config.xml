@@ -669,8 +669,6 @@
 
 		<!-- Group Pages -->
 
-		<action path="/group_pages/add_group" forward="portlet.layouts_admin.add_group" />
-
 		<action path="/group_pages/add_layout" forward="portlet.layouts_admin.add_layout" />
 
 		<action path="/group_pages/confirmation" type="com.liferay.portlet.layoutsadmin.action.ConfirmationExportImportConfigurationAction">
@@ -967,8 +965,6 @@
 		<action path="/layout_set_prototypes/view" forward="portlet.layout_set_prototypes.view" />
 
 		<!-- Layouts Admin -->
-
-		<action path="/layouts_admin/add_group" forward="portlet.layouts_admin.add_group" />
 
 		<action path="/layouts_admin/add_layout" forward="portlet.layouts_admin.add_layout" />
 

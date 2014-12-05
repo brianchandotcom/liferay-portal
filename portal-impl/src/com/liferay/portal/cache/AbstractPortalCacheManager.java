@@ -86,7 +86,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	public void destroy() {
 		PortalCacheProvider.unregisterPortalCacheManager(getName());
 
-		_portalCaches.clear();
+		portalCaches.clear();
 
 		doDestroy();
 	}
@@ -100,7 +100,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	public PortalCache<K, V> getCache(String name, boolean blocking)
 		throws PortalCacheException {
 
-		PortalCache<K, V> portalCache = _portalCaches.get(name);
+		PortalCache<K, V> portalCache = portalCaches.get(name);
 
 		if (portalCache != null) {
 			return portalCache;
@@ -130,7 +130,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			portalCache = new BlockingPortalCache<K, V>(portalCache);
 		}
 
-		PortalCache<K, V> previousPortalCache = _portalCaches.putIfAbsent(
+		PortalCache<K, V> previousPortalCache = portalCaches.putIfAbsent(
 			name, portalCache);
 
 		if (previousPortalCache != null) {
@@ -179,7 +179,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void removeCache(String name) {
-		_portalCaches.remove(name);
+		portalCaches.remove(name);
 
 		doRemoveCache(name);
 	}
@@ -244,7 +244,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			_portalCacheManagerConfiguration.putPortalCacheConfiguration(
 				portalCacheName, portalCacheConfiguration);
 
-			PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);
+			PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);
 
 			if (portalCache == null) {
 				continue;
@@ -259,6 +259,8 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	protected final AggregatedCacheManagerListener
 		aggregatedCacheManagerListener = new AggregatedCacheManagerListener();
 	protected boolean clusterAware;
+	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
+		new ConcurrentHashMap<String, PortalCache<K, V>>();
 
 	private void _initPortalCacheListeners(
 		PortalCache<K, V> portalCache,
@@ -290,7 +292,5 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	private boolean _mpiOnly;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
-	private final ConcurrentMap<String, PortalCache<K, V>> _portalCaches =
-		new ConcurrentHashMap<String, PortalCache<K, V>>();
 
 }

@@ -146,6 +146,10 @@ public class EhcachePortalCache<K extends Serializable, V>
 		return ehcache.replace(oldElement, newElement);
 	}
 
-	protected Ehcache ehcache;
+	protected void reconfigEhcache(Ehcache ehcache) {
+		this.ehcache = ehcache;
+	}
+
+	protected volatile Ehcache ehcache;
 
 }

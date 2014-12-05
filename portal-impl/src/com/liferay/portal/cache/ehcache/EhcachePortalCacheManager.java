@@ -16,6 +16,7 @@ package com.liferay.portal.cache.ehcache;
 
 import com.liferay.portal.cache.AbstractPortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -218,8 +219,42 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				Cache cache = new Cache(cacheConfiguration);
 
 				_cacheManager.addCache(cache);
+
+				PortalCache<K, V> portalCache = portalCaches.get(
+					portalCacheName);
+
+				if (portalCache != null) {
+					EhcachePortalCache<K, V> ehcachePortalCache =
+						_getEhcachePortalCache(portalCache);
+
+					if (ehcachePortalCache != null) {
+						ehcachePortalCache.reconfigEhcache(cache);
+					}
+					else {
+						_log.error(
+							"Unable to reconfig cache with name " +
+								portalCacheName);
+					}
+				}
 			}
 		}
+	}
+
+	private EhcachePortalCache<K, V> _getEhcachePortalCache(
+		PortalCache<K, V> portalCache) {
+
+		while (portalCache instanceof PortalCacheWrapper) {
+			PortalCacheWrapper<K, V> portalCacheWrapper =
+				(PortalCacheWrapper<K, V>)portalCache;
+
+			portalCache = portalCacheWrapper.getWrappedPortalCache();
+		}
+
+		if (portalCache instanceof EhcachePortalCache) {
+			return (EhcachePortalCache<K, V>)portalCache;
+		}
+
+		return null;
 	}
 
 	private static final String _DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE =

@@ -75,9 +75,7 @@ public class WabBundleProcessor implements ServletContextListener {
 
 		_bundleClassLoader = bundleWiring.getClassLoader();
 
-		String contextName = _contextPath.substring(1);
-
-		_contextName = contextName.replaceAll("[^a-zA-Z0-9]", "");
+		_contextName = _contextPath.substring(1);
 
 		_bundleContext = _bundle.getBundleContext();
 		_webXMLDefinitionLoader = new WebXMLDefinitionLoader(

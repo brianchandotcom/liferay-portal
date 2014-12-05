@@ -13,38 +13,40 @@
 	.drop-here-info {
 		color: #32A8E6;
 		font-size: 25px;
+
 		@include opacity(0);
 	}
 
 	.glyphicon-ok {
 		background: #FFF;
-		border-radius: 30px;
 		left: 50%;
-		margin: 0 auto;
+
 		@include opacity(0);
+
 		padding: 20px;
 		position: absolute;
 		top: 50%;
-		@include transform(translate(-10px, 0));
-		@include transform(translate(0, -50%));
+
+		@include transform(translate(-50%, -50%));
 	}
 
 	.progress-wrapper {
+		color: #2B4259;
 		display: none;
 		left: 50%;
-		margin-left: -15%;
+		max-width: 450px;
 		position: absolute;
 		top: 50%;
-		@include transform(translate(0, -50%));
-		width: 30%;
+
+		@include transform(translate(-50%, -50%));
+
+		width: 50%;
 
 		button {
 			margin-top: 20px;
 		}
 
 		p {
-			color: #2B4259;
-			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 			font-size: 18px;
 			margin: 0;
 			text-align: left;
@@ -56,10 +58,11 @@
 
 		.progressbar {
 			background: #B0B4BB;
-			border-radius: 0;
 			height: 6px;
 			margin: 5px auto;
+
 			@include opacity(0.7);
+
 			width: 100%;
 		}
 	}

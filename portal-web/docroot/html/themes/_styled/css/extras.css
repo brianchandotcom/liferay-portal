@@ -579,3 +579,13 @@ body:first-of-type {
 		}
 	}
 }
+
+.taglib-image-selector {
+	.glyphicon-ok {
+		@include border-radius(30px);
+	}
+
+	.progress-wrapper .progressbar {
+		@include border-radius(0);
+	}
+}

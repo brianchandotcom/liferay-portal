@@ -255,15 +255,15 @@
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG" />
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
@@ -304,15 +304,15 @@
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG" />
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
@@ -353,15 +353,15 @@
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG" />
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
@@ -404,15 +404,15 @@
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG" />
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
@@ -453,15 +453,15 @@
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG" />
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
@@ -502,15 +502,15 @@
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG" />
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
@@ -557,15 +557,15 @@
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG" />
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
@@ -626,15 +626,15 @@
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG" />
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
@@ -683,15 +683,15 @@
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG" />
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
@@ -738,15 +738,15 @@
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG" />
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebFormPortlet#deleteField">
+		<execute macro="WebFormPortlet#deleteEditableField">
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
@@ -792,15 +792,15 @@
 
 		<execute action="PGWebformConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
-		<execute macro="WebFormPortlet#viewField">
+		<execute macro="WebFormPortlet#viewEditableField">
 			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#viewField">
+		<execute macro="WebFormPortlet#viewEditableField">
 			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebFormPortlet#viewField">
+		<execute macro="WebFormPortlet#viewEditableField">
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 
@@ -838,15 +838,27 @@
 		<execute action="PGWebformConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_FIELDS_INFO_MESSAGE" value1="There is existing form data. Please export and delete it before making changes to the fields." />
 
-		<execute macro="WebFormPortlet#viewFieldNotPresent">
+		<execute macro="WebFormPortlet#viewEditableFieldNotPresent">
 			<var name="wfFieldName" value="Name" />
 		</execute>
 
-		<execute macro="WebFormPortlet#viewFieldNotPresent">
+		<execute macro="WebFormPortlet#viewSubmittedField">
+			<var name="wfFieldName" value="Name" />
+		</execute>
+
+		<execute macro="WebFormPortlet#viewEditableFieldNotPresent">
 			<var name="wfFieldName" value="Rating" />
 		</execute>
 
-		<execute macro="WebFormPortlet#viewFieldNotPresent">
+		<execute macro="WebFormPortlet#viewSubmittedField">
+			<var name="wfFieldName" value="Rating" />
+		</execute>
+
+		<execute macro="WebFormPortlet#viewEditableFieldNotPresent">
+			<var name="wfFieldName" value="Comments" />
+		</execute>
+
+		<execute macro="WebFormPortlet#viewSubmittedField">
 			<var name="wfFieldName" value="Comments" />
 		</execute>
 

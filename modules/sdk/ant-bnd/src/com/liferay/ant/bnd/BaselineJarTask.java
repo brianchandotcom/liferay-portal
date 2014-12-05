@@ -424,10 +424,13 @@ public class BaselineJarTask extends BaseBndTask {
 		String sourceDirName = project.getProperty("plugin.source.dir");
 
 		if (sourceDirName == null) {
-			sourceDirName = "src";
+
+			// We are in the portal
+
+			sourceDirName = project.getBaseDir() + "/src";
 		}
 
-		File sourceDir = new File(project.getBaseDir(), sourceDirName);
+		File sourceDir = new File(sourceDirName);
 
 		if (!sourceDir.exists()) {
 			return;

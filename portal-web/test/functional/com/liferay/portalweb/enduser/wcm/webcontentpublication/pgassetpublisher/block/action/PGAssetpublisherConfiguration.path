@@ -231,7 +231,7 @@
 </tr>
 <tr>
 	<td>FILTER_CATEGORIZATION_SELECT</td>
-	<td>//select[contains(@class,'select asset')]</td>
+	<td>//select[contains(@class,'asset-query')]</td>
 	<td></td>
 </tr>
 <tr>

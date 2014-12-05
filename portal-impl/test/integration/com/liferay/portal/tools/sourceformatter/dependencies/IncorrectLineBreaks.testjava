@@ -70,6 +70,16 @@ public class IncorrectLineBreaks {
 			testStringNames);
 	}
 
+	public void method4() {
+		for (String number : _NUMBERS) {
+			if (number !=
+					null) {
+
+				return;
+			}
+		}
+	}
+
 	public void methodWithASlightlyLongerName(
 		String test1, String test2, String[] testStringArray) throws Exception {
 
@@ -79,5 +89,11 @@ public class IncorrectLineBreaks {
 			continue;
 		}
 	}
+
+	private static final String _NUMBERS =
+		new String[] {
+			"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
+			"Nine", "Ten"
+		}; 
 
 }

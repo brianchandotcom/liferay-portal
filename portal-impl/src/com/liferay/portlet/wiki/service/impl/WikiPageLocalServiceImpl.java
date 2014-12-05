@@ -2817,15 +2817,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			int status = versionPageOldStatus;
 
-			if (versionPageOldStatus ==
-					WorkflowConstants.STATUS_PENDING) {
-
+			if (versionPageOldStatus == WorkflowConstants.STATUS_PENDING) {
 				status = WorkflowConstants.STATUS_DRAFT;
 			}
 
-			if (versionPageOldStatus !=
-					WorkflowConstants.STATUS_APPROVED) {
-
+			if (versionPageOldStatus != WorkflowConstants.STATUS_APPROVED) {
 				trashVersionLocalService.addTrashVersion(
 					trashEntryId, WikiPage.class.getName(),
 					versionPage.getPageId(), status, null);

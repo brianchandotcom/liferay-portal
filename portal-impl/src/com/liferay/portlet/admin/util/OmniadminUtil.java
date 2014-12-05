@@ -79,9 +79,7 @@ public class OmniadminUtil {
 				return false;
 			}
 
-			if (user.getCompanyId() !=
-					PortalInstances.getDefaultCompanyId()) {
-
+			if (user.getCompanyId() != PortalInstances.getDefaultCompanyId()) {
 				return false;
 			}
 

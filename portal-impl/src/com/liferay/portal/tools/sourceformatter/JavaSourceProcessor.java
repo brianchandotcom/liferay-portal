@@ -2039,16 +2039,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					previousLine, null, tabDiff, false, true, false);
 			}
 
-			if (previousLine.endsWith(StringPool.EQUAL) &&
-				line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+			if (previousLine.endsWith(StringPool.EQUAL)) {
+				if (line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+					processErrorMessage(
+						fileName, "line break: " + fileName + " " + lineCount);
+				}
+				else if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+					String nextLine = getNextLine(content, lineCount);
 
-				String nextLine = getNextLine(content, lineCount);
-
-				if (nextLine.endsWith(StringPool.SEMICOLON)) {
-					return getCombinedLinesContent(
-						content, fileName, line, trimmedLine, lineLength,
-						lineCount, previousLine, null, tabDiff, false, true,
-						true);
+					if (nextLine.endsWith(StringPool.SEMICOLON)) {
+						return getCombinedLinesContent(
+							content, fileName, line, trimmedLine, lineLength,
+							lineCount, previousLine, null, tabDiff, false, true,
+							true);
+					}
 				}
 			}
 		}

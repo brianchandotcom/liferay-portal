@@ -168,33 +168,31 @@ public interface UsersAdmin {
 			};
 
 	public static final Accessor<UserGroupRole, String>
-		USER_GROUP_ROLE_TITLE_ACCESSOR =
-			new Accessor<UserGroupRole, String>() {
+		USER_GROUP_ROLE_TITLE_ACCESSOR = new Accessor<UserGroupRole, String>() {
 
-				@Override
-				public String get(UserGroupRole userGroupRole) {
-					Role role = RoleLocalServiceUtil.fetchRole(
-						userGroupRole.getRoleId());
+			@Override
+			public String get(UserGroupRole userGroupRole) {
+				Role role = RoleLocalServiceUtil.fetchRole(
+					userGroupRole.getRoleId());
 
-					if (role == null) {
-						return StringPool.BLANK;
-					}
-
-					return role.getTitle(
-						LocaleThreadLocal.getThemeDisplayLocale());
+				if (role == null) {
+					return StringPool.BLANK;
 				}
 
-				@Override
-				public Class<String> getAttributeClass() {
-					return String.class;
-				}
+				return role.getTitle(LocaleThreadLocal.getThemeDisplayLocale());
+			}
 
-				@Override
-				public Class<UserGroupRole> getTypeClass() {
-					return UserGroupRole.class;
-				}
+			@Override
+			public Class<String> getAttributeClass() {
+				return String.class;
+			}
 
-			};
+			@Override
+			public Class<UserGroupRole> getTypeClass() {
+				return UserGroupRole.class;
+			}
+
+		};
 
 	public void addPortletBreadcrumbEntries(
 			Organization organization, HttpServletRequest request,

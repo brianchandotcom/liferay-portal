@@ -114,11 +114,10 @@ public class AssetEntryQueryTest {
 
 		_travelAssetCategoryId = travelCategory.getCategoryId();
 
-		_assetCategoryIds1 =
-			new long[] {
-				_healthAssetCategoryId, _sportAssetCategoryId,
-				_travelAssetCategoryId
-			};
+		_assetCategoryIds1 = new long[] {
+			_healthAssetCategoryId, _sportAssetCategoryId,
+			_travelAssetCategoryId
+		};
 		_assetCategoryIds2 = new long[] {
 			_fashionAssetCategoryId, _foodAssetCategoryId,
 			_healthAssetCategoryId, _sportAssetCategoryId

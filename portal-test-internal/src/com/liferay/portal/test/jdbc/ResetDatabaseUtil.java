@@ -92,9 +92,7 @@ public class ResetDatabaseUtil {
 				continue;
 			}
 
-			if (_modifiedTables.putIfAbsent(tableName, table) ==
-					null) {
-
+			if (_modifiedTables.putIfAbsent(tableName, table) == null) {
 				table.generateTempFile(connection);
 			}
 		}

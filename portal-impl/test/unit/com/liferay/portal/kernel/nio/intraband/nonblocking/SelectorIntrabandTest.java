@@ -1080,8 +1080,8 @@ public class SelectorIntrabandTest {
 		Pipe writePipe = Pipe.open();
 
 		try (GatheringByteChannel gatheringByteChannel = writePipe.sink();
-			ScatteringByteChannel scatteringByteChannel =
-				readPipe.source()) {
+				ScatteringByteChannel scatteringByteChannel =
+					readPipe.source()) {
 
 			SelectionKeyRegistrationReference registrationReference =
 				(SelectionKeyRegistrationReference)

@@ -70,8 +70,7 @@ public class JournalArticleAssetRenderer
 
 	public static long getClassPK(JournalArticle article) {
 		if ((article.isDraft() || article.isPending()) &&
-			(article.getVersion() !=
-				JournalArticleConstants.VERSION_DEFAULT)) {
+			(article.getVersion() != JournalArticleConstants.VERSION_DEFAULT)) {
 
 			return article.getPrimaryKey();
 		}

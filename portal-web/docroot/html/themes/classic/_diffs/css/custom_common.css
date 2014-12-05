@@ -236,6 +236,22 @@ select:focus {
 	}
 }
 
+/* ---------- Image selector ---------- */
+
+.taglib-image-selector {
+	&.drop-active {
+		outline-color: #32A8E6;
+	}
+
+	.drop-here-info {
+		color: #32A8E6;
+	}
+
+	.progress-wrapper {
+		color: #2B4259;
+	}
+}
+
 /* ---------- Dockbar ---------- */
 
 .dockbar-split {

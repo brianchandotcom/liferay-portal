@@ -137,8 +137,8 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, see {@link #addFolder(long, long, String,
-	 *             String, ServiceContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link #addFolder(long, long,
+	 *             String, String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -706,8 +706,8 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, see {@link #moveFileEntry(long, long, long,
-	 *             ServiceContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link #moveFileEntry(long, long,
+	 *             long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -734,7 +734,7 @@ public class BaseRepositoryProxyBean
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, see {@link #moveFolder(long, long, long,
+	 * @deprecated As of 7.0.0, replaced by {@link #moveFolder(long, long, long,
 	 *             ServiceContext)}
 	 */
 	@Deprecated

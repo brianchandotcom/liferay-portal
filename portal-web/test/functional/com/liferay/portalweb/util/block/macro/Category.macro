@@ -219,8 +219,6 @@
 			</then>
 		</if>
 
-		<var name="key_pathNumber" value="${pathNumber}" />
-
 		<execute action="CPCategoriesEdit#type" locator-key1="PROPERTIES_KEY_FIELD_1" value1="${propertiesKeyFieldEdit}" />
 		<execute action="CPCategoriesEdit#type" locator-key1="PROPERTIES_VALUE_FIELD_1" value1="${propertiesValueFieldEdit}" />
 		<execute action="CPCategoriesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />

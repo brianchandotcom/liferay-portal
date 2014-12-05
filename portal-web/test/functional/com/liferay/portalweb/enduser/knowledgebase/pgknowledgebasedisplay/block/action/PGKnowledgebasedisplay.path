@@ -50,48 +50,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_RSS</td>
-	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'RSS')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_SUBSCRIBE</td>
-	<td>//div[@class='kb-article-container']//a[contains(.,'Subscribe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_UNSUBSCRIBE</td>
-	<td>//div[@class='kb-article-container']//div//a[contains(.,'Unsubscribe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_HISTORY</td>
-	<td>//div[@class='kb-article-container']//a[contains(.,'History')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_PRINT</td>
-	<td>//div[@class='kb-article-container']//a[contains(.,'Print')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_ACTIONS_BUTTON</td>
-	<td>//div[@class='kb-article-container']//div//span[contains(.,'Actions')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ARTICLE_CONTENT</td>
 	<td>//div[@class='kb-article-container']//div[@class='kb-article-body']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_PREVIOUS</td>
-	<td>//div[@class='kb-article-container']//span[@class='kb-article-previous']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_NEXT</td>
-	<td>//div[@class='kb-article-container']//span[@class='kb-article-next']/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -110,13 +70,43 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_SUGGESTIONS</td>
-	<td>//div[@class='kb-article-container']//div/a[contains(.,'Do you have any suggestions?')]</td>
+	<td>ARTICLE_RSS</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_SUGGESTIONS_VIEW</td>
-	<td>//div[@class='kb-article-container']//div[@class='kb-article-feedback-actions']/a[2]</td>
+	<td>ARTICLE_SUBSCRIBE</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_UNSUBSCRIBE</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_HISTORY</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_PRINT</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_ACTIONS_BUTTON</td>
+	<td>//div[@class='kb-article-container']//div//span[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_PREVIOUS</td>
+	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-previous']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NEXT</td>
+	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-next']</td>
 	<td></td>
 </tr>
 <tr>
@@ -199,8 +189,18 @@
 </tr>
 <!--SUGGESTION-->
 <tr>
+	<td>SUGGESTION_ADD_LINK</td>
+	<td>//div[@class='kb-article-suggestion-actions']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_VIEW_LINK</td>
+	<td>//div[@class='kb-article-suggestion-actions']/a[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUGGESTION_BODY</td>
-	<td>//textarea[contains(@id,'_knowledgebaseportlet_content') and contains(@class,'lfr-textarea')]</td>
+	<td>//textarea[contains(@id,'knowledgebaseportlet_content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -213,19 +213,25 @@
 	<td>//button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
+<!--SUGGESTION_NAVIGATION-->
+<tr>
+	<td>SUGGESTION_NAVIGATION_BAR</td>
+	<td>//ul[contains(@id,'knowledgebaseportlet') and contains(@class,'navbar')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>SUGGESTION_NAVIGATION_NEW</td>
-	<td>//ul[contains(@class,'lfr-nav') and contains(@class,'nav')]//a[contains(.,'New')]</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(.,'New')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUGGESTION_NAVIGATION_IN_PROGRESS</td>
-	<td>//ul[contains(@class,'lfr-nav') and contains(@class,'nav')]//a[contains(.,'New')]</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(.,'In Progress')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUGGESTION_NAVIGATION_RESOLVED</td>
-	<td>//ul[contains(@class,'lfr-nav') and contains(@class,'nav')]//a[contains(.,'New')]</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(.,'Resolved')]</td>
 	<td></td>
 </tr>
 </tbody>

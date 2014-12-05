@@ -19,13 +19,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BACK_TO_HEADER</td>
-	<td>//h3[@class='header-title']/span</td>
+	<td>BACK_TO_ICON</td>
+	<td>//span[@class='header-back-to']/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TITLE</td>
-	<td>//h1[@class='kb-title']</td>
+	<td>HEADER_TITLE</td>
+	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
 <tr>

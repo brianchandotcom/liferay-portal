@@ -101,6 +101,37 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 			portletApp.getServletContextName(), portletApp.getServletContext());
 	}
 
+	@Override
+	protected void include(
+			String path, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String languageId = themeDisplay.getLanguageId();
+
+		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
+		String pid = ParamUtil.getString(renderRequest, "pid", factoryPid);
+		String viewType = ParamUtil.getString(renderRequest, "viewType");
+
+		ConfigurationHelper configurationHelper = new ConfigurationHelper(
+			_bundleContext, _configurationAdmin, _metaTypeService, languageId);
+
+		if ("/edit_configuration.ftl".equals(path)) {
+		}
+		else {
+			List<ConfigurationModel> models = configurationHelper.getModels();
+
+			renderRequest.setAttribute(
+				"modelIterator", new ConfigurationIterator(models));
+		}
+
+		include(
+			path, renderRequest, renderResponse, PortletRequest.RENDER_PHASE);
+	}
+
 	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {

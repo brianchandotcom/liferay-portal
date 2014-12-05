@@ -32,6 +32,8 @@ import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,10 +67,18 @@ import javax.naming.ldap.PagedResultsResponseControl;
  * @author Wesley Gong
  * @author Marcellus Tavares
  * @author Hugo Huijser
+ * @author Edward Han
  */
-public class PortalLDAPUtil {
+public class DefaultPortalLDAP implements PortalLDAP {
 
-	public static LdapContext getContext(long ldapServerId, long companyId)
+	public DefaultPortalLDAP() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerService(PortalLDAP.class, this);
+	}
+
+	@Override
+	public LdapContext getContext(long ldapServerId, long companyId)
 		throws Exception {
 
 		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
@@ -83,7 +93,8 @@ public class PortalLDAPUtil {
 		return getContext(companyId, baseProviderURL, pricipal, credentials);
 	}
 
-	public static LdapContext getContext(
+	@Override
+	public LdapContext getContext(
 			long companyId, String providerURL, String principal,
 			String credentials)
 		throws Exception {
@@ -126,8 +137,8 @@ public class PortalLDAPUtil {
 		return ldapContext;
 	}
 
-	public static Binding getGroup(
-			long ldapServerId, long companyId, String groupName)
+	@Override
+	public Binding getGroup(long ldapServerId, long companyId, String groupName)
 		throws Exception {
 
 		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
@@ -197,7 +208,8 @@ public class PortalLDAPUtil {
 		}
 	}
 
-	public static Attributes getGroupAttributes(
+	@Override
+	public Attributes getGroupAttributes(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			String fullDistinguishedName)
 		throws Exception {
@@ -206,7 +218,8 @@ public class PortalLDAPUtil {
 			ldapServerId, companyId, ldapContext, fullDistinguishedName, false);
 	}
 
-	public static Attributes getGroupAttributes(
+	@Override
+	public Attributes getGroupAttributes(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			String fullDistinguishedName, boolean includeReferenceAttributes)
 		throws Exception {
@@ -243,7 +256,8 @@ public class PortalLDAPUtil {
 		return attributes;
 	}
 
-	public static byte[] getGroups(
+	@Override
+	public byte[] getGroups(
 			long companyId, LdapContext ldapContext, byte[] cookie,
 			int maxResults, String baseDN, String groupFilter,
 			List<SearchResult> searchResults)
@@ -254,7 +268,8 @@ public class PortalLDAPUtil {
 			null, searchResults);
 	}
 
-	public static byte[] getGroups(
+	@Override
+	public byte[] getGroups(
 			long companyId, LdapContext ldapContext, byte[] cookie,
 			int maxResults, String baseDN, String groupFilter,
 			String[] attributeIds, List<SearchResult> searchResults)
@@ -265,7 +280,8 @@ public class PortalLDAPUtil {
 			attributeIds, searchResults);
 	}
 
-	public static byte[] getGroups(
+	@Override
+	public byte[] getGroups(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			byte[] cookie, int maxResults, List<SearchResult> searchResults)
 		throws Exception {
@@ -282,7 +298,8 @@ public class PortalLDAPUtil {
 			searchResults);
 	}
 
-	public static byte[] getGroups(
+	@Override
+	public byte[] getGroups(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			byte[] cookie, int maxResults, String[] attributeIds,
 			List<SearchResult> searchResults)
@@ -300,7 +317,8 @@ public class PortalLDAPUtil {
 			attributeIds, searchResults);
 	}
 
-	public static String getGroupsDN(long ldapServerId, long companyId)
+	@Override
+	public String getGroupsDN(long ldapServerId, long companyId)
 		throws Exception {
 
 		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
@@ -309,7 +327,8 @@ public class PortalLDAPUtil {
 			companyId, PropsKeys.LDAP_GROUPS_DN + postfix);
 	}
 
-	public static long getLdapServerId(
+	@Override
+	public long getLdapServerId(
 			long companyId, String screenName, String emailAddress)
 		throws Exception {
 
@@ -358,7 +377,8 @@ public class PortalLDAPUtil {
 		return ldapServerIds[0];
 	}
 
-	public static Attribute getMultivaluedAttribute(
+	@Override
+	public Attribute getMultivaluedAttribute(
 			long companyId, LdapContext ldapContext, String baseDN,
 			String filter, Attribute attribute)
 		throws Exception {
@@ -422,7 +442,8 @@ public class PortalLDAPUtil {
 		return attribute;
 	}
 
-	public static String getNameInNamespace(
+	@Override
+	public String getNameInNamespace(
 			long ldapServerId, long companyId, Binding binding)
 		throws Exception {
 
@@ -447,7 +468,8 @@ public class PortalLDAPUtil {
 		}
 	}
 
-	public static Binding getUser(
+	@Override
+	public Binding getUser(
 			long ldapServerId, long companyId, String screenName,
 			String emailAddress)
 		throws Exception {
@@ -456,7 +478,8 @@ public class PortalLDAPUtil {
 			ldapServerId, companyId, screenName, emailAddress, false);
 	}
 
-	public static Binding getUser(
+	@Override
+	public Binding getUser(
 			long ldapServerId, long companyId, String screenName,
 			String emailAddress, boolean checkOriginalEmail)
 		throws Exception {
@@ -541,7 +564,7 @@ public class PortalLDAPUtil {
 				if (Validator.isNotNull(originalEmailAddress) &&
 					!emailAddress.equals(originalEmailAddress)) {
 
-					return PortalLDAPUtil.getUser(
+					return getUser(
 						ldapServerId, companyId, screenName,
 						originalEmailAddress, false);
 				}
@@ -560,7 +583,8 @@ public class PortalLDAPUtil {
 		}
 	}
 
-	public static Attributes getUserAttributes(
+	@Override
+	public Attributes getUserAttributes(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			String fullDistinguishedName)
 		throws Exception {
@@ -602,7 +626,8 @@ public class PortalLDAPUtil {
 		return attributes;
 	}
 
-	public static byte[] getUsers(
+	@Override
+	public byte[] getUsers(
 			long companyId, LdapContext ldapContext, byte[] cookie,
 			int maxResults, String baseDN, String userFilter,
 			List<SearchResult> searchResults)
@@ -613,7 +638,8 @@ public class PortalLDAPUtil {
 			null, searchResults);
 	}
 
-	public static byte[] getUsers(
+	@Override
+	public byte[] getUsers(
 			long companyId, LdapContext ldapContext, byte[] cookie,
 			int maxResults, String baseDN, String userFilter,
 			String[] attributeIds, List<SearchResult> searchResults)
@@ -624,7 +650,8 @@ public class PortalLDAPUtil {
 			attributeIds, searchResults);
 	}
 
-	public static byte[] getUsers(
+	@Override
+	public byte[] getUsers(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			byte[] cookie, int maxResults, List<SearchResult> searchResults)
 		throws Exception {
@@ -641,7 +668,8 @@ public class PortalLDAPUtil {
 			searchResults);
 	}
 
-	public static byte[] getUsers(
+	@Override
+	public byte[] getUsers(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			byte[] cookie, int maxResults, String[] attributeIds,
 			List<SearchResult> searchResults)
@@ -659,7 +687,8 @@ public class PortalLDAPUtil {
 			attributeIds, searchResults);
 	}
 
-	public static String getUsersDN(long ldapServerId, long companyId)
+	@Override
+	public String getUsersDN(long ldapServerId, long companyId)
 		throws Exception {
 
 		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
@@ -668,7 +697,8 @@ public class PortalLDAPUtil {
 			companyId, PropsKeys.LDAP_USERS_DN + postfix);
 	}
 
-	public static boolean hasUser(
+	@Override
+	public boolean hasUser(
 			long ldapServerId, long companyId, String screenName,
 			String emailAddress)
 		throws Exception {
@@ -683,7 +713,8 @@ public class PortalLDAPUtil {
 		}
 	}
 
-	public static boolean isGroupMember(
+	@Override
+	public boolean isGroupMember(
 			long ldapServerId, long companyId, String groupDN, String userDN)
 		throws Exception {
 
@@ -738,7 +769,8 @@ public class PortalLDAPUtil {
 		return false;
 	}
 
-	public static boolean isUserGroupMember(
+	@Override
+	public boolean isUserGroupMember(
 			long ldapServerId, long companyId, String groupDN, String userDN)
 		throws Exception {
 
@@ -792,7 +824,8 @@ public class PortalLDAPUtil {
 		return false;
 	}
 
-	public static byte[] searchLDAP(
+	@Override
+	public byte[] searchLDAP(
 			long companyId, LdapContext ldapContext, byte[] cookie,
 			int maxResults, String baseDN, String filter, String[] attributeIds,
 			List<SearchResult> searchResults)
@@ -913,7 +946,7 @@ public class PortalLDAPUtil {
 		return attributes;
 	}
 
-	private static byte[] _getCookie(Control[] controls) {
+	private byte[] _getCookie(Control[] controls) {
 		if (controls == null) {
 			return null;
 		}
@@ -930,7 +963,7 @@ public class PortalLDAPUtil {
 		return null;
 	}
 
-	private static String _getNextRange(String attributeId) {
+	private String _getNextRange(String attributeId) {
 		String originalAttributeId = null;
 		int start = 0;
 		int end = 0;
@@ -965,6 +998,6 @@ public class PortalLDAPUtil {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortalLDAPUtil.class);
+	private static Log _log = LogFactoryUtil.getLog(DefaultPortalLDAP.class);
 
 }

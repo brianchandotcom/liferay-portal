@@ -71,7 +71,17 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETUP_FORM_FIELDS_FIELD_TITLE</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETUP_FORM_FIELDS_NAME_FIELD</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]/..//input[contains(@id,'_86_fieldLabel') and @type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_FIELDS_NAME_EDITABLE_FIELD</td>
 	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]/..//input[contains(@id,'_86_fieldLabel') and @type='text']</td>
 	<td></td>
 </tr>

@@ -59,6 +59,11 @@ public interface Repository extends DocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addFolder(long, long,
+	 *             String, String, ServiceContext)}
+	 */
+	@Deprecated
 	public Folder addFolder(
 			long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
@@ -202,11 +207,6 @@ public interface Repository extends DocumentRepository {
 	public int getMountFoldersCount(long parentFolderId) throws PortalException;
 
 	public List<FileEntry> getRepositoryFileEntries(
-			long userId, long rootFolderId, int start, int end,
-			OrderByComparator<FileEntry> obc)
-		throws PortalException;
-
-	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, String[] mimeTypes, int status,
 			int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException;
@@ -247,10 +247,20 @@ public interface Repository extends DocumentRepository {
 			long expirationTime)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #moveFileEntry(long, long,
+	 *             long, ServiceContext)}
+	 */
+	@Deprecated
 	public FileEntry moveFileEntry(
 			long fileEntryId, long newFolderId, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #moveFolder(long, long, long,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
 	public Folder moveFolder(
 			long folderId, long newParentFolderId,
 			ServiceContext serviceContext)

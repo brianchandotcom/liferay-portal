@@ -157,7 +157,7 @@ public class TempFileEntryUtil {
 
 		long classNameId = PortalUtil.getClassNameId(
 			"com.liferay.portal.repository.temporaryrepository." +
-				"TemporaryRepository");
+				"TemporaryFileEntryRepository");
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 

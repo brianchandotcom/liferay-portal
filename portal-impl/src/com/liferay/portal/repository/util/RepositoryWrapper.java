@@ -107,11 +107,28 @@ public class RepositoryWrapper implements Repository {
 
 	@Override
 	public Folder addFolder(
+			long userId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _repository.addFolder(
+			userId, parentFolderId, name, description, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addFolder(long, long,
+	 *             String, String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public Folder addFolder(
 			long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return _repository.addFolder(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			parentFolderId, name, description, serviceContext);
 	}
 
@@ -121,8 +138,8 @@ public class RepositoryWrapper implements Repository {
 	}
 
 	/**
-	 * As of 7.0.0, replaced by {@link #checkInFileEntry(long, long, boolean,
-	 *              String, ServiceContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
+	 *             boolean, String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -169,8 +186,8 @@ public class RepositoryWrapper implements Repository {
 	}
 
 	/**
-	 * As of 7.0.0, replaced by {@link #checkInFileEntry(long, long, String,
-	 *              ServiceContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
+	 *             String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -571,13 +588,45 @@ public class RepositoryWrapper implements Repository {
 
 	@Override
 	public FileEntry moveFileEntry(
+			long userId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _repository.moveFileEntry(
+			userId, fileEntryId, newFolderId, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #moveFileEntry(long, long,
+	 *             long, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry moveFileEntry(
 			long fileEntryId, long newFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
 		return _repository.moveFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
 			fileEntryId, newFolderId, serviceContext);
 	}
 
+	@Override
+	public Folder moveFolder(
+			long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _repository.moveFolder(
+			userId, folderId, parentFolderId, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #moveFolder(long, long, long,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public Folder moveFolder(
 			long folderId, long newParentFolderId,
@@ -585,7 +634,9 @@ public class RepositoryWrapper implements Repository {
 		throws PortalException {
 
 		return _repository.moveFolder(
-			folderId, newParentFolderId, serviceContext);
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			newParentFolderId, serviceContext);
 	}
 
 	@Override
@@ -739,6 +790,16 @@ public class RepositoryWrapper implements Repository {
 				getUserId(),
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
+	}
+
+	@Override
+	public Folder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _repository.updateFolder(
+			folderId, parentFolderId, name, description, serviceContext);
 	}
 
 	@Override

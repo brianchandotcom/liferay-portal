@@ -232,12 +232,12 @@ public class CapabilityLocalRepository
 
 	@Override
 	public List<FileEntry> getRepositoryFileEntries(
-			long rootFolderId, int start, int end,
+			long userId, long rootFolderId, int start, int end,
 			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
 		return getRepository().getRepositoryFileEntries(
-			rootFolderId, start, end, obc);
+			userId, rootFolderId, start, end, obc);
 	}
 
 	@Override

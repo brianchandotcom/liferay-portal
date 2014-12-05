@@ -129,19 +129,36 @@ public class CapabilityRepository
 
 	@Override
 	public Folder addFolder(
-			long parentFolderId, String name, String description,
+			long userId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository repository = getRepository();
 
 		Folder folder = repository.addFolder(
-			parentFolderId, name, description, serviceContext);
+			userId, parentFolderId, name, description, serviceContext);
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Add.class, Folder.class, folder);
 
 		return folder;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addFolder(long, long,
+	 *             String, String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public Folder addFolder(
+			long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFolder(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			parentFolderId, name, description, serviceContext);
 	}
 
 	@Override
@@ -687,13 +704,14 @@ public class CapabilityRepository
 
 	@Override
 	public FileEntry moveFileEntry(
-			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+			long userId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository repository = getRepository();
 
 		FileEntry fileEntry = repository.moveFileEntry(
-			fileEntryId, newFolderId, serviceContext);
+			userId, fileEntryId, newFolderId, serviceContext);
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Move.class, FileEntry.class, fileEntry);
@@ -701,21 +719,54 @@ public class CapabilityRepository
 		return fileEntry;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #moveFileEntry(long, long,
+	 *             long, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public FileEntry moveFileEntry(
+			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+		throws PortalException {
+
+		return moveFileEntry(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			fileEntryId, newFolderId, serviceContext);
+	}
+
 	@Override
 	public Folder moveFolder(
-			long folderId, long newParentFolderId,
+			long userId, long folderId, long parentFolderId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository repository = getRepository();
 
 		Folder folder = repository.moveFolder(
-			folderId, newParentFolderId, serviceContext);
+			userId, folderId, parentFolderId, serviceContext);
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Move.class, Folder.class, folder);
 
 		return folder;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #moveFolder(long, long, long,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public Folder moveFolder(
+			long folderId, long newParentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return moveFolder(
+			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+				getUserId(),
+			folderId, newParentFolderId, serviceContext);
 	}
 
 	@Override
@@ -882,8 +933,8 @@ public class CapabilityRepository
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateFileEntry(long, long,
-	 *             String, String, String, String, String, boolean,
-	 *             InputStream, long, ServiceContext)}
+	 *             String, String, String, String, String, boolean, InputStream,
+	 *             long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -904,6 +955,23 @@ public class CapabilityRepository
 			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 
 		return fileEntry;
+	}
+
+	@Override
+	public Folder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Repository repository = getRepository();
+
+		Folder folder = repository.updateFolder(
+			folderId, parentFolderId, name, description, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, Folder.class, folder);
+
+		return folder;
 	}
 
 	@Override

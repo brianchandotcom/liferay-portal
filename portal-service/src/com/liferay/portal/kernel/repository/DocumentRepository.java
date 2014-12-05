@@ -19,10 +19,13 @@ import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 import java.io.InputStream;
+
+import java.util.List;
 
 /**
  * @author Iván Zaera
@@ -39,6 +42,11 @@ public interface DocumentRepository extends CapabilityProvider {
 			long userId, long folderId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog, InputStream is,
 			long size, ServiceContext serviceContext)
+		throws PortalException;
+
+	public Folder addFolder(
+			long userId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void checkInFileEntry(
@@ -77,7 +85,22 @@ public interface DocumentRepository extends CapabilityProvider {
 	public Folder getFolder(long parentFolderId, String name)
 		throws PortalException;
 
+	public List<FileEntry> getRepositoryFileEntries(
+			long userId, long rootFolderId, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException;
+
 	public long getRepositoryId();
+
+	public FileEntry moveFileEntry(
+			long userId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public Folder moveFolder(
+			long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	public void revertFileEntry(
 			long userId, long fileEntryId, String version,
@@ -94,6 +117,11 @@ public interface DocumentRepository extends CapabilityProvider {
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
 			boolean majorVersion, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public Folder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException;
 

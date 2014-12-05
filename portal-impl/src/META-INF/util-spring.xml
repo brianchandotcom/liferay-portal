@@ -568,7 +568,7 @@
 						<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
 					</property>
 				</bean>
-				<bean class="com.liferay.portal.repository.temporaryrepository.TemporaryRepositoryDefiner">
+				<bean class="com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepositoryDefiner">
 					<property name="repositoryFactory">
 						<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
 					</property>

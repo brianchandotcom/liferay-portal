@@ -196,7 +196,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public Folder addFolder(
-			long parentFolderId, String name, String description,
+			long userId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1007,7 +1007,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public FileEntry moveFileEntry(
-			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+			long userId, long fileEntryId, long newFolderId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		try {
@@ -1064,7 +1065,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 	@Override
 	public Folder moveFolder(
-			long folderId, long parentFolderId, ServiceContext serviceContext)
+			long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		try {

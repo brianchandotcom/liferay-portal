@@ -79,8 +79,6 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void clearAll() throws PortalCacheException {
-		_portalCaches.clear();
-
 		doClearAll();
 	}
 

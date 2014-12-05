@@ -218,7 +218,6 @@
 		</execute>
 
 		<execute macro="SitePage#viewLoadMoreResultsPages">
-			<var name="pageName" value="Public Pages" />
 			<var name="siteChildPages" value="false" />
 		</execute>
 
@@ -235,7 +234,6 @@
 		</execute>
 
 		<execute macro="SitePage#viewLoadMoreResultsPages">
-			<var name="pageName" value="Welcome" />
 			<var name="siteChildPages" value="true" />
 		</execute>
 	</command>

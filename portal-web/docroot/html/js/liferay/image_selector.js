@@ -3,13 +3,13 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var CHANGE_IMAGE_CONTROLS_DELAY = 5000;
+
 		var CSS_DROP_ACTIVE = 'drop-active';
 
 		var CSS_CHECK_ACTIVE = 'check-active';
 
 		var CSS_PROGRESS_ACTIVE = 'progress-active';
-
-		var CHANGE_IMAGE_CONTROLS_DELAY = 5000;
 
 		var PROGRESS_HEIGHT = '6';
 
@@ -86,18 +86,18 @@ AUI.add(
 
 						instance._fileEntryImageNode = instance.one('#image');
 
-						instance._fileNameNode = instance.rootNode.one(instance.get('fileNameNode'));
+						var rootNode = instance.rootNode;
 
-						instance._progressDataNode = instance.rootNode.one(instance.get('progressDataNode'));
+						instance._fileNameNode = rootNode.one(instance.get('fileNameNode'));
+						instance._progressDataNode = rootNode.one(instance.get('progressDataNode'));
 
-						var errorNode = instance.rootNode.one(instance.get('errorNode'));
+						var errorNode = rootNode.one(instance.get('errorNode'));
 
 						instance._errorNodeAlert = A.Widget.getByNode(errorNode);
 
 						instance.set('addSpaceBeforeSuffix', true);
 
 						instance._bindUI();
-
 						instance._renderUploader();
 					},
 
@@ -141,6 +141,7 @@ AUI.add(
 
 						if (instance._timer) {
 							instance._timer.cancel();
+
 							instance._timer = null;
 						}
 					},
@@ -171,23 +172,27 @@ AUI.add(
 
 						var fileEntryId = event.imageData.fileEntryId;
 						var fileEntryUrl = event.imageData.url;
-						var fileEntryIdNode = instance.rootNode.one('#' + instance.get('paramName') + 'Id');
+
+						var rootNode = instance.rootNode;
+
+						var fileEntryIdNode = rootNode.one('#' + instance.get('paramName') + 'Id');
 
 						fileEntryIdNode.val(fileEntryId);
 
-						instance._fileEntryImageNode.setAttribute('src', fileEntryUrl);
+						var fileEntryImageNode = instance._fileEntryImageNode;
+
+						fileEntryImageNode.attr('src', fileEntryUrl);
 
 						instance._fileEntryId = fileEntryId;
 
 						var showImageControls = (fileEntryId !== 0 && fileEntryUrl !== '');
 
-						instance._fileEntryImageNode.toggle(showImageControls);
+						fileEntryImageNode.toggle(showImageControls);
 
 						var browseImageControls = instance.one('.browse-image-controls');
-
 						var changeImageControls = instance.one('.change-image-controls');
 
-						instance.rootNode.toggleClass('drop-enabled', !showImageControls);
+						rootNode.toggleClass('drop-enabled', !showImageControls);
 
 						browseImageControls.toggle(!showImageControls);
 
@@ -258,14 +263,16 @@ AUI.add(
 
 						var changeImageControls = instance.one('.change-image-controls');
 
-						instance.rootNode.addClass(CSS_CHECK_ACTIVE);
+						var rootNode = instance.rootNode;
+
+						rootNode.addClass(CSS_CHECK_ACTIVE);
 
 						if (!instance._timer && instance._fileEntryId > 0) {
 							instance._timer = A.later(
 								CHANGE_IMAGE_CONTROLS_DELAY,
 								instance,
 								function() {
-									instance.rootNode.removeClass(CSS_CHECK_ACTIVE);
+									rootNode.removeClass(CSS_CHECK_ACTIVE);
 
 									changeImageControls.toggle(true);
 								},
@@ -319,16 +326,18 @@ AUI.add(
 
 						if (progressDataNode) {
 							var bytesLoaded = instance.formatStorage(event.bytesLoaded);
-
 							var bytesTotal = instance.formatStorage(event.bytesTotal);
+
+							var bytesLoadedSpaceIndex = bytesLoaded.indexOf(STR_SPACE);
+							var bytesTotalSpaceIndex = bytesTotal.indexOf(STR_SPACE);
 
 							var progressDataTemplate = A.Lang.sub(
 								TPL_PROGRESS_DATA,
 								{
-									loaded: bytesLoaded.substring(0, bytesLoaded.indexOf(STR_SPACE)),
-									loadedUnit: bytesLoaded.substring(bytesLoaded.indexOf(STR_SPACE) + 1),
-									total: bytesTotal.substring(0, bytesTotal.indexOf(STR_SPACE)),
-									totalUnit: bytesTotal.substring(bytesTotal.indexOf(STR_SPACE) + 1)
+									loaded: bytesLoaded.substring(0, bytesLoadedSpaceIndex),
+									loadedUnit: bytesLoaded.substring(bytesLoadedSpaceIndex + 1),
+									total: bytesTotal.substring(0, bytesTotalSpaceIndex),
+									totalUnit: bytesTotal.substring(bytesTotalSpaceIndex + 1)
 								}
 							);
 
@@ -393,7 +402,9 @@ AUI.add(
 							message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance.formatStorage(instance.get('maxFileSize'))]);
 						}
 
-						var errorWrapper = instance.rootNode.one('.error-wrapper');
+						var rootNode = instance.rootNode;
+
+						var errorWrapper = rootNode.one('.error-wrapper');
 
 						var errorMessage = errorWrapper.one('.error-message');
 
@@ -401,13 +412,15 @@ AUI.add(
 
 						errorWrapper.show();
 
-						instance.rootNode.removeClass(CSS_CHECK_ACTIVE);
+						rootNode.removeClass(CSS_CHECK_ACTIVE);
 
-						instance._errorNodeAlert.show();
+						var errorNodeAlert = instance._errorNodeAlert;
+
+						errorNodeAlert.show();
 
 						var browseImageControls = instance.one('.browse-image-controls');
 
-						instance._errorNodeAlert.on(
+						errorNodeAlert.on(
 							'visibleChange',
 							function(event) {
 								if (!event.newVal) {

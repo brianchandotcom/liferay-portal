@@ -120,6 +120,23 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 			_bundleContext, _configurationAdmin, _metaTypeService, languageId);
 
 		if ("/edit_configuration.ftl".equals(path)) {
+			ConfigurationModel model = configurationHelper.getModel(pid);
+
+			if (model != null) {
+
+				// Get an instance configuration model
+
+				model = new ConfigurationModel(
+					model.getObjectClassDefinition(),
+					configurationHelper.getConfiguration(pid),
+					model.getBundleLocation(), model.isFactory());
+			}
+
+			renderRequest.setAttribute(
+				"configurationHelper", configurationHelper);
+			renderRequest.setAttribute("factoryPid", factoryPid);
+			renderRequest.setAttribute("model", model);
+			renderRequest.setAttribute("pid", pid);
 		}
 		else if ("factoryInstances".equals(viewType)) {
 			ConfigurationModel factoryModel = configurationHelper.getModel(

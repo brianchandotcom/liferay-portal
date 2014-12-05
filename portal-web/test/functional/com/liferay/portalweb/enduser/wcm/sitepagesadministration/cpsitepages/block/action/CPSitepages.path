@@ -243,7 +243,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_LOAD_MORE_RESULTS_LINK</td>
-	<td>//ul/li/div[contains(.,'${key_pageName}')]/..//a[@class='tree-node-paginator']</td>
+	<td>//a[@class='tree-node-paginator']</td>
 	<td></td>
 </tr>
 <tr>

@@ -1028,6 +1028,9 @@ public interface Portal {
 
 	public String getPortletTitle(PortletResponse portletResponse);
 
+	public String getPortletTitle(
+		String portletId, ResourceBundle resourceBundle);
+
 	public String getPortletTitle(String portletId, Locale locale);
 
 	public String getPortletTitle(String portletId, String languageId);

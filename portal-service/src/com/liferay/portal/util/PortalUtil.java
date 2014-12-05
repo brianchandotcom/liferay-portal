@@ -1628,14 +1628,14 @@ public class PortalUtil {
 		return getPortal().getPortletTitle(portletResponse);
 	}
 
+	public static String getPortletTitle(String portletId, Locale locale) {
+		return getPortal().getPortletTitle(portletId, locale);
+	}
+
 	public static String getPortletTitle(
 		String portletId, ResourceBundle resourceBundle) {
 
 		return getPortal().getPortletTitle(portletId, resourceBundle);
-	}
-
-	public static String getPortletTitle(String portletId, Locale locale) {
-		return getPortal().getPortletTitle(portletId, locale);
 	}
 
 	public static String getPortletTitle(String portletId, String languageId) {

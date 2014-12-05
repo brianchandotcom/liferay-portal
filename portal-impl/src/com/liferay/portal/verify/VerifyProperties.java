@@ -352,6 +352,13 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.polls.service"
 		},
 
+		// RSS
+
+		new String[] {
+			"rss.display.templates.config", "display.templates.config",
+			"com.liferay.rss.web"
+		},
+
 		// XSL content
 
 		new String[] {

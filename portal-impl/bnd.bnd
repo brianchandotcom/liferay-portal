@@ -19,6 +19,7 @@ Export-Package:\
 	com.liferay.portal.resiliency.service,\
 	com.liferay.portal.search,\
 	com.liferay.portal.security.ac,\
+	com.liferay.portal.security.lang,\
 	com.liferay.portal.service.http,\
 	com.liferay.portal.spring.aop,\
 	com.liferay.portal.spring.bean,\

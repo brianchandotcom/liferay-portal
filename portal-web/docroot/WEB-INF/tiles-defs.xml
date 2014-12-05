@@ -1214,18 +1214,6 @@
 		<put name="portlet_content" value="/portlet/roles_admin/view.jsp" />
 	</definition>
 
-	<!-- RSS -->
-
-	<definition name="portlet.rss" extends="portlet" />
-
-	<definition name="portlet.rss.view" extends="portlet.rss">
-		<put name="portlet_content" value="/portlet/rss/view.jsp" />
-	</definition>
-
-	<definition name="portlet.rss.view_channel" extends="portlet.rss">
-		<put name="portlet_content" value="/portlet/rss/view_channel.jsp" />
-	</definition>
-
 	<!-- Search -->
 
 	<definition name="portlet.search" extends="portlet" />

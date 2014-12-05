@@ -1611,10 +1611,6 @@
 
 		<action path="/roles_admin/view_users" forward="portlet.users_admin.view" />
 
-		<!-- RSS -->
-
-		<action path="/rss/view" forward="portlet.rss.view" />
-
 		<!-- Search -->
 
 		<action path="/search/open_search" type="com.liferay.portlet.search.action.OpenSearchAction" />

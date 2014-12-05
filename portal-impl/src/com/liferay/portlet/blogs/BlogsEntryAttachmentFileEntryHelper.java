@@ -35,37 +35,40 @@ import java.util.regex.Pattern;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
-public class BlogsEntryFileEntryHelper {
+public class BlogsEntryAttachmentFileEntryHelper {
 
-	public List<BlogsEntryFileEntryReference> addBlogsEntryFileEntries(
+	public List<BlogsEntryAttachmentFileEntryReference>
+		addBlogsEntryAttachmentFileEntries(
 			long groupId, long userId, long blogsEntryId,
-			List<FileEntry> tempBlogsEntryFileEntries)
+			List<FileEntry> tempFileEntries)
 		throws PortalException {
 
-		List<BlogsEntryFileEntryReference> blogsEntryFileEntryReferences =
-			new ArrayList<>();
+		List<BlogsEntryAttachmentFileEntryReference>
+			blogsEntryAttachmentFileEntryReferences = new ArrayList<>();
 
-		for (FileEntry tempBlogsEntryFileEntry : tempBlogsEntryFileEntries) {
-			FileEntry blogsEntryFileEntry = addBlogsEntryFileEntry(
-				groupId, userId, blogsEntryId,
-				tempBlogsEntryFileEntry.getTitle(),
-				tempBlogsEntryFileEntry.getMimeType(),
-				tempBlogsEntryFileEntry.getContentStream());
+		for (FileEntry tempFileEntry : tempFileEntries) {
+			FileEntry blogsAttachmentEntryFileEntry =
+				addBlogsEntryAttachmentFileEntry(
+					groupId, userId, blogsEntryId, tempFileEntry.getTitle(),
+					tempFileEntry.getMimeType(),
+					tempFileEntry.getContentStream());
 
-			blogsEntryFileEntryReferences.add(
-				new BlogsEntryFileEntryReference(
-					tempBlogsEntryFileEntry.getFileEntryId(),
-					blogsEntryFileEntry));
+			blogsEntryAttachmentFileEntryReferences.add(
+				new BlogsEntryAttachmentFileEntryReference(
+					tempFileEntry.getFileEntryId(),
+					blogsAttachmentEntryFileEntry));
 		}
 
-		return blogsEntryFileEntryReferences;
+		return blogsEntryAttachmentFileEntryReferences;
 	}
 
-	public List<FileEntry> getTempBlogsEntryFileEntries(String content)
+	public List<FileEntry> getTempBlogsEntryAttachmentFileEntries(
+			String content)
 		throws PortalException {
 
-		List<FileEntry> tempBlogsEntryFileEntries = new ArrayList<>();
+		List<FileEntry> tempBlogsEntryAttachmentFileEntries = new ArrayList<>();
 
 		Pattern pattern = Pattern.compile(
 			EditorConstants.ATTRIBUTE_DATA_IMAGE_ID + "=.(\\d+)");
@@ -75,39 +78,44 @@ public class BlogsEntryFileEntryHelper {
 		while (matcher.find()) {
 			long fileEntryId = GetterUtil.getLong(matcher.group(1));
 
-			FileEntry tempBlogsEntryFileEntry =
+			FileEntry tempFileEntry =
 				PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
 
-			tempBlogsEntryFileEntries.add(tempBlogsEntryFileEntry);
+			tempBlogsEntryAttachmentFileEntries.add(tempFileEntry);
 		}
 
-		return tempBlogsEntryFileEntries;
+		return tempBlogsEntryAttachmentFileEntries;
 	}
 
 	public String updateContent(
-		String content,
-		List<BlogsEntryFileEntryReference> blogsEntryFileEntryReferences) {
+		String content, List<BlogsEntryAttachmentFileEntryReference>
+			blogsEntryAttachmentFileEntryReferences) {
 
-		for (BlogsEntryFileEntryReference blogsEntryFileEntryReference :
-				blogsEntryFileEntryReferences) {
+		for (BlogsEntryAttachmentFileEntryReference
+				blogsEntryAttachmentFileEntryReference :
+					blogsEntryAttachmentFileEntryReferences) {
 
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("<img.*");
 			sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 			sb.append("=\\s?\"");
-			sb.append(blogsEntryFileEntryReference.getTempFileEntryId());
+			sb.append(
+				blogsEntryAttachmentFileEntryReference.
+					getTempAttachmentFileEntryId());
 			sb.append("\".*src=\\s?\"(.*)\".*/>");
 
 			content = content.replaceAll(
 				sb.toString(),
-				getFileEntryLink(blogsEntryFileEntryReference.getFileEntry()));
+				getAttachmentFileEntryLink(
+					blogsEntryAttachmentFileEntryReference.
+						getAttachmentFileEntry()));
 		}
 
 		return content;
 	}
 
-	protected FileEntry addBlogsEntryFileEntry(
+	protected FileEntry addBlogsEntryAttachmentFileEntry(
 			long groupId, long userId, long blogsEntryId, String fileName,
 			String mimeType, InputStream is)
 		throws PortalException {
@@ -121,9 +129,11 @@ public class BlogsEntryFileEntryHelper {
 			true);
 	}
 
-	protected String getFileEntryLink(FileEntry blogsEntryFileEntry) {
+	protected String getAttachmentFileEntryLink(
+		FileEntry blogsAttachmentEntryFileEntry) {
+
 		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
-			null, blogsEntryFileEntry, StringPool.BLANK);
+			null, blogsAttachmentEntryFileEntry, StringPool.BLANK);
 
 		return "<img src=\"" + fileEntryURL + "\" />";
 	}

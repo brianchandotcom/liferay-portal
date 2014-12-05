@@ -54,8 +54,8 @@ import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
-import com.liferay.portlet.blogs.BlogsEntryFileEntryHelper;
-import com.liferay.portlet.blogs.BlogsEntryFileEntryReference;
+import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
+import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
 import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryDescriptionException;
 import com.liferay.portlet.blogs.EntryDisplayDateException;
@@ -112,8 +112,8 @@ public class EditEntryAction extends PortletAction {
 		try {
 			BlogsEntry entry = null;
 			String oldUrlTitle = StringPool.BLANK;
-			List<BlogsEntryFileEntryReference> blogsEntryFileEntryReferences =
-				null;
+			List<BlogsEntryAttachmentFileEntryReference>
+				blogsEntryAttachmentFileEntryReferences = null;
 
 			UploadException uploadException =
 				(UploadException)actionRequest.getAttribute(
@@ -140,8 +140,9 @@ public class EditEntryAction extends PortletAction {
 
 				entry = (BlogsEntry)returnValue[0];
 				oldUrlTitle = ((String)returnValue[1]);
-				blogsEntryFileEntryReferences =
-					((List<BlogsEntryFileEntryReference>)returnValue[2]);
+				blogsEntryAttachmentFileEntryReferences =
+					((List<BlogsEntryAttachmentFileEntryReference>)
+						returnValue[2]);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteEntries(actionRequest, false);
@@ -206,15 +207,16 @@ public class EditEntryAction extends PortletAction {
 
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-				for (BlogsEntryFileEntryReference
-						blogsEntryFileEntryReference :
-							blogsEntryFileEntryReferences) {
+				for (BlogsEntryAttachmentFileEntryReference
+						blogsEntryAttachmentFileEntryReference :
+							blogsEntryAttachmentFileEntryReferences) {
 
 					JSONObject blogsEntryFileEntryReferencesJSONObject =
 						JSONFactoryUtil.createJSONObject();
 
-					FileEntry fileEntry =
-						blogsEntryFileEntryReference.getFileEntry();
+					FileEntry attachmentFileEntry =
+						blogsEntryAttachmentFileEntryReference.
+							getAttachmentFileEntry();
 
 					blogsEntryFileEntryReferencesJSONObject.put(
 						"attributeDataImageId",
@@ -222,11 +224,12 @@ public class EditEntryAction extends PortletAction {
 					blogsEntryFileEntryReferencesJSONObject.put(
 						"fileEntryId",
 						String.valueOf(
-							blogsEntryFileEntryReference.getTempFileEntryId()));
+							blogsEntryAttachmentFileEntryReference.
+								getTempAttachmentFileEntryId()));
 					blogsEntryFileEntryReferencesJSONObject.put(
 						"fileEntryUrl",
 						PortletFileRepositoryUtil.getPortletFileEntryURL(
-							null, fileEntry, StringPool.BLANK));
+							null, attachmentFileEntry, StringPool.BLANK));
 
 					jsonArray.put(blogsEntryFileEntryReferencesJSONObject);
 				}
@@ -583,8 +586,8 @@ public class EditEntryAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			BlogsEntry.class.getName(), actionRequest);
 
-		List<BlogsEntryFileEntryReference> blogsEntryAttachmentReferences =
-			new ArrayList<>();
+		List<BlogsEntryAttachmentFileEntryReference>
+			blogsEntryAttachmentFileEntryReferences = new ArrayList<>();
 
 		if (entryId <= 0) {
 
@@ -597,21 +600,23 @@ public class EditEntryAction extends PortletAction {
 				coverImageImageSelector, smallImageImageSelector,
 				serviceContext);
 
-			BlogsEntryFileEntryHelper blogsEntryAttachmentHelper =
-				new BlogsEntryFileEntryHelper();
+			BlogsEntryAttachmentFileEntryHelper
+				blogsEntryAttachmentFileEntryHelper =
+					new BlogsEntryAttachmentFileEntryHelper();
 
 			List<FileEntry> tempBlogsEntryAttachments =
-				blogsEntryAttachmentHelper.getTempBlogsEntryFileEntries(
-					content);
+				blogsEntryAttachmentFileEntryHelper.
+					getTempBlogsEntryAttachmentFileEntries(content);
 
 			if (!tempBlogsEntryAttachments.isEmpty()) {
-				blogsEntryAttachmentReferences =
-					blogsEntryAttachmentHelper.addBlogsEntryFileEntries(
-						entry.getGroupId(), themeDisplay.getUserId(),
-						entry.getEntryId(), tempBlogsEntryAttachments);
+				blogsEntryAttachmentFileEntryReferences =
+					blogsEntryAttachmentFileEntryHelper.
+						addBlogsEntryAttachmentFileEntries(
+							entry.getGroupId(), themeDisplay.getUserId(),
+							entry.getEntryId(), tempBlogsEntryAttachments);
 
-				content = blogsEntryAttachmentHelper.updateContent(
-					content, blogsEntryAttachmentReferences);
+				content = blogsEntryAttachmentFileEntryHelper.updateContent(
+					content, blogsEntryAttachmentFileEntryReferences);
 
 				entry.setContent(content);
 
@@ -651,21 +656,22 @@ public class EditEntryAction extends PortletAction {
 
 			String tempOldUrlTitle = entry.getUrlTitle();
 
-			BlogsEntryFileEntryHelper blogsEntryAttachmentHelper =
-				new BlogsEntryFileEntryHelper();
+			BlogsEntryAttachmentFileEntryHelper blogsEntryAttachmentHelper =
+				new BlogsEntryAttachmentFileEntryHelper();
 
 			List<FileEntry> tempBlogsEntryAttachments =
-				blogsEntryAttachmentHelper.getTempBlogsEntryFileEntries(
-					content);
+				blogsEntryAttachmentHelper.
+					getTempBlogsEntryAttachmentFileEntries(content);
 
 			if (!tempBlogsEntryAttachments.isEmpty()) {
-				blogsEntryAttachmentReferences =
-					blogsEntryAttachmentHelper.addBlogsEntryFileEntries(
-						entry.getGroupId(), themeDisplay.getUserId(),
-						entry.getEntryId(), tempBlogsEntryAttachments);
+				blogsEntryAttachmentFileEntryReferences =
+					blogsEntryAttachmentHelper.
+						addBlogsEntryAttachmentFileEntries(
+							entry.getGroupId(), themeDisplay.getUserId(),
+							entry.getEntryId(), tempBlogsEntryAttachments);
 
 				content = blogsEntryAttachmentHelper.updateContent(
-					content, blogsEntryAttachmentReferences);
+					content, blogsEntryAttachmentFileEntryReferences);
 
 				entry = BlogsEntryServiceUtil.updateEntry(
 					entryId, title, subtitle, description, content,
@@ -694,7 +700,7 @@ public class EditEntryAction extends PortletAction {
 		}
 
 		return new Object[] {
-			entry, oldUrlTitle, blogsEntryAttachmentReferences
+			entry, oldUrlTitle, blogsEntryAttachmentFileEntryReferences
 		};
 	}
 

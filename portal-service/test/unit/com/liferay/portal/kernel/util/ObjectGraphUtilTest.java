@@ -480,15 +480,14 @@ public class ObjectGraphUtilTest {
 	@Target(ElementType.FIELD)
 	private @interface Annotation1 {
 
-		public static final Annotation1 INSTANCE =
-			new Annotation1() {
+		public static final Annotation1 INSTANCE = new Annotation1() {
 
-				@Override
-				public Class<? extends Annotation> annotationType() {
-					return Annotation1.class;
-				}
+			@Override
+			public Class<? extends Annotation> annotationType() {
+				return Annotation1.class;
+			}
 
-			};
+		};
 
 	}
 
@@ -497,15 +496,14 @@ public class ObjectGraphUtilTest {
 	@Target(ElementType.FIELD)
 	private @interface Annotation2 {
 
-		public static final Annotation2 INSTANCE =
-			new Annotation2() {
+		public static final Annotation2 INSTANCE = new Annotation2() {
 
-				@Override
-				public Class<? extends Annotation> annotationType() {
-					return Annotation2.class;
-				}
+			@Override
+			public Class<? extends Annotation> annotationType() {
+				return Annotation2.class;
+			}
 
-			};
+		};
 
 	}
 
@@ -514,15 +512,14 @@ public class ObjectGraphUtilTest {
 	@Target(ElementType.FIELD)
 	private @interface Annotation3 {
 
-		public static final Annotation3 INSTANCE =
-			new Annotation3() {
+		public static final Annotation3 INSTANCE = new Annotation3() {
 
-				@Override
-				public Class<? extends Annotation> annotationType() {
-					return Annotation3.class;
-				}
+			@Override
+			public Class<? extends Annotation> annotationType() {
+				return Annotation3.class;
+			}
 
-			};
+		};
 
 	}
 

@@ -888,9 +888,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isRoot() {
-		if (getParentGroupId() ==
-				GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-
+		if (getParentGroupId() == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 			return true;
 		}
 

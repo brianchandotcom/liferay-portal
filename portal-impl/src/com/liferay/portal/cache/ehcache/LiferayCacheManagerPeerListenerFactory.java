@@ -74,58 +74,57 @@ public class LiferayCacheManagerPeerListenerFactory
 		return cacheManagerPeerListener;
 	}
 
-	private static final CacheReplicator _PLACE_HOLDER =
-		new CacheReplicator() {
+	private static final CacheReplicator _PLACE_HOLDER = new CacheReplicator() {
 
-			@Override
-			public boolean alive() {
-				return true;
-			}
+		@Override
+		public boolean alive() {
+			return true;
+		}
 
-			@Override
-			public Object clone() {
-				return this;
-			}
+		@Override
+		public Object clone() {
+			return this;
+		}
 
-			@Override
-			public void dispose() {
-			}
+		@Override
+		public void dispose() {
+		}
 
-			@Override
-			public boolean isReplicateUpdatesViaCopy() {
-				return false;
-			}
+		@Override
+		public boolean isReplicateUpdatesViaCopy() {
+			return false;
+		}
 
-			@Override
-			public boolean notAlive() {
-				return false;
-			}
+		@Override
+		public boolean notAlive() {
+			return false;
+		}
 
-			@Override
-			public void notifyElementEvicted(Ehcache ehcache, Element element) {
-			}
+		@Override
+		public void notifyElementEvicted(Ehcache ehcache, Element element) {
+		}
 
-			@Override
-			public void notifyElementExpired(Ehcache ehcache, Element element) {
-			}
+		@Override
+		public void notifyElementExpired(Ehcache ehcache, Element element) {
+		}
 
-			@Override
-			public void notifyElementPut(Ehcache ehcache, Element element) {
-			}
+		@Override
+		public void notifyElementPut(Ehcache ehcache, Element element) {
+		}
 
-			@Override
-			public void notifyElementRemoved(Ehcache ehcache, Element element) {
-			}
+		@Override
+		public void notifyElementRemoved(Ehcache ehcache, Element element) {
+		}
 
-			@Override
-			public void notifyElementUpdated(Ehcache ehcache, Element element) {
-			}
+		@Override
+		public void notifyElementUpdated(Ehcache ehcache, Element element) {
+		}
 
-			@Override
-			public void notifyRemoveAll(Ehcache ehch) {
-			}
+		@Override
+		public void notifyRemoveAll(Ehcache ehch) {
+		}
 
-		};
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayCacheManagerPeerListenerFactory.class);

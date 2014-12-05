@@ -66,15 +66,14 @@ public class ListUtilTest {
 
 		Assert.assertEquals(1, ListUtil.count(list, predicateFilter));
 
-		predicateFilter =
-			new PredicateFilter<String>() {
+		predicateFilter = new PredicateFilter<String>() {
 
-				@Override
-				public boolean filter(String string) {
-					return string.equals("z");
-				}
+			@Override
+			public boolean filter(String string) {
+				return string.equals("z");
+			}
 
-			};
+		};
 
 		Assert.assertEquals(0, ListUtil.count(list, predicateFilter));
 	}
@@ -137,15 +136,14 @@ public class ListUtilTest {
 
 		Assert.assertTrue(ListUtil.exists(list, predicateFilter));
 
-		predicateFilter =
-			new PredicateFilter<String>() {
+		predicateFilter = new PredicateFilter<String>() {
 
-				@Override
-				public boolean filter(String string) {
-					return string.equals("z");
-				}
+			@Override
+			public boolean filter(String string) {
+				return string.equals("z");
+			}
 
-			};
+		};
 
 		Assert.assertFalse(ListUtil.exists(list, predicateFilter));
 	}

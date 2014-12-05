@@ -111,15 +111,14 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 
 	private static final Log _log = LogFactoryUtil.getLog(AsyncAdvice.class);
 
-	private static final Async _nullAsync =
-		new Async() {
+	private static final Async _nullAsync = new Async() {
 
-			@Override
-			public Class<? extends Annotation> annotationType() {
-				return Async.class;
-			}
+		@Override
+		public Class<? extends Annotation> annotationType() {
+			return Async.class;
+		}
 
-		};
+	};
 
 	private String _defaultDestinationName;
 	private Map<Class<?>, String> _destinationNames;

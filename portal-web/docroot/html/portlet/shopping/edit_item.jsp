@@ -131,33 +131,29 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
 			</div>
 
-			<aui:script use="aui-base">
-				var categoryButton = A.one('#<portlet:namespace />selectCategoryButton');
-
-				if (categoryButton) {
-					categoryButton.on(
-						'click',
-						function(event) {
-							Liferay.Util.selectEntity(
-								{
-									dialog: {
-										constrain: true,
-										modal: true,
-										width: 680
-									},
-									id: '<portlet:namespace />selectCategory',
-									title: '<liferay-ui:message arguments="category" key="select-x" />',
-									uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" /></portlet:renderURL>'
+			<aui:script>
+				AUI.$('#<portlet:namespace />selectCategoryButton').on(
+					'click',
+					function(event) {
+						Liferay.Util.selectEntity(
+							{
+								dialog: {
+									constrain: true,
+									modal: true,
+									width: 680
 								},
-								function(event) {
-									document.<portlet:namespace />fm.<portlet:namespace />categoryId.value = event.categoryid;
+								id: '<portlet:namespace />selectCategory',
+								title: '<liferay-ui:message arguments="category" key="select-x" />',
+								uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" /></portlet:renderURL>'
+							},
+							function(event) {
+								document.<portlet:namespace />fm.<portlet:namespace />categoryId.value = event.categoryid;
 
-									document.getElementById('<portlet:namespace />categoryName').value = A.Lang.String.unescapeEntities(event.name);
-								}
-							);
-						}
-					);
-				}
+								document.getElementById('<portlet:namespace />categoryName').value = AUI._.unescape(event.name);
+							}
+						);
+					}
+				);
 			</aui:script>
 		</c:if>
 

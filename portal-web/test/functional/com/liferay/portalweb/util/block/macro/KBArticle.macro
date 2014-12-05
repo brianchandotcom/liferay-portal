@@ -250,6 +250,20 @@
 		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="goBackCP">
+		<execute action="CPKnowledgebaseadminArticle#assertClick" locator-key1="BACK_TO_ICON" value1="Back" />
+	</command>
+
+	<command name="gotoCP">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_AUTHOR" value1="${kbAuthor}" />
+		<execute action="CPKnowledgebaseadmin#click" locator-key1="ARTICLE_TABLE_ACTIONS" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_MENULIST_VIEW" value1="View" />
+	</command>
+
 	<command name="gotoPGViaKBSearchResult">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
@@ -274,6 +288,19 @@
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 	</command>
 
+	<command name="gotoSuggestionsNavigationCP">
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="NAVIGATION_SUGGESTIONS" value1="Suggestions" />
+	</command>
+
+	<command name="gotoSuggestionsNavigationPG">
+		<if>
+			<condition action="PGKnowledgebasedisplay#isElementNotPresent" locator-key1="SUGGESTION_NAVIGATION_BAR" />
+			<then>
+				<execute action="PGKnowledgebasedisplay#click" locator-key1="SUGGESTION_VIEW_LINK" />
+			</then>
+		</if>
+	</command>
+
 	<command name="gotoViaKBAdminCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
@@ -291,7 +318,12 @@
 	<command name="gotoViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
+		<if>
+			<condition action="PGKnowledgebasedisplay#isElementPresent" locator-key1="ARTICLE_NAVIGATION" />
+			<then>
+				<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="gotoViaKBDisplayPGHierarchyNavigationPG">
@@ -429,20 +461,12 @@
 		<execute action="CPKnowledgebaseadmin#click" locator-key1="ARTICLE_TABLE_ACTIONS" />
 		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_MENULIST_VIEW" value1="View" />
 
-		<execute action="CPKnowledgebaseadminChildarticle#assertTextEquals" locator-key1="BACK_TO_HEADER" value1="${kbChildArticleTitle}" />
+		<execute action="CPKnowledgebaseadminChildarticle#assertTextEquals" locator-key1="HEADER_TITLE" value1="${kbChildArticleTitle}" />
 		<execute action="CPKnowledgebaseadminChildarticle#assertTextEquals" locator-key1="CONTENT" value1="${kbChildArticleContent}" />
 	</command>
 
 	<command name="viewCP">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
-		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
-		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_AUTHOR" value1="${kbAuthor}" />
-		<execute action="CPKnowledgebaseadmin#click" locator-key1="ARTICLE_TABLE_ACTIONS" />
-		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_MENULIST_VIEW" value1="View" />
-
-		<execute action="CPKnowledgebaseadminArticle#assertTextEquals" locator-key1="BACK_TO_HEADER" value1="${kbArticleTitle}" />
+		<execute action="CPKnowledgebaseadminArticle#assertTextEquals" locator-key1="HEADER_TITLE" value1="${kbArticleTitle}" />
 		<execute action="CPKnowledgebaseadminArticle#assertTextEquals" locator-key1="CONTENT" value1="${kbArticleContent}" />
 
 		<if>

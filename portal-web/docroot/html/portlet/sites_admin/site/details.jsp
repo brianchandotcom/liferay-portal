@@ -100,11 +100,7 @@ if ((group == null) && (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID)
 }
 
 if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-	try {
-		parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
-	}
-	catch (NoSuchGroupException nsoe) {
-	}
+	parentGroup = GroupLocalServiceUtil.fetchGroup(parentGroupId);
 }
 %>
 

@@ -18,6 +18,15 @@
 
 <#assign redirectURL = renderResponse.createRenderURL() />
 
+<#if Request["factoryModel"]??>
+	<#assign factoryModel = Request["factoryModel"] />
+
+	<@liferay_ui["header"]
+		backURL="${redirectURL}"
+		title='${factoryModel.getName()}'
+	/>
+</#if>
+
 <#assign modelIterator = Request["modelIterator"] />
 
 <@liferay_ui["search-container"]
@@ -41,10 +50,19 @@
 			<@portlet["param"] name="factoryPid" value="${model.getFactoryPid()}" />
 		</@>
 
+		<@portlet["renderURL"] varImpl="viewFactoryInstancesURL">
+			<@portlet["param"] name="pid" value="${model.getID()}" />
+			<@portlet["param"] name="factoryPid" value="${model.getFactoryPid()}" />
+			<@portlet["param"] name="viewType" value="factoryInstances" />
+		</@>
+
 		<@liferay_ui["search-container-column-text"]
 			name="name"
 		>
 			<#if model.isFactory()>
+				<@aui["a"] href=(viewFactoryInstancesURL.toString())>${model.getName()}</@>
+
+				<em>(<@liferay_ui["message"] key="factory" />)</em>
 			<#else>
 				<@aui["a"] href=(editURL.toString())>${model.getName()}</@>
 			</#if>
@@ -84,6 +102,13 @@
 		>
 			<@liferay_ui["icon-menu"]>
 				<#if model.isFactory()>
+					<@liferay_ui["icon"]
+						image="view"
+						label=true
+						message="view"
+						method="post"
+						url="${viewFactoryInstancesURL}"
+					/>
 				<#else>
 					<@liferay_ui["icon"]
 						image="edit"

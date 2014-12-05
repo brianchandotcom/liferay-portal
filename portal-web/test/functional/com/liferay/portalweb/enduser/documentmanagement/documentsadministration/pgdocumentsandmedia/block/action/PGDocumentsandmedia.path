@@ -442,6 +442,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_ICON_DOCUMENT_SHORTCUT_ACTIONS</td>
+	<td>//div[contains(.,'${key_dmDocumentTitle}') and a/div/img[@class='shortcut-icon']]//span/div/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

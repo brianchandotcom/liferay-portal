@@ -156,14 +156,14 @@ AUI.add(
 					_createProgressBar: function() {
 						var instance = this;
 
-						var progressbar = new A.ProgressBar(
+						var progressBar = new A.ProgressBar(
 							{
 								boundingBox: instance.one('.progressbar'),
 								height: PROGRESS_HEIGHT
 							}
 						).render();
 
-						instance._progressbar = progressbar;
+						instance._progressBar = progressBar;
 					},
 
 					_defImageDataFn: function(event) {
@@ -240,23 +240,7 @@ AUI.add(
 							fileNameNode.html(fileDataTemplate);
 						}
 
-						var reader = new FileReader();
-
-						reader.addEventListener(
-							'loadend',
-							function() {
-								if (!instance._uploadCompleted) {
-									instance._updateImageData(
-										{
-											fileentryid: '-1',
-											url: reader.result
-										}
-									);
-								}
-							}
-						);
-
-						reader.readAsDataURL(file.get('file'));
+						instance._showImagePreview(file.get('file'));
 
 						var queue = instance._uploader.queue;
 
@@ -323,12 +307,12 @@ AUI.add(
 					_onUploadProgress: function(event) {
 						var instance = this;
 
-						var progressbar = instance._progressbar;
+						var progressBar = instance._progressBar;
 
-						if (progressbar) {
+						if (progressBar) {
 							var percentLoaded = Math.round(event.percentLoaded);
 
-							progressbar.set(STR_VALUE, Math.ceil(percentLoaded));
+							progressBar.set(STR_VALUE, Math.ceil(percentLoaded));
 						}
 
 						var progressDataNode = instance._progressDataNode;
@@ -421,6 +405,8 @@ AUI.add(
 
 						instance._errorNodeAlert.show();
 
+						var browseImageControls = instance.one('.browse-image-controls');
+
 						instance._errorNodeAlert.on(
 							'visibleChange',
 							function(event) {
@@ -430,9 +416,31 @@ AUI.add(
 							}
 						);
 
-						var browseImageControls = instance.one('.browse-image-controls');
-
 						browseImageControls.hide();
+					},
+
+					_showImagePreview: function(file) {
+						var instance = this;
+
+						if (A.config.win.FileReader) {
+							var reader = new FileReader();
+
+							reader.addEventListener(
+								'loadend',
+								function() {
+									if (!instance._uploadCompleted) {
+										instance._updateImageData(
+											{
+												fileentryid: '-1',
+												url: reader.result
+											}
+										);
+									}
+								}
+							);
+
+							reader.readAsDataURL(file);
+						}
 					},
 
 					_stopProgress: function(event) {
@@ -440,7 +448,7 @@ AUI.add(
 
 						instance.rootNode.removeClass(CSS_PROGRESS_ACTIVE);
 
-						instance._progressbar.set(STR_VALUE, 0);
+						instance._progressBar.set(STR_VALUE, 0);
 
 						if (event) {
 							instance._updateImageData(event);

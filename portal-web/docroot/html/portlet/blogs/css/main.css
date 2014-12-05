@@ -53,11 +53,11 @@
 					min-height: 150px;
 
 					.drag-drop-label {
-				    	font-size: 15px;
+						font-size: 15px;
 					}
 
 					.file-validation-info {
-				    	font-size: 13px;
+						font-size: 13px;
 					}
 				}
 			}
@@ -226,12 +226,10 @@
 	#blogsCommentsPanelContainer {
 		border-width: 0;
 	}
+}
 
-	@-moz-document url-prefix() {
-		fieldset.input-container {
-			display: table-column;
-		}
-	}
+.firefox .portlet-blogs fieldset.input-container {
+	display: table-column;
 }
 
 .social-boomarks-options {

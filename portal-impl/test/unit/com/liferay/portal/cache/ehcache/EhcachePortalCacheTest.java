@@ -328,6 +328,15 @@ public class EhcachePortalCacheTest {
 	}
 
 	@Test
+	public void testReconfigEhcache() {
+		Assert.assertNotNull(_ehcachePortalCache.ehcache);
+
+		_ehcachePortalCache.reconfigEhcache(null);
+
+		Assert.assertNull(_ehcachePortalCache.ehcache);
+	}
+
+	@Test
 	public void testRemove() {
 		Assert.assertEquals(_VALUE_1, _ehcachePortalCache.get(_KEY_1));
 		Assert.assertNull(_ehcachePortalCache.get(_KEY_2));

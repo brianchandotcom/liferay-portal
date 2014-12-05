@@ -61,6 +61,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 import com.liferay.portlet.expando.util.ExpandoConverterUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -94,6 +96,13 @@ import javax.naming.ldap.LdapContext;
  */
 @DoPrivileged
 public class LDAPUserImporterImpl implements LDAPUserImporter {
+
+	public LDAPUserImporterImpl() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerService(LDAPUserImporter.class, this);
+		registry.registerService(UserImporter.class, this);
+	}
 
 	@Override
 	public User importUser(

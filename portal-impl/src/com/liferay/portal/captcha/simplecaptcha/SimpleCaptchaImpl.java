@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.RandomUtil;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -390,6 +391,16 @@ public class SimpleCaptchaImpl implements Captcha {
 
 		String captchaText = (String)session.getAttribute(WebKeys.CAPTCHA_TEXT);
 
+		if (request instanceof UploadPortletRequest) {
+			PortletRequest portletRequest =
+				((UploadPortletRequest)request).getPortletRequest();
+
+			PortletSession portletSession = portletRequest.getPortletSession();
+
+			captchaText = (String)portletSession.getAttribute(
+				WebKeys.CAPTCHA_TEXT);
+		}
+
 		if (captchaText == null) {
 			_log.error(
 				"CAPTCHA text is null. User " + request.getRemoteUser() +
@@ -402,7 +413,17 @@ public class SimpleCaptchaImpl implements Captcha {
 			ParamUtil.getString(request, "captchaText"));
 
 		if (valid) {
-			session.removeAttribute(WebKeys.CAPTCHA_TEXT);
+			if (request instanceof UploadPortletRequest) {
+				PortletRequest portletRequest =
+					((UploadPortletRequest)request).getPortletRequest();
+
+				PortletSession portletSession =
+					portletRequest.getPortletSession();
+
+				portletSession.removeAttribute(WebKeys.CAPTCHA_TEXT);
+			} else {
+				session.removeAttribute(WebKeys.CAPTCHA_TEXT);
+			}
 		}
 
 		return valid;

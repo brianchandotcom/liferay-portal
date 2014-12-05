@@ -35,6 +35,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -392,12 +393,12 @@ public class SimpleCaptchaImpl implements Captcha {
 
 		if (request instanceof UploadPortletRequest) {
 			PortletRequest portletRequest =
-					((UploadPortletRequest)request).getPortletRequest();
+				((UploadPortletRequest)request).getPortletRequest();
 
 			PortletSession portletSession = portletRequest.getPortletSession();
 
 			captchaText = (String)portletSession.getAttribute(
-					WebKeys.CAPTCHA_TEXT);
+				WebKeys.CAPTCHA_TEXT);
 		}
 
 		if (captchaText == null) {
@@ -414,12 +415,14 @@ public class SimpleCaptchaImpl implements Captcha {
 		if (valid) {
 			if (request instanceof UploadPortletRequest) {
 				PortletRequest portletRequest =
-						((UploadPortletRequest)request).getPortletRequest();
+					((UploadPortletRequest)request).getPortletRequest();
 
-				PortletSession portletSession = portletRequest.getPortletSession();
+				PortletSession portletSession =
+					portletRequest.getPortletSession();
 
 				portletSession.removeAttribute(WebKeys.CAPTCHA_TEXT);
-			} else {
+			}
+			else {
 				session.removeAttribute(WebKeys.CAPTCHA_TEXT);
 			}
 		}

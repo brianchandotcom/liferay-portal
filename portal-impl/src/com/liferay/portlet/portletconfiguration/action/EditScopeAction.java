@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
@@ -34,10 +33,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
-
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -258,14 +254,8 @@ public class EditScopeAction extends PortletAction {
 			ServletContext servletContext =
 				(ServletContext)portletRequest.getAttribute(WebKeys.CTX);
 
-			PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-				portlet, servletContext);
-
-			ResourceBundle resourceBundle = portletConfig.getResourceBundle(
-				themeDisplay.getLocale());
-
-			portletTitle = resourceBundle.getString(
-				JavaConstants.JAVAX_PORTLET_TITLE);
+			portletTitle = PortalUtil.getPortletTitle(
+				portlet, servletContext, themeDisplay.getLocale());
 		}
 
 		return portletTitle;

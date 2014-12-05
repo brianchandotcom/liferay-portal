@@ -14,16 +14,19 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.cache.SingleVMPoolImpl;
+import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.util.PortletPreferencesImplTestUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesTestUtil;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
+import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -32,10 +35,28 @@ import org.junit.Test;
  */
 public class PortletPreferencesFactoryImplTest {
 
-	@ClassRule
-	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
+	@Before
+	public void setUp() {
+		HtmlUtil htmlUtil = new HtmlUtil();
+
+		htmlUtil.setHtml(new HtmlImpl());
+
+		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
+
+		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();
+
+		singleVMPoolImpl.setPortalCacheManager(
+			MemoryPortalCacheManager.createMemoryPortalCacheManager(
+				PortletPreferencesFactoryImplTest.class.getName()));
+
+		singleVMPoolUtil.setSingleVMPool(singleVMPoolImpl);
+
+		PortletPreferencesFactoryUtil portletPreferencesFactoryUtil =
+			new PortletPreferencesFactoryUtil();
+
+		portletPreferencesFactoryUtil.setPortletPreferencesFactory(
+			new PortletPreferencesFactoryImpl());
+	}
 
 	@Test
 	public void testBlankPreference() throws Exception {

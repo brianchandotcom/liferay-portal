@@ -156,7 +156,6 @@
 	}
 
 	.drop-here-info {
-		color: #32A8E6;
 		font-size: 25px;
 
 		@include opacity(0);
@@ -169,8 +168,6 @@
 	}
 
 	.progress-wrapper {
-		color: #2B4259;
-
 		p {
 			font-size: 18px;
 
@@ -191,8 +188,6 @@
 	}
 
 	&.drop-active {
-		outline-color: #32A8E6;
-
 		.browse-image-controls {
 			@include opacity(0);
 		}

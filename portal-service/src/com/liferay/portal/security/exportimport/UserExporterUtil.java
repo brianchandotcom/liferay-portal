@@ -14,9 +14,11 @@
 
 package com.liferay.portal.security.exportimport;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.io.Serializable;
 
@@ -35,35 +37,37 @@ public class UserExporterUtil {
 			Contact contact, Map<String, Serializable> contactExpandoAttributes)
 		throws Exception {
 
-		getUserExporter().exportUser(contact, contactExpandoAttributes);
+		_getInstance().exportUser(contact, contactExpandoAttributes);
 	}
 
 	public static void exportUser(
 			long userId, long userGroupId, UserOperation userOperation)
 		throws Exception {
 
-		getUserExporter().exportUser(userId, userGroupId, userOperation);
+		_getInstance().exportUser(userId, userGroupId, userOperation);
 	}
 
 	public static void exportUser(
 			User user, Map<String, Serializable> userExpandoAttributes)
 		throws Exception {
 
-		getUserExporter().exportUser(user, userExpandoAttributes);
+		_getInstance().exportUser(user, userExpandoAttributes);
 	}
 
-	public static UserExporter getUserExporter() {
-		PortalRuntimePermission.checkGetBeanProperty(UserExporterUtil.class);
-
-		return _userExporter;
+	private static UserExporter _getInstance() {
+		return _instance._serviceTracker.getService();
 	}
 
-	public void setUserExporter(UserExporter userExporter) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	private UserExporterUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		_userExporter = userExporter;
+		_serviceTracker = registry.trackServices(UserExporter.class);
+
+		_serviceTracker.open();
 	}
 
-	private static UserExporter _userExporter;
+	private static final UserExporterUtil _instance = new UserExporterUtil();
+
+	private final ServiceTracker<UserExporter, UserExporter> _serviceTracker;
 
 }

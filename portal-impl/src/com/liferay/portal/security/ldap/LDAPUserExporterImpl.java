@@ -28,6 +28,8 @@ import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -54,6 +56,12 @@ import javax.naming.ldap.LdapContext;
  */
 @DoPrivileged
 public class LDAPUserExporterImpl implements UserExporter {
+
+	public LDAPUserExporterImpl() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerService(UserExporter.class, this);
+	}
 
 	@Override
 	public void exportUser(

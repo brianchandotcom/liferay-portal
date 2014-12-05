@@ -70,8 +70,12 @@ public class RSSPortletDisplayTemplateHandler
 
 		Bundle bundle = bundleReference.getBundle();
 
+		String symbolicName = bundle.getSymbolicName();
+
+		symbolicName = symbolicName.replaceAll("[^a-zA-Z0-9]", "");
+
 		return RSSPortletKeys.RSS.concat(PortletConstants.WAR_SEPARATOR).concat(
-			String.valueOf(bundle.getBundleId()));
+			String.valueOf(symbolicName));
 	}
 
 	@Override

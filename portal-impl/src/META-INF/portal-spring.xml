@@ -253,6 +253,7 @@
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryMetadataLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryMetadataPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataFinder" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryMetadataFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypePersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryTypePersistenceImpl" parent="basePersistence" />

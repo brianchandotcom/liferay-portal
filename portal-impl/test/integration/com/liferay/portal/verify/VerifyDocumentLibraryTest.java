@@ -17,7 +17,12 @@ package com.liferay.portal.verify;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
@@ -25,12 +30,33 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portal.util.test.ServiceContextTestUtil;
+import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.io.ByteArrayInputStream;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -54,6 +80,74 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testDeleteDLFileEntryMetadataWithMismatchCompanyId()
+		throws Exception {
+
+		DLFileEntry dlFileEntry = addDLFileEntryWithFileEntryType();
+
+		DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
+
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		DDMStructure ddmStructure = ddmStructures.get(0);
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		ddmStructure.setCompanyId(12345);
+
+		DDMStructureLocalServiceUtil.updateDDMStructure(ddmStructure);
+
+		DLFileEntryMetadata dlFileEntryMetadata =
+			DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
+				ddmStructure.getStructureId(),
+				dlFileVersion.getFileVersionId());
+
+		Assert.assertNotNull(dlFileEntryMetadata);
+
+		doVerify();
+
+		dlFileEntryMetadata =
+			DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
+				ddmStructure.getStructureId(),
+				dlFileVersion.getFileVersionId());
+
+		Assert.assertNull(dlFileEntryMetadata);
+	}
+
+	@Test
+	public void testDeleteDLFileEntryMetadataWithNoStructure()
+		throws Exception {
+
+		DLFileEntry dlFileEntry = addDLFileEntryWithFileEntryType();
+
+		DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
+
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		DDMStructure ddmStructure = ddmStructures.get(0);
+
+		DDMStructureLocalServiceUtil.deleteDDMStructure(ddmStructure);
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		DLFileEntryMetadata dlFileEntryMetadata =
+			DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
+				ddmStructure.getStructureId(),
+				dlFileVersion.getFileVersionId());
+
+		Assert.assertNotNull(dlFileEntryMetadata);
+
+		doVerify();
+
+		dlFileEntryMetadata =
+			DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
+				ddmStructure.getStructureId(),
+				dlFileVersion.getFileVersionId());
+
+		Assert.assertNull(dlFileEntryMetadata);
 	}
 
 	@Test
@@ -179,10 +273,65 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 		doVerify();
 	}
 
+	@Rule
+	public final SynchronousDestinationTestRule synchronousDestinationTestRule =
+		SynchronousDestinationTestRule.INSTANCE;
+
+	protected DLFileEntry addDLFileEntryWithFileEntryType() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		byte[] testFileBytes = FileUtil.getBytes(
+			getClass(), _TEST_DDM_STRUCTURE);
+
+		serviceContext.setAttribute("definition", new String(testFileBytes));
+
+		User user = TestPropsValues.getUser();
+
+		serviceContext.setLanguageId(LocaleUtil.toLanguageId(user.getLocale()));
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				"Test Structure", StringPool.BLANK, new long[0],
+				serviceContext);
+
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		DDMStructure ddmStructure = ddmStructures.get(0);
+
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
+			RandomTestUtil.randomBytes());
+
+		Map<String, Fields> fieldsMap = new HashMap<String, Fields>();
+
+		Fields fields = new Fields();
+
+		Field nameField = new Field(
+			ddmStructure.getStructureId(), "date_an", new Date());
+
+		fields.put(nameField);
+
+		fieldsMap.put(ddmStructure.getStructureKey(), fields);
+
+		return DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			null, null, dlFileEntryType.getFileEntryTypeId(), fieldsMap, null,
+			byteArrayInputStream, byteArrayInputStream.available(),
+			serviceContext);
+	}
+
 	@Override
 	protected VerifyProcess getVerifyProcess() {
 		return new VerifyDocumentLibrary();
 	}
+
+	private static final String _TEST_DDM_STRUCTURE =
+		"/com/liferay/portlet/documentlibrary/service/dependencies/" +
+			"ddmstructure.xml";
 
 	@DeleteAfterTestRun
 	private Group _group;

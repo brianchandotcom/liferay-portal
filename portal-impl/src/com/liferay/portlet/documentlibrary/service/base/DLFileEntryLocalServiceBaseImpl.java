@@ -66,6 +66,7 @@ import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder;
@@ -1547,6 +1548,25 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the document library file entry metadata finder.
+	 *
+	 * @return the document library file entry metadata finder
+	 */
+	public DLFileEntryMetadataFinder getDLFileEntryMetadataFinder() {
+		return dlFileEntryMetadataFinder;
+	}
+
+	/**
+	 * Sets the document library file entry metadata finder.
+	 *
+	 * @param dlFileEntryMetadataFinder the document library file entry metadata finder
+	 */
+	public void setDLFileEntryMetadataFinder(
+		DLFileEntryMetadataFinder dlFileEntryMetadataFinder) {
+		this.dlFileEntryMetadataFinder = dlFileEntryMetadataFinder;
+	}
+
+	/**
 	 * Returns the document library file entry type local service.
 	 *
 	 * @return the document library file entry type local service
@@ -1931,6 +1951,8 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	protected com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService;
 	@BeanReference(type = DLFileEntryMetadataPersistence.class)
 	protected DLFileEntryMetadataPersistence dlFileEntryMetadataPersistence;
+	@BeanReference(type = DLFileEntryMetadataFinder.class)
+	protected DLFileEntryMetadataFinder dlFileEntryMetadataFinder;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService dlFileEntryTypeLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService.class)

@@ -735,11 +735,19 @@ public class JournalArticleIndexer extends BaseIndexer {
 	}
 
 	protected void reindexArticleVersions(JournalArticle article)
-		throws PortalException {
+		throws Exception {
+
+		Collection<Document> documents = getArticleVersions(article);
+
+		if(documents.isEmpty() && 
+			!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+
+			doDelete(article);
+		}
 
 		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), article.getCompanyId(),
-			getArticleVersions(article), isCommitImmediately());
+			getSearchEngineId(), article.getCompanyId(), documents,
+			isCommitImmediately());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

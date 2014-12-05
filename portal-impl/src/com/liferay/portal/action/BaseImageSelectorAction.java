@@ -86,6 +86,11 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 
 			String fileName = uploadPortletRequest.getFileName(
 				"imageSelectorFileName");
+			String contentType = uploadPortletRequest.getContentType(
+				"imageSelectorFileName");
+			long size = uploadPortletRequest.getSize("imageSelectorFileName");
+
+			validateFile(fileName, contentType, size);
 
 			Class<?> clazz = getClass();
 
@@ -111,7 +116,7 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 			jsonObject.put("success", Boolean.TRUE);
 		}
 		catch (Exception e) {
-			jsonObject.put("success", Boolean.FALSE);
+			handleUploadException(actionRequest, actionResponse, e, jsonObject);
 		}
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
@@ -119,6 +124,15 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 
 	protected abstract void checkPermission(
 			long groupId, PermissionChecker permissionChecker)
+		throws PortalException;
+
+	protected abstract void handleUploadException(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			Exception e, JSONObject jsonObject)
+		throws Exception;
+
+	protected abstract void validateFile(
+			String fileName, String contentType, long size)
 		throws PortalException;
 
 }

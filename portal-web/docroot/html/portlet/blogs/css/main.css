@@ -48,6 +48,18 @@
 				float: left;
 				margin-bottom: 30px;
 				width: 200px;
+
+				.taglib-image-selector {
+					min-height: 150px;
+
+					.drag-drop-label {
+						font-size: 15px;
+					}
+
+					.file-validation-info {
+						font-size: 13px;
+					}
+				}
 			}
 
 			.entry-description {
@@ -154,6 +166,10 @@
 		}
 	}
 
+	.lfr-blogs-cover-image-selector {
+		margin: 20px 0 60px;
+	}
+
 	.preview {
 		background: #FFC;
 		border: 1px dotted gray;
@@ -210,6 +226,10 @@
 	#blogsCommentsPanelContainer {
 		border-width: 0;
 	}
+}
+
+.firefox .portlet-blogs fieldset.input-container {
+	display: table-column;
 }
 
 .social-boomarks-options {

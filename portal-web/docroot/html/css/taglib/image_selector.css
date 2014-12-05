@@ -7,11 +7,55 @@
 	text-align: center;
 
 	&.drop-enabled, &.drop-active {
-		outline: 2px dashed rgba(176, 180, 187, 0.5);
+		outline: 2px dashed transparent;
+	}
+
+	.glyphicon-ok {
+		left: 50%;
+		padding: 20px;
+		position: absolute;
+		top: 50%;
+
+		@include transform(translate(-50%, -50%));
+	}
+
+	.progress-wrapper {
+		display: none;
+		left: 50%;
+		max-width: 450px;
+		position: absolute;
+		top: 50%;
+
+		@include transform(translate(-50%, -50%));
+
+		width: 50%;
+
+		button {
+			margin-top: 20px;
+		}
+
+		p {
+			margin: 0;
+			text-align: left;
+		}
+
+		.progressbar {
+			height: 6px;
+			margin: 5px auto;
+			width: 100%;
+		}
 	}
 
 	&.drop-active {
-		outline-color: #118ADE;
+		outline-width: 2px;
+
+		.change-image-controls {
+			display: none;
+		}
+
+		.progress-wrapper {
+			display: none;
+		}
 	}
 
 	&.draggable-image {
@@ -24,8 +68,14 @@
 		}
 
 		&.both .current-image {
-			max-height: inherit;
-			max-width: inherit;
+			max-height: 100%;
+			max-width: 100%;
+		}
+
+		&.drop-enabled {
+			.image-wrapper {
+				height : 100px;
+			}
 		}
 
 		.image-wrapper {
@@ -36,13 +86,23 @@
 		}
 	}
 
+	&.progress-active {
+		.change-image-controls {
+			display: none;
+		}
+
+		.progress-wrapper {
+			display: block;
+		}
+	}
+
 	.browse-image-controls, .current-image {
 		margin: auto;
 		max-height: 100%;
 		max-width: 100%;
 	}
 
-	.browse-image-controls {
+	.browse-image-controls, .drop-here-info {
 		left: 0;
 		padding: 10px;
 		position: absolute;
@@ -54,11 +114,120 @@
 		width: 100%;
 	}
 
+	.browse-image-controls {
+		.drag-drop-label {
+			line-height: 35px;
+		}
+
+		.file-validation-info {
+			margin-top: 15px;
+		}
+
+		z-index: 1;
+	}
+
+	.change-image-controls {
+		bottom: 10px;
+		position: absolute;
+		right: 10px;
+	}
+
 	.current-image {
 		margin-bottom: 5px;
 	}
 
+	.error-wrapper {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 2;
+	}
+
 	.yui3-uploader-content {
 		display: none;
+	}
+}
+
+/* Skin */
+
+.taglib-image-selector {
+	&.drop-enabled, &.drop-active {
+		outline-color: rgba(176, 180, 187, 0.5)
+	}
+
+	.drop-here-info {
+		font-size: 25px;
+
+		@include opacity(0);
+	}
+
+	.glyphicon-ok {
+		background: #FFF;
+
+		@include opacity(0);
+	}
+
+	.progress-wrapper {
+		p {
+			font-size: 18px;
+
+			&.size {
+				font-size: 14px;
+			}
+		}
+
+		.progressbar {
+			background: #B0B4BB;
+
+			@include opacity(0.7);
+		}
+	}
+
+	&.check-active .glyphicon-ok{
+		@include opacity(1);
+	}
+
+	&.drop-active {
+		.browse-image-controls {
+			@include opacity(0);
+		}
+
+		.drop-here-info {
+			@include opacity(1);
+		}
+
+		.glyphicon-ok {
+			@include opacity(0);
+		}
+
+		.image-wrapper {
+			@include opacity(0.15);
+		}
+
+		.error-wrapper {
+			@include opacity(0);
+		}
+	}
+
+	&.progress-active {
+		.image-wrapper {
+			@include opacity(0.15);
+		}
+
+		.browse-image-controls {
+			@include opacity(0);
+		}
+
+		.drop-here-info {
+			@include opacity(0);
+		}
+
+		.glyphicon-ok {
+			@include opacity(0);
+		}
+	}
+
+	.browse-image-controls .drag-drop-label, .browse-image-controls .browse-image{
+		font-size: 16px;
 	}
 }

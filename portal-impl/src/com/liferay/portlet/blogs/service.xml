@@ -231,6 +231,8 @@
 		<reference package-path="com.liferay.portlet.blogs" entity="BlogsEntry" />
 	</entity>
 	<exceptions>
+		<exception>CoverImageName</exception>
+		<exception>CoverImageSize</exception>
 		<exception>EntryContent</exception>
 		<exception>EntryDescription</exception>
 		<exception>EntryDisplayDate</exception>

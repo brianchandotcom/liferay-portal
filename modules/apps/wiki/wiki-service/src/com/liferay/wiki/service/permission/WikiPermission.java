@@ -18,12 +18,16 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.wiki.constants.WikiPortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
-public class WikiPermission {
+@Component(property = {"resource.name=com.liferay.wiki"})
+public class WikiPermission implements ResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.wiki";
 
@@ -49,6 +53,14 @@ public class WikiPermission {
 
 		return permissionChecker.hasPermission(
 			groupId, RESOURCE_NAME, groupId, actionId);
+	}
+
+	@Override
+	public Boolean checkResource(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws PortalException {
+
+		return contains(permissionChecker, classPK, actionId);
 	}
 
 }

@@ -7,22 +7,11 @@
 	text-align: center;
 
 	&.drop-enabled, &.drop-active {
-		outline: 2px dashed rgba(176, 180, 187, 0.5);
-	}
-
-	.drop-here-info {
-		color: #32A8E6;
-		font-size: 25px;
-
-		@include opacity(0);
+		outline: 2px dashed transparent;
 	}
 
 	.glyphicon-ok {
-		background: #FFF;
 		left: 50%;
-
-		@include opacity(0);
-
 		padding: 20px;
 		position: absolute;
 		top: 50%;
@@ -31,7 +20,6 @@
 	}
 
 	.progress-wrapper {
-		color: #2B4259;
 		display: none;
 		left: 50%;
 		max-width: 450px;
@@ -47,56 +35,22 @@
 		}
 
 		p {
-			font-size: 18px;
 			margin: 0;
 			text-align: left;
-
-			&.size {
-				font-size: 14px;
-			}
 		}
 
 		.progressbar {
-			background: #B0B4BB;
 			height: 6px;
 			margin: 5px auto;
-
-			@include opacity(0.7);
-
 			width: 100%;
 		}
 	}
 
-	&.check-active .glyphicon-ok{
-		@include opacity(1);
-	}
-
 	&.drop-active {
-		outline-color: #32A8E6;
 		outline-width: 2px;
 
 		.change-image-controls {
 			display: none;
-		}
-
-		.browse-image-controls {
-			@include opacity(0);
-		}
-
-		.drop-here-info {
-			@include opacity(1);
-		}
-
-		.glyphicon-ok {
-			@include opacity(0);
-		}
-
-		.image-wrapper {
-			@include opacity(0.15);
-		}
-
-		.error-wrapper {
-			@include opacity(0);
 		}
 
 		.progress-wrapper {
@@ -133,24 +87,8 @@
 	}
 
 	&.progress-active {
-		.image-wrapper {
-			@include opacity(0.15);
-		}
-
-		.browse-image-controls {
-			@include opacity(0);
-		}
-
 		.change-image-controls {
 			display: none;
-		}
-
-		.drop-here-info {
-			@include opacity(0);
-		}
-
-		.glyphicon-ok {
-			@include opacity(0);
 		}
 
 		.progress-wrapper {
@@ -177,10 +115,6 @@
 	}
 
 	.browse-image-controls {
-		.drag-drop-label, .browse-image {
-			font-size: 16px;
-		}
-
 		.drag-drop-label {
 			line-height: 35px;
 		}
@@ -211,5 +145,94 @@
 
 	.yui3-uploader-content {
 		display: none;
+	}
+}
+
+/* Skin */
+
+.taglib-image-selector {
+	&.drop-enabled, &.drop-active {
+		outline-color: rgba(176, 180, 187, 0.5)
+	}
+
+	.drop-here-info {
+		color: #32A8E6;
+		font-size: 25px;
+
+		@include opacity(0);
+	}
+
+	.glyphicon-ok {
+		background: #FFF;
+
+		@include opacity(0);
+	}
+
+	.progress-wrapper {
+		color: #2B4259;
+
+		p {
+			font-size: 18px;
+
+			&.size {
+				font-size: 14px;
+			}
+		}
+
+		.progressbar {
+			background: #B0B4BB;
+
+			@include opacity(0.7);
+		}
+	}
+
+	&.check-active .glyphicon-ok{
+		@include opacity(1);
+	}
+
+	&.drop-active {
+		outline-color: #32A8E6;
+
+		.browse-image-controls {
+			@include opacity(0);
+		}
+
+		.drop-here-info {
+			@include opacity(1);
+		}
+
+		.glyphicon-ok {
+			@include opacity(0);
+		}
+
+		.image-wrapper {
+			@include opacity(0.15);
+		}
+
+		.error-wrapper {
+			@include opacity(0);
+		}
+	}
+
+	&.progress-active {
+		.image-wrapper {
+			@include opacity(0.15);
+		}
+
+		.browse-image-controls {
+			@include opacity(0);
+		}
+
+		.drop-here-info {
+			@include opacity(0);
+		}
+
+		.glyphicon-ok {
+			@include opacity(0);
+		}
+	}
+
+	.browse-image-controls .drag-drop-label, .browse-image-controls .browse-image{
+		font-size: 16px;
 	}
 }

@@ -1080,9 +1080,8 @@
 		<execute macro="Category#editCategoryPropertyCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="categoryNameEdit" value="Category Name Edit" />
-			<var name="propertiesKeyFieldEdit" value="Category Key Edit" />
-			<var name="propertiesValueFieldEdit" value="Category Value Edit" />
-			<var name="propertyNumber" value="1" />
+			<var name="propertiesKeyFieldEdit" value="Category Key Edit 1" />
+			<var name="propertiesValueFieldEdit" value="Category Value Edit 1" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 

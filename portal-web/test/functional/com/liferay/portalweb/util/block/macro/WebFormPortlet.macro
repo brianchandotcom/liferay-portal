@@ -32,14 +32,14 @@
 		</if>
 	</command>
 
-	<command name="deleteField">
-		<execute macro="WebFormPortlet#viewField" />
+	<command name="deleteEditableField">
+		<execute macro="WebFormPortlet#viewEditableField" />
 
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
 		<execute action="PGWebformConfiguration#click" locator-key1="SETUP_FORM_FIELDS_DELETE_ROW_BUTTON" />
 
-		<execute macro="WebFormPortlet#viewFieldNotPresent" />
+		<execute macro="WebFormPortlet#viewEditableFieldNotVisibleCmd" />
 	</command>
 
 	<command name="editField">
@@ -88,15 +88,33 @@
 		<execute action="PGWebformConfiguration#selectFrameTop" value1="relative=top" />
 	</command>
 
-	<command name="viewField">
+	<command name="viewDeletedFieldNotPresent">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
+
+		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_FIELD_TITLE" />
+	</command>
+
+	<command name="viewEditableField">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
 		<execute action="PGWebformConfiguration#assertElementPresent" locator-key1="SETUP_FORM_FIELDS_NAME_FIELD" />
 	</command>
 
-	<command name="viewFieldNotPresent">
+	<command name="viewEditableFieldNotPresent">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
+
+		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_NAME_EDITABLE_FIELD" />
+	</command>
+
+	<command name="viewEditableFieldNotVisibleCmd">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
 		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_NAME_FIELD" />
+	</command>
+
+	<command name="viewSubmittedField">
+		<var name="key_wfFieldName" value="${wfFieldName}" />
+
+		<execute action="PGWebformConfiguration#assertElementPresent" locator-key1="SETUP_FORM_FIELDS_FIELD_TITLE" />
 	</command>
 </definition>

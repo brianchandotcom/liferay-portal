@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
@@ -42,10 +44,12 @@ public class UploadPortletRequestImpl
 	extends HttpServletRequestWrapper implements UploadPortletRequest {
 
 	public UploadPortletRequestImpl(
+		PortletRequest portletRequest,
 		UploadServletRequest uploadServletRequest, String namespace) {
 
 		super(uploadServletRequest);
 
+		_portletRequest = portletRequest;
 		_uploadServletRequest = uploadServletRequest;
 		_namespace = namespace;
 	}
@@ -269,6 +273,11 @@ public class UploadPortletRequestImpl
 	}
 
 	@Override
+	public PortletRequest getPortletRequest() {
+		return _portletRequest;
+	}
+
+	@Override
 	public Map<String, List<String>> getRegularParameterMap() {
 		if (!(_uploadServletRequest instanceof UploadServletRequestImpl)) {
 			return Collections.emptyMap();
@@ -329,6 +338,7 @@ public class UploadPortletRequestImpl
 	}
 
 	private final String _namespace;
+	private final PortletRequest _portletRequest;
 	private final UploadServletRequest _uploadServletRequest;
 
 }

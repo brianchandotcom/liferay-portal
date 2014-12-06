@@ -168,6 +168,17 @@
 					return json;
 				}
 
+				public String getRebaseError(String githubJenkinsFailureURL) {
+					String consoleOutput = toString(githubJenkinsFailureURL + "/logText/progressiveText");
+
+					int x = consoleOutput.indexOf("[EnvInject] - Variables injected successfully.");
+					int y = consoleOutput.indexOf("--abort");
+
+					String errorMessage = consoleOutput.substring(x, y + 9);
+
+					return fixJSON(errorMessage);
+				}
+
 				public String toFormattedBuildTime(String githubJenkinsBuildTime) {
 					int milliseconds = Integer.parseInt(githubJenkinsBuildTime);
 
@@ -210,6 +221,10 @@
 				}
 
 				public JSONObject toJSONObject(String url) {
+					return new JSONObject(toString(url));
+				}
+
+				public String toString(String url) {
 					StringBuilder sb = new StringBuilder();
 
 					URL urlObject = new URL(fixURL(url));
@@ -222,11 +237,12 @@
 
 					while ((line = bufferedReader.readLine()) != null) {
 						sb.append(line);
+						sb.append("\n");
 					}
 
 					bufferedReader.close();
 
-					return new JSONObject(sb.toString());
+					return sb.toString();
 				}
 
 				StringBuilder sb = new StringBuilder();
@@ -278,7 +294,14 @@
 						sb.append(jsonObject.get("fullDisplayName"));
 						sb.append("</a>");
 						sb.append("<pre>RESULT: ");
-						sb.append(jsonObject.get("result"));
+
+						if (githubJenkinsFailureURL.contains("source")) {
+							sb.append(getRebaseError(githubJenkinsFailureURL));
+						}
+						else {
+							sb.append(jsonObject.get("result"));
+						}
+
 						sb.append("</pre>");
 						sb.append("</li>");
 					}

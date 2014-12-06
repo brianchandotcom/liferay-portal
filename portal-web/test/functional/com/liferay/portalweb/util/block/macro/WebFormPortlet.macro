@@ -91,7 +91,7 @@
 	<command name="viewDeletedFieldNotPresent">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_FIELDS_FIELD_TITLE" />
+		<execute action="PGWebformConfiguration#assertElementNotPresent" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_TITLE" />
 	</command>
 
 	<command name="viewEditableField">
@@ -115,6 +115,41 @@
 	<command name="viewSubmittedField">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute action="PGWebformConfiguration#assertElementPresent" locator-key1="SETUP_FORM_FIELDS_FIELD_TITLE" />
+		<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_TITLE" value1="${wfFieldName}" />
+		<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_NAME" value1="${wfFieldName}" />
+
+		<if>
+			<equals arg1="${wfFieldType}" arg2="Text Box" />
+			<then>
+				<var name="key_wfFieldType" value="textarea" />
+				<var name="wfFieldType" value="textarea" />
+
+				<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_TYPE" value1="${wfFieldType}" />
+			</then>
+			<else>
+				<var name="key_wfFieldType" value="${wfFieldType}" />
+
+				<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_TYPE" value1="${wfFieldType}" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${optional}" arg2="true" />
+			<then>
+				<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_OPTIONAL" value1="Yes" />
+			</then>
+			<else>
+				<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_OPTIONAL" value1="No" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="optionsList" />
+			<then>
+				<var name="key_optionsList" value="${optionsList}" />
+
+				<execute action="PGWebformConfiguration#assertTextEquals" locator-key1="SETUP_FORM_POPULATED_FIELDS_FIELD_OPTIONS" value1="${optionsList}" />
+			</then>
+		</if>
 	</command>
 </definition>

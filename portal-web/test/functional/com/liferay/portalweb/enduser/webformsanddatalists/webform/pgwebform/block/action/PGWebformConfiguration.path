@@ -71,11 +71,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SETUP_FORM_FIELDS_FIELD_TITLE</td>
-	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SETUP_FORM_FIELDS_NAME_FIELD</td>
 	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]/..//input[contains(@id,'_86_fieldLabel') and @type='text']</td>
 	<td></td>
@@ -134,6 +129,37 @@
 <tr>
 	<td>SETUP_FORM_DEFAULT_FIELDS_COMMENTS_NAME_FIELD</td>
 	<td>//input[@id='_86_fieldLabel3']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETUP_FORM_POPULATED_FIELDS-->
+<tr>
+	<td>SETUP_FORM_POPULATED_FIELDS_FIELD_TITLE</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_POPULATED_FIELDS_FIELD_NAME</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]/../dl/dt[contains(.,'Name')]/following-sibling::dd[contains(.,'${key_wfFieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_POPULATED_FIELDS_FIELD_TYPE</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]/../dl/dt[contains(.,'Type')]/following-sibling::dd[contains(.,'${key_wfFieldType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_POPULATED_FIELDS_FIELD_OPTIONAL</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]/../dl/dt[contains(.,'Optional')]/following-sibling::dd</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_POPULATED_FIELDS_FIELD_OPTIONS</td>
+	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]/../dl/dt[contains(.,'Options')]/following-sibling::dd[contains(.,'${key_optionsList}')]</td>
 	<td></td>
 </tr>
 </tbody>

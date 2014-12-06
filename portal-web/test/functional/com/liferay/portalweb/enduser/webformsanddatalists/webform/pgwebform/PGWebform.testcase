@@ -844,6 +844,7 @@
 
 		<execute macro="WebFormPortlet#viewSubmittedField">
 			<var name="wfFieldName" value="Name" />
+			<var name="wfFieldType" value="Text" />
 		</execute>
 
 		<execute macro="WebFormPortlet#viewEditableFieldNotPresent">
@@ -851,7 +852,9 @@
 		</execute>
 
 		<execute macro="WebFormPortlet#viewSubmittedField">
+			<var name="optionsList" value="Excellent,Good,Satisfactory,Poor" />
 			<var name="wfFieldName" value="Rating" />
+			<var name="wfFieldType" value="Options" />
 		</execute>
 
 		<execute macro="WebFormPortlet#viewEditableFieldNotPresent">
@@ -860,6 +863,7 @@
 
 		<execute macro="WebFormPortlet#viewSubmittedField">
 			<var name="wfFieldName" value="Comments" />
+			<var name="wfFieldType" value="Text Box" />
 		</execute>
 
 		<execute action="PGWebformConfiguration#selectFrameTop" value1="relative=top" />

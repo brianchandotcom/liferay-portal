@@ -1,27 +1,27 @@
 Liferay = window.Liferay || {};
 
-(function(A, Liferay) {
-	var Lang = A.Lang;
-
-	var owns = A.Object.owns;
-
+(function($, _, Liferay) {
 	var isNode = function(node) {
-		return node && (node._node || node.nodeType);
+		return node && (node._node || node.jquery || node.nodeType);
 	};
 
 	var REGEX_METHOD_GET = /^get$/i;
 
-	Liferay.namespace = A.namespace;
+	Liferay.namespace = _.namespace;
 
-	A.mix(
-		A.namespace('config.io'),
+	$.ajaxSetup(
 		{
-			method: 'POST',
-			uriFormatter: function(value) {
-				return Liferay.Util.getURLWithSessionId(value);
+			data: {},
+			type: 'POST'
+		}
+	);
+
+	$.ajaxPrefilter(
+		function(options) {
+			if (options.url) {
+				options.url = Liferay.Util.getURLWithSessionId(options.url);
 			}
-		},
-		true
+		}
 	);
 
 	/**
@@ -41,10 +41,10 @@ Liferay = window.Liferay || {};
 
 		var args = Service.parseInvokeArgs(arguments);
 
-		Service.invoke.apply(Service, args);
+		return Service.invoke.apply(Service, args);
 	};
 
-	A.mix(
+	_.assign(
 		Service,
 		{
 			URL_INVOKE: themeDisplay.getPathContext() + '/api/jsonws/invoke',
@@ -52,11 +52,11 @@ Liferay = window.Liferay || {};
 			bind: function() {
 				var instance = this;
 
-				var args = A.Array(arguments, 0, true);
+				var args = _.toArray(arguments);
 
 				args.unshift(Liferay.Service, Liferay);
 
-				return A.bind.apply(A, args);
+				return _.bind.apply(_, args);
 			},
 
 			parseIOConfig: function(args) {
@@ -68,8 +68,8 @@ Liferay = window.Liferay || {};
 
 				delete payload.io;
 
-				if (!(ioConfig.on && ioConfig.on.success)) {
-					var callbacks = A.Array.filter(args, Lang.isFunction);
+				if (!ioConfig.success) {
+					var callbacks = _.filter(args, _.isFunction);
 
 					var callbackSuccess = callbacks[0];
 					var callbackException = callbacks[1];
@@ -78,30 +78,28 @@ Liferay = window.Liferay || {};
 						callbackException = callbackSuccess;
 					}
 
-					A.namespace.call(ioConfig, 'on');
+					ioConfig.complete = function(xhr) {
+						var response = xhr.responseJSON;
 
-					ioConfig.on.success = function(event) {
-						var responseData = this.get('responseData');
-
-						if ((responseData !== null) && !owns(responseData, 'exception')) {
+						if ((response !== null) && !_.has(response, 'exception')) {
 							if (callbackSuccess) {
-								callbackSuccess.call(this, responseData);
+								callbackSuccess.call(this, response);
 							}
 						}
 						else if (callbackException) {
-							var exception = responseData ? (responseData.exception + ': ' + responseData.message) : 'The server returned an empty response';
+							var exception = response ? response.exception : 'The server returned an empty response';
 
-							callbackException.call(this, exception, responseData);
+							callbackException.call(this, exception, response);
 						}
 					};
 				}
 
-				if (!owns(ioConfig, 'cache') && REGEX_METHOD_GET.test(ioConfig.method)) {
+				if (!_.has(ioConfig, 'cache') && REGEX_METHOD_GET.test(ioConfig.type)) {
 					ioConfig.cache = false;
 				}
 
 				if (Liferay.PropsValues.NTLM_AUTH_ENABLED && Liferay.Browser.isIe()) {
-					ioConfig.method = 'GET';
+					ioConfig.type = 'GET';
 				}
 
 				return ioConfig;
@@ -113,9 +111,7 @@ Liferay = window.Liferay || {};
 				var form = args[1];
 
 				if (isNode(form)) {
-					A.namespace.call(ioConfig, 'form');
-
-					ioConfig.form.id = form._node || form;
+					ioConfig.form = form;
 				}
 			},
 
@@ -126,14 +122,14 @@ Liferay = window.Liferay || {};
 
 				var ioConfig = instance.parseIOConfig(args);
 
-				if (Lang.isString(payload)) {
+				if (_.isString(payload)) {
 					payload = instance.parseStringPayload(args);
 
 					instance.parseIOFormConfig(ioConfig, args);
 
 					var lastArg = args[args.length - 1];
 
-					if (Lang.isObject(lastArg) && lastArg.method) {
+					if (_.isObject(lastArg) && lastArg.method) {
 						ioConfig.method = lastArg.method;
 					}
 				}
@@ -149,7 +145,7 @@ Liferay = window.Liferay || {};
 
 				var config = args[1];
 
-				if (!Lang.isFunction(config) && !isNode(config)) {
+				if (!_.isFunction(config) && !isNode(config)) {
 					params = config;
 				}
 
@@ -161,30 +157,38 @@ Liferay = window.Liferay || {};
 		true
 	);
 
-	Liferay.provide(
-		Service,
-		'invoke',
-		function(payload, ioConfig) {
-			var instance = this;
+	Service.invoke = function(payload, ioConfig) {
+		var instance = this;
 
-			A.io.request(
-				instance.URL_INVOKE,
-				A.merge(
-					{
-						data: {
-							cmd: A.JSON.stringify(payload),
-							p_auth: Liferay.authToken
-						},
-						dataType: 'JSON'
-					},
-					ioConfig
-				)
+		_.defaults(
+			ioConfig,
+			{
+				data: {
+					cmd: JSON.stringify(payload),
+					p_auth: Liferay.authToken
+				},
+				dataType: 'JSON'
+			}
+		);
+
+		if (ioConfig.form) {
+			_.forEach(
+				$(ioConfig.form).serializeArray(),
+				function(item, index) {
+					ioConfig.data[item.name] = item.value;
+				}
 			);
-		},
-		['aui-io-request']
-	);
 
-	A.each(
+			delete ioConfig.form;
+		}
+
+		return $.ajax(
+			instance.URL_INVOKE,
+			ioConfig
+		);
+	};
+
+	_.forEach(
 		['get', 'delete', 'post', 'put', 'update'],
 		function(item, index) {
 			var methodName = item;
@@ -193,9 +197,9 @@ Liferay = window.Liferay || {};
 				methodName = 'del';
 			}
 
-			Service[methodName] = A.rbind(
-				'Service',
+			Service[methodName] = _.bindKeyRight(
 				Liferay,
+				'Service',
 				{
 					method: item
 				}
@@ -214,7 +218,7 @@ Liferay = window.Liferay || {};
 		if (arguments.length === 1) {
 			var component = components[id];
 
-			if (component && Lang.isFunction(component)) {
+			if (component && _.isFunction(component)) {
 				componentsFn[id] = component;
 
 				component = component();
@@ -237,4 +241,17 @@ Liferay = window.Liferay || {};
 	Liferay.Template = {
 		PORTLET: '<div class="portlet"><div class="portlet-topper"><div class="portlet-title"></div></div><div class="portlet-content"></div><div class="forbidden-action"></div></div>'
 	};
+})(AUI.$, AUI._, Liferay);
+
+(function(A, Liferay) {
+	A.mix(
+		A.namespace('config.io'),
+		{
+			method: 'POST',
+			uriFormatter: function(value) {
+				return Liferay.Util.getURLWithSessionId(value);
+			}
+		},
+		true
+	);
 })(AUI(), Liferay);

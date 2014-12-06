@@ -26,8 +26,8 @@ public interface GroupFinder {
 
 	public int countByG_U(long groupId, long userId, boolean inherit);
 
-	public int countByC_C_PG_N_D(long companyId, long[] classNameIds,
-		long parentGroupId, java.lang.String[] names,
+	public int countByC_C_PG_GK_D(long companyId, long[] classNameIds,
+		long parentGroupId, java.lang.String[] groupKeys,
 		java.lang.String[] descriptions,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator);
@@ -58,12 +58,13 @@ public interface GroupFinder {
 	public java.util.List<java.lang.Long> findByC_P(long companyId,
 		long parentGroupId, long previousGroupId, int size);
 
-	public com.liferay.portal.model.Group findByC_N(long companyId,
-		java.lang.String name) throws com.liferay.portal.NoSuchGroupException;
+	public com.liferay.portal.model.Group findByC_GK(long companyId,
+		java.lang.String groupKey)
+		throws com.liferay.portal.NoSuchGroupException;
 
-	public java.util.List<com.liferay.portal.model.Group> findByC_C_PG_N_D(
+	public java.util.List<com.liferay.portal.model.Group> findByC_C_PG_GK_D(
 		long companyId, long[] classNameIds, long parentGroupId,
-		java.lang.String[] names, java.lang.String[] descriptions,
+		java.lang.String[] groupKeys, java.lang.String[] descriptions,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);

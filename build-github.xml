@@ -133,6 +133,21 @@
 
 				import org.json.JSONObject;
 
+				public String fixJSON(String json) {
+					json = json.replaceAll("\t", "&#09;");
+					json = json.replaceAll("\\\"", "&#34;");
+					json = json.replaceAll("'", "&#39;");
+					json = json.replaceAll("<", "&#60;");
+					json = json.replaceAll(">", "&#62;");
+					json = json.replaceAll("\\[", "&#91;");
+					json = json.replaceAll("\\]", "&#93;");
+					json = json.replaceAll("\\{", "&#123;");
+					json = json.replaceAll("\\}", "&#125;");
+					json = json.replaceAll("\n", "<br />");
+
+					return json;
+				}
+
 				public String fixURL(String url) {
 					if (url.contains("(")) {
 						url = url.replace("(", "%28");
@@ -151,21 +166,6 @@
 					}
 
 					return url;
-				}
-
-				public String fixJSON(String json) {
-					json = json.replaceAll("\t", "&#09;");
-					json = json.replaceAll("\\\"", "&#34;");
-					json = json.replaceAll("'", "&#39;");
-					json = json.replaceAll("<", "&#60;");
-					json = json.replaceAll(">", "&#62;");
-					json = json.replaceAll("\\[", "&#91;");
-					json = json.replaceAll("\\]", "&#93;");
-					json = json.replaceAll("\\{", "&#123;");
-					json = json.replaceAll("\\}", "&#125;");
-					json = json.replaceAll("\n", "<br />");
-
-					return json;
 				}
 
 				public String getRebaseError(String githubJenkinsFailureURL) {

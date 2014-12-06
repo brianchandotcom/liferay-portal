@@ -180,6 +180,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="folderId" arrayable-operator="OR" />
 		</finder>
+		<finder name="C_F" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="fileEntryTypeId" />
+		</finder>
 		<finder name="R_F" return-type="Collection">
 			<finder-column name="repositoryId" />
 			<finder-column name="folderId" />

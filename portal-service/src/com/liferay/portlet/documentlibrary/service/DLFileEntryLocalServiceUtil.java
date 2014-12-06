@@ -379,6 +379,13 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getCompanyFileEntriesByFileEntryType(
+		long companyId, long fileEntryTypeId) {
+		return getService()
+				   .getCompanyFileEntriesByFileEntryType(companyId,
+			fileEntryTypeId);
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDDMStructureFileEntries(
 		long[] ddmStructureIds) {
 		return getService().getDDMStructureFileEntries(ddmStructureIds);

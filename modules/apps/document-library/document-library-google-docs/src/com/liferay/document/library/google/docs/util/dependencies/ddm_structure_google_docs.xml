@@ -8,30 +8,37 @@
 			<entry name="tip" />
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="Title" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
+	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="NAME" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
 		<meta-data locale="en_US">
-			<entry name="label">Title</entry>
+			<entry name="label">NAME</entry>
 			<entry name="predefinedValue" />
 			<entry name="tip" />
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="Icon" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
+	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="DESCRIPTION" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
 		<meta-data locale="en_US">
-			<entry name="label">Icon</entry>
+			<entry name="label">DESCRIPTION</entry>
 			<entry name="predefinedValue" />
 			<entry name="tip" />
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="Embed_URL" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
+	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="ICON_URL" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
 		<meta-data locale="en_US">
-			<entry name="label">Embed URL</entry>
+			<entry name="label">ICON_URL</entry>
 			<entry name="predefinedValue" />
 			<entry name="tip" />
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="Edit_URL" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
+	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="EMBEDDABLE_URL" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
 		<meta-data locale="en_US">
-			<entry name="label">Edit URL</entry>
+			<entry name="label">EMBEDDABLE_URL</entry>
+			<entry name="predefinedValue" />
+			<entry name="tip" />
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="URL" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
+		<meta-data locale="en_US">
+			<entry name="label">URL</entry>
 			<entry name="predefinedValue" />
 			<entry name="tip" />
 		</meta-data>

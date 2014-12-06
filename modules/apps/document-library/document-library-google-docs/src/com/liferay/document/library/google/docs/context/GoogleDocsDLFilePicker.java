@@ -17,11 +17,9 @@ package com.liferay.document.library.google.docs.context;
 import com.liferay.document.library.google.docs.util.FreeMarkerRenderer;
 import com.liferay.document.library.google.docs.util.GoogleDocsConfigurationHelper;
 import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
-import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.context.DLFilePicker;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import freemarker.template.TemplateException;
 
@@ -34,20 +32,13 @@ import java.io.IOException;
 public class GoogleDocsDLFilePicker implements DLFilePicker {
 
 	public GoogleDocsDLFilePicker(
-		GoogleDocsMetadataHelper googleDocsMetadataHelper,
-		ThemeDisplay themeDisplay, String namespace,
-		String onFilePickCallback) {
+		String namespace, String onFilePickCallback,
+		ThemeDisplay themeDisplay) {
 
-		_googleDocsMetadataHelper = googleDocsMetadataHelper;
 		_namespace = namespace;
 		_onFilePickCallback = onFilePickCallback;
 		_googleDocsConfigurationHelper = new GoogleDocsConfigurationHelper(
 			themeDisplay.getCompanyId());
-	}
-
-	@Override
-	public DDMStructure getDDMStructure() {
-		return _googleDocsMetadataHelper.getDDMStructure();
 	}
 
 	@Override
@@ -57,7 +48,7 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 
 	@Override
 	public String getIconFieldName() {
-		return GoogleDocsConstants.DDM_FIELD_NAME_ICON;
+		return GoogleDocsConstants.DDM_FIELD_NAME_ICON_URL;
 	}
 
 	@Override
@@ -99,11 +90,10 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 
 	@Override
 	public String getTitleFieldName() {
-		return GoogleDocsConstants.DDM_FIELD_NAME_TITLE;
+		return GoogleDocsConstants.DDM_FIELD_NAME_NAME;
 	}
 
 	private final GoogleDocsConfigurationHelper _googleDocsConfigurationHelper;
-	private final GoogleDocsMetadataHelper _googleDocsMetadataHelper;
 	private final String _namespace;
 	private final String _onFilePickCallback;
 

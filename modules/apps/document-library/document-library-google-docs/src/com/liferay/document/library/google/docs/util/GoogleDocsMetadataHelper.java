@@ -14,17 +14,21 @@
 
 package com.liferay.document.library.google.docs.util;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
+import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 
 import java.io.Serializable;
 
@@ -37,26 +41,55 @@ import java.util.Map;
  */
 public class GoogleDocsMetadataHelper {
 
-	public GoogleDocsMetadataHelper(DLFileEntry dlFileEntry) {
+	public static DDMStructure getGoogleDocsDDMStructure(
+		DLFileEntryType dlFileEntryType) {
+
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			String structureKey = ddmStructure.getStructureKey();
+
+			if (structureKey.equals(
+					GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
+
+				return ddmStructure;
+			}
+		}
+
+		return null;
+	}
+
+	public GoogleDocsMetadataHelper(
+		DLFileEntry dlFileEntry,
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
+		StorageEngine storageEngine) {
+
 		try {
+			_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+			_storageEngine = storageEngine;
+
 			_dlFileVersion = dlFileEntry.getFileVersion();
 
-			initDDMStructure(dlFileEntry.getDLFileEntryType());
+			_ddmStructure = getGoogleDocsDDMStructure(
+				dlFileEntry.getDLFileEntryType());
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
 		}
 	}
 
-	public GoogleDocsMetadataHelper(DLFileEntryType dlFileEntryType) {
-		initDDMStructure(dlFileEntryType);
-	}
+	public GoogleDocsMetadataHelper(
+		DLFileVersion dlFileVersion,
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
+		StorageEngine storageEngine) {
 
-	public GoogleDocsMetadataHelper(DLFileVersion dlFileVersion) {
 		_dlFileVersion = dlFileVersion;
+		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+		_storageEngine = storageEngine;
 
 		try {
-			initDDMStructure(dlFileVersion.getDLFileEntryType());
+			_ddmStructure = getGoogleDocsDDMStructure(
+				dlFileVersion.getDLFileEntryType());
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
@@ -64,9 +97,9 @@ public class GoogleDocsMetadataHelper {
 	}
 
 	public boolean containsField(String fieldName) {
-		initFields();
+		initDLFileEntryMetadataAndFields();
 
-		Field field = _fields.get(fieldName);
+		Field field = _fieldsMap.get(fieldName);
 
 		if (field != null) {
 			return true;
@@ -75,18 +108,8 @@ public class GoogleDocsMetadataHelper {
 		return false;
 	}
 
-	public DDMStructure getDDMStructure() {
-		return _ddmStructure;
-	}
-
 	public String getFieldValue(String fieldName) {
-		initFields();
-
-		Field field = _fields.get(fieldName);
-
-		if (field == null) {
-			throw new IllegalArgumentException("Unknown field " + fieldName);
-		}
+		Field field = _getField(fieldName);
 
 		Serializable value = field.getValue();
 
@@ -105,52 +128,153 @@ public class GoogleDocsMetadataHelper {
 		return false;
 	}
 
-	protected void initDDMStructure(DLFileEntryType dlFileEntryType) {
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+	public void setFieldValue(String fieldName, String value) {
+		Field field = _getField(fieldName);
 
-		for (DDMStructure ddmStructure : ddmStructures) {
-			String structureKey = ddmStructure.getStructureKey();
+		field.setValue(value);
+	}
 
-			if (structureKey.equals(
-					GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
-
-				_ddmStructure = ddmStructure;
-			}
+	public void update() {
+		try {
+			_storageEngine.update(
+				_dlFileEntryMetadata.getDDMStorageId(), _fields,
+				new ServiceContext());
+		}
+		catch (StorageException se) {
+			throw new SystemException(
+				"Unable to update DDM fields for file version " +
+					_dlFileVersion.getFileVersionId(),
+				se);
 		}
 	}
 
-	protected void initFields() {
-		if (_fields == null) {
-			_fields = new HashMap<>();
+	protected void addGoogleDocsDLFileEntryMetadata() {
+		try {
+			DLFileEntry dlFileEntry = _dlFileVersion.getFileEntry();
 
-			if (_dlFileVersion == null) {
-				return;
-			}
+			_dlFileEntryMetadata =
+				_dlFileEntryMetadataLocalService.createDLFileEntryMetadata(
+					CounterLocalServiceUtil.increment());
 
-			try {
-				DLFileEntryMetadata dlFileEntryMetadata =
-					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
-						_ddmStructure.getStructureId(),
-						_dlFileVersion.getFileVersionId());
+			long ddmStructureId = _ddmStructure.getStructureId();
 
-				Fields fields = StorageEngineUtil.getFields(
-					dlFileEntryMetadata.getDDMStorageId());
+			Fields fields = new Fields();
 
-				for (Field field : fields) {
-					_fields.put(field.getName(), field);
-				}
-			}
-			catch (PortalException pe) {
-				throw new SystemException(
-					"Unable to load DDM fields for file version " +
-						_dlFileVersion.getFileVersionId(),
-					pe);
-			}
+			fields.put(
+				new Field(
+					ddmStructureId,
+					GoogleDocsConstants.DDM_FIELD_NAME_DESCRIPTION, ""));
+			fields.put(
+				new Field(
+					ddmStructureId, GoogleDocsConstants.DDM_FIELD_NAME_URL,
+					""));
+			fields.put(
+				new Field(
+					ddmStructureId,
+					GoogleDocsConstants.DDM_FIELD_NAME_EMBEDDABLE_URL, ""));
+			fields.put(
+				new Field(
+					ddmStructureId, GoogleDocsConstants.DDM_FIELD_NAME_ICON_URL,
+					""));
+			fields.put(
+				new Field(
+					ddmStructureId, GoogleDocsConstants.DDM_FIELD_NAME_ID, ""));
+			fields.put(
+				new Field(
+					ddmStructureId, GoogleDocsConstants.DDM_FIELD_NAME_NAME,
+					""));
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setUserId(_dlFileVersion.getUserId());
+			serviceContext.setScopeGroupId(_dlFileVersion.getGroupId());
+
+			long ddmStorageId = _storageEngine.create(
+				_dlFileVersion.getCompanyId(), ddmStructureId, fields,
+				serviceContext);
+
+			_dlFileEntryMetadata.setDDMStorageId(ddmStorageId);
+			_dlFileEntryMetadata.setDDMStructureId(ddmStructureId);
+			_dlFileEntryMetadata.setFileEntryTypeId(
+				dlFileEntry.getFileEntryTypeId());
+			_dlFileEntryMetadata.setFileEntryId(dlFileEntry.getFileEntryId());
+			_dlFileEntryMetadata.setFileVersionId(
+				_dlFileVersion.getFileVersionId());
+
+			_dlFileEntryMetadata =
+				_dlFileEntryMetadataLocalService.addDLFileEntryMetadata(
+					_dlFileEntryMetadata);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to add DDM fields for file version " +
+					_dlFileVersion.getFileVersionId(),
+				pe);
 		}
 	}
 
-	private DDMStructure _ddmStructure;
+	protected void initDLFileEntryMetadataAndFields() {
+		if (_fieldsMap != null) {
+			return;
+		}
+
+		if (_dlFileVersion == null) {
+			return;
+		}
+
+		_fieldsMap = new HashMap<>();
+
+		try {
+			_dlFileEntryMetadata =
+				_dlFileEntryMetadataLocalService.getFileEntryMetadata(
+					_ddmStructure.getStructureId(),
+					_dlFileVersion.getFileVersionId());
+		}
+		catch (NoSuchFileEntryMetadataException nsfeme) {
+			addGoogleDocsDLFileEntryMetadata();
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to load file entry metadata for file version " +
+					_dlFileVersion.getFileVersionId(),
+				pe);
+		}
+
+		try {
+			_fields = _storageEngine.getFields(
+				_dlFileEntryMetadata.getDDMStorageId());
+
+			for (Field field : _fields) {
+				_fieldsMap.put(field.getName(), field);
+			}
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to load DDM fields for file version " +
+					_dlFileVersion.getFileVersionId(),
+				pe);
+		}
+	}
+
+	private Field _getField(String fieldName) {
+		initDLFileEntryMetadataAndFields();
+
+		Field field = _fieldsMap.get(fieldName);
+
+		if (field == null) {
+			throw new IllegalArgumentException("Unknown field " + fieldName);
+		}
+
+		return field;
+	}
+
+	private final DDMStructure _ddmStructure;
+	private DLFileEntryMetadata _dlFileEntryMetadata;
+	private final DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalService;
 	private DLFileVersion _dlFileVersion;
-	private Map<String, Field> _fields;
+	private Fields _fields;
+	private Map<String, Field> _fieldsMap;
+	private final StorageEngine _storageEngine;
 
 }

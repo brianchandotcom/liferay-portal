@@ -28,7 +28,6 @@ import com.liferay.sync.engine.util.OSDetector;
 
 import java.io.IOException;
 
-import java.nio.file.ClosedWatchServiceException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -44,6 +43,7 @@ import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import name.pachler.nio.file.ClosedWatchServiceException;
 import name.pachler.nio.file.FileSystem;
 import name.pachler.nio.file.FileSystems;
 import name.pachler.nio.file.Paths;
@@ -123,6 +123,15 @@ public class Watcher implements Runnable {
 
 				try {
 					watchKey = _watchService.take();
+				}
+				catch (ClosedWatchServiceException cwse) {
+					if (!SyncEngine.isRunning()) {
+						break;
+					}
+
+					_logger.error(cwse.getMessage(), cwse);
+
+					continue;
 				}
 				catch (Exception e) {
 					if (_logger.isTraceEnabled()) {
@@ -251,13 +260,6 @@ public class Watcher implements Runnable {
 						break;
 					}
 				}
-			}
-			catch (ClosedWatchServiceException cwse) {
-				if (!SyncEngine.isRunning()) {
-					break;
-				}
-
-				_logger.error(cwse.getMessage(), cwse);
 			}
 			catch (Exception e) {
 				_logger.error(e.getMessage(), e);

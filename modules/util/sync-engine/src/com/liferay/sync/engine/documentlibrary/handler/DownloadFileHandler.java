@@ -101,7 +101,7 @@ public class DownloadFileHandler extends BaseHandler {
 			handleSiteDeactivatedException();
 		}
 
-		Session session = SessionManager.getSession(getSyncAccountId());
+		final Session session = SessionManager.getSession(getSyncAccountId());
 
 		Header tokenHeader = httpResponse.getFirstHeader("Sync-JWT");
 

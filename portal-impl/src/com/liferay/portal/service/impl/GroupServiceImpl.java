@@ -123,7 +123,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @param      parentGroupId the primary key of the parent group
 	 * @param      liveGroupId the primary key of the live group
-	 * @param      groupKey the entity's groupKey
+	 * @param      name the entity's name
 	 * @param      description the group's description (optionally
 	 *             <code>null</code>)
 	 * @param      type the group's type. For more information see {@link
@@ -152,7 +152,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Group addGroup(
-			long parentGroupId, long liveGroupId, String groupKey,
+			long parentGroupId, long liveGroupId, String name,
 			String description, int type, boolean manualMembership,
 			int membershipRestriction, String friendlyURL, boolean site,
 			boolean active, ServiceContext serviceContext)
@@ -162,7 +162,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(locale, groupKey);
+		nameMap.put(locale, name);
 
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
@@ -178,7 +178,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * Adds the group using the group default live group ID.
 	 *
 	 * @param      parentGroupId the primary key of the parent group
-	 * @param      groupKey the entity's groupKey
+	 * @param      name the entity's name
 	 * @param      description the group's description (optionally
 	 *             <code>null</code>)
 	 * @param      type the group's type. For more information see {@link
@@ -202,7 +202,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Group addGroup(
-			long parentGroupId, String groupKey, String description, int type,
+			long parentGroupId, String name, String description, int type,
 			String friendlyURL, boolean site, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -211,7 +211,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(locale, groupKey);
+		nameMap.put(locale, name);
 
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
@@ -231,12 +231,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Group addGroup(
-			String groupKey, String description, int type, String friendlyURL,
+			String name, String description, int type, String friendlyURL,
 			boolean site, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addGroup(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID, groupKey, description, type,
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, name, description, type,
 			friendlyURL, site, active, serviceContext);
 	}
 
@@ -364,16 +364,14 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * Returns the group with the name.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  groupKey the group's key
-	 * @return the group with the groupKey
+	 * @param  name the group's name
+	 * @return the group with the name
 	 * @throws PortalException if a matching group could not be found or if the
 	 *         current user did not have permission to view the group
 	 */
 	@Override
-	public Group getGroup(long companyId, String groupKey)
-		throws PortalException {
-
-		Group group = groupLocalService.getGroup(companyId, groupKey);
+	public Group getGroup(long companyId, String name) throws PortalException {
+		Group group = groupLocalService.getGroup(companyId, name);
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), group, ActionKeys.VIEW);
@@ -1161,7 +1159,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *
 	 * @param      groupId the primary key of the group
 	 * @param      parentGroupId the primary key of the parent group
-	 * @param      groupKey the group's key
+	 * @param      name the group's name
 	 * @param      description the group's new description (optionally
 	 *             <code>null</code>)
 	 * @param      type the group's new type. For more information see {@link
@@ -1187,17 +1185,16 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Group updateGroup(
-			long groupId, long parentGroupId, String groupKey,
-			String description, int type, boolean manualMembership,
-			int membershipRestriction, String friendlyURL, boolean active,
-			ServiceContext serviceContext)
+			long groupId, long parentGroupId, String name, String description,
+			int type, boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		Locale locale = LocaleUtil.getDefault();
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(locale, groupKey);
+		nameMap.put(locale, name);
 
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 

@@ -1180,7 +1180,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             found, if the friendly URL was invalid or could one not be
 	 *             created
 	 * @deprecated As of 7.0.0, replaced by {@link #updateGroup(long, long, Map,
-	 *             Map, int, boolean, int, String, boolean, ServiceContext)}
+	 *             Map, int, boolean, int, String, boolean, boolean,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -1202,7 +1203,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		return updateGroup(
 			groupId, parentGroupId, nameMap, descriptionMap, type,
-			manualMembership, membershipRestriction, friendlyURL, active,
+			manualMembership, membershipRestriction, friendlyURL, false, active,
 			serviceContext);
 	}
 

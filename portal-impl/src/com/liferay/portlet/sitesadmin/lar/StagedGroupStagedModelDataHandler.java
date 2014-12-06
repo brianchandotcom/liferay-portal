@@ -52,7 +52,7 @@ public class StagedGroupStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(StagedGroup stagedGroup) {
-		return stagedGroup.getName();
+		return stagedGroup.getGroupKey();
 	}
 
 	@Override

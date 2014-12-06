@@ -169,7 +169,7 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByC_C_PG_N_D">
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByC_C_PG_GK_D">
 		<![CDATA[
 			SELECT
 				DISTINCT Group_.groupId AS groupId
@@ -182,8 +182,8 @@
 				(Group_.classNameId = ?) AND
 				(Group_.parentGroupId [$PARENT_GROUP_ID_COMPARATOR$] ?) AND
 				(Group_.liveGroupId = 0) AND
-				(Group_.name != 'Control Panel') AND
-				(lower(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(Group_.groupKey != 'Control Panel') AND
+				(lower(Group_.groupKey) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 				(lower(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$]) AND
 				(Group_.type_ != 4)
 		]]>
@@ -191,7 +191,7 @@
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByLayouts">
 		<![CDATA[
 			SELECT
-				Group_.*, Group_.name AS groupName
+				Group_.*, Group_.groupKey AS groupKey
 			FROM
 				Group_
 			INNER JOIN
@@ -265,8 +265,8 @@
 				WHERE
 					(Group_.companyId = ?) AND
 					(
-						(Group_.name = 'Control Panel') OR
-						(Group_.name = 'Guest') OR
+						(Group_.groupKey = 'Control Panel') OR
+						(Group_.groupKey = 'Guest') OR
 						(Group_.type_ = 4)
 					)
 			)
@@ -275,7 +275,7 @@
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_C">
 		<![CDATA[
 			SELECT
-				DISTINCT Group_.groupId AS groupId, Group_.name AS groupName
+				DISTINCT Group_.groupId AS groupId, Group_.groupKey AS groupKey
 			FROM
 				Group_
 			[$JOIN$]
@@ -301,7 +301,7 @@
 				groupId ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_N">
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_GK">
 		<![CDATA[
 			SELECT
 				{Group_.*}
@@ -310,14 +310,14 @@
 			WHERE
 				(Group_.companyId = ?) AND
 				(Group_.liveGroupId = 0) AND
-				(lower(Group_.name) = ?) AND
+				(lower(Group_.groupKey) = ?) AND
 				(Group_.type_ != 4)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_C_PG_N_D">
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_C_PG_GK_D">
 		<![CDATA[
 			SELECT
-				DISTINCT Group_.groupId AS groupId, Group_.name AS groupName, Group_.type_ AS groupType, Group_.friendlyURL AS groupFriendlyURL
+				DISTINCT Group_.groupId AS groupId, Group_.groupKey AS groupKey, Group_.type_ AS groupType, Group_.friendlyURL AS groupFriendlyURL
 			FROM
 				Group_
 			[$JOIN$]
@@ -327,8 +327,8 @@
 				(Group_.classNameId = ?) AND
 				(Group_.parentGroupId [$PARENT_GROUP_ID_COMPARATOR$] ?) AND
 				(Group_.liveGroupId = 0) AND
-				(Group_.name != 'Control Panel') AND
-				(lower(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(Group_.groupKey != 'Control Panel') AND
+				(lower(Group_.groupKey) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 				(lower(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$]) AND
 				(Group_.type_ != 4)
 		]]>

@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.AggregateTestRule;
@@ -29,10 +30,11 @@ import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
-import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
@@ -57,8 +59,9 @@ import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -76,12 +79,12 @@ public class DLFileEntryFinderTest {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_user = UserTestUtil.addUser();
+
 		long classNameId = PortalUtil.getClassNameId(
 			LiferayRepository.class.getName());
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
 		_group = GroupTestUtil.addGroup();
 
@@ -91,7 +94,7 @@ public class DLFileEntryFinderTest {
 		_repository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Repository A",
-			StringPool.BLANK, "Test Portlet", typeSettingsProperties, true,
+			StringPool.BLANK, "Test Portlet", new UnicodeProperties(), true,
 			serviceContext);
 
 		Object[] objects = setUp(
@@ -104,6 +107,13 @@ public class DLFileEntryFinderTest {
 			_repository.getRepositoryId(), "-NewRepository", serviceContext);
 
 		_newRepositoryFolder = (Folder)objects[0];
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws PortalException {
+		GroupLocalServiceUtil.deleteGroup(_group);
+
+		UserLocalServiceUtil.deleteUser(_user);
 	}
 
 	@Test
@@ -1297,11 +1307,9 @@ public class DLFileEntryFinderTest {
 		Assert.assertEquals("FE1.txt", dlFileEntry.getTitle());
 	}
 
-	protected FileEntry addFileEntry(
+	protected static FileEntry addFileEntry(
 			long repositoryId, Folder folder, String titleSuffix)
 		throws Exception {
-
-		User user = UserTestUtil.addUser();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -1313,7 +1321,7 @@ public class DLFileEntryFinderTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return DLAppLocalServiceUtil.addFileEntry(
-			user.getUserId(), repositoryId, folder.getFolderId(), "FE1.txt",
+			_user.getUserId(), repositoryId, folder.getFolderId(), "FE1.txt",
 			ContentTypes.TEXT_PLAIN, "FE1.txt".concat(titleSuffix), null, null,
 			(byte[])null, serviceContext);
 	}
@@ -1488,7 +1496,7 @@ public class DLFileEntryFinderTest {
 			queryDefinition);
 	}
 
-	protected Object[] setUp(
+	protected static Object[] setUp(
 			long repositoryId, String titleSuffix,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -1573,13 +1581,11 @@ public class DLFileEntryFinderTest {
 
 	private static final long _SMALL_IMAGE_ID = 1234L;
 
-	private DLFileVersion _defaultRepositoryDLFileVersion;
-	private Folder _defaultRepositoryFolder;
-
-	@DeleteAfterTestRun
-	private Group _group;
-
-	private Folder _newRepositoryFolder;
-	private Repository _repository;
+	private static DLFileVersion _defaultRepositoryDLFileVersion;
+	private static Folder _defaultRepositoryFolder;
+	private static Group _group;
+	private static Folder _newRepositoryFolder;
+	private static Repository _repository;
+	private static User _user;
 
 }

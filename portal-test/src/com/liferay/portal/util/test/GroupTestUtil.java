@@ -31,6 +31,8 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.StagingLocalServiceUtil;
+import com.liferay.portal.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.test.randomizerbumpers.UniqueStringRandomizerBumper;
 
 import java.util.Locale;
 import java.util.Map;
@@ -41,7 +43,16 @@ import java.util.Map;
 public class GroupTestUtil {
 
 	public static Group addGroup() throws Exception {
-		return addGroup(RandomTestUtil.randomString());
+		return addGroup(GroupConstants.DEFAULT_PARENT_GROUP_ID);
+	}
+
+	public static Group addGroup(long parentGroupId) throws Exception {
+		return addGroup(
+			parentGroupId,
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			"This is a test group.");
 	}
 
 	public static Group addGroup(long userId, Layout layout) throws Exception {
@@ -92,28 +103,13 @@ public class GroupTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	public static Group addGroup(long parentGroupId, String name)
-		throws Exception {
-
-		return addGroup(parentGroupId, name, "This is a test group.");
-	}
-
 	public static Group addGroup(
-			long parentGroupId, String name, String description)
+			long parentGroupId, ServiceContext serviceContext)
 		throws Exception {
 
-		return addGroup(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			parentGroupId, name, description);
-	}
-
-	public static Group addGroup(String name) throws Exception {
-		return addGroup(GroupConstants.DEFAULT_PARENT_GROUP_ID, name);
-	}
-
-	public static Group addGroup(
-			String name, long parentGroupId, ServiceContext serviceContext)
-		throws Exception {
+		String name = RandomTestUtil.randomString(
+			NumericStringRandomizerBumper.INSTANCE,
+			UniqueStringRandomizerBumper.INSTANCE);
 
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			TestPropsValues.getCompanyId(), name);
@@ -140,6 +136,25 @@ public class GroupTestUtil {
 			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
 			description, type, manualMembership, membershipRestriction,
 			friendlyURL, site, active, serviceContext);
+	}
+
+	public static Group addGroup(long parentGroupId, String name)
+		throws Exception {
+
+		return addGroup(parentGroupId, name, "This is a test group.");
+	}
+
+	public static Group addGroup(
+			long parentGroupId, String name, String description)
+		throws Exception {
+
+		return addGroup(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			parentGroupId, name, description);
+	}
+
+	public static Group addGroup(String name) throws Exception {
+		return addGroup(GroupConstants.DEFAULT_PARENT_GROUP_ID, name);
 	}
 
 	public static void enableLocalStaging(Group group) throws Exception {

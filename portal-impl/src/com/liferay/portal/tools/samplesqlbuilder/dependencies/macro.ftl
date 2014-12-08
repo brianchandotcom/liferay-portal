@@ -133,7 +133,7 @@
 	_groupModel
 	_publicPageCount
 >
-	insert into Group_ values (${_groupModel.mvccVersion}, '${_groupModel.uuid}', ${_groupModel.groupId}, ${_groupModel.companyId}, ${_groupModel.creatorUserId}, ${_groupModel.classNameId}, ${_groupModel.classPK}, ${_groupModel.parentGroupId}, ${_groupModel.liveGroupId}, '${_groupModel.treePath}', '${_groupModel.name}', '${_groupModel.description}', ${_groupModel.type}, '${_groupModel.typeSettings}', ${_groupModel.manualMembership?string}, ${_groupModel.membershipRestriction}, '${_groupModel.friendlyURL}', ${_groupModel.site?string}, ${_groupModel.remoteStagingGroupCount}, ${_groupModel.inheritContent?string}, ${_groupModel.active?string});
+	insert into Group_ values (${_groupModel.mvccVersion}, '${_groupModel.uuid}', ${_groupModel.groupId}, ${_groupModel.companyId}, ${_groupModel.creatorUserId}, ${_groupModel.classNameId}, ${_groupModel.classPK}, ${_groupModel.parentGroupId}, ${_groupModel.liveGroupId}, '${_groupModel.treePath}', '${_groupModel.groupKey}', '${_groupModel.name}', '${_groupModel.description}', ${_groupModel.type}, '${_groupModel.typeSettings}', ${_groupModel.manualMembership?string}, ${_groupModel.membershipRestriction}, '${_groupModel.friendlyURL}', ${_groupModel.site?string}, ${_groupModel.remoteStagingGroupCount}, ${_groupModel.inheritContent?string}, ${_groupModel.active?string});
 
 	<#local layoutSetModels = dataFactory.newLayoutSetModels(_groupModel.groupId, _publicPageCount)>
 

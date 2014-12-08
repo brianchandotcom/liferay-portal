@@ -105,17 +105,21 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 <aui:script>
 	function <portlet:namespace />saveCategory() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (category == null) ? Constants.ADD : Constants.UPDATE %>';
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		submitForm(document.<portlet:namespace />fm);
+		form.fm('<%= Constants.CMD %>').val('<%= (category == null) ? Constants.ADD : Constants.UPDATE %>');
+
+		submitForm(form);
 	}
 
-	function removeCategory() {
+	function <portlet:namespace />removeCategory() {
 		var $ = AUI.$;
 
-		document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = '<%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>';
+		var form = $(document.<portlet:namespace />fm);
 
-		document.getElementById('<portlet:namespace />parentCategoryName').value = '';
+		form.fm('parentCategoryId').val('<%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>');
+
+		form.fm('parentCategoryName').val('');
 
 		$('#<portlet:namespace />mergeParentCheckboxDiv').addClass('hide');
 
@@ -137,11 +141,13 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(parentCategoryId) %>" /></portlet:renderURL>'
 				},
 				function(event) {
+					var form = AUI.$(document.<portlet:namespace />fm);
+
 					var parentCategoryId = event.categoryid;
 
-					document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
+					form.fm('parentCategoryId').val(parentCategoryId);
 
-					document.getElementById('<portlet:namespace />parentCategoryName').value = event.name;
+					form.fm('parentCategoryName').val(event.name);
 
 					if (parentCategoryId != <%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>) {
 						$('#<portlet:namespace />mergeParentCheckboxDiv').removeClass('hide');

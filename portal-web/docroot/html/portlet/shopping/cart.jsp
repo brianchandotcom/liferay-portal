@@ -32,22 +32,18 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	var itemsInStock = true;
 
 	function <portlet:namespace />checkout() {
-		if (!itemsInStock) {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "your-cart-has-items-that-are-out-of-stock") %>')) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
-				document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<portlet:actionURL><portlet:param name="struts_action" value="/shopping/checkout" /><portlet:param name="cmd" value='<%= Constants.CHECKOUT %>'/></portlet:actionURL>';
-				<portlet:namespace />updateCart();
-			}
-		}
-		else {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHECKOUT %>';
-			document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<portlet:actionURL><portlet:param name="struts_action" value="/shopping/checkout" /><portlet:param name="cmd" value='<%= Constants.CHECKOUT %>'/></portlet:actionURL>';
-			<portlet:namespace />updateCart();
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		if (itemsInStock || confirm('<%= UnicodeLanguageUtil.get(request, "your-cart-has-items-that-are-out-of-stock") %>')) {
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.CHECKOUT %>');
+			form.fm('redirect').val('<portlet:actionURL><portlet:param name="struts_action" value="/shopping/checkout" /><portlet:param name="cmd" value='<%= Constants.CHECKOUT %>'/></portlet:actionURL>');
+			<portlet:namespace />updateCart()
 		}
 	}
 
 	function <portlet:namespace />updateCart() {
 		var count = 0;
+		var form = AUI.$(document.<portlet:namespace />fm);
 		var invalidSKUs = '';
 		var itemIds = '';
 		var subtotal = 0;
@@ -63,7 +59,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			int maxQuantity = _getMaxQuantity(itemPrices);
 		%>
 
-			count = document.<portlet:namespace />fm.<portlet:namespace />item_<%= item.getItemId() %>_<%= itemsCount %>_count.value;
+			count = form.fm('item_<%= item.getItemId() %>_<%= itemsCount %>_count').val();
 
 			subtotal += <%= ShoppingUtil.calculateActualPrice(item, 1) %> * count;
 
@@ -86,10 +82,10 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		}
 		%>
 
-		if (document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value == '<%= Constants.CHECKOUT %>') {
+		if (form.fm('<%= Constants.CMD %>').val() == '<%= Constants.CHECKOUT %>') {
 			if (subtotal < <%= shoppingSettings.getMinOrder() %>) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UPDATE %>'
-				document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= currentURL %>';
+				form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
+				form.fm('redirect').val('<%= currentURL %>');
 
 				alert('<%= UnicodeLanguageUtil.format(request, "your-order-cannot-be-processed-because-it-falls-below-the-minimum-required-amount-of-x", currencyFormat.format(shoppingSettings.getMinOrder()), false) %>');
 
@@ -97,10 +93,10 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			}
 		}
 
-		document.<portlet:namespace />fm.<portlet:namespace />itemIds.value = itemIds;
+		form.fm('itemIds').val(itemIds);
 
 		if (invalidSKUs == '') {
-			submitForm(document.<portlet:namespace />fm);
+			submitForm(form);
 		}
 		else {
 			alert('<%= UnicodeLanguageUtil.get(request, "please-enter-valid-quantities-for-the-following-skus") %>' + invalidSKUs);

@@ -281,7 +281,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			friendlyURL);
 
 		if (staging) {
-			groupKey = groupKey.concat(ORGANIZATION_STAGING_SUFFIX);
+			for (Locale locale : nameMap.keySet()) {
+				String name = nameMap.get(locale);
+
+				if (Validator.isNull(name)) {
+					continue;
+				}
+
+				nameMap.put(locale, name.concat(ORGANIZATION_STAGING_SUFFIX));
+			}
+
+			groupKey = groupKey.concat("-staging");
 			friendlyURL = getFriendlyURL(friendlyURL.concat("-staging"));
 		}
 

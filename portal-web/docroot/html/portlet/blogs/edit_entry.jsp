@@ -104,7 +104,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	</c:if>
 
 	<liferay-ui:tabs
-		names="details,settings"
+		names="content,settings"
 		refresh="<%= false %>"
 		type="pills"
 	>

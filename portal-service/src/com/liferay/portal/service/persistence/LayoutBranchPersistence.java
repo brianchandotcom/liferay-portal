@@ -130,14 +130,14 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	/**
 	* Returns the layout branchs before and after the current layout branch in the ordered set where layoutSetBranchId = &#63;.
 	*
-	* @param LayoutBranchId the primary key of the current layout branch
+	* @param layoutBranchId the primary key of the current layout branch
 	* @param layoutSetBranchId the layout set branch ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout branch
 	* @throws com.liferay.portal.NoSuchLayoutBranchException if a layout branch with the primary key could not be found
 	*/
 	public com.liferay.portal.model.LayoutBranch[] findByLayoutSetBranchId_PrevAndNext(
-		long LayoutBranchId, long layoutSetBranchId,
+		long layoutBranchId, long layoutSetBranchId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutBranch> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutBranchException;
 
@@ -255,7 +255,7 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	/**
 	* Returns the layout branchs before and after the current layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
 	*
-	* @param LayoutBranchId the primary key of the current layout branch
+	* @param layoutBranchId the primary key of the current layout branch
 	* @param layoutSetBranchId the layout set branch ID
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -263,7 +263,7 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	* @throws com.liferay.portal.NoSuchLayoutBranchException if a layout branch with the primary key could not be found
 	*/
 	public com.liferay.portal.model.LayoutBranch[] findByL_P_PrevAndNext(
-		long LayoutBranchId, long layoutSetBranchId, long plid,
+		long layoutBranchId, long layoutSetBranchId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutBranch> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutBranchException;
 
@@ -450,7 +450,7 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	/**
 	* Returns the layout branchs before and after the current layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
 	*
-	* @param LayoutBranchId the primary key of the current layout branch
+	* @param layoutBranchId the primary key of the current layout branch
 	* @param layoutSetBranchId the layout set branch ID
 	* @param plid the plid
 	* @param master the master
@@ -459,7 +459,7 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	* @throws com.liferay.portal.NoSuchLayoutBranchException if a layout branch with the primary key could not be found
 	*/
 	public com.liferay.portal.model.LayoutBranch[] findByL_P_M_PrevAndNext(
-		long LayoutBranchId, long layoutSetBranchId, long plid, boolean master,
+		long layoutBranchId, long layoutSetBranchId, long plid, boolean master,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutBranch> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutBranchException;
 
@@ -500,19 +500,19 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	/**
 	* Creates a new layout branch with the primary key. Does not add the layout branch to the database.
 	*
-	* @param LayoutBranchId the primary key for the new layout branch
+	* @param layoutBranchId the primary key for the new layout branch
 	* @return the new layout branch
 	*/
-	public com.liferay.portal.model.LayoutBranch create(long LayoutBranchId);
+	public com.liferay.portal.model.LayoutBranch create(long layoutBranchId);
 
 	/**
 	* Removes the layout branch with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param LayoutBranchId the primary key of the layout branch
+	* @param layoutBranchId the primary key of the layout branch
 	* @return the layout branch that was removed
 	* @throws com.liferay.portal.NoSuchLayoutBranchException if a layout branch with the primary key could not be found
 	*/
-	public com.liferay.portal.model.LayoutBranch remove(long LayoutBranchId)
+	public com.liferay.portal.model.LayoutBranch remove(long layoutBranchId)
 		throws com.liferay.portal.NoSuchLayoutBranchException;
 
 	public com.liferay.portal.model.LayoutBranch updateImpl(
@@ -521,22 +521,22 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	/**
 	* Returns the layout branch with the primary key or throws a {@link com.liferay.portal.NoSuchLayoutBranchException} if it could not be found.
 	*
-	* @param LayoutBranchId the primary key of the layout branch
+	* @param layoutBranchId the primary key of the layout branch
 	* @return the layout branch
 	* @throws com.liferay.portal.NoSuchLayoutBranchException if a layout branch with the primary key could not be found
 	*/
 	public com.liferay.portal.model.LayoutBranch findByPrimaryKey(
-		long LayoutBranchId)
+		long layoutBranchId)
 		throws com.liferay.portal.NoSuchLayoutBranchException;
 
 	/**
 	* Returns the layout branch with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param LayoutBranchId the primary key of the layout branch
+	* @param layoutBranchId the primary key of the layout branch
 	* @return the layout branch, or <code>null</code> if a layout branch with the primary key could not be found
 	*/
 	public com.liferay.portal.model.LayoutBranch fetchByPrimaryKey(
-		long LayoutBranchId);
+		long layoutBranchId);
 
 	@Override
 	public java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutBranch> fetchByPrimaryKeys(

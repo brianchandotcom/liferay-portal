@@ -450,7 +450,7 @@
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutBranchImpl" table="LayoutBranch" dynamic-update="true">
 		<cache usage="read-write" />
-		<id name="LayoutBranchId" type="long">
+		<id name="layoutBranchId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version name="mvccVersion" type="long" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" />

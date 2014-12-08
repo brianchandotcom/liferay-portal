@@ -839,7 +839,7 @@
 
 		<!-- PK fields -->
 
-		<column name="LayoutBranchId" type="long" primary="true" />
+		<column name="layoutBranchId" type="long" primary="true" />
 
 		<!-- Group instance -->
 

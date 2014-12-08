@@ -52,7 +52,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("LayoutBranchId", getLayoutBranchId());
+		attributes.put("layoutBranchId", getLayoutBranchId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -74,10 +74,10 @@ public class LayoutBranchWrapper implements LayoutBranch,
 			setMvccVersion(mvccVersion);
 		}
 
-		Long LayoutBranchId = (Long)attributes.get("LayoutBranchId");
+		Long layoutBranchId = (Long)attributes.get("layoutBranchId");
 
-		if (LayoutBranchId != null) {
-			setLayoutBranchId(LayoutBranchId);
+		if (layoutBranchId != null) {
+			setLayoutBranchId(layoutBranchId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -376,11 +376,11 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	/**
 	* Sets the layout branch ID of this layout branch.
 	*
-	* @param LayoutBranchId the layout branch ID of this layout branch
+	* @param layoutBranchId the layout branch ID of this layout branch
 	*/
 	@Override
-	public void setLayoutBranchId(long LayoutBranchId) {
-		_layoutBranch.setLayoutBranchId(LayoutBranchId);
+	public void setLayoutBranchId(long layoutBranchId) {
+		_layoutBranch.setLayoutBranchId(layoutBranchId);
 	}
 
 	/**

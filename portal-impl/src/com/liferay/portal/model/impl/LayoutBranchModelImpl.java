@@ -68,7 +68,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	public static final String TABLE_NAME = "LayoutBranch";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "mvccVersion", Types.BIGINT },
-			{ "LayoutBranchId", Types.BIGINT },
+			{ "layoutBranchId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -79,10 +79,10 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 			{ "description", Types.VARCHAR },
 			{ "master", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutBranch (mvccVersion LONG default 0,LayoutBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,layoutSetBranchId LONG,plid LONG,name VARCHAR(75) null,description STRING null,master BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutBranch (mvccVersion LONG default 0,layoutBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,layoutSetBranchId LONG,plid LONG,name VARCHAR(75) null,description STRING null,master BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutBranch";
-	public static final String ORDER_BY_JPQL = " ORDER BY layoutBranch.LayoutBranchId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LayoutBranch.LayoutBranchId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY layoutBranch.layoutBranchId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY LayoutBranch.layoutBranchId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -157,7 +157,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 
 	@Override
 	public long getPrimaryKey() {
-		return _LayoutBranchId;
+		return _layoutBranchId;
 	}
 
 	@Override
@@ -167,7 +167,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _LayoutBranchId;
+		return _layoutBranchId;
 	}
 
 	@Override
@@ -190,7 +190,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("LayoutBranchId", getLayoutBranchId());
+		attributes.put("layoutBranchId", getLayoutBranchId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -215,10 +215,10 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 			setMvccVersion(mvccVersion);
 		}
 
-		Long LayoutBranchId = (Long)attributes.get("LayoutBranchId");
+		Long layoutBranchId = (Long)attributes.get("layoutBranchId");
 
-		if (LayoutBranchId != null) {
-			setLayoutBranchId(LayoutBranchId);
+		if (layoutBranchId != null) {
+			setLayoutBranchId(layoutBranchId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -290,12 +290,12 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	@JSON
 	@Override
 	public long getLayoutBranchId() {
-		return _LayoutBranchId;
+		return _layoutBranchId;
 	}
 
 	@Override
-	public void setLayoutBranchId(long LayoutBranchId) {
-		_LayoutBranchId = LayoutBranchId;
+	public void setLayoutBranchId(long layoutBranchId) {
+		_layoutBranchId = layoutBranchId;
 	}
 
 	@JSON
@@ -606,7 +606,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 
 		layoutBranchCacheModel.mvccVersion = getMvccVersion();
 
-		layoutBranchCacheModel.LayoutBranchId = getLayoutBranchId();
+		layoutBranchCacheModel.layoutBranchId = getLayoutBranchId();
 
 		layoutBranchCacheModel.groupId = getGroupId();
 
@@ -653,7 +653,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
-		sb.append(", LayoutBranchId=");
+		sb.append(", layoutBranchId=");
 		sb.append(getLayoutBranchId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -691,7 +691,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>LayoutBranchId</column-name><column-value><![CDATA[");
+			"<column><column-name>layoutBranchId</column-name><column-value><![CDATA[");
 		sb.append(getLayoutBranchId());
 		sb.append("]]></column-value></column>");
 		sb.append(
@@ -741,7 +741,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 			LayoutBranch.class
 		};
 	private long _mvccVersion;
-	private long _LayoutBranchId;
+	private long _layoutBranchId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

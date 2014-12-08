@@ -84,9 +84,9 @@ public interface LayoutBranchModel extends BaseModel<LayoutBranch>, MVCCModel {
 	/**
 	 * Sets the layout branch ID of this layout branch.
 	 *
-	 * @param LayoutBranchId the layout branch ID of this layout branch
+	 * @param layoutBranchId the layout branch ID of this layout branch
 	 */
-	public void setLayoutBranchId(long LayoutBranchId);
+	public void setLayoutBranchId(long layoutBranchId);
 
 	/**
 	 * Returns the group ID of this layout branch.

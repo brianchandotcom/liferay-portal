@@ -241,7 +241,7 @@ public class LayoutBranchPersistenceTest {
 
 	protected OrderByComparator<LayoutBranch> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutBranch",
-			"mvccVersion", true, "LayoutBranchId", true, "groupId", true,
+			"mvccVersion", true, "layoutBranchId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true,
 			"layoutSetBranchId", true, "plid", true, "name", true,
 			"description", true, "master", true);
@@ -377,7 +377,7 @@ public class LayoutBranchPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutBranch.class,
 				LayoutBranch.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("LayoutBranchId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutBranchId",
 				newLayoutBranch.getLayoutBranchId()));
 
 		List<LayoutBranch> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -394,7 +394,7 @@ public class LayoutBranchPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutBranch.class,
 				LayoutBranch.class.getClassLoader());
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("LayoutBranchId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutBranchId",
 				RandomTestUtil.nextLong()));
 
 		List<LayoutBranch> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -411,11 +411,11 @@ public class LayoutBranchPersistenceTest {
 				LayoutBranch.class.getClassLoader());
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"LayoutBranchId"));
+				"layoutBranchId"));
 
 		Object newLayoutBranchId = newLayoutBranch.getLayoutBranchId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("LayoutBranchId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("layoutBranchId",
 				new Object[] { newLayoutBranchId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -433,9 +433,9 @@ public class LayoutBranchPersistenceTest {
 				LayoutBranch.class.getClassLoader());
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"LayoutBranchId"));
+				"layoutBranchId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("LayoutBranchId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("layoutBranchId",
 				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);

@@ -71,23 +71,11 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	/**
 	* Creates a new layout branch with the primary key. Does not add the layout branch to the database.
 	*
-	* @param LayoutBranchId the primary key for the new layout branch
+	* @param layoutBranchId the primary key for the new layout branch
 	* @return the new layout branch
 	*/
 	public com.liferay.portal.model.LayoutBranch createLayoutBranch(
-		long LayoutBranchId);
-
-	/**
-	* Deletes the layout branch with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param LayoutBranchId the primary key of the layout branch
-	* @return the layout branch that was removed
-	* @throws PortalException if a layout branch with the primary key could not be found
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.LayoutBranch deleteLayoutBranch(
-		long LayoutBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long layoutBranchId);
 
 	/**
 	* Deletes the layout branch from the database. Also notifies the appropriate model listeners.
@@ -98,6 +86,18 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.LayoutBranch deleteLayoutBranch(
 		com.liferay.portal.model.LayoutBranch layoutBranch);
+
+	/**
+	* Deletes the layout branch with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param layoutBranchId the primary key of the layout branch
+	* @return the layout branch that was removed
+	* @throws PortalException if a layout branch with the primary key could not be found
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
+	public com.liferay.portal.model.LayoutBranch deleteLayoutBranch(
+		long layoutBranchId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteLayoutSetBranchLayoutBranches(long layoutSetBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -177,7 +177,7 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutBranch fetchLayoutBranch(
-		long LayoutBranchId);
+		long layoutBranchId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
@@ -192,13 +192,13 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	/**
 	* Returns the layout branch with the primary key.
 	*
-	* @param LayoutBranchId the primary key of the layout branch
+	* @param layoutBranchId the primary key of the layout branch
 	* @return the layout branch
 	* @throws PortalException if a layout branch with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutBranch getLayoutBranch(
-		long LayoutBranchId)
+		long layoutBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

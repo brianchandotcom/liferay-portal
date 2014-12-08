@@ -344,7 +344,7 @@
 	</model>
 	<model name="com.liferay.portal.model.LayoutBranch">
 		<field name="mvccVersion" type="long" />
-		<field name="LayoutBranchId" type="long" />
+		<field name="layoutBranchId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

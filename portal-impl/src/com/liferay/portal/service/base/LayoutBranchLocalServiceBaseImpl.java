@@ -89,26 +89,26 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	/**
 	 * Creates a new layout branch with the primary key. Does not add the layout branch to the database.
 	 *
-	 * @param LayoutBranchId the primary key for the new layout branch
+	 * @param layoutBranchId the primary key for the new layout branch
 	 * @return the new layout branch
 	 */
 	@Override
-	public LayoutBranch createLayoutBranch(long LayoutBranchId) {
-		return layoutBranchPersistence.create(LayoutBranchId);
+	public LayoutBranch createLayoutBranch(long layoutBranchId) {
+		return layoutBranchPersistence.create(layoutBranchId);
 	}
 
 	/**
 	 * Deletes the layout branch with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param LayoutBranchId the primary key of the layout branch
+	 * @param layoutBranchId the primary key of the layout branch
 	 * @return the layout branch that was removed
 	 * @throws PortalException if a layout branch with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public LayoutBranch deleteLayoutBranch(long LayoutBranchId)
+	public LayoutBranch deleteLayoutBranch(long layoutBranchId)
 		throws PortalException {
-		return layoutBranchPersistence.remove(LayoutBranchId);
+		return layoutBranchPersistence.remove(layoutBranchId);
 	}
 
 	/**
@@ -207,21 +207,21 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	}
 
 	@Override
-	public LayoutBranch fetchLayoutBranch(long LayoutBranchId) {
-		return layoutBranchPersistence.fetchByPrimaryKey(LayoutBranchId);
+	public LayoutBranch fetchLayoutBranch(long layoutBranchId) {
+		return layoutBranchPersistence.fetchByPrimaryKey(layoutBranchId);
 	}
 
 	/**
 	 * Returns the layout branch with the primary key.
 	 *
-	 * @param LayoutBranchId the primary key of the layout branch
+	 * @param layoutBranchId the primary key of the layout branch
 	 * @return the layout branch
 	 * @throws PortalException if a layout branch with the primary key could not be found
 	 */
 	@Override
-	public LayoutBranch getLayoutBranch(long LayoutBranchId)
+	public LayoutBranch getLayoutBranch(long layoutBranchId)
 		throws PortalException {
-		return layoutBranchPersistence.findByPrimaryKey(LayoutBranchId);
+		return layoutBranchPersistence.findByPrimaryKey(layoutBranchId);
 	}
 
 	@Override
@@ -232,7 +232,7 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 		actionableDynamicQuery.setClass(LayoutBranch.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("LayoutBranchId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("layoutBranchId");
 
 		return actionableDynamicQuery;
 	}
@@ -243,7 +243,7 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 		actionableDynamicQuery.setClass(LayoutBranch.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("LayoutBranchId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("layoutBranchId");
 	}
 
 	/**

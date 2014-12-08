@@ -359,7 +359,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	/**
 	 * Returns the layout branchs before and after the current layout branch in the ordered set where layoutSetBranchId = &#63;.
 	 *
-	 * @param LayoutBranchId the primary key of the current layout branch
+	 * @param layoutBranchId the primary key of the current layout branch
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout branch
@@ -367,10 +367,10 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch[] findByLayoutSetBranchId_PrevAndNext(
-		long LayoutBranchId, long layoutSetBranchId,
+		long layoutBranchId, long layoutSetBranchId,
 		OrderByComparator<LayoutBranch> orderByComparator)
 		throws NoSuchLayoutBranchException {
-		LayoutBranch layoutBranch = findByPrimaryKey(LayoutBranchId);
+		LayoutBranch layoutBranch = findByPrimaryKey(layoutBranchId);
 
 		Session session = null;
 
@@ -863,7 +863,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	/**
 	 * Returns the layout branchs before and after the current layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
 	 *
-	 * @param LayoutBranchId the primary key of the current layout branch
+	 * @param layoutBranchId the primary key of the current layout branch
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -871,11 +871,11 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 * @throws com.liferay.portal.NoSuchLayoutBranchException if a layout branch with the primary key could not be found
 	 */
 	@Override
-	public LayoutBranch[] findByL_P_PrevAndNext(long LayoutBranchId,
+	public LayoutBranch[] findByL_P_PrevAndNext(long layoutBranchId,
 		long layoutSetBranchId, long plid,
 		OrderByComparator<LayoutBranch> orderByComparator)
 		throws NoSuchLayoutBranchException {
-		LayoutBranch layoutBranch = findByPrimaryKey(LayoutBranchId);
+		LayoutBranch layoutBranch = findByPrimaryKey(layoutBranchId);
 
 		Session session = null;
 
@@ -1689,7 +1689,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	/**
 	 * Returns the layout branchs before and after the current layout branch in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and master = &#63;.
 	 *
-	 * @param LayoutBranchId the primary key of the current layout branch
+	 * @param layoutBranchId the primary key of the current layout branch
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param master the master
@@ -1698,11 +1698,11 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 * @throws com.liferay.portal.NoSuchLayoutBranchException if a layout branch with the primary key could not be found
 	 */
 	@Override
-	public LayoutBranch[] findByL_P_M_PrevAndNext(long LayoutBranchId,
+	public LayoutBranch[] findByL_P_M_PrevAndNext(long layoutBranchId,
 		long layoutSetBranchId, long plid, boolean master,
 		OrderByComparator<LayoutBranch> orderByComparator)
 		throws NoSuchLayoutBranchException {
-		LayoutBranch layoutBranch = findByPrimaryKey(LayoutBranchId);
+		LayoutBranch layoutBranch = findByPrimaryKey(layoutBranchId);
 
 		Session session = null;
 
@@ -2074,15 +2074,15 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	/**
 	 * Creates a new layout branch with the primary key. Does not add the layout branch to the database.
 	 *
-	 * @param LayoutBranchId the primary key for the new layout branch
+	 * @param layoutBranchId the primary key for the new layout branch
 	 * @return the new layout branch
 	 */
 	@Override
-	public LayoutBranch create(long LayoutBranchId) {
+	public LayoutBranch create(long layoutBranchId) {
 		LayoutBranch layoutBranch = new LayoutBranchImpl();
 
 		layoutBranch.setNew(true);
-		layoutBranch.setPrimaryKey(LayoutBranchId);
+		layoutBranch.setPrimaryKey(layoutBranchId);
 
 		return layoutBranch;
 	}
@@ -2090,14 +2090,14 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	/**
 	 * Removes the layout branch with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param LayoutBranchId the primary key of the layout branch
+	 * @param layoutBranchId the primary key of the layout branch
 	 * @return the layout branch that was removed
 	 * @throws com.liferay.portal.NoSuchLayoutBranchException if a layout branch with the primary key could not be found
 	 */
 	@Override
-	public LayoutBranch remove(long LayoutBranchId)
+	public LayoutBranch remove(long layoutBranchId)
 		throws NoSuchLayoutBranchException {
-		return remove((Serializable)LayoutBranchId);
+		return remove((Serializable)layoutBranchId);
 	}
 
 	/**
@@ -2337,14 +2337,14 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	/**
 	 * Returns the layout branch with the primary key or throws a {@link com.liferay.portal.NoSuchLayoutBranchException} if it could not be found.
 	 *
-	 * @param LayoutBranchId the primary key of the layout branch
+	 * @param layoutBranchId the primary key of the layout branch
 	 * @return the layout branch
 	 * @throws com.liferay.portal.NoSuchLayoutBranchException if a layout branch with the primary key could not be found
 	 */
 	@Override
-	public LayoutBranch findByPrimaryKey(long LayoutBranchId)
+	public LayoutBranch findByPrimaryKey(long layoutBranchId)
 		throws NoSuchLayoutBranchException {
-		return findByPrimaryKey((Serializable)LayoutBranchId);
+		return findByPrimaryKey((Serializable)layoutBranchId);
 	}
 
 	/**
@@ -2396,12 +2396,12 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	/**
 	 * Returns the layout branch with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param LayoutBranchId the primary key of the layout branch
+	 * @param layoutBranchId the primary key of the layout branch
 	 * @return the layout branch, or <code>null</code> if a layout branch with the primary key could not be found
 	 */
 	@Override
-	public LayoutBranch fetchByPrimaryKey(long LayoutBranchId) {
-		return fetchByPrimaryKey((Serializable)LayoutBranchId);
+	public LayoutBranch fetchByPrimaryKey(long layoutBranchId) {
+		return fetchByPrimaryKey((Serializable)layoutBranchId);
 	}
 
 	@Override
@@ -2677,7 +2677,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	}
 
 	private static final String _SQL_SELECT_LAYOUTBRANCH = "SELECT layoutBranch FROM LayoutBranch layoutBranch";
-	private static final String _SQL_SELECT_LAYOUTBRANCH_WHERE_PKS_IN = "SELECT layoutBranch FROM LayoutBranch layoutBranch WHERE LayoutBranchId IN (";
+	private static final String _SQL_SELECT_LAYOUTBRANCH_WHERE_PKS_IN = "SELECT layoutBranch FROM LayoutBranch layoutBranch WHERE layoutBranchId IN (";
 	private static final String _SQL_SELECT_LAYOUTBRANCH_WHERE = "SELECT layoutBranch FROM LayoutBranch layoutBranch WHERE ";
 	private static final String _SQL_COUNT_LAYOUTBRANCH = "SELECT COUNT(layoutBranch) FROM LayoutBranch layoutBranch";
 	private static final String _SQL_COUNT_LAYOUTBRANCH_WHERE = "SELECT COUNT(layoutBranch) FROM LayoutBranch layoutBranch WHERE ";

@@ -33,6 +33,6 @@ public abstract class LayoutBranchActionableDynamicQuery
 
 		setClassLoader(PortalClassLoaderUtil.getClassLoader());
 
-		setPrimaryKeyPropertyName("LayoutBranchId");
+		setPrimaryKeyPropertyName("layoutBranchId");
 	}
 }

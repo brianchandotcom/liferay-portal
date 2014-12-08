@@ -74,6 +74,8 @@ public class InstrumentationAgent {
 			}
 		}
 		finally {
+			dataFile.delete();
+
 			System.clearProperty("cobertura.parent.dynamically.instrumented");
 			System.clearProperty("junit.code.coverage");
 

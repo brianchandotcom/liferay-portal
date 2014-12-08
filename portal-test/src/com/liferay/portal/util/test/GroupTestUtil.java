@@ -48,6 +48,7 @@ public class GroupTestUtil {
 
 	public static Group addGroup(long parentGroupId) throws Exception {
 		return addGroup(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			parentGroupId,
 			RandomTestUtil.randomString(
 				NumericStringRandomizerBumper.INSTANCE,
@@ -126,16 +127,9 @@ public class GroupTestUtil {
 	public static Group addGroup(long parentGroupId, String name)
 		throws Exception {
 
-		return addGroup(parentGroupId, name, "This is a test group.");
-	}
-
-	public static Group addGroup(
-			long parentGroupId, String name, String description)
-		throws Exception {
-
 		return addGroup(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			parentGroupId, name, description);
+			parentGroupId, name, "This is a test group.");
 	}
 
 	public static void enableLocalStaging(Group group) throws Exception {

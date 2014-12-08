@@ -103,6 +103,10 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<aui:workflow-status id="<%= String.valueOf(entry.getEntryId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 	</c:if>
 
+	<%
+	String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
+	%>
+
 	<liferay-ui:tabs
 		names="content,settings"
 		refresh="<%= false %>"
@@ -114,11 +118,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			</portlet:actionURL>
 
 			<div class="lfr-blogs-cover-image-selector">
-
-				<%
-				String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
-				%>
-
 				<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE) %>" paramName="coverImageFileEntry" uploadURL="<%= coverImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 			</div>
 
@@ -139,7 +138,9 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			</div>
 
 			<aui:input name="content" type="hidden" />
+		</liferay-ui:section>
 
+		<liferay-ui:section>
 			<div class="entry-abstract-wrapper">
 
 				<%
@@ -182,9 +183,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					<aui:input name="description" type="hidden" />
 				</aui:fieldset>
 			</div>
-		</liferay-ui:section>
 
-		<liferay-ui:section>
 			<aui:input name="displayDate" />
 
 			<c:if test="<%= (entry != null) && blogsSettings.isEmailEntryUpdatedEnabled() %>">

@@ -8,7 +8,9 @@
 		<author>Julio Camarero</author>
 		<author>Antonio Junior</author>
 	</authors>
+	<description>Provides the AUI component tags, prefixed with <![CDATA[<code>aui:</code>]]>.</description>
 	<component name="ButtonItem" module="aui-button-item" bodyContent="false" alloyComponent="true">
+		<description>Deprecated as of 6.2, replaced by aui:button.</description>
 		<attributes>
 	      <attribute>
 	        <name>activeState</name>

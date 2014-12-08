@@ -136,6 +136,7 @@ public class FileEntryStagedModelDataHandler
 			try {
 				TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
 					DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
 				return trashEntry.getTypeSettingsProperty("title");
 			}
 			catch (Exception e) {

@@ -170,6 +170,12 @@ public class OrganizationLocalServiceTest {
 
 	@Test
 	public void testGetNoAssetOrganizations() throws Exception {
+		for (Organization organization :
+				OrganizationLocalServiceUtil.getNoAssetOrganizations()) {
+
+			OrganizationLocalServiceUtil.deleteOrganization(organization);
+		}
+
 		Organization organizationA =
 			OrganizationLocalServiceUtil.addOrganization(
 				TestPropsValues.getUserId(),

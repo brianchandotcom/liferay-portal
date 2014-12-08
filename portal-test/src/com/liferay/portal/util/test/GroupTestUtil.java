@@ -49,11 +49,7 @@ public class GroupTestUtil {
 	public static Group addGroup(long parentGroupId) throws Exception {
 		return addGroup(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			parentGroupId,
-			RandomTestUtil.randomString(
-				NumericStringRandomizerBumper.INSTANCE,
-				UniqueStringRandomizerBumper.INSTANCE),
-			"This is a test group.");
+			parentGroupId);
 	}
 
 	public static Group addGroup(long userId, Layout layout) throws Exception {
@@ -81,12 +77,31 @@ public class GroupTestUtil {
 			long companyId, long userId, long parentGroupId)
 		throws Exception {
 
-		return addGroup(
-			companyId, userId, parentGroupId,
-			RandomTestUtil.randomString(
-				NumericStringRandomizerBumper.INSTANCE,
-				UniqueStringRandomizerBumper.INSTANCE),
-			RandomTestUtil.randomString());
+		String name = RandomTestUtil.randomString(
+			NumericStringRandomizerBumper.INSTANCE,
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		Group group = GroupLocalServiceUtil.fetchGroup(companyId, name);
+
+		if (group != null) {
+			return group;
+		}
+
+		int type = GroupConstants.TYPE_SITE_OPEN;
+		String friendlyURL =
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
+		boolean site = true;
+		boolean active = true;
+		boolean manualMembership = true;
+		int membershipRestriction =
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
+
+		return GroupLocalServiceUtil.addGroup(
+			userId, parentGroupId, null, 0,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
+			RandomTestUtil.randomString(), type, manualMembership,
+			membershipRestriction, friendlyURL, site, active,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static Group addGroup(
@@ -104,7 +119,6 @@ public class GroupTestUtil {
 			return group;
 		}
 
-		String description = "This is a test group.";
 		int type = GroupConstants.TYPE_SITE_OPEN;
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
@@ -120,8 +134,8 @@ public class GroupTestUtil {
 
 		return GroupServiceUtil.addGroup(
 			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
-			description, type, manualMembership, membershipRestriction,
-			friendlyURL, site, active, serviceContext);
+			RandomTestUtil.randomString(), type, manualMembership,
+			membershipRestriction, friendlyURL, site, active, serviceContext);
 	}
 
 	public static void enableLocalStaging(Group group) throws Exception {
@@ -182,33 +196,6 @@ public class GroupTestUtil {
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
 		return group;
-	}
-
-	protected static Group addGroup(
-			long companyId, long userId, long parentGroupId, String name,
-			String description)
-		throws Exception {
-
-		Group group = GroupLocalServiceUtil.fetchGroup(companyId, name);
-
-		if (group != null) {
-			return group;
-		}
-
-		int type = GroupConstants.TYPE_SITE_OPEN;
-		String friendlyURL =
-			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
-		boolean site = true;
-		boolean active = true;
-		boolean manualMembership = true;
-		int membershipRestriction =
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
-
-		return GroupLocalServiceUtil.addGroup(
-			userId, parentGroupId, null, 0,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, description, type,
-			manualMembership, membershipRestriction, friendlyURL, site, active,
-			ServiceContextTestUtil.getServiceContext());
 	}
 
 }

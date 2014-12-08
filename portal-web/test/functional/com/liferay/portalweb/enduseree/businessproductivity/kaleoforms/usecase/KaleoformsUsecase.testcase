@@ -1646,6 +1646,8 @@
 	</command>
 
 	<command name="CompleteProcessAndViewEmailNotifications" priority="5">
+		<property name="test.assert.javascript.errors" value="false" />
+		
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />

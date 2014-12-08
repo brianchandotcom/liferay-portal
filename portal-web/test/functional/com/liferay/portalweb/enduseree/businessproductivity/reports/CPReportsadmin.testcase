@@ -155,6 +155,8 @@
 	</command>
 
 	<command name="DeliverReportToEmail" priority="5">
+		<property name="test.assert.javascript.errors" value="false" />
+		
 		<var name="emailAddress3" property-value="email.address.3" />
 		<var name="emailPassword3" property-value="email.password.3" />
 
@@ -553,6 +555,8 @@
 	</command>
 
 	<command name="ViewEmailNotificationDelivery" priority="5">
+		<property name="test.assert.javascript.errors" value="false" />
+
 		<var name="emailAddress1" property-value="email.address.1" />
 		<var name="emailPassword1" property-value="email.password.1" />
 
@@ -628,6 +632,8 @@
 	</command>
 
 	<command name="ViewEmailRecipientDelivery" priority="5">
+		<property name="test.assert.javascript.errors" value="false" />
+
 		<var name="emailAddress2" property-value="email.address.2" />
 		<var name="emailPassword2" property-value="email.password.2" />
 

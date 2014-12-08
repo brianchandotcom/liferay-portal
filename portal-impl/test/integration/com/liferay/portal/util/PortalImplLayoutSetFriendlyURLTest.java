@@ -58,7 +58,7 @@ public class PortalImplLayoutSetFriendlyURLTest
 		Group defaultGroup = GroupTestUtil.addGroup();
 
 		try {
-			field.set(null, defaultGroup.getName());
+			field.set(null, defaultGroup.getGroupKey());
 
 			ThemeDisplay themeDisplay = initThemeDisplay(
 				company, group, publicLayout, LOCALHOST, VIRTUAL_HOSTNAME);

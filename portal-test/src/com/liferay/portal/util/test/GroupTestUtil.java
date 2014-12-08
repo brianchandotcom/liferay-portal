@@ -77,30 +77,15 @@ public class GroupTestUtil {
 	}
 
 	public static Group addGroup(
-			long companyId, long userId, long parentGroupId, String name,
-			String description)
+			long companyId, long userId, long parentGroupId)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.fetchGroup(companyId, name);
-
-		if (group != null) {
-			return group;
-		}
-
-		int type = GroupConstants.TYPE_SITE_OPEN;
-		String friendlyURL =
-			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
-		boolean site = true;
-		boolean active = true;
-		boolean manualMembership = true;
-		int membershipRestriction =
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
-
-		return GroupLocalServiceUtil.addGroup(
-			userId, parentGroupId, null, 0,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, description, type,
-			manualMembership, membershipRestriction, friendlyURL, site, active,
-			ServiceContextTestUtil.getServiceContext());
+		return addGroup(
+			companyId, userId, parentGroupId,
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomString());
 	}
 
 	public static Group addGroup(
@@ -215,6 +200,33 @@ public class GroupTestUtil {
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
 		return group;
+	}
+
+	protected static Group addGroup(
+			long companyId, long userId, long parentGroupId, String name,
+			String description)
+		throws Exception {
+
+		Group group = GroupLocalServiceUtil.fetchGroup(companyId, name);
+
+		if (group != null) {
+			return group;
+		}
+
+		int type = GroupConstants.TYPE_SITE_OPEN;
+		String friendlyURL =
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
+		boolean site = true;
+		boolean active = true;
+		boolean manualMembership = true;
+		int membershipRestriction =
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
+
+		return GroupLocalServiceUtil.addGroup(
+			userId, parentGroupId, null, 0,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, description, type,
+			manualMembership, membershipRestriction, friendlyURL, site, active,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 }

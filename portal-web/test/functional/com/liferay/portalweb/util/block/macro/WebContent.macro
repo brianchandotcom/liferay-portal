@@ -281,7 +281,7 @@
 				<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_GENERIC" />
 			</then>
 			<else>
-				<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+				<execute action="PGAssetpublisherAddnewwebcontent#assertClickNoError" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 				<execute action="PGAssetpublisher#pause" locator1="5000" />
 				<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />

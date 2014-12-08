@@ -1,0 +1,7 @@
+@import "compass";
+
+.lfr-input-time {
+	&.form-group {
+		margin-bottom: 0;
+	}
+}

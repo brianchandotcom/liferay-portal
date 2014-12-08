@@ -20,17 +20,17 @@ ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${f
 
 <#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionPathName) as i>
 	<#if functionElement.attributeValue("locator${i}")??>
-		<#assign fullFunctionPath = functionElement.attributeValue("locator${i}")>
+		<#assign locator = functionElement.attributeValue("locator${i}")>
 
-		<#if fullFunctionPath?contains("#")>
-			<#assign y = fullFunctionPath?last_index_of("#")>
+		<#if locator?contains("#")>
+			<#assign y = locator?last_index_of("#")>
 
-			<#assign functionPath = fullFunctionPath?substring(0, y)>
-			<#assign functionPathLocator = fullFunctionPath?substring(y + 1)>
+			<#assign pathLocatorKey = locator?substring(y + 1)>
+			<#assign pathName = locator?substring(0, y)>
 
-			${functionPath}Path.getPathLocator("${functionPathLocator}"),
+			${pathName}Path.getPathLocator("${pathLocatorKey}"),
 		<#else>
-			"${fullFunctionPath}",
+			"${locator}",
 		</#if>
 	<#else>
 		locator${i},

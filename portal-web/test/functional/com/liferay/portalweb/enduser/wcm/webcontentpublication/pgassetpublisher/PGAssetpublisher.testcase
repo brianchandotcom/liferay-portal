@@ -845,6 +845,7 @@
 		<execute macro="AssetPublisherPortlet#viewConfigureAPDisplayTemplateTableBookmarksPG">
 			<var name="assetTitle" value="Test Bookmark Name" />
 			<var name="bookmarkDescription" value="Test Bookmark Description" />
+			<var name="bookmarkName" value="Test Bookmark Name" />
 		</execute>
 	</command>
 
@@ -1022,6 +1023,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewSelectedPG">
+			<var name="selectedAsset" value="Document" />
 			<var name="selectedAssetConfiguration" value="Document" />
 		</execute>
 	</command>

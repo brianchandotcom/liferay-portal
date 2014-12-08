@@ -7,6 +7,22 @@
 		display: block;
 	}
 
+	.edit-entry {
+		h3 {
+			color: #2B4256;
+			font-size: 22px;
+			margin-top: 0;
+		}
+
+		.explanation {
+			font-weight: normal;
+		}
+	}
+
+	.display-date-wrapper {
+		padding-top: 40px;
+	}
+
 	.entry-author {
 		border-right: 1px solid #999;
 		color: #999;
@@ -24,20 +40,8 @@
 	.entry-abstract-wrapper {
 		color: #2B4256;
 
-		h3 {
-			border-top: 1px solid #CCC;
-			color: #2B4256;
-			font-size: 22px;
-			margin-top: 0;
-			padding-top: 40px;
-		}
-
 		.entry-abstract-options {
 			margin-top: 20px;
-		}
-
-		.abstract-explanation {
-			font-weight: normal;
 		}
 
 		.entry-abstract {
@@ -46,7 +50,6 @@
 
 			.lfr-blogs-small-image-selector {
 				float: left;
-				margin-bottom: 30px;
 				width: 200px;
 
 				.taglib-image-selector {
@@ -141,6 +144,10 @@
 				margin-bottom: 0;
 			}
 		}
+	}
+
+	.categorization-wrapper, .custom-attributes-wrapper, .display-date-wrapper, .email-entry-updated-wrapper, .entry-abstract-wrapper, .permissions-wrapper, .pingback-enabled-wrapper, .related-assets-wrapper, .trackback-enabled-wrapper {
+		margin-bottom: 55px;
 	}
 
 	.entry.draft, .entry.pending, .entry.scheduled {

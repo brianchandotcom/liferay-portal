@@ -59,7 +59,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	<portlet:param name="struts_action" value="/blogs/edit_entry" />
 </portlet:actionURL>
 
-<aui:form action="<%= editEntryURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
+<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
@@ -141,6 +141,12 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		</liferay-ui:section>
 
 		<liferay-ui:section>
+			<div class="display-date-wrapper">
+				<h3><liferay-ui:message key="display-date" /></h3>
+
+				<aui:input label="" name="displayDate" />
+			</div>
+
 			<div class="entry-abstract-wrapper">
 
 				<%
@@ -157,9 +163,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 				<h3><liferay-ui:message key="abstract" /></h3>
 
-				<p class="abstract-explanation">
-					<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE), locale) %>" key="an-abstract-is-a-brief-summary-of-a-blog-entry" />
-				</p>
+				<p class="explanation"><liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE), locale) %>" key="an-abstract-is-a-brief-summary-of-a-blog-entry" /></p>
 
 				<div class="entry-abstract-options" id="<portlet:namespace />entryAbstractOptions">
 					<aui:input checked="<%= !customAbstract %>" label='<%= LanguageUtil.format(request, "use-first-x-characters-of-the-content-entry", pageAbstractLength, false) %>' name="customAbstract" type="radio" value="<%= false %>" />
@@ -184,86 +188,105 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				</aui:fieldset>
 			</div>
 
-			<aui:input name="displayDate" />
-
 			<c:if test="<%= (entry != null) && blogsSettings.isEmailEntryUpdatedEnabled() %>">
+				<div class="email-entry-updated-wrapper">
+					<h3><liferay-ui:message key="email-notifications" /></h3>
 
-				<%
-				boolean sendEmailEntryUpdated = ParamUtil.getBoolean(request, "sendEmailEntryUpdated");
-				%>
+					<p class="explanation"><liferay-ui:message key="comments-regarding-the-blog-entry-update" /></p>
 
-				<aui:input name="sendEmailEntryUpdated" type="checkbox" value="<%= sendEmailEntryUpdated %>" />
+					<%
+					boolean sendEmailEntryUpdated = ParamUtil.getBoolean(request, "sendEmailEntryUpdated");
+					%>
 
-				<%
-				String emailEntryUpdatedComment = ParamUtil.getString(request, "emailEntryUpdatedComment");
-				%>
+					<aui:input name="sendEmailEntryUpdated" type="checkbox" value="<%= sendEmailEntryUpdated %>" />
 
-				<div id="<portlet:namespace />emailEntryUpdatedCommentWrapper">
-					<aui:input label="comments-regarding-the-blog-entry-update" name="emailEntryUpdatedComment" type="textarea" value="<%= emailEntryUpdatedComment %>" />
+					<%
+					String emailEntryUpdatedComment = ParamUtil.getString(request, "emailEntryUpdatedComment");
+					%>
+
+					<div id="<portlet:namespace />emailEntryUpdatedCommentWrapper">
+						<aui:input label="" name="emailEntryUpdatedComment" type="textarea" value="<%= emailEntryUpdatedComment %>" />
+					</div>
 				</div>
 			</c:if>
 
-			<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
-				<liferay-ui:custom-attribute-list
-					className="<%= BlogsEntry.class.getName() %>"
-					classPK="<%= entryId %>"
-					editable="<%= true %>"
-					label="<%= true %>"
-				/>
-			</liferay-ui:custom-attributes-available>
+			<div class="categorization-wrapper">
+				<h3><liferay-ui:message key="categorization" /></h3>
 
-			<c:if test="<%= PropsValues.BLOGS_PINGBACK_ENABLED %>">
-				<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" name="allowPingbacks" value="<%= allowPingbacks %>" />
-			</c:if>
+				<aui:input name="categories" type="assetCategories" />
 
-			<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED %>">
-				<aui:input helpMessage="to-allow-trackbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" name="allowTrackbacks" value="<%= allowTrackbacks %>" />
-
-				<aui:input label="trackbacks-to-send" name="trackbacks" />
-
-				<c:if test="<%= (entry != null) && Validator.isNotNull(entry.getTrackbacks()) %>">
-					<aui:fieldset label="trackbacks-already-sent">
-
-						<%
-						int i = 0;
-
-						for (String trackback : StringUtil.split(entry.getTrackbacks())) {
-						%>
-
-							<aui:input label="" name='<%= "trackback" + (i++) %>' title="" type="resource" value="<%= trackback %>" />
-
-						<%
-						}
-						%>
-
-					</aui:fieldset>
-				</c:if>
-			</c:if>
+				<aui:input name="tags" type="assetTags" />
+			</div>
 
 			<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
-				<aui:field-wrapper label="permissions">
+				<aui:field-wrapper cssClass="permissions-wrapper">
+					<h3><liferay-ui:message key="permissions" /></h3>
+
 					<liferay-ui:input-permissions
 						modelName="<%= BlogsEntry.class.getName() %>"
 					/>
 				</aui:field-wrapper>
 			</c:if>
 
-			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="blogsEntryCategorizationPanel" persistState="<%= true %>" title="categorization">
-				<aui:fieldset>
-					<aui:input name="categories" type="assetCategories" />
+			<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
+				<div class="custom-attributes-wrapper">
+					<h3><liferay-ui:message key="custom-fields" /></h3>
 
-					<aui:input name="tags" type="assetTags" />
-				</aui:fieldset>
-			</liferay-ui:panel>
-
-			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="blogsEntryAssetLinksPanel" persistState="<%= true %>" title="related-assets">
-				<aui:fieldset>
-					<liferay-ui:input-asset-links
+					<liferay-ui:custom-attribute-list
 						className="<%= BlogsEntry.class.getName() %>"
 						classPK="<%= entryId %>"
+						editable="<%= true %>"
+						label="<%= true %>"
 					/>
-				</aui:fieldset>
-			</liferay-ui:panel>
+				</div>
+			</liferay-ui:custom-attributes-available>
+
+			<div class="related-assets-wrapper">
+				<h3><liferay-ui:message key="related-assets" /></h3>
+
+				<liferay-ui:input-asset-links
+					className="<%= BlogsEntry.class.getName() %>"
+					classPK="<%= entryId %>"
+				/>
+			</div>
+
+			<c:if test="<%= PropsValues.BLOGS_PINGBACK_ENABLED %>">
+				<div class="pingback-enabled-wrapper">
+					<h3><liferay-ui:message key="pingback" /></h3>
+
+					<p class="explanation"><liferay-ui:message key="a-pingback-is-a-comment-that-is-created-when-you-link-to-another-blog-post-where-pingbacks-are-enabled" /></p>
+
+					<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="enabled" name="allowPingbacks" value="<%= allowPingbacks %>" />
+				</div>
+			</c:if>
+
+			<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED %>">
+				<div class="trackback-enabled-wrapper">
+					<h3><liferay-ui:message key="trackbacks" /></h3>
+
+					<aui:input helpMessage="to-allow-trackbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" name="allowTrackbacks" value="<%= allowTrackbacks %>" />
+
+					<aui:input label="trackbacks-to-send" name="trackbacks" />
+
+					<c:if test="<%= (entry != null) && Validator.isNotNull(entry.getTrackbacks()) %>">
+						<aui:fieldset label="trackbacks-already-sent">
+
+							<%
+							int i = 0;
+
+							for (String trackback : StringUtil.split(entry.getTrackbacks())) {
+							%>
+
+								<aui:input label="" name='<%= "trackback" + (i++) %>' title="" type="resource" value="<%= trackback %>" />
+
+							<%
+							}
+							%>
+
+						</aui:fieldset>
+					</c:if>
+				</div>
+			</c:if>
 		</liferay-ui:section>
 	</liferay-ui:tabs>
 

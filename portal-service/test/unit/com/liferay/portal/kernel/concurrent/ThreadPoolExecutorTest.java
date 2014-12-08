@@ -1127,6 +1127,7 @@ public class ThreadPoolExecutorTest {
 		ReentrantLock takeLock = taskQueue.getTakeLock();
 
 		takeLock.lock();
+
 		try {
 			markerBlockingJob1.unBlock();
 

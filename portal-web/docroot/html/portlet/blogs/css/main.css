@@ -102,6 +102,10 @@
 		}
 	}
 
+	.entry-title, .entry-subtitle, .entry-content {
+		margin-left: 24px;
+	}
+
 	.entry-title {
 		display: block;
 		font-weight: bold;

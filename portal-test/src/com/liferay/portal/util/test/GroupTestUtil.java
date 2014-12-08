@@ -138,10 +138,6 @@ public class GroupTestUtil {
 			parentGroupId, name, description);
 	}
 
-	public static Group addGroup(String name) throws Exception {
-		return addGroup(GroupConstants.DEFAULT_PARENT_GROUP_ID, name);
-	}
-
 	public static void enableLocalStaging(Group group) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();

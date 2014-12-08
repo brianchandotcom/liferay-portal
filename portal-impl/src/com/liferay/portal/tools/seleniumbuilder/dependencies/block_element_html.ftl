@@ -31,6 +31,20 @@
 
 					<#include "element_close_html.ftl">
 				</#if>
+			<#elseif element.attributeValue("function")??>
+				<#assign displayElement = element>
+
+				<#include "element_whole_html.ftl">
+
+				<#if element.element("var")??>
+					<#assign displayElement = element>
+
+					<#include "element_open_html.ftl">
+
+					<#assign displayElement = element>
+
+					<#include "element_close_html.ftl">
+				</#if>
 			<#elseif element.attributeValue("macro")??>
 				<#assign macroElement = element>
 

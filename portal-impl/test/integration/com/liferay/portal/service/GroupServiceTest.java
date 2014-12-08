@@ -280,11 +280,14 @@ public class GroupServiceTest {
 
 	@Test
 	public void testFindGroupByNameWithSpaces() throws Exception {
-		String name =
-			RandomTestUtil.randomString() + StringPool.SPACE +
-				RandomTestUtil.randomString();
+		Group group = GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		GroupTestUtil.addGroup(GroupConstants.DEFAULT_PARENT_GROUP_ID, name);
+		group.setName(
+			RandomTestUtil.randomString() + StringPool.SPACE +
+				RandomTestUtil.randomString());
+
+		GroupLocalServiceUtil.updateGroup(group);
 
 		LinkedHashMap<String, Object> groupParams =
 			new LinkedHashMap<String, Object>();
@@ -295,7 +298,8 @@ public class GroupServiceTest {
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, name, groupParams));
+				TestPropsValues.getCompanyId(), null, group.getName(),
+				groupParams));
 	}
 
 	@Test

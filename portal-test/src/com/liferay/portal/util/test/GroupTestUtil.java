@@ -124,14 +124,6 @@ public class GroupTestUtil {
 			friendlyURL, site, active, serviceContext);
 	}
 
-	public static Group addGroup(long parentGroupId, String name)
-		throws Exception {
-
-		return addGroup(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			parentGroupId, name, "This is a test group.");
-	}
-
 	public static void enableLocalStaging(Group group) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();

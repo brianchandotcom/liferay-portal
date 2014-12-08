@@ -46,6 +46,8 @@ AUI.add(
 
 		var REGEX_VIDEO = /\.(avi|flv|mpe|mpg|mpeg|mov|m4v|ogg|wmv)$/i;
 
+		var STR_DOT = '.';
+
 		var SELECTOR_DATA_FOLDER = '[data-folder="true"]';
 
 		var SELECTOR_DATA_FOLDER_DATA_TITLE = '[data-folder="true"][data-title]';
@@ -58,6 +60,8 @@ AUI.add(
 
 		var SELECTOR_ENTRIES_EMPTY = '.entries-empty';
 
+		var SELECTOR_ENTRY_DISPLAY_STYLE = STR_DOT + CSS_ENTRY_DISPLAY_STYLE;
+
 		var SELECTOR_ENTRY_LINK = '.entry-link';
 
 		var SELECTOR_ENTRY_SELECTOR = STR_DOT + CSS_ENTRY_SELECTOR;
@@ -67,10 +71,6 @@ AUI.add(
 		var SELECTOR_IMAGE_ICON = 'img.icon';
 
 		var SELECTOR_SEARCH_CONTAINER = '.searchcontainer';
-
-		var STR_DOT = '.';
-
-		var SELECTOR_ENTRY_DISPLAY_STYLE = STR_DOT + CSS_ENTRY_DISPLAY_STYLE;
 
 		var SELECTOR_TAGLIB_ICON = STR_DOT + CSS_TAGLIB_ICON;
 
@@ -469,19 +469,19 @@ AUI.add(
 						else {
 							var invisibleEntry = instance._invisibleDescriptiveEntry;
 
+							var hiddenCheckbox = sub(TPL_HIDDEN_CHECK_BOX, [instance.get(STR_HOST).ns('rowIdsFileEntry')]);
+
 							if (displayStyle == CSS_ICON) {
 								invisibleEntry = instance._invisibleIconEntry;
 							}
 
 							entryNode = invisibleEntry.clone();
 
+							entryNode.append(hiddenCheckbox);
+
 							var entryLink = entryNode.one(SELECTOR_ENTRY_LINK);
 
 							var entryTitle = entryLink.one(SELECTOR_ENTRY_TITLE_TEXT);
-
-							var hiddenCheckbox = sub(TPL_HIDDEN_CHECK_BOX, [instance.get(STR_HOST).ns('rowIdsFileEntry')]);
-
-							entryNode.append(hiddenCheckbox);
 
 							entryLink.attr('title', name);
 
@@ -523,7 +523,7 @@ AUI.add(
 								else if (item == 'downloads') {
 									value = '0';
 								}
-								else if (index == 0) {
+								else if (index === 0) {
 									value = sub(TPL_HIDDEN_CHECK_BOX, [instance.get(STR_HOST).ns('rowIdsFileEntry')]);
 								}
 
@@ -1074,7 +1074,7 @@ AUI.add(
 							else {
 								var displayStyleList = (displayStyle == STR_LIST);
 
-								var fileEntryId = A.JSON.parse(event.data).fileEntryId
+								var fileEntryId = A.JSON.parse(event.data).fileEntryId;
 
 								if (!displayStyleList) {
 									instance._updateThumbnail(fileNode, file.name);
@@ -1209,7 +1209,11 @@ AUI.add(
 					_updateFileHiddenInput: function(node, id) {
 						var instance = this;
 
-						node.one('input').val(id);
+						var inputNode = node.one('input');
+
+						if (inputNode) {
+							inputNode.val(id);
+						}
 					},
 
 					_updateFileLink: function(node, id, displayStyleList) {

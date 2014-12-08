@@ -194,8 +194,7 @@ public class AssetPublisherExportImportTest
 	public void testChildLayoutScopeIds() throws Exception {
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
 
-		Group childGroup = GroupTestUtil.addGroup(
-			group.getGroupId(), RandomTestUtil.randomString());
+		Group childGroup = GroupTestUtil.addGroup(group.getGroupId());
 
 		preferenceMap.put(
 			"scopeIds",

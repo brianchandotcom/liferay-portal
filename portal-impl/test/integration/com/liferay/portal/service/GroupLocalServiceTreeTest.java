@@ -21,7 +21,6 @@ import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.util.test.GroupTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import org.junit.ClassRule;
@@ -50,8 +49,7 @@ public class GroupLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 			parentGroupId = group.getGroupId();
 		}
 
-		Group group = GroupTestUtil.addGroup(
-			parentGroupId, RandomTestUtil.randomString());
+		Group group = GroupTestUtil.addGroup(parentGroupId);
 
 		group.setTreePath(null);
 

@@ -168,20 +168,17 @@ public class GroupFinderTest {
 
 		int initialGroupCount = groups.size();
 
-		GroupTestUtil.addGroup(RandomTestUtil.randomString());
+		GroupTestUtil.addGroup();
 
-		Group parentGroup = GroupTestUtil.addGroup(
-			RandomTestUtil.randomString());
+		Group parentGroup = GroupTestUtil.addGroup();
 
 		LayoutTestUtil.addLayout(parentGroup, false);
 
-		Group childGroup1 = GroupTestUtil.addGroup(
-			parentGroup.getGroupId(), RandomTestUtil.randomString());
+		Group childGroup1 = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
 		LayoutTestUtil.addLayout(childGroup1, false);
 
-		Group childGroup2 = GroupTestUtil.addGroup(
-			parentGroup.getGroupId(), RandomTestUtil.randomString());
+		Group childGroup2 = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
 		LayoutTestUtil.addLayout(childGroup2, true);
 

@@ -17,7 +17,6 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -82,11 +81,9 @@ public class PortalImplGetSitesTest {
 	public void testGetSharedContentSiteGroupIdsFromDescendants()
 		throws Exception {
 
-		Group childGroup = GroupTestUtil.addGroup(
-			_group.getGroupId(), StringUtil.randomString());
+		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
 
-		Group grandchildGroup = GroupTestUtil.addGroup(
-			childGroup.getGroupId(), StringUtil.randomString());
+		Group grandchildGroup = GroupTestUtil.addGroup(childGroup.getGroupId());
 
 		long[] groupIds = getSharedContentSiteGroupIds();
 
@@ -156,10 +153,9 @@ public class PortalImplGetSitesTest {
 		Group grandparentGroup = GroupTestUtil.addGroup();
 
 		Group parentGroup = GroupTestUtil.addGroup(
-			grandparentGroup.getGroupId(), StringUtil.randomString());
+			grandparentGroup.getGroupId());
 
-		_group = GroupTestUtil.addGroup(
-			parentGroup.getGroupId(), StringUtil.randomString());
+		_group = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
 		_user = UserTestUtil.addGroupAdminUser(_group);
 

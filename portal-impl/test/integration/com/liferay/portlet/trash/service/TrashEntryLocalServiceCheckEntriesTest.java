@@ -250,8 +250,8 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 		User user = UserTestUtil.getAdminUser(companyId);
 
 		Group group = GroupTestUtil.addGroup(
-			companyId, user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			RandomTestUtil.randomString(), "This is a test group.");
+			companyId, user.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		_groups.add(group);
 

@@ -23,9 +23,9 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.ResetDatabaseTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -62,7 +62,6 @@ public class FindActionTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			ResetDatabaseTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
@@ -188,6 +187,8 @@ public class FindActionTest {
 	private String _assetPublisherPortletId;
 	private Layout _blogLayout;
 	private BlogsEntry _blogsEntry;
+
+	@DeleteAfterTestRun
 	private Group _group;
 
 }

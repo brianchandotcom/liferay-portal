@@ -589,6 +589,7 @@ public class JournalArticleFinderImpl
 		Timestamp reviewDateGT_TS = CalendarUtil.getTimestamp(reviewDateGT);
 
 		Session session = null;
+
 		try {
 			session = openSession();
 

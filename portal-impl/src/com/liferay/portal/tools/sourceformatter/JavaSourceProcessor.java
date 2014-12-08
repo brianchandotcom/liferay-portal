@@ -1824,7 +1824,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								 !trimmedPreviousLine.endsWith(
 									StringPool.COLON) &&
 								 (trimmedLine.startsWith("for (") ||
-								  trimmedLine.startsWith("if ("))) {
+								  trimmedLine.startsWith("if (") ||
+								  trimmedLine.startsWith("try {"))) {
 
 							sb.append("\n");
 						}

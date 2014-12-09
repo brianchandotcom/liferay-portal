@@ -341,6 +341,7 @@ public class DDLExporterTest {
 	private Group _group;
 
 	private enum DDMFormFieldType {
+
 		CHECKBOX("checkbox"), DATE("ddm-date"), DECIMAL("ddm-decimal"),
 		DOCUMENT_LIBRARY("ddm-documentlibrary"), GEOLOCATION("ddm-geolocation"),
 		INTEGER("ddm-integer"), LINK_TO_PAGE("ddm-link-to-page"),

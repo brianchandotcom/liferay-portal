@@ -2222,10 +2222,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			// Move file entries within repository
 
-			FileEntry fileEntry = fromRepository.moveFileEntry(
+			return fromRepository.moveFileEntry(
 				getUserId(), fileEntryId, newFolderId, serviceContext);
-
-			return fileEntry;
 		}
 
 		// Move file entries between repositories
@@ -2373,26 +2371,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			}
 		}
 
-		Folder folder = null;
-
 		if (fromRepository.getRepositoryId() ==
 				toRepository.getRepositoryId()) {
 
 			// Move file entries within repository
 
-			folder = fromRepository.moveFolder(
+			return fromRepository.moveFolder(
 				getUserId(), folderId, parentFolderId, serviceContext);
 		}
-		else {
 
-			// Move file entries between repositories
+		// Move file entries between repositories
 
-			folder = moveFolders(
-				folderId, parentFolderId, fromRepository, toRepository,
-				serviceContext);
-		}
-
-		return folder;
+		return moveFolders(
+			folderId, parentFolderId, fromRepository, toRepository,
+			serviceContext);
 	}
 
 	/**
@@ -3436,16 +3428,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	protected Repository getFolderRepository(long folderId, long groupId)
 		throws PortalException {
 
-		Repository repository = null;
-
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			repository = getRepository(groupId);
-		}
-		else {
-			repository = getFolderRepository(folderId);
+			return getRepository(groupId);
 		}
 
-		return repository;
+		return getFolderRepository(folderId);
 	}
 
 	protected Repository getRepository(long repositoryId)

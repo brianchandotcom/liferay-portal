@@ -229,11 +229,13 @@ public class GroupServiceTest {
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
 
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, group.getDescription(),
-				groupParams));
+				TestPropsValues.getCompanyId(), null,
+				group.getDescription(themeDisplay.getLocale()), groupParams));
 	}
 
 	@Test
@@ -253,37 +255,21 @@ public class GroupServiceTest {
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
 
-		Assert.assertEquals(
-			1,
-			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, group.getDescription(),
-				groupParams));
-	}
-
-	@Test
-	public void testFindGroupByName() throws Exception {
-		Group group = GroupTestUtil.addGroup(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
-
-		groupParams.put("manualMembership", Boolean.TRUE);
-		groupParams.put("site", Boolean.TRUE);
+		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, group.getName(),
-				groupParams));
+				TestPropsValues.getCompanyId(), null,
+				group.getDescription(themeDisplay.getLocale()), groupParams));
 	}
 
 	@Test
-	public void testFindGroupByNameWithSpaces() throws Exception {
+	public void testFindGroupByGropKeyWithSpaces() throws Exception {
 		Group group = GroupTestUtil.addGroup(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		group.setName(
+		group.setGroupKey(
 			RandomTestUtil.randomString() + StringPool.SPACE +
 				RandomTestUtil.randomString());
 
@@ -298,7 +284,25 @@ public class GroupServiceTest {
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, group.getName(),
+				TestPropsValues.getCompanyId(), null, group.getGroupKey(),
+				groupParams));
+	}
+
+	@Test
+	public void testFindGroupByGroupKey() throws Exception {
+		Group group = GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("manualMembership", Boolean.TRUE);
+		groupParams.put("site", Boolean.TRUE);
+
+		Assert.assertEquals(
+			1,
+			GroupLocalServiceUtil.searchCount(
+				TestPropsValues.getCompanyId(), null, group.getGroupKey(),
 				groupParams));
 	}
 
@@ -430,7 +434,9 @@ public class GroupServiceTest {
 		String scopeDescriptiveName = group.getScopeDescriptiveName(
 			themeDisplay);
 
-		Assert.assertTrue(scopeDescriptiveName.equals(group.getName()));
+		Assert.assertTrue(
+			scopeDescriptiveName.equals(
+				group.getName(themeDisplay.getLocale())));
 	}
 
 	@Test

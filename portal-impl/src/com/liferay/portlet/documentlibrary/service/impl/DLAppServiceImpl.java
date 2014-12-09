@@ -3298,8 +3298,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				}
 				catch (Exception e) {
 					_log.error(e, e);
-
-					continue;
 				}
 			}
 

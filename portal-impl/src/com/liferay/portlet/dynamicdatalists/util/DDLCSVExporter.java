@@ -29,6 +29,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -60,7 +61,11 @@ public class DDLCSVExporter extends BaseDDLExporter {
 		List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(
 			recordSetId, status, start, end, orderByComparator);
 
-		for (DDLRecord record : records) {
+		Iterator<DDLRecord> itr = records.iterator();
+
+		while (itr.hasNext()) {
+			DDLRecord record = itr.next();
+
 			DDLRecordVersion recordVersion = record.getRecordVersion();
 
 			Fields fields = StorageEngineUtil.getFields(
@@ -81,7 +86,10 @@ public class DDLCSVExporter extends BaseDDLExporter {
 			}
 
 			sb.append(getStatusMessage(recordVersion.getStatus()));
-			sb.append(StringPool.NEW_LINE);
+
+			if (itr.hasNext()) {
+				sb.append(StringPool.NEW_LINE);
+			}
 		}
 
 		String csv = sb.toString();

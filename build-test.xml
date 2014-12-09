@@ -4479,7 +4479,7 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 
 		<ant dir="util-java" target="test-class-group" inheritAll="false" />
 
-		<tempfile property="temp.file" suffix=".properties"/>
+		<tempfile deleteonexit="true" property="temp.file" suffix=".properties"/>
 
 		<echo file="${temp.file}">
 portal.dir=${project.dir}
@@ -4490,8 +4490,6 @@ portal.dir=${project.dir}
 			ant.properties.file="${temp.file}"
 			ant.target="test-class-group"
 		/>
-
-		<delete file="${temp.file}" />
 	</target>
 
 	<target name="test-integration">

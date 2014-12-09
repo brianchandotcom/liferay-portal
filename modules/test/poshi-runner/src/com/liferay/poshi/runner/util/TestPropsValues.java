@@ -14,14 +14,12 @@
 
 package com.liferay.poshi.runner.util;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class TestPropsValues
-	extends com.liferay.portal.util.test.TestPropsValues {
+public class TestPropsValues {
 
 	public static final String BROWSER_COMMANDS_DIR_NAME = TestPropsUtil.get(
 		"browser.commands.dir");
@@ -64,8 +62,8 @@ public class TestPropsValues
 	public static final String EMAIL_PASSWORD_5 = TestPropsUtil.get(
 		"email.password.5");
 
-	public static final String[] FIXED_ISSUES = StringUtil.split(
-		TestPropsUtil.get("fixed.issues"));
+	public static final String[] FIXED_ISSUES = StringUtils.split(
+		TestPropsUtil.get("fixed.issues"), ",");
 
 	public static final String IGNORE_ERRORS = TestPropsUtil.get(
 		"ignore.errors");
@@ -79,7 +77,7 @@ public class TestPropsValues
 	public static final String LIFERAY_PORTAL_BUNDLE = TestPropsUtil.get(
 		"liferay.portal.bundle");
 
-	public static final boolean MOBILE_DEVICE_ENABLED = GetterUtil.getBoolean(
+	public static final boolean MOBILE_DEVICE_ENABLED = Boolean.parseBoolean(
 		TestPropsUtil.get("mobile.device.enabled"));
 
 	public static final String MOBILE_DEVICE_RESOLUTION = TestPropsUtil.get(
@@ -93,10 +91,10 @@ public class TestPropsValues
 
 	public static final String PORTAL_URL = TestPropsUtil.get("portal.url");
 
-	public static final boolean SAVE_SCREENSHOT = GetterUtil.getBoolean(
+	public static final boolean SAVE_SCREENSHOT = Boolean.parseBoolean(
 		TestPropsUtil.get("save.screenshot"));
 
-	public static final boolean SAVE_SOURCE = GetterUtil.getBoolean(
+	public static final boolean SAVE_SOURCE = Boolean.parseBoolean(
 		TestPropsUtil.get("save.source"));
 
 	public static final String SELENIUM_EXECUTABLE_DIR_NAME = TestPropsUtil.get(
@@ -108,47 +106,47 @@ public class TestPropsValues
 	public static final String SELENIUM_IMPLEMENTATION = TestPropsUtil.get(
 		"selenium.implementation");
 
-	public static final boolean SELENIUM_LOGGER_ENABLED = GetterUtil.getBoolean(
+	public static final boolean SELENIUM_LOGGER_ENABLED = Boolean.parseBoolean(
 		TestPropsUtil.get("selenium.logger.enabled"));
 
-	public static final int SELENIUM_PORT = GetterUtil.getInteger(
-		TestPropsUtil.get("selenium.port"));
+	public static final int SELENIUM_PORT = Integer.parseInt(TestPropsUtil.get(
+		"selenium.port"));
 
 	public static final String TCAT_ADMIN_REPOSITORY = TestPropsUtil.get(
 		"tcat.admin.repository");
 
-	public static final boolean TCAT_ENABLED = GetterUtil.getBoolean(
+	public static final boolean TCAT_ENABLED = Boolean.parseBoolean(
 		TestPropsUtil.get("tcat.enabled"));
 
-	public static final boolean TEAR_DOWN_BEFORE_TEST = GetterUtil.getBoolean(
+	public static final boolean TEAR_DOWN_BEFORE_TEST = Boolean.parseBoolean(
 		TestPropsUtil.get("tear.down.before.test"));
 
 	public static final boolean TEST_ASSERT_JAVASCRIPT_ERRORS =
-		GetterUtil.getBoolean(
+		Boolean.parseBoolean(
 			TestPropsUtil.get("test.assert.javascript.errors"));
 
 	public static final boolean TEST_ASSERT_LIFERAY_ERRORS =
-		GetterUtil.getBoolean(TestPropsUtil.get("test.assert.liferay.errors"));
+		Boolean.parseBoolean(TestPropsUtil.get("test.assert.liferay.errors"));
 
 	public static final String TEST_BASE_DIR_NAME = TestPropsUtil.get(
 		"test.basedir");
 
-	public static final boolean TEST_DATABASE_MINIMAL = GetterUtil.getBoolean(
+	public static final boolean TEST_DATABASE_MINIMAL = Boolean.parseBoolean(
 		TestPropsUtil.get("test.database.minimal"));
 
-	public static final boolean TEST_SKIP_TEAR_DOWN = GetterUtil.getBoolean(
+	public static final boolean TEST_SKIP_TEAR_DOWN = Boolean.parseBoolean(
 		TestPropsUtil.get("test.skip.tear.down"));
 
-	public static final boolean TESTING_CLASS_METHOD = GetterUtil.getBoolean(
+	public static final boolean TESTING_CLASS_METHOD = Boolean.parseBoolean(
 		TestPropsUtil.get("testing.class.method"));
 
-	public static final String[] THEME_IDS = StringUtil.split(
-		TestPropsUtil.get("theme.ids"));
+	public static final String[] THEME_IDS = StringUtils.split(
+		TestPropsUtil.get("theme.ids"), ",");
 
-	public static final int TIMEOUT_EXPLICIT_WAIT = GetterUtil.getInteger(
+	public static final int TIMEOUT_EXPLICIT_WAIT = Integer.parseInt(
 		TestPropsUtil.get("timeout.explicit.wait"));
 
-	public static final int TIMEOUT_IMPLICIT_WAIT = GetterUtil.getInteger(
+	public static final int TIMEOUT_IMPLICIT_WAIT = Integer.parseInt(
 		TestPropsUtil.get("timeout.implicit.wait"));
 
 	public static final String VM_HOST = TestPropsUtil.get("vm.host");

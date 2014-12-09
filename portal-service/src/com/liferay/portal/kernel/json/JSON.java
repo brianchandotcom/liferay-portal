@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.json;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -29,6 +31,8 @@ import java.lang.annotation.Target;
 public @interface JSON {
 
 	public boolean include() default true;
+
+	public String name() default StringPool.BLANK;
 
 	public boolean strict() default false;
 

@@ -639,6 +639,12 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 						var ckeditorInstance = CKEDITOR.instances['<%= name %>'];
 
 						if (ckeditorInstance) {
+							var currentDialog = CKEDITOR.dialog.getCurrent();
+
+							if (currentDialog) {
+								currentDialog.hide();
+							}
+
 							ckeditorInstance.destroy();
 
 							ckeditorInstance = null;

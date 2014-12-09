@@ -578,11 +578,11 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
-	public Long[] filterGroups(List<Group> groups, String[] names) {
+	public Long[] filterGroups(List<Group> groups, String[] groupKeys) {
 		List<Long> groupIds = new ArrayList<Long>();
 
 		for (Group group : groups) {
-			if (!ArrayUtil.contains(names, group.getName())) {
+			if (!ArrayUtil.contains(groupKeys, group.getGroupKey())) {
 				groupIds.add(group.getGroupId());
 			}
 		}
@@ -1412,10 +1412,9 @@ public class SitesImpl implements Sites {
 			GroupLocalServiceUtil.addGroup(
 				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				Layout.class.getName(), targetLayout.getPlid(),
-				GroupConstants.DEFAULT_LIVE_GROUP_ID,
-				targetLayout.getName(languageId), null, 0, true,
-				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
-				true, null);
+				GroupConstants.DEFAULT_LIVE_GROUP_ID, targetLayout.getNameMap(),
+				null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+				null, false, true, null);
 		}
 
 		String portletTitle = PortalUtil.getPortletTitle(

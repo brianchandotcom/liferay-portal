@@ -100,8 +100,8 @@ public class GroupServiceTest {
 		Group companyStagingGroup = GroupLocalServiceUtil.addGroup(
 			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			companyGroup.getClassName(), companyGroup.getClassPK(),
-			companyGroup.getGroupId(), companyGroup.getDescriptiveName(),
-			companyGroup.getDescription(), companyGroup.getType(),
+			companyGroup.getGroupId(), companyGroup.getNameMap(),
+			companyGroup.getDescriptionMap(), companyGroup.getType(),
 			companyGroup.isManualMembership(),
 			companyGroup.getMembershipRestriction(),
 			companyGroup.getFriendlyURL(), false, companyGroup.isActive(),
@@ -229,11 +229,13 @@ public class GroupServiceTest {
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
 
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, group.getDescription(),
-				groupParams));
+				TestPropsValues.getCompanyId(), null,
+				group.getDescription(themeDisplay.getLocale()), groupParams));
 	}
 
 	@Test
@@ -253,11 +255,13 @@ public class GroupServiceTest {
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
 
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, group.getDescription(),
-				groupParams));
+				TestPropsValues.getCompanyId(), null,
+				group.getDescription(themeDisplay.getLocale()), groupParams));
 	}
 
 	@Test
@@ -271,11 +275,13 @@ public class GroupServiceTest {
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
 
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, group.getName(),
-				groupParams));
+				TestPropsValues.getCompanyId(), null,
+				group.getName(themeDisplay.getLocale()), groupParams));
 	}
 
 	@Test
@@ -295,11 +301,13 @@ public class GroupServiceTest {
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
 
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, group.getName(),
-				groupParams));
+				TestPropsValues.getCompanyId(), null,
+				group.getName(themeDisplay.getLocale()), groupParams));
 	}
 
 	@Test
@@ -430,7 +438,9 @@ public class GroupServiceTest {
 		String scopeDescriptiveName = group.getScopeDescriptiveName(
 			themeDisplay);
 
-		Assert.assertTrue(scopeDescriptiveName.equals(group.getName()));
+		Assert.assertTrue(
+			scopeDescriptiveName.equals(
+				group.getName(themeDisplay.getLocale())));
 	}
 
 	@Test

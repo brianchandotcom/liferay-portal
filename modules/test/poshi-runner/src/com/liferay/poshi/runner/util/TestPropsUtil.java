@@ -14,8 +14,6 @@
 
 package com.liferay.poshi.runner.util;
 
-import com.liferay.portal.kernel.util.ListUtil;
-
 import java.io.InputStream;
 
 import java.util.Collections;
@@ -75,7 +73,7 @@ public class TestPropsUtil {
 		List<String> keys = Collections.list(
 			(Enumeration<String>)_props.propertyNames());
 
-		keys = ListUtil.sort(keys);
+		Collections.sort(keys);
 
 		if (update) {
 			System.out.println("-- updated properties --");

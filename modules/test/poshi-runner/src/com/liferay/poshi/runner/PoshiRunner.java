@@ -16,6 +16,8 @@ package com.liferay.poshi.runner;
 
 import java.io.File;
 
+import junit.framework.TestCase;
+
 import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
 
@@ -24,9 +26,9 @@ import org.dom4j.io.SAXReader;
  * @author Michael Hashimoto
  * @author Karen Dang
  */
-public class PoshiRunner {
+public class PoshiRunner extends TestCase {
 
-	public static void main(String[] args) throws Exception {
+	public void testPoshiRunner() throws Exception {
 		File file = new File(
 			"../../../portal-web/test/functional/com/liferay/portalweb" +
 				"/development/tools/testinginfrastructure");
@@ -36,7 +38,7 @@ public class PoshiRunner {
 		System.out.println("Test " + file.exists());
 	}
 
-	private static void _findFiles(File file) throws Exception {
+	private void _findFiles(File file) throws Exception {
 		if (file.isDirectory()) {
 			for (File childFile : file.listFiles()) {
 				_findFiles(childFile);
@@ -47,7 +49,7 @@ public class PoshiRunner {
 		}
 	}
 
-	private static void _parseFile(File file) throws Exception {
+	private void _parseFile(File file) throws Exception {
 		SAXReader saxReader = new SAXReader();
 
 		Document document = saxReader.read(file);

@@ -3140,14 +3140,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = null;
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			repository = getRepository(serviceContext.getScopeGroupId());
-		}
-		else {
-			repository = getFolderRepository(folderId);
-		}
+		Repository repository = getFolderRepository(
+			folderId, serviceContext.getScopeGroupId());
 
 		Folder folder = repository.updateFolder(
 			folderId, name, description, serviceContext);

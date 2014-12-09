@@ -4478,6 +4478,20 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<ant dir="portal-impl" target="test-class-group" inheritAll="false" />
 
 		<ant dir="util-java" target="test-class-group" inheritAll="false" />
+
+		<tempfile property="temp.file" suffix=".properties"/>
+
+		<echo file="${temp.file}">
+portal.dir=${project.dir}
+		</echo>
+		
+		<ant-execute
+			ant.dir="${project.dir}/modules"
+			ant.properties.file="${temp.file}"
+			ant.target="test-class-group"
+		/>
+
+		<delete file="${temp.file}" />
 	</target>
 
 	<target name="test-integration">

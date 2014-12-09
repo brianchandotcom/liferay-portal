@@ -316,6 +316,8 @@
 
 		<action path="/blogs/find_entry" type="com.liferay.portlet.blogs.action.FindEntryAction" />
 
+		<action path="/blogs/image_selector" type="com.liferay.portlet.blogs.action.ImageSelectorAction" />
+
 		<action path="/blogs/rss" type="com.liferay.portlet.blogs.action.RSSAction" />
 
 		<action path="/blogs/search" forward="portlet.blogs.search" />
@@ -343,6 +345,8 @@
 		<action path="/blogs_admin/edit_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />
 		</action>
+
+		<action path="/blogs_admin/image_selector" type="com.liferay.portlet.blogs.action.ImageSelectorAction" />
 
 		<action path="/blogs_admin/search" forward="portlet.blogs.search" />
 

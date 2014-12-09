@@ -19,9 +19,12 @@
 <%
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
+Long groupId = layoutsAdminDisplayContext.getGroupId();
 boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 long parentPlid = LayoutConstants.DEFAULT_PLID;
 long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
+
+String tabs1 = layoutsAdminDisplayContext.getTabs1();
 
 if (layout.isTypeControlPanel()) {
 	if (layoutsAdminDisplayContext.getSelPlid() != 0) {
@@ -46,6 +49,8 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 <c:if test="<%= !portletName.equals(PortletKeys.DOCKBAR) %>">
 	<portlet:renderURL var="backURL">
 		<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="tabs1" value="<%= tabs1 %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:header
@@ -60,12 +65,14 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 
 <portlet:renderURL var="editLayoutRenderURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
 	<portlet:param name="struts_action" value='<%= portletName.equals(PortletKeys.DOCKBAR) ? "/layouts_admin/add_layout" : "/layouts_admin/edit_layouts" %>' />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="tabs1" value="<%= tabs1 %>" />
 </portlet:renderURL>
 
 <aui:form action="<%= editLayoutActionURL %>" enctype="multipart/form-data" method="post" name="addPageFm" onSubmit="event.preventDefault()">
 	<aui:input id="addLayoutCMD" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input id="addLayoutRedirect" name="redirect" type="hidden" value="<%= editLayoutRenderURL %>" />
-	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />
+	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 	<aui:input id="addLayoutPrivateLayout" name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input id="addLayoutParentPlid" name="parentPlid" type="hidden" value="<%= parentPlid %>" />
 	<aui:input id="addLayoutParentLayoutId" name="parentLayoutId" type="hidden" value="<%= parentLayoutId %>" />

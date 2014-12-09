@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
-
-import com.thoughtworks.selenium.Selenium;
+package com.liferay.poshi.runner.liferayselenium;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public interface LiferaySelenium extends Selenium {
+public interface LiferaySelenium {
 
 	public void antCommand(String fileName, String target) throws Exception;
 

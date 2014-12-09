@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_journal_content_web_portlet_JournalContentPortlet_WAR_comliferayjournalcontentweb</portlet-name>
+		<portlet-name>com_liferay_journal_content_web_portlet_JournalContentPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_TO_PAGE</action-key>

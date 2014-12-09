@@ -29,7 +29,7 @@ for (FullNameField fullNameField: fullNameDefinition.getFields()) {
 %>
 
 <c:choose>
-	<c:when test="<%= ArrayUtil.isEmpty(options) %>">
+	<c:when test="<%= fullNameField.isFreeText() %>">
 		<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" name="<%= fieldName %>">
 			<c:if test="<%= required %>">
 				<aui:validator name="required" />

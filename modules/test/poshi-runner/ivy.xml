@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<!--<dependency name="commons-io" org="commons-io" rev="2.4" />-->
+		<dependency name="commons-io" org="commons-io" rev="2.4" />
 		<dependency name="dom4j" org="dom4j" rev="1.6.1" />
 		<dependency name="junit" org="junit" rev="4.12" />
 		<dependency name="selenium-java" org="org.seleniumhq.selenium" rev="2.44.0" />

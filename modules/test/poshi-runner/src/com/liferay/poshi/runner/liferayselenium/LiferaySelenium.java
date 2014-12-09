@@ -16,8 +16,12 @@ package com.liferay.poshi.runner.liferayselenium;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Michael Hashimoto
  */
 public interface LiferaySelenium {
+
+	public void addSelection(String locator, String optionLocator)
+		throws Exception;
 
 	public void antCommand(String fileName, String target) throws Exception;
 
@@ -91,9 +95,17 @@ public interface LiferaySelenium {
 
 	public void assertVisible(String locator) throws Exception;
 
+	public void check(String locator) throws Exception;
+
+	public void click(String locator) throws Exception;
+
 	public void clickAndWait(String locator);
 
+	public void clickAt(String locator, String coordString) throws Exception;
+
 	public void clickAtAndWait(String locator, String coordString);
+
+	public void close() throws Exception;
 
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception;
@@ -104,9 +116,29 @@ public interface LiferaySelenium {
 
 	public void deleteAllEmails() throws Exception;
 
+	public void doubleClick(String locator) throws Exception;
+
+	public void doubleClickAt(String locator, String coordString)
+		throws Exception;
+
+	public void dragAndDrop(String locator, String movementsString)
+		throws Exception;
+
+	public void dragAndDropToObject(
+		String locatorOfObjectToBeDragged,
+		String locatorOfDragDestinationObject) throws Exception;
+
 	public void echo(String message);
 
 	public void fail(String message);
+
+	public String getAlert();
+
+	public String getAttribute(String attributeLocator) throws Exception;
+
+	public String getBodyText() throws Exception;
+
+	public String getConfirmation() throws Exception;
 
 	public String getCurrentDay();
 
@@ -116,13 +148,27 @@ public interface LiferaySelenium {
 
 	public String getDependenciesDirName();
 
+	public Number getElementHeight(String locator) throws Exception;
+
+	public Number getElementIndex(String locator) throws Exception;
+
+	public Number getElementPositionLeft(String locator) throws Exception;
+
+	public Number getElementPositionTop(String locator) throws Exception;
+
+	public Number getElementWidth(String locator) throws Exception;
+
 	public String getEmailBody(String index) throws Exception;
 
 	public String getEmailSubject(String index) throws Exception;
 
+	public String getEval(String script) throws Exception;
+
 	public String getFirstNumber(String locator);
 
 	public String getFirstNumberIncrement(String locator);
+
+	public String getLocation() throws Exception;
 
 	public String getNumberDecrement(String value);
 
@@ -134,13 +180,33 @@ public interface LiferaySelenium {
 
 	public String getProjectDirName();
 
+	public String getSelectedLabel(String selectLocator) throws Exception;
+
+	public String[] getSelectedLabels(String selectLocator) throws Exception;
+
 	public String getSikuliImagesDirName();
 
+	public String getText(String locator) throws Exception;
+
+	public String getTitle() throws Exception;
+
+	public String getValue(String locator) throws Exception;
+
+	public void goBack() throws Exception;
+
 	public void goBackAndWait();
+
+	public void highlight(String locator) throws Exception;
+
+	public boolean isAlertPresent() throws Exception;
+
+	public boolean isChecked(String locator) throws Exception;
 
 	public boolean isConfirmation(String pattern);
 
 	public boolean isElementNotPresent(String locator);
+
+	public boolean isElementPresent(String locator) throws Exception;
 
 	public boolean isElementPresentAfterWait(String locator) throws Exception;
 
@@ -162,6 +228,8 @@ public interface LiferaySelenium {
 
 	public boolean isPartialText(String locator, String value);
 
+	public boolean isPromptPresent() throws Exception;
+
 	public boolean isSelectedLabel(String selectLocator, String pattern);
 
 	public boolean isTCatEnabled();
@@ -170,17 +238,55 @@ public interface LiferaySelenium {
 
 	public boolean isTextNotPresent(String pattern);
 
+	public boolean isTextPresent(String pattern) throws Exception;
+
 	public boolean isValue(String locator, String value);
+
+	public boolean isVisible(String locator) throws Exception;
+
+	public void keyDown(String locator, String keySequence) throws Exception;
 
 	public void keyDownAndWait(String locator, String keySequence);
 
+	public void keyDownNative(String keycode) throws Exception;
+
+	public void keyPress(String locator, String keySequence) throws Exception;
+
 	public void keyPressAndWait(String locator, String keySequence);
+
+	public void keyPressNative(String keycode) throws Exception;
+
+	public void keyUp(String locator, String keySequence) throws Exception;
 
 	public void keyUpAndWait(String locator, String keySequence);
 
+	public void keyUpNative(String keycode) throws Exception;
+
 	public void makeVisible(String locator);
 
+	public void mouseDown(String locator) throws Exception;
+
+	public void mouseDownAt(String locator, String coordString)
+		throws Exception;
+
+	public void mouseMove(String locator) throws Exception;
+
+	public void mouseMoveAt(String locator, String coordString)
+		throws Exception;
+
+	public void mouseOut(String locator) throws Exception;
+
+	public void mouseOver(String locator) throws Exception;
+
 	public void mouseRelease();
+
+	public void mouseUp(String locator) throws Exception;
+
+	public void mouseUpAt(String locator, String coordString) throws Exception;
+
+	public void open(String url) throws Exception;
+
+	public void openWindow(String url, String windowID) throws Exception;
 
 	public void paste(String locator);
 
@@ -188,9 +294,13 @@ public interface LiferaySelenium {
 
 	public void pauseLoggerCheck() throws Exception;
 
+	public void refresh() throws Exception;
+
 	public void refreshAndWait();
 
 	public void replyToEmail(String to, String body) throws Exception;
+
+	public void runScript(String script) throws Exception;
 
 	public void saveScreenshot() throws Exception;
 
@@ -201,7 +311,16 @@ public interface LiferaySelenium {
 
 	public void scrollWebElementIntoView(String locator) throws Exception;
 
+	public void select(String selectLocator, String optionLocator)
+		throws Exception;
+
 	public void selectAndWait(String selectLocator, String optionLocator);
+
+	public void selectFrame(String locator) throws Exception;
+
+	public void selectPopUp(String windowID) throws Exception;
+
+	public void selectWindow(String windowID) throws Exception;
 
 	public void sendActionDescriptionLogger(String description);
 
@@ -222,11 +341,15 @@ public interface LiferaySelenium {
 
 	public void sendTestCaseHeaderLogger(String command);
 
+	public void setContext(String context) throws Exception;
+
 	public void setDefaultTimeout();
 
 	public void setDefaultTimeoutImplicit();
 
 	public void setPrimaryTestSuiteName(String primaryTestSuiteName);
+
+	public void setTimeout(String timeout) throws Exception;
 
 	public void setTimeoutImplicit(String timeout);
 
@@ -262,17 +385,27 @@ public interface LiferaySelenium {
 	public void sikuliUploadTempFile(String image, String value)
 		throws Exception;
 
+	public void start() throws Exception;
+
 	public void startLogger();
+
+	public void stop() throws Exception;
 
 	public void stopLogger();
 
 	public void tap(String locator);
 
+	public void type(String locator, String value) throws Exception;
+
 	public void typeAceEditor(String locator, String value);
 
 	public void typeFrame(String locator, String value);
 
+	public void typeKeys(String locator, String value) throws Exception;
+
 	public void typeScreen(String value);
+
+	public void uncheck(String locator) throws Exception;
 
 	public void uploadCommonFile(String locator, String value);
 
@@ -298,8 +431,12 @@ public interface LiferaySelenium {
 
 	public void waitForNotVisible(String locator) throws Exception;
 
+	public void waitForPageToLoad(String timeout) throws Exception;
+
 	public void waitForPartialText(String locator, String value)
 		throws Exception;
+
+	public void waitForPopUp(String windowID, String timeout) throws Exception;
 
 	public void waitForSelectedLabel(String selectLocator, String pattern)
 		throws Exception;

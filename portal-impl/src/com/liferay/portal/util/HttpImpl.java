@@ -15,7 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.io.DeleteOnCloseFileInputStream;
+import com.liferay.portal.kernel.io.AutoDeleteFileInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1645,7 +1645,7 @@ public class HttpImpl implements Http {
 					File tempFile = FileUtil.createTempFile(
 						progressInputStream);
 
-					return new DeleteOnCloseFileInputStream(tempFile);
+					return new AutoDeleteFileInputStream(tempFile);
 				}
 				finally {
 					progressInputStream.clearProgress();
@@ -1654,7 +1654,7 @@ public class HttpImpl implements Http {
 			else {
 				File tempFile = FileUtil.createTempFile(inputStream);
 
-				return new DeleteOnCloseFileInputStream(tempFile);
+				return new AutoDeleteFileInputStream(tempFile);
 			}
 		}
 		finally {

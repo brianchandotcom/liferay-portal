@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_categories_navigation/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-ui:ddm-template-renderer displayStyle="<%= assetCategoriesNavigationDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetCategoriesNavigationDisplayContext.getDDMTemplateAssetVocabularies() %>">
 	<c:choose>

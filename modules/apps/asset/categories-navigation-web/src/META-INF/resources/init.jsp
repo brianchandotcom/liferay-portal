@@ -22,4 +22,4 @@
 AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext = new AssetCategoriesNavigationDisplayContext(request, portletPreferences);
 %>
 
-<%@ include file="/html/portlet/asset_categories_navigation/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

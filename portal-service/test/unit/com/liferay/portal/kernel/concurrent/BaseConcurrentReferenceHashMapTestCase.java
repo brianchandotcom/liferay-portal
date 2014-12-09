@@ -89,10 +89,10 @@ public class BaseConcurrentReferenceHashMapTestCase {
 		testKey = null;
 
 		if (fullGC) {
-			GCUtil.fullGC();
+			GCUtil.fullGC(true);
 		}
 		else {
-			GCUtil.gc();
+			GCUtil.gc(true);
 		}
 
 		ReflectionTestUtil.invoke(

@@ -317,7 +317,7 @@ public class ConstantsBeanFactoryImplTest {
 		constantsBean1 = null;
 		constantsBeanClass1 = null;
 
-		GCUtil.gc();
+		GCUtil.gc(true);
 
 		ReflectionTestUtil.invoke(
 			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
@@ -331,7 +331,7 @@ public class ConstantsBeanFactoryImplTest {
 
 		constantsBean2 = null;
 
-		GCUtil.gc();
+		GCUtil.gc(true);
 
 		ReflectionTestUtil.invoke(
 			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);

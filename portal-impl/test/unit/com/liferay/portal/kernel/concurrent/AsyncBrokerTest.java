@@ -100,7 +100,7 @@ public class AsyncBrokerTest {
 
 		noticeableFuture = null;
 
-		GCUtil.gc();
+		GCUtil.gc(true);
 
 		ReflectionTestUtil.invoke(
 			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
@@ -123,7 +123,7 @@ public class AsyncBrokerTest {
 		try {
 			asyncBroker.post(_KEY);
 
-			GCUtil.gc();
+			GCUtil.gc(true);
 
 			ReflectionTestUtil.invoke(
 				FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
@@ -148,7 +148,7 @@ public class AsyncBrokerTest {
 
 			noticeableFuture = null;
 
-			GCUtil.gc();
+			GCUtil.gc(true);
 
 			ReflectionTestUtil.invoke(
 				FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
@@ -183,7 +183,7 @@ public class AsyncBrokerTest {
 
 			asyncBroker.post(_KEY);
 
-			GCUtil.gc();
+			GCUtil.gc(true);
 
 			Field field = ReflectionTestUtil.getFieldValue(
 				AsyncBroker.class, "_REFERENT_FIELD");

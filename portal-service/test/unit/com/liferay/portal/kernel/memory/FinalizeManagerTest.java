@@ -117,7 +117,7 @@ public class FinalizeManagerTest {
 
 		object = null;
 
-		GCUtil.gc();
+		GCUtil.gc(true);
 
 		ReflectionTestUtil.invoke(
 			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
@@ -247,10 +247,10 @@ public class FinalizeManagerTest {
 		// First GC to trigger Object#finalize
 
 		if (referenceType == ReferenceType.SOFT) {
-			GCUtil.fullGC();
+			GCUtil.fullGC(true);
 		}
 		else {
-			GCUtil.gc();
+			GCUtil.gc(true);
 		}
 
 		Assert.assertEquals(id, _finalizedIds.take());
@@ -260,7 +260,7 @@ public class FinalizeManagerTest {
 
 			// Second GC to trigger ReferenceQueue#enqueue
 
-			GCUtil.gc();
+			GCUtil.gc(true);
 		}
 
 		if (threadEnabled) {

@@ -28,7 +28,9 @@ import org.junit.Assert;
  */
 public class GCUtil {
 
-	public static void fullGC() throws InterruptedException {
+	public static void fullGC(boolean ensureEnqueuedReferences)
+		throws InterruptedException {
+
 		ReferenceQueue<Object> referenceQueue = new ReferenceQueue<Object>();
 
 		SoftReference<Object> softReference = new SoftReference<Object>(
@@ -43,15 +45,23 @@ public class GCUtil {
 			catch (OutOfMemoryError oome) {
 				list.clear();
 
+				list = null;
+
 				break;
 			}
 		}
 
 		Assert.assertNull(softReference.get());
 		Assert.assertSame(softReference, referenceQueue.remove());
+
+		if (ensureEnqueuedReferences) {
+			fullGC(false);
+		}
 	}
 
-	public static void gc() throws InterruptedException {
+	public static void gc(boolean ensureEnqueuedReferences)
+		throws InterruptedException {
+
 		ReferenceQueue<Object> referenceQueue = new ReferenceQueue<Object>();
 
 		WeakReference<Object> weakReference = new WeakReference<Object>(
@@ -64,6 +74,10 @@ public class GCUtil {
 		}
 
 		Assert.assertSame(weakReference, referenceQueue.remove());
+
+		if (ensureEnqueuedReferences) {
+			gc(false);
+		}
 	}
 
 }

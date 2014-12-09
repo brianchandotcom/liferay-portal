@@ -1091,39 +1091,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>122</portlet-name>
-		<display-name>Asset Categories Navigation</display-name>
-		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/asset_categories_navigation/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/asset_categories_navigation/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/asset_categories_navigation/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
-		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
-	</portlet>
-	<portlet>
 		<portlet-name>124</portlet-name>
 		<display-name>Social</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

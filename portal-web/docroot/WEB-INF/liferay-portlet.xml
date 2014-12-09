@@ -829,21 +829,6 @@
 		<css-class-wrapper>portlet-activities</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>122</portlet-name>
-		<icon>/html/icons/asset_categories_navigation.png</icon>
-		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
-		<portlet-data-handler-class>com.liferay.portlet.assetcategoriesnavigation.lar.AssetCategoriesNavigationPortletDataHandler</portlet-data-handler-class>
-		<template-handler>com.liferay.portlet.assetcategoriesnavigation.template.AssetCategoriesNavigationPortletDisplayTemplateHandler</template-handler>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<layout-cacheable>true</layout-cacheable>
-		<instanceable>true</instanceable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-asset-categories-navigation</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>124</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>social</struts-path>

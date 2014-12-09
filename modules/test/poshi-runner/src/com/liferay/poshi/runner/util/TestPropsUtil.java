@@ -49,12 +49,12 @@ public class TestPropsUtil {
 			ClassLoader classLoader = ClassLoader.getSystemClassLoader();
 
 			InputStream is = classLoader.getResourceAsStream(
-				"test-portal-web.properties");
+				"test-poshi-runner.properties");
 
 			_props.load(is);
 
 			is = classLoader.getResourceAsStream(
-				"test-portal-web-ext.properties");
+				"test-poshi-runner-ext.properties");
 
 			if (is != null) {
 				_props.load(is);

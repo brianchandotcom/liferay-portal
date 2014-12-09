@@ -57,7 +57,7 @@
 <!--USER_SEGMENTS_MATCHED-->
 <tr>
 	<td>USER_SEGMENTS_MATCHED_LABEL</td>
-	<td>//div[@class='category-content']/label[contains(.,'${key_userSegmentMatched}')]</td>
+	<td>//div[@class='category-content']/div/label[contains(.,'${key_userSegmentMatched}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -88,8 +88,7 @@ public class BindConfigurationAction implements ActionCommand {
 		}
 
 		ConfigurationHelper configurationHelper = new ConfigurationHelper(
-			_bundleContext, _configurationAdmin, _metaTypeService,
-			languageId);
+			_bundleContext, _configurationAdmin, _metaTypeService, languageId);
 
 		ConfigurationModel model = configurationHelper.getModel(pid);
 
@@ -101,15 +100,13 @@ public class BindConfigurationAction implements ActionCommand {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
 
-		Dictionary<String, Object> properties =
-			ConfigurationProperties.load(
-				model, ddmFormFieldValuesMap, locale);
+		Dictionary<String, Object> properties = ConfigurationProperties.load(
+			model, ddmFormFieldValuesMap, locale);
 
 		properties.put(Constants.SERVICE_PID, pid);
 
 		if (Validator.isNotNull(factoryPid)) {
-			properties.put(
-				ConfigurationAdmin.SERVICE_FACTORYPID, factoryPid);
+			properties.put(ConfigurationAdmin.SERVICE_FACTORYPID, factoryPid);
 		}
 
 		configureTargetService(model, configuration, properties);

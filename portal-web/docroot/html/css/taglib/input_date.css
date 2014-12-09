@@ -1,0 +1,7 @@
+@import "compass";
+
+.lfr-input-date {
+	&.form-group {
+		margin-bottom: 0;
+	}
+}

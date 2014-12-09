@@ -352,7 +352,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		Folder folder = repository.addFolder(
-			parentFolderId, name, description, serviceContext);
+			getUserId(), parentFolderId, name, description, serviceContext);
 
 		dlAppHelperLocalService.addFolder(getUserId(), folder, serviceContext);
 
@@ -685,7 +685,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Folder srcFolder = repository.getFolder(sourceFolderId);
 
 		Folder destFolder = repository.addFolder(
-			parentFolderId, name, description, serviceContext);
+			getUserId(), parentFolderId, name, description, serviceContext);
 
 		dlAppHelperLocalService.addFolder(
 			getUserId(), destFolder, serviceContext);
@@ -1197,29 +1197,22 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public FileEntry getFileEntryByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException {
 
-		try {
-			Repository repository = getRepository(groupId);
+		FileEntry fileEntry = fetchFileEntryByUuidAndRepositoryId(
+			uuid, groupId);
 
-			return repository.getFileEntryByUuid(uuid);
-		}
-		catch (NoSuchFileEntryException nsfee) {
-		}
-		catch (RepositoryException re) {
-			throw new NoSuchFileEntryException(re);
+		if (fileEntry != null) {
+			return fileEntry;
 		}
 
 		List<com.liferay.portal.model.Repository> repositories =
 			repositoryPersistence.findByGroupId(groupId);
 
-		for (int i = 0; i < repositories.size(); i++) {
-			try {
-				long repositoryId = repositories.get(i).getRepositoryId();
+		for (com.liferay.portal.model.Repository repository : repositories) {
+			fileEntry = fetchFileEntryByUuidAndRepositoryId(
+				uuid, repository.getRepositoryId());
 
-				Repository repository = getRepository(repositoryId);
-
-				return repository.getFileEntryByUuid(uuid);
-			}
-			catch (NoSuchFileEntryException nsfee) {
+			if (fileEntry != null) {
+				return fileEntry;
 			}
 		}
 
@@ -2222,10 +2215,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			// Move file entries within repository
 
-			FileEntry fileEntry = fromRepository.moveFileEntry(
-				fileEntryId, newFolderId, serviceContext);
-
-			return fileEntry;
+			return fromRepository.moveFileEntry(
+				getUserId(), fileEntryId, newFolderId, serviceContext);
 		}
 
 		// Move file entries between repositories
@@ -2373,26 +2364,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			}
 		}
 
-		Folder folder = null;
-
 		if (fromRepository.getRepositoryId() ==
 				toRepository.getRepositoryId()) {
 
 			// Move file entries within repository
 
-			folder = fromRepository.moveFolder(
-				folderId, parentFolderId, serviceContext);
-		}
-		else {
-
-			// Move file entries between repositories
-
-			folder = moveFolders(
-				folderId, parentFolderId, fromRepository, toRepository,
-				serviceContext);
+			return fromRepository.moveFolder(
+				getUserId(), folderId, parentFolderId, serviceContext);
 		}
 
-		return folder;
+		// Move file entries between repositories
+
+		return moveFolders(
+			folderId, parentFolderId, fromRepository, toRepository,
+			serviceContext);
 	}
 
 	/**
@@ -3148,14 +3133,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = null;
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			repository = getRepository(serviceContext.getScopeGroupId());
-		}
-		else {
-			repository = getFolderRepository(folderId);
-		}
+		Repository repository = getFolderRepository(
+			folderId, serviceContext.getScopeGroupId());
 
 		Folder folder = repository.updateFolder(
 			folderId, name, description, serviceContext);
@@ -3312,8 +3291,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				}
 				catch (Exception e) {
 					_log.error(e, e);
-
-					continue;
 				}
 			}
 
@@ -3323,8 +3300,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			for (Folder srcSubfolder : srcSubfolders) {
 				Folder destSubfolder = repository.addFolder(
-					curDestFolder.getFolderId(), srcSubfolder.getName(),
-					srcSubfolder.getDescription(), serviceContext);
+					getUserId(), curDestFolder.getFolderId(),
+					srcSubfolder.getName(), srcSubfolder.getDescription(),
+					serviceContext);
 
 				dlAppHelperLocalService.addFolder(
 					getUserId(), destSubfolder, serviceContext);
@@ -3378,6 +3356,23 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
 			throw pe;
+		}
+	}
+
+	protected FileEntry fetchFileEntryByUuidAndRepositoryId(
+			String uuid, long repositoryId)
+		throws PortalException {
+
+		try {
+			Repository repository = getRepository(repositoryId);
+
+			return repository.getFileEntryByUuid(uuid);
+		}
+		catch (NoSuchFileEntryException nsfee) {
+			return null;
+		}
+		catch (RepositoryException re) {
+			throw new NoSuchFileEntryException(re);
 		}
 	}
 
@@ -3435,16 +3430,11 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	protected Repository getFolderRepository(long folderId, long groupId)
 		throws PortalException {
 
-		Repository repository = null;
-
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			repository = getRepository(groupId);
-		}
-		else {
-			repository = getFolderRepository(folderId);
+			return getRepository(groupId);
 		}
 
-		return repository;
+		return getFolderRepository(folderId);
 	}
 
 	protected Repository getRepository(long repositoryId)
@@ -3489,8 +3479,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Folder folder = fromRepository.getFolder(folderId);
 
 		Folder newFolder = toRepository.addFolder(
-			parentFolderId, folder.getName(), folder.getDescription(),
-			serviceContext);
+			getUserId(), parentFolderId, folder.getName(),
+			folder.getDescription(), serviceContext);
 
 		dlAppHelperLocalService.addFolder(
 			getUserId(), newFolder, serviceContext);

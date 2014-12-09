@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
@@ -39,7 +40,7 @@ import java.util.List;
 public class DDLXMLExporter extends BaseDDLExporter {
 
 	protected void addFieldElement(
-		Element fieldsElement, String label, Serializable value, int status) {
+		Element fieldsElement, String label, Serializable value) {
 
 		Element fieldElement = fieldsElement.addElement("field");
 
@@ -50,10 +51,6 @@ public class DDLXMLExporter extends BaseDDLExporter {
 		Element valueElement = fieldElement.addElement("value");
 
 		valueElement.addText(String.valueOf(value));
-
-		Element statusElement = fieldElement.addElement("status");
-
-		statusElement.addText(getStatusMessage(status));
 	}
 
 	@Override
@@ -93,9 +90,12 @@ public class DDLXMLExporter extends BaseDDLExporter {
 				}
 
 				addFieldElement(
-					fieldsElement, label.getString(getLocale()), value,
-					recordVersion.getStatus());
+					fieldsElement, label.getString(getLocale()), value);
 			}
+
+			addFieldElement(
+				fieldsElement, LanguageUtil.get(getLocale(), "status"),
+				getStatusMessage(recordVersion.getStatus()));
 		}
 
 		String xml = document.asXML();

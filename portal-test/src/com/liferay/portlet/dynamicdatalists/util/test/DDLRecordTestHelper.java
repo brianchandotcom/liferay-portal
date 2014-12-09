@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.util.test;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -47,7 +48,8 @@ public class DDLRecordTestHelper {
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
 		DDMFormValues ddmFormValues = DDLRecordTestUtil.createDDMFormValues(
-			ddmForm);
+			ddmForm, DDLRecordTestUtil.createAvailableLocales(LocaleUtil.US),
+			LocaleUtil.US);
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			if (ddmStructure.isFieldPrivate(ddmFormField.getName())) {

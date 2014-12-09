@@ -19,13 +19,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -35,15 +36,64 @@ import java.util.Set;
  */
 public class DDLRecordTestUtil {
 
-	public static DDMFormValues createDDMFormValues(DDMForm ddmForm) {
+	public static Set<Locale> createAvailableLocales(Locale... locales) {
+		Set<Locale> availableLocales = new LinkedHashSet<Locale>();
+
+		for (Locale locale : locales) {
+			availableLocales.add(locale);
+		}
+
+		return availableLocales;
+	}
+
+	public static DDMForm createDDMForm(
+		Set<Locale> availableLocales, Locale defaultLocale) {
+
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.setAvailableLocales(availableLocales);
+		ddmForm.setDefaultLocale(defaultLocale);
+
+		return ddmForm;
+	}
+
+	public static DDMFormField createDDMFormField(
+		String name, String label, String type, String dataType,
+		boolean localizable, boolean repeatable, boolean required) {
+
+		DDMFormField ddmFormField = new DDMFormField(name, type);
+
+		ddmFormField.setDataType(dataType);
+		ddmFormField.setLocalizable(localizable);
+		ddmFormField.setRepeatable(repeatable);
+		ddmFormField.setRequired(required);
+
+		LocalizedValue localizedValue = ddmFormField.getLabel();
+
+		localizedValue.addString(LocaleUtil.US, label);
+
+		return ddmFormField;
+	}
+
+	public static DDMFormFieldValue createDDMFormFieldValue(
+		String name, Value value) {
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
+		ddmFormFieldValue.setName(name);
+		ddmFormFieldValue.setValue(value);
+
+		return ddmFormFieldValue;
+	}
+
+	public static DDMFormValues createDDMFormValues(
+		DDMForm ddmForm, Set<Locale> availableLocales, Locale defaultLocale) {
+
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
-		Set<Locale> availableLocales = new HashSet<Locale>();
-
-		availableLocales.add(LocaleUtil.US);
-
 		ddmFormValues.setAvailableLocales(availableLocales);
-		ddmFormValues.setDefaultLocale(LocaleUtil.US);
+		ddmFormValues.setDefaultLocale(defaultLocale);
 
 		return ddmFormValues;
 	}

@@ -574,6 +574,7 @@ public class UserFinderImpl
 
 					for (int i = 0; i < organizationIds.length; i++) {
 						Organization organization = organizations.get(i);
+
 						organizationIds[i] = organization.getOrganizationId();
 					}
 
@@ -651,6 +652,7 @@ public class UserFinderImpl
 
 					for (int i = 0; i < organizationIds.length; i++) {
 						Organization organization = organizations.get(i);
+
 						organizationIds[i] = organization.getOrganizationId();
 					}
 

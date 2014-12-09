@@ -1197,29 +1197,22 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public FileEntry getFileEntryByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException {
 
-		try {
-			Repository repository = getRepository(groupId);
+		FileEntry fileEntry = fetchFileEntryByUuidAndRepositoryId(
+			uuid, groupId);
 
-			return repository.getFileEntryByUuid(uuid);
-		}
-		catch (NoSuchFileEntryException nsfee) {
-		}
-		catch (RepositoryException re) {
-			throw new NoSuchFileEntryException(re);
+		if (fileEntry != null) {
+			return fileEntry;
 		}
 
 		List<com.liferay.portal.model.Repository> repositories =
 			repositoryPersistence.findByGroupId(groupId);
 
-		for (int i = 0; i < repositories.size(); i++) {
-			try {
-				long repositoryId = repositories.get(i).getRepositoryId();
+		for (com.liferay.portal.model.Repository repository : repositories) {
+			fileEntry = fetchFileEntryByUuidAndRepositoryId(
+				uuid, repository.getRepositoryId());
 
-				Repository repository = getRepository(repositoryId);
-
-				return repository.getFileEntryByUuid(uuid);
-			}
-			catch (NoSuchFileEntryException nsfee) {
+			if (fileEntry != null) {
+				return fileEntry;
 			}
 		}
 
@@ -3363,6 +3356,23 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
 			throw pe;
+		}
+	}
+
+	protected FileEntry fetchFileEntryByUuidAndRepositoryId(
+			String uuid, long repositoryId)
+		throws PortalException {
+
+		try {
+			Repository repository = getRepository(repositoryId);
+
+			return repository.getFileEntryByUuid(uuid);
+		}
+		catch (NoSuchFileEntryException nsfee) {
+			return null;
+		}
+		catch (RepositoryException re) {
+			throw new NoSuchFileEntryException(re);
 		}
 	}
 

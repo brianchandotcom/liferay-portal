@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.upload.ProgressInputStream;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -58,7 +57,6 @@ import java.util.regex.Pattern;
 import javax.net.SocketFactory;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.Cookie;
@@ -1146,8 +1144,7 @@ public class HttpImpl implements Http {
 			options.getLocation(), options.getMethod(), options.getHeaders(),
 			options.getCookies(), options.getAuth(), options.getBody(),
 			options.getFileParts(), options.getParts(), options.getResponse(),
-			options.isFollowRedirects(), options.getProgressId(),
-			options.getPortletRequest());
+			options.isFollowRedirects());
 	}
 
 	@Override
@@ -1179,8 +1176,7 @@ public class HttpImpl implements Http {
 			options.getLocation(), options.getMethod(), options.getHeaders(),
 			options.getCookies(), options.getAuth(), options.getBody(),
 			options.getFileParts(), options.getParts(), options.getResponse(),
-			options.isFollowRedirects(), options.getProgressId(),
-			options.getPortletRequest());
+			options.isFollowRedirects());
 	}
 
 	@Override
@@ -1421,13 +1417,12 @@ public class HttpImpl implements Http {
 			String location, Http.Method method, Map<String, String> headers,
 			Cookie[] cookies, Http.Auth auth, Http.Body body,
 			List<Http.FilePart> fileParts, Map<String, String> parts,
-			Http.Response response, boolean followRedirects, String progressId,
-			PortletRequest portletRequest)
+			Http.Response response, boolean followRedirects)
 		throws IOException {
 
 		InputStream inputStream = URLtoInputStream(
 			location, method, headers, cookies, auth, body, fileParts, parts,
-			response, followRedirects, progressId, portletRequest);
+			response, followRedirects);
 
 		if (inputStream == null) {
 			return null;
@@ -1459,8 +1454,7 @@ public class HttpImpl implements Http {
 			String location, Http.Method method, Map<String, String> headers,
 			Cookie[] cookies, Http.Auth auth, Http.Body body,
 			List<Http.FilePart> fileParts, Map<String, String> parts,
-			Http.Response response, boolean followRedirects, String progressId,
-			PortletRequest portletRequest)
+			Http.Response response, boolean followRedirects)
 		throws IOException {
 
 		HttpMethod httpMethod = null;
@@ -1593,8 +1587,7 @@ public class HttpImpl implements Http {
 				if (followRedirects) {
 					return URLtoInputStream(
 						redirect, Http.Method.GET, headers, cookies, auth, body,
-						fileParts, parts, response, followRedirects, progressId,
-						portletRequest);
+						fileParts, parts, response, followRedirects);
 				}
 				else {
 					response.setRedirect(redirect);
@@ -1635,27 +1628,9 @@ public class HttpImpl implements Http {
 
 			InputStream inputStream = httpMethod.getResponseBodyAsStream();
 
-			if (Validator.isNotNull(progressId) && (portletRequest != null)) {
-				ProgressInputStream progressInputStream =
-					new ProgressInputStream(
-						portletRequest, inputStream, contentLengthLong,
-						progressId);
+			File tempFile = FileUtil.createTempFile(inputStream);
 
-				try {
-					File tempFile = FileUtil.createTempFile(
-						progressInputStream);
-
-					return new AutoDeleteFileInputStream(tempFile);
-				}
-				finally {
-					progressInputStream.clearProgress();
-				}
-			}
-			else {
-				File tempFile = FileUtil.createTempFile(inputStream);
-
-				return new AutoDeleteFileInputStream(tempFile);
-			}
+			return new AutoDeleteFileInputStream(tempFile);
 		}
 		finally {
 			try {

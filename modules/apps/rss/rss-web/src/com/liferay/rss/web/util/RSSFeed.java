@@ -113,6 +113,10 @@ public class RSSFeed {
 
 		SyndFeed syndFeed = getSyndFeed();
 
+		if (syndFeed == null) {
+			return _rssFeedEntries;
+		}
+
 		for (Object syndEntry : syndFeed.getEntries()) {
 			RSSFeedEntry rssFeedEntry = new RSSFeedEntry(
 				this, (SyndEntry)syndEntry, themeDisplay);

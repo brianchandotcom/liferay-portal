@@ -98,8 +98,10 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_filterMapping.dispatchers.add(dispatcher);
 		}
 		else if (qName.equals("filter")) {
-			_webXMLDefinition.setFilterDefinition(
-				_filterDefinition.getName(), _filterDefinition);
+			if (_filterDefinition.getFilter() != null) {
+				_webXMLDefinition.setFilterDefinition(
+					_filterDefinition.getName(), _filterDefinition);
+			}
 
 			_filterDefinition = null;
 		}
@@ -117,15 +119,18 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			FilterDefinition filterDefinition = filterDefinitions.get(
 				_filterMapping.filterName);
 
-			filterDefinition.setDispatchers(_filterMapping.dispatchers);
+			if (filterDefinition != null) {
+				filterDefinition.setDispatchers(_filterMapping.dispatchers);
 
-			if (_filterMapping.servletName != null) {
-				List<String> servletNames = filterDefinition.getServletNames();
+				if (_filterMapping.servletName != null) {
+					List<String> servletNames =
+						filterDefinition.getServletNames();
 
-				servletNames.add(_filterMapping.servletName);
+					servletNames.add(_filterMapping.servletName);
+				}
+
+				filterDefinition.setURLPatterns(_filterMapping.urlPatterns);
 			}
-
-			filterDefinition.setURLPatterns(_filterMapping.urlPatterns);
 
 			_filterMapping = null;
 		}
@@ -158,7 +163,9 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_jspConfig = null;
 		}
 		else if (qName.equals("listener")) {
-			_webXMLDefinition.addListenerDefinition(_listenerDefinition);
+			if (_listenerDefinition.getEventListener() != null) {
+				_webXMLDefinition.addListenerDefinition(_listenerDefinition);
+			}
 
 			_listenerDefinition = null;
 		}
@@ -179,8 +186,10 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_paramValue = _paramValue.trim();
 		}
 		else if (qName.equals("servlet")) {
-			_webXMLDefinition.setServletDefinition(
-				_servletDefinition.getName(), _servletDefinition);
+			if (_servletDefinition.getServlet() != null) {
+				_webXMLDefinition.setServletDefinition(
+					_servletDefinition.getName(), _servletDefinition);
+			}
 
 			_servletDefinition = null;
 		}
@@ -198,7 +207,9 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			ServletDefinition servletDefinition = servletDefinitions.get(
 				_servletMapping.servletName);
 
-			servletDefinition.setURLPatterns(_servletMapping.urlPatterns);
+			if (servletDefinition != null) {
+				servletDefinition.setURLPatterns(_servletMapping.urlPatterns);
+			}
 
 			_servletMapping = null;
 		}

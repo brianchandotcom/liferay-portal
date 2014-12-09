@@ -486,16 +486,27 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<attribute default="build.xml" name="ant.build.file" />
 		<attribute name="ant.dir" />
 		<attribute name="ant.target" />
+		<attribute default="" name="ant.properties.file" />
 
 		<sequential>
 			<if>
 				<os family="unix" />
 				<then>
-					<ant antfile="@{ant.build.file}" dir="@{ant.dir}" target="@{ant.target}" inheritAll="false" />
+						<if>
+							<available file="@{ant.properties.file}" type="file" />
+							<then>
+								<ant antfile="@{ant.build.file}" dir="@{ant.dir}" target="@{ant.target}" inheritAll="false">
+									<property file="@{ant.properties.file}"/>
+								</ant>
+							</then>
+							<else>
+								<ant antfile="@{ant.build.file}" dir="@{ant.dir}" target="@{ant.target}" inheritAll="false" />
+							</else>
+						</if>
 				</then>
 				<else>
 					<exec dir="@{ant.dir}" executable="${ant.home}/bin/ant.bat" failonerror="true">
-						<arg line="-f @{ant.build.file} @{ant.target}" />
+						<arg line="-f @{ant.build.file} -propertyfile @{ant.properties.file} @{ant.target}" />
 					</exec>
 				</else>
 			</if>
@@ -1517,7 +1528,7 @@ rerun your task.
 			</then>
 		</if>
 
-		<property file="${project.dir}/test.class.file.names.properties" />
+		<property file="/Users/migue/development/sourcecode/liferay/liferay-portal/portal/test.class.file.names.properties" />
 
 		<propertycopy from="TEST_CLASS_GROUP_${test.class.group.index}" name="test.classes" />
 

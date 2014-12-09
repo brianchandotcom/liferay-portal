@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.util.TestPropsUtil;
+
 import java.io.File;
 
 import org.dom4j.Document;
@@ -27,6 +29,8 @@ import org.dom4j.io.SAXReader;
 public class PoshiRunner {
 
 	public static void main(String[] args) throws Exception {
+		TestPropsUtil.printProperties();
+
 		File file = new File(
 			"../../../portal-web/test/functional/com/liferay/portalweb" +
 				"/development/tools/testinginfrastructure");

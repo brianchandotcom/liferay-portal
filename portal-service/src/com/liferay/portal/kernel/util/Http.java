@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -24,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.Cookie;
@@ -174,6 +174,14 @@ public interface Http {
 	public byte[] URLtoByteArray(String location) throws IOException;
 
 	public byte[] URLtoByteArray(String location, boolean post)
+		throws IOException;
+
+	public InputStream URLtoInputStream(Http.Options options)
+		throws IOException;
+
+	public InputStream URLtoInputStream(String location) throws IOException;
+
+	public InputStream URLtoInputStream(String location, boolean post)
 		throws IOException;
 
 	public String URLtoString(Http.Options options) throws IOException;
@@ -384,14 +392,6 @@ public interface Http {
 			return _parts;
 		}
 
-		public PortletRequest getPortletRequest() {
-			return _portletRequest;
-		}
-
-		public String getProgressId() {
-			return _progressId;
-		}
-
 		public Response getResponse() {
 			return _response;
 		}
@@ -516,10 +516,6 @@ public interface Http {
 			_parts = parts;
 		}
 
-		public void setPortletRequest(PortletRequest portletRequest) {
-			_portletRequest = portletRequest;
-		}
-
 		public void setPost(boolean post) {
 			if (post) {
 				_method = Method.POST;
@@ -527,10 +523,6 @@ public interface Http {
 			else {
 				_method = Method.GET;
 			}
-		}
-
-		public void setProgressId(String progressId) {
-			_progressId = progressId;
 		}
 
 		public void setPut(boolean put) {
@@ -555,8 +547,6 @@ public interface Http {
 		private String _location;
 		private Method _method = Method.GET;
 		private Map<String, String> _parts;
-		private PortletRequest _portletRequest;
-		private String _progressId;
 		private Response _response = new Response();
 
 	}
@@ -573,6 +563,10 @@ public interface Http {
 
 		public int getContentLength() {
 			return _contentLength;
+		}
+
+		public long getContentLengthLong() {
+			return _contentLengthLong;
 		}
 
 		public String getContentType() {
@@ -604,6 +598,10 @@ public interface Http {
 			_contentLength = contentLength;
 		}
 
+		public void setContentLengthLong(long contentLengthLong) {
+			_contentLengthLong = contentLengthLong;
+		}
+
 		public void setContentType(String contentType) {
 			_contentType = contentType;
 		}
@@ -621,6 +619,7 @@ public interface Http {
 		}
 
 		private int _contentLength = -1;
+		private long _contentLengthLong = -1;
 		private String _contentType;
 		private Map<String, String> _headers;
 		private String _redirect;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetcategoriesnavigation.lar;
+package com.liferay.asset.categories.navigation.web.lar;
 
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;

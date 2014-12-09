@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetcategoriesnavigation.template;
+package com.liferay.asset.categories.navigation.web.portlet.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;

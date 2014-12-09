@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetcategoriesnavigation.context;
+package com.liferay.asset.categories.navigation.web.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

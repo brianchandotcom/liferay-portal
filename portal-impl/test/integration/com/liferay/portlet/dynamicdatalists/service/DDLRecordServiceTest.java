@@ -289,9 +289,9 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 	}
 
 	protected DDMFormValues createDDMFormValues(DDMForm ddmForm) {
-		return DDLRecordTestUtil.createDDMFormValues(ddmForm,
-				DDLRecordTestUtil.createAvailableLocales(LocaleUtil.US),
-				LocaleUtil.US);
+		return DDLRecordTestUtil.createDDMFormValues(
+			ddmForm, DDLRecordTestUtil.createAvailableLocales(LocaleUtil.US),
+			LocaleUtil.US);
 	}
 
 	protected DDMFormFieldValue createLocalizedTextDDMFormFieldValue(

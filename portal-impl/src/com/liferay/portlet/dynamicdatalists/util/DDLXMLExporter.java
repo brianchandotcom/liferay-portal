@@ -30,6 +30,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 /**
@@ -91,10 +92,10 @@ public class DDLXMLExporter extends BaseDDLExporter {
 				addFieldElement(
 					fieldsElement, label.getString(getLocale()), value);
 			}
-			
+
 			addFieldElement(
-					fieldsElement, LanguageUtil.get(getLocale(), "status"),
-					getStatusMessage(recordVersion.getStatus()));
+				fieldsElement, LanguageUtil.get(getLocale(), "status"),
+				getStatusMessage(recordVersion.getStatus()));
 		}
 
 		String xml = document.asXML();

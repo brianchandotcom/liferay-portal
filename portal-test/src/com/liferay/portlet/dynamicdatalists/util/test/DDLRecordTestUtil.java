@@ -20,8 +20,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
@@ -38,6 +36,16 @@ import java.util.Set;
  */
 public class DDLRecordTestUtil {
 
+	public static Set<Locale> createAvailableLocales(Locale... locales) {
+		Set<Locale> availableLocales = new LinkedHashSet<Locale>();
+
+		for (Locale locale : locales) {
+			availableLocales.add(locale);
+		}
+
+		return availableLocales;
+	}
+
 	public static DDMForm createDDMForm(
 		Set<Locale> availableLocales, Locale defaultLocale) {
 
@@ -48,23 +56,11 @@ public class DDLRecordTestUtil {
 
 		return ddmForm;
 	}
-	
-	public static DDMFormValues createDDMFormValues(
-			DDMForm ddmForm, Set<Locale> availableLocales,
-			Locale defaultLocale) {
-		
-		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
-
-		ddmFormValues.setAvailableLocales(availableLocales);
-		ddmFormValues.setDefaultLocale(defaultLocale);
-
-		return ddmFormValues;
-	}
 
 	public static DDMFormField createDDMFormField(
-			String name, String label, String type, String dataType,
-			boolean localizable, boolean repeatable, boolean required) {
-		
+		String name, String label, String type, String dataType,
+		boolean localizable, boolean repeatable, boolean required) {
+
 		DDMFormField ddmFormField = new DDMFormField(name, type);
 
 		ddmFormField.setDataType(dataType);
@@ -76,26 +72,11 @@ public class DDLRecordTestUtil {
 
 		localizedValue.addString(LocaleUtil.US, label);
 
-		if (type == DDMFormFieldType.RADIO || type == DDMFormFieldType.SELECT) {
-			
-			DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-			final int defaultOptionsNumber = 3;
-			
-			for (int i = 1; i <= defaultOptionsNumber; i++) {
-
-				ddmFormFieldOptions.addOption("value " + i);
-				ddmFormFieldOptions.addOptionLabel(
-						"value " + i, LocaleUtil.US, "option " + i);
-			}
-			
-			ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-		}
-		
 		return ddmFormField;
 	}
-	
+
 	public static DDMFormFieldValue createDDMFormFieldValue(
-			String name, Value value) {
+		String name, Value value) {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
@@ -105,7 +86,18 @@ public class DDLRecordTestUtil {
 
 		return ddmFormFieldValue;
 	}
-	
+
+	public static DDMFormValues createDDMFormValues(
+		DDMForm ddmForm, Set<Locale> availableLocales, Locale defaultLocale) {
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.setAvailableLocales(availableLocales);
+		ddmFormValues.setDefaultLocale(defaultLocale);
+
+		return ddmFormValues;
+	}
+
 	public static DDMFormFieldValue createLocalizedTextDDMFormFieldValue(
 		String name, String enValue) {
 
@@ -138,16 +130,6 @@ public class DDLRecordTestUtil {
 		return "com/liferay/portlet/dynamicdatalists/dependencies/";
 	}
 
-	public static Set<Locale> createAvailableLocales(Locale... locales) {
-		Set<Locale> availableLocales = new LinkedHashSet<Locale>();
-
-		for (Locale locale : locales) {
-			availableLocales.add(locale);
-		}
-
-		return availableLocales;
-	}
-	
 	public static ServiceContext getServiceContext(int workflowAction)
 		throws Exception {
 

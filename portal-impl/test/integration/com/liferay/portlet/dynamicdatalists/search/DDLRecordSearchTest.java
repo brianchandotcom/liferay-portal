@@ -240,9 +240,10 @@ public class DDLRecordSearchTest {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		return DDLRecordTestUtil.createDDMFormValues(ddmStructure.getDDMForm(), 
-				DDLRecordTestUtil.createAvailableLocales(LocaleUtil.US),
-				LocaleUtil.US);
+		return DDLRecordTestUtil.createDDMFormValues(
+			ddmStructure.getDDMForm(),
+			DDLRecordTestUtil.createAvailableLocales(LocaleUtil.US),
+			LocaleUtil.US);
 	}
 
 	protected DDMFormFieldValue createLocalizedTextDDMFormFieldValue(

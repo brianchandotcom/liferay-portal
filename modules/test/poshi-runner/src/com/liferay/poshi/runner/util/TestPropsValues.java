@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.util;
+package com.liferay.poshi.runner.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;

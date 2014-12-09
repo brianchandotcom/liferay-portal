@@ -158,7 +158,7 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 					<aui:input name="defaultLanguage" type="resource" value="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
 				</td>
 				<td>
-					<aui:select label="localized-language" name="prioritiesLanguageId" onClick='<%= renderResponse.getNamespace() + "updatePrioritiesLanguage();" %>' showEmptyOption="<%= true %>">
+					<aui:select label="localized-language" name="prioritiesLanguageId" onChange='<%= renderResponse.getNamespace() + "updatePrioritiesLanguage();" %>' showEmptyOption="<%= true %>">
 
 						<%
 						for (int i = 0; i < locales.length; i++) {
@@ -321,73 +321,70 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 			<br />
 
 			<aui:script>
-				var prioritiesChanged = false;
-				var prioritiesLastLanguageId = '<%= currentLanguageId %>';
+				var <portlet:namespace />prioritiesChanged = false;
+				var <portlet:namespace />prioritiesLastLanguageId = '<%= currentLanguageId %>';
 
 				function <portlet:namespace />onPrioritiesChanged() {
-					prioritiesChanged = true;
+					<portlet:namespace />prioritiesChanged = true;
 				}
 
 				function <portlet:namespace />updatePrioritiesLanguage() {
 					var $ = AUI.$;
 
-					if (prioritiesLastLanguageId != '<%= defaultLanguageId %>') {
-						if (prioritiesChanged) {
-							for (var i = 0; i < 10; i++) {
-								var priorityName = $('#<portlet:namespace />priorityName' + i + '_temp').val();
-								var priorityImage = $('#<portlet:namespace />priorityImage' + i + '_temp').val();
-								var priorityValue = $('#<portlet:namespace />priorityValue' + i + '_temp').val();
+					var form = $(document.<portlet:namespace />fm);
 
-								$('#<portlet:namespace />priorityName' + i + '_' + prioritiesLastLanguageId).val(priorityName);
-								$('#<portlet:namespace />priorityImage' + i + '_' + prioritiesLastLanguageId).val(priorityImage);
-								$('#<portlet:namespace />priorityValue' + i + '_' + prioritiesLastLanguageId).val(priorityValue);
-							}
+					if (<portlet:namespace />prioritiesChanged && (<portlet:namespace />prioritiesLastLanguageId != '<%= defaultLanguageId %>')) {
+						for (var i = 0; i < 10; i++) {
+							var priorityName = form.fm('priorityName' + i + '_temp').val();
+							var priorityImage = form.fm('priorityImage' + i + '_temp').val();
+							var priorityValue = form.fm('priorityValue' + i + '_temp').val();
 
-							prioritiesChanged = false;
+							form.fm('priorityName' + i + '_' + <portlet:namespace />prioritiesLastLanguageId).val(priorityName);
+							form.fm('priorityImage' + i + '_' + <portlet:namespace />prioritiesLastLanguageId).val(priorityImage);
+							form.fm('priorityValue' + i + '_' + <portlet:namespace />prioritiesLastLanguageId).val(priorityValue);
 						}
+
+						<portlet:namespace />prioritiesChanged = false;
 					}
 
-					var selLanguageId = $(document.<portlet:namespace />fm).fm('prioritiesLanguageId').val();
+					var selLanguageId = form.fm('prioritiesLanguageId').val();
 
-					var localizedPriorityTable = $('#<portlet:namespace />localized-priorities-table');
-
-					if ((selLanguageId != '') && (selLanguageId != 'null')) {
+					if (selLanguageId) {
 						<portlet:namespace />updatePrioritiesLanguageTemps(selLanguageId);
-
-						localizedPriorityTable.removeClass('hide');
-					}
-					else {
-						localizedPriorityTable.addClass('hide');
 					}
 
-					prioritiesLastLanguageId = selLanguageId;
+					$('#<portlet:namespace />localized-priorities-table').toggleClass('hide', !selLanguageId);
+
+					<portlet:namespace />prioritiesLastLanguageId = selLanguageId;
 				}
 
 				function <portlet:namespace />updatePrioritiesLanguageTemps(lang) {
 					var $ = AUI.$;
 
+					var form = $(document.<portlet:namespace />fm);
+
 					if (lang != '<%= defaultLanguageId %>') {
 						for (var i = 0; i < 10; i++) {
-							var defaultName = $('#<portlet:namespace />priorityName' + i + '_' + '<%= defaultLanguageId %>').val();
-							var defaultImage = $('#<portlet:namespace />priorityImage' + i + '_' + '<%= defaultLanguageId %>').val();
-							var defaultValue = $('#<portlet:namespace />priorityValue' + i + '_' + '<%= defaultLanguageId %>').val();
+							var defaultName = form.fm('priorityName' + i + '_' + '<%= defaultLanguageId %>').val();
+							var defaultImage = form.fm('priorityImage' + i + '_' + '<%= defaultLanguageId %>').val();
+							var defaultValue = form.fm('priorityValue' + i + '_' + '<%= defaultLanguageId %>').val();
 
-							var priorityName = $('#<portlet:namespace />priorityName' + i + '_' + lang).val();
-							var priorityImage = $('#<portlet:namespace />priorityImage' + i + '_' + lang).val();
-							var priorityValue = $('#<portlet:namespace />priorityValue' + i + '_' + lang).val();
+							var priorityName = form.fm('priorityName' + i + '_' + lang).val();
+							var priorityImage = form.fm('priorityImage' + i + '_' + lang).val();
+							var priorityValue = form.fm('priorityValue' + i + '_' + lang).val();
 
 							var name = priorityName || defaultName;
 							var image = priorityImage || defaultImage;
 							var value = priorityValue || defaultValue;
 
-							$('#<portlet:namespace />priorityName' + i + '_temp').val(name);
-							$('#<portlet:namespace />priorityImage' + i + '_temp').val(image);
-							$('#<portlet:namespace />priorityValue' + i + '_temp').val(value);
+							form.fm('priorityName' + i + '_temp').val(name);
+							form.fm('priorityImage' + i + '_temp').val(image);
+							form.fm('priorityValue' + i + '_temp').val(value);
 						}
 					}
 				}
 
-				<portlet:namespace />updatePrioritiesLanguageTemps(prioritiesLastLanguageId);
+				<portlet:namespace />updatePrioritiesLanguageTemps(<portlet:namespace />prioritiesLastLanguageId);
 			</aui:script>
 		</liferay-ui:section>
 
@@ -440,67 +437,61 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 						}
 						%>
 
-						<aui:input cssClass="lfr-textarea-container" label="" name="ranks_temp" onChange='<%= renderResponse.getNamespace() + "onRanksChanged();" %>' title="ranks" type="textarea" />
+						<aui:input cssClass="hide lfr-textarea-container" label="" name="ranks_temp" onChange='<%= renderResponse.getNamespace() + "onRanksChanged();" %>' title="ranks" type="textarea" />
 					</td>
 				</tr>
 				</table>
 			</aui:fieldset>
 
 			<aui:script>
-				var ranksChanged = false;
-				var ranksLastLanguageId = '<%= currentLanguageId %>';
+				var <portlet:namespace />ranksChanged = false;
+				var <portlet:namespace />ranksLastLanguageId = '<%= currentLanguageId %>';
 
 				function <portlet:namespace />onRanksChanged() {
-					ranksChanged = true;
+					<portlet:namespace />ranksChanged = true;
 				}
 
 				function <portlet:namespace />updateRanksLanguage() {
 					var $ = AUI.$;
 
-					if (ranksLastLanguageId != '<%= defaultLanguageId %>') {
-						if (ranksChanged) {
-							var ranksValue = $('#<portlet:namespace />ranks_temp').val();
+					var form = $(document.<portlet:namespace />fm);
 
-							if (ranksValue == null) {
-								ranksValue = '';
-							}
+					if (<portlet:namespace />ranksChanged && (<portlet:namespace />ranksLastLanguageId != '<%= defaultLanguageId %>')) {
+						var ranksValue = form.fm('ranks_temp').val();
 
-							$('#<portlet:namespace />ranks_' + ranksLastLanguageId).val(ranksValue);
+						form.fm('ranks_' + <portlet:namespace />ranksLastLanguageId).val(ranksValue);
 
-							ranksChanged = false;
-						}
+						<portlet:namespace />ranksChanged = false;
 					}
 
-					var selLanguageId = $(document.<portlet:namespace />fm).fm('ranksLanguageId').val();
+					var selLanguageId = form.fm('ranksLanguageId').val();
 
-					var ranksTemp = $('#<portlet:namespace />ranks_temp');
-
-					if ((selLanguageId != '') && (selLanguageId != 'null')) {
+					if (selLanguageId) {
 						<portlet:namespace />updateRanksLanguageTemps(selLanguageId);
-
-						ranksTemp.removeClass('hide');
-					}
-					else {
-						ranksTemp.addClass('hide');
 					}
 
-					ranksLastLanguageId = selLanguageId;
+					form.fm('ranks_temp').toggleClass('hide', !selLanguageId);
+
+					<portlet:namespace />ranksLastLanguageId = selLanguageId;
 				}
 
 				function <portlet:namespace />updateRanksLanguageTemps(lang) {
 					var $ = AUI.$;
 
+					var form = $(document.<portlet:namespace />fm);
+
 					if (lang != '<%= defaultLanguageId %>') {
-						var ranksValue = $('#<portlet:namespace />ranks_' + lang).val();
-						var defaultRanksValue = $('#<portlet:namespace />ranks_<%= defaultLanguageId %>').val();
+						var ranksValue = form.fm('ranks_' + lang).val();
+
+						var defaultRanksValue = form.fm('ranks_<%= defaultLanguageId %>').val();
 
 						var value = ranksValue || defaultRanksValue;
 
-						$('#<portlet:namespace />ranks_temp').val(value);
+						form.fm('ranks_temp').val(value);
 					}
 				}
 
-				<portlet:namespace />updateRanksLanguageTemps(ranksLastLanguageId);
+				<portlet:namespace />updateRanksLanguageTemps(<portlet:namespace />ranksLastLanguageId);
 			</aui:script>
 		</liferay-ui:section>
 
@@ -533,16 +524,16 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 	function <portlet:namespace />saveEmails() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		try {
-			form.fm('preferences--emailMessageAddedBody--').val(window['<portlet:namespace />emailMessageAdded'].getHTML());
-		}
-		catch (e) {
+		var emailMessageAdded = window['<portlet:namespace />emailMessageAdded'];
+
+		if (emailMessageAdded) {
+			form.fm('preferences--emailMessageAddedBody--').val(emailMessageAdded.getHTML());
 		}
 
-		try {
-			form.fm('preferences--emailMessageUpdatedBody--').val(window['<portlet:namespace />emailMessageUpdated'].getHTML());
-		}
-		catch (e) {
+		var emailMessageUpdated = window['<portlet:namespace />emailMessageUpdated'];
+
+		if (emailMessageUpdated) {
+			form.fm('preferences--emailMessageUpdatedBody--').val(emailMessageUpdated.getHTML());
 		}
 	}
 </aui:script>

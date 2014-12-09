@@ -26,5 +26,5 @@
 
 	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />
 
-	<import file="../../tools/sdk/build-common.xml" />
+	<import file="../../tools/sdk/build-common-plugins.xml" />
 </project>

@@ -69,12 +69,30 @@
 <!--USER_SEGMENTS_OTHER-->
 <tr>
 	<td>USER_SEGMENTS_OTHER_LABEL</td>
-	<td>//div[@class='category-content']/label[contains(.,'${key_userSegmentOther}')]</td>
+	<td>//div[@class='category-content']/div/label[contains(.,'${key_userSegmentOther}') and contains(@for,'notMatchedElement')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENTS_OTHER_CHECKBOX</td>
 	<td>//label[contains(.,'${key_userSegmentOther}')]/input[@class='field element not-matched']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CAMPAIGNS_MATCHED-->
+<tr>
+	<td>CAMPAIGNS_MATCHED_LABEL</td>
+	<td>//div[@class='campaign']/div/div[@class='category-content']//label[contains(.,'${key_campaignMatched}')]</td>
+	<td></td>
+</tr>
+<!---->
+<!--CAMPAIGNS_OTHER-->
+<tr>
+	<td>CAMPAIGNS_OTHER_LABEL</td>
+	<td>//label[contains(.,'${key_campaignOther}') and contains(@for,'notMatchedElement')]</td>
 	<td></td>
 </tr>
 </tbody>

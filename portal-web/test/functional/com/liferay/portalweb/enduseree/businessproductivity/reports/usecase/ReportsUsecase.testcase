@@ -43,7 +43,7 @@
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -67,7 +67,7 @@
 
 		<execute macro="ReportsDisplayPortlet#downloadReportEntryFile">
 			<var name="reportFormat" value="pdf" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.pdf" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 	</command>
 
@@ -85,7 +85,7 @@
 				<var name="dataSource" value="Portal" />
 				<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 				<var name="reportsDefinitionName" value="Reports Definition ${number}" />
-				<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+				<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 			</execute>
 		</for>
 
@@ -171,7 +171,7 @@ Thanks,<br/>
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -192,12 +192,12 @@ Thanks,<br/>
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Liferay QA" />
-			<var name="gmailAssetType" value="New Report From QA: reports_admin_template_source_sample.pdf" />
-			<var name="gmailMailTableMessageTitle" value="New Report From QA: reports_admin_template_source_sample.pdf" />
+			<var name="gmailAssetType" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="gmailMailTableMessageTitle" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMessageBody" value="You have a new report from your friends in QA." />
 			<var name="gmailMessageBodyClosing" value="Thanks, Liferay QA qa@liferay.com" />
 			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress1}," />
-			<var name="gmailMessageTitle" value="New Report From QA: reports_admin_template_source_sample.pdf" />
+			<var name="gmailMessageTitle" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
 		<execute macro="Gmail#tearDown">
@@ -214,13 +214,13 @@ Thanks,<br/>
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Liferay QA" />
-			<var name="gmailAssetType" value="New Report From QA: reports_admin_template_source_sample.pdf" />
-			<var name="gmailMailTableMessageTitle" value="New Report From QA: reports_admin_template_source_sample.pdf" />
+			<var name="gmailAssetType" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="gmailMailTableMessageTitle" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMessageBody" value="Please review the attached report from your friends in QA!" />
 			<var name="gmailMessageBodyClosing" value="Thank You, Liferay QA qa@liferay.com" />
 			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress2}," />
-			<var name="gmailMessageTitle" value="New Report From QA: reports_admin_template_source_sample.pdf" />
-			<var name="gmailMesssageAttachment" value="reports_admin_template_source_sample.pdf" />
+			<var name="gmailMessageTitle" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="gmailMesssageAttachment" value="reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
 		<execute macro="Gmail#tearDown">
@@ -248,7 +248,7 @@ Thanks,<br/>
 			<var name="dataSource" value="Portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="templateFile" value="reports_admin_template_source_sample.jrxml" />
+			<var name="templateFile" value="reports_admin_template_source_sample_class_name.jrxml" />
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
@@ -274,7 +274,7 @@ Thanks,<br/>
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample.csv" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
 			<var name="userName" value="Test Test" />
 		</execute>
 	</command>

@@ -66,6 +66,22 @@
 		</if>
 	</command>
 
+	<command name="viewCampaignsViaSimulatorPG">
+		<execute action="PGContentTargetingSimulator#assertClick" locator-key1="SIMULATOR_CAMPAIGNS_NAVIGATION" value1="Campaigns" />
+
+		<for list="${viewCampaignMatched}" param="campaignMatched">
+			<var name="key_campaignMatched" value="${campaignMatched}" />
+
+			<execute action="PGContentTargetingSimulator#assertTextEquals" locator-key1="CAMPAIGNS_MATCHED_LABEL" value1="${campaignMatched}" />
+		</for>
+
+		<for list="${viewCampaignOther}" param="campaignOther">
+			<var name="key_campaignOther" value="${campaignOther}" />
+
+			<execute action="PGContentTargetingSimulator#assertTextEquals" locator-key1="CAMPAIGNS_OTHER_LABEL" value1="${campaignOther}" />
+		</for>
+	</command>
+
 	<command name="viewUserSegmentsViaSimulatorPG">
 		<execute action="PGContentTargetingSimulator#assertClick" locator-key1="SIMULATOR_USER_SEGMENTS_NAVIGATION" value1="User Segments" />
 

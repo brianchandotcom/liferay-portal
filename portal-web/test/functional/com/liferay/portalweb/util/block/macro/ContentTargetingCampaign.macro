@@ -18,6 +18,13 @@
 		<execute action="CPContenttargetingAddcampaign#type" locator-key1="CAMPAIGN_END_DATE_FIELD" value1="${campaignEndDate}" />
 		<execute action="CPContenttargetingAddcampaign#type" locator-key1="CAMPAIGN_END_TIME_FIELD" value1="${campaignEndTime}" />
 		<execute action="CPContenttargetingAddcampaign#type" locator-key1="CAMPAIGN_PRIORITY_FIELD" value1="${campaignPriorityField}" />
+
+		<if>
+			<equals arg1="${campaignInactive}" arg2="true" />
+			<then>
+				<execute action="CPContenttargetingAddcampaign#uncheck" locator-key1="CAMPAIGN_ACTIVE_CHECKBOX" />
+			</then>
+		</if>
 	</command>
 
 	<command name="addTrackingActionContentCP">

@@ -24,8 +24,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPORT_PDF_PNG</td>
-	<td>portal/screenshots/reports/report_pdf.png</td>
+	<td>REPORT_PDF_CLASS_NAME_PNG</td>
+	<td>portal/screenshots/reports/report_pdf_class_name.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_PDF_LIST_TYPE_PNG</td>
+	<td>portal/screenshots/reports/report_pdf_list_type.png</td>
 	<td></td>
 </tr>
 <tr>
@@ -210,6 +215,39 @@
 <tr>
 	<td>DEFINITIONS_PAGINATION_NEXT_BUTTON</td>
 	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SOURCES-->
+<tr>
+	<td>SOURCES_ADD_SOURCE_BUTTON</td>
+	<td>//button[contains(.,'Add Source')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SOURCES_SOURCE-->
+<tr>
+	<td>SOURCES_SOURCE_TABLE_ACTIONS_1</td>
+	<td>xpath=(//tr/td[4]/div/a[@title='Actions'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SOURCES_SOURCE_MENULIST-->
+<tr>
+	<td>SOURCES_SOURCE_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

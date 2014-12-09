@@ -15,10 +15,12 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.io.AutoDeleteFileInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncFilterInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.memory.FinalizeAction;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -34,9 +36,10 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.lang.ref.Reference;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -1628,23 +1631,37 @@ public class HttpImpl implements Http {
 
 			InputStream inputStream = httpMethod.getResponseBodyAsStream();
 
-			File tempFile = FileUtil.createTempFile(inputStream);
+			final HttpMethod httpMethodRef = httpMethod;
 
-			return new AutoDeleteFileInputStream(tempFile);
+			final Reference<InputStream> reference = FinalizeManager.register(
+				inputStream,
+				new FinalizeAction() {
+
+					@Override
+					public void doFinalize(Reference<?> reference) {
+						httpMethodRef.releaseConnection();
+					}
+
+				},
+				FinalizeManager.WEAK_REFERENCE_FACTORY);
+
+			return new UnsyncFilterInputStream(inputStream) {
+
+				@Override
+				public void close() throws IOException {
+					super.close();
+
+					httpMethodRef.releaseConnection();
+
+					reference.clear();
+				}
+
+			};
 		}
 		finally {
 			try {
 				if (httpState != null) {
 					_cookies.set(toServletCookies(httpState.getCookies()));
-				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-
-			try {
-				if (httpMethod != null) {
-					httpMethod.releaseConnection();
 				}
 			}
 			catch (Exception e) {

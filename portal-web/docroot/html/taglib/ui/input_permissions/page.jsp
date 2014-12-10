@@ -284,26 +284,30 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 
 		<aui:script>
 			function <%= namespace %>checkGroupAndGuestPermissions() {
-				if (document.<%= formName %>.<%= namespace %>addGroupPermissionsBox.checked ||
-					document.<%= formName %>.<%= namespace %>addGuestPermissionsBox.checked) {
+				var form = AUI.$(document.<%= formName %>);
 
-					document.<%= formName %>.<%= namespace %>addUserPermissionsBox.checked = false;
+				if (form.fm('addGroupPermissionsBox').prop('checked') ||
+					form.fm('addGuestPermissionsBox').prop('checked')) {
+
+					form.fm('addUserPermissionsBox').prop('checked', false);
 				}
-				else if (!document.<%= formName %>.<%= namespace %>addGroupPermissionsBox.checked &&
-						!document.<%= formName %>.<%= namespace %>addGuestPermissionsBox.checked) {
+				else if (!form.fm('addGroupPermissionsBox').prop('checked') &&
+						!form.fm('addGuestPermissionsBox').prop('checked')) {
 
-					document.<%= formName %>.<%= namespace %>addUserPermissionsBox.checked = true;
+					form.fm('addUserPermissionsBox').prop('checked', true);
 				}
 			}
 
 			function <%= namespace %>checkUserPermissions() {
-				if (document.<%= formName %>.<%= namespace %>addUserPermissionsBox.checked) {
-					document.<%= formName %>.<%= namespace %>addGroupPermissionsBox.checked = false;
-					document.<%= formName %>.<%= namespace %>addGuestPermissionsBox.checked = false;
+				var form = AUI.$(document.<%= formName %>);
+
+				if (form.fm('addUserPermissionsBox').prop('checked')) {
+					form.fm('addGroupPermissionsBox').prop('checked', false);
+					form.fm('addGuestPermissionsBox').prop('checked', false);
 				}
 				else {
-					document.<%= formName %>.<%= namespace %>addGroupPermissionsBox.checked = true;
-					document.<%= formName %>.<%= namespace %>addGuestPermissionsBox.checked = true;
+					form.fm('addGroupPermissionsBox').prop('checked', true);
+					form.fm('addGuestPermissionsBox').prop('checked', true);
 				}
 			}
 		</aui:script>

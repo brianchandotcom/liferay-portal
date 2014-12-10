@@ -65,7 +65,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			BulkOperationCapability.class, bulkOperationCapability);
 
 		capabilityRegistry.addSupportedCapability(
-			SyncCapability.class, _liferaySyncCapability);
+			SyncCapability.class, new LiferaySyncCapability());
 		capabilityRegistry.addSupportedCapability(
 			WorkflowCapability.class, _liferayWorkflowCapability);
 	}
@@ -82,8 +82,6 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			repositoryFactory);
 	}
 
-	private final LiferaySyncCapability _liferaySyncCapability =
-		new LiferaySyncCapability();
 	private final LiferayTrashCapability _liferayTrashCapability =
 		new LiferayTrashCapability();
 	private final LiferayWorkflowCapability _liferayWorkflowCapability =

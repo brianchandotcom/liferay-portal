@@ -15,11 +15,16 @@
 package com.liferay.portal.repository.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.repository.liferayrepository.LiferayWorkflowLocalRepositoryWrapper;
+import com.liferay.portal.repository.liferayrepository.LiferayWorkflowRepositoryWrapper;
+import com.liferay.portal.repository.util.RepositoryWrapperAware;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -33,7 +38,8 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 /**
  * @author Adolfo Pérez
  */
-public class LiferayWorkflowCapability implements WorkflowCapability {
+public class LiferayWorkflowCapability
+	implements RepositoryWrapperAware, WorkflowCapability {
 
 	@Override
 	public void addFileEntry(
@@ -96,6 +102,18 @@ public class LiferayWorkflowCapability implements WorkflowCapability {
 		throws PortalException {
 
 		_startWorkflowInstance(userId, fileEntry, serviceContext);
+	}
+
+	@Override
+	public LocalRepository wrapLocalRepository(
+		LocalRepository localRepository) {
+
+		return new LiferayWorkflowLocalRepositoryWrapper(localRepository, this);
+	}
+
+	@Override
+	public Repository wrapRepository(Repository repository) {
+		return new LiferayWorkflowRepositoryWrapper(repository, this);
 	}
 
 	private DLFileVersion _getWorkflowDLFileVersion(

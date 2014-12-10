@@ -71,6 +71,10 @@ public abstract class BaseCapabilityProvider implements CapabilityProvider {
 		_supportedCapabilities.put(capabilityClass, capability);
 	}
 
+	protected Map<Class<? extends Capability>, Capability> getCapabilities() {
+		return _supportedCapabilities;
+	}
+
 	protected <S extends Capability> S getInternalCapability(
 		Class<S> capabilityClass) {
 

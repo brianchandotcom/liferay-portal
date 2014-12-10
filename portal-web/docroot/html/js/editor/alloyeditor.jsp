@@ -30,6 +30,7 @@ String alloyEditorMode = ParamUtil.getString(request, "alloyEditorMode");
 String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
+Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
 Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name")) + "Editor";
@@ -222,12 +223,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			var uploader = new Liferay.BlogsUploader(
 				{
 					editor: nativeEditor,
-
-					<portlet:actionURL var="imageSelectorURL">
-						<portlet:param name="struts_action" value="/blogs/image_selector" />
-					</portlet:actionURL>
-
-					uploadUrl: '<%= imageSelectorURL %>'
+					uploadUrl: '<%= GetterUtil.getString(data.get("uploadURL")) %>'
 				}
 			);
 

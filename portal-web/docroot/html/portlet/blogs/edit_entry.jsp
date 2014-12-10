@@ -134,7 +134,17 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			<aui:input name="subtitle" type="hidden" />
 
 			<div class="entry-content">
-				<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" onChangeMethod="OnChangeEditor" placeholder="content" />
+				<portlet:actionURL var="uploadEditorImageURL">
+					<portlet:param name="struts_action" value="/blogs/upload_editor_image" />
+				</portlet:actionURL>
+
+				<%
+				Map<String, Object> data = new HashMap<>();
+
+				data.put("uploadURL", uploadEditorImageURL);
+				%>
+
+				<liferay-ui:input-editor contents="<%= content %>" data="<%= data %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" onChangeMethod="OnChangeEditor" placeholder="content" />
 			</div>
 
 			<aui:input name="content" type="hidden" />

@@ -76,7 +76,6 @@ public class InstrumentationAgent {
 		finally {
 			dataFile.delete();
 
-			System.clearProperty("cobertura.parent.dynamically.instrumented");
 			System.clearProperty("junit.code.coverage");
 
 			_dynamicallyInstrumented = false;
@@ -165,7 +164,6 @@ public class InstrumentationAgent {
 		_dynamicallyInstrumented = true;
 		_originalClassDefinitions = null;
 
-		System.setProperty("cobertura.parent.dynamically.instrumented", "true");
 		System.setProperty("junit.code.coverage", "true");
 	}
 
@@ -188,10 +186,6 @@ public class InstrumentationAgent {
 		);
 	}
 
-	public static boolean isStaticallyInstrumented() {
-		return _staticallyInstrumented;
-	}
-
 	public static synchronized void premain(
 		String agentArguments, Instrumentation instrumentation) {
 
@@ -200,17 +194,7 @@ public class InstrumentationAgent {
 		String[] includes = arguments[0].split(",");
 		String[] excludes = arguments[1].split(",");
 
-		boolean coberturaParentDynamicallyInstrumented = Boolean.getBoolean(
-			"cobertura.parent.dynamically.instrumented");
-		boolean junitCodeCoverage = Boolean.getBoolean("junit.code.coverage");
-
-		// A subprocess is only considered as statically instrumented when it is
-		// configured as such and its parent is not dynamically instrumented
-
-		_staticallyInstrumented =
-			!coberturaParentDynamicallyInstrumented && junitCodeCoverage;
-
-		if (junitCodeCoverage) {
+		if (Boolean.getBoolean("junit.code.coverage")) {
 			CoberturaClassFileTransformer coberturaClassFileTransformer =
 				new CoberturaClassFileTransformer(
 					includes, excludes, _lockFile);
@@ -334,7 +318,6 @@ public class InstrumentationAgent {
 	private static Instrumentation _instrumentation;
 	private static File _lockFile;
 	private static List<OriginalClassDefinition> _originalClassDefinitions;
-	private static boolean _staticallyInstrumented;
 
 	static {
 		File dataFile = CoverageDataFileHandler.getDefaultDataFile();

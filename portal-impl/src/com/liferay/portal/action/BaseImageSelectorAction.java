@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -127,15 +126,10 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 				"attributeDataImageId",
 				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 
-			inputStream = uploadPortletRequest.getFileAsStream(
-				"imageSelectorFileName");
-
-			String contentType = uploadPortletRequest.getContentType(
-				"imageSelectorFileName");
-
 			String fileName = uploadPortletRequest.getFileName(
 				"imageSelectorFileName");
-
+			String contentType = uploadPortletRequest.getContentType(
+				"imageSelectorFileName");
 			long size = uploadPortletRequest.getSize("imageSelectorFileName");
 
 			validateFile(fileName, contentType, size);
@@ -143,13 +137,10 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 			inputStream = uploadPortletRequest.getFileAsStream(
 				"imageSelectorFileName");
 
-			String mimeType = MimeTypesUtil.getContentType(
-				inputStream, fileName);
-
 			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				_TEMP_FOLDER_NAME, StringUtil.randomString() + fileName,
-				inputStream, mimeType);
+				inputStream, contentType);
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 

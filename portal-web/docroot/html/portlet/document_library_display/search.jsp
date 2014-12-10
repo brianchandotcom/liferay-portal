@@ -25,22 +25,6 @@ long folderId = ParamUtil.getLong(request, "folderId");
 long breadcrumbsFolderId = ParamUtil.getLong(request, "breadcrumbsFolderId");
 
 long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
-long searchFolderIds = ParamUtil.getLong(request, "searchFolderIds");
-
-long[] folderIdsArray = null;
-
-if (searchFolderId > 0) {
-	folderIdsArray = new long[] {searchFolderId};
-}
-else {
-	long dataRepositoryId = DLFolderConstants.getFolderId(scopeGroupId, DLFolderConstants.getDataRepositoryId(scopeGroupId, searchFolderIds));
-
-	List<Long> folderIds = DLAppServiceUtil.getSubfolderIds(scopeGroupId, searchFolderIds);
-
-	folderIds.add(0, dataRepositoryId);
-
-	folderIdsArray = StringUtil.split(StringUtil.merge(folderIds), 0L);
-}
 
 String keywords = ParamUtil.getString(request, "keywords");
 
@@ -60,7 +44,6 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 	<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= breadcrumbsFolderId %>" />
 	<aui:input name="searchFolderId" type="hidden" value="<%= searchFolderId %>" />
-	<aui:input name="searchFolderIds" type="hidden" value="<%= searchFolderIds %>" />
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
@@ -91,7 +74,6 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 			searchExternalRepositoryURL.setParameter("folderId", String.valueOf(mountFolder.getFolderId()));
 			searchExternalRepositoryURL.setParameter("breadcrumbsFolderId", String.valueOf(breadcrumbsFolderId));
 			searchExternalRepositoryURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
-			searchExternalRepositoryURL.setParameter("searchFolderIds", String.valueOf(searchFolderIds));
 			searchExternalRepositoryURL.setParameter("keywords", keywords);
 
 			sb.append("<a href=\"");
@@ -120,7 +102,6 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 	portletURL.setParameter("folderId", String.valueOf(folderId));
 	portletURL.setParameter("breadcrumbsFolderId", String.valueOf(breadcrumbsFolderId));
 	portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
-	portletURL.setParameter("searchFolderIds", String.valueOf(searchFolderIds));
 	portletURL.setParameter("keywords", keywords);
 	%>
 
@@ -134,7 +115,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 
 		searchContext.setAttribute("paginationType", "more");
 		searchContext.setEnd(searchContainer.getEnd());
-		searchContext.setFolderIds(folderIdsArray);
+		searchContext.setFolderIds(new long[] {searchFolderId});
 		searchContext.setIncludeDiscussions(true);
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(searchContainer.getStart());

@@ -22,7 +22,7 @@ import com.liferay.portlet.blogs.CoverImageSizeException;
 /**
  * @author Roberto Díaz
  */
-public class ImageSelectorAction extends BaseImageSelectorAction {
+public class UploadEditorImageAction extends BaseImageSelectorAction {
 
 	@Override
 	public void validateFile(String fileName, String contentType, long size)

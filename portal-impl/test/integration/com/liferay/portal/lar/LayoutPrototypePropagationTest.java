@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.ResetDatabaseTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 
@@ -35,8 +34,7 @@ public class LayoutPrototypePropagationTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			ResetDatabaseTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Override
 	protected void doSetUp() throws Exception {

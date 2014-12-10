@@ -134,6 +134,7 @@ create table AssetEntry (
 	classUuid VARCHAR(75) null,
 	classTypeId LONG,
 	visible BOOLEAN,
+	listable BOOLEAN,
 	startDate DATE null,
 	endDate DATE null,
 	publishDate DATE null,

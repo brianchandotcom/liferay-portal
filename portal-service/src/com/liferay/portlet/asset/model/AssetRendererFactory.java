@@ -144,6 +144,8 @@ public interface AssetRendererFactory {
 
 	public boolean isLinkable();
 
+	public boolean isListable(long classPK);
+
 	public boolean isSelectable();
 
 	public boolean isSupportsClassTypes();

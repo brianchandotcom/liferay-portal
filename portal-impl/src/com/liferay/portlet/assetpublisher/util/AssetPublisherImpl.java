@@ -767,6 +767,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 		assetEntryQuery.setNotAnyTagIds(notAnyAssetTagIds);
 
+		assetEntryQuery.setListable(true);
+
 		return assetEntryQuery;
 	}
 

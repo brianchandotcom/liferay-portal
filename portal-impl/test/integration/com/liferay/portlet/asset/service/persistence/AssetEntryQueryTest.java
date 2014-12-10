@@ -575,6 +575,7 @@ public class AssetEntryQueryTest {
 		}
 
 		assetEntryQuery.setGroupIds(new long[] {groupId});
+		assetEntryQuery.setListable(true);
 
 		return assetEntryQuery;
 	}
@@ -588,6 +589,7 @@ public class AssetEntryQueryTest {
 		assetEntryQuery.setAndOperator(andOperator);
 		assetEntryQuery.setDescription(description);
 		assetEntryQuery.setGroupIds(new long[] {groupId});
+		assetEntryQuery.setListable(true);
 		assetEntryQuery.setTitle(title);
 		assetEntryQuery.setUserName(userName);
 
@@ -641,6 +643,7 @@ public class AssetEntryQueryTest {
 
 		assetEntryQuery.setGroupIds(new long[] {groupId});
 		assetEntryQuery.setKeywords(keywords);
+		assetEntryQuery.setListable(true);
 
 		return assetEntryQuery;
 	}

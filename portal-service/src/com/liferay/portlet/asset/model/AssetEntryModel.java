@@ -289,6 +289,27 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	public void setVisible(boolean visible);
 
 	/**
+	 * Returns the listable of this asset entry.
+	 *
+	 * @return the listable of this asset entry
+	 */
+	public boolean getListable();
+
+	/**
+	 * Returns <code>true</code> if this asset entry is listable.
+	 *
+	 * @return <code>true</code> if this asset entry is listable; <code>false</code> otherwise
+	 */
+	public boolean isListable();
+
+	/**
+	 * Sets whether this asset entry is listable.
+	 *
+	 * @param listable the listable of this asset entry
+	 */
+	public void setListable(boolean listable);
+
+	/**
 	 * Returns the start date of this asset entry.
 	 *
 	 * @return the start date of this asset entry

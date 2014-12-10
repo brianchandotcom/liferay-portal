@@ -129,6 +129,8 @@ public class AssetEntryPersistenceTest {
 
 		newAssetEntry.setVisible(RandomTestUtil.randomBoolean());
 
+		newAssetEntry.setListable(RandomTestUtil.randomBoolean());
+
 		newAssetEntry.setStartDate(RandomTestUtil.nextDate());
 
 		newAssetEntry.setEndDate(RandomTestUtil.nextDate());
@@ -187,6 +189,8 @@ public class AssetEntryPersistenceTest {
 			newAssetEntry.getClassTypeId());
 		Assert.assertEquals(existingAssetEntry.getVisible(),
 			newAssetEntry.getVisible());
+		Assert.assertEquals(existingAssetEntry.getListable(),
+			newAssetEntry.getListable());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingAssetEntry.getStartDate()),
 			Time.getShortTimestamp(newAssetEntry.getStartDate()));
@@ -359,11 +363,12 @@ public class AssetEntryPersistenceTest {
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "classUuid", true,
-			"classTypeId", true, "visible", true, "startDate", true, "endDate",
-			true, "publishDate", true, "expirationDate", true, "mimeType",
-			true, "title", true, "description", true, "summary", true, "url",
-			true, "layoutUuid", true, "height", true, "width", true,
-			"priority", true, "viewCount", true);
+			"classTypeId", true, "visible", true, "listable", true,
+			"startDate", true, "endDate", true, "publishDate", true,
+			"expirationDate", true, "mimeType", true, "title", true,
+			"description", true, "summary", true, "url", true, "layoutUuid",
+			true, "height", true, "width", true, "priority", true, "viewCount",
+			true);
 	}
 
 	@Test
@@ -610,6 +615,8 @@ public class AssetEntryPersistenceTest {
 		assetEntry.setClassTypeId(RandomTestUtil.nextLong());
 
 		assetEntry.setVisible(RandomTestUtil.randomBoolean());
+
+		assetEntry.setListable(RandomTestUtil.randomBoolean());
 
 		assetEntry.setStartDate(RandomTestUtil.nextDate());
 

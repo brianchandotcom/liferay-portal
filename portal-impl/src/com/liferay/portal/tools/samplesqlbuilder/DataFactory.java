@@ -1017,7 +1017,7 @@ public class DataFactory {
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
 			blogsEntryModel.getModifiedDate(), getBlogsEntryClassNameId(),
 			blogsEntryModel.getEntryId(), blogsEntryModel.getUuid(), 0, true,
-			ContentTypes.TEXT_HTML, blogsEntryModel.getTitle());
+			true, ContentTypes.TEXT_HTML, blogsEntryModel.getTitle());
 	}
 
 	public AssetEntryModel newAssetEntryModel(
@@ -1027,7 +1027,7 @@ public class DataFactory {
 			dLFileEntryModel.getGroupId(), dLFileEntryModel.getCreateDate(),
 			dLFileEntryModel.getModifiedDate(), getDLFileEntryClassNameId(),
 			dLFileEntryModel.getFileEntryId(), dLFileEntryModel.getUuid(),
-			dLFileEntryModel.getFileEntryTypeId(), true,
+			dLFileEntryModel.getFileEntryTypeId(), true, true,
 			dLFileEntryModel.getMimeType(), dLFileEntryModel.getTitle());
 	}
 
@@ -1036,8 +1036,8 @@ public class DataFactory {
 			dLFolderModel.getGroupId(), dLFolderModel.getCreateDate(),
 			dLFolderModel.getModifiedDate(),
 			_classNameModelsMap.get(DLFolder.class.getName()),
-			dLFolderModel.getFolderId(), dLFolderModel.getUuid(), 0, true, null,
-			dLFolderModel.getName());
+			dLFolderModel.getFolderId(), dLFolderModel.getUuid(), 0, true, true,
+			null, dLFolderModel.getName());
 	}
 
 	public AssetEntryModel newAssetEntryModel(
@@ -1053,7 +1053,8 @@ public class DataFactory {
 			journalArticleModel.getModifiedDate(),
 			getJournalArticleClassNameId(), resourcePrimKey, resourceUuid,
 			_defaultJournalDDMStructureModel.getStructureId(), true,
-			ContentTypes.TEXT_HTML, journalArticleModel.getTitle());
+			journalArticleModel.getIndexable(), ContentTypes.TEXT_HTML,
+			journalArticleModel.getTitle());
 	}
 
 	public AssetEntryModel newAssetEntryModel(MBMessageModel mbMessageModel) {
@@ -1074,7 +1075,7 @@ public class DataFactory {
 			mbMessageModel.getGroupId(), mbMessageModel.getCreateDate(),
 			mbMessageModel.getModifiedDate(), classNameId,
 			mbMessageModel.getMessageId(), mbMessageModel.getUuid(), 0, visible,
-			ContentTypes.TEXT_HTML, mbMessageModel.getSubject());
+			true, ContentTypes.TEXT_HTML, mbMessageModel.getSubject());
 	}
 
 	public AssetEntryModel newAssetEntryModel(MBThreadModel mbThreadModel) {
@@ -1083,7 +1084,8 @@ public class DataFactory {
 			mbThreadModel.getModifiedDate(),
 			_classNameModelsMap.get(MBThread.class.getName()),
 			mbThreadModel.getThreadId(), mbThreadModel.getUuid(), 0, false,
-			StringPool.BLANK, String.valueOf(mbThreadModel.getRootMessageId()));
+			true, StringPool.BLANK,
+			String.valueOf(mbThreadModel.getRootMessageId()));
 	}
 
 	public AssetEntryModel newAssetEntryModel(WikiPageModel wikiPageModel) {
@@ -1091,7 +1093,7 @@ public class DataFactory {
 			wikiPageModel.getGroupId(), wikiPageModel.getCreateDate(),
 			wikiPageModel.getModifiedDate(), getWikiPageClassNameId(),
 			wikiPageModel.getResourcePrimKey(), wikiPageModel.getUuid(), 0,
-			true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
+			true, true, ContentTypes.TEXT_HTML, wikiPageModel.getTitle());
 	}
 
 	public List<PortletPreferencesModel>
@@ -2419,7 +2421,7 @@ public class DataFactory {
 	protected AssetEntryModel newAssetEntryModel(
 		long groupId, Date createDate, Date modifiedDate, long classNameId,
 		long classPK, String uuid, long classTypeId, boolean visible,
-		String mimeType, String title) {
+		boolean listable, String mimeType, String title) {
 
 		AssetEntryModel assetEntryModel = new AssetEntryModelImpl();
 
@@ -2435,6 +2437,7 @@ public class DataFactory {
 		assetEntryModel.setClassUuid(uuid);
 		assetEntryModel.setClassTypeId(classTypeId);
 		assetEntryModel.setVisible(visible);
+		assetEntryModel.setListable(listable);
 		assetEntryModel.setStartDate(createDate);
 		assetEntryModel.setEndDate(nextFutureDate());
 		assetEntryModel.setPublishDate(createDate);

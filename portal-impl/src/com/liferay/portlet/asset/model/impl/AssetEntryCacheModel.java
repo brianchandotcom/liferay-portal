@@ -41,7 +41,7 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{entryId=");
 		sb.append(entryId);
@@ -67,6 +67,8 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		sb.append(classTypeId);
 		sb.append(", visible=");
 		sb.append(visible);
+		sb.append(", listable=");
+		sb.append(listable);
 		sb.append(", startDate=");
 		sb.append(startDate);
 		sb.append(", endDate=");
@@ -142,6 +144,7 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 
 		assetEntryImpl.setClassTypeId(classTypeId);
 		assetEntryImpl.setVisible(visible);
+		assetEntryImpl.setListable(listable);
 
 		if (startDate == Long.MIN_VALUE) {
 			assetEntryImpl.setStartDate(null);
@@ -237,6 +240,7 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		classUuid = objectInput.readUTF();
 		classTypeId = objectInput.readLong();
 		visible = objectInput.readBoolean();
+		listable = objectInput.readBoolean();
 		startDate = objectInput.readLong();
 		endDate = objectInput.readLong();
 		publishDate = objectInput.readLong();
@@ -282,6 +286,7 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 
 		objectOutput.writeLong(classTypeId);
 		objectOutput.writeBoolean(visible);
+		objectOutput.writeBoolean(listable);
 		objectOutput.writeLong(startDate);
 		objectOutput.writeLong(endDate);
 		objectOutput.writeLong(publishDate);
@@ -347,6 +352,7 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 	public String classUuid;
 	public long classTypeId;
 	public boolean visible;
+	public boolean listable;
 	public long startDate;
 	public long endDate;
 	public long publishDate;

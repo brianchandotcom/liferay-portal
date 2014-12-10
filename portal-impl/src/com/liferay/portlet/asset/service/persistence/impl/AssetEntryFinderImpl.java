@@ -287,6 +287,10 @@ public class AssetEntryFinderImpl
 			sb.append(" AND (visible = ?)");
 		}
 
+		if (entryQuery.isListable() != null) {
+			sb.append(" AND (listable = ?)");
+		}
+
 		if (entryQuery.isExcludeZeroViewCount()) {
 			sb.append(" AND (AssetEntry.viewCount > 0)");
 		}
@@ -450,6 +454,10 @@ public class AssetEntryFinderImpl
 
 		if (entryQuery.isVisible() != null) {
 			qPos.add(entryQuery.isVisible());
+		}
+
+		if (entryQuery.isListable() != null) {
+			qPos.add(entryQuery.isListable());
 		}
 
 		if (Validator.isNotNull(entryQuery.getKeywords())) {

@@ -191,14 +191,14 @@ public class LocalizationImpl implements Localization {
 
 			fullNameField.setRequired(required);
 
-			String testOptionsProperty =
-				"lang.user.name." + userNameField + ".options";
+			String testValueOptionsProperty =
+				"lang.user.name." + userNameField + ".value.options";
 
-			String optionsString = LanguageUtil.get(
-				locale, testOptionsProperty, StringPool.BLANK);
+			String valueOptionsString = LanguageUtil.get(
+				locale, testValueOptionsProperty, StringPool.BLANK);
 
-			if (!optionsString.isEmpty()) {
-				fullNameField.setOptions(StringUtil.split(optionsString));
+			if (!valueOptionsString.isEmpty()) {
+				fullNameField.setValueOptions(StringUtil.split(valueOptionsString));
 			}
 
 			fullNameDefinition.addField(fullNameField);

@@ -50,20 +50,17 @@ import java.util.concurrent.Callable;
 public class LiferaySyncCapability
 	implements RepositoryEventAware, SyncCapability {
 
+	public LiferaySyncCapability(
+		BulkOperationCapability bulkOperationCapability) {
+
+		_bulkOperationCapability = bulkOperationCapability;
+	}
+
 	@Override
 	public void destroyDocumentRepository(DocumentRepository documentRepository)
 		throws PortalException {
 
-		if (!documentRepository.isCapabilityProvided(
-				BulkOperationCapability.class)) {
-
-			return;
-		}
-
-		BulkOperationCapability bulkOperationCapability =
-			documentRepository.getCapability(BulkOperationCapability.class);
-
-		bulkOperationCapability.execute(new DeleteRepositoryModelOperation());
+		_bulkOperationCapability.execute(new DeleteRepositoryModelOperation());
 	}
 
 	@Override
@@ -253,6 +250,8 @@ public class LiferaySyncCapability
 			WORKFLOW_UPDATE_FILE_ENTRY_EVENT_LISTENER =
 				new SyncFileEntryRepositoryEventListener<>(
 					DLSyncConstants.EVENT_UPDATE);
+
+	private final BulkOperationCapability _bulkOperationCapability;
 
 	private static class SyncFileEntryRepositoryEventListener
 			<S extends RepositoryEventType>

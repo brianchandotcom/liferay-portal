@@ -27,7 +27,11 @@ package com.liferay.poshi.runner.util;
 public class StringUtil {
 
 	public static String[] split(String s) {
-		return s.split(",");
+		if (s != null) {
+			return s.split(",");
+		}
+
+		return null;
 	}
 
 }

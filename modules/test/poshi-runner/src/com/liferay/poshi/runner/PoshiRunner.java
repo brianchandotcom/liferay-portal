@@ -14,11 +14,16 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.util.TestPropsUtil;
+
 import java.io.File;
+
+import java.util.List;
 
 import junit.framework.TestCase;
 
 import org.dom4j.Document;
+import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 /**
@@ -27,6 +32,10 @@ import org.dom4j.io.SAXReader;
  * @author Karen Dang
  */
 public class PoshiRunner extends TestCase {
+
+	public PoshiRunner() {
+		TestPropsUtil.printProperties();
+	}
 
 	public void testPoshiRunner() throws Exception {
 		File file = new File(
@@ -53,6 +62,14 @@ public class PoshiRunner extends TestCase {
 		SAXReader saxReader = new SAXReader();
 
 		Document document = saxReader.read(file);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> elements = rootElement.elements("command");
+
+		for (Element element : elements) {
+			System.out.println(element.attributeValue("name"));
+		}
 	}
 
 }

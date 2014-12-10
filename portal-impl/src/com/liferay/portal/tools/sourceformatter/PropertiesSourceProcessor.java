@@ -40,6 +40,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
+		content = trimContent(content, true);
+
 		if (!portalSource && fileName.endsWith("portlet.properties")) {
 			return formatPortletProperties(content);
 		}

@@ -204,7 +204,7 @@ public class MeetupsPortlet extends MVCPortlet {
 		_meetupsRegistrationLocalService = meetupsRegistrationLocalService;
 	}
 
-	@Reference(policy = ReferencePolicy.DYNAMIC)
+	@Reference
 	protected void setSocialNetworkingServiceConfigurator(
 		SocialNetworkingServiceConfigurator
 			socialNetworkingServiceConfigurator) {

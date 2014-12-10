@@ -45,6 +45,7 @@ public class DDMTemplateSoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setTemplateKey(model.getTemplateKey());
+		soapModel.setVersion(model.getVersion());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setType(model.getType());
@@ -195,6 +196,14 @@ public class DDMTemplateSoap implements Serializable {
 		_templateKey = templateKey;
 	}
 
+	public String getVersion() {
+		return _version;
+	}
+
+	public void setVersion(String version) {
+		_version = version;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -294,6 +303,7 @@ public class DDMTemplateSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private String _templateKey;
+	private String _version;
 	private String _name;
 	private String _description;
 	private String _type;

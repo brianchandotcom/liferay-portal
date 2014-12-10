@@ -41,12 +41,11 @@ public class SyncFileTestUtil {
 			SyncFile.TYPE_FILE);
 
 		if (typePK == 0) {
-			typePK = syncFile.getSyncFileId();
+			syncFile.setFileKey(String.valueOf(syncFile.getSyncFileId()));
+			syncFile.setTypePK(syncFile.getSyncFileId());
+
+			SyncFileService.update(syncFile);
 		}
-
-		syncFile.setTypePK(typePK);
-
-		SyncFileService.update(syncFile);
 
 		return syncFile;
 	}
@@ -77,12 +76,11 @@ public class SyncFileTestUtil {
 			SyncFile.TYPE_FOLDER);
 
 		if (typePK == 0) {
-			typePK = syncFile.getSyncFileId();
+			syncFile.setFileKey(String.valueOf(syncFile.getSyncFileId()));
+			syncFile.setTypePK(syncFile.getSyncFileId());
+
+			SyncFileService.update(syncFile);
 		}
-
-		syncFile.setTypePK(typePK);
-
-		SyncFileService.update(syncFile);
 
 		return syncFile;
 	}

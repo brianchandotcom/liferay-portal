@@ -56,15 +56,15 @@ public class SyncFileServiceTest extends BaseTestCase {
 			folderSyncFileAA.getTypePK(), syncAccount.getSyncAccountId());
 
 		SyncFileTestUtil.addFileSyncFile(
-			FileUtil.getFilePathName(filePathName, "a", "b"),
+			FileUtil.getFilePathName(filePathName, "a", "b.txt"),
 			folderSyncFileA.getTypePK(), syncAccount.getSyncAccountId());
 
 		SyncFileTestUtil.addFileSyncFile(
-			FileUtil.getFilePathName(filePathName, "a", "c"),
+			FileUtil.getFilePathName(filePathName, "a", "c.txt"),
 			folderSyncFileA.getTypePK(), syncAccount.getSyncAccountId());
 
 		SyncFileTestUtil.addFileSyncFile(
-			FileUtil.getFilePathName(filePathName, "a", "a", "a"),
+			FileUtil.getFilePathName(filePathName, "a", "a", "a.txt"),
 			folderSyncFileAA.getTypePK(), syncAccount.getSyncAccountId());
 
 		syncFiles = SyncFileService.findSyncFiles(

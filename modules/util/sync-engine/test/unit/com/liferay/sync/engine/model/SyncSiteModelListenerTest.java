@@ -54,7 +54,11 @@ public class SyncSiteModelListenerTest extends BaseTestCase {
 	public void tearDown() throws Exception {
 		SyncSiteService.unregisterModelListener(_syncSiteModelListener);
 
-		SyncSiteService.deleteSyncSite(_syncSite.getSyncSiteId());
+		_syncSite = SyncSiteService.fetchSyncSite(_syncSite.getSyncSiteId());
+
+		if (_syncSite != null) {
+			SyncSiteService.deleteSyncSite(_syncSite.getSyncSiteId());
+		}
 
 		super.tearDown();
 	}

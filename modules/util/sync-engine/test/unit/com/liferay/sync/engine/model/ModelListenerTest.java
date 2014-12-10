@@ -49,27 +49,11 @@ public class ModelListenerTest extends BaseTestCase {
 		Assert.assertEquals(
 			FileUtil.getFilePathName(filePathName, "test"),
 			_originalFieldValues.get("filePathName"));
-		Assert.assertEquals(3, _originalFieldValues.size());
+		Assert.assertEquals(2, _originalFieldValues.size());
 
 		SyncFileService.deleteSyncFile(syncFile);
 
 		Assert.assertTrue(_onRemoveCalled);
-	}
-
-	@Test
-	public void testUpdateSyncFileIdSyncFile() throws Exception {
-		SyncFileService.registerModelListener(new SyncFileModelListener());
-
-		SyncFile syncFile = SyncFileTestUtil.addFileSyncFile(
-			FileUtil.getFilePathName(filePathName, "test"), 0,
-			syncAccount.getSyncAccountId());
-
-		syncFile.setSyncFileId(12345);
-
-		SyncFileService.update(syncFile);
-
-		Assert.assertEquals(1, _originalFieldValues.size());
-		Assert.assertFalse(_onRemoveCalled);
 	}
 
 	private boolean _onCreateCalled;

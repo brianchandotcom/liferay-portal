@@ -130,9 +130,11 @@ public class SyncAccountService {
 
 		// Sync user
 
-		syncUser.setSyncAccountId(syncAccount.getSyncAccountId());
+		if (syncUser != null) {
+			syncUser.setSyncAccountId(syncAccount.getSyncAccountId());
 
-		SyncUserService.update(syncUser);
+			SyncUserService.update(syncUser);
+		}
 
 		return syncAccount;
 	}
@@ -168,7 +170,9 @@ public class SyncAccountService {
 
 			SyncUser syncUser = SyncUserService.fetchSyncUser(syncAccountId);
 
-			SyncUserService.deleteSyncUser(syncUser.getSyncUserId());
+			if (syncUser != null) {
+				SyncUserService.deleteSyncUser(syncUser.getSyncUserId());
+			}
 
 			// Sync watch events
 

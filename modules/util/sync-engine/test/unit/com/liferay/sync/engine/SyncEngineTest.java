@@ -30,7 +30,9 @@ public class SyncEngineTest {
 		SyncEngineListener syncEngineListener = new SyncEngineListener() {
 
 			@Override
-			public void syncEngineStateChanged(int syncEngineState) {
+			public void syncEngineStateChanged(
+				long syncAccountId, int syncEngineState) {
+
 				if (syncEngineState ==
 						SyncEngineUtil.SYNC_ENGINE_STATE_STOPPED) {
 

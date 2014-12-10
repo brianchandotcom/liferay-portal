@@ -316,7 +316,7 @@
 
 				<var name="key_lowercaseLanguageCode" value="${lowercaseLanguageCode}" />
 
-				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD_LOCALIZED" value1="${webContentTitle}" />
+				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD_LOCALIZED" value1="${webContentContent}" />
 				<execute action="PGWebcontentdisplayAddwebcontent#click" locator-key1="LOCALIZED_PUBLISH_BUTTON" />
 			</then>

@@ -488,6 +488,22 @@ public class JournalArticleIndexer extends BaseIndexer {
 			return;
 		}
 
+		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+			int status = article.getStatus();
+
+			if ((status != WorkflowConstants.STATUS_APPROVED) &&
+				(status != WorkflowConstants.STATUS_IN_TRASH)) {
+
+				Document document = getDocument(article);
+
+				SearchEngineUtil.deleteDocument(
+					getSearchEngineId(), article.getCompanyId(),
+					document.get(Field.UID), isCommitImmediately());
+
+				return;
+			}
+		}
+
 		if (allVersions) {
 			reindexArticleVersions(article);
 		}
@@ -737,17 +753,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 	protected void reindexArticleVersions(JournalArticle article)
 		throws Exception {
 
-		Collection<Document> documents = getArticleVersions(article);
-
-		if(documents.isEmpty() && 
-			!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-
-			doDelete(article);
-		}
-
 		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), article.getCompanyId(), documents,
-			isCommitImmediately());
+			getSearchEngineId(), article.getCompanyId(),
+			getArticleVersions(article), isCommitImmediately());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

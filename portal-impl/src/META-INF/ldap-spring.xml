@@ -10,7 +10,7 @@
 	<bean id="ldapToPortalConverter" class="com.liferay.portal.security.ldap.DefaultLDAPToPortalConverter" />
 	<bean id="portalToLDAPConverter" class="com.liferay.portal.security.ldap.DefaultPortalToLDAPConverter" />
 
-	<bean id="com.liferay.portal.security.ldap.LDAPSettings" class="com.liferay.portal.security.ldap.DefaultLDAPSettings" />
+	<bean id="com.liferay.portal.security.ldap.LDAPSettings" class="com.liferay.portal.security.ldap.DefaultLDAPSettingsImpl" />
 	<bean id="com.liferay.portal.security.ldap.PortalLDAP" class="com.liferay.portal.security.ldap.DefaultPortalLDAP" />
 
 	<bean id="com.liferay.portal.security.exportimport.UserExporter" class="com.liferay.portal.security.ldap.LDAPUserExporterImpl">

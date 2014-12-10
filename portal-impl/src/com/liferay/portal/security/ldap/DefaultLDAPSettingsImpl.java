@@ -37,9 +37,9 @@ import java.util.Properties;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public class DefaultLDAPSettings implements LDAPSettings {
+public class DefaultLDAPSettingsImpl implements LDAPSettings {
 
-	public DefaultLDAPSettings() {
+	public DefaultLDAPSettingsImpl() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		registry.registerService(LDAPSettings.class, this);
@@ -265,6 +265,6 @@ public class DefaultLDAPSettings implements LDAPSettings {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultLDAPSettings.class);
+		DefaultLDAPSettingsImpl.class);
 
 }

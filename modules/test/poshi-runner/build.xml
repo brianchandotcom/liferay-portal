@@ -6,11 +6,13 @@
 
 	<!--<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />-->
 
-	<target name="start-poshi-runner">
-		<java
-			classname="com.liferay.poshi.runner.PoshiRunner"
-			classpathref="plugin.classpath"
-			fork="true"
-		/>
+	<target name="start-poshi-runner" depends="compile">
+		<mkdir dir="test-results" />
+
+		<junit printsummary="on" showoutput="true">
+			<classpath refid="plugin.classpath" />
+			<formatter type="xml" />
+			<test name="com.liferay.poshi.runner.PoshiRunner" todir="test-results" />
+		</junit>
 	</target>
 </project>

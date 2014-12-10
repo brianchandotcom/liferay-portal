@@ -101,11 +101,11 @@ public class SampleSQLBuilder {
 
 		// Generic
 
-		Reader reader = generateSQL();
-
 		File tempDir = new File(_outputDir, "temp");
 
 		tempDir.mkdirs();
+
+		Reader reader = generateSQL();
 
 		try {
 

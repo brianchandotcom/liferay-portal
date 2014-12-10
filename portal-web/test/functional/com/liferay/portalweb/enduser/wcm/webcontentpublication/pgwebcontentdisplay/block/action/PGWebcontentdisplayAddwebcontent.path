@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>CONTENT_FIELD_LOCALIZED</td>
-	<td>//iframe[contains(@class,'cke_wysiwyg_frame cke_reset')]</td>
+	<td>//iframe[contains(@title,'Editor')]</td>
 	<td></td>
 </tr>
 <tr>

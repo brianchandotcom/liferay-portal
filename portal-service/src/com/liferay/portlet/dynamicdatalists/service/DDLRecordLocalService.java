@@ -228,28 +228,10 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	*/
 	public java.lang.String getBeanIdentifier();
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getCompanyRecords(long, int,
-	int, int, int, OrderByComparator)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getCompanyRecords(
-		long companyId, int scope, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getCompanyRecords(
 		long companyId, int status, int scope, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getCompanyRecordsCount(long,
-	int, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompanyRecordsCount(long companyId, int scope);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyRecordsCount(long companyId, int status, int scope);

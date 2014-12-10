@@ -276,35 +276,12 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.getBeanIdentifier();
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getCompanyRecords(long, int,
-	int, int, int, OrderByComparator)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getCompanyRecords(
-		long companyId, int scope, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
-		return _ddlRecordLocalService.getCompanyRecords(companyId, scope,
-			start, end, orderByComparator);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getCompanyRecords(
 		long companyId, int status, int scope, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator) {
 		return _ddlRecordLocalService.getCompanyRecords(companyId, status,
 			scope, start, end, orderByComparator);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getCompanyRecordsCount(long,
-	int, int)}
-	*/
-	@Deprecated
-	@Override
-	public int getCompanyRecordsCount(long companyId, int scope) {
-		return _ddlRecordLocalService.getCompanyRecordsCount(companyId, scope);
 	}
 
 	@Override

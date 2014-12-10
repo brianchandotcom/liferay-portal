@@ -69,9 +69,9 @@ import javax.naming.ldap.PagedResultsResponseControl;
  * @author Hugo Huijser
  * @author Edward Han
  */
-public class DefaultPortalLDAP implements PortalLDAP {
+public class DefaultPortalLDAPImpl implements PortalLDAP {
 
-	public DefaultPortalLDAP() {
+	public DefaultPortalLDAPImpl() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		registry.registerService(PortalLDAP.class, this);
@@ -998,6 +998,6 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DefaultPortalLDAP.class);
+	private static Log _log = LogFactoryUtil.getLog(DefaultPortalLDAPImpl.class);
 
 }

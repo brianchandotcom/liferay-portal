@@ -1,0 +1,23 @@
+<definition component-name="portal-plugins-osgi">
+	<property name="deploy.plugins.osgi" value="true" />
+	<property name="testray.main.component.name" value="Plugin Installer" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="WelcomeThemeSmoke" priority="5">
+		<property name="theme.plugins.includes" value="welcome-theme" />
+		<property name="web.plugins.includes" value="resources-importer-web" />
+
+		<var name="appName" value="Welcome" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute action="CPAppmanager#assertTextPresent" value1="${appName}" />
+
+		<execute action="CPAppmanager#antCommand" locator1="build-test.xml" value1="remove-plugins-osgi -Dplugin.name=welcome-theme" />
+	</command>
+</definition>

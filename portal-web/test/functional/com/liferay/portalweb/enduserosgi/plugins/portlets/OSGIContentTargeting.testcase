@@ -1,0 +1,47 @@
+<definition component-name="portal-plugins-osgi">
+	<property name="deploy.plugins.osgi" value="true" />
+	<property name="testray.main.component.name" value="Plugin Installer" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="MarketplacePortletContentTargetingSmoke" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Store" />
+		</execute>
+
+		<execute macro="Marketplace#signIn">
+			<var name="userEmailAddress" property-value="email.address.5" />
+			<var name="userEmailPassword" property-value="email.password.5" />
+		</execute>
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Store" />
+		</execute>
+
+		<execute macro="Marketplace#downloadApp">
+			<var name="appName" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Purchased" />
+		</execute>
+
+		<execute macro="Marketplace#installApp">
+			<var name="appName" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+		</execute>
+	</command>
+</definition>

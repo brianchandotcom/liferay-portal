@@ -1,0 +1,32 @@
+<definition component-name="portal-plugins-osgi">
+	<property name="deploy.plugins.osgi" value="true" />
+	<property name="testray.main.component.name" value="Plugin Installer" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="FlashPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="flash-portlet" />
+
+		<var name="appName" value="Flash" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Flash" />
+		</execute>
+
+		<execute action="CPAppmanager#antCommand" locator1="build-test.xml" value1="remove-plugins-osgi -Dplugin.name=flash-portlet" />
+	</command>
+</definition>

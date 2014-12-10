@@ -1,0 +1,32 @@
+<definition component-name="portal-plugins-osgi">
+	<property name="deploy.plugins.osgi" value="true" />
+	<property name="testray.main.component.name" value="Plugin Installer" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ChatPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="chat-portlet" />
+
+		<var name="appName" value="Chat" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#deactivateAppCP">
+			<var name="appName" value="${appName}" />
+		</execute>
+
+		<execute action="CPAppmanager#antCommand" locator1="build-test.xml" value1="remove-plugins-osgi -Dplugin.name=ddl-form-portlet" />
+	</command>
+</definition>

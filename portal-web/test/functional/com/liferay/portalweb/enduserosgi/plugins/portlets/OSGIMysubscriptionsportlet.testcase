@@ -1,0 +1,36 @@
+<definition component-name="portal-plugins-osgi">
+	<property name="deploy.plugins.osgi" value="true" />
+	<property name="testray.main.component.name" value="Plugin Installer" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="MySubscriptionsPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="my-subscriptions-portlet" />
+
+		<var name="appName" value="My Subscriptions" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="My Subscriptions" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Subscriptions" />
+		</execute>
+
+		<execute action="CPAppmanager#antCommand" locator1="build-test.xml" value1="remove-plugins-osgi -Dplugin.name=my-subscriptions-portlet" />
+	</command>
+</definition>

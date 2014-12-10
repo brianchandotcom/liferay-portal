@@ -189,19 +189,15 @@ public abstract class BaseIndexer implements Indexer {
 				SearchEngineUtil.getSearchPermissionChecker();
 
 			long[] groupIds = null;
+
 			String contextGroupId = (String)searchContext.getAttribute
-					("groupId");
+				("groupId");
 
-			if (contextGroupId != null) {
+			if (Validator.isNotNull(contextGroupId) &&
+				!contextGroupId.equals("0")) {
 
-				if (!"0".equals(contextGroupId)) {
-					groupIds = new long[]{Long.parseLong(contextGroupId)};
-				}
-				else {
-					groupIds = searchContext.getGroupIds();
-				}
+				groupIds = new long[]{Long.parseLong(contextGroupId)};
 			}
-
 			else {
 				groupIds = searchContext.getGroupIds();
 			}

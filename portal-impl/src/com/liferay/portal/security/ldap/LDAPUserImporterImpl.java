@@ -93,7 +93,7 @@ import javax.naming.ldap.LdapContext;
  * @author Hugo Huijser
  */
 @DoPrivileged
-public class LDAPUserImporterImpl implements LDAPUserImporter {
+public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	@Override
 	public User importUser(

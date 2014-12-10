@@ -75,9 +75,11 @@ public class ExportUsersAction extends PortletAction {
 
 		try {
 			if (!actionRequest.getParameter("keywords").isEmpty()) {
-				DynamicActionRequest adjustedActionRequest = new DynamicActionRequest(actionRequest);
+				DynamicActionRequest adjustedActionRequest =
+					new DynamicActionRequest(actionRequest);
 
-				adjustedActionRequest.setParameter("keywords", StringPool.BLANK);
+				adjustedActionRequest.setParameter(
+					"keywords", StringPool.BLANK);
 
 				actionRequest = adjustedActionRequest;
 			}

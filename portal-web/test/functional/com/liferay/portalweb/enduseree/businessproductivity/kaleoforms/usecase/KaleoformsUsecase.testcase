@@ -1980,10 +1980,10 @@
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Liferay Portal Workflow ." />
 			<var name="gmailAssetType" value="Review Notification Description" />
-			<var name="gmailMailTableMessageTitle" value="Review Notification Description - ${user1FirstName} ${user1LastName} sent you a Kaleo Process for review in the workflow." />
-			<var name="gmailMessageBody" value="${user1FirstName} ${user1LastName} sent you a Kaleo Process for review in the workflow." />
-			<var name="gmailMessageBodyClosing" value="${user1FirstName} ${user1LastName} sent you a Kaleo Process for review in the workflow." />
-			<var name="gmailMessageBodyGreeting" value="${user1FirstName} ${user1LastName} sent you a Kaleo Process for review in the workflow." />
+			<var name="gmailMailTableMessageTitle" value="Review Notification Description - ${user1FirstName} ${user1LastName} sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="gmailMessageBody" value="${user1FirstName} ${user1LastName} sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="gmailMessageBodyClosing" value="${user1FirstName} ${user1LastName} sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="gmailMessageBodyGreeting" value="${user1FirstName} ${user1LastName} sent you a Kaleo Forms Process for review in the workflow." />
 			<var name="gmailMessageTitle" value="Review Notification Description" />
 		</execute>
 

@@ -147,6 +147,11 @@ public class NewEnvTestRule implements TestRule {
 	protected List<String> createArguments(Description description) {
 		List<String> arguments = new ArrayList<String>();
 
+		if (Boolean.getBoolean("junit.debug")) {
+			arguments.add(_JPDA_OPTIONS);
+			arguments.add("-Djunit.debug=true");
+		}
+
 		String agentLine = System.getProperty("junit.cobertura.agent");
 
 		if (Validator.isNotNull(agentLine)) {
@@ -160,11 +165,6 @@ public class NewEnvTestRule implements TestRule {
 
 		if (Boolean.getBoolean("junit.code.coverage.dump")) {
 			arguments.add("-Djunit.code.coverage.dump=true");
-		}
-
-		if (Boolean.getBoolean("junit.debug")) {
-			arguments.add(_JPDA_OPTIONS);
-			arguments.add("-Djunit.debug=true");
 		}
 
 		arguments.add("-Djava.net.preferIPv4Stack=true");

@@ -1,4 +1,6 @@
 Bundle-SymbolicName: com.ctc.wstx
 Bundle-Version: 3.2.4.LIFERAY-PATCHED-1
-Export-Package: *
+Export-Package: \
+	com.ctc.wstx.*,\
+	org.codehaus.stax2.*
 Include-Resource: classes

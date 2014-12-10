@@ -35,8 +35,6 @@ public class PortletKeys {
 
 	public static final String ASSET_CATEGORIES_ADMIN = "147";
 
-	public static final String ASSET_CATEGORIES_NAVIGATION = "122";
-
 	public static final String ASSET_PUBLISHER = "101";
 
 	public static final String ASSET_TAGS_NAVIGATION = "141";
@@ -229,13 +227,6 @@ public class PortletKeys {
 	public static final String STOCKS = "12";
 
 	public static final String TAGS_ADMIN = "99";
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #ASSET_CATEGORIES_NAVIGATION}
-	 */
-	@Deprecated
-	public static final String TAGS_CATEGORIES_NAVIGATION =
-		ASSET_CATEGORIES_NAVIGATION;
 
 	public static final String TAGS_CLOUD = "148";
 

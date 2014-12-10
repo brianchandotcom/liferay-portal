@@ -179,7 +179,7 @@
 	</command>
 
 	<command name="AddKBArticleWithSourceViaKBAdmin" priority="5">
-		<var name="kbArticleContentSourceOn">
+		<var name="kbArticleContentSource">
 			<![CDATA[<b>Knowledge Base&rsquo;s Article Content<b>]]>
 		</var>
 
@@ -188,7 +188,8 @@
 		</execute>
 
 		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContentSourceOn" value="${kbArticleContentSourceOn}" />
+			<var name="kbArticleAddViaSource" value="true" />
+			<var name="kbArticleContentSource" value="${kbArticleContentSource}" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
@@ -203,7 +204,7 @@
 			<var name="kbPriority" value="1.0" />
 		</execute>
 
-		<execute action="CPKnowledgebaseadminArticle#assertTextNotEquals" locator-key1="CONTENT" value1="${kbArticleContentSourceOn}" />
+		<execute action="CPKnowledgebaseadminArticle#assertTextNotEquals" locator-key1="CONTENT" value1="${kbArticleContentSource}" />
 	</command>
 
 	<command name="AddTemplateCP" priority="5">

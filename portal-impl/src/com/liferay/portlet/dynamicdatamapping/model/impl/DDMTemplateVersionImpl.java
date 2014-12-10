@@ -12,22 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.portlet.dynamicdatamapping.model.impl;
+
+import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Alexander Chow
- * @author Eduardo Lundgren
+ * @author Brian Wing Shun Chan
  */
-public class DDMTemplateConstants {
-
-	public static final String TEMPLATE_MODE_CREATE = "create";
-
-	public static final String TEMPLATE_MODE_EDIT = "edit";
-
-	public static final String TEMPLATE_TYPE_DISPLAY = "display";
-
-	public static final String TEMPLATE_TYPE_FORM = "form";
-
-	public static final String VERSION_DEFAULT = "1.0";
-
+@ProviderType
+public class DDMTemplateVersionImpl extends DDMTemplateVersionBaseImpl {
 }

@@ -12,22 +12,31 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.portlet.dynamicdatamapping;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.NoSuchModelException;
 
 /**
- * @author Alexander Chow
- * @author Eduardo Lundgren
+ * @author Brian Wing Shun Chan
  */
-public class DDMTemplateConstants {
+@ProviderType
+public class NoSuchTemplateVersionException extends NoSuchModelException {
 
-	public static final String TEMPLATE_MODE_CREATE = "create";
+	public NoSuchTemplateVersionException() {
+	}
 
-	public static final String TEMPLATE_MODE_EDIT = "edit";
+	public NoSuchTemplateVersionException(String msg) {
+		super(msg);
+	}
 
-	public static final String TEMPLATE_TYPE_DISPLAY = "display";
+	public NoSuchTemplateVersionException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
-	public static final String TEMPLATE_TYPE_FORM = "form";
-
-	public static final String VERSION_DEFAULT = "1.0";
+	public NoSuchTemplateVersionException(Throwable cause) {
+		super(cause);
+	}
 
 }

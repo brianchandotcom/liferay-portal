@@ -270,6 +270,21 @@ public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
 	public void setTemplateKey(String templateKey);
 
 	/**
+	 * Returns the version of this d d m template.
+	 *
+	 * @return the version of this d d m template
+	 */
+	@AutoEscape
+	public String getVersion();
+
+	/**
+	 * Sets the version of this d d m template.
+	 *
+	 * @param version the version of this d d m template
+	 */
+	public void setVersion(String version);
+
+	/**
 	 * Returns the name of this d d m template.
 	 *
 	 * @return the name of this d d m template

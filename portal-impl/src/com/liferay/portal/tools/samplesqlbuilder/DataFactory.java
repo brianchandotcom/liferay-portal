@@ -2593,6 +2593,7 @@ public class DataFactory {
 			_classNameModelsMap.get(DDMStructure.class.getName()));
 		ddmTemplateModel.setClassPK(structureId);
 		ddmTemplateModel.setTemplateKey(String.valueOf(_counter.get()));
+		ddmTemplateModel.setVersion(DDMTemplateConstants.VERSION_DEFAULT);
 
 		StringBundler sb = new StringBundler(3);
 

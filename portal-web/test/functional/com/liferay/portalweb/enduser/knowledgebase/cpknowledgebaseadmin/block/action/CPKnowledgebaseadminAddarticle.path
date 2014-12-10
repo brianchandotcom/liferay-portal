@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SOURCE_BUTTON</td>
+	<td>//a[@title='Source']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_FIELD</td>
 	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td></td>
@@ -51,6 +56,11 @@
 <tr>
 	<td>CONTENT_BODY</td>
 	<td>//body[contains(@class,'cke_editable')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_BODY_SOURCE_ON</td>
+	<td>//textarea[contains(@class,'cke_editable')]</td>
 	<td></td>
 </tr>
 <tr>

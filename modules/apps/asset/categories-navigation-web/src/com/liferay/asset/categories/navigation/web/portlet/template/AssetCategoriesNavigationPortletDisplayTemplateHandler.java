@@ -14,13 +14,15 @@
 
 package com.liferay.asset.categories.navigation.web.portlet.template;
 
+import com.liferay.asset.categories.navigation.web.configuration.CategoriesNavigationWebConfigurationValues;
+import com.liferay.asset.categories.navigation.web.constants.CategoriesNavigationPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalService;
@@ -32,10 +34,22 @@ import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateCon
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleReference;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Juan Fernández
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=com_liferay_asset_categories_navigation_web_portlet_CategoriesNavigationPortlet"
+	},
+	service = TemplateHandler.class
+)
 public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
@@ -46,8 +60,12 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language");
+
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.ASSET_CATEGORIES_NAVIGATION, locale);
+			CategoriesNavigationPortletKeys.CATEGORIES_NAVIGATION,
+			resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -55,7 +73,20 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return PortletKeys.ASSET_CATEGORIES_NAVIGATION;
+		Class<?> clazz = getClass();
+
+		BundleReference bundleReference =
+			(BundleReference)clazz.getClassLoader();
+
+		Bundle bundle = bundleReference.getBundle();
+
+		String symbolicName = bundle.getSymbolicName();
+
+		symbolicName = symbolicName.replaceAll("[^a-zA-Z0-9]", "");
+
+		return CategoriesNavigationPortletKeys.CATEGORIES_NAVIGATION.concat(
+			PortletConstants.WAR_SEPARATOR).concat(
+				String.valueOf(symbolicName));
 	}
 
 	@Override
@@ -95,7 +126,8 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return PropsValues.ASSET_CATEGORIES_NAVIGATION_DISPLAY_TEMPLATES_CONFIG;
+		return CategoriesNavigationWebConfigurationValues.
+			DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

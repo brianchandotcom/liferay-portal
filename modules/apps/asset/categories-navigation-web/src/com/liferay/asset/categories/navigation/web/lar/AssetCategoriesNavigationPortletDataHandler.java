@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
@@ -29,9 +30,18 @@ import java.util.Enumeration;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Julio Camarero
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=com_liferay_asset_categories_navigation_web_portlet_CategoriesNavigationPortlet"
+	},
+	service = PortletDataHandler.class
+)
 public class AssetCategoriesNavigationPortletDataHandler
 	extends DefaultConfigurationPortletDataHandler {
 

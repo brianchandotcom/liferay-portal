@@ -29,20 +29,20 @@ public class FullNameField {
 		return _name;
 	}
 
-	public String[] getOptions() {
-		return _options;
+	public String[] getValueOptions() {
+		return _valueOptions;
 	}
 
 	public boolean isFreeText() {
-		return ArrayUtil.isEmpty(_options);
+		return ArrayUtil.isEmpty(_valueOptions);
 	}
 
 	public boolean isRequired() {
 		return _required;
 	}
 
-	public void setOptions(String[] options) {
-		_options = options;
+	public void setValueOptions(String[] valueOptions) {
+		_valueOptions = valueOptions;
 	}
 
 	public void setRequired(boolean required) {
@@ -50,7 +50,7 @@ public class FullNameField {
 	}
 
 	private final String _name;
-	private String[] _options;
+	private String[] _valueOptions;
 	private boolean _required;
 
 }

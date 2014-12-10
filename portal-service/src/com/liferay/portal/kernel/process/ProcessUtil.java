@@ -46,6 +46,9 @@ public class ProcessUtil {
 	public static final ConsumerOutputProcessor CONSUMER_OUTPUT_PROCESSOR =
 		new ConsumerOutputProcessor();
 
+	public static final EchoOutputProcessor ECHO_OUTPUT_PROCESSOR =
+		new EchoOutputProcessor();
+
 	public static final LoggingOutputProcessor LOGGING_OUTPUT_PROCESSOR =
 		new LoggingOutputProcessor();
 

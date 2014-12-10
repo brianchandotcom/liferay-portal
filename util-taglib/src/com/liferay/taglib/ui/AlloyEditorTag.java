@@ -77,6 +77,10 @@ public class AlloyEditorTag extends IncludeTag {
 		_skipEditorLoading = skipEditorLoading;
 	}
 
+	public void setUploadURL(String uploadURL) {
+		_uploadURL = uploadURL;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_contents = null;
@@ -92,6 +96,7 @@ public class AlloyEditorTag extends IncludeTag {
 		_page = null;
 		_placeholder = null;
 		_skipEditorLoading = false;
+		_uploadURL = null;
 	}
 
 	@Override
@@ -142,6 +147,7 @@ public class AlloyEditorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:input-editor:skipEditorLoading",
 			String.valueOf(_skipEditorLoading));
+		request.setAttribute("liferay-ui:input-editor:uploadURL", _uploadURL);
 	}
 
 	private String _contents;
@@ -157,5 +163,6 @@ public class AlloyEditorTag extends IncludeTag {
 	private String _page;
 	private String _placeholder;
 	private boolean _skipEditorLoading;
+	private String _uploadURL;
 
 }

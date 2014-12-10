@@ -61,6 +61,7 @@ if (Validator.isNotNull(onInitMethod)) {
 
 String placeholder = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:placeholder"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
+String uploadURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:uploadURL"));
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
@@ -222,12 +223,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			var uploader = new Liferay.BlogsUploader(
 				{
 					editor: nativeEditor,
-
-					<portlet:actionURL var="imageSelectorURL">
-						<portlet:param name="struts_action" value="/blogs/image_selector" />
-					</portlet:actionURL>
-
-					uploadUrl: '<%= imageSelectorURL %>'
+					uploadUrl: '<%= uploadURL %>'
 				}
 			);
 

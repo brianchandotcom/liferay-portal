@@ -12,7 +12,7 @@
 	<uri>http://liferay.com/tld/ui</uri>
 	<tag>
 		<name>alloy-editor</name>
-		<tag-class>com.liferay.taglib.ui.InputEditorTag</tag-class>
+		<tag-class>com.liferay.taglib.ui.AlloyEditorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>contents</name>
@@ -71,6 +71,11 @@
 		</attribute>
 		<attribute>
 			<name>skipEditorLoading</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>uploadURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

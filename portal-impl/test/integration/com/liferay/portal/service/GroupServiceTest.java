@@ -357,14 +357,24 @@ public class GroupServiceTest {
 			parentOrganization.getOrganizationId(),
 			RandomTestUtil.randomString(), false);
 
+		_organizations.add(organization);
+		_organizations.add(parentOrganization);
+
 		UserLocalServiceUtil.addOrganizationUsers(
 			organization.getOrganizationId(),
 			new long[] {TestPropsValues.getUserId()});
 
-		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
-			TestPropsValues.getUserId(), null, false, QueryUtil.ALL_POS);
+		try {
+			List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+				TestPropsValues.getUserId(), null, false, QueryUtil.ALL_POS);
 
-		Assert.assertTrue(groups.contains(parentOrganizationGroup));
+			Assert.assertTrue(groups.contains(parentOrganizationGroup));
+		}
+		finally {
+			UserLocalServiceUtil.unsetOrganizationUsers(
+				organization.getOrganizationId(),
+				new long[] {TestPropsValues.getUserId()});
+		}
 	}
 
 	@Test
@@ -1055,5 +1065,9 @@ public class GroupServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private final List<Organization> _organizations =
+		new ArrayList<Organization>();
 
 }

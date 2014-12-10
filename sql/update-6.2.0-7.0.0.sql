@@ -23,6 +23,25 @@ create table DDMStructureVersion (
 	type_ INTEGER
 );
 
+alter table DDMTemplate add version VARCHAR(75) null;
+
+update DDMTemplate set version = '1.0';
+
+create table DDMTemplateVersion (
+	templateVersionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	templateId LONG,
+	version VARCHAR(75) null,
+	name STRING null,
+	description STRING null,
+	language VARCHAR(75) null,
+	script TEXT null
+);
+
 alter table DLFolder add restrictionType INTEGER;
 
 update DLFolder set restrictionType = 1 where overrideFileEntryTypes = 1;

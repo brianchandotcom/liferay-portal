@@ -246,8 +246,6 @@
 
 					<property name="app.server.dir" refid="app.server.dir" />
 
-					<delete dir="${app.server.dir}/patching-tool" />
-
 					<loadresource property="patching.tool.version">
 						<url url="${test.fix.pack.base.url}/patching-tool/LATEST.txt" />
 					</loadresource>
@@ -3200,6 +3198,20 @@ plugins.includes=marketplace-portlet</echo>
 					<mapper
 						from="[^/]+/(.*)"
 						to="\1"
+						type="regexp"
+					/>
+				</unzip>
+
+				<unzip
+					dest="${app.server.parent.dir}"
+					src="${tstamp.value}.zip"
+				>
+					<patternset
+						includes="liferay-portal-*/patching-tool/patches/**"
+					/>
+					<mapper
+						from="[^/]+/(.*)"
+						to="${app.server.dir}//\1"
 						type="regexp"
 					/>
 				</unzip>

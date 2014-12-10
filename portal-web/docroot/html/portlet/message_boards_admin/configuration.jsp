@@ -359,9 +359,7 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 				}
 
 				function <portlet:namespace />updatePrioritiesLanguageTemps(lang) {
-					var $ = AUI.$;
-
-					var form = $(document.<portlet:namespace />fm);
+					var form = AUI.$(document.<portlet:namespace />fm);
 
 					if (lang != '<%= defaultLanguageId %>') {
 						for (var i = 0; i < 10; i++) {
@@ -452,9 +450,7 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 				}
 
 				function <portlet:namespace />updateRanksLanguage() {
-					var $ = AUI.$;
-
-					var form = $(document.<portlet:namespace />fm);
+					var form = AUI.$(document.<portlet:namespace />fm);
 
 					if (<portlet:namespace />ranksChanged && (<portlet:namespace />ranksLastLanguageId != '<%= defaultLanguageId %>')) {
 						var ranksValue = form.fm('ranks_temp').val();
@@ -476,9 +472,7 @@ mbSettings = MBSettings.getInstance(themeDisplay.getSiteGroupId(), request.getPa
 				}
 
 				function <portlet:namespace />updateRanksLanguageTemps(lang) {
-					var $ = AUI.$;
-
-					var form = $(document.<portlet:namespace />fm);
+					var form = AUI.$(document.<portlet:namespace />fm);
 
 					if (lang != '<%= defaultLanguageId %>') {
 						var ranksValue = form.fm('ranks_' + lang).val();

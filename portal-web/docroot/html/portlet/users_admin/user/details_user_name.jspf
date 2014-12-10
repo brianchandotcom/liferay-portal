@@ -25,7 +25,7 @@ FullNameDefinition fullNameDefinition = LocalizationUtil.getFullNameDefinition(s
 for (FullNameField fullNameField: fullNameDefinition.getFields()) {
 	String fieldName = CamelCaseUtil.toCamelCase(fullNameField.getName());
 	boolean required = fullNameField.isRequired();
-	String[] options = fullNameField.getOptions();
+	String[] valueOptions = fullNameField.getValueOptions();
 %>
 
 <c:choose>
@@ -52,10 +52,10 @@ for (FullNameField fullNameField: fullNameDefinition.getFields()) {
 			}
 		}
 
-		for (String option: options) {
+		for (String valueOption: valueOptions) {
 		%>
 
-			<aui:option label="<%= option %>" selected="<%= selected.equals(option) %>" value="<%= option %>" />
+			<aui:option label="<%= valueOption %>" selected="<%= selected.equals(valueOption) %>" value="<%= valueOption %>" />
 
 		<%
 		}

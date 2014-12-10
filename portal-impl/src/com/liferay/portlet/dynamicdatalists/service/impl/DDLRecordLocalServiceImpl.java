@@ -261,32 +261,6 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			companyId, status, scope, start, end, orderByComparator);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyRecords(long, int,
-	 *             int, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<DDLRecord> getCompanyRecords(
-		long companyId, int scope, int start, int end,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getCompanyRecords(
-			companyId, WorkflowConstants.STATUS_ANY, scope, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyRecordsCount(long,
-	 *             int, int)}
-	 */
-	@Deprecated
-	@Override
-	public int getCompanyRecordsCount(long companyId, int scope) {
-		return getCompanyRecordsCount(
-			companyId, WorkflowConstants.STATUS_ANY, scope);
-	}
-
 	@Override
 	public int getCompanyRecordsCount(long companyId, int status, int scope) {
 		return ddlRecordFinder.countByC_S_S(companyId, status, scope);

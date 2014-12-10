@@ -16,9 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:ddm-template-renderer displayStyle="<%= assetCategoriesNavigationDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetCategoriesNavigationDisplayContext.getDDMTemplateAssetVocabularies() %>">
+<liferay-ui:ddm-template-renderer displayStyle="<%= categoriesNavigationDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= categoriesNavigationDisplayContext.getDisplayStyleGroupId() %>" entries="<%= categoriesNavigationDisplayContext.getDDMTemplateAssetVocabularies() %>">
 	<c:choose>
-		<c:when test="<%= assetCategoriesNavigationDisplayContext.isAllAssetVocabularies() %>">
+		<c:when test="<%= categoriesNavigationDisplayContext.isAllAssetVocabularies() %>">
 			<liferay-ui:asset-categories-navigation
 				hidePortletWhenEmpty="<%= true %>"
 			/>
@@ -26,7 +26,7 @@
 		<c:otherwise>
 			<liferay-ui:asset-categories-navigation
 				hidePortletWhenEmpty="<%= true %>"
-				vocabularyIds="<%= assetCategoriesNavigationDisplayContext.getAssetVocabularyIds() %>"
+				vocabularyIds="<%= categoriesNavigationDisplayContext.getAssetVocabularyIds() %>"
 			/>
 		</c:otherwise>
 	</c:choose>

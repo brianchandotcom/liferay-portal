@@ -24,7 +24,7 @@
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ page import="com.liferay.asset.categories.navigation.web.context.AssetCategoriesNavigationDisplayContext" %><%@
+<%@ page import="com.liferay.asset.categories.navigation.web.context.CategoriesNavigationDisplayContext" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
@@ -35,7 +35,7 @@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
 <portlet:defineObjects />
 
 <%
-AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext = new AssetCategoriesNavigationDisplayContext(request, portletPreferences);
+CategoriesNavigationDisplayContext categoriesNavigationDisplayContext = new CategoriesNavigationDisplayContext(request, portletPreferences);
 %>
 
 <%@ include file="/init-ext.jsp" %>

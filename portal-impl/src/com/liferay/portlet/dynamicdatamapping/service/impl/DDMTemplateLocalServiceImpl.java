@@ -45,6 +45,7 @@ import com.liferay.portlet.dynamicdatamapping.TemplateSmallImageSizeException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateLocalServiceBaseImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -213,6 +214,7 @@ public class DDMTemplateLocalServiceImpl
 		template.setClassNameId(classNameId);
 		template.setClassPK(classPK);
 		template.setTemplateKey(templateKey);
+		template.setVersion(DDMTemplateConstants.VERSION_DEFAULT);
 		template.setNameMap(nameMap);
 		template.setDescriptionMap(descriptionMap);
 		template.setType(type);
@@ -246,6 +248,10 @@ public class DDMTemplateLocalServiceImpl
 		saveImages(
 			smallImage, template.getSmallImageId(), smallImageFile,
 			smallImageBytes);
+
+		// Template version
+
+		addTemplateVersion(template, DDMTemplateConstants.VERSION_DEFAULT);
 
 		return template;
 	}
@@ -1275,6 +1281,13 @@ public class DDMTemplateLocalServiceImpl
 			template.setClassPK(classPK);
 		}
 
+		DDMTemplateVersion latestTemplateVersion =
+			ddmTemplateVersionLocalService.getLatestTemplateVersion(templateId);
+
+		String version = getNextVersion(
+			latestTemplateVersion.getVersion(), false);
+
+		template.setVersion(version);
 		template.setNameMap(nameMap);
 		template.setDescriptionMap(descriptionMap);
 		template.setType(type);
@@ -1292,6 +1305,10 @@ public class DDMTemplateLocalServiceImpl
 		saveImages(
 			smallImage, template.getSmallImageId(), smallImageFile,
 			smallImageBytes);
+
+		// Template version
+
+		addTemplateVersion(template, version);
 
 		return template;
 	}
@@ -1337,6 +1354,31 @@ public class DDMTemplateLocalServiceImpl
 			template.getSmallImageURL(), smallImageFile, serviceContext);
 	}
 
+	protected DDMTemplateVersion addTemplateVersion(
+		DDMTemplate template, String version) {
+
+		long templateVersionId = counterLocalService.increment();
+
+		DDMTemplateVersion templateVersion =
+			ddmTemplateVersionPersistence.create(templateVersionId);
+
+		templateVersion.setGroupId(template.getGroupId());
+		templateVersion.setCompanyId(template.getCompanyId());
+		templateVersion.setUserId(template.getUserId());
+		templateVersion.setUserName(template.getUserName());
+		templateVersion.setCreateDate(template.getModifiedDate());
+		templateVersion.setTemplateId(template.getTemplateId());
+		templateVersion.setVersion(version);
+		templateVersion.setName(template.getName());
+		templateVersion.setDescription(template.getDescription());
+		templateVersion.setLanguage(template.getLanguage());
+		templateVersion.setScript(template.getScript());
+
+		ddmTemplateVersionPersistence.update(templateVersion);
+
+		return templateVersion;
+	}
+
 	protected DDMTemplate copyTemplate(
 			long userId, DDMTemplate template, long classPK,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -1369,6 +1411,20 @@ public class DDMTemplateLocalServiceImpl
 		}
 
 		return script;
+	}
+
+	protected String getNextVersion(String version, boolean majorVersion) {
+		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
+
+		if (majorVersion) {
+			versionParts[0]++;
+			versionParts[1] = 0;
+		}
+		else {
+			versionParts[1]++;
+		}
+
+		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
 	protected File getSmallImageFile(DDMTemplate template) {

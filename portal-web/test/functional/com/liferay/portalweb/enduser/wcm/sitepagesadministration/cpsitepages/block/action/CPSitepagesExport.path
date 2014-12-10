@@ -272,7 +272,7 @@
 </tr>
 <tr>
 	<td>EXPORT_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON</td>
-	<td>//div[@id='_156_savedConfigurations']//tr[contains(.,'${key_exportTemplateName}')]//a/span[contains(.,'Recycle Bin')]</td>
+	<td>//div[@id='_156_savedConfigurations']//tr[contains(.,'${key_exportTemplateName}')]//a[contains(.,'Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>

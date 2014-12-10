@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>ADD_BASIC_WEB_CONTENT_BUTTON</td>
-	<td>//ul[@aria-label='Asset Publisher']/li/a[@title='Add Basic Web Content']/span</td>
+	<td>//ul[@aria-label='Asset Publisher']/li/a[@title='Add Basic Web Content']</td>
 	<td></td>
 </tr>
 <tr>

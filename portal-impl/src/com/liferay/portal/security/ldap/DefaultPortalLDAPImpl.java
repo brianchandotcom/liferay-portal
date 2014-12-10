@@ -32,8 +32,6 @@ import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,12 +68,6 @@ import javax.naming.ldap.PagedResultsResponseControl;
  * @author Edward Han
  */
 public class DefaultPortalLDAPImpl implements PortalLDAP {
-
-	public DefaultPortalLDAPImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		registry.registerService(PortalLDAP.class, this);
-	}
 
 	@Override
 	public LdapContext getContext(long ldapServerId, long companyId)
@@ -998,6 +990,7 @@ public class DefaultPortalLDAPImpl implements PortalLDAP {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DefaultPortalLDAPImpl.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		DefaultPortalLDAPImpl.class);
 
 }

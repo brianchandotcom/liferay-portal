@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Properties;
 
@@ -38,12 +36,6 @@ import java.util.Properties;
  * @author Brian Wing Shun Chan
  */
 public class DefaultLDAPSettingsImpl implements LDAPSettings {
-
-	public DefaultLDAPSettingsImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		registry.registerService(LDAPSettings.class, this);
-	}
 
 	@Override
 	public String getAuthSearchFilter(

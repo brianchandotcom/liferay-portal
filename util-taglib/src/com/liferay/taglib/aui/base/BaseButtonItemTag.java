@@ -25,7 +25,7 @@ import javax.servlet.jsp.JspException;
  * @author Antonio Junior
  * @generated
  */
-public class BaseButtonItemTag extends com.liferay.taglib.util.IncludeTag {
+public abstract class BaseButtonItemTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {

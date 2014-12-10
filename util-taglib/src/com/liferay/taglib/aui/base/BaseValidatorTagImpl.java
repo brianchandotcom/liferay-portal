@@ -23,7 +23,7 @@ import javax.servlet.jsp.JspException;
  * @author Julio Camarero
  * @generated
  */
-public class BaseValidatorTagImpl extends com.liferay.taglib.BaseBodyTagSupport {
+public abstract class BaseValidatorTagImpl extends com.liferay.taglib.BaseBodyTagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {

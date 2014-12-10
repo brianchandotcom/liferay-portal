@@ -23,7 +23,7 @@ import javax.servlet.jsp.JspException;
  * @author Julio Camarero
  * @generated
  */
-public class BaseScriptTag extends com.liferay.taglib.util.PositionTagSupport {
+public abstract class BaseScriptTag extends com.liferay.taglib.util.PositionTagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {

@@ -15,7 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.BaseValidatorTagSupport;
 
 import java.util.Calendar;
 
@@ -24,7 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
-public class InputDateTag extends IncludeTag {
+public class InputDateTag extends BaseValidatorTagSupport {
+
+	@Override
+	public String getInputName() {
+		return _name;
+	}
 
 	public void setAutoFocus(boolean autoFocus) {
 		_autoFocus = autoFocus;

@@ -668,7 +668,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Input">
+	<component name="Input" parentClass="com.liferay.taglib.BaseValidatorTagSupport">
 		<description>Creates a configurable input component.</description>
 		<attributes>
 			<attribute>

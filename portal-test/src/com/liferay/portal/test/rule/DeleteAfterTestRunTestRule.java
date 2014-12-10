@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.Role;
@@ -305,7 +306,7 @@ public class DeleteAfterTestRunTestRule extends BaseTestRule<Object, Object> {
 		new LinkedHashSet<Class<?>>(
 			Arrays.<Class<?>>asList(
 				User.class, Organization.class, Role.class, UserGroup.class,
-				Group.class, Company.class));
+				Group.class, LayoutPrototype.class, Company.class));
 
 	private Object _instance;
 

@@ -28,7 +28,7 @@ iframeSrc += (String)request.getAttribute(IFrameWebKeys.IFRAME_SRC);
 if (iframeSrc.contains(StringPool.QUESTION)) {
 	iframeSrc = iframeSrc.concat(StringPool.AMPERSAND).concat(StringUtil.merge(iframeVariables, StringPool.AMPERSAND));
 }
-else {
+else if (!ListUtil.isEmpty(iframeVariables)) {
 	iframeSrc = iframeSrc.concat(StringPool.QUESTION).concat(StringUtil.merge(iframeVariables, StringPool.AMPERSAND));
 }
 

@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.util;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 import java.util.Collections;
@@ -24,7 +26,7 @@ import java.util.Properties;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TestPropsUtil {
+public class PoshiRunnerPropsUtil {
 
 	public static String get(String key) {
 		return _instance._get(key);
@@ -42,20 +44,24 @@ public class TestPropsUtil {
 		_instance._set(key, value);
 	}
 
-	private TestPropsUtil() {
+	private PoshiRunnerPropsUtil() {
 		try {
-			ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+			String[] propertiesFileNames = {
+				"classes/poshi-runner.properties", "poshi-runner-ext.properties"
+			};
 
-			InputStream is = classLoader.getResourceAsStream(
-				"test-portal-web.properties");
+			for (String propertiesFileName : propertiesFileNames) {
+				File file = new File(propertiesFileName);
 
-			_props.load(is);
+				InputStream is = new FileInputStream(file);
 
-			is = classLoader.getResourceAsStream(
-				"test-portal-web-ext.properties");
+				if (file.exists()) {
+					is = new FileInputStream(file);
 
-			if (is != null) {
-				_props.load(is);
+					if (is != null) {
+						_props.load(is);
+					}
+				}
 			}
 
 			_printProperties(false);
@@ -93,7 +99,7 @@ public class TestPropsUtil {
 		_props.setProperty(key, value);
 	}
 
-	private static TestPropsUtil _instance = new TestPropsUtil();
+	private static PoshiRunnerPropsUtil _instance = new PoshiRunnerPropsUtil();
 
 	private Properties _props = new Properties();
 

@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.util.PoshiRunnerPropsUtil;
+
 import java.io.File;
 
 import junit.framework.TestCase;
@@ -27,6 +29,10 @@ import org.dom4j.io.SAXReader;
  * @author Karen Dang
  */
 public class PoshiRunner extends TestCase {
+
+	public PoshiRunner() {
+		PoshiRunnerPropsUtil.printProperties();
+	}
 
 	public void testPoshiRunner() throws Exception {
 		File file = new File(

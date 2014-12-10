@@ -95,6 +95,13 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 		_assetVocabularyService.deleteVocabulary(vocabularyId);
 	}
 
+	@Override
+	public com.liferay.portlet.asset.model.AssetVocabulary fetchVocabulary(
+		long vocabularyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetVocabularyService.fetchVocabulary(vocabularyId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

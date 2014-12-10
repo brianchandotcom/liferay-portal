@@ -16,29 +16,10 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.NoSuchVocabularyException" %>
+<%@ page import="com.liferay.portlet.assetcategoriesnavigation.context.AssetCategoriesNavigationDisplayContext" %>
 
 <%
-List<AssetVocabulary> assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId));
-
-long[] availableAssetVocabularyIds = new long[assetVocabularies.size()];
-
-for (int i = 0; i < assetVocabularies.size(); i++) {
-	AssetVocabulary assetVocabulary = assetVocabularies.get(i);
-
-	availableAssetVocabularyIds[i] = assetVocabulary.getVocabularyId();
-}
-
-boolean allAssetVocabularies = GetterUtil.getBoolean(portletPreferences.getValue("allAssetVocabularies", Boolean.TRUE.toString()));
-
-long[] assetVocabularyIds = availableAssetVocabularyIds;
-
-if (!allAssetVocabularies && (portletPreferences.getValues("assetVocabularyIds", null) != null)) {
-	assetVocabularyIds = StringUtil.split(portletPreferences.getValue("assetVocabularyIds", null), 0L);
-}
-
-String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);
-long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
+AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext = new AssetCategoriesNavigationDisplayContext(request, portletPreferences);
 %>
 
 <%@ include file="/html/portlet/asset_categories_navigation/init-ext.jsp" %>

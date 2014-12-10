@@ -157,6 +157,16 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		assetVocabularyLocalService.deleteVocabulary(vocabularyId);
 	}
 
+	@Override
+	public AssetVocabulary fetchVocabulary(long vocabularyId)
+		throws PortalException {
+
+		AssetVocabularyPermission.check(
+			getPermissionChecker(), vocabularyId, ActionKeys.VIEW);
+
+		return assetVocabularyLocalService.fetchAssetVocabulary(vocabularyId);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */

@@ -32,7 +32,7 @@ AUI.add(
 						'<div>';
 
 		var TPL_GEOLOCATION = '<div class="field-labels-inline">' +
-									'<img src="' + themeDisplay.getPathThemeImages() + '/geolocation/geolocation.png" />' +
+									'<img src="' + themeDisplay.getPathThemeImages() + '/common/geolocation.png" />' +
 								'<div>';
 
 		var TPL_LINK_TO_PAGE = '<div class="lfr-ddm-link-to-page">' +

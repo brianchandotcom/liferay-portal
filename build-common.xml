@@ -904,8 +904,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<sysproperty key="junit.code.coverage.dump" value="${junit.code.coverage.dump}" />
 				<sysproperty key="junit.debug" value="${junit.debug}" />
 				<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/@{test.type}/cobertura.ser" />
-				<jvmarg line="${junit.cobertura.agent}" />
 				<jvmarg line="${junit.debug.jpda}" />
+				<jvmarg line="${junit.cobertura.agent}" />
 				<jvmarg value="-Xmx${junit.java.mx}" />
 				<jvmarg value="-Xss2m" />
 				<jvmarg value="-XX:MaxPermSize=${junit.java.maxpermsize}" />

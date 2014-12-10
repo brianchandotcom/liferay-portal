@@ -1390,6 +1390,11 @@ public class LocalProcessExecutorTest {
 		arguments.add(
 			"-D" + SystemProperties.SYSTEM_PROPERTIES_QUIET + "=true");
 
+		if (Boolean.getBoolean("junit.debug")) {
+			arguments.add(jpdaOptions);
+			arguments.add("-Djunit.debug=true");
+		}
+
 		String agentLine = System.getProperty("junit.cobertura.agent");
 
 		if (Validator.isNotNull(agentLine)) {
@@ -1403,11 +1408,6 @@ public class LocalProcessExecutorTest {
 
 		if (Boolean.getBoolean("junit.code.coverage.dump")) {
 			arguments.add("-Djunit.code.coverage.dump=true");
-		}
-
-		if (Boolean.getBoolean("junit.debug")) {
-			arguments.add(jpdaOptions);
-			arguments.add("-Djunit.debug=true");
 		}
 
 		String fileName = System.getProperty(

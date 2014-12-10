@@ -50,17 +50,6 @@ public abstract class BaseCapabilityRepository<R>
 		return _capabilityProvider.isCapabilityProvided(capabilityClass);
 	}
 
-	protected <T extends Capability> T getInternalCapability(
-		Class<T> capabilityClass) {
-
-		try {
-			return getCapability(capabilityClass);
-		}
-		catch (IllegalArgumentException iae) {
-			return null;
-		}
-	}
-
 	private final CapabilityProvider _capabilityProvider;
 	private final R _repository;
 

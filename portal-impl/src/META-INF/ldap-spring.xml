@@ -9,20 +9,14 @@
 >
 	<bean id="ldapToPortalConverter" class="com.liferay.portal.security.ldap.DefaultLDAPToPortalConverter" />
 	<bean id="portalToLDAPConverter" class="com.liferay.portal.security.ldap.DefaultPortalToLDAPConverter" />
-	<bean id="com.liferay.portal.security.exportimport.UserExporterUtil" class="com.liferay.portal.security.exportimport.UserExporterUtil">
-		<property name="userExporter">
-			<bean class="com.liferay.portal.security.ldap.LDAPUserExporterImpl">
-				<property name="portalToLDAPConverter" ref="portalToLDAPConverter" />
-			</bean>
-		</property>
+
+	<bean id="com.liferay.portal.security.ldap.LDAPSettings" class="com.liferay.portal.security.ldap.DefaultLDAPSettings" />
+	<bean id="com.liferay.portal.security.ldap.PortalLDAP" class="com.liferay.portal.security.ldap.DefaultPortalLDAP" />
+
+	<bean id="com.liferay.portal.security.exportimport.UserExporter" class="com.liferay.portal.security.ldap.LDAPUserExporterImpl">
+		<property name="portalToLDAPConverter" ref="portalToLDAPConverter" />
 	</bean>
-	<bean id="com.liferay.portal.security.exportimport.UserImporterUtil" class="com.liferay.portal.security.exportimport.UserImporterUtil">
-		<property name="userImporter" ref="com.liferay.portal.security.ldap.LDAPUserImporterImpl" />
-	</bean>
-	<bean id="com.liferay.portal.security.ldap.LDAPUserImporterImpl" class="com.liferay.portal.security.ldap.LDAPUserImporterImpl">
-		<property name="lDAPToPortalConverter" ref="ldapToPortalConverter" />
-	</bean>
-	<bean id="com.liferay.portal.security.ldap.LDAPUserImporterUtil" class="com.liferay.portal.security.ldap.LDAPUserImporterUtil">
-		<property name="lDAPUserImporter" ref="com.liferay.portal.security.ldap.LDAPUserImporterImpl" />
+	<bean id="com.liferay.portal.security.exportimport.UserImporter" class="com.liferay.portal.security.ldap.LDAPUserImporterImpl">
+		<property name="LDAPToPortalConverter" ref="ldapToPortalConverter" />
 	</bean>
 </beans>

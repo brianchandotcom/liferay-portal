@@ -22,22 +22,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 long breadcrumbsFolderId = ParamUtil.getLong(request, "breadcrumbsFolderId");
 
 long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
-long searchFolderIds = ParamUtil.getLong(request, "searchFolderIds");
-
-long[] folderIdsArray = null;
-
-if (searchFolderId > 0) {
-	folderIdsArray = new long[] {searchFolderId};
-}
-else {
-	List folderIds = new ArrayList();
-
-	folderIds.add(new Long(searchFolderIds));
-
-	BookmarksFolderServiceUtil.getSubfolderIds(folderIds, scopeGroupId, searchFolderIds, true);
-
-	folderIdsArray = StringUtil.split(StringUtil.merge(folderIds), 0L);
-}
 
 String keywords = ParamUtil.getString(request, "keywords");
 
@@ -57,7 +41,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= breadcrumbsFolderId %>" />
 	<aui:input name="searchFolderId" type="hidden" value="<%= searchFolderId %>" />
-	<aui:input name="searchFolderIds" type="hidden" value="<%= searchFolderIds %>" />
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
@@ -71,7 +54,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 	portletURL.setParameter("redirect", redirect);
 	portletURL.setParameter("breadcrumbsFolderId", String.valueOf(breadcrumbsFolderId));
 	portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
-	portletURL.setParameter("searchFolderIds", String.valueOf(searchFolderIds));
 	portletURL.setParameter("keywords", keywords);
 	%>
 
@@ -87,7 +69,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 
 		searchContext.setAttribute("paginationType", "more");
 		searchContext.setEnd(searchContainer.getEnd());
-		searchContext.setFolderIds(folderIdsArray);
+		searchContext.setFolderIds(new long[] {searchFolderId});
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(searchContainer.getStart());
 

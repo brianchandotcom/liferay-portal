@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
@@ -57,9 +56,7 @@ public class LiferaySyncCapability
 	}
 
 	@Override
-	public void destroyDocumentRepository(DocumentRepository documentRepository)
-		throws PortalException {
-
+	public void destroyDocumentRepository() throws PortalException {
 		_bulkOperationCapability.execute(new DeleteRepositoryModelOperation());
 	}
 

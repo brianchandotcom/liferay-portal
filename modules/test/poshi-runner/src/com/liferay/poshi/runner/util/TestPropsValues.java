@@ -12,16 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.util;
-
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+package com.liferay.poshi.runner.util;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class TestPropsValues
-	extends com.liferay.portal.util.test.TestPropsValues {
+public class TestPropsValues {
 
 	public static final String BROWSER_COMMANDS_DIR_NAME = TestPropsUtil.get(
 		"browser.commands.dir");

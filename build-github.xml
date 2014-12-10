@@ -129,6 +129,8 @@
 
 		<script classpathref="project.classpath" language="beanshell">
 			<![CDATA[
+				import java.io.File;
+
 				import java.util.concurrent.TimeUnit;
 
 				import org.json.JSONObject;
@@ -175,6 +177,12 @@
 					int y = consoleOutput.indexOf("Total time:");
 
 					String errorMessage = consoleOutput.substring(x, y - 2);
+
+					return fixJSON(errorMessage);
+				}
+
+				public String getDeprecatedMethodErrorMessage(File file) {
+					String errorMessage = toStringFile(file);
 
 					return fixJSON(errorMessage);
 				}
@@ -256,6 +264,25 @@
 					return sb.toString();
 				}
 
+				public String toStringFile(File file) {
+					StringBuilder sb = new StringBuilder();
+
+					FileReader fileReader = new FileReader(file);
+
+					BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+					String line = null;
+
+					while((line = bufferedReader.readLine()) != null ) {
+						sb.append(line);
+						sb.append("\n");
+					}
+
+					bufferedReader.close();
+
+					return sb.toString();
+				}
+
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("<h1>Some tests FAILED!</h1>");
@@ -306,7 +333,12 @@
 						sb.append("</a>");
 						sb.append("<pre>RESULT: ");
 
-						if (githubJenkinsFailureURL.contains("source")) {
+						File file = new File(project.getProperty("github.jenkins.shared.dir") + "/javac.output.txt");
+
+						if (file.exists()) {
+							sb.append(getDeprecatedMethodErrorMessage(file));
+						}
+						else if (githubJenkinsFailureURL.contains("source")) {
 							sb.append(getRebaseErrorMessage(githubJenkinsFailureURL));
 						}
 						else {

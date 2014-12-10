@@ -316,8 +316,6 @@
 
 		<action path="/blogs/find_entry" type="com.liferay.portlet.blogs.action.FindEntryAction" />
 
-		<action path="/blogs/image_selector" type="com.liferay.portlet.blogs.action.ImageSelectorAction" />
-
 		<action path="/blogs/rss" type="com.liferay.portlet.blogs.action.RSSAction" />
 
 		<action path="/blogs/search" forward="portlet.blogs.search" />
@@ -325,6 +323,8 @@
 		<action path="/blogs/small_image_selector" type="com.liferay.portlet.blogs.action.SmallImageSelectorAction" />
 
 		<action path="/blogs/trackback" type="com.liferay.portlet.blogs.action.TrackbackAction" />
+
+		<action path="/blogs/upload_editor_image" type="com.liferay.portlet.blogs.action.UploadEditorImageAction" />
 
 		<action path="/blogs/view" forward="portlet.blogs.view" />
 
@@ -346,11 +346,11 @@
 			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />
 		</action>
 
-		<action path="/blogs_admin/image_selector" type="com.liferay.portlet.blogs.action.ImageSelectorAction" />
-
 		<action path="/blogs_admin/search" forward="portlet.blogs.search" />
 
 		<action path="/blogs_admin/small_image_selector" type="com.liferay.portlet.blogs.action.SmallImageSelectorAction" />
+
+		<action path="/blogs_admin/upload_editor_image" type="com.liferay.portlet.blogs.action.UploadEditorImageAction" />
 
 		<action path="/blogs_admin/view" forward="portlet.blogs_admin.view" />
 

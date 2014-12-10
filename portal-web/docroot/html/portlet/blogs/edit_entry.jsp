@@ -150,11 +150,11 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			<div class="entry-content">
 				<c:choose>
 					<c:when test='<%= EditorUtil.getEditorValue(request, EDITOR_HTML_IMPL_KEY).startsWith("alloyeditor") %>'>
-						<portlet:actionURL var="imageSelectorURL">
-							<portlet:param name="struts_action" value="/blogs/image_selector" />
+						<portlet:actionURL var="uploadEditorImageURL">
+							<portlet:param name="struts_action" value="/blogs/upload_editor_image" />
 						</portlet:actionURL>
 
-						<liferay-ui:alloy-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" onChangeMethod="OnChangeEditor" placeholder="content" uploadURL="<%= imageSelectorURL %>" />
+						<liferay-ui:alloy-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" onChangeMethod="OnChangeEditor" placeholder="content" uploadURL="<%= uploadEditorImageURL %>" />
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" onChangeMethod="OnChangeEditor" placeholder="content" />

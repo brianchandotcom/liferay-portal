@@ -219,10 +219,6 @@
 
 		<action path="/asset_browser/view" forward="portlet.asset_browser.view" />
 
-		<!-- Asset Categories Navigation -->
-
-		<action path="/asset_categories_navigation/view" forward="portlet.asset_categories_navigation.view" />
-
 		<!-- Asset Category Admin -->
 
 		<action path="/asset_category_admin/edit_category" type="com.liferay.portlet.assetcategoryadmin.action.EditCategoryAction">

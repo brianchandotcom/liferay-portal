@@ -152,14 +152,6 @@
 		<put name="portlet_content" value="/portlet/asset_browser/view.jsp" />
 	</definition>
 
-	<!-- Asset Categories Navigation -->
-
-	<definition name="portlet.asset_categories_navigation" extends="portlet" />
-
-	<definition name="portlet.asset_categories_navigation.view" extends="portlet.asset_categories_navigation">
-		<put name="portlet_content" value="/portlet/asset_categories_navigation/view.jsp" />
-	</definition>
-
 	<!-- Asset Category Admin -->
 
 	<definition name="portlet.asset_category_admin" extends="portlet" />

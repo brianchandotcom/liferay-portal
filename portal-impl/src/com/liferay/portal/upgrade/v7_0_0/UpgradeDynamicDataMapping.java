@@ -124,6 +124,91 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
+	protected void addTemplateVersion(
+			long templateVersionId, long groupId, long companyId, long userId,
+			String userName, Timestamp createDate, long templateId, String name,
+			String description, String language, String script)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("insert into DDMTemplateVersion (templateVersionId, ");
+			sb.append("groupId, companyId, userId, userName, createDate, ");
+			sb.append("templateId, version, name, description, language, ");
+			sb.append("script) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, templateVersionId);
+			ps.setLong(2, groupId);
+			ps.setLong(3, companyId);
+			ps.setLong(4, userId);
+			ps.setString(5, userName);
+			ps.setTimestamp(6, createDate);
+			ps.setLong(7, templateId);
+			ps.setString(8, DDMStructureConstants.VERSION_DEFAULT);
+			ps.setString(9, name);
+			ps.setString(10, description);
+			ps.setString(11, language);
+			ps.setString(12, script);
+
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to upgrade dynamic data mapping template version " +
+					"with template ID " + templateId);
+
+			throw e;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void addTemplateVersions() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement("select * from DDMTemplate");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long templateId = rs.getLong("templateId");
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+				String userName = rs.getString("userName");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+				String name = rs.getString("name");
+				String description = rs.getString("description");
+				String language = rs.getString("language");
+				String script = rs.getString("script");
+
+				addTemplateVersion(
+					increment(), groupId, companyId, userId, userName,
+					modifiedDate, templateId, name, description, language,
+					script);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		try {
@@ -147,6 +232,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 
 		addStructureVersions();
+
+		addTemplateVersions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -513,6 +513,14 @@
 		<property name="service" ref="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService" />
 		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService" />
 	</bean>
+	<bean name="/com_liferay_portlet_dynamicdatamapping_service_spring_DDMTemplateVersionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionService" />
+		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionService" />
+	</bean>
+	<bean name="/com_liferay_portlet_dynamicdatamapping_service_spring_DDMTemplateVersionService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionService" />
+		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionService" />
+	</bean>
 	<bean name="/com_liferay_portlet_expando_service_spring_ExpandoColumnService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.expando.service.ExpandoColumnService" />
 		<property name="serviceInterface" value="com.liferay.portlet.expando.service.ExpandoColumnService" />

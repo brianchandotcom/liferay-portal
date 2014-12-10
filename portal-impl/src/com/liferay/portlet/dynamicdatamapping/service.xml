@@ -230,6 +230,7 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="templateKey" type="String" />
+		<column name="version" type="String" />
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="type" type="String" />
@@ -307,6 +308,43 @@
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
+		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplateVersion" />
+	</entity>
+	<entity name="DDMTemplateVersion" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="templateVersionId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="templateId" type="long" />
+		<column name="version" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
+		<column name="language" type="String" />
+		<column name="script" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="TemplateId" return-type="Collection">
+			<finder-column name="templateId" />
+		</finder>
+		<finder name="T_V" return-type="DDMTemplateVersion" unique="true">
+			<finder-column name="templateId" />
+			<finder-column name="version" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>Content</exception>

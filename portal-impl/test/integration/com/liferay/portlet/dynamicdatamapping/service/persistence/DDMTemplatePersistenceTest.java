@@ -126,6 +126,8 @@ public class DDMTemplatePersistenceTest {
 
 		newDDMTemplate.setTemplateKey(RandomTestUtil.randomString());
 
+		newDDMTemplate.setVersion(RandomTestUtil.randomString());
+
 		newDDMTemplate.setName(RandomTestUtil.randomString());
 
 		newDDMTemplate.setDescription(RandomTestUtil.randomString());
@@ -174,6 +176,8 @@ public class DDMTemplatePersistenceTest {
 			newDDMTemplate.getClassPK());
 		Assert.assertEquals(existingDDMTemplate.getTemplateKey(),
 			newDDMTemplate.getTemplateKey());
+		Assert.assertEquals(existingDDMTemplate.getVersion(),
+			newDDMTemplate.getVersion());
 		Assert.assertEquals(existingDDMTemplate.getName(),
 			newDDMTemplate.getName());
 		Assert.assertEquals(existingDDMTemplate.getDescription(),
@@ -490,10 +494,10 @@ public class DDMTemplatePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("DDMTemplate", "uuid", true,
 			"templateId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "templateKey", true, "name",
-			true, "description", true, "type", true, "mode", true, "language",
-			true, "script", true, "cacheable", true, "smallImage", true,
-			"smallImageId", true, "smallImageURL", true);
+			"classNameId", true, "classPK", true, "templateKey", true,
+			"version", true, "name", true, "description", true, "type", true,
+			"mode", true, "language", true, "script", true, "cacheable", true,
+			"smallImage", true, "smallImageId", true, "smallImageURL", true);
 	}
 
 	@Test
@@ -744,6 +748,8 @@ public class DDMTemplatePersistenceTest {
 		ddmTemplate.setClassPK(RandomTestUtil.nextLong());
 
 		ddmTemplate.setTemplateKey(RandomTestUtil.randomString());
+
+		ddmTemplate.setVersion(RandomTestUtil.randomString());
 
 		ddmTemplate.setName(RandomTestUtil.randomString());
 

@@ -15,7 +15,7 @@
 --%>
 
 <%
-FullNameDefinition fullNameDefinition = LocalizationUtil.getFullNameDefinition(locale);
+FullNameDefinition fullNameDefinition = LocalizationUtil.getFullNameDefinition(selUser.getLocale());
 %>
 
 <liferay-ui:error exception="<%= ContactFirstNameException.class %>" message="please-enter-a-valid-first-name" />

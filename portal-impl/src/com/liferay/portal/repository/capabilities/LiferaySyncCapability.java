@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
@@ -32,8 +34,11 @@ import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.repository.liferayrepository.LiferaySyncLocalRepositoryWrapper;
+import com.liferay.portal.repository.liferayrepository.LiferaySyncRepositoryWrapper;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.repository.util.RepositoryWrapperAware;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
@@ -47,7 +52,7 @@ import java.util.concurrent.Callable;
  * @author Adolfo Pérez
  */
 public class LiferaySyncCapability
-	implements RepositoryEventAware, SyncCapability {
+	implements RepositoryEventAware, RepositoryWrapperAware, SyncCapability {
 
 	public LiferaySyncCapability(
 		BulkOperationCapability bulkOperationCapability) {
@@ -103,6 +108,18 @@ public class LiferaySyncCapability
 		repositoryEventRegistry.registerRepositoryEventListener(
 			WorkflowRepositoryEventType.Update.class, FileEntry.class,
 			WORKFLOW_UPDATE_FILE_ENTRY_EVENT_LISTENER);
+	}
+
+	@Override
+	public LocalRepository wrapLocalRepository(
+		LocalRepository localRepository) {
+
+		return new LiferaySyncLocalRepositoryWrapper(localRepository, this);
+	}
+
+	@Override
+	public Repository wrapRepository(Repository repository) {
+		return new LiferaySyncRepositoryWrapper(repository, this);
 	}
 
 	protected static boolean isStagingGroup(long groupId) {

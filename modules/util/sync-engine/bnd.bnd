@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Sync Engine
 Bundle-SymbolicName: com.liferay.sync.engine
 Bundle-Version: 2.0.0
-Export-Package: *
+Export-Package: com.liferay.sync.engine.*
 Include-Resource:\
 	sync-logback.xml=src/sync-logback.xml,\
 	sync.properties=src/sync.properties

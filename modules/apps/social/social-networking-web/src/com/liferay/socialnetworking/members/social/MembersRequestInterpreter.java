@@ -171,7 +171,7 @@ public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {
 		Group.class.getName(), Organization.class.getName()
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		MembersRequestInterpreter.class);
 
 	private GroupLocalService _groupLocalService;

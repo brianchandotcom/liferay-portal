@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.OlderVersionException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.model.Release;
 import com.liferay.portal.service.ReleaseLocalService;
 
 import java.util.Collections;
@@ -66,11 +65,12 @@ public class SocialNetworkingServiceUpgrade_v1_0_0 {
 				"social-networking-portlet", upgradeProcesses, 100, 0, false);
 		}
 		catch (OlderVersionException ovs) {
-			_log.debug(
-				"No need to execute " +
-					SocialNetworkingServiceUpgrade_v1_0_0.class.getName());
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No need to execute " +
+						SocialNetworkingServiceUpgrade_v1_0_0.class.getName());
+			}
 		}
-
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

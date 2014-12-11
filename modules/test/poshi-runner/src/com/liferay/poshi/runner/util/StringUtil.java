@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * The String utility class.
  *
@@ -39,7 +41,7 @@ public class StringUtil {
 			return null;
 		}
 
-		return s.toLowerCase();
+		return StringUtils.uncapitalize(s);
 	}
 
 }

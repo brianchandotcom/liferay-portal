@@ -356,6 +356,8 @@ public class NewEnvTestRule implements TestRule {
 				}
 
 				currentThread.setContextClassLoader(contextClassLoader);
+
+				MethodCache.reset();
 			}
 		}
 

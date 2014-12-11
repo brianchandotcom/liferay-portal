@@ -496,7 +496,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 							<available file="@{ant.properties.file}" type="file" />
 							<then>
 								<ant antfile="@{ant.build.file}" dir="@{ant.dir}" target="@{ant.target}" inheritAll="false">
-									<property file="@{ant.properties.file}"/>
+									<property file="@{ant.properties.file}" />
 								</ant>
 							</then>
 							<else>

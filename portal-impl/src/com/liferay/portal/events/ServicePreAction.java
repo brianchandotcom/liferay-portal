@@ -1522,10 +1522,30 @@ public class ServicePreAction extends Action {
 			HttpServletRequest request, User user, boolean signedIn)
 		throws PortalException {
 
+		Object[] defaultLayout = getDefaultVirtualLayout(request);
+
+		if (signedIn) {
+			if (defaultLayout[0] == null) {
+				defaultLayout = getDefaultUserPersonalLayout(user);
+			}
+
+			if (defaultLayout[0] == null) {
+				defaultLayout = getDefaultUserSiteLayout(user);
+			}
+		}
+
+		if (defaultLayout[0] == null) {
+			defaultLayout = getDefaultSiteLayout(user);
+		}
+
+		return defaultLayout;
+	}
+
+	protected Object[] getDefaultVirtualLayout(HttpServletRequest request)
+		throws PortalException {
+
 		Layout layout = null;
 		List<Layout> layouts = null;
-
-		// Check the virtual host
 
 		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
@@ -1573,72 +1593,83 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		if ((layout == null) && signedIn) {
+		return new Object[] {layout, layouts};
+	}
 
-			// Check the user's personal layouts
+	protected Object[] getDefaultUserPersonalLayout(User user)
+		throws PortalException {
 
-			Group userGroup = user.getGroup();
+		Layout layout = null;
+		List<Layout> layouts = null;
 
+		Group userGroup = user.getGroup();
+
+		layouts = LayoutLocalServiceUtil.getLayouts(
+			userGroup.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if (layouts.isEmpty()) {
 			layouts = LayoutLocalServiceUtil.getLayouts(
-				userGroup.getGroupId(), true,
+				userGroup.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		}
+
+		if (!layouts.isEmpty()) {
+			layout = layouts.get(0);
+		}
+
+		return new Object[] {layout, layouts};
+	}
+
+	protected Object[] getDefaultUserSiteLayout(User user)
+		throws PortalException {
+
+		Layout layout = null;
+		List<Layout> layouts = null;
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<>();
+
+		groupParams.put("usersGroups", new Long(user.getUserId()));
+
+		List<Group> groups = GroupLocalServiceUtil.search(
+			user.getCompanyId(), null, null, groupParams,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (Group group : groups) {
+			layouts = LayoutLocalServiceUtil.getLayouts(
+				group.getGroupId(), true,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if (layouts.isEmpty()) {
 				layouts = LayoutLocalServiceUtil.getLayouts(
-					userGroup.getGroupId(), false,
+					group.getGroupId(), false,
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 			}
 
 			if (!layouts.isEmpty()) {
 				layout = layouts.get(0);
-			}
 
-			// Check the user's sites
-
-			if (layout == null) {
-				LinkedHashMap<String, Object> groupParams =
-					new LinkedHashMap<>();
-
-				groupParams.put("usersGroups", new Long(user.getUserId()));
-
-				List<Group> groups = GroupLocalServiceUtil.search(
-					user.getCompanyId(), null, null, groupParams,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-				for (Group group : groups) {
-					layouts = LayoutLocalServiceUtil.getLayouts(
-						group.getGroupId(), true,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-					if (layouts.isEmpty()) {
-						layouts = LayoutLocalServiceUtil.getLayouts(
-							group.getGroupId(), false,
-							LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-					}
-
-					if (!layouts.isEmpty()) {
-						layout = layouts.get(0);
-
-						break;
-					}
-				}
+				break;
 			}
 		}
 
-		if (layout == null) {
+		return new Object[] {layout, layouts};
+	}
 
-			// Check the Guest site
+	protected Object[] getDefaultSiteLayout(User user) throws PortalException {
+		Layout layout = null;
+		List<Layout> layouts = null;
 
-			Group guestGroup = GroupLocalServiceUtil.getGroup(
-				user.getCompanyId(), GroupConstants.GUEST);
+		Group guestGroup = GroupLocalServiceUtil.getGroup(
+			user.getCompanyId(), GroupConstants.GUEST);
 
-			layouts = LayoutLocalServiceUtil.getLayouts(
-				guestGroup.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		layouts = LayoutLocalServiceUtil.getLayouts(
+			guestGroup.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-			if (!layouts.isEmpty()) {
-				layout = layouts.get(0);
-			}
+		if (!layouts.isEmpty()) {
+			layout = layouts.get(0);
 		}
 
 		return new Object[] {layout, layouts};

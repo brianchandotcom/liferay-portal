@@ -16,12 +16,12 @@
 
 <%@ include file="/members_activities/init.jsp" %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
+	<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 

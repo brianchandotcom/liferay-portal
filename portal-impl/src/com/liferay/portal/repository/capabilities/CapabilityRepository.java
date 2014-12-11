@@ -16,7 +16,7 @@ package com.liferay.portal.repository.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
-import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
+import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -43,9 +43,10 @@ public class CapabilityRepository
 	extends BaseCapabilityRepository<Repository> implements Repository {
 
 	public CapabilityRepository(
-		Repository repository, RepositoryEventTrigger repositoryEventTrigger) {
+		Repository repository, CapabilityProvider capabilityProvider,
+		RepositoryEventTrigger repositoryEventTrigger) {
 
-		super(repository);
+		super(repository, capabilityProvider);
 
 		_repositoryEventTrigger = repositoryEventTrigger;
 	}
@@ -329,13 +330,6 @@ public class CapabilityRepository
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Delete.class, Repository.class, repository);
-
-		SyncCapability syncCapability = getInternalCapability(
-			SyncCapability.class);
-
-		if (syncCapability != null) {
-			syncCapability.destroyDocumentRepository(this);
-		}
 
 		repository.deleteAll();
 	}

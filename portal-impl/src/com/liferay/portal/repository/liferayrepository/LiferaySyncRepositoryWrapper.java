@@ -12,15 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.capabilities;
+package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
+import com.liferay.portal.repository.util.RepositoryWrapper;
 
 /**
  * @author Adolfo Pérez
  */
-public interface SyncCapability extends Capability {
+public class LiferaySyncRepositoryWrapper extends RepositoryWrapper {
 
-	public void destroyDocumentRepository() throws PortalException;
+	public LiferaySyncRepositoryWrapper(
+		Repository repository, SyncCapability syncCapability) {
+
+		super(repository);
+
+		_syncCapability = syncCapability;
+	}
+
+	@Override
+	public void deleteAll() throws PortalException {
+		_syncCapability.destroyDocumentRepository();
+
+		super.deleteAll();
+	}
+
+	private final SyncCapability _syncCapability;
 
 }

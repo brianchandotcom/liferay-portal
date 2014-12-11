@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.repository.model.FileContentReference;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
-import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.repository.util.ModelValidatorUtil;
 import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
@@ -66,19 +65,10 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			BulkOperationCapability.class, bulkOperationCapability);
 
 		capabilityRegistry.addSupportedCapability(
-			SyncCapability.class, _liferaySyncCapability);
+			SyncCapability.class,
+			new LiferaySyncCapability(bulkOperationCapability));
 		capabilityRegistry.addSupportedCapability(
 			WorkflowCapability.class, _liferayWorkflowCapability);
-	}
-
-	@Override
-	public void registerRepositoryEventListeners(
-		RepositoryEventRegistry repositoryEventRegistry) {
-
-		_liferaySyncCapability.registerRepositoryEventListeners(
-			repositoryEventRegistry);
-		_liferayTrashCapability.registerRepositoryEventListeners(
-			repositoryEventRegistry);
 	}
 
 	@Override
@@ -93,8 +83,6 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			repositoryFactory);
 	}
 
-	private final LiferaySyncCapability _liferaySyncCapability =
-		new LiferaySyncCapability();
 	private final LiferayTrashCapability _liferayTrashCapability =
 		new LiferayTrashCapability();
 	private final LiferayWorkflowCapability _liferayWorkflowCapability =
@@ -119,12 +107,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			ModelValidator<FileContentReference> modelValidator =
 				ModelValidatorUtil.getDefaultDLFileEntryModelValidator();
 
-			LocalRepository localRepositoryWrapper =
-				new ModelValidatorLocalRepositoryWrapper(
-					localRepository, modelValidator);
-
-			return new LiferayWorkflowLocalRepositoryWrapper(
-				localRepositoryWrapper, _liferayWorkflowCapability);
+			return new ModelValidatorLocalRepositoryWrapper(
+				localRepository, modelValidator);
 		}
 
 		@Override
@@ -137,11 +121,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			ModelValidator<FileContentReference> modelValidator =
 				ModelValidatorUtil.getDefaultDLFileEntryModelValidator();
 
-			Repository repositoryWrapper = new ModelValidatorRepositoryWrapper(
+			return new ModelValidatorRepositoryWrapper(
 				repository, modelValidator);
-
-			return new LiferayWorkflowRepositoryWrapper(
-				repositoryWrapper, _liferayWorkflowCapability);
 		}
 
 		private final RepositoryFactory _repositoryFactory;

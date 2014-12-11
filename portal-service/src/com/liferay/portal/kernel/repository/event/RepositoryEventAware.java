@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.capabilities;
+package com.liferay.portal.kernel.repository.event;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 
 /**
  * @author Adolfo Pérez
  */
-public interface SyncCapability extends Capability {
+public interface RepositoryEventAware {
 
-	public void destroyDocumentRepository() throws PortalException;
+	public void registerRepositoryEventListeners(
+		RepositoryEventRegistry repositoryEventRegistry);
 
 }

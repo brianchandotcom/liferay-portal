@@ -12,15 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.capabilities;
+package com.liferay.portal.repository.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.Repository;
 
 /**
  * @author Adolfo Pérez
  */
-public interface SyncCapability extends Capability {
+public interface RepositoryWrapperAware {
 
-	public void destroyDocumentRepository() throws PortalException;
+	public LocalRepository wrapLocalRepository(LocalRepository localRepository);
+
+	public Repository wrapRepository(Repository repository);
 
 }

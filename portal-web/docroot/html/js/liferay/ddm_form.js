@@ -736,7 +736,6 @@ AUI.add(
 											}
 											else {
 												data.tempFile = true;
-												data.title = data.name;
 
 												instance.setValue(data);
 
@@ -910,6 +909,8 @@ AUI.add(
 
 					setValue: function(value) {
 						var instance = this;
+
+						debugger;
 
 						var parsedValue = instance.getParsedValue(value);
 

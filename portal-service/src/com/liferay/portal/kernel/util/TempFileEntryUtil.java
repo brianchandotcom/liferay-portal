@@ -76,8 +76,6 @@ public class TempFileEntryUtil {
 			InputStream inputStream, String mimeType)
 		throws PortalException {
 
-		folderName = DigesterUtil.digestHex(Digester.SHA_256, folderName);
-
 		TemporaryFileEntriesCapability temporaryFileEntriesCapability =
 			_getTemporaryFileEntriesCapability(groupId);
 
@@ -114,8 +112,6 @@ public class TempFileEntryUtil {
 			long groupId, long userId, String folderName, String fileName)
 		throws PortalException {
 
-		folderName = DigesterUtil.digestHex(Digester.SHA_256, folderName);
-
 		TemporaryFileEntriesCapability temporaryFileEntriesCapability =
 			_getTemporaryFileEntriesCapability(groupId);
 
@@ -126,8 +122,6 @@ public class TempFileEntryUtil {
 	public static String[] getTempFileNames(
 			long groupId, long userId, String folderName)
 		throws PortalException {
-
-		folderName = DigesterUtil.digestHex(Digester.SHA_256, folderName);
 
 		TemporaryFileEntriesCapability temporaryFileEntriesCapability =
 			_getTemporaryFileEntriesCapability(groupId);

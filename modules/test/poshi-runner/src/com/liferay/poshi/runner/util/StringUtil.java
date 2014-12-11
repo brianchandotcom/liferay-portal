@@ -37,11 +37,11 @@ public class StringUtil {
 	}
 
 	public static String[] split(String s) {
-		if (s != null) {
-			return s.split(",");
+		if (s == null) {
+			return null;
 		}
 
-		return null;
+		return s.split(",");
 	}
 
 	public static String toLowerCase(String s) {

@@ -10,7 +10,15 @@
 		<if>
 			<equals arg1="${reportFormat}" arg2="pdf" />
 			<then>
-				<execute action="PGReportsdisplay#sikuliAssertElementPresent" locator-key1="REPORT_PDF_PNG" />
+				<if>
+					<equals arg1="${reportsFileName}" arg2="reports_admin_template_source_sample_list_type.pdf" />
+					<then>
+						<execute action="PGReportsdisplay#sikuliAssertElementPresent" locator-key1="REPORT_PDF_LIST_TYPE_PNG" />
+					</then>
+					<else>
+						<execute action="PGReportsdisplay#sikuliAssertElementPresent" locator-key1="REPORT_PDF_CLASS_NAME_PNG" />
+					</else>
+				</if>
 			</then>
 		</if>
 	</command>

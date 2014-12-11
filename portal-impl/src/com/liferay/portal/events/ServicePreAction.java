@@ -482,18 +482,20 @@ public class ServicePreAction extends Action {
 
 		List<Layout> unfilteredLayouts = layouts;
 
-		if (layout == null) {
-			Object[] defaultLayout = getDefaultLayout(request, user, signedIn);
+		Object[] viewableLayouts = null;
 
-			layout = (Layout)defaultLayout[0];
-			layouts = (List<Layout>)defaultLayout[1];
+		if (layout == null) {
+			viewableLayouts = getDefaultViewableLayouts(
+				request, user, permissionChecker, doAsGroupId,
+				controlPanelCategory, signedIn);
 
 			request.setAttribute(WebKeys.LAYOUT_DEFAULT, Boolean.TRUE);
 		}
-
-		Object[] viewableLayouts = getViewableLayouts(
-			request, user, permissionChecker, layout, layouts, doAsGroupId,
-			controlPanelCategory);
+		else {
+			viewableLayouts = getViewableLayouts(
+				request, user, permissionChecker, layout, layouts, doAsGroupId,
+				controlPanelCategory);
+		}
 
 		String layoutSetLogo = null;
 
@@ -1518,27 +1520,52 @@ public class ServicePreAction extends Action {
 			userGroup.getGroupId(), false, serviceContext);
 	}
 
-	protected Object[] getDefaultLayout(
-			HttpServletRequest request, User user, boolean signedIn)
+	protected Object[] getDefaultViewableLayouts(
+			HttpServletRequest request, User user,
+			PermissionChecker permissionChecker, long doAsGroupId,
+			String controlPanelCategory, boolean signedIn)
 		throws PortalException {
 
 		Object[] defaultLayout = getDefaultVirtualLayout(request);
 
+		Layout layout = (Layout)defaultLayout[0];
+		List<Layout> layouts = (List<Layout>)defaultLayout[1];
+
+		defaultLayout = getViewableLayouts(
+			request, user, permissionChecker, layout, layouts, doAsGroupId,
+			controlPanelCategory);
+
+		if (defaultLayout[1] != null) {
+			return defaultLayout;
+		}
+
 		if (signedIn) {
-			if (defaultLayout[0] == null) {
-				defaultLayout = getDefaultUserPersonalLayout(user);
-			}
+			defaultLayout = getDefaultUserPersonalLayout(user);
 
 			if (defaultLayout[0] == null) {
 				defaultLayout = getDefaultUserSiteLayout(user);
 			}
+
+			layout = (Layout)defaultLayout[0];
+			layouts = (List<Layout>)defaultLayout[1];
+
+			defaultLayout = getViewableLayouts(
+				request, user, permissionChecker, layout, layouts, doAsGroupId,
+				controlPanelCategory);
+
+			if (defaultLayout[1] != null) {
+				return defaultLayout;
+			}
 		}
 
-		if (defaultLayout[0] == null) {
-			defaultLayout = getDefaultSiteLayout(user);
-		}
+		defaultLayout = getDefaultSiteLayout(user);
 
-		return defaultLayout;
+		layout = (Layout)defaultLayout[0];
+		layouts = (List<Layout>)defaultLayout[1];
+
+		return getViewableLayouts(
+			request, user, permissionChecker, layout, layouts, doAsGroupId,
+			controlPanelCategory);
 	}
 
 	protected Object[] getDefaultVirtualLayout(HttpServletRequest request)

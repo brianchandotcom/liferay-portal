@@ -34,4 +34,12 @@ public class StringUtil {
 		return null;
 	}
 
+	public static String toLowerCase(String s) {
+		if (s == null) {
+			return null;
+		}
+
+		return s.toLowerCase();
+	}
+
 }

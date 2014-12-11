@@ -141,7 +141,7 @@ for (int i = values.size() - 1; i >= 0; i--) {
 					<portlet:namespace />closeDialog();
 				}
 
-				AUI.$('.taglib-page-iterator li a').on('click', <portlet:namespace />setItemQuantities);
+				AUI.$('.taglib-page-iterator').on('click', 'li a', <portlet:namespace />setItemQuantities);
 			</aui:script>
 
 			<liferay-ui:search-iterator />

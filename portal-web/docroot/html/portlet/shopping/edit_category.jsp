@@ -74,11 +74,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
 			</div>
 
-			<div id="<portlet:namespace />mergeParentCheckboxDiv"
-				<c:if test="<%= category.getParentCategoryId() == ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
-					style="display: none;"
-				</c:if>
-			>
+			<div class="<%= (category.getParentCategoryId() == ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ? "hide" : "" %>" id="<portlet:namespace />mergeParentCheckboxDiv">
 				<aui:input name="mergeWithParentCategory" type="checkbox" />
 			</div>
 		</c:if>
@@ -104,14 +100,6 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />saveCategory() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('<%= (category == null) ? Constants.ADD : Constants.UPDATE %>');
-
-		submitForm(form);
-	}
-
 	function <portlet:namespace />removeCategory() {
 		var $ = AUI.$;
 
@@ -123,7 +111,15 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 		$('#<portlet:namespace />mergeParentCheckboxDiv').addClass('hide');
 
-		$('#<portlet:namespace />mergeWithParentCategory').prop('checked', false);
+		form.fm('mergeWithParentCategory').prop('checked', false);
+	}
+
+	function <portlet:namespace />saveCategory() {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('<%= Constants.CMD %>').val('<%= (category == null) ? Constants.ADD : Constants.UPDATE %>');
+
+		submitForm(form);
 	}
 
 	AUI.$('#<portlet:namespace />selectCategoryButton').on(

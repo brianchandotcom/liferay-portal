@@ -81,7 +81,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 </portlet:actionURL>
 
 <aui:form action="<%= editItemURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveItem();" %>'>
-	<input name="scroll" type="hidden" value="" />
+	<aui:input name="scroll" type="hidden" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />

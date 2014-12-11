@@ -270,15 +270,10 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 				form.fm(type + 'City').val('<%= HtmlUtil.escapeJS(address.getCity()) %>');
 
 				var stateSel = form.fm(type + 'StateSel');
-				var stateOptions = stateSel.find('option');
 				var stateSelValue = '<%= HtmlUtil.escapeJS(region.getRegionCode()) %>';
 
-				for (var i = 0; i < stateOptions.length; i++) {
-					if (stateOptions.eq(i).val() == stateSelValue) {
-						stateSel.prop('selectedIndex', i);
-
-						break;
-					}
+				if (stateSel.find('option[value="' + stateSelValue + '"]').length) {
+					stateSel.val(stateSelValue);
 				}
 
 				form.fm(type + 'Zip').val('<%= HtmlUtil.escapeJS(address.getZip()) %>');

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
+import com.liferay.portal.upgrade.v7_0_0.util.DLFolderTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -34,6 +35,7 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -46,6 +48,18 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+
+		// DLFolder
+
+		try {
+			runSQL("alter_column_type DLFolder name VARCHAR(255) null");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				DLFolderTable.TABLE_NAME, DLFolderTable.TABLE_COLUMNS,
+				DLFolderTable.TABLE_SQL_CREATE,
+				DLFolderTable.TABLE_SQL_ADD_INDEXES);
+		}
 
 		// DLFileEntry
 

@@ -126,6 +126,17 @@ public class OrganizationTestUtil {
 			new ServiceContext());
 	}
 
+	public static Organization addSite(Organization organization)
+		throws Exception {
+
+		return OrganizationLocalServiceUtil.updateOrganization(
+			organization.getCompanyId(), organization.getOrganizationId(),
+			organization.getParentOrganizationId(), organization.getName(),
+			organization.getType(), organization.getRegionId(),
+			organization.getCountryId(), organization.getStatusId(),
+			organization.getComments(), false, null, true, null);
+	}
+
 	public static Website addWebsite(Organization organization)
 		throws Exception {
 

@@ -169,6 +169,94 @@ public class OrganizationLocalServiceTest {
 	}
 
 	@Test
+	public void testAddSiteToOrganizationWithChildOrganizationWithoutSite()
+		throws Exception {
+
+		Organization organizationA = OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			"Organization A", false);
+
+		Organization organizationB = OrganizationTestUtil.addOrganization(
+			organizationA.getOrganizationId(), "Organization B", false);
+
+		_organizations.add(organizationB);
+		_organizations.add(organizationA);
+
+		organizationA = OrganizationTestUtil.addSite(organizationA);
+
+		Group groupB = organizationB.getGroup();
+
+		Assert.assertEquals(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, groupB.getParentGroupId());
+	}
+
+	@Test
+	public void testAddSiteToOrganizationWithChildOrganizationWithSite()
+		throws Exception {
+
+		Organization organizationA = OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			"Organization A", false);
+
+		Organization organizationB = OrganizationTestUtil.addOrganization(
+			organizationA.getOrganizationId(), "Organization B", true);
+
+		_organizations.add(organizationB);
+		_organizations.add(organizationA);
+
+		organizationA = OrganizationTestUtil.addSite(organizationA);
+
+		Group groupA = organizationA.getGroup();
+		Group groupB = organizationB.getGroup();
+
+		Assert.assertEquals(groupA.getGroupId(), groupB.getParentGroupId());
+	}
+
+	@Test
+	public void testAddSiteToOrganizationWithParentOrganizationWithoutSite()
+		throws Exception {
+
+		Organization organizationA = OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			"Organization A", false);
+
+		Organization organizationB = OrganizationTestUtil.addOrganization(
+			organizationA.getOrganizationId(), "Organization B", false);
+
+		_organizations.add(organizationB);
+		_organizations.add(organizationA);
+
+		organizationB = OrganizationTestUtil.addSite(organizationB);
+
+		Group groupB = organizationB.getGroup();
+
+		Assert.assertEquals(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, groupB.getParentGroupId());
+	}
+
+	@Test
+	public void testAddSiteToOrganizationWithParentOrganizationWithSite()
+		throws Exception {
+
+		Organization organizationA = OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			"Organization A", true);
+
+		Organization organizationB = OrganizationTestUtil.addOrganization(
+			organizationA.getOrganizationId(), "Organization B", false);
+
+		_organizations.add(organizationB);
+		_organizations.add(organizationA);
+
+		organizationB = OrganizationTestUtil.addSite(organizationB);
+
+		Group groupA = organizationA.getGroup();
+		Group groupB = organizationB.getGroup();
+
+		Assert.assertEquals(groupA.getGroupId(), groupB.getParentGroupId());
+	}
+
+	@Test
 	public void testGetNoAssetOrganizations() throws Exception {
 		for (Organization organization :
 				OrganizationLocalServiceUtil.getNoAssetOrganizations()) {

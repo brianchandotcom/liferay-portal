@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util;
+package com.liferay.poshi.runner.util;
 
 import com.sun.mail.imap.IMAPFolder;
 
@@ -30,6 +30,7 @@ import javax.mail.internet.MimeMessage.RecipientType;
 
 /**
  * @author Kwang Lee
+ * @author Michael Hashimoto
  */
 public class EmailCommands {
 

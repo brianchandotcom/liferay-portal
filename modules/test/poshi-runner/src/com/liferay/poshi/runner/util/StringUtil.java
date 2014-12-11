@@ -28,6 +28,14 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class StringUtil {
 
+	public static String replace(String s, String oldSub, String newSub) {
+		if (s == null) {
+			return null;
+		}
+
+		return s.replace(oldSub, newSub);
+	}
+
 	public static String[] split(String s) {
 		if (s != null) {
 			return s.split(",");

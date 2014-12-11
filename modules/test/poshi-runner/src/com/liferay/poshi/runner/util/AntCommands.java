@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util;
+package com.liferay.poshi.runner.util;
 
-import com.liferay.portal.kernel.util.OSDetector;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+import com.liferay.poshi.runner.selenium.LiferaySelenium;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -26,6 +23,7 @@ import java.util.concurrent.Callable;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Michael Hashimoto
  */
 public class AntCommands implements Callable<Void> {
 
@@ -40,7 +38,7 @@ public class AntCommands implements Callable<Void> {
 	@Override
 	public Void call() throws Exception {
 		Runtime runtime = Runtime.getRuntime();
-		StringBundler sb = new StringBundler();
+		StringBuilder sb = new StringBuilder();
 
 		if (!OSDetector.isWindows()) {
 			String projectDirName = _liferaySelenium.getProjectDirName();

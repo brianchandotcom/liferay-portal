@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util;
-
-import com.liferay.portal.kernel.util.OSDetector;
-import com.liferay.portalweb.util.TestPropsValues;
+package com.liferay.poshi.runner.util;
 
 import org.openqa.selenium.WebDriver;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Michael Hashimoto
  */
 public class BrowserCommands {
 
@@ -93,14 +91,13 @@ public class BrowserCommands {
 	}
 
 	private static final String _BROWSER_COMMANDS_DIR_NAME =
-		TestPropsValues.BROWSER_COMMANDS_DIR_NAME;
+		PropsValues.BROWSER_COMMANDS_DIR_NAME;
 
-	private static final String _BROWSER_TYPE = TestPropsValues.BROWSER_TYPE;
+	private static final String _BROWSER_TYPE = PropsValues.BROWSER_TYPE;
 
-	private static final String _OUTPUT_DIR_NAME =
-		TestPropsValues.OUTPUT_DIR_NAME;
+	private static final String _OUTPUT_DIR_NAME = PropsValues.OUTPUT_DIR_NAME;
 
 	private static final String _SELENIUM_IMPLEMENTATION =
-		TestPropsValues.SELENIUM_IMPLEMENTATION;
+		PropsValues.SELENIUM_IMPLEMENTATION;
 
 }

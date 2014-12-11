@@ -50,7 +50,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderDescription}" />
 	</command>
 
 	<command name="addSubfolderCP">
@@ -91,7 +91,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderDescription}" />
 	</command>
 
 	<command name="deletePG">
@@ -129,7 +129,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderDescription}" />
 		<execute action="PGBookmarks#click" locator-key1="FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON" />
 		<execute action="PGBookmarks#assertClick" locator-key1="FOLDER_ACTION_MENULIST_EDIT" value1="Edit" />
 
@@ -142,7 +142,7 @@
 		<var name="key_folderName" value="${folderNameEdit}" />
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderNameEdit}" />
-		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescriptionEdit}" />
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderDescriptionEdit}" />
 	</command>
 
 	<command name="editSubfolderCP">
@@ -232,7 +232,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderDescription}" />
 		<execute action="PGBookmarks#click" locator-key1="FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON" />
 		<execute action="PGBookmarks#assertClick" locator-key1="FOLDER_ACTION_MENULIST_SUBSCRIBE" value1="Subscribe" />
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -270,6 +270,6 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderDescription}" />
 	</command>
 </definition>

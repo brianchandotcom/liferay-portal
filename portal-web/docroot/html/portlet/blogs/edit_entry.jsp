@@ -122,19 +122,44 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			</div>
 
 			<div class="entry-title">
-				<h2><liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="title" placeholder="title" /></h2>
+				<c:choose>
+					<c:when test='<%= EditorUtil.getEditorValue(request, EDITOR_TEXT_IMPL_KEY).startsWith("alloyeditor") %>'>
+						<h2><liferay-ui:alloy-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="title" placeholder="title" /></h2>
+					</c:when>
+					<c:otherwise>
+						<h2><liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="title" placeholder="title" /></h2>
+					</c:otherwise>
+				</c:choose>
 			</div>
 
 			<aui:input name="title" type="hidden" />
 
 			<div class="entry-subtitle">
-				<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="subtitle" placeholder="subtitle" />
+				<c:choose>
+					<c:when test='<%= EditorUtil.getEditorValue(request, EDITOR_TEXT_IMPL_KEY).startsWith("alloyeditor") %>'>
+						<liferay-ui:alloy-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="subtitle" placeholder="subtitle" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="subtitle" placeholder="subtitle" />
+					</c:otherwise>
+				</c:choose>
 			</div>
 
 			<aui:input name="subtitle" type="hidden" />
 
 			<div class="entry-content">
-				<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" onChangeMethod="OnChangeEditor" placeholder="content" />
+				<c:choose>
+					<c:when test='<%= EditorUtil.getEditorValue(request, EDITOR_HTML_IMPL_KEY).startsWith("alloyeditor") %>'>
+						<portlet:actionURL var="uploadEditorImageURL">
+							<portlet:param name="struts_action" value="/blogs/upload_editor_image" />
+						</portlet:actionURL>
+
+						<liferay-ui:alloy-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" onChangeMethod="OnChangeEditor" placeholder="content" uploadURL="<%= uploadEditorImageURL %>" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" onChangeMethod="OnChangeEditor" placeholder="content" />
+					</c:otherwise>
+				</c:choose>
 			</div>
 
 			<aui:input name="content" type="hidden" />
@@ -183,7 +208,14 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					</div>
 
 					<div class="entry-description">
-						<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="description" onInitMethod="OnDescriptionEditorInit" placeholder="description" />
+						<c:choose>
+							<c:when test='<%= EditorUtil.getEditorValue(request, EDITOR_TEXT_IMPL_KEY).startsWith("alloyeditor") %>'>
+								<liferay-ui:alloy-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="description" onInitMethod="OnDescriptionEditorInit" placeholder="description" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="description" onInitMethod="OnDescriptionEditorInit" placeholder="description" />
+							</c:otherwise>
+						</c:choose>
 					</div>
 
 					<aui:input name="description" type="hidden" />

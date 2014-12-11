@@ -16,7 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.service.SubscriptionLocalServiceUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.editor.EditorUtil" %><%@
+page import="com.liferay.portal.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.portlet.blogs.BlogsPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.blogs.BlogsSettings" %><%@
 page import="com.liferay.portlet.blogs.EntryContentException" %><%@

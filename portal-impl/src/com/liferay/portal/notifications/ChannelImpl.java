@@ -329,7 +329,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		try {
 			long currentTime = System.currentTimeMillis();
 
-			storeNotificationEvent(notificationEvent, currentTime);
+			doStoreNotificationEvent(notificationEvent, currentTime);
 
 			if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED &&
 				notificationEvent.isDeliveryRequired()) {
@@ -362,7 +362,7 @@ public class ChannelImpl extends BaseChannelImpl {
 				new ArrayList<NotificationEvent>(notificationEvents.size());
 
 			for (NotificationEvent notificationEvent : notificationEvents) {
-				storeNotificationEvent(notificationEvent, currentTime);
+				doStoreNotificationEvent(notificationEvent, currentTime);
 
 				if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED &&
 					notificationEvent.isDeliveryRequired()) {
@@ -392,33 +392,13 @@ public class ChannelImpl extends BaseChannelImpl {
 	public void storeNotificationEvent(
 		NotificationEvent notificationEvent, long currentTime) {
 
-		if (isRemoveNotificationEvent(notificationEvent, currentTime)) {
-			return;
+		_reentrantLock.lock();
+
+		try {
+			doStoreNotificationEvent(notificationEvent, currentTime);
 		}
-
-		if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED &&
-			notificationEvent.isDeliveryRequired()) {
-
-			Map<String, NotificationEvent> unconfirmedNotificationEvents =
-				_getUnconfirmedNotificationEvents();
-
-			unconfirmedNotificationEvents.put(
-				notificationEvent.getUuid(), notificationEvent);
-		}
-		else {
-			TreeSet<NotificationEvent> notificationEvents =
-				_getNotificationEvents();
-
-			notificationEvents.add(notificationEvent);
-
-			if (notificationEvents.size() >
-					PropsValues.NOTIFICATIONS_MAX_EVENTS) {
-
-				NotificationEvent firstNotificationEvent =
-					notificationEvents.first();
-
-				notificationEvents.remove(firstNotificationEvent);
-			}
+		finally {
+			_reentrantLock.unlock();
 		}
 	}
 
@@ -608,6 +588,39 @@ public class ChannelImpl extends BaseChannelImpl {
 		if (!invalidNotificationEventUuids.isEmpty()) {
 			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvents(
 				invalidNotificationEventUuids, getCompanyId());
+		}
+	}
+
+	protected void doStoreNotificationEvent(
+		NotificationEvent notificationEvent, long currentTime) {
+
+		if (isRemoveNotificationEvent(notificationEvent, currentTime)) {
+			return;
+		}
+
+		if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED &&
+			notificationEvent.isDeliveryRequired()) {
+
+			Map<String, NotificationEvent> unconfirmedNotificationEvents =
+				_getUnconfirmedNotificationEvents();
+
+			unconfirmedNotificationEvents.put(
+				notificationEvent.getUuid(), notificationEvent);
+		}
+		else {
+			TreeSet<NotificationEvent> notificationEvents =
+				_getNotificationEvents();
+
+			notificationEvents.add(notificationEvent);
+
+			if (notificationEvents.size() >
+					PropsValues.NOTIFICATIONS_MAX_EVENTS) {
+
+				NotificationEvent firstNotificationEvent =
+					notificationEvents.first();
+
+				notificationEvents.remove(firstNotificationEvent);
+			}
 		}
 	}
 

@@ -281,6 +281,8 @@ public interface PropsKeys {
 
 	public static final String BLOGS_FLAGS_ENABLED = "blogs.flags.enabled";
 
+	public static final String BLOGS_IMAGE_ALLOY_EDITOR_MAX_SIZE = "blogs.image.alloy.editor.max.size";
+
 	public static final String BLOGS_IMAGE_COVER_MAX_SIZE = "blogs.image.cover.max.size";
 
 	public static final String BLOGS_IMAGE_EXTENSIONS = "blogs.image.extensions";

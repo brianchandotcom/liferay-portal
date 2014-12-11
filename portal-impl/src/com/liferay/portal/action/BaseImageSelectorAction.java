@@ -14,6 +14,7 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -21,7 +22,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -44,6 +46,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public abstract class BaseImageSelectorAction extends PortletAction {
 
@@ -81,8 +84,47 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
+
+		JSONObject imageJSONObject = null;
+
 		try {
-			JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
+			imageJSONObject = getImageJSONObject(actionRequest);
+
+			jsonObject.put("success", Boolean.TRUE);
+		}
+		catch (Exception e) {
+			handleUploadException(actionRequest, actionResponse, e, jsonObject);
+		}
+
+		imageJSONObject.put("randomId", randomId);
+
+		jsonObject.put("image", imageJSONObject);
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
+	}
+
+	protected abstract void checkPermission(
+			long groupId, PermissionChecker permissionChecker)
+		throws PortalException;
+
+	protected JSONObject getImageJSONObject(ActionRequest actionRequest)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
+
+		InputStream inputStream = null;
+
+		try {
+			imageJSONObject.put(
+				"attributeDataImageId",
+				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 
 			String fileName = uploadPortletRequest.getFileName(
 				"imageSelectorFileName");
@@ -92,17 +134,13 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 
 			validateFile(fileName, contentType, size);
 
-			Class<?> clazz = getClass();
-
-			String tempFolderName = clazz.getName();
-
-			InputStream inputStream = uploadPortletRequest.getFileAsStream(
+			inputStream = uploadPortletRequest.getFileAsStream(
 				"imageSelectorFileName");
 
 			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				tempFolderName, StringUtil.randomString() + fileName,
-				inputStream, MimeTypesUtil.getContentType(fileName));
+				_TEMP_FOLDER_NAME, StringUtil.randomString() + fileName,
+				inputStream, contentType);
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 
@@ -111,20 +149,12 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 				PortletFileRepositoryUtil.getPortletFileEntryURL(
 					themeDisplay, fileEntry, StringPool.BLANK));
 
-			jsonObject.put("image", imageJSONObject);
-
-			jsonObject.put("success", Boolean.TRUE);
+			return imageJSONObject;
 		}
-		catch (Exception e) {
-			handleUploadException(actionRequest, actionResponse, e, jsonObject);
+		finally {
+			StreamUtil.cleanUp(inputStream);
 		}
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
-
-	protected abstract void checkPermission(
-			long groupId, PermissionChecker permissionChecker)
-		throws PortalException;
 
 	protected abstract void handleUploadException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
@@ -134,5 +164,8 @@ public abstract class BaseImageSelectorAction extends PortletAction {
 	protected abstract void validateFile(
 			String fileName, String contentType, long size)
 		throws PortalException;
+
+	private static final String _TEMP_FOLDER_NAME =
+		BaseImageSelectorAction.class.getName();
 
 }

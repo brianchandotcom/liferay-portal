@@ -30,6 +30,7 @@ String alloyEditorMode = ParamUtil.getString(request, "alloyEditorMode");
 String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
+Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
 Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name")) + "Editor";
@@ -113,7 +114,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 <div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
 
-<aui:script use="aui-base,alloy-editor">
+<aui:script use="aui-base,alloy-editor,liferay-editor-image-uploader">
 	document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
 	<%
@@ -218,6 +219,20 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			window['<%= name %>'].editor = alloyEditor;
 
 			window['<%= name %>'].instanceReady = true;
+
+			var uploader = new Liferay.BlogsUploader(
+				{
+					editor: nativeEditor,
+					uploadUrl: '<%= GetterUtil.getString(data.get("uploadURL")) %>'
+				}
+			);
+
+			nativeEditor.on(
+				'imagedrop',
+				function(event) {
+					uploader.uploadImage(event.data.el.$, event.data.file);
+				}
+			);
 		}
 	);
 

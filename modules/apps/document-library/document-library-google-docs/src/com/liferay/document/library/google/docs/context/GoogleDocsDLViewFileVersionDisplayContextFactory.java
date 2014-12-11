@@ -14,26 +14,17 @@
 
 package com.liferay.document.library.google.docs.context;
 
-import com.liferay.document.library.google.docs.util.GoogleDocsDLFileEntryTypeHelper;
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.service.ClassNameLocalService;
-import com.liferay.portal.service.CompanyLocalService;
-import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContextFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
-
-import java.util.List;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,20 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class GoogleDocsDLViewFileVersionDisplayContextFactory
 	implements DLViewFileVersionDisplayContextFactory {
 
-	@Activate
-	public void activate() throws PortalException {
-		List<Company> companies = _companyLocalService.getCompanies();
-
-		for (Company company : companies) {
-			GoogleDocsDLFileEntryTypeHelper googleDocsDLFileEntryTypeHelper =
-				new GoogleDocsDLFileEntryTypeHelper(
-					company, _classNameLocalService, _ddmStructureLocalService,
-					_dlFileEntryTypeLocalService, _userLocalService);
-
-			googleDocsDLFileEntryTypeHelper.addGoogleDocsDLFileEntryType();
-		}
-	}
-
 	@Override
 	public DLViewFileVersionDisplayContext
 		getDLFileVersionActionsDisplayContext(
@@ -69,12 +46,14 @@ public class GoogleDocsDLViewFileVersionDisplayContextFactory
 			FileVersion fileVersion) {
 
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
-			new GoogleDocsMetadataHelper((DLFileVersion)fileVersion.getModel());
+			new GoogleDocsMetadataHelper(
+				(DLFileVersion)fileVersion.getModel(),
+				_dlFileEntryMetadataLocalService, _storageEngine);
 
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
 			return new GoogleDocsDLViewFileVersionDisplayContext(
 				parentDLFileEntryActionsDisplayContext, request, response,
-				fileVersion);
+				fileVersion, googleDocsMetadataHelper);
 		}
 
 		return parentDLFileEntryActionsDisplayContext;
@@ -94,42 +73,18 @@ public class GoogleDocsDLViewFileVersionDisplayContextFactory
 	}
 
 	@Reference
-	public void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
+	public void setDLFileEntryMetadataLocalService(
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
 
-		_classNameLocalService = classNameLocalService;
+		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 	}
 
 	@Reference
-	public void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
+	public void setStorageEngine(StorageEngine storageEngine) {
+		_storageEngine = storageEngine;
 	}
 
-	@Reference
-	public void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference
-	public void setDLFileEntryTypeLocalService(
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
-
-		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
-	}
-
-	@Reference
-	public void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	private ClassNameLocalService _classNameLocalService;
-	private CompanyLocalService _companyLocalService;
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private UserLocalService _userLocalService;
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+	private StorageEngine _storageEngine;
 
 }

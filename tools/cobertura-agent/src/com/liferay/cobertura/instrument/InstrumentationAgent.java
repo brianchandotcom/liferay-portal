@@ -30,6 +30,7 @@ import net.sourceforge.cobertura.coveragedata.CoverageData;
 import net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler;
 import net.sourceforge.cobertura.coveragedata.LineData;
 import net.sourceforge.cobertura.coveragedata.ProjectData;
+import net.sourceforge.cobertura.coveragedata.TouchCollector;
 
 /**
  * @author Shuyang Zhou
@@ -43,11 +44,12 @@ public class InstrumentationAgent {
 			return;
 		}
 
-		File dataFile = CoverageDataFileHandler.getDefaultDataFile();
+		_instrumentation.removeTransformer(_coberturaClassFileTransformer);
+
+		_coberturaClassFileTransformer = null;
 
 		try {
-			ProjectData projectData = ProjectDataUtil.captureProjectData(
-				dataFile, _lockFile);
+			ProjectData projectData = ProjectDataUtil.captureProjectData();
 
 			for (Class<?> clazz : classes) {
 				ClassData classData = projectData.getClassData(clazz.getName());
@@ -74,15 +76,9 @@ public class InstrumentationAgent {
 			}
 		}
 		finally {
-			dataFile.delete();
-
 			System.clearProperty("junit.code.coverage");
 
 			_dynamicallyInstrumented = false;
-
-			_instrumentation.removeTransformer(_coberturaClassFileTransformer);
-
-			_coberturaClassFileTransformer = null;
 
 			if (_originalClassDefinitions != null) {
 				try {
@@ -134,7 +130,7 @@ public class InstrumentationAgent {
 
 		if (_coberturaClassFileTransformer == null) {
 			_coberturaClassFileTransformer = new CoberturaClassFileTransformer(
-				includes, excludes, _lockFile);
+				includes, excludes);
 		}
 
 		_instrumentation.addTransformer(_coberturaClassFileTransformer, true);
@@ -155,11 +151,21 @@ public class InstrumentationAgent {
 			}
 		}
 
-		if (!modifiableClasses.isEmpty()) {
-			_instrumentation.retransformClasses(
-				modifiableClasses.toArray(
-					new Class<?>[modifiableClasses.size()]));
-		}
+		// Ensure TouchCollector is loaded before retransform.
+		// A class can be instrumented for code coverage in a new classloader,
+		// but failed to initialize due to an ExceptionInInitializerError.
+		// Therefor its reference to TouchCollector has not be resolved.
+		// But that class will still be redefined in the end to its original
+		// form, and that will sucessfully resolve TouchCollector for the first
+		// time, in its original form. It will cause TouchCollector#<clinit>
+		// being invoked, which in turn calls ProjectData#initialize() to add
+		// net.sourceforge.cobertura.coveragedata.SaveTimer into shutdown hook,
+		// causing a jvm shutdown issue.
+
+		modifiableClasses.add(TouchCollector.class);
+
+		_instrumentation.retransformClasses(
+			modifiableClasses.toArray(new Class<?>[modifiableClasses.size()]));
 
 		_dynamicallyInstrumented = true;
 		_originalClassDefinitions = null;
@@ -167,23 +173,12 @@ public class InstrumentationAgent {
 		System.setProperty("junit.code.coverage", "true");
 	}
 
+	public static File getLockFile() {
+		return _lockFile;
+	}
+
 	public static void initialize() {
-		ProjectDataUtil.addShutdownHook(
-			new Runnable() {
-
-				@Override
-				public void run() {
-					File dataFile =
-						CoverageDataFileHandler.getDefaultDataFile();
-
-					ProjectData projectData =
-						ProjectDataUtil.collectProjectData();
-
-					ProjectDataUtil.mergeSave(dataFile, _lockFile, projectData);
-				}
-
-			}
-		);
+		ProjectDataUtil.addMergeHook();
 	}
 
 	public static synchronized void premain(
@@ -195,11 +190,22 @@ public class InstrumentationAgent {
 		String[] excludes = arguments[1].split(",");
 
 		if (Boolean.getBoolean("junit.code.coverage")) {
-			CoberturaClassFileTransformer coberturaClassFileTransformer =
-				new CoberturaClassFileTransformer(
-					includes, excludes, _lockFile);
+			final CoberturaClassFileTransformer coberturaClassFileTransformer =
+				new CoberturaClassFileTransformer(includes, excludes);
 
 			instrumentation.addTransformer(coberturaClassFileTransformer);
+
+			Runtime runtime = Runtime.getRuntime();
+
+			runtime.addShutdownHook(
+				new Thread() {
+
+					@Override
+					public void run() {
+						ProjectDataUtil.runMergeHooks();
+					}
+
+				});
 		}
 		else if (instrumentation.isRedefineClassesSupported() &&
 				 instrumentation.isRetransformClassesSupported()) {
@@ -265,7 +271,7 @@ public class InstrumentationAgent {
 	private static void _assertClassDataCoverage(
 		Class<?> clazz, ClassData classData) {
 
-		if (clazz.isSynthetic()) {
+		if (clazz.isInterface() || clazz.isSynthetic()) {
 			return;
 		}
 

@@ -359,7 +359,7 @@ public class SummaryPortlet extends MVCPortlet {
 		_userLocalService = userLocalService;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SummaryPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(SummaryPortlet.class);
 
 	private ExpandoValueLocalService _expandoValueLocalService;
 	private GroupLocalService _groupLocalService;

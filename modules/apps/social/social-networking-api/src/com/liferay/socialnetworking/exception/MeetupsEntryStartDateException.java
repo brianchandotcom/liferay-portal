@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class MeetupsEntryStartDateException extends PortalException {
 
 	public MeetupsEntryStartDateException() {
-		super();
 	}
 
 	public MeetupsEntryStartDateException(String msg) {

@@ -26,13 +26,11 @@ import java.lang.management.RuntimeMXBean;
 
 import java.security.ProtectionDomain;
 
-import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler;
 import net.sourceforge.cobertura.coveragedata.ProjectData;
 
 import org.objectweb.asm.ClassReader;
@@ -46,9 +44,7 @@ import org.objectweb.asm.Opcodes;
  */
 public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
-	public CoberturaClassFileTransformer(
-		String[] includes, String[] excludes, final File lockFile) {
-
+	public CoberturaClassFileTransformer(String[] includes, String[] excludes) {
 		_includePatterns = new Pattern[includes.length];
 
 		for (int i = 0; i < includes.length; i++) {
@@ -64,29 +60,6 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 			_excludePatterns[i] = pattern;
 		}
-
-		ProjectDataUtil.addShutdownHook(
-			new Runnable() {
-
-				@Override
-				public void run() {
-					File dataFile =
-						CoverageDataFileHandler.getDefaultDataFile();
-
-					Collection<ProjectData> projectDatas =
-						_projectDatas.values();
-
-					ProjectDataUtil.mergeSave(
-						dataFile, lockFile,
-						projectDatas.toArray(
-							new ProjectData[projectDatas.size()]));
-
-					_projectDatas.clear();
-				}
-
-			}
-
-		);
 	}
 
 	public boolean matches(String className) {

@@ -30,9 +30,10 @@ import java.lang.reflect.Field;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
+import net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler;
 import net.sourceforge.cobertura.coveragedata.ProjectData;
 import net.sourceforge.cobertura.coveragedata.TouchCollector;
 
@@ -41,23 +42,27 @@ import net.sourceforge.cobertura.coveragedata.TouchCollector;
  */
 public class ProjectDataUtil {
 
-	public static void addShutdownHook(Runnable runnable) {
-		List<Runnable> shutdownHooks = _getShutdownHooks();
+	public static void addMergeHook() {
+		Set<Runnable> mergeHooks = _getMergeHooks();
 
-		shutdownHooks.add(runnable);
+		mergeHooks.add(_mergeHookRunnable);
 	}
 
-	public static ProjectData captureProjectData(File dataFile, File lockFile) {
-		for (Runnable runnable : _getShutdownHooks()) {
-			runnable.run();
-		}
+	public static ProjectData captureProjectData() {
+		runMergeHooks();
 
 		synchronized (ProjectDataUtil.class.getName().intern()) {
-			FileLock fileLock = _lockFile(lockFile);
+			FileLock fileLock = _lockFile();
 
 			try {
+				File dataFile = CoverageDataFileHandler.getDefaultDataFile();
+
 				if (dataFile.exists()) {
-					return _readProjectData(dataFile);
+					ProjectData projectData = _readProjectData(dataFile);
+
+					dataFile.delete();
+
+					return projectData;
 				}
 				else {
 					return new ProjectData();
@@ -69,81 +74,40 @@ public class ProjectDataUtil {
 		}
 	}
 
-	public static ProjectData collectProjectData() {
-		ProjectData projectData = new ProjectData();
+	public static void runMergeHooks() {
+		Set<Runnable> runnables = _getMergeHooks();
 
-		PrintStream printStream = new PrintStream(new ByteArrayOutputStream());
-
-		synchronized (FileDescriptor.out) {
-			PrintStream stdOut = System.out;
-
-			System.setOut(printStream);
-
-			try {
-				TouchCollector.applyTouchesOnProjectData(projectData);
-			}
-			finally {
-				System.setOut(stdOut);
-			}
-		}
-
-		return projectData;
-	}
-
-	public static void mergeSave(
-		File dataFile, File lockFile, ProjectData... projectDatas) {
-
-		synchronized (ProjectDataUtil.class.getName().intern()) {
-			FileLock fileLock = _lockFile(lockFile);
-
-			try {
-				ProjectData masterProjectData = null;
-
-				if (dataFile.exists()) {
-					masterProjectData = _readProjectData(dataFile);
-				}
-				else {
-					masterProjectData = new ProjectData();
-				}
-
-				for (ProjectData projectData : projectDatas) {
-					masterProjectData.merge(projectData);
-				}
-
-				_writeProjectData(masterProjectData, dataFile);
-			}
-			finally {
-				_unlockFile(fileLock);
-			}
+		for (Runnable runnable : runnables) {
+			runnable.run();
 		}
 	}
 
-	private static List<Runnable> _getShutdownHooks() {
+	private static Set<Runnable> _getMergeHooks() {
 		ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
 
 		if (ProjectDataUtil.class.getClassLoader() == systemClassLoader) {
-			return _shutdownHooks;
+			return _mergeHooks;
 		}
 
 		try {
 			Class<?> clazz = systemClassLoader.loadClass(
 				ProjectDataUtil.class.getName());
 
-			Field field = clazz.getDeclaredField("_shutdownHooks");
+			Field field = clazz.getDeclaredField("_mergeHooks");
 
 			field.setAccessible(true);
 
-			return (List<Runnable>)field.get(null);
+			return (Set<Runnable>)field.get(null);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	private static FileLock _lockFile(File file) {
+	private static FileLock _lockFile() {
 		try {
 			RandomAccessFile randomAccessFile = new RandomAccessFile(
-				file, "rw");
+				InstrumentationAgent.getLockFile(), "rw");
 
 			FileChannel fileChannel = randomAccessFile.getChannel();
 
@@ -246,26 +210,58 @@ public class ProjectDataUtil {
 
 	private static final int _RETRY_TIMES = 10;
 
-	private static List<Runnable> _shutdownHooks =
-		new CopyOnWriteArrayList<Runnable>();
+	private static final Runnable _mergeHookRunnable = new Runnable() {
 
-	static {
-		ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
+			@Override
+			public void run() {
+				ProjectData projectData = new ProjectData();
 
-		if (ProjectDataUtil.class.getClassLoader() == systemClassLoader) {
-			Runtime.getRuntime().addShutdownHook(
-				new Thread() {
+				PrintStream printStream = new PrintStream(
+					new ByteArrayOutputStream());
 
-					@Override
-					public void run() {
+				synchronized (FileDescriptor.out) {
+					PrintStream stdOut = System.out;
 
-						for (Runnable runnable : _shutdownHooks) {
-							runnable.run();
-						}
+					System.setOut(printStream);
+
+					try {
+						TouchCollector.applyTouchesOnProjectData(projectData);
 					}
+					finally {
+						System.setOut(stdOut);
+					}
+				}
 
-				});
-		}
-	}
+				synchronized (ProjectDataUtil.class.getName().intern()) {
+					FileLock fileLock = _lockFile();
+
+					try {
+						File dataFile =
+							CoverageDataFileHandler.getDefaultDataFile();
+
+						if (dataFile.exists()) {
+							projectData.merge(_readProjectData(dataFile));
+						}
+
+						_writeProjectData(projectData, dataFile);
+					}
+					finally {
+						_unlockFile(fileLock);
+					}
+				}
+
+				if (ProjectDataUtil.class.getClassLoader() !=
+						ClassLoader.getSystemClassLoader()) {
+
+					Set<Runnable> mergeHooks = _getMergeHooks();
+
+					mergeHooks.remove(this);
+				}
+			}
+
+		};
+
+	private static final Set<Runnable> _mergeHooks =
+		new CopyOnWriteArraySet<Runnable>();
 
 }

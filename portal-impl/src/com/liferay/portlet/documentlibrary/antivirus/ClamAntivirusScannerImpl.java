@@ -47,6 +47,9 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 					AntivirusScannerException.PROCESS_FAILURE);
 			}
 		}
+		catch (AntivirusScannerException ase) {
+			throw ase;
+		}
 		catch (Exception e) {
 			throw new AntivirusScannerException(
 				AntivirusScannerException.PROCESS_FAILURE);

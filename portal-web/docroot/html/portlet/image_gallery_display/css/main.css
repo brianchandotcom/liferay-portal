@@ -5,6 +5,10 @@
 		clear: both;
 	}
 
+	.carousel.image-viewer-base {
+		margin: 0 auto;
+	}
+
 	.folder-search {
 		float: right;
 		margin: 0 0 0.5em 0.5em;

@@ -15,8 +15,10 @@
 package com.liferay.socialnetworking.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.OlderVersionException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.model.Release;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.socialnetworking.upgrade.v1_0_0.SocialNetworkingServiceUpgrade_v1_0_0;
 
@@ -49,19 +51,22 @@ public class SocialNetworkingServiceUpgrade_v1_0_1 {
 
 	@Activate
 	protected void upgrade() throws PortalException {
-		Release release = _releaseLocalService.fetchRelease(
-			"social-networking-portlet");
-
-		if (release.getBuildNumber() >= 101) {
-			return;
-		}
-
 		List<UpgradeProcess> upgradeProcesses =
 			Collections.<UpgradeProcess>singletonList(new UpgradePortletId());
 
-		_releaseLocalService.updateRelease(
-			"social-networking-portlet", upgradeProcesses, 101, 0, false);
+		try {
+			_releaseLocalService.updateRelease(
+				"social-networking-portlet", upgradeProcesses, 101, 0, false);
+		}
+		catch (OlderVersionException ove) {
+			_log.debug(
+				"No need to execute " +
+					SocialNetworkingServiceUpgrade_v1_0_1.class.getName());
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SocialNetworkingServiceUpgrade_v1_0_1.class);
 
 	private ReleaseLocalService _releaseLocalService;
 

@@ -22,7 +22,6 @@
 <%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.ip.geocoder.IPInfo" %><%@
 page import="com.liferay.portal.NoSuchUserException" %><%@
@@ -79,8 +78,7 @@ page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.util.RSSUtil" %><%@
 page import="com.liferay.util.portlet.PortletProps" %>
 
-<%@ page import="java.text.Format" %><%@
-page import="java.text.NumberFormat" %>
+<%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Calendar" %><%@
@@ -112,9 +110,5 @@ else if (group.isUser()) {
 	user2 = UserLocalServiceUtil.getUserById(group.getClassPK());
 }
 
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-
-NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
-NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 %>

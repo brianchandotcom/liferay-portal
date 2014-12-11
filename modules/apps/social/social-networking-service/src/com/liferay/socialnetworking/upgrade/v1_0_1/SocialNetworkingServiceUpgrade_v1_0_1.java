@@ -59,9 +59,11 @@ public class SocialNetworkingServiceUpgrade_v1_0_1 {
 				"social-networking-portlet", upgradeProcesses, 101, 0, false);
 		}
 		catch (OlderVersionException ove) {
-			_log.debug(
-				"No need to execute " +
-					SocialNetworkingServiceUpgrade_v1_0_1.class.getName());
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No need to execute " +
+						SocialNetworkingServiceUpgrade_v1_0_1.class.getName());
+			}
 		}
 	}
 

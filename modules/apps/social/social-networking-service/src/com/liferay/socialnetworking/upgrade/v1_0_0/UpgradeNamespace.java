@@ -88,6 +88,7 @@ public class UpgradeNamespace extends UpgradeProcess {
 		upgradeTable.updateTable();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeNamespace.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeNamespace.class);
 
 }

@@ -419,12 +419,12 @@ AUI.add(
 						A.Array.each(
 							persistentImages,
 							function(item, index) {
-								var el = instance.one('img[' + item.dataImageIdAttribute + '="' + item.fileEntryId + '"]');
+								var el = instance.one('img[' + item.attributeDataImageId + '="' + item.fileEntryId + '"]');
 
 								if (el) {
 									el.attr('src', item.fileEntryUrl);
 
-									el.removeAttribute(item.dataImageIdAttribute);
+									el.removeAttribute(item.attributeDataImageId);
 								}
 							}
 						);

@@ -1606,11 +1606,8 @@ public class ServicePreAction extends Action {
 
 		Object[] defaultLayout = getDefaultVirtualLayout(request);
 
-		Layout layout = (Layout)defaultLayout[0];
-		List<Layout> layouts = (List<Layout>)defaultLayout[1];
-
 		defaultLayout = getViewableLayouts(
-			request, user, permissionChecker, layout, layouts, doAsGroupId,
+			request, user, permissionChecker, defaultLayout, doAsGroupId,
 			controlPanelCategory);
 
 		if (defaultLayout[1] != null) {
@@ -1624,11 +1621,8 @@ public class ServicePreAction extends Action {
 				defaultLayout = getDefaultUserSiteLayout(user);
 			}
 
-			layout = (Layout)defaultLayout[0];
-			layouts = (List<Layout>)defaultLayout[1];
-
 			defaultLayout = getViewableLayouts(
-				request, user, permissionChecker, layout, layouts, doAsGroupId,
+				request, user, permissionChecker, defaultLayout, doAsGroupId,
 				controlPanelCategory);
 
 			if (defaultLayout[1] != null) {
@@ -1638,11 +1632,8 @@ public class ServicePreAction extends Action {
 
 		defaultLayout = getDefaultSiteLayout(user);
 
-		layout = (Layout)defaultLayout[0];
-		layouts = (List<Layout>)defaultLayout[1];
-
 		return getViewableLayouts(
-			request, user, permissionChecker, layout, layouts, doAsGroupId,
+			request, user, permissionChecker, defaultLayout, doAsGroupId,
 			controlPanelCategory);
 	}
 
@@ -1772,6 +1763,20 @@ public class ServicePreAction extends Action {
 		}
 
 		return new Object[] {layout, layouts};
+	}
+
+	protected Object[] getViewableLayouts(
+			HttpServletRequest request, User user,
+			PermissionChecker permissionChecker, Object[] defaultLayout,
+			long doAsGroupId, String controlPanelCategory)
+		throws PortalException {
+
+		Layout layout = (Layout)defaultLayout[0];
+		List<Layout> layouts = (List<Layout>)defaultLayout[1];
+
+		return getViewableLayouts(
+			request, user, permissionChecker, layout, layouts, doAsGroupId,
+			controlPanelCategory);
 	}
 
 	protected boolean hasAccessPermission(

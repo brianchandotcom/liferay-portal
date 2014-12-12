@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.ac;
 
-import java.lang.reflect.Method;
+import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Michael C. Han
@@ -22,7 +22,9 @@ import java.lang.reflect.Method;
  */
 public interface AccessControlAdvisor {
 
-	public void accept(Method method, AccessControlled accessControlled)
+	public void accept(
+			MethodInvocation methodInvocation,
+			AccessControlled accessControlled)
 		throws SecurityException;
 
 }

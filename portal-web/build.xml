@@ -50,9 +50,7 @@
 		<pathelement location="${project.dir}/lib/portal/velocity.jar" />
 	</path>
 
-	<target name="build-alloy">
-		<antcall target="build-alloy-bootstrap" />
-
+	<target name="build-alloy" depends="build-alloy-font-awesome">
 		<path id="alloy.zip.path">
 			<fileset dir="third-party">
 				<include name="alloy-${alloy.version}*.zip" />
@@ -231,12 +229,6 @@
 				<delete dir="${alloy.bootstrap.tmp.dir}" />
 			</then>
 		</if>
-
-		<!-- Build Alloy Font Awesome -->
-
-		<antcall target="build-alloy-font-awesome">
-			<param name="alloy.bootstrap.deploy" value="${alloy.bootstrap.deploy}" />
-		</antcall>
 	</target>
 
 	<target name="build-alloy-editor">
@@ -282,7 +274,7 @@
 		</if>
 	</target>
 
-	<target name="build-alloy-font-awesome">
+	<target name="build-alloy-font-awesome" depends="build-alloy-bootstrap">
 		<path id="alloy-font-awesome.zip.path">
 			<fileset dir="third-party">
 				<include name="alloy-font-awesome-${alloy-font-awesome.version}*.zip" />
@@ -488,7 +480,7 @@
 		/>
 	</target>
 
-	<target name="build-css">
+	<target name="build-css" depends="build-themes">
 		<property name="sass.tmp.dir" value="${basedir}/sass_tmp_dir" />
 
 		<mkdir dir="${sass.tmp.dir}" />
@@ -637,9 +629,7 @@
 		<echo file="${project.dir}/tools/selenium/extensions/ide.${user.name}.js">${ide.js.content}</echo>
 	</target>
 
-	<target name="build-themes">
-		<antcall target="build-alloy" />
-
+	<target name="build-themes" depends="build-alloy">
 		<for param="module.name">
 			<path>
 				<dirset dir="docroot/html/themes" excludes="_styled,_unstyled" includes="*" />
@@ -820,7 +810,7 @@
 		</if>
 	</target>
 
-	<target name="clean" depends="build-common-web.clean">
+	<target name="clean" depends="build-common-web.clean,clean-css,clean-themes">
 		<delete dir="classes" />
 		<delete dir="docroot/dtd" />
 		<delete dir="docroot/html/js/aui" />
@@ -835,10 +825,6 @@
 		<delete dir="docroot/WEB-INF/lib" />
 		<delete dir="test-classes" />
 		<delete dir="test-results" />
-
-		<antcall target="clean-css" />
-
-		<antcall target="clean-themes" />
 	</target>
 
 	<target name="clean-css">
@@ -1099,18 +1085,7 @@ Please set the property "jdk.6.home" in build.properties.
 		</antcall>
 	</target>
 
-	<target name="deploy">
-		<antcall target="build-alloy" />
-		<antcall target="build-alloy-editor" />
-		<antcall target="build-ckeditor" />
-		<antcall target="build-dtd" />
-		<antcall target="build-tinymce" />
-		<antcall target="build-vaadin" />
-
-		<antcall target="build-css" />
-
-		<antcall target="build-common-web.deploy" />
-
+	<target name="deploy" depends="build-common-web.deploy">
 		<if>
 			<and>
 				<equals arg1="${app.server.type}" arg2="jboss" />
@@ -1225,13 +1200,7 @@ Please set the property "jdk.6.home" in build.properties.
 		</jshint>
 	</target>
 
-	<target name="war" depends="compile">
-		<antcall target="build-alloy" />
-		<antcall target="build-ckeditor" />
-		<antcall target="build-dtd" />
-		<antcall target="build-tinymce" />
-		<antcall target="build-vaadin" />
-
+	<target name="war" depends="build-alloy,build-alloy-editor,build-ckeditor,build-css,build-dtd,build-tinymce,build-themes,build-vaadin">
 		<war
 			basedir="docroot"
 			destfile="${war.file}.war"

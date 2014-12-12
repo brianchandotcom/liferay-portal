@@ -56,7 +56,7 @@
 		</manifest>
 	</target>
 
-	<target name="deploy" depends="compile">
+	<target name="deploy">
 		<if>
 			<equals arg1="${war.file}" arg2="portal-web" />
 			<then>
@@ -174,7 +174,7 @@
 		</if>
 	</target>
 
-	<target name="war" depends="compile">
+	<target name="war">
 		<if>
 			<available file="docroot" />
 			<then>

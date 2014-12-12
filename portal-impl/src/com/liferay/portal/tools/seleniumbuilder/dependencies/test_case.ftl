@@ -10,6 +10,7 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 import com.liferay.portalweb.portal.util.liferayselenium.SeleniumException;
 import com.liferay.portalweb.util.RuntimeVariables;
 import com.liferay.portalweb.util.SeleniumUtil;
+import com.liferay.portalweb.util.TestPropsUtil;
 import com.liferay.portalweb.util.TestPropsValues;
 
 import ${seleniumBuilderContext.getMacroClassName("User")};

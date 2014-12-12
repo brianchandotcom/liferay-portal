@@ -1326,7 +1326,7 @@ public class Creole10Parser]]></replacevalue>
 		</jarjar>
 	</target>
 
-	<target name="clean">
+	<target name="clean" depends="build-common-java.clean">
 		<delete dir="classes" />
 
 		<if>
@@ -1338,8 +1338,6 @@ public class Creole10Parser]]></replacevalue>
 				<delete dir="${app.server.classes.portal.dir}" />
 			</then>
 		</if>
-
-		<antcall target="build-common-java.clean" />
 	</target>
 
 	<target name="compile">
@@ -1543,7 +1541,7 @@ public class Creole10Parser]]></replacevalue>
 		<delete file="ServiceBuilder.temp" />
 	</target>
 
-	<target name="jar" depends="compile">
+	<target name="jar">
 		<ant dir="../util-bridges" target="jar" inheritAll="false" />
 		<ant dir="../util-java" target="jar" inheritAll="false" />
 		<ant dir="../util-taglib" target="jar" inheritAll="false" />

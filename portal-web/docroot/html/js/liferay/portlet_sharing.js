@@ -12,7 +12,7 @@ Liferay.provide(
 			portletURL = Liferay.PortletURL.createURL(basePortletURL);
 		}
 
-		portletURL.setPortletId(133);
+		portletURL.setPortletId(Liferay.PortletKeys.PORTLET_SHARING);
 
 		portletURL.setParameter('netvibesURL', netvibesURL);
 
@@ -47,7 +47,7 @@ Liferay.provide(
 			portletURL = Liferay.PortletURL.createURL(basePortletURL);
 		}
 
-		portletURL.setPortletId(133);
+		portletURL.setPortletId(Liferay.PortletKeys.PORTLET_SHARING);
 
 		portletURL.setParameter('widgetURL', widgetURL);
 

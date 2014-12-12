@@ -220,19 +220,29 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 			window['<%= name %>'].instanceReady = true;
 
-			var uploader = new Liferay.BlogsUploader(
-				{
-					editor: nativeEditor,
-					uploadUrl: '<%= GetterUtil.getString(data.get("uploadURL")) %>'
-				}
-			);
+			<%
+			String uploadURL = StringPool.BLANK;
 
-			nativeEditor.on(
-				'imagedrop',
-				function(event) {
-					uploader.uploadImage(event.data.el.$, event.data.file);
-				}
-			);
+			if (data != null) {
+				uploadURL = GetterUtil.getString(data.get("uploadURL"), StringPool.BLANK);
+			}
+			%>
+
+			<c:if test="<%= Validator.isNotNull(uploadURL) %>">
+				var uploader = new Liferay.BlogsUploader(
+					{
+						editor: nativeEditor,
+						uploadUrl: '<%= uploadURL %>'
+					}
+				);
+
+				nativeEditor.on(
+					'imagedrop',
+					function(event) {
+						uploader.uploadImage(event.data.el.$, event.data.file);
+					}
+				);
+			</c:if>
 		}
 	);
 

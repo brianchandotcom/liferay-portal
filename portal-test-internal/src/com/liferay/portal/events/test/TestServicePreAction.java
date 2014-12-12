@@ -83,11 +83,39 @@ public class TestServicePreAction extends ServicePreAction {
 	}
 
 	@Override
-	public Object[] getDefaultLayout(
-			HttpServletRequest request, User user, boolean signedIn)
+	public Object[] getDefaultSiteLayout(User user) throws PortalException {
+		return super.getDefaultSiteLayout(user);
+	}
+
+	@Override
+	public Object[] getDefaultUserPersonalLayout(User user)
 		throws PortalException {
 
-		return super.getDefaultLayout(request, user, signedIn);
+		return super.getDefaultUserPersonalLayout(user);
+	}
+
+	@Override
+	public Object[] getDefaultUserSiteLayout(User user) throws PortalException {
+		return super.getDefaultUserSiteLayout(user);
+	}
+
+	@Override
+	public Object[] getDefaultViewableLayouts(
+			HttpServletRequest request, User user,
+			PermissionChecker permissionChecker, long doAsGroupId,
+			String controlPanelCategory, boolean signedIn)
+		throws PortalException {
+
+		return super.getDefaultViewableLayouts(
+			request, user, permissionChecker, doAsGroupId, controlPanelCategory,
+			signedIn);
+	}
+
+	@Override
+	public Object[] getDefaultVirtualLayout(HttpServletRequest request)
+		throws PortalException {
+
+		return super.getDefaultVirtualLayout(request);
 	}
 
 	@Override

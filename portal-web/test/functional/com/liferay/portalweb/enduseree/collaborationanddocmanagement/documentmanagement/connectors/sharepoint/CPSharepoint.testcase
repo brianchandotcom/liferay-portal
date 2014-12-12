@@ -2,9 +2,12 @@
 	<property name="custom.properties" value="session.store.password=true$${line.separator}company.security.auth.type=screenName" />
 	<property name="hook.plugins.includes" value="sharepoint-hook" />
 	<property name="testray.main.component.name" value="Documents Management" />
+	<property name="sharepoint.vm.host.name.retrieve" value="true" />
 
 	<set-up>
-		<execute action="BaseLiferay#antCommand" locator1="build-test-sharepoint.xml" value1="clean-sharepoint-repository" />
+		<var method="TestPropsUtil#get(&quot;sharepoint.vm.host.name&quot;)" name="sharepointVMHostName" />
+
+		<execute action="BaseLiferay#antCommand" locator1="build-test-sharepoint.xml" value1="clean-sharepoint-repository -Dssh.host=${sharepointVMHostName}" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="authenticationMethod" value="By Screen Name" />
@@ -43,7 +46,7 @@
 		<execute macro="DMRepository#addCP">
 			<var name="dmRepositoryLibraryName" value="Documents" />
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
-			<var name="dmRepositorySiteURL" value="http://cloud-10-0-15-1" />
+			<var name="dmRepositorySiteURL" value="http://${sharepointVMHostName}" />
 			<var name="dmRepositoryType" value="Sharepoint" />
 		</execute>
 	</set-up>

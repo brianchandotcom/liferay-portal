@@ -1643,6 +1643,30 @@
 		</if>
 	</command>
 
+	<command name="viewDocumentCheckoutOption">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<if>
+			<isset var="dmDocumentShortcut" />
+			<then>
+				<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_SHORTCUT_ACTIONS" />
+			</then>
+			<else>
+				<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="viewNoCheckoutOption" />
+			<then>
+				<execute action="PGDocumentsandmedia#assertNotVisible" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
+			</then>
+			<else>
+				<execute action="PGDocumentsandmedia#assertVisible" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewDocumentDetailsCmdPG">
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_DATE" />
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_WORKFLOW_STATUS" />

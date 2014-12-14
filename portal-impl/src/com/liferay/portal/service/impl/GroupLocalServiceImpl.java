@@ -1097,6 +1097,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return groupLocalService.loadFetchGroup(companyId, name);
 	}
 
+	@Override
+	public Group fetchUserGroup(long companyId, long userId)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(User.class);
+
+		return groupPersistence.fetchByC_C_C(companyId, classNameId, userId);
+	}
+
 	/**
 	 * Returns the default user's personal site group.
 	 *

@@ -1910,7 +1910,7 @@ ${marketplace.portlet.properties}</echo>
 
 		<echo file="test-results/TESTS-TestSuites.xml">${test.suites.xml.content}</echo>
 
-		<echo message="A report with all the test results can be found at test-results/html/index.html." />
+		<echo message="A report with all the test results can be found at test-results/html/index.html" />
 	</target>
 
 	<target name="move-file">

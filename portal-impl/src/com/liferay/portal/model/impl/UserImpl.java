@@ -468,7 +468,8 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public Group getGroup() throws PortalException {
-		return GroupLocalServiceUtil.getUserGroup(getCompanyId(), getUserId());
+		return GroupLocalServiceUtil.fetchUserGroup(
+			getCompanyId(), getUserId());
 	}
 
 	@Override

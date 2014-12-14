@@ -16,12 +16,13 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.User;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.ResetDatabaseTestRule;
 import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -38,13 +39,17 @@ public class UserLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			ResetDatabaseTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Test
 	public void testGetNoAnnouncementsDeliveries() throws Exception {
 		User user1 = UserTestUtil.addUser();
+
+		_users.add(user1);
+
 		User user2 = UserTestUtil.addUser();
+
+		_users.add(user2);
 
 		AnnouncementsDeliveryLocalServiceUtil.addUserDelivery(
 			user1.getUserId(), "general");
@@ -60,6 +65,8 @@ public class UserLocalServiceTest {
 	public void testGetNoContacts() throws Exception {
 		User user = UserTestUtil.addUser();
 
+		_users.add(user);
+
 		ContactLocalServiceUtil.deleteContact(user.getContactId());
 
 		List<User> users = UserLocalServiceUtil.getNoContacts();
@@ -71,11 +78,16 @@ public class UserLocalServiceTest {
 	public void testGetNoGroups() throws Exception {
 		User user = UserTestUtil.addUser();
 
+		_users.add(user);
+
 		GroupLocalServiceUtil.deleteGroup(user.getGroupId());
 
 		List<User> users = UserLocalServiceUtil.getNoGroups();
 
 		Assert.assertTrue(users.contains(user));
 	}
+
+	@DeleteAfterTestRun
+	private final List<User> _users = new ArrayList<User>();
 
 }

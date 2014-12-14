@@ -52,21 +52,8 @@ public class UserLocalServiceTest {
 		List<User> users = UserLocalServiceUtil.getNoAnnouncementsDeliveries(
 			"general");
 
-		boolean success = false;
-
-		for (User user : users) {
-			if (user.getUserId() == user2.getUserId()) {
-				success = true;
-			}
-			else if (user.getUserId() == user1.getUserId()) {
-				Assert.fail(
-					"User " + user.getUserId() +
-						" should not have announcement deliveries");
-			}
-		}
-
-		Assert.assertTrue(
-			"No user found with user ID " + user2.getUserId(), success);
+		Assert.assertFalse(users.contains(user1));
+		Assert.assertTrue(users.contains(user2));
 	}
 
 	@Test
@@ -77,8 +64,7 @@ public class UserLocalServiceTest {
 
 		List<User> users = UserLocalServiceUtil.getNoContacts();
 
-		Assert.assertEquals(1, users.size());
-		Assert.assertEquals(user, users.get(0));
+		Assert.assertTrue(users.contains(user));
 	}
 
 	@Test
@@ -89,8 +75,7 @@ public class UserLocalServiceTest {
 
 		List<User> users = UserLocalServiceUtil.getNoGroups();
 
-		Assert.assertEquals(1, users.size());
-		Assert.assertEquals(user, users.get(0));
+		Assert.assertTrue(users.contains(user));
 	}
 
 }

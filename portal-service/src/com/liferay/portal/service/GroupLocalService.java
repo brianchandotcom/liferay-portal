@@ -478,6 +478,10 @@ public interface GroupLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Group fetchGroupByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Group fetchUserGroup(long companyId,
+		long userId) throws com.liferay.portal.kernel.exception.PortalException;
+
 	/**
 	* Returns the default user's personal site group.
 	*

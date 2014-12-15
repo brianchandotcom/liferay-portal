@@ -19,13 +19,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.File;
 import java.io.InputStream;
-
 import java.lang.reflect.Field;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,28 +58,30 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 	}
 
 	@Override
-	public Map<String, Fields> getRawMetadataMap(
+	public Map<String, DDMFormValues> getRawMetadataMap(
 			String extension, String mimeType, File file)
 		throws PortalException {
 
 		Metadata metadata = extractMetadata(extension, mimeType, file);
 
-		return createDDMFieldsMap(metadata, getFields());
+		return createDDMFormValuesMap(metadata, getFields());
 	}
 
 	@Override
-	public Map<String, Fields> getRawMetadataMap(
+	public Map<String, DDMFormValues> getRawMetadataMap(
 			String extension, String mimeType, InputStream inputStream)
 		throws PortalException {
 
 		Metadata metadata = extractMetadata(extension, mimeType, inputStream);
 
-		return createDDMFieldsMap(metadata, getFields());
+		return createDDMFormValuesMap(metadata, getFields());
 	}
 
-	protected Fields createDDMFields(Metadata metadata, Field[] fields) {
-		Fields ddmFields = new Fields();
+	protected DDMFormValues createDDMFormValues(
+		Metadata metadata, Field[] fields) {
 
+		DDMFormValues ddmFormValues = new DDMFormValues(new DDMForm());
+		
 		for (Field field : fields) {
 			Class<?> fieldClass = field.getDeclaringClass();
 
@@ -93,40 +96,43 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 				continue;
 			}
 
-			com.liferay.portlet.dynamicdatamapping.storage.Field ddmField =
-				new com.liferay.portlet.dynamicdatamapping.storage.Field(
-					name, value);
-
-			ddmFields.put(ddmField);
+			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+			
+			ddmFormFieldValue.setName(name);
+			ddmFormFieldValue.setValue(new UnlocalizedValue(value));
+			
+			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 		}
 
-		return ddmFields;
+		return ddmFormValues;
 	}
 
-	protected Map<String, Fields> createDDMFieldsMap(
+	protected Map<String, DDMFormValues> createDDMFormValuesMap(
 		Metadata metadata, Map<String, Field[]> fieldsMap) {
 
-		Map<String, Fields> ddmFieldsMap = new HashMap<>();
+		Map<String, DDMFormValues> ddmFormValuesMap =
+				new HashMap<String, DDMFormValues>();
 
 		if (metadata == null) {
-			return ddmFieldsMap;
+			return ddmFormValuesMap;
 		}
 
 		for (String key : fieldsMap.keySet()) {
 			Field[] fields = fieldsMap.get(key);
 
-			Fields ddmFields = createDDMFields(metadata, fields);
+			DDMFormValues ddmFormValues = createDDMFormValues(metadata, fields);
 
-			Set<String> names = ddmFields.getNames();
+			Set<String> names = 
+					ddmFormValues.getDDMFormFieldValuesMap().keySet();
 
 			if (names.isEmpty()) {
 				continue;
 			}
 
-			ddmFieldsMap.put(key, ddmFields);
+			ddmFormValuesMap.put(key, ddmFormValues);
 		}
 
-		return ddmFieldsMap;
+		return ddmFormValuesMap;
 	}
 
 	protected abstract Metadata extractMetadata(

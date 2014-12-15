@@ -35,14 +35,17 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.persistence.OrganizationUtil;
 import com.liferay.portal.service.persistence.RoleUtil;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -536,7 +539,7 @@ public class UserFinderImpl
 		if (ArrayUtil.isNotEmpty(groupIds) && inherit &&
 			!socialRelationTypeUnionUserGroups) {
 
-			List<Organization> organizations = new ArrayList<Organization>();
+			List<Long> organizationIds = new ArrayList<Long>();
 			List<Long> siteGroupIds = new ArrayList<Long>();
 			List<Long> userGroupIds = new ArrayList<Long>();
 
@@ -548,13 +551,7 @@ public class UserFinderImpl
 				}
 
 				if (group.isOrganization()) {
-					Organization organization =
-						OrganizationLocalServiceUtil.fetchOrganization(
-							group.getOrganizationId());
-
-					if (organization != null) {
-						organizations.add(organization);
-					}
+					organizationIds.add(group.getOrganizationId());
 				}
 				else if (group.isUserGroup()) {
 					userGroupIds.add(group.getClassPK());
@@ -564,24 +561,22 @@ public class UserFinderImpl
 				}
 			}
 
-			if (!organizations.isEmpty()) {
+			if (!organizationIds.isEmpty()) {
 				params2 = new LinkedHashMap<String, Object>(params1);
 
 				params2.remove("usersGroups");
 
 				if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
-					Long[] organizationIds = new Long[organizations.size()];
-
-					for (int i = 0; i < organizationIds.length; i++) {
-						Organization organization = organizations.get(i);
-
-						organizationIds[i] = organization.getOrganizationId();
-					}
-
 					params2.put("usersOrgs", organizationIds);
 				}
 				else {
-					params2.put("usersOrgsTree", organizations);
+					Map<Serializable, Organization> map =
+						OrganizationUtil.fetchByPrimaryKeys(
+							new HashSet<Serializable>(organizationIds));
+
+					params2.put(
+						"usersOrgsTree",
+						new ArrayList<Organization>(map.values()));
 				}
 			}
 
@@ -616,7 +611,7 @@ public class UserFinderImpl
 		if (ArrayUtil.isNotEmpty(roleIds) && inherit &&
 			!socialRelationTypeUnionUserGroups) {
 
-			List<Organization> organizations = new ArrayList<Organization>();
+			List<Long> organizationIds = new ArrayList<Long>();
 			List<Long> siteGroupIds = new ArrayList<Long>();
 			List<Long> userGroupIds = new ArrayList<Long>();
 
@@ -625,13 +620,7 @@ public class UserFinderImpl
 
 				for (Group group : groups) {
 					if (group.isOrganization()) {
-						Organization organization =
-							OrganizationLocalServiceUtil.fetchOrganization(
-								group.getOrganizationId());
-
-						if (organization != null) {
-							organizations.add(organization);
-						}
+						organizationIds.add(group.getOrganizationId());
 					}
 					else if (group.isUserGroup()) {
 						userGroupIds.add(group.getClassPK());
@@ -642,24 +631,25 @@ public class UserFinderImpl
 				}
 			}
 
-			if (!organizations.isEmpty()) {
+			if (!organizationIds.isEmpty()) {
 				params2 = new LinkedHashMap<String, Object>(params1);
 
 				params2.remove("usersRoles");
 
 				if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
-					Long[] organizationIds = new Long[organizations.size()];
-
-					for (int i = 0; i < organizationIds.length; i++) {
-						Organization organization = organizations.get(i);
-
-						organizationIds[i] = organization.getOrganizationId();
-					}
-
-					params2.put("usersOrgs", organizationIds);
+					params2.put(
+						"usersOrgs",
+						organizationIds.toArray(
+							new Long[organizationIds.size()]));
 				}
 				else {
-					params2.put("usersOrgsTree", organizations);
+					Map<Serializable, Organization> map =
+						OrganizationUtil.fetchByPrimaryKeys(
+							new HashSet<Serializable>(organizationIds));
+
+					params2.put(
+						"usersOrgsTree",
+						new ArrayList<Organization>(map.values()));
 				}
 			}
 

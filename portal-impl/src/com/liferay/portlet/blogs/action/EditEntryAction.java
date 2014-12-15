@@ -670,14 +670,14 @@ public class EditEntryAction extends PortletAction {
 
 				content = blogsEntryAttachmentHelper.updateContent(
 					content, blogsEntryAttachmentFileEntryReferences);
-
-				entry = BlogsEntryServiceUtil.updateEntry(
-					entryId, title, subtitle, description, content,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, allowPingbacks,
-					allowTrackbacks, trackbacks, coverImageImageSelector,
-					smallImageImageSelector, serviceContext);
 			}
+
+			entry = BlogsEntryServiceUtil.updateEntry(
+				entryId, title, subtitle, description, content,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, allowPingbacks,
+				allowTrackbacks, trackbacks, coverImageImageSelector,
+				smallImageImageSelector, serviceContext);
 
 			for (FileEntry tempBlogsEntryAttachmentFileEntry :
 					tempBlogsEntryAttachmentFileEntries) {

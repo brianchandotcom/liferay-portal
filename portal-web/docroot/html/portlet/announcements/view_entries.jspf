@@ -97,10 +97,9 @@ if (((hiddenMessagesCount == 0) && (visibleMessagesCount == 0)) && portletName.e
 				{
 					entryId : entryId,
 					value: <%= AnnouncementsFlagConstants.HIDDEN %>
-				}
+				},
+				A.bind('refresh', Liferay.Portlet, '#p_p_id<portlet:namespace />')
 			);
-
-			Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
 		},
 		['aui-base']
 	);

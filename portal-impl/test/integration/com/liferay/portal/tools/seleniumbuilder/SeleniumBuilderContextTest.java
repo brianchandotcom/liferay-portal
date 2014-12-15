@@ -458,46 +458,6 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testPathVariable1010() throws Exception {
-		test(
-			"PathVariable1010.action",
-			"Error 1010: Invalid locator-key LOCATO at " + _DIR_NAME +
-				"/PathVariable1010.action:3");
-	}
-
-	@Test
-	public void testPathVariable1012() throws Exception {
-		test(
-			"PathVariable1012.action",
-			"Error 1012: Invalid function command HELLOWORLD at " + _DIR_NAME +
-				"/PathVariable1012.action:4");
-	}
-
-	@Test
-	public void testPathExtendPath1010_1() throws Exception {
-		test(
-			"PathExtendPath1010_1.action",
-			"Error 1010: Invalid locator-key LOCATOR_KEY at " + _DIR_NAME +
-				"/PathExtendPath1010_1.action:3");
-	}
-
-	@Test
-	public void testPathExtendPath1010_2() throws Exception {
-		test(
-			"PathExtendPath1010_2.action",
-			"Error 1010: Invalid locator-key LOCATOR_ at " + _DIR_NAME +
-				"/PathExtendPath1010_2.action:3");
-	}
-
-	@Test
-	public void testPathExtendPath1012() throws Exception {
-		test(
-			"PathExtendPath1012.action",
-			"Error 1012: Invalid function command Function at " + _DIR_NAME +
-				"/PathExtendPath1012.action:4");
-	}
-
-	@Test
 	public void testTestCase() throws Exception {
 		test("TestCase.testcase");
 	}

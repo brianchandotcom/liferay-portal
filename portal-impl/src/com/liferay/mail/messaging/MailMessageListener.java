@@ -38,6 +38,14 @@ import javax.mail.internet.InternetAddress;
 public class MailMessageListener extends BaseMessageListener {
 
 	protected void doMailMessage(MailMessage mailMessage) throws Exception {
+		InternetAddress from = filterInternetAddress(mailMessage.getFrom());
+
+		if (from == null) {
+			return;
+		}
+
+		mailMessage.setFrom(from);
+
 		InternetAddress[] auditTrail = InternetAddress.parse(
 			PropsValues.MAIL_AUDIT_TRAIL);
 
@@ -57,15 +65,6 @@ public class MailMessageListener extends BaseMessageListener {
 			}
 		}
 
-		InternetAddress from = filterInternetAddress(mailMessage.getFrom());
-
-		if (from == null) {
-			return;
-		}
-		else {
-			mailMessage.setFrom(from);
-		}
-
 		InternetAddress[] to = filterInternetAddresses(mailMessage.getTo());
 
 		mailMessage.setTo(to);
@@ -82,6 +81,11 @@ public class MailMessageListener extends BaseMessageListener {
 			mailMessage.getBulkAddresses());
 
 		mailMessage.setBulkAddresses(bulkAddresses);
+
+		InternetAddress[] replyTo = filterInternetAddresses(
+			mailMessage.getReplyTo());
+
+		mailMessage.setReplyTo(replyTo);
 
 		if (ArrayUtil.isNotEmpty(to) || ArrayUtil.isNotEmpty(cc) ||
 			ArrayUtil.isNotEmpty(bcc) || ArrayUtil.isNotEmpty(bulkAddresses)) {

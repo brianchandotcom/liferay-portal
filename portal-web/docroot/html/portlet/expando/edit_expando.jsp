@@ -110,7 +110,7 @@ portletURL.setParameter("modelResource", modelResource);
 
 						<%
 						for (int curType : ExpandoColumnConstants.TYPES) {
-							if ((curType == ExpandoColumnConstants.BOOLEAN_ARRAY) || (curType == ExpandoColumnConstants.DATE_ARRAY)) {
+							if ((curType == ExpandoColumnConstants.BOOLEAN_ARRAY) || (curType == ExpandoColumnConstants.DATE_ARRAY) || (curType == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED)) {
 								continue;
 							}
 						%>
@@ -196,6 +196,20 @@ portletURL.setParameter("modelResource", modelResource);
 				</c:when>
 				<c:when test="<%= type == ExpandoColumnConstants.STRING_ARRAY %>">
 					<aui:input cssClass="lfr-textarea-container" helpMessage="enter-one-value-per-line" label="values" name="defaultValue" required="<%= true %>" type="textarea" value="<%= StringUtil.merge((String[])defaultValue, StringPool.NEW_LINE) %>" />
+				</c:when>
+				<c:when test="<%= type == ExpandoColumnConstants.STRING_LOCALIZED %>">
+
+					<%
+					String xml = StringPool.BLANK;
+
+					if (defaultValue != null) {
+						xml = LocalizationUtil.updateLocalization((Map<Locale,String>)defaultValue, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
+					}
+					%>
+
+					<aui:field-wrapper label="default-value">
+						<liferay-ui:input-localized cssClass="lfr-input-text-container" name="defaultValue" xml="<%= xml %>" />
+					</aui:field-wrapper>
 				</c:when>
 				<c:otherwise>
 					<aui:input cssClass="lfr-input-text-container" name="defaultValue" type="text" value="<%= String.valueOf(defaultValue) %>" />

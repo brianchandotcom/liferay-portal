@@ -14,20 +14,31 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.exception.BulkException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ReleaseConstants;
 import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,6 +78,60 @@ public abstract class VerifyProcess extends BaseDBProcess {
 	}
 
 	protected void doVerify() throws Exception {
+	}
+
+	protected void doVerify(
+			Collection<? extends ThrowableAwareRunnable>
+				throwableAwareRunnables)
+		throws Exception {
+
+		List<Throwable> throwables = new ArrayList<Throwable>();
+
+		if (throwableAwareRunnables.size() <
+				PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD) {
+
+			for (ThrowableAwareRunnable throwableAwareRunnable :
+					throwableAwareRunnables) {
+
+				throwableAwareRunnable.run();
+
+				if (throwableAwareRunnable.hasException()) {
+					throwables.add(throwableAwareRunnable.getThrowable());
+				}
+			}
+		}
+		else {
+			ExecutorService executorService = Executors.newFixedThreadPool(
+				throwableAwareRunnables.size());
+
+			List<Callable<Object>> jobs = new ArrayList<Callable<Object>>(
+				throwableAwareRunnables.size());
+
+			for (Runnable runnable : throwableAwareRunnables) {
+				jobs.add(Executors.callable(runnable));
+			}
+
+			try {
+				List<Future<Object>> futures = executorService.invokeAll(jobs);
+
+				for (Future<Object> future : futures) {
+					try {
+						future.get();
+					}
+					catch (ExecutionException ee) {
+						throwables.add(ee.getCause());
+					}
+				}
+			}
+			finally {
+				executorService.shutdown();
+			}
+		}
+
+		if (!throwables.isEmpty()) {
+			throw new BulkException(
+				"Verification error: " + getClass().getName(), throwables);
+		}
 	}
 
 	/**

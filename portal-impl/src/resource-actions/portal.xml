@@ -652,6 +652,7 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>VIEW_MEMBERS</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
@@ -662,6 +663,7 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>VIEW_MEMBERS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

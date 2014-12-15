@@ -322,7 +322,7 @@ public class ExpandoTableLocalServiceImpl
 			companyId, classNameId, name);
 
 		if ((table != null) && (table.getTableId() != tableId)) {
-			throw new DuplicateTableNameException();
+			throw new DuplicateTableNameException("{tableId=" + tableId + "}");
 		}
 	}
 

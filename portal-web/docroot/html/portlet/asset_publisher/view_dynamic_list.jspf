@@ -70,7 +70,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 			}
 
-			if (!results.isEmpty()) {
+			if (!results.isEmpty() && (start < groupTotal)) {
 				searchContainer.setResults(results);
 
 				request.setAttribute("view.jsp-results", results);
@@ -190,7 +190,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 			request.setAttribute("view.jsp-results", results);
 
-			if (!results.isEmpty()) {
+			if (!results.isEmpty() && (start < groupTotal)) {
 %>
 
 				<h3 class="asset-entries-group-label"><%= ResourceActionsUtil.getModelResource(locale, groupAssetRendererFactory.getClassName()) %></h3>

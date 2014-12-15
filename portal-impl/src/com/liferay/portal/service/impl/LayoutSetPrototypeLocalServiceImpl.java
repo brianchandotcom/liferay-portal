@@ -268,15 +268,6 @@ public class LayoutSetPrototypeLocalServiceImpl
 
 		layoutSetPrototypePersistence.update(layoutSetPrototype);
 
-		// Group
-
-		Group group = groupLocalService.getLayoutSetPrototypeGroup(
-			layoutSetPrototype.getCompanyId(), layoutSetPrototypeId);
-
-		group.setName(layoutSetPrototype.getName(LocaleUtil.getDefault()));
-
-		groupPersistence.update(group);
-
 		return layoutSetPrototype;
 	}
 

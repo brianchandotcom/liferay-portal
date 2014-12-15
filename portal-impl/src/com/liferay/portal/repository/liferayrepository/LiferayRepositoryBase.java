@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.repository.liferayrepository.util.LiferayBase;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -79,18 +80,19 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 	}
 
 	public LiferayRepositoryBase(
-		RepositoryLocalService repositoryLocalService,
-		RepositoryService repositoryService,
-		DLAppHelperLocalService dlAppHelperLocalService,
-		DLFileEntryLocalService dlFileEntryLocalService,
-		DLFileEntryService dlFileEntryService,
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
-		DLFileVersionLocalService dlFileVersionLocalService,
-		DLFileVersionService dlFileVersionService,
-		DLFolderLocalService dlFolderLocalService,
-		DLFolderService dlFolderService,
-		ResourceLocalService resourceLocalService, long folderId,
-		long fileEntryId, long fileVersionId) {
+			RepositoryLocalService repositoryLocalService,
+			RepositoryService repositoryService,
+			DLAppHelperLocalService dlAppHelperLocalService,
+			DLFileEntryLocalService dlFileEntryLocalService,
+			DLFileEntryService dlFileEntryService,
+			DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
+			DLFileVersionLocalService dlFileVersionLocalService,
+			DLFileVersionService dlFileVersionService,
+			DLFolderLocalService dlFolderLocalService,
+			DLFolderService dlFolderService,
+			ResourceLocalService resourceLocalService, long folderId,
+			long fileEntryId, long fileVersionId)
+		throws PrincipalException {
 
 		this.repositoryLocalService = repositoryLocalService;
 		this.repositoryService = repositoryService;
@@ -215,11 +217,14 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		return longList;
 	}
 
-	protected abstract void initByFileEntryId(long fileEntryId);
+	protected abstract void initByFileEntryId(long fileEntryId)
+		throws PrincipalException;
 
-	protected abstract void initByFileVersionId(long fileVersionId);
+	protected abstract void initByFileVersionId(long fileVersionId)
+		throws PrincipalException;
 
-	protected abstract void initByFolderId(long folderId);
+	protected abstract void initByFolderId(long folderId)
+		throws PrincipalException;
 
 	protected abstract void initByRepositoryId(long repositoryId);
 

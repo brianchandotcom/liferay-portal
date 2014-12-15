@@ -69,6 +69,12 @@ public class MBCategoryPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
+		if (MBBanLocalServiceUtil.hasBan(
+				groupId, permissionChecker.getUserId())) {
+
+			return false;
+		}
+
 		if ((categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
 			(categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
@@ -143,7 +149,8 @@ public class MBCategoryPermission {
 				}
 			}
 
-			return true;
+			return MBPermission.contains(
+				permissionChecker, category.getGroupId(), actionId);
 		}
 
 		return _hasPermission(permissionChecker, category, actionId);

@@ -916,6 +916,12 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolder.isInTrashExplicitly();
+	}
+
+	@Override
 	public boolean isRoot() {
 		return _bookmarksFolder.isRoot();
 	}

@@ -28,19 +28,19 @@ else {
 	group = (Group)request.getAttribute(WebKeys.GROUP);
 }
 
-Group liveGroup = group;
+long liveGroupId = group.getGroupId();
 
-if (group.isStagingGroup()) {
-	liveGroup = group.getLiveGroup();
+if (group.isStagingGroup() && !group.isStagedRemotely()) {
+	Group liveGroup = group.getLiveGroup();
+
+	liveGroupId = ParamUtil.getLong(request, "liveGroupId", liveGroup.getGroupId());
 }
-
-long liveGroupId = ParamUtil.getLong(request, "liveGroupId", liveGroup.getGroupId());
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 
-DateRange dateRange = ExportImportHelperUtil.getDateRange(renderRequest, groupId, privateLayout, 0, null, "all");
+DateRange dateRange = ExportImportHelperUtil.getDateRange(renderRequest, liveGroupId, privateLayout, 0, null, "all");
 
 Date startDate = dateRange.getStartDate();
 Date endDate = dateRange.getEndDate();
@@ -53,14 +53,14 @@ List<Layout> selectedLayouts = new ArrayList<Layout>();
 
 for (int i = 0; i < selectedLayoutIds.length; i++) {
 	try {
-		selectedLayouts.add(LayoutLocalServiceUtil.getLayout(groupId, privateLayout, selectedLayoutIds[i]));
+		selectedLayouts.add(LayoutLocalServiceUtil.getLayout(liveGroupId, privateLayout, selectedLayoutIds[i]));
 	}
 	catch (NoSuchLayoutException nsle) {
 	}
 }
 
 if (selectedLayouts.isEmpty()) {
-	selectedLayouts = LayoutLocalServiceUtil.getLayouts(groupId, privateLayout);
+	selectedLayouts = LayoutLocalServiceUtil.getLayouts(liveGroupId, privateLayout);
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -82,7 +82,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 		<div id="<portlet:namespace />exportImportOptions">
 
 			<%
-			int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, LayoutExportBackgroundTaskExecutor.class.getName(), false);
+			int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(liveGroupId, LayoutExportBackgroundTaskExecutor.class.getName(), false);
 			%>
 
 			<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
@@ -93,7 +93,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 			<portlet:actionURL var="exportPagesURL">
 				<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
 			</portlet:actionURL>
@@ -103,9 +103,12 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 				<div class="export-dialog-tree">
-					<aui:input cssClass="file-selector" label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= HtmlUtil.escape(StringUtil.replace(rootNodeName, " ", "_")) + "-" + Time.getShortTimestamp() + ".lar" %>' />
+					<aui:input cssClass="file-selector" label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" showRequiredLabel="<%= false %>" size="50" value='<%= HtmlUtil.escape(StringUtil.replace(rootNodeName, " ", "_")) + "-" + Time.getShortTimestamp() + ".lar" %>'>
+						<aui:validator name="maxLength">75</aui:validator>
+						<aui:validator name="required" />
+					</aui:input>
 
-					<aui:input name="layoutIds" type="hidden" />
+					<aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(liveGroupId, privateLayout, StringUtil.merge(selectedLayoutIds)) %>" />
 
 					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 						<aui:fieldset cssClass="options-group" label="pages">
@@ -174,7 +177,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 											for (Portlet portlet : portletDataHandlerPortlets) {
 												PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-												PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), groupId, portlet, privateLayout);
+												PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), liveGroupId, portlet, privateLayout);
 
 												String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 											%>
@@ -183,18 +186,22 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 													<aui:input label="<%= portletTitle %>" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
 
 													<div class="hide" id="<portlet:namespace />configuration_<%= portlet.getRootPortletId() %>">
-														<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
-															<ul class="lfr-tree unstyled">
+														<ul class="lfr-tree unstyled">
+															<li class="tree-item">
+																<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
+																	<ul class="lfr-tree unstyled">
 
-																<%
-																request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
-																request.setAttribute("render_controls.jsp-controls", configurationControls);
-																request.setAttribute("render_controls.jsp-portletId", portlet.getRootPortletId());
-																%>
+																		<%
+																		request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
+																		request.setAttribute("render_controls.jsp-controls", configurationControls);
+																		request.setAttribute("render_controls.jsp-portletId", portlet.getRootPortletId());
+																		%>
 
-																<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
-															</ul>
-														</aui:fieldset>
+																		<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																	</ul>
+																</aui:fieldset>
+															</li>
+														</ul>
 													</div>
 
 													<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= portlet.getRootPortletId() %>">
@@ -231,7 +238,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 					<%
 					List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId());
 
-					PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(themeDisplay, startDate, endDate);
+					PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), liveGroupId, startDate, endDate);
 
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 					%>
@@ -571,7 +578,9 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 	<liferay-ui:section>
 		<div class="process-list" id="<portlet:namespace />exportProcesses">
-			<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_processes.jsp" />
+			<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_processes.jsp">
+				<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+			</liferay-util:include>
 		</div>
 	</liferay-ui:section>
 </liferay-ui:tabs>
@@ -581,7 +590,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 		<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 	</liferay-portlet:resourceURL>
 
 	new Liferay.ExportImport(

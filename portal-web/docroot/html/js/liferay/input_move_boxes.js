@@ -107,26 +107,15 @@ AUI.add(
 
 						var from = instance._leftBox;
 						var to = instance._rightBox;
-						var sort;
+						var sort = !instance.get('leftReorder');
 
 						if (cssClass.indexOf('move-right') !== -1) {
 							from = instance._rightBox;
 							to = instance._leftBox;
 							sort = !instance.get('rightReorder');
 						}
-						else {
-							sort = !instance.get('leftReorder');
-						}
 
-						Util.moveItem(from, to, sort);
-
-						Liferay.fire(
-							NAME + ':moveItem',
-							{
-								fromBox: from,
-								toBox: to
-							}
-						);
+						instance._moveItem(from, to, sort);
 					},
 
 					_afterOrderClick: function(event, box) {
@@ -145,6 +134,18 @@ AUI.add(
 						}
 
 						Util.reorder(box, direction);
+					},
+
+					_moveItem: function(from, to, sort) {
+						Util.moveItem(from, to, sort);
+
+						Liferay.fire(
+							NAME + ':moveItem',
+							{
+								fromBox: from,
+								toBox: to
+							}
+						);
 					},
 
 					_onSelectFocus: function(event, box) {
@@ -166,10 +167,9 @@ AUI.add(
 						var instance = this;
 
 						var contentBox = instance.get('contentBox');
+						var strings = instance.get('strings');
 
 						var moveButtonsColumn = contentBox.one('.move-arrow-buttons');
-
-						var strings = instance.get('strings');
 
 						if (moveButtonsColumn) {
 							instance._moveToolbar = new A.Toolbar(

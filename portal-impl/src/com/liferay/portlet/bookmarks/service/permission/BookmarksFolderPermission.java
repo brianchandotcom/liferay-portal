@@ -96,7 +96,8 @@ public class BookmarksFolderPermission {
 				}
 			}
 
-			return true;
+			return BookmarksPermission.contains(
+				permissionChecker, folder.getGroupId(), actionId);
 		}
 
 		return _hasPermission(permissionChecker, folder, actionId);

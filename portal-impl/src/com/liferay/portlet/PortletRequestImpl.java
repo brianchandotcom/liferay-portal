@@ -49,6 +49,7 @@ import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.servlet.SharedSessionServletRequest;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration;
 
@@ -63,6 +64,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ccpp.Profile;
 
@@ -549,9 +552,17 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 			return true;
 		}
-		else {
-			return false;
+
+		if (_strutsPortlet) {
+			Matcher matcher = _strutsPortletIgnoredParamtersPattern.matcher(
+				name);
+
+			if (matcher.matches()) {
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	@Override
@@ -662,6 +673,14 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_portlet = portlet;
 		_portletName = portlet.getPortletId();
 		_publicRenderParameters = PublicRenderParametersPool.get(request, plid);
+
+		if (invokerPortlet != null) {
+			if (invokerPortlet.isStrutsPortlet() ||
+				invokerPortlet.isStrutsBridgePortlet()) {
+
+				_strutsPortlet = true;
+			}
+		}
 
 		String portletNamespace = PortalUtil.getPortletNamespace(_portletName);
 
@@ -948,6 +967,9 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	private static Log _log = LogFactoryUtil.getLog(PortletRequestImpl.class);
 
+	private static Pattern _strutsPortletIgnoredParamtersPattern =
+		Pattern.compile(PropsValues.STRUTS_PORTLET_IGNORED_PARAMETERS_REGEXP);
+
 	private boolean _invalidSession;
 	private Locale _locale;
 	private HttpServletRequest _originalRequest;
@@ -965,6 +987,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private long _remoteUserId;
 	private HttpServletRequest _request;
 	private PortletSessionImpl _session;
+	private boolean _strutsPortlet;
 	private boolean _triggeredByActionURL;
 	private Principal _userPrincipal;
 	private boolean _wapTheme;

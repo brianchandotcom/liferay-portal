@@ -252,7 +252,14 @@ serverURL.setParameter("tabs3", tabs3);
 
 				for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 					String property = (String)entry.getKey();
-					String value = (String)entry.getValue();
+					String value = StringPool.BLANK;
+
+					if (ArrayUtil.contains(PropsValues.ADMIN_OBFUSCATED_PROPERTIES, property)) {
+						value = "********";
+					}
+					else {
+						value = (String)entry.getValue();
+					}
 
 					if (Validator.isNull(keywords) || property.contains(keywords) || value.contains(keywords)) {
 						filteredProperties.put(property, value);
@@ -578,7 +585,15 @@ serverURL.setParameter("tabs3", tabs3);
 
 							<aui:input cssClass="lfr-input-text-container" label="user-name" name="pop3User" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_POP3_USER) %>" />
 
-							<aui:input cssClass="lfr-input-text-container" label="password" name="pop3Password" type="password" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD) %>" />
+							<%
+							String pop3Password = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD);
+
+							if (Validator.isNotNull(pop3Password)) {
+								pop3Password = Portal.TEMP_OBFUSCATION_VALUE;
+							}
+							%>
+
+							<aui:input cssClass="lfr-input-text-container" label="password" name="pop3Password" type="password" value="<%= pop3Password %>" />
 
 							<aui:input cssClass="lfr-input-text-container" label="outgoing-smtp-server" name="smtpHost" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST) %>" />
 
@@ -588,7 +603,15 @@ serverURL.setParameter("tabs3", tabs3);
 
 							<aui:input cssClass="lfr-input-text-container" label="user-name" name="smtpUser" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER) %>" />
 
-							<aui:input cssClass="lfr-input-text-container" label="password" name="smtpPassword" type="password" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD) %>" />
+							<%
+							String smtpPassword = PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD);
+
+							if (Validator.isNotNull(smtpPassword)) {
+								smtpPassword = Portal.TEMP_OBFUSCATION_VALUE;
+							}
+							%>
+
+							<aui:input cssClass="lfr-input-text-container" label="password" name="smtpPassword" type="password" value="<%= smtpPassword %>" />
 
 							<aui:input cssClass="lfr-textarea-container" label="manually-specify-additional-javamail-properties-to-override-the-above-configuration" name="advancedProperties" type="textarea" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES, StringPool.BLANK) %>" />
 						</liferay-ui:panel>

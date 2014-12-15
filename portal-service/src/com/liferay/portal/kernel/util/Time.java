@@ -175,7 +175,21 @@ public class Time {
 	}
 
 	public static String getRelativeTimeDescription(
+		Date date, Locale locale, TimeZone timeZone, Format dateTimeFormat) {
+
+		return getRelativeTimeDescription(
+			date.getTime(), locale, timeZone, dateTimeFormat);
+	}
+
+	public static String getRelativeTimeDescription(
 		long milliseconds, Locale locale, TimeZone timeZone) {
+
+		return getRelativeTimeDescription(milliseconds, locale, timeZone, null);
+	}
+
+	public static String getRelativeTimeDescription(
+		long milliseconds, Locale locale, TimeZone timeZone,
+		Format dateTimeFormat) {
 
 		Format timeFormat = FastDateFormatFactoryUtil.getTime(locale, timeZone);
 
@@ -184,12 +198,14 @@ public class Time {
 
 		long millisAgo = System.currentTimeMillis() - milliseconds;
 
-		if (millisAgo <= Time.MINUTE) {
-			return LanguageUtil.get(locale, "about-a-minute-ago");
-		}
-		else if (millisAgo < Time.HOUR) {
-			return LanguageUtil.format(
-				locale, "x-minutes-ago", (millisAgo / Time.MINUTE));
+		if (millisAgo < Time.HOUR) {
+			long minutes = millisAgo / Time.MINUTE;
+
+			if (minutes <= 1) {
+				return LanguageUtil.get(locale, "about-a-minute-ago");
+			}
+
+			return LanguageUtil.format(locale, "x-minutes-ago", minutes);
 		}
 		else if ((millisAgo / Time.HOUR) == 1) {
 			return LanguageUtil.get(locale, "about-an-hour-ago");
@@ -203,10 +219,12 @@ public class Time {
 				locale, "yesterday-at-x", timeFormat.format(milliseconds));
 		}
 
-		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"EEEE, MMMMM dd, yyyy", locale, timeZone);
+		if (dateTimeFormat == null) {
+			dateTimeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+				"EEEE, MMMMM dd, yyyy", locale, timeZone);
+		}
 
-		return dateFormat.format(milliseconds);
+		return dateTimeFormat.format(milliseconds);
 	}
 
 	public static String getRFC822() {

@@ -853,6 +853,14 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedFieldsMap) {
 	}
 
+	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedPersistentFieldsMap() {
+		return null;
+	}
+
+	public void setLocalizedPersistentFieldsMap(
+		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedPersistentFieldsMap) {
+	}
+
 	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> getLocalizedTransientFieldsMap() {
 		return null;
 	}
@@ -921,7 +929,9 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			return StringPool.BLANK;
 		}
 
-		return LocalizationUtil.getDefaultLanguageId(xml);
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
 	}
 
 	@Override
@@ -933,7 +943,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
 
@@ -1063,6 +1073,14 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		ddmStructureModelImpl._originalDescription = ddmStructureModelImpl._description;
 
+		setDocument(null);
+
+		setLocalizedFieldsMap(null);
+
+		setLocalizedPersistentFieldsMap(null);
+
+		setLocalizedTransientFieldsMap(null);
+
 		ddmStructureModelImpl._columnBitmask = 0;
 	}
 
@@ -1161,6 +1179,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureCacheModel._document = getDocument();
 
 		ddmStructureCacheModel._localizedFieldsMap = getLocalizedFieldsMap();
+
+		ddmStructureCacheModel._localizedPersistentFieldsMap = getLocalizedPersistentFieldsMap();
 
 		ddmStructureCacheModel._localizedTransientFieldsMap = getLocalizedTransientFieldsMap();
 

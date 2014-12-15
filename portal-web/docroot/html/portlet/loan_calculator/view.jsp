@@ -18,12 +18,11 @@
 
 <%
 String loanAmountString = ParamUtil.get(request, "loanAmount", "200000");
-String interestString = ParamUtil.get(request, "interest", "7.00");
+double interestRate = ParamUtil.get(request, "interestRate", 7.00);
 int years = ParamUtil.get(request, "years", 30);
 int paymentsPerYear = ParamUtil.get(request, "paymentsPerYear", 12);
 
 int loanAmount = 0;
-double interest = 0.0;
 
 NumberFormat doubleFormat = NumberFormat.getNumberInstance(locale);
 
@@ -37,75 +36,51 @@ integerFormat.setMinimumFractionDigits(0);
 
 try {
 	loanAmount = GetterUtil.getInteger(integerFormat.parse(loanAmountString));
-	interest = GetterUtil.getDouble(doubleFormat.parse(interestString));
 }
 catch (Exception e) {
 }
 
-double tempValue = Math.pow((1 + (interest / 100 / paymentsPerYear)), (years * paymentsPerYear));
-double amountPerPayment = (loanAmount * tempValue * (interest / 100 / paymentsPerYear)) / (tempValue - 1);
+double tempValue = Math.pow((1 + (interestRate / 100 / paymentsPerYear)), (years * paymentsPerYear));
+double amountPerPayment = (loanAmount * tempValue * (interestRate / 100 / paymentsPerYear)) / (tempValue - 1);
 double totalPaid = amountPerPayment * years * paymentsPerYear;
 double interestPaid = totalPaid - loanAmount;
 %>
 
-<form action="<liferay-portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/loan_calculator/view" /></liferay-portlet:renderURL>" id="<portlet:namespace />fm" method="post" name="<portlet:namespace />fm">
+<portlet:renderURL var="viewLoanURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<portlet:param name="struts_action" value="/loan_calculator/view" />
+</portlet:renderURL>
 
-<table class="lfr-table">
-<tr>
-	<td>
-		<liferay-ui:message key="loan-amount" />
-	</td>
-	<td>
-		<input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<portlet:namespace />loanAmount" size="5" type="text" value="<%= integerFormat.format(loanAmount) %>" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<liferay-ui:message key="interest-rate" />
-	</td>
-	<td>
-		<input name="<portlet:namespace />interest" size="5" type="text" value="<%= doubleFormat.format(interest) %>" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<liferay-ui:message key="years" />
-	</td>
-	<td>
-		<input name="<portlet:namespace />years" size="5" type="text" value="<%= years %>" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<liferay-ui:message key="monthly-payment" />
-	</td>
-	<td>
-		<strong><%= integerFormat.format(amountPerPayment) %></strong>
-	</td>
-</tr>
-<tr>
-	<td>
-		<liferay-ui:message key="interest-paid" />
-	</td>
-	<td>
-		<strong><%= integerFormat.format(interestPaid) %></strong>
-	</td>
-</tr>
-<tr>
-	<td>
-		<liferay-ui:message key="total-paid" />
-	</td>
-	<td>
-		<strong><%= integerFormat.format(totalPaid) %></strong>
-	</td>
-</tr>
-</table>
+<aui:form action="<%= viewLoanURL %>" id="fm" method="post" name="fm">
+	<aui:row>
+		<aui:col width="50">
+			<aui:fieldset>
+				<aui:field-wrapper>
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="loanAmount" value="<%= integerFormat.format(loanAmount) %>" />
 
-<br />
+					<aui:input name="interestRate" value="<%= doubleFormat.format(interestRate) %>" />
 
-<input type="submit" value="<liferay-ui:message key="calculate" />" />
+					<aui:input name="years" value="<%= years %>" />
 
-</form>
+					<aui:button-row>
+						<aui:button type="submit" value="calculate" />
+					</aui:button-row>
+				</aui:field-wrapper>
+			</aui:fieldset>
+		</aui:col>
+
+		<aui:col width="50">
+			<aui:fieldset>
+				<aui:field-wrapper>
+					<aui:input disabled="<%= true %>" name="monthlyPayment" value="<%= integerFormat.format(amountPerPayment) %>" />
+
+					<aui:input disabled="<%= true %>" name="interestPaid" value="<%= integerFormat.format(interestPaid) %>" />
+
+					<aui:input disabled="<%= true %>" name="totalPaid" value="<%= integerFormat.format(totalPaid) %>" />
+				</aui:field-wrapper>
+			</aui:fieldset>
+		</aui:col>
+	</aui:row>
+</aui:form>
 
 <aui:script use="aui-io-request,aui-parse-content">
 	var form = A.one('#<portlet:namespace />fm');

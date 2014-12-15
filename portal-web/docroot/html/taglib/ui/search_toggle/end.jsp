@@ -43,7 +43,7 @@
 					},
 					align: {
 						node: toggleAdvancedNode,
-						points:[A.WidgetPositionAlign.TR, A.WidgetPositionAlign.BR]
+						points:[A.WidgetPositionAlign.TL, A.WidgetPositionAlign.BL]
 					},
 					bodyContent: A.one('#<%= id %>advancedBodyNode'),
 					boundingBox: advancedNode,

@@ -54,7 +54,15 @@
 
 		<property name="alloy.version" value="2.0.0" />
 
-		<property name="alloy.file" value="alloy-${alloy.version}.zip" />
+		<path id="alloy.zip.path">
+			<fileset dir="third-party">
+				<include name="alloy-${alloy.version}*.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloy.zip.path" refid="alloy.zip.path" />
+
+		<basename file="${alloy.zip.path}" property="alloy.file" />
 
 		<if>
 			<not>
@@ -351,6 +359,10 @@
 				// Fix handling mixed list items
 
 				creoleParserContent = creoleParserContent.replace("regex: /[ \\t]*([*#]).+(\\n[ \\t]*[^*#\\s].*)*(\\n[ \\t]*\\1[*#].+)*/,", "regex: /[ \\t]*([*#]).+(\\n[ \\t]*[^*#\\s].*)*(\\n[ \\t]*[*#]{2}.+)*/,");
+
+				// Add support for multiple links in table cells
+
+				creoleParserContent = creoleParserContent.replace("'\\\\[\\\\[' + rx.link + '(\\\\|' + rx.linkText + ')?\\\\]\\\\]' +", "'(?:\\\\[\\\\[' + rx.link + '(\\\\|' + rx.linkText + ')?\\\\]\\\\][^|~\\\\[{]*)*' +");
 
 				// Register Creole parser
 
@@ -714,6 +726,9 @@
 								break ;
 							case 211:
 								alert( 'You cannot upload an audio file if audio preview generation is disabled.' );
+								break ;
+							case 212:
+								alert( 'A category is required for this file. Please use the Documents and Media application to upload the file.' );
 								break ;
 							default :
 						]]>

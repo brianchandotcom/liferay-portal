@@ -43,4 +43,7 @@ public interface WikiNode extends WikiNodeModel, PersistedModel {
 
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

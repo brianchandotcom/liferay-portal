@@ -19,6 +19,7 @@ import com.liferay.portal.RequiredReminderQueryException;
 import com.liferay.portal.SendPasswordException;
 import com.liferay.portal.UserActiveException;
 import com.liferay.portal.UserEmailAddressException;
+import com.liferay.portal.UserLockoutException;
 import com.liferay.portal.UserReminderQueryException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
@@ -89,6 +90,7 @@ public class ForgotPasswordAction extends PortletAction {
 				e instanceof SendPasswordException ||
 				e instanceof UserActiveException ||
 				e instanceof UserEmailAddressException ||
+				e instanceof UserLockoutException ||
 				e instanceof UserReminderQueryException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
@@ -213,6 +215,10 @@ public class ForgotPasswordAction extends PortletAction {
 
 		if (!user.isActive()) {
 			throw new UserActiveException();
+		}
+
+		if (user.isLockout()) {
+			throw new UserLockoutException();
 		}
 
 		return user;

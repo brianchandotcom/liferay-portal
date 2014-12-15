@@ -168,17 +168,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SITE_ADMIN_PAGES_SITE_PAGES_GENERAL-->
-<tr>
-	<td>SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_ACCESS_IN_SITE_ADMINISTRATION</td>
-	<td>//input[@value='156ACCESS_IN_CONTROL_PANEL']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SITE_ADMIN_PAGES_SITE_PAGES_SITE-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_ADD_SITE</td>
@@ -277,11 +266,6 @@
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENTS_ADD_DOCUMENT</td>
 	<td>//input[@value='com.liferay.portlet.documentlibraryADD_DOCUMENT']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENTS_ADD_REPOSITORY</td>
-	<td>//input[@value='com.liferay.portlet.documentlibraryADD_REPOSITORY']</td>
 	<td></td>
 </tr>
 <tr>

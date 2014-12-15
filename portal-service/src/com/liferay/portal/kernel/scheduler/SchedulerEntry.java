@@ -25,6 +25,10 @@ public interface SchedulerEntry extends Serializable {
 
 	public String getDescription();
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public MessageListener getEventListener();
 
 	public String getEventListenerClass();
@@ -41,6 +45,10 @@ public interface SchedulerEntry extends Serializable {
 
 	public void setDescription(String description);
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void setEventListener(MessageListener eventListener);
 
 	public void setEventListenerClass(String eventListenerClass);

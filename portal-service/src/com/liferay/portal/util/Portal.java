@@ -75,6 +75,8 @@ public interface Portal {
 
 	public static final String FRIENDLY_URL_SEPARATOR = "/-/";
 
+	public static final String JSESSIONID = ";jsessionid=";
+
 	public static final String PATH_IMAGE = "/image";
 
 	public static final String PATH_MAIN = "/c";
@@ -640,6 +642,13 @@ public interface Portal {
 	public long getDigestAuthUserId(HttpServletRequest request)
 		throws PortalException, SystemException;
 
+	public String getDisplayURL(Group group, ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	public String getDisplayURL(
+			Group group, ThemeDisplay themeDisplay, boolean privateLayout)
+		throws PortalException;
+
 	public String getEmailFromAddress(
 			PortletPreferences preferences, long companyId, String defaultValue)
 		throws SystemException;
@@ -806,6 +815,10 @@ public interface Portal {
 
 	public String getLayoutURL(
 			Layout layout, ThemeDisplay themeDisplay, boolean doAsUser)
+		throws PortalException, SystemException;
+
+	public String getLayoutURL(
+			Layout layout, ThemeDisplay themeDisplay, Locale locale)
 		throws PortalException, SystemException;
 
 	public String getLayoutURL(ThemeDisplay themeDisplay)
@@ -1035,6 +1048,10 @@ public interface Portal {
 
 	public String getServletContextName();
 
+	public long[] getSharedContentSiteGroupIds(
+			long companyId, long groupId, long userId)
+		throws PortalException, SystemException;
+
 	public Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
 			HttpServletRequest request)
 		throws SystemException;
@@ -1152,6 +1169,8 @@ public interface Portal {
 
 	public String getUserValue(long userId, String param, String defaultValue)
 		throws SystemException;
+
+	public String getValidPortalDomain(long companyId, String domain);
 
 	public long getValidUserId(long companyId, long userId)
 		throws PortalException, SystemException;
@@ -1287,6 +1306,8 @@ public interface Portal {
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelistActions}
 	 */
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions();
+
+	public String resetPortletParameters(String url, String portletId);
 
 	public void sendError(
 			Exception e, ActionRequest actionRequest,

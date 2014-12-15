@@ -61,17 +61,26 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		categorySections="<%= categorySections %>"
 		htmlTop="<%= htmlTop %>"
 		jspPath="/html/portlet/portal_settings/"
+		showButtons="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), company.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>"
 	/>
 </aui:form>
 
 <aui:script>
 	function <portlet:namespace />saveCompany() {
-		document.<portlet:namespace />fm.method = "post";
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.UPDATE %>";
+		document.<portlet:namespace />fm.method = 'post';
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UPDATE %>';
 
-		<portlet:namespace />saveEmails();
-		<portlet:namespace />saveLdap();
-		<portlet:namespace />saveLocales();
+		if (typeof(<portlet:namespace />saveEmails) == 'function') {
+			<portlet:namespace />saveEmails();
+		}
+
+		if (typeof(<portlet:namespace />saveLdap) == 'function') {
+			<portlet:namespace />saveLdap();
+		}
+
+		if (typeof(<portlet:namespace />saveLocales) == 'function') {
+			<portlet:namespace />saveLocales();
+		}
 
 		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/portal_settings/edit_company" /></portlet:actionURL>");
 	}

@@ -65,6 +65,7 @@ public interface PortalService extends BaseService {
 	public java.lang.String getAutoDeployDirectory()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.jsonwebservice.JSONWebService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBuildNumber();
 
@@ -86,6 +87,7 @@ public interface PortalService extends BaseService {
 		java.lang.String transactionPortletBarText)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void testAutoSyncHibernateSessionStateOnTxCreation()
 		throws com.liferay.portal.kernel.exception.SystemException;
 

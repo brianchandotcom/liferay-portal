@@ -59,21 +59,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ALLOW_PINGBACKS_CHECKBOX</td>
-	<td>//input[@id='_33_allowPingbacksCheckbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALLOWS_TRACKBACKS_CHECKBOX</td>
-	<td>//input[@id='_33_allowTrackbacksCheckbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TRACKBACKS_TO_SEND_FIELD</td>
-	<td>//input[@id='_33_trackbacks']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SAVE_AS_DRAFT_BUTTON</td>
 	<td>//button[@id='_33_saveButton']</td>
 	<td></td>

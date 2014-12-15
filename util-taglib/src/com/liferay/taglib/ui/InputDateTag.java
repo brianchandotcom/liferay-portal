@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -75,6 +74,10 @@ public class InputDateTag extends IncludeTag {
 		_name = name;
 	}
 
+	public void setNullable(boolean nullable) {
+		_nullable = nullable;
+	}
+
 	public void setYearParam(String yearParam) {
 		_yearParam = yearParam;
 	}
@@ -96,6 +99,7 @@ public class InputDateTag extends IncludeTag {
 		_monthAndYearParam = StringPool.BLANK;
 		_monthParam = null;
 		_monthValue = -1;
+		_nullable = false;
 		_yearParam = null;
 		_yearValue = 0;
 	}
@@ -109,11 +113,8 @@ public class InputDateTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
 			"liferay-ui:input-date:autoFocus", String.valueOf(_autoFocus));
-		request.setAttribute("liferay-ui:input-date:cssClass",_cssClass);
+		request.setAttribute("liferay-ui:input-date:cssClass", _cssClass);
 		request.setAttribute("liferay-ui:input-date:dayParam", _dayParam);
-		request.setAttribute(
-			"liferay-ui:input-date:dayParamId",
-			FriendlyURLNormalizerUtil.normalize(_dayParam));
 		request.setAttribute(
 			"liferay-ui:input-date:dayValue", String.valueOf(_dayValue));
 		request.setAttribute(
@@ -129,15 +130,11 @@ public class InputDateTag extends IncludeTag {
 			"liferay-ui:input-date:monthAndYearParam", _monthAndYearParam);
 		request.setAttribute("liferay-ui:input-date:monthParam", _monthParam);
 		request.setAttribute(
-			"liferay-ui:input-date:monthParamId",
-			FriendlyURLNormalizerUtil.normalize(_monthParam));
-		request.setAttribute(
 			"liferay-ui:input-date:monthValue", String.valueOf(_monthValue));
 		request.setAttribute("liferay-ui:input-date:name", _name);
-		request.setAttribute("liferay-ui:input-date:yearParam", _yearParam);
 		request.setAttribute(
-			"liferay-ui:input-date:yearParamId",
-			FriendlyURLNormalizerUtil.normalize(_yearParam));
+			"liferay-ui:input-date:nullable", String.valueOf(_nullable));
+		request.setAttribute("liferay-ui:input-date:yearParam", _yearParam);
 		request.setAttribute(
 			"liferay-ui:input-date:yearValue", String.valueOf(_yearValue));
 	}
@@ -156,6 +153,7 @@ public class InputDateTag extends IncludeTag {
 	private String _monthParam;
 	private int _monthValue = -1;
 	private String _name;
+	private boolean _nullable;
 	private String _yearParam;
 	private int _yearValue;
 

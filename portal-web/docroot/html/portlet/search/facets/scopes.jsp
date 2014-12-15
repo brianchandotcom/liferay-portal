@@ -20,7 +20,7 @@
 if (termCollectors.isEmpty()) {
 %>
 
-	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="0" />
+	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldName()) %>" type="hidden" value="0" />
 
 <%
 	return;
@@ -31,12 +31,12 @@ int maxTerms = dataJSONObject.getInt("maxTerms");
 boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 %>
 
-<div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldId() %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= facet.getFieldId() %>" type="hidden" value="<%= fieldParam %>" />
+<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
+	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
 	<ul class="nav nav-pills nav-stacked scopes">
 		<li class="facet-value default <%= fieldParam.equals("0") ? "active" : StringPool.BLANK %>">
-			<a data-value="0" href="javascript:;"><aui:icon image="sitemap" /> <liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
+			<a data-value="0" href="javascript:;"><aui:icon image="sitemap" /> <liferay-ui:message key="any" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 		</li>
 
 		<%
@@ -58,7 +58,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 				<aui:script use="liferay-token-list">
 					Liferay.Search.tokenList.add(
 						{
-							fieldValues: '<%= renderResponse.getNamespace() + facet.getFieldId() + "|0" %>',
+							fieldValues: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "|0" %>',
 							text: '<%= HtmlUtil.escapeJS(group.getDescriptiveName(locale)) %>'
 						}
 					);

@@ -119,9 +119,18 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+		boolean fileMaxSizeCheckEnabled =
+			PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled();
 
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
+
+			if ((portletId != null) &&
+				portletId.equals(PortletKeys.BACKGROUND_TASK)) {
+
+				PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(
+					false);
+			}
 
 			return DLAppLocalServiceUtil.addFileEntry(
 				userId, repository.getRepositoryId(), folderId, fileName,
@@ -130,6 +139,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(
+				fileMaxSizeCheckEnabled);
 		}
 	}
 

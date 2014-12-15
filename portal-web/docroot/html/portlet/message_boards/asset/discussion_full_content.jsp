@@ -51,7 +51,7 @@ MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(message.getParent
 		</c:if>
 
 		<div>
-			<%= message.getBody() %>
+			<%= HtmlUtil.escape(message.getBody()) %>
 		</div>
 
 		<br />

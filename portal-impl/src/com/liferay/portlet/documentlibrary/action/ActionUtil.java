@@ -18,20 +18,22 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.RepositoryServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil;
@@ -39,6 +41,7 @@ import com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -117,7 +120,8 @@ public class ActionUtil {
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
 		if (fileEntry.isInTrash() && !cmd.equals(Constants.MOVE_FROM_TRASH)) {
-			throw new NoSuchFileEntryException();
+			throw new NoSuchFileEntryException(
+				"{fileEntryId=" + fileEntryId + "}");
 		}
 	}
 
@@ -188,18 +192,33 @@ public class ActionUtil {
 
 		long folderId = ParamUtil.getLong(request, "folderId");
 
+		boolean ignoreRootFolder = ParamUtil.getBoolean(
+			request, "ignoreRootFolder");
+
+		if ((folderId <= 0) && !ignoreRootFolder) {
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			String portletId = portletDisplay.getId();
+
+			PortletPreferences portletPreferences =
+				PortletPreferencesFactoryUtil.getPortletPreferences(
+					request, portletId);
+
+			folderId = GetterUtil.getLong(
+				portletPreferences.getValue("rootFolderId", null));
+		}
+
 		Folder folder = null;
 
-		if ((folderId > 0) &&
-			(folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
+		if (folderId > 0) {
 			folder = DLAppServiceUtil.getFolder(folderId);
 
 			if (folder.getModel() instanceof DLFolder) {
 				DLFolder dlFolder = (DLFolder)folder.getModel();
 
 				if (dlFolder.isInTrash()) {
-					throw new NoSuchFolderException();
+					throw new NoSuchFolderException(
+						"{folderId=" + folderId + "}");
 				}
 			}
 		}

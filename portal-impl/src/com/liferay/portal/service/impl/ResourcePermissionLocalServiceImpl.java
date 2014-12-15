@@ -328,6 +328,15 @@ public class ResourcePermissionLocalServiceImpl
 		}
 	}
 
+	@Override
+	public ResourcePermission fetchResourcePermission(
+			long companyId, String name, int scope, String primKey, long roleId)
+		throws SystemException {
+
+		return resourcePermissionPersistence.fetchByC_N_S_P_R(
+			companyId, name, scope, primKey, roleId);
+	}
+
 	/**
 	 * Returns the intersection of action IDs the role has permission at the
 	 * scope to perform on resources of the type.

@@ -78,7 +78,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 		%>
 
 			<li>
-				<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= layoutPrototypeName %></strong> (<%= layoutPrototypeUuid %>)
+				<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= HtmlUtil.escape(layoutPrototypeName) %></strong> (<%= HtmlUtil.escape(layoutPrototypeUuid) %>)
 			</li>
 
 		<%
@@ -142,7 +142,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 						<liferay-ui:message key="name" />
 					</dt>
 					<dd>
-						<%= fileEntry.getTitle() %>
+						<%= HtmlUtil.escape(fileEntry.getTitle()) %>
 					</dd>
 					<dt>
 						<liferay-ui:message key="export" />
@@ -161,7 +161,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 						<liferay-ui:message key="author" />
 					</dt>
 					<dd>
-						<%= fileEntry.getUserName() %>
+						<%= HtmlUtil.escape(fileEntry.getUserName()) %>
 					</dd>
 					<dt>
 						<liferay-ui:message key="size" />
@@ -243,18 +243,22 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 											<aui:input label="<%= portletTitle %>" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
 
 											<div class="hide" id="<portlet:namespace />configuration_<%= portlet.getRootPortletId() %>">
-												<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
-													<ul class="lfr-tree unstyled">
+												<ul class="lfr-tree unstyled">
+													<li class="tree-item">
+														<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
+															<ul class="lfr-tree unstyled">
 
-														<%
-														request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
-														request.setAttribute("render_controls.jsp-controls", portletDataHandlerControls);
-														request.setAttribute("render_controls.jsp-portletId", portlet.getRootPortletId());
-														%>
+																<%
+																request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
+																request.setAttribute("render_controls.jsp-controls", portletDataHandlerControls);
+																request.setAttribute("render_controls.jsp-portletId", portlet.getRootPortletId());
+																%>
 
-														<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
-													</ul>
-												</aui:fieldset>
+																<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+															</ul>
+														</aui:fieldset>
+													</li>
+												</ul>
 											</div>
 
 											<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= portlet.getRootPortletId() %>">
@@ -343,8 +347,18 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 										<%
 										Set<String> displayedControls = new HashSet<String>();
+										Set<String> portletDataHandlerClasses = new HashSet<String>();
 
 										for (Portlet portlet : dataPortlets) {
+											String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
+
+											if (!portletDataHandlerClasses.contains(portletDataHandlerClass)) {
+												portletDataHandlerClasses.add(portletDataHandlerClass);
+											}
+											else {
+												continue;
+											}
+
 											String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
 											PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();

@@ -58,7 +58,7 @@
 		>
 
 			<%
-			buffer.append(LanguageUtil.get(pageContext, workflowInstance.getWorkflowDefinitionName()));
+			buffer.append(LanguageUtil.get(pageContext, HtmlUtil.escape(workflowInstance.getWorkflowDefinitionName())));
 			%>
 
 		</liferay-ui:search-container-column-text>
@@ -94,7 +94,7 @@
 		>
 
 			<%
-			buffer.append(LanguageUtil.get(pageContext, workflowInstance.getState()));
+			buffer.append(LanguageUtil.get(pageContext, HtmlUtil.escape(workflowInstance.getState())));
 			%>
 
 		</liferay-ui:search-container-column-text>

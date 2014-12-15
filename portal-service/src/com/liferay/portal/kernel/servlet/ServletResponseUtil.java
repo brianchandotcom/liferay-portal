@@ -167,39 +167,41 @@ public class ServletResponseUtil {
 
 	public static void sendFile(
 			HttpServletRequest request, HttpServletResponse response,
-			String fileName, InputStream is)
+			String fileName, InputStream inputStream)
 		throws IOException {
 
-		sendFile(request, response, fileName, is, null);
+		sendFile(request, response, fileName, inputStream, null);
 	}
 
 	public static void sendFile(
 			HttpServletRequest request, HttpServletResponse response,
-			String fileName, InputStream is, long contentLength,
+			String fileName, InputStream inputStream, long contentLength,
 			String contentType)
 		throws IOException {
 
-		sendFile(request, response, fileName, is, 0, contentType, null);
+		sendFile(
+			request, response, fileName, inputStream, contentLength,
+			contentType, null);
 	}
 
 	public static void sendFile(
 			HttpServletRequest request, HttpServletResponse response,
-			String fileName, InputStream is, long contentLength,
+			String fileName, InputStream inputStream, long contentLength,
 			String contentType, String contentDispositionType)
 		throws IOException {
 
 		setHeaders(
 			request, response, fileName, contentType, contentDispositionType);
 
-		write(response, is, contentLength);
+		write(response, inputStream, contentLength);
 	}
 
 	public static void sendFile(
 			HttpServletRequest request, HttpServletResponse response,
-			String fileName, InputStream is, String contentType)
+			String fileName, InputStream inputStream, String contentType)
 		throws IOException {
 
-		sendFile(request, response, fileName, is, 0, contentType);
+		sendFile(request, response, fileName, inputStream, 0, contentType);
 	}
 
 	/**
@@ -227,32 +229,34 @@ public class ServletResponseUtil {
 	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
-			HttpServletResponse response, String fileName, InputStream is)
+			HttpServletResponse response, String fileName,
+			InputStream inputStream)
 		throws IOException {
 
-		sendFile(null, response, fileName, is);
+		sendFile(null, response, fileName, inputStream);
 	}
 
 	/**
 	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
-			HttpServletResponse response, String fileName, InputStream is,
-			int contentLength, String contentType)
+			HttpServletResponse response, String fileName,
+			InputStream inputStream, int contentLength, String contentType)
 		throws IOException {
 
-		sendFile(null, response, fileName, is, contentLength, contentType);
+		sendFile(
+			null, response, fileName, inputStream, contentLength, contentType);
 	}
 
 	/**
 	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
-			HttpServletResponse response, String fileName, InputStream is,
-			String contentType)
+			HttpServletResponse response, String fileName,
+			InputStream inputStream, String contentType)
 		throws IOException {
 
-		sendFile(null, response, fileName, is, contentType);
+		sendFile(null, response, fileName, inputStream, contentType);
 	}
 
 	public static void write(
@@ -540,28 +544,36 @@ public class ServletResponseUtil {
 		}
 	}
 
-	public static void write(HttpServletResponse response, InputStream is)
+	public static void write(
+			HttpServletResponse response, InputStream inputStream)
 		throws IOException {
 
-		write(response, is, 0);
+		write(response, inputStream, 0);
 	}
 
 	public static void write(
-			HttpServletResponse response, InputStream is, long contentLength)
+			HttpServletResponse response, InputStream inputStream,
+			long contentLength)
 		throws IOException {
 
-		if (response.isCommitted()) {
-			return;
+		OutputStream outputStream = null;
+
+		try {
+			if (response.isCommitted()) {
+				return;
+			}
+
+			if (contentLength > 0) {
+				response.setContentLength((int)contentLength);
+			}
+
+			response.flushBuffer();
+
+			StreamUtil.transfer(inputStream, response.getOutputStream(), false);
 		}
-
-		if (contentLength > 0) {
-			response.setHeader(
-				HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
+		finally {
+			StreamUtil.cleanUp(inputStream, outputStream);
 		}
-
-		response.flushBuffer();
-
-		StreamUtil.transfer(is, response.getOutputStream());
 	}
 
 	public static void write(HttpServletResponse response, String s)

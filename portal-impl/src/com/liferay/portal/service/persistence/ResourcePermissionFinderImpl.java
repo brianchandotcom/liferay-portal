@@ -113,7 +113,7 @@ public class ResourcePermissionFinderImpl
 		throws SystemException {
 
 		Object[] finderArgs = new Object[] {
-			companyId, name, scope, primKey, roleIds, actionId
+			companyId, name, scope, primKey, StringUtil.merge(roleIds), actionId
 		};
 
 		Long count = (Long)FinderCacheUtil.getResult(

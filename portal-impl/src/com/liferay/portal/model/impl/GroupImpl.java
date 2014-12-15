@@ -722,7 +722,7 @@ public class GroupImpl extends GroupBaseImpl {
 		Layout defaultLayout = null;
 
 		int siteLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
-			this, true);
+			this, privateSite);
 
 		if (siteLayoutsCount == 0) {
 			boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(

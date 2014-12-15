@@ -39,14 +39,14 @@ if (mergeUrlTags || mergeLayoutTags) {
 
 		allAssetTagNames = ArrayUtil.distinct(newAssetTagNames, new StringComparator());
 
-		long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(scopeGroupId, allAssetTagNames);
+		long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(siteGroupIds, allAssetTagNames);
 
 		assetEntryQuery.setAllTagIds(allAssetTagIds);
 
 		titleEntry = compilerTagNames[compilerTagNames.length - 1];
 	}
 
-	String portletTitle = HtmlUtil.unescape(portletDisplay.getTitle());
+	String portletTitle = portletDisplay.getTitle();
 
 	portletTitle = AssetUtil.substituteTagPropertyVariables(scopeGroupId, titleEntry, portletTitle);
 

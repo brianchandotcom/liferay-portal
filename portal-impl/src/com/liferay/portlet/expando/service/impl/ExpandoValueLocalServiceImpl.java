@@ -1392,6 +1392,10 @@ public class ExpandoValueLocalServiceImpl
 		ExpandoColumn column = expandoColumnLocalService.getColumn(
 			companyId, className, tableName, columnName);
 
+		if (column == null) {
+			return null;
+		}
+
 		ExpandoValue value = new ExpandoValueImpl();
 
 		value.setColumn(column);

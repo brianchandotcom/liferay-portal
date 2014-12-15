@@ -19,6 +19,10 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "my-sites");
 
+if (!tabs1.equals("my-sites") && !tabs1.equals("available-sites")) {
+	tabs1 = "my-sites";
+}
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/my_sites/view");
@@ -54,7 +58,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			groupParams.put("usersGroups", new Long(user.getUserId()));
 			groupParams.put("active", Boolean.TRUE);
 		}
-		else if (tabs1.equals("available-sites")) {
+		else {
 			List types = new ArrayList();
 
 			types.add(new Integer(GroupConstants.TYPE_SITE_OPEN));

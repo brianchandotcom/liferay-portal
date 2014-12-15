@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	* @return the resource block that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.ResourceBlock addResourceBlock(
 		com.liferay.portal.model.ResourceBlock resourceBlock)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	* @throws PortalException if a resource block with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.ResourceBlock deleteResourceBlock(
 		long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	* @return the resource block that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.ResourceBlock deleteResourceBlock(
 		com.liferay.portal.model.ResourceBlock resourceBlock)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	* @return the resource block that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.ResourceBlock updateResourceBlock(
 		com.liferay.portal.model.ResourceBlock resourceBlock)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -375,6 +380,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isSupported(java.lang.String name);
 
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
 	public void releasePermissionedModelResourceBlock(
 		com.liferay.portal.model.PermissionedModel permissionedModel)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -392,6 +398,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	* @param resourceBlockId the primary key of the resource block
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
 	public void releaseResourceBlock(long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -403,6 +410,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	* @param resourceBlock the resource block
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
 	public void releaseResourceBlock(
 		com.liferay.portal.model.ResourceBlock resourceBlock)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -522,6 +530,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 		long roleId, long actionIdsLong, int operator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portal.model.ResourceBlock updateResourceBlockId(
 		long companyId, long groupId, java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,

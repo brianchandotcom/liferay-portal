@@ -38,8 +38,8 @@ if (assetVocabularies.isEmpty()) {
 }
 %>
 
-<div class="asset-vocabulary <%= cssClass %>" data-facetFieldName="<%= facet.getFieldId() %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= facet.getFieldId() %>" type="hidden" value="<%= StringUtil.merge(assetCategoryIdsOrNames) %>" />
+<div class="asset-vocabulary <%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
+	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= StringUtil.merge(assetCategoryIdsOrNames) %>" />
 
 	<%
 	for (AssetVocabulary assetVocabulary : assetVocabularies) {
@@ -96,7 +96,7 @@ private void _buildCategoriesNavigation(String[] assetCategoryIdsOrNames, boolea
 		if (ArrayUtil.contains(assetCategoryIdsOrNames, term)) {
 			sb.append(" active");
 
-			ScriptTag.doTag(null, "liferay-token-list", "Liferay.Search.tokenList.add({clearFields: '" + clearFields + "', text: '" + HtmlUtil.escapeJS(assetCategoryName) + "'});", null, pageContext);
+			ScriptTag.doTag(null, "liferay-token-list", "Liferay.Search.tokenList.add({clearFields: '" + HtmlUtil.escapeJS(clearFields) + "', text: '" + HtmlUtil.escapeJS(assetCategoryName) + "'});", null, pageContext);
 		}
 
 		sb.append("\"><a href=\"#\" data-value=\"");

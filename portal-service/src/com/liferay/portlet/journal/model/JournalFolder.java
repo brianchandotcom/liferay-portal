@@ -56,5 +56,8 @@ public interface JournalFolder extends JournalFolderModel, PersistedModel,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public boolean isRoot();
 }

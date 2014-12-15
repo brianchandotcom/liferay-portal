@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @return the background task that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.BackgroundTask addBackgroundTask(
 		com.liferay.portal.model.BackgroundTask backgroundTask)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @throws PortalException if a background task with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.BackgroundTask deleteBackgroundTask(
 		long backgroundTaskId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -86,6 +89,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.BackgroundTask deleteBackgroundTask(
 		com.liferay.portal.model.BackgroundTask backgroundTask)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -228,6 +232,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @return the background task that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.BackgroundTask updateBackgroundTask(
 		com.liferay.portal.model.BackgroundTask backgroundTask)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -278,9 +283,11 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
 	public void cleanUpBackgroundTask(
 		com.liferay.portal.model.BackgroundTask backgroundTask, int status);
 
+	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
 	public void cleanUpBackgroundTasks()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -409,11 +416,14 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 		java.lang.String[] taskExecutorClassNames, boolean completed)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId);
 
+	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
 	public void resumeBackgroundTask(long backgroundTaskId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
 	public void triggerBackgroundTask(long backgroundTaskId);
 }

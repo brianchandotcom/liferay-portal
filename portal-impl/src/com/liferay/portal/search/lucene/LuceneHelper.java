@@ -82,6 +82,11 @@ public interface LuceneHelper {
 	public void addTerm(
 		BooleanQuery booleanQuery, String field, String[] values, boolean like);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #releaseIndexSearcher(long,
+	 *             IndexSearcher)}
+	 */
+	@Deprecated
 	public void cleanUp(IndexSearcher indexSearcher);
 
 	public int countScoredFieldNames(Query query, String[] fieldNames);
@@ -97,6 +102,8 @@ public interface LuceneHelper {
 
 	public IndexAccessor getIndexAccessor(long companyId);
 
+	public IndexSearcher getIndexSearcher(long companyId) throws IOException;
+
 	public long getLastGeneration(long companyId);
 
 	public InputStream getLoadIndexesInputStreamFromCluster(
@@ -105,6 +112,10 @@ public interface LuceneHelper {
 
 	public Set<String> getQueryTerms(Query query);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getIndexSearcher(long)}
+	 */
+	@Deprecated
 	public IndexSearcher getSearcher(long companyId, boolean readOnly)
 		throws IOException;
 
@@ -121,6 +132,10 @@ public interface LuceneHelper {
 		throws IOException;
 
 	public void loadIndexesFromCluster(long companyId) throws SystemException;
+
+	public void releaseIndexSearcher(
+			long companyId, IndexSearcher indexSearcher)
+		throws IOException;
 
 	public void shutdown();
 

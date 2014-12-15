@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -48,7 +49,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -289,6 +292,8 @@ public class VerifyGroup extends VerifyProcess {
 			typeSettingsProperties.setProperty(
 				"stagedRemotely", Boolean.FALSE.toString());
 
+			verifyStagingTypeSettingsProperties(typeSettingsProperties);
+
 			GroupLocalServiceUtil.updateGroup(
 				group.getGroupId(), typeSettingsProperties.toString());
 
@@ -302,6 +307,28 @@ public class VerifyGroup extends VerifyProcess {
 		}
 	}
 
+	protected void verifyStagingTypeSettingsProperties(
+		UnicodeProperties typeSettingsProperties) {
+
+		Set<String> keys = typeSettingsProperties.keySet();
+
+		Iterator<String> iterator = keys.iterator();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			if (ArrayUtil.contains(
+					_LEGACY_STAGED_PORTLET_TYPE_SETTINGS_KEYS, key)) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Removing type settings property " + key);
+				}
+
+				iterator.remove();
+			}
+		}
+	}
+
 	protected void verifyTree() throws Exception {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
@@ -309,6 +336,12 @@ public class VerifyGroup extends VerifyProcess {
 			GroupLocalServiceUtil.rebuildTree(companyId);
 		}
 	}
+
+	private static String[] _LEGACY_STAGED_PORTLET_TYPE_SETTINGS_KEYS = {
+		"staged-portlet_39", "staged-portlet_54", "staged-portlet_56",
+		"staged-portlet_59", "staged-portlet_107", "staged-portlet_108",
+		"staged-portlet_110", "staged-portlet_166", "staged-portlet_169"
+	};
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyGroup.class);
 

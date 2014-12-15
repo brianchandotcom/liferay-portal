@@ -441,8 +441,10 @@ public class ImageProcessorImpl
 			sb.append(2);
 		}
 
-		sb.append(StringPool.PERIOD);
-		sb.append(type);
+		if (Validator.isNotNull(type)) {
+			sb.append(StringPool.PERIOD);
+			sb.append(type);
+		}
 
 		String filePath = sb.toString();
 

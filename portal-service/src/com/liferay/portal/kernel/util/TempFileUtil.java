@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.Repository;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryThreadLocal;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
@@ -43,9 +44,21 @@ public class TempFileUtil {
 
 		Folder folder = addTempFolder(groupId, userId, tempFolderName);
 
-		return PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, StringPool.BLANK, 0, PortletKeys.DOCUMENT_LIBRARY,
-			folder.getFolderId(), file, fileName, mimeType, false);
+		boolean fileMaxSizeCheckEnabled =
+			PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled();
+
+		try {
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(false);
+
+			return PortletFileRepositoryUtil.addPortletFileEntry(
+				groupId, userId, StringPool.BLANK, 0,
+				PortletKeys.DOCUMENT_LIBRARY, folder.getFolderId(), file,
+				fileName, mimeType, false);
+		}
+		finally {
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(
+				fileMaxSizeCheckEnabled);
+		}
 	}
 
 	public static FileEntry addTempFile(
@@ -55,9 +68,21 @@ public class TempFileUtil {
 
 		Folder folder = addTempFolder(groupId, userId, tempFolderName);
 
-		return PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, StringPool.BLANK, 0, PortletKeys.DOCUMENT_LIBRARY,
-			folder.getFolderId(), inputStream, fileName, mimeType, false);
+		boolean fileMaxSizeCheckEnabled =
+			PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled();
+
+		try {
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(false);
+
+			return PortletFileRepositoryUtil.addPortletFileEntry(
+				groupId, userId, StringPool.BLANK, 0,
+				PortletKeys.DOCUMENT_LIBRARY, folder.getFolderId(), inputStream,
+				fileName, mimeType, false);
+		}
+		finally {
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(
+				fileMaxSizeCheckEnabled);
+		}
 	}
 
 	public static void deleteTempFile(long fileEntryId)

@@ -294,6 +294,13 @@ public class ManifestSummary implements Serializable {
 		modelDeletionCounter.increment();
 	}
 
+	public void resetCounters() {
+		_modelAdditionCounters.clear();
+		_modelDeletionCounters.clear();
+
+		_manifestSummaryKeys.clear();
+	}
+
 	public void setExportDate(Date exportDate) {
 		_exportDate = exportDate;
 	}

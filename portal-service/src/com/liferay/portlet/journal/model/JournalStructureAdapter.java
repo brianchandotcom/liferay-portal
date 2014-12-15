@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -141,6 +142,16 @@ public class JournalStructureAdapter implements JournalStructure {
 	}
 
 	@Override
+	public String getDescriptionCurrentLanguageId() {
+		return _ddmStructure.getDescriptionCurrentLanguageId();
+	}
+
+	@Override
+	public String getDescriptionCurrentValue() {
+		return _ddmStructure.getDescriptionCurrentValue();
+	}
+
+	@Override
 	public Map<Locale, String> getDescriptionMap() {
 		return _ddmStructure.getDescriptionMap();
 	}
@@ -262,6 +273,16 @@ public class JournalStructureAdapter implements JournalStructure {
 	}
 
 	@Override
+	public String getNameCurrentLanguageId() {
+		return _ddmStructure.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public String getNameCurrentValue() {
+		return _ddmStructure.getNameCurrentValue();
+	}
+
+	@Override
 	public Map<Locale, String> getNameMap() {
 		return _ddmStructure.getNameMap();
 	}
@@ -337,6 +358,13 @@ public class JournalStructureAdapter implements JournalStructure {
 	}
 
 	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+
+		_ddmStructure.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
 	public void setCompanyId(long companyId) {
 		_ddmStructure.setCompanyId(companyId);
 	}
@@ -361,6 +389,11 @@ public class JournalStructureAdapter implements JournalStructure {
 		String description, Locale locale, Locale defaultLocale) {
 
 		_ddmStructure.setDescription(description, locale, defaultLocale);
+	}
+
+	@Override
+	public void setDescriptionCurrentLanguageId(String languageId) {
+		_ddmStructure.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	@Override
@@ -505,6 +538,11 @@ public class JournalStructureAdapter implements JournalStructure {
 	@Override
 	public void setName(String name, Locale locale, Locale defaultLocale) {
 		_ddmStructure.setName(name, locale, defaultLocale);
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(String languageId) {
+		_ddmStructure.setNameCurrentLanguageId(languageId);
 	}
 
 	@Override

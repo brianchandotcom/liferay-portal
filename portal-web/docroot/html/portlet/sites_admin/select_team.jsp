@@ -66,12 +66,12 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		>
 			<liferay-ui:search-container-column-text
 				name="name"
-				value="<%= curTeam.getName() %>"
+				value="<%= HtmlUtil.escape(curTeam.getName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="description"
-				value="<%= curTeam.getDescription() %>"
+				value="<%= HtmlUtil.escape(curTeam.getDescription()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text>

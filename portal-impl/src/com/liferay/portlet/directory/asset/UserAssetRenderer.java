@@ -99,9 +99,17 @@ public class UserAssetRenderer extends BaseAssetRenderer {
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
-		return getURLViewInContext(
-			liferayPortletRequest, noSuchEntryRedirect, "/directory/find_user",
-			"p_u_i_d", _user.getUserId());
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			return _user.getDisplayURL(themeDisplay);
+		}
+		catch (Exception e) {
+		}
+
+		return noSuchEntryRedirect;
 	}
 
 	@Override

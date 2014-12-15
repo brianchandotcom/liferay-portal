@@ -25,155 +25,175 @@
 <%@ page import="java.util.Locale" %>
 
 <%
-String contentsLanguageId = ParamUtil.getString(request, "contentsLanguageId");
-String cssClasses = ParamUtil.getString(request, "cssClasses");
-String languageId = ParamUtil.getString(request, "languageId");
-long wikiPageResourcePrimKey = ParamUtil.getLong(request, "wikiPageResourcePrimKey");
 String attachmentURLPrefix = ParamUtil.getString(request, "attachmentURLPrefix");
+
+String contentsLanguageId = ParamUtil.getString(request, "contentsLanguageId");
+
+Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+
+contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
+
+String cssClasses = ParamUtil.getString(request, "cssClasses");
+String cssPath = ParamUtil.getString(request, "cssPath");
+
+String languageId = ParamUtil.getString(request, "languageId");
+
+Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+languageId = LocaleUtil.toLanguageId(locale);
+
+String name = ParamUtil.getString(request, "name");
 boolean resizable = ParamUtil.getBoolean(request, "resizable");
+long wikiPageResourcePrimKey = ParamUtil.getLong(request, "wikiPageResourcePrimKey");
 
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
 
-CKEDITOR.config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';
+;(function() {
+	var ckEditor = CKEDITOR.instances['<%= HtmlUtil.escapeJS(name) %>'];
 
-CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
+	var config = ckEditor.config;
 
-<%
-Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+	config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';
 
-String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
-%>
+	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
+
+	config.contentsCss = ['<%= HtmlUtil.escapeJS(cssPath) %>/aui.css', '<%= HtmlUtil.escapeJS(cssPath) %>/main.css'];
+
+	<%
+	String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
+	%>
 
 CKEDITOR.config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
 
-CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.replace("iw_", "he_")) %>';
+	config.contentsLanguage = '<%= contentsLanguageId.replace("iw_", "he_") %>';
 
-CKEDITOR.config.decodeLinks = true;
+	config.decodeLinks = true;
 
-CKEDITOR.config.disableObjectResizing = true;
+	config.disableObjectResizing = true;
 
-CKEDITOR.config.extraPlugins = 'creole,wikilink';
+	config.extraPlugins = 'creole,wikilink';
 
-CKEDITOR.config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
+	config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
 
-CKEDITOR.config.height = 265;
+	config.height = 265;
 
-CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId.replace("iw_", "he_")) %>';
+	config.language = '<%= languageId.replace("iw_", "he_") %>';
 
-CKEDITOR.config.removePlugins = [
-	'elementspath',
-	'save',
-	'font',
-	'bidi',
-	'colordialog',
-	'colorbutton',
-	'div',
-	'flash',
-	'font',
-	'forms',
-	'justify',
-	'keystrokes',
-	'link',
-	'maximize',
-	'newpage',
-	'pagebreak',
-	'preview',
-	'print',
-	'save',
-	'smiley',
-	'showblocks',
-	'stylescombo',
-	'templates',
-	'video'
-].join();
+	config.removePlugins = [
+		'elementspath',
+		'save',
+		'font',
+		'bidi',
+		'colordialog',
+		'colorbutton',
+		'div',
+		'flash',
+		'font',
+		'forms',
+		'justify',
+		'keystrokes',
+		'link',
+		'maximize',
+		'newpage',
+		'pagebreak',
+		'preview',
+		'print',
+		'save',
+		'smiley',
+		'showblocks',
+		'stylescombo',
+		'templates',
+		'video'
+	].join();
 
-<c:if test="<%= resizable %>">
-	CKEDITOR.config.resize_dir = 'vertical';
-</c:if>
+	<c:if test="<%= resizable %>">
+		config.resize_dir = 'vertical';
+	</c:if>
 
-CKEDITOR.config.resize_enabled = <%= resizable %>;
+	config.resize_enabled = <%= resizable %>;
 
-CKEDITOR.config.toolbar_creole = [
-	['Cut','Copy','Paste','PasteText','PasteFromWord'],
-	['Undo','Redo'],
-	['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
-	['Format'],
+	config.toolbar_creole = [
+		['Cut','Copy','Paste','PasteText','PasteFromWord'],
+		['Undo','Redo'],
+		['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+		['Format'],
 
-	<%
-	String linkButtonBar = "['Link', 'Unlink']";
+		<%
+		String linkButtonBar = "['Link', 'Unlink']";
 
-	if (wikiPageResourcePrimKey > 0) {
-		linkButtonBar = "['Link', 'Unlink', 'Image']";
-	}
-	%>
-
-	<%= linkButtonBar %>,
-
-	['Table', '-', 'HorizontalRule', 'SpecialChar' ],
-	['Find','Replace','-','SelectAll','RemoveFormat'],
-	['Source']
-];
-
-CKEDITOR.config.toolbar_phone = [
-	['Bold', 'Italic', 'Underline'],
-	['NumberedList', 'BulletedList'],
-	['Image', 'Link', 'Unlink']
-];
-
-CKEDITOR.config.toolbar_tablet = [
-	['Bold', 'Italic', 'Underline', 'Strike'],
-	['NumberedList', 'BulletedList'],
-	['Image', 'Link', 'Unlink'],
-	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-	['Styles', 'FontSize']
-];
-
-CKEDITOR.on(
-	'dialogDefinition',
-	function(event) {
-		var dialogName = event.data.name;
-
-		var dialogDefinition = event.data.definition;
-
-		var infoTab;
-
-		if (dialogName === 'cellProperties') {
-			infoTab = dialogDefinition.getContents('info');
-
-			infoTab.remove('bgColor');
-			infoTab.remove('bgColorChoose');
-			infoTab.remove('borderColor');
-			infoTab.remove('borderColorChoose');
-			infoTab.remove('colSpan');
-			infoTab.remove('hAlign');
-			infoTab.remove('height');
-			infoTab.remove('htmlHeightType');
-			infoTab.remove('rowSpan');
-			infoTab.remove('vAlign');
-			infoTab.remove('width');
-			infoTab.remove('widthType');
-			infoTab.remove('wordWrap');
-
-			dialogDefinition.minHeight = 40;
-			dialogDefinition.minWidth = 210;
+		if (wikiPageResourcePrimKey > 0) {
+			linkButtonBar = "['Link', 'Unlink', 'Image']";
 		}
-		else if (dialogName === 'table' || dialogName === 'tableProperties') {
-			infoTab = dialogDefinition.getContents('info');
+		%>
 
-			infoTab.remove('cmbAlign');
-			infoTab.remove('cmbWidthType');
-			infoTab.remove('cmbWidthType');
-			infoTab.remove('htmlHeightType');
-			infoTab.remove('txtBorder');
-			infoTab.remove('txtCellPad');
-			infoTab.remove('txtCellSpace');
-			infoTab.remove('txtHeight');
-			infoTab.remove('txtSummary');
-			infoTab.remove('txtWidth');
+		<%= linkButtonBar %>,
 
-			dialogDefinition.minHeight = 180;
-			dialogDefinition.minWidth = 210;
+		['Table', '-', 'HorizontalRule', 'SpecialChar' ],
+		['Find','Replace','-','SelectAll','RemoveFormat'],
+		['Source']
+	];
+
+	config.toolbar_phone = [
+		['Bold', 'Italic', 'Underline'],
+		['NumberedList', 'BulletedList'],
+		['Image', 'Link', 'Unlink']
+	];
+
+	config.toolbar_tablet = [
+		['Bold', 'Italic', 'Underline', 'Strike'],
+		['NumberedList', 'BulletedList'],
+		['Image', 'Link', 'Unlink'],
+		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+		['Styles', 'FontSize']
+	];
+
+	ckEditor.on(
+		'dialogDefinition',
+		function(event) {
+			var dialogName = event.data.name;
+
+			var dialogDefinition = event.data.definition;
+
+			var infoTab;
+
+			if (dialogName === 'cellProperties') {
+				infoTab = dialogDefinition.getContents('info');
+
+				infoTab.remove('bgColor');
+				infoTab.remove('bgColorChoose');
+				infoTab.remove('borderColor');
+				infoTab.remove('borderColorChoose');
+				infoTab.remove('colSpan');
+				infoTab.remove('hAlign');
+				infoTab.remove('height');
+				infoTab.remove('htmlHeightType');
+				infoTab.remove('rowSpan');
+				infoTab.remove('vAlign');
+				infoTab.remove('width');
+				infoTab.remove('widthType');
+				infoTab.remove('wordWrap');
+
+				dialogDefinition.minHeight = 40;
+				dialogDefinition.minWidth = 210;
+			}
+			else if (dialogName === 'table' || dialogName === 'tableProperties') {
+				infoTab = dialogDefinition.getContents('info');
+
+				infoTab.remove('cmbAlign');
+				infoTab.remove('cmbWidthType');
+				infoTab.remove('cmbWidthType');
+				infoTab.remove('htmlHeightType');
+				infoTab.remove('txtBorder');
+				infoTab.remove('txtCellPad');
+				infoTab.remove('txtCellSpace');
+				infoTab.remove('txtHeight');
+				infoTab.remove('txtSummary');
+				infoTab.remove('txtWidth');
+
+				dialogDefinition.minHeight = 180;
+				dialogDefinition.minWidth = 210;
+			}
 		}
-	}
-);
+	);
+})();

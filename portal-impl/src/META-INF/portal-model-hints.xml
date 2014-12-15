@@ -1135,6 +1135,7 @@
 		<field name="title" type="String" />
 		<field name="content" type="String">
 			<hint-collection name="CLOB" />
+			<sanitize content-type="text/html" modes="ALL" />
 		</field>
 		<field name="url" type="String">
 			<hint-collection name="URL" />
@@ -1744,7 +1745,10 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="templateKey" type="String" />
+		<field name="templateKey" type="String">
+			<hint name="upper-case">true</hint>
+			<hint name="auto-escape">false</hint>
+		</field>
 		<field name="name" type="String" localized="true">
 			<validator name="required" />
 		</field>
@@ -1820,7 +1824,6 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="articleId" type="String">
-			<hint name="auto-escape">false</hint>
 			<hint name="upper-case">true</hint>
 		</field>
 		<field name="version" type="double" />

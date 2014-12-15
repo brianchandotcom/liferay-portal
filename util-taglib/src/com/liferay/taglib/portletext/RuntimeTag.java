@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.portletext;
 
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.portlet.PortletParameterUtil;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -37,9 +35,6 @@ import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-
-import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -113,8 +108,6 @@ public class RuntimeTag extends TagSupport {
 			Portlet portlet = getPortlet(
 				themeDisplay.getCompanyId(), portletId);
 
-			JSONObject jsonObject = null;
-
 			if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
 					portletId) < 1) ||
@@ -131,22 +124,18 @@ public class RuntimeTag extends TagSupport {
 					portletLayoutListener.onAddToLayout(
 						portletId, themeDisplay.getPlid());
 				}
-
-				jsonObject = JSONFactoryUtil.createJSONObject();
-
-				PortletJSONUtil.populatePortletJSONObject(
-					request, StringPool.BLANK, portlet, jsonObject);
 			}
 
-			if (jsonObject != null) {
-				writeHeaderPaths(response, jsonObject);
-			}
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			PortletJSONUtil.populatePortletJSONObject(
+				request, StringPool.BLANK, portlet, jsonObject);
+
+			PortletJSONUtil.writeHeaderPaths(response, jsonObject);
 
 			PortletContainerUtil.render(request, response, portlet);
 
-			if (jsonObject != null) {
-				writeFooterPaths(response, jsonObject);
-			}
+			PortletJSONUtil.writeFooterPaths(response, jsonObject);
 		}
 		finally {
 			restrictPortletServletRequest.mergeSharedAttributes();
@@ -213,74 +202,6 @@ public class RuntimeTag extends TagSupport {
 		portlet.setStatic(true);
 
 		return portlet;
-	}
-
-	protected static void writeFooterPaths(
-			HttpServletResponse response, JSONObject jsonObject)
-		throws IOException {
-
-		JSONArray footerCssPathsJSONArray = jsonObject.getJSONArray(
-			"footerCssPaths");
-		JSONArray footerJavaScriptPathsJSONArray = jsonObject.getJSONArray(
-			"footerJavaScriptPaths");
-
-		if ((footerCssPathsJSONArray.length() == 0) &&
-			(footerJavaScriptPathsJSONArray.length() == 0)) {
-
-			return;
-		}
-
-		PrintWriter printWriter = response.getWriter();
-
-		for (int i = 0; i < footerCssPathsJSONArray.length(); i++) {
-			String value = footerCssPathsJSONArray.getString(i);
-
-			printWriter.print("<link href=\"");
-			printWriter.print(HtmlUtil.escape(value));
-			printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
-		}
-
-		for (int i = 0; i < footerJavaScriptPathsJSONArray.length(); i++) {
-			String value = footerJavaScriptPathsJSONArray.getString(i);
-
-			printWriter.print("<script src=\"");
-			printWriter.print(HtmlUtil.escape(value));
-			printWriter.println("\" type=\"text/javascript\"></script>");
-		}
-	}
-
-	protected static void writeHeaderPaths(
-			HttpServletResponse response, JSONObject jsonObject)
-		throws IOException {
-
-		JSONArray headerCssPathsJSONArray = jsonObject.getJSONArray(
-			"headerCssPaths");
-		JSONArray headerJavaScriptPathsJSONArray = jsonObject.getJSONArray(
-			"headerJavaScriptPaths");
-
-		if ((headerCssPathsJSONArray.length() == 0) &&
-			(headerJavaScriptPathsJSONArray.length() == 0)) {
-
-			return;
-		}
-
-		PrintWriter printWriter = response.getWriter();
-
-		for (int i = 0; i < headerCssPathsJSONArray.length(); i++) {
-			String value = headerCssPathsJSONArray.getString(i);
-
-			printWriter.print("<link href=\"");
-			printWriter.print(HtmlUtil.escape(value));
-			printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
-		}
-
-		for (int i = 0; i < headerJavaScriptPathsJSONArray.length(); i++) {
-			String value = headerJavaScriptPathsJSONArray.getString(i);
-
-			printWriter.print("<script src=\"");
-			printWriter.print(HtmlUtil.escape(value));
-			printWriter.println("\" type=\"text/javascript\"></script>");
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(RuntimeTag.class);

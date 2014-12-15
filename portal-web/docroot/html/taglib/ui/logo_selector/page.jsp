@@ -19,6 +19,7 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_logo_selector") + StringPool.UNDERLINE;
 
+String currentLogoURL = (String)request.getAttribute("liferay-ui:logo-selector:currentLogoURL");
 String defaultLogoURL = (String)request.getAttribute("liferay-ui:logo-selector:defaultLogoURL");
 String editLogoURL = (String)request.getAttribute("liferay-ui:logo-selector:editLogoURL");
 long imageId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:logo-selector:imageId"));
@@ -31,6 +32,9 @@ String imageSrc = null;
 
 if (deleteLogo || (imageId == 0)) {
 	imageSrc = defaultLogoURL;
+}
+else if (Validator.isNotNull(currentLogoURL)) {
+	imageSrc = currentLogoURL;
 }
 else {
 	imageSrc = themeDisplay.getPathImage() + "/logo?img_id=" + imageId + "&t" + WebServerServletTokenUtil.getToken(imageId);

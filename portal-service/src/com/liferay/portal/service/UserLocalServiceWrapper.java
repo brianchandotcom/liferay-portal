@@ -1628,11 +1628,13 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* the confirmation email.
 	*
 	* @param user the user
-	* @param serviceContext the service context to be applied. Can set whether
-	a password should be generated (with the
-	<code>autoPassword</code> attribute) and whether the confirmation
-	email should be sent (with the <code>sendEmail</code> attribute)
-	for the user.
+	* @param serviceContext the service context to be applied. You can specify
+	an unencrypted custom password for the user via attribute
+	<code>passwordUnencrypted</code>. You automatically generate a
+	password for the user by setting attribute
+	<code>autoPassword</code> to <code>true</code>. You can send a
+	confirmation email to the user by setting attribute
+	<code>sendEmail</code> to <code>true</code>.
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
@@ -3438,14 +3440,37 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* @param userId the primary key of the user
 	* @param status the user's new workflow status
 	* @return the user
-	* @throws PortalException if a user with the primary key could not be found
+	* @throws PortalException if a user with the primary key could not be
+	found
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, int,
+	ServiceContext)}
 	*/
 	@Override
 	public com.liferay.portal.model.User updateStatus(long userId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userLocalService.updateStatus(userId, status);
+	}
+
+	/**
+	* Updates the user's workflow status.
+	*
+	* @param userId the primary key of the user
+	* @param status the user's new workflow status
+	* @param serviceContext the service context to be applied. You can specify
+	an unencrypted custom password (used by an LDAP listener) for the
+	user via attribute <code>passwordUnencrypted</code>.
+	* @return the user
+	* @throws PortalException if a user with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.User updateStatus(long userId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.updateStatus(userId, status, serviceContext);
 	}
 
 	/**

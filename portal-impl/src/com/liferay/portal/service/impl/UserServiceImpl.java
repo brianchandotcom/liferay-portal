@@ -1663,8 +1663,35 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	/**
 	 * Updates the user's workflow status.
 	 *
+	 * @param      userId the primary key of the user
+	 * @param      status the user's new workflow status
+	 * @return     the user
+	 * @throws     PortalException if a user with the primary key could not be
+	 *             found, if the current user was updating her own status to
+	 *             anything but {@link
+	 *             com.liferay.portal.kernel.workflow.WorkflowConstants#STATUS_APPROVED},
+	 *             or if the current user did not have permission to update the
+	 *             user's workflow status.
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, int,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public User updateStatus(long userId, int status)
+		throws PortalException, SystemException {
+
+		return updateStatus(userId, status, new ServiceContext());
+	}
+
+	/**
+	 * Updates the user's workflow status.
+	 *
 	 * @param  userId the primary key of the user
 	 * @param  status the user's new workflow status
+	 * @param  serviceContext the service context to be applied. You can specify
+	 *         an unencrypted custom password (used by an LDAP listener) for the
+	 *         user via attribute <code>passwordUnencrypted</code>.
 	 * @return the user
 	 * @throws PortalException if a user with the primary key could not be
 	 *         found, if the current user was updating her own status to
@@ -1675,7 +1702,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public User updateStatus(long userId, int status)
+	public User updateStatus(
+			long userId, int status, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if ((getUserId() == userId) &&
@@ -1687,7 +1715,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		UserPermissionUtil.check(
 			getPermissionChecker(), userId, ActionKeys.DELETE);
 
-		return userLocalService.updateStatus(userId, status);
+		return userLocalService.updateStatus(userId, status, serviceContext);
 	}
 
 	/**
@@ -1807,11 +1835,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		long curUserId = getUserId();
 
 		if (curUserId == userId) {
-			validateUpdatePermission(
-				user, screenName, emailAddress, firstName, middleName, lastName,
-				prefixId, suffixId, birthdayMonth, birthdayDay, birthdayYear,
-				male, jobTitle);
-
 			emailAddress = StringUtil.toLowerCase(emailAddress.trim());
 
 			if (!StringUtil.equalsIgnoreCase(
@@ -1820,6 +1843,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				validateEmailAddress(user, emailAddress);
 			}
 		}
+
+		validateUpdatePermission(
+			user, screenName, emailAddress, firstName, middleName, lastName,
+			prefixId, suffixId, birthdayMonth, birthdayDay, birthdayYear, male,
+			jobTitle);
 
 		// Group membership policy
 

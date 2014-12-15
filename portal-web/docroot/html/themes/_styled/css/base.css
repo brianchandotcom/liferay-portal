@@ -13,6 +13,7 @@
 body.html-editor {
 	background: #FFF;
 	color: #000;
+	padding: 1em;
 }
 
 .html-editor.portlet-message-boards {
@@ -94,6 +95,10 @@ body.html-editor {
 }
 
 /* ---------- Miscellaneous ---------- */
+
+span.alert {
+	display: inline-block;
+}
 
 #skip-to-content {
 	clip: rect(0 0 0 0);

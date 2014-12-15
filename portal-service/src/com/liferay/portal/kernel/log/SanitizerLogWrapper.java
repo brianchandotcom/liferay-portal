@@ -16,8 +16,8 @@ package com.liferay.portal.kernel.log;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.util.ArrayList;
@@ -41,6 +41,10 @@ public class SanitizerLogWrapper extends LogWrapper {
 			SystemProperties.get(
 				PropsKeys.LOG_SANITIZER_REPLACEMENT_CHARACTER));
 
+		for (int i = 0; i < _whitelistCharacters.length; i++) {
+			_whitelistCharacters[i] = 1;
+		}
+
 		int[] whitelistCharacters = GetterUtil.getIntegerValues(
 			SystemProperties.getArray(
 				PropsKeys.LOG_SANITIZER_WHITELIST_CHARACTERS));
@@ -49,7 +53,7 @@ public class SanitizerLogWrapper extends LogWrapper {
 			if ((whitelistCharacter >= 0) &&
 				(whitelistCharacter < _whitelistCharacters.length)) {
 
-				_whitelistCharacters[whitelistCharacter] = 1;
+				_whitelistCharacters[whitelistCharacter] = 0;
 			}
 			else {
 				System.err.println(
@@ -175,27 +179,39 @@ public class SanitizerLogWrapper extends LogWrapper {
 		}
 
 		char[] chars = message.toCharArray();
+		boolean hasLessThanCharacter = false;
 		boolean sanitized = false;
 
 		for (int i = 0; i < chars.length; i++) {
 			int c = chars[i];
 
 			if ((c >= 0) && (c < _whitelistCharacters.length) &&
-				(_whitelistCharacters[c] == 0)) {
+				(_whitelistCharacters[c] != 0)) {
 
 				chars[i] = _LOG_SANITIZER_REPLACEMENT_CHARACTER;
 				sanitized = true;
 			}
+
+			if (c == CharPool.LESS_THAN) {
+				hasLessThanCharacter = true;
+			}
 		}
 
-		if (sanitized) {
+		boolean escapeHTML = false;
+
+		if (_LOG_SANITIZER_ESCAPE_HTML_ENABLED && hasLessThanCharacter) {
+			escapeHTML = true;
+		}
+
+		if (sanitized || escapeHTML) {
 			String sanitizedMessage = new String(chars);
 
-			sanitizedMessage = sanitizedMessage.concat(_SANITIZED);
-
-			if (_LOG_SANITIZER_ESCAPE_HTML_ENABLED) {
-				return HtmlUtil.escape(sanitizedMessage);
+			if (escapeHTML) {
+				sanitizedMessage = sanitizedMessage.replaceAll(
+					StringPool.LESS_THAN, _LESS_THAN_ESCAPED);
 			}
+
+			sanitizedMessage = sanitizedMessage.concat(_SANITIZED);
 
 			return sanitizedMessage;
 		}
@@ -244,6 +260,8 @@ public class SanitizerLogWrapper extends LogWrapper {
 
 		return resultThrowable;
 	}
+
+	private static final String _LESS_THAN_ESCAPED = "&lt;";
 
 	private static final String _SANITIZED = " [Sanitized]";
 

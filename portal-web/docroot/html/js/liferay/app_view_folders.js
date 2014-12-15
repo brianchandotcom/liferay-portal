@@ -261,6 +261,7 @@ AUI.add(
 							instance.get('mainUrl'),
 							{
 								autoLoad: false,
+								cache: false,
 								method: 'get'
 							}
 						);

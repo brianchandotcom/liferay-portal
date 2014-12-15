@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.LayoutFriendlyURLException;
+import com.liferay.portal.LayoutFriendlyURLsException;
 import com.liferay.portal.LayoutNameException;
 import com.liferay.portal.LayoutParentLayoutIdException;
 import com.liferay.portal.LayoutTypeException;
@@ -24,9 +25,11 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -39,11 +42,13 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutFriendlyURLPersistence;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
+import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.sites.util.SitesUtil;
@@ -126,11 +131,15 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			}
 		}
 
-		if (newFriendlyURLMap.isEmpty()) {
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		if (newFriendlyURLMap.isEmpty() ||
+			Validator.isNull(newFriendlyURLMap.get(siteDefaultLocale))) {
+
 			String friendlyURL = getFriendlyURL(
 				groupId, privateLayout, layoutId, name, StringPool.BLANK);
 
-			newFriendlyURLMap.put(LocaleUtil.getSiteDefault(), friendlyURL);
+			newFriendlyURLMap.put(siteDefaultLocale, friendlyURL);
 		}
 
 		return newFriendlyURLMap;
@@ -271,7 +280,9 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 		Group group = layout.getGroup();
 
-		if (group.isGuest() && !hasGuestViewPermission(layout)) {
+		if (group.isGuest() && layout.isPublicLayout() &&
+			!hasGuestViewPermission(layout)) {
+
 			LayoutTypeException lte = new LayoutTypeException(
 				LayoutTypeException.FIRST_LAYOUT_PERMISSION);
 
@@ -323,11 +334,29 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 		LayoutImpl.validateFriendlyURLKeyword(friendlyURL);
 
-		/*List<FriendlyURLMapper> friendlyURLMappers =
-			portletLocalService.getFriendlyURLMappers();
+		if (friendlyURL.contains(Portal.FRIENDLY_URL_SEPARATOR)) {
+			LayoutFriendlyURLException lfurle =
+				new LayoutFriendlyURLException(
+					LayoutFriendlyURLException.KEYWORD_CONFLICT);
+
+			lfurle.setKeywordConflict(Portal.FRIENDLY_URL_SEPARATOR);
+
+			throw lfurle;
+		}
+
+		List<FriendlyURLMapper> friendlyURLMappers =
+			PortletLocalServiceUtil.getFriendlyURLMappers();
 
 		for (FriendlyURLMapper friendlyURLMapper : friendlyURLMappers) {
-			if (friendlyURL.indexOf(friendlyURLMapper.getMapping()) != -1) {
+			if (friendlyURLMapper.isCheckMappingWithPrefix()) {
+				continue;
+			}
+
+			String mapping = StringPool.SLASH + friendlyURLMapper.getMapping();
+
+			if (friendlyURL.contains(mapping + StringPool.SLASH) ||
+				friendlyURL.endsWith(mapping)) {
+
 				LayoutFriendlyURLException lfurle =
 					new LayoutFriendlyURLException(
 						LayoutFriendlyURLException.KEYWORD_CONFLICT);
@@ -336,7 +365,33 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 				throw lfurle;
 			}
-		}*/
+		}
+
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : availableLocales) {
+			String languageId = StringUtil.toLowerCase(
+				LocaleUtil.toLanguageId(locale));
+
+			String i18nPathLanguageId =
+				StringPool.SLASH +
+					PortalUtil.getI18nPathLanguageId(locale, languageId);
+
+			if (friendlyURL.startsWith(i18nPathLanguageId + StringPool.SLASH) ||
+				friendlyURL.startsWith(
+					StringPool.SLASH + languageId + StringPool.SLASH) ||
+				friendlyURL.endsWith(i18nPathLanguageId) ||
+				friendlyURL.endsWith(StringPool.SLASH + languageId)) {
+
+				LayoutFriendlyURLException lfurle =
+					new LayoutFriendlyURLException(
+						LayoutFriendlyURLException.KEYWORD_CONFLICT);
+
+				lfurle.setKeywordConflict(i18nPathLanguageId);
+
+				throw lfurle;
+			}
+		}
 
 		String layoutIdFriendlyURL = friendlyURL.substring(1);
 
@@ -357,10 +412,28 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			Map<Locale, String> friendlyURLMap)
 		throws PortalException, SystemException {
 
+		LayoutFriendlyURLsException layoutFriendlyURLsException = null;
+
 		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
 			String friendlyURL = entry.getValue();
 
-			validateFriendlyURL(groupId, privateLayout, layoutId, friendlyURL);
+			try {
+				validateFriendlyURL(
+					groupId, privateLayout, layoutId, friendlyURL);
+			}
+			catch (LayoutFriendlyURLException lfurle) {
+				if (layoutFriendlyURLsException == null) {
+					layoutFriendlyURLsException =
+						new LayoutFriendlyURLsException();
+				}
+
+				layoutFriendlyURLsException.addLayoutFriendlyURLException(
+					lfurle);
+			}
+		}
+
+		if (layoutFriendlyURLsException != null) {
+			throw layoutFriendlyURLsException;
 		}
 	}
 

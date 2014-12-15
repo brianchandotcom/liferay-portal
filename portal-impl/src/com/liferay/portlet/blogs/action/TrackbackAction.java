@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -122,8 +123,7 @@ public class TrackbackAction extends PortletAction {
 		if (!remoteIp.equals(trackbackIp)) {
 			sendError(
 				actionRequest, actionResponse,
-				"Remote IP " + remoteIp +
-					" does not match trackback URL's IP " + trackbackIp + ".");
+				"Remote IP does not match trackback URL's IP.");
 
 			return;
 		}
@@ -166,6 +166,12 @@ public class TrackbackAction extends PortletAction {
 
 		long threadId = thread.getThreadId();
 		long parentMessageId = thread.getRootMessageId();
+
+		url = StringUtil.replace(
+			url,
+			new String[] {StringPool.CLOSE_BRACKET, StringPool.OPEN_BRACKET},
+			new String[] {"%5D", "%5B"});
+
 		String body =
 			"[...] " + excerpt + " [...] [url=" + url + "]" +
 				themeDisplay.translate("read-more") + "[/url]";

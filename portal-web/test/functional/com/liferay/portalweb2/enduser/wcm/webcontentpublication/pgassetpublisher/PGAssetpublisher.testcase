@@ -25,7 +25,7 @@
 	<command name="ConfigureAPPortletSelectedWebContent" priority="5">
 		<var name="selectedAsset" value="Web Content Article" />
 
-		<execute macro="AssetPublisherPortlet#configureSelectedPG">
+		<execute macro="AssetPublisher#configureSelectedPG">
 				<var name="selectedAsset" value="${selectedAsset}" />
 		</execute>
 
@@ -33,12 +33,12 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#viewSelectedPG">
+		<execute macro="AssetPublisher#viewSelectedPG">
 			<var name="selectedAsset" value="${selectedAsset}" />
 		</execute>
 	</command>
 
 	<command name="ConfigureAPPortletDisplayPage" priority="5">
-		<execute macro="AssetPublisherPortlet#configureDisplayPagePG" />
+		<execute macro="AssetPublisher#configureDisplayPagePG" />
 	</command>
 </definition>

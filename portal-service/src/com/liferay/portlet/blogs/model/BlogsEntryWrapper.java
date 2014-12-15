@@ -1035,6 +1035,12 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntry.isInTrashExplicitly();
+	}
+
+	@Override
 	public boolean isVisible() {
 		return _blogsEntry.isVisible();
 	}

@@ -15,6 +15,7 @@
 package com.liferay.portal.setup;
 
 import com.liferay.portal.dao.jdbc.util.DataSourceSwapper;
+import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -221,7 +222,7 @@ public class SetupWizardUtil {
 		}
 
 		_updateCompany(request);
-		_updateAdminUser(request, unicodeProperties);
+		_updateAdminUser(request, response, unicodeProperties);
 
 		_initPlugins();
 
@@ -366,7 +367,8 @@ public class SetupWizardUtil {
 	}
 
 	private static void _updateAdminUser(
-			HttpServletRequest request, UnicodeProperties unicodeProperties)
+			HttpServletRequest request, HttpServletResponse response,
+			UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -476,7 +478,12 @@ public class SetupWizardUtil {
 
 		session.setAttribute(WebKeys.EMAIL_ADDRESS, emailAddress);
 		session.setAttribute(WebKeys.SETUP_WIZARD_PASSWORD_UPDATED, true);
+		session.setAttribute(WebKeys.USER, user);
 		session.setAttribute(WebKeys.USER_ID, user.getUserId());
+
+		EventsProcessorUtil.process(
+			PropsKeys.LOGIN_EVENTS_POST, PropsValues.LOGIN_EVENTS_POST, request,
+			response);
 	}
 
 	private static void _updateCompany(HttpServletRequest request)

@@ -53,10 +53,6 @@
 		display: block;
 	}
 
-	.delete-entry {
-		padding-right: 2em;
-	}
-
 	.entry-type-general {
 		background: #fff url('@theme_image_path@/common/all_pages.png') 4px 4px no-repeat;
 		clear: both;
@@ -86,13 +82,5 @@
 
 	.read-entries .entry-title {
 		@include opacity(0.5);
-	}
-
-	.edit-actions {
-		float: right;
-		font-size: 0.7em;
-		font-weight: normal;
-		right: 0;
-		top: 0;
 	}
 }

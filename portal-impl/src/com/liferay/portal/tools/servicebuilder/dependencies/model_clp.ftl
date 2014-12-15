@@ -11,6 +11,7 @@ import ${packagePath}.service.ClpSerializer;
 </#if>
 
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -493,7 +494,14 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			TrashHandler trashHandler = getTrashHandler();
 
 			if (!Validator.isNull(trashHandler.getContainerModelClassName())) {
-				ContainerModel containerModel = trashHandler.getParentContainerModel(this);
+				ContainerModel containerModel = null;
+
+				try {
+					containerModel = trashHandler.getParentContainerModel(this);
+				}
+				catch (NoSuchModelException nsme) {
+	            	return null;
+				}
 
 				while (containerModel != null) {
 					if (containerModel instanceof TrashedModel) {
@@ -741,7 +749,13 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 						return StringPool.BLANK;
 					}
 
-					return LocalizationUtil.getDefaultLanguageId(xml);
+					<#if entity.isGroupedModel()>
+						Locale defaultLocale = LocaleUtil.getSiteDefault();
+					<#else>
+						Locale defaultLocale = LocaleUtil.getDefault();
+					</#if>
+
+					return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
 					<#break>
 				</#if>
 			</#list>
@@ -755,7 +769,11 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		@Override
 		@SuppressWarnings("unused")
 		public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) throws LocaleException {
-			Locale defaultLocale = LocaleUtil.getDefault();
+			<#if entity.isGroupedModel()>
+				Locale defaultLocale = LocaleUtil.getSiteDefault();
+			<#else>
+				Locale defaultLocale = LocaleUtil.getDefault();
+			</#if>
 
 			String modelDefaultLanguageId = getDefaultLanguageId();
 
@@ -890,6 +908,10 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		<#if entity.hasPrimitivePK(false)>
@@ -960,5 +982,6 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 	</#list>
 
 	private BaseModel<?> _${entity.varName}RemoteModel;
+	private Class<?> _clpSerializerClass = ${packagePath}.service.ClpSerializer.class;
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.WorkflowDefinitionLink;
@@ -32,6 +33,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * @author Bruno Farache
@@ -69,26 +71,9 @@ public class WorkflowHandlerRegistryUtil {
 	}
 
 	public static void startWorkflowInstance(
-			long companyId, long groupId, long userId, String className,
-			long classPK, Object model, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		Map<String, Serializable> workflowContext =
-			(Map<String, Serializable>)serviceContext.removeAttribute(
-				"workflowContext");
-
-		if (workflowContext == null) {
-			workflowContext = Collections.emptyMap();
-		}
-
-		startWorkflowInstance(
-			companyId, groupId, userId, className, classPK, model,
-			serviceContext, workflowContext);
-	}
-
-	public static void startWorkflowInstance(
-			long companyId, long groupId, long userId, String className,
-			long classPK, Object model, ServiceContext serviceContext,
+			final long companyId, final long groupId, final long userId,
+			String className, final long classPK, final Object model,
+			ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
 		throws PortalException, SystemException {
 
@@ -98,7 +83,7 @@ public class WorkflowHandlerRegistryUtil {
 			return;
 		}
 
-		WorkflowHandler workflowHandler = getWorkflowHandler(className);
+		final WorkflowHandler workflowHandler = getWorkflowHandler(className);
 
 		if (workflowHandler == null) {
 			if (WorkflowThreadLocal.isEnabled()) {
@@ -109,11 +94,11 @@ public class WorkflowHandlerRegistryUtil {
 			return;
 		}
 
-		WorkflowInstanceLink workflowInstanceLink =
-			WorkflowInstanceLinkLocalServiceUtil.fetchWorkflowInstanceLink(
+		boolean hasWorkflowInstanceInProgress =
+			_instance._hasWorkflowInstanceInProgress(
 				companyId, groupId, className, classPK);
 
-		if (workflowInstanceLink != null) {
+		if (hasWorkflowInstanceInProgress) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Workflow already started for class " + className +
@@ -163,9 +148,41 @@ public class WorkflowHandlerRegistryUtil {
 		workflowHandler.updateStatus(status, workflowContext);
 
 		if (workflowDefinitionLink != null) {
-			workflowHandler.startWorkflowInstance(
-				companyId, groupId, userId, classPK, model, workflowContext);
+			final Map<String, Serializable> tempWorkflowContext =
+				workflowContext;
+
+			TransactionCommitCallbackRegistryUtil.registerCallback(
+				new Callable<Object>() {
+
+					@Override
+					public Object call() throws Exception {
+						workflowHandler.startWorkflowInstance(
+							companyId, groupId, userId, classPK, model,
+							tempWorkflowContext);
+
+						return null;
+					}
+
+				});
 		}
+	}
+
+	public static void startWorkflowInstance(
+			long companyId, long groupId, long userId, String className,
+			long classPK, Object model, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> workflowContext =
+			(Map<String, Serializable>)serviceContext.removeAttribute(
+				"workflowContext");
+
+		if (workflowContext == null) {
+			workflowContext = Collections.emptyMap();
+		}
+
+		startWorkflowInstance(
+			companyId, groupId, userId, className, classPK, model,
+			serviceContext, workflowContext);
 	}
 
 	public static void startWorkflowInstance(
@@ -231,8 +248,34 @@ public class WorkflowHandlerRegistryUtil {
 		_workflowHandlerRegistry = workflowHandlerRegistry;
 	}
 
+	private boolean _hasWorkflowInstanceInProgress(
+			long companyId, long groupId, String className, long classPK)
+		throws PortalException, SystemException {
+
+		WorkflowInstanceLink workflowInstanceLink =
+			WorkflowInstanceLinkLocalServiceUtil.fetchWorkflowInstanceLink(
+				companyId, groupId, className, classPK);
+
+		if (workflowInstanceLink == null) {
+			return false;
+		}
+
+		WorkflowInstance workflowInstance =
+			WorkflowInstanceManagerUtil.getWorkflowInstance(
+				companyId, workflowInstanceLink.getWorkflowInstanceId());
+
+		if (!workflowInstance.isComplete()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		WorkflowHandlerRegistryUtil.class);
+
+	private static WorkflowHandlerRegistryUtil _instance =
+		new WorkflowHandlerRegistryUtil();
 
 	private static WorkflowHandlerRegistry _workflowHandlerRegistry;
 

@@ -70,7 +70,7 @@ if (assetRendererFactory != null) {
 		viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 	}
 
-	if (viewInContext) {
+	if (viewInContext || !assetEntry.isVisible()) {
 		inheritRedirect = true;
 
 		String viewFullContentURLString = viewFullContentURL.toString();
@@ -197,7 +197,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 						catch (NoSuchCategoryException nsce) {
 						}
 
-						if (assetCategory == null) {
+						if ((assetCategory == null) || !permissionChecker.hasPermission(assetCategory.getGroupId(), assetCategory.getModelClassName(), assetCategory.getPrimaryKey(), ActionKeys.VIEW)) {
 							continue;
 						}
 
@@ -205,7 +205,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 
 						PortletURL categoryURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-						categoryURL.setParameter(Field.ASSET_CATEGORY_TITLES, assetCategory.getTitle(LocaleUtil.getDefault()));
+						categoryURL.setParameter(Field.ASSET_CATEGORY_IDS, String.valueOf(assetCategory.getCategoryId()));
 					%>
 
 						<c:if test="<%= i == 0 %>">

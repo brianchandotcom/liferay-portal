@@ -32,6 +32,7 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 	_options.putAll(dynamicAttributes);
 }
 
+boolean checkRequired = GetterUtil.getBoolean(String.valueOf(request.getAttribute("ddm:html:checkRequired")), true);
 long classNameId = GetterUtil.getLong(String.valueOf(request.getAttribute("ddm:html:classNameId")));
 long classPK = GetterUtil.getLong(String.valueOf(request.getAttribute("ddm:html:classPK")));
 com.liferay.portlet.dynamicdatamapping.storage.Fields fields = (com.liferay.portlet.dynamicdatamapping.storage.Fields)request.getAttribute("ddm:html:fields");
@@ -40,6 +41,7 @@ boolean readOnly = GetterUtil.getBoolean(String.valueOf(request.getAttribute("dd
 boolean repeatable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("ddm:html:repeatable")), true);
 java.util.Locale requestedLocale = (java.util.Locale)request.getAttribute("ddm:html:requestedLocale");
 
+_updateOptions(_options, "checkRequired", checkRequired);
 _updateOptions(_options, "classNameId", classNameId);
 _updateOptions(_options, "classPK", classPK);
 _updateOptions(_options, "fields", fields);

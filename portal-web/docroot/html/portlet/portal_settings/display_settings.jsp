@@ -217,12 +217,16 @@
 	</aui:select>
 </aui:fieldset>
 
-<aui:script use="liferay-util-list-fields">
+<aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveLocales',
 		function() {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= PropsKeys.LOCALES %>.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentLanguageIds);
+			var locales = document.<portlet:namespace />fm.<portlet:namespace /><%= PropsKeys.LOCALES %>;
+
+			if (locales) {
+				locales.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentLanguageIds);
+			}
 		},
 		['liferay-util-list-fields']
 	);

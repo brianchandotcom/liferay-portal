@@ -50,7 +50,7 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 		try {
 			FileVersion fileVersion = _fileEntry.getLatestFileVersion();
 
-			return fileVersion.getContentStream(false);
+			return fileVersion.getContentStream(true);
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);

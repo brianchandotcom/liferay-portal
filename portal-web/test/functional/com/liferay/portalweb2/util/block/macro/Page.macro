@@ -137,11 +137,20 @@
 	</command>
 
 	<command name="gotoPagesCP">
-		<execute macro="Page#gotoCmdCP">
-			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_PAGES" />
-			<var name="portletCategoryName" value="Pages" />
-			<var name="portletName" value="${portletName}" />
-		</execute>
+        <execute macro="Page#openURL" />
+
+        <execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+        <execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_PAGES" value1="Pages" />
+
+        <if>
+           <isset var="siteScopeName" />
+           <then>
+              <execute action="Home#click" locator-key1="SCOPE_SELECTOR" />
+                  <var name="key_siteScopeName" value="${siteScopeName}" />
+               <execute action="Home#click" locator-key1="SCOPE_SELECTOR_MENULIST_ITEM" />
+           </then>
+        </if>
+        <execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'${portletName}')]/a" />
      </command>
 
 	<command name="gotoPG">
@@ -176,16 +185,42 @@
 		</if>
 
 		<if>
-			<and>
-				<isset var="siteName" />
-				<equals arg1="${siteURL}" arg2="true" />
-			</and>
+			<equals arg1="${pageType}" arg2="Open Site" />
 			<then>
-				<var name="siteNameURL" value="${siteName?replace(' ', '-')}" />
-				<var name="siteNameURL" value="/${siteNameURL?lowercase()}" />
+				<var name="pageTypeURL" value="/open-site-name" />
 			</then>
+			<elseif>
+				<equals arg1="${pageType}" arg2="Organization" />
+				<then>
+					<var name="pageTypeURL" value="/organization-name" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${pageType}" arg2="Site" />
+				<then>
+					<var name="pageTypeURL" value="/site-name" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${pageType}" arg2="Child" />
+				<then>
+					<var name="pageTypeURL" value="/child-sitename" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${pageType}" arg2="Child1" />
+				<then>
+					<var name="pageTypeURL" value="/child-site1name" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${pageType}" arg2="Child Child" />
+				<then>
+					<var name="pageTypeURL" value="/child-childsite1name" />
+				</then>
+			</elseif>
 			<else>
-				<var name="siteNameURL" value="/guest" />
+				<var name="pageTypeURL" value="/guest" />
 			</else>
 		</if>
 
@@ -199,7 +234,7 @@
 			</else>
 		</if>
 
-		<execute action="Home#open" locator1="${pageAccessURL}${siteNameURL}${pageStagingURL}" />
+		<execute action="Home#open" locator1="${pageAccessURL}${pageTypeURL}${pageStagingURL}" />
 	</command>
 
 	<command name="tearDownPG">

@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.notifications.ChannelHubManagerUtil;
 import com.liferay.portal.kernel.poller.PollerHeader;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -59,7 +60,7 @@ public class PollerServlet extends HttpServlet {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			_log.error(e.getMessage());
 
 			PortalUtil.sendError(
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,
@@ -89,20 +90,29 @@ public class PollerServlet extends HttpServlet {
 			return StringPool.BLANK;
 		}
 
-		JSONObject pollerResponseHeaderJSONObject =
-			PollerRequestHandlerUtil.processRequest(
-				request, pollerRequestString);
-
-		if (pollerResponseHeaderJSONObject == null) {
-			return StringPool.BLANK;
-		}
-
 		SynchronousPollerChannelListener synchronousPollerChannelListener =
-			new SynchronousPollerChannelListener(
-				companyId, userId, pollerResponseHeaderJSONObject);
+			new SynchronousPollerChannelListener();
 
-		return synchronousPollerChannelListener.getNotificationEvents(
-			PropsValues.POLLER_REQUEST_TIMEOUT);
+		try {
+			ChannelHubManagerUtil.registerChannelListener(
+				companyId, userId, synchronousPollerChannelListener);
+
+			JSONObject pollerResponseHeaderJSONObject =
+				PollerRequestHandlerUtil.processRequest(
+					request, pollerRequestString);
+
+			if (pollerResponseHeaderJSONObject == null) {
+				return StringPool.BLANK;
+			}
+
+			return synchronousPollerChannelListener.getNotificationEvents(
+				companyId, userId, pollerResponseHeaderJSONObject,
+				PropsValues.POLLER_REQUEST_TIMEOUT);
+		}
+		finally {
+			ChannelHubManagerUtil.unregisterChannelListener(
+				companyId, userId, synchronousPollerChannelListener);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PollerServlet.class);

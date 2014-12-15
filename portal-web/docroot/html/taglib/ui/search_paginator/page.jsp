@@ -57,7 +57,7 @@ if (iteratorURL != null) {
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(searchContainer.getEmptyResultsMessage()) %>">
 		<div class="alert alert-info">
-			<%= searchContainer.getEmptyResultsMessage() %>
+			<%= LanguageUtil.get(pageContext, searchContainer.getEmptyResultsMessage()) %>
 		</div>
 	</c:when>
 </c:choose>

@@ -52,5 +52,8 @@ public interface MBThread extends MBThreadModel, PersistedModel {
 
 	public boolean hasLock(long userId);
 
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public boolean isLocked();
 }

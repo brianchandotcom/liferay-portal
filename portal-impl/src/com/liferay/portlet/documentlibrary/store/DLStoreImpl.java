@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -617,25 +618,45 @@ public class DLStoreImpl implements DLStore {
 			throw new FileNameException(fileName);
 		}
 
-		if (validateFileExtension) {
-			boolean validFileExtension = false;
+		if (!validateFileExtension) {
+			return;
+		}
 
-			String[] fileExtensions = PrefsPropsUtil.getStringArray(
-				PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
+		Thread currentThread = Thread.currentThread();
 
-			for (String fileExtension : fileExtensions) {
-				if (StringPool.STAR.equals(fileExtension) ||
-					StringUtil.endsWith(fileName, fileExtension)) {
+		StackTraceElement[] stackTraceElements = currentThread.getStackTrace();
 
-					validFileExtension = true;
+		for (StackTraceElement stackTraceElement : stackTraceElements) {
+			String className = stackTraceElement.getClassName();
 
-					break;
-				}
+			if (className.startsWith("com.liferay.") &&
+				(className.endsWith("EditLayoutSetAction") ||
+				 className.endsWith("EditUserPortraitAction") ||
+				 className.endsWith("LogoAction") ||
+				 className.endsWith("PortletFileRepositoryImpl")||
+				 className.endsWith("TempFileUtil"))) {
+
+				return;
 			}
+		}
 
-			if (!validFileExtension) {
-				throw new FileExtensionException(fileName);
+		boolean validFileExtension = false;
+
+		String[] fileExtensions = PrefsPropsUtil.getStringArray(
+			PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
+
+		for (String fileExtension : fileExtensions) {
+			if (StringPool.STAR.equals(fileExtension) ||
+				StringUtil.endsWith(fileName, fileExtension)) {
+
+				validFileExtension = true;
+
+				break;
 			}
+		}
+
+		if (!validFileExtension) {
+			throw new FileExtensionException(fileName);
 		}
 	}
 
@@ -646,7 +667,8 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		if ((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
+		if (PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled() &&
+			(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
 			((bytes == null) ||
 			 (bytes.length >
 				 PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
@@ -662,7 +684,8 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		if ((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
+		if (PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled() &&
+			(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
 			((file == null) ||
 			 (file.length() >
 				PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
@@ -681,10 +704,11 @@ public class DLStoreImpl implements DLStore {
 		// LEP-4851
 
 		try {
-			if ((is == null) ||
-				((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
-				 (is.available() >
-					PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE)))) {
+			if (PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled() &&
+				((is == null) ||
+				 ((PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
+				  (is.available() >
+					PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE))))) {
 
 				throw new FileSizeException(fileName);
 			}
@@ -704,7 +728,8 @@ public class DLStoreImpl implements DLStore {
 			fileName, fileExtension, sourceFileName, validateFileExtension,
 			StringPool.BLANK);
 
-		if ((file != null) &&
+		if (PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled() &&
+			(file != null) &&
 			(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
 			(file.length() >
 				PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE))) {
@@ -724,7 +749,8 @@ public class DLStoreImpl implements DLStore {
 			StringPool.BLANK);
 
 		try {
-			if ((is != null) &&
+			if (PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled() &&
+				(is != null) &&
 				(PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) > 0) &&
 				(is.available() >
 					PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE))) {

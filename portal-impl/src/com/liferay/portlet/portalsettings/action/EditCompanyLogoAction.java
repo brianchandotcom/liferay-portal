@@ -258,6 +258,14 @@ public class EditCompanyLogoAction extends PortletAction {
 				int x = jsonObject.getInt("x");
 				int y = jsonObject.getInt("y");
 
+				if ((height + y) > renderedImage.getHeight()) {
+					height = renderedImage.getHeight() - y;
+				}
+
+				if ((width + x) > renderedImage.getWidth()) {
+					width = renderedImage.getWidth() - x;
+				}
+
 				renderedImage = getCroppedRenderedImage(
 					renderedImage, height, width, x, y);
 			}

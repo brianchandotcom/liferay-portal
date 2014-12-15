@@ -15,7 +15,10 @@
 package com.liferay.portal.layoutconfiguration.util.velocity;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
+import com.liferay.portal.kernel.portlet.PortletJSONUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -192,9 +195,18 @@ public class TemplateProcessor implements ColumnProcessor {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), portletId);
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		PortletJSONUtil.populatePortletJSONObject(
+			_request, StringPool.BLANK, portlet, jsonObject);
+
 		try {
+			PortletJSONUtil.writeHeaderPaths(_response, jsonObject);
+
 			PortletContainerUtil.render(
 				_request, bufferCacheServletResponse, portlet);
+
+			PortletJSONUtil.writeFooterPaths(_response, jsonObject);
 
 			return bufferCacheServletResponse.getString();
 		}

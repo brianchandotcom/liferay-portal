@@ -122,7 +122,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 						data.put("portlet-id", assetRenderer.getAddToPagePortletId());
 						data.put("title", title);
 
-						String navItemCssClass="content-shortcut lfr-content-item ";
+						String navItemCssClass="content-shortcut drag-content-item lfr-content-item ";
 
 						if (!displayStyle.equals("icon")) {
 							navItemCssClass += "has-preview";
@@ -132,13 +132,13 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 						<aui:nav-item cssClass='<%= navItemCssClass %>'
 							data="<%= data %>"
 							href=""
-							iconCssClass='<%= displayStyle.equals("icon") ? "" : "icon-file" %>'
+							iconCssClass='<%= displayStyle.equals("list") ? "icon-file" : StringPool.BLANK %>'
 							label='<%= displayStyle.equals("list") ? title : "" %>'
 						>
 							<c:choose>
 								<c:when test='<%= !displayStyle.equals("list") %>' >
 									<div class="add-content-thumbnail <%= displayStyle.equals("descriptive") ? "span4" : StringPool.BLANK %>">
-										<img src="<%= assetRenderer.getThumbnailPath(liferayPortletRequest) %>" />
+										<img src="<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>" />
 									</div>
 
 									<div class="add-content-details <%= displayStyle.equals("descriptive") ? "span8" : StringPool.BLANK %>">
@@ -147,7 +147,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 										</div>
 
 										<div class="add-content-description">
-											<%= StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 120) %>
+											<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 120)) %>
 										</div>
 									</div>
 								</c:when>

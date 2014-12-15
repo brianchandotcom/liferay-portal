@@ -231,13 +231,17 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 				else if (causeString.contains("PrincipalException")) {
 					returnValue = "207";
 				}
-				else if (causeString.contains("ImageSizeException") ||
-						 causeString.contains("FileSizeException")) {
+				else if (causeString.contains("FileSizeException") ||
+						 causeString.contains("ImageSizeException") ||
+						 causeString.contains("SizeLimitExceededException")) {
 
 					returnValue = "208";
 				}
 				else if (causeString.contains("SystemException")) {
 					returnValue = "209";
+				}
+				else if (causeString.contains("AssetCategoryException")) {
+					returnValue = "212";
 				}
 				else {
 					throw fcke;
@@ -342,7 +346,7 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 
 		ThemeDisplay themeDisplay = commandArgument.getThemeDisplay();
 
-		long scopeGroupId = themeDisplay.getScopeGroupId();
+		long doAsGroupId = themeDisplay.getDoAsGroupId();
 
 		HttpServletRequest request = commandArgument.getHttpServletRequest();
 
@@ -353,30 +357,23 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 
 			foldersElement.appendChild(folderElement);
 
-			boolean setNameAttribute = false;
+			long groupId = group.getGroupId();
+			String descriptiveName = group.getDescriptiveName();
 
 			if (group.hasStagingGroup()) {
 				Group stagingGroup = group.getStagingGroup();
 
-				if ((stagingGroup.getGroupId() == scopeGroupId) &&
+				if ((stagingGroup.getGroupId() == doAsGroupId) &&
 					group.isStagedPortlet(portletId) &&
 					!group.isStagedRemotely() && isStagedData(group)) {
 
-					folderElement.setAttribute(
-						"name",
-						stagingGroup.getGroupId() + " - " +
-							HtmlUtil.escape(stagingGroup.getDescriptiveName()));
-
-					setNameAttribute = true;
+					groupId = stagingGroup.getGroupId();
+					descriptiveName = stagingGroup.getDescriptiveName();
 				}
 			}
 
-			if (!setNameAttribute) {
-				folderElement.setAttribute(
-					"name",
-					group.getGroupId() + " - " +
-						HtmlUtil.escape(group.getDescriptiveName()));
-			}
+			folderElement.setAttribute(
+				"name", groupId + " - " + HtmlUtil.escape(descriptiveName));
 		}
 	}
 

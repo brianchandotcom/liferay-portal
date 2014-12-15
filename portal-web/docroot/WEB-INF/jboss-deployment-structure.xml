@@ -1,13 +1,17 @@
 <?xml version="1.0"?>
 
-<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.0">
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">
 	<deployment>
 		<exclusions>
 			<module name="org.apache.log4j" />
 			<module name="org.hibernate" />
 		</exclusions>
 		<dependencies>
-			<module name="com.liferay.portal" />
+			<module meta-inf="export" name="com.liferay.portal">
+				<imports>
+					<include path="META-INF" />
+				</imports>
+			</module>
 			<module name="javax.mail.api" />
 			<module name="org.apache.xerces" />
 			<module name="org.jboss.modules" />

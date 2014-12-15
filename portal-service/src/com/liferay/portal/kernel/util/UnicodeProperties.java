@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.io.IOException;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -177,7 +176,16 @@ public class UnicodeProperties extends HashMap<String, String> {
 		return put(key, value);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #toString}
+	 */
+	@Deprecated
 	public String toSortedString() {
+		return toString();
+	}
+
+	@Override
+	public String toString() {
 		StringBuilder sb = new StringBuilder(_length);
 
 		Set<String> keys = new TreeSet<String>(keySet());
@@ -194,30 +202,6 @@ public class UnicodeProperties extends HashMap<String, String> {
 			}
 
 			sb.append(key);
-			sb.append(StringPool.EQUAL);
-			sb.append(value);
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder(_length);
-
-		for (Map.Entry<String, String> entry : entrySet()) {
-			String value = entry.getValue();
-
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			if (_safe) {
-				value = _encode(value);
-			}
-
-			sb.append(entry.getKey());
 			sb.append(StringPool.EQUAL);
 			sb.append(value);
 			sb.append(StringPool.NEW_LINE);

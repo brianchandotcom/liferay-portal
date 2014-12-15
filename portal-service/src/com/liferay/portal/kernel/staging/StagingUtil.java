@@ -63,6 +63,13 @@ public class StagingUtil {
 		return getStaging().buildRemoteURL(typeSettingsProperties);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.StagingLocalServiceUtil#
+	 *             checkDefaultLayoutSetBranches(long, Group, boolean, boolean,
+	 *             boolean, ServiceContext))}
+	 */
+	@Deprecated
 	public static void checkDefaultLayoutSetBranches(
 			long userId, Group liveGroup, boolean branchingPublic,
 			boolean branchingPrivate, boolean remote,
@@ -224,14 +231,15 @@ public class StagingUtil {
 
 	public static JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
-		Map<String, Serializable> contextMap) {
+		Map<String, Serializable> contextMap) throws SystemException {
 
 		return getStaging().getErrorMessagesJSONArray(
 			locale, missingReferences, contextMap);
 	}
 
 	public static JSONObject getExceptionMessagesJSONObject(
-		Locale locale, Exception e, Map<String, Serializable> contextMap) {
+			Locale locale, Exception e, Map<String, Serializable> contextMap)
+		throws SystemException {
 
 		return getStaging().getExceptionMessagesJSONObject(
 			locale, e, contextMap);

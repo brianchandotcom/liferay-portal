@@ -17,17 +17,21 @@ package com.liferay.portal.kernel.monitoring.statistics;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public class DataSampleThreadLocal implements Cloneable {
+public class DataSampleThreadLocal {
 
 	public static void addDataSample(DataSample dataSample) {
-		_dataSampleThreadLocal.get()._addDataSample(dataSample);
+		DataSampleThreadLocal dataSampleThreadLocal =
+			_dataSampleThreadLocal.get();
+
+		dataSampleThreadLocal._addDataSample(dataSample);
 	}
 
 	public static void clearDataSamples() {
@@ -35,7 +39,14 @@ public class DataSampleThreadLocal implements Cloneable {
 	}
 
 	public static List<DataSample> getDataSamples() {
-		return ListUtil.copy(_dataSampleThreadLocal.get()._getDataSamples());
+		DataSampleThreadLocal dataSampleThreadLocal =
+			_dataSampleThreadLocal.get();
+
+		return ListUtil.fromCollection(dataSampleThreadLocal._getDataSamples());
+	}
+
+	public static void initialize() {
+		_dataSampleThreadLocal.get();
 	}
 
 	@Override
@@ -55,16 +66,30 @@ public class DataSampleThreadLocal implements Cloneable {
 		_dataSamples.add(dataSample);
 	}
 
-	private List<DataSample> _getDataSamples() {
+	private Queue<DataSample> _getDataSamples() {
 		return _dataSamples;
 	}
 
 	private static ThreadLocal<DataSampleThreadLocal> _dataSampleThreadLocal =
 		new AutoResetThreadLocal<DataSampleThreadLocal>(
-			DataSampleThreadLocal.class + "._dataSampleThreadLocal",
-			new DataSampleThreadLocal());
+			DataSampleThreadLocal.class + "._dataSampleThreadLocal") {
 
-	private List<DataSample> _dataSamples = new ArrayList<DataSample>();
+				@Override
+				protected DataSampleThreadLocal copy(
+					DataSampleThreadLocal dataSampleThreadLocal) {
+
+					return dataSampleThreadLocal;
+				}
+
+				@Override
+				protected DataSampleThreadLocal initialValue() {
+					return new DataSampleThreadLocal();
+				}
+
+			};
+
+	private Queue<DataSample> _dataSamples =
+		new ConcurrentLinkedQueue<DataSample>();
 	private long _monitorTime;
 
 }

@@ -53,6 +53,13 @@ public interface Staging {
 
 	public String buildRemoteURL(UnicodeProperties typeSettingsProperties);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.StagingLocalServiceUtil#
+	 *             checkDefaultLayoutSetBranches(long, Group, boolean, boolean,
+	 *             boolean, ServiceContext))}
+	 */
+	@Deprecated
 	public void checkDefaultLayoutSetBranches(
 			long userId, Group liveGroup, boolean branchingPublic,
 			boolean branchingPrivate, boolean remote,
@@ -152,11 +159,13 @@ public interface Staging {
 		throws Exception;
 
 	public JSONArray getErrorMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences,
-		Map<String, Serializable> contextMap);
+			Locale locale, Map<String, MissingReference> missingReferences,
+			Map<String, Serializable> contextMap)
+		throws SystemException;
 
 	public JSONObject getExceptionMessagesJSONObject(
-		Locale locale, Exception e, Map<String, Serializable> contextMap);
+			Locale locale, Exception e, Map<String, Serializable> contextMap)
+		throws SystemException;
 
 	public Group getLiveGroup(long groupId)
 		throws PortalException, SystemException;

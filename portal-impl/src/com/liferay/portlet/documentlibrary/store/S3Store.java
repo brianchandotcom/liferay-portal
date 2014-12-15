@@ -92,14 +92,12 @@ public class S3Store extends BaseStore {
 			s3Object.setDataInputStream(is);
 
 			_s3Service.putObject(_s3Bucket, s3Object);
-
-			is.close();
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
 		}
 		catch (S3ServiceException s3se) {
 			throw new SystemException(s3se);
+		}
+		finally {
+			StreamUtil.cleanUp(is);
 		}
 	}
 
@@ -304,6 +302,10 @@ public class S3Store extends BaseStore {
 			String fileName)
 		throws SystemException {
 
+		File tempFile = null;
+		InputStream is = null;
+		S3Object newS3Object = null;
+
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
 				_s3Bucket.getName(), getKey(companyId, repositoryId, fileName),
@@ -314,13 +316,13 @@ public class S3Store extends BaseStore {
 
 				oldS3Object = _s3Service.getObject(_s3Bucket.getName(), oldKey);
 
-				File tempFile = new File(
+				tempFile = new File(
 					SystemProperties.get(SystemProperties.TMP_DIR) +
 						File.separator + PortalUUIDUtil.generate());
 
 				FileUtil.write(tempFile, oldS3Object.getDataInputStream());
 
-				InputStream is = new FileInputStream(tempFile);
+				is = new FileInputStream(tempFile);
 
 				String newPrefix = getKey(companyId, newRepositoryId);
 
@@ -328,18 +330,14 @@ public class S3Store extends BaseStore {
 
 				x = oldKey.indexOf(CharPool.SLASH, x + 1);
 
-				String newKey = newPrefix + oldKey.substring(x + 1);
+				String newKey = newPrefix + oldKey.substring(x);
 
-				S3Object newS3Object = new S3Object(_s3Bucket, newKey);
+				newS3Object = new S3Object(_s3Bucket, newKey);
 
 				newS3Object.setDataInputStream(is);
 
 				_s3Service.putObject(_s3Bucket, newS3Object);
 				_s3Service.deleteObject(_s3Bucket, oldKey);
-
-				is.close();
-
-				FileUtil.delete(tempFile);
 			}
 		}
 		catch (IOException ioe) {
@@ -347,6 +345,11 @@ public class S3Store extends BaseStore {
 		}
 		catch (ServiceException se) {
 			throw new SystemException(se);
+		}
+		finally {
+			StreamUtil.cleanUp(is);
+
+			FileUtil.delete(tempFile);
 		}
 	}
 
@@ -356,6 +359,10 @@ public class S3Store extends BaseStore {
 			String newFileName)
 		throws SystemException {
 
+		File tempFile = null;
+		InputStream is = null;
+		S3Object newS3Object = null;
+
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
 				_s3Bucket.getName(), getKey(companyId, repositoryId, fileName),
@@ -366,7 +373,7 @@ public class S3Store extends BaseStore {
 
 				oldS3Object = _s3Service.getObject(_s3Bucket.getName(), oldKey);
 
-				File tempFile = new File(
+				tempFile = new File(
 					SystemProperties.get(SystemProperties.TMP_DIR) +
 						File.separator + PortalUUIDUtil.generate());
 
@@ -374,7 +381,7 @@ public class S3Store extends BaseStore {
 
 				oldS3Object.closeDataInputStream();
 
-				InputStream is = new FileInputStream(tempFile);
+				is = new FileInputStream(tempFile);
 
 				String newPrefix = getKey(companyId, repositoryId, newFileName);
 
@@ -383,20 +390,14 @@ public class S3Store extends BaseStore {
 				x = oldKey.indexOf(CharPool.SLASH, x + 1);
 				x = oldKey.indexOf(CharPool.SLASH, x + 1);
 
-				String newKey = newPrefix + oldKey.substring(x + 1);
+				String newKey = newPrefix + oldKey.substring(x);
 
-				S3Object newS3Object = new S3Object(_s3Bucket, newKey);
+				newS3Object = new S3Object(_s3Bucket, newKey);
 
 				newS3Object.setDataInputStream(is);
 
 				_s3Service.putObject(_s3Bucket, newS3Object);
 				_s3Service.deleteObject(_s3Bucket, oldKey);
-
-				newS3Object.closeDataInputStream();
-
-				is.close();
-
-				FileUtil.delete(tempFile);
 			}
 		}
 		catch (IOException ioe) {
@@ -404,6 +405,11 @@ public class S3Store extends BaseStore {
 		}
 		catch (ServiceException se) {
 			throw new SystemException(se);
+		}
+		finally {
+			StreamUtil.cleanUp(is);
+
+			FileUtil.delete(tempFile);
 		}
 	}
 
@@ -421,14 +427,12 @@ public class S3Store extends BaseStore {
 			s3Object.setDataInputStream(is);
 
 			_s3Service.putObject(_s3Bucket, s3Object);
-
-			is.close();
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
 		}
 		catch (S3ServiceException s3se) {
 			throw new SystemException(s3se);
+		}
+		finally {
+			StreamUtil.cleanUp(is);
 		}
 	}
 

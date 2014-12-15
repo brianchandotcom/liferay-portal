@@ -247,6 +247,8 @@ public class EditStructureAction extends PortletAction {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long scopeClassNameId = ParamUtil.getLong(
 			actionRequest, "scopeClassNameId");
+		String structureKey = ParamUtil.getString(
+			actionRequest, "structureKey");
 		long parentStructureId = ParamUtil.getLong(
 			actionRequest, "parentStructureId",
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
@@ -264,8 +266,8 @@ public class EditStructureAction extends PortletAction {
 
 		if (cmd.equals(Constants.ADD)) {
 			structure = DDMStructureServiceUtil.addStructure(
-				groupId, parentStructureId, scopeClassNameId, null, nameMap,
-				descriptionMap, xsd, storageType,
+				groupId, parentStructureId, scopeClassNameId, structureKey,
+				nameMap, descriptionMap, xsd, storageType,
 				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {

@@ -17,6 +17,7 @@ package com.liferay.portal.asset;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
@@ -113,15 +114,16 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 				_layoutRevision.getPlid());
 
-			StringBundler sb = new StringBundler(5);
+			String layoutURL = PortalUtil.getLayoutURL(layout, themeDisplay);
 
-			sb.append(PortalUtil.getLayoutFriendlyURL(layout, themeDisplay));
-			sb.append("?layoutSetBranchId=");
-			sb.append(_layoutRevision.getLayoutSetBranchId());
-			sb.append("&layoutRevisionId=");
-			sb.append(_layoutRevision.getLayoutRevisionId());
+			layoutURL = HttpUtil.addParameter(
+				layoutURL, "layoutSetBranchId",
+				_layoutRevision.getLayoutSetBranchId());
+			layoutURL = HttpUtil.addParameter(
+				layoutURL, "layoutRevisionId",
+				_layoutRevision.getLayoutRevisionId());
 
-			return sb.toString();
+			return layoutURL;
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;

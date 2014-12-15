@@ -646,6 +646,12 @@ public class ParamUtil_IW {
 	}
 
 	public java.lang.String[] getParameterValues(
+		javax.servlet.http.HttpServletRequest request, java.lang.String param,
+		java.lang.String[] defaultValue, boolean split) {
+		return ParamUtil.getParameterValues(request, param, defaultValue, split);
+	}
+
+	public java.lang.String[] getParameterValues(
 		javax.portlet.PortletRequest portletRequest, java.lang.String param) {
 		return ParamUtil.getParameterValues(portletRequest, param);
 	}
@@ -654,6 +660,13 @@ public class ParamUtil_IW {
 		javax.portlet.PortletRequest portletRequest, java.lang.String param,
 		java.lang.String[] defaultValue) {
 		return ParamUtil.getParameterValues(portletRequest, param, defaultValue);
+	}
+
+	public java.lang.String[] getParameterValues(
+		javax.portlet.PortletRequest portletRequest, java.lang.String param,
+		java.lang.String[] defaultValue, boolean split) {
+		return ParamUtil.getParameterValues(portletRequest, param,
+			defaultValue, split);
 	}
 
 	public short getShort(javax.servlet.http.HttpServletRequest request,

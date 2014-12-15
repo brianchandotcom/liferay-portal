@@ -28,15 +28,6 @@
 			.accordion-group .accordion-inner {
 				padding: 6px 0;
 			}
-
-			.nav-list {
-				padding-left: 0;
-				padding-right: 0;
-
-				.lfr-content-item {
-					padding-left: 15px;
-				}
-			}
 		}
 
 		.btn-toolbar {
@@ -105,11 +96,15 @@
 			margin-bottom: 25px;
 		}
 
+		.drag-content-item {
+			cursor: move;
+		}
+
 		.lfr-content-item {
+			padding-left: 15px;
 			position: relative;
 
 			.drag-content-item {
-				cursor: move;
 				display: inline-block;
 				width: 100%;
 			}
@@ -164,11 +159,10 @@
 				}
 
 				&.toggler-header-collapsed .lfr-page-template-description {
+					@include ellipsis;
+
 					height: 1.6em;
-					overflow: hidden;
 					padding-left: 26px;
-					text-overflow: ellipsis;
-					white-space: nowrap;
 					width: 285px;
 				}
 
@@ -194,9 +188,8 @@
 
 			.add-content-details {
 				.add-content-title, .add-content-description {
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
+					@include ellipsis;
+
 					width: 100%;
 				}
 			}
@@ -276,6 +269,8 @@
 	}
 
 	.asset-title {
+		@include ellipsis;
+
 		margin-bottom: 5px;
 	}
 }

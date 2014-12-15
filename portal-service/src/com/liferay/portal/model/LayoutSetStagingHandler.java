@@ -126,17 +126,29 @@ public class LayoutSetStagingHandler
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if ((serviceContext == null) || !serviceContext.isSignedIn()) {
+		if (serviceContext == null) {
 			return null;
 		}
 
 		long layoutSetBranchId = ParamUtil.getLong(
 			serviceContext, "layoutSetBranchId");
 
-		return LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
-			serviceContext.getUserId(), layoutSet.getGroupId(),
-			layoutSet.isPrivateLayout(), layoutSet.getLayoutSetId(),
-			layoutSetBranchId);
+		LayoutSetBranch layoutSetBranch = null;
+
+		if (serviceContext.isSignedIn()) {
+			layoutSetBranch =
+				LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
+					serviceContext.getUserId(), layoutSet.getGroupId(),
+					layoutSet.isPrivateLayout(), layoutSet.getLayoutSetId(),
+					layoutSetBranchId);
+		}
+		else if (layoutSetBranchId > 0) {
+			layoutSetBranch =
+				LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
+					layoutSetBranchId);
+		}
+
+		return layoutSetBranch;
 	}
 
 	private Object _toEscapedModel() {

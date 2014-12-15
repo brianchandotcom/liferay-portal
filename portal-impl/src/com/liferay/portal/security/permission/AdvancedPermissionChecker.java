@@ -520,13 +520,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	public boolean hasPermission(
 		long groupId, String name, String primKey, String actionId) {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		Group group = null;
 
@@ -643,6 +639,18 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			return false;
 		}
+	}
+
+	@Override
+	public boolean isContentReviewer(long companyId, long groupId) {
+		try {
+			return isContentReviewerImpl(companyId, groupId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return false;
 	}
 
 	@Override
@@ -979,13 +987,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			boolean checkAdmin)
 		throws Exception {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		long companyId = user.getCompanyId();
 
@@ -1056,6 +1060,45 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return value.booleanValue();
 	}
 
+	protected boolean isContentReviewerImpl(long companyId, long groupId)
+		throws Exception {
+
+		if (!signedIn) {
+			return false;
+		}
+
+		if (isOmniadmin()) {
+			return true;
+		}
+
+		if (isCompanyAdmin(companyId)) {
+			return true;
+		}
+
+		if (groupId <= 0) {
+			return false;
+		}
+
+		if (isGroupAdmin(groupId)) {
+			return true;
+		}
+
+		PermissionCheckerBag bag = getUserBag(user.getUserId(), groupId);
+
+		if (bag == null) {
+			_log.error("Bag should never be null");
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (bag.isContentReviewer(this, group)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected boolean isGroupAdminImpl(long groupId) throws Exception {
 		if (!signedIn) {
 			return false;
@@ -1085,13 +1128,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		if (group.isOrganization()) {
 			Organization organization =

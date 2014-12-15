@@ -682,7 +682,8 @@ public class SCProductEntryLocalServiceImpl
 		if ((productEntry != null) &&
 			(productEntry.getProductEntryId() != productEntryId)) {
 
-			throw new DuplicateProductEntryModuleIdException();
+			throw new DuplicateProductEntryModuleIdException(
+				"{productEntryId=" + productEntryId + "}");
 		}
 
 		if (licenseIds.length == 0) {

@@ -83,12 +83,6 @@
 	<dd>
 		<liferay-ui:message key="the-name-of-the-email-recipient" />
 	</dd>
-	<dt class="password-changed-notification">
-		[$USER_AGENT$]
-	</dt>
-	<dd class="password-changed-notification">
-		<liferay-ui:message key="the-browser's-user-agent" />
-	</dd>
 	<dt>
 		[$USER_ID$]
 	</dt>

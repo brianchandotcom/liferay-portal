@@ -65,7 +65,7 @@ public class MBBanStagedModelDataHandler
 		User bannedUser = UserLocalServiceUtil.getUser(ban.getUserId());
 
 		portletDataContext.addReferenceElement(
-			ban, userBanElement, bannedUser, User.class,
+			ban, userBanElement, bannedUser,
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY_DISPOSABLE, true);
 
 		portletDataContext.addClassedModel(

@@ -353,8 +353,13 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.portlet-topper-toolbar {
 		position: absolute;
-		right: 21px;
+		right: 8px;
 		top: 23px;
+	}
+
+	.portlet-topper-titleless .portlet-topper-toolbar {
+		bottom: 30px;
+		top: auto;
 	}
 
 	.nav-list {
@@ -378,8 +383,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.portlet-title {
+		display: inline-block;
 		font-size: 25px;
 		font-weight: 100;
+		width: 85%;
 
 		.taglib-icon-help {
 			margin-left: -7px;
@@ -442,11 +449,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 							display: block;
 							font-size: 14px;
 							padding: 3px 15px;
-							text-decoration: none;
 
 							&:focus, &:hover {
 								background: #E5F5FC;
 								color: #009AE5;
+							}
+
+							&.taglib-icon:hover .taglib-text {
+								text-decoration: none;
 							}
 						}
 
@@ -464,6 +474,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.search-panels {
 			padding: 0 10px 14px;
 			position: relative;
+
+			.icon-search {
+				left: 18px;
+				position: absolute;
+				top: 8px;
+			}
 
 			.cancel-search {
 				color: #f88;
@@ -514,7 +530,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 
 				input {
-					padding-left: 40px;
+					padding-left: 28px;
 				}
 			}
 		}
@@ -533,14 +549,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 					.toggler-content {
 						border: 1px solid #DDD;
 						left: 49px;
-
-						&:before {
-							content: '';
-							height: 44px;
-							margin-left: 0px;
-							position: absolute;
-							width: 50px;
-						}
 
 						.accordion-inner {
 							border-top-width: 0;
@@ -568,7 +576,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			.control-panel-tools {
 				cursor: pointer;
-				padding-top: 16px;
+				padding: 12px 0;
 
 				&:hover {
 					background-color: #DDD;
@@ -621,10 +629,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			.search-panels {
+				padding: 0;
 				text-align: center;
 
 				.icon-search {
 					display: block;
+					position: static;
 				}
 			}
 
@@ -945,7 +955,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			margin-right: 0;
 		}
 
-		.tabbable-content.taglib-form-navigator {
+		.taglib-form-navigator .tabbable-content {
 			position: relative;
 		}
 

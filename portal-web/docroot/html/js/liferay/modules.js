@@ -8,6 +8,14 @@
 
 	var PATH_JAVASCRIPT = LiferayAUI.getJavaScriptRootPath();
 
+	var testTouch = function(A) {
+		return A.UA.touch;
+	};
+
+	var testTouchMobile = function(A) {
+		return testTouch(A) && A.UA.mobile;
+	};
+
 	window.YUI_config = {
 		base: PATH_JAVASCRIPT + '/aui/',
 		combine: COMBINE,
@@ -29,6 +37,17 @@
 				base: PATH_JAVASCRIPT + '/liferay/',
 				combine: COMBINE,
 				modules: {
+					'liferay-ajax-session': {
+						condition: {
+							trigger: 'aui-io-request'
+						},
+						path: 'ajax_session.js',
+						requires: [
+							'aui-io-request',
+							'liferay-session'
+						]
+					},
+
 					'liferay-app-view-folders': {
 						path: 'app_view_folders.js',
 						requires: [
@@ -43,6 +62,15 @@
 					},
 					'liferay-app-view-move': {
 						path: 'app_view_move.js',
+						plugins: {
+							'liferay-app-view-move-touch': {
+								condition: {
+									name: 'liferay-app-view-move-touch',
+									test: testTouch,
+									trigger: 'liferay-app-view-move'
+								}
+							}
+						},
 						requires: [
 							'aui-base',
 							'dd-constrain',
@@ -53,6 +81,12 @@
 							'liferay-history-manager',
 							'liferay-portlet-base',
 							'liferay-util-list-fields'
+						]
+					},
+					'liferay-app-view-move-touch': {
+						path: 'app_view_move_touch.js',
+						requires: [
+							'aui-base'
 						]
 					},
 					'liferay-app-view-paginator': {
@@ -343,9 +377,27 @@
 					},
 					'liferay-input-move-boxes': {
 						path: 'input_move_boxes.js',
+						plugins: {
+							'liferay-input-move-boxes-touch': {
+								condition: {
+									name: 'liferay-input-move-boxes-touch',
+									test: testTouchMobile,
+									trigger: 'liferay-input-move-boxes'
+								}
+							}
+						},
 						requires: [
 							'aui-base',
 							'aui-toolbar'
+						]
+					},
+					'liferay-input-move-boxes-touch': {
+						path: 'input_move_boxes_touch.js',
+						requires: [
+							'aui-base',
+							'aui-template-deprecated',
+							'liferay-input-move-boxes',
+							'sortable'
 						]
 					},
 					'liferay-layout': {
@@ -428,9 +480,7 @@
 							'liferay-navigation-touch': {
 								condition: {
 									name: 'liferay-navigation-touch',
-									test: function(A) {
-										return A.UA.touch;
-									},
+									test: testTouch,
 									trigger: 'liferay-navigation'
 								}
 							}
@@ -442,9 +492,7 @@
 							'liferay-navigation-interaction-touch': {
 								condition: {
 									name: 'liferay-navigation-interaction-touch',
-									test: function(A) {
-										return A.UA.touch;
-									},
+									test: testTouch,
 									trigger: 'liferay-navigation-interaction'
 								}
 							}
@@ -457,6 +505,7 @@
 					'liferay-navigation-interaction-touch': {
 						path: 'navigation_interaction_touch.js',
 						requires: [
+							'event-tap',
 							'event-touch',
 							'liferay-navigation-interaction'
 						]

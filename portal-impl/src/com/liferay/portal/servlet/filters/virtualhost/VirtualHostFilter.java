@@ -272,6 +272,16 @@ public class VirtualHostFilter extends BasePortalFilter {
 				Group group = GroupLocalServiceUtil.getGroup(
 					layoutSet.getGroupId());
 
+				if (isDocumentFriendlyURL(
+						request, group.getGroupId(), friendlyURL)) {
+
+					processFilter(
+						VirtualHostFilter.class, request, response,
+						filterChain);
+
+					return;
+				}
+
 				if (group.isGuest() && friendlyURL.equals(StringPool.SLASH) &&
 					!layoutSet.isPrivateLayout()) {
 
@@ -291,16 +301,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 						}
 					}
 					else {
-						if (isDocumentFriendlyURL(
-								request, group.getGroupId(), friendlyURL)) {
-
-							processFilter(
-								VirtualHostFilter.class, request, response,
-								filterChain);
-
-							return;
-						}
-
 						forwardURL.append(_PUBLIC_GROUP_SERVLET_MAPPING);
 					}
 

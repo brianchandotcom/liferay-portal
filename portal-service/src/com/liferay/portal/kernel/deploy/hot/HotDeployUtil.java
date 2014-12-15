@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.deploy.hot;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.PortalLifecycle;
 
 /**
  * @author Ivica Cardic
@@ -35,6 +36,13 @@ public class HotDeployUtil {
 		PortalRuntimePermission.checkGetBeanProperty(HotDeployUtil.class);
 
 		return _hotDeploy;
+	}
+
+	public static boolean registerDependentPortalLifecycle(
+		String servletContextName, PortalLifecycle portalLifecycle) {
+
+		return getHotDeploy().registerDependentPortalLifecycle(
+			servletContextName, portalLifecycle);
 	}
 
 	public static void registerListener(HotDeployListener hotDeployListener) {

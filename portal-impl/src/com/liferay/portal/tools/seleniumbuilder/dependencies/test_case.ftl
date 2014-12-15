@@ -26,14 +26,7 @@ import com.liferay.portalweb.portal.util.liferayselenium.SeleniumException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
-	<#if rootElement.attributeValue("extends")??>
-		<#assign extendedTestCase = rootElement.attributeValue("extends")>
-
-		extends ${extendedTestCase}TestCase {
-	<#else>
-		extends BaseTestCase {
-	</#if>
+public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} extends BaseTestCase {
 
 	<#if rootElement.element("var")??>
 		public ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}() {

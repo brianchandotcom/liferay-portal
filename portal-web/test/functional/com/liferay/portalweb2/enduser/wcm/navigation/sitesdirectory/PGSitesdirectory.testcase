@@ -36,8 +36,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -103,16 +102,14 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="SitesDirectory#viewDefaultConfigurationPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="SitesDirectory#viewDescriptivePG">
@@ -129,8 +126,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />
@@ -142,8 +138,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="SitesDirectory#viewListHierarchyPG">

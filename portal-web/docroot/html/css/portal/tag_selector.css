@@ -1,7 +1,15 @@
+@import "compass";
+
 .lfr-tags-selector-list {
 	border: 0 solid transparent;
 	border-width: 0 1px 1px;
 	margin-bottom: 0.5em;
+
+	li {
+		&.tree-node .tree-node-content {
+			@include ellipsis;
+		}
+	}
 }
 
 .lfr-tags-selector-content {
@@ -23,6 +31,9 @@
 		border-bottom: 1px solid transparent;
 		cursor: pointer;
 		display: block;
+
+		@include ellipsis;
+
 		padding: 2px;
 
 		input {

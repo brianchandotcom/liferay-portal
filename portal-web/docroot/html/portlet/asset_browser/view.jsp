@@ -26,7 +26,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/asset_browser/view");
-portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("selectedGroupIds", StringUtil.merge(selectedGroupIds));
 portletURL.setParameter("refererAssetEntryId", String.valueOf(refererAssetEntryId));
 portletURL.setParameter("typeSelection", typeSelection);
@@ -72,27 +71,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<div class="separator"><!-- --></div>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.search.Document"
+				className="com.liferay.portlet.asset.model.AssetEntry"
 				escapedModel="<%= true %>"
-				modelVar="doc"
+				modelVar="assetEntry"
 			>
 
 				<%
-				long assetEntryId = 0;
-
-				if (typeSelection.equals(JournalArticle.class.getName())) {
-					assetEntryId = GetterUtil.getLong(doc.get(Field.ROOT_ENTRY_CLASS_PK));
-				}
-				else {
-					assetEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-				}
-
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(typeSelection, assetEntryId);
-
-				if ((assetEntry == null) || !assetEntry.isVisible()) {
-					continue;
-				}
-
 				Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
 				%>
 
@@ -107,17 +91,17 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				/>
 
 				<liferay-ui:search-container-column-text
-					name="userName"
+					name="user-name"
 					value="<%= HtmlUtil.escape(PortalUtil.getUserName(assetEntry)) %>"
 				/>
 
 				<liferay-ui:search-container-column-date
-					name="modifiedDate"
+					name="modified-date"
 					value="<%= assetEntry.getModifiedDate() %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					name="descriptiveName"
+					name="site"
 					value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 				/>
 
@@ -137,7 +121,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
 					</c:if>
 				</liferay-ui:search-container-column-text>
-
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator />

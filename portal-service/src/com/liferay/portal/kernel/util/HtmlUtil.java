@@ -68,6 +68,10 @@ public class HtmlUtil {
 		return getHtml().fromInputSafe(html);
 	}
 
+	public static String getAUICompatibleId(String html) {
+		return getHtml().getAUICompatibleId(html);
+	}
+
 	public static Html getHtml() {
 		PortalRuntimePermission.checkGetBeanProperty(HtmlUtil.class);
 
@@ -78,6 +82,7 @@ public class HtmlUtil {
 		return getHtml().render(html);
 	}
 
+	@Deprecated
 	public static String replaceMsWordCharacters(String html) {
 		return getHtml().replaceMsWordCharacters(html);
 	}

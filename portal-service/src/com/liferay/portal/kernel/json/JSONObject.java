@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.json;
 
+import java.io.Externalizable;
 import java.io.Writer;
 
 import java.util.Date;
@@ -22,7 +23,7 @@ import java.util.Iterator;
 /**
  * @author Brian Wing Shun Chan
  */
-public interface JSONObject {
+public interface JSONObject extends Externalizable {
 
 	public boolean getBoolean(String key);
 

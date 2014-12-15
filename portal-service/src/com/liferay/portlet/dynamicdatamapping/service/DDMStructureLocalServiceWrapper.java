@@ -802,6 +802,13 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		_ddmStructureLocalService.deleteStructures(groupId);
 	}
 
+	@Override
+	public void deleteStructures(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ddmStructureLocalService.deleteStructures(groupId, classNameId);
+	}
+
 	/**
 	* Returns the structure with the ID.
 	*

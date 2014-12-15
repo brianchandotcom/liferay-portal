@@ -133,11 +133,11 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 				// Article id
 
-				row.addText(articleVersion.getArticleId());
+				row.addText(HtmlUtil.escape(articleVersion.getArticleId()));
 
 				// Title
 
-				row.addText(articleVersion.getTitle(locale));
+				row.addText(HtmlUtil.escape(articleVersion.getTitle(locale)));
 
 				// Version
 

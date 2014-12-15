@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -52,6 +53,12 @@ public class DDMIndexerImpl implements DDMIndexer {
 			try {
 				String indexType = ddmStructure.getFieldProperty(
 					field.getName(), "indexType");
+
+				String structureKey = ddmStructure.getStructureKey();
+
+				if (structureKey.equals("TIKARAWMETADATA")) {
+					indexType = "text";
+				}
 
 				if (Validator.isNull(indexType)) {
 					continue;
@@ -132,6 +139,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 							}
 						}
 						else {
+							if (type.equals(DDMImpl.TYPE_DDM_TEXT_HTML)) {
+								valueString = HtmlUtil.extractText(valueString);
+							}
+
 							if (indexType.equals("keyword")) {
 								document.addKeyword(name, valueString);
 							}
@@ -189,6 +200,12 @@ public class DDMIndexerImpl implements DDMIndexer {
 				String indexType = ddmStructure.getFieldProperty(
 					field.getName(), "indexType");
 
+				String structureKey = ddmStructure.getStructureKey();
+
+				if (structureKey.equals("TIKARAWMETADATA")) {
+					indexType = "text";
+				}
+
 				if (Validator.isNull(indexType)) {
 					continue;
 				}
@@ -240,6 +257,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 						sb.append(StringPool.SPACE);
 					}
 					else {
+						if (type.equals(DDMImpl.TYPE_DDM_TEXT_HTML)) {
+							valueString = HtmlUtil.extractText(valueString);
+						}
+
 						sb.append(valueString);
 						sb.append(StringPool.SPACE);
 					}

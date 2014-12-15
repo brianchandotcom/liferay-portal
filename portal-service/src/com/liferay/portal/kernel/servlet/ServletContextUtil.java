@@ -26,7 +26,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -105,22 +104,11 @@ public class ServletContextUtil {
 				}
 			}
 			else {
-				try {
-					URL url = servletContext.getResource(curPath);
+				long curLastModified = FileTimestampUtil.getTimestamp(
+					servletContext, curPath);
 
-					if (url == null) {
-						_log.error("Resource URL for " + curPath + " is null");
-					}
-					else {
-						URLConnection urlConnection = url.openConnection();
-
-						if (urlConnection.getLastModified() > lastModified) {
-							lastModified = urlConnection.getLastModified();
-						}
-					}
-				}
-				catch (IOException ioe) {
-					_log.error(ioe, ioe);
+				if (curLastModified > lastModified) {
+					lastModified = curLastModified;
 				}
 			}
 		}

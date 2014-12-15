@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.lar;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -29,8 +28,10 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 
@@ -104,19 +105,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 					portletDataContext, portletDataHandlerControl);
 			}
 
-			if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-				PortletDataContext clonePortletDataContext =
-					PortletDataContextFactoryUtil.clonePortletDataContext(
-						portletDataContext);
-
-				prepareManifestSummary(
-					clonePortletDataContext, portletPreferences);
-
-				PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
-					"portlet", portletId,
-					clonePortletDataContext.getManifestSummary());
-			}
-
 			return doExportData(
 				portletDataContext, portletId, portletPreferences);
 		}
@@ -182,10 +170,16 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 				portlet.getRootPortletId(), false) > 0)) {
 
+				PortletDataHandlerControl[] portletDataHandlerControls = null;
+
+				if (isDisplayPortlet()) {
+					portletDataHandlerControls = getExportControls();
+				}
+
 				configurationControls.add(
 					new PortletDataHandlerBoolean(
 						null, PortletDataHandlerKeys.PORTLET_SETUP, "setup",
-						true, false, null, null, null));
+						true, false, portletDataHandlerControls, null, null));
 		}
 
 		// Archived setups
@@ -256,10 +250,16 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		// Setup
 
 		if (ArrayUtil.contains(configurationPortletOptions, "setup")) {
+			PortletDataHandlerControl[] portletDataHandlerControls = null;
+
+			if (isDisplayPortlet()) {
+				portletDataHandlerControls = getExportControls();
+			}
+
 			configurationControls.add(
 				new PortletDataHandlerBoolean(
 					null, PortletDataHandlerKeys.PORTLET_SETUP, "setup", true,
-					false, null, null, null));
+					false, portletDataHandlerControls, null, null));
 		}
 
 		// Archived setups
@@ -478,10 +478,58 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 					portletDataContext, portletId, portletPreferences);
 
 				if (displayStyleGroupId ==
-						portletDataContext.getCompanyGroupId()) {
+						portletDataContext.getSourceCompanyGroupId()) {
 
-					ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
-						portletDataContext.getCompanyGroupId(), displayStyle);
+					Element importDataRootElement =
+						portletDataContext.getImportDataRootElement();
+
+					Element referencesElement = importDataRootElement.element(
+						"references");
+
+					List<Element> referenceElements =
+						referencesElement.elements();
+
+					String ddmTemplateUuid =
+						PortletDisplayTemplateUtil.getDDMTemplateUuid(
+							displayStyle);
+
+					boolean preloaded = false;
+					long referenceClassNameId = 0;
+					String templateKey = null;
+
+					for (Element referenceElement : referenceElements) {
+						String className = referenceElement.attributeValue(
+							"class-name");
+						String uuid = referenceElement.attributeValue("uuid");
+
+						if (!className.equals(DDMTemplate.class.getName()) ||
+							!uuid.equals(ddmTemplateUuid)) {
+
+							continue;
+						}
+
+						preloaded = GetterUtil.getBoolean(
+							referenceElement.attributeValue("preloaded"));
+						referenceClassNameId = PortalUtil.getClassNameId(
+							referenceElement.attributeValue(
+								"referenced-class-name"));
+						templateKey = referenceElement.attributeValue(
+							"template-key");
+
+						break;
+					}
+
+					if (!preloaded) {
+						ddmTemplate =
+							PortletDisplayTemplateUtil.fetchDDMTemplate(
+								portletDataContext.getCompanyGroupId(),
+								displayStyle);
+					}
+					else {
+						ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
+							portletDataContext.getCompanyGroupId(),
+							referenceClassNameId, templateKey);
+					}
 				}
 				else if (displayStyleGroupId ==
 							portletDataContext.getSourceGroupId()) {

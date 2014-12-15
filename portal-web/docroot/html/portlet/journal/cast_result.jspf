@@ -20,12 +20,8 @@ JournalFolder curFolder = null;
 
 if (result instanceof JournalFolder) {
 	curFolder = (JournalFolder)result;
-
-	curFolder = curFolder.toEscapedModel();
 }
 else {
 	curArticle = (JournalArticle)result;
-
-	curArticle = curArticle.toEscapedModel();
 }
 %>

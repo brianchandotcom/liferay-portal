@@ -101,10 +101,7 @@ public class SoftwareCatalogServlet extends HttpServlet {
 	}
 
 	protected String getBaseImageURL(HttpServletRequest request) {
-		String host = PortalUtil.getHost(request);
-
-		String portalURL = PortalUtil.getPortalURL(
-			host, request.getServerPort(), request.isSecure());
+		String portalURL = PortalUtil.getPortalURL(request);
 
 		String pathImage = PortalUtil.getPathImage();
 

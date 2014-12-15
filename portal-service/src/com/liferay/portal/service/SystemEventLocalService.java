@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @return the system event that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.SystemEvent addSystemEvent(
 		com.liferay.portal.model.SystemEvent systemEvent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @throws PortalException if a system event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.SystemEvent deleteSystemEvent(
 		long systemEventId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @return the system event that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.SystemEvent deleteSystemEvent(
 		com.liferay.portal.model.SystemEvent systemEvent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @return the system event that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.SystemEvent updateSystemEvent(
 		com.liferay.portal.model.SystemEvent systemEvent)
 		throws com.liferay.portal.kernel.exception.SystemException;

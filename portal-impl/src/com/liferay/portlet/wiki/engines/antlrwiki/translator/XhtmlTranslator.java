@@ -187,15 +187,13 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	protected void appendTableOfContents(
 		TreeNode<HeadingNode> tableOfContents, int depth) {
 
-		append("<ol>");
-
 		List<TreeNode<HeadingNode>> treeNodes = tableOfContents.getChildNodes();
 
-		if (treeNodes == null) {
-			append("</ol>");
-
+		if ((treeNodes == null) || treeNodes.isEmpty()) {
 			return;
 		}
+
+		append("<ol>");
 
 		for (TreeNode<HeadingNode> treeNode : treeNodes) {
 			append("<li class=\"toc-level-");

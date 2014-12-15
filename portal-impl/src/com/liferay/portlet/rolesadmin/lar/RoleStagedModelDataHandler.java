@@ -301,7 +301,7 @@ public class RoleStagedModelDataHandler
 			ResourcePermissionServiceUtil.addResourcePermission(
 				portletDataContext.getCompanyGroupId(),
 				portletDataContext.getCompanyId(), permission.getName(), scope,
-				String.valueOf(portletDataContext.getCompanyGroupId()),
+				String.valueOf(portletDataContext.getCompanyId()),
 				importedRole.getRoleId(), permission.getActionId());
 		}
 		else if (scope == ResourceConstants.SCOPE_GROUP) {

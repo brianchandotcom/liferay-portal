@@ -24,6 +24,8 @@ else {
 	hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), groupIds, themeDisplay.getUserId(), assetRendererFactory.getClassName(), searchTerms.getKeywords(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
 }
 
-searchContainer.setResults(ListUtil.fromArray(hits.getDocs()));
+List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(hits);
+
+searchContainer.setResults(assetEntries);
 searchContainer.setTotal(hits.getLength());
 %>

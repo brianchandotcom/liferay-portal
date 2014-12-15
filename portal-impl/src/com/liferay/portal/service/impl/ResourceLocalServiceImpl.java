@@ -433,13 +433,9 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			String actionId, long[] roleIds)
 		throws PortalException, SystemException {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		int block = 1;
 

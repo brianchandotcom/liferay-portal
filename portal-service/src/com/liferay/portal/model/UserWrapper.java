@@ -1393,6 +1393,34 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getDisplayEmailAddress();
 	}
 
+	/**
+	* Returns the user's display URL, discounting the URL of the user's default
+	* intranet site home page.
+	*
+	* <p>
+	* The logic for the display URL to return is as follows:
+	* </p>
+	*
+	* <ol>
+	* <li>
+	* If the user is the guest user, return an empty string.
+	* </li>
+	* <li>
+	* Else, if a friendly URL is available for the user's profile, return that
+	* friendly URL.
+	* </li>
+	* <li>
+	* Otherwise, return the URL of the user's default extranet site home page.
+	* </li>
+	* </ol>
+	*
+	* @param portalURL the portal's URL
+	* @param mainPath the main path
+	* @return the user's display URL
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
+	*/
 	@Override
 	public java.lang.String getDisplayURL(java.lang.String portalURL,
 		java.lang.String mainPath)
@@ -1401,6 +1429,40 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getDisplayURL(portalURL, mainPath);
 	}
 
+	/**
+	* Returns the user's display URL.
+	*
+	* <p>
+	* The logic for the display URL to return is as follows:
+	* </p>
+	*
+	* <ol>
+	* <li>
+	* If the user is the guest user, return an empty string.
+	* </li>
+	* <li>
+	* Else, if a friendly URL is available for the user's profile, return that
+	* friendly URL.
+	* </li>
+	* <li>
+	* Else, if <code>privateLayout</code> is <code>true</code>, return the URL
+	* of the user's default intranet site home page.
+	* </li>
+	* <li>
+	* Otherwise, return the URL of the user's default extranet site home page.
+	* </li>
+	* </ol>
+	*
+	* @param portalURL the portal's URL
+	* @param mainPath the main path
+	* @param privateLayout whether to use the URL of the user's default
+	intranet(versus extranet)  site home page, if no friendly URL
+	is available for the user's profile
+	* @return the user's display URL
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
+	*/
 	@Override
 	public java.lang.String getDisplayURL(java.lang.String portalURL,
 		java.lang.String mainPath, boolean privateLayout)
@@ -1409,6 +1471,32 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getDisplayURL(portalURL, mainPath, privateLayout);
 	}
 
+	/**
+	* Returns the user's display URL based on the theme display, discounting
+	* the URL of the user's default intranet site home page.
+	*
+	* <p>
+	* The logic for the display URL to return is as follows:
+	* </p>
+	*
+	* <ol>
+	* <li>
+	* If the user is the guest user, return an empty string.
+	* </li>
+	* <li>
+	* Else, if a friendly URL is available for the user's profile, return that
+	* friendly URL.
+	* </li>
+	* <li>
+	* Otherwise, return the URL of the user's default extranet site home page.
+	* </li>
+	* </ol>
+	*
+	* @param themeDisplay the theme display
+	* @return the user's display URL
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public java.lang.String getDisplayURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
@@ -1417,6 +1505,38 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getDisplayURL(themeDisplay);
 	}
 
+	/**
+	* Returns the user's display URL based on the theme display.
+	*
+	* <p>
+	* The logic for the display URL to return is as follows:
+	* </p>
+	*
+	* <ol>
+	* <li>
+	* If the user is the guest user, return an empty string.
+	* </li>
+	* <li>
+	* Else, if a friendly URL is available for the user's profile, return that
+	* friendly URL.
+	* </li>
+	* <li>
+	* Else, if <code>privateLayout</code> is <code>true</code>, return the URL
+	* of the user's default intranet site home page.
+	* </li>
+	* <li>
+	* Otherwise, return the URL of the user's default extranet site home page.
+	* </li>
+	* </ol>
+	*
+	* @param themeDisplay the theme display
+	* @param privateLayout whether to use the URL of the user's default
+	intranet (versus extranet) site home page, if no friendly URL is
+	available for the user's profile
+	* @return the user's display URL
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public java.lang.String getDisplayURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay,
@@ -1426,12 +1546,26 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getDisplayURL(themeDisplay, privateLayout);
 	}
 
+	/**
+	* Returns the user's email addresses.
+	*
+	* @return the user's email addresses
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _user.getEmailAddresses();
 	}
 
+	/**
+	* Returns <code>true</code> if the user is female.
+	*
+	* @return <code>true</code> if the user is female; <code>false</code>
+	otherwise
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public boolean getFemale()
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1439,6 +1573,11 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getFemale();
 	}
 
+	/**
+	* Returns the user's full name.
+	*
+	* @return the user's full name
+	*/
 	@Override
 	public java.lang.String getFullName() {
 		return _user.getFullName();
@@ -1482,6 +1621,14 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getLogin();
 	}
 
+	/**
+	* Returns <code>true</code> if the user is male.
+	*
+	* @return <code>true</code> if the user is male; <code>false</code>
+	otherwise
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public boolean getMale()
 		throws com.liferay.portal.kernel.exception.PortalException,

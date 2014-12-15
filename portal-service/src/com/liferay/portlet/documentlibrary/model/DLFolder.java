@@ -61,6 +61,9 @@ public interface DLFolder extends DLFolderModel, PersistedModel, TreeModel {
 
 	public boolean isInHiddenFolder();
 
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public boolean isLocked();
 
 	public boolean isRoot();

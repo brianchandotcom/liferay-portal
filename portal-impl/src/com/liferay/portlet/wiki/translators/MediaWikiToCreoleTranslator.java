@@ -264,7 +264,7 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 				matcher.start(0) + offset,
 				matcher.start(0) + originalLength + offset, mediaWikiTable);
 
-			offset = mediaWikiTable.length() - originalLength;
+			offset += mediaWikiTable.length() - originalLength;
 		}
 
 		content = sb.toString();

@@ -1,7 +1,7 @@
 #set ($portlet_display = $portletDisplay)
 
 #set ($portlet_id = $htmlUtil.escapeAttribute($portlet_display.getId()))
-#set ($portlet_title = $portlet_display.getTitle())
+#set ($portlet_title = $htmlUtil.escape($portlet_display.getTitle()))
 #set ($portlet_title_icon_css_class = "")
 #set ($portlet_description = $portlet_display.getDescription())
 #set ($portlet_description_css_class = "alert alert-info lfr-control-panel-help-content lfr-message-content")
@@ -17,8 +17,14 @@
 	#set ($portlet_description_css_class = "${portlet_description_css_class} hide")
 #end
 
+#set ($portlet_topper_css_class = "portlet-topper")
+
+#if (!$show_portlet_title)
+	#set ($portlet_topper_css_class = "${portlet_topper_css_class} portlet-topper-titleless")
+#end
+
 <section class="portlet" id="portlet_$portlet_id">
-	<header class="portlet-topper">
+	<header class="$portlet_topper_css_class">
 
 		#if ($show_portlet_title)
 			<h2 class="portlet-title" id="cpPortletTitle">

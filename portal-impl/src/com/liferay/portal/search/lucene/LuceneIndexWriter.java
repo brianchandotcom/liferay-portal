@@ -142,7 +142,7 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 	private void _addLuceneFieldable(
 		org.apache.lucene.document.Document luceneDocument, String name,
 		boolean numeric, Class<? extends Number> numericClass,
-		boolean tokenized, float boost, String value) {
+		boolean tokenized, boolean sortable, float boost, String value) {
 
 		org.apache.lucene.document.Fieldable luceneFieldable = null;
 
@@ -156,6 +156,12 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 			else {
 				luceneFieldable = LuceneFields.getKeyword(name, value);
 			}
+		}
+
+		if (sortable) {
+			String sortableFieldName = DocumentImpl.getSortableFieldName(name);
+
+			luceneFieldable = LuceneFields.getKeyword(sortableFieldName, value);
 		}
 
 		luceneFieldable.setBoost(boost);
@@ -186,7 +192,7 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 
 					_addLuceneFieldable(
 						luceneDocument, name, numeric, numericClass, tokenized,
-						boost, value);
+						field.isSortable(), boost, value);
 				}
 			}
 			else {
@@ -212,7 +218,7 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 					if (languageId.equals(defaultLanguageId)) {
 						_addLuceneFieldable(
 							luceneDocument, name, numeric, numericClass,
-							tokenized, boost, value);
+							tokenized, field.isSortable(), boost, value);
 					}
 
 					String localizedName = DocumentImpl.getLocalizedName(
@@ -220,7 +226,7 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 
 					_addLuceneFieldable(
 						luceneDocument, localizedName, numeric, numericClass,
-						tokenized, boost, value);
+						tokenized, field.isSortable(), boost, value);
 				}
 			}
 		}

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -54,6 +55,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @return the trash entry that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.trash.model.TrashEntry addTrashEntry(
 		com.liferay.portlet.trash.model.TrashEntry trashEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -75,6 +77,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a trash entry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.trash.model.TrashEntry deleteTrashEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -87,6 +90,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @return the trash entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.trash.model.TrashEntry deleteTrashEntry(
 		com.liferay.portlet.trash.model.TrashEntry trashEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -228,6 +232,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @return the trash entry that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.trash.model.TrashEntry updateTrashEntry(
 		com.liferay.portlet.trash.model.TrashEntry trashEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -303,6 +308,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.trash.model.TrashEntry deleteEntry(
 		com.liferay.portlet.trash.model.TrashEntry trashEntry)
 		throws com.liferay.portal.kernel.exception.SystemException;

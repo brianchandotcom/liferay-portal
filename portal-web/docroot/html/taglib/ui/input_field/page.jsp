@@ -385,11 +385,6 @@ if (hints != null) {
 				if (Validator.isNotNull(bean)) {
 					xml = BeanPropertiesUtil.getString(bean, field);
 				}
-				else {
-					Map<Locale, String> localizationMap = LocalizationUtil.getLocalizationMap(portletRequest, field);
-
-					xml = LocalizationUtil.updateLocalization(localizationMap, xml, field, defaultLanguageId);
-				}
 			}
 			%>
 
@@ -399,6 +394,7 @@ if (hints != null) {
 						<c:when test="<%= localized %>">
 							<liferay-ui:input-localized
 								autoFocus="<%= autoFocus %>"
+								availableLocales="<%= availableLocales %>"
 								cssClass='<%= cssClass + " lfr-input-text" %>'
 								defaultLanguageId="<%= defaultLanguageId %>"
 								disabled="<%= disabled %>"
@@ -415,7 +411,13 @@ if (hints != null) {
 							/>
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:input-editor cssClass='<%= cssClass + \" lfr-input-text\" %>' editorImpl="ckeditor" initMethod='<%= fieldParam + \"InitEditor\" %>' name="<%= fieldParam %>" toolbarSet="simple" />
+							<liferay-ui:input-editor
+								cssClass='<%= cssClass + \" lfr-input-text\" %>'
+								editorImpl="ckeditor"
+								initMethod='<%= fieldParam + \"InitEditor\" %>'
+								name="<%= fieldParam %>"
+								toolbarSet="simple"
+							/>
 
 							<aui:script>
 								function <portlet:namespace /><%= fieldParam %>InitEditor() {
@@ -439,7 +441,22 @@ if (hints != null) {
 
 					<c:choose>
 						<c:when test="<%= localized %>">
-							<liferay-ui:input-localized autoFocus="<%= autoFocus %>" availableLocales="<%= availableLocales %>" cssClass='<%= cssClass + " lfr-input-text" %>' defaultLanguageId="<%= defaultLanguageId %>" disabled="<%= disabled %>" displayWidth="<%= displayWidth %>" formName="<%= formName %>" id="<%= id %>" ignoreRequestValue="<%= ignoreRequestValue %>" languageId="<%= languageId %>" maxLength="<%= maxLength %>" name="<%= fieldParam %>" style='<%= "max-width: " + displayWidth + (Validator.isDigit(displayWidth) ? "px" : "") + "; " + (upperCase ? "text-transform: uppercase;" : "" ) %>' xml="<%= xml %>" />
+							<liferay-ui:input-localized
+								autoFocus="<%= autoFocus %>"
+								availableLocales="<%= availableLocales %>"
+								cssClass='<%= cssClass + " lfr-input-text" %>'
+								defaultLanguageId="<%= defaultLanguageId %>"
+								disabled="<%= disabled %>"
+								displayWidth="<%= displayWidth %>"
+								formName="<%= formName %>"
+								id="<%= id %>"
+								ignoreRequestValue="<%= ignoreRequestValue %>"
+								languageId="<%= languageId %>"
+								maxLength="<%= maxLength %>"
+								name="<%= fieldParam %>"
+								style='<%= "max-width: " + displayWidth + (Validator.isDigit(displayWidth) ? "px" : "") + "; " + (upperCase ? "text-transform: uppercase;" : "" ) %>'
+								xml="<%= xml %>"
+							/>
 						</c:when>
 						<c:otherwise>
 							<input class="<%= cssClass + " lfr-input-text" %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="max-width: <%= displayWidth %><%= Validator.isDigit(displayWidth) ? "px" : "" %>; <%= upperCase ? "text-transform: uppercase;" : "" %>" type="<%= secret ? "password" : "text" %>" value="<%= autoEscape ? HtmlUtil.escape(value) : value %>" />
@@ -449,7 +466,26 @@ if (hints != null) {
 				<c:otherwise>
 					<c:choose>
 						<c:when test="<%= localized %>">
-							<liferay-ui:input-localized autoFocus="<%= autoFocus %>" autoSize="<%= autoSize %>" availableLocales="<%= availableLocales %>" cssClass='<%= cssClass + " lfr-input-text" %>' defaultLanguageId="<%= defaultLanguageId %>" disabled="<%= disabled %>" displayWidth="<%= displayWidth %>" formName="<%= formName %>" id="<%= id %>" ignoreRequestValue="<%= ignoreRequestValue %>" languageId="<%= languageId %>" maxLength="<%= maxLength %>" name="<%= fieldParam %>" onKeyDown='<%= (checkTab ? "Liferay.Util.checkTab(this); " : "") + "Liferay.Util.disableEsc();" %>' style='<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK + "max-width: " + displayWidth + (Validator.isDigit(displayWidth) ? "px" : "") +";" %>' type="textarea" wrap="soft" xml="<%= xml %>" />
+							<liferay-ui:input-localized
+								autoFocus="<%= autoFocus %>"
+								autoSize="<%= autoSize %>"
+								availableLocales="<%= availableLocales %>"
+								cssClass='<%= cssClass + " lfr-input-text" %>'
+								defaultLanguageId="<%= defaultLanguageId %>"
+								disabled="<%= disabled %>"
+								displayWidth="<%= displayWidth %>"
+								formName="<%= formName %>"
+								id="<%= id %>"
+								ignoreRequestValue="<%= ignoreRequestValue %>"
+								languageId="<%= languageId %>"
+								maxLength="<%= maxLength %>"
+								name="<%= fieldParam %>"
+								onKeyDown='<%= (checkTab ? "Liferay.Util.checkTab(this); " : "") + "Liferay.Util.disableEsc();" %>'
+								style='<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK + "max-width: " + displayWidth + (Validator.isDigit(displayWidth) ? "px" : "") +";" %>'
+								type="textarea"
+								wrap="soft"
+								xml="<%= xml %>"
+							/>
 						</c:when>
 						<c:otherwise>
 							<textarea class="<%= cssClass + " lfr-textarea" %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %> max-width: <%= displayWidth %><%= Validator.isDigit(displayWidth) ? "px" : "" %>;" wrap="soft" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : "" %> Liferay.Util.disableEsc();"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>

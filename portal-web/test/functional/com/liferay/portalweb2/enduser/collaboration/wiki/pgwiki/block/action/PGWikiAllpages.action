@@ -12,11 +12,11 @@
 		<case locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
-		<case locator-key1="WIKI_PAGE_TABLE_ACTIONS">
-			<execute function="AssertClick#pauseAssertTextClickAt" />
-		</case>
 		<case locator-key1="WIKI_PAGE_TABLE_PAGE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case locator-key1="WIKI_PAGE_TABLE_ACTIONS">
+			<execute function="AssertClick#pauseAssertTextClickAt" />
 		</case>
 	</command>
 

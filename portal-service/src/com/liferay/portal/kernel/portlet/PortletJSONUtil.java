@@ -14,8 +14,10 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,6 +27,9 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +37,7 @@ import java.util.Set;
 import javax.portlet.MimeResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Raymond Augé
@@ -53,7 +59,7 @@ public class PortletJSONUtil {
 
 		boolean portletOnLayout = false;
 
-		String rootPortletId = getRootPortletId(portlet);
+		String rootPortletId = _getRootPortletId(portlet);
 		String portletId = portlet.getPortletId();
 
 		LayoutTypePortlet layoutTypePortlet =
@@ -64,7 +70,8 @@ public class PortletJSONUtil {
 			// Check to see if an instance of this portlet is already in the
 			// layout, but ignore the portlet that was just added
 
-			String layoutPortletRootPortletId = getRootPortletId(layoutPortlet);
+			String layoutPortletRootPortletId = _getRootPortletId(
+				layoutPortlet);
 
 			if (rootPortletId.equals(layoutPortletRootPortletId) &&
 				!portletId.equals(layoutPortlet.getPortletId())) {
@@ -230,7 +237,25 @@ public class PortletJSONUtil {
 		jsonObject.put("refresh", !portlet.isAjaxable());
 	}
 
-	protected static String getRootPortletId(Portlet portlet) {
+	public static void writeFooterPaths(
+			HttpServletResponse response, JSONObject jsonObject)
+		throws IOException {
+
+		_writePaths(
+			response, jsonObject.getJSONArray("footerCssPaths"),
+			jsonObject.getJSONArray("footerJavaScriptPaths"));
+	}
+
+	public static void writeHeaderPaths(
+			HttpServletResponse response, JSONObject jsonObject)
+		throws IOException {
+
+		_writePaths(
+			response, jsonObject.getJSONArray("headerCssPaths"),
+			jsonObject.getJSONArray("headerJavaScriptPaths"));
+	}
+
+	private static String _getRootPortletId(Portlet portlet) {
 
 		// Workaround for portlet#getRootPortletId because that does not return
 		// the proper root portlet ID for OpenSocial and WSRP portlets
@@ -238,6 +263,36 @@ public class PortletJSONUtil {
 		Portlet rootPortlet = portlet.getRootPortlet();
 
 		return rootPortlet.getPortletId();
+	}
+
+	private static void _writePaths(
+			HttpServletResponse response, JSONArray cssPathsJSONArray,
+			JSONArray javaScriptPathsJSONArray)
+		throws IOException {
+
+		if ((cssPathsJSONArray.length() == 0) &&
+			(javaScriptPathsJSONArray.length() == 0)) {
+
+			return;
+		}
+
+		PrintWriter printWriter = response.getWriter();
+
+		for (int i = 0; i < cssPathsJSONArray.length(); i++) {
+			String value = cssPathsJSONArray.getString(i);
+
+			printWriter.print("<link href=\"");
+			printWriter.print(HtmlUtil.escape(value));
+			printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
+		}
+
+		for (int i = 0; i < javaScriptPathsJSONArray.length(); i++) {
+			String value = javaScriptPathsJSONArray.getString(i);
+
+			printWriter.print("<script src=\"");
+			printWriter.print(HtmlUtil.escape(value));
+			printWriter.println("\" type=\"text/javascript\"></script>");
+		}
 	}
 
 }

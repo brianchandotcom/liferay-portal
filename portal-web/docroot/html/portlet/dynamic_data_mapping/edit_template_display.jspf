@@ -58,11 +58,10 @@ if (Validator.isNotNull(scriptContent)) {
 
 										<%
 										for (TemplateVariableDefinition templateVariableDefinition : templateVariableGroup.getTemplateVariableDefinitions()) {
-											String[] dataContentArray = _getDataContentArray(templateVariableDefinition, language);
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content1="<%= HtmlUtil.escapeAttribute(dataContentArray[0]) %>" <c:if test="<%= Validator.isNotNull(dataContentArray[1]) %>">data-content2="<%= HtmlUtil.escapeAttribute(dataContentArray[1]) %>"</c:if> <c:if test="<%= Validator.isNotNull(dataContentArray[2]) %>">data-content3="<%= HtmlUtil.escapeAttribute(dataContentArray[2]) %>"</c:if> data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
+												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, language)) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(pageContext, templateVariableDefinition)) %>">
 													<liferay-ui:message key="<%= templateVariableDefinition.getLabel() %>" /><c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>
 											</li>
@@ -116,8 +115,8 @@ if (Validator.isNotNull(scriptContent)) {
 
 	var editorContainer = panelScriptContainer.one('#<portlet:namespace />editorContainer');
 
-	if (Liferay.Util.getTop() !== A.config.win) {
-		var dialog = Liferay.Util.getWindow();
+	if (Util.getTop() !== A.config.win) {
+		var dialog = Util.getWindow();
 
 		if (dialog && A.Lang.isFunction(dialog._detachUIHandlesAutohide)) {
 			dialog._detachUIHandlesAutohide();
@@ -176,7 +175,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 			var getNoResultsNode = function() {
 				if (!noResultsNode) {
-					noResultsNode = A.Node.create('<div class="alert"><%= LanguageUtil.get(pageContext, "there-are-no-results") %></div>');
+					noResultsNode = A.Node.create('<div class="alert"><%= UnicodeLanguageUtil.get(pageContext, "there-are-no-results") %></div>');
 				}
 
 				return noResultsNode;
@@ -245,7 +244,13 @@ if (Validator.isNotNull(scriptContent)) {
 
 			var item = event.currentTarget;
 
-			var contentAttrs = Util.getAttributes(item, 'data-content');
+			var aceAutocomplete = richEditor['ace-autocomplete-plugin'];
+
+			aceAutocomplete._lockEditor = true;
+
+			var content = item.attr('data-content');
+
+			var fragments = content.split('[$CURSOR$]');
 
 			var cursorPos;
 			var processed;
@@ -255,14 +260,10 @@ if (Validator.isNotNull(scriptContent)) {
 			aceAutocomplete._lockEditor = true;
 
 			AObject.each(
-				contentAttrs,
+				fragments,
 				function(item, index) {
 					if (processed) {
-						editor.insert('\n');
-
 						cursorPos = editor.getCursorPosition();
-
-						editor.insert('\n');
 					}
 
 					processed = true;
@@ -291,13 +292,17 @@ if (Validator.isNotNull(scriptContent)) {
 		return selectLanguageNode.val();
 	}
 
+	var paletteSearchContainer = panelScriptContainer.one('#<portlet:namespace />paletteSearchContainer');
+
 	function resizeEditor(event) {
 		var info = event.info;
 
 		richEditor.set(STR_HEIGHT, info.offsetHeight);
 		richEditor.set('width', info.offsetWidth);
 
-		paletteDataContainer.setStyle(STR_HEIGHT, info.offsetHeight);
+		if (!Util.isPhone()) {
+			paletteDataContainer.setStyle(STR_HEIGHT, info.offsetHeight - paletteSearchContainer.height());
+		}
 	}
 
 	function setEditorContent(content) {
@@ -490,56 +495,81 @@ private String _getAccessor(String accessor, String language) {
 	return accessor;
 }
 
-private String[] _getDataContentArray(TemplateVariableDefinition templateVariableDefinition, String language) {
-	String[] dataContentArray = new String[] {StringPool.BLANK, StringPool.BLANK, StringPool.BLANK};
+private String _getDataContent(TemplateVariableDefinition templateVariableDefinition, String language) {
+	String dataContent = StringPool.BLANK;
 
 	String dataType = templateVariableDefinition.getDataType();
 
-	if (dataType.equals("service-locator")) {
+	if (templateVariableDefinition.isCollection()) {
+		TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
+
+		dataContent = _getListCode(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), itemTemplateVariableDefinition.getAccessor(), language);
+	}
+	else if (Validator.isNull(dataType)) {
+		dataContent = _getVariableReferenceCode(templateVariableDefinition.getName(), templateVariableDefinition.getAccessor(), language);
+	}
+	else if (dataType.equals("service-locator")) {
 		Class<?> templateVariableDefinitionClass = templateVariableDefinition.getClazz();
 
 		String variableName = templateVariableDefinitionClass.getSimpleName();
 
-		dataContentArray[0] = _getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + templateVariableDefinition.getName() + "\")", language);
-		dataContentArray[1] = _getVariableReferenceCode(variableName, null, language);
-	}
-	else if (templateVariableDefinition.isCollection()) {
-		TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
+		StringBundler sb = new StringBundler(3);
 
-		String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), itemTemplateVariableDefinition.getAccessor(), language);
+		sb.append(_getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + templateVariableDefinition.getName() + "\")", language));
+		sb.append("[$CURSOR$]");
+		sb.append(_getVariableReferenceCode(variableName, null, language));
 
-		dataContentArray[0] = listCodeArray[0];
-		dataContentArray[1] = listCodeArray[1];
-	}
-	else if (Validator.isNull(dataType)) {
-		dataContentArray[0] = _getVariableReferenceCode(templateVariableDefinition.getName(), templateVariableDefinition.getAccessor(), language);
+		dataContent = sb.toString();
 	}
 	else {
 		try {
-			dataContentArray = templateVariableDefinition.generateCode(language);
+			String[] generateCode = templateVariableDefinition.generateCode(language);
+
+			dataContent = generateCode[0];
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 	}
 
-	return dataContentArray;
+	return dataContent;
 }
 
-private String[] _getListCodeArray(
-	String variableName, String itemName, String accessor, String language) {
-	String[] listCodeArray = new String[2];
-
+private String _getListCode(String variableName, String itemName, String accessor, String language) {
 	if (StringUtil.equalsIgnoreCase(language, "ftl")) {
-		listCodeArray[0] = "<#if " + variableName + "?has_content>\n\t<#list " + variableName + " as " + itemName + ">\n\t\t" + _getVariableReferenceCode(itemName, accessor, language);
-		listCodeArray[1] = "\n\t</#list>\n</#if>";
+		StringBundler sb = new StringBundler(10);
+
+		sb.append("<#if ");
+		sb.append(variableName);
+		sb.append("?has_content>\n\t<#list ");
+		sb.append(variableName);
+		sb.append(" as ");
+		sb.append(itemName);
+		sb.append(">\n\t\t");
+		sb.append(_getVariableReferenceCode(itemName, accessor, language));
+		sb.append("[$CURSOR$]");
+		sb.append("\n\t</#list>\n</#if>");
+
+		return sb.toString();
 	}
 	else if (StringUtil.equalsIgnoreCase(language, "vm")) {
-		listCodeArray[0] = "#if (!$"+ variableName + ".isEmpty())\n\t#foreach ($" + itemName + " in $" + variableName + ")\n\t\t" + _getVariableReferenceCode(itemName, accessor, language);
-		listCodeArray[1] = "#end\n#end";
+		StringBundler sb = new StringBundler(10);
+
+		sb.append("#if (!$");
+		sb.append(variableName);
+		sb.append(".isEmpty())\n\t#foreach ($");
+		sb.append(itemName);
+		sb.append(" in $");
+		sb.append(variableName);
+		sb.append(")\n\t\t");
+		sb.append(_getVariableReferenceCode(itemName, accessor, language));
+		sb.append("[$CURSOR$]");
+		sb.append("#end\n#end");
+
+		return sb.toString();
 	}
 
-	return listCodeArray;
+	return StringPool.BLANK;
 }
 
 private String _getPaletteItemTitle(PageContext pageContext, String label, Class<?> clazz) {

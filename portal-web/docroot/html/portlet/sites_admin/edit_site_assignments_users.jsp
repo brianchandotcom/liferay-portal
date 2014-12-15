@@ -122,7 +122,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 		>
 
 			<%
-			buffer.append(HtmlUtil.escape(user2.getFullName()));
+			buffer.append(user2.getFullName());
 
 			List<String> names = new ArrayList<String>();
 
@@ -210,39 +210,41 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 	</liferay-ui:search-container-row>
 
 	<liferay-util:buffer var="formButton">
-		<c:choose>
-			<c:when test='<%= tabs2.equals("current") %>'>
+		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
+			<c:choose>
+				<c:when test='<%= tabs2.equals("current") %>'>
 
-				<%
-				viewUsersURL.setParameter("tabs2", "available");
-				viewUsersURL.setParameter("redirect", currentURL);
-				%>
+					<%
+					viewUsersURL.setParameter("tabs2", "available");
+					viewUsersURL.setParameter("redirect", currentURL);
+					%>
 
-				<liferay-ui:icon
-					image="../aui/user"
-					label="<%= true %>"
-					message="assign-users"
-					url="<%= viewUsersURL.toString() %>"
-				/>
+					<liferay-ui:icon
+						image="../aui/user"
+						label="<%= true %>"
+						message="assign-users"
+						url="<%= viewUsersURL.toString() %>"
+					/>
 
-				<%
-				viewUsersURL.setParameter("tabs2", "current");
-				%>
+					<%
+					viewUsersURL.setParameter("tabs2", "current");
+					%>
 
-			</c:when>
-			<c:otherwise>
+				</c:when>
+				<c:otherwise>
 
-				<%
-				portletURL.setParameter("tabs2", "current");
+					<%
+					portletURL.setParameter("tabs2", "current");
 
-				String taglibOnClick = renderResponse.getNamespace() + "updateGroupUsers('" + redirect + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
-				%>
+					String taglibOnClick = renderResponse.getNamespace() + "updateGroupUsers('" + redirect + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+					%>
 
-				<aui:button-row>
-					<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
-				</aui:button-row>
-			</c:otherwise>
-		</c:choose>
+					<aui:button-row>
+						<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
+					</aui:button-row>
+				</c:otherwise>
+			</c:choose>
+		</c:if>
 	</liferay-util:buffer>
 
 	<c:choose>

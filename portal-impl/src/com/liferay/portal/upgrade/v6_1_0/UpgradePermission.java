@@ -15,18 +15,18 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
@@ -50,19 +50,12 @@ import java.util.List;
 public class UpgradePermission extends UpgradeProcess {
 
 	protected ResourceBlock convertResourcePermissions(
-			long companyId, String name, long primKey)
-		throws PortalException, SystemException {
+			String tableName, String pkColumnName, long companyId, long groupId,
+			String name, long primKey)
+		throws SystemException {
 
-		PermissionedModel permissionedModel =
-			ResourceBlockLocalServiceUtil.getPermissionedModel(name, primKey);
-
-		long groupId = 0;
-
-		if (permissionedModel instanceof GroupedModel) {
-			GroupedModel groupedModel = (GroupedModel)permissionedModel;
-
-			groupId = groupedModel.getGroupId();
-		}
+		PermissionedModel permissionedModel = new UpgradePermissionedModel(
+			tableName, pkColumnName, primKey);
 
 		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer =
 			getResourceBlockPermissionsContainer(
@@ -91,16 +84,18 @@ public class UpgradePermission extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select " + pkColumnName + ", companyId from " + tableName);
+				"select " + pkColumnName + ", groupId, companyId from " +
+					tableName);
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				long primKey = rs.getLong(pkColumnName);
+				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
 
 				ResourceBlock resourceBlock = convertResourcePermissions(
-					companyId, name, primKey);
+					tableName, pkColumnName, companyId, groupId, name, primKey);
 
 				if (_log.isInfoEnabled() &&
 					((resourceBlock.getResourceBlockId() % 100) == 0)) {
@@ -144,6 +139,14 @@ public class UpgradePermission extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+
+		// LPS-46141
+
+		List<String> modelActions = ResourceActionsUtil.getModelResourceActions(
+			Role.class.getName());
+
+		ResourceActionLocalServiceUtil.checkResourceActions(
+			Role.class.getName(), modelActions);
 
 		// LPS-14202 and LPS-17841
 
@@ -216,5 +219,53 @@ public class UpgradePermission extends UpgradeProcess {
 	};
 
 	private static Log _log = LogFactoryUtil.getLog(UpgradePermission.class);
+
+	private class UpgradePermissionedModel implements PermissionedModel {
+
+		public UpgradePermissionedModel(
+			String tableName, String pkColumnName, long primKey) {
+
+			_pkColumnName = pkColumnName;
+			_primKey = primKey;
+			_tableName = tableName;
+		}
+
+		@Override
+		public long getResourceBlockId() {
+			return _resourceBlockId;
+		}
+
+		@Override
+		public void persist() throws SystemException {
+			try {
+				StringBundler sb = new StringBundler(8);
+
+				sb.append("update ");
+				sb.append(_tableName);
+				sb.append(" set resourceBlockId = ");
+				sb.append(_resourceBlockId);
+				sb.append(" where ");
+				sb.append(_pkColumnName);
+				sb.append(" = ");
+				sb.append(_primKey);
+
+				runSQL(sb.toString());
+			}
+			catch (Exception e) {
+				throw new SystemException(e);
+			}
+		}
+
+		@Override
+		public void setResourceBlockId(long resourceBlockId) {
+			_resourceBlockId = resourceBlockId;
+		}
+
+		private String _pkColumnName;
+		private long _primKey;
+		private long _resourceBlockId;
+		private String _tableName;
+
+	}
 
 }

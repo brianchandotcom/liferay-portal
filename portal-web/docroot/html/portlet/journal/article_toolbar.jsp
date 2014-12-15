@@ -123,7 +123,8 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 			modelResource="<%= JournalArticle.class.getName() %>"
-			modelResourceDescription="<%= article.getTitle(locale) %>"
+			modelResourceDescription="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
+			resourceGroupId="<%= String.valueOf(article.getGroupId()) %>"
 			resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
 			var="permissionsURL"
 		/>
@@ -161,6 +162,7 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 		<portlet:param name="struts_action" value="/journal/view_article_history" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 		<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 	</portlet:renderURL>
 

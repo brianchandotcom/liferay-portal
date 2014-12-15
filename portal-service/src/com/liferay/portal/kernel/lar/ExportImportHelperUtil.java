@@ -117,6 +117,14 @@ public class ExportImportHelperUtil {
 			portletDataContext, stagedModelType);
 	}
 
+	public static String getSelectedLayoutsJSON(
+			long groupId, boolean privateLayout, String selectedNodes)
+		throws SystemException {
+
+		return getExportImportHelper().getSelectedLayoutsJSON(
+			groupId, privateLayout, selectedNodes);
+	}
+
 	public static FileEntry getTempFileEntry(
 			long groupId, long userId, String folderName)
 		throws PortalException, SystemException {

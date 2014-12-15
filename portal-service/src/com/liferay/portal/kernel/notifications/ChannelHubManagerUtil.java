@@ -217,6 +217,14 @@ public class ChannelHubManagerUtil {
 			companyId, userId, notificationEventUuids);
 	}
 
+	public static void sendClusterNotificationEvent(
+			long companyId, long userId, NotificationEvent notificationEvent)
+		throws ChannelException {
+
+		getChannelHubManager().sendClusterNotificationEvent(
+			companyId, userId, notificationEvent);
+	}
+
 	public static void sendNotificationEvent(
 			long companyId, long userId, NotificationEvent notificationEvent)
 		throws ChannelException {
@@ -232,6 +240,14 @@ public class ChannelHubManagerUtil {
 
 		getChannelHubManager().sendNotificationEvents(
 			companyId, userId, notificationEvents);
+	}
+
+	public static void storeNotificationEvent(
+			long companyId, long userId, NotificationEvent notificationEvent)
+		throws ChannelException {
+
+		getChannelHubManager().storeNotificationEvent(
+			companyId, userId, notificationEvent);
 	}
 
 	public static void unregisterChannelListener(

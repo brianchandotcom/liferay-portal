@@ -199,10 +199,8 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 		Team team = teamPersistence.fetchByG_N(groupId, name);
 
-		if (team != null) {
-			if ((teamId <= 0) || (team.getTeamId() != teamId)) {
-				throw new DuplicateTeamException();
-			}
+		if ((team != null) && (team.getTeamId() != teamId)) {
+			throw new DuplicateTeamException("{teamId=" + teamId + "}");
 		}
 	}
 

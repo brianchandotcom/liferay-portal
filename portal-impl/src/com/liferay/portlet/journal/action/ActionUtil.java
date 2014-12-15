@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -448,12 +450,6 @@ public class ActionUtil {
 			List<Serializable> values = field.getValues(locale);
 
 			for (int i = 0; i < values.size(); i++) {
-				String content = (String)values.get(i);
-
-				if (content.equals("update")) {
-					continue;
-				}
-
 				StringBundler sb = new StringBundler(6);
 
 				sb.append(StringPool.UNDERLINE);
@@ -462,6 +458,11 @@ public class ActionUtil {
 				sb.append(i);
 				sb.append(StringPool.UNDERLINE);
 				sb.append(LanguageUtil.getLanguageId(locale));
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					(String)values.get(i));
+
+				String content = jsonObject.getString("data");
 
 				images.put(sb.toString(), UnicodeFormatter.hexToBytes(content));
 			}

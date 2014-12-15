@@ -19,14 +19,14 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 
-long groupId = ParamUtil.getLong(request, "groupId");
+long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
 String typeSelection = ParamUtil.getString(request, "typeSelection");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(typeSelection);
 
-Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), themeDisplay.getScopeGroupId()}, locale);
+Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), groupId}, locale);
 %>
 
 <aui:nav-item href="<%= portletURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />

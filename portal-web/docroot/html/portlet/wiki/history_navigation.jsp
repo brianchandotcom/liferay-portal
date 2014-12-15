@@ -170,7 +170,7 @@ if (type.equals("html")) {
 					/>
 
 					<c:if test="<%= Validator.isNotNull(wikiPage.getSummary()) %>">
-						<%= StringPool.COLON + StringPool.SPACE + wikiPage.getSummary() %>
+						<%= StringPool.COLON + StringPool.SPACE + HtmlUtil.escape(wikiPage.getSummary()) %>
 					</c:if>
 
 					<c:if test="<%= wikiPage.isMinorEdit() %>">

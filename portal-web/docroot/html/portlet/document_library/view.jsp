@@ -198,22 +198,37 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 <aui:script use="liferay-document-library">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
 
+	<%
+	String[] escapedEntryColumns = new String[entryColumns.length];
+
+	for (int i = 0; i < entryColumns.length; i++) {
+		escapedEntryColumns[i] = HtmlUtil.escapeJS(entryColumns[i]);
+	}
+
+	String[] escapedDisplayViews = new String[displayViews.length];
+
+	for (int i = 0; i < displayViews.length; i++) {
+		escapedDisplayViews[i] = HtmlUtil.escapeJS(displayViews[i]);
+	}
+	%>
+
 	new Liferay.Portlet.DocumentLibrary(
 		{
-			columnNames: ['<%= StringUtil.merge(entryColumns, "','") %>'],
+			columnNames: ['<%= StringUtil.merge(escapedEntryColumns, "','") %>'],
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 			folders: {
 				defaultParams: {
 					p_p_id: <%= HtmlUtil.escapeJS(portletId) %>,
 					p_p_lifecycle: 0
 				},
-				defaultParentFolderId: '<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
+				defaultParentFolderId: '<%= folderId %>',
 				dimensions: {
 					height: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) %>',
 					width: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>'
 				},
 				'listViewConfig.useTransition': false,
 				mainUrl: '<%= mainURL %>',
+				rootFolderId: '<%= rootFolderId %>',
 				strutsAction: '/document_library/view'
 			},
 			trashEnabled: <%= TrashUtil.isTrashEnabled(scopeGroupId) %>,
@@ -259,7 +274,7 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 
 					,{
 						id: '<%= mountFolder.getRepositoryId() %>',
-						name: '<%= mountFolder.getName() %>'
+						name: '<%= HtmlUtil.escapeJS(mountFolder.getName()) %>'
 					}
 
 				<%
@@ -269,7 +284,7 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 			],
 			rowIds: '<%= RowChecker.ROW_IDS %>',
 			select: {
-				displayViews: ['<%= StringUtil.merge(displayViews, "','") %>']
+				displayViews: ['<%= StringUtil.merge(escapedDisplayViews, "','") %>']
 			},
 			syncMessageDisabled: <%= !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE %>,
 			syncMessageSuppressed: <%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true")) %>,

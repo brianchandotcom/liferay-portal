@@ -14,6 +14,8 @@
 
 package com.liferay.portal.parsers.creole.ast;
 
+import com.liferay.portal.util.PropsUtil;
+
 /**
  * @author Miguel Pastor
  */
@@ -62,10 +64,8 @@ public abstract class URLNode extends ASTNode {
 		_supportedProtocols = supportedProtocols;
 	}
 
-	private static final String[] _SUPPORTED_PROTOCOL_LINK =
-		{"http://", "https://", "ftp://", "mailto:"};
-
 	private String _link;
-	private String[] _supportedProtocols = _SUPPORTED_PROTOCOL_LINK;
+	private String[] _supportedProtocols = PropsUtil.getArray(
+		"wiki.parsers.creole.supported.protocols");
 
 }

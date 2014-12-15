@@ -201,6 +201,12 @@ public class FileUtil {
 		return getFile().extractText(is, fileName);
 	}
 
+	public static String extractText(
+		InputStream is, String fileName, int maxStringLength) {
+
+		return getFile().extractText(is, fileName, maxStringLength);
+	}
+
 	public static String[] find(
 		String directory, String includes, String excludes) {
 

@@ -123,11 +123,24 @@ public class JournalArticlePermission {
 		}
 
 		if (actionId.equals(ActionKeys.VIEW) &&
+			!PropsValues.JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED) {
+
+			return true;
+		}
+
+		if (actionId.equals(ActionKeys.VIEW) &&
 			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
 			long folderId = article.getFolderId();
 
-			if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				if (!JournalPermission.contains(
+						permissionChecker, article.getGroupId(), actionId)) {
+
+					return false;
+				}
+			}
+			else {
 				try {
 					JournalFolder folder =
 						JournalFolderLocalServiceUtil.getFolder(folderId);

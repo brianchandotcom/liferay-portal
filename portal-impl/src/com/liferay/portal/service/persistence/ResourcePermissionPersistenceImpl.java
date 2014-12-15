@@ -3395,6 +3395,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				query.append(WHERE_AND);
 			}
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_4);
 			}
@@ -3402,6 +3404,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_6);
 			}
 			else {
+				bindName = true;
+
 				query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_5);
 			}
 
@@ -3419,6 +3423,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				query.append(WHERE_AND);
 			}
 
+			boolean bindPrimKey = false;
+
 			if (primKey == null) {
 				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_4);
 			}
@@ -3426,6 +3432,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_6);
 			}
 			else {
+				bindPrimKey = true;
+
 				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_5);
 			}
 
@@ -3473,13 +3481,13 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 				qPos.add(companyId);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
 				qPos.add(scope);
 
-				if (primKey != null) {
+				if (bindPrimKey) {
 					qPos.add(primKey);
 				}
 
@@ -3899,6 +3907,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				query.append(WHERE_AND);
 			}
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_4);
 			}
@@ -3906,6 +3916,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_6);
 			}
 			else {
+				bindName = true;
+
 				query.append(_FINDER_COLUMN_C_N_S_P_R_NAME_5);
 			}
 
@@ -3923,6 +3935,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				query.append(WHERE_AND);
 			}
 
+			boolean bindPrimKey = false;
+
 			if (primKey == null) {
 				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_4);
 			}
@@ -3930,6 +3944,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_6);
 			}
 			else {
+				bindPrimKey = true;
+
 				query.append(_FINDER_COLUMN_C_N_S_P_R_PRIMKEY_5);
 			}
 
@@ -3968,13 +3984,13 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 				qPos.add(companyId);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
 				qPos.add(scope);
 
-				if (primKey != null) {
+				if (bindPrimKey) {
 					qPos.add(primKey);
 				}
 

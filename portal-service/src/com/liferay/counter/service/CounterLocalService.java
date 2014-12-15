@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -54,6 +55,7 @@ public interface CounterLocalService extends BaseLocalService,
 	* @return the counter that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.counter.model.Counter addCounter(
 		com.liferay.counter.model.Counter counter)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -75,6 +77,7 @@ public interface CounterLocalService extends BaseLocalService,
 	* @throws PortalException if a counter with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.counter.model.Counter deleteCounter(
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -87,6 +90,7 @@ public interface CounterLocalService extends BaseLocalService,
 	* @return the counter that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.counter.model.Counter deleteCounter(
 		com.liferay.counter.model.Counter counter)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface CounterLocalService extends BaseLocalService,
 	* @return the counter that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.counter.model.Counter updateCounter(
 		com.liferay.counter.model.Counter counter)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -248,21 +253,27 @@ public interface CounterLocalService extends BaseLocalService,
 	public java.util.List<java.lang.String> getNames()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public long increment()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public long increment(java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public long increment(java.lang.String name, int size)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public void rename(java.lang.String oldName, java.lang.String newName)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public void reset(java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.transaction.Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public void reset(java.lang.String name, long size)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

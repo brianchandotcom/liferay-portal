@@ -109,16 +109,18 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 		ColorScheme colorScheme = colorSchemesMap.get(colorSchemeId);
 
-		if (colorScheme == null) {
-			List<ColorScheme> colorSchemes = theme.getColorSchemes();
+		if (colorScheme != null) {
+			return colorScheme;
+		}
 
-			if (colorSchemes.size() > 0) {
-				for (int i = (colorSchemes.size() - 1); i >= 0; i--) {
-					colorScheme = colorSchemes.get(i);
+		List<ColorScheme> colorSchemes = theme.getColorSchemes();
 
-					if (colorScheme.isDefaultCs()) {
-						break;
-					}
+		if (!colorSchemes.isEmpty()) {
+			for (int i = (colorSchemes.size() - 1); i >= 0; i--) {
+				colorScheme = colorSchemes.get(i);
+
+				if (colorScheme.isDefaultCs()) {
+					return colorScheme;
 				}
 			}
 		}
@@ -146,44 +148,52 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 		Theme theme = themes.get(themeId);
 
-		if (theme == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No theme found for specified theme id " + themeId +
-						". Returning the default theme.");
-			}
-
-			if (wapTheme) {
-				themeId = ThemeFactoryUtil.getDefaultWapThemeId(companyId);
-			}
-			else {
-				themeId = ThemeFactoryUtil.getDefaultRegularThemeId(companyId);
-			}
-
-			theme = _themes.get(themeId);
+		if (theme != null) {
+			return theme;
 		}
 
-		if (theme == null) {
-			if (_themes.isEmpty()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("No themes are installed");
-				}
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"No theme found for specified theme id " + themeId +
+					". Returning the default theme.");
+		}
 
-				return null;
+		if (wapTheme) {
+			themeId = ThemeFactoryUtil.getDefaultWapThemeId(companyId);
+		}
+		else {
+			themeId = ThemeFactoryUtil.getDefaultRegularThemeId(companyId);
+		}
+
+		theme = _themes.get(themeId);
+
+		if (theme != null) {
+			return theme;
+		}
+
+		if (_themes.isEmpty()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No themes are installed");
 			}
 
-			if (!themeId.contains(PortletConstants.WAR_SEPARATOR)) {
-				_log.error(
-					"No theme found for default theme id " + themeId +
-						". Returning a random theme.");
-			}
+			return null;
+		}
 
-			for (Map.Entry<String, Theme> entry : _themes.entrySet()) {
-				theme = entry.getValue();
+		if (!themeId.contains(PortletConstants.WAR_SEPARATOR)) {
+			_log.error(
+				"No theme found for default theme id " + themeId +
+					". Returning a random theme.");
+		}
+
+		for (Map.Entry<String, Theme> entry : _themes.entrySet()) {
+			theme = entry.getValue();
+
+			if ((theme != null) && (theme.isWapTheme() == wapTheme)) {
+				return theme;
 			}
 		}
 
-		return theme;
+		return null;
 	}
 
 	@Override

@@ -1111,6 +1111,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolder.isInTrashExplicitly();
+	}
+
+	@Override
 	public boolean isLocked() {
 		return _dlFolder.isLocked();
 	}

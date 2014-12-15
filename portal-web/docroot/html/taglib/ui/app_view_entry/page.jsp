@@ -84,7 +84,7 @@ if (showLinkTitle) {
 			</c:choose>
 
 			<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
-				<img alt="" border="no" class="img-polaroid" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
+				<img alt="" border="no" class="img-polaroid" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" style="<%= thumbnailStyle %>" />
 
 				<c:if test="<%= shortcut %>">
 					<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon img-polaroid" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
@@ -129,7 +129,7 @@ if (showLinkTitle) {
 			</c:choose>
 
 			<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
-				<img alt="" border="no" class="img-polaroid" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
+				<img alt="" border="no" class="img-polaroid" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" style="<%= thumbnailStyle %>" />
 
 				<c:if test="<%= shortcut %>">
 					<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon img-polaroid" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
@@ -229,7 +229,7 @@ if (showLinkTitle) {
 							</c:choose>
 
 							<dd class="entry-author">
-								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - modifiedDate.getTime(), true), author} %>" key="x-ago-by-x" />
+								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - modifiedDate.getTime(), true), HtmlUtil.escape(author)} %>" key="x-ago-by-x" />
 							</dd>
 						</c:if>
 
@@ -342,7 +342,7 @@ if (showLinkTitle) {
 				label="<%= true %>"
 				linkCssClass="entry-link"
 				localizeMessage="<%= false %>"
-				message="<%= title %>"
+				message="<%= HtmlUtil.escape(title) %>"
 				method="get"
 				src="<%= thumbnailSrc %>"
 				url="<%= url %>"

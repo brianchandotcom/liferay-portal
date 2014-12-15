@@ -14,6 +14,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,6 +40,9 @@ public class VerifyGroupId extends VerifyProcess {
 			pendingModels.add(model[0]);
 		}
 
+		List<VerifiableGroupedModelRunnable> verifiableGroupedModelRunnables =
+			new ArrayList<VerifiableGroupedModelRunnable>(_MODELS.length);
+
 		while (!pendingModels.isEmpty()) {
 			int count = pendingModels.size();
 
@@ -48,6 +52,12 @@ public class VerifyGroupId extends VerifyProcess {
 
 					continue;
 				}
+
+				VerifiableGroupedModelRunnable verifyAuditedModelRunnable =
+					new VerifiableGroupedModelRunnable(
+						model[0], model[1], model[2], model[3]);
+
+				verifiableGroupedModelRunnables.add(verifyAuditedModelRunnable);
 
 				verifyModel(model[0], model[1], model[2], model[3]);
 
@@ -59,6 +69,8 @@ public class VerifyGroupId extends VerifyProcess {
 					"Circular dependency detected " + pendingModels);
 			}
 		}
+
+		doVerify(verifiableGroupedModelRunnables);
 	}
 
 	protected long getGroupId(
@@ -150,6 +162,33 @@ public class VerifyGroupId extends VerifyProcess {
 			"PollsVote", "voteId", "PollsQuestion", "questionId"
 		}
 	};
+
+	private class VerifiableGroupedModelRunnable
+		extends ThrowableAwareRunnable {
+
+		private VerifiableGroupedModelRunnable(
+			String relatedPKColumnName, String relatedModelName,
+			String pkColumnName, String modelName) {
+
+			_relatedPKColumnName = relatedPKColumnName;
+			_relatedModelName = relatedModelName;
+			_pkColumnName = pkColumnName;
+			_modelName = modelName;
+		}
+
+		@Override
+		protected void doRun() throws Exception {
+			verifyModel(
+				_modelName, _pkColumnName, _relatedModelName,
+				_relatedPKColumnName);
+		}
+
+		private final String _modelName;
+		private final String _pkColumnName;
+		private final String _relatedModelName;
+		private final String _relatedPKColumnName;
+
+	}
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyGroupId.class);
 

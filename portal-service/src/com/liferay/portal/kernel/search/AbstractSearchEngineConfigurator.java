@@ -15,6 +15,11 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.cluster.messaging.ClusterBridgeMessageListener;
+import com.liferay.portal.kernel.concurrent.CallerRunsPolicy;
+import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.InvokerMessageListener;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -24,6 +29,10 @@ import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.search.messaging.BaseSearchEngineMessageListener;
 import com.liferay.portal.kernel.search.messaging.SearchReaderMessageListener;
 import com.liferay.portal.kernel.search.messaging.SearchWriterMessageListener;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -200,6 +209,40 @@ public abstract class AbstractSearchEngineConfigurator {
 
 			parallelDestination.setName(searchWriterDestinationName);
 
+			if (_INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE > 0) {
+				parallelDestination.setMaximumQueueSize(
+					_INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE);
+
+				RejectedExecutionHandler rejectedExecutionHandler =
+					new CallerRunsPolicy() {
+
+						@Override
+						public void rejectedExecution(
+							Runnable runnable,
+							ThreadPoolExecutor threadPoolExecutor) {
+
+							if (_log.isWarnEnabled()) {
+								StringBundler sb = new StringBundler(4);
+
+								sb.append(
+									"The search index writer's task queue ");
+								sb.append("is at its maximum capacity. The ");
+								sb.append("current thread will handle the ");
+								sb.append("request.");
+
+								_log.warn(sb.toString());
+							}
+
+							super.rejectedExecution(
+								runnable, threadPoolExecutor);
+						}
+
+					};
+
+				parallelDestination.setRejectedExecutionHandler(
+					rejectedExecutionHandler);
+			}
+
 			parallelDestination.open();
 
 			searchWriterDestination = parallelDestination;
@@ -327,6 +370,13 @@ public abstract class AbstractSearchEngineConfigurator {
 				invokerMessageListener);
 		}
 	}
+
+	private static final int _INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE));
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AbstractSearchEngineConfigurator.class);
 
 	private String _originalSearchEngineId;
 	private List<SearchEngineRegistration> _searchEngineRegistrations =

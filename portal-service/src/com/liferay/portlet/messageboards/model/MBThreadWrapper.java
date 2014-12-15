@@ -1079,6 +1079,12 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbThread.isInTrashExplicitly();
+	}
+
+	@Override
 	public boolean isLocked() {
 		return _mbThread.isLocked();
 	}

@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/quick_note/init.jsp" %>
 
-<div id="<portlet:namespace />pad" style="background: <%= color %>;">
+<div id="<portlet:namespace />pad" style="background: <%= HtmlUtil.escapeAttribute(color) %>;">
 	<c:if test="<%= portletDisplay.isShowConfigurationIcon() %>">
 		<table width="100%">
 		<tr>

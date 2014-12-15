@@ -683,6 +683,11 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	@Override
+	public java.lang.String getCompanyFallbackVirtualHostname() {
+		return _layoutSet.getCompanyFallbackVirtualHostname();
+	}
+
+	@Override
 	public com.liferay.portal.model.Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -744,6 +749,12 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	@Override
 	public boolean isLayoutSetPrototypeLinkActive() {
 		return _layoutSet.isLayoutSetPrototypeLinkActive();
+	}
+
+	@Override
+	public void setCompanyFallbackVirtualHostname(
+		java.lang.String companyFallbackVirtualHostname) {
+		_layoutSet.setCompanyFallbackVirtualHostname(companyFallbackVirtualHostname);
 	}
 
 	@Override

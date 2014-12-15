@@ -238,7 +238,7 @@ AUI.add(
 								message = Liferay.Language.get('please-enter-a-file-with-a-valid-file-type');
 							}
 
-							var messageNode = instance._getMessageNode(message, 'aui-alert aui-alert-error');
+							var messageNode = instance._getMessageNode(message, 'alert alert-error');
 
 							instance._formNode.prepend(messageNode);
 						}

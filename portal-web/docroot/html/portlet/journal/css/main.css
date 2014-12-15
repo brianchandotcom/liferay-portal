@@ -425,6 +425,16 @@
 		}
 	}
 
+	.app-view-entry-taglib.entry-display-style.display-icon {
+		.entry-title {
+			@include ellipsis;
+
+			overflow: hidden;
+			position: relative;
+			white-space: nowrap;
+		}
+	}
+
 	.journal-article-instructions-container {
 		display: normal;
 	}

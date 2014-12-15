@@ -17,9 +17,13 @@ package com.liferay.portal.action;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.SessionClicks;
 
 import java.util.Enumeration;
@@ -39,6 +43,10 @@ import org.apache.struts.action.ActionMapping;
  */
 public class SessionClickAction extends Action {
 
+	public static final boolean SESSION_CLICKS_AUTH_TOKEN_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get("session.clicks.auth.token.enabled"));
+
 	@Override
 	public ActionForward execute(
 			ActionMapping actionMapping, ActionForm actionForm,
@@ -46,6 +54,11 @@ public class SessionClickAction extends Action {
 		throws Exception {
 
 		try {
+			if (SESSION_CLICKS_AUTH_TOKEN_ENABLED) {
+				AuthTokenUtil.checkCSRFToken(
+					request, SessionClickAction.class.getName());
+			}
+
 			HttpSession session = request.getSession();
 
 			Enumeration<String> enu = request.getParameterNames();
@@ -71,6 +84,8 @@ public class SessionClickAction extends Action {
 			String value = getValue(request);
 
 			if (value != null) {
+				response.setContentType(ContentTypes.APPLICATION_JSON);
+
 				ServletOutputStream servletOutputStream =
 					response.getOutputStream();
 

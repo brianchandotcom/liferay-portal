@@ -48,13 +48,11 @@ import org.apache.commons.lang.time.StopWatch;
 public class SetupWizardSampleDataUtil {
 
 	public static void addSampleData(long companyId) throws Exception {
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
 
 		if (_log.isInfoEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-
 			_log.info("Adding sample data");
 		}
 

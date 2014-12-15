@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -29,9 +28,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -51,7 +48,6 @@ import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -59,10 +55,9 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.service.persistence.MBCategoryActionableDynamicQuery;
 import com.liferay.portlet.messageboards.service.persistence.MBMessageActionableDynamicQuery;
 
+import javax.portlet.PortletURL;
 import java.util.List;
 import java.util.Locale;
-
-import javax.portlet.PortletURL;
 
 /**
  * @author Brian Wing Shun Chan
@@ -87,8 +82,15 @@ public class MBMessageIndexer extends BaseIndexer {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
-		MBMessage message = MBMessageAttachmentsUtil.getMessage(
-			dlFileEntry.getFileEntryId());
+		MBMessage message = null;
+
+		try {
+			message = MBMessageAttachmentsUtil.getMessage(
+				dlFileEntry.getFileEntryId());
+		}
+		catch (Exception e) {
+			return;
+		}
 
 		document.addKeyword(Field.CATEGORY_ID, message.getCategoryId());
 		document.addKeyword(
@@ -170,69 +172,9 @@ public class MBMessageIndexer extends BaseIndexer {
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
-		SearchContext searchContext = new SearchContext();
+		MBMessage message = (MBMessage)obj;
 
-		searchContext.setSearchEngineId(getSearchEngineId());
-
-		if (obj instanceof MBCategory) {
-			MBCategory category = (MBCategory)obj;
-
-			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			booleanQuery.addRequiredTerm(Field.PORTLET_ID, PORTLET_ID);
-
-			booleanQuery.addRequiredTerm(
-				"categoryId", category.getCategoryId());
-
-			Hits hits = SearchEngineUtil.search(
-				getSearchEngineId(), category.getCompanyId(), booleanQuery,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			for (int i = 0; i < hits.getLength(); i++) {
-				Document document = hits.doc(i);
-
-				SearchEngineUtil.deleteDocument(
-					getSearchEngineId(), category.getCompanyId(),
-					document.get(Field.UID));
-			}
-		}
-		else if (obj instanceof MBMessage) {
-			MBMessage message = (MBMessage)obj;
-
-			Document document = new DocumentImpl();
-
-			document.addUID(PORTLET_ID, message.getMessageId());
-
-			SearchEngineUtil.deleteDocument(
-				getSearchEngineId(), message.getCompanyId(),
-				document.get(Field.UID));
-		}
-		else if (obj instanceof MBThread) {
-			MBThread thread = (MBThread)obj;
-
-			MBMessage message = MBMessageLocalServiceUtil.getMessage(
-				thread.getRootMessageId());
-
-			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			booleanQuery.addRequiredTerm(Field.PORTLET_ID, PORTLET_ID);
-
-			booleanQuery.addRequiredTerm("threadId", thread.getThreadId());
-
-			Hits hits = SearchEngineUtil.search(
-				getSearchEngineId(), message.getCompanyId(), booleanQuery,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			for (int i = 0; i < hits.getLength(); i++) {
-				Document document = hits.doc(i);
-
-				SearchEngineUtil.deleteDocument(
-					getSearchEngineId(), message.getCompanyId(),
-					document.get(Field.UID));
-			}
-		}
+		deleteDocument(message.getCompanyId(), message.getMessageId());
 	}
 
 	@Override
@@ -439,6 +381,10 @@ public class MBMessageIndexer extends BaseIndexer {
 			@Override
 			protected void performAction(Object object) throws PortalException {
 				MBMessage message = (MBMessage)object;
+
+				if (message.isDiscussion() && message.isRoot()) {
+					return;
+				}
 
 				Document document = getDocument(message);
 

@@ -2,6 +2,8 @@
 
 <#assign style = fieldStructure.style!"">
 
-<div class="separator" style="${escapeAttribute(style)}"></div>
+<@aui["field-wrapper"] data=data label=escape(label)>
+	<div class="separator" style="${escapeAttribute(style)}"></div>
 
-${fieldStructure.children}
+	${fieldStructure.children}
+</@>

@@ -134,8 +134,8 @@ public class JournalFolderLocalServiceImpl
 			folder.getGroupId(), folder.getFolderId());
 
 		for (JournalFolder curFolder : folders) {
-			if (includeTrashedEntries || !curFolder.isInTrash()) {
-				deleteFolder(curFolder);
+			if (includeTrashedEntries || !curFolder.isInTrashExplicitly()) {
+				deleteFolder(curFolder, includeTrashedEntries);
 			}
 		}
 
@@ -440,14 +440,14 @@ public class JournalFolderLocalServiceImpl
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 			folderId);
 
-		TrashEntry trashEntry = folder.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(JournalFolder.class, folderId)) {
+		if (folder.isInTrashExplicitly()) {
 			restoreFolderFromTrash(userId, folderId);
 		}
 		else {
 
 			// Folder
+
+			TrashEntry trashEntry = folder.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(
@@ -860,7 +860,7 @@ public class JournalFolderLocalServiceImpl
 
 				JournalFolder folder = (JournalFolder)object;
 
-				if (folder.isInTrash()) {
+				if (folder.isInTrashExplicitly()) {
 					continue;
 				}
 

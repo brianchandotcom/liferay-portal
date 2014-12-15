@@ -24,10 +24,13 @@ DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 boolean editable = false;
+boolean hasDeletePermission = false;
+boolean hasUpdatePermission = false;
 boolean showAddRecordButton = false;
 
 if (DDLUtil.isEditable(request, portletDisplay.getId(), themeDisplay.getScopeGroupId())) {
-	editable = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.UPDATE);
+	hasDeletePermission = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.DELETE);
+	hasUpdatePermission = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.UPDATE);
 	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD);
 }
 
@@ -59,12 +62,13 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 		headerNames.add(label);
 	}
 
-	if (editable) {
+	if (hasUpdatePermission) {
 		headerNames.add("status");
 		headerNames.add("modified-date");
 		headerNames.add("author");
-		headerNames.add(StringPool.BLANK);
 	}
+
+	headerNames.add(StringPool.BLANK);
 	%>
 
 	<liferay-ui:search-container
@@ -108,8 +112,9 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 
 			ResultRow row = new ResultRow(record, record.getRecordId(), i);
 
-			row.setParameter("editable", String.valueOf(editable));
 			row.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
+			row.setParameter("hasDeletePermission", String.valueOf(hasDeletePermission));
+			row.setParameter("hasUpdatePermission", String.valueOf(hasUpdatePermission));
 
 			PortletURL rowURL = renderResponse.createRenderURL();
 
@@ -132,15 +137,15 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 			<%
 			}
 
-			if (editable) {
+			if (hasUpdatePermission) {
 				row.addStatus(recordVersion.getStatus(), recordVersion.getStatusByUserId(), recordVersion.getStatusDate(), rowURL);
 				row.addDate(record.getModifiedDate(), rowURL);
 				row.addText(HtmlUtil.escape(PortalUtil.getUserName(recordVersion)), rowURL);
-
-				// Action
-
-				row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/dynamic_data_lists/record_action.jsp");
 			}
+
+			// Action
+
+			row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/dynamic_data_lists/record_action.jsp");
 
 			// Add result row
 

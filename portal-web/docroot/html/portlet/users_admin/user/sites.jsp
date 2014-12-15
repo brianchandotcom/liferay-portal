@@ -19,6 +19,9 @@
 <%
 User selUser = (User)request.getAttribute("user.selUser");
 List<Group> groups = (List<Group>)request.getAttribute("user.groups");
+List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSites");
+
+currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="sites" />
@@ -36,11 +39,13 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 <h3><liferay-ui:message key="sites" /></h3>
 
 <liferay-ui:search-container
+	curParam="sitesCur"
 	headerNames="name,roles,null"
+	iteratorURL="<%= currentURLObj %>"
+	total="<%= groups.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= groups %>"
-		total="<%= groups.size() %>"
+		results="<%= groups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -86,11 +91,10 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" />
+	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
-	<br />
 
 	<liferay-ui:icon
 		cssClass="modify-link"
@@ -152,3 +156,56 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 		);
 	</aui:script>
 </c:if>
+
+<h3><liferay-ui:message key="inherited-sites" /></h3>
+
+<c:if test="<%= inheritedSites.isEmpty() %>">
+	<liferay-ui:message key="this-user-does-not-have-any-inherited-sites" />
+</c:if>
+
+<liferay-ui:search-container
+	curParam="inheritedSitesCur"
+	headerNames="name,roles"
+	iteratorURL="<%= currentURLObj %>"
+	total="<%= inheritedSites.size() %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= inheritedSites.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.Group"
+		escapedModel="<%= true %>"
+		keyProperty="groupId"
+		modelVar="inheritedSite"
+		rowIdProperty="friendlyURL"
+	>
+		<liferay-ui:search-container-column-text
+			name="name"
+			value="<%= HtmlUtil.escape(inheritedSite.getDescriptiveName(locale)) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			buffer="buffer"
+			name="roles"
+		>
+
+			<%
+			List<Role> inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId());
+
+			for (Role role : inheritedRoles) {
+				buffer.append(HtmlUtil.escape(role.getTitle(locale)));
+				buffer.append(StringPool.COMMA_AND_SPACE);
+			}
+
+			if (!inheritedRoles.isEmpty()) {
+				buffer.setIndex(buffer.index() - 1);
+			}
+			%>
+
+		</liferay-ui:search-container-column-text>
+
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>

@@ -75,32 +75,34 @@ public class PortletResponseUtil {
 	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
-			MimeResponse mimeResponse, String fileName, InputStream is)
+			MimeResponse mimeResponse, String fileName, InputStream inputStream)
 		throws IOException {
 
-		sendFile(null, mimeResponse, fileName, is);
+		sendFile(null, mimeResponse, fileName, inputStream);
 	}
 
 	/**
 	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
-			MimeResponse mimeResponse, String fileName, InputStream is,
+			MimeResponse mimeResponse, String fileName, InputStream inputStream,
 			int contentLength, String contentType)
 		throws IOException {
 
-		sendFile(null, mimeResponse, fileName, is, contentLength, contentType);
+		sendFile(
+			null, mimeResponse, fileName, inputStream, contentLength,
+			contentType);
 	}
 
 	/**
 	 * @deprecated As of 6.1.0
 	 */
 	public static void sendFile(
-			MimeResponse mimeResponse, String fileName, InputStream is,
+			MimeResponse mimeResponse, String fileName, InputStream inputStream,
 			String contentType)
 		throws IOException {
 
-		sendFile(null, mimeResponse, fileName, is, contentType);
+		sendFile(null, mimeResponse, fileName, inputStream, contentType);
 	}
 
 	public static void sendFile(
@@ -135,25 +137,26 @@ public class PortletResponseUtil {
 
 	public static void sendFile(
 			PortletRequest portletRequest, MimeResponse mimeResponse,
-			String fileName, InputStream is)
+			String fileName, InputStream inputStream)
 		throws IOException {
 
-		sendFile(portletRequest, mimeResponse, fileName, is, null);
+		sendFile(portletRequest, mimeResponse, fileName, inputStream, null);
 	}
 
 	public static void sendFile(
 			PortletRequest portletRequest, MimeResponse mimeResponse,
-			String fileName, InputStream is, int contentLength,
+			String fileName, InputStream inputStream, int contentLength,
 			String contentType)
 		throws IOException {
 
 		sendFile(
-			portletRequest, mimeResponse, fileName, is, 0, contentType, null);
+			portletRequest, mimeResponse, fileName, inputStream, contentLength,
+			contentType, null);
 	}
 
 	public static void sendFile(
 			PortletRequest portletRequest, MimeResponse mimeResponse,
-			String fileName, InputStream is, int contentLength,
+			String fileName, InputStream inputStream, int contentLength,
 			String contentType, String contentDispositionType)
 		throws IOException {
 
@@ -161,15 +164,17 @@ public class PortletResponseUtil {
 			portletRequest, mimeResponse, fileName, contentType,
 			contentDispositionType);
 
-		write(mimeResponse, is, contentLength);
+		write(mimeResponse, inputStream, contentLength);
 	}
 
 	public static void sendFile(
 			PortletRequest portletRequest, MimeResponse mimeResponse,
-			String fileName, InputStream is, String contentType)
+			String fileName, InputStream inputStream, String contentType)
 		throws IOException {
 
-		sendFile(portletRequest, mimeResponse, fileName, is, 0, contentType);
+		sendFile(
+			portletRequest, mimeResponse, fileName, inputStream, 0,
+			contentType);
 	}
 
 	public static void write(MimeResponse mimeResponse, byte[] bytes)
@@ -262,30 +267,39 @@ public class PortletResponseUtil {
 		}
 	}
 
-	public static void write(MimeResponse mimeResponse, InputStream is)
+	public static void write(MimeResponse mimeResponse, InputStream inputStream)
 		throws IOException {
 
-		write(mimeResponse, is, 0);
+		write(mimeResponse, inputStream, 0);
 	}
 
 	public static void write(
-			MimeResponse mimeResponse, InputStream is, int contentLength)
+			MimeResponse mimeResponse, InputStream inputStream,
+			int contentLength)
 		throws IOException {
 
-		if (mimeResponse.isCommitted()) {
-			return;
-		}
+		OutputStream outputStream = null;
 
-		if (contentLength > 0) {
-			if (mimeResponse instanceof ResourceResponse) {
-				ResourceResponse resourceResponse =
-					(ResourceResponse)mimeResponse;
-
-				resourceResponse.setContentLength(contentLength);
+		try {
+			if (mimeResponse.isCommitted()) {
+				return;
 			}
-		}
 
-		StreamUtil.transfer(is, mimeResponse.getPortletOutputStream());
+			if (contentLength > 0) {
+				if (mimeResponse instanceof ResourceResponse) {
+					ResourceResponse resourceResponse =
+						(ResourceResponse)mimeResponse;
+
+					resourceResponse.setContentLength(contentLength);
+				}
+			}
+
+			StreamUtil.transfer(
+				inputStream, mimeResponse.getPortletOutputStream(), false);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream, outputStream);
+		}
 	}
 
 	public static void write(MimeResponse mimeResponse, String s)

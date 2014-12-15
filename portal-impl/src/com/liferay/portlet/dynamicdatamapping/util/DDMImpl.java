@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -34,7 +35,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -56,7 +59,6 @@ import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateIdComparat
 import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateModifiedDateComparator;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -89,7 +91,11 @@ public class DDMImpl implements DDM {
 
 	public static final String TYPE_DDM_DOCUMENTLIBRARY = "ddm-documentlibrary";
 
+	public static final String TYPE_DDM_IMAGE = "ddm-image";
+
 	public static final String TYPE_DDM_LINK_TO_PAGE = "ddm-link-to-page";
+
+	public static final String TYPE_DDM_TEXT_HTML = "ddm-text-html";
 
 	public static final String TYPE_RADIO = "radio";
 
@@ -206,9 +212,29 @@ public class DDMImpl implements DDM {
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 
+		boolean translating = true;
+
+		String defaultLanguageId = (String)serviceContext.getAttribute(
+			"defaultLanguageId");
+		String toLanguageId = (String)serviceContext.getAttribute(
+			"toLanguageId");
+
+		if (Validator.isNull(toLanguageId) ||
+			Validator.equals(defaultLanguageId, toLanguageId)) {
+
+			translating = false;
+		}
+
 		Fields fields = new Fields();
 
 		for (String fieldName : fieldNames) {
+			boolean localizable = GetterUtil.getBoolean(
+				ddmStructure.getFieldProperty(fieldName, "localizable"), true);
+
+			if (!localizable && translating) {
+				continue;
+			}
+
 			List<Serializable> fieldValues = getFieldValues(
 				ddmStructure, fieldName, fieldNamespace, serviceContext);
 
@@ -476,11 +502,19 @@ public class DDMImpl implements DDM {
 				int fieldValueYear = GetterUtil.getInteger(
 					serviceContext.getAttribute(fieldNameValue + "Year"));
 
-				Date fieldValueDate = PortalUtil.getDate(
-					fieldValueMonth, fieldValueDay, fieldValueYear);
+				String fieldValueDateString = GetterUtil.getString(
+					serviceContext.getAttribute(fieldNameValue));
 
-				if (fieldValueDate != null) {
-					fieldValue = String.valueOf(fieldValueDate.getTime());
+				if (Validator.isNull(fieldValueDateString)) {
+					fieldValue = StringPool.BLANK;
+				}
+				else {
+					Date fieldValueDate = PortalUtil.getDate(
+						fieldValueMonth, fieldValueDay, fieldValueYear);
+
+					if (fieldValueDate != null) {
+						fieldValue = String.valueOf(fieldValueDate.getTime());
+					}
 				}
 			}
 			else if (fieldDataType.equals(FieldConstants.IMAGE) &&
@@ -492,23 +526,8 @@ public class DDMImpl implements DDM {
 					return null;
 				}
 
-				UploadRequest uploadRequest = (UploadRequest)request;
-
-				File file = uploadRequest.getFile(fieldNameValue);
-
-				try {
-					byte[] bytes = FileUtil.getBytes(file);
-
-					if (ArrayUtil.isNotEmpty(bytes)) {
-						fieldValue = UnicodeFormatter.bytesToHex(bytes);
-					}
-					else {
-						fieldValue = "update";
-					}
-				}
-				catch (IOException ioe) {
-					return null;
-				}
+				fieldValue = getImageFieldValue(
+					(UploadRequest)request, fieldNameValue);
 			}
 
 			if (fieldValue == null) {
@@ -533,6 +552,55 @@ public class DDMImpl implements DDM {
 		}
 
 		return fieldValues;
+	}
+
+	protected byte[] getImageBytes(
+			UploadRequest uploadRequest, String fieldNameValue)
+		throws Exception {
+
+		File file = uploadRequest.getFile(fieldNameValue + "File");
+
+		byte[] bytes = FileUtil.getBytes(file);
+
+		if (ArrayUtil.isNotEmpty(bytes)) {
+			return bytes;
+		}
+
+		String url = uploadRequest.getParameter(fieldNameValue + "URL");
+
+		long imageId = GetterUtil.getLong(
+			HttpUtil.getParameter(url, "img_id", false));
+
+		Image image = ImageLocalServiceUtil.fetchImage(imageId);
+
+		if (image == null) {
+			return null;
+		}
+
+		return image.getTextObj();
+	}
+
+	protected String getImageFieldValue(
+		UploadRequest uploadRequest, String fieldNameValue) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("alt", StringPool.BLANK);
+		jsonObject.put("data", StringPool.BLANK);
+
+		try {
+			byte[] bytes = getImageBytes(uploadRequest, fieldNameValue);
+
+			if (ArrayUtil.isNotEmpty(bytes)) {
+				jsonObject.put(
+					"alt", uploadRequest.getParameter(fieldNameValue + "Alt"));
+				jsonObject.put("data", UnicodeFormatter.bytesToHex(bytes));
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return jsonObject.toString();
 	}
 
 }

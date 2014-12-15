@@ -37,8 +37,10 @@ import com.liferay.portal.kernel.util.CharBufferPool;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
 import com.liferay.portal.kernel.util.ClearTimerThreadUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LicenseValidationTransportUtil;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
@@ -54,6 +56,7 @@ import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portlet.PortletContextBagPool;
@@ -84,6 +87,10 @@ import org.springframework.web.context.ContextLoaderListener;
  */
 public class PortalContextLoaderListener extends ContextLoaderListener {
 
+	public static final boolean CACHE_CLEAR_ON_CONTEXT_INITIALIZATION =
+		GetterUtil.getBoolean(
+			PropsUtil.get("cache.clear.on.context.initialization"));
+
 	public static String getPortalServlerContextName() {
 		return _portalServlerContextName;
 	}
@@ -97,6 +104,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		PortalContextLoaderLifecycleThreadLocal.setDestroying(true);
 
 		ThreadLocalCacheManager.destroy();
+
+		try {
+			LicenseValidationTransportUtil.stopMulticastTransportThread();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 
 		try {
 			ClearThreadLocalUtil.clearThreadLocal();
@@ -240,21 +254,23 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			_log.error(e, e);
 		}
 
-		FinderCacheUtil.clearCache();
-		FinderCacheUtil.clearLocalCache();
-		EntityCacheUtil.clearCache();
-		EntityCacheUtil.clearLocalCache();
-		PermissionCacheUtil.clearCache();
-		PermissionCacheUtil.clearLocalCache();
-		TemplateResourceLoaderUtil.clearCache();
-		WikiCacheUtil.clearCache(0);
+		if (CACHE_CLEAR_ON_CONTEXT_INITIALIZATION) {
+			FinderCacheUtil.clearCache();
+			FinderCacheUtil.clearLocalCache();
+			EntityCacheUtil.clearCache();
+			EntityCacheUtil.clearLocalCache();
+			PermissionCacheUtil.clearCache();
+			PermissionCacheUtil.clearLocalCache();
+			TemplateResourceLoaderUtil.clearCache();
+			WikiCacheUtil.clearCache(0);
 
-		ServletContextPool.clear();
+			ServletContextPool.clear();
 
-		CacheUtil.clearCache();
-		MultiVMPoolUtil.clear();
-		SingleVMPoolUtil.clear();
-		WebCachePoolUtil.clear();
+			CacheUtil.clearCache();
+			MultiVMPoolUtil.clear();
+			SingleVMPoolUtil.clear();
+			WebCachePoolUtil.clear();
+		}
 
 		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 

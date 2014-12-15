@@ -49,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>URL_FIELD_REQUIRED</td>
-	<td>//div[@class='control-group error']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DESCRIPTION_FIELD</td>
 	<td>//textarea[@id='_28_description']</td>
 	<td></td>

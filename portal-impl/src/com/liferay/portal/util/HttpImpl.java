@@ -735,7 +735,19 @@ public class HttpImpl implements Http {
 				String value = StringPool.BLANK;
 
 				if (kvp.length > 1) {
-					value = decodeURL(kvp[1]);
+					try {
+						value = decodeURL(kvp[1]);
+					}
+					catch (IllegalArgumentException iae) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Skipping parameter with key " + key +
+									" because of invalid value " + kvp[1],
+								iae);
+						}
+
+						continue;
+					}
 				}
 
 				List<String> values = tempParameterMap.get(key);
@@ -828,6 +840,10 @@ public class HttpImpl implements Http {
 
 			if (secure) {
 				protocol = Http.HTTPS;
+			}
+
+			if (port == -1) {
+				port = urlObj.getPort();
 			}
 
 			urlObj = new URL(

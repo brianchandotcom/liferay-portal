@@ -28,6 +28,22 @@ String redirect = ParamUtil.getString(request, "redirect");
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
+			<aui:fieldset>
+				<aui:select name="preferences--displayStyle--">
+
+					<%
+					for (String displayStyleOption : PropsValues.BREADCRUMB_DISPLAY_STYLE_OPTIONS) {
+					%>
+
+						<aui:option label="<%= displayStyleOption %>" selected="<%= displayStyle.equals(displayStyleOption) %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</aui:fieldset>
+
 			<aui:fieldset cssClass="checkBoxes">
 				<aui:col width="<%= 50 %>">
 					<aui:input label="show-current-site" name="preferences--showCurrentGroup--" type="checkbox" value="<%= showCurrentGroup %>" />

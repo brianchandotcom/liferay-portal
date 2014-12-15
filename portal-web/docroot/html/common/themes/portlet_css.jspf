@@ -304,17 +304,13 @@ JSONObject advancedData = jsonObject.getJSONObject("advancedData");
 
 String customCSS = advancedData.getString("customCSS");
 
-customCSS = StringUtil.replace(
-	customCSS,
-	new String[] {"<", ">", "expression("},
-	new String[] {"&lt;", "&gt;", ""}
-);
-
 // Portlet data
 
 JSONObject portletData = jsonObject.getJSONObject("portletData");
 
-boolean showBorders = portletData.getBoolean("showBorders", PropsValues.THEME_PORTLET_DECORATE_DEFAULT);
+boolean portletDecorate = GetterUtil.getBoolean(themeDisplay.getThemeSetting("portlet-setup-show-borders-default"), PropsValues.THEME_PORTLET_DECORATE_DEFAULT);
+
+boolean showBorders = portletData.getBoolean("showBorders", portletDecorate);
 
 // Generated CSS
 
@@ -323,6 +319,9 @@ out.print("#p_p_id_" + portlet.getPortletId() + "_");
 if (showBorders) {
 	out.print(" .portlet");
 }
+else {
+	out.print(" .portlet-borderless-container");
+}
 
 out.print(" {\n");
 
@@ -330,14 +329,14 @@ String[] finalCSSArray = (String[])finalCSS.toArray(new String[0]);
 
 String finalCSSString = StringUtil.merge(finalCSSArray, ";\n");
 
-out.print(finalCSSString);
+out.print(_escapeCssBlock(finalCSSString));
 
 out.print("\n}\n");
 
 // Advanced CSS
 
 if (Validator.isNotNull(customCSS)) {
-	out.print(customCSS);
+	out.print(_escapeCssBlock(customCSS));
 }
 %>
 

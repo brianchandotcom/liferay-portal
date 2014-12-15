@@ -79,9 +79,9 @@ for (int i = 0; i < results.size(); i++) {
 
 	sb.append("<img align=\"left\" src=\"");
 	sb.append(theme2.getStaticResourcePath());
-	sb.append(theme2.getImagesPath());
+	sb.append(HtmlUtil.escapeAttribute(theme2.getImagesPath()));
 	sb.append("/thumbnail.png\" style=\"margin-right: 10px\" />");
-	sb.append(theme2.getName());
+	sb.append(HtmlUtil.escape(theme2.getName()));
 
 	if (showEditPluginHREF) {
 		sb.append("</a>");
@@ -95,7 +95,7 @@ for (int i = 0; i < results.size(); i++) {
 		sb.append(LanguageUtil.get(pageContext, "unknown"));
 	}
 	else {
-		sb.append(pluginPackage.getName());
+		sb.append(HtmlUtil.escape(pluginPackage.getName()));
 
 		if (pluginPackage.getContext() != null) {
 			sb.append(" (");
@@ -114,7 +114,7 @@ for (int i = 0; i < results.size(); i++) {
 		for (int j = 0; j < colorSchemes.size(); j++) {
 			ColorScheme colorScheme2 = (ColorScheme)colorSchemes.get(j);
 
-			sb.append(colorScheme2.getName());
+			sb.append(HtmlUtil.escape(colorScheme2.getName()));
 
 			if ((j + 1) < colorSchemes.size()) {
 				sb.append(", ");
@@ -130,7 +130,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Roles
 
-	row.addText(StringUtil.merge(pluginSetting.getRolesArray(), ", "));
+	row.addText(HtmlUtil.escape(StringUtil.merge(pluginSetting.getRolesArray(), ", ")));
 
 	// Add result row
 

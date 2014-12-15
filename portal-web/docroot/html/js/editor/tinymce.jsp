@@ -51,7 +51,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	<textarea id="<%= name %>" name="<%= name %>" style="height: 100%; width: 100%;"></textarea>
 </div>
 
-<aui:script>
+<aui:script use="aui-node-base">
 	window['<%= name %>'] = {
 		onChangeCallbackCounter: 0,
 
@@ -69,7 +69,16 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		},
 
 		getHTML: function() {
-			return tinyMCE.editors['<%= name %>'].getContent();
+			var data;
+
+			if (!window['<%= name %>'].instanceReady && window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
+				data = <%= HtmlUtil.escape(namespace + initMethod) %>();
+			}
+			else {
+				data = tinyMCE.editors['<%= name %>'].getContent();
+			}
+
+			return data;
 		},
 
 		init: function(value) {
@@ -84,7 +93,23 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			<c:if test="<%= Validator.isNotNull(initMethod) %>">
 				window['<%= name %>'].init(<%= HtmlUtil.escape(namespace + initMethod) %>());
 			</c:if>
+
+			var iframe = A.one('#<%= name %>_ifr');
+
+			if (iframe) {
+				var iframeWin = iframe.getDOM().contentWindow;
+
+				if (iframeWin) {
+					var iframeDoc = iframeWin.document.documentElement;
+
+					A.one(iframeDoc).addClass('aui');
+				}
+			}
+
+			window['<%= name %>'].instanceReady = true;
 		},
+
+		instanceReady: false,
 
 		<%
 		if (Validator.isNotNull(onChangeMethod)) {
@@ -124,6 +149,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 	tinyMCE.init(
 		{
+			content_css: '<%= HtmlUtil.escapeJS(themeDisplay.getPathThemeCss()) %>/aui.css,<%= HtmlUtil.escapeJS(themeDisplay.getPathThemeCss()) %>/main.css',
 			convert_urls: false,
 			elements: '<%= name %>',
 			extended_valid_elements: 'a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|usemap],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]',

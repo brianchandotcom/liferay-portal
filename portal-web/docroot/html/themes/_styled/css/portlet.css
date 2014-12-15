@@ -7,7 +7,7 @@
 }
 
 body.portlet {
-	border: none;
+	border-width: 0;
 }
 
 .portlet-topper {
@@ -72,11 +72,11 @@ body.portlet {
 
 .portlet-title-text {
 	display: inline-block;
+
+	@include ellipsis;
+
 	max-width: 95%;
-	overflow: hidden;
-	text-overflow: ellipsis;
 	vertical-align: top;
-	white-space: nowrap;
 }
 
 .panel-page-content, .panel-page-body {
@@ -94,15 +94,16 @@ body.portlet {
 }
 
 .portlet-nested-portlets .portlet-boundary {
+	left: 0 !important;
 	position: relative !important;
 	top: 0 !important;
-	left: 0 !important;
 }
 
 %portlet-action-bar {
 	background: #333;
 	color: #FFF;
-	text-shadow: -1px -1px #000;
+
+	@include text-shadow(-1px -1px #000);
 
 	a {
 		color: #3AF;
@@ -119,6 +120,12 @@ body.portlet {
 
 .portlet-borderless-bar {
 	@extend %portlet-action-bar;
+
+	.portlet-options, .portlet-options.open {
+		.dropdown-toggle {
+			background-image: url(../images/portlet/options_borderless.png);
+		}
+	}
 }
 
 .portlet-content {
@@ -195,36 +202,42 @@ body.portlet {
 }
 
 .portlet-borderless-bar {
+	background-color: transparent;
 	font-size: 10px;
 
 	@include opacity(0.3);
 
-	padding: 2px 5px 1px;
+	height: 0;
+	padding: 0;
 	position: absolute;
 	right: 0;
 	top: 0;
+
+	width: 100%;
 	z-index: 200;
 
 	a {
 		background: url() no-repeat 0 50%;
 		display: inline-block;
-		height: 16px;
+		height: 20px;
 		margin-left: 5px;
 		text-indent: -9999px;
-		vertical-align: middle;
 		width: 16px;
 	}
 
 	.portlet-actions {
-		display: none;
-		float: left;
-		margin-right: 10px;
+		float: right;
 		overflow: hidden;
+		padding: 0 5px;
+
+		.portlet-action, .portlet-options {
+			display: inline-block;
+		}
 	}
 
 	.portlet-actions, .portlet-title-default {
-		min-height: 20px;
-		vertical-align: top;
+		background-color: #333;
+		min-height: 21px;
 	}
 
 	.portlet-action-separator {
@@ -237,8 +250,13 @@ body.portlet {
 		width: auto;
 	}
 
-	.portlet-close a {
-		background-image: url(../images/portlet/close_borderless.png);
+	.portlet-close {
+		display: inline-block;
+		vertical-align: middle;
+
+		a {
+			background-image: url(../images/portlet/close_borderless.png);
+		}
 	}
 
 	.portlet-options li.lfr-trigger strong a {
@@ -287,9 +305,16 @@ body.portlet {
 }
 
 .portlet-title-default {
-	display: inline-block;
+	display: block;
+
+	@include ellipsis;
+
 	float: right;
 	font-weight: bold;
+	height: 0;
+	line-height: 19px;
+	max-width: 50%;
+	padding: 0 10px;
 	text-transform: uppercase;
 }
 
@@ -299,7 +324,7 @@ body.portlet {
 	}
 
 	.portlet-title-default {
-		background: url(../images/portlet/draggable_borderless.png) no-repeat 0 50%;
+		background: #333 url(../images/portlet/draggable_borderless.png) no-repeat 0 50%;
 		cursor: move;
 		padding-left: 20px;
 	}
@@ -561,7 +586,7 @@ body.portlet {
 .restricted {
 	&, & td {
 		background: #FDD;
-		border: none;
+		border-width: 0;
 	}
 
 	* {
@@ -594,6 +619,7 @@ body.portlet {
 		background-position: 5px 50%;
 		background-repeat: no-repeat;
 		padding-left: 30px;
+		vertical-align: middle;
 	}
 
 	&.lfr-role-guest .first {
@@ -627,20 +653,44 @@ body.portlet {
 	}
 }
 
+/* ---------- Breadcrumb taglib ---------- */
+
+.breadcrumb.breadcrumb-vertical {
+	display: inline-block;
+	text-align: center;
+
+	li {
+		display: block;
+
+		&.last, &.only {
+			background: none;
+		}
+	}
+
+	.divider {
+		background: url(@theme_image_path@/arrows/07_down.png) no-repeat 50% 100%;
+		display: block;
+
+		@include hide-text(right);
+
+		height: 10px;
+	}
+}
+
 /* ---------- Calendar taglib ---------- */
 
 .taglib-calendar {
 	tr {
 		&.portlet-section-header th, & td {
-			border: none;
+			border-width: 0;
 		}
 
 		td {
 			a {
 				background-color: #F0F5F7;
 				border: 1px solid #FFF;
-				border-bottom: none;
-				border-left: none;
+				border-bottom-width: 0;
+				border-left-width: 0;
 				display: block;
 				height: 15px;
 				padding: 5px 0;
@@ -701,7 +751,7 @@ body.portlet {
 	}
 
 	.taglib-calendar tr td.first a {
-		border-right: none;
+		border-right-width: 0;
 	}
 }
 

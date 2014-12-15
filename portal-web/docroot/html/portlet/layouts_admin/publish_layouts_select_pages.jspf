@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:input name="layoutIds" type="hidden" />
+<aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(stagingGroup.getGroupId(), privateLayout, StringUtil.merge(selectedLayoutIds)) %>" />
 
 <span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
 

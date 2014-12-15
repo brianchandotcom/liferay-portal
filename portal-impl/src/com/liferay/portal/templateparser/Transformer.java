@@ -138,17 +138,23 @@ public class Transformer {
 		try {
 			prepareTemplate(themeDisplay, template);
 
+			long classNameId = 0;
+
 			if (contextObjects != null) {
 				for (String key : contextObjects.keySet()) {
 					template.put(key, contextObjects.get(key));
 				}
+
+				classNameId = GetterUtil.getLong(
+					contextObjects.get(TemplateConstants.CLASS_NAME_ID));
 			}
 
 			template.put("company", getCompany(themeDisplay, companyId));
 			template.put("companyId", companyId);
 			template.put("device", getDevice(themeDisplay));
 
-			String templatesPath = getTemplatesPath(companyId, scopeGroupId);
+			String templatesPath = getTemplatesPath(
+				companyId, scopeGroupId, classNameId);
 
 			template.put("journalTemplatesPath", templatesPath);
 			template.put(
@@ -269,6 +275,7 @@ public class Transformer {
 			long companyId = 0;
 			long companyGroupId = 0;
 			long articleGroupId = 0;
+			long classNameId = 0;
 
 			if (tokens != null) {
 				companyId = GetterUtil.getLong(tokens.get("company_id"));
@@ -276,6 +283,8 @@ public class Transformer {
 					tokens.get("company_group_id"));
 				articleGroupId = GetterUtil.getLong(
 					tokens.get("article_group_id"));
+				classNameId = GetterUtil.getLong(
+					tokens.get(TemplateConstants.CLASS_NAME_ID));
 			}
 
 			long scopeGroupId = 0;
@@ -327,7 +336,7 @@ public class Transformer {
 				template.put("device", getDevice(themeDisplay));
 
 				String templatesPath = getTemplatesPath(
-					companyId, articleGroupId);
+					companyId, articleGroupId, classNameId);
 
 				template.put("journalTemplatesPath", templatesPath);
 
@@ -560,14 +569,18 @@ public class Transformer {
 		return templateNodes;
 	}
 
-	protected String getTemplatesPath(long companyId, long groupId) {
-		StringBundler sb = new StringBundler(5);
+	protected String getTemplatesPath(
+		long companyId, long groupId, long classNameId) {
+
+		StringBundler sb = new StringBundler(7);
 
 		sb.append(TemplateConstants.TEMPLATE_SEPARATOR);
 		sb.append(StringPool.SLASH);
 		sb.append(companyId);
 		sb.append(StringPool.SLASH);
 		sb.append(groupId);
+		sb.append(StringPool.SLASH);
+		sb.append(classNameId);
 
 		return sb.toString();
 	}

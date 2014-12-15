@@ -21,10 +21,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		border-width: 1px 0;
 	}
 
-	#wrapper {
-		position: relative;
-	}
-
 	.site-title {
 		a:hover {
 			text-decoration: none;
@@ -64,6 +60,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.site-navigation {
 		margin-bottom: 6px;
+
+		.lfr-nav-item {
+			span, a {
+				@include ellipsis;
+
+				max-width: 300px;
+			}
+		}
 	}
 
 	.taglib-portal-message {
@@ -243,9 +247,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.brand {
-			padding: 0;
-			padding-right: 20px;
 			margin-left: 0;
+			padding: 0 20px 0 0;
 
 			img {
 				height: 40px;
@@ -257,6 +260,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 			li {
 				&.dropdown {
 					> .dropdown-toggle {
+						padding-right: 0;
+
 						.caret {
 							border-bottom-color: #FFF;
 							border-top-color: #FFF;
@@ -311,15 +316,38 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	.modify-pages .delete-tab {
-		background: #555;
-		border: 2px solid #FFF;
-		color: #FFF;
-		font-size: 16px;
-		padding: 4px;
-		right: -10px;
-		top: 0;
-		z-index: 300;
+	.modify-pages {
+		.delete-tab {
+			background: #555;
+			border: 2px solid #FFF;
+			color: #FFF;
+			font-size: 16px;
+			padding: 4px;
+			right: -10px;
+			top: 0;
+			z-index: 300;
+		}
+
+		.lfr-nav-item .lfr-nav-child-toggle {
+			padding: 10px;
+
+			i {
+				margin: 0;
+			}
+
+			@include respond-to(phone, tablet) {
+				line-height: 1em;
+				padding: 14px;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+		}
+
+		.drag-handle {
+			background-color: rgba(255, 255, 255, 0.75);
+			color: #009AE5;
+		}
 	}
 
 	/* ---------- Breadcrumbs ---------- */
@@ -373,18 +401,27 @@ $dockbarOpenGradientStart: #0EA6F9;
 		background-color: #A9A9A9;
 	}
 
-	.portlet-borderless-bar .portlet-options {
-		.dropdown-toggle {
-			background-image: url(../images/portlet/options_borderless.png);
-		}
-	}
-
 	.signed-in.controls-visible .portlet-title {
 		padding-right: 80px;
 	}
 
-	.portlet-asset-publisher .asset-content, .portlet-asset-publisher .asset-summary, .portlet-asset-publisher .asset-title, .portlet-asset-publisher .header-title, .portlet-asset-publisher li.title-list, .portlet-blogs .entry-body, .portlet-blogs .entry-title, .portlet-blogs .header-title, .portlet-journal-content .journal-content-article, .portlet-message-boards .header-title, .portlet-message-boards .thread-body {
+	.portlet-asset-publisher .asset-title, .portlet-asset-publisher .header-title, .portlet-asset-publisher li.title-list, .portlet-blogs .entry-title, .portlet-blogs .header-title, .portlet-message-boards .header-title {
 		@include hyphenation;
+	}
+
+	.portlet-asset-publisher .asset-content, .portlet-asset-publisher .asset-summary, .portlet-blogs .entry-body, .portlet-journal-content .journal-content-article, .portlet-message-boards .thread-body {
+		word-wrap: break-word;
+	}
+
+	.edit-actions {
+		list-style: none;
+		margin-left: 0;
+		margin-right: 0;
+
+		li {
+			float: left;
+			margin-right: 10px;
+		}
 	}
 
 	.portlet-icons {
@@ -571,6 +608,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.portlet-borderless-bar {
 		@extend %portlet-action-bar-custom;
+
+		.portlet-actions {
+			@include box-shadow(inset 2px 1px 2px #000);
+		}
+
+		.portlet-title-default {
+			@include box-shadow(inset -2px 1px 2px #000);
+		}
 	}
 
 	.portlet-content, .portlet-minimized .portlet-content-container {

@@ -35,20 +35,37 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 	<c:if test="<%= backgroundTaskStatus != null %>">
 
 		<%
-		double percentage = 100;
+		Map<String, Serializable> taskContextMap = backgroundTask.getTaskContextMap();
+
+		String cmd = (String)taskContextMap.get(Constants.CMD);
+
+		int percentage = 100;
 
 		long allModelAdditionCountersTotal = GetterUtil.getLong(backgroundTaskStatus.getAttribute("allModelAdditionCountersTotal"));
+		long allPortletAdditionCounter = GetterUtil.getLong(backgroundTaskStatus.getAttribute("allPortletAdditionCounter"));
 		long currentModelAdditionCountersTotal = GetterUtil.getLong(backgroundTaskStatus.getAttribute("currentModelAdditionCountersTotal"));
+		long currentPortletAdditionCounter = GetterUtil.getLong(backgroundTaskStatus.getAttribute("currentPortletAdditionCounter"));
 
-		if (allModelAdditionCountersTotal > 0) {
-			percentage = Math.round((double)currentModelAdditionCountersTotal / allModelAdditionCountersTotal * 100);
+		long allProgressBarCountersTotal = allModelAdditionCountersTotal + allPortletAdditionCounter;
+		long currentProgressBarCountersTotal = currentModelAdditionCountersTotal + currentPortletAdditionCounter;
+
+		if (allProgressBarCountersTotal > 0) {
+			int base = 100;
+
+			String phase = GetterUtil.getString(backgroundTaskStatus.getAttribute("phase"));
+
+			if (phase.equals(Constants.EXPORT) && !Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+				base = 50;
+			}
+
+			percentage = Math.round((float)currentProgressBarCountersTotal / allProgressBarCountersTotal * base);
 		}
 		%>
 
 		<div class="progress progress-striped active">
 			<div class="bar" style="width: <%= percentage %>%;">
-				<c:if test="<%= allModelAdditionCountersTotal > 0 %>">
-					<%= currentModelAdditionCountersTotal %> / <%= allModelAdditionCountersTotal %>
+				<c:if test="<%= (allProgressBarCountersTotal > 0) && (!Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE) || (percentage < 100)) %>">
+					<%= percentage + StringPool.PERCENT %>
 				</c:if>
 			</div>
 		</div>
@@ -58,27 +75,30 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 		String stagedModelType = (String)backgroundTaskStatus.getAttribute("stagedModelType");
 		%>
 
-		<c:if test="<%= Validator.isNotNull(stagedModelName) && Validator.isNotNull(stagedModelType) %>">
+		<c:choose>
+			<c:when test="<%= Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE) && (percentage == 100) %>">
+				<div class="progress-current-item">
+					<strong><liferay-ui:message key="please-wait-as-the-publication-processes-on-the-remote-site" /></strong>
+				</div>
+			</c:when>
+			<c:when test="<%= Validator.isNotNull(stagedModelName) && Validator.isNotNull(stagedModelType) %>">
 
-			<%
-			String messageKey = "exporting";
+				<%
+				String messageKey = "exporting";
 
-			Map<String, Serializable> taskContextMap = backgroundTask.getTaskContextMap();
+				if (Validator.equals(cmd, Constants.IMPORT)) {
+					messageKey = "importing";
+				}
+				else if (Validator.equals(cmd, Constants.PUBLISH_TO_LIVE) || Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+					messageKey = "publishing";
+				}
+				%>
 
-			String cmd = (String)taskContextMap.get(Constants.CMD);
-
-			if (Validator.equals(cmd, Constants.IMPORT)) {
-				messageKey = "importing";
-			}
-			else if (Validator.equals(cmd, Constants.PUBLISH)) {
-				messageKey = "publishing";
-			}
-			%>
-
-			<div class="progress-current-item">
-				<strong><liferay-ui:message key="<%= messageKey %>" /><%= StringPool.TRIPLE_PERIOD %></strong> <%= ResourceActionsUtil.getModelResource(locale, stagedModelType) %> <em><%= stagedModelName %></em>
-			</div>
-		</c:if>
+				<div class="progress-current-item">
+					<strong><liferay-ui:message key="<%= messageKey %>" /><%= StringPool.TRIPLE_PERIOD %></strong> <%= ResourceActionsUtil.getModelResource(locale, stagedModelType) %> <em><%= HtmlUtil.escape(stagedModelName) %></em>
+				</div>
+			</c:when>
+		</c:choose>
 	</c:if>
 </c:if>
 

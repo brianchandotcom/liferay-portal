@@ -5,7 +5,7 @@
 		}
 	<#else>
 		<#if !finderCol.isPrimitiveType()>
-			if (${finderCol.name} != null) {
+			if (bind${finderCol.methodName}) {
 		</#if>
 
 		qPos.add(

@@ -24,16 +24,19 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ColorScheme;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.VirtualHost;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -50,6 +53,40 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	public ColorScheme getColorScheme() throws SystemException {
 		return ThemeLocalServiceUtil.getColorScheme(
 			getCompanyId(), getTheme().getThemeId(), getColorSchemeId(), false);
+	}
+
+	@Override
+	public String getCompanyFallbackVirtualHostname() {
+		if (_companyFallbackVirtualHostname != null) {
+			return _companyFallbackVirtualHostname;
+		}
+
+		_companyFallbackVirtualHostname = StringPool.BLANK;
+
+		if (Validator.isNotNull(
+				PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&
+			!isPrivateLayout()) {
+
+			try {
+				Group group = GroupLocalServiceUtil.fetchGroup(
+					getCompanyId(),
+					PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+
+				if ((group != null) && (getGroupId() == group.getGroupId())) {
+					Company company = CompanyLocalServiceUtil.fetchCompany(
+						getCompanyId());
+
+					if (company != null) {
+						_companyFallbackVirtualHostname =
+							company.getVirtualHostname();
+					}
+				}
+			}
+			catch (SystemException se) {
+			}
+		}
+
+		return _companyFallbackVirtualHostname;
 	}
 
 	@Override
@@ -215,6 +252,13 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	@Override
+	public void setCompanyFallbackVirtualHostname(
+		String companyFallbackVirtualHostname) {
+
+		_companyFallbackVirtualHostname = companyFallbackVirtualHostname;
+	}
+
+	@Override
 	public void setSettings(String settings) {
 		_settingsProperties = null;
 
@@ -261,6 +305,9 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetImpl.class);
+
+	@CacheField
+	private String _companyFallbackVirtualHostname;
 
 	private UnicodeProperties _settingsProperties;
 

@@ -164,7 +164,7 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 	@Override
 	protected void setThemeSettingProperties(
 		ActionRequest actionRequest, UnicodeProperties typeSettingsProperties,
-		Map<String, ThemeSetting> themeSettings, String device,
+		String themeId, Map<String, ThemeSetting> themeSettings, String device,
 		String deviceThemeId) {
 
 		for (String key : themeSettings.keySet()) {
@@ -174,8 +174,7 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 				device + "ThemeSettingsProperties--" + key +
 					StringPool.DOUBLE_DASH;
 
-			String value = ParamUtil.getString(
-				actionRequest, property, themeSetting.getValue());
+			String value = ParamUtil.getString(actionRequest, property);
 
 			if (!value.equals(themeSetting.getValue())) {
 				typeSettingsProperties.setProperty(
@@ -208,7 +207,8 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 
 		updateLookAndFeel(
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
-			stagingGroupId, privateLayout, layoutSet.getSettingsProperties());
+			stagingGroupId, privateLayout, layoutSet.getThemeId(),
+			layoutSet.getSettingsProperties());
 
 		updateMergePages(actionRequest, liveGroupId);
 
@@ -260,7 +260,7 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 
 	protected void updateLookAndFeel(
 			ActionRequest actionRequest, long companyId, long liveGroupId,
-			long stagingGroupId, boolean privateLayout,
+			long stagingGroupId, boolean privateLayout, String themeId,
 			UnicodeProperties typeSettingsProperties)
 		throws Exception {
 
@@ -282,8 +282,8 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 					deviceWapTheme);
 
 				updateThemeSettingsProperties(
-					actionRequest, companyId, typeSettingsProperties, device,
-					deviceThemeId, deviceWapTheme);
+					actionRequest, companyId, typeSettingsProperties, themeId,
+					device, deviceThemeId, deviceWapTheme);
 			}
 
 			long groupId = liveGroupId;

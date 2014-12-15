@@ -118,7 +118,9 @@ public class EhcacheStreamBootstrapHelpUtil {
 		List<String> cacheNames = new ArrayList<String>();
 
 		for (Ehcache ehcache : ehcaches) {
-			cacheNames.add(ehcache.getName());
+			if (cacheManager == ehcache.getCacheManager()) {
+				cacheNames.add(ehcache.getName());
+			}
 		}
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
@@ -154,7 +156,6 @@ public class EhcacheStreamBootstrapHelpUtil {
 		}
 
 		Socket socket = null;
-		ObjectInputStream objectInputStream = null;
 
 		try {
 			SocketAddress remoteSocketAddress =
@@ -174,47 +175,51 @@ public class EhcacheStreamBootstrapHelpUtil {
 
 			socket.shutdownOutput();
 
-			objectInputStream = new AnnotatedObjectInputStream(
-				socket.getInputStream());
+			ObjectInputStream objectInputStream =
+				new AnnotatedObjectInputStream(socket.getInputStream());
 
 			Ehcache ehcache = null;
 
-			while (true) {
-				Object object = objectInputStream.readObject();
+			try {
+				while (true) {
+					Object object = objectInputStream.readObject();
 
-				if (object instanceof EhcacheElement) {
-					EhcacheElement ehcacheElement = (EhcacheElement)object;
+					if (object instanceof EhcacheElement) {
+						EhcacheElement ehcacheElement = (EhcacheElement)object;
 
-					Element element = ehcacheElement.toElement();
+						Element element = ehcacheElement.toElement();
 
-					ehcache.put(element, true);
+						ehcache.put(element, true);
+					}
+					else if (object instanceof String) {
+						if (_COMMAND_SOCKET_CLOSE.equals(object)) {
+							break;
+						}
+
+						EhcacheStreamBootstrapCacheLoader.setSkip();
+
+						try {
+							ehcache = cacheManager.addCacheIfAbsent(
+								(String)object);
+						}
+						finally {
+							EhcacheStreamBootstrapCacheLoader.resetSkip();
+						}
+					}
+					else {
+						throw new SystemException(
+							"Socket input stream returned invalid object " +
+								object);
+					}
 				}
-				else if (object instanceof String) {
-					if (_COMMAND_SOCKET_CLOSE.equals(object)) {
-						break;
-					}
-
-					EhcacheStreamBootstrapCacheLoader.setSkip();
-
-					try {
-						ehcache = cacheManager.addCacheIfAbsent((String)object);
-					}
-					finally {
-						EhcacheStreamBootstrapCacheLoader.resetSkip();
-					}
-				}
-				else {
-					throw new SystemException(
-						"Socket input stream returned invalid object " +
-							object);
+			}
+			finally {
+				if (objectInputStream != null) {
+					objectInputStream.close();
 				}
 			}
 		}
 		finally {
-			if (objectInputStream != null) {
-				objectInputStream.close();
-			}
-
 			if (socket != null) {
 				socket.close();
 			}
@@ -285,8 +290,9 @@ public class EhcacheStreamBootstrapHelpUtil {
 
 					return;
 				}
-
-				_serverSocket.close();
+				finally {
+					_serverSocket.close();
+				}
 
 				socket.shutdownInput();
 

@@ -16,6 +16,7 @@ package com.liferay.portlet.polls.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.polls.DuplicateVoteException;
@@ -48,7 +49,8 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 		PollsChoice choice = pollsChoicePersistence.findByPrimaryKey(choiceId);
 
 		if (choice.getQuestionId() != questionId) {
-			throw new NoSuchQuestionException();
+			throw new NoSuchQuestionException(
+				"{questionId=" + questionId + "}");
 		}
 
 		// Question
@@ -69,37 +71,44 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 		PollsVote vote = pollsVotePersistence.fetchByQ_U(questionId, userId);
 
 		if (vote != null) {
-			throw new DuplicateVoteException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("{questionId=");
+			sb.append(questionId);
+			sb.append(", userId=");
+			sb.append(userId);
+			sb.append("}");
+
+			throw new DuplicateVoteException(sb.toString());
+		}
+
+		String userName = null;
+
+		User user = userPersistence.fetchByPrimaryKey(userId);
+
+		if (user != null) {
+			userName = user.getFullName();
 		}
 		else {
-			String userName = null;
-
-			User user = userPersistence.fetchByPrimaryKey(userId);
-
-			if (user != null) {
-				userName = user.getFullName();
-			}
-			else {
-				userName = serviceContext.translate("anonymous");
-			}
-
-			long voteId = counterLocalService.increment();
-
-			vote = pollsVotePersistence.create(voteId);
-
-			vote.setUuid(serviceContext.getUuid());
-			vote.setGroupId(serviceContext.getScopeGroupId());
-			vote.setCompanyId(serviceContext.getCompanyId());
-			vote.setUserId(userId);
-			vote.setUserName(userName);
-			vote.setCreateDate(serviceContext.getCreateDate(now));
-			vote.setModifiedDate(serviceContext.getModifiedDate(now));
-			vote.setQuestionId(questionId);
-			vote.setChoiceId(choiceId);
-			vote.setVoteDate(serviceContext.getCreateDate(now));
-
-			pollsVotePersistence.update(vote);
+			userName = serviceContext.translate("anonymous");
 		}
+
+		long voteId = counterLocalService.increment();
+
+		vote = pollsVotePersistence.create(voteId);
+
+		vote.setUuid(serviceContext.getUuid());
+		vote.setGroupId(serviceContext.getScopeGroupId());
+		vote.setCompanyId(serviceContext.getCompanyId());
+		vote.setUserId(userId);
+		vote.setUserName(userName);
+		vote.setCreateDate(serviceContext.getCreateDate(now));
+		vote.setModifiedDate(serviceContext.getModifiedDate(now));
+		vote.setQuestionId(questionId);
+		vote.setChoiceId(choiceId);
+		vote.setVoteDate(serviceContext.getCreateDate(now));
+
+		pollsVotePersistence.update(vote);
 
 		return vote;
 	}

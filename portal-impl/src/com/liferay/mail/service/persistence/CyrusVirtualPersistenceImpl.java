@@ -47,7 +47,8 @@ public class CyrusVirtualPersistenceImpl
 			return (CyrusVirtual)session.load(CyrusVirtual.class, emailAddress);
 		}
 		catch (ObjectNotFoundException onfe) {
-			throw new NoSuchCyrusVirtualException();
+			throw new NoSuchCyrusVirtualException(
+				"{emailAddress=" + emailAddress + "}");
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -95,7 +96,8 @@ public class CyrusVirtualPersistenceImpl
 			session.flush();
 		}
 		catch (ObjectNotFoundException onfe) {
-			throw new NoSuchCyrusVirtualException();
+			throw new NoSuchCyrusVirtualException(
+				"{emailAddress=" + emailAddress + "}");
 		}
 		catch (Exception e) {
 			throw processException(e);

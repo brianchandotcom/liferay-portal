@@ -52,7 +52,12 @@ if (Validator.isNull(script)) {
 	if (templateHandler != null) {
 		Class<?> templateHandlerClass = templateHandler.getClass();
 
-		script = ContentUtil.get(templateHandlerClass.getClassLoader(), templateHandler.getTemplatesHelpPath(language));
+		try {
+			script = StringUtil.read(templateHandlerClass.getClassLoader(), templateHandler.getTemplatesHelpPath(language));
+		}
+		catch(Exception e) {
+			script = StringUtil.read(PortalClassLoaderUtil.getClassLoader(), templateHandler.getTemplatesHelpPath(language));
+		}
 	}
 	else if ((structure != null) && Validator.equals(structure.getClassName(), JournalArticle.class.getName())) {
 		script = ContentUtil.get(PropsUtil.get(PropsKeys.JOURNAL_TEMPLATE_LANGUAGE_CONTENT, new Filter(language)));
@@ -178,6 +183,10 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					</aui:select>
 				</c:if>
 
+				<c:if test="<%= !PropsValues.DYNAMIC_DATA_MAPPING_TEMPLATE_FORCE_AUTOGENERATE_KEY %>">
+					<aui:input disabled="<%= (template != null) ? true : false %>" name="templateKey" />
+				</c:if>
+
 				<aui:input name="description" />
 
 				<c:if test="<%= template != null %>">
@@ -213,7 +222,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 								<aui:row>
 									<c:if test="<%= smallImage && (template != null) %>">
 										<aui:col width="<%= 50 %>">
-											<img alt="<liferay-ui:message key="preview" />" class="lfr-ddm-small-image-preview" src="<%= Validator.isNotNull(template.getSmallImageURL()) ? template.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + template.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(template.getSmallImageId()) %>" />
+											<img alt="<liferay-ui:message key="preview" />" class="lfr-ddm-small-image-preview" src="<%= Validator.isNotNull(template.getSmallImageURL()) ? HtmlUtil.escapeHREF(template.getSmallImageURL()) : themeDisplay.getPathImage() + "/template?img_id=" + template.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(template.getSmallImageId()) %>" />
 										</aui:col>
 									</c:if>
 
@@ -400,6 +409,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					eventName: '<portlet:namespace />selectStructure',
 					groupId: <%= groupId %>,
 					refererPortletName: '<%= PortletKeys.JOURNAL %>',
+					showGlobalScope: true,
 					struts_action: '/dynamic_data_mapping/select_structure',
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
 				},

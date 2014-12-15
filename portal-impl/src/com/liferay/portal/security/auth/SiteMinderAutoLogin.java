@@ -15,6 +15,7 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -89,6 +90,14 @@ public class SiteMinderAutoLogin extends BaseAutoLogin {
 				user = UserLocalServiceUtil.fetchUserByScreenName(
 					companyId, siteMinderUserHeader);
 			}
+		}
+
+		String redirect = ParamUtil.getString(request, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			request.setAttribute(
+				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE,
+				PortalUtil.escapeRedirect(redirect));
 		}
 
 		String[] credentials = new String[3];

@@ -227,6 +227,12 @@ public class InputTag extends BaseInputTag {
 		_forLabel = id;
 		_inputName = getName();
 
+		String languageId = getLanguageId();
+
+		if (Validator.isNotNull(languageId)) {
+			_forLabel = _forLabel + StringPool.UNDERLINE + languageId;
+		}
+
 		String baseType = null;
 
 		if ((model != null) && Validator.isNull(type)) {
@@ -298,6 +304,12 @@ public class InputTag extends BaseInputTag {
 
 			if (Validator.equals(getType(), "checkbox")) {
 				inputName = inputName.concat("Checkbox");
+			}
+
+			String languageId = getLanguageId();
+
+			if (Validator.isNotNull(languageId)) {
+				inputName = inputName + StringPool.UNDERLINE + languageId;
 			}
 
 			validatorTagsMap.put(inputName, validatorTags);

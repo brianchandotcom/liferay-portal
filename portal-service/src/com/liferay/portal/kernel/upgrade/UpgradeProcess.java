@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -49,23 +50,11 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 	}
 
 	public boolean hasTable(String tableName) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		if (doHasTable(StringUtil.toLowerCase(tableName)) ||
+			doHasTable(StringUtil.toUpperCase(tableName)) ||
+			doHasTable(tableName)) {
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			DatabaseMetaData metadata = con.getMetaData();
-
-			rs = metadata.getTables(null, null, tableName, null);
-
-			while (rs.next()) {
-				return true;
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			return true;
 		}
 
 		return false;
@@ -126,7 +115,7 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 			for (int i = 0; i < rsmd.getColumnCount(); i++) {
 				String curColumnName = rsmd.getColumnName(i + 1);
 
-				if (curColumnName.equals(columnName)) {
+				if (StringUtil.equalsIgnoreCase(curColumnName, columnName)) {
 					return true;
 				}
 			}
@@ -197,6 +186,29 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 
 	public void upgrade(UpgradeProcess upgradeProcess) throws UpgradeException {
 		upgradeProcess.upgrade();
+	}
+
+	protected boolean doHasTable(String tableName) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			DatabaseMetaData metadata = con.getMetaData();
+
+			rs = metadata.getTables(null, null, tableName, null);
+
+			while (rs.next()) {
+				return true;
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return false;
 	}
 
 	protected void doUpgrade() throws Exception {

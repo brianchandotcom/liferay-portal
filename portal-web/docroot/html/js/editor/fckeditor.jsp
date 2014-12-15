@@ -29,6 +29,10 @@ if (Validator.isNull(doAsUserId)) {
 
 long doAsGroupId = themeDisplay.getDoAsGroupId();
 
+if (doAsGroupId == 0) {
+	doAsGroupId = (Long)request.getAttribute("liferay-ui:input-editor:groupId");
+}
+
 StringBundler configParamsSB = new StringBundler();
 
 Map<String, String> configParams = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:configParams");
@@ -183,7 +187,10 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 			}
 			%>
 
+			window['<%= name %>'].instanceReady = true;
 		},
+
+		instanceReady: false,
 
 		<%
 		if (Validator.isNotNull(onChangeMethod)) {

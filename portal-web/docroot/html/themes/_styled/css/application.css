@@ -77,6 +77,10 @@
 	margin: 2px 0;
 }
 
+.yui3-dd-proxy {
+	z-index: 1110 !important;
+}
+
 /* ---------- Portal tool tips ---------- */
 
 .tooltip {
@@ -530,6 +534,18 @@
 	padding: 0;
 }
 
+/* ---------- CKEditor menu ---------- */
+
+.aui {
+	.cke_dialog .cke_dialog_ui_input_text {
+		height: auto;
+	}
+
+	.cke_editable_inline a {
+		cursor: pointer;
+	}
+}
+
 /* ---------- Inline editing ---------- */
 
 .lfr-editable {
@@ -610,6 +626,10 @@
 }
 
 .ie {
+	& input.cke_dialog_ui_input_text {
+		height: auto;
+	}
+
 	.proxy.not-intersecting .forbidden-action {
 		right: 2px;
 		top: 2px;
@@ -640,6 +660,15 @@
 
 	.paginator-current-page {
 		color: #FFF;
+	}
+}
+
+.ie8 {
+	.row-fluid {
+		input[class*=span].search-query {
+			line-height: 20px;
+			min-height: 20px;
+		}
 	}
 }
 

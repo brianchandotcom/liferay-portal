@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the role that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Role addRole(
 		com.liferay.portal.model.Role role)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -72,6 +74,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @throws PortalException if a role with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Role deleteRole(long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -84,6 +87,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Role deleteRole(
 		com.liferay.portal.model.Role role)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -251,6 +255,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return the role that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Role updateRole(
 		com.liferay.portal.model.Role role)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -604,6 +609,7 @@ public interface RoleLocalService extends BaseLocalService,
 	set applicable permissions on a role
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkSystemRoles(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -622,6 +628,7 @@ public interface RoleLocalService extends BaseLocalService,
 	with the name could not be found in the company
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Role fetchRole(long companyId,
 		java.lang.String name)
@@ -718,6 +725,7 @@ public interface RoleLocalService extends BaseLocalService,
 	company
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Role getRole(long companyId,
 		java.lang.String name)
@@ -992,6 +1000,7 @@ public interface RoleLocalService extends BaseLocalService,
 	found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserRole(long userId, long companyId,
 		java.lang.String name, boolean inherited)

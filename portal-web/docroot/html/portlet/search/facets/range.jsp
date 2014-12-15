@@ -25,8 +25,8 @@ int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
 JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 %>
 
-<div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldId() %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= facet.getFieldId() %>" type="hidden" value="<%= fieldParam %>" />
+<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
+	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
 	<ul class="nav nav-pills nav-stacked range">
 		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
@@ -47,7 +47,7 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 				<aui:script use="liferay-token-list">
 					Liferay.Search.tokenList.add(
 						{
-							clearFields: '<%= renderResponse.getNamespace() + facet.getFieldId() %>',
+							clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
 							text: '<%= UnicodeLanguageUtil.get(pageContext, HtmlUtil.escape(label)) %>'
 						}
 					);
@@ -68,7 +68,7 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 
 			<li class="facet-value <%= fieldParam.equals(range) ? "active" : StringPool.BLANK %>">
 				<a data-value="<%= HtmlUtil.escapeAttribute(range) %>" href="javascript:;">
-					<liferay-ui:message key="<%= label %>" />
+					<liferay-ui:message key="<%= HtmlUtil.escape(label) %>" />
 
 					<span class="badge badge-info frequency"><%= frequency %></span>
 				</a>

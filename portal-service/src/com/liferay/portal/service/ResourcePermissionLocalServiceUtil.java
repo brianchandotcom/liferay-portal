@@ -406,6 +406,15 @@ public class ResourcePermissionLocalServiceUtil {
 		getService().deleteResourcePermissions(companyId, name, scope, primKey);
 	}
 
+	public static com.liferay.portal.model.ResourcePermission fetchResourcePermission(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchResourcePermission(companyId, name, scope, primKey,
+			roleId);
+	}
+
 	/**
 	* Returns the intersection of action IDs the role has permission at the
 	* scope to perform on resources of the type.

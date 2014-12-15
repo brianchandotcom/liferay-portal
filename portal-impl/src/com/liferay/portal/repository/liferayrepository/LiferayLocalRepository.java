@@ -29,6 +29,7 @@ import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -82,18 +83,19 @@ public class LiferayLocalRepository
 	}
 
 	public LiferayLocalRepository(
-		RepositoryLocalService repositoryLocalService,
-		RepositoryService repositoryService,
-		DLAppHelperLocalService dlAppHelperLocalService,
-		DLFileEntryLocalService dlFileEntryLocalService,
-		DLFileEntryService dlFileEntryService,
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
-		DLFileVersionLocalService dlFileVersionLocalService,
-		DLFileVersionService dlFileVersionService,
-		DLFolderLocalService dlFolderLocalService,
-		DLFolderService dlFolderService,
-		ResourceLocalService resourceLocalService, long folderId,
-		long fileEntryId, long fileVersionId) {
+			RepositoryLocalService repositoryLocalService,
+			RepositoryService repositoryService,
+			DLAppHelperLocalService dlAppHelperLocalService,
+			DLFileEntryLocalService dlFileEntryLocalService,
+			DLFileEntryService dlFileEntryService,
+			DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
+			DLFileVersionLocalService dlFileVersionLocalService,
+			DLFileVersionService dlFileVersionService,
+			DLFolderLocalService dlFolderLocalService,
+			DLFolderService dlFolderService,
+			ResourceLocalService resourceLocalService, long folderId,
+			long fileEntryId, long fileVersionId)
+		throws PrincipalException {
 
 		super(
 			repositoryLocalService, repositoryService, dlAppHelperLocalService,
@@ -374,12 +376,17 @@ public class LiferayLocalRepository
 	}
 
 	@Override
-	protected void initByFileEntryId(long fileEntryId) {
+	protected void initByFileEntryId(long fileEntryId)
+		throws PrincipalException {
+
 		try {
 			DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
 				fileEntryId);
 
 			initByRepositoryId(dlFileEntry.getRepositoryId());
+		}
+		catch (PrincipalException pe) {
+			throw pe;
 		}
 		catch (Exception e) {
 			if (_log.isTraceEnabled()) {
@@ -394,12 +401,17 @@ public class LiferayLocalRepository
 	}
 
 	@Override
-	protected void initByFileVersionId(long fileVersionId) {
+	protected void initByFileVersionId(long fileVersionId)
+		throws PrincipalException {
+
 		try {
 			DLFileVersion dlFileVersion =
 				dlFileVersionLocalService.getFileVersion(fileVersionId);
 
 			initByRepositoryId(dlFileVersion.getRepositoryId());
+		}
+		catch (PrincipalException pe) {
+			throw pe;
 		}
 		catch (Exception e) {
 			if (_log.isTraceEnabled()) {
@@ -414,11 +426,14 @@ public class LiferayLocalRepository
 	}
 
 	@Override
-	protected void initByFolderId(long folderId) {
+	protected void initByFolderId(long folderId) throws PrincipalException {
 		try {
 			DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
 
 			initByRepositoryId(dlFolder.getRepositoryId());
+		}
+		catch (PrincipalException pe) {
+			throw pe;
 		}
 		catch (Exception e) {
 			if (_log.isTraceEnabled()) {

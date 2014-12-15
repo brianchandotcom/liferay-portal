@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BackgroundTask;
 
 /**
@@ -27,7 +28,8 @@ public interface BackgroundTaskExecutor {
 	public BackgroundTaskStatusMessageTranslator
 		getBackgroundTaskStatusMessageTranslator();
 
-	public String handleException(BackgroundTask backgroundTask, Exception e);
+	public String handleException(BackgroundTask backgroundTask, Exception e)
+		throws SystemException;
 
 	public boolean isSerial();
 

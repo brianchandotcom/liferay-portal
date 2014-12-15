@@ -16,6 +16,7 @@ package com.liferay.portlet.layoutsadmin.lar;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.lar.LayoutExporter;
+import com.liferay.portal.lar.LayoutImporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
@@ -60,13 +63,13 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
-import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -76,6 +79,7 @@ import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -144,37 +148,9 @@ public class LayoutStagedModelDataHandler
 			PortletDataContext portletDataContext, Layout layout)
 		throws Exception {
 
-		LayoutRevision layoutRevision = null;
-
-		boolean exportLAR = MapUtil.getBoolean(
-			portletDataContext.getParameterMap(), "exportLAR");
-
-		if (!exportLAR && LayoutStagingUtil.isBranchingLayout(layout) &&
-			!layout.isTypeURL()) {
-
-			long layoutSetBranchId = MapUtil.getLong(
-				portletDataContext.getParameterMap(), "layoutSetBranchId");
-
-			if (layoutSetBranchId <= 0) {
-				return;
-			}
-
-			layoutRevision = LayoutRevisionLocalServiceUtil.fetchLayoutRevision(
-				layoutSetBranchId, true, layout.getPlid());
-
-			if (layoutRevision == null) {
-				return;
-			}
-
-			LayoutStagingHandler layoutStagingHandler =
-				LayoutStagingUtil.getLayoutStagingHandler(layout);
-
-			layoutStagingHandler.setLayoutRevision(layoutRevision);
-		}
-
 		Element layoutElement = portletDataContext.getExportDataElement(layout);
 
-		populateElementLayoutMetadata(layoutElement, layout, layoutRevision);
+		populateElementLayoutMetadata(layoutElement, layout);
 
 		layoutElement.addAttribute("action", Constants.ADD);
 
@@ -487,7 +463,7 @@ public class LayoutStagedModelDataHandler
 		if (layout.isTypeArticle()) {
 			importJournalArticle(portletDataContext, layout);
 
-			updateTypeSettings(importedLayout, layout);
+			updateTypeSettings(portletDataContext, importedLayout, layout);
 		}
 		else if (layout.isTypePortlet() &&
 				 Validator.isNotNull(layout.getTypeSettings()) &&
@@ -503,7 +479,7 @@ public class LayoutStagedModelDataHandler
 				newLayoutsMap);
 		}
 		else {
-			updateTypeSettings(importedLayout, layout);
+			updateTypeSettings(portletDataContext, importedLayout, layout);
 		}
 
 		importedLayout.setHidden(layout.isHidden());
@@ -520,10 +496,21 @@ public class LayoutStagedModelDataHandler
 			ImageLocalServiceUtil.deleteImage(importedLayout.getIconImageId());
 		}
 
-		importedLayout.setPriority(layout.getPriority());
+		if (existingLayout == null) {
+			int priority = _layoutLocalServiceHelper.getNextPriority(
+				groupId, privateLayout, parentLayoutId, null, -1);
+
+			importedLayout.setPriority(priority);
+		}
+
 		importedLayout.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());
 		importedLayout.setLayoutPrototypeLinkEnabled(
 			layout.isLayoutPrototypeLinkEnabled());
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			layout);
+
+		importedLayout.setExpandoBridgeAttributes(serviceContext);
 
 		StagingUtil.updateLastImportSettings(
 			layoutElement, importedLayout, portletDataContext);
@@ -893,8 +880,12 @@ public class LayoutStagedModelDataHandler
 		String linkedToLayoutUuid = layoutElement.attributeValue(
 			"linked-to-layout-uuid");
 
+		if (Validator.isNull(linkedToLayoutUuid)) {
+			return;
+		}
+
 		if (linkToLayoutId <= 0) {
-			updateTypeSettings(importedLayout, layout);
+			updateTypeSettings(portletDataContext, importedLayout, layout);
 
 			return;
 		}
@@ -938,7 +929,7 @@ public class LayoutStagedModelDataHandler
 			}
 		}
 
-		updateTypeSettings(importedLayout, layout);
+		updateTypeSettings(portletDataContext, importedLayout, layout);
 	}
 
 	protected void importTheme(
@@ -1089,26 +1080,37 @@ public class LayoutStagedModelDataHandler
 	}
 
 	protected void populateElementLayoutMetadata(
-			Element layoutElement, Layout layout, LayoutRevision layoutRevision)
+			Element layoutElement, Layout layout)
 		throws Exception {
 
-		if (layoutRevision != null) {
-			layoutElement.addAttribute(
-				"layout-revision-id",
-				String.valueOf(layoutRevision.getLayoutRevisionId()));
-			layoutElement.addAttribute(
-				"layout-branch-id",
-				String.valueOf(layoutRevision.getLayoutBranchId()));
+		LayoutStagingHandler layoutStagingHandler =
+			LayoutStagingUtil.getLayoutStagingHandler(layout);
 
-			LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
+		if (layoutStagingHandler != null) {
+			LayoutRevision layoutRevision =
+				layoutStagingHandler.getLayoutRevision();
 
-			layoutElement.addAttribute(
-				"layout-branch-name", String.valueOf(layoutBranch.getName()));
+			if (layoutRevision != null) {
+				layoutElement.addAttribute(
+					"layout-revision-id",
+					String.valueOf(layoutRevision.getLayoutRevisionId()));
+				layoutElement.addAttribute(
+					"layout-branch-id",
+					String.valueOf(layoutRevision.getLayoutBranchId()));
+
+				LayoutBranch layoutBranch = layoutRevision.getLayoutBranch();
+
+				layoutElement.addAttribute(
+					"layout-branch-name",
+					String.valueOf(layoutBranch.getName()));
+			}
 		}
 
 		layoutElement.addAttribute("layout-uuid", layout.getUuid());
 		layoutElement.addAttribute(
 			"layout-id", String.valueOf(layout.getLayoutId()));
+		layoutElement.addAttribute(
+			"layout-priority", String.valueOf(layout.getPriority()));
 
 		String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
 
@@ -1126,7 +1128,33 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void updateTypeSettings(Layout importedLayout, Layout layout)
+	protected void removePortletFromLayoutTypePortlet(
+		String portletId, LayoutTypePortlet layoutTypePortlet) {
+
+		List<String> columnIds = new ArrayList<String>();
+
+		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
+
+		columnIds.addAll(layoutTemplate.getColumns());
+
+		String nestedColumnIds = layoutTypePortlet.getTypeSettingsProperty(
+			LayoutTypePortletConstants.NESTED_COLUMN_IDS);
+
+		columnIds.addAll(ListUtil.fromArray(StringUtil.split(nestedColumnIds)));
+
+		for (String columnId : columnIds) {
+			String columnValue = layoutTypePortlet.getTypeSettingsProperty(
+				columnId);
+
+			columnValue = StringUtil.remove(columnValue, portletId);
+
+			layoutTypePortlet.setTypeSettingsProperty(columnId, columnValue);
+		}
+	}
+
+	protected void updateTypeSettings(
+			PortletDataContext portletDataContext, Layout importedLayout,
+			Layout layout)
 		throws PortalException, SystemException {
 
 		long groupId = layout.getGroupId();
@@ -1140,10 +1168,40 @@ public class LayoutStagedModelDataHandler
 
 			layout.setGroupId(importedLayout.getGroupId());
 
-			LayoutTypePortlet layoutType =
+			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			importedPortletIds.removeAll(layoutType.getPortletIds());
+			// Remove portlets with unchecked setup from the target layout
+
+			List<String> sourcePortletIds = layoutTypePortlet.getPortletIds();
+
+			for (String portletId : sourcePortletIds) {
+				boolean importPortletConfiguration = false;
+
+				try {
+					Map<String, Boolean> importPortletControlsMap =
+						LayoutImporter.getImportPortletControlsMap(
+							portletDataContext.getCompanyId(), portletId,
+							portletDataContext.getParameterMap(), null,
+							portletDataContext.getManifestSummary());
+
+					importPortletConfiguration = importPortletControlsMap.get(
+						PortletDataHandlerKeys.PORTLET_CONFIGURATION);
+				}
+				catch (Exception e) {
+				}
+
+				if (!importPortletConfiguration &&
+					!importedPortletIds.contains(portletId)) {
+
+					removePortletFromLayoutTypePortlet(
+						portletId, layoutTypePortlet);
+				}
+			}
+
+			importedPortletIds.removeAll(layoutTypePortlet.getPortletIds());
+
+			// Delete already removed portlet instances
 
 			if (!importedPortletIds.isEmpty()) {
 				PortletLocalServiceUtil.deletePortlets(
@@ -1153,7 +1211,8 @@ public class LayoutStagedModelDataHandler
 					importedLayout.getPlid());
 			}
 
-			importedLayout.setTypeSettings(layout.getTypeSettings());
+			importedLayout.setTypeSettingsProperties(
+				layoutTypePortlet.getTypeSettingsProperties());
 		}
 		finally {
 			layout.setGroupId(groupId);
@@ -1162,5 +1221,9 @@ public class LayoutStagedModelDataHandler
 
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutStagedModelDataHandler.class);
+
+	private LayoutLocalServiceHelper _layoutLocalServiceHelper =
+		(LayoutLocalServiceHelper)PortalBeanLocatorUtil.locate(
+			LayoutLocalServiceHelper.class.getName());
 
 }

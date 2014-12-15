@@ -248,7 +248,7 @@ else {
 						%>
 
 						<li>
-							<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= HtmlUtil.escape(layoutPrototypeName) %></strong> (<%= layoutPrototypeUuid %>)
+							<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= HtmlUtil.escape(layoutPrototypeName) %></strong> (<%= HtmlUtil.escape(layoutPrototypeUuid) %>)
 						</li>
 
 						<%
@@ -348,11 +348,9 @@ else {
 							</aui:fieldset>
 						</c:if>
 
-						<c:if test="<%= !selGroup.isCompany() %>">
-							<aui:fieldset cssClass="options-group" label="permissions">
-								<%@ include file="/html/portlet/layouts_admin/publish_layouts_permissions.jspf" %>
-							</aui:fieldset>
-						</c:if>
+						<aui:fieldset cssClass="options-group" label="permissions">
+							<%@ include file="/html/portlet/layouts_admin/publish_layouts_permissions.jspf" %>
+						</aui:fieldset>
 
 						<c:if test="<%= !localPublishing %>">
 							<aui:fieldset cssClass="options-group" label="remote-live-connection-settings">

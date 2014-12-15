@@ -77,7 +77,7 @@ public class PortletRenderer {
 		throws PortletContainerException {
 
 		request = PortletContainerUtil.setupOptionalRenderParameters(
-			request, _RENDER_PATH, null, null, null);
+			request, _RENDER_PATH, _columnId, _columnPos, _columnCount);
 
 		_restrictPortletServletRequest = (RestrictPortletServletRequest)request;
 
@@ -92,7 +92,7 @@ public class PortletRenderer {
 			WebKeys.PARALLEL_RENDERING_TIMEOUT_ERROR, Boolean.TRUE);
 
 		request = PortletContainerUtil.setupOptionalRenderParameters(
-			request, null, null, null, null);
+			request, null, _columnId, _columnPos, _columnCount);
 
 		_restrictPortletServletRequest = (RestrictPortletServletRequest)request;
 
@@ -111,6 +111,11 @@ public class PortletRenderer {
 		BufferCacheServletResponse bufferCacheServletResponse =
 			new BufferCacheServletResponse(response);
 
+		Object lock = request.getAttribute(
+			WebKeys.PARALLEL_RENDERING_MERGE_LOCK);
+
+		request.setAttribute(WebKeys.PARALLEL_RENDERING_MERGE_LOCK, null);
+
 		Object portletParallelRender = request.getAttribute(
 			WebKeys.PORTLET_PARALLEL_RENDER);
 
@@ -126,6 +131,7 @@ public class PortletRenderer {
 			throw new PortletContainerException(ioe);
 		}
 		finally {
+			request.setAttribute(WebKeys.PARALLEL_RENDERING_MERGE_LOCK, lock);
 			request.setAttribute(
 				WebKeys.PORTLET_PARALLEL_RENDER, portletParallelRender);
 		}

@@ -76,6 +76,8 @@ AUI.add(
 
 		var LINE_HEIGHT = 'lineHeight';
 
+		var NORMAL = 'normal';
+
 		var OK = 'ok';
 
 		var OPACITY = 'opacity';
@@ -113,18 +115,17 @@ AUI.add(
 
 				if (obj) {
 					instance._portletId = portletId;
-					instance._curPortlet = obj.one('.portlet');
 
-					instance._portletBoundary = obj;
-
-					if (!instance._curPortlet) {
+					if (!obj.hasClass('portlet-borderless')) {
+						instance._curPortlet = obj.one('.portlet');
+						instance._curPortletWrapperId = instance._curPortlet.attr(ID);
+					}
+					else {
 						instance._curPortlet = obj;
 						instance._curPortletWrapperId = curPortletBoundaryId;
 					}
-					else {
-						instance._curPortletWrapperId = instance._curPortlet.attr(ID);
-					}
 
+					instance._portletBoundary = obj;
 					instance._portletBoundaryId = curPortletBoundaryId;
 					instance._newPanel = A.one('#portlet-set-properties');
 					instance._currentLanguage = themeDisplay.getLanguageId();
@@ -140,6 +141,10 @@ AUI.add(
 							instance._currentPopup = Liferay.Util.Window.getWindow(
 								{
 									dialog: {
+										draggable: {
+											handles: ['.modal-header']
+										},
+										modal: false,
 										on: {
 											visibleChange: function(event) {
 												if (!event.newVal && Browser.isIe() && Browser.getMajorVersion() == 6) {
@@ -228,8 +233,9 @@ AUI.add(
 				if (!instance._backgroundColorPicker) {
 					instance._backgroundColorPicker = new A.ColorPickerPopover(
 						{
-							trigger: backgroundColor,
-							plugins: [Liferay.WidgetZIndex]
+							constrain: true,
+							plugins: [Liferay.WidgetZIndex],
+							trigger: backgroundColor
 						}
 					).render(instance._currentPopup.get(BOUNDING_BOX));
 				}
@@ -473,6 +479,7 @@ AUI.add(
 						if (!instance[borderLocation]) {
 							instance[borderLocation] = new A.ColorPickerPopover(
 								{
+									constrain: true,
 									trigger: item,
 									zIndex: 1000
 								}
@@ -762,6 +769,133 @@ AUI.add(
 				return '.' + boundaryClasses.join('.') + portletClasses;
 			},
 
+			_getDefaultData: function() {
+				var instance = this;
+
+				return {
+					advancedData: {
+						customCSS: EMPTY,
+						customCSSClassName: EMPTY
+					},
+					bgData: {
+						backgroundColor: EMPTY,
+						backgroundImage: EMPTY,
+						backgroundPosition: {
+							left: {
+								unit: PX,
+								value: EMPTY
+							},
+							top: {
+								unit: PX,
+								value: EMPTY
+							}
+						},
+						backgroundRepeat: EMPTY,
+						useBgImage: false
+					},
+					borderData: {
+						borderColor: {
+							bottom: EMPTY,
+							left: EMPTY,
+							right: EMPTY,
+							sameForAll: true,
+							top: EMPTY
+						},
+						borderStyle: {
+							bottom: EMPTY,
+							left: EMPTY,
+							right: EMPTY,
+							sameForAll: true,
+							top: EMPTY
+						},
+						borderWidth: {
+							bottom: {
+								unit: PX,
+								value: EMPTY
+							},
+							left: {
+								unit: PX,
+								value: EMPTY
+							},
+							right: {
+								unit: PX,
+								value: EMPTY
+							},
+							sameForAll: true,
+							top: {
+								unit: PX,
+								value: EMPTY
+							}
+						}
+					},
+					portletData: {
+						customTitle: EMPTY,
+						language: 'en_US',
+						portletLinksTarget: EMPTY,
+						showBorders: EMPTY,
+						title: EMPTY,
+						titles: {},
+						useCustomTitle: false
+					},
+					spacingData: {
+						margin: {
+							bottom: {
+								unit: PX,
+								value: EMPTY
+							},
+							left: {
+								unit: PX,
+								value: EMPTY
+							},
+							right: {
+								unit: PX,
+								value: EMPTY
+							},
+							sameForAll: true,
+							top: {
+								unit: PX,
+								value: EMPTY
+							}
+						},
+						padding: {
+							bottom: {
+								unit: PX,
+								value: EMPTY
+							},
+							left: {
+								unit: PX,
+								value: EMPTY
+							},
+							right: {
+								unit: PX,
+								value: EMPTY
+							},
+							sameForAll: true,
+							top: {
+								unit: PX,
+								value: EMPTY
+							}
+						}
+					},
+					textData: {
+						color: EMPTY,
+						fontFamily: EMPTY,
+						fontSize: EMPTY,
+						fontStyle: EMPTY,
+						fontWeight: EMPTY,
+						letterSpacing: EMPTY,
+						lineHeight: EMPTY,
+						textAlign: EMPTY,
+						textDecoration: EMPTY,
+						wordSpacing: EMPTY
+					},
+					wapData: {
+						initialWindowState: 'NORMAL',
+						title: EMPTY
+					}
+				};
+			},
+
 			_getNodeById: function(id) {
 				var instance = this;
 
@@ -816,13 +950,15 @@ AUI.add(
 
 				var newPanel = instance._newPanel;
 
+				var portletConfig = instance._getDefaultData();
+
 				if (!instantiated) {
 					newPanel.addClass(INSTANTIATED);
 					instance._portletBoundaryIdVar = A.one('#portlet-boundary-id');
 
 					// Portlet config
 
-					var portletTitle = instance._curPortlet.one('.portlet-title');
+					var portletTitle = instance._curPortlet.one('.portlet-title-text');
 
 					instance._defaultPortletTitle = Lang.trim(portletTitle ? portletTitle.text() : EMPTY);
 
@@ -934,137 +1070,6 @@ AUI.add(
 				if (instance._portletMsgResponse) {
 					instance._portletMsgResponse.hide();
 				}
-
-				var defaultData = {
-					advancedData: {
-						customCSS: EMPTY
-					},
-
-					bgData: {
-						backgroundColor: EMPTY,
-						backgroundImage: EMPTY,
-						backgroundPosition: {
-							left: {
-								unit: PX,
-								value: EMPTY
-							},
-							top: {
-								unit: PX,
-								value: EMPTY
-							}
-						},
-						backgroundRepeat: EMPTY,
-						useBgImage: false
-					},
-
-					borderData: {
-						borderColor: {
-							bottom: EMPTY,
-							left: EMPTY,
-							right: EMPTY,
-							sameForAll: true,
-							top: EMPTY
-						},
-
-						borderStyle: {
-							bottom: EMPTY,
-							left: EMPTY,
-							right: EMPTY,
-							sameForAll: true,
-							top: EMPTY
-						},
-
-						borderWidth: {
-							bottom: {
-								unit: PX,
-								value: EMPTY
-							},
-							left: {
-								unit: PX,
-								value: EMPTY
-							},
-							right: {
-								unit: PX,
-								value: EMPTY
-							},
-							sameForAll: true,
-							top: {
-								unit: PX,
-								value: EMPTY
-							}
-						}
-					},
-
-					portletData: {
-						customTitle: EMPTY,
-						language: 'en_US',
-						portletLinksTarget: EMPTY,
-						showBorders: EMPTY,
-						title: EMPTY,
-						titles: {},
-						useCustomTitle: false
-					},
-
-					spacingData: {
-						margin: {
-							bottom: {
-								unit: PX,
-								value: EMPTY
-							},
-							left: {
-								unit: PX,
-								value: EMPTY
-							},
-							right: {
-								unit: PX,
-								value: EMPTY
-							},
-							sameForAll: true,
-							top: {
-								unit: PX,
-								value: EMPTY
-							}
-						},
-						padding: {
-							bottom: {
-								unit: PX,
-								value: EMPTY
-							},
-							left: {
-								unit: PX,
-								value: EMPTY
-							},
-							right: {
-								unit: PX,
-								value: EMPTY
-							},
-							sameForAll: true,
-							top: {
-								unit: PX,
-								value: EMPTY
-							}
-						}
-
-					},
-
-					textData: {
-						color: EMPTY,
-						fontFamily: EMPTY,
-						fontSize: EMPTY,
-						fontStyle: EMPTY,
-						fontWeight: EMPTY,
-						letterSpacing: EMPTY,
-						lineHeight: EMPTY,
-						textAlign: EMPTY,
-						textDecoration: EMPTY,
-						wordSpacing: EMPTY
-					},
-
-					wapData: {
-						initialWindowState: 'NORMAL',
-						title: EMPTY
-					}
-				};
 
 				var onLookAndFeelComplete = function() {
 					instance._portletBoundaryIdVar.val(instance._curPortletWrapperId);
@@ -1226,7 +1231,8 @@ AUI.add(
 								customStyle.remove(true);
 							}
 
-							instance._objData = defaultData;
+							A.mix(instance._objData, instance._getDefaultData(), true);
+
 							instance._setDefaults();
 						}
 					);
@@ -1234,7 +1240,7 @@ AUI.add(
 					instance._currentPopup.loadingmask.hide();
 				};
 
-				instance._objData = defaultData;
+				instance._objData = portletConfig;
 
 				A.io.request(
 					themeDisplay.getPathMain() + '/portlet_configuration/get_look_and_feel',
@@ -1249,6 +1255,8 @@ AUI.add(
 						on: {
 							success: function(event, id, obj) {
 								var objectData = this.get(RESPONSE_DATA);
+
+								A.mix(objectData, portletConfig);
 
 								if (objectData.hasCssValue) {
 									instance._objData = objectData;
@@ -1282,39 +1290,7 @@ AUI.add(
 				customTitleCheckbox.on(
 					CLICK,
 					function(event) {
-						var title;
-						var portletTitle = instance._curPortlet.one('.portlet-title');
-
-						var checked = event.currentTarget.get(CHECKED);
-
-						portletData.useCustomTitle = checked;
-
-						if (checked) {
-							customTitleInput.set(DISABLED, false);
-							language.set(DISABLED, false);
-
-							title = Lang.trim(customTitleInput.val());
-
-							if (title == EMPTY) {
-								title = (portletTitle && portletTitle.text()) || EMPTY;
-								title = Lang.trim(title);
-
-								customTitleInput.val(title);
-							}
-
-							portletData.title = title;
-
-							instance._portletTitles(false, title);
-						}
-						else {
-							customTitleInput.attr(DISABLED, true);
-							language.attr(DISABLED, true);
-							title = instance._defaultPortletTitle;
-						}
-
-						if (portletTitle) {
-							portletTitle.text(title);
-						}
+						instance._setCustomTitleInput(event);
 					}
 				);
 
@@ -1344,7 +1320,17 @@ AUI.add(
 							var portletLanguage = instance._portletLanguage.val();
 
 							if (portletLanguage == instance._currentLanguage) {
-								portletTitle.html(cruft + value);
+								portletTitle.html(cruft);
+
+								var portletTitleText = portletTitle;
+
+								if (instance._showBorders.val() != 'false') {
+									portletTitleText = portletTitle.one('.portlet-title-text');
+								}
+
+								if (portletTitleText) {
+									portletTitleText.text(value);
+								}
 							}
 
 							portletData.title = value;
@@ -1430,6 +1416,57 @@ AUI.add(
 				}
 			},
 
+			_setCustomTitleInput: function(event) {
+				var instance = this;
+
+				var title;
+
+				var customTitleInput = instance._customTitleInput;
+				var language = instance._portletLanguage;
+
+				var portletData = instance._objData.portletData;
+
+				var portletTitleSelector = '.portlet-title-default';
+
+				if (instance._showBorders.val() != 'false') {
+					portletTitleSelector = '.portlet-title-text';
+				}
+
+				var portletTitleText = instance._curPortlet.one(portletTitleSelector);
+
+				var checked = event.currentTarget.get(CHECKED);
+
+				portletData.useCustomTitle = checked;
+
+				if (checked) {
+					customTitleInput.set(DISABLED, false);
+					language.set(DISABLED, false);
+
+					title = Lang.trim(customTitleInput.val());
+
+					if (title == EMPTY) {
+						title = (portletTitleText && portletTitleText.text()) || EMPTY;
+						title = Lang.trim(title);
+
+						customTitleInput.val(title);
+					}
+
+					portletData.title = title;
+
+					instance._portletTitles(false, title);
+				}
+				else {
+					customTitleInput.attr(DISABLED, true);
+					language.attr(DISABLED, true);
+
+					title = instance._defaultPortletTitle;
+				}
+
+				if (portletTitleText) {
+					portletTitleText.text(title);
+				}
+			},
+
 			_setDefaults: function() {
 				var instance = this;
 
@@ -1454,11 +1491,11 @@ AUI.add(
 				var fontStyle = false;
 				var fontWeight = false;
 
-				if (textData.fontStyle && textData.fontStyle != 'normal') {
+				if (textData.fontStyle && textData.fontStyle != NORMAL) {
 					fontStyle = true;
 				}
 
-				if (textData.fontWeight && textData.fontWeight != 'normal') {
+				if (textData.fontWeight && textData.fontWeight != NORMAL) {
 					fontWeight = true;
 				}
 
@@ -1469,31 +1506,30 @@ AUI.add(
 				instance._setSelect(instance._portletLanguage, instance._currentLanguage);
 				instance._setSelect(instance._portletLinksTarget, portletData.portletLinksTarget);
 
-				var portletTitles = portletData.titles;
-
 				var portletTitle = instance._portletTitles(portletData.language);
 
-				if (!portletTitle) {
-					instance._portletTitles(EMPTY);
+				if (portletData.useCustomTitle) {
+					if (!portletTitle) {
+						instance._portletTitles(EMPTY);
 
-					portletData.title = EMPTY;
+						portletData.title = EMPTY;
+					}
+
+					if (portletData.titles) {
+						A.each(
+							portletData.titles,
+							function(item, index, collection) {
+								instance._languageClasses(item);
+							}
+						);
+					}
+				}
+				else {
+					instance._customTitleInput.attr(DISABLED, true);
+					instance._portletLanguage.attr(DISABLED, true);
 				}
 
 				instance._setInput(instance._customTitleInput, portletTitle);
-
-				if (!portletData.useCustomTitle) {
-					instance._customTitleInput.set(DISABLED, true);
-					instance._portletLanguage.set(DISABLED, true);
-				}
-
-				if (portletData.titles) {
-					A.each(
-						portletData.titles,
-						function(item, index, collection) {
-							instance._languageClasses(item);
-						}
-					);
-				}
 
 				// Text
 
@@ -1857,7 +1893,7 @@ AUI.add(
 				fontBold.on(
 					CLICK,
 					function(event) {
-						var style = 'normal';
+						var style = NORMAL;
 
 						if (event.currentTarget.get(CHECKED)) {
 							style = BOLD;
@@ -1916,8 +1952,9 @@ AUI.add(
 				if (!instance._fontColorPicker) {
 					instance._fontColorPicker = new A.ColorPickerPopover(
 						{
-							trigger: fontColor,
-							plugins: [Liferay.WidgetZIndex]
+							constrain: true,
+							plugins: [Liferay.WidgetZIndex],
+							trigger: fontColor
 						}
 					).render(instance._currentPopup.get(BOUNDING_BOX));
 				}

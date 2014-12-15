@@ -23,6 +23,8 @@ tabs1URL.setParameter("struts_action", "/directory/view");
 
 String tabs1Names = ParamUtil.getString(request, "tabs1Names", "users,organizations,user-groups");
 
+tabs1Names = HtmlUtil.escape(tabs1Names);
+
 String tabs1Values = tabs1Names;
 
 String viewUsersRedirect = ParamUtil.getString(request, "viewUsersRedirect");

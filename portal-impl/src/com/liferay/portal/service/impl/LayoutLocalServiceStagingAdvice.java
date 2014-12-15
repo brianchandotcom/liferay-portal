@@ -143,6 +143,8 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 		Object returnValue = null;
 
+		Class<?>[] parameterTypes = method.getParameterTypes();
+
 		Object thisObject = methodInvocation.getThis();
 		Object[] arguments = methodInvocation.getArguments();
 
@@ -170,6 +172,9 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			if (arguments.length == 6) {
 				showIncomplete = (Boolean)arguments[3];
 			}
+			else if (Arrays.equals(parameterTypes, _GET_LAYOUTS_TYPES)) {
+				showIncomplete = true;
+			}
 
 			return wrapReturnValue(methodInvocation.proceed(), showIncomplete);
 		}
@@ -178,10 +183,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 			Map<Locale, String> friendlyURLMap = null;
 
-			if (Arrays.equals(
-					method.getParameterTypes(),
-					_UPDATE_LAYOUT_PARAMETER_TYPES)) {
-
+			if (Arrays.equals(parameterTypes, _UPDATE_LAYOUT_PARAMETER_TYPES)) {
 				friendlyURLMap = new HashMap<Locale, String>();
 
 				friendlyURLMap.put(
@@ -206,9 +208,8 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			try {
 				Class<?> clazz = getClass();
 
-				Class<?>[] parameterTypes = ArrayUtil.append(
-					new Class<?>[] {LayoutLocalService.class},
-					method.getParameterTypes());
+				parameterTypes = ArrayUtil.append(
+					new Class<?>[] {LayoutLocalService.class}, parameterTypes);
 
 				Method layoutLocalServiceStagingAdviceMethod = clazz.getMethod(
 					methodName, parameterTypes);
@@ -306,7 +307,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		}
 
 		boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
-			serviceContext, "layoutPrototypeLinkEnabled", true);
+			serviceContext, "layoutPrototypeLinkEnabled");
 
 		originalLayout.setLayoutPrototypeLinkEnabled(
 			layoutPrototypeLinkEnabled);
@@ -651,6 +652,10 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 	@BeanReference(type = LayoutLocalServiceHelper.class)
 	protected LayoutLocalServiceHelper layoutLocalServiceHelper;
+
+	private static final Class<?>[] _GET_LAYOUTS_TYPES = {
+		Long.TYPE, Boolean.TYPE, Long.TYPE
+	};
 
 	private static final Class<?>[] _UPDATE_LAYOUT_PARAMETER_TYPES = {
 		long.class, boolean.class, long.class, long.class, Map.class, Map.class,

@@ -7,7 +7,7 @@
 #set ($theme_settings = $themeDisplay.getThemeSettings())
 
 #set ($root_css_class = "aui " + $languageUtil.get($locale, "lang.dir"))
-#set ($css_class = $theme_display.getColorScheme().getCssClass() + " yui3-skin-sam")
+#set ($css_class = $htmlUtil.escape($theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam")
 
 #set ($liferay_toggle_controls = $sessionClicks.get($request, "liferay_toggle_controls", "visible"))
 
@@ -293,7 +293,7 @@
 	#set ($the_title = $page_group.getDescriptiveName())
 #end
 
-#if (($tilesTitle == "") && !$pageTitle)
+#if ($tilesTitle == "")
 	#set ($the_title = $htmlUtil.escape($the_title))
 #end
 
@@ -314,15 +314,11 @@
 	#set($logo_css_class = "$logo_css_class custom-logo")
 #end
 
-#if ($is_guest_group)
-	#set ($show_site_name = true)
-#else
-	#set ($show_site_name_supported = $getterUtil.getBoolean($theme_settings.getProperty("show-site-name-supported"), true))
+#set ($show_site_name_supported = $getterUtil.getBoolean($theme_settings.getProperty("show-site-name-supported"), true))
 
-	#set ($show_site_name_default = $getterUtil.getBoolean($theme_settings.getProperty("show-site-name-default"), $show_site_name_supported))
+#set ($show_site_name_default = $getterUtil.getBoolean($theme_settings.getProperty("show-site-name-default"), $show_site_name_supported))
 
-	#set ($show_site_name = $getterUtil.getBoolean($layout.layoutSet.getSettingsProperty("showSiteName"), $show_site_name_default))
-#end
+#set ($show_site_name = $getterUtil.getBoolean($layout.layoutSet.getSettingsProperty("showSiteName"), $show_site_name_default))
 
 #set($site_logo = $company_logo)
 #set ($logo_description = $htmlUtil.escape($site_name))

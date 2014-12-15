@@ -15,6 +15,8 @@
 --%>
 
 <%
+boolean filterByMetadata = GetterUtil.getBoolean((Boolean)request.getAttribute("asset_metadata.jspf-filterByMetadata"));
+
 boolean previous = false;
 
 for (int j = 0; j < metadataFields.length; j++) {
@@ -84,14 +86,14 @@ for (int j = 0; j < metadataFields.length; j++) {
 					<liferay-ui:asset-categories-summary
 						className="<%= assetEntry.getClassName() %>"
 						classPK="<%= assetEntry.getClassPK () %>"
-						portletURL="<%= renderResponse.createRenderURL() %>"
+						portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
 					/>
 				</c:when>
 				<c:when test='<%= value.equals("tags") %>' >
 					<liferay-ui:asset-tags-summary
 						className="<%= assetEntry.getClassName() %>"
 						classPK="<%= assetEntry.getClassPK () %>"
-						portletURL="<%= renderResponse.createRenderURL() %>"
+						portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
 					/>
 				</c:when>
 				<c:otherwise>

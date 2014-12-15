@@ -1670,6 +1670,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticle.isInTrashExplicitly();
+	}
+
+	@Override
 	public boolean isTemplateDriven() {
 		return _journalArticle.isTemplateDriven();
 	}

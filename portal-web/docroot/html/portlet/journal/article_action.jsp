@@ -70,7 +70,7 @@ else {
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
 			<liferay-security:permissionsURL
 				modelResource="<%= JournalArticle.class.getName() %>"
-				modelResourceDescription="<%= article.getTitle(locale) %>"
+				modelResourceDescription="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
 				resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
 				var="permissionsURL"
 				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
@@ -117,7 +117,7 @@ else {
 				/>
 			</c:if>
 
-			<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE) %>">
+			<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, article.getFolderId(), ActionKeys.ADD_ARTICLE) %>">
 				<portlet:renderURL var="copyURL">
 					<portlet:param name="struts_action" value="/journal/copy_article" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />

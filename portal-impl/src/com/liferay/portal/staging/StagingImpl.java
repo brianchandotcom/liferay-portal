@@ -81,11 +81,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.LayoutSetBranch;
-import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
@@ -104,7 +101,6 @@ import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -207,6 +203,12 @@ public class StagingImpl implements Staging {
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link StagingLocalServiceUtil#
+	 *             checkDefaultLayoutSetBranches(long, Group, boolean, boolean,
+	 *             boolean, ServiceContext))}
+	 */
+	@Deprecated
 	@Override
 	public void checkDefaultLayoutSetBranches(
 			long userId, Group liveGroup, boolean branchingPublic,
@@ -214,54 +216,9 @@ public class StagingImpl implements Staging {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		long targetGroupId = 0;
-
-		if (remote) {
-			targetGroupId = liveGroup.getGroupId();
-		}
-		else {
-			Group stagingGroup = liveGroup.getStagingGroup();
-
-			if (stagingGroup == null) {
-				return;
-			}
-
-			targetGroupId = stagingGroup.getGroupId();
-		}
-
-		if (branchingPublic) {
-			LayoutSetBranch layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
-					targetGroupId, false,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME);
-
-			if (layoutSetBranch == null) {
-				addDefaultLayoutSetBranch(
-					userId, targetGroupId, liveGroup.getDescriptiveName(),
-					false, serviceContext);
-			}
-		}
-		else {
-			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
-				targetGroupId, false, true);
-		}
-
-		if (branchingPrivate) {
-			LayoutSetBranch layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
-					targetGroupId, true,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME);
-
-			if (layoutSetBranch == null) {
-				addDefaultLayoutSetBranch(
-					userId, targetGroupId, liveGroup.getDescriptiveName(), true,
-					serviceContext);
-			}
-		}
-		else {
-			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
-				targetGroupId, true, true);
-		}
+		StagingLocalServiceUtil.checkDefaultLayoutSetBranches(
+			userId, liveGroup, branchingPublic, branchingPrivate, remote,
+			serviceContext);
 	}
 
 	@Override
@@ -320,7 +277,7 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, sourceGroupId, false, null, parameterMap,
-				Constants.PUBLISH, dateRange.getStartDate(),
+				Constants.PUBLISH_TO_LIVE, dateRange.getStartDate(),
 				dateRange.getEndDate(), StringPool.BLANK);
 
 		taskContextMap.put("sourceGroupId", sourceGroupId);
@@ -401,7 +358,8 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				user.getUserId(), sourceGroupId, privateLayout, null,
-				parameterMap, Constants.PUBLISH, startDate, endDate, null);
+				parameterMap, Constants.PUBLISH_TO_REMOTE, startDate, endDate,
+				null);
 
 		taskContextMap.put("httpPrincipal", httpPrincipal);
 
@@ -571,7 +529,7 @@ public class StagingImpl implements Staging {
 	@Override
 	public JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
-		Map<String, Serializable> contextMap) {
+		Map<String, Serializable> contextMap) throws SystemException {
 
 		JSONArray errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -630,6 +588,18 @@ public class StagingImpl implements Staging {
 			}
 
 			errorMessageJSONObject.put("name", missingReferenceDisplayName);
+
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				missingReference.getGroupId());
+
+			if (group != null) {
+				errorMessageJSONObject.put(
+					"site",
+					LanguageUtil.format(
+						locale, "in-site-x", missingReference.getGroupId(),
+						false));
+			}
+
 			errorMessageJSONObject.put(
 				"type",
 				ResourceActionsUtil.getModelResource(
@@ -643,7 +613,8 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public JSONObject getExceptionMessagesJSONObject(
-		Locale locale, Exception e, Map<String, Serializable> contextMap) {
+			Locale locale, Exception e, Map<String, Serializable> contextMap)
+		throws SystemException {
 
 		JSONObject exceptionMessagesJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -777,19 +748,19 @@ public class StagingImpl implements Staging {
 				cmd = (String)contextMap.get(Constants.CMD);
 			}
 
-			if (Validator.equals(cmd, Constants.PUBLISH)) {
+			if (Validator.equals(cmd, Constants.PUBLISH_TO_LIVE) ||
+				Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+
 				errorMessage = LanguageUtil.get(
 					locale,
 					"there-are-missing-references-that-could-not-be-found-in-" +
-						"the-live-environment.-please-publish-again-to-live-" +
-							"ensuring-the-following-elements-are-published");
+						"the-live-environment");
 			}
 			else {
 				errorMessage = LanguageUtil.get(
 					locale,
 					"there-are-missing-references-that-could-not-be-found-in-" +
-						"the-current-site.-please-import-another-lar-file-" +
-							"containing-the-following-elements");
+						"the-current-site");
 			}
 
 			MissingReferences missingReferences = mre.getMissingReferences();
@@ -1388,7 +1359,8 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, sourceGroupId, privateLayout, layoutIds, parameterMap,
-				Constants.PUBLISH, startDate, endDate, StringPool.BLANK);
+				Constants.PUBLISH_TO_LIVE, startDate, endDate,
+				StringPool.BLANK);
 
 		taskContextMap.put("sourceGroupId", sourceGroupId);
 		taskContextMap.put("targetGroupId", targetGroupId);
@@ -1493,8 +1465,14 @@ public class StagingImpl implements Staging {
 
 		long scopeGroupId = PortalUtil.getScopeGroupId(portletRequest);
 
-		if (sourceLayout.hasScopeGroup() &&
-			(sourceLayout.getScopeGroup().getGroupId() == scopeGroupId)) {
+		if (sourceLayout.isTypeControlPanel()) {
+			stagingGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
+			liveGroup = stagingGroup.getLiveGroup();
+
+			targetLayout = sourceLayout;
+		}
+		else if (sourceLayout.hasScopeGroup() &&
+				 (sourceLayout.getScopeGroup().getGroupId() == scopeGroupId)) {
 
 			stagingGroup = sourceLayout.getScopeGroup();
 			liveGroup = stagingGroup.getLiveGroup();
@@ -1511,20 +1489,10 @@ public class StagingImpl implements Staging {
 				sourceLayout.isPrivateLayout());
 		}
 
-		long sourcePlid = sourceLayout.getPlid();
-
-		long targetPlid = LayoutConstants.DEFAULT_PLID;
-
-		if (targetLayout != null) {
-			targetPlid = targetLayout.getPlid();
-		}
-		else if ((targetLayout == null) && sourceLayout.isTypeControlPanel()) {
-			targetPlid = sourcePlid;
-		}
-
 		copyPortlet(
 			portletRequest, stagingGroup.getGroupId(), liveGroup.getGroupId(),
-			sourcePlid, targetPlid, portlet.getPortletId());
+			sourceLayout.getPlid(), targetLayout.getPlid(),
+			portlet.getPortletId());
 	}
 
 	@Override
@@ -1981,51 +1949,6 @@ public class StagingImpl implements Staging {
 			ree.setURL(remoteURL);
 
 			throw ree;
-		}
-	}
-
-	protected void addDefaultLayoutSetBranch(
-			long userId, long groupId, String groupName, boolean privateLayout,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		String masterBranchDescription =
-			LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PUBLIC;
-
-		if (privateLayout) {
-			masterBranchDescription =
-				LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PRIVATE;
-		}
-
-		String description = LanguageUtil.format(
-			PortalUtil.getSiteDefaultLocale(groupId), masterBranchDescription,
-			groupName);
-
-		try {
-			LayoutSetBranch layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
-					userId, groupId, privateLayout,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME, description,
-					true, LayoutSetBranchConstants.ALL_BRANCHES,
-					serviceContext);
-
-			List<LayoutRevision> layoutRevisions =
-				LayoutRevisionLocalServiceUtil.getLayoutRevisions(
-					layoutSetBranch.getLayoutSetBranchId(), false);
-
-			for (LayoutRevision layoutRevision : layoutRevisions) {
-				LayoutRevisionLocalServiceUtil.updateStatus(
-					userId, layoutRevision.getLayoutRevisionId(),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
-			}
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to create master branch for " +
-						(privateLayout ? "private" : "public") + " layouts",
-					pe);
-			}
 		}
 	}
 

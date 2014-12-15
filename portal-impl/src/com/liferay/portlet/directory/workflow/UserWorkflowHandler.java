@@ -61,20 +61,18 @@ public class UserWorkflowHandler extends BaseWorkflowHandler {
 
 		User user = UserLocalServiceUtil.getUser(userId);
 
+		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
+			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
+
 		if (((user.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
 			 (user.getStatus() == WorkflowConstants.STATUS_PENDING)) &&
 			(status == WorkflowConstants.STATUS_APPROVED)) {
 
-			ServiceContext serviceContext = (ServiceContext)workflowContext.get(
-				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
-
 			UserLocalServiceUtil.completeUserRegistration(user, serviceContext);
-
-			serviceContext.setAttribute(
-				"passwordUnencrypted", user.getPasswordUnencrypted());
 		}
 
-		return UserLocalServiceUtil.updateStatus(userId, status);
+		return UserLocalServiceUtil.updateStatus(
+			userId, status, serviceContext);
 	}
 
 	@Override

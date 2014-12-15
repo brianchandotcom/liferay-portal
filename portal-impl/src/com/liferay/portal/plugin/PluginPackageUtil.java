@@ -1403,14 +1403,12 @@ public class PluginPackageUtil {
 		}
 
 		protected void setUpdateAvailable() throws Exception {
-			StopWatch stopWatch = null;
+			StopWatch stopWatch = new StopWatch();
+
+			stopWatch.start();
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Checking for available updates");
-
-				stopWatch = new StopWatch();
-
-				stopWatch.start();
 			}
 
 			for (PluginPackage pluginPackage :

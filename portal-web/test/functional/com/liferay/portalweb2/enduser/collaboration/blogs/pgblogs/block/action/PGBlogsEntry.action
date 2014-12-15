@@ -3,10 +3,6 @@
 		<case comparator="startsWith" locator-key1="COMMENT">
 			<execute function="AssertClick#assertTextClickWaitForInlineCKEditor" />
 		</case>
-
-		<case locator-key1="COMMENT_READ_MORE_1">
-			<execute function="AssertClick#assertTextClickAndWait" />
-		</case>
 	</command>
 
 	<command name="assertTextEquals">

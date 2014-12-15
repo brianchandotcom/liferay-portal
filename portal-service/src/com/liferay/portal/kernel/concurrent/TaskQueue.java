@@ -121,9 +121,7 @@ public class TaskQueue<E> {
 			if (count < _capacity) {
 				_enqueue(element);
 
-				_count.getAndIncrement();
-
-				if (count == 0) {
+				if (_count.getAndIncrement() == 0) {
 
 					// Signal takers right after enqueue to increase the
 					// possibility of a concurrent token

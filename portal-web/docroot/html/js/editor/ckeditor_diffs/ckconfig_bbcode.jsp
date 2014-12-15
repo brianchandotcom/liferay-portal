@@ -29,108 +29,122 @@
 
 <%
 String contentsLanguageId = ParamUtil.getString(request, "contentsLanguageId");
+
+Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+
+contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
+
 String cssPath = ParamUtil.getString(request, "cssPath");
 String cssClasses = ParamUtil.getString(request, "cssClasses");
-String imagesPath = ParamUtil.getString(request, "imagesPath");
-String languageId = ParamUtil.getString(request, "languageId");
 String emoticonsPath = ParamUtil.getString(request, "emoticonsPath");
+String imagesPath = ParamUtil.getString(request, "imagesPath");
+
+String languageId = ParamUtil.getString(request, "languageId");
+
+Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+languageId = LocaleUtil.toLanguageId(locale);
+
+String name = ParamUtil.getString(request, "name");
 boolean resizable = ParamUtil.getBoolean(request, "resizable");
 
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
 
-CKEDITOR.config.height = 265;
+;(function() {
+	var config = CKEDITOR.instances['<%= HtmlUtil.escapeJS(name) %>'].config;
 
-CKEDITOR.config.removePlugins = [
-	'elementspath',
-	'save',
-	'bidi',
-	'div',
-	'flash',
-	'forms',
-	'keystrokes',
-	'link',
-	'maximize',
-	'newpage',
-	'pagebreak',
-	'preview',
-	'print',
-	'save',
-	'showblocks',
-	'templates',
-	'video'
-].join(',');
+	config.height = 265;
 
-CKEDITOR.config.toolbar_bbcode = [
-	['Bold', 'Italic', 'Underline', 'Strike', '-', 'Link', 'Unlink'],
-	['Image', 'Smiley', '-', 'TextColor', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
-	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Blockquote', '-', 'Code'],
-	'/',
-	['Font', 'FontSize', '-', 'Format', '-', 'Undo', 'Redo', '-', 'Source']
-];
+	config.removePlugins = [
+		'elementspath',
+		'save',
+		'bidi',
+		'div',
+		'flash',
+		'forms',
+		'keystrokes',
+		'link',
+		'maximize',
+		'newpage',
+		'pagebreak',
+		'preview',
+		'print',
+		'save',
+		'showblocks',
+		'templates',
+		'video'
+	].join(',');
 
-CKEDITOR.config.toolbar_phone = [
-	['Bold', 'Italic', 'Underline'],
-	['NumberedList', 'BulletedList'],
-	['Image', 'Link', 'Unlink']
-];
+	config.toolbar_bbcode = [
+		['Bold', 'Italic', 'Underline', 'Strike', '-', 'Link', 'Unlink'],
+		['Image', 'Smiley', '-', 'TextColor', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Blockquote', '-', 'Code'],
+		'/',
+		['Font', 'FontSize', '-', 'Format', '-', 'Undo', 'Redo', '-', 'Source']
+	];
 
-CKEDITOR.config.toolbar_tablet = [
-	['Bold', 'Italic', 'Underline', 'Strike'],
-	['NumberedList', 'BulletedList'],
-	['Image', 'Link', 'Unlink'],
-	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-	['Styles', 'FontSize']
-];
+	config.toolbar_phone = [
+		['Bold', 'Italic', 'Underline'],
+		['NumberedList', 'BulletedList'],
+		['Image', 'Link', 'Unlink']
+	];
 
-CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
+	config.toolbar_tablet = [
+		['Bold', 'Italic', 'Underline', 'Strike'],
+		['NumberedList', 'BulletedList'],
+		['Image', 'Link', 'Unlink'],
+		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+		['Styles', 'FontSize']
+	];
 
-CKEDITOR.config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
+	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
-<%
-Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+	config.contentsCss = ['<%= HtmlUtil.escapeJS(cssPath) %>/aui.css', '<%= HtmlUtil.escapeJS(cssPath) %>/main.css'];
 
-String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
-%>
+	<%
+	String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
+	%>
 
-CKEDITOR.config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
+	config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
 
-CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.replace("iw_", "he_")) %>';
+	config.contentsLanguage = '<%= contentsLanguageId.replace("iw_", "he_") %>';
 
-CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+	config.enterMode = CKEDITOR.ENTER_BR;
 
-CKEDITOR.config.extraPlugins = 'bbcode,wikilink';
+	config.extraPlugins = 'bbcode,wikilink';
 
-CKEDITOR.config.filebrowserBrowseUrl = '';
+	config.filebrowserBrowseUrl = '';
 
-CKEDITOR.config.filebrowserImageBrowseLinkUrl = '';
+	config.filebrowserImageBrowseLinkUrl = '';
 
-CKEDITOR.config.filebrowserImageBrowseUrl = '';
+	config.filebrowserImageBrowseUrl = '';
 
-CKEDITOR.config.filebrowserImageUploadUrl = '';
+	config.filebrowserImageUploadUrl = '';
 
-CKEDITOR.config.filebrowserUploadUrl = '';
+	config.filebrowserUploadUrl = '';
 
-CKEDITOR.config.fontSize_sizes = '10/10px;12/12px;16/16px;18/18px;24/24px;32/32px;48/48px';
+	config.fontSize_sizes = '10/10px;12/12px;16/16px;18/18px;24/24px;32/32px;48/48px';
 
-CKEDITOR.config.format_tags = 'p;pre';
+	config.format_tags = 'p;pre';
 
-CKEDITOR.config.imagesPath = '<%= HtmlUtil.escapeJS(imagesPath) %>/message_boards/';
+	config.imagesPath = '<%= HtmlUtil.escapeJS(imagesPath) %>/message_boards/';
 
-CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId.replace("iw_", "he_")) %>';
+	config.language = '<%= languageId.replace("iw_", "he_") %>';
 
-CKEDITOR.config.newThreadURL = '<%= MBThreadConstants.NEW_THREAD_URL %>';
+	config.newThreadURL = '<%= MBThreadConstants.NEW_THREAD_URL %>';
 
-<c:if test="<%= resizable %>">
-	CKEDITOR.config.resize_dir = 'vertical';
-</c:if>
+	<c:if test="<%= resizable %>">
+		config.resize_dir = 'vertical';
+	</c:if>
 
-CKEDITOR.config.resize_enabled = <%= resizable %>;
+	config.resize_enabled = <%= resizable %>;
 
-CKEDITOR.config.smiley_descriptions = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonDescriptions(), "','") %>'];
+	config.smiley_descriptions = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonDescriptions(), "','") %>'];
 
-CKEDITOR.config.smiley_images = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonFiles(), "','") %>'];
+	config.smiley_images = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonFiles(), "','") %>'];
 
-CKEDITOR.config.smiley_path = '<%= HtmlUtil.escapeJS(emoticonsPath) %>' + '/';
+	config.smiley_path = '<%= HtmlUtil.escapeJS(emoticonsPath) %>' + '/';
 
-CKEDITOR.config.smiley_symbols = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonSymbols(), "','") %>'];
+	config.smiley_symbols = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonSymbols(), "','") %>'];
+})();

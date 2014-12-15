@@ -393,22 +393,23 @@ AUI.add(
 				if (colorpicker) {
 					instance._fontColorInput.placeBefore(colorpicker);
 
-					new A.ColorPicker(
+					var colorPickerPopover = new A.ColorPickerPopover(
 						{
-							after: {
-								colorChange: function() {
-									instance._fontColorInput.val('#' + this.get('hex'));
-								},
-								visibleChange: function(event) {
-									if (!event.newVal) {
-										instance._insertColor();
-									}
-								}
-							},
 							trigger: colorpicker,
 							zIndex: 9999
 						}
 					).render();
+
+					colorPickerPopover.on(
+						'select',
+						function(event) {
+							instance._fontColorInput.val(event.color);
+
+							if (!event.newVal) {
+								instance._insertColor();
+							}
+						}
+					);
 				}
 			},
 
@@ -581,6 +582,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-color-picker-deprecated', 'aui-io-request', 'aui-overlay-context-deprecated']
+		requires: ['aui-color-picker-popover', 'aui-io-request', 'aui-overlay-context-deprecated']
 	}
 );

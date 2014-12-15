@@ -21,7 +21,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.social.WikiActivityKeys;
@@ -30,6 +34,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Sergio Sanchez
@@ -86,9 +93,99 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		updateDLFileVersionActivities();
 		updateJournalActivities();
 		updateSOSocialActivities();
 		updateWikiPageActivities();
+	}
+
+	protected Timestamp getUniqueModifiedDate(
+		Set<String> keys, long groupId, long userId, Timestamp modifiedDate,
+		long classNameId, long resourcePrimKey, double type) {
+
+		while (true) {
+			StringBundler sb = new StringBundler(11);
+
+			sb.append(groupId);
+			sb.append(StringPool.DASH);
+			sb.append(userId);
+			sb.append(StringPool.DASH);
+			sb.append(modifiedDate);
+			sb.append(StringPool.DASH);
+			sb.append(classNameId);
+			sb.append(StringPool.DASH);
+			sb.append(resourcePrimKey);
+			sb.append(StringPool.DASH);
+			sb.append(type);
+
+			String key = sb.toString();
+
+			modifiedDate = new Timestamp(modifiedDate.getTime() + 1);
+
+			if (!keys.contains(key)) {
+				keys.add(key);
+
+				return modifiedDate;
+			}
+		}
+	}
+
+	protected void updateDLFileVersionActivities() throws Exception {
+		long classNameId = PortalUtil.getClassNameId(DLFileEntry.class);
+
+		runSQL("delete from SocialActivity where classNameId = " + classNameId);
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			Set<String> keys = new HashSet<String>();
+
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select groupId, companyId, userId, modifiedDate, " +
+					"fileEntryId, title, version from DLFileVersion " +
+						"where status = ?");
+
+			ps.setInt(1, WorkflowConstants.STATUS_APPROVED);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+				long fileEntryId = rs.getLong("fileEntryId");
+				String title = rs.getString("title");
+				double version = rs.getDouble("version");
+
+				int type = DLActivityKeys.ADD_FILE_ENTRY;
+
+				if (version > 1.0) {
+					type = DLActivityKeys.UPDATE_FILE_ENTRY;
+				}
+
+				modifiedDate = getUniqueModifiedDate(
+					keys, groupId, userId, modifiedDate, classNameId,
+					fileEntryId, type);
+
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				extraDataJSONObject.put("title", title);
+
+				addActivity(
+					increment(), groupId, companyId, userId, modifiedDate, 0,
+					classNameId, fileEntryId, type,
+					extraDataJSONObject.toString(), 0);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	protected void updateJournalActivities() throws Exception {
@@ -159,6 +256,8 @@ public class UpgradeSocial extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
+			Set<String> keys = new HashSet<String>();
+
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
@@ -180,6 +279,10 @@ public class UpgradeSocial extends UpgradeProcess {
 				if (version > 1.0) {
 					type = WikiActivityKeys.UPDATE_PAGE;
 				}
+
+				modifiedDate = getUniqueModifiedDate(
+					keys, groupId, userId, modifiedDate, classNameId,
+					resourcePrimKey, type);
 
 				JSONObject extraDataJSONObject =
 					JSONFactoryUtil.createJSONObject();

@@ -8,6 +8,10 @@ import java.io.Serializable;
 
 import java.util.Date;
 
+/**
+ * @author ${author}
+ * @generated
+ */
 public class ${entity.PKClassName} implements Comparable<${entity.PKClassName}>, Serializable {
 
 	<#list entity.PKList as column>

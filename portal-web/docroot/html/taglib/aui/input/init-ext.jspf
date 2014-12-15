@@ -39,7 +39,7 @@ else if (Validator.isNotNull(title)) {
 }
 
 boolean checkboxField = baseType.equals("checkbox") || baseType.equals("boolean");
-boolean choiceField = checkboxField || baseType.equals("radio");
+boolean radioField = baseType.equals("radio");
 
 boolean showForLabel = true;
 
@@ -55,7 +55,7 @@ if (checkboxField) {
 	forLabel += "Checkbox";
 }
 
-if (choiceField && Validator.isNull(inlineLabel)) {
+if ((radioField || checkboxField) && Validator.isNull(inlineLabel)) {
 	inlineLabel = "right";
 }
 

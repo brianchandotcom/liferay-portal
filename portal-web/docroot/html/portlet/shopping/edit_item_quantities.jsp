@@ -85,11 +85,13 @@ for (int i = values.size() - 1; i >= 0; i--) {
 			</liferay-ui:search-container-row>
 
 			<aui:script>
-				var opener = Liferay.Util.getTop();
+				var form = $(document.<portlet:namespace />fm);
+
+				var openerForm = $(Liferay.Util.getOpener().document.<portlet:namespace />fm);
+
+				var fieldsQuantities = openerForm.fm('fieldsQuantities').val();
 
 				var itemQuantities = [];
-
-				var fieldsQuantities = opener.document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value;
 
 				if (fieldsQuantities) {
 					itemQuantities = fieldsQuantities.split(',');
@@ -103,7 +105,7 @@ for (int i = values.size() - 1; i >= 0; i--) {
 				for (int i = searchContainer.getStart(); i < searchContainer.getResultEnd(); i++) {
 				%>
 
-					document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantity<%= i %>.value = itemQuantities[<%= i %>];
+					form.fm('fieldsQuantity<%= i %>').val(itemQuantities[<%= i %>]);
 
 				<%
 				}
@@ -124,13 +126,13 @@ for (int i = values.size() - 1; i >= 0; i--) {
 					for (int i = searchContainer.getStart(); i < searchContainer.getResultEnd(); i++) {
 					%>
 
-						itemQuantities.splice(<%= i %>, 1, document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantity<%= i %>.value);
+						itemQuantities.splice(<%= i %>, 1, form.fm('fieldsQuantity<%= i %>').val());
 
 					<%
 					}
 					%>
 
-					opener.document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value = itemQuantities.join(',');
+					openerForm.fm('fieldsQuantities').val(itemQuantities.join(','));
 				}
 
 				function <portlet:namespace />updateItemQuantities() {
@@ -139,11 +141,7 @@ for (int i = values.size() - 1; i >= 0; i--) {
 					<portlet:namespace />closeDialog();
 				}
 
-				AUI().all('.taglib-page-iterator li a').each(
-					function(node) {
-						node.on('click', <portlet:namespace />setItemQuantities);
-					}
-				);
+				AUI.$('.taglib-page-iterator').on('click', 'li a', <portlet:namespace />setItemQuantities);
 			</aui:script>
 
 			<liferay-ui:search-iterator />

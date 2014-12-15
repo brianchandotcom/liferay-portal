@@ -255,6 +255,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 
 <aui:script>
 	function <portlet:namespace />updateAddress(addressId, type) {
+		var form = AUI.$(document.<portlet:namespace />fm);
 
 		<%
 		for (int i = 0; addresses != null && i < addresses.size(); i++) {
@@ -265,22 +266,18 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 		%>
 
 			if ('<%= address.getAddressId() %>' == addressId) {
-				document.getElementById('<portlet:namespace />' + type + 'Street').value = '<%= HtmlUtil.escapeJS(address.getStreet1()) %>';
-				document.getElementById('<portlet:namespace />' + type + 'City').value = '<%= HtmlUtil.escapeJS(address.getCity()) %>';
+				form.fm(type + 'Street').val('<%= HtmlUtil.escapeJS(address.getStreet1()) %>');
+				form.fm(type + 'City').val('<%= HtmlUtil.escapeJS(address.getCity()) %>');
 
-				var stateSel = document.getElementById('<portlet:namespace />' + type + 'StateSel');
+				var stateSel = form.fm(type + 'StateSel');
 				var stateSelValue = '<%= HtmlUtil.escapeJS(region.getRegionCode()) %>';
 
-				for (var i = 0; i < stateSel.length; i++) {
-					if (stateSel[i].value == stateSelValue) {
-						stateSel.selectedIndex = i;
-
-						break;
-					}
+				if (stateSel.find('option[value="' + stateSelValue + '"]').length) {
+					stateSel.val(stateSelValue);
 				}
 
-				document.getElementById('<portlet:namespace />' + type + 'Zip').value = '<%= HtmlUtil.escapeJS(address.getZip()) %>';
-				document.getElementById('<portlet:namespace />' + type + 'Country').value = '<%= HtmlUtil.escapeJS(country.getName()) %>';
+				form.fm(type + 'Zip').val('<%= HtmlUtil.escapeJS(address.getZip()) %>');
+				form.fm(type + 'Country').val('<%= HtmlUtil.escapeJS(country.getName()) %>');
 			}
 
 		<%

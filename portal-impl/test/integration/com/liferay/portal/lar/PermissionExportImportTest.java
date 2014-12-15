@@ -28,6 +28,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.ResetDatabaseTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.ResourcePermissionUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -64,8 +64,7 @@ public class PermissionExportImportTest extends PowerMockito {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			ResetDatabaseTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Test
 	public void testPortletGuestPermissionsExportImport() throws Exception {
@@ -106,6 +105,9 @@ public class PermissionExportImportTest extends PowerMockito {
 
 		validateImportedPortletPermissions(
 			importGroup, role, importResourcePrimKey);
+
+		GroupLocalServiceUtil.deleteGroup(exportGroup);
+		GroupLocalServiceUtil.deleteGroup(importGroup);
 	}
 
 	protected void addPortletPermissions(

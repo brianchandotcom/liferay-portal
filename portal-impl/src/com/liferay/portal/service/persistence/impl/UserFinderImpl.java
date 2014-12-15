@@ -35,12 +35,17 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.persistence.OrganizationUtil;
 import com.liferay.portal.service.persistence.RoleUtil;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -561,9 +566,18 @@ public class UserFinderImpl
 
 				params2.remove("usersGroups");
 
-				params2.put(
-					"usersOrgs",
-					organizationIds.toArray(new Long[organizationIds.size()]));
+				if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
+					params2.put("usersOrgs", organizationIds);
+				}
+				else {
+					Map<Serializable, Organization> map =
+						OrganizationUtil.fetchByPrimaryKeys(
+							new HashSet<Serializable>(organizationIds));
+
+					params2.put(
+						"usersOrgsTree",
+						new ArrayList<Organization>(map.values()));
+				}
 			}
 
 			if (!siteGroupIds.isEmpty()) {
@@ -622,9 +636,21 @@ public class UserFinderImpl
 
 				params2.remove("usersRoles");
 
-				params2.put(
-					"usersOrgs",
-					organizationIds.toArray(new Long[organizationIds.size()]));
+				if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
+					params2.put(
+						"usersOrgs",
+						organizationIds.toArray(
+							new Long[organizationIds.size()]));
+				}
+				else {
+					Map<Serializable, Organization> map =
+						OrganizationUtil.fetchByPrimaryKeys(
+							new HashSet<Serializable>(organizationIds));
+
+					params2.put(
+						"usersOrgsTree",
+						new ArrayList<Organization>(map.values()));
+				}
 			}
 
 			if (!siteGroupIds.isEmpty()) {

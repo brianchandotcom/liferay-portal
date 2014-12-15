@@ -14,8 +14,10 @@
 
 package com.liferay.portal.security.ldap;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.User;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import javax.naming.directory.Attributes;
 import javax.naming.ldap.LdapContext;
@@ -25,26 +27,31 @@ import javax.naming.ldap.LdapContext;
  */
 public class LDAPUserImporterUtil {
 
-	public static LDAPUserImporter getLDAPUserImporter() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			LDAPUserImporterUtil.class);
-
-		return _ldapUserImporter;
-	}
-
 	public static User importUser(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			Attributes attributes, String password)
 		throws Exception {
 
-		return getLDAPUserImporter().importUser(
+		return _getInstance().importUser(
 			ldapServerId, companyId, ldapContext, attributes, password);
 	}
 
-	public void setLDAPUserImporter(LDAPUserImporter ldapUserImporter) {
-		_ldapUserImporter = ldapUserImporter;
+	private static LDAPUserImporter _getInstance() {
+		return _instance._serviceTracker.getService();
 	}
 
-	private static LDAPUserImporter _ldapUserImporter;
+	private LDAPUserImporterUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(LDAPUserImporter.class);
+
+		_serviceTracker.open();
+	}
+
+	private static final LDAPUserImporterUtil _instance =
+		new LDAPUserImporterUtil();
+
+	private final ServiceTracker<LDAPUserImporter, LDAPUserImporter>
+		_serviceTracker;
 
 }

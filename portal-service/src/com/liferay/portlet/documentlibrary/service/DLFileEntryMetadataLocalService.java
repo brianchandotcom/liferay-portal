@@ -282,13 +282,13 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 	public void updateFileEntryMetadata(long companyId,
 		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures,
 		long fileEntryTypeId, long fileEntryId, long fileVersionId,
-		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> ddmFormValuesMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void updateFileEntryMetadata(long fileEntryTypeId, long fileEntryId,
 		long fileVersionId,
-		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> ddmFormValuesMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

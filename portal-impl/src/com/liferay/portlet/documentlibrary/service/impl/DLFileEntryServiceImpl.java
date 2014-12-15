@@ -37,11 +37,11 @@ import com.liferay.portlet.documentlibrary.service.base.DLFileEntryServiceBaseIm
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.File;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -62,7 +62,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			long groupId, long repositoryId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, long fileEntryTypeId,
-			Map<String, Fields> fieldsMap, File file, InputStream is, long size,
+			Map<String, DDMFormValues> ddmFormValuesMap, File file, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -71,7 +71,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryLocalService.addFileEntry(
 			getUserId(), groupId, repositoryId, folderId, sourceFileName,
-			mimeType, title, description, changeLog, fileEntryTypeId, fieldsMap,
+			mimeType, title, description, changeLog, fileEntryTypeId, ddmFormValuesMap,
 			file, is, size, serviceContext);
 	}
 
@@ -687,7 +687,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
 			boolean majorVersion, long fileEntryTypeId,
-			Map<String, Fields> fieldsMap, File file, InputStream is, long size,
+			Map<String, DDMFormValues> ddmFormValuesMap, File file, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -696,7 +696,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryLocalService.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, majorVersion, fileEntryTypeId, fieldsMap,
+			description, changeLog, majorVersion, fileEntryTypeId, ddmFormValuesMap,
 			file, is, size, serviceContext);
 	}
 

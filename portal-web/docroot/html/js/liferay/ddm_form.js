@@ -854,7 +854,7 @@ AUI.add(
 						portletURL.setParameter('refererPortletName', '');
 						portletURL.setParameter('struts_action', '/document_selector/view');
 						portletURL.setParameter('tabs1Names', 'documents');
-						portletURL.setPortletId('200');
+						portletURL.setPortletId(Liferay.PortletKeys.DOCUMENT_SELECTOR);
 						portletURL.setWindowState('pop_up');
 
 						return portletURL.toString();
@@ -890,7 +890,7 @@ AUI.add(
 						portletURL.setParameter('p_auth', Liferay.authToken);
 						portletURL.setParameter('struts_action', '/journal/upload_file_entry');
 
-						portletURL.setPortletId(15);
+						portletURL.setPortletId(Liferay.PortletKeys.JOURNAL);
 
 						return portletURL.toString();
 					},

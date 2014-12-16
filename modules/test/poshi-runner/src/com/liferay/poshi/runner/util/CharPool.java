@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.poshi.runner.util;
 
 /**
  * @author Brian Wing Shun Chan

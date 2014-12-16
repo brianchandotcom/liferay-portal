@@ -249,6 +249,9 @@ public class FinalizeManagerTest {
 		if (referenceType == ReferenceType.SOFT) {
 			GCUtil.fullGC(true);
 		}
+		else if (referenceType == ReferenceType.PHANTOM) {
+			GCUtil.gc(false);
+		}
 		else {
 			GCUtil.gc(true);
 		}
@@ -260,7 +263,7 @@ public class FinalizeManagerTest {
 
 			// Second GC to trigger ReferenceQueue#enqueue
 
-			GCUtil.gc(true);
+			GCUtil.gc(false);
 		}
 
 		if (threadEnabled) {

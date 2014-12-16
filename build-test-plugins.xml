@@ -4,13 +4,11 @@
 	<import file="build-test.xml" />
 
 	<target name="deploy-extra-apps">
-		<fail message="Please set the property ${jenkins.shared.user.content.dir}" unless="jenkins.shared.user.content.dir" />
-		<fail message="Please set the property ${top.level.build.number}" unless="top.level.build.number" />
-		<fail message="Please set the property ${top.level.job.name}" unless="top.level.job.name" />
+		<fail message="Please set the property ${extra.apps.zip.file.name}" unless="extra.apps.zip.file.name" />
 
 		<unzip
 			dest="${liferay.home}/deploy"
-			src="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads/extraapps.zip"
+			src="${extra.apps.zip.file.name}"
 		/>
 	</target>
 

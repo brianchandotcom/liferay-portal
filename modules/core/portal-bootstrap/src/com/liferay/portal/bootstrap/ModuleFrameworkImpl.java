@@ -1039,7 +1039,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		try {
 			if (!location.startsWith("file:")) {
 				location = "file:".concat(
-					_getLiferayLibPortalDir().concat(location));
+					PropsValues.LIFERAY_LIB_PORTAL_DIR.concat(location));
 			}
 
 			URL initialBundleURL = new URL(location);

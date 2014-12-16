@@ -3,6 +3,15 @@
 <project name="portal-test-plugins" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<target name="deploy-extra-apps">
+		<fail message="Please set the property ${extra.apps.zip.file.name}" unless="extra.apps.zip.file.name" />
+
+		<unzip
+			dest="${liferay.home}/deploy"
+			src="${extra.apps.zip.file.name}"
+		/>
+	</target>
+
 	<target name="deploy-simple-server-plugins">
 		<if>
 			<equals arg1="${app.server.type}" arg2="jboss" />
@@ -79,20 +88,6 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 				</if>
 			</sequential>
 		</for>
-
-		<if>
-			<and>
-				<isset property="jenkins.shared.user.content.dir" />
-				<isset property="top.level.build.number" />
-				<isset property="top.level.job.name" />
-			</and>
-			<then>
-				<unzip
-					dest="${liferay.home}/deploy"
-					src="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads/extraapps.zip"
-				/>
-			</then>
-		</if>
 
 		<if>
 			<matches pattern="http" string="${test.build.plugins.war.zip.url}" />

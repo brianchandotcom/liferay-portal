@@ -823,8 +823,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		String liferayLibPortalDir = PropsValues.LIFERAY_LIB_PORTAL_DIR;
 
 		if (liferayLibPortalDir.startsWith(StringPool.SLASH)) {
-			liferayLibPortalDir = liferayLibPortalDir.substring(
-				1, liferayLibPortalDir.length() - 1);
+			liferayLibPortalDir = liferayLibPortalDir.substring(1);
 		}
 
 		return liferayLibPortalDir;

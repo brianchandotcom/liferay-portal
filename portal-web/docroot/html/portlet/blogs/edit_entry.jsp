@@ -139,7 +139,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				</portlet:actionURL>
 
 				<%
-				Map<String, Object> data = new HashMap<>();
+				Map<String, Object> data = new HashMap<String, Object>();
 
 				data.put("uploadURL", uploadEditorImageURL);
 				%>

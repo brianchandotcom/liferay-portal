@@ -1,0 +1,4 @@
+Bundle-SymbolicName: org.hibernate
+Bundle-Version: 3.6.10.LIFERAY-PATCHED-1
+Export-Package: org.hibernate.*
+Include-Resource: classes

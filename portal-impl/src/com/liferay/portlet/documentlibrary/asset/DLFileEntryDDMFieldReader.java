@@ -21,10 +21,12 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portlet.asset.model.BaseDDMFieldReader;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
 import java.util.List;
@@ -42,9 +44,10 @@ public class DLFileEntryDDMFieldReader extends BaseDDMFieldReader {
 	}
 
 	@Override
-	public Fields getFields() throws PortalException {
-		Fields fields = new Fields();
-
+	public DDMFormValues getDDMFormValues() throws PortalException {
+		DDMFormValues ddmFormValues = new DDMFormValues(new DDMForm());
+		DDMForm ddmForm = ddmFormValues.getDDMForm();
+		
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
 			DLFileEntryMetadata.class);
 
@@ -62,15 +65,24 @@ public class DLFileEntryDDMFieldReader extends BaseDDMFieldReader {
 				continue;
 			}
 
-			Fields ddmStorageFields = StorageEngineUtil.getFields(
-				dlFileEntryMetadata.getDDMStorageId());
+			DDMFormValues ddmStorageDDMFormValues = 
+					StorageEngineUtil.getDDMFormValues(
+							dlFileEntryMetadata.getDDMStorageId());
 
-			for (Field ddmStorageField : ddmStorageFields) {
-				fields.put(ddmStorageField);
+			for (DDMFormField ddmFormField : 
+				ddmStorageDDMFormValues.getDDMForm().getDDMFormFields()) {
+				
+				ddmForm.addDDMFormField(ddmFormField);
+			}
+			
+			for (DDMFormFieldValue ddmFormFieldValue : 
+				ddmStorageDDMFormValues.getDDMFormFieldValues()) {
+				
+				ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 			}
 		}
 
-		return fields;
+		return ddmFormValues;
 	}
 
 	private final FileEntry _fileEntry;

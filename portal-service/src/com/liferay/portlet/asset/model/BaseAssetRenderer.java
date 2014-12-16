@@ -419,13 +419,13 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	private static final class NullDDMFieldReader implements DDMFieldReader {
 
 		@Override
-		public Fields getFields() {
-			return new Fields();
+		public DDMFormValues getDDMFormValues() {
+			return new DDMFormValues(new DDMForm());
 		}
 
 		@Override
-		public Fields getFields(String ddmType) {
-			return getFields();
+		public DDMFormValues getDDMFormValues(String ddmType) {
+			return getDDMFormValues();
 		}
 
 	}

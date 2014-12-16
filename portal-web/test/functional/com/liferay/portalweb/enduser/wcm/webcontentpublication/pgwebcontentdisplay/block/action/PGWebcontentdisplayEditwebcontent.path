@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>AVAILABLE_TRANSLATION</td>
-	<td>//span[contains(@class,'lfr-translation-manager') and contains(.,'${key_webContentTranslationLanguage}')]</td>
+	<td>//span[contains(@class,'lfr-translation-manager-translation') and contains(.,'${key_webContentTranslationLanguage}')]</td>
 	<td></td>
 </tr>
 <tr>

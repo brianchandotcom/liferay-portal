@@ -1,6 +1,12 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="FOLDERS_TABLE_FOLDER_NAME">
+			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
-		<case locator-key1="FOLDERS_TABLE_FOLDER_DESCRIPTION">
+		<case locator-key1="FOLDERS_TABLE_FOLDER_NAME">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 

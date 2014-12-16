@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'description')]</td>
+	<td>//div[@class='portlet-body']//textarea[contains(@id,'description')]</td>
 	<td>Description</td>
 </tr>
 <tr>

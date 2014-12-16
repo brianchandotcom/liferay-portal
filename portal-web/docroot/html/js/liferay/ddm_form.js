@@ -910,8 +910,6 @@ AUI.add(
 					setValue: function(value) {
 						var instance = this;
 
-						debugger;
-
 						var parsedValue = instance.getParsedValue(value);
 
 						if (!parsedValue.title && !parsedValue.uuid) {

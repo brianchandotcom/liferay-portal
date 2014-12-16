@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.util;
-
-import com.liferay.portal.kernel.util.StringUtil;
+package com.liferay.poshi.runner.util;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

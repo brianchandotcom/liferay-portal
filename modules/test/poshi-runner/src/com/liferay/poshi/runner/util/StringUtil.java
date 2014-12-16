@@ -36,6 +36,22 @@ public class StringUtil {
 		return s.replace(oldSub, newSub);
 	}
 
+	public static String replace(String s, String[] oldSubs, String[] newSubs) {
+		if ((s == null) || (oldSubs == null) || (newSubs == null)) {
+			return null;
+		}
+
+		if (oldSubs.length != newSubs.length) {
+			return s;
+		}
+
+		for (int i = 0; i < oldSubs.length; i++) {
+			s = replace(s, oldSubs[i], newSubs[i]);
+		}
+
+		return s;
+	}
+
 	public static String[] split(String s) {
 		if (s == null) {
 			return null;

@@ -1640,7 +1640,7 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="name" type="String">
-			<hint name="max-length">100</hint>
+			<hint name="max-length">255</hint>
 			<validator name="required" />
 		</field>
 		<field name="description" type="String">

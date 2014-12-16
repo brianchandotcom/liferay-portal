@@ -704,7 +704,7 @@ create table DLFolder (
 	mountPoint BOOLEAN,
 	parentFolderId LONG,
 	treePath STRING null,
-	name VARCHAR(100) null,
+	name VARCHAR(255) null,
 	description STRING null,
 	lastPostDate DATE null,
 	defaultFileEntryTypeId LONG,

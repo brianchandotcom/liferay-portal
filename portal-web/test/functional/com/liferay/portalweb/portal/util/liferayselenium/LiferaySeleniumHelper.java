@@ -970,6 +970,19 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
+		// LPS-52210
+
+		if (line.matches(
+				".*The web application \\[\\] created a ThreadLocal with key " +
+					"of type.*")) {
+
+			if (line.contains(
+					"[org.apache.jasper.runtime.JspWriterImpl.CharBufferThreadLocalPool]")) {
+
+				return true;
+			}
+		}
+
 		if (Validator.equals(
 				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
 			Validator.equals(

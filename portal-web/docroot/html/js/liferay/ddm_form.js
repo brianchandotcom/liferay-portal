@@ -736,7 +736,6 @@ AUI.add(
 											}
 											else {
 												data.tempFile = true;
-												data.title = data.name;
 
 												instance.setValue(data);
 

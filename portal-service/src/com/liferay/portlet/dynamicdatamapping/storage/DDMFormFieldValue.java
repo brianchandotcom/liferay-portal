@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 
 import java.io.Serializable;
@@ -161,9 +162,9 @@ public class DDMFormFieldValue implements Serializable {
 	public void setValue(Value value) {
 		_value = value;
 	}
-
+	
 	private DDMFormValues _ddmFormValues;
-	private String _instanceId;
+	private String _instanceId = StringUtil.randomString();
 	private String _name;
 	private List<DDMFormFieldValue> _nestedDDMFormFieldValues =
 		new ArrayList<>();

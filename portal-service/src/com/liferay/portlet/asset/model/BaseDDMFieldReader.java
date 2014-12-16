@@ -14,9 +14,13 @@
 
 package com.liferay.portlet.asset.model;
 
+import java.util.Map;
+
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 /**
  * @author Adolfo Pérez
@@ -24,16 +28,28 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 public abstract class BaseDDMFieldReader implements DDMFieldReader {
 
 	@Override
-	public Fields getFields(String ddmType) throws PortalException {
-		Fields filteredFields = new Fields();
+	public DDMFormValues getDDMFormValues(String ddmType) 
+		throws PortalException {
+		
+		DDMFormValues filteredDDMFormValues = new DDMFormValues(new DDMForm());
+		DDMFormValues currentDDMFormValues = getDDMFormValues();
+		Map<String, DDMFormField> currentDDMFormFieldsMap =
+				currentDDMFormValues.getDDMForm().getDDMFormFieldsMap(true);
+		
+		for (DDMFormFieldValue ddmFormFieldValue : 
+			currentDDMFormValues.getDDMFormFieldValues()) {
 
-		for (Field field : getFields()) {
-			if (ddmType.equals(field.getDataType())) {
-				filteredFields.put(field);
+			DDMFormField ddmFormField = currentDDMFormFieldsMap.get(
+					ddmFormFieldValue.getName());
+			
+			if (ddmType.equals(ddmFormField.getDataType())) {
+				filteredDDMFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+				filteredDDMFormValues.getDDMForm().addDDMFormField(
+					ddmFormField);
 			}
 		}
 
-		return filteredFields;
+		return filteredDDMFormValues;
 	}
 
 }

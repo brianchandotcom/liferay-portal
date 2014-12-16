@@ -36,6 +36,8 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.provider.DisplayPortletProvider;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -456,13 +458,13 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	private static final class NullDDMFieldReader implements DDMFieldReader {
 
 		@Override
-		public Fields getFields() {
-			return new Fields();
+		public DDMFormValues getDDMFormValues() {
+			return new DDMFormValues(new DDMForm());
 		}
 
 		@Override
-		public Fields getFields(String ddmType) {
-			return getFields();
+		public DDMFormValues getDDMFormValues(String ddmType) {
+			return getDDMFormValues();
 		}
 
 	}

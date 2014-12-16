@@ -59,8 +59,8 @@ public class SyncAccountModelListener implements ModelListener<SyncAccount> {
 
 			SessionManager.removeSession(syncAccount.getSyncAccountId());
 
-			ServerEventUtil.synchronizeSyncAccount(
-				syncAccount.getSyncAccountId());
+			ServerEventUtil.retryServerConnection(
+				syncAccount.getSyncAccountId(), 0);
 		}
 	}
 

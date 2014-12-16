@@ -39,6 +39,11 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -219,97 +224,19 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			response, new TypeReference<SyncDLObjectUpdate>() {});
 
 		for (SyncFile targetSyncFile : syncDLObjectUpdate.getSyncDLObjects()) {
-			SyncFile parentSyncFile = SyncFileService.fetchSyncFile(
-				targetSyncFile.getRepositoryId(), getSyncAccountId(),
-				targetSyncFile.getParentFolderId());
-
-			if (parentSyncFile == null) {
+			if (!processSyncFile(targetSyncFile)) {
 				continue;
 			}
 
-			String filePathName = "";
+			List<SyncFile> dependentSyncFiles = _dependentSyncFilesMap.remove(
+				targetSyncFile.getTypePK());
 
-			try {
-				filePathName = FileUtil.getFilePathName(
-					parentSyncFile.getFilePathName(),
-					FileUtil.getSanitizedFileName(
-						targetSyncFile.getName(),
-						targetSyncFile.getExtension()));
-
-				SyncFile sourceSyncFile = SyncFileService.fetchSyncFile(
-					targetSyncFile.getRepositoryId(), getSyncAccountId(),
-					targetSyncFile.getTypePK());
-
-				if (isIgnoredFilePath(sourceSyncFile, filePathName) ||
-					((sourceSyncFile != null) &&
-					 (sourceSyncFile.getModifiedTime() ==
-						targetSyncFile.getModifiedTime()))) {
-
-					continue;
-				}
-
-				String event = targetSyncFile.getEvent();
-
-				if (event.equals(SyncFile.EVENT_ADD) ||
-					event.equals(SyncFile.EVENT_GET) ||
-					event.equals(SyncFile.EVENT_RESTORE)) {
-
-					if (sourceSyncFile != null) {
-						updateFile(
-							sourceSyncFile, targetSyncFile, filePathName);
-
-						continue;
-					}
-
-					addFile(targetSyncFile, filePathName);
-				}
-				else if (event.equals(SyncFile.EVENT_DELETE)) {
-					if (sourceSyncFile == null) {
-						continue;
-					}
-
-					deleteFile(sourceSyncFile, false);
-				}
-				else if (event.equals(SyncFile.EVENT_MOVE)) {
-					if (sourceSyncFile == null) {
-						addFile(targetSyncFile, filePathName);
-
-						continue;
-					}
-
-					moveFile(sourceSyncFile, targetSyncFile, filePathName);
-				}
-				else if (event.equals(SyncFile.EVENT_TRASH)) {
-					if (sourceSyncFile == null) {
-						continue;
-					}
-
-					deleteFile(sourceSyncFile, true);
-				}
-				else if (event.equals(SyncFile.EVENT_UPDATE)) {
-					if (sourceSyncFile == null) {
-						addFile(targetSyncFile, filePathName);
-
-						continue;
-					}
-
-					updateFile(sourceSyncFile, targetSyncFile, filePathName);
-				}
+			if (dependentSyncFiles == null) {
+				continue;
 			}
-			catch (Exception e) {
-				_logger.error(e.getMessage(), e);
 
-				if (e instanceof FileSystemException) {
-					String message = e.getMessage();
-
-					if (message.contains("File name too long")) {
-						targetSyncFile.setState(SyncFile.STATE_ERROR);
-						targetSyncFile.setUiEvent(
-							SyncFile.UI_EVENT_FILE_NAME_TOO_LONG);
-
-						SyncFileService.update(targetSyncFile);
-					}
-				}
+			for (SyncFile dependentSyncFile : dependentSyncFiles) {
+				processSyncFile(dependentSyncFile);
 			}
 		}
 
@@ -321,6 +248,117 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 			SyncSiteService.update(syncSite);
 		}
+	}
+
+	protected boolean processSyncFile(SyncFile targetSyncFile) {
+		SyncFile parentSyncFile = SyncFileService.fetchSyncFile(
+			targetSyncFile.getRepositoryId(), getSyncAccountId(),
+			targetSyncFile.getParentFolderId());
+
+		if (parentSyncFile == null) {
+			queueSyncFile(targetSyncFile.getParentFolderId(), targetSyncFile);
+
+			return false;
+		}
+
+		String filePathName = "";
+
+		try {
+			filePathName = FileUtil.getFilePathName(
+				parentSyncFile.getFilePathName(),
+				FileUtil.getSanitizedFileName(
+					targetSyncFile.getName(), targetSyncFile.getExtension()));
+
+			SyncFile sourceSyncFile = SyncFileService.fetchSyncFile(
+				targetSyncFile.getRepositoryId(), getSyncAccountId(),
+				targetSyncFile.getTypePK());
+
+			if (isIgnoredFilePath(sourceSyncFile, filePathName) ||
+				((sourceSyncFile != null) &&
+				 (sourceSyncFile.getModifiedTime() ==
+					targetSyncFile.getModifiedTime()))) {
+
+				return false;
+			}
+
+			String event = targetSyncFile.getEvent();
+
+			if (event.equals(SyncFile.EVENT_ADD) ||
+				event.equals(SyncFile.EVENT_GET) ||
+				event.equals(SyncFile.EVENT_RESTORE)) {
+
+				if (sourceSyncFile != null) {
+					updateFile(sourceSyncFile, targetSyncFile, filePathName);
+
+					return true;
+				}
+
+				addFile(targetSyncFile, filePathName);
+			}
+			else if (event.equals(SyncFile.EVENT_DELETE)) {
+				if (sourceSyncFile == null) {
+					return false;
+				}
+
+				deleteFile(sourceSyncFile, false);
+			}
+			else if (event.equals(SyncFile.EVENT_MOVE)) {
+				if (sourceSyncFile == null) {
+					addFile(targetSyncFile, filePathName);
+
+					return true;
+				}
+
+				moveFile(sourceSyncFile, targetSyncFile, filePathName);
+			}
+			else if (event.equals(SyncFile.EVENT_TRASH)) {
+				if (sourceSyncFile == null) {
+					return false;
+				}
+
+				deleteFile(sourceSyncFile, true);
+			}
+			else if (event.equals(SyncFile.EVENT_UPDATE)) {
+				if (sourceSyncFile == null) {
+					addFile(targetSyncFile, filePathName);
+
+					return true;
+				}
+
+				updateFile(sourceSyncFile, targetSyncFile, filePathName);
+			}
+		}
+		catch (Exception e) {
+			_logger.error(e.getMessage(), e);
+
+			if (e instanceof FileSystemException) {
+				String message = e.getMessage();
+
+				if (message.contains("File name too long")) {
+					targetSyncFile.setState(SyncFile.STATE_ERROR);
+					targetSyncFile.setUiEvent(
+						SyncFile.UI_EVENT_FILE_NAME_TOO_LONG);
+
+					SyncFileService.update(targetSyncFile);
+				}
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
+	protected void queueSyncFile(long parentFolderId, SyncFile syncFile) {
+		List<SyncFile> syncFiles = _dependentSyncFilesMap.get(parentFolderId);
+
+		if (syncFiles == null) {
+			syncFiles = new ArrayList<SyncFile>();
+
+			_dependentSyncFilesMap.put(parentFolderId, syncFiles);
+		}
+
+		syncFiles.add(syncFile);
 	}
 
 	protected void updateFile(
@@ -377,5 +415,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		GetSyncDLObjectUpdateHandler.class);
+
+	private final Map<Long, List<SyncFile>> _dependentSyncFilesMap =
+		new HashMap<Long, List<SyncFile>>();
 
 }

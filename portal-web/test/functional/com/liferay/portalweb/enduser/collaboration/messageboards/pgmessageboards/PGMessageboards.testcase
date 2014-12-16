@@ -934,4 +934,59 @@
 
 		<execute action="Home#open" locator1="http://localhost:8080" />
 	</command>
+
+	<command name="ViewSubcategorySubscriptionViaMySubscriptionsPage" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addSubcategoryPG">
+			<var name="categoryName" value="MB Category Name" />
+			<var name="subCategoryDescription" value="subCategoryDescription" />
+			<var name="subCategoryName" value="MB Subcategory Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addSubcategoryToSubcategoryPG">
+			<var name="categoryName" value="MB Subcategory Name" />
+			<var name="subCategoryDescription" value="subCategoryDescription" />
+			<var name="subCategoryName" value="MB Subcategory Name 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#viewSubcategoryPG">
+			<var name="categoryName" value="MB Category Name" />
+			<var name="containsSubcategory" value="true" />
+			<var name="subCategoryDescription" value="subCategoryDescription" />
+			<var name="subCategoryName" value="MB Subcategory Name" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#viewSubcategoryPG">
+			<var name="categoryName" value="MB Subcategory Name" />
+			<var name="subCategoryDescription" value="subCategoryDescription" />
+			<var name="subCategoryName" value="MB Subcategory Name 2" />
+			<var name="subscribe" value="true" />
+			<var name="viewSubcategoryFromSubcategory" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#viewMysubscriptionsPG">
+			<var name="parentcategory1" value="MB Category Name" />
+			<var name="parentcategory2" value="MB Subcategory Name" />
+			<var name="subscribedThread" value="MB Subcategory Name 2" />
+		</execute>
+	</command>
 </definition>

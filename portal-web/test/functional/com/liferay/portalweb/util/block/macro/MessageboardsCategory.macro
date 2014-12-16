@@ -106,6 +106,20 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addSubcategoryToSubcategoryPG">
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY_SUBCATEGORY_GENERIC" value1="${categoryName}" />
+
+		<execute action="PGMessageboardsCategory#assertClick" locator-key1="ADD_SUBCATEGORY_BUTTON" value1="Add Subcategory" />
+
+		<execute action="PGMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${subCategoryName}" />
+		<execute action="PGMessageboardsAddcategory#type" locator-key1="DESCRIPTION_FIELD" value1="${subCategoryDescription}" />
+		<execute action="PGMessageboardsAddcategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="deleteCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
@@ -257,6 +271,14 @@
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY_GENERIC" />
 	</command>
 
+	<command name="viewMysubscriptionsPG" priority="4">
+		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_MY_SUBSCRIPTIONS" value1="My Subscriptions" />
+
+		<execute action="PGMessageboardsMysubscriptions#assertTextPresent" locator-key1="CATEGORY_TABLE_CATEGORY_BREADCRUMB_1" value1="${parentcategory1}" />
+		<execute action="PGMessageboardsMysubscriptions#assertTextPresent" locator-key1="CATEGORY_TABLE_CATEGORY_BREADCRUMB_2" value1="${parentcategory2}" />
+		<execute action="PGMessageboardsMysubscriptions#assertTextPresent" locator-key1="CATEGORY_TABLE_CATEGORY_BREADCRUMB_3" value1="${subscribedThread}" />
+	</command>
+
 	<command name="viewNoCP">
 		<var name="key_categoryName" value="${categoryName}" />
 
@@ -354,15 +376,40 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_subCategoryName" value="${subCategoryName}" />
 
-		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<if>
+			<isset var="viewSubcategoryFromSubcategory" />
+			<then>
+				<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />
+			</then>
+			<else>
+				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+			</else>
+		</if>
 
 		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
 		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${subCategoryDescription}" />
-		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_CATEGORIES" value1="0" />
+
+		<if>
+			<isset var="containsSubcategory" />
+			<then>
+				<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_CATEGORIES" value1="1" />
+			</then>
+			<else>
+				<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_CATEGORIES" value1="0" />
+			</else>
+		</if>
+
 		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_THREADS" value1="0" />
 		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBCATEGORY_TABLE_POSTS" value1="0" />
 		<execute action="PGMessageboardsCategory#assertElementPresent" locator-key1="SUBCATEGORY_TABLE_ACTIONS" />
 		<execute action="PGMessageboardsCategory#click" locator-key1="SUBCATEGORY_TABLE_CATEGORY" />
 		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${subCategoryName}" />
+
+		<if>
+			<isset var="subscribe" />
+			<then>
+				<execute action="PGMessageboards#assertClick" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
+			</then>
+		</if>
 	</command>
 </definition>

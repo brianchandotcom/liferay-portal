@@ -16,26 +16,9 @@
 
 <%@ include file="/html/portlet/asset_categories_navigation/init.jsp" %>
 
-<%
-List<AssetVocabulary> ddmTemplateAssetVocabularies = new ArrayList<AssetVocabulary>();
-
-if (allAssetVocabularies) {
-	ddmTemplateAssetVocabularies = assetVocabularies;
-}
-else {
-	for (long assetVocabularyId : assetVocabularyIds) {
-		try {
-			ddmTemplateAssetVocabularies.add(AssetVocabularyServiceUtil.getVocabulary(assetVocabularyId));
-		}
-		catch (NoSuchVocabularyException nsve) {
-		}
-	}
-}
-%>
-
-<liferay-ui:ddm-template-renderer displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= ddmTemplateAssetVocabularies %>">
+<liferay-ui:ddm-template-renderer displayStyle="<%= assetCategoriesNavigationDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetCategoriesNavigationDisplayContext.getDDMTemplateAssetVocabularies() %>">
 	<c:choose>
-		<c:when test="<%= allAssetVocabularies %>">
+		<c:when test="<%= assetCategoriesNavigationDisplayContext.isAllAssetVocabularies() %>">
 			<liferay-ui:asset-categories-navigation
 				hidePortletWhenEmpty="<%= true %>"
 			/>
@@ -43,7 +26,7 @@ else {
 		<c:otherwise>
 			<liferay-ui:asset-categories-navigation
 				hidePortletWhenEmpty="<%= true %>"
-				vocabularyIds="<%= assetVocabularyIds %>"
+				vocabularyIds="<%= assetCategoriesNavigationDisplayContext.getAssetVocabularyIds() %>"
 			/>
 		</c:otherwise>
 	</c:choose>

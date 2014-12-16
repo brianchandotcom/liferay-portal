@@ -26,58 +26,20 @@
 
 	<aui:fieldset>
 		<aui:select label="vocabularies" name="preferences--allAssetVocabularies--">
-			<aui:option label="all" selected="<%= allAssetVocabularies %>" value="<%= true %>" />
-			<aui:option label="filter[action]" selected="<%= !allAssetVocabularies %>" value="<%= false %>" />
+			<aui:option label="all" selected="<%= assetCategoriesNavigationDisplayContext.isAllAssetVocabularies() %>" value="<%= true %>" />
+			<aui:option label="filter[action]" selected="<%= !assetCategoriesNavigationDisplayContext.isAllAssetVocabularies() %>" value="<%= false %>" />
 		</aui:select>
 
 		<aui:input name="preferences--assetVocabularyIds--" type="hidden" />
 
-		<%
-		Set<Long> availableAssetVocabularyIdsSet = SetUtil.fromArray(availableAssetVocabularyIds);
-
-		// Left list
-
-		List<KeyValuePair> typesLeftList = new ArrayList<KeyValuePair>();
-
-		for (long assetVocabularyId : assetVocabularyIds) {
-			try {
-				AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
-
-				assetVocabulary = assetVocabulary.toEscapedModel();
-
-				typesLeftList.add(new KeyValuePair(String.valueOf(assetVocabularyId), _getTitle(assetVocabulary, themeDisplay)));
-			}
-			catch (NoSuchVocabularyException nsve) {
-			}
-		}
-
-		// Right list
-
-		List<KeyValuePair> typesRightList = new ArrayList<KeyValuePair>();
-
-		Arrays.sort(assetVocabularyIds);
-
-		for (long assetVocabularyId : availableAssetVocabularyIdsSet) {
-			if (Arrays.binarySearch(assetVocabularyIds, assetVocabularyId) < 0) {
-				AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
-
-				assetVocabulary = assetVocabulary.toEscapedModel();
-
-				typesRightList.add(new KeyValuePair(String.valueOf(assetVocabularyId), _getTitle(assetVocabulary, themeDisplay)));
-			}
-		}
-
-		typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator(false, true));
-		%>
-
-		<div class="<%= allAssetVocabularies ? "hide" : "" %>" id="<portlet:namespace />assetVocabulariesBoxes">
+		<div class="<%= assetCategoriesNavigationDisplayContext.isAllAssetVocabularies() ? "hide" : "" %>" id="<portlet:namespace />assetVocabulariesBoxes">
 			<liferay-ui:input-move-boxes
 				leftBoxName="currentAssetVocabularyIds"
-				leftList="<%= typesLeftList %>"
+				leftList="<%= assetCategoriesNavigationDisplayContext.getCurrentVocabularyNames() %>"
 				leftReorder="true"
 				leftTitle="current"
 				rightBoxName="availableAssetVocabularyIds"
-				rightList="<%= typesRightList %>"
+				rightList="<%= assetCategoriesNavigationDisplayContext.getAvailableVocabularyNames() %>"
 				rightTitle="available"
 			/>
 		</div>
@@ -90,8 +52,8 @@
 
 			<liferay-ui:ddm-template-selector
 				classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
-				displayStyle="<%= displayStyle %>"
-				displayStyleGroupId="<%= displayStyleGroupId %>"
+				displayStyle="<%= assetCategoriesNavigationDisplayContext.getDisplayStyle() %>"
+				displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"
 				refreshURL="<%= configurationRenderURL %>"
 				showEmptyOption="<%= true %>"
 			/>
@@ -114,15 +76,3 @@
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />allAssetVocabularies', 'false', '<portlet:namespace />assetVocabulariesBoxes');
 </aui:script>
-
-<%!
-private String _getTitle(AssetVocabulary assetVocabulary, ThemeDisplay themeDisplay) {
-	String title = assetVocabulary.getTitle(themeDisplay.getLanguageId());
-
-	if (assetVocabulary.getGroupId() == themeDisplay.getCompanyGroupId()) {
-		title += " (" + LanguageUtil.get(themeDisplay.getLocale(), "global") + ")";
-	}
-
-	return title;
-}
-%>

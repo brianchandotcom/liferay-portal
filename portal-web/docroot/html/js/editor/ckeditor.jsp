@@ -326,11 +326,9 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	}
 
 	var createEditor = function() {
-
 		var editorNode = A.one('#<%= name %>');
 
-		editorNode.setAttribute('contenteditable', true);
-
+		editorNode.attr('contenteditable', true);
 		editorNode.addClass('lfr-editable');
 
 		function initData() {

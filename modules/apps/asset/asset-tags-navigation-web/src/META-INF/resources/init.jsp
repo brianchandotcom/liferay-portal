@@ -28,4 +28,4 @@ boolean showAssetCount = PrefsParamUtil.getBoolean(portletPreferences, request, 
 boolean showZeroAssetCount = PrefsParamUtil.getBoolean(portletPreferences, request, "showZeroAssetCount");
 %>
 
-<%@ include file="/html/portlet/asset_tags_navigation/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

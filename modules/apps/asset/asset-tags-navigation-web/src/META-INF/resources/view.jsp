@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_tags_navigation/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 List<AssetTag> assetTags = null;

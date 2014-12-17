@@ -1069,7 +1069,14 @@ public abstract class BaseIndexer implements Indexer {
 
 		multiValueFacet.setFieldName(Field.TREE_PATH);
 		multiValueFacet.setStatic(true);
-		multiValueFacet.setValues(searchContext.getFolderIds());
+
+		long[] folderIds = searchContext.getFolderIds();
+
+		folderIds = ArrayUtil.remove(folderIds, 0);
+
+		if (ArrayUtil.isNotEmpty(folderIds)) {
+			multiValueFacet.setValues(folderIds);
+		}
 
 		searchContext.addFacet(multiValueFacet);
 	}

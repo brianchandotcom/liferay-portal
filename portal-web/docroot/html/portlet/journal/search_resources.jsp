@@ -113,16 +113,6 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 
 	ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
-	List<Long> folderIds = new ArrayList<Long>(1);
-
-	folderIds.add(searchFolderId);
-
-	searchTerms.setFolderIds(folderIds);
-
-	if (searchFolderId <= 0) {
-		searchTerms.setFolderIds(new ArrayList<Long>());
-	}
-
 	try {
 		boolean emptySearchResults = false;
 	%>
@@ -171,7 +161,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 				searchContext.setAttribute("head", Boolean.FALSE.toString());
 				searchContext.setAttribute("params", params);
 				searchContext.setEnd(searchContainer.getEnd());
-				searchContext.setFolderIds(searchTerms.getFolderIds());
+				searchContext.setFolderIds(new long[] {searchFolderId});
 				searchContext.setStart(searchContainer.getStart());
 
 				Hits hits = indexer.search(searchContext);

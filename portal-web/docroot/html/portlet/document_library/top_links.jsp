@@ -85,7 +85,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 								<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 								<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 								<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= folderId %>" />
-								<aui:input name="searchFolderIds" type="hidden" value="<%= folderId %>" />
+								<aui:input name="searchFolderId" type="hidden" value="<%= folderId %>" />
 
 								<liferay-ui:input-search id="keywords1" />
 							</aui:form>

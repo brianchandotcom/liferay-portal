@@ -1623,14 +1623,7 @@ public class DLFileEntryLocalServiceImpl
 		searchContext.setCompanyId(group.getCompanyId());
 
 		searchContext.setEnd(end);
-
-		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			List<Long> folderIds = dlFolderService.getFolderIds(
-				groupId, folderId);
-
-			searchContext.setFolderIds(folderIds);
-		}
-
+		searchContext.setFolderIds(new long[] {folderId});
 		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setSorts(new Sort(Field.MODIFIED_DATE, true));
 		searchContext.setStart(start);

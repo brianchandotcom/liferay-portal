@@ -678,6 +678,82 @@
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
 
+	<command name="ViewFileCategoriesAndTags" priority="4">
+		<var name="categoryDescription" value="Category Description" />
+		<var name="categoryName" value="Category Name" />
+		<var name="dmDocumentDescription" value="Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentTitle" value="Document Title" />
+		<var name="pageName" value="Documents and Media Page" />
+		<var name="tagNameList" value="category tag 1,category tag 2" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Category#addCategoryDescriptionCP">
+			<var name="categoryDescription" value="${categoryDescription}" />
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="tagNameList" value="${tagNameList}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="tagNameList" value="${tagNameList}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#editPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="tagNameList" value="${tagNameList}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="tagNameList" value="${tagNameList}" />
+		</execute>
+	</command>
+
 	<command name="ViewPortletAfterRenamingDocumentWithDuplicateTitlePG" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Documents and Media Page" />

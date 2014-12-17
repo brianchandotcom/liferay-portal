@@ -17,22 +17,21 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.GroupServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.ResetDatabaseTestRule;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.UserTestUtil;
-import com.liferay.portlet.sites.util.Sites;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -50,21 +49,44 @@ public class PortalImplGetSitesTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			ResetDatabaseTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_groups.add(_group);
+
 		_user = UserTestUtil.addGroupAdminUser(_group);
+
+		_users.add(_user);
 	}
 
 	@Test
 	public void testGetSharedContentSiteGroupIdsFromAncestors()
 		throws Exception {
 
-		testGetSharedContentSiteGroupIdsFromAncestors(true);
+		Group grandparentGroup = GroupTestUtil.addGroup();
+
+		Group parentGroup = GroupTestUtil.addGroup(
+			grandparentGroup.getGroupId());
+
+		_group = GroupTestUtil.addGroup(parentGroup.getGroupId());
+
+		_groups.add(_group);
+		_groups.add(parentGroup);
+		_groups.add(grandparentGroup);
+
+		_user = UserTestUtil.addGroupAdminUser(_group);
+
+		_users.add(_user);
+
+		long[] groupIds = getSharedContentSiteGroupIds();
+
+		Assert.assertTrue(
+			ArrayUtil.contains(groupIds, grandparentGroup.getGroupId()));
+		Assert.assertTrue(
+			ArrayUtil.contains(groupIds, parentGroup.getGroupId()));
 	}
 
 	@Test
@@ -83,7 +105,11 @@ public class PortalImplGetSitesTest {
 
 		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
 
+		_groups.add(0, childGroup);
+
 		Group grandchildGroup = GroupTestUtil.addGroup(childGroup.getGroupId());
+
+		_groups.add(0, grandchildGroup);
 
 		long[] groupIds = getSharedContentSiteGroupIds();
 
@@ -97,7 +123,11 @@ public class PortalImplGetSitesTest {
 	public void testGetSharedContentSiteGroupIdsFromGroup() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
+		_groups.add(group);
+
 		_user = UserTestUtil.addGroupAdminUser(group);
+
+		_users.add(_user);
 
 		Assert.assertTrue(
 			ArrayUtil.contains(
@@ -131,52 +161,14 @@ public class PortalImplGetSitesTest {
 			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
 	}
 
-	protected void setContentSharingWithChildrenEnabled(
-			Group group, int contentSharingWithChildrenEnabled)
-		throws Exception {
-
-		UnicodeProperties typeSettingsProperties =
-			group.getTypeSettingsProperties();
-
-		typeSettingsProperties.setProperty(
-			"contentSharingWithChildrenEnabled",
-			String.valueOf(contentSharingWithChildrenEnabled));
-
-		GroupServiceUtil.updateGroup(
-			group.getGroupId(), typeSettingsProperties.toString());
-	}
-
-	protected void testGetSharedContentSiteGroupIdsFromAncestors(
-			boolean contentSharingWithChildrenEnabled)
-		throws Exception {
-
-		Group grandparentGroup = GroupTestUtil.addGroup();
-
-		Group parentGroup = GroupTestUtil.addGroup(
-			grandparentGroup.getGroupId());
-
-		_group = GroupTestUtil.addGroup(parentGroup.getGroupId());
-
-		_user = UserTestUtil.addGroupAdminUser(_group);
-
-		if (!contentSharingWithChildrenEnabled) {
-			setContentSharingWithChildrenEnabled(
-				grandparentGroup, Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED);
-			setContentSharingWithChildrenEnabled(
-				parentGroup, Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED);
-		}
-
-		long[] groupIds = getSharedContentSiteGroupIds();
-
-		Assert.assertEquals(
-			contentSharingWithChildrenEnabled,
-			ArrayUtil.contains(groupIds, grandparentGroup.getGroupId()));
-		Assert.assertEquals(
-			contentSharingWithChildrenEnabled,
-			ArrayUtil.contains(groupIds, parentGroup.getGroupId()));
-	}
-
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private final List<Group> _groups = new ArrayList<Group>();
+
 	private User _user;
+
+	@DeleteAfterTestRun
+	private final List<User> _users = new ArrayList<User>();
 
 }

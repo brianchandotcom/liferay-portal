@@ -171,56 +171,6 @@ public class SyncFileService {
 		return syncFile;
 	}
 
-	public static SyncFile deleteFileSyncFile(
-			long syncAccountId, SyncFile syncFile)
-		throws Exception {
-
-		// Local sync file
-
-		if (Files.exists(Paths.get(syncFile.getFilePathName()))) {
-			return syncFile;
-		}
-
-		syncFile.setUiEvent(SyncFile.UI_EVENT_DELETED_LOCAL);
-
-		deleteSyncFile(syncFile);
-
-		// Remote sync file
-
-		if ((syncFile.getState() != SyncFile.STATE_ERROR) &&
-			(syncFile.getState() != SyncFile.STATE_UNSYNCED)) {
-
-			FileEventUtil.deleteFile(syncAccountId, syncFile);
-		}
-
-		return syncFile;
-	}
-
-	public static SyncFile deleteFolderSyncFile(
-			long syncAccountId, SyncFile syncFile)
-		throws Exception {
-
-		// Local sync file
-
-		if (Files.exists(Paths.get(syncFile.getFilePathName()))) {
-			return syncFile;
-		}
-
-		syncFile.setUiEvent(SyncFile.UI_EVENT_DELETED_LOCAL);
-
-		deleteSyncFile(syncFile);
-
-		// Remote sync file
-
-		if ((syncFile.getState() != SyncFile.STATE_ERROR) &&
-			(syncFile.getState() != SyncFile.STATE_UNSYNCED)) {
-
-			FileEventUtil.deleteFolder(syncAccountId, syncFile);
-		}
-
-		return syncFile;
-	}
-
 	public static void deleteSyncFile(SyncFile syncFile) {
 		deleteSyncFile(syncFile, true);
 	}

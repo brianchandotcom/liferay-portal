@@ -15,6 +15,7 @@
 package com.liferay.sync.engine.filesystem;
 
 import com.liferay.sync.engine.SyncEngine;
+import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncFileModelListener;
@@ -321,7 +322,16 @@ public class SyncWatchEventProcessor implements Runnable {
 
 		SyncFile syncFile = SyncFileService.fetchSyncFile(filePath.toString());
 
-		if (syncFile == null) {
+		if ((syncFile == null) ||
+			Files.exists(Paths.get(syncFile.getFilePathName()))) {
+
+			return;
+		}
+		else if ((syncFile.getState() == SyncFile.STATE_ERROR) ||
+				 (syncFile.getState() == SyncFile.STATE_UNSYNCED)) {
+
+			SyncFileService.deleteSyncFile(syncFile);
+
 			return;
 		}
 		else if (isPendingTypePK(syncFile)) {
@@ -330,7 +340,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			return;
 		}
 
-		SyncFileService.deleteFileSyncFile(_syncAccountId, syncFile);
+		FileEventUtil.deleteFile(_syncAccountId, syncFile);
 	}
 
 	protected void deleteFolder(SyncWatchEvent syncWatchEvent)
@@ -340,7 +350,16 @@ public class SyncWatchEventProcessor implements Runnable {
 
 		SyncFile syncFile = SyncFileService.fetchSyncFile(filePath.toString());
 
-		if (syncFile == null) {
+		if ((syncFile == null) ||
+			Files.exists(Paths.get(syncFile.getFilePathName()))) {
+
+			return;
+		}
+		else if ((syncFile.getState() == SyncFile.STATE_ERROR) ||
+				 (syncFile.getState() == SyncFile.STATE_UNSYNCED)) {
+
+			SyncFileService.deleteSyncFile(syncFile);
+
 			return;
 		}
 		else if (isPendingTypePK(syncFile)) {
@@ -349,7 +368,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			return;
 		}
 
-		SyncFileService.deleteFolderSyncFile(_syncAccountId, syncFile);
+		FileEventUtil.deleteFolder(_syncAccountId, syncFile);
 	}
 
 	protected void doRun() throws Exception {

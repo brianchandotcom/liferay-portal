@@ -26,7 +26,6 @@ import com.liferay.sync.engine.filesystem.Watcher;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
-import com.liferay.sync.engine.model.SyncWatchEvent;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncPropService;
@@ -305,9 +304,14 @@ public class SyncEngine {
 				continue;
 			}
 
-			watchEventListener.watchEvent(
-				SyncWatchEvent.EVENT_TYPE_DELETE,
-				Paths.get(deletedSyncFile.getFilePathName()));
+			if (deletedSyncFile.isFolder()) {
+				FileEventUtil.deleteFolder(
+					deletedSyncFile.getSyncAccountId(), deletedSyncFile);
+			}
+			else {
+				FileEventUtil.deleteFile(
+					deletedSyncFile.getSyncAccountId(), deletedSyncFile);
+			}
 		}
 	}
 

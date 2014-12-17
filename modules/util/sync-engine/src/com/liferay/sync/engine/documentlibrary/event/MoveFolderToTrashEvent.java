@@ -14,8 +14,10 @@
 
 package com.liferay.sync.engine.documentlibrary.event;
 
-import com.liferay.sync.engine.documentlibrary.handler.BaseJSONHandler;
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
+import com.liferay.sync.engine.documentlibrary.handler.MoveToTrashHandler;
+import com.liferay.sync.engine.model.SyncFile;
+import com.liferay.sync.engine.service.SyncFileService;
 
 import java.util.Map;
 
@@ -29,7 +31,7 @@ public class MoveFolderToTrashEvent extends BaseEvent {
 
 		super(syncAccountId, _URL_PATH, parameters);
 
-		_handler = new BaseJSONHandler(this);
+		_handler = new MoveToTrashHandler(this);
 	}
 
 	@Override
@@ -39,6 +41,13 @@ public class MoveFolderToTrashEvent extends BaseEvent {
 
 	@Override
 	protected void processRequest() throws Exception {
+		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
+
+		syncFile.setState(SyncFile.STATE_IN_PROGRESS);
+		syncFile.setUiEvent(SyncFile.UI_EVENT_DELETED_LOCAL);
+
+		SyncFileService.update(syncFile);
+
 		processAsynchronousRequest();
 	}
 

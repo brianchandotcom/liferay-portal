@@ -14,7 +14,6 @@
 
 package com.liferay.socialnetworking.service.impl;
 
-import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -25,10 +24,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 import com.liferay.socialnetworking.model.WallEntry;
 import com.liferay.socialnetworking.service.base.WallEntryLocalServiceBaseImpl;
 import com.liferay.socialnetworking.wall.social.WallActivityKeys;
@@ -50,7 +47,7 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 
 		// Wall entry
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = getGroupLocalService().getGroup(groupId);
 		User user = userLocalService.getUserById(userId);
 		Date now = new Date();
 
@@ -84,7 +81,7 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 		extraDataJSONObject.put("comments", wallEntry.getComments());
 
 		if (userId != group.getClassPK()) {
-			SocialActivityLocalServiceUtil.addActivity(
+			getSocialActivityLocalService().addActivity(
 				userId, groupId, WallEntry.class.getName(), wallEntryId,
 				WallActivityKeys.ADD_ENTRY, extraDataJSONObject.toString(),
 				group.getClassPK());
@@ -120,7 +117,7 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 
 		// Social
 
-		SocialActivityLocalServiceUtil.deleteActivities(
+		getSocialActivityLocalService().deleteActivities(
 			WallEntry.class.getName(), wallEntry.getWallEntryId());
 
 		return wallEntry;
@@ -178,7 +175,7 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 
 		String wallEntryURL = portalURL + layoutURL;
 
-		Group group = GroupLocalServiceUtil.getGroup(wallEntry.getGroupId());
+		Group group = getGroupLocalService().getGroup(wallEntry.getGroupId());
 
 		User user = userLocalService.getUserById(group.getClassPK());
 		User wallEntryUser = userLocalService.getUserById(
@@ -232,7 +229,7 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 		MailMessage mailMessage = new MailMessage(
 			from, to, subject, body, true);
 
-		MailServiceUtil.sendEmail(mailMessage);
+		getMailService().sendEmail(mailMessage);
 	}
 
 }

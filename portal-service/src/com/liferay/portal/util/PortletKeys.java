@@ -37,8 +37,6 @@ public class PortletKeys {
 
 	public static final String ASSET_PUBLISHER = "101";
 
-	public static final String ASSET_TAGS_NAVIGATION = "141";
-
 	public static final String BACKGROUND_TASK = "189";
 
 	public static final String BLOGS = "33";
@@ -231,12 +229,6 @@ public class PortletKeys {
 	public static final String TAGS_CLOUD = "148";
 
 	public static final String TAGS_COMPILER = "103";
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #ASSET_TAGS_NAVIGATION}
-	 */
-	@Deprecated
-	public static final String TAGS_ENTRIES_NAVIGATION = ASSET_TAGS_NAVIGATION;
 
 	public static final String TRANSLATOR = "26";
 

@@ -36,6 +36,7 @@ import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
+import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
@@ -510,6 +511,62 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the image local service.
+	 *
+	 * @return the image local service
+	 */
+	public com.liferay.portal.service.ImageLocalService getImageLocalService() {
+		return imageLocalService;
+	}
+
+	/**
+	 * Sets the image local service.
+	 *
+	 * @param imageLocalService the image local service
+	 */
+	public void setImageLocalService(
+		com.liferay.portal.service.ImageLocalService imageLocalService) {
+		this.imageLocalService = imageLocalService;
+	}
+
+	/**
+	 * Returns the image remote service.
+	 *
+	 * @return the image remote service
+	 */
+	public com.liferay.portal.service.ImageService getImageService() {
+		return imageService;
+	}
+
+	/**
+	 * Sets the image remote service.
+	 *
+	 * @param imageService the image remote service
+	 */
+	public void setImageService(
+		com.liferay.portal.service.ImageService imageService) {
+		this.imageService = imageService;
+	}
+
+	/**
+	 * Returns the image persistence.
+	 *
+	 * @return the image persistence
+	 */
+	public ImagePersistence getImagePersistence() {
+		return imagePersistence;
+	}
+
+	/**
+	 * Sets the image persistence.
+	 *
+	 * @param imagePersistence the image persistence
+	 */
+	public void setImagePersistence(ImagePersistence imagePersistence) {
+		this.imagePersistence = imagePersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -668,6 +725,12 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	protected com.liferay.portal.service.ClassNameService classNameService;
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
+	@BeanReference(type = com.liferay.portal.service.ImageLocalService.class)
+	protected com.liferay.portal.service.ImageLocalService imageLocalService;
+	@BeanReference(type = com.liferay.portal.service.ImageService.class)
+	protected com.liferay.portal.service.ImageService imageService;
+	@BeanReference(type = ImagePersistence.class)
+	protected ImagePersistence imagePersistence;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)

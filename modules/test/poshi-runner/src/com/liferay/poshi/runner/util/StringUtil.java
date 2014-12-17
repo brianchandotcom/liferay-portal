@@ -53,11 +53,15 @@ public class StringUtil {
 	}
 
 	public static String[] split(String s) {
+		return split(s, StringPool.COMMA);
+	}
+
+	public static String[] split(String s, String delimiter) {
 		if (s == null) {
 			return null;
 		}
 
-		return s.split(",");
+		return s.split(delimiter);
 	}
 
 	public static String toLowerCase(String s) {
@@ -66,6 +70,14 @@ public class StringUtil {
 		}
 
 		return StringUtils.uncapitalize(s);
+	}
+
+	public static String toUpperCase(String s) {
+		if (s == null) {
+			return null;
+		}
+
+		return StringUtils.capitalize(s);
 	}
 
 }

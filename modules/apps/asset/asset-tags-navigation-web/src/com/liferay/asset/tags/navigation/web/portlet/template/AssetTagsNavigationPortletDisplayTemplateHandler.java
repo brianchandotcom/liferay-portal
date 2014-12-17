@@ -14,13 +14,14 @@
 
 package com.liferay.asset.tags.navigation.web.portlet.template;
 
+import com.liferay.asset.tags.navigation.web.configuration.AssetTagsNavigationWebConfigurationValues;
+import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetTagLocalService;
 import com.liferay.portlet.asset.service.AssetTagService;
@@ -30,10 +31,20 @@ import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateCon
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Juan Fernández
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + AssetTagsNavigationPortletKeys.TAGS_NAVIGATION
+	},
+	service = TemplateHandler.class
+)
 public class AssetTagsNavigationPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
@@ -44,8 +55,11 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language");
+
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.ASSET_TAGS_NAVIGATION, locale);
+			AssetTagsNavigationPortletKeys.TAGS_NAVIGATION, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -53,7 +67,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return PortletKeys.ASSET_TAGS_NAVIGATION;
+		return AssetTagsNavigationPortletKeys.TAGS_NAVIGATION;
 	}
 
 	@Override
@@ -93,7 +107,8 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return PropsValues.ASSET_TAGS_NAVIGATION_DISPLAY_TEMPLATES_CONFIG;
+		return
+			AssetTagsNavigationWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

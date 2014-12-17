@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="bookmarks-service" />
+	<property name="import.shared" value="social-networking-service" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 </project>

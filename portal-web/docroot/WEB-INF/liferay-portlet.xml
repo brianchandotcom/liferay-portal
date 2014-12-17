@@ -1090,11 +1090,10 @@
 	<portlet>
 		<portlet-name>141</portlet-name>
 		<icon>/html/icons/asset_tags_navigation.png</icon>
-		<struts-path>asset_tags_navigation</struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<template-handler>com.liferay.portlet.assettagsnavigation.template.AssetTagsNavigationPortletDisplayTemplateHandler</template-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<layout-cacheable>true</layout-cacheable>
 		<instanceable>true</instanceable>
 		<scopeable>true</scopeable>

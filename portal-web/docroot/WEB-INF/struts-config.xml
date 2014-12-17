@@ -297,10 +297,6 @@
 
 		<action path="/asset_tags_cloud/view" forward="portlet.asset_tags_navigation.view" />
 
-		<!-- Asset Tags Navigation -->
-
-		<action path="/asset_tags_navigation/view" forward="portlet.asset_tags_navigation.view" />
-
 		<!-- Blogs -->
 
 		<action path="/blogs/cover_image_selector" type="com.liferay.portlet.blogs.action.CoverImageSelectorAction" />

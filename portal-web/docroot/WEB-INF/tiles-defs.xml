@@ -232,14 +232,6 @@
 		<put name="portlet_content" value="/portlet/asset_tag_admin/view_tag.jsp" />
 	</definition>
 
-	<!-- Asset Tags Navigation -->
-
-	<definition name="portlet.asset_tags_navigation" extends="portlet" />
-
-	<definition name="portlet.asset_tags_navigation.view" extends="portlet.asset_tags_navigation">
-		<put name="portlet_content" value="/portlet/asset_tags_navigation/view.jsp" />
-	</definition>
-
 	<!-- Background Task-->
 
 	<definition name="portlet.background_task" extends="portlet" />

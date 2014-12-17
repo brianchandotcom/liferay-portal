@@ -31,9 +31,12 @@ import com.liferay.portal.repository.capabilities.TemporaryFileEntriesCapability
  */
 public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 
+	public static final String CLASS_NAME =
+		TemporaryFileEntryRepository.class.getName();
+
 	@Override
 	public String getClassName() {
-		return TemporaryFileEntryRepository.class.getName();
+		return CLASS_NAME;
 	}
 
 	@Override

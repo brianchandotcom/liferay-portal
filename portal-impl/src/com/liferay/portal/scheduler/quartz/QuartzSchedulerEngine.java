@@ -1164,6 +1164,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		JobDetail jobDetail = scheduler.getJobDetail(jobKey);
 
+		if (jobDetail == null) {
+			return;
+		}
+
 		JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
 		JobState jobState = getJobState(jobDataMap);

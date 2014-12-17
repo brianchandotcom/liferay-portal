@@ -21,7 +21,7 @@
 		/>
 
 		<antcall target="patch">
-			<param name="patch.destination" value="org/hibernate/cache/UpdateTimestampsCache.java" />
+			<param name="patch.destination" value="org/hibernate/cache/UpdateTimestampsCache.java,org/hibernate/intercept/FieldInterceptionHelper.java" />
 			<param name="patch.original.lib.name" value="${original.lib.name}" />
 			<param name="patch.original.lib.url" value="${original.lib.url}" />
 			<param name="patch.original.lib.version" value="${original.lib.version}" />

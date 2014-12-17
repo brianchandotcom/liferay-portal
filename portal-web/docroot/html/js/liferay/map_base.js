@@ -409,12 +409,28 @@ AUI.add(
 
 						var controls = instance.get(STR_CONTROLS);
 
+						var availableControls = controls.map(
+							function(item, index, collection) {
+								return Lang.isString(item) ? item : item.name;
+							}
+						);
+
 						var config = {};
 
 						A.Object.each(
 							instance.CONTROLS_CONFIG_MAP,
 							function(item, index, collection) {
-								config[item] = (AArray.indexOf(controls, index) !== -1);
+								var controlIndex = AArray.indexOf(availableControls, index);
+
+								if (controlIndex !== -1) {
+									var controlConfig = controls[controlIndex];
+
+									if (Lang.isObject(controlConfig) && controlConfig.cfg) {
+										config[item + 'Options'] = controlConfig.cfg;
+									}
+								}
+
+								config[item] = (controlIndex !== -1);
 							}
 						);
 

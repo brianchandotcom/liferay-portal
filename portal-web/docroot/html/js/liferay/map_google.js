@@ -364,19 +364,6 @@ AUI.add(
 							zoom: instance.get('zoom')
 						};
 
-						if (Liferay.Util.isTablet() && Liferay.Util.isPhone()){
-							controlsConfig = {
-								mapTypeControlOptions: {
-									position: MapBase.POSITION.LEFT_BOTTOM
-								},
-								panControl: false,
-								rotateControl: false,
-								scaleControl: false,
-								streetViewControl: false,
-								zoomControl: false
-							};
-						}
-
 						return new google.maps.Map(
 							instance.get('boundingBox').getDOMNode(),
 							A.merge(mapConfig, controlsConfig)

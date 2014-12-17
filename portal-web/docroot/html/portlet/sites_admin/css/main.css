@@ -11,7 +11,8 @@
 		margin-left: 1.5em;
 	}
 
-	.staging-types .field-choice label {
+	.staging-types .field-wrapper label {
+		display: block;
 		font-weight: normal;
 	}
 

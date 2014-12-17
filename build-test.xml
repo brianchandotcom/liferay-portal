@@ -1459,7 +1459,7 @@ ${marketplace.portlet.properties}</echo>
 				<echo file="${results.xml.file}"><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
 <testsuite>
 <testcase classname="${test.class.name}" name="${test.method.name}" time="0.00">
-<failure message="Jenkins failure prior to running test">Jenkins failure prior to running test<failure>
+<failure message="Jenkins failure prior to running test">Jenkins failure prior to running test</failure>
 </testcase>
 <system-out>
 <![CDATA[]]]]><![CDATA[>

@@ -168,6 +168,17 @@
 					return url;
 				}
 
+				public String getConsoleErrorMessage(String githubJenkinsFailureURL) {
+					String consoleOutput = toString(githubJenkinsFailureURL + "/logText/progressiveText");
+
+					int x = consoleOutput.indexOf("BUILD FAILED");
+					int y = consoleOutput.indexOf("Total time:");
+
+					String errorMessage = consoleOutput.substring(x, y - 2);
+
+					return fixJSON(errorMessage);
+				}
+
 				public String getRebaseErrorMessage(String githubJenkinsFailureURL) {
 					String consoleOutput = toString(githubJenkinsFailureURL + "/logText/progressiveText");
 
@@ -299,7 +310,7 @@
 							sb.append(getRebaseErrorMessage(githubJenkinsFailureURL));
 						}
 						else {
-							sb.append(jsonObject.get("result"));
+							sb.append(getConsoleErrorMessage(githubJenkinsFailureURL));
 						}
 
 						sb.append("</pre>");

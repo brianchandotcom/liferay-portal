@@ -1647,23 +1647,29 @@
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<if>
-			<isset var="dmDocumentShortcut" />
+			<equals arg1="${dmDocumentShortcut}" arg2="true" />
 			<then>
 				<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_SHORTCUT_ACTIONS" />
 			</then>
-			<else>
-				<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
-			</else>
+			<elseif>
+				<equals arg1="${dmDocumentShortcut}" arg2="false" />
+				<then>
+					<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+				</then>
+			</elseif>
 		</if>
 
 		<if>
-			<isset var="viewNoCheckoutOption" />
+			<equals arg1="${viewCheckoutOption}" arg2="true" />
 			<then>
-				<execute action="PGDocumentsandmedia#assertNotVisible" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
-			</then>
-			<else>
 				<execute action="PGDocumentsandmedia#assertVisible" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
-			</else>
+			</then>
+			<elseif>
+				<equals arg1="${viewCheckoutOption}" arg2="false" />
+				<then>
+					<execute action="PGDocumentsandmedia#assertNotVisible" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
+				</then>
+			</elseif>
 		</if>
 	</command>
 

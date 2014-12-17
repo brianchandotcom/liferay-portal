@@ -1394,6 +1394,10 @@
 		<put name="portlet_content" value="/portlet/users_admin/edit_user.jsp" />
 	</definition>
 
+	<definition name="portlet.users_admin.edit_user_details" extends="portlet.users_admin">
+		<put name="portlet_content" value="/portlet/users_admin/user/details.jsp" />
+	</definition>
+
 	<definition name="portlet.users_admin.error" extends="portlet.users_admin">
 		<put name="portlet_content" value="/portlet/users_admin/error.jsp" />
 	</definition>

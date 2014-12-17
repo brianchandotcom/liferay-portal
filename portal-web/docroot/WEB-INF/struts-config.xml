@@ -1862,6 +1862,8 @@
 			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
 		</action>
 
+		<action path="/users_admin/edit_user_details" forward="portlet.users_admin.edit_user_details" />
+
 		<action path="/users_admin/edit_user_roles" type="com.liferay.portlet.sites.action.EditUserRolesAction">
 			<forward name="portlet.sites_admin.edit_user_roles" path="portlet.sites_admin.edit_user_roles" />
 			<forward name="portlet.sites_admin.error" path="portlet.sites_admin.error" />

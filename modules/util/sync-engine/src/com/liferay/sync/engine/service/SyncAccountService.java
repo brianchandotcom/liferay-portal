@@ -27,13 +27,10 @@ import com.liferay.sync.engine.util.OSDetector;
 
 import java.io.IOException;
 
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.sql.SQLException;
 
@@ -41,6 +38,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.io.FileUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -384,31 +383,7 @@ public class SyncAccountService {
 			return;
 		}
 
-		Files.walkFileTree(
-			filePath,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult postVisitDirectory(
-						Path filePath, IOException ioe)
-					throws IOException {
-
-					Files.deleteIfExists(filePath);
-
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(
-						Path filePath, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					Files.deleteIfExists(filePath);
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
+		FileUtils.deleteDirectory(filePath.toFile());
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

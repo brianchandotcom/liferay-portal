@@ -34,6 +34,7 @@ import com.liferay.sync.engine.service.SyncWatchEventService;
 import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
 import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
 import com.liferay.sync.engine.util.ConnectionRetryUtil;
+import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.LoggerUtil;
 import com.liferay.sync.engine.util.PropsValues;
 import com.liferay.sync.engine.util.SyncClientUpdater;
@@ -58,6 +59,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.io.FileUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -160,6 +163,13 @@ public class SyncEngine {
 
 		SyncAccount syncAccount = ServerEventUtil.synchronizeSyncAccount(
 			syncAccountId);
+
+		Path dataFilePath = FileUtil.getFilePath(
+			syncAccount.getFilePathName(), ".data");
+
+		if (Files.exists(dataFilePath)) {
+			FileUtils.cleanDirectory(dataFilePath.toFile());
+		}
 
 		if (!ConnectionRetryUtil.retryInProgress(syncAccountId)) {
 			syncAccount.setState(SyncAccount.STATE_CONNECTED);

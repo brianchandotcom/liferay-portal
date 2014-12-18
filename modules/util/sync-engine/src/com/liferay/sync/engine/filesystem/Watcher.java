@@ -330,9 +330,11 @@ public class Watcher implements Runnable {
 							BasicFileAttributes basicFileAttributes)
 						throws IOException {
 
-						if (!filePath.equals(_dataFilePath)) {
-							doRegister(filePath, false);
+						if (filePath.equals(_dataFilePath)) {
+							return FileVisitResult.SKIP_SUBTREE;
 						}
+
+						doRegister(filePath, false);
 
 						return FileVisitResult.CONTINUE;
 					}
@@ -369,13 +371,9 @@ public class Watcher implements Runnable {
 							Path filePath, IOException ioe)
 						throws IOException {
 
-						if (ioe != null) {
-							_failedFilePaths.add(filePath);
+						_failedFilePaths.add(filePath);
 
-							return FileVisitResult.CONTINUE;
-						}
-
-						return super.visitFileFailed(filePath, ioe);
+						return FileVisitResult.CONTINUE;
 					}
 
 				}

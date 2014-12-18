@@ -16,6 +16,7 @@ package com.liferay.sync.engine.service.persistence;
 
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.SelectArg;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.stmt.Where;
 
 import com.liferay.sync.engine.model.SyncFile;
@@ -115,6 +116,12 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		return syncFiles.get(0);
 	}
 
+	public List<SyncFile> findBySyncAccountId(long syncAccountId)
+		throws SQLException {
+
+		return queryForEq("syncAccountId", syncAccountId);
+	}
+
 	public List<SyncFile> findByF_L(String filePathName, long localSyncTime)
 		throws SQLException {
 
@@ -174,10 +181,22 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		return queryForFieldValues(fieldValues);
 	}
 
-	public List<SyncFile> findBySyncAccountId(long syncAccountId)
+	public void updateByFilePathName(
+			String filePathName, int state, int uiEvent)
 		throws SQLException {
 
-		return queryForEq("syncAccountId", syncAccountId);
+		UpdateBuilder<SyncFile, Long> updateBuilder = updateBuilder();
+
+		Where<SyncFile, Long> where = updateBuilder.where();
+
+		filePathName = StringUtils.replace(filePathName, "\\", "\\\\");
+
+		where.like("filePathName", new SelectArg(filePathName + "%"));
+
+		updateBuilder.updateColumnValue("state", state);
+		updateBuilder.updateColumnValue("uiEvent", uiEvent);
+
+		updateBuilder.update();
 	}
 
 }

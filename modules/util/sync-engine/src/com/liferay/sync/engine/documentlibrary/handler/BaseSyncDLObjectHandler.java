@@ -22,6 +22,7 @@ import com.liferay.sync.engine.util.FileUtil;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.FileTime;
 
 /**
  * @author Shinn Lok
@@ -59,6 +60,11 @@ public class BaseSyncDLObjectHandler extends BaseJSONHandler {
 				sourceSyncFile);
 
 			if (Files.exists(sourceFilePath)) {
+				FileTime fileTime = FileTime.fromMillis(
+					targetSyncFile.getModifiedTime());
+
+				Files.setLastModifiedTime(sourceFilePath, fileTime);
+
 				Files.move(sourceFilePath, targetFilePath);
 			}
 
@@ -80,6 +86,11 @@ public class BaseSyncDLObjectHandler extends BaseJSONHandler {
 				sourceSyncFile);
 
 			if (Files.exists(sourceFilePath)) {
+				FileTime fileTime = FileTime.fromMillis(
+					targetSyncFile.getModifiedTime());
+
+				Files.setLastModifiedTime(sourceFilePath, fileTime);
+
 				Files.move(sourceFilePath, targetFilePath);
 			}
 

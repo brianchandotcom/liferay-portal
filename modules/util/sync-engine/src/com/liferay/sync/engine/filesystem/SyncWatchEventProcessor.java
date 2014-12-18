@@ -86,7 +86,14 @@ public class SyncWatchEventProcessor implements Runnable {
 	}
 
 	public boolean isInProgress() {
-		return _inProgress;
+		long count = SyncWatchEventService.getSyncWatchEventsCount(
+			_syncAccountId);
+
+		if (count > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -383,8 +390,6 @@ public class SyncWatchEventProcessor implements Runnable {
 			System.currentTimeMillis() - lastSyncWatchEvent.getTimestamp();
 
 		if (delta <= 500) {
-			_inProgress = true;
-
 			SyncEngineUtil.fireSyncEngineStateChanged(
 				_syncAccountId, SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSING);
 
@@ -404,8 +409,6 @@ public class SyncWatchEventProcessor implements Runnable {
 		for (SyncWatchEvent syncWatchEvent : syncWatchEvents) {
 			processSyncWatchEvent(syncWatchEvent);
 		}
-
-		_inProgress = false;
 
 		SyncEngineUtil.fireSyncEngineStateChanged(
 			_syncAccountId, SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
@@ -555,7 +558,6 @@ public class SyncWatchEventProcessor implements Runnable {
 	private final Map<String, List<SyncWatchEvent>>
 		_dependentSyncWatchEventsMaps =
 			new HashMap<String, List<SyncWatchEvent>>();
-	private boolean _inProgress;
 	private final Set<Long> _pendingTypePKSyncFileIds = new HashSet<Long>();
 	private final Set<Long> _processedSyncWatchEventIds = new HashSet<Long>();
 	private final long _syncAccountId;

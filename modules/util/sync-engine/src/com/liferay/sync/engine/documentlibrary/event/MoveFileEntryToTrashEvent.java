@@ -43,10 +43,9 @@ public class MoveFileEntryToTrashEvent extends BaseEvent {
 	protected void processRequest() throws Exception {
 		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
 
-		syncFile.setState(SyncFile.STATE_IN_PROGRESS);
-		syncFile.setUiEvent(SyncFile.UI_EVENT_DELETED_LOCAL);
-
-		SyncFileService.update(syncFile);
+		SyncFileService.setStatuses(
+			syncFile, SyncFile.STATE_IN_PROGRESS,
+			SyncFile.UI_EVENT_DELETED_LOCAL);
 
 		processAsynchronousRequest();
 	}

@@ -35,6 +35,16 @@ public class SyncWatchEventPersistence
 		super(SyncWatchEvent.class);
 	}
 
+	public long countBySyncAccountId(long syncAccountId) throws SQLException {
+		QueryBuilder<SyncWatchEvent, Long> queryBuilder = queryBuilder();
+
+		Where<SyncWatchEvent, Long> where = queryBuilder.where();
+
+		where.eq("syncAccountId", syncAccountId);
+
+		return where.countOf();
+	}
+
 	public void deleteBySyncAccountId(long syncAccountId) throws SQLException {
 		DeleteBuilder<SyncWatchEvent, Long> deleteBuilder = deleteBuilder();
 
@@ -72,23 +82,7 @@ public class SyncWatchEventPersistence
 		return syncWatchEvents.get(0);
 	}
 
-	public List<SyncWatchEvent> findBySyncAccountId(
-			long syncAccountId, String orderByColumn, boolean ascending)
-		throws SQLException {
-
-		QueryBuilder<SyncWatchEvent, Long> queryBuilder = queryBuilder();
-
-		Where<SyncWatchEvent, Long> where = queryBuilder.where();
-
-		where.eq("syncAccountId", syncAccountId);
-
-		queryBuilder.orderBy("fileType", false);
-		queryBuilder.orderBy(orderByColumn, ascending);
-
-		return query(queryBuilder.prepare());
-	}
-
-	public SyncWatchEvent findBySyncAccountId_Last(long syncAccountId)
+	public SyncWatchEvent fetchBySyncAccountId_Last(long syncAccountId)
 		throws SQLException {
 
 		QueryBuilder<SyncWatchEvent, Long> queryBuilder = queryBuilder();
@@ -107,6 +101,22 @@ public class SyncWatchEventPersistence
 		}
 
 		return syncWatchEvents.get(0);
+	}
+
+	public List<SyncWatchEvent> findBySyncAccountId(
+			long syncAccountId, String orderByColumn, boolean ascending)
+		throws SQLException {
+
+		QueryBuilder<SyncWatchEvent, Long> queryBuilder = queryBuilder();
+
+		Where<SyncWatchEvent, Long> where = queryBuilder.where();
+
+		where.eq("syncAccountId", syncAccountId);
+
+		queryBuilder.orderBy("fileType", false);
+		queryBuilder.orderBy(orderByColumn, ascending);
+
+		return query(queryBuilder.prepare());
 	}
 
 }

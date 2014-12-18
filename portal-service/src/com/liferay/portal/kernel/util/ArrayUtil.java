@@ -1158,6 +1158,10 @@ public class ArrayUtil {
 	}
 
 	public static boolean[] remove(boolean[] array, boolean value) {
+		if (isEmpty(array)) {
+			return array;
+		}
+
 		List<Boolean> list = new ArrayList<Boolean>();
 
 		for (int i = 0; i < array.length; i++) {
@@ -1170,6 +1174,10 @@ public class ArrayUtil {
 	}
 
 	public static byte[] remove(byte[] array, byte value) {
+		if (isEmpty(array)) {
+			return array;
+		}
+
 		List<Byte> list = new ArrayList<Byte>();
 
 		for (int i = 0; i < array.length; i++) {
@@ -1182,6 +1190,10 @@ public class ArrayUtil {
 	}
 
 	public static char[] remove(char[] array, char value) {
+		if (isEmpty(array)) {
+			return array;
+		}
+
 		List<Character> list = new ArrayList<Character>();
 
 		for (int i = 0; i < array.length; i++) {
@@ -1194,6 +1206,10 @@ public class ArrayUtil {
 	}
 
 	public static double[] remove(double[] array, double value) {
+		if (isEmpty(array)) {
+			return array;
+		}
+
 		List<Double> list = new ArrayList<Double>();
 
 		for (int i = 0; i < array.length; i++) {
@@ -1206,6 +1222,10 @@ public class ArrayUtil {
 	}
 
 	public static float[] remove(float[] array, float value) {
+		if (isEmpty(array)) {
+			return array;
+		}
+
 		List<Float> list = new ArrayList<Float>();
 
 		for (int i = 0; i < array.length; i++) {
@@ -1218,6 +1238,10 @@ public class ArrayUtil {
 	}
 
 	public static int[] remove(int[] array, int value) {
+		if (isEmpty(array)) {
+			return array;
+		}
+
 		List<Integer> list = new ArrayList<Integer>();
 
 		for (int i = 0; i < array.length; i++) {
@@ -1230,6 +1254,10 @@ public class ArrayUtil {
 	}
 
 	public static long[] remove(long[] array, long value) {
+		if (isEmpty(array)) {
+			return array;
+		}
+
 		List<Long> list = new ArrayList<Long>();
 
 		for (int i = 0; i < array.length; i++) {
@@ -1242,6 +1270,10 @@ public class ArrayUtil {
 	}
 
 	public static short[] remove(short[] array, short value) {
+		if (isEmpty(array)) {
+			return array;
+		}
+
 		List<Short> list = new ArrayList<Short>();
 
 		for (int i = 0; i < array.length; i++) {
@@ -1254,6 +1286,10 @@ public class ArrayUtil {
 	}
 
 	public static String[] remove(String[] array, String value) {
+		if (isEmpty(array)) {
+			return array;
+		}
+
 		List<String> list = new ArrayList<String>();
 
 		for (String s : array) {

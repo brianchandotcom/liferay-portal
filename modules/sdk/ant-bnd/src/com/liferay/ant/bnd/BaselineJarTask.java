@@ -116,6 +116,8 @@ public class BaselineJarTask extends BaseBndTask {
 				}
 			);
 
+			doHeader(bundleInfo);
+
 			for (Info info : infosArray) {
 				String warnings = "-";
 
@@ -365,34 +367,24 @@ public class BaselineJarTask extends BaseBndTask {
 	}
 
 	protected void doHeader(BundleInfo bundleInfo) {
-		if (_headerPrinted) {
+		if (!bundleInfo.mismatch) {
 			return;
 		}
-
-		_headerPrinted = true;
 
 		project.log(
 			"[Baseline Report] Mode: " + _reportLevel, Project.MSG_WARN);
 
-		if (bundleInfo.mismatch) {
-			project.log(
-				"[Baseline Warning] Bundle Version Change Recommended: " +
-					bundleInfo.suggestedVersion,
-				Project.MSG_WARN);
-		}
+		String output =
+			"[Baseline Warning] Bundle Version Change Recommended: " +
+				bundleInfo.suggestedVersion;
 
-		reportLog(
-			" ", "PACKAGE_NAME", "DELTA", "CUR_VER", "BASE_VER", "REC_VER",
-			"WARNINGS", "ATTRIBUTES");
+		project.log(output, Project.MSG_WARN);
 
-		reportLog(
-			"=", "==================================================",
-			"==========", "==========", "==========", "==========",
-			"==========", "==========");
+		persistLog(output);
 	}
 
 	protected void doInfo(BundleInfo bundleInfo, Info info, String warnings) {
-		doHeader(bundleInfo);
+		doPackagesHeader(bundleInfo);
 
 		reportLog(
 			String.valueOf(info.mismatch ? '*' : ' '), info.packageName,
@@ -416,6 +408,23 @@ public class BaselineJarTask extends BaseBndTask {
 
 			doDiff(curDiff, sb);
 		}
+	}
+
+	protected void doPackagesHeader(BundleInfo bundleInfo) {
+		if (_headerPrinted) {
+			return;
+		}
+
+		_headerPrinted = true;
+
+		reportLog(
+			" ", "PACKAGE_NAME", "DELTA", "CUR_VER", "BASE_VER", "REC_VER",
+			"WARNINGS", "ATTRIBUTES");
+
+		reportLog(
+			"=", "==================================================",
+			"==========", "==========", "==========", "==========",
+			"==========", "==========");
 	}
 
 	protected void generatePackageInfo(Info info, String warnings)
@@ -496,6 +505,25 @@ public class BaselineJarTask extends BaseBndTask {
 		return String.valueOf(deltaString.charAt(0));
 	}
 
+	protected void persistLog(String output) {
+		if (!_reportLevelIsPersist) {
+			return;
+		}
+
+		try {
+			if (_printWriter == null) {
+				_logFile.createNewFile();
+
+				_printWriter = new PrintWriter(_logFile);
+			}
+
+			_printWriter.println(output);
+		}
+		catch (IOException ioe) {
+			throw new BuildException(ioe);
+		}
+	}
+
 	protected void reportLog(
 		String string1, String string2, String string3, String string4,
 		String string5, String string6, String string7, String string8) {
@@ -506,20 +534,7 @@ public class BaselineJarTask extends BaseBndTask {
 
 		project.log(output, Project.MSG_WARN);
 
-		if (_reportLevelIsPersist) {
-			try {
-				if (_printWriter == null) {
-					_logFile.createNewFile();
-
-					_printWriter = new PrintWriter(_logFile);
-				}
-
-				_printWriter.println(output);
-			}
-			catch (IOException ioe) {
-				throw new BuildException(ioe);
-			}
-		}
+		persistLog(output);
 	}
 
 	private static final String _BASELINE_REPORTS_DIR = "baseline-reports";

@@ -23,7 +23,7 @@ if (Validator.isNotNull(languageId)) {
 	userLocale = LocaleUtil.fromLanguageId(languageId);
 }
 else {
-	userLocale = Validator.isNotNull(selUser) ? selUser.getLocale() : locale;
+	userLocale = Validator.isNotNull(selUser) ? selUser.getLocale() : companyLocale;
 }
 
 FullNameDefinition fullNameDefinition = LocalizationUtil.getFullNameDefinition(userLocale);

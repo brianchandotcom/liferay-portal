@@ -32,17 +32,19 @@ String type = GetterUtil.getString(request.getAttribute("liferay-staging:portlet
 Set<String> displayedControls = new HashSet<String>();
 Set<String> portletDataHandlerClasses = new HashSet<String>();
 
-PortletDataContext portletDataContext = null;
+long exportGroupId = groupId;
+
+if (type.equals(Constants.EXPORT) && (liveGroupId > 0)) {
+	exportGroupId = liveGroupId;
+}
+else if (stagingGroupId > 0) {
+	exportGroupId = stagingGroupId;
+}
 
 Date startDate = dateRange.getStartDate();
 Date endDate = dateRange.getEndDate();
 
-if (type.equals(Constants.EXPORT)) {
-	portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), liveGroupId, startDate, endDate);
-}
-else {
-	portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), stagingGroupId, startDate, endDate);
-}
+PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), exportGroupId, startDate, endDate);
 
 ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 %>

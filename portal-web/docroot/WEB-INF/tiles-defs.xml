@@ -208,30 +208,6 @@
 		<put name="portlet_content" value="/portlet/asset_publisher/view_content.jsp" />
 	</definition>
 
-	<!-- Asset Tag Admin -->
-
-	<definition name="portlet.asset_tag_admin" extends="portlet" />
-
-	<definition name="portlet.asset_tag_admin.edit_tag" extends="portlet.asset_tag_admin">
-		<put name="portlet_content" value="/portlet/asset_tag_admin/edit_tag.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_tag_admin.error" extends="portlet.asset_tag_admin">
-		<put name="portlet_content" value="/portlet/asset_tag_admin/error.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_tag_admin.merge_tag" extends="portlet.asset_tag_admin">
-		<put name="portlet_content" value="/portlet/asset_tag_admin/merge_tag.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_tag_admin.view" extends="portlet.asset_tag_admin">
-		<put name="portlet_content" value="/portlet/asset_tag_admin/view.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_tag_admin.view_tag" extends="portlet.asset_tag_admin">
-		<put name="portlet_content" value="/portlet/asset_tag_admin/view_tag.jsp" />
-	</definition>
-
 	<!-- Background Task-->
 
 	<definition name="portlet.background_task" extends="portlet" />

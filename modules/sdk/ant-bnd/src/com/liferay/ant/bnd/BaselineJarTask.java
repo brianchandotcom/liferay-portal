@@ -143,14 +143,13 @@ public class BaselineJarTask extends BaseBndTask {
 				else if (delta == Delta.UNCHANGED) {
 					boolean newVersionSuggested = false;
 
-					if ((suggestedVersion.getMajor() !=
-							newerVersion.getMajor()) ||
-						(suggestedVersion.getMicro() !=
-							newerVersion.getMicro()) ||
-						(suggestedVersion.getMinor() !=
-							newerVersion.getMinor())) {
-
+					if (suggestedVersion.compareTo(newerVersion) > 0) {
 						warnings = "VERSION INCREASE SUGGESTED";
+
+						newVersionSuggested = true;
+					}
+					else if (suggestedVersion.compareTo(newerVersion) < 0) {
+						warnings = "EXCESSIVE VERSION INCREASE";
 
 						newVersionSuggested = true;
 					}

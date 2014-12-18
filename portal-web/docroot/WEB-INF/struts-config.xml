@@ -1232,6 +1232,8 @@
 			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
 		</action>
 
+		<action path="/my_account/edit_user_details" forward="portlet.users_admin.edit_user_details" />
+
 		<action path="/my_account/view" type="com.liferay.portlet.myaccount.action.ViewAction">
 			<forward name="portlet.my_account.edit_user" path="portlet.users_admin.edit_user" />
 			<forward name="portlet.my_account.view" path="portlet.my_account.view" />

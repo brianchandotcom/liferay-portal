@@ -5,6 +5,9 @@
 
 	<property name="deploy.dir" value="${liferay.home}/osgi/test" />
 	<property name="jar.file" value="${ant.project.name}" />
+	<property name="javac.classpathref" value="portal.test.classpath" />
+	<property name="javac.destdir" value="classes" />
+	<property name="javac.srcdir" value="src" />
 	<property name="manifest.bundle.name" value="Liferay Portal Test" />
 	<property name="manifest.bundle.symbolic.name" value="portal-test" />
 
@@ -12,38 +15,4 @@
 		<path refid="lib.classpath" />
 		<pathelement location="${project.dir}/portal-service/classes" />
 	</path>
-
-	<target name="compile">
-		<mkdir dir="classes" />
-
-		<antcall target="compile-java">
-			<param name="javac.classpathref" value="portal.test.classpath" />
-			<param name="javac.destdir" value="classes" />
-			<param name="javac.srcdir" value="src" />
-		</antcall>
-	</target>
-
-	<!--<target name="compile">
-		<mkdir dir="classes" />
-
-		<copy todir="classes" preservelastmodified="true">
-			<fileset dir="src" excludes="**/*.java" />
-		</copy>
-
-		<path id="web-lib.classpath">
-			<fileset dir="${project.dir}/lib/development" includes="junit.jar" />
-		</path>
-
-		<javac
-			classpathref="web.classpath"
-			compiler="${javac.compiler}"
-			debug="${javac.debug}"
-			deprecation="${javac.deprecation}"
-			destdir="classes"
-			encoding="${javac.encoding}"
-			includeAntRuntime="false"
-			nowarn="${javac.nowarn}"
-			srcdir="src"
-		/>
-	</target>-->
 </project>

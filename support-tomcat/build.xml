@@ -14,9 +14,7 @@
 		<fileset dir="${project.dir}/lib/development" includes="catalina.jar,jasper.jar,tomcat-coyote.jar" />
 	</path>
 
-	<target name="clean">
-		<antcall target="build-common-java.clean" />
-
+	<target name="clean" depends="build-common-java.clean">
 		<delete file="${deploy.dir}/${jar.file}.jar" />
 	</target>
 

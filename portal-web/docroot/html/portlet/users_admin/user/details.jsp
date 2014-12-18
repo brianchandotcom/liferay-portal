@@ -18,6 +18,11 @@
 
 <%
 User selUser = (User)request.getAttribute("user.selUser");
+
+if (Validator.isNull(selUser)) {
+	selUser = PortalUtil.getSelectedUser(request);
+}
+
 Contact selContact = (Contact)request.getAttribute("user.selContact");
 
 Calendar birthday = CalendarFactoryUtil.getCalendar();

@@ -111,7 +111,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			}
 		}
 
-		return _ddmForm;
+		return new DDMForm(_ddmForm);
 	}
 
 	@Override
@@ -247,7 +247,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			}
 		}
 
-		return _fullHierarchyDDMForm;
+		return new DDMForm(_fullHierarchyDDMForm);
 	}
 
 	@Override

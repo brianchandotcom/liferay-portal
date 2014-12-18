@@ -145,6 +145,8 @@ public abstract class BaseFieldWrapperTag extends com.liferay.taglib.util.Includ
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_cssClass = null;
 		_data = null;
 		_first = false;

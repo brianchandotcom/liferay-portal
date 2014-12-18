@@ -105,6 +105,8 @@ public abstract class BaseAlertTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_animated = false;
 		_closeable = true;
 		_cssClass = null;

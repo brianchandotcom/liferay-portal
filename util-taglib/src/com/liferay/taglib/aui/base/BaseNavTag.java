@@ -115,6 +115,8 @@ public abstract class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_ariaLabel = null;
 		_ariaRole = null;
 		_collapsible = false;

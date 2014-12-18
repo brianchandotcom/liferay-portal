@@ -55,6 +55,8 @@ public abstract class BaseButtonRowTag extends com.liferay.taglib.util.IncludeTa
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_cssClass = null;
 		_id = null;
 	}

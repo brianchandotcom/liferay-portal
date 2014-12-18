@@ -65,6 +65,8 @@ public abstract class BaseContainerTag extends com.liferay.taglib.util.IncludeTa
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_cssClass = null;
 		_fluid = true;
 		_id = null;

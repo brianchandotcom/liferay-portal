@@ -105,6 +105,8 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_cssClass = null;
 		_data = null;
 		_id = null;

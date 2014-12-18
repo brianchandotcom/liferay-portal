@@ -48,6 +48,8 @@ public abstract class BaseScriptTag extends com.liferay.taglib.util.PositionTagS
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_sandbox = false;
 		_use = null;
 	}

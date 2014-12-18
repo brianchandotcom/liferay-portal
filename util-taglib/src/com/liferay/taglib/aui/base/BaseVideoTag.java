@@ -135,6 +135,8 @@ public abstract class BaseVideoTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_boundingBox = null;
 		_cssClass = null;
 		_flashPlayerVersion = "9,0,0,0";

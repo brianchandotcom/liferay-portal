@@ -75,6 +75,8 @@ public abstract class BaseNavBarSearchTag extends com.liferay.taglib.util.Includ
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_cssClass = null;
 		_id = null;
 		_file = null;

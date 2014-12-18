@@ -85,6 +85,8 @@ public abstract class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_columnWidth = 0;
 		_cssClass = null;
 		_first = false;

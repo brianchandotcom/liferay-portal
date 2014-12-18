@@ -115,6 +115,8 @@ public abstract class BaseColTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_cssClass = null;
 		_id = null;
 		_lg = null;

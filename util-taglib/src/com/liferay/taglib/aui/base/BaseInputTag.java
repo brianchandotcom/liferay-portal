@@ -495,6 +495,8 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_autoFocus = false;
 		_autoSize = false;
 		_bean = null;

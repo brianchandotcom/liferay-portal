@@ -64,6 +64,8 @@ public abstract class BaseModelContextTag extends com.liferay.taglib.util.Includ
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_bean = null;
 		_defaultLanguageId = null;
 		_model = null;

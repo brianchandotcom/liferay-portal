@@ -201,6 +201,10 @@
 		.edit-toolbar {
 			margin: 0;
 		}
+
+		.nav-item-icon {
+			width: 15px;
+		}
 	}
 
 	.lfr-app-column-view {

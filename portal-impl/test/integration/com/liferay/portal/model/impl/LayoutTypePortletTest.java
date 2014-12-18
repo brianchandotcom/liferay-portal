@@ -234,23 +234,6 @@ public class LayoutTypePortletTest {
 	}
 
 	@Test
-	public void testAddPortletIdWithInvalidIdWithoutPermission()
-		throws Exception {
-
-		Layout layout = _layoutTypePortlet.getLayout();
-
-		_user = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), layout.getGroupId());
-
-		String portletId = RandomTestUtil.randomString();
-
-		portletId = _layoutTypePortlet.addPortletId(
-			_user.getUserId(), portletId);
-
-		Assert.assertNull(portletId);
-	}
-
-	@Test
 	public void testAddPortletIdWithValidId() throws Exception {
 		Layout layout = _layoutTypePortlet.getLayout();
 

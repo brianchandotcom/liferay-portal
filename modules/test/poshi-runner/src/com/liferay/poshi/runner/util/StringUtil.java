@@ -80,4 +80,8 @@ public class StringUtil {
 		return StringUtils.capitalize(s);
 	}
 
+	public static String valueOf(Object obj) {
+		return String.valueOf(obj);
+	}
+
 }

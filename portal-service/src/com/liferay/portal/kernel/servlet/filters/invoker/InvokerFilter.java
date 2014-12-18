@@ -31,7 +31,9 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -69,9 +71,32 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		String uri = getURI(request);
 
-		request = handleNonSerializableRequest(request);
-
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
+
+		if (!Validator.isBlank(uri) &&
+			(uri.length() > _invokerFilterURILengthHardLimit)) {
+
+			response.sendError(HttpServletResponse.SC_REQUEST_URI_TOO_LONG);
+
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("Request uri=\"");
+				sb.append(
+					StringUtil.shorten(uri, _invokerFilterURILengthHardLimit));
+				sb.append("\",len=");
+				sb.append(uri.length());
+				sb.append(" was rejected, because it was longer than ");
+				sb.append(_invokerFilterURILengthHardLimit);
+				sb.append(" characters.");
+
+				_log.warn(sb.toString());
+			}
+
+			return;
+		}
+
+		request = handleNonSerializableRequest(request);
 
 		if (ServletVersionDetector.is3_0()) {
 			response =
@@ -157,6 +182,9 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 			_filterChains = new ConcurrentLFUCache<String, InvokerFilterChain>(
 				_invokerFilterChainSize);
 		}
+
+		_invokerFilterURILengthHardLimit = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.INVOKER_FILTER_URI_LENGTH_HARD_LIMIT));
 
 		ServletContext servletContext = _filterConfig.getServletContext();
 
@@ -287,5 +315,6 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	private FilterConfig _filterConfig;
 	private int _invokerFilterChainSize;
 	private InvokerFilterHelper _invokerFilterHelper;
+	private int _invokerFilterURILengthHardLimit;
 
 }

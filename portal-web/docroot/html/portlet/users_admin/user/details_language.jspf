@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:select label="Locale" name="languageId">
+<aui:select label="locale" name="languageId">
 
 	<%
 	Locale[] locales = LanguageUtil.getAvailableLocales();
@@ -35,14 +35,12 @@
 </portlet:renderURL>
 
 <aui:script sandbox="<%= true %>" use='liferay-portlet-url'>
-	var details = $('#<portlet:namespace />details'),
-		form = $('#<portlet:namespace />fm'),
-		formData,
-		select = $('#<portlet:namespace />languageId'),
-		userDetailsURL = Liferay.PortletURL.createURL('<%= userDetailsURL %>');
+	var select = $('#<portlet:namespace />languageId');
+
+	var userDetailsURL = Liferay.PortletURL.createURL('<%= userDetailsURL %>');
 
 	select.on('change', function(event) {
-		formData = form.formToArray();
+		var formData = $('#<portlet:namespace />fm').formToArray();
 
 		userDetailsURL.setParameter('language_id', select.val());
 
@@ -52,14 +50,14 @@
 				complete: function() {
 					formData.forEach(function(field) {
 						var node = $('#' + field.name);
-			 
+
 						if (node) {
 							node.val(field.value);
 						}
 					});
 				},
 				success: function(responseData) {
-					details.html(responseData);
+					$('#<portlet:namespace />details').html(responseData);
 				}
 			}
 		)

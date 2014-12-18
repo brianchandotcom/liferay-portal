@@ -50,10 +50,6 @@ public class TemplateManagerRegistry {
 		}
 	}
 
-	public Set<String> getRegisteredTemplateNames() {
-		return _templateManagers.keySet();
-	}
-
 	public TemplateManager getTemplateManager(String templateManagerName)
 		throws TemplateException {
 
@@ -66,6 +62,10 @@ public class TemplateManagerRegistry {
 		}
 
 		return templateManager;
+	}
+
+	public Set<String> getTemplateManagerNames() {
+		return _templateManagers.keySet();
 	}
 
 	public void register(TemplateManager templateManager)
@@ -88,7 +88,8 @@ public class TemplateManagerRegistry {
 		for (TemplateManager templateManager : templateManagers) {
 			try {
 				register(templateManager);
-			} catch (TemplateException te) {
+			}
+			catch (TemplateException te) {
 				_log.error(
 					"Unable to register template manager " +
 						templateManager.getName(), te);

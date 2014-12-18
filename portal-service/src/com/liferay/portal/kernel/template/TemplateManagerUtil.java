@@ -46,12 +46,11 @@ public class TemplateManagerUtil {
 			return supportedLanguageTypes;
 		}
 
-		supportedLanguageTypes = new HashSet<>();
+		supportedLanguageTypes = new HashSet<String>();
 
-		Set<String> registeredTemplateNames =
-			_templateManagerRegistry.getRegisteredTemplateNames();
+		for (String templateManagerName :
+				_templateManagerRegistry.getTemplateManagerNames()) {
 
-		for (String templateManagerName : registeredTemplateNames) {
 			String content = PropsUtil.get(
 				propertyKey, new Filter(templateManagerName));
 

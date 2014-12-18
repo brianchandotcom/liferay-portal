@@ -17,6 +17,12 @@
 <%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
+User defaultUser = company.getDefaultUser();
+
+String companyLanguageId = ParamUtil.getString(request, "languageId", defaultUser.getLanguageId());
+
+Locale companyLocale = LocaleUtil.fromLanguageId(companyLanguageId);
+
 User selUser = (User)request.getAttribute("user.selUser");
 
 if (Validator.isNull(selUser)) {

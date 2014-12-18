@@ -18,7 +18,7 @@
 
 	<%
 	Locale[] locales = LanguageUtil.getAvailableLocales();
-	Locale userLocale = Validator.isNotNull(selUser) ? selUser.getLocale() : locale;
+	Locale userLocale = Validator.isNotNull(selUser) ? selUser.getLocale() : companyLocale;
 
 	for (Locale curLocale : locales) {
 	%>

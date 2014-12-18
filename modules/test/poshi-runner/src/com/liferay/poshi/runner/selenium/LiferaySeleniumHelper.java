@@ -57,12 +57,6 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import org.sikuli.api.robot.Key;
-import org.sikuli.script.Button;
-import org.sikuli.script.Location;
-import org.sikuli.script.Match;
-import org.sikuli.script.Screen;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -1116,237 +1110,87 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		Match match = _screen.exists(
-			liferaySelenium.getProjectDirName() +
-				liferaySelenium.getSikuliImagesDirName() + image);
-
-		liferaySelenium.pause("1000");
-
-		if (match != null) {
-			throw new Exception("Element is present");
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	public static void sikuliAssertElementPresent(
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		Match match = _screen.exists(
-			liferaySelenium.getProjectDirName() +
-				liferaySelenium.getSikuliImagesDirName() + image);
-
-		liferaySelenium.pause("1000");
-
-		if (match == null) {
-			throw new Exception("Element is not present");
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	public static void sikuliClick(
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		Match match = _screen.exists(
-			liferaySelenium.getProjectDirName() +
-				liferaySelenium.getSikuliImagesDirName() + image);
-
-		liferaySelenium.pause("1000");
-
-		if (match == null) {
-			return;
-		}
-
-		_screen.click(
-			liferaySelenium.getProjectDirName() +
-			liferaySelenium.getSikuliImagesDirName() + image);
+		throw new UnsupportedOperationException();
 	}
 
 	public static void sikuliDragAndDrop(
 			LiferaySelenium liferaySelenium, String image, String coordString)
 		throws Exception {
 
-		Match match = _screen.exists(
-			liferaySelenium.getProjectDirName() +
-				liferaySelenium.getSikuliImagesDirName() + image);
-
-		liferaySelenium.pause("1000");
-
-		if (match == null) {
-			throw new Exception("Image is not present");
-		}
-
-		_screen.mouseMove(
-			liferaySelenium.getProjectDirName() +
-			liferaySelenium.getSikuliImagesDirName() + image);
-
-		Robot robot = new Robot();
-
-		robot.delay(1000);
-
-		_screen.mouseDown(Button.LEFT);
-
-		liferaySelenium.pause("2000");
-
-		String[] coords = coordString.split(",");
-
-		Location location = match.getCenter();
-
-		int x = location.getX() + GetterUtil.getInteger(coords[0]);
-		int y = location.getY() + GetterUtil.getInteger(coords[1]);
-
-		robot.mouseMove(x, y);
-
-		robot.delay(1500);
-
-		_screen.mouseUp(Button.LEFT);
+		throw new UnsupportedOperationException();
 	}
 
 	public static void sikuliLeftMouseDown(LiferaySelenium liferaySelenium)
 		throws Exception {
 
-		liferaySelenium.pause("1000");
-
-		_screen.mouseDown(Button.LEFT);
+		throw new UnsupportedOperationException();
 	}
 
 	public static void sikuliLeftMouseUp(LiferaySelenium liferaySelenium)
 		throws Exception {
 
-		liferaySelenium.pause("1000");
-
-		_screen.mouseUp(Button.LEFT);
+		throw new UnsupportedOperationException();
 	}
 
 	public static void sikuliMouseMove(
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		Match match = _screen.exists(
-			liferaySelenium.getProjectDirName() +
-			liferaySelenium.getSikuliImagesDirName() + image);
-
-		liferaySelenium.pause("1000");
-
-		if (match == null) {
-			return;
-		}
-
-		_screen.mouseMove(
-			liferaySelenium.getProjectDirName() +
-			liferaySelenium.getSikuliImagesDirName() + image);
+		throw new UnsupportedOperationException();
 	}
 
 	public static void sikuliRightMouseDown(LiferaySelenium liferaySelenium)
 		throws Exception {
 
-		liferaySelenium.pause("1000");
-
-		_screen.mouseDown(Button.RIGHT);
+		throw new UnsupportedOperationException();
 	}
 
 	public static void sikuliRightMouseUp(LiferaySelenium liferaySelenium)
 		throws Exception {
 
-		liferaySelenium.pause("1000");
-
-		_screen.mouseUp(Button.RIGHT);
+		throw new UnsupportedOperationException();
 	}
 
 	public static void sikuliType(
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
-		Match match = _screen.exists(
-			liferaySelenium.getProjectDirName() +
-				liferaySelenium.getSikuliImagesDirName() + image);
-
-		liferaySelenium.pause("1000");
-
-		if (match == null) {
-			return;
-		}
-
-		_screen.click(
-			liferaySelenium.getProjectDirName() +
-			liferaySelenium.getSikuliImagesDirName() + image);
-
-		liferaySelenium.pause("1000");
-
-		if (value.contains("${line.separator}")) {
-			String[] tokens = StringUtil.split(value, "${line.separator}");
-
-			for (int i = 0; i < tokens.length; i++) {
-				_screen.type(tokens[i]);
-
-				if ((i + 1) < tokens.length) {
-					_screen.type(Key.ENTER);
-				}
-			}
-
-			if (value.endsWith("${line.separator}")) {
-				_screen.type(Key.ENTER);
-			}
-		}
-		else {
-			_screen.type(value);
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	public static void sikuliUploadCommonFile(
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
-		_screen.click(
-			liferaySelenium.getProjectDirName() +
-			liferaySelenium.getSikuliImagesDirName() + image);
-
-		_screen.type("a", Key.CTRL);
-
-		sikuliType(
-			liferaySelenium, image,
-			liferaySelenium.getProjectDirName() +
-				liferaySelenium.getDependenciesDirName() + value);
-
-		_screen.type(Key.ENTER);
+		throw new UnsupportedOperationException();
 	}
 
 	public static void sikuliUploadTCatFile(
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
-		String tCatAdminFileName =
-			TestPropsValues.TCAT_ADMIN_REPOSITORY + "/" + value;
-
-		if (OSDetector.isWindows()) {
-			tCatAdminFileName = tCatAdminFileName.replace("/", "\\");
-		}
-
-		sikuliType(liferaySelenium, image, tCatAdminFileName);
-
-		_screen.type(Key.ENTER);
+		throw new UnsupportedOperationException();
 	}
 
 	public static void sikuliUploadTempFile(
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
-		_screen.click(
-			liferaySelenium.getProjectDirName() +
-			liferaySelenium.getSikuliImagesDirName() + image);
-
-		_screen.type("a", Key.CTRL);
-
-		String slash = "/";
-
-		if (OSDetector.isWindows()) {
-			slash = "\\";
-		}
-
-		sikuliType(
-			liferaySelenium, image,
-			liferaySelenium.getOutputDirName() + slash + value);
-
-		_screen.type(Key.ENTER);
+		throw new UnsupportedOperationException();
 	}
 
 	public static void typeAceEditor(
@@ -1407,7 +1251,7 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void typeScreen(String value) {
-		_screen.type(value);
+		throw new UnsupportedOperationException();
 	}
 
 	public static void waitForElementNotPresent(
@@ -1728,7 +1572,6 @@ public class LiferaySeleniumHelper {
 		new ArrayList<Exception>();
 	private static List<Exception> _liferayExceptions =
 		new ArrayList<Exception>();
-	private static Screen _screen = new Screen();
 	private static int _screenshotCount = 0;
 	private static int _screenshotErrorCount = 0;
 

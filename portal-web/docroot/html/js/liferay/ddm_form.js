@@ -471,7 +471,7 @@ AUI.add(
 
 								var siblings = instance.getSiblings();
 
-								var field = instance._getField(fieldNode);
+								var field = parent._getField(fieldNode);
 
 								var index = AArray.indexOf(siblings, instance);
 

@@ -18,6 +18,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -27,6 +28,19 @@ import java.util.Set;
  * @author Pablo Carvalho
  */
 public class DDMForm implements Serializable {
+
+	public DDMForm() {
+	}
+
+	public DDMForm(DDMForm ddmForm) {
+		_availableLocales = new LinkedHashSet<Locale>(
+			ddmForm._availableLocales);
+		_defaultLocale = ddmForm._defaultLocale;
+
+		for (DDMFormField ddmFormField : ddmForm._ddmFormFields) {
+			addDDMFormField(new DDMFormField(ddmFormField));
+		}
+	}
 
 	public void addAvailableLocale(Locale locale) {
 		_availableLocales.add(locale);

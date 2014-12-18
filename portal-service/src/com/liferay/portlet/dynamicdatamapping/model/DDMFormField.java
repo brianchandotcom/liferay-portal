@@ -26,6 +26,32 @@ import java.util.Map;
  */
 public class DDMFormField implements Serializable {
 
+	public DDMFormField(DDMFormField ddmFormField) {
+		_dataType = ddmFormField._dataType;
+		_ddmFormFieldOptions = new DDMFormFieldOptions(
+			ddmFormField._ddmFormFieldOptions);
+		_indexType = ddmFormField._indexType;
+		_label = new LocalizedValue(ddmFormField._label);
+		_localizable = ddmFormField._localizable;
+		_multiple = ddmFormField._multiple;
+		_name = ddmFormField._name;
+		_namespace = ddmFormField._namespace;
+		_predefinedValue = new LocalizedValue(ddmFormField._predefinedValue);
+		_readOnly = ddmFormField._readOnly;
+		_repeatable = ddmFormField._repeatable;
+		_required = ddmFormField._required;
+		_showLabel = ddmFormField._showLabel;
+		_style = new LocalizedValue(ddmFormField._style);
+		_tip = new LocalizedValue(ddmFormField._tip);
+		_type = ddmFormField._type;
+
+		for (DDMFormField nestedDDMFormField :
+				ddmFormField._nestedDDMFormFields) {
+
+			addNestedDDMFormField(nestedDDMFormField);
+		}
+	}
+
 	public DDMFormField(String name, String type) {
 		_name = name;
 		_type = type;

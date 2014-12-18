@@ -30,6 +30,11 @@ public class UnlocalizedValue implements Value {
 		_values.put(LocaleUtil.ROOT, value);
 	}
 
+	public UnlocalizedValue(UnlocalizedValue unlocalizedValue) {
+		_values.put(
+			LocaleUtil.ROOT, unlocalizedValue.getString(LocaleUtil.ROOT));
+	}
+
 	@Override
 	public void addString(Locale locale, String value) {
 		_values.put(LocaleUtil.ROOT, value);

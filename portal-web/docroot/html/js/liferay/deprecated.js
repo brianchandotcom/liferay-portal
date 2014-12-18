@@ -326,6 +326,19 @@
 
 	Liferay.provide(
 		Util,
+		'check',
+		function(form, name, checked) {
+			var checkbox = A.one(form[name]);
+
+			if (checkbox) {
+				checkbox.attr('checked', checked);
+			}
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		Util,
 		'disableSelectBoxes',
 		function(toggleBoxId, value, selectBoxId) {
 			var selectBox = A.one('#' + selectBoxId);
@@ -379,6 +392,24 @@
 				textarea.attr('textareatabs', 'disabled');
 
 				textarea.on('keydown', Util.textareaTabs);
+			}
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		Util,
+		'removeItem',
+		function(box, value) {
+			box = A.one(box);
+
+			var selectedIndex = box.get('selectedIndex');
+
+			if (!value) {
+				box.all('option').item(selectedIndex).remove(true);
+			}
+			else {
+				box.all('option[value=' + value + STR_RIGHT_SQUARE_BRACKET).item(selectedIndex).remove(true);
 			}
 		},
 		['aui-base']

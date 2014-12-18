@@ -12,26 +12,19 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.poshi.runner.selenium;
 
-import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.OSDetector;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.AntCommands;
-import com.liferay.portalweb.portal.util.EmailCommands;
-import com.liferay.portalweb.util.RuntimeVariables;
-import com.liferay.portalweb.util.TestPropsValues;
+import com.liferay.poshi.runner.util.AntCommands;
+import com.liferay.poshi.runner.util.DateUtil;
+import com.liferay.poshi.runner.util.EmailCommands;
+import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.runner.util.GetterUtil;
+import com.liferay.poshi.runner.util.HtmlUtil;
+import com.liferay.poshi.runner.util.LocaleUtil;
+import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.RuntimeVariables;
+import com.liferay.poshi.runner.util.StringUtil;
+import com.liferay.poshi.runner.util.Validator;
 
 import java.awt.Rectangle;
 import java.awt.Robot;
@@ -57,6 +50,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
+
+import junit.framework.TestCase;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 import org.sikuli.api.robot.Key;
 import org.sikuli.script.Button;
@@ -102,7 +101,7 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String pattern)
 		throws Exception {
 
-		BaseTestCase.assertEquals(pattern, liferaySelenium.getAlert());
+		TestCase.assertEquals(pattern, liferaySelenium.getAlert());
 	}
 
 	public static void assertAlertNotPresent(LiferaySelenium liferaySelenium)
@@ -175,15 +174,14 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String index, String body)
 		throws Exception {
 
-		BaseTestCase.assertEquals(body, liferaySelenium.getEmailBody(index));
+		TestCase.assertEquals(body, liferaySelenium.getEmailBody(index));
 	}
 
 	public static void assertEmailSubject(
 			LiferaySelenium liferaySelenium, String index, String subject)
 		throws Exception {
 
-		BaseTestCase.assertEquals(
-			subject, liferaySelenium.getEmailSubject(index));
+		TestCase.assertEquals(subject, liferaySelenium.getEmailSubject(index));
 	}
 
 	public static void assertHTMLSourceTextNotPresent(
@@ -226,7 +224,11 @@ public class LiferaySeleniumHelper {
 		content = "<log4j>" + content + "</log4j>";
 		content = content.replaceAll("log4j:", "");
 
-		Document document = SAXReaderUtil.read(content, true);
+		SAXReader saxReader = new SAXReader();
+
+		File file = new File(fileName);
+
+		Document document = saxReader.read(file);
 
 		Element rootElement = document.getRootElement();
 
@@ -276,12 +278,12 @@ public class LiferaySeleniumHelper {
 	public static void assertLocation(
 		LiferaySelenium liferaySelenium, String pattern) {
 
-		BaseTestCase.assertEquals(pattern, liferaySelenium.getLocation());
+		TestCase.assertEquals(pattern, liferaySelenium.getLocation());
 	}
 
 	public static void assertNoJavaScriptExceptions() throws Exception {
 		if (!_javaScriptExceptions.isEmpty()) {
-			StringBundler sb = new StringBundler();
+			StringBuilder sb = new StringBuilder();
 
 			sb.append(_javaScriptExceptions.size());
 			sb.append(" Javascript Exception");
@@ -318,7 +320,7 @@ public class LiferaySeleniumHelper {
 
 	public static void assertNoLiferayExceptions() throws Exception {
 		if (!_liferayExceptions.isEmpty()) {
-			StringBundler sb = new StringBundler();
+			StringBuilder sb = new StringBuilder();
 
 			sb.append(_liferayExceptions.size());
 			sb.append(" Liferay Exception");
@@ -356,7 +358,8 @@ public class LiferaySeleniumHelper {
 	public static void assertNotAlert(
 		LiferaySelenium liferaySelenium, String pattern) {
 
-		BaseTestCase.assertNotEquals(pattern, liferaySelenium.getAlert());
+		TestCase.assertTrue(
+			Validator.equals(pattern, liferaySelenium.getAlert()));
 	}
 
 	public static void assertNotChecked(
@@ -373,7 +376,8 @@ public class LiferaySeleniumHelper {
 	public static void assertNotLocation(
 		LiferaySelenium liferaySelenium, String pattern) {
 
-		BaseTestCase.assertNotEquals(pattern, liferaySelenium.getLocation());
+		TestCase.assertTrue(
+			Validator.equals(pattern, liferaySelenium.getLocation()));
 	}
 
 	public static void assertNotPartialText(
@@ -571,7 +575,7 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void fail(String message) {
-		BaseTestCase.fail(message);
+		TestCase.fail(message);
 	}
 
 	public static String getEmailBody(String index) throws Exception {
@@ -625,7 +629,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				return liferaySelenium.isElementPresent(locator);
 			}
 
@@ -970,16 +974,11 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
-		if (Validator.equals(
-				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
-			Validator.equals(
-				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.2") ||
-			Validator.equals(
-				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.3") ||
-			Validator.equals(
-				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.4") ||
-			Validator.equals(
-				TestPropsValues.LIFERAY_PORTAL_BRANCH, "ee-6.2.10")) {
+		if (Validator.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
+			Validator.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.2") ||
+			Validator.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.3") ||
+			Validator.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.4") ||
+			Validator.equals(PropsValues.LIFERAY_PORTAL_BRANCH, "ee-6.2.10")) {
 
 			if (line.contains(
 					"com.liferay.portal.kernel.search.SearchException: " +
@@ -995,16 +994,16 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
-		if (Validator.isNotNull(TestPropsValues.IGNORE_ERRORS)) {
-			if (Validator.isNotNull(TestPropsValues.IGNORE_ERRORS_DELIMITER)) {
+		if (Validator.isNotNull(PropsValues.IGNORE_ERRORS)) {
+			if (Validator.isNotNull(PropsValues.IGNORE_ERRORS_DELIMITER)) {
 				String ignoreErrorsDelimiter =
-					TestPropsValues.IGNORE_ERRORS_DELIMITER;
+					PropsValues.IGNORE_ERRORS_DELIMITER;
 
 				if (ignoreErrorsDelimiter.equals("|")) {
 					ignoreErrorsDelimiter = "\\|";
 				}
 
-				String[] ignoreErrors = TestPropsValues.IGNORE_ERRORS.split(
+				String[] ignoreErrors = PropsValues.IGNORE_ERRORS.split(
 					ignoreErrorsDelimiter);
 
 				for (String ignoreError : ignoreErrors) {
@@ -1013,7 +1012,7 @@ public class LiferaySeleniumHelper {
 					}
 				}
 			}
-			else if (line.contains(TestPropsValues.IGNORE_ERRORS)) {
+			else if (line.contains(PropsValues.IGNORE_ERRORS)) {
 				return true;
 			}
 		}
@@ -1022,7 +1021,7 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isMobileDeviceEnabled() {
-		return TestPropsValues.MOBILE_DEVICE_ENABLED;
+		return PropsValues.MOBILE_DEVICE_ENABLED;
 	}
 
 	public static boolean isNotChecked(
@@ -1056,7 +1055,7 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isTCatEnabled() {
-		return TestPropsValues.TCAT_ENABLED;
+		return PropsValues.TCAT_ENABLED;
 	}
 
 	public static boolean isTextNotPresent(
@@ -1386,7 +1385,7 @@ public class LiferaySeleniumHelper {
 	public static void typeFrame(
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
-		StringBundler sb = new StringBundler();
+		StringBuilder sb = new StringBuilder();
 
 		String titleAttribute = liferaySelenium.getAttribute(
 			locator + "@title");
@@ -1416,7 +1415,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertElementNotPresent(locator);
 			}
 
@@ -1437,7 +1436,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertElementPresent(locator);
 			}
 
@@ -1460,7 +1459,7 @@ public class LiferaySeleniumHelper {
 		value = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertNotPartialText(locator, value);
 			}
 
@@ -1482,7 +1481,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertNotSelectedLabel(selectLocator, pattern);
 			}
 
@@ -1507,7 +1506,7 @@ public class LiferaySeleniumHelper {
 		value = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertNotText(locator, value);
 			}
 
@@ -1530,7 +1529,7 @@ public class LiferaySeleniumHelper {
 		value = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertNotValue(locator, value);
 			}
 
@@ -1551,7 +1550,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertNotVisible(locator);
 			}
 
@@ -1574,7 +1573,7 @@ public class LiferaySeleniumHelper {
 		value = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertPartialText(locator, value);
 			}
 
@@ -1596,7 +1595,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertSelectedLabel(selectLocator, pattern);
 			}
 
@@ -1619,7 +1618,7 @@ public class LiferaySeleniumHelper {
 		value = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertText(locator, value);
 			}
 
@@ -1642,7 +1641,7 @@ public class LiferaySeleniumHelper {
 		value = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertTextNotPresent(value);
 			}
 
@@ -1665,7 +1664,7 @@ public class LiferaySeleniumHelper {
 		value = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertTextPresent(value);
 			}
 
@@ -1688,7 +1687,7 @@ public class LiferaySeleniumHelper {
 		value = RuntimeVariables.replace(value);
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertValue(locator, value);
 			}
 
@@ -1709,7 +1708,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_EXPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertVisible(locator);
 			}
 

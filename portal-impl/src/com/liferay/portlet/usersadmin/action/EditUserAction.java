@@ -421,7 +421,7 @@ public class EditUserAction extends PortletAction {
 		User user = UserServiceUtil.addUser(
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			LocaleUtil.getDefault(), firstName, middleName, lastName, prefixId,
+			LocaleUtil.fromLanguageId(languageId), firstName, middleName, lastName, prefixId,
 			suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
 			groupIds, organizationIds, roleIds, userGroupIds, addresses,
 			emailAddresses, phones, websites, announcementsDeliveries,

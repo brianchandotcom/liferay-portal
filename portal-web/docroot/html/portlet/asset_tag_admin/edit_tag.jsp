@@ -19,9 +19,9 @@
 <%
 String redirect = ParamUtil.getString(renderRequest, "redirect");
 
-AssetTag tag = (AssetTag)request.getAttribute(WebKeys.ASSET_TAG);
+long tagId = ParamUtil.getLong(request, "tagId");
 
-long tagId = BeanParamUtil.getLong(tag, request, "tagId");
+AssetTag tag = AssetTagLocalServiceUtil.fetchAssetTag(tagId);
 
 int[] tagPropertiesIndexes = null;
 

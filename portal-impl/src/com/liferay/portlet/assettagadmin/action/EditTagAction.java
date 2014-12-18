@@ -96,8 +96,6 @@ public class EditTagAction extends PortletAction {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		ActionUtil.getTag(renderRequest);
-
 		return actionMapping.findForward(
 			getForward(renderRequest, "portlet.asset_tag_admin.edit_tag"));
 	}

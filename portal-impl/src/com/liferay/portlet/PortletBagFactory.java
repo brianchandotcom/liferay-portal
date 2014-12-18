@@ -447,8 +447,6 @@ public class PortletBagFactory {
 					(AssetRendererFactory)newInstance(
 						AssetRendererFactory.class, assetRendererFactoryClass);
 
-				assetRendererFactoryInstance.setClassName(
-					assetRendererFactoryInstance.getClassName());
 				assetRendererFactoryInstance.setPortletId(
 					portlet.getPortletId());
 

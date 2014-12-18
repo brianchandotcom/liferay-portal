@@ -498,11 +498,6 @@ dlSearchContainer.setResults(results);
 								>
 
 									<%
-									data = new HashMap<String, Object>();
-
-									data.put("folder", true);
-									data.put("folder-id", curFolder.getFolderId());
-
 									AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 
 									AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
@@ -515,7 +510,6 @@ dlSearchContainer.setResults(results);
 									%>
 
 									<liferay-ui:app-view-entry
-										data="<%= data %>"
 										displayStyle="<%= displayStyle %>"
 										folder="<%= true %>"
 										iconCssClass="<%= assetRenderer.getIconCssClass() %>"

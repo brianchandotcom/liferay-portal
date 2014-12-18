@@ -90,8 +90,7 @@ public class ImportLayoutsAction extends PortletAction {
 		try {
 			if (cmd.equals(Constants.ADD_TEMP)) {
 				addTempFileEntry(
-					actionRequest, actionResponse,
-					ExportImportHelper.TEMP_FOLDER_NAME);
+					actionRequest, ExportImportHelper.TEMP_FOLDER_NAME);
 
 				validateFile(
 					actionRequest, actionResponse,
@@ -198,8 +197,7 @@ public class ImportLayoutsAction extends PortletAction {
 	}
 
 	protected void addTempFileEntry(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			String folderName)
+			ActionRequest actionRequest, String folderName)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =

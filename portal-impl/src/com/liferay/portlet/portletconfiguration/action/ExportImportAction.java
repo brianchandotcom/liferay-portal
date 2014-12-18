@@ -92,7 +92,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 
 				if (cmd.equals(Constants.ADD_TEMP)) {
 					addTempFileEntry(
-						actionRequest, actionResponse,
+						actionRequest,
 						ExportImportHelper.TEMP_FOLDER_NAME +
 							portlet.getPortletId());
 

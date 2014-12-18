@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.scheduler.CronTrigger;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -293,7 +295,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return TempFileEntryUtil.addTempFileEntry(
-			groupId, getUserId(), folderName, fileName, inputStream, mimeType);
+			groupId, getUserId(),
+			DigesterUtil.digestHex(Digester.SHA_256, folderName), fileName,
+			inputStream, mimeType);
 	}
 
 	/**
@@ -351,7 +355,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		TempFileEntryUtil.deleteTempFileEntry(
-			groupId, getUserId(), folderName, fileName);
+			groupId, getUserId(),
+			DigesterUtil.digestHex(Digester.SHA_256, folderName), fileName);
 	}
 
 	/**
@@ -904,7 +909,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return TempFileEntryUtil.getTempFileNames(
-			groupId, getUserId(), folderName);
+			groupId, getUserId(),
+			DigesterUtil.digestHex(Digester.SHA_256, folderName));
 	}
 
 	/**

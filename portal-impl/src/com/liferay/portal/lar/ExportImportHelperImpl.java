@@ -654,7 +654,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return TempFileEntryUtil.getTempFileEntry(
-			groupId, userId, DigesterUtil.digest(Digester.SHA_256, folderName),
+			groupId, userId,
+			DigesterUtil.digestHex(Digester.SHA_256, folderName),
 			tempFileNames[0]);
 	}
 

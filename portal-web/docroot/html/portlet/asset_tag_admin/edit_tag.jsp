@@ -67,13 +67,11 @@ else {
 	title='<%= (tag != null) ? tag.getName() : "add-tag" %>'
 />
 
-<portlet:actionURL var="editTagURL">
-	<portlet:param name="struts_action" value="/asset_tag_admin/edit_tag" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-</portlet:actionURL>
+<portlet:actionURL name="editTag" var="editTagURL" />
 
-<aui:form action="<%= editTagURL %>" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= tag == null ? Constants.ADD : Constants.UPDATE %>" />
+<aui:form action="<%= editTagURL %>" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="mvcPath" type="hidden" value="/html/portlet/asset_tag_admin/edit_tag.jsp" />
 
 	<liferay-ui:error exception="<%= AssetTagException.class %>">
 

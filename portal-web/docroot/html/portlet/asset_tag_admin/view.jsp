@@ -27,7 +27,7 @@
 			<aui:nav cssClass="navbar-nav">
 				<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG) %>">
 					<portlet:renderURL var="editTagURL">
-						<portlet:param name="struts_action" value="/asset_tag_admin/edit_tag" />
+						<portlet:param name="mvcPath" value="/html/portlet/asset_tag_admin/edit_tag.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
@@ -159,9 +159,7 @@
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				<portlet:actionURL var="deleteURL">
-					<portlet:param name="struts_action" value="/asset_tag_admin/edit_tag" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+				<portlet:actionURL name="deleteTag" var="deleteURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:actionURL>
 
@@ -177,7 +175,7 @@
 		function() {
 			if (form.fm('rowIds').filter(':checked').length > 1) {
 				<portlet:renderURL var="mergeURL">
-					<portlet:param name="struts_action" value="/asset_tag_admin/merge_tag" />
+					<portlet:param name="mvcPath" value="/html/portlet/asset_tag_admin/merge_tag.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 

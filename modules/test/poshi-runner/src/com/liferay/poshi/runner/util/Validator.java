@@ -23,6 +23,203 @@ package com.liferay.poshi.runner.util;
 public class Validator {
 
 	/**
+	 * Returns <code>true</code> if the booleans are equal.
+	 *
+	 * @param  boolean1 the first boolean
+	 * @param  boolean2 the second boolean
+	 * @return <code>true</code> if the booleans are equal; <code>false</code>
+	 *         otherwise
+	 */
+	public static boolean equals(boolean boolean1, boolean boolean2) {
+		if (boolean1 == boolean2) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the bytes are equal.
+	 *
+	 * @param  byte1 the first byte
+	 * @param  byte2 the second byte
+	 * @return <code>true</code> if the bytes are equal; <code>false</code>
+	 *         otherwise
+	 */
+	public static boolean equals(byte byte1, byte byte2) {
+		if (byte1 == byte2) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the characters are equal.
+	 *
+	 * @param  char1 the first character
+	 * @param  char2 the second character
+	 * @return <code>true</code> if the characters are equal; <code>false</code>
+	 *         otherwise
+	 */
+	public static boolean equals(char char1, char char2) {
+		if (char1 == char2) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the doubles are equal.
+	 *
+	 * @param  double1 the first double
+	 * @param  double2 the second double
+	 * @return <code>true</code> if the doubles are equal; <code>false</code>
+	 *         otherwise
+	 */
+	public static boolean equals(double double1, double double2) {
+		if (Double.compare(double1, double2) == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the floats are equal.
+	 *
+	 * @param  float1 the first float
+	 * @param  float2 the second float
+	 * @return <code>true</code> if the floats are equal; <code>false</code>
+	 *         otherwise
+	 */
+	public static boolean equals(float float1, float float2) {
+		if (Float.compare(float1, float2) == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the integers are equal.
+	 *
+	 * @param  int1 the first integer
+	 * @param  int2 the second integer
+	 * @return <code>true</code> if the integers are equal; <code>false</code>
+	 *         otherwise
+	 */
+	public static boolean equals(int int1, int int2) {
+		if (int1 == int2) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the long integers are equal.
+	 *
+	 * @param  long1 the first long integer
+	 * @param  long2 the second long integer
+	 * @return <code>true</code> if the long integers are equal;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean equals(long long1, long long2) {
+		if (long1 == long2) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the objects are either equal, the same
+	 * instance, or both <code>null</code>.
+	 *
+	 * @param  obj1 the first object
+	 * @param  obj2 the second object
+	 * @return <code>true</code> if the objects are either equal, the same
+	 *         instance, or both <code>null</code>; <code>false</code> otherwise
+	 */
+	public static boolean equals(Object obj1, Object obj2) {
+		if (obj1 == obj2) {
+			return true;
+		}
+		else if ((obj1 == null) || (obj2 == null)) {
+			return false;
+		}
+		else {
+			return obj1.equals(obj2);
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the short integers are equal.
+	 *
+	 * @param  short1 the first short integer
+	 * @param  short2 the second short integer
+	 * @return <code>true</code> if the short integers are equal;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean equals(short short1, short short2) {
+		if (short1 == short2) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the character is a digit between 0 and 9
+	 * (inclusive).
+	 *
+	 * @param  c the character to check
+	 * @return <code>true</code> if the character is a digit between 0 and 9
+	 *         (inclusive); <code>false</code> otherwise
+	 */
+	public static boolean isDigit(char c) {
+		int x = c;
+
+		if ((x >= _DIGIT_BEGIN) && (x <= _DIGIT_END)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns <code>true</code> if the string consists of only digits between 0
+	 * and 9 (inclusive).
+	 *
+	 * @param  s the string to check
+	 * @return <code>true</code> if the string consists of only digits between 0
+	 *         and 9 (inclusive); <code>false</code> otherwise
+	 */
+	public static boolean isDigit(String s) {
+		if (isNull(s)) {
+			return false;
+		}
+
+		for (char c : s.toCharArray()) {
+			if (!isDigit(c)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Returns <code>true</code> if the object is not <code>null</code>, using
 	 * the rules from {@link #isNotNull(Long)} or {@link #isNotNull(String)} if
 	 * the object is one of these types.
@@ -123,5 +320,9 @@ public class Validator {
 
 		return false;
 	}
+
+	private static final int _DIGIT_BEGIN = 48;
+
+	private static final int _DIGIT_END = 57;
 
 }

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTempla
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 import com.liferay.rss.web.configuration.RSSWebConfigurationValues;
@@ -31,8 +30,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleReference;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -67,19 +64,7 @@ public class RSSPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		Class<?> clazz = getClass();
-
-		BundleReference bundleReference =
-			(BundleReference)clazz.getClassLoader();
-
-		Bundle bundle = bundleReference.getBundle();
-
-		String symbolicName = bundle.getSymbolicName();
-
-		symbolicName = symbolicName.replaceAll("[^a-zA-Z0-9]", "");
-
-		return RSSPortletKeys.RSS.concat(PortletConstants.WAR_SEPARATOR).concat(
-			String.valueOf(symbolicName));
+		return "com_liferay_rss_web_portlet_RSSPortlet";
 	}
 
 	@Override

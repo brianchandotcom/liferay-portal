@@ -1065,11 +1065,18 @@ public abstract class BaseIndexer implements Indexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
+		long[] folderIds = searchContext.getFolderIds();
+
 		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
 
 		multiValueFacet.setFieldName(Field.TREE_PATH);
 		multiValueFacet.setStatic(true);
-		multiValueFacet.setValues(searchContext.getFolderIds());
+
+		if (ArrayUtil.isNotEmpty(folderIds)) {
+			folderIds = ArrayUtil.remove(folderIds, _DEFAULT_FOLDER_ID);
+
+			multiValueFacet.setValues(folderIds);
+		}
 
 		searchContext.addFacet(multiValueFacet);
 	}
@@ -1840,6 +1847,8 @@ public abstract class BaseIndexer implements Indexer {
 	protected void setStagingAware(boolean stagingAware) {
 		_stagingAware = stagingAware;
 	}
+
+	private static final long _DEFAULT_FOLDER_ID = 0L;
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 

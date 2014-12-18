@@ -36,31 +36,11 @@ if (searchRepositoryId == 0) {
 long folderId = ParamUtil.getLong(request, "folderId");
 
 long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
-long searchFolderIds = ParamUtil.getLong(request, "searchFolderIds");
-
-long[] folderIdsArray = null;
 
 Folder folder = null;
 
 if (searchFolderId > 0) {
-	folderIdsArray = new long[] {searchFolderId};
-
 	folder = DLAppServiceUtil.getFolder(searchFolderId);
-}
-else {
-	long defaultFolderId = DLFolderConstants.getFolderId(scopeGroupId, DLFolderConstants.getDataRepositoryId(scopeGroupId, searchFolderIds));
-
-	List<Folder> folders = DLAppServiceUtil.getFolders(scopeGroupId, searchFolderIds);
-
-	List<Long> folderIds = new ArrayList<Long>(folders.size() + 1);
-
-	folderIds.add(defaultFolderId);
-
-	for (Folder subfolder : folders) {
-		folderIds.add(subfolder.getFolderId());
-	}
-
-	folderIdsArray = StringUtil.split(StringUtil.merge(folderIds), 0L);
 }
 
 List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -76,7 +56,6 @@ portletURL.setParameter("struts_action", "/document_library/search");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("breadcrumbsFolderId", String.valueOf(breadcrumbsFolderId));
 portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
-portletURL.setParameter("searchFolderIds", String.valueOf(searchFolderIds));
 portletURL.setParameter("keywords", keywords);
 
 SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, portletURL, null, null);
@@ -150,7 +129,6 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= breadcrumbsFolderId %>" />
 			<aui:input name="searchFolderId" type="hidden" value="<%= searchFolderId %>" />
-			<aui:input name="searchFolderIds" type="hidden" value="<%= searchFolderIds %>" />
 
 			<%
 			try {
@@ -159,7 +137,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 				searchContext.setAttribute("paginationType", "regular");
 				searchContext.setAttribute("searchRepositoryId", searchRepositoryId);
 				searchContext.setEnd(searchContainer.getEnd());
-				searchContext.setFolderIds(folderIdsArray);
+				searchContext.setFolderIds(new long[] {searchFolderId});
 				searchContext.setIncludeDiscussions(true);
 				searchContext.setKeywords(keywords);
 

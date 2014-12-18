@@ -1357,22 +1357,9 @@ public class DLImpl implements DL {
 		Map<String, Serializable> workflowContext =
 			new HashMap<String, Serializable>();
 
-		String entryURL = null;
-
-		if (Validator.equals(
-				serviceContext.getCommand(), Constants.ADD_WEBDAV) ||
-			Validator.equals(
-				serviceContext.getCommand(), Constants.UPDATE_WEBDAV)) {
-
-			entryURL =
-				serviceContext.getPortalURL() + serviceContext.getCurrentURL();
-		}
-		else {
-			entryURL = getEntryURL(dlFileVersion, serviceContext);
-		}
-
-		workflowContext.put(WorkflowConstants.CONTEXT_URL, entryURL);
-
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_URL,
+			getEntryURL(dlFileVersion, serviceContext));
 		workflowContext.put("event", syncEventType);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
@@ -1385,6 +1372,15 @@ public class DLImpl implements DL {
 	protected String getEntryURL(
 			DLFileVersion dlFileVersion, ServiceContext serviceContext)
 		throws PortalException {
+
+		if (Validator.equals(
+				serviceContext.getCommand(), Constants.ADD_WEBDAV) ||
+			Validator.equals(
+				serviceContext.getCommand(), Constants.UPDATE_WEBDAV)) {
+
+			return
+				serviceContext.getPortalURL() + serviceContext.getCurrentURL();
+		}
 
 		HttpServletRequest request = serviceContext.getRequest();
 

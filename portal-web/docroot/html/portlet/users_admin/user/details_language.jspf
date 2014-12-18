@@ -32,6 +32,7 @@
 
 <portlet:renderURL var="userDetailsURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="struts_action" value="/users_admin/edit_user_details" />
+	<portlet:param name="p_u_i_d" value="<%= Validator.isNotNull(selUser) ? String.valueOf(selUser.getUserId()) : String.valueOf(0) %>" />
 </portlet:renderURL>
 
 <aui:script sandbox="<%= true %>" use='liferay-portlet-url'>

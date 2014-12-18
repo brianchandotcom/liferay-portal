@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -1371,6 +1372,15 @@ public class DLImpl implements DL {
 	protected String getEntryURL(
 			DLFileVersion dlFileVersion, ServiceContext serviceContext)
 		throws PortalException {
+
+		if (Validator.equals(
+				serviceContext.getCommand(), Constants.ADD_WEBDAV) ||
+			Validator.equals(
+				serviceContext.getCommand(), Constants.UPDATE_WEBDAV)) {
+
+			return
+				serviceContext.getPortalURL() + serviceContext.getCurrentURL();
+		}
 
 		HttpServletRequest request = serviceContext.getRequest();
 

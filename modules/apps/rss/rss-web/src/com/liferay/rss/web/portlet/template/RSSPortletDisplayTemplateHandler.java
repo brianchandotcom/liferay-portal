@@ -67,19 +67,7 @@ public class RSSPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		Class<?> clazz = getClass();
-
-		BundleReference bundleReference =
-			(BundleReference)clazz.getClassLoader();
-
-		Bundle bundle = bundleReference.getBundle();
-
-		String symbolicName = bundle.getSymbolicName();
-
-		symbolicName = symbolicName.replaceAll("[^a-zA-Z0-9]", "");
-
-		return RSSPortletKeys.RSS.concat(PortletConstants.WAR_SEPARATOR).concat(
-			String.valueOf(symbolicName));
+		return "com_liferay_rss_web_portlet_RSSPortlet";
 	}
 
 	@Override

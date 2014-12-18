@@ -1021,7 +1021,9 @@
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">400</hint>
 		</field>
-		<field name="firstName" type="String" />
+		<field name="firstName" type="String">
+			<validator name="required" />
+		</field>
 		<field name="middleName" type="String" />
 		<field name="lastName" type="String" />
 		<field name="jobTitle" type="String">

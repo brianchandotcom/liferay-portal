@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTempla
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -36,8 +35,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleReference;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -46,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_asset_categories_navigation_web_portlet_CategoriesNavigationPortlet"
+		"javax.portlet.name="+ CategoriesNavigationPortletKeys.CATEGORIES_NAVIGATION
 	},
 	service = TemplateHandler.class
 )
@@ -73,20 +70,7 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		Class<?> clazz = getClass();
-
-		BundleReference bundleReference =
-			(BundleReference)clazz.getClassLoader();
-
-		Bundle bundle = bundleReference.getBundle();
-
-		String symbolicName = bundle.getSymbolicName();
-
-		symbolicName = symbolicName.replaceAll("[^a-zA-Z0-9]", "");
-
-		return CategoriesNavigationPortletKeys.CATEGORIES_NAVIGATION.concat(
-			PortletConstants.WAR_SEPARATOR).concat(
-				String.valueOf(symbolicName));
+		return CategoriesNavigationPortletKeys.CATEGORIES_NAVIGATION;
 	}
 
 	@Override

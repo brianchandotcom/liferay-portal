@@ -161,8 +161,7 @@ public class ImageToolImplTest {
 
 		Assert.assertNotNull(expectedImage);
 
-		DataBuffer expectedDataBuffer =
-			expectedImage.getData().getDataBuffer();
+		DataBuffer expectedDataBuffer = expectedImage.getData().getDataBuffer();
 
 		byte[][] expectedData =
 			((DataBufferByte)expectedDataBuffer).getBankData();

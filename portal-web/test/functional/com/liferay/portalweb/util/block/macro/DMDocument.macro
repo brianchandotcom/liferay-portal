@@ -275,10 +275,11 @@
 				<var name="key_categoryName" value="${categoryName}" />
 
 				<execute macro="PGDocumentsandmediaEditdocument#showCategorization" />
-
 				<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="CATEGORIZATION_TOPIC_SELECT_BUTTON" value1="Select" />
+
 				<execute action="PGDocumentsandmediaCategoriesDialogBox#assertClick" locator-key1="CATEGORY_TOPIC" value1="${categoryName}" />
 				<execute action="PGDocumentsandmediaCategoriesDialogBox#assertClick" locator-key1="CLOSE_BUTTON" value1="×" />
+
 				<execute action="PGDocumentsandmediaEditdocument#assertTextEquals" locator-key1="CATEGORIZATION_VOCABULARY_TAG" value1="${categoryName}" />
 			</then>
 		</if>
@@ -806,25 +807,6 @@
 			</not>
 			<then>
 				<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescriptionEdit}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="categoryName" />
-			<then>
-				<var name="key_categoryName" value="${categoryName}" />
-
-				<execute action="PGDocumentsandmediaEditdocument#assertTextEquals" locator-key1="CATEGORIZATION_VOCABULARY_TAG" value1="${categoryName}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="tagNameList" />
-			<then>
-				<for list="${tagNameList}" param="tagName">
-					<var name="key_categoryTag" value="${tagName}" />
-					<execute action="PGDocumentsandmediaEditdocument#assertTextEquals" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />
-				</for>
 			</then>
 		</if>
 

@@ -678,14 +678,14 @@
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
 
-	<command name="ViewFileCategoriesAndTags" priority="4">
+	<command name="ViewFileCategoryAndTags" priority="4">
 		<var name="categoryDescription" value="Category Description" />
 		<var name="categoryName" value="Category Name" />
 		<var name="dmDocumentDescription" value="Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="Document Title" />
 		<var name="pageName" value="Documents and Media Page" />
-		<var name="tagNameList" value="category tag 1,category tag 2" />
+		<var name="tagNameList" value="tag1,tag2" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -695,10 +695,10 @@
 			<var name="portletName" value="Categories" />
 		</execute>
 
-		<execute macro="Category#addCategoryDescriptionCP">
+		<execute macro="Category#addCP">
 			<var name="categoryDescription" value="${categoryDescription}" />
 			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="" />
+			<var name="vocabularyName" value="Topic" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -721,26 +721,20 @@
 			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute macro="DMDocument#viewPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-			<var name="tagNameList" value="${tagNameList}" />
-		</execute>
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
 
-		<execute macro="DMDocument#editPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-			<var name="tagNameList" value="${tagNameList}" />
-		</execute>
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="PGDocumentsandmediaEditdocument#assertTextEquals" locator-key1="CATEGORIZATION_VOCABULARY_TAG" value1="${categoryName}" />
+
+		<for list="${tagNameList}" param="tagName">
+			<var name="key_categoryTag" value="${tagName}" />
+			<execute action="PGDocumentsandmediaEditdocument#assertTextEquals" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />
+		</for>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

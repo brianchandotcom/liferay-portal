@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_SELECT_BUTTON</td>
-	<td>//div[contains(.,'Document')]/div/button[contains(.,'Select')]</td>
+	<td>//button[@name='_20_selectToFileEntryButton']</td>
 	<td>Document</td>
 </tr>
 <tr>

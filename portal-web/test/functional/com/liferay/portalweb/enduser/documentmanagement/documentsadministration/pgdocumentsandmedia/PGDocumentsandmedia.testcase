@@ -1719,4 +1719,36 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 	</command>
+
+	<command name="ViewNoShortcutCheckoutOption" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="Test Document" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addShortcutPG">
+			<var name="dmDocumentDescription" value="Test Document" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="siteName" value="Liferay" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentCheckoutOption">
+			<var name="dmDocumentShortcut" value="true" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="viewCheckoutOption" value="false" />
+		</execute>
+	</command>
 </definition>

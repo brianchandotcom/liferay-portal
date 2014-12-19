@@ -1643,6 +1643,36 @@
 		</if>
 	</command>
 
+	<command name="viewDocumentCheckoutOption">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<if>
+			<equals arg1="${dmDocumentShortcut}" arg2="true" />
+			<then>
+				<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_SHORTCUT_ACTIONS" />
+			</then>
+			<elseif>
+				<equals arg1="${dmDocumentShortcut}" arg2="false" />
+				<then>
+					<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<equals arg1="${viewCheckoutOption}" arg2="true" />
+			<then>
+				<execute action="PGDocumentsandmedia#assertVisible" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
+			</then>
+			<elseif>
+				<equals arg1="${viewCheckoutOption}" arg2="false" />
+				<then>
+					<execute action="PGDocumentsandmedia#assertNotVisible" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
 	<command name="viewDocumentDetailsCmdPG">
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_DATE" />
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_WORKFLOW_STATUS" />

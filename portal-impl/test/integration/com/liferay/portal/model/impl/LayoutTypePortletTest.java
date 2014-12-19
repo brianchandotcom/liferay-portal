@@ -15,13 +15,16 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.impl.PortletLocalServiceImpl;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
@@ -30,7 +33,6 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portal.util.test.UserTestUtil;
-import com.liferay.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portlet.util.PortletKeys;
 
 import java.util.List;
@@ -38,15 +40,12 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 /**
  * @author Raymond Augé
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LayoutTypePortletTest {
 
 	@ClassRule
@@ -255,21 +254,51 @@ public class LayoutTypePortletTest {
 		_user = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), layout.getGroupId());
 
-		String portletId = _layoutTypePortlet.addPortletId(
+		final String portletId = _layoutTypePortlet.addPortletId(
 			_user.getUserId(), PortletKeys.TEST);
 
 		List<Portlet> portlets = _layoutTypePortlet.getAllPortlets();
 
 		Assert.assertEquals(1, portlets.size());
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			TestPropsValues.getCompanyId(), portletId);
+		final long companyId = TestPropsValues.getCompanyId();
 
-		PortletInstanceFactoryUtil.destroy(portlet);
+		PortletLocalService portletLocalService =
+			PortletLocalServiceUtil.getService();
 
-		portlets = _layoutTypePortlet.getAllPortlets();
+		ReflectionTestUtil.setFieldValue(
+			PortletLocalServiceUtil.class, "_service",
+			new PortletLocalServiceImpl() {
 
-		Assert.assertEquals(0, portlets.size());
+				@Override
+				public Portlet getPortletById(
+					long localCompanyId, String localPortletId) {
+
+					Portlet portlet = super.getPortletById(
+						localCompanyId, localPortletId);
+
+					if ((companyId == localCompanyId) &&
+						portletId.equals(localPortletId)) {
+
+						portlet = (Portlet)portlet.clone();
+
+						portlet.setUndeployedPortlet(true);
+					}
+
+					return portlet;
+				}
+
+			});
+
+		try {
+			portlets = _layoutTypePortlet.getAllPortlets();
+
+			Assert.assertTrue(portlets.isEmpty());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PortletLocalServiceUtil.class, "_service", portletLocalService);
+		}
 	}
 
 	@Test

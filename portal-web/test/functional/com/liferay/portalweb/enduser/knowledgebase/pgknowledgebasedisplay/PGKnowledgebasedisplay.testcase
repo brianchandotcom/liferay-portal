@@ -355,6 +355,41 @@
 		</execute>
 	</command>
 
+	<command name="ViewEditedKBArticleTitleHistory" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="KB Article Content" />
+			<var name="kbArticleTitle" value="KB Article Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#editCP">
+			<var name="kbArticleContentEdit" value="KB Article Content Edit" />
+			<var name="kbArticleTitle" value="KB Article Title" />
+			<var name="kbArticleTitleEdit" value="KB Article Title Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewArticleHistoryPG">
+			<var name="kbArticleContent" value="KB Article Content Edit" />
+			<var name="kbArticleContentDiff" value="Edit" />
+			<var name="kbArticleHistorySource" value="1 (Source)" />
+			<var name="kbArticleHistoryTarget" value="2 (Target)" />
+			<var name="kbArticleTitle" value="KB Article Title Edit" />
+			<var name="kbArticleTitleDiff" value="Edit" />
+			<var name="viewNoXMLInTitle" value="true" />
+		</execute>
+	</command>
+
 	<command name="ViewKBArticleByPriority" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />

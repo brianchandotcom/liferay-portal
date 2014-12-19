@@ -24,6 +24,7 @@ import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
 import java.awt.image.RenderedImage;
 
@@ -160,10 +161,11 @@ public class ImageToolImplTest {
 
 		Assert.assertNotNull(expectedImage);
 
-		DataBufferByte expectedDataBufferByte =
-			(DataBufferByte)expectedImage.getData().getDataBuffer();
+		DataBuffer expectedDataBuffer =
+			expectedImage.getData().getDataBuffer();
 
-		byte[][] expectedData = expectedDataBufferByte.getBankData();
+		byte[][] expectedData =
+			((DataBufferByte)expectedDataBuffer).getBankData();
 
 		String expectedType = FileUtil.getExtension(fileName);
 

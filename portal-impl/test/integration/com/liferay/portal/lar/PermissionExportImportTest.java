@@ -28,7 +28,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
@@ -106,8 +106,10 @@ public class PermissionExportImportTest extends PowerMockito {
 		validateImportedPortletPermissions(
 			importGroup, role, importResourcePrimKey);
 
-		GroupLocalServiceUtil.deleteGroup(exportGroup);
-		GroupLocalServiceUtil.deleteGroup(importGroup);
+		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+			exportLayoutSetPrototype);
+		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+			importLayoutSetPrototype);
 	}
 
 	protected void addPortletPermissions(

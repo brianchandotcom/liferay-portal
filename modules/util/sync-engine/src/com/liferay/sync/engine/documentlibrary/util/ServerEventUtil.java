@@ -22,7 +22,6 @@ import com.liferay.sync.engine.service.SyncAccountService;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -33,24 +32,17 @@ import java.util.concurrent.TimeUnit;
 public class ServerEventUtil {
 
 	public static void retryServerConnection(long syncAccountId, long delay) {
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("uuid", null);
-
 		RetryServerConnectionEvent retryServerConnectionEvent =
-			new RetryServerConnectionEvent(syncAccountId, parameters);
+			new RetryServerConnectionEvent(
+				syncAccountId, Collections.<String, Object>emptyMap());
 
 		_scheduledExecutorService.schedule(
 			retryServerConnectionEvent, delay, TimeUnit.MILLISECONDS);
 	}
 
 	public static SyncAccount synchronizeSyncAccount(long syncAccountId) {
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("uuid", null);
-
 		GetSyncContextEvent getSyncContextEvent = new GetSyncContextEvent(
-			syncAccountId, parameters);
+			syncAccountId, Collections.<String, Object>emptyMap());
 
 		getSyncContextEvent.run();
 

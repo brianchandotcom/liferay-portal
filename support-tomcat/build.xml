@@ -18,7 +18,8 @@
 		<delete file="${deploy.dir}/${jar.file}.jar" />
 	</target>
 
-	<target name="compile" depends="compile-java">
+	<target name="compile" depends="check-compile-uptodate" unless="${compile.uptodate}">
+		<antcall target="compile-java" />
 
 		<!--
 		LEP-2995

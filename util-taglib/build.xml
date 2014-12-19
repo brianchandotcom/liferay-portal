@@ -30,52 +30,43 @@
 		</java>
 	</target>
 
-	<target name="compile">
-		<if>
-			<not>
-				<uptodate targetfile="classes/.touch">
-					<srcfiles dir="src" includes="**/*.*" />
-				</uptodate>
-			</not>
-			<then>
-				<copy file="src/META-INF/aui.tld" overwrite="true" tofile="src/META-INF/liferay-aui.tld" preservelastmodified="true" />
+	<target name="compile" depends="check-compile-uptodate" unless="${compile.uptodate}">
+		<copy file="src/META-INF/aui.tld" overwrite="true" tofile="src/META-INF/liferay-aui.tld" preservelastmodified="true" />
 
-				<replace file="src/META-INF/liferay-aui.tld">
-					<replacetoken><![CDATA[<uri>http://alloy.liferay.com/tld/aui</uri>]]></replacetoken>
-					<replacevalue><![CDATA[<uri>http://liferay.com/tld/aui</uri>]]></replacevalue>
-				</replace>
+		<replace file="src/META-INF/liferay-aui.tld">
+			<replacetoken><![CDATA[<uri>http://alloy.liferay.com/tld/aui</uri>]]></replacetoken>
+			<replacevalue><![CDATA[<uri>http://liferay.com/tld/aui</uri>]]></replacevalue>
+		</replace>
 
-				<copy file="src/META-INF/ddm.tld" overwrite="true" tofile="src/META-INF/liferay-ddm.tld" preservelastmodified="true" />
+		<copy file="src/META-INF/ddm.tld" overwrite="true" tofile="src/META-INF/liferay-ddm.tld" preservelastmodified="true" />
 
-				<replace file="src/META-INF/liferay-ddm.tld">
-					<replacetoken><![CDATA[<short-name>ddm</short-name>]]></replacetoken>
-					<replacevalue><![CDATA[<short-name>liferay-ddm</short-name>]]></replacevalue>
-				</replace>
+		<replace file="src/META-INF/liferay-ddm.tld">
+			<replacetoken><![CDATA[<short-name>ddm</short-name>]]></replacetoken>
+			<replacevalue><![CDATA[<short-name>liferay-ddm</short-name>]]></replacevalue>
+		</replace>
 
-				<replace file="src/META-INF/liferay-ddm.tld">
-					<replacetoken><![CDATA[<uri>http://alloy.liferay.com/tld/ddm</uri>]]></replacetoken>
-					<replacevalue><![CDATA[<uri>http://liferay.com/tld/ddm</uri>]]></replacevalue>
-				</replace>
+		<replace file="src/META-INF/liferay-ddm.tld">
+			<replacetoken><![CDATA[<uri>http://alloy.liferay.com/tld/ddm</uri>]]></replacetoken>
+			<replacevalue><![CDATA[<uri>http://liferay.com/tld/ddm</uri>]]></replacevalue>
+		</replace>
 
-				<copy file="src/META-INF/liferay-portlet.tld" tofile="src/META-INF/liferay-portlet_2_0.tld" preservelastmodified="true" />
+		<copy file="src/META-INF/liferay-portlet.tld" tofile="src/META-INF/liferay-portlet_2_0.tld" preservelastmodified="true" />
 
-				<replace file="src/META-INF/liferay-portlet_2_0.tld">
-					<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
-					<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
-				</replace>
+		<replace file="src/META-INF/liferay-portlet_2_0.tld">
+			<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
+			<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
+		</replace>
 
-				<mkdir dir="classes" />
+		<mkdir dir="classes" />
 
-				<antcall target="compile-java">
-					<param name="javac.classpathref" value="project.classpath" />
-					<param name="javac.destdir" value="classes" />
-					<param name="javac.srcdir" value="src" />
-				</antcall>
-			</then>
-		</if>
+		<antcall target="compile-java">
+			<param name="javac.classpathref" value="project.classpath" />
+			<param name="javac.destdir" value="classes" />
+			<param name="javac.srcdir" value="src" />
+		</antcall>
 	</target>
 
-	<target name="deploy" depends="jar">
+	<target name="deploy" depends="check-deploy-uptodate,jar" unless="${deploy.uptodate}">
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
@@ -88,7 +79,7 @@
 		</if>
 	</target>
 
-	<target name="jar">
+	<target name="jar" depends="check-jar-uptodate" unless="${jar.uptodate}">
 		<antcall target="build-common-java.jar" />
 
 		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />

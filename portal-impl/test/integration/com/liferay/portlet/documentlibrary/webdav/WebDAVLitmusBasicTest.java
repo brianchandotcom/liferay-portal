@@ -28,10 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 /**
  * <p>
@@ -41,7 +39,6 @@ import org.junit.runners.MethodSorters;
  *
  * @author Alexander Chow
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 
 	@ClassRule
@@ -103,12 +100,12 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 	}
 
 	@Test
-	public void test08DeleteNull() {
+	public void test06DeleteNull() {
 		assertCode(HttpServletResponse.SC_NOT_FOUND, serviceDelete("404me"));
 	}
 
 	@Test
-	public void test09DeleteFragment() {
+	public void test07DeleteFragment() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
 			service(Method.MKCOL, "frag", null, null));
@@ -118,7 +115,7 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 	}
 
 	@Test
-	public void test10Col() {
+	public void test08Col() {
 
 		// Create
 
@@ -138,14 +135,14 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 	}
 
 	@Test
-	public void test13MkcolNoParent() {
+	public void test09MkcolNoParent() {
 		assertCode(
 			HttpServletResponse.SC_CONFLICT,
 			service(Method.MKCOL, "409me/col", null, null));
 	}
 
 	@Test
-	public void test14MkcolWithBody() {
+	public void test10MkcolWithBody() {
 		Map<String, String> headers = new HashMap<String, String>();
 
 		headers.put(HttpHeaders.CONTENT_TYPE, "xyz-foo/bar-512");

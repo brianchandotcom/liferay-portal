@@ -33,6 +33,14 @@ public class ListUtil {
 		return new ArrayList<E>(master);
 	}
 
+	public static boolean isEmpty(List<?> list) {
+		if ((list == null) || list.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static <E> List<E> sort(List<E> list) {
 		return sort(list, null);
 	}
@@ -45,6 +53,34 @@ public class ListUtil {
 		Collections.sort(list, comparator);
 
 		return list;
+	}
+
+	public static String toString(List<?> list, String param) {
+		return toString(list, param, StringPool.COMMA);
+	}
+
+	public static String toString(
+		List<?> list, String param, String delimiter) {
+
+		if (isEmpty(list)) {
+			return StringPool.BLANK;
+		}
+
+		StringBuilder sb = new StringBuilder(2 * list.size() - 1);
+
+		for (int i = 0; i < list.size(); i++) {
+			Object value = null;
+
+			if (value != null) {
+				sb.append(value);
+			}
+
+			if ((i + 1) != list.size()) {
+				sb.append(delimiter);
+			}
+		}
+
+		return sb.toString();
 	}
 
 }

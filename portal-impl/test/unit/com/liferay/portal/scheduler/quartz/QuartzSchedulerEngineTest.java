@@ -36,12 +36,15 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletApp;
+import com.liferay.portal.model.impl.PortletAppImpl;
+import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.scheduler.SchedulerEngineHelperImpl;
 import com.liferay.portal.scheduler.job.MessageSenderJob;
 import com.liferay.portal.test.AdviseWith;
@@ -86,6 +89,8 @@ import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.spi.JobFactory;
 
+import org.springframework.mock.web.MockServletContext;
+
 /**
  * @author Tina Tian
  */
@@ -109,8 +114,6 @@ public class QuartzSchedulerEngineTest {
 		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
 
 		PropsUtil.setProps(new PropsImpl());
-
-		ClassLoaderPool.register(_TEST_PORTLET_ID, currentClassLoader);
 
 		MessageBusUtil.init(new DefaultMessageBus(), null, null);
 
@@ -417,7 +420,9 @@ public class QuartzSchedulerEngineTest {
 		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
+	@AdviseWith(adviceClasses = {
+		EnableSchedulerAdvice.class, PortalLocalServiceUtilAdvice.class
+	})
 	@Test
 	public void testSchedule1() throws Exception {
 		List<SchedulerResponse> schedulerResponses =
@@ -734,6 +739,33 @@ public class QuartzSchedulerEngineTest {
 			throws Throwable {
 
 			return proceedingJoinPoint.proceed(new Object[] {Boolean.TRUE});
+		}
+
+	}
+
+	@Aspect
+	public static class PortalLocalServiceUtilAdvice {
+
+		@Around(
+			"execution(* com.liferay.portal.service.PortletLocalServiceUtil." +
+				"getPortletById(java.lang.String)) && args(portletId)")
+		public Portlet getPortletById(String portletId) {
+			Portlet portlet = new PortletImpl();
+
+			PortletApp portletApp = new PortletAppImpl(portletId);
+
+			portletApp.setServletContext(new MockServletContext() {
+
+				@Override
+				public ClassLoader getClassLoader() {
+					return Thread.currentThread().getContextClassLoader();
+				}
+
+			});
+
+			portlet.setPortletApp(portletApp);
+
+			return portlet;
 		}
 
 	}

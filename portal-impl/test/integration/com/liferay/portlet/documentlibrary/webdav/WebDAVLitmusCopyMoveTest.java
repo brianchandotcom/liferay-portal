@@ -21,10 +21,8 @@ import com.liferay.portal.test.LiferayIntegrationTestRule;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.ClassRule;
-import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 /**
  * <p>
@@ -34,7 +32,6 @@ import org.junit.runners.MethodSorters;
  *
  * @author Alexander Chow
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 
 	@ClassRule
@@ -90,7 +87,7 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 	}
 
 	@Test
-	public void test07CopyColl() {
+	public void test03CopyColl() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
 			service(Method.MKCOL, "ccsrc", null, null));
@@ -133,7 +130,7 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 	}
 
 	@Test
-	public void test08CopyShallow() {
+	public void test04CopyShallow() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
 			service(Method.MKCOL, "ccsrc", null, null));
@@ -149,7 +146,7 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 	}
 
 	@Test
-	public void test09Move() {
+	public void test05Move() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
 			servicePut("move", _TEST_CONTENT.getBytes()));
@@ -176,7 +173,7 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 	}
 
 	@Test
-	public void test10MoveColl() {
+	public void test06MoveColl() {
 		assertCode(
 			HttpServletResponse.SC_CREATED,
 			service(Method.MKCOL, "mvsrc", null, null));

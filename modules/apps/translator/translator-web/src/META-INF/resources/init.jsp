@@ -23,8 +23,7 @@
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException" %><%@
+<%@ page import="com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
@@ -32,10 +31,9 @@ page import="com.liferay.translator.web.configuration.TranslatorConfiguration" %
 page import="com.liferay.translator.web.model.Translation" %><%@
 page import="com.liferay.translator.web.util.TranslatorUtil" %>
 
-<%@ page import="javax.portlet.WindowState" %>
+<%@ page import="java.util.Map" %>
 
-<%@ page import="java.util.Locale" %><%@
-page import="java.util.Map" %>
+<%@ page import="javax.portlet.WindowState" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />

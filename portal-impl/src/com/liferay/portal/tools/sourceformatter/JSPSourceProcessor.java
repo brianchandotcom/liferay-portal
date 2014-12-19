@@ -1244,9 +1244,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		sb.append("|(\\+(\\+)?)|(-(-)?)");
 		sb.append("|(\\)))?");
 
-		String regex = sb.toString();
-
-		return hasUnusedJSPTerm(fileName, regex, "variable");
+		return hasUnusedJSPTerm(fileName, sb.toString(), "variable");
 	}
 
 	protected boolean isJSPDuplicateImport(

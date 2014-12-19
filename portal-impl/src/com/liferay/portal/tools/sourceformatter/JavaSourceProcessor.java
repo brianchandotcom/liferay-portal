@@ -1055,11 +1055,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixSystemExceptions(String content) {
-		Matcher matcher = _throwsSystemExceptionPattern.matcher(content);
-
 		if (!content.contains("SystemException")) {
 			return content;
 		}
+
+		Matcher matcher = _throwsSystemExceptionPattern.matcher(content);
 
 		if (!matcher.find()) {
 			return content;

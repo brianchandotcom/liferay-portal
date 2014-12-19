@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.document.selector.web
 Bundle-Version: 1.0.0
 Import-Package: \
 	com.liferay.portal.kernel.lar,\
+	com.liferay.portal.kernel.servlet.filters.invoker,\
 	com.liferay.portal.upload,\
 	\
 	com.liferay.portlet.documentlibrary,\

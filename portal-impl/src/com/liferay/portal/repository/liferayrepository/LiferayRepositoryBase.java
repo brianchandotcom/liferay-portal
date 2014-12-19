@@ -38,6 +38,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
@@ -139,14 +140,17 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 		return dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
 	}
 
-	protected HashMap<String, Fields> getFieldsMap(
+	protected HashMap<String, DDMFormValues> getDDMFormValuesMap(
 			ServiceContext serviceContext, long fileEntryTypeId)
 		throws PortalException {
 
-		HashMap<String, Fields> fieldsMap = new HashMap<>();
+//		HashMap<String, Fields> fieldsMap = new HashMap<String, Fields>();
+		HashMap<String, DDMFormValues> ddmFormValuesMap = 
+			new HashMap<String, DDMFormValues>();
 
 		if (fileEntryTypeId <= 0) {
-			return fieldsMap;
+//			return fieldsMap;
+			return ddmFormValuesMap;
 		}
 
 		DLFileEntryType fileEntryType =
@@ -157,18 +161,27 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 		for (DDMStructure ddmStructure : ddmStructures) {
 			String namespace = String.valueOf(ddmStructure.getStructureId());
 
-			Fields fields = (Fields)serviceContext.getAttribute(
-				Fields.class.getName() + ddmStructure.getStructureId());
+//			Fields fields = (Fields)serviceContext.getAttribute(
+//				Fields.class.getName() + ddmStructure.getStructureId());
 
-			if (fields == null) {
-				fields = DDMUtil.getFields(
-					ddmStructure.getStructureId(), namespace, serviceContext);
+			DDMFormValues ddmFormValues = 
+				(DDMFormValues)serviceContext.getAttribute(
+					DDMFormValues.class.getName() + 
+						ddmStructure.getStructureId());
+
+			if (ddmFormValues == null) {
+//				fields = DDMUtil.getFields(
+//					ddmStructure.getStructureId(), namespace, serviceContext);
+				ddmFormValues = DDMUtil.getDDMFormValues(
+						ddmStructure.getStructureId(), namespace, serviceContext);
 			}
 
-			fieldsMap.put(ddmStructure.getStructureKey(), fields);
+//			fieldsMap.put(ddmStructure.getStructureKey(), fields);
+			ddmFormValuesMap.put(ddmStructure.getStructureKey(), ddmFormValues);
 		}
 
-		return fieldsMap;
+//		return fieldsMap;
+		return ddmFormValuesMap;
 	}
 
 	protected long getGroupId() {

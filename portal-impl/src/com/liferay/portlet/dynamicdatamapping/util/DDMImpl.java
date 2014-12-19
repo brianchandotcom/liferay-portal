@@ -50,10 +50,14 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
@@ -65,9 +69,7 @@ import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateModifiedDa
 
 import java.io.File;
 import java.io.Serializable;
-
 import java.text.DateFormat;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -276,6 +278,61 @@ public class DDMImpl implements DDM {
 
 		return fields;
 	}
+	
+	@Override
+	public DDMFormValues getDDMFormValues(
+			long ddmStructureId, long ddmTemplateId, String fieldNamespace,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructure ddmStructure = getDDMStructure(
+			ddmStructureId, ddmTemplateId);
+
+		Set<String> fieldNames = ddmStructure.getFieldNames();
+
+		boolean translating = true;
+
+		String defaultLanguageId = (String)serviceContext.getAttribute(
+			"defaultLanguageId");
+		String toLanguageId = (String)serviceContext.getAttribute(
+			"toLanguageId");
+
+		if (Validator.isNull(toLanguageId) ||
+			Validator.equals(defaultLanguageId, toLanguageId)) {
+
+			translating = false;
+		}
+
+		DDMFormValues ddmFormValues = new DDMFormValues(new DDMForm());
+
+		for (String fieldName : fieldNames) {
+			boolean localizable = GetterUtil.getBoolean(
+				ddmStructure.getFieldProperty(fieldName, "localizable"), true);
+
+			if (!localizable && translating &&
+				!ddmStructure.isFieldPrivate(fieldName)) {
+
+				continue;
+			}
+			
+			List<String> fieldValues = getDDMFormFieldValues(
+				ddmStructure, fieldName, fieldNamespace, serviceContext);
+
+			if ((fieldValues == null) || fieldValues.isEmpty()) {
+				continue;
+			}
+
+//			Field field = createField(
+//				ddmStructure, fieldName, fieldValues, serviceContext);
+			DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
+					ddmStructure, fieldName, fieldValues, serviceContext);
+
+//			fields.put(field);
+			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+		}
+
+		return ddmFormValues;
+	}
 
 	@Override
 	public Fields getFields(long ddmStructureId, ServiceContext serviceContext)
@@ -289,6 +346,23 @@ public class DDMImpl implements DDM {
 		}
 
 		return getFields(ddmStructureId, 0, serviceContext);
+	}
+	
+	@Override
+	public DDMFormValues getDDMFormValues(long ddmStructureId,
+			String fieldNamespace, ServiceContext serviceContext)
+			throws PortalException {
+		
+		String serializedDDMFormValues = GetterUtil.getString(
+			serviceContext.getAttribute("ddmFormValues"));
+
+		if (Validator.isNotNull(serializedDDMFormValues)) {
+			return getDDMFormValues(ddmStructureId, serializedDDMFormValues);
+		}
+
+//		return getFields(ddmStructureId, 0, serviceContext);
+		return getDDMFormValues(
+			ddmStructureId, 0, StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -486,6 +560,50 @@ public class DDMImpl implements DDM {
 		return field;
 	}
 
+	protected DDMFormFieldValue createDDMFormFieldValue(
+			DDMStructure ddmStructure, String fieldName,
+			List<String> fieldValues, ServiceContext serviceContext)
+		throws PortalException {
+
+//		Field field = new Field();
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+//		field.setDDMStructureId(ddmStructure.getStructureId());
+
+		String languageId = GetterUtil.getString(
+			serviceContext.getAttribute("languageId"),
+			serviceContext.getLanguageId());
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		String defaultLanguageId = GetterUtil.getString(
+			serviceContext.getAttribute("defaultLanguageId"));
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+
+		if (ddmStructure.isFieldPrivate(fieldName)) {
+			locale = LocaleUtil.getSiteDefault();
+
+			defaultLocale = LocaleUtil.getSiteDefault();
+		}
+
+//		field.setDefaultLocale(defaultLocale);
+//
+//		field.setName(fieldName);
+//		field.setValues(locale, fieldValues);
+
+		ddmFormFieldValue.setName(fieldName);
+
+		LocalizedValue value = new LocalizedValue(defaultLocale);
+
+		value.addString(locale, fieldValues.get(0));
+
+		ddmFormFieldValue.setValue(value);
+
+//		return field;
+		return ddmFormFieldValue;
+	}
+	
 	protected DDMStructure getDDMStructure(
 			long ddmStructureId, long ddmTemplateId)
 		throws PortalException {
@@ -589,16 +707,29 @@ public class DDMImpl implements DDM {
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			ddmStructureId);
+		
+		DDMFormValues ddmFormValues = getDDMFormValues(
+			ddmStructureId, serializedDDMFormValues);
+
+		return DDMFormValuesToFieldsConverterUtil.convert(
+			ddmStructure, ddmFormValues);
+	}
+
+	protected DDMFormValues getDDMFormValues(
+			long ddmStructureId, String serializedDDMFormValues)
+		throws PortalException {
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStructureId);
 
 		DDMFormValues ddmFormValues =
 			DDMFormValuesJSONDeserializerUtil.deserialize(
 				ddmStructure.getFullHierarchyDDMForm(),
 				serializedDDMFormValues);
 
-		return DDMFormValuesToFieldsConverterUtil.convert(
-			ddmStructure, ddmFormValues);
+		return ddmFormValues;
 	}
-
+	
 	protected int getFieldValueIndex(
 		String[] fieldsDisplayValues, String fieldName, String instanceId) {
 
@@ -700,6 +831,77 @@ public class DDMImpl implements DDM {
 		return fieldValues;
 	}
 
+	protected List<String> getDDMFormFieldValues(
+			DDMStructure ddmStructure, String fieldName, String fieldNamespace,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		String fieldDataType = ddmStructure.getFieldDataType(fieldName);
+		String fieldType = ddmStructure.getFieldType(fieldName);
+
+		List<String> fieldNames = getFieldNames(
+			fieldNamespace, fieldName, serviceContext);
+
+		List<String> fieldValues = new ArrayList<String>(
+			fieldNames.size());
+
+		for (String fieldNameValue : fieldNames) {
+			Serializable fieldValue = serviceContext.getAttribute(
+				fieldNameValue);
+
+			if (fieldType.equals(DDMImpl.TYPE_CHECKBOX) &&
+				Validator.isNull(fieldValue)) {
+
+				fieldValue = "false";
+			}
+			else if (fieldDataType.equals(FieldConstants.DATE)) {
+				int fieldValueMonth = GetterUtil.getInteger(
+					serviceContext.getAttribute(fieldNameValue + "Month"));
+				int fieldValueDay = GetterUtil.getInteger(
+					serviceContext.getAttribute(fieldNameValue + "Day"));
+				int fieldValueYear = GetterUtil.getInteger(
+					serviceContext.getAttribute(fieldNameValue + "Year"));
+
+				Date fieldValueDate = PortalUtil.getDate(
+					fieldValueMonth, fieldValueDay, fieldValueYear);
+
+				if (fieldValueDate != null) {
+					fieldValue = String.valueOf(fieldValueDate.getTime());
+				}
+			}
+			else if (fieldDataType.equals(FieldConstants.IMAGE) &&
+					 Validator.isNull(fieldValue)) {
+
+				HttpServletRequest request = serviceContext.getRequest();
+
+				if (!(request instanceof UploadRequest)) {
+					return null;
+				}
+
+				fieldValue = getImageFieldValue(
+					(UploadRequest)request, fieldNameValue);
+			}
+
+			if (fieldValue == null) {
+				return null;
+			}
+
+			if (DDMImpl.TYPE_RADIO.equals(fieldType) ||
+				DDMImpl.TYPE_SELECT.equals(fieldType)) {
+
+				if (fieldValue instanceof String) {
+					fieldValue = new String[] {String.valueOf(fieldValue)};
+				}
+
+				fieldValue = JSONFactoryUtil.serialize(fieldValue);
+			}
+
+			fieldValues.add(GetterUtil.getString(fieldValue));
+		}
+
+		return fieldValues;
+	}
+	
 	protected List<Serializable> getFieldValues(Field field, Locale locale) {
 		Map<Locale, List<Serializable>> fieldValuesMap = field.getValuesMap();
 

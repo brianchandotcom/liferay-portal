@@ -40,12 +40,6 @@ public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		if (registry == null) {
-			_serviceTracker = null;
-
-			return;
-		}
-
 		_serviceTracker = registry.trackServices(
 			AccessControlPolicy.class,
 			new AccessControlPolicyTrackerCustomizer());

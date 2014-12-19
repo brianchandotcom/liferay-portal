@@ -45,24 +45,25 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 			WebDAVEnvironmentConfigTestRule.INSTANCE);
 
 	@Test
-	public void test02CopyInit() {
+	public void test02Copy() {
+
+		// Create
+
 		assertCode(
 			HttpServletResponse.SC_CREATED,
 			servicePut("copysrc", _TEST_CONTENT.getBytes()));
 		assertCode(
 			HttpServletResponse.SC_CREATED,
 			service(Method.MKCOL, "copycoll", null, null));
-	}
 
-	@Test
-	public void test03CopySimple() {
+		// Copy
+
 		assertCode(
 			HttpServletResponse.SC_CREATED,
 			serviceCopyOrMove(Method.COPY, "copysrc", "copydest", false));
-	}
 
-	@Test
-	public void test04CopyOverwrite() {
+		// Overwrite
+
 		assertCode(
 			HttpServletResponse.SC_PRECONDITION_FAILED,
 			serviceCopyOrMove(Method.COPY, "copysrc", "copydest", false));
@@ -72,17 +73,15 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 		assertCode(
 			HttpServletResponse.SC_NO_CONTENT,
 			serviceCopyOrMove(Method.COPY, "copysrc", "copycoll", true));
-	}
 
-	@Test
-	public void test05NoDestColl() {
+		// No destination
+
 		assertCode(
 			HttpServletResponse.SC_CONFLICT,
 			serviceCopyOrMove(Method.COPY, "copysrc", "nonesuch/foo", false));
-	}
 
-	@Test
-	public void test06CopyCleanup() {
+		// Delete
+
 		assertCode(HttpServletResponse.SC_NO_CONTENT, serviceDelete("copysrc"));
 		assertCode(
 			HttpServletResponse.SC_NO_CONTENT, serviceDelete("copydest"));

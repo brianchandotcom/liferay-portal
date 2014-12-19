@@ -33,6 +33,8 @@ public abstract class BaseMobileDriverImpl
 		String projectDirName, String browserURL, MobileDriver mobileDriver) {
 
 		super(mobileDriver);
+
+		_projectDirName = projectDirName;
 	}
 
 	@Override
@@ -809,7 +811,7 @@ public abstract class BaseMobileDriverImpl
 		"portal-web//test//functional//com//liferay//portalweb//dependencies//";
 	private String _outputDirName = PropsValues.OUTPUT_DIR_NAME;
 	private String _primaryTestSuiteName;
-	private String _projectDirName;
+	private final String _projectDirName;
 	private String _sikuliImagesDirName =
 		_dependenciesDirName + "sikuli//linux//";
 

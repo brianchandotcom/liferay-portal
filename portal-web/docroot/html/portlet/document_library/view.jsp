@@ -145,6 +145,10 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 				</div>
 			</div>
 
+			<c:if test="<%= portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request) %>">
+				<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
+			</c:if>
+
 			<liferay-portlet:renderURL varImpl="editFileEntryURL">
 				<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 			</liferay-portlet:renderURL>

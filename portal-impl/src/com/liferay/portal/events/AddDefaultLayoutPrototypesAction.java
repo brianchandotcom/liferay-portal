@@ -147,8 +147,6 @@ public class AddDefaultLayoutPrototypesAction
 		}
 
 		addPortletId(layout, PortletKeys.ASSET_TAGS_NAVIGATION, "column-1");
-		addPortletId(
-			layout, PortletKeys.ASSET_CATEGORIES_NAVIGATION, "column-1");
 		addPortletId(layout, PortletKeys.SEARCH, "column-2");
 		String portletId = addPortletId(
 			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
@@ -180,8 +178,6 @@ public class AddDefaultLayoutPrototypesAction
 		}
 
 		addPortletId(layout, PortletKeys.WIKI, "column-1");
-		addPortletId(
-			layout, PortletKeys.ASSET_CATEGORIES_NAVIGATION, "column-2");
 
 		String portletId = addPortletId(
 			layout, PortletKeys.ASSET_TAGS_NAVIGATION, "column-2");

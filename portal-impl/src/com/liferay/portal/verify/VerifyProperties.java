@@ -283,6 +283,14 @@ public class VerifyProperties extends VerifyProcess {
 
 	private static final String[][] _MODULARIZED_PORTAL_KEYS = {
 
+		// Asset
+
+		new String[] {
+			"asset.categories.navigation.display.templates.config",
+			"display.templates.config",
+			"com.liferay.asset.categories.navigation.web"
+		},
+
 		// Bookmarks
 
 		new String[] {

@@ -3,6 +3,7 @@
 
 <project>
 	<path id="plugins.includes.path">
+		<dirset dir="apps/asset" includes="*" />
 		<dirset dir="apps/amazon-rankings" includes="*" />
 		<dirset dir="apps/bookmarks" includes="*" />
 		<dirset dir="apps/currency-converter" includes="*" />

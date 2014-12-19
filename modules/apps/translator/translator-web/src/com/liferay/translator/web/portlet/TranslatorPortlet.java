@@ -77,12 +77,11 @@ public class TranslatorPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-			renderRequest.setAttribute(
-				TranslatorConfiguration.class.getName(),
-				_translatorConfiguration);
+		renderRequest.setAttribute(
+			TranslatorConfiguration.class.getName(), _translatorConfiguration);
 
-			super.include(viewTemplate, renderRequest, renderResponse);
-		}
+		super.include(viewTemplate, renderRequest, renderResponse);
+	}
 
 	@Override
 	public void processAction(
@@ -90,8 +89,7 @@ public class TranslatorPortlet extends MVCPortlet {
 		throws PortletException {
 
 		actionRequest.setAttribute(
-				TranslatorConfiguration.class.getName(),
-				_translatorConfiguration);
+			TranslatorConfiguration.class.getName(), _translatorConfiguration);
 
 		try {
 			String fromLanguageId = ParamUtil.getString(

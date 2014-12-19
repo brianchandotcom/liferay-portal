@@ -35,11 +35,6 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	}
 
 	@Override
-	public String getPropertyKey() {
-		return _propertyKey;
-	}
-
-	@Override
 	public TimeUnit getTimeUnit() {
 		return _timeUnit;
 	}
@@ -105,11 +100,6 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	}
 
 	@Override
-	public void setPropertyKey(String propertyKey) {
-		_propertyKey = propertyKey;
-	}
-
-	@Override
 	public void setTimeUnit(TimeUnit timeUnit) {
 		_timeUnit = timeUnit;
 	}
@@ -136,14 +126,12 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append(", description=");
 		sb.append(_description);
 		sb.append(", eventListenerClass=");
 		sb.append(_eventListenerClass);
-		sb.append(", propertyKey=");
-		sb.append(_propertyKey);
 		sb.append(", timeUnit=");
 		sb.append(_timeUnit);
 		sb.append(", trigger=");
@@ -159,7 +147,6 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 
 	private String _description = StringPool.BLANK;
 	private String _eventListenerClass = StringPool.BLANK;
-	private String _propertyKey = StringPool.BLANK;
 	private TimeUnit _timeUnit;
 	private Trigger _trigger;
 	private TriggerType _triggerType;

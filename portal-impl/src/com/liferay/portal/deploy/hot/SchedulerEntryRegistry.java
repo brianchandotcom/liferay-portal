@@ -14,8 +14,6 @@
 
 package com.liferay.portal.deploy.hot;
 
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -23,9 +21,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.StorageTypeAware;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
@@ -93,8 +88,6 @@ public class SchedulerEntryRegistry {
 				storageType = storageTypeAware.getStorageType();
 			}
 
-			addTrigger(schedulerEntry, serviceReference);
-
 			String portletId = (String)serviceReference.getProperty(
 				"javax.portlet.name");
 
@@ -142,53 +135,6 @@ public class SchedulerEntryRegistry {
 			catch (SchedulerException e) {
 				_log.error(e, e);
 			}
-		}
-
-		protected void addTrigger(
-			SchedulerEntry schedulerEntry,
-			ServiceReference<SchedulerEntry> serviceReference) {
-
-			String propertyKey = schedulerEntry.getPropertyKey();
-
-			if (Validator.isNull(propertyKey)) {
-				return;
-			}
-
-			long bundleId = GetterUtil.getLong(
-				serviceReference.getProperty("bundle.id"), -1);
-
-			String triggerValue = null;
-
-			if (bundleId != 0) {
-				Class<?> clazz = schedulerEntry.getClass();
-
-				ClassLoader classloader = clazz.getClassLoader();
-
-				triggerValue = getPluginPropertyValue(classloader, propertyKey);
-			}
-			else {
-				triggerValue = PrefsPropsUtil.getString(propertyKey);
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Scheduler property key " + propertyKey +
-						" has trigger value " + triggerValue);
-			}
-
-			if (Validator.isNotNull(triggerValue)) {
-				schedulerEntry.setTriggerValue(triggerValue);
-			}
-		}
-
-		protected String getPluginPropertyValue(
-			ClassLoader classLoader, String propertyKey) {
-
-			Configuration configuration =
-				ConfigurationFactoryUtil.getConfiguration(
-					classLoader, "portlet");
-
-			return configuration.get(propertyKey);
 		}
 
 	}

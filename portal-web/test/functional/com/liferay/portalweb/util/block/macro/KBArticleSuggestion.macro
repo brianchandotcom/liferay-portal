@@ -1,7 +1,7 @@
 <definition>
 	<command name="add">
-		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="SUGGESTION_ADD_LINK" value1="Do you have any suggestions?" />
-		<execute action="PGKnowledgebasedisplay#type" locator-key1="SUGGESTION_BODY" value1="${kbSuggestionBody}" />
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_DO_YOU_HAVE_ANY_SUGGESTIONS_LINK" value1="Do you have any suggestions?" />
+		<execute action="PGKnowledgebasedisplay#type" locator-key1="SUGGESTION_CONTENT_FIELD" value1="${kbSuggestionBody}" />
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="SUGGESTION_SUBMIT_BUTTON" value1="Submit" />
 
 		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Suggestion saved successfully." />
@@ -19,7 +19,7 @@
 	<command name="gotoArticleCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute action="PGKnowledgebasedisplaySuggestionsInprogress#click" locator-key1="SUGGESTION_TITLE" value1="${kbSuggestionBody}" />
+		<execute action="PGKnowledgebasedisplay#click" locator-key1="SUGGESTION_TITLE" value1="${kbSuggestionBody}" />
 	</command>
 
 	<command name="gotoStatus">
@@ -71,6 +71,33 @@
 		</if>
 	</command>
 
+	<command name="moveToStatusPG">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
+
+		<if>
+			<equals arg1="${kbSuggestionStatus}" arg2="New" />
+			<then>
+				<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="SUGGESTION_MOVE_TO_NEW_BUTTON" value1="Move to New" />
+				<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Suggestion status updated successfully." />
+			</then>
+			<elseif>
+				<equals arg1="${kbSuggestionStatus}" arg2="In Progress" />
+				<then>
+					<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="SUGGESTION_MOVE_TO_IN_PROGRESS_BUTTON" value1="Move to in Progress" />
+					<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Suggestion status updated successfully." />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${kbSuggestionStatus}" arg2="Resolved" />
+				<then>
+					<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="SUGGESTION_RESOLVE_BUTTON" value1="Resolve" />
+					<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Suggestion status updated successfully." />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
 	<command name="viewCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
@@ -84,18 +111,18 @@
 		<if>
 			<equals arg1="${status}" arg2="New" />
 			<then>
-				<execute action="PGKnowledgebasedisplaySuggestionsNew#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No new suggestion was found." />
+				<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No new suggestion was found." />
 			</then>
 			<elseif>
 				<equals arg1="${status}" arg2="In Progress" />
 				<then>
-					<execute action="PGKnowledgebasedisplaySuggestionsInprogress#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No in progress suggestion was found." />
+					<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No in progress suggestion was found." />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${status}" arg2="Resolved" />
 				<then>
-					<execute action="PGKnowledgebasedisplaySuggestionsResolved#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No completed suggestion was found." />
+					<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No completed suggestion was found." />
 				</then>
 			</elseif>
 		</if>
@@ -104,8 +131,8 @@
 	<command name="viewPG">
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute action="PGKnowledgebasedisplaySuggestionsNew#assertTextEquals" locator-key1="SUGGESTION_USER_NAME" value1="${userName}" />
-		<execute action="PGKnowledgebasedisplaySuggestionsNew#assertTextEquals" locator-key1="SUGGESTION_BODY" value1="${kbSuggestionBody}" />
-		<execute action="PGKnowledgebasedisplaySuggestionsNew#assertTextEquals" locator-key1="SUGGESTION_STATUS" value1="Status: ${status}" />
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUGGESTION_USER_NAME" value1="${userName}" />
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUGGESTION_CONTENT" value1="${kbSuggestionBody}" />
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUGGESTION_STATUS" value1="Status: ${status}" />
 	</command>
 </definition>

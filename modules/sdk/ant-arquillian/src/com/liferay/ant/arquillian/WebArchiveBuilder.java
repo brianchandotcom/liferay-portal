@@ -14,11 +14,16 @@
 
 package com.liferay.ant.arquillian;
 
+import com.liferay.portal.kernel.process.ProcessUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+
 import java.io.File;
 
+import java.util.concurrent.Future;
+
+import org.apache.log4j.Logger;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
-import org.apache.tools.ant.listener.Log4jListener;
 
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -32,12 +37,19 @@ public class WebArchiveBuilder {
 	public static WebArchive build() {
 		File tempDir = new File(System.getProperty("java.io.tmpdir"));
 
+		try {
+			Future<ObjectValuePair<Void, Void>> future = ProcessUtil.execute(
+				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, "ant", "direct-deploy",
+				"-Dapp.server.deploy.dir=" + tempDir.getAbsolutePath(),
+				"-Dauto.deploy.unpack.war=false");
+
+			future.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
 		Project project = _getProject();
-
-		project.setProperty("app.server.deploy.dir", tempDir.getAbsolutePath());
-		project.setProperty("auto.deploy.unpack.war", "false");
-
-		project.executeTarget("direct-deploy");
 
 		File warFile = new File(
 			tempDir.getAbsolutePath(),
@@ -48,8 +60,6 @@ public class WebArchiveBuilder {
 
 	private static Project _getProject() {
 		Project project = new Project();
-
-		project.addBuildListener(new Log4jListener());
 
 		File buildFile = new File("build.xml");
 
@@ -65,5 +75,8 @@ public class WebArchiveBuilder {
 
 		return project;
 	}
+
+	private static final Logger _logger = Logger.getLogger(
+		WebArchiveBuilder.class);
 
 }

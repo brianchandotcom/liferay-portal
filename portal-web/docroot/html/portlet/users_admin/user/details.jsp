@@ -17,12 +17,6 @@
 <%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
-User defaultUser = company.getDefaultUser();
-
-String companyLanguageId = ParamUtil.getString(request, "languageId", defaultUser.getLanguageId());
-
-Locale companyLocale = LocaleUtil.fromLanguageId(companyLanguageId);
-
 User selUser = (User)request.getAttribute("user.selUser");
 
 if (Validator.isNull(selUser)) {
@@ -39,6 +33,19 @@ birthday.set(Calendar.YEAR, 1970);
 
 if (selContact != null) {
 	birthday.setTime(selContact.getBirthday());
+}
+
+String languageId = request.getParameter("languageId");
+
+Locale userLocale;
+
+if (Validator.isNotNull(languageId)) {
+	userLocale = LocaleUtil.fromLanguageId(languageId);
+}
+else {
+	User defaultUser = company.getDefaultUser();
+
+	userLocale = Validator.isNotNull(selUser) ? selUser.getLocale() : LocaleUtil.fromLanguageId(defaultUser.getLanguageId());
 }
 %>
 

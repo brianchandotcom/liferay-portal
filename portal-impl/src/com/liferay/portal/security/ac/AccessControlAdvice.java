@@ -16,8 +16,6 @@ package com.liferay.portal.security.ac;
 
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
-import java.lang.reflect.Method;
-
 import org.aopalliance.intercept.MethodInvocation;
 
 /**
@@ -38,13 +36,7 @@ public class AccessControlAdvice
 			return null;
 		}
 
-		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
-
-		if (remoteAccess) {
-			Method targetMethod = methodInvocation.getMethod();
-
-			_accessControlAdvisor.accept(targetMethod, accessControlled);
-		}
+		_accessControlAdvisor.accept(methodInvocation, accessControlled);
 
 		return null;
 	}

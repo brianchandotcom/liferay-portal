@@ -445,7 +445,7 @@ AUI.add(
 						instance.get('container').remove(true);
 					},
 
-					removeUndefinedLocaleValue: function() {
+					formatLocaleValue: function() {
 						var instance = this;
 
 						var parent = instance.get('parent');
@@ -590,7 +590,7 @@ AUI.add(
 						if (dataType) {
 							instance.updateLocalizationMap(instance.get('displayLocale'));
 
-							instance.removeUndefinedLocaleValue();
+							instance.formatLocaleValue();
 
 							fieldJSON.value = instance.get('localizationMap');
 						}

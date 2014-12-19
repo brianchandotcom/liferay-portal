@@ -97,6 +97,10 @@
 		min-width: 400px;
 	}
 
+	.leaflet-popup #<@liferay_portlet.namespace />assetEntryAbstract {
+		display: inline-block;
+	}
+
 	#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image {
 		display: block;
 		float: left;

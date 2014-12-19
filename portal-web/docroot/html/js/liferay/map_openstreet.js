@@ -48,7 +48,12 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._dialog = L.popup();
+						instance._dialog = L.popup(
+							{
+								className: 'leaflet-popup',
+								minWidth: 400
+							}
+						);
 					},
 
 					open: function(cfg) {

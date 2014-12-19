@@ -18,7 +18,6 @@
 
 	<%
 	Locale[] locales = LanguageUtil.getAvailableLocales();
-	Locale userLocale = Validator.isNotNull(selUser) ? selUser.getLocale() : companyLocale;
 
 	for (Locale curLocale : locales) {
 	%>
@@ -43,7 +42,7 @@
 	select.on('change', function(event) {
 		var formData = $('#<portlet:namespace />fm').formToArray();
 
-		userDetailsURL.setParameter('language_id', select.val());
+		userDetailsURL.setParameter('languageId', select.val());
 
 		$.ajax(
 			userDetailsURL.toString(),

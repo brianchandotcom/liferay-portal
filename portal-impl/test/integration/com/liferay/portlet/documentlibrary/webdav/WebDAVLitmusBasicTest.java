@@ -118,21 +118,22 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 	}
 
 	@Test
-	public void test10Mkcol() {
+	public void test10Col() {
+
+		// Create
+
 		assertCode(
 			HttpServletResponse.SC_CREATED,
 			service(Method.MKCOL, "col", null, null));
-	}
 
-	@Test
-	public void test11MkcolAgain() {
+		// Create duplicate
+
 		assertCode(
 			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
 			service(Method.MKCOL, "col", null, null));
-	}
 
-	@Test
-	public void test12DeleteColl() {
+		//Delete
+
 		assertCode(HttpServletResponse.SC_NO_CONTENT, serviceDelete("col"));
 	}
 

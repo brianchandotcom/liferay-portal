@@ -2,12 +2,11 @@ Bundle-Name: Liferay Translator Web
 Bundle-SymbolicName: com.liferay.translator.web
 Bundle-Version: 1.0.0
 Import-Package:\
-	${bnd.jsp.support.imports},\
+	com.liferay.portal.kernel.util,\
 	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
-	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
 	@../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
 	@../../../../util-taglib/util-taglib.jar
 

@@ -336,16 +336,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return ifClause;
 	}
 
-	protected void checkLogLevel(
-		String content, String fileName, String logLevel) {
-
+	protected void checkLogLevel(String content, String fileName) {
 		if (fileName.contains("Log")) {
 			return;
 		}
 
-		Pattern pattern = Pattern.compile("\n(\t+)_log." + logLevel + "\\(");
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _logLevelPattern.matcher(content);
 
 		while (matcher.find()) {
 			int pos = matcher.start();
@@ -363,7 +359,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String codeBlock = content.substring(pos, matcher.start());
 			String s =
-				"_log.is" + StringUtil.upperCaseFirstLetter(logLevel) +
+				"_log.is" + StringUtil.upperCaseFirstLetter(matcher.group(2)) +
 					"Enabled()";
 
 			if (!codeBlock.contains(s)) {
@@ -865,10 +861,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-41315
 
-		checkLogLevel(newContent, fileName, "debug");
-		checkLogLevel(newContent, fileName, "info");
-		checkLogLevel(newContent, fileName, "trace");
-		checkLogLevel(newContent, fileName, "warn");
+		checkLogLevel(newContent, fileName);
 
 		// LPS-46632
 
@@ -1059,6 +1052,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixSystemExceptions(String content) {
+		if (!content.contains("SystemException")) {
+			return content;
+		}
+
 		Matcher matcher = _throwsSystemExceptionPattern.matcher(content);
 
 		if (!matcher.find()) {
@@ -2730,6 +2727,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _javaTermSortExclusions;
 	private Pattern _lineBreakPattern = Pattern.compile("\\}(\\)+) \\{");
 	private List<String> _lineLengthExclusions;
+	private Pattern _logLevelPattern = Pattern.compile(
+		"\n(\t+)_log.(debug|info|trace|warn)\\(");
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");

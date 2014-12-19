@@ -1235,9 +1235,16 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return false;
 		}
 
-		String regex = "[^A-Za-z0-9_\"]" + variableName + "[^A-Za-z0-9_\"]";
+		StringBundler sb = new StringBundler(6);
 
-		return hasUnusedJSPTerm(fileName, regex, "variable");
+		sb.append("((/)|(\\*)|(\\+(\\+)?)|(-(-)?)|\\(|=)?( )?");
+		sb.append(variableName);
+		sb.append("( )?(\\.");
+		sb.append("|(((\\+)|(-)|(\\*)|(/)|(%)|(\\|)|(&)|(\\^))?(=))");
+		sb.append("|(\\+(\\+)?)|(-(-)?)");
+		sb.append("|(\\)))?");
+
+		return hasUnusedJSPTerm(fileName, sb.toString(), "variable");
 	}
 
 	protected boolean isJSPDuplicateImport(

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -74,7 +75,9 @@ public class ExportUsersAction extends PortletAction {
 		throws Exception {
 
 		try {
-			if (!actionRequest.getParameter("keywords").isEmpty()) {
+			String keywords = ParamUtil.getString(actionRequest, "keywords");
+
+			if (Validator.isNotNull(keywords)) {
 				DynamicActionRequest adjustedActionRequest =
 					new DynamicActionRequest(actionRequest);
 

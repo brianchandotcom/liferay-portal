@@ -74,8 +74,22 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 	}
 
 	@Test
-	public void test04PutGetUTF8() {
+	public void test04UTF8() {
+
+		// Create
+
 		putGet("res-\u20AC");
+
+		// Modify
+
+		assertCode(
+			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+			service(Method.MKCOL, "res-\u20AC", null, null));
+
+		// Delete
+
+		assertCode(
+			HttpServletResponse.SC_NO_CONTENT, serviceDelete("res-\u20AC"));
 	}
 
 	@Test
@@ -86,19 +100,6 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 		assertCode(
 			HttpServletResponse.SC_CONFLICT,
 			servicePut("409me/noparent.txt", _TEST_CONTENT.getBytes()));
-	}
-
-	@Test
-	public void test06MkcolOverPlain() {
-		assertCode(
-			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
-			service(Method.MKCOL, "res-\u20AC", null, null));
-	}
-
-	@Test
-	public void test07Delete() {
-		assertCode(
-			HttpServletResponse.SC_NO_CONTENT, serviceDelete("res-\u20AC"));
 	}
 
 	@Test

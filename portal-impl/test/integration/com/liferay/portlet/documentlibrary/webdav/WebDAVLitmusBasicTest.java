@@ -129,7 +129,7 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
 			service(Method.MKCOL, "col", null, null));
 
-		//Delete
+		// Delete
 
 		assertCode(HttpServletResponse.SC_NO_CONTENT, serviceDelete("col"));
 	}

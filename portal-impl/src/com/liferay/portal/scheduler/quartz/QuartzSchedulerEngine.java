@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.scheduler.IntervalTrigger;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
@@ -40,10 +39,12 @@ import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.scheduler.job.MessageSenderJob;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.QuartzLocalService;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -56,6 +57,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+
+import javax.servlet.ServletContext;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
@@ -941,16 +944,13 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			classLoader = ClassLoaderUtil.getPortalClassLoader();
 		}
 		else {
-			classLoader = PortletClassLoaderUtil.getClassLoader(portletId);
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
-			if (classLoader == null) {
+			PortletApp portletApp = portlet.getPortletApp();
 
-				// No class loader found for the portlet ID, try getting the
-				// class loader where we assume the portlet ID is really a
-				// servlet context name
+			ServletContext servletContext = portletApp.getServletContext();
 
-				classLoader = ClassLoaderPool.getClassLoader(portletId);
-			}
+			classLoader = servletContext.getClassLoader();
 		}
 
 		if (classLoader == null) {

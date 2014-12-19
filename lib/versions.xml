@@ -2933,6 +2933,24 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/monte-cc.jar</file-name>
+				<version>0.7.7</version>
+				<project-name>Monte Media Library</project-name>
+				<project-url>http://www.randelshofer.ch/monte/</project-url>
+				<licenses>
+					<license>
+						<license-name>Creative Commons Attribution 3.0</license-name>
+						<license-url>http://creativecommons.org/licenses/by/3.0/</license-url>
+						<copyright-notice>Copyright (c) 2012 Monte Media Library. All rights reserved.</copyright-notice>
+					</license>
+					<license>
+						<license-name>LGPL 3.0</license-name>
+						<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
+						<copyright-notice>Copyright (c) 2012 Monte Media Library. All rights reserved.</copyright-notice>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/msnm.jar</file-name>
 				<version>1.2.2</version>
 				<project-name>JMSN - Open source MSN messenger clone</project-name>

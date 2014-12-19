@@ -1104,6 +1104,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		Trigger trigger = scheduler.getTrigger(triggerKey);
 
+		if (trigger == null) {
+			return;
+		}
+
 		jobState.setTriggerDate(END_TIME, new Date());
 		jobState.setTriggerDate(FINAL_FIRE_TIME, trigger.getPreviousFireTime());
 		jobState.setTriggerDate(NEXT_FIRE_TIME, null);

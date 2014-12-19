@@ -28,36 +28,53 @@
 		<delete file="${jar.file}-sources.jar" failonerror="false" />
 	</target>
 
-	<target name="compile">
-		<if>
+	<target name="check-compile-uptodate">
+		<uptodate property="compile.uptodate" targetfile="classes/.touch">
+			<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*"/>
+		</uptodate>
+
+		<condition property="jar.uptodate" value="false">
 			<not>
-				<uptodate targetfile="classes/.touch">
-					<srcfiles dir="src" includes="**/*.*" />
-				</uptodate>
+				<equals arg1="${compile.uptodate}" arg2="true" />
 			</not>
+		</condition>
+	</target>
+
+	<target name="check-deploy-uptodate" depends="check-jar-uptodate">
+		<uptodate property="deploy.uptodate" srcfile="${jar.file}.jar" targetfile="${deploy.dir}/${jar.file}.jar" />
+	</target>
+
+	<target name="check-jar-uptodate" depends="check-compile-uptodate">
+		<uptodate property="jar.uptodate" srcfile="classes/.touch" targetfile="${jar.file}.jar" />
+
+		<condition property="deploy.uptodate" value="false">
+			<not>
+				<equals arg1="${jar.uptodate}" arg2="true" />
+			</not>
+		</condition>
+	</target>
+
+	<target name="compile" depends="check-compile-uptodate" unless="${compile.uptodate}">
+		<if>
+			<available file="$${javac.destdir}" />
 			<then>
-				<if>
-					<available file="$${javac.destdir}" />
-					<then>
 
-						<!--
-						Clean up stale dir that was accidentally introduced in
-						0b63ac06aec90d42d428a1b23140303324125042.
-						-->
+				<!--
+				Clean up stale dir that was accidentally introduced in
+				0b63ac06aec90d42d428a1b23140303324125042.
+				-->
 
-						<delete dir="$${javac.destdir}" />
-					</then>
-				</if>
-
-				<mkdir dir="classes" />
-
-				<antcall target="compile-java">
-					<param name="javac.classpathref" value="project.classpath" />
-					<param name="javac.destdir" value="classes" />
-					<param name="javac.srcdir" value="src" />
-				</antcall>
+				<delete dir="$${javac.destdir}" />
 			</then>
 		</if>
+
+		<mkdir dir="classes" />
+
+		<antcall target="compile-java">
+			<param name="javac.classpathref" value="project.classpath" />
+			<param name="javac.destdir" value="classes" />
+			<param name="javac.srcdir" value="src" />
+		</antcall>
 	</target>
 
 	<target name="compile-java">
@@ -109,49 +126,31 @@
 		<echo file="${javac.destdir}/.touch"></echo>
 	</target>
 
-	<target name="deploy" depends="jar">
-		<if>
-			<not>
-				<uptodate targetfile="${deploy.dir}/${jar.file}.jar">
-					<srcfiles dir="${basedir}" includes="${jar.file}.jar" />
-				</uptodate>
-			</not>
-			<then>
-				<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
-			</then>
-		</if>
+	<target name="deploy" depends="check-deploy-uptodate,jar" unless="${deploy.uptodate}">
+		<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
 	</target>
 
-	<target name="jar" depends="compile">
+	<target name="jar" depends="check-jar-uptodate,compile" unless="${jar.uptodate}">
 		<if>
-			<not>
-				<uptodate targetfile="${jar.file}.jar">
-					<srcfiles dir="classes" includes="**/*.*" />
-				</uptodate>
-			</not>
+			<available file="bnd.bnd" />
 			<then>
-				<if>
-					<available file="bnd.bnd" />
-					<then>
-						<baseline-jar-macro
-							bndRootFile="${project.dir}/common.bnd"
-							file="bnd.bnd"
-							outputPath="."
-							rootProjectDir="${project.dir}"
-							sourcePath="."
-						/>
-					</then>
-					<else>
-						<antcall target="manifest" />
-
-						<jar
-							basedir="classes"
-							jarfile="${jar.file}.jar"
-							manifest="classes/META-INF/MANIFEST.MF"
-						/>
-					</else>
-				</if>
+				<baseline-jar-macro
+					bndRootFile="${project.dir}/common.bnd"
+					file="bnd.bnd"
+					outputPath="."
+					rootProjectDir="${project.dir}"
+					sourcePath="."
+				/>
 			</then>
+			<else>
+				<antcall target="manifest" />
+
+				<jar
+					basedir="classes"
+					jarfile="${jar.file}.jar"
+					manifest="classes/META-INF/MANIFEST.MF"
+				/>
+			</else>
 		</if>
 	</target>
 

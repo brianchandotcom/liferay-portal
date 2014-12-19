@@ -416,6 +416,8 @@
 		<ant dir="portal-test" target="compile" inheritAll="false" />
 		<ant dir="portal-test-internal" target="compile" inheritAll="false" />
 
+		<ant dir="support-tomcat" target="compile" inheritAll="false" />
+
 		<if>
 			<available file="javac.output.txt" />
 			<then>

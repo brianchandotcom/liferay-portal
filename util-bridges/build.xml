@@ -18,8 +18,6 @@
 		<fileset dir="${project.dir}/lib/portal" includes="bsf.jar,commons-logging.jar,liferay-rhino.jar,portals-bridges.jar,struts.jar" />
 	</path>
 
-	<target name="compile" depends="compile-java" />
-
 	<target name="jar" depends="build-common-java.jar">
 		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
 		<copy file="${project.dir}/lib/portal/portals-bridges.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />

@@ -14,13 +14,12 @@
 		<fileset dir="${project.dir}/lib/development" includes="catalina.jar,jasper.jar,tomcat-coyote.jar" />
 	</path>
 
-	<target name="clean">
-		<antcall target="build-common-java.clean" />
-
+	<target name="clean" depends="build-common-java.clean">
 		<delete file="${deploy.dir}/${jar.file}.jar" />
 	</target>
 
-	<target name="compile" depends="compile-java">
+	<target name="compile" depends="check-compile-uptodate" unless="${compile.uptodate}">
+		<antcall target="compile-java" />
 
 		<!--
 		LEP-2995

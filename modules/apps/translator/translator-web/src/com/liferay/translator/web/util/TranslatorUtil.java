@@ -15,6 +15,7 @@
 package com.liferay.translator.web.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webcache.WebCacheException;
@@ -61,6 +62,7 @@ public class TranslatorUtil {
 			return new String[] {fromLanguageId, toLanguageId};
 		}
 		catch (Exception e) {
+			ReflectionUtil.throwException(e);
 		}
 
 		return null;

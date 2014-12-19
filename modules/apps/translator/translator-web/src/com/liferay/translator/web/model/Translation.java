@@ -14,6 +14,7 @@
 
 package com.liferay.translator.web.model;
 
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
@@ -65,6 +66,7 @@ public class Translation implements Serializable {
 			_fromText = new String(fromText.getBytes(), StringPool.UTF8);
 		}
 		catch (UnsupportedEncodingException uee) {
+			ReflectionUtil.throwException(uee);
 		}
 	}
 
@@ -73,6 +75,7 @@ public class Translation implements Serializable {
 			_toText = new String(toText.getBytes(), StringPool.UTF8);
 		}
 		catch (UnsupportedEncodingException uee) {
+			ReflectionUtil.throwException(uee);
 		}
 	}
 

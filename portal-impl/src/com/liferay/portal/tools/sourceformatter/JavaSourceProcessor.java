@@ -341,10 +341,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
-		Pattern pattern = Pattern.compile(
-			"\n(\t+)_log.(debug|info|trace|warn)\\(");
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _logLevelPattern.matcher(content);
 
 		while (matcher.find()) {
 			int pos = matcher.start();
@@ -2730,6 +2727,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _javaTermSortExclusions;
 	private Pattern _lineBreakPattern = Pattern.compile("\\}(\\)+) \\{");
 	private List<String> _lineLengthExclusions;
+	private Pattern _logLevelPattern = Pattern.compile(
+		"\n(\t+)_log.(debug|info|trace|warn)\\(");
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");

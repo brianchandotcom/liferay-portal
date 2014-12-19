@@ -1,4 +1,4 @@
-Bundle-Version: 6.2.0
+Bundle-Version: 6.2.1
 Export-Package: com.liferay.util.bridges.*
 Import-Package:\
 	com.liferay.*,\

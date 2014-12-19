@@ -48,6 +48,8 @@ public class PersistenceTestRule extends BaseTestRule<Object, Object> {
 
 	@Override
 	protected Object beforeMethod(Description description) {
+		initialize();
+
 		Object instance = ReflectionTestUtil.getFieldValue(
 			ModelListenerRegistrationUtil.class, "_instance");
 
@@ -63,10 +65,11 @@ public class PersistenceTestRule extends BaseTestRule<Object, Object> {
 		return modelListeners;
 	}
 
-	private PersistenceTestRule() {
-	}
+	private static void initialize() {
+		if (_initialized) {
+			return;
+		}
 
-	static {
 		try {
 			DBUpgrader.upgrade();
 
@@ -78,6 +81,13 @@ public class PersistenceTestRule extends BaseTestRule<Object, Object> {
 		finally {
 			CacheRegistryUtil.setActive(true);
 		}
+
+		_initialized = true;
 	}
+
+	private PersistenceTestRule() {
+	}
+
+	private static boolean _initialized;
 
 }

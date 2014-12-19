@@ -471,6 +471,25 @@
 		</if>
 	</command>
 
+	<command name="viewArticleHistoryPG">
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_HISTORY" value1="History" />
+
+		<execute action="PGKnowledgebasedisplayArticleHistory#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute action="PGKnowledgebasedisplayArticleHistory#assertTextEquals" locator-key1="ARTICLE_TITLE_EDIT_DIFF" value1="${kbArticleTitleDiff}" />
+		<execute action="PGKnowledgebasedisplayArticleHistory#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
+		<execute action="PGKnowledgebasedisplayArticleHistory#assertTextEquals" locator-key1="ARTICLE_CONTENT_EDIT_DIFF" value1="${kbArticleContentDiff}" />
+
+		<if>
+			<equals arg1="${viewNoXMLInTitle}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplayArticleHistory#assertTextNotPresent" locator-key1="ARTICLE_TITLE" value1="xml" />
+			</then>
+		</if>
+
+		<execute action="PGKnowledgebasedisplayArticleHistory#assertTextEquals" locator-key1="VERSION_TABLE_TARGET" value1="${kbArticleHistoryTarget}" />
+		<execute action="PGKnowledgebasedisplayArticleHistory#assertTextEquals" locator-key1="VERSION_TABLE_SOURCE" value1="${kbArticleHistorySource}" />
+	</command>
+
 	<command name="viewChildArticleCP">
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Child Articles for ${kbArticleTitle}." />
 

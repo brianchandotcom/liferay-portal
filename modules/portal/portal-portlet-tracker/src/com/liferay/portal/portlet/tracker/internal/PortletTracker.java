@@ -261,7 +261,7 @@ public class PortletTracker
 		portletBagFactory.setClassLoader(bundleWiring.getClassLoader());
 		portletBagFactory.setServletContext(
 			bundlePortletApp.getServletContext());
-		portletBagFactory.setWARFile(true);
+		portletBagFactory.setWARFile(false);
 
 		try {
 			portletBagFactory.create(portletModel);
@@ -1112,7 +1112,7 @@ public class PortletTracker
 		for (String resourceActionConfig : resourceActionConfigs) {
 			try {
 				ResourceActionsUtil.read(
-					servletContextName, classLoader, resourceActionConfig);
+					null, classLoader, resourceActionConfig);
 			}
 			catch (Exception e) {
 				_log.error(e, e);

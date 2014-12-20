@@ -133,6 +133,8 @@
 
 				import java.util.concurrent.TimeUnit;
 
+				import org.apache.commons.io.FileUtils;
+
 				import org.json.JSONObject;
 
 				public String fixJSON(String json) {
@@ -182,7 +184,7 @@
 				}
 
 				public String getDeprecatedMethodErrorMessage(File file) {
-					String errorMessage = toStringFile(file);
+					String errorMessage = FileUtils.readFileToString(file);
 
 					return fixJSON(errorMessage);
 				}
@@ -255,25 +257,6 @@
 					String line = null;
 
 					while ((line = bufferedReader.readLine()) != null) {
-						sb.append(line);
-						sb.append("\n");
-					}
-
-					bufferedReader.close();
-
-					return sb.toString();
-				}
-
-				public String toStringFile(File file) {
-					StringBuilder sb = new StringBuilder();
-
-					FileReader fileReader = new FileReader(file);
-
-					BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-					String line = null;
-
-					while((line = bufferedReader.readLine()) != null ) {
 						sb.append(line);
 						sb.append("\n");
 					}

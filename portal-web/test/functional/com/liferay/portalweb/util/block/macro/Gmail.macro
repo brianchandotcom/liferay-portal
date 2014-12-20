@@ -175,6 +175,12 @@
 		</if>
 	</command>
 
+	<command name="viewMailNotPresent">
+		<var name="key_gmailAssetType" value="${gmailAssetType}" />
+
+		<execute action="Gmail#assertElementNotPresent" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE" />
+	</command>
+
 	<command name="viewSocialOfficeMessageMail">
 		<execute action="Gmail#assertClick" locator-key1="GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE_SOCIAL_OFFICE_MESSAGE" value1="${senderName} sent you a message on Liferay" />
 		<execute action="Gmail#pause" locator1="3000" />

@@ -14,6 +14,11 @@
 
 package com.liferay.portal.kernel.test;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -23,7 +28,7 @@ import org.junit.runners.model.Statement;
  */
 public class AggregateTestRule implements TestRule {
 
-	public AggregateTestRule(TestRule... testRules) {
+	public AggregateTestRule(boolean sort, TestRule... testRules) {
 		if (testRules == null) {
 			throw new NullPointerException("Test rules is null");
 		}
@@ -34,6 +39,14 @@ public class AggregateTestRule implements TestRule {
 		}
 
 		_testRules = testRules;
+
+		if (sort) {
+			Arrays.sort(_testRules, _TEST_RULE_COMPARATOR);
+		}
+	}
+
+	public AggregateTestRule(TestRule... testRules) {
+		this(true, testRules);
 	}
 
 	@Override
@@ -44,6 +57,48 @@ public class AggregateTestRule implements TestRule {
 
 		return statement;
 	}
+
+	private static final String[] _ORDERED_RULE_CLASS_NAMES = new String[] {
+		HeapDumpTestRule.class.getName(), CodeCoverageAssertor.class.getName(),
+		NewEnvTestRule.class.getName(),
+		"com.liferay.portal.test.LiferayIntegrationTestRule",
+		"com.liferay.portal.test.MainServletTestRule",
+		"com.liferay.portal.test.PersistenceTestRule",
+		"com.liferay.portal.test.TransactionalTestRule",
+		"com.liferay.portal.test.SynchronousDestinationTestRule"
+	};
+
+	private static final Comparator<TestRule> _TEST_RULE_COMPARATOR =
+		new Comparator<TestRule>() {
+
+			@Override
+			public int compare(TestRule testRule1, TestRule testRule2) {
+				return getIndex(testRule1.getClass()) -
+					getIndex(testRule2.getClass());
+			}
+
+			private int getIndex(Class<?> testRuleClass) {
+				Set<String> testRuleClassNames = new HashSet<String>();
+
+				while (TestRule.class.isAssignableFrom(testRuleClass)) {
+					testRuleClassNames.add(testRuleClass.getName());
+
+					testRuleClass = testRuleClass.getSuperclass();
+				}
+
+				for (int i = 0; i < _ORDERED_RULE_CLASS_NAMES.length; i++) {
+					if (testRuleClassNames.contains(
+							_ORDERED_RULE_CLASS_NAMES[i])) {
+
+						return i;
+					}
+				}
+
+				throw new IllegalArgumentException(
+					"Unknown test rule class : " + testRuleClass);
+			}
+
+		};
 
 	private final TestRule[] _testRules;
 

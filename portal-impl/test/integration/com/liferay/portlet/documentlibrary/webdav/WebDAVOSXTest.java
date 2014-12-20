@@ -27,6 +27,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
@@ -50,8 +51,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			new LiferayIntegrationTestRule(),
 			WebDAVEnvironmentConfigTestRule.INSTANCE);
 
-	@Test
-	public void testMSOffice0Setup() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		Class<?> clazz = getClass();
 
 		_testFileBytes = FileUtil.getBytes(clazz, _OFFICE_TEST_DOCX);

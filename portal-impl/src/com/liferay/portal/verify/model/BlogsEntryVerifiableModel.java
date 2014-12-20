@@ -36,4 +36,9 @@ public class BlogsEntryVerifiableModel implements VerifiableResourcedModel {
 		return "BlogsEntry";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

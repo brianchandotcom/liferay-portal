@@ -14,31 +14,31 @@
 
 package com.liferay.portal.verify.model;
 
-import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portal.model.Group;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Tomas Polesovsky
  */
-public class MBMessageVerifiableModel implements VerifiableResourcedModel {
+public class GroupVerifiableResourcedModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return MBMessage.class.getName();
+		return Group.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "messageId";
+		return "groupId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "MBMessage";
+		return "Group_";
 	}
 
 	@Override
 	public String getUserIdColumnName() {
-		return "userId";
+		return "creatorUserId";
 	}
 
 }

@@ -54,6 +54,11 @@ public class LayoutVerifiableModel
 	}
 
 	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
+	@Override
 	public boolean isUpdateDates() {
 		return false;
 	}

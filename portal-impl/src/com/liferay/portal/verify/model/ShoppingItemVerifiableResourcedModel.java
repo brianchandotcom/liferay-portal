@@ -37,4 +37,9 @@ public class ShoppingItemVerifiableResourcedModel
 		return "ShoppingItem";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

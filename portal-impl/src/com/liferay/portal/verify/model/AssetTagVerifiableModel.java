@@ -36,4 +36,9 @@ public class AssetTagVerifiableModel implements VerifiableResourcedModel {
 		return "AssetTag";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

@@ -36,4 +36,9 @@ public class MBCategoryVerifiableModel implements VerifiableResourcedModel {
 		return "MBCategory";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

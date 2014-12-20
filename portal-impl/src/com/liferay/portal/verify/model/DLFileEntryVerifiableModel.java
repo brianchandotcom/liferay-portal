@@ -36,4 +36,9 @@ public class DLFileEntryVerifiableModel implements VerifiableResourcedModel {
 		return "DLFileEntry";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

@@ -37,4 +37,9 @@ public class JournalFeedVerifiableModel
 		return "JournalFeed";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

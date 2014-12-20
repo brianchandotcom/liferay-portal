@@ -36,4 +36,9 @@ public class DLFolderVerifiableModel implements VerifiableResourcedModel {
 		return "DLFolder";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

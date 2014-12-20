@@ -37,4 +37,9 @@ public class AnnouncementsEntryVerifiableModel
 		return "AnnouncementsEntry";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

@@ -37,4 +37,9 @@ public class PasswordPolicyVerifiableModel
 		return "PasswordPolicy";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

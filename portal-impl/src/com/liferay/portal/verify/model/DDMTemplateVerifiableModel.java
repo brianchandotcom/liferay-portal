@@ -36,4 +36,9 @@ public class DDMTemplateVerifiableModel implements VerifiableResourcedModel {
 		return "DDMTemplate";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

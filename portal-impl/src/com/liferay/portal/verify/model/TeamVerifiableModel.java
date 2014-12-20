@@ -36,4 +36,9 @@ public class TeamVerifiableModel implements VerifiableResourcedModel {
 		return "Team";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

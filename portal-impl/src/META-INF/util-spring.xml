@@ -834,6 +834,7 @@
 	<bean class="com.liferay.portal.verify.model.DLFolderVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.EmailAddressVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.GroupVerifiableModel" />
+	<bean class="com.liferay.portal.verify.model.GroupVerifiableResourcedModel" />
 	<bean class="com.liferay.portal.verify.model.JournalArticleResourceVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.JournalArticleVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.JournalFeedVerifiableModel" />

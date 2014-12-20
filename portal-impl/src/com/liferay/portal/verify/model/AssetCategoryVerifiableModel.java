@@ -36,4 +36,9 @@ public class AssetCategoryVerifiableModel implements VerifiableResourcedModel {
 		return "AssetCategory";
 	}
 
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
+	}
+
 }

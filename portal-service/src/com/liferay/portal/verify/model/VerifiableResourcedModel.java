@@ -27,4 +27,6 @@ public interface VerifiableResourcedModel extends VerifiableModel {
 	@Override
 	public String getTableName();
 
+	public String getUserIdColumnName();
+
 }

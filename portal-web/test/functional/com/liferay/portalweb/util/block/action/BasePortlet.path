@@ -232,6 +232,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_CONFIGURATION_SHOW_BORDERS_SELECT</td>
+	<td>//select[@id='_113_show-borders']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_CONFIGURATION_SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>

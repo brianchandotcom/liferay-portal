@@ -149,6 +149,16 @@
 		</execute>
 
 		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_THERE_ARE_SUGGESTIONS_LINK" value1="There are 3 suggestions. (3 Pending)" />
+
+		<for list="${kbSuggestionCounterList}" param="suggestionCount" >
+			<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
+
+			<execute macro="KBArticleSuggestion#viewPG">
+				<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion${suggestionCount}" />
+				<var name="status" value="New" />
+				<var name="userName" value="Test Test" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="CannotViewDuplicateBreadcrumbsWhenAddingParentArticle" priority="5" >
@@ -298,6 +308,7 @@
 		</execute>
 
 		<execute macro="KBArticle#rateArticlePG">
+			<var name="articleVoteCount" value="+1 (1 Vote)" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="rateUp" value="true" />
 		</execute>
@@ -408,10 +419,9 @@
 			<var name="suggestionCount" value="1" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#moveToStatusPG">
+		<execute macro="KBArticleSuggestion#moveToInProgressStatusPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
 			<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion" />
-			<var name="kbSuggestionStatus" value="In Progress" />
 		</execute>
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
@@ -422,10 +432,9 @@
 			<var name="suggestionCount" value="1" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#moveToStatusPG">
+		<execute macro="KBArticleSuggestion#moveToResolvedStatusPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
 			<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion" />
-			<var name="kbSuggestionStatus" value="Resolved" />
 		</execute>
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />

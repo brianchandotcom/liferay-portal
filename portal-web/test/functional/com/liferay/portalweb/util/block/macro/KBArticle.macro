@@ -357,6 +357,7 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
+
 		<if>
 			<equals arg1="${rateUp}" arg2="true" />
 			<then>
@@ -370,7 +371,7 @@
 			</elseif>
 		</if>
 
-		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_VOTES" value1="1" />
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_VOTES" value1="${articleVoteCount}" />
 	</command>
 
 	<command name="searchPGViaKBSearch">
@@ -772,13 +773,6 @@
 		</for>
 	</command>
 
-	<command name="viewViaReadMoreLinkPG">
-		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute action="PGKnowledgebasedisplay#assertTextNotPresent" locator-key1="ARTICLE_CHILD_CONTENT" value1="This last sentence of the child article should only be visible after clicking on Read More. " />
-		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_READ_MORE" value1="Read More" />
-		<execute action="PGKnowledgebasedisplay#assertTextPresent" locator-key1="ARTICLE_CONTENT" value1="This last sentence of the child article should only be visible after clicking on Read More." />
-	</command>
-
 	<command name="viewViaKBArticlePG">
 		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
@@ -807,5 +801,12 @@
 	<command name="viewViaKBSectionPG">
 		<execute action="PGKnowledgebasesectionArticle#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute action="PGKnowledgebasesectionArticle#assertTextEquals" locator-key1="ARTICLE_CONTENT" value1="${kbArticleContent}" />
+	</command>
+
+	<command name="viewViaReadMoreLinkPG">
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute action="PGKnowledgebasedisplay#assertTextNotPresent" locator-key1="ARTICLE_CHILD_CONTENT" value1="This last sentence of the child article should only be visible after clicking on Read More. " />
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_READ_MORE" value1="Read More" />
+		<execute action="PGKnowledgebasedisplay#assertTextPresent" locator-key1="ARTICLE_CONTENT" value1="This last sentence of the child article should only be visible after clicking on Read More." />
 	</command>
 </definition>

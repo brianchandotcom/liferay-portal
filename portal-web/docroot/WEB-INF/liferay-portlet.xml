@@ -251,16 +251,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>26</portlet-name>
-		<icon>/html/icons/translator.png</icon>
-		<struts-path>translator</struts-path>
-		<remoteable>true</remoteable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-translator</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>29</portlet-name>
 		<icon>/html/icons/communities.png</icon>
 		<struts-path>my_sites</struts-path>

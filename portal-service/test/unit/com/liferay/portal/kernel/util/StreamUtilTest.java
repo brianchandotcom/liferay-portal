@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.util;
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -25,12 +24,9 @@ import java.nio.file.StandardOpenOption;
 
 import java.util.Random;
 
-import org.apache.commons.io.FileUtils;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -46,6 +42,8 @@ public class StreamUtilTest {
 		Random random = new Random();
 
 		random.nextBytes(_data);
+
+		Files.write(_fromFilePath, _data);
 	}
 
 	@After
@@ -55,42 +53,29 @@ public class StreamUtilTest {
 	}
 
 	@Test
-	public void testTransferFileChannel1MB() throws Exception {
-		Files.write(_fromFilePath, _data);
-
-		testTransferFileChannel();
-	}
-
-	@Test
-	@Ignore
-	public void testTransferFileChannel2GB() throws Exception {
-		Files.write(_fromFilePath, _data);
-
-		RandomAccessFile file = new RandomAccessFile(
-			_fromFilePath.toFile(), "rw");
-
-		file.setLength(Integer.MAX_VALUE);
-
-		file.close();
-
-		testTransferFileChannel();
-	}
-
-	protected void testTransferFileChannel() throws Exception {
+	public void testTransferFileChannel() throws Exception {
 		try (FileChannel fromFileChannel = FileChannel.open(
 				_fromFilePath, StandardOpenOption.READ);
 			FileChannel toFileChannel = FileChannel.open(
 				_toFilePath, StandardOpenOption.CREATE,
 				StandardOpenOption.WRITE)) {
 
+			ByteBuffer byteBuffer = ByteBuffer.allocate(_data.length / 2);
+
+			while (byteBuffer.hasRemaining()) {
+				fromFileChannel.read(byteBuffer);
+			}
+
+			byteBuffer.flip();
+
+			toFileChannel.write(byteBuffer);
+
 			StreamUtil.transferFileChannel(
-				fromFileChannel, toFileChannel, 0);
+				fromFileChannel, toFileChannel,
+				_data.length - byteBuffer.capacity());
 		}
 
-		boolean contentEquals = FileUtils.contentEquals(
-			_fromFilePath.toFile(), _toFilePath.toFile());
-
-		Assert.assertTrue(contentEquals);
+		Assert.assertArrayEquals(_data, Files.readAllBytes(_toFilePath));
 	}
 
 	private final byte[] _data = new byte[1024 * 1024];

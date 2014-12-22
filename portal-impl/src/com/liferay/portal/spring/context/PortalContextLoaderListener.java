@@ -16,6 +16,7 @@ package com.liferay.portal.spring.context;
 
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.cache.ehcache.ClearEhcacheThreadUtil;
+import com.liferay.portal.dao.orm.hibernate.FieldInterceptionHelperUtil;
 import com.liferay.portal.deploy.hot.IndexerPostProcessorRegistry;
 import com.liferay.portal.deploy.hot.SchedulerEntryRegistry;
 import com.liferay.portal.deploy.hot.ServiceWrapperRegistry;
@@ -193,6 +194,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		PortletBagPool.reset();
 
 		ReferenceRegistry.releaseReferences();
+
+		FieldInterceptionHelperUtil.initialize();
 
 		InitUtil.init();
 

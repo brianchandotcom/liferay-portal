@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import java.io.IOException;
+import java.io.RandomAccessFile;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -44,8 +45,6 @@ public class StreamUtilTest {
 		Random random = new Random();
 
 		random.nextBytes(_data);
-
-		Files.write(_fromFilePath, _data);
 	}
 
 	@After
@@ -55,7 +54,27 @@ public class StreamUtilTest {
 	}
 
 	@Test
-	public void testTransferFileChannel() throws Exception {
+	public void testTransferFileChannel1MB() throws Exception {
+		Files.write(_fromFilePath, _data);
+
+		testTransferFileChannel();
+	}
+
+	@Test
+	public void testTransferFileChannel2GB() throws Exception {
+		Files.write(_fromFilePath, _data);
+
+		RandomAccessFile file = new RandomAccessFile(
+			_fromFilePath.toFile(), "rw");
+
+		file.setLength(Integer.MAX_VALUE);
+
+		file.close();
+
+		testTransferFileChannel();
+	}
+
+	protected void testTransferFileChannel() throws Exception {
 		try (FileChannel fromFileChannel = FileChannel.open(
 				_fromFilePath, StandardOpenOption.READ);
 			FileChannel toFileChannel = FileChannel.open(

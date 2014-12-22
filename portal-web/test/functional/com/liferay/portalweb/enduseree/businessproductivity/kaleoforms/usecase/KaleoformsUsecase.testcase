@@ -7358,12 +7358,32 @@
 
 		<property name="test.assert.javascript.errors" value="false" />
 
-		<var name="user1EmailAddress" property-value="email.address.3" />
-		<var name="user1EmailPassword" property-value="email.password.3" />
-		<var name="user2EmailAddress" property-value="email.address.4" />
-		<var name="user2EmailPassword" property-value="email.password.4" />
-		<var name="user3EmailAddress" property-value="email.address.2" />
-		<var name="user3EmailPassword" property-value="email.password.2" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Text" />
+		<var name="fieldName" value="Text" />
+		<var name="kfFieldSetName" value="Field Set Data Definition" />
+		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
+		<var name="kfProcessFieldData" value="Test" />
+		<var name="kfProcessName" value="Kaleo Forms Process" />
+		<var name="pageName" value="Kaleo Forms" />
+		<var name="role1Name" value="KaleoSubmitRole Name" />
+		<var name="role2Name" value="KaleoReviewRole Name" />
+		<var name="role3Name" value="Administrator" />
+		<var name="user1EmailAddress" property-value="email.address.2" />
+		<var name="user1EmailPassword" property-value="email.password.2" />
+		<var name="user1FirstName" value="userfn1" />
+		<var name="user1LastName" value="Submitter" />
+		<var name="user1ScreenName" value="kaloesubmitter" />
+		<var name="user2EmailAddress" property-value="email.address.3" />
+		<var name="user2EmailPassword" property-value="email.password.3" />
+		<var name="user2FirstName" value="userfn2" />
+		<var name="user2LastName" value="Updater" />
+		<var name="user2ScreenName" value="kaleoupdater" />
+		<var name="user3EmailAddress" property-value="email.address.4" />
+		<var name="user3EmailPassword" property-value="email.password.4" />
+		<var name="user3FirstName" value="userfn3" />
+		<var name="user3LastName" value="Administrator" />
+		<var name="user3ScreenName" value="admin" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
@@ -7379,7 +7399,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="CustomRole Name" />
+			<var name="roleName" value="${role1Name}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7387,7 +7407,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleName" value="${role2Name}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7399,7 +7419,7 @@
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
 			<var name="permissionNavigationValue" value="Kaleo Forms" />
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleName" value="${role1Name}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7411,7 +7431,7 @@
 			<var name="permissionDefinitionValue" value="Submit" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
 			<var name="permissionNavigationValue" value="Kaleo Forms" />
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleName" value="${role1Name}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7423,7 +7443,7 @@
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
 			<var name="permissionNavigationValue" value="Kaleo Forms" />
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleName" value="${role1Name}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7444,7 +7464,7 @@
 
 		<execute macro="KaleoDesigner#editNodeAssignments">
 			<var name="nodeAssignmentType" value="Role" />
-			<var name="roleName" value="CustomRole Name" />
+			<var name="roleName" value="${role2Name}" />
 		</execute>
 
 		<execute macro="KaleoDesigner#editNodeNotifications">
@@ -7457,7 +7477,7 @@
 		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="Kaleo Forms" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -7470,9 +7490,9 @@
 
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="${user1EmailAddress}" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userFirstName" value="${user1FirstName}" />
+			<var name="userLastName" value="${user1LastName}" />
+			<var name="userScreenName" value="${user1ScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7481,7 +7501,7 @@
 
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="${user1EmailAddress}" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userScreenName" value="${user1ScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7489,8 +7509,8 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="KaleoRegRole Name" />
-			<var name="userScreenName" value="usersn" />
+			<var name="roleName" value="${role1Name}" />
+			<var name="userScreenName" value="${user1ScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7499,9 +7519,9 @@
 
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="${user2EmailAddress}" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="kaleoassignee" />
+			<var name="userFirstName" value="${user2FirstName}" />
+			<var name="userLastName" value="${user2LastName}" />
+			<var name="userScreenName" value="${user2ScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7510,7 +7530,7 @@
 
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="${user2EmailAddress}" />
-			<var name="userScreenName" value="kaleoassignee" />
+			<var name="userScreenName" value="${user2ScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7518,8 +7538,8 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Administrator" />
-			<var name="userScreenName" value="kaleoassignee" />
+			<var name="roleName" value="${role3Name}" />
+			<var name="userScreenName" value="${user2ScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7527,8 +7547,8 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="CustomRole Name" />
-			<var name="userScreenName" value="kaleoassignee" />
+			<var name="roleName" value="${role2Name}" />
+			<var name="userScreenName" value="${user2ScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7537,9 +7557,9 @@
 
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="${user3EmailAddress}" />
-			<var name="userFirstName" value="userfn3" />
-			<var name="userLastName" value="userln3" />
-			<var name="userScreenName" value="admin" />
+			<var name="userFirstName" value="${user3FirstName}" />
+			<var name="userLastName" value="${user3LastName}" />
+			<var name="userScreenName" value="${user3ScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7548,7 +7568,7 @@
 
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="${user3EmailAddress}" />
-			<var name="userScreenName" value="admin" />
+			<var name="userScreenName" value="${user3ScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7556,8 +7576,8 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Administrator" />
-			<var name="userScreenName" value="admin" />
+			<var name="roleName" value="${role3Name}" />
+			<var name="userScreenName" value="${user3ScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -7567,43 +7587,43 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
-			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfProcessDescription" value="${kfProcessDescription}" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#addFieldSet">
-			<var name="kfFieldSetName" value="Field Set Data Definition" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfFieldSetName" value="${kfFieldSetName}" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveFieldSet">
-			<var name="kfFieldSetName" value="Field Set Data Definition" />
+			<var name="kfFieldSetName" value="${kfFieldSetName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
-			<var name="kfFieldSetName" value="Field Set Data Definition" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfFieldSetName" value="${kfFieldSetName}" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="create" />
 		</execute>
 
@@ -7618,16 +7638,16 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcess">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcess">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${user1EmailAddress}" />
-			<var name="userLoginFullName" value="userfn userln" />
+			<var name="userLoginFullName" value="${user1FirstName} ${user1LastName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -7637,38 +7657,38 @@
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
 		<execute macro="KaleoFormsPortlet#submitNewProcess">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test Submitted" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="kfProcessFieldData" value="${kfProcessFieldData}" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
 
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequests">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="kfProcessStatus" value="Review" />
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${user3EmailAddress}" />
-			<var name="userLoginFullName" value="userfn3 userln3" />
+			<var name="userLoginFullName" value="${user3FirstName} ${user3FirstName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Kaleo Forms" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#assignProcessToMe">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="review" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#rejectProcess">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="review" />
 		</execute>
 
@@ -7683,7 +7703,7 @@
 			<var name="emailFromUserName" value="Liferay Portal Workflow ." />
 			<var name="gmailAssetType" value="Update Notification Description" />
 			<var name="gmailMailTableMessageTitle" value="Update Notification Description" />
-			<var name="gmailMessageBody" value="Your submission was rejected by userfn3 userln3, please modify and resubmit." />
+			<var name="gmailMessageBody" value="Your submission was rejected by ${user3FirstName} ${user3LastName}, please modify and resubmit." />
 			<var name="gmailMessageTitle" value="Update Notification Description" />
 		</execute>
 

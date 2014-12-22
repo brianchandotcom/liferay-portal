@@ -35,20 +35,10 @@ MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessage
 MBCategory category = messageDisplay.getCategory();
 MBThread thread = messageDisplay.getThread();
 MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
-MBMessage rootMessage = null;
-List<MBMessage> messages = null;
-int messagesCount = 0;
+MBMessage rootMessage = treeWalker.getRoot();
+List<MBMessage> messages = treeWalker.getMessages();
+int messagesCount = messages.size();
 SearchContainer searchContainer = null;
-
-if (treeWalker != null) {
-	rootMessage = treeWalker.getRoot();
-	messages = treeWalker.getMessages();
-	messagesCount = messages.size();
-}
-else {
-	rootMessage = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
-	messagesCount = MBMessageLocalServiceUtil.getThreadMessagesCount(rootMessage.getThreadId(), WorkflowConstants.STATUS_ANY);
-}
 %>
 
 <div class="hide lfr-message-response" id="<portlet:namespace />discussion-status-messages"></div>
@@ -176,70 +166,68 @@ else {
 			<c:if test="<%= messagesCount > 1 %>">
 				<a name="<%= randomNamespace %>messages_top"></a>
 
-				<c:if test="<%= treeWalker != null %>">
-					<aui:row>
+				<aui:row>
 
-						<%
-						if (messages != null) {
-							messages = ListUtil.copy(messages);
+					<%
+					if (messages != null) {
+						messages = ListUtil.copy(messages);
 
 						messages.remove(0);
 					}
 					else {
 						PortletURL currentURLObj = PortletURLUtil.getCurrent(renderRequest, renderResponse);
 
-							searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, null);
+						searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, null);
 
-							searchContainer.setTotal(messagesCount - 1);
+						searchContainer.setTotal(messagesCount - 1);
 
-							messages = MBMessageLocalServiceUtil.getThreadRepliesMessages(message.getThreadId(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
+						messages = MBMessageLocalServiceUtil.getThreadRepliesMessages(message.getThreadId(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
 
-							searchContainer.setResults(messages);
+						searchContainer.setResults(messages);
+					}
+
+					List<Long> classPKs = new ArrayList<Long>();
+
+					for (MBMessage curMessage : messages) {
+						classPKs.add(curMessage.getMessageId());
+					}
+
+					List<RatingsEntry> ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(themeDisplay.getUserId(), MBDiscussion.class.getName(), classPKs);
+					List<RatingsStats> ratingsStatsList = RatingsStatsLocalServiceUtil.getStats(MBDiscussion.class.getName(), classPKs);
+
+					int[] range = treeWalker.getChildrenRange(rootMessage);
+
+					for (int j = range[0] - 1; j < range[1] - 1; j++) {
+						message = (MBMessage)messages.get(j);
+
+						boolean lastChildNode = false;
+
+						if ((j + 1) == range[1]) {
+							lastChildNode = true;
 						}
 
-						List<Long> classPKs = new ArrayList<Long>();
+						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
+						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
+						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(0));
+						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
+						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, rootMessage);
+						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
 
-						for (MBMessage curMessage : messages) {
-							classPKs.add(curMessage.getMessageId());
-						}
+						request.setAttribute("page.jsp-randomNamespace", randomNamespace);
+						request.setAttribute("page.jsp-rootMessage", rootMessage);
 
-						List<RatingsEntry> ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(themeDisplay.getUserId(), MBDiscussion.class.getName(), classPKs);
-						List<RatingsStats> ratingsStatsList = RatingsStatsLocalServiceUtil.getStats(MBDiscussion.class.getName(), classPKs);
+						request.setAttribute("page.jsp-ratingsEntries", ratingsEntries);
+						request.setAttribute("page.jsp-ratingsStatsList", ratingsStatsList);
+					%>
 
-						int[] range = treeWalker.getChildrenRange(rootMessage);
+						<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />
 
-						for (int j = range[0] - 1; j < range[1] - 1; j++) {
-							message = (MBMessage)messages.get(j);
+					<%
+					}
+					%>
 
-							boolean lastChildNode = false;
-
-							if ((j + 1) == range[1]) {
-								lastChildNode = true;
-							}
-
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(0));
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, rootMessage);
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-
-							request.setAttribute("page.jsp-randomNamespace", randomNamespace);
-							request.setAttribute("page.jsp-rootMessage", rootMessage);
-
-							request.setAttribute("page.jsp-ratingsEntries", ratingsEntries);
-							request.setAttribute("page.jsp-ratingsStatsList", ratingsStatsList);
-						%>
-
-							<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />
-
-						<%
-						}
-						%>
-
-					</aui:row>
-				</c:if>
+				</aui:row>
 
 				<c:if test="<%= (searchContainer != null) && (searchContainer.getTotal() > searchContainer.getDelta()) %>">
 					<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />

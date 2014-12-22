@@ -24,6 +24,8 @@ import java.nio.file.StandardOpenOption;
 
 import java.util.Random;
 
+import org.apache.commons.io.FileUtils;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,22 +62,14 @@ public class StreamUtilTest {
 				_toFilePath, StandardOpenOption.CREATE,
 				StandardOpenOption.WRITE)) {
 
-			ByteBuffer byteBuffer = ByteBuffer.allocate(_data.length / 2);
-
-			while (byteBuffer.hasRemaining()) {
-				fromFileChannel.read(byteBuffer);
-			}
-
-			byteBuffer.flip();
-
-			toFileChannel.write(byteBuffer);
-
 			StreamUtil.transferFileChannel(
-				fromFileChannel, toFileChannel,
-				_data.length - byteBuffer.capacity());
+				fromFileChannel, toFileChannel, 0);
 		}
 
-		Assert.assertArrayEquals(_data, Files.readAllBytes(_toFilePath));
+		boolean contentEquals = FileUtils.contentEquals(
+			_fromFilePath.toFile(), _toFilePath.toFile());
+
+		Assert.assertTrue(contentEquals);
 	}
 
 	private final byte[] _data = new byte[1024 * 1024];

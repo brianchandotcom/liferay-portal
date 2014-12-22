@@ -37,7 +37,7 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 
 	public LiferayIntegrationTestRule() {
 		super(
-			LogAssertionTestRule.INSTANCE, _clearThreadLocalTestRule,
+			false, LogAssertionTestRule.INSTANCE, _clearThreadLocalTestRule,
 			_uniqueStringRandomizerBumperTestRule,
 			new DeleteAfterTestRunTestRule());
 

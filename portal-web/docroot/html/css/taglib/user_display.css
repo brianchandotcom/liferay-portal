@@ -29,8 +29,20 @@
 	}
 
 	.avatar {
-		height: auto;
+		background: no-repeat center;
+		background-size: 65px;
+		display: block;
+		height: 65px;
+		margin: 0 auto;
 		width: 65px;
+
+		&.author:after {
+			border-radius: 50%;
+			content: '';
+			display: block;
+			height: 100%;
+			width: 100%;
+		}
 	}
 
 	.user-details {
@@ -43,6 +55,10 @@
 .taglib-user-display {
 	a .user-name {
 		text-decoration: underline;
+	}
+
+	.avatar.author:after {
+		background: transparentize(#32A8E6, 0.5);
 	}
 
 	.user-name {

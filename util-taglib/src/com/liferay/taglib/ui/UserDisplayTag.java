@@ -86,6 +86,8 @@ public class UserDisplayTag extends TagSupport {
 				"liferay-ui:user-display:imageCssClass", _imageCssClass);
 
 			request.setAttribute(
+				"liferay-ui:user-display:isAuthor", String.valueOf(_isAuthor));
+			request.setAttribute(
 				"liferay-ui:user-display:showUserDetails",
 				String.valueOf(_showUserDetails));
 			request.setAttribute(
@@ -117,6 +119,10 @@ public class UserDisplayTag extends TagSupport {
 
 	public void setImageCssClass(String imageCssClass) {
 		_imageCssClass = imageCssClass;
+	}
+
+	public void setIsAuthor(boolean isAuthor) {
+		_isAuthor = isAuthor;
 	}
 
 	public void setShowUserDetails(boolean showUserDetails) {
@@ -170,6 +176,7 @@ public class UserDisplayTag extends TagSupport {
 	private int _displayStyle = 1;
 	private String _endPage;
 	private String _imageCssClass;
+	private boolean _isAuthor = false;
 	private boolean _showUserDetails = true;
 	private boolean _showUserName = true;
 	private String _startPage;

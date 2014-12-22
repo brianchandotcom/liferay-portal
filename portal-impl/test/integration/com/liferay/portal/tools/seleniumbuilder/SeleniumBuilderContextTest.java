@@ -23,15 +23,12 @@ import com.liferay.portal.test.LiferayIntegrationTestRule;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 /**
  * @author Michael Hashimoto
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SeleniumBuilderContextTest {
 
 	@ClassRule

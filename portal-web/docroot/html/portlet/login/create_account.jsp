@@ -132,9 +132,6 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 
 	<aui:fieldset column="<%= true %>">
 		<aui:col width="<%= 50 %>">
-			<%@ include file="/html/portlet/login/create_account_locale.jspf" %>
-			<%@ include file="/html/portlet/login/create_account_user_name.jspf" %>
-
 			<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) %>">
 				<aui:input model="<%= User.class %>" name="screenName" />
 			</c:if>
@@ -144,6 +141,9 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 					<aui:validator name="required" />
 				</c:if>
 			</aui:input>
+
+			<%@ include file="/html/portlet/login/create_account_locale.jspf" %>
+			<%@ include file="/html/portlet/login/create_account_user_name.jspf" %>
 		</aui:col>
 
 		<aui:col width="<%= 50 %>">

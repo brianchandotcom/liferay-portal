@@ -14,6 +14,7 @@
 
 package com.liferay.asset.tags.navigation.web.upgrade;
 
+import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -52,9 +53,7 @@ public class AssetTagsCloudWebUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"148",
-						"com_liferay_asset_tags_navigation_web_portlet_" +
-							"AssetTagsCloudPortlet"
+						"148", AssetTagsNavigationPortletKeys.TAGS_CLOUD
 					}
 				};
 			}

@@ -33,9 +33,7 @@ long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discus
 
 String strutsAction = ParamUtil.getString(request, "struts_action");
 
-String threadView = PropsValues.DISCUSSION_THREAD_VIEW;
-
-MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, scopeGroupId, className, classPK, WorkflowConstants.STATUS_ANY, threadView);
+MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, scopeGroupId, className, classPK, WorkflowConstants.STATUS_ANY);
 
 MBCategory category = messageDisplay.getCategory();
 MBThread thread = messageDisplay.getThread();

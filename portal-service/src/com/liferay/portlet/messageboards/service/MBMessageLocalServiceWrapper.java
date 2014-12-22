@@ -411,6 +411,11 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 			groupId, className, classPK, status);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getDiscussionMessageDisplay(
+	long, long, String, long, int)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.messageboards.model.MBMessageDisplay getDiscussionMessageDisplay(
 		long userId, long groupId, java.lang.String className, long classPK,

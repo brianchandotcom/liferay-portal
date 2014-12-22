@@ -538,7 +538,7 @@ public class VerifyProperties extends VerifyProcess {
 		"com.liferay.portal.servlet.filters.charbufferpool." +
 			"CharBufferPoolFilter",
 		"com.liferay.portal.servlet.filters.validhtml.ValidHtmlFilter",
-		"commons.pool.enabled", "convert.processes",
+		"commons.pool.enabled", "convert.processes", "discussion.thread.view",
 		"dl.file.entry.read.count.enabled",
 		"dynamic.data.lists.template.language.parser[ftl]",
 		"dynamic.data.lists.template.language.parser[vm]",

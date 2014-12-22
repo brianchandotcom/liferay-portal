@@ -460,6 +460,249 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testRemoveFromBooleanArray() {
+		boolean[] array = new boolean[] {true, true, false};
+
+		array = ArrayUtil.remove(array, false);
+
+		Assert.assertArrayEquals(new boolean[] {true, true}, array);
+	}
+
+	@Test
+	public void testRemoveFromBooleanEmptyArray() {
+		boolean[] array = new boolean[] {};
+
+		array = ArrayUtil.remove(array, false);
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testRemoveFromBooleanNullArray() {
+		boolean[] array = null;
+
+		array = ArrayUtil.remove(array, false);
+
+		Assert.assertNull(array);
+	}
+
+	@Test
+	public void testRemoveFromByteArray() {
+		byte[] array = {1, 2, 3};
+
+		array = ArrayUtil.remove(array, (byte)3);
+
+		Assert.assertArrayEquals(new byte[]{1, 2}, array);
+	}
+
+	@Test
+	public void testRemoveFromByteEmptyArray() {
+		byte[] array = {};
+
+		array = ArrayUtil.remove(array, (byte)3);
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testRemoveFromByteNullArray() {
+		byte[] array = null;
+
+		array = ArrayUtil.remove(array, (byte)3);
+
+		Assert.assertNull(array);
+	}
+
+	@Test
+	public void testRemoveFromCharArray() {
+		char[] array = {'a', 'b', 'c'};
+
+		array = ArrayUtil.remove(array, 'c');
+
+		Assert.assertArrayEquals(new char[]{'a', 'b'}, array);
+	}
+
+	@Test
+	public void testRemoveFromCharEmptyArray() {
+		char[] array = {};
+
+		array = ArrayUtil.remove(array, 'c');
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testRemoveFromCharNullArray() {
+		char[] array = null;
+
+		array = ArrayUtil.remove(array, 'c');
+
+		Assert.assertNull(array);
+	}
+
+	@Test
+	public void testRemoveFromDoubleArray() {
+		double[] array = {1.0D, 2.0D, 3.0D};
+
+		array = ArrayUtil.remove(array, 3.0D);
+
+		Assert.assertArrayEquals(new double[]{1.0D, 2.0D}, array, 0);
+	}
+
+	@Test
+	public void testRemoveFromDoubleEmptyArray() {
+		double[] array = {};
+
+		array = ArrayUtil.remove(array, 3.0D);
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testRemoveFromDoubleNullArray() {
+		double[] array = null;
+
+		array = ArrayUtil.remove(array, 3.0D);
+
+		Assert.assertNull(array);
+	}
+
+	@Test
+	public void testRemoveFromFloatArray() {
+		float[] array = {1.5f, 2.5f, 3.5f};
+
+		array = ArrayUtil.remove(array, 3.5f);
+
+		Assert.assertArrayEquals(new float[]{1.5f, 2.5f}, array, 0);
+	}
+
+	@Test
+	public void testRemoveFromFloatEmptyArray() {
+		float[] array = {};
+
+		array = ArrayUtil.remove(array, 3.5f);
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testRemoveFromFloatNullArray() {
+		float[] array = null;
+
+		array = ArrayUtil.remove(array, 3.5f);
+
+		Assert.assertNull(array);
+	}
+
+	@Test
+	public void testRemoveFromIntArray() {
+		int[] array = {1, 2, 3};
+
+		array = ArrayUtil.remove(array, (byte)3);
+
+		Assert.assertArrayEquals(new int[]{1, 2}, array);
+	}
+
+	@Test
+	public void testRemoveFromIntEmptyArray() {
+		int[] array = {};
+
+		array = ArrayUtil.remove(array, (byte)3);
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testRemoveFromIntNullArray() {
+		int[] array = null;
+
+		array = ArrayUtil.remove(array, (byte)3);
+
+		Assert.assertNull(array);
+	}
+
+	@Test
+	public void testRemoveFromLongArray() {
+		long[] array = {1L, 2L, 3L};
+
+		array = ArrayUtil.remove(array, 3L);
+
+		Assert.assertArrayEquals(new long[]{1L, 2L}, array);
+	}
+
+	@Test
+	public void testRemoveFromLongEmptyArray() {
+		long[] array = {};
+
+		array = ArrayUtil.remove(array, 3L);
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testRemoveFromLongNullArray() {
+		long[] array = null;
+
+		array = ArrayUtil.remove(array, 3L);
+
+		Assert.assertNull(array);
+	}
+
+	@Test
+	public void testRemoveFromShortArray() {
+		short[] array = {1, 2, 3};
+
+		array = ArrayUtil.remove(array, (short)3);
+
+		Assert.assertArrayEquals(new short[]{1, 2}, array);
+	}
+
+	@Test
+	public void testRemoveFromShortEmptyArray() {
+		short[] array = {};
+
+		array = ArrayUtil.remove(array, (short)3);
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testRemoveFromShortNullArray() {
+		short[] array = null;
+
+		array = ArrayUtil.remove(array, (short)3);
+
+		Assert.assertNull(array);
+	}
+
+	@Test
+	public void testRemoveFromStringArray() {
+		String[] array = {"a", "b", "c"};
+
+		array = ArrayUtil.remove(array, "c");
+
+		Assert.assertArrayEquals(new String[]{"a", "b"}, array);
+	}
+
+	@Test
+	public void testRemoveFromStringEmptyArray() {
+		String[] array = {};
+
+		array = ArrayUtil.remove(array, "c");
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testRemoveFromStringNullArray() {
+		String[] array = null;
+
+		array = ArrayUtil.remove(array, "c");
+
+		Assert.assertNull(array);
+	}
+
+	@Test
 	public void testReverseBooleanArray() throws Exception {
 		boolean[] array = new boolean[] {true, true, false};
 

@@ -30,9 +30,7 @@ long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("lifera
 String redirect = (String)request.getAttribute("liferay-ui:discussion:redirect");
 long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:userId"));
 
-String threadView = PropsValues.DISCUSSION_THREAD_VIEW;
-
-MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, scopeGroupId, className, classPK, WorkflowConstants.STATUS_ANY, threadView);
+MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, scopeGroupId, className, classPK, WorkflowConstants.STATUS_ANY);
 
 MBCategory category = messageDisplay.getCategory();
 MBThread thread = messageDisplay.getThread();

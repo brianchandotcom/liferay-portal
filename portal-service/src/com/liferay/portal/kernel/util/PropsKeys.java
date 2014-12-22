@@ -623,8 +623,6 @@ public interface PropsKeys {
 
 	public static final String DISCUSSION_SUBSCRIBE_BY_DEFAULT = "discussion.subscribe.by.default";
 
-	public static final String DISCUSSION_THREAD_VIEW = "discussion.thread.view";
-
 	public static final String DL_ACTIONS_VISIBLE = "dl.actions.visible";
 
 	public static final String DL_CHAR_BLACKLIST = "dl.char.blacklist";

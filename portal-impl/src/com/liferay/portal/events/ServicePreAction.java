@@ -1520,24 +1520,6 @@ public class ServicePreAction extends Action {
 			userGroup.getGroupId(), false, serviceContext);
 	}
 
-	protected Object[] getGuestSiteLayout(User user) throws PortalException {
-		Layout layout = null;
-		List<Layout> layouts = null;
-
-		Group guestGroup = GroupLocalServiceUtil.getGroup(
-			user.getCompanyId(), GroupConstants.GUEST);
-
-		layouts = LayoutLocalServiceUtil.getLayouts(
-			guestGroup.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		if (!layouts.isEmpty()) {
-			layout = layouts.get(0);
-		}
-
-		return new Object[] {layout, layouts};
-	}
-
 	protected Object[] getDefaultUserPersonalLayout(User user)
 		throws PortalException {
 
@@ -1696,6 +1678,24 @@ public class ServicePreAction extends Action {
 		friendlyURL = GetterUtil.getString(friendlyURL);
 
 		return FriendlyURLNormalizerUtil.normalize(friendlyURL);
+	}
+
+	protected Object[] getGuestSiteLayout(User user) throws PortalException {
+		Layout layout = null;
+		List<Layout> layouts = null;
+
+		Group guestGroup = GroupLocalServiceUtil.getGroup(
+			user.getCompanyId(), GroupConstants.GUEST);
+
+		layouts = LayoutLocalServiceUtil.getLayouts(
+			guestGroup.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if (!layouts.isEmpty()) {
+			layout = layouts.get(0);
+		}
+
+		return new Object[] {layout, layouts};
 	}
 
 	protected Object[] getViewableLayouts(

@@ -1489,61 +1489,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>148</portlet-name>
-		<display-name>Asset Tags Cloud</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/asset_tags_navigation/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/asset_tags_navigation/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/asset_tags_cloud/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<portlet-preferences>
-			<preference>
-				<name>classNameId</name>
-				<value>0</value>
-			</preference>
-			<preference>
-				<name>displayStyle</name>
-				<value>cloud</value>
-			</preference>
-			<preference>
-				<name>maxAssetTags</name>
-				<value>10</value>
-			</preference>
-			<preference>
-				<name>showAssetCount</name>
-				<value>true</value>
-			</preference>
-			<preference>
-				<name>showZeroAssetCount</name>
-				<value>false</value>
-			</preference>
-		</portlet-preferences>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
-		<supported-public-render-parameter>tag</supported-public-render-parameter>
-	</portlet>
-	<portlet>
 		<portlet-name>149</portlet-name>
 		<display-name>Site Templates</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

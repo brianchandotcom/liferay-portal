@@ -1147,20 +1147,6 @@
 		<render-weight>50</render-weight>
 	</portlet>
 	<portlet>
-		<portlet-name>148</portlet-name>
-		<icon>/html/icons/asset_tags_cloud.png</icon>
-		<struts-path>asset_tags_cloud</struts-path>
-		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
-		<use-default-template>false</use-default-template>
-		<layout-cacheable>true</layout-cacheable>
-		<instanceable>true</instanceable>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-asset-tags-navigation</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>149</portlet-name>
 		<icon>/html/icons/layout_set_prototypes.png</icon>
 		<struts-path>layout_set_prototypes</struts-path>

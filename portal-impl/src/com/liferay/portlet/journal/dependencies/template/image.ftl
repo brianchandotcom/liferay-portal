@@ -6,4 +6,12 @@
 	<#assign variableAltName = "cur_" + variableAltName>
 </#if>
 
-<img alt="${getVariableReferenceCode(variableAltName)}" src="${getVariableReferenceCode(variableName)}" />
+<#if language == "ftl">
+${r"<#if"} ${variableName}?? && ${variableName} != "">
+	<img alt="${getVariableReferenceCode(variableAltName)}" src="${getVariableReferenceCode(variableName)}" />
+${r"</#if>"}
+<#else>
+#if (!$${variableName} && $${variableName} != "")
+	<img alt="${getVariableReferenceCode(variableAltName)}" src="${getVariableReferenceCode(variableName)}" />
+#end
+</#if>

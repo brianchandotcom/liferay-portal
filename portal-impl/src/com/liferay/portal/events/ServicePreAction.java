@@ -1520,7 +1520,7 @@ public class ServicePreAction extends Action {
 			userGroup.getGroupId(), false, serviceContext);
 	}
 
-	protected Object[] getDefaultSiteLayout(User user) throws PortalException {
+	protected Object[] getGuestSiteLayout(User user) throws PortalException {
 		Layout layout = null;
 		List<Layout> layouts = null;
 
@@ -1563,7 +1563,7 @@ public class ServicePreAction extends Action {
 		return new Object[] {layout, layouts};
 	}
 
-	protected Object[] getDefaultUserSiteLayout(User user)
+	protected Object[] getDefaultUserSitesLayout(User user)
 		throws PortalException {
 
 		Layout layout = null;
@@ -1604,7 +1604,7 @@ public class ServicePreAction extends Action {
 			String controlPanelCategory, boolean signedIn)
 		throws PortalException {
 
-		Object[] defaultLayout = getDefaultVirtualLayout(request);
+		Object[] defaultLayout = getDefaultVirtualHostLayout(request);
 
 		defaultLayout = getViewableLayouts(
 			request, user, permissionChecker, defaultLayout, doAsGroupId,
@@ -1618,7 +1618,7 @@ public class ServicePreAction extends Action {
 			defaultLayout = getDefaultUserPersonalLayout(user);
 
 			if (defaultLayout[0] == null) {
-				defaultLayout = getDefaultUserSiteLayout(user);
+				defaultLayout = getDefaultUserSitesLayout(user);
 			}
 
 			defaultLayout = getViewableLayouts(
@@ -1630,14 +1630,14 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		defaultLayout = getDefaultSiteLayout(user);
+		defaultLayout = getGuestSiteLayout(user);
 
 		return getViewableLayouts(
 			request, user, permissionChecker, defaultLayout, doAsGroupId,
 			controlPanelCategory);
 	}
 
-	protected Object[] getDefaultVirtualLayout(HttpServletRequest request)
+	protected Object[] getDefaultVirtualHostLayout(HttpServletRequest request)
 		throws PortalException {
 
 		Layout layout = null;

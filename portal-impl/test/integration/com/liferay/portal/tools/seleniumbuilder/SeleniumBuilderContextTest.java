@@ -525,11 +525,6 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testTestCase() throws Exception {
-		test("TestCase.testcase");
-	}
-
-	@Test
 	public void testTestCaseCommandElement1009() throws Exception {
 		test(
 			"TestCaseCommandElement1009.testcase",
@@ -635,6 +630,7 @@ public class SeleniumBuilderContextTest {
 
 	@Test
 	public void testTestCaseSetUpElement1006_2() throws Exception {
+		test("TestCase.testcase");
 		test(
 			"TestCaseSetUpElement1006_2.testcase",
 			"Error 1006: Invalid test-case attribute value in " + _DIR_NAME +

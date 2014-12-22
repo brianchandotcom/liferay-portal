@@ -235,7 +235,6 @@ public class AddDefaultLayoutSetPrototypesAction
 		layout = addLayout(layoutSet, "wiki", "/wiki", "2_columns_iii");
 
 		addPortletId(layout, PortletKeys.WIKI, "column-1");
-		addPortletId(layout, PortletKeys.TAGS_CLOUD, "column-2");
 	}
 
 	protected void doRun(long companyId) throws Exception {

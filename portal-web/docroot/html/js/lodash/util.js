@@ -19,6 +19,15 @@
 				return _.partialRight.apply(_, args);
 			},
 
+			cached: function(fn) {
+				return _.memoize(
+					fn,
+					function() {
+						return (arguments.length > 1) ? Array.prototype.join.call(arguments, '_') : String(arguments[0]);
+					}
+				);
+			},
+
 			sub: function(string, data) {
 				if (arguments.length > 2 || !_.isObject(data)) {
 					data = _.toArray(arguments).slice(1);

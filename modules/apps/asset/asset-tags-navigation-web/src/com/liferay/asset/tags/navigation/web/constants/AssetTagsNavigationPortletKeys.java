@@ -19,6 +19,10 @@ package com.liferay.asset.tags.navigation.web.constants;
  */
 public class AssetTagsNavigationPortletKeys {
 
+	public static final String TAGS_CLOUD =
+		"com_liferay_asset_tags_navigation_web_portlet_" +
+			"AssetTagsCloudPortlet";
+
 	public static final String TAGS_NAVIGATION =
 		"com_liferay_asset_tags_navigation_web_portlet_" +
 			"AssetTagsNavigationPortlet";

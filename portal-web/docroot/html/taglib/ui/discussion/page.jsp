@@ -27,11 +27,8 @@ String formName = (String)request.getAttribute("liferay-ui:discussion:formName")
 boolean hideControls = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:hideControls"));
 String permissionClassName = (String)request.getAttribute("liferay-ui:discussion:permissionClassName");
 long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:permissionClassPK"));
-boolean ratingsEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:ratingsEnabled"));
 String redirect = (String)request.getAttribute("liferay-ui:discussion:redirect");
 long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:userId"));
-
-String strutsAction = ParamUtil.getString(request, "struts_action");
 
 String threadView = PropsValues.DISCUSSION_THREAD_VIEW;
 
@@ -54,8 +51,6 @@ else {
 	rootMessage = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
 	messagesCount = MBMessageLocalServiceUtil.getThreadMessagesCount(rootMessage.getThreadId(), WorkflowConstants.STATUS_ANY);
 }
-
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <div class="hide lfr-message-response" id="<portlet:namespace />discussion-status-messages"></div>
@@ -81,20 +76,18 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			<aui:input name="ajax" type="hidden" value="<%= true %>" />
 
 			<%
-			int i = 0;
-
 			MBMessage message = rootMessage;
 			%>
 
 			<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
 				<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
 					<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
-						<aui:input name='<%= "messageId" + i %>' type="hidden" value="<%= message.getMessageId() %>" />
-						<aui:input name='<%= "parentMessageId" + i %>' type="hidden" value="<%= message.getMessageId() %>" />
+						<aui:input name="messageId0" type="hidden" value="<%= message.getMessageId() %>" />
+						<aui:input name="parentMessageId0" type="hidden" value="<%= message.getMessageId() %>" />
 					</div>
 
 					<%
-					String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "');";
+					String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm0', '" + namespace + randomNamespace + "postReplyBody0');";
 					%>
 
 					<c:choose>
@@ -160,12 +153,12 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								</aui:col>
 
 								<aui:col cssClass="lfr-discussion-body" width="<%= 75 %>">
-									<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "postReplyBody" + i %>' placeholder="type-your-comment-here" />
+									<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="postReplyBody0" placeholder="type-your-comment-here" />
 
-									<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
+									<aui:input name="postReplyBody0" type="hidden" />
 
 									<aui:button-row>
-										<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
+										<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
 									</aui:button-row>
 								</aui:col>
 							</aui:row>
@@ -186,358 +179,69 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<a name="<%= randomNamespace %>messages_top"></a>
 
 				<c:if test="<%= treeWalker != null %>">
-				<table class="table table-bordered table-hover table-striped tree-walker">
-					<thead class="table-columns">
-					<tr>
-						<th class="table-header" colspan="2">
-							<liferay-ui:message key="threaded-replies" />
-						</th>
-						<th class="table-header" colspan="2">
-							<liferay-ui:message key="author" />
-						</th>
-						<th class="table-header">
-							<liferay-ui:message key="date" />
-						</th>
-					</tr>
-					</thead>
+					<aui:row>
 
-					<tbody class="table-data">
-
-					<%
-					int[] range = treeWalker.getChildrenRange(rootMessage);
-
-					for (i = range[0]; i < range[1]; i++) {
-						message = (MBMessage)messages.get(i);
-
-						boolean lastChildNode = false;
-
-						if ((i + 1) == range[1]) {
-							lastChildNode = true;
-						}
-
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(0));
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, rootMessage);
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-					%>
-
-						<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />
-
-					<%
-					}
-					%>
-
-					</tbody>
-				</table>
-
-					<br />
-				</c:if>
-
-				<aui:row>
-
-					<%
-					if (messages != null) {
-						messages = ListUtil.sort(messages, new MessageCreateDateComparator(true));
-
-						messages = ListUtil.copy(messages);
+						<%
+						if (messages != null) {
+							messages = ListUtil.copy(messages);
 
 						messages.remove(0);
 					}
 					else {
 						PortletURL currentURLObj = PortletURLUtil.getCurrent(renderRequest, renderResponse);
 
-						searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, null);
+							searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, null);
 
-						searchContainer.setTotal(messagesCount - 1);
+							searchContainer.setTotal(messagesCount - 1);
 
-						messages = MBMessageLocalServiceUtil.getThreadRepliesMessages(message.getThreadId(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
+							messages = MBMessageLocalServiceUtil.getThreadRepliesMessages(message.getThreadId(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
 
-						searchContainer.setResults(messages);
-					}
-
-					List<Long> classPKs = new ArrayList<Long>();
-
-					for (MBMessage curMessage : messages) {
-						classPKs.add(curMessage.getMessageId());
-					}
-
-					List<RatingsEntry> ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(themeDisplay.getUserId(), MBDiscussion.class.getName(), classPKs);
-					List<RatingsStats> ratingsStatsList = RatingsStatsLocalServiceUtil.getStats(MBDiscussion.class.getName(), classPKs);
-
-					for (i = 1; i <= messages.size(); i++) {
-						message = messages.get(i - 1);
-
-						if ((!message.isApproved() && ((message.getUserId() != user.getUserId()) || user.isDefaultUser()) && !permissionChecker.isGroupAdmin(scopeGroupId)) || !MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW)) {
-							continue;
+							searchContainer.setResults(messages);
 						}
 
-						String cssClass = StringPool.BLANK;
+						List<Long> classPKs = new ArrayList<Long>();
 
-						if (i == 1) {
-							cssClass = "first";
+						for (MBMessage curMessage : messages) {
+							classPKs.add(curMessage.getMessageId());
 						}
-						else if (i == messages.size()) {
-							cssClass = "last";
+
+						List<RatingsEntry> ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(themeDisplay.getUserId(), MBDiscussion.class.getName(), classPKs);
+						List<RatingsStats> ratingsStatsList = RatingsStatsLocalServiceUtil.getStats(MBDiscussion.class.getName(), classPKs);
+
+						int[] range = treeWalker.getChildrenRange(rootMessage);
+
+						for (int j = range[0] - 1; j < range[1] - 1; j++) {
+							message = (MBMessage)messages.get(j);
+
+							boolean lastChildNode = false;
+
+							if ((j + 1) == range[1]) {
+								lastChildNode = true;
+							}
+
+							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
+							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
+							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(0));
+							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
+							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, rootMessage);
+							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
+
+							request.setAttribute("page.jsp-randomNamespace", randomNamespace);
+							request.setAttribute("page.jsp-rootMessage", rootMessage);
+
+							request.setAttribute("page.jsp-ratingsEntries", ratingsEntries);
+							request.setAttribute("page.jsp-ratingsStatsList", ratingsStatsList);
+						%>
+
+							<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />
+
+						<%
 						}
-					%>
+						%>
 
-						<div class="lfr-discussion <%= cssClass %>">
-							<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
-								<a name="<%= randomNamespace %>message_<%= message.getMessageId() %>"></a>
-
-								<aui:input name='<%= "messageId" + i %>' type="hidden" value="<%= message.getMessageId() %>" />
-								<aui:input name='<%= "parentMessageId" + i %>' type="hidden" value="<%= message.getMessageId() %>" />
-							</div>
-
-							<aui:row fluid="<%= true %>">
-								<aui:col cssClass="lfr-discussion-details" width="<%= 25 %>">
-									<liferay-ui:user-display
-										displayStyle="2"
-										userId="<%= message.getUserId() %>"
-										userName="<%= HtmlUtil.escape(message.getUserName()) %>"
-									/>
-								</aui:col>
-
-								<aui:col cssClass="lfr-discussion-body" width="<%= 75 %>">
-									<c:if test="<%= (message != null) && !message.isApproved() %>">
-										<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
-
-										<div>
-											<aui:workflow-status model="<%= MBDiscussion.class %>" status="<%= message.getStatus() %>" />
-										</div>
-									</c:if>
-
-									<div class="lfr-discussion-message">
-
-										<%
-										String msgBody = message.getBody();
-
-										if (message.isFormatBBCode()) {
-											msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
-										}
-										%>
-
-										<%= msgBody %>
-									</div>
-
-									<div class="lfr-discussion-controls">
-										<c:if test="<%= ratingsEnabled && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
-
-											<%
-											RatingsEntry ratingsEntry = getRatingsEntry(ratingsEntries, message.getMessageId());
-											RatingsStats ratingStats = getRatingsStats(ratingsStatsList, message.getMessageId());
-											%>
-
-											<liferay-ui:ratings
-												className="<%= MBDiscussion.class.getName() %>"
-												classPK="<%= message.getMessageId() %>"
-												ratingsEntry="<%= ratingsEntry %>"
-												ratingsStats="<%= ratingStats %>"
-												type="thumbs"
-											/>
-										</c:if>
-
-										<c:if test="<%= !hideControls && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
-											<ul class="lfr-discussion-actions">
-												<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
-													<li class="lfr-discussion-reply-to">
-
-														<%
-														String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "'); " + randomNamespace + "hideForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "', '" + HtmlUtil.escapeJS(message.getBody()) + "');";
-														%>
-
-														<c:choose>
-															<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-																<liferay-ui:icon
-																	iconCssClass="icon-reply"
-																	label="<%= true %>"
-																	message="post-reply"
-																	url="<%= taglibPostReplyURL %>"
-																/>
-															</c:when>
-															<c:otherwise>
-																<liferay-ui:icon
-																	iconCssClass="icon-reply"
-																	label="<%= true %>"
-																	message="please-sign-in-to-reply"
-																	url="<%= themeDisplay.getURLSignIn() %>"
-																/>
-															</c:otherwise>
-														</c:choose>
-													</li>
-												</c:if>
-
-												<c:if test="<%= i > 0 %>">
-
-													<%
-													String taglibTopURL = "#" + randomNamespace + "messages_top";
-													%>
-
-													<li class="lfr-discussion-top-link">
-														<liferay-ui:icon
-															iconCssClass="icon-long-arrow-up"
-															label="<%= true %>"
-															message="top"
-															url="<%= taglibTopURL %>"
-														/>
-													</li>
-
-													<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
-
-														<%
-														String taglibEditURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "');" + randomNamespace + "hideForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "', '')";
-														%>
-
-														<li class="lfr-discussion-edit">
-															<liferay-ui:icon
-																iconCssClass="icon-edit"
-																label="<%= true %>"
-																message="edit"
-																url="<%= taglibEditURL %>"
-															/>
-														</li>
-													</c:if>
-
-													<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.DELETE_DISCUSSION) %>">
-
-														<%
-														String taglibDeleteURL = "javascript:" + randomNamespace + "deleteMessage(" + i + ");";
-														%>
-
-														<li class="lfr-discussion-delete">
-															<liferay-ui:icon-delete
-																label="<%= true %>"
-																url="<%= taglibDeleteURL %>"
-															/>
-														</li>
-													</c:if>
-												</c:if>
-											</ul>
-										</c:if>
-									</div>
-								</aui:col>
-							</aui:row>
-
-							<aui:row cssClass="lfr-discussion-form-container" fluid="<%= true %>">
-								<div class="col-md-12 lfr-discussion-form lfr-discussion-form-reply" id="<%= randomNamespace %>postReplyForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-
-									<liferay-ui:user-display
-										displayStyle="2"
-										userId="<%= user.getUserId() %>"
-										userName="<%= HtmlUtil.escape(PortalUtil.getUserName(user.getUserId(), StringPool.BLANK)) %>"
-									/>
-
-									<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "postReplyBody" + i %>' placeholder="type-your-comment-here" />
-
-									<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
-
-									<aui:button-row>
-										<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
-
-										<%
-										String taglibCancel = randomNamespace + "hideForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "', '');";
-										%>
-
-										<aui:button cssClass="btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
-									</aui:button-row>
-								</div>
-
-								<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
-									<div class="col-md-12 lfr-discussion-form lfr-discussion-form-edit" id="<%= randomNamespace %>editForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-										<liferay-ui:input-editor contents="<%= message.getBody() %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "editReplyBody" + i %>' />
-
-										<aui:input name='<%= "editReplyBody" + i %>' type="hidden" value="<%= message.getBody() %>" />
-
-										<%
-										boolean pending = message.isPending();
-
-										String publishButtonLabel = LanguageUtil.get(request, "publish");
-
-										if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBDiscussion.class.getName())) {
-											if (pending) {
-												publishButtonLabel = "save";
-											}
-											else {
-												publishButtonLabel = LanguageUtil.get(request, "submit-for-publication");
-											}
-										}
-										%>
-
-										<aui:button-row>
-											<aui:button name='<%= randomNamespace + "editReplyButton" + i %>' onClick='<%= randomNamespace + "updateMessage(" + i + ");" %>' value="<%= publishButtonLabel %>" />
-
-											<%
-											String taglibCancel = randomNamespace + "hideForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "', '" + HtmlUtil.escapeJS(message.getBody()) + "');";
-											%>
-
-											<aui:button onClick="<%= taglibCancel %>" type="cancel" />
-										</aui:button-row>
-									</div>
-								</c:if>
-							</aui:row>
-
-							<div class="lfr-discussion-posted-on">
-								<c:choose>
-									<c:when test="<%= message.getParentMessageId() == rootMessage.getMessageId() %>">
-										<%= LanguageUtil.format(request, "posted-on-x", dateFormatDateTime.format(message.getModifiedDate()), false) %>
-									</c:when>
-									<c:otherwise>
-
-										<%
-										MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(message.getParentMessageId());
-										%>
-
-										<liferay-util:buffer var="buffer">
-
-											<%
-											User parentMessageUser = UserLocalServiceUtil.fetchUser(parentMessage.getUserId());
-
-											boolean male = (parentMessageUser == null) ? true : parentMessageUser.isMale();
-											long portraitId = (parentMessageUser == null) ? 0 : parentMessageUser.getPortraitId();
-											String userUuid = (parentMessageUser == null) ? null : parentMessageUser.getUserUuid();
-											%>
-
-											<span id="lfr-discussion-reply-user-info">
-												<div class="lfr-discussion-reply-user-avatar">
-													<img alt="<%= HtmlUtil.escapeAttribute(parentMessage.getUserName()) %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), male, portraitId, userUuid) %>" width="30" />
-												</div>
-
-												<div class="lfr-discussion-reply-user-name">
-														<%= parentMessage.getUserName() %>
-												</div>
-
-												<div class="lfr-discussion-reply-creation-date">
-													<%= dateFormatDateTime.format(parentMessage.getCreateDate()) %>
-												</div>
-											</span>
-										</liferay-util:buffer>
-
-										<%
-										StringBundler sb = new StringBundler(7);
-
-										sb.append("<a class=\"lfr-discussion-parent-link\" data-title=\"");
-										sb.append(HtmlUtil.escape(buffer));
-										sb.append("\"data-metaData=\"");
-										sb.append(HtmlUtil.escape(parentMessage.getBody()));
-										sb.append("\">");
-										sb.append(HtmlUtil.escape(parentMessage.getUserName()));
-										sb.append("</a>");
-										%>
-
-										<%= LanguageUtil.format(request, "posted-on-x-in-reply-to-x", new Object[] {dateFormatDateTime.format(message.getModifiedDate()), sb.toString()}, false) %>
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</div>
-
-					<%
-					}
-					%>
-
-				</aui:row>
+					</aui:row>
+				</c:if>
 
 				<c:if test="<%= (searchContainer != null) && (searchContainer.getTotal() > searchContainer.getDelta()) %>">
 					<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />

@@ -15,11 +15,11 @@
 package com.liferay.portal.fabric.netty.fileserver;
 
 import com.liferay.portal.fabric.netty.fileserver.handlers.FileServerTestUtil;
-import com.liferay.portal.fabric.netty.fileserver.handlers.FileSystemProviderWrapper;
-import com.liferay.portal.fabric.netty.fileserver.handlers.FileSystemWrapper;
-import com.liferay.portal.fabric.netty.fileserver.handlers.PathWrapper;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.nio.FileSystemProviderWrapper;
+import com.liferay.portal.kernel.nio.FileSystemWrapper;
+import com.liferay.portal.kernel.nio.PathWrapper;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;

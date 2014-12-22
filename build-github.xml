@@ -175,8 +175,8 @@
 				public String getConsoleErrorMessage(String githubJenkinsFailureURL) {
 					String consoleOutput = toString(githubJenkinsFailureURL + "/logText/progressiveText");
 
-					int x = consoleOutput.indexOf("BUILD FAILED");
-					int y = consoleOutput.indexOf("Total time:");
+					int x = consoleOutput.lastIndexOf("BUILD FAILED");
+					int y = consoleOutput.lastIndexOf("Total time:");
 
 					String errorMessage = consoleOutput.substring(x, y - 2);
 

@@ -30,7 +30,7 @@
 
 	<target name="check-compile-uptodate">
 		<uptodate property="compile.uptodate" targetfile="classes/.touch">
-			<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*"/>
+			<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
 		</uptodate>
 
 		<condition property="jar.uptodate" value="false">

@@ -666,9 +666,10 @@ public class LayoutSetPrototypePropagationTest
 	private int _initialLayoutCount;
 	private int _initialPrototypeLayoutCount;
 	private Layout _layout;
-	private LayoutSetPrototype _layoutSetPrototype;
 
 	@DeleteAfterTestRun
+	private LayoutSetPrototype _layoutSetPrototype;
+
 	private Group _layoutSetPrototypeGroup;
 
 	@DeleteAfterTestRun

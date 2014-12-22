@@ -27,11 +27,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 /**
  * <p>
@@ -40,7 +39,6 @@ import org.junit.runners.MethodSorters;
  *
  * @author Alexander Chow
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 	@ClassRule
@@ -50,25 +48,20 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			new LiferayIntegrationTestRule(),
 			WebDAVEnvironmentConfigTestRule.INSTANCE);
 
-	@Test
-	public void testMSOffice0Setup() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		Class<?> clazz = getClass();
 
 		_testFileBytes = FileUtil.getBytes(clazz, _OFFICE_TEST_DOCX);
 		_testMetaBytes = FileUtil.getBytes(clazz, _OFFICE_TEST_META_DOCX);
 		_testDeltaBytes = FileUtil.getBytes(clazz, _OFFICE_TEST_DELTA_DOCX);
+
+		servicePut(_TEST_FILE_NAME, _testFileBytes, getLock(_TEST_FILE_NAME));
 	}
 
 	@Test
 	public void testMSOffice1Create() throws Exception {
 		Tuple tuple = null;
-
-		assertCode(
-			HttpServletResponse.SC_NOT_FOUND, servicePropFind(_TEST_FILE_NAME));
-		assertCode(
-			HttpServletResponse.SC_CREATED,
-			servicePut(
-				_TEST_FILE_NAME, _testFileBytes, getLock(_TEST_FILE_NAME)));
 
 		for (int i = 0; i < 3; i++) {
 			lock(HttpServletResponse.SC_OK, _TEST_FILE_NAME);

@@ -24,8 +24,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_TITLE_EDIT_DIFF</td>
-	<td>//div[@class='kb-title']/div/span</td>
+	<td>ARTICLE_TITLE_EDIT_ADDED_DIFF</td>
+	<td>//div[@class='kb-title']/div/span[contains(@class,'diff-html-added')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TITLE_EDIT_REMOVED_DIFF</td>
+	<td>//div[@class='kb-title']/div/span[contains(@class,'diff-html-removed')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -34,8 +39,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_CONTENT_EDIT_DIFF</td>
-	<td>//div[@class='kb-entity-body']/div/span</td>
+	<td>ARTICLE_CONTENT_EDIT_ADDED_DIFF</td>
+	<td>//div[@class='kb-entity-body']/div/span[contains(@class,'diff-html-added')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_CONTENT_EDIT_REMOVED_DIFF</td>
+	<td>//div[@class='kn-entity-body']/div/span[contains(@class,'diff-html-removed')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,12 +56,12 @@
 <!--VERSION_TABLE-->
 <tr>
 	<td>VERSION_TABLE_TARGET</td>
-	<td>xpath=(//table[@data-searchcontainerid='_2_WAR_knowledgebaseportlet_kbArticlesSearchContainer']//tr/td)[2]</td>
+	<td>//table[contains(@data-searchcontainerid,'knowledgebaseportlet')]//thead[contains(.,'Version')]/..//a[contains(.,'(Target)')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VERSION_TABLE_SOURCE</td>
-	<td>xpath=(//table[@data-searchcontainerid='_2_WAR_knowledgebaseportlet_kbArticlesSearchContainer']//tr)[3]/td[2]</td>
+	<td>//table[contains(@data-searchcontainerid,'knowledgebaseportlet')]//thead[contains(.,'Version')]/..//a[contains(.,'(Source)')]</td>
 	<td></td>
 </tr>
 </tbody>

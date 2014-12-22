@@ -381,11 +381,11 @@
 
 		<execute macro="KBArticle#viewArticleHistoryPG">
 			<var name="kbArticleContent" value="KB Article Content Edit" />
-			<var name="kbArticleContentDiff" value="Edit" />
+			<var name="kbArticleContentAddedDiff" value="Edit" />
 			<var name="kbArticleHistorySource" value="1 (Source)" />
 			<var name="kbArticleHistoryTarget" value="2 (Target)" />
 			<var name="kbArticleTitle" value="KB Article Title Edit" />
-			<var name="kbArticleTitleDiff" value="Edit" />
+			<var name="kbArticleTitleAddedDiff" value="Edit" />
 			<var name="viewNoXMLInTitle" value="true" />
 		</execute>
 	</command>

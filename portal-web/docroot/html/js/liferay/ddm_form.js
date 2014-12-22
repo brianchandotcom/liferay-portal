@@ -353,6 +353,26 @@ AUI.add(
 						return localizationMap;
 					},
 
+					formatLocaleValue: function() {
+						var instance = this;
+
+						var parent = instance.get('parent');
+
+						var translationManager = parent.get('translationManager');
+
+						var availableLocales = translationManager.get('availableLocales');
+
+						var localizationMap = instance.get('localizationMap');
+
+						for (var i = 0; i < availableLocales.length; i++) {
+							var value = localizationMap[availableLocales[i]];
+
+							if (Lang.isUndefined(value)) {
+								localizationMap[availableLocales[i]] = instance.getValue();
+							}
+						}
+					},
+
 					getFieldDefinition: function() {
 						var instance = this;
 
@@ -443,26 +463,6 @@ AUI.add(
 						instance.destroy();
 
 						instance.get('container').remove(true);
-					},
-
-					formatLocaleValue: function() {
-						var instance = this;
-
-						var parent = instance.get('parent');
-
-						var translationManager = parent.get('translationManager');
-
-						var availableLocales = translationManager.get('availableLocales');
-
-						var localizationMap = instance.get('localizationMap');
-
-						for (var i = 0; i < availableLocales.length; i++) {
-							var value = localizationMap[availableLocales[i]];
-
-							if (Lang.isUndefined(value)) {
-								localizationMap[availableLocales[i]] = instance.getValue();
-							}
-						}
 					},
 
 					renderRepeatableUI: function() {

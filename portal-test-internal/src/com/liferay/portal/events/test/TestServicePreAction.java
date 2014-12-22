@@ -83,8 +83,8 @@ public class TestServicePreAction extends ServicePreAction {
 	}
 
 	@Override
-	public Object[] getDefaultSiteLayout(User user) throws PortalException {
-		return super.getDefaultSiteLayout(user);
+	public Object[] getGuestSiteLayout(User user) throws PortalException {
+		return super.getGuestSiteLayout(user);
 	}
 
 	@Override
@@ -95,8 +95,8 @@ public class TestServicePreAction extends ServicePreAction {
 	}
 
 	@Override
-	public Object[] getDefaultUserSiteLayout(User user) throws PortalException {
-		return super.getDefaultUserSiteLayout(user);
+	public Object[] getDefaultUserSitesLayout(User user) throws PortalException {
+		return super.getDefaultUserSitesLayout(user);
 	}
 
 	@Override
@@ -112,10 +112,10 @@ public class TestServicePreAction extends ServicePreAction {
 	}
 
 	@Override
-	public Object[] getDefaultVirtualLayout(HttpServletRequest request)
+	public Object[] getDefaultVirtualHostLayout(HttpServletRequest request)
 		throws PortalException {
 
-		return super.getDefaultVirtualLayout(request);
+		return super.getDefaultVirtualHostLayout(request);
 	}
 
 	@Override

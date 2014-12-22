@@ -104,51 +104,16 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							</div>
 						</c:when>
 						<c:otherwise>
-							<c:choose>
-								<c:when test="<%= messagesCount == 1 %>">
-									<c:choose>
-										<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-											<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:otherwise>
-									<c:choose>
-										<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-											<aui:row fluid="<%= true %>">
-												<aui:col cssClass="lfr-discussion-details" width="<%= 25 %>">
-													<liferay-ui:user-display
-														displayStyle="2"
-														userId="<%= user.getUserId() %>"
-														userName="<%= user.getFullName() %>"
-													/>
-												</aui:col>
-
-												<aui:col cssClass="lfr-discussion-body" width="<%= 75 %>">
-													<liferay-ui:input-editor contents="" cssClass="comments" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "postReplyBody" + i %>' placeholder="type-your-comment-here" />
-
-													<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
-
-													<aui:button-row>
-														<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
-													</aui:button-row>
-												</aui:col>
-											</aui:row>
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:icon
-												iconCssClass="icon-reply"
-												label="<%= true %>"
-												message="please-sign-in-to-comment"
-												url="<%= themeDisplay.getURLSignIn() %>"
-											/>
-										</c:otherwise>
-									</c:choose>
-								</c:otherwise>
-							</c:choose>
+							<c:if test="<%= messagesCount == 1 %>">
+								<c:choose>
+									<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+										<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
 						</c:otherwise>
 					</c:choose>
 
@@ -183,35 +148,37 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 					<aui:input name="emailAddress" type="hidden" />
 
-					<div id="<%= randomNamespace %>postReplyForm<%= i %>" style="display: none;">
-						<aui:input id='<%= randomNamespace + "postReplyBody" + i %>' label="comment" name='<%= "postReplyBody" + i %>' type="textarea" wrap="soft" wrapperCssClass="lfr-textarea-container" />
+					<c:choose>
+						<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+							<aui:row fluid="<%= true %>">
+								<aui:col cssClass="lfr-discussion-details" width="<%= 25 %>">
+									<liferay-ui:user-display
+										displayStyle="2"
+										userId="<%= user.getUserId() %>"
+										userName="<%= user.getFullName() %>"
+									/>
+								</aui:col>
 
-						<%
-						String postReplyButtonLabel = LanguageUtil.get(request, "reply");
+								<aui:col cssClass="lfr-discussion-body" width="<%= 75 %>">
+									<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "postReplyBody" + i %>' placeholder="type-your-comment-here" />
 
-						if (!themeDisplay.isSignedIn()) {
-							postReplyButtonLabel = LanguageUtil.get(request, "reply-as");
-						}
+									<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
 
-						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBDiscussion.class.getName()) && !strutsAction.contains("workflow")) {
-							postReplyButtonLabel = LanguageUtil.get(request, "submit-for-publication");
-						}
-						%>
-
-						<c:if test="<%= !subscribed && themeDisplay.isSignedIn() %>">
-							<aui:input helpMessage="comments-subscribe-me-help" label="subscribe-me" name="subscribe" type="checkbox" value="<%= PropsValues.DISCUSSION_SUBSCRIBE_BY_DEFAULT %>" />
-						</c:if>
-
-						<aui:button-row>
-							<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value="<%= postReplyButtonLabel %>" />
-
-							<%
-							String taglibCancel = "document.getElementById('" + randomNamespace + "postReplyForm" + i + "').style.display = 'none'; document.getElementById('" + namespace + randomNamespace + "postReplyBody" + i + "').value = ''; void('');";
-							%>
-
-							<aui:button cssClass="btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
-						</aui:button-row>
-					</div>
+									<aui:button-row>
+										<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
+									</aui:button-row>
+								</aui:col>
+							</aui:row>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:icon
+								iconCssClass="icon-reply"
+								label="<%= true %>"
+								message="please-sign-in-to-comment"
+								url="<%= themeDisplay.getURLSignIn() %>"
+							/>
+						</c:otherwise>
+					</c:choose>
 				</aui:fieldset>
 			</c:if>
 
@@ -463,7 +430,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										userName="<%= HtmlUtil.escape(PortalUtil.getUserName(user.getUserId(), StringPool.BLANK)) %>"
 									/>
 
-									<aui:input id='<%= randomNamespace + "postReplyBody" + i %>' label="" name='<%= "postReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px;" %>' title="reply-body" type="textarea" wrap="soft" />
+									<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "postReplyBody" + i %>' placeholder="type-your-comment-here" />
+
+									<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
 
 									<aui:button-row>
 										<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
@@ -589,7 +558,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 	<aui:script>
 		function <%= randomNamespace %>hideForm(rowId, textAreaId, textAreaValue) {
 			document.getElementById(rowId).style.display = 'none';
-			document.getElementById(textAreaId).value = textAreaValue;
 		}
 
 		function <%= randomNamespace %>scrollIntoView(messageId) {
@@ -598,7 +566,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 		function <%= randomNamespace %>showForm(rowId, textAreaId) {
 			document.getElementById(rowId).style.display = 'block';
-			document.getElementById(textAreaId).focus();
 		}
 
 		Liferay.provide(

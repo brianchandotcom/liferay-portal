@@ -1925,6 +1925,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/hibernate-commons-annotations.jar</file-name>
+				<version>3.2.0</version>
+				<project-name>Hibernate</project-name>
+				<project-url>http://www.hibernate.org</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/hibernate-core.jar</file-name>
 				<version>3.6.10</version>
 				<project-name>Hibernate</project-name>
@@ -1938,18 +1950,6 @@
 				<comments>
 					This includes a public patch from HHH-6286.
 				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/hibernate-commons-annotations.jar</file-name>
-				<version>3.2.0</version>
-				<project-name>Hibernate</project-name>
-				<project-url>http://www.hibernate.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/htmlparser.jar</file-name>

@@ -27,6 +27,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
 import java.awt.image.DataBufferInt;
+import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 
 import java.io.File;
@@ -162,7 +163,9 @@ public class ImageToolImplTest {
 
 		Assert.assertNotNull(expectedImage);
 
-		DataBuffer expectedDataBuffer = expectedImage.getData().getDataBuffer();
+		Raster raster = expectedImage.getData();
+
+		DataBuffer expectedDataBuffer = raster.getDataBuffer();
 
 		String expectedType = FileUtil.getExtension(fileName);
 
@@ -182,7 +185,9 @@ public class ImageToolImplTest {
 
 		Assert.assertNotNull(resultImage);
 
-		DataBuffer resultDataBuffer = resultImage.getData().getDataBuffer();
+		raster = resultImage.getData();
+
+		DataBuffer resultDataBuffer = raster.getDataBuffer();
 
 		String resultType = imageBag.getType();
 

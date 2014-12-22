@@ -71,18 +71,6 @@ public class ServicePreActionTest {
 	}
 
 	@Test
-	public void testInitThemeDisplayPlidGuestSiteLayout() throws Exception {
-		long plid = getThemeDisplayPlid(false, false);
-
-		Object[] defaultLayout =
-			TestServicePreAction.INSTANCE.getGuestSiteLayout(_user);
-
-		Layout layout = (Layout)defaultLayout[0];
-
-		Assert.assertEquals(layout.getPlid(), plid);
-	}
-
-	@Test
 	public void testInitThemeDisplayPlidDefaultUserPersonalLayout()
 		throws Exception {
 
@@ -124,6 +112,18 @@ public class ServicePreActionTest {
 			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE =
 				privateLayoutsAutoCreate;
 		}
+	}
+
+	@Test
+	public void testInitThemeDisplayPlidGuestSiteLayout() throws Exception {
+		long plid = getThemeDisplayPlid(false, false);
+
+		Object[] defaultLayout =
+			TestServicePreAction.INSTANCE.getGuestSiteLayout(_user);
+
+		Layout layout = (Layout)defaultLayout[0];
+
+		Assert.assertEquals(layout.getPlid(), plid);
 	}
 
 	@Test

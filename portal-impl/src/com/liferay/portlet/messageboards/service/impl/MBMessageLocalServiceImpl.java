@@ -883,17 +883,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			int status)
 		throws PortalException {
 
-		return getDiscussionMessageDisplay(
-			userId, groupId, className, classPK, status,
-			MBThreadConstants.THREAD_VIEW_COMBINATION);
-	}
-
-	@Override
-	public MBMessageDisplay getDiscussionMessageDisplay(
-			long userId, long groupId, String className, long classPK,
-			int status, String threadView)
-		throws PortalException {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		MBMessage message = null;
@@ -943,7 +932,24 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 		}
 
-		return getMessageDisplay(userId, message, status, threadView, false);
+		return getMessageDisplay(
+			userId, message, status, MBThreadConstants.THREAD_VIEW_COMBINATION,
+			false);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDiscussionMessageDisplay(
+	 *             long, long, String, long, int)}
+	 */
+	@Deprecated
+	@Override
+	public MBMessageDisplay getDiscussionMessageDisplay(
+			long userId, long groupId, String className, long classPK,
+			int status, String threadView)
+		throws PortalException {
+
+		return getDiscussionMessageDisplay(
+			userId, groupId, className, classPK, status);
 	}
 
 	@Override

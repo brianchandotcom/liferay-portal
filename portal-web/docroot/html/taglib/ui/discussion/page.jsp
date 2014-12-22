@@ -118,12 +118,25 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								<c:otherwise>
 									<c:choose>
 										<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-											<liferay-ui:icon
-												iconCssClass="icon-reply"
-												label="<%= true %>"
-												message="add-comment"
-												url="<%= taglibPostReplyURL %>"
-											/>
+											<aui:row fluid="<%= true %>">
+												<aui:col cssClass="lfr-discussion-details" width="<%= 25 %>">
+													<liferay-ui:user-display
+														displayStyle="2"
+														userId="<%= user.getUserId() %>"
+														userName="<%= user.getFullName() %>"
+													/>
+												</aui:col>
+
+												<aui:col cssClass="lfr-discussion-body" width="<%= 75 %>">
+													<liferay-ui:input-editor contents="" cssClass="comments" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "postReplyBody" + i %>' placeholder="type-your-comment-here" />
+
+													<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
+
+													<aui:button-row>
+														<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
+													</aui:button-row>
+												</aui:col>
+											</aui:row>
 										</c:when>
 										<c:otherwise>
 											<liferay-ui:icon
@@ -465,7 +478,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 								<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
 									<div class="col-md-12 lfr-discussion-form lfr-discussion-form-edit" id="<%= randomNamespace %>editForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-										<aui:input id='<%= randomNamespace + "editReplyBody" + i %>' label="" name='<%= "editReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px;" %>' title="reply-body" type="textarea" value="<%= message.getBody() %>" wrap="soft" />
+										<liferay-ui:input-editor contents="<%= message.getBody() %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "editReplyBody" + i %>' />
+
+										<aui:input name='<%= "editReplyBody" + i %>' type="hidden" value="<%= message.getBody() %>" />
 
 										<%
 										boolean pending = message.isPending();
@@ -652,7 +667,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-				var body = form.one('#<%= namespace %><%= randomNamespace%>postReplyBody' + i).val();
+				var body = window['<%= namespace %>postReplyBody0Editor'].getHTML();
 				var parentMessageId = form.one('#<%= namespace %>parentMessageId' + i).val();
 
 				form.one('#<%= namespace %><%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.ADD %>');
@@ -802,7 +817,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-				var body = form.one('#<%= namespace %><%= randomNamespace%>editReplyBody' + i).val();
+				var body = window['<%= namespace %>editReplyBody' + i + 'Editor'].getHTML();
 				var messageId = form.one('#<%= namespace %>messageId' + i).val();
 
 				if (pending) {
@@ -866,6 +881,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 </c:if>
 
 <%!
+public static final String EDITOR_TEXT_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.text.jsp";
+
 private RatingsEntry getRatingsEntry(List<RatingsEntry> ratingEntries, long classPK) {
 	for (RatingsEntry ratingsEntry : ratingEntries) {
 		if (ratingsEntry.getClassPK() == classPK) {

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.lar;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -295,6 +296,8 @@ public class StagedModelDataHandlerUtil {
 
 		stagedModelDataHandler.importStagedModel(
 			portletDataContext, stagedModel);
+
+		LastSessionRecorderHelperUtil.syncLastSessionState();
 	}
 
 	private static StagedModel _getReferenceStagedModel(

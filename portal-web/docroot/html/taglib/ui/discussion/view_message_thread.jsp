@@ -82,6 +82,10 @@ request.setAttribute("page.jsp-i", new Integer(i));
 
 					<aui:a href="<%= (messageUser != null) ? messageUser.getDisplayURL(themeDisplay) : null %>">
 						<%= HtmlUtil.escape(message.getUserName()) %>
+
+						<c:if test="<%= message.getUserId() == user.getUserId() %>">
+							(<liferay-ui:message key="you" />)
+						</c:if>
 					</aui:a>
 
 					<c:choose>

@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -66,7 +67,7 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() throws PortalException {
 		for (String portletId : _PORTLET_IDS) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				TestPropsValues.getCompanyId(), portletId);

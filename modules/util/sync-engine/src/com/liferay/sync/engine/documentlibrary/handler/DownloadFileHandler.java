@@ -91,57 +91,18 @@ public class DownloadFileHandler extends BaseHandler {
 		SyncFileService.deleteSyncFile(syncFile, false);
 	}
 
-	@Override
-	protected void doHandleResponse(HttpResponse httpResponse)
+	protected void copyFile(
+			SyncFile syncFile, Path filePath, InputStream inputStream)
 		throws Exception {
-
-		Header errorHeader = httpResponse.getFirstHeader("Sync-Error");
-
-		if (errorHeader != null) {
-			handleSiteDeactivatedException();
-		}
-
-		final Session session = SessionManager.getSession(getSyncAccountId());
-
-		Header tokenHeader = httpResponse.getFirstHeader("Sync-JWT");
-
-		if (tokenHeader != null) {
-			session.setToken(tokenHeader.getValue());
-		}
-
-		InputStream inputStream = null;
-
-		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
-
-		syncFile = SyncFileService.fetchSyncFile(syncFile.getSyncFileId());
-
-		if ((syncFile == null) ||
-			(syncFile.getState() == SyncFile.STATE_UNSYNCED)) {
-
-			return;
-		}
-
-		Path filePath = Paths.get(syncFile.getFilePathName());
 
 		Watcher watcher = WatcherRegistry.getWatcher(getSyncAccountId());
 
 		List<String> downloadedFilePathNames =
 			watcher.getDownloadedFilePathNames();
 
+		downloadedFilePathNames.add(filePath.toString());
+
 		try {
-			HttpEntity httpEntity = httpResponse.getEntity();
-
-			inputStream = new CountingInputStream(httpEntity.getContent()) {
-
-				@Override
-				protected synchronized void afterRead(int n) {
-					session.incrementDownloadedBytes(n);
-
-					super.afterRead(n);
-				}
-
-			};
-
 			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 				getSyncAccountId());
 
@@ -201,9 +162,67 @@ public class DownloadFileHandler extends BaseHandler {
 				SyncFileService.update(syncFile);
 			}
 		}
+	}
+
+	@Override
+	protected void doHandleResponse(HttpResponse httpResponse)
+		throws Exception {
+
+		Header errorHeader = httpResponse.getFirstHeader("Sync-Error");
+
+		if (errorHeader != null) {
+			handleSiteDeactivatedException();
+		}
+
+		final Session session = SessionManager.getSession(getSyncAccountId());
+
+		Header tokenHeader = httpResponse.getFirstHeader("Sync-JWT");
+
+		if (tokenHeader != null) {
+			session.setToken(tokenHeader.getValue());
+		}
+
+		InputStream inputStream = null;
+
+		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
+
+		if (isUnsynced(syncFile)) {
+			return;
+		}
+
+		Path filePath = Paths.get(syncFile.getFilePathName());
+
+		try {
+			HttpEntity httpEntity = httpResponse.getEntity();
+
+			inputStream = new CountingInputStream(httpEntity.getContent()) {
+
+				@Override
+				protected synchronized void afterRead(int n) {
+					session.incrementDownloadedBytes(n);
+
+					super.afterRead(n);
+				}
+
+			};
+
+			copyFile(syncFile, filePath, inputStream);
+		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
+	}
+
+	protected boolean isUnsynced(SyncFile syncFile) {
+		syncFile = SyncFileService.fetchSyncFile(syncFile.getSyncFileId());
+
+		if ((syncFile == null) ||
+			(syncFile.getState() == SyncFile.STATE_UNSYNCED)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

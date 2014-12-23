@@ -56,6 +56,27 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		super(event);
 	}
 
+	@Override
+	public void processResponse(String response) throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		SyncDLObjectUpdate syncDLObjectUpdate = objectMapper.readValue(
+			response, new TypeReference<SyncDLObjectUpdate>() {});
+
+		for (SyncFile targetSyncFile : syncDLObjectUpdate.getSyncDLObjects()) {
+			processSyncFile(targetSyncFile);
+		}
+
+		if (getParameterValue("parentFolderId") == null) {
+			SyncSite syncSite = SyncSiteService.fetchSyncSite(
+				(Long)getParameterValue("repositoryId"), getSyncAccountId());
+
+			syncSite.setRemoteSyncTime(syncDLObjectUpdate.getLastAccessTime());
+
+			SyncSiteService.update(syncSite);
+		}
+	}
+
 	protected void addFile(SyncFile syncFile, String filePathName)
 		throws Exception {
 
@@ -226,27 +247,6 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 		for (SyncFile dependentSyncFile : dependentSyncFiles) {
 			processSyncFile(dependentSyncFile);
-		}
-	}
-
-	@Override
-	protected void processResponse(String response) throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		SyncDLObjectUpdate syncDLObjectUpdate = objectMapper.readValue(
-			response, new TypeReference<SyncDLObjectUpdate>() {});
-
-		for (SyncFile targetSyncFile : syncDLObjectUpdate.getSyncDLObjects()) {
-			processSyncFile(targetSyncFile);
-		}
-
-		if (getParameterValue("parentFolderId") == null) {
-			SyncSite syncSite = SyncSiteService.fetchSyncSite(
-				(Long)getParameterValue("repositoryId"), getSyncAccountId());
-
-			syncSite.setRemoteSyncTime(syncDLObjectUpdate.getLastAccessTime());
-
-			SyncSiteService.update(syncSite);
 		}
 	}
 

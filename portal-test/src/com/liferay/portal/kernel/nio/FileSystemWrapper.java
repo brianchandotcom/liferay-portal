@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.fabric.netty.fileserver.handlers;
+package com.liferay.portal.kernel.nio;
 
 import java.io.IOException;
 

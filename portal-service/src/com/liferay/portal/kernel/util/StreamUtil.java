@@ -228,7 +228,8 @@ public class StreamUtil {
 
 		while (count < length) {
 			count += inputFileChannel.transferTo(
-				inputFileChannel.position(), length - count, outputFileChannel);
+				inputFileChannel.position() + count, length - count,
+				outputFileChannel);
 		}
 	}
 

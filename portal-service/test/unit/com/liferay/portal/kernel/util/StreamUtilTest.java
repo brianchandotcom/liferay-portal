@@ -14,10 +14,13 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.nio.FileChannelWrapper;
+
 import java.io.IOException;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.channels.WritableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -54,8 +57,20 @@ public class StreamUtilTest {
 
 	@Test
 	public void testTransferFileChannel() throws Exception {
-		try (FileChannel fromFileChannel = FileChannel.open(
-				_fromFilePath, StandardOpenOption.READ);
+		try (FileChannel fromFileChannel = new FileChannelWrapper(
+				FileChannel.open(_fromFilePath, StandardOpenOption.READ)) {
+
+					@Override
+					public long transferTo(
+							long position, long count,
+							WritableByteChannel target)
+						throws IOException {
+
+						return super.transferTo(
+							position, _data.length / 4, target);
+					}
+
+				};
 			FileChannel toFileChannel = FileChannel.open(
 				_toFilePath, StandardOpenOption.CREATE,
 				StandardOpenOption.WRITE)) {

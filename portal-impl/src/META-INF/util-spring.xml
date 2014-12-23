@@ -326,7 +326,7 @@
 	<bean id="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil">
 		<property name="springFactory" ref="com.liferay.portal.kernel.spring.util.SpringFactory" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.template.TemplateManagerUtil" class="com.liferay.portal.kernel.template.TemplateManagerUtil">
+	<bean id="com.liferay.portal.kernel.template.TemplateManagerRegistry" class="com.liferay.portal.kernel.template.TemplateManagerRegistry">
 		<property name="templateManagers">
 			<list>
 				<bean class="com.liferay.portal.freemarker.FreeMarkerManager">
@@ -346,6 +346,9 @@
 				</bean>
 			</list>
 		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.template.TemplateManagerUtil" class="com.liferay.portal.kernel.template.TemplateManagerUtil">
+		<property name="templateManagerRegistry" ref="com.liferay.portal.kernel.template.TemplateManagerRegistry" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil" class="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil">
 		<property name="templateResourceLoaders">

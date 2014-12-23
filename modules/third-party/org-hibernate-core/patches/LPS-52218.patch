@@ -1,0 +1,65 @@
+diff --git a/org/hibernate/intercept/FieldInterceptionHelper.java b/org/hibernate/intercept/FieldInterceptionHelper.java
+index 06146cc..0aabcc7 100644
+--- a/org/hibernate/intercept/FieldInterceptionHelper.java
++++ b/org/hibernate/intercept/FieldInterceptionHelper.java
+@@ -1,3 +1,4 @@
++/* @generated */
+ /*
+  * Hibernate, Relational Persistence for Idiomatic Java
+  *
+@@ -24,11 +25,13 @@
+  */
+ package org.hibernate.intercept;
+ 
++import java.util.Map;
+ import org.hibernate.engine.SessionImplementor;
+ import org.hibernate.intercept.cglib.CGLIBHelper;
+ import org.hibernate.intercept.javassist.JavassistHelper;
+ 
+ import java.util.Set;
++import java.util.concurrent.ConcurrentHashMap;
+ 
+ /**
+  * Helper class for dealing with enhanced entity classes.
+@@ -48,14 +51,20 @@ public class FieldInterceptionHelper {
+ 	}
+ 
+ 	public static boolean isInstrumented(Class entityClass) {
+-		Class[] definedInterfaces = entityClass.getInterfaces();
+-		for ( int i = 0; i < definedInterfaces.length; i++ ) {
+-			if ( "net.sf.cglib.transform.impl.InterceptFieldEnabled".equals( definedInterfaces[i].getName() )
+-			     || "org.hibernate.bytecode.javassist.FieldHandled".equals( definedInterfaces[i].getName() ) ) {
+-				return true;
++		Boolean instrumented = _instrumentedCache.get(entityClass);
++
++		if (instrumented == null) {
++			instrumented = false;
++			Class[] definedInterfaces = entityClass.getInterfaces();
++			for ( int i = 0; i < definedInterfaces.length; i++ ) {
++				if ( "net.sf.cglib.transform.impl.InterceptFieldEnabled".equals( definedInterfaces[i].getName() )
++					 || "org.hibernate.bytecode.javassist.FieldHandled".equals( definedInterfaces[i].getName() ) ) {
++					instrumented = true;
++				}
+ 			}
++			_instrumentedCache.put(entityClass, instrumented);
+ 		}
+-		return false;
++		return instrumented;
+ 	}
+ 
+ 	public static boolean isInstrumented(Object entity) {
+@@ -63,7 +72,7 @@ public class FieldInterceptionHelper {
+ 	}
+ 
+ 	public static FieldInterceptor extractFieldInterceptor(Object entity) {
+-		if ( entity == null ) {
++		if (isInstrumented(entity)) {
+ 			return null;
+ 		}
+ 		Class[] definedInterfaces = entity.getClass().getInterfaces();
+@@ -114,4 +123,5 @@ public class FieldInterceptionHelper {
+ 			interceptor.dirty();
+ 		}
+ 	}
++	private static final Map<Class<?>, Boolean> _instrumentedCache = new ConcurrentHashMap<Class<?>, Boolean>();
+ }

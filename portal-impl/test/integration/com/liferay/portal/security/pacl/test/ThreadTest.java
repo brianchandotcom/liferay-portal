@@ -15,12 +15,11 @@
 package com.liferay.portal.security.pacl.test;
 
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
-import com.liferay.portal.kernel.messaging.BaseDestination;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.messaging.SerialDestination;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.security.pacl.test.messaging.TestPACLMessageListener;
 import com.liferay.portal.test.PACLTestRule;
 
 import java.util.Map;
@@ -492,13 +491,12 @@ public class ThreadTest {
 			PortalExecutorManagerUtil.getPortalExecutor(
 				"liferay/test_pacl", true);
 
-			BaseDestination baseDestination = new SerialDestination();
+			MessageBus messageBus = MessageBusUtil.getMessageBus();
 
-			baseDestination.setName("liferay/test_pacl");
-			baseDestination.register(new TestPACLMessageListener());
-			baseDestination.open();
+			Destination destination = messageBus.getDestination(
+				"liferay/test_pacl");
 
-			MessageBusUtil.addDestination(baseDestination);
+			destination.open();
 		}
 		catch (SecurityException se) {
 			Assert.fail();

@@ -937,8 +937,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					/>
 				</try>
 				<catch>
-					<ant antfile="${project.dir}/portal-service/build.xml" target="compile" inheritAll="false" />
-					<ant antfile="${project.dir}/util-java/build.xml" target="compile" inheritAll="false" />
+					<ant dir="../portal-service" target="compile" inheritAll="false" />
+					<ant dir="../util-java" target="compile" inheritAll="false" />
 
 					<taskdef
 						classname="com.liferay.util.ant.ManifestHelperTask"

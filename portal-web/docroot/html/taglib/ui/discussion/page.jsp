@@ -135,8 +135,8 @@ SearchContainer searchContainer = null;
 								<aui:col cssClass="lfr-discussion-details" width="<%= 25 %>">
 									<liferay-ui:user-display
 										displayStyle="2"
+										showUserName="<%= false %>"
 										userId="<%= user.getUserId() %>"
-										userName="<%= user.getFullName() %>"
 									/>
 								</aui:col>
 

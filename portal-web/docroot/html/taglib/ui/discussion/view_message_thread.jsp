@@ -59,6 +59,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 		<aui:col cssClass="lfr-discussion-details" width="<%= 25 %>">
 			<liferay-ui:user-display
 				displayStyle="2"
+				showImageOverlay="<%= userId == message.getUserId() %>"
 				showUserName="<%= false %>"
 				userId="<%= message.getUserId() %>"
 			/>

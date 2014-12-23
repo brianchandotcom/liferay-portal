@@ -94,11 +94,17 @@ public class LangBuilder {
 
 			_portalLanguageProperties.load(inputStream);
 		}
+		else {
+			_portalLanguageProperties = null;
+		}
 
 		File renameKeysFile = new File(_langDir + "/rename.properties");
 
 		if (renameKeysFile.exists()) {
 			_renameKeys = PropertiesUtil.load(FileUtil.read(renameKeysFile));
+		}
+		else {
+			_renameKeys = null;
 		}
 
 		String content = _orderProperties(
@@ -677,7 +683,7 @@ public class LangBuilder {
 	private String _langDir;
 	private String _langFile;
 	private boolean _langTranslate;
-	private Properties _portalLanguageProperties;
-	private Properties _renameKeys;
+	private final Properties _portalLanguageProperties;
+	private final Properties _renameKeys;
 
 }

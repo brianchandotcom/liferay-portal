@@ -135,6 +135,9 @@ public class HttpImpl implements Http {
 
 			_nonProxyHostsPattern = Pattern.compile(nonProxyHostsRegEx);
 		}
+		else {
+			_nonProxyHostsPattern = null;
+		}
 
 		MultiThreadedHttpConnectionManager httpConnectionManager =
 			new MultiThreadedHttpConnectionManager();
@@ -153,6 +156,8 @@ public class HttpImpl implements Http {
 		_proxyHttpClient.setHttpConnectionManager(httpConnectionManager);
 
 		if (!hasProxyConfig() || Validator.isNull(_PROXY_USERNAME)) {
+			_proxyCredentials = null;
+
 			return;
 		}
 
@@ -174,6 +179,9 @@ public class HttpImpl implements Http {
 			authPrefs.add(AuthPolicy.NTLM);
 			authPrefs.add(AuthPolicy.BASIC);
 			authPrefs.add(AuthPolicy.DIGEST);
+		}
+		else {
+			_proxyCredentials = null;
 		}
 
 		HttpClientParams httpClientParams = _proxyHttpClient.getParams();
@@ -1715,8 +1723,8 @@ public class HttpImpl implements Http {
 	private static ThreadLocal<Cookie[]> _cookies = new ThreadLocal<Cookie[]>();
 
 	private HttpClient _httpClient = new HttpClient();
-	private Pattern _nonProxyHostsPattern;
-	private Credentials _proxyCredentials;
+	private final Pattern _nonProxyHostsPattern;
+	private final Credentials _proxyCredentials;
 	private HttpClient _proxyHttpClient = new HttpClient();
 
 	private class FastProtocolSocketFactory

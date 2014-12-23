@@ -45,12 +45,14 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		super(request.getInputStream());
 
 		_session = request.getSession();
-		_totalSize = request.getContentLength();
+		long totalSize = request.getContentLength();
 
-		if (_totalSize < 0) {
-			_totalSize = GetterUtil.getLong(
-				request.getHeader(HttpHeaders.CONTENT_LENGTH), _totalSize);
+		if (totalSize < 0) {
+			totalSize = GetterUtil.getLong(
+				request.getHeader(HttpHeaders.CONTENT_LENGTH), totalSize);
 		}
+
+		_totalSize = totalSize;
 	}
 
 	public ServletInputStream getCachedInputStream() {
@@ -113,6 +115,6 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		new UnsyncByteArrayOutputStream();
 	private HttpSession _session;
 	private long _totalRead;
-	private long _totalSize;
+	private final long _totalSize;
 
 }

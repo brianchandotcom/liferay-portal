@@ -80,6 +80,8 @@ public class UploadServletRequestImpl
 		_fileParameters = new LinkedHashMap<>();
 		_regularParameters = new LinkedHashMap<>();
 
+		LiferayServletRequest liferayServletRequest = null;
+
 		try {
 			ServletFileUpload servletFileUpload = new LiferayFileUpload(
 				new LiferayFileItemFactory(getTempDir()), request);
@@ -88,10 +90,10 @@ public class UploadServletRequestImpl
 				PrefsPropsUtil.getLong(
 					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE));
 
-			_liferayServletRequest = new LiferayServletRequest(request);
+			liferayServletRequest = new LiferayServletRequest(request);
 
 			List<org.apache.commons.fileupload.FileItem> fileItems =
-				servletFileUpload.parseRequest(_liferayServletRequest);
+				servletFileUpload.parseRequest(liferayServletRequest);
 
 			for (org.apache.commons.fileupload.FileItem fileItem : fileItems) {
 				LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
@@ -174,6 +176,8 @@ public class UploadServletRequestImpl
 				_log.debug(e, e);
 			}
 		}
+
+		_liferayServletRequest = liferayServletRequest;
 	}
 
 	public UploadServletRequestImpl(
@@ -192,6 +196,8 @@ public class UploadServletRequestImpl
 		if (regularParams != null) {
 			_regularParameters.putAll(regularParams);
 		}
+
+		_liferayServletRequest = null;
 	}
 
 	@Override
@@ -528,7 +534,7 @@ public class UploadServletRequestImpl
 	private static File _tempDir;
 
 	private Map<String, FileItem[]> _fileParameters;
-	private LiferayServletRequest _liferayServletRequest;
+	private final LiferayServletRequest _liferayServletRequest;
 	private Map<String, List<String>> _regularParameters;
 
 }

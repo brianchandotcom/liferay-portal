@@ -176,7 +176,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 							<li class="lfr-discussion-reply-to">
 
 								<%
-								String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "'); " + randomNamespace + "hideForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "', '" + HtmlUtil.escapeJS(message.getBody()) + "');";
+								String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + namespace + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "'); " + randomNamespace + "hideForm('" + namespace + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "', '" + HtmlUtil.escapeJS(message.getBody()) + "');";
 								%>
 
 								<c:choose>
@@ -218,7 +218,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 							<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
 
 								<%
-								String taglibEditURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "');" + randomNamespace + "hideForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "', '')";
+								String taglibEditURL = "javascript:" + randomNamespace + "showForm('" + namespace + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "');" + randomNamespace + "hideForm('" + namespace + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "', '')";
 								%>
 
 								<li class="lfr-discussion-edit">
@@ -251,31 +251,34 @@ request.setAttribute("page.jsp-i", new Integer(i));
 		</aui:col>
 
 		<aui:row cssClass="lfr-discussion-form-container" fluid="<%= true %>">
-			<div class="col-md-12 lfr-discussion-form lfr-discussion-form-reply" id="<%= randomNamespace %>postReplyForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
+			<aui:row fluid="<%= true %>" id='<%= randomNamespace + "postReplyForm" + i %>' style="display: none;">
+				<aui:col cssClass="lfr-discussion-details" width="<%= 25 %>">
+					<liferay-ui:user-display
+						displayStyle="2"
+						showUserName="<%= false %>"
+						userId="<%= user.getUserId() %>"
+					/>
+				</aui:col>
 
-				<liferay-ui:user-display
-					displayStyle="2"
-					userId="<%= user.getUserId() %>"
-					userName="<%= HtmlUtil.escape(PortalUtil.getUserName(user.getUserId(), StringPool.BLANK)) %>"
-				/>
+				<aui:col cssClass="lfr-discussion-body" width="<%= 75 %>">
+					<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "postReplyBody" + i %>' placeholder="type-your-comment-here" />
 
-				<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "postReplyBody" + i %>' placeholder="type-your-comment-here" />
+					<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
 
-				<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
+					<aui:button-row>
+						<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 
-				<aui:button-row>
-					<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+						<%
+						String taglibCancel = randomNamespace + "hideForm('" + namespace + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "', '');";
+						%>
 
-					<%
-					String taglibCancel = randomNamespace + "hideForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "', '');";
-					%>
-
-					<aui:button cssClass="btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
-				</aui:button-row>
-			</div>
+						<aui:button cssClass="btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
+					</aui:button-row>
+				</aui:col>
+			</aui:row>
 
 			<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
-				<div class="col-md-12 lfr-discussion-form lfr-discussion-form-edit" id="<%= randomNamespace %>editForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
+				<div class="col-md-12 lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
 					<liferay-ui:input-editor contents="<%= message.getBody() %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "editReplyBody" + i %>' />
 
 					<aui:input name='<%= "editReplyBody" + i %>' type="hidden" value="<%= message.getBody() %>" />
@@ -299,7 +302,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 						<aui:button name='<%= randomNamespace + "editReplyButton" + i %>' onClick='<%= randomNamespace + "updateMessage(" + i + ");" %>' value="<%= publishButtonLabel %>" />
 
 						<%
-						String taglibCancel = randomNamespace + "hideForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "', '" + HtmlUtil.escapeJS(message.getBody()) + "');";
+						String taglibCancel = randomNamespace + "hideForm('" + namespace + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "', '" + HtmlUtil.escapeJS(message.getBody()) + "');";
 						%>
 
 						<aui:button onClick="<%= taglibCancel %>" type="cancel" />

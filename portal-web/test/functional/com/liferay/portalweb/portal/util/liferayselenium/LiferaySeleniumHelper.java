@@ -970,14 +970,15 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
-		// LPS-52210
+		// LPS-52346
 
 		if (line.matches(
 				".*The web application \\[\\] created a ThreadLocal with key " +
 					"of type.*")) {
 
 			if (line.contains(
-					"[org.apache.jasper.runtime.JspWriterImpl.CharBufferThreadLocalPool]")) {
+					"[org.apache.jasper.runtime.JspWriterImpl." +
+						"CharBufferThreadLocalPool]")) {
 
 				return true;
 			}

@@ -29,7 +29,11 @@
 	}
 
 	.avatar {
-		height: auto;
+		background: no-repeat center;
+		background-size: 65px;
+		display: block;
+		height: 65px;
+		margin: 0 auto;
 		width: 65px;
 	}
 

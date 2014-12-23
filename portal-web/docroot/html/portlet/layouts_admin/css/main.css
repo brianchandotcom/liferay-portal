@@ -204,6 +204,8 @@
 		width: 30px;
 
 		.avatar {
+			background-size: 30px;
+			height: 30px;
 			width: 30px;
 		}
 	}
@@ -256,6 +258,8 @@
 			width: 30px;
 
 			.avatar {
+				background-size: 30px;
+				height: 30px;
 				width: 30px;
 			}
 		}

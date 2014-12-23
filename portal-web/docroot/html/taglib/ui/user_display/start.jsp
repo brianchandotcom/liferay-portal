@@ -37,7 +37,7 @@ if (Validator.isNull(url) && (userDisplay != null)) {
 
 	<aui:a href="<%= url %>">
 		<span class="user-profile-image">
-			<img alt="" class="avatar <%= imageCssClass %>" src="<%= HtmlUtil.escape(taglibSrc) %>" />
+			<span class="avatar <%= imageCssClass %>" style="background-image: url('<%= HtmlUtil.escape(taglibSrc) %>')"></span>
 		</span>
 
 		<c:if test="<%= showUserName %>">

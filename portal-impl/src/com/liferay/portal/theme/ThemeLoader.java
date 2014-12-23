@@ -110,12 +110,18 @@ public class ThemeLoader {
 		_servletContextName = servletContextName;
 		_servletContext = servletContext;
 
+		boolean loadFromServletContext = true;
+
+		File fileStorage = null;
+
+		String themesPath = null;
+
 		try {
 			Document doc = SAXReaderUtil.read(xmls[0], true);
 
 			Element root = doc.getRootElement();
 
-			_themesPath = GetterUtil.getString(
+			themesPath = GetterUtil.getString(
 				root.elementText("themes-path"), "/themes");
 
 			String fileStorageValue = PropsValues.THEME_LOADER_STORAGE_PATH;
@@ -124,31 +130,36 @@ public class ThemeLoader {
 				root.elementText("file-storage"), fileStorageValue);
 
 			if (Validator.isNotNull(fileStorageValue)) {
-				_fileStorage = new File(fileStorageValue);
-				_loadFromServletContext = false;
+				fileStorage = new File(fileStorageValue);
+				loadFromServletContext = false;
 			}
 			else {
-				_fileStorage = new File(
-					servletContext.getRealPath(_themesPath));
-				_loadFromServletContext = true;
+				fileStorage = new File(servletContext.getRealPath(themesPath));
+				loadFromServletContext = true;
 			}
 
-			if (!_fileStorage.exists()) {
+			if (!fileStorage.exists()) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"File storage " + _fileStorage + " does not exist");
+						"File storage " + fileStorage + " does not exist");
 				}
 
-				if (!_fileStorage.mkdirs()) {
+				if (!fileStorage.mkdirs()) {
 					_log.error(
 						"Unable to create theme loader file storage at " +
-							_fileStorage);
+							fileStorage);
 				}
 			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_loadFromServletContext = loadFromServletContext;
+
+		_fileStorage = fileStorage;
+
+		_themesPath = themesPath;
 
 		loadThemes();
 	}
@@ -177,11 +188,11 @@ public class ThemeLoader {
 
 	private static Log _log = LogFactoryUtil.getLog(ThemeLoader.class);
 
-	private File _fileStorage;
+	private final File _fileStorage;
 	private Map<String, Long> _lastModifiedMap = new HashMap<>();
-	private boolean _loadFromServletContext = true;
+	private final boolean _loadFromServletContext;
 	private ServletContext _servletContext;
 	private String _servletContextName;
-	private String _themesPath;
+	private final String _themesPath;
 
 }

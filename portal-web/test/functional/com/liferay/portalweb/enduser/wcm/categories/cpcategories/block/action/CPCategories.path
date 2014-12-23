@@ -302,6 +302,11 @@
 	<td>//ul[@class='tree-container']/li/div/span[contains(.,'${key_subcategoryName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VOCABULARY_CATEGORY_LABEL</td>
+	<td>//div[@id='categoriesTreeContainer']/ul/li[contains(.,'${key_categoryName}')]/div</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

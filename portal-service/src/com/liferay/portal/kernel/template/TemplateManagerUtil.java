@@ -31,19 +31,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TemplateManagerUtil {
 
 	public static void destroy() {
-		Map<String, TemplateManager> templateManagers =
-			TemplateManagerRegistryUtil.getTemplateManagers();
-
-		for (TemplateManager templateManager : templateManagers.values()) {
-			templateManager.destroy();
-		}
-
-		templateManagers.clear();
+		_templateManagerRegistry.unregisterAll();
 	}
 
 	public static void destroy(ClassLoader classLoader) {
 		Map<String, TemplateManager> templateManagers =
-			TemplateManagerRegistryUtil.getTemplateManagers();
+			_templateManagerRegistry.getTemplateManagers();
 
 		for (TemplateManager templateManager : templateManagers.values()) {
 			templateManager.destroy(classLoader);
@@ -59,7 +52,7 @@ public class TemplateManagerUtil {
 		}
 
 		Map<String, TemplateManager> templateManagers =
-			TemplateManagerRegistryUtil.getTemplateManagers();
+			_templateManagerRegistry.getTemplateManagers();
 
 		supportedLanguageTypes = new HashSet<String>();
 
@@ -86,7 +79,7 @@ public class TemplateManagerUtil {
 		throws TemplateException {
 
 		TemplateManager templateManager =
-			TemplateManagerRegistryUtil.getTemplateManager(templateManagerName);
+			_templateManagerRegistry.getTemplateManager(templateManagerName);
 
 		return templateManager.getTemplate(templateResource, restricted);
 	}
@@ -97,7 +90,7 @@ public class TemplateManagerUtil {
 		throws TemplateException {
 
 		TemplateManager templateManager =
-			TemplateManagerRegistryUtil.getTemplateManager(templateManagerName);
+			_templateManagerRegistry.getTemplateManager(templateManagerName);
 
 		return templateManager.getTemplate(
 			templateResource, errorTemplateResource, restricted);
@@ -107,39 +100,37 @@ public class TemplateManagerUtil {
 		String templateManagerName) {
 
 		Map<String, TemplateManager> templateManagers =
-			TemplateManagerRegistryUtil.getTemplateManagers();
+			_templateManagerRegistry.getTemplateManagers();
 
 		return templateManagers.get(templateManagerName);
 	}
 
 	public static Set<String> getTemplateManagerNames() {
 		Map<String, TemplateManager> templateManagers =
-			TemplateManagerRegistryUtil.getTemplateManagers();
+			_templateManagerRegistry.getTemplateManagers();
 
 		return templateManagers.keySet();
 	}
 
 	public static Map<String, TemplateManager> getTemplateManagers() {
-		return TemplateManagerRegistryUtil.getTemplateManagers();
+		return _templateManagerRegistry.getTemplateManagers();
 	}
 
 	public static boolean hasTemplateManager(String templateManagerName) {
 		Map<String, TemplateManager> templateManagers =
-			TemplateManagerRegistryUtil.getTemplateManagers();
+			_templateManagerRegistry.getTemplateManagers();
 
 		return templateManagers.containsKey(templateManagerName);
 	}
 
-	public static void init() throws TemplateException {
-		Map<String, TemplateManager> templateManagers =
-			TemplateManagerRegistryUtil.getTemplateManagers();
+	public void setTemplateManagerRegistry(
+		TemplateManagerRegistry templateManagerRegistry) {
 
-		for (TemplateManager templateManager : templateManagers.values()) {
-			templateManager.init();
-		}
+		_templateManagerRegistry = templateManagerRegistry;
 	}
 
 	private static final Map<String, Set<String>> _supportedLanguageTypes =
 		new ConcurrentHashMap<String, Set<String>>();
+	private static TemplateManagerRegistry _templateManagerRegistry;
 
 }

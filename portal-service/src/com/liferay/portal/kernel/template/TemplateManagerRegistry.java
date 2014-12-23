@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.template;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -31,12 +33,12 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Marcellus Tavares
  */
-public class TemplateManagerRegistryUtil {
+public class TemplateManagerRegistry {
 
-	public static TemplateManager getTemplateManager(String templateManagerName)
+	public TemplateManager getTemplateManager(String templateManagerName)
 		throws TemplateException {
 
-		TemplateManager templateManager = _instance._templateManagers.get(
+		TemplateManager templateManager = _templateManagers.get(
 			templateManagerName);
 
 		if (templateManager == null) {
@@ -47,36 +49,25 @@ public class TemplateManagerRegistryUtil {
 		return templateManager;
 	}
 
-	public static Map<String, TemplateManager> getTemplateManagers() {
-		return Collections.unmodifiableMap(_instance._templateManagers);
-	}
-
-	public static void register(TemplateManager templateManager)
-		throws TemplateException {
-
-		templateManager.init();
-
-		_instance._register(templateManager);
-	}
-
-	public static void unregister(String templateManagerName) {
-		TemplateManager templateManager = _instance._templateManagers.get(
-			templateManagerName);
-
-		templateManager.destroy();
-
-		_instance._unregister(templateManager);
+	public Map<String, TemplateManager> getTemplateManagers() {
+		return Collections.unmodifiableMap(_templateManagers);
 	}
 
 	public void setTemplateManagers(List<TemplateManager> templateManagers) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		for (TemplateManager templateManager : templateManagers) {
-			_instance._register(templateManager);
+			_register(templateManager);
 		}
 	}
 
-	private TemplateManagerRegistryUtil() {
+	public void unregisterAll() {
+		for (TemplateManager templateManager : _templateManagers.values()) {
+			_unregister(templateManager);
+		}
+	}
+
+	private TemplateManagerRegistry() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
@@ -105,8 +96,8 @@ public class TemplateManagerRegistryUtil {
 		}
 	}
 
-	private static final TemplateManagerRegistryUtil _instance =
-		new TemplateManagerRegistryUtil();
+	private static final Log _log = LogFactoryUtil.getLog(
+		TemplateManagerRegistry.class);
 
 	private final StringServiceRegistrationMap<TemplateManager>
 		_serviceRegistrations =
@@ -128,9 +119,21 @@ public class TemplateManagerRegistryUtil {
 			TemplateManager templateManager = registry.getService(
 				serviceReference);
 
-			_templateManagers.put(templateManager.getName(), templateManager);
+			try {
+				templateManager.init();
 
-			return templateManager;
+				_templateManagers.put(
+					templateManager.getName(), templateManager);
+
+				return templateManager;
+			}
+			catch (TemplateException te) {
+				_log.error(
+					"Unable to register template manager " +
+						templateManager.getName(), te);
+			}
+
+			return null;
 		}
 
 		@Override
@@ -147,6 +150,8 @@ public class TemplateManagerRegistryUtil {
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
+
+			templateManager.destroy();
 
 			_templateManagers.remove(templateManager.getName());
 		}

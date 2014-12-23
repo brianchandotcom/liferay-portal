@@ -61,7 +61,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
@@ -651,12 +650,9 @@ public class FileEntryStagedModelDataHandler
 			DDMFormValues ddmFormValues =
 				(DDMFormValues)portletDataContext.getZipEntryAsObject(path);
 
-			String serializedDDMFormValues =
-				DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
-			
 			serviceContext.setAttribute(
 				DDMFormValues.class.getName() + ddmStructure.getStructureId(),
-				serializedDDMFormValues);
+				ddmFormValues);
 		}
 	}
 

@@ -56,6 +56,11 @@ public class BaseHandler implements Handler<Void> {
 	}
 
 	@Override
+	public String getException(String response) {
+		return null;
+	}
+
+	@Override
 	public void handleException(Exception e) {
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			getSyncAccountId());
@@ -118,6 +123,11 @@ public class BaseHandler implements Handler<Void> {
 	}
 
 	@Override
+	public boolean handlePortalException(String exception) throws Exception {
+		return false;
+	}
+
+	@Override
 	public Void handleResponse(HttpResponse httpResponse) {
 		try {
 			StatusLine statusLine = httpResponse.getStatusLine();
@@ -152,6 +162,10 @@ public class BaseHandler implements Handler<Void> {
 		}
 
 		return null;
+	}
+
+	@Override
+	public void processResponse(String response) throws Exception {
 	}
 
 	protected void doHandleResponse(HttpResponse httpResponse)

@@ -38,7 +38,7 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 	}
 
 	@Override
-	protected void processResponse(String response) throws Exception {
+	public void processResponse(String response) throws Exception {
 		Set<Long> remoteSyncSiteIds = new HashSet<Long>();
 
 		ObjectMapper objectMapper = new ObjectMapper();

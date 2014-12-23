@@ -15,22 +15,36 @@
 package com.liferay.sync.engine.documentlibrary.event;
 
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
+import com.liferay.sync.engine.documentlibrary.handler.UpdateFileEntriesHandler;
 
 import java.util.Map;
 
 /**
  * @author Shinn Lok
  */
-public interface Event extends Runnable {
+public class UpdateFileEntriesEvent extends BaseEvent {
 
-	public Handler<Void> getHandler();
+	public UpdateFileEntriesEvent(
+		long syncAccountId, Map<String, Object> parameters) {
 
-	public Map<String, Object> getParameters();
+		super(syncAccountId, _URL_PATH, parameters);
 
-	public Object getParameterValue(String key);
+		_handler = new UpdateFileEntriesHandler(this);
+	}
 
-	public long getSyncAccountId();
+	@Override
+	public Handler<Void> getHandler() {
+		return _handler;
+	}
 
-	public String getURLPath();
+	@Override
+	protected void processRequest() throws Exception {
+		executeAsynchronousPost(_URL_PATH, getParameters());
+	}
+
+	private static final String _URL_PATH =
+		"/sync-web.syncdlobject/update-file-entries";
+
+	private final Handler<Void> _handler;
 
 }

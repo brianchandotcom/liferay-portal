@@ -19,6 +19,15 @@ package com.liferay.sync.engine.util;
  */
 public interface PropsKeys {
 
+	public static final String SYNC_BATCH_EVENTS_MAX_COUNT =
+		"sync.batch.events.total.count";
+
+	public static final String SYNC_BATCH_EVENTS_MAX_FILE_SIZE =
+		"sync.batch.events.max.file.size";
+
+	public static final String SYNC_BATCH_EVENTS_MAX_TOTAL_FILE_SIZE =
+		"sync.batch.events.max.total.file.size";
+
 	public static final String SYNC_CONFIGURATION_DIRECTORY =
 		"sync.configuration.directory";
 

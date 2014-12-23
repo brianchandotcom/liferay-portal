@@ -32,7 +32,7 @@ public class MoveFolderHandler extends BaseJSONHandler {
 	}
 
 	@Override
-	protected void processResponse(String response) throws Exception {
+	public void processResponse(String response) throws Exception {
 		SyncFile localSyncFile = (SyncFile)getParameterValue("syncFile");
 
 		ObjectMapper objectMapper = new ObjectMapper();

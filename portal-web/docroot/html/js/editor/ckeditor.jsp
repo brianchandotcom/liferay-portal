@@ -308,25 +308,28 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		);
 	</c:if>
 
-	var createEditor = function() {
+	var currentToolbarSet;
+
+	var initialToolbarSet = '<%= TextFormatter.format(HtmlUtil.escapeJS(toolbarSet), TextFormatter.M) %>';
+
+	function getToolbarSet(toolbarSet) {
 		var Util = Liferay.Util;
 
+		if (Util.isPhone()) {
+			toolbarSet = 'phone';
+		}
+		else if (Util.isTablet()) {
+			toolbarSet = 'tablet';
+		}
+
+		return toolbarSet;
+	}
+
+	var createEditor = function() {
 		var editorNode = A.one('#<%= name %>');
 
-		editorNode.setAttribute('contenteditable', true);
-
+		editorNode.attr('contenteditable', true);
 		editorNode.addClass('lfr-editable');
-
-		function getToolbarSet(toolbarSet) {
-			if (Util.isPhone()) {
-				toolbarSet = 'phone';
-			}
-			else if (Util.isTablet()) {
-				toolbarSet = 'tablet';
-			}
-
-			return toolbarSet;
-		}
 
 		function initData() {
 			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
@@ -353,6 +356,8 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 			window['<%= name %>'].instanceReady = true;
 		}
+
+		currentToolbarSet = getToolbarSet(initialToolbarSet);
 
 		<c:choose>
 			<c:when test="<%= inlineEdit %>">
@@ -412,7 +417,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 				</c:choose>
 
 				filebrowserUploadUrl: null,
-				toolbar: getToolbarSet('<%= TextFormatter.format(HtmlUtil.escapeJS(toolbarSet), TextFormatter.M) %>')
+				toolbar: currentToolbarSet
 			}
 		);
 
@@ -622,6 +627,39 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			success();
 		}
 	};
+
+	<c:if test="<%= !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
+		A.getWin().on(
+			'resize',
+			A.debounce(
+				function() {
+					if (currentToolbarSet != getToolbarSet(initialToolbarSet)) {
+						var ckeditorInstance = CKEDITOR.instances['<%= name %>'];
+
+						if (ckeditorInstance) {
+							var currentDialog = CKEDITOR.dialog.getCurrent();
+
+							if (currentDialog) {
+								currentDialog.hide();
+							}
+
+							ckeditorInstance.destroy();
+
+							ckeditorInstance = null;
+
+							var editorNode = A.one('#<%= name %>');
+
+							editorNode.removeAttribute('contenteditable');
+							editorNode.removeClass('lfr-editable');
+
+							createEditor();
+						}
+					}
+				},
+				250
+			)
+		);
+	</c:if>
 </aui:script>
 
 <%!

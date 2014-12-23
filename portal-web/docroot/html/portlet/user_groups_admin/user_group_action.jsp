@@ -63,6 +63,12 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		/>
 	</c:if>
 
+	<%
+	Group userGroupGroup = userGroup.getGroup();
+
+	hasPermissionsPermission = GroupPermissionUtil.contains(permissionChecker, userGroupGroup, ActionKeys.PERMISSIONS);
+	%>
+
 	<c:if test="<%= hasPermissionsPermission %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Group.class.getName() %>"
@@ -80,10 +86,6 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			useDialog="<%= true %>"
 		/>
 	</c:if>
-
-	<%
-	Group userGroupGroup = userGroup.getGroup();
-	%>
 
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, userGroupGroup, ActionKeys.MANAGE_LAYOUTS) %>">
 		<portlet:renderURL var="managePagesURL">

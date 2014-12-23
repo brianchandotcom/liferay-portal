@@ -812,6 +812,9 @@ public class LuceneHelperImpl implements LuceneHelper {
 			ClusterExecutorUtil.addClusterEventListener(
 				_loadIndexClusterEventListener);
 		}
+		else {
+			_loadIndexClusterEventListener = null;
+		}
 
 		BooleanQuery.setMaxClauseCount(_LUCENE_BOOLEAN_QUERY_CLAUSE_MAX_SIZE);
 	}
@@ -1015,7 +1018,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 	private Analyzer _analyzer;
 	private Map<Long, IndexAccessor> _indexAccessors =
 		new ConcurrentHashMap<>();
-	private LoadIndexClusterEventListener _loadIndexClusterEventListener;
+	private final LoadIndexClusterEventListener _loadIndexClusterEventListener;
 	private ThreadPoolExecutor _luceneIndexThreadPoolExecutor;
 	private Version _version;
 

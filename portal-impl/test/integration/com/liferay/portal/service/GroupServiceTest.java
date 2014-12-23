@@ -229,11 +229,13 @@ public class GroupServiceTest {
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
 
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, group.getDescription(),
-				groupParams));
+				TestPropsValues.getCompanyId(), null,
+				group.getDescription(themeDisplay.getLocale()), groupParams));
 	}
 
 	@Test
@@ -253,37 +255,21 @@ public class GroupServiceTest {
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
 
-		Assert.assertEquals(
-			1,
-			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, group.getDescription(),
-				groupParams));
-	}
-
-	@Test
-	public void testFindGroupByName() throws Exception {
-		Group group = GroupTestUtil.addGroup(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
-
-		groupParams.put("manualMembership", Boolean.TRUE);
-		groupParams.put("site", Boolean.TRUE);
+		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, group.getName(),
-				groupParams));
+				TestPropsValues.getCompanyId(), null,
+				group.getDescription(themeDisplay.getLocale()), groupParams));
 	}
 
 	@Test
-	public void testFindGroupByNameWithSpaces() throws Exception {
+	public void testFindGroupByGropKeyWithSpaces() throws Exception {
 		Group group = GroupTestUtil.addGroup(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		group.setName(
+		group.setGroupKey(
 			RandomTestUtil.randomString() + StringPool.SPACE +
 				RandomTestUtil.randomString());
 
@@ -298,7 +284,25 @@ public class GroupServiceTest {
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, group.getName(),
+				TestPropsValues.getCompanyId(), null, group.getGroupKey(),
+				groupParams));
+	}
+
+	@Test
+	public void testFindGroupByGroupKey() throws Exception {
+		Group group = GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("manualMembership", Boolean.TRUE);
+		groupParams.put("site", Boolean.TRUE);
+
+		Assert.assertEquals(
+			1,
+			GroupLocalServiceUtil.searchCount(
+				TestPropsValues.getCompanyId(), null, group.getGroupKey(),
 				groupParams));
 	}
 
@@ -430,7 +434,9 @@ public class GroupServiceTest {
 		String scopeDescriptiveName = group.getScopeDescriptiveName(
 			themeDisplay);
 
-		Assert.assertTrue(scopeDescriptiveName.equals(group.getName()));
+		Assert.assertTrue(
+			scopeDescriptiveName.equals(
+				group.getName(themeDisplay.getLocale())));
 	}
 
 	@Test
@@ -589,8 +595,8 @@ public class GroupServiceTest {
 
 		try {
 			GroupLocalServiceUtil.updateGroup(
-				group1.getGroupId(), group11.getGroupId(), group1.getName(),
-				group1.getDescription(), group1.getType(),
+				group1.getGroupId(), group11.getGroupId(), group1.getNameMap(),
+				group1.getDescriptionMap(), group1.getType(),
 				group1.isManualMembership(), group1.getMembershipRestriction(),
 				group1.getFriendlyURL(), group1.isInheritContent(),
 				group1.isActive(), ServiceContextTestUtil.getServiceContext());
@@ -615,11 +621,12 @@ public class GroupServiceTest {
 
 		try {
 			GroupLocalServiceUtil.updateGroup(
-				group1.getGroupId(), group1111.getGroupId(), group1.getName(),
-				group1.getDescription(), group1.getType(),
-				group1.isManualMembership(), group1.getMembershipRestriction(),
-				group1.getFriendlyURL(), group1.isInheritContent(),
-				group1.isActive(), ServiceContextTestUtil.getServiceContext());
+				group1.getGroupId(), group1111.getGroupId(),
+				group1.getNameMap(), group1.getDescriptionMap(),
+				group1.getType(), group1.isManualMembership(),
+				group1.getMembershipRestriction(), group1.getFriendlyURL(),
+				group1.isInheritContent(), group1.isActive(),
+				ServiceContextTestUtil.getServiceContext());
 
 			Assert.fail("A child group cannot be its parent group");
 		}
@@ -642,7 +649,7 @@ public class GroupServiceTest {
 
 			GroupLocalServiceUtil.updateGroup(
 				stagingGroup.getGroupId(), group.getGroupId(),
-				stagingGroup.getName(), stagingGroup.getDescription(),
+				stagingGroup.getNameMap(), stagingGroup.getDescriptionMap(),
 				stagingGroup.getType(), stagingGroup.isManualMembership(),
 				stagingGroup.getMembershipRestriction(),
 				stagingGroup.getFriendlyURL(), stagingGroup.isInheritContent(),
@@ -663,8 +670,8 @@ public class GroupServiceTest {
 
 		try {
 			GroupLocalServiceUtil.updateGroup(
-				group.getGroupId(), group.getGroupId(), group.getName(),
-				group.getDescription(), group.getType(),
+				group.getGroupId(), group.getGroupId(), group.getNameMap(),
+				group.getDescriptionMap(), group.getType(),
 				group.isManualMembership(), group.getMembershipRestriction(),
 				group.getFriendlyURL(), group.isInheritContent(),
 				group.isActive(), ServiceContextTestUtil.getServiceContext());

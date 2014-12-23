@@ -139,7 +139,7 @@ public class UpgradeAsset extends UpgradeProcess {
 				long classPK = rs.getLong("resourcePrimKey");
 
 				runSQL(
-					"update AssetEntry set listable = FALSE where " +
+					"update AssetEntry set listable = [$FALSE$] where " +
 						"classNameId = " + classNameId + " and classPK = " +
 							classPK);
 			}

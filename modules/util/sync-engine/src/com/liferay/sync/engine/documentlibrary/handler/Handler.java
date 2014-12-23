@@ -21,6 +21,12 @@ import org.apache.http.client.ResponseHandler;
  */
 public interface Handler<T> extends ResponseHandler<T> {
 
+	public String getException(String response);
+
 	public void handleException(Exception e);
+
+	public boolean handlePortalException(String exception) throws Exception;
+
+	public void processResponse(String response) throws Exception;
 
 }

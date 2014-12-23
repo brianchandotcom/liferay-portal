@@ -200,6 +200,14 @@
 					return fixJSON(errorMessage);
 				}
 
+				public String getRemoteGithubJenkinsUrl() {
+					JSONObject rootJSONObject = toJSONObject(project.getProperty("github.jenkins.url") + "/api/json");
+
+					JSONObject primaryViewJSONObject = rootJSONObject.get("primaryView");
+
+					return primaryViewJSONObject.get("url");
+				}
+
 				public String toFormattedBuildTime(String githubJenkinsBuildTime) {
 					int milliseconds = Integer.parseInt(githubJenkinsBuildTime);
 
@@ -303,14 +311,15 @@
 				sb.append("<ul>");
 
 				for (String githubJenkinsFailureURLPath : githubJenkinsFailureURLPaths) {
-					String githubJenkinsFailureURL = project.getProperty("github.jenkins.url") + githubJenkinsFailureURLPath;
+					String localGithubJenkinsFailureURL = project.getProperty("github.jenkins.url") + githubJenkinsFailureURLPath;
+					String remoteGithubJenkinsFailureURL = getRemoteGithubJenkinsUrl() + githubJenkinsFailureURLPath;
 
-					JSONObject jsonObject = toJSONObject(githubJenkinsFailureURL + "/api/json");
+					JSONObject jsonObject = toJSONObject(localGithubJenkinsFailureURL + "/api/json");
 
 					if (jsonObject.has("result")) {
 						sb.append("<li>");
 						sb.append("<a href=\\\"");
-						sb.append(githubJenkinsFailureURL);
+						sb.append(remoteGithubJenkinsFailureURL);
 						sb.append("\\\">");
 						sb.append(jsonObject.get("fullDisplayName"));
 						sb.append("</a>");
@@ -321,11 +330,11 @@
 						if (file.exists()) {
 							sb.append(getDeprecatedMethodErrorMessage(file));
 						}
-						else if (githubJenkinsFailureURL.contains("source")) {
-							sb.append(getRebaseErrorMessage(githubJenkinsFailureURL));
+						else if (localGithubJenkinsFailureURL.contains("source")) {
+							sb.append(getRebaseErrorMessage(localGithubJenkinsFailureURL));
 						}
 						else {
-							sb.append(getConsoleErrorMessage(githubJenkinsFailureURL));
+							sb.append(getConsoleErrorMessage(localGithubJenkinsFailureURL));
 						}
 
 						sb.append("</pre>");
@@ -334,7 +343,7 @@
 					else {
 						sb.append("<li>");
 						sb.append("<a href=\\\"");
-						sb.append(githubJenkinsFailureURL);
+						sb.append(remoteGithubJenkinsFailureURL);
 						sb.append("\\\">");
 						sb.append(jsonObject.get("className"));
 						sb.append(".");

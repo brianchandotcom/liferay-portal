@@ -430,8 +430,6 @@
 		<ant dir="sql" target="build-db" inheritAll="false" />
 		<ant dir="sql" target="rebuild-hypersonic" inheritAll="false" />
 
-		<ant dir="portal-impl" target="build-themes" inheritAll="false" />
-
 		<antcall target="jar" />
 
 		<antcall target="print-current-time" />

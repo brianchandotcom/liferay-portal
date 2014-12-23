@@ -100,6 +100,7 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.expando.NoSuchRowException;
@@ -111,12 +112,10 @@ import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.awt.image.RenderedImage;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -2264,12 +2263,14 @@ public class DLFileEntryLocalServiceImpl
 					ddmStructure.getStructureId(),
 					latestDLFileVersion.getFileVersionId());
 
-			Fields lastFields = StorageEngineUtil.getFields(
+			DDMFormValues lastDDMFormValues = StorageEngineUtil.getDDMFormValues(
 				lastFileEntryMetadata.getDDMStorageId());
-			Fields latestFields = StorageEngineUtil.getFields(
+			DDMFormValues latestDDMFormValues = StorageEngineUtil.getDDMFormValues(
 				latestFileEntryMetadata.getDDMStorageId());
 
-			if (!lastFields.equals(latestFields, false)) {
+			if (!lastDDMFormValues.getDDMFormFieldValues().containsAll(
+				latestDDMFormValues.getDDMFormFieldValues())) {
+
 				return false;
 			}
 		}

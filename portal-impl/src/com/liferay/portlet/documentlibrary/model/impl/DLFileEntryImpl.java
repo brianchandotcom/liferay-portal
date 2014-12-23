@@ -43,13 +43,12 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,10 +134,11 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	}
 
 	@Override
-	public Map<String, Fields> getFieldsMap(long fileVersionId)
+	public Map<String, DDMFormValues> getDDMFormValuesMap(long fileVersionId)
 		throws PortalException {
 
-		Map<String, Fields> fieldsMap = new HashMap<>();
+		Map<String, DDMFormValues> ddmFormValuesMap =
+			new HashMap<String, DDMFormValues>();
 
 		DLFileVersion dlFileVersion =
 			DLFileVersionLocalServiceUtil.getFileVersion(fileVersionId);
@@ -146,7 +146,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		long fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
 
 		if (fileEntryTypeId <= 0) {
-			return fieldsMap;
+			return ddmFormValuesMap;
 		}
 
 		DLFileEntryType dlFileEntryType = getDLFileEntryType();
@@ -159,14 +159,15 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 					ddmStructure.getStructureId(), fileVersionId);
 
 			if (dlFileEntryMetadata != null) {
-				Fields fields = StorageEngineUtil.getFields(
-					dlFileEntryMetadata.getDDMStorageId());
+				DDMFormValues ddmFormValues =
+					StorageEngineUtil.getDDMFormValues(
+						dlFileEntryMetadata.getDDMStorageId());
 
-				fieldsMap.put(ddmStructure.getStructureKey(), fields);
+				ddmFormValuesMap.put(ddmStructure.getStructureKey(), ddmFormValues);
 			}
 		}
 
-		return fieldsMap;
+		return ddmFormValuesMap;
 	}
 
 	@Override

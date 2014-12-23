@@ -365,6 +365,13 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
+	public java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> getDDMFormValuesMap(
+		long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getDDMFormValuesMap(fileVersionId);
+	}
+
+	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryType()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntry.getDLFileEntryType();
@@ -413,13 +420,6 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties() {
 		return _dlFileEntry.getExtraSettingsProperties();
-	}
-
-	@Override
-	public java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> getFieldsMap(
-		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getFieldsMap(fileVersionId);
 	}
 
 	/**

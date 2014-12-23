@@ -18,10 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.IOException;
-
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -35,7 +34,8 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public List<DDMStructure> getDDMStructures() throws PortalException;
 
-	public Fields getFields(DDMStructure ddmStructure) throws PortalException;
+	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
+		throws PortalException;
 
 	public List<MenuItem> getMenuItems() throws PortalException;
 

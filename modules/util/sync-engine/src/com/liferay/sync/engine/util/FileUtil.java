@@ -29,6 +29,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 
@@ -39,6 +40,7 @@ import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -272,6 +274,19 @@ public class FileUtil {
 		return true;
 	}
 
+	public static void moveFile(Path sourceFilePath, Path targetFilePath) {
+		checkFilePath(sourceFilePath);
+
+		try {
+			Files.move(
+				sourceFilePath, targetFilePath,
+				StandardCopyOption.REPLACE_EXISTING);
+		}
+		catch (Exception e) {
+			_logger.error(e.getMessage(), e);
+		}
+	}
+
 	public static void writeFileKey(Path filePath, String fileKey) {
 		if (!OSDetector.isWindows()) {
 			return;
@@ -290,6 +305,25 @@ public class FileUtil {
 		try {
 			userDefinedFileAttributeView.write(
 				"fileKey", _CHARSET.encode(CharBuffer.wrap(fileKey)));
+		}
+		catch (Exception e) {
+			_logger.error(e.getMessage(), e);
+		}
+	}
+
+	protected static void checkFilePath(Path filePath) {
+		try {
+			while (true) {
+				long size1 = FileUtils.sizeOf(filePath.toFile());
+
+				Thread.sleep(1000);
+
+				long size2 = FileUtils.sizeOf(filePath.toFile());
+
+				if (size1 == size2) {
+					break;
+				}
+			}
 		}
 		catch (Exception e) {
 			_logger.error(e.getMessage(), e);

@@ -24,7 +24,7 @@
 	%>
 
 	<c:if test="<%= (threadPriority != null) && (thread.getPriority() > 0) %>">
-		<img alt="<%= threadPriority[0] %>" class="thread-priority" src="<%= threadPriority[1] %>" title="<%= threadPriority[0] %>" />
+		<img alt="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>" class="thread-priority" src="<%= HtmlUtil.escapeAttribute(threadPriority[1]) %>" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>" />
 	</c:if>
 
 	<c:if test="<%= thread.isLocked() %>">

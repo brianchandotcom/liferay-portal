@@ -27,7 +27,7 @@ String[] ranks = MBUtil.getUserRank(mbSettings, themeDisplay.getLanguageId(), st
 <liferay-ui:user-display userId="<%= statsUser.getUserId() %>">
 	<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
 		<div class="thread-user-rank">
-			<span><liferay-ui:message key="rank" />:</span> <%= ranks[0] %>
+			<span><liferay-ui:message key="rank" />:</span> <%= HtmlUtil.escape(ranks[0]) %>
 		</div>
 	</c:if>
 

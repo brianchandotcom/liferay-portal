@@ -38,6 +38,7 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
@@ -140,10 +141,10 @@ public class DDLIndexer extends BaseIndexer {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		Fields fields = StorageEngineUtil.getFields(
+		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
 			recordVersion.getDDMStorageId());
 
-		DDMIndexerUtil.addAttributes(document, ddmStructure, fields);
+		DDMIndexerUtil.addAttributes(document, ddmStructure, ddmFormValues);
 
 		return document;
 	}
@@ -220,17 +221,17 @@ public class DDLIndexer extends BaseIndexer {
 			DDLRecordVersion recordVersion, Locale locale)
 		throws Exception {
 
-		Fields fields = StorageEngineUtil.getFields(
+		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
 			recordVersion.getDDMStorageId());
 
-		if (fields == null) {
+		if (ddmFormValues == null) {
 			return StringPool.BLANK;
 		}
 
 		DDLRecordSet recordSet = recordVersion.getRecordSet();
 
 		return DDMIndexerUtil.extractAttributes(
-			recordSet.getDDMStructure(), fields, locale);
+			recordSet.getDDMStructure(), ddmFormValues, locale);
 	}
 
 	@Override

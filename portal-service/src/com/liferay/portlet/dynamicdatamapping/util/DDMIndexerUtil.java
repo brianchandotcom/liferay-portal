@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.util;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.util.Locale;
@@ -27,9 +28,10 @@ import java.util.Locale;
 public class DDMIndexerUtil {
 
 	public static void addAttributes(
-		Document document, DDMStructure ddmStructure, Fields fields) {
+		Document document, DDMStructure ddmStructure,
+		DDMFormValues ddmFormValues) {
 
-		getDDMIndexer().addAttributes(document, ddmStructure, fields);
+		getDDMIndexer().addAttributes(document, ddmStructure, ddmFormValues);
 	}
 
 	public static String encodeName(long ddmStructureId, String fieldName) {
@@ -43,10 +45,10 @@ public class DDMIndexerUtil {
 	}
 
 	public static String extractAttributes(
-		DDMStructure ddmStructure, Fields fields, Locale locale) {
+		DDMStructure ddmStructure, DDMFormValues ddmFormValues, Locale locale) {
 
 		return getDDMIndexer().extractIndexableAttributes(
-			ddmStructure, fields, locale);
+			ddmStructure, ddmFormValues, locale);
 	}
 
 	public static DDMIndexer getDDMIndexer() {

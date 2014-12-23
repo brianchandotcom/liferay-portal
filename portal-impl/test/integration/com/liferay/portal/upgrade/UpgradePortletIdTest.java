@@ -49,16 +49,14 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 /**
  * @author Raymond Augé
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UpgradePortletIdTest extends UpgradePortletId {
 
 	@ClassRule
@@ -66,6 +64,16 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		for (String portletId : _PORTLET_IDS) {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				TestPropsValues.getCompanyId(), portletId);
+
+			PortletLocalServiceUtil.destroyPortlet(portlet);
+		}
+	}
 
 	@After
 	public void tearDown() throws Exception {

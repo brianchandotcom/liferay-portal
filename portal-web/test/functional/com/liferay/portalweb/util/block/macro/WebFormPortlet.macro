@@ -37,7 +37,7 @@
 
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute action="PGWebformConfiguration#click" locator-key1="SETUP_FORM_FIELDS_DELETE_ROW_BUTTON" />
+		<execute action="PGWebformConfiguration#doubleClick" locator-key1="SETUP_FORM_FIELDS_DELETE_ROW_BUTTON" />
 
 		<execute macro="WebFormPortlet#viewEditableFieldNotVisibleCmd" />
 	</command>

@@ -57,7 +57,7 @@
 
 		<var name="key_field" value="${field}" />
 
-		<execute action="Dynamicdatamapping#scrollWebElementIntoView" locator-key1="FIELDS_FIELD" />
+		<execute action="Dynamicdatamapping#scrollWebElementIntoView" locator-key1="FIELDS_LINK" />
 
 		<var name="key_field" value="${field?lowercase()}" />
 

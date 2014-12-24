@@ -54,6 +54,9 @@ public class AssetTagsNavigationWebUpgrade {
 				return new String[][] {
 					new String[] {
 						"141", AssetTagsNavigationPortletKeys.TAGS_NAVIGATION
+					},
+					new String[] {
+						"148", AssetTagsNavigationPortletKeys.TAGS_CLOUD
 					}
 				};
 			}

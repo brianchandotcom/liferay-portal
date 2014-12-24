@@ -14,7 +14,7 @@
 
 package com.liferay.asset.tags.navigation.web.portlet;
 
-import com.liferay.asset.tags.navigation.web.upgrade.AssetTagsCloudWebUpgrade;
+import com.liferay.asset.tags.navigation.web.upgrade.AssetTagsNavigationWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -55,8 +55,8 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetTagsCloudPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
-	protected void setAssetTagsCloudWebUpgrade(
-		AssetTagsCloudWebUpgrade assetTagsCloudWebUpgrade) {
+	protected void setAssetTagsNavigationWebUpgrade(
+		AssetTagsNavigationWebUpgrade assetTagsNavigationWebUpgrade) {
 	}
 
 }

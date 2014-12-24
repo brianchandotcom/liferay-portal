@@ -61,13 +61,12 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	public void testAddStructureMissingRequiredElementAttribute()
 		throws Exception {
 
-		String storageType = StorageType.XML.getValue();
-
 		try {
 			addStructure(
 				_CLASS_NAME_ID, null, "Test Structure",
 				read("ddm-structure-required-element-attribute.xsd"),
-				storageType, DDMStructureConstants.TYPE_DEFAULT);
+				StorageType.JSON.getValue(),
+				DDMStructureConstants.TYPE_DEFAULT);
 
 			Assert.fail();
 		}
@@ -77,12 +76,11 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testAddStructureWithDuplicateElementName() throws Exception {
-		String storageType = StorageType.XML.getValue();
-
 		try {
 			addStructure(
 				_CLASS_NAME_ID, null, "Test Structure",
-				read("ddm-structure-duplicate-element-name.xsd"), storageType,
+				read("ddm-structure-duplicate-element-name.xsd"),
+				StorageType.JSON.getValue(),
 				DDMStructureConstants.TYPE_DEFAULT);
 
 			Assert.fail();
@@ -95,18 +93,18 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	public void testAddStructureWithDuplicateElementNameInParent()
 		throws Exception {
 
-		String storageType = StorageType.XML.getValue();
-
 		try {
 			DDMStructure parentStructure = addStructure(
 				_CLASS_NAME_ID, null, "Test Parent Structure",
-				read("ddm-structure-duplicate-element-name.xsd"), storageType,
+				read("ddm-structure-duplicate-element-name.xsd"),
+				StorageType.JSON.getValue(),
 				DDMStructureConstants.TYPE_DEFAULT);
 
 			addStructure(
 				parentStructure.getStructureId(), _CLASS_NAME_ID, null,
 				"Test Structure",
-				read("ddm-structure-duplicate-element-name.xsd"), storageType,
+				read("ddm-structure-duplicate-element-name.xsd"),
+				StorageType.JSON.getValue(),
 				DDMStructureConstants.TYPE_DEFAULT);
 
 			Assert.fail();
@@ -118,17 +116,16 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testAddStructureWithDuplicateKey() throws Exception {
 		String structureKey = RandomTestUtil.randomString();
-		String storageType = StorageType.XML.getValue();
 
 		try {
 			addStructure(
 				_CLASS_NAME_ID, structureKey, "Test Structure 1",
-				getTestStructureDefinition(storageType), storageType,
+				read("test-structure.xsd"), StorageType.JSON.getValue(),
 				DDMStructureConstants.TYPE_DEFAULT);
 
 			addStructure(
 				_CLASS_NAME_ID, structureKey, "Test Structure 2",
-				getTestStructureDefinition(storageType), storageType,
+				read("test-structure.xsd"), StorageType.JSON.getValue(),
 				DDMStructureConstants.TYPE_DEFAULT);
 
 			Assert.fail();
@@ -139,13 +136,12 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testAddStructureWithInvalidElementAttribute() throws Exception {
-		String storageType = StorageType.XML.getValue();
-
 		try {
 			addStructure(
 				_CLASS_NAME_ID, null, "Test Structure",
 				read("ddm-structure-invalid-element-attribute.xsd"),
-				storageType, DDMStructureConstants.TYPE_DEFAULT);
+				StorageType.JSON.getValue(),
+				DDMStructureConstants.TYPE_DEFAULT);
 
 			Assert.fail();
 		}
@@ -158,7 +154,8 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		try {
 			addStructure(
 				_CLASS_NAME_ID, null, "Test Structure", StringPool.BLANK,
-				StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+				StorageType.JSON.getValue(),
+				DDMStructureConstants.TYPE_DEFAULT);
 
 			Assert.fail();
 		}
@@ -168,12 +165,10 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testAddStructureWithoutName() throws Exception {
-		String storageType = StorageType.XML.getValue();
-
 		try {
 			addStructure(
 				_CLASS_NAME_ID, null, StringPool.BLANK,
-				getTestStructureDefinition(storageType), storageType,
+				read("test-structure.xsd"), StorageType.JSON.getValue(),
 				DDMStructureConstants.TYPE_DEFAULT);
 
 			Assert.fail();

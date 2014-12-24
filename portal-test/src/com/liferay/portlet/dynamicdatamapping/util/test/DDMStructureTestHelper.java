@@ -78,7 +78,7 @@ public class DDMStructureTestHelper {
 		String definition = DDLRecordTestUtil.read(
 			testClass, "test-structure.xsd");
 
-		return addStructure(definition, StorageType.XML.toString());
+		return addStructure(definition, StorageType.JSON.toString());
 	}
 
 	private final Group _group;

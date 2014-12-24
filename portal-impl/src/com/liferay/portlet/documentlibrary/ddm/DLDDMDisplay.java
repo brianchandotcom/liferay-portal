@@ -40,7 +40,7 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getStorageType() {
-		return StorageType.XML.toString();
+		return StorageType.JSON.toString();
 	}
 
 	@Override

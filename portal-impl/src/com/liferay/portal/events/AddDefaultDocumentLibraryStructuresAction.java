@@ -41,6 +41,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 
 import java.io.StringReader;
 
@@ -217,7 +218,8 @@ public class AddDefaultDocumentLibraryStructuresAction
 					userId, groupId,
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 					PortalUtil.getClassNameId(RawMetadataProcessor.class), name,
-					nameMap, descriptionMap, ddmForm, "xml",
+					nameMap, descriptionMap, ddmForm,
+					StorageType.JSON.toString(),
 					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 			}
 		}

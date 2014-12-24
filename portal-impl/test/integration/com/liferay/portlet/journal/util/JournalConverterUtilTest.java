@@ -93,7 +93,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		_ddmStructure = addStructure(
 			classNameId, null, "Test Structure", definition,
-			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
 	@Test

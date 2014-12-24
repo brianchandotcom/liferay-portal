@@ -37,6 +37,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.util.ContentUtil;
 
@@ -118,8 +119,9 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 			ddmStructure = DDMStructureLocalServiceUtil.addStructure(
 				userId, groupId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
-				ddmStructureKey, nameMap, descriptionMap, ddmForm, "xml",
-				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+				ddmStructureKey, nameMap, descriptionMap, ddmForm,
+				StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT,
+				serviceContext);
 
 			Element templateElement = structureElement.element("template");
 

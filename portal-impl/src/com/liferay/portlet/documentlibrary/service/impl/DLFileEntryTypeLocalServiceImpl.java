@@ -48,6 +48,7 @@ import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.ArrayList;
@@ -643,7 +644,8 @@ public class DLFileEntryTypeLocalServiceImpl
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 					classNameLocalService.getClassNameId(
 						DLFileEntryMetadata.class),
-					ddmStructureKey, nameMap, descriptionMap, ddmForm, "xml",
+					ddmStructureKey, nameMap, descriptionMap, ddmForm,
+					StorageType.JSON.toString(),
 					DDMStructureConstants.TYPE_AUTO, serviceContext);
 			}
 			else {

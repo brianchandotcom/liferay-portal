@@ -96,7 +96,7 @@ public class DDMForm implements Serializable {
 		_defaultLocale = defaultLocale;
 	}
 
-	private Set<Locale> _availableLocales;
+	private Set<Locale> _availableLocales = new LinkedHashSet<Locale>();
 	private List<DDMFormField> _ddmFormFields = new ArrayList<>();
 	private Locale _defaultLocale;
 

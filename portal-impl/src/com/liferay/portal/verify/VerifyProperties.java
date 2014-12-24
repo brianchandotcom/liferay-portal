@@ -290,7 +290,6 @@ public class VerifyProperties extends VerifyProcess {
 			"display.templates.config",
 			"com.liferay.asset.categories.navigation.web"
 		},
-
 		new String[] {
 			"asset.tags.navigation.display.templates.config",
 			"display.templates.config", "com.liferay.asset.tags.navigation.web"

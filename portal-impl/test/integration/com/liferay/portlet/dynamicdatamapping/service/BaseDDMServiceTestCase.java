@@ -95,11 +95,9 @@ public class BaseDDMServiceTestCase {
 	protected DDMStructure addStructure(long classNameId, String name)
 		throws Exception {
 
-		String storageType = StorageType.XML.getValue();
-
 		return addStructure(
-			classNameId, null, name, getTestStructureDefinition(storageType),
-			storageType, DDMStructureConstants.TYPE_DEFAULT);
+			classNameId, null, name, read("test-structure.xsd"),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
 	protected DDMStructure addStructure(
@@ -147,18 +145,6 @@ public class BaseDDMServiceTestCase {
 
 	protected String getBasePath() {
 		return "com/liferay/portlet/dynamicdatamapping/dependencies/";
-	}
-
-	protected String getTestStructureDefinition(String storageType)
-		throws Exception {
-
-		String text = StringPool.BLANK;
-
-		if (storageType.equals(StorageType.XML.getValue())) {
-			text = read("test-structure.xsd");
-		}
-
-		return text;
 	}
 
 	protected String getTestTemplateScript(String language) throws Exception {

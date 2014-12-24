@@ -2703,13 +2703,15 @@ module.framework.properties.osgi.console=11312</echo>
 					<then>
 						<exec executable="/bin/bash" os="${os.unix}" outputproperty="sharepoint.vm.host.name">
 							<arg value="-c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
+							<arg value="curl" />
+							<arg value="&quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
 						</exec>
 					</then>
 					<else>
 						<exec executable="cmd" outputproperty="sharepoint.vm.host.name">
 							<arg value="/c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
+							<arg value="curl" />
+							<arg value="&quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
 						</exec>
 					</else>
 				</if>
@@ -4221,13 +4223,15 @@ if (ppstate.equals("normal")) {
 					<then>
 						<exec executable="/bin/bash" os="${os.unix}">
 							<arg value="-c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${sharepoint.vm.host.name}&amp;resourceType=qa%2Esharepoint2010&quot;" />
+							<arg value="curl" />
+							<arg value="&quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${sharepoint.vm.host.name}&amp;resourceType=qa%2Esharepoint2010&quot;" />
 						</exec>
 					</then>
 					<else>
 						<exec executable="cmd">
 							<arg value="/c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${sharepoint.vm.host.name}&amp;resourceType=qa%2Esharepoint2010&quot;" />
+							<arg value="curl" />
+							<arg value="&quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${sharepoint.vm.host.name}&amp;resourceType=qa%2Esharepoint2010&quot;" />
 						</exec>
 					</else>
 				</if>

@@ -45,10 +45,7 @@ final class JournalArticleDDMFieldReader extends BaseDDMFieldReader {
 
 			String content = _article.getContent();
 
-			DDMFormValues ddmFormValues = 
-					FieldsToDDMFormValuesConverterUtil.convert(
-							ddmStructure, JournalConverterUtil.getDDMFields(
-									ddmStructure, content));
+			DDMFormValues ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, JournalConverterUtil.getDDMFields(ddmStructure, content));
 
 			return ddmFormValues;
 		}

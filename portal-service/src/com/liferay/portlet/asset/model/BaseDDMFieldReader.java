@@ -36,8 +36,7 @@ public abstract class BaseDDMFieldReader implements DDMFieldReader {
 		Map<String, DDMFormField> currentDDMFormFieldsMap =
 				currentDDMFormValues.getDDMForm().getDDMFormFieldsMap(true);
 		
-		for (DDMFormFieldValue ddmFormFieldValue : 
-			currentDDMFormValues.getDDMFormFieldValues()) {
+		for (DDMFormFieldValue ddmFormFieldValue : currentDDMFormValues.getDDMFormFieldValues()) {
 
 			DDMFormField ddmFormField = currentDDMFormFieldsMap.get(
 					ddmFormFieldValue.getName());

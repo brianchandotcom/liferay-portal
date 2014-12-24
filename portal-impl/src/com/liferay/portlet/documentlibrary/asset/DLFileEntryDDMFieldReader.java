@@ -69,14 +69,12 @@ public class DLFileEntryDDMFieldReader extends BaseDDMFieldReader {
 					StorageEngineUtil.getDDMFormValues(
 							dlFileEntryMetadata.getDDMStorageId());
 
-			for (DDMFormField ddmFormField : 
-				ddmStorageDDMFormValues.getDDMForm().getDDMFormFields()) {
+			for (DDMFormField ddmFormField : ddmStorageDDMFormValues.getDDMForm().getDDMFormFields()) {
 				
 				ddmForm.addDDMFormField(ddmFormField);
 			}
 			
-			for (DDMFormFieldValue ddmFormFieldValue : 
-				ddmStorageDDMFormValues.getDDMFormFieldValues()) {
+			for (DDMFormFieldValue ddmFormFieldValue : ddmStorageDDMFormValues.getDDMFormFieldValues()) {
 				
 				ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 			}

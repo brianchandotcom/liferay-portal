@@ -222,16 +222,16 @@ public class GroupServiceWrapper implements GroupService,
 	* Returns the group with the name.
 	*
 	* @param companyId the primary key of the company
-	* @param name the group's name
-	* @return the group with the name
+	* @param groupKey the group's key
+	* @return the group with the groupKey
 	* @throws PortalException if a matching group could not be found or if the
 	current user did not have permission to view the group
 	*/
 	@Override
 	public com.liferay.portal.model.Group getGroup(long companyId,
-		java.lang.String name)
+		java.lang.String groupKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _groupService.getGroup(companyId, name);
+		return _groupService.getGroup(companyId, groupKey);
 	}
 
 	/**
@@ -789,7 +789,7 @@ public class GroupServiceWrapper implements GroupService,
 	*
 	* @param groupId the primary key of the group
 	* @param parentGroupId the primary key of the parent group
-	* @param name the group's new name
+	* @param groupKey the group's key
 	* @param description the group's new description (optionally
 	<code>null</code>)
 	* @param type the group's new type. For more information see {@link
@@ -811,13 +811,13 @@ public class GroupServiceWrapper implements GroupService,
 	*/
 	@Override
 	public com.liferay.portal.model.Group updateGroup(long groupId,
-		long parentGroupId, java.lang.String name,
+		long parentGroupId, java.lang.String groupKey,
 		java.lang.String description, int type, boolean manualMembership,
 		int membershipRestriction, java.lang.String friendlyURL,
 		boolean inheritContent, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _groupService.updateGroup(groupId, parentGroupId, name,
+		return _groupService.updateGroup(groupId, parentGroupId, groupKey,
 			description, type, manualMembership, membershipRestriction,
 			friendlyURL, inheritContent, active, serviceContext);
 	}

@@ -451,18 +451,18 @@ public interface GroupLocalService extends BaseLocalService,
 		long companyId, java.lang.String friendlyURL);
 
 	/**
-	* Returns the group with the matching group name by first searching the
+	* Returns the group with the matching groupKey by first searching the
 	* system groups and then using the finder cache.
 	*
 	* @param companyId the primary key of the company
-	* @param name the group's name
-	* @return the group with the name and associated company, or
+	* @param groupKey the group's key
+	* @return the group with the groupKey and associated company, or
 	<code>null</code> if a matching group could not be found
 	*/
 	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group fetchGroup(long companyId,
-		java.lang.String name);
+		java.lang.String groupKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group fetchGroup(long groupId);
@@ -564,17 +564,17 @@ public interface GroupLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the group with the matching group name.
+	* Returns the group with the matching groupKey.
 	*
 	* @param companyId the primary key of the company
-	* @param name the group's name
-	* @return the group with the name
+	* @param groupKey the group's key
+	* @return the group with the groupKey
 	* @throws PortalException if a matching group could not be found
 	*/
 	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group getGroup(long companyId,
-		java.lang.String name)
+		java.lang.String groupKey)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -1250,29 +1250,29 @@ public interface GroupLocalService extends BaseLocalService,
 	public boolean hasUserGroups(long userId);
 
 	/**
-	* Returns the group with the matching group name by first searching the
+	* Returns the group with the matching group key by first searching the
 	* system groups and then using the finder cache.
 	*
 	* @param companyId the primary key of the company
-	* @param name the group's name
-	* @return the group with the name and associated company, or
+	* @param groupKey the group's key
+	* @return the group with the groupKey and associated company, or
 	<code>null</code> if a matching group could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group loadFetchGroup(long companyId,
-		java.lang.String name);
+		java.lang.String groupKey);
 
 	/**
-	* Returns the group with the matching group name.
+	* Returns the group with the matching group key.
 	*
 	* @param companyId the primary key of the company
-	* @param name the group's name
-	* @return the group with the name and associated company
+	* @param groupKey the group's key
+	* @return the group with the groupKey and associated company
 	* @throws PortalException if a matching group could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group loadGetGroup(long companyId,
-		java.lang.String name)
+		java.lang.String groupKey)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**

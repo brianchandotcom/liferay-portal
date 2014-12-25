@@ -275,7 +275,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			friendlyURL);
 
 		if (staging) {
-			groupKey = groupKey.concat(ORGANIZATION_STAGING_SUFFIX);
+			name = name.concat(ORGANIZATION_STAGING_SUFFIX);
+			groupKey = groupKey.concat("-staging");
 			friendlyURL = getFriendlyURL(friendlyURL.concat("-staging"));
 		}
 

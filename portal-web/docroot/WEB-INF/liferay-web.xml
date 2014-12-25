@@ -90,10 +90,6 @@
 		</init-param>
 	</filter>
 	<filter>
-		<filter-name>Char Buffer Pool Filter</filter-name>
-		<filter-class>com.liferay.portal.servlet.filters.charbufferpool.CharBufferPoolFilter</filter-class>
-	</filter>
-	<filter>
 		<filter-name>Compound Session Id Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.compoundsessionid.CompoundSessionIdFilter</filter-class>
 	</filter>

@@ -27,7 +27,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
-import org.osgi.service.event.EventConstants;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -52,10 +51,6 @@ public class EventUtil
 		_bundleContext = bundleContext;
 
 		_webExtenderBundle = _bundleContext.getBundle();
-
-		Map<String, Object> properties = new Hashtable<String, Object>();
-
-		properties.put(EventConstants.EVENT_TOPIC, _EVENT_TOPICS);
 
 		_eventAdminServiceTracker = new ServiceTracker<EventAdmin, EventAdmin>(
 			_bundleContext, EventAdmin.class.getName(), this);
@@ -160,10 +155,6 @@ public class EventUtil
 
 		_eventAdmin.sendEvent(event);
 	}
-
-	private static final String[] _EVENT_TOPICS = new String[] {
-		DEPLOYED, DEPLOYING, FAILED, UNDEPLOYED, UNDEPLOYING
-	};
 
 	private final BundleContext _bundleContext;
 	private EventAdmin _eventAdmin;

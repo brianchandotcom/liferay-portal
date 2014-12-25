@@ -2684,6 +2684,7 @@ public class DataFactory {
 		groupModel.setClassPK(classPK);
 		groupModel.setTreePath(
 			StringPool.SLASH + groupModel.getGroupId() + StringPool.SLASH);
+		groupModel.setGroupKey(name);
 		groupModel.setName(name);
 		groupModel.setManualMembership(true);
 		groupModel.setMembershipRestriction(

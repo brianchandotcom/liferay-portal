@@ -321,14 +321,16 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * Returns the group with the name.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  name the group's name
-	 * @return the group with the name
+	 * @param  groupKey the group's key
+	 * @return the group with the groupKey
 	 * @throws PortalException if a matching group could not be found or if the
 	 *         current user did not have permission to view the group
 	 */
 	@Override
-	public Group getGroup(long companyId, String name) throws PortalException {
-		Group group = groupLocalService.getGroup(companyId, name);
+	public Group getGroup(long companyId, String groupKey)
+		throws PortalException {
+
+		Group group = groupLocalService.getGroup(companyId, groupKey);
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), group, ActionKeys.VIEW);

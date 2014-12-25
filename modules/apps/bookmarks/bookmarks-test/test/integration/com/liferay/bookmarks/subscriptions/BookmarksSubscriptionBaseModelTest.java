@@ -29,6 +29,7 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailTestRule;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
 import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portal.util.test.RoleTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 
 import org.junit.ClassRule;

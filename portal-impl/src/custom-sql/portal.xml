@@ -182,7 +182,7 @@
 				(Group_.classNameId = ?) AND
 				(Group_.parentGroupId [$PARENT_GROUP_ID_COMPARATOR$] ?) AND
 				(Group_.liveGroupId = 0) AND
-				(Group_.name != 'Control Panel') AND
+				(Group_.groupKey != 'Control Panel') AND
 				(lower(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 				(lower(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$]) AND
 				(Group_.type_ != 4)
@@ -265,8 +265,8 @@
 				WHERE
 					(Group_.companyId = ?) AND
 					(
-						(Group_.name = 'Control Panel') OR
-						(Group_.name = 'Guest') OR
+						(Group_.groupKey = 'Control Panel') OR
+						(Group_.groupKey = 'Guest') OR
 						(Group_.type_ = 4)
 					)
 			)
@@ -301,7 +301,7 @@
 				groupId ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_N">
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_GK">
 		<![CDATA[
 			SELECT
 				{Group_.*}
@@ -310,7 +310,7 @@
 			WHERE
 				(Group_.companyId = ?) AND
 				(Group_.liveGroupId = 0) AND
-				(lower(Group_.name) = ?) AND
+				(lower(Group_.groupKey) = ?) AND
 				(Group_.type_ != 4)
 		]]>
 	</sql>
@@ -327,7 +327,7 @@
 				(Group_.classNameId = ?) AND
 				(Group_.parentGroupId [$PARENT_GROUP_ID_COMPARATOR$] ?) AND
 				(Group_.liveGroupId = 0) AND
-				(Group_.name != 'Control Panel') AND
+				(Group_.groupKey != 'Control Panel') AND
 				(lower(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 				(lower(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$]) AND
 				(Group_.type_ != 4)

@@ -577,9 +577,9 @@
 			<finder-column name="companyId" />
 			<finder-column name="parentGroupId" />
 		</finder>
-		<finder name="C_N" return-type="Group" unique="true">
+		<finder name="C_GK" return-type="Group" unique="true">
 			<finder-column name="companyId" />
-			<finder-column name="name" />
+			<finder-column name="groupKey" />
 		</finder>
 		<finder name="C_F" return-type="Group" unique="true">
 			<finder-column name="companyId" />
@@ -613,16 +613,16 @@
 			<finder-column name="parentGroupId" />
 			<finder-column name="site" />
 		</finder>
-		<finder name="C_L_N" return-type="Group" unique="true">
+		<finder name="C_L_GK" return-type="Group" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="liveGroupId" />
-			<finder-column name="name" />
+			<finder-column name="groupKey" />
 		</finder>
-		<finder name="C_C_L_N" return-type="Group" unique="true">
+		<finder name="C_C_L_GK" return-type="Group" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="liveGroupId" />
-			<finder-column name="name" />
+			<finder-column name="groupKey" />
 		</finder>
 		<finder name="C_P_S_I" return-type="Collection">
 			<finder-column name="companyId" />
@@ -3374,7 +3374,7 @@
 		<exception>ExpiredLock</exception>
 		<exception>GroupFriendlyURL</exception>
 		<exception>GroupInheritContent</exception>
-		<exception>GroupName</exception>
+		<exception>GroupKey</exception>
 		<exception>GroupParent</exception>
 		<exception>ImageType</exception>
 		<exception>InvalidLock</exception>

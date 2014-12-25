@@ -247,7 +247,7 @@ public class GroupImpl extends GroupBaseImpl {
 		else if (isUserPersonalSite()) {
 			name = LanguageUtil.get(locale, "user-personal-site");
 		}
-		else if (name.equals(GroupConstants.GUEST)) {
+		else if (getGroupKey().equals(GroupConstants.GUEST)) {
 			Company company = CompanyLocalServiceUtil.getCompany(
 				getCompanyId());
 
@@ -816,9 +816,9 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isControlPanel() {
-		String name = getName();
+		String groupKey = getGroupKey();
 
-		if (name.equals(GroupConstants.CONTROL_PANEL)) {
+		if (groupKey.equals(GroupConstants.CONTROL_PANEL)) {
 			return true;
 		}
 		else {
@@ -828,9 +828,9 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public boolean isGuest() {
-		String name = getName();
+		String groupKey = getGroupKey();
 
-		if (name.equals(GroupConstants.GUEST)) {
+		if (groupKey.equals(GroupConstants.GUEST)) {
 			return true;
 		}
 		else {

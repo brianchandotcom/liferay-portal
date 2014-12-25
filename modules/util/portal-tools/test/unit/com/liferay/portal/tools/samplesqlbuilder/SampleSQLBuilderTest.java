@@ -51,7 +51,7 @@ public class SampleSQLBuilderTest {
 		try {
 			new SampleSQLBuilder(properties, new DataFactory(properties));
 
-			_loadHypersonic("sql", tempDir.getAbsolutePath());
+			_loadHypersonic("../../../sql/", tempDir.getAbsolutePath());
 		}
 		finally {
 			FileUtil.deltree(tempDir);

@@ -91,9 +91,10 @@ public class GroupFinderUtil {
 				   .findByC_P(companyId, parentGroupId, previousGroupId, size);
 	}
 
-	public static com.liferay.portal.model.Group findByC_N(long companyId,
-		java.lang.String name) throws com.liferay.portal.NoSuchGroupException {
-		return getFinder().findByC_N(companyId, name);
+	public static com.liferay.portal.model.Group findByC_GK(long companyId,
+		java.lang.String groupKey)
+		throws com.liferay.portal.NoSuchGroupException {
+		return getFinder().findByC_GK(companyId, groupKey);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> findByC_C_PG_N_D(

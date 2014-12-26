@@ -116,11 +116,11 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
 			"image.jpg", _getInputStream(), ContentTypes.IMAGE_JPEG);
 
-		String tempfileEntryLink = _getTempFileEntryLink(tempFileEntry);
+		String tempFileEntryImgTag = _getTempFileEntryImgTag(tempFileEntry);
 
 		String content =
 			RandomTestUtil.randomString(50) + StringPool.SPACE +
-				tempfileEntryLink + StringPool.SPACE +
+				tempFileEntryImgTag + StringPool.SPACE +
 					RandomTestUtil.randomString(50);
 
 		List<FileEntry> tempBlogsEntryAttachments =
@@ -145,12 +145,12 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
 			"image.jpg", _getInputStream(), ContentTypes.IMAGE_JPEG);
 
-		String tempfileEntryLink = _getManuallyModifiedTempFileEntryLink(
+		String tempFileEntryImgTag = _getManuallyModifiedTempFileEntryImgTag(
 			tempFileEntry);
 
 		String content =
 			RandomTestUtil.randomString(50) + StringPool.SPACE +
-				tempfileEntryLink + StringPool.SPACE +
+				tempFileEntryImgTag + StringPool.SPACE +
 					RandomTestUtil.randomString(50);
 
 		List<FileEntry> tempBlogsEntryAttachments =
@@ -172,11 +172,11 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
 			"image.jpg", _getInputStream(), ContentTypes.IMAGE_JPEG);
 
-		String tempfileEntryLink = _getTempFileEntryLink(tempFileEntry);
+		String tempFileEntryImgTag = _getTempFileEntryImgTag(tempFileEntry);
 
 		String initialContent =
 			RandomTestUtil.randomString(50) + StringPool.SPACE +
-				tempfileEntryLink + StringPool.SPACE +
+				tempFileEntryImgTag + StringPool.SPACE +
 					RandomTestUtil.randomString(50);
 
 		List<BlogsEntryAttachmentFileEntryReference>
@@ -186,7 +186,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 		String content = _blogsEntryAttachmentFileEntryHelper.updateContent(
 			initialContent, blogsEntryAttachmentFileEntryReferences);
 
-		Assert.assertFalse(content.contains(tempfileEntryLink));
+		Assert.assertFalse(content.contains(tempFileEntryImgTag));
 
 		BlogsEntryAttachmentFileEntryReference
 			blogsEntryAttachmentFileEntryReference =
@@ -229,7 +229,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			"com/liferay/portal/util/dependencies/test.jpg");
 	}
 
-	private String _getManuallyModifiedTempFileEntryLink(
+	private String _getManuallyModifiedTempFileEntryImgTag(
 		FileEntry tempFileEntry) {
 
 		StringBundler sb = new StringBundler(7);
@@ -247,7 +247,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 		return sb.toString();
 	}
 
-	private String _getTempFileEntryLink(FileEntry tempFileEntry) {
+	private String _getTempFileEntryImgTag(FileEntry tempFileEntry) {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("<img ");

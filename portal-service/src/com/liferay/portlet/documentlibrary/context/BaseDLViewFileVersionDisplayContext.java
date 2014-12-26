@@ -22,6 +22,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.IOException;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -47,15 +48,15 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public List<DDMStructure> getDDMStructures() throws PortalException {
-		return parentDLDisplayContext.getDDMStructures();
+	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
+		throws PortalException {
+
+		return parentDLDisplayContext.getDDMFormValues(ddmStructure);
 	}
 
 	@Override
-	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
-		throws PortalException {
-		
-		return parentDLDisplayContext.getDDMFormValues(ddmStructure);
+	public List<DDMStructure> getDDMStructures() throws PortalException {
+		return parentDLDisplayContext.getDDMStructures();
 	}
 
 	@Override

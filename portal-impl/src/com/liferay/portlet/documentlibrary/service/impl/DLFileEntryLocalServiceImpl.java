@@ -112,10 +112,12 @@ import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.awt.image.RenderedImage;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -2263,13 +2265,15 @@ public class DLFileEntryLocalServiceImpl
 					ddmStructure.getStructureId(),
 					latestDLFileVersion.getFileVersionId());
 
-			DDMFormValues lastDDMFormValues = StorageEngineUtil.getDDMFormValues(
-				lastFileEntryMetadata.getDDMStorageId());
-			DDMFormValues latestDDMFormValues = StorageEngineUtil.getDDMFormValues(
-				latestFileEntryMetadata.getDDMStorageId());
+			DDMFormValues lastDDMFormValues =
+				StorageEngineUtil.getDDMFormValues(
+					lastFileEntryMetadata.getDDMStorageId());
+			DDMFormValues latestDDMFormValues =
+				StorageEngineUtil.getDDMFormValues(
+					latestFileEntryMetadata.getDDMStorageId());
 
 			if (!lastDDMFormValues.getDDMFormFieldValues().containsAll(
-				latestDDMFormValues.getDDMFormFieldValues())) {
+					latestDDMFormValues.getDDMFormFieldValues())) {
 
 				return false;
 			}

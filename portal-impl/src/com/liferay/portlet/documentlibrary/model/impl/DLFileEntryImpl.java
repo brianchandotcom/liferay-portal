@@ -49,6 +49,7 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,44 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	public long getDataRepositoryId() {
 		return DLFolderConstants.getDataRepositoryId(
 			getGroupId(), getFolderId());
+	}
+
+	@Override
+	public Map<String, DDMFormValues> getDDMFormValuesMap(long fileVersionId)
+		throws PortalException {
+
+		Map<String, DDMFormValues> ddmFormValuesMap =
+			new HashMap<String, DDMFormValues>();
+
+		DLFileVersion dlFileVersion =
+			DLFileVersionLocalServiceUtil.getFileVersion(fileVersionId);
+
+		long fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
+
+		if (fileEntryTypeId <= 0) {
+			return ddmFormValuesMap;
+		}
+
+		DLFileEntryType dlFileEntryType = getDLFileEntryType();
+
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			DLFileEntryMetadata dlFileEntryMetadata =
+				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
+					ddmStructure.getStructureId(), fileVersionId);
+
+			if (dlFileEntryMetadata != null) {
+				DDMFormValues ddmFormValues =
+					StorageEngineUtil.getDDMFormValues(
+						dlFileEntryMetadata.getDDMStorageId());
+
+				ddmFormValuesMap.put(
+					ddmStructure.getStructureKey(), ddmFormValues);
+			}
+		}
+
+		return ddmFormValuesMap;
 	}
 
 	@Override
@@ -131,43 +170,6 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		}
 
 		return _extraSettingsProperties;
-	}
-
-	@Override
-	public Map<String, DDMFormValues> getDDMFormValuesMap(long fileVersionId)
-		throws PortalException {
-
-		Map<String, DDMFormValues> ddmFormValuesMap =
-			new HashMap<String, DDMFormValues>();
-
-		DLFileVersion dlFileVersion =
-			DLFileVersionLocalServiceUtil.getFileVersion(fileVersionId);
-
-		long fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
-
-		if (fileEntryTypeId <= 0) {
-			return ddmFormValuesMap;
-		}
-
-		DLFileEntryType dlFileEntryType = getDLFileEntryType();
-
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			DLFileEntryMetadata dlFileEntryMetadata =
-				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
-					ddmStructure.getStructureId(), fileVersionId);
-
-			if (dlFileEntryMetadata != null) {
-				DDMFormValues ddmFormValues =
-					StorageEngineUtil.getDDMFormValues(
-						dlFileEntryMetadata.getDDMStorageId());
-
-				ddmFormValuesMap.put(ddmStructure.getStructureKey(), ddmFormValues);
-			}
-		}
-
-		return ddmFormValuesMap;
 	}
 
 	@Override

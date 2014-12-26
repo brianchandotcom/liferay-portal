@@ -21,25 +21,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
-import java.io.Serializable;
-import java.text.Format;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -78,12 +69,12 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 					String type = ddmStructure.getDDMFormField(
 						ddmFormFieldValue.getName()).getType();
-					
+
 					if (type.equals(DDMImpl.TYPE_RADIO) ||
 						type.equals(DDMImpl.TYPE_SELECT)) {
 
-						JSONArray jsonArray =
-							JSONFactoryUtil.createJSONArray(valueString);
+						JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+							valueString);
 
 						String[] stringArray = ArrayUtil.toStringArray(
 							jsonArray);
@@ -150,7 +141,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		for (DDMFormFieldValue ddmFormFieldValue :
 			ddmFormValues.getDDMFormFieldValues()) {
-			
+
 			try {
 				String indexType = ddmStructure.getFieldProperty(
 					ddmFormFieldValue.getName(), "indexType");
@@ -171,8 +162,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 					JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 						valueString);
 
-					String[] stringArray = ArrayUtil.toStringArray(
-						jsonArray);
+					String[] stringArray = ArrayUtil.toStringArray(jsonArray);
 
 					sb.append(stringArray);
 					sb.append(StringPool.SPACE);

@@ -15,12 +15,12 @@
 package com.liferay.portal.wab.extender.internal.event;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.wab.extender.internal.WabUtil;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.Dictionary;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -89,7 +89,8 @@ public class EventUtil
 		Bundle bundle, String eventTopic, Exception exception,
 		boolean collision) {
 
-		Map<String, Object> properties = new Hashtable<String, Object>();
+		Dictionary<String, Object> properties =
+			new HashMapDictionary<String, Object>();
 
 		properties.put("bundle", bundle);
 		properties.put("bundle.id", bundle.getBundleId());

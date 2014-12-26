@@ -17,9 +17,9 @@ package com.liferay.osgi.util.test;
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.osgi.util.service.ReflectionServiceTracker;
 import com.liferay.osgi.util.service.UnavailableServiceException;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
-import java.util.Hashtable;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -365,7 +365,7 @@ public class ReflectionServiceTrackerTest {
 					_bundleContext, InterfaceTwo.class, trackedTwo2, 1);
 
 			Dictionary<String, Object> properties =
-				new Hashtable<String, Object>();
+				new HashMapDictionary<String, Object>();
 
 			properties.put("service.ranking", 3);
 
@@ -399,7 +399,7 @@ public class ReflectionServiceTrackerTest {
 		BundleContext bundleContext, Class<T> clazz, T service, int ranking) {
 
 		Dictionary<String, Integer> properties =
-			new Hashtable<String, Integer>();
+			new HashMapDictionary<String, Integer>();
 
 		properties.put("service.ranking", ranking);
 

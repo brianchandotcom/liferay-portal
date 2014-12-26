@@ -118,14 +118,10 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 
 		String tempFileEntryImgTag = _getTempFileEntryImgTag(tempFileEntry);
 
-		String content =
-			RandomTestUtil.randomString(50) + StringPool.SPACE +
-				tempFileEntryImgTag + StringPool.SPACE +
-					RandomTestUtil.randomString(50);
-
 		List<FileEntry> tempBlogsEntryAttachments =
 			_blogsEntryAttachmentFileEntryHelper.
-				getTempBlogsEntryAttachmentFileEntries(content);
+				getTempBlogsEntryAttachmentFileEntries(
+					getContent(tempFileEntryImgTag));
 
 		Assert.assertEquals(1, tempBlogsEntryAttachments.size());
 
@@ -148,14 +144,10 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 		String tempFileEntryImgTag = _getManuallyModifiedTempFileEntryImgTag(
 			tempFileEntry);
 
-		String content =
-			RandomTestUtil.randomString(50) + StringPool.SPACE +
-				tempFileEntryImgTag + StringPool.SPACE +
-					RandomTestUtil.randomString(50);
-
 		List<FileEntry> tempBlogsEntryAttachments =
 			_blogsEntryAttachmentFileEntryHelper.
-				getTempBlogsEntryAttachmentFileEntries(content);
+				getTempBlogsEntryAttachmentFileEntries(
+					getContent(tempFileEntryImgTag));
 
 		Assert.assertEquals(1, tempBlogsEntryAttachments.size());
 
@@ -174,17 +166,13 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 
 		String tempFileEntryImgTag = _getTempFileEntryImgTag(tempFileEntry);
 
-		String initialContent =
-			RandomTestUtil.randomString(50) + StringPool.SPACE +
-				tempFileEntryImgTag + StringPool.SPACE +
-					RandomTestUtil.randomString(50);
-
 		List<BlogsEntryAttachmentFileEntryReference>
 			blogsEntryAttachmentFileEntryReferences =
 				getBlogsEntryAttachmentFileEntryReferences(tempFileEntry);
 
 		String content = _blogsEntryAttachmentFileEntryHelper.updateContent(
-			initialContent, blogsEntryAttachmentFileEntryReferences);
+			getContent(tempFileEntryImgTag),
+			blogsEntryAttachmentFileEntryReferences);
 
 		Assert.assertFalse(content.contains(tempFileEntryImgTag));
 
@@ -218,6 +206,23 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 				addBlogsEntryAttachmentFileEntries(
 					_group.getGroupId(), _user.getUserId(), entry.getEntryId(),
 					tempFileEntries);
+	}
+
+	protected String getContent(String tempFileEntryImgTag) {
+		StringBundler sb = new StringBundler(10);
+
+		sb.append("<p>");
+		sb.append(RandomTestUtil.randomStrings(50));
+		sb.append("</p>");
+		sb.append("<a href=\"www.liferay.com\"><span>");
+		sb.append(RandomTestUtil.randomStrings(50));
+		sb.append("<img src=\"www.liferay.com/logo.png\" /><span>");
+		sb.append(RandomTestUtil.randomStrings(50));
+		sb.append("</span>");
+		sb.append(tempFileEntryImgTag);
+		sb.append("<span></a>");
+
+		return sb.toString();
 	}
 
 	private InputStream _getInputStream() {

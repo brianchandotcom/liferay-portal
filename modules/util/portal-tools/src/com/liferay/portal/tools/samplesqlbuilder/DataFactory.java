@@ -179,17 +179,18 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityModel;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
-import com.liferay.portlet.wiki.model.WikiNode;
-import com.liferay.portlet.wiki.model.WikiNodeModel;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.model.WikiPageConstants;
-import com.liferay.portlet.wiki.model.WikiPageModel;
-import com.liferay.portlet.wiki.model.WikiPageResourceModel;
-import com.liferay.portlet.wiki.model.impl.WikiNodeModelImpl;
-import com.liferay.portlet.wiki.model.impl.WikiPageModelImpl;
-import com.liferay.portlet.wiki.model.impl.WikiPageResourceModelImpl;
-import com.liferay.portlet.wiki.social.WikiActivityKeys;
 import com.liferay.util.SimpleCounter;
+import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiNodeModel;
+import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.model.WikiPageConstants;
+import com.liferay.wiki.model.WikiPageModel;
+import com.liferay.wiki.model.WikiPageResourceModel;
+import com.liferay.wiki.model.impl.WikiNodeModelImpl;
+import com.liferay.wiki.model.impl.WikiPageModelImpl;
+import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
+import com.liferay.wiki.social.WikiActivityKeys;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1111,7 +1112,7 @@ public class DataFactory {
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
-				plid, PortletKeys.WIKI, PortletConstants.DEFAULT_PREFERENCES));
+				plid, WikiPortletKeys.WIKI, PortletConstants.DEFAULT_PREFERENCES));
 
 		return portletPreferencesModels;
 	}
@@ -2971,7 +2972,7 @@ public class DataFactory {
 		wikiPageModel.setTitle("Test Page " + index);
 		wikiPageModel.setVersion(WikiPageConstants.VERSION_DEFAULT);
 		wikiPageModel.setContent("This is test page " + index + ".");
-		wikiPageModel.setFormat(WikiPageConstants.DEFAULT_FORMAT);
+		wikiPageModel.setFormat("creole");
 		wikiPageModel.setHead(true);
 
 		return wikiPageModel;

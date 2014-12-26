@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.asset.tags.navigation.web.configuration;
-
-import com.liferay.portal.kernel.util.GetterUtil;
+package com.liferay.asset.tags.web.constants;
 
 /**
  * @author Eudaldo Alonso
  */
-public class AssetTagsNavigationWebConfigurationValues {
+public class AssetTagsNavigationPortletKeys {
 
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		AssetTagsNavigationWebConfigurationUtil.get(
-			"display.templates.config"));
+	public static final String TAGS_CLOUD =
+		"com_liferay_asset_tags_navigation_web_portlet_" +
+			"AssetTagsCloudPortlet";
+
+	public static final String TAGS_NAVIGATION =
+		"com_liferay_asset_tags_navigation_web_portlet_" +
+			"AssetTagsNavigationPortlet";
 
 }

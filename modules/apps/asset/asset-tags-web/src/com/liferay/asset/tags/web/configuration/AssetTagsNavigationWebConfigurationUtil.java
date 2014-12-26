@@ -12,24 +12,23 @@
  * details.
  */
 
-package com.liferay.asset.tags.navigation.web.portlet.action;
+package com.liferay.asset.tags.web.configuration;
 
-import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
-import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + AssetTagsNavigationPortletKeys.TAGS_CLOUD
-	},
-	service = ConfigurationAction.class
-)
-public class AssetTagsCloudConfigurationAction
-	extends DefaultConfigurationAction {
+public class AssetTagsNavigationWebConfigurationUtil {
+
+	public static String get(String key) {
+		return _configuration.get(key);
+	}
+
+	private static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			AssetTagsNavigationWebConfigurationUtil.class.getClassLoader(),
+			"portlet");
+
 }

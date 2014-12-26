@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.asset.tags.navigation.web.portlet.template;
+package com.liferay.asset.tags.web.portlet.template;
 
-import com.liferay.asset.tags.navigation.web.configuration.AssetTagsNavigationWebConfigurationValues;
-import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
+import com.liferay.asset.tags.web.configuration.AssetTagsNavigationWebConfigurationValues;
+import com.liferay.asset.tags.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;

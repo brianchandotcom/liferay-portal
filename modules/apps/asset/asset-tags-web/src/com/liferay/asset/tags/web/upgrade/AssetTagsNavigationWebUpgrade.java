@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.asset.tags.navigation.web.upgrade;
+package com.liferay.asset.tags.web.upgrade;
 
-import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
+import com.liferay.asset.tags.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;

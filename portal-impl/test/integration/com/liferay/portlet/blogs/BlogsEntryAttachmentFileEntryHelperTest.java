@@ -47,6 +47,7 @@ import org.junit.Test;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 public class BlogsEntryAttachmentFileEntryHelperTest {
 
@@ -277,6 +278,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@DeleteAfterTestRun
 	private User _user;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -59,6 +60,48 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addGroupAdminUser(_group);
+	}
+
+	@Test
+	public void testAddBlogsEntryAttachmentFileEntries() throws Exception {
+		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
+			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
+			"image.jpg", _getInputStream(), ContentTypes.IMAGE_JPEG);
+
+		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
+
+		List<FileEntry> tempFileEntries = new ArrayList<>();
+
+		tempFileEntries.add(tempFileEntry);
+
+		List<BlogsEntryAttachmentFileEntryReference>
+			blogsEntryAttachmentFileEntryReferences =
+				_blogsEntryAttachmentFileEntryHelper.
+					addBlogsEntryAttachmentFileEntries(
+						_group.getGroupId(), _user.getUserId(),
+						entry.getEntryId(), tempFileEntries);
+
+		Assert.assertEquals(1, blogsEntryAttachmentFileEntryReferences.size());
+
+		BlogsEntryAttachmentFileEntryReference
+			blogsEntryAttachmentFileEntryReference =
+				blogsEntryAttachmentFileEntryReferences.get(0);
+
+		Assert.assertEquals(
+			tempFileEntry.getFileEntryId(),
+			blogsEntryAttachmentFileEntryReference.
+				getTempBlogsEntryAttachmentFileEntryId());
+
+		FileEntry fileEntry =
+			blogsEntryAttachmentFileEntryReference.
+				getBlogsEntryAttachmentFileEntry();
+
+		Assert.assertEquals(tempFileEntry.getTitle(), fileEntry.getTitle());
+		Assert.assertEquals(
+			tempFileEntry.getMimeType(), fileEntry.getMimeType());
+		Assert.assertEquals(
+			DigesterUtil.digestBase64(tempFileEntry.getContentStream()),
+			DigesterUtil.digestBase64(fileEntry.getContentStream()));
 	}
 
 	@Test
@@ -161,23 +204,20 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 		String content = _blogsEntryAttachmentFileEntryHelper.updateContent(
 			initialContent, blogsEntryAttachmentFileEntryReferences);
 
-		Assert.assertNotEquals(initialContent, content);
 		Assert.assertFalse(content.contains(tempfileEntryLink));
-		Assert.assertEquals(1, blogsEntryAttachmentFileEntryReferences.size());
 
-		for (BlogsEntryAttachmentFileEntryReference
-				blogsEntryAttachmentFileEntryReference :
-					blogsEntryAttachmentFileEntryReferences) {
+		BlogsEntryAttachmentFileEntryReference
+			blogsEntryAttachmentFileEntryReference =
+				blogsEntryAttachmentFileEntryReferences.get(0);
 
-			FileEntry fileEntry =
-				blogsEntryAttachmentFileEntryReference.
-					getBlogsEntryAttachmentFileEntry();
+		FileEntry fileEntry =
+			blogsEntryAttachmentFileEntryReference.
+				getBlogsEntryAttachmentFileEntry();
 
-			Assert.assertTrue(
-				content.contains(
-					PortletFileRepositoryUtil.getPortletFileEntryURL(
-						null, fileEntry, StringPool.BLANK)));
-		}
+		Assert.assertTrue(
+			content.contains(
+				PortletFileRepositoryUtil.getPortletFileEntryURL(
+					null, fileEntry, StringPool.BLANK)));
 	}
 
 	private InputStream _getInputStream() {

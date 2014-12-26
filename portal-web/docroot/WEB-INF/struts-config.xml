@@ -279,20 +279,6 @@
 			<forward name="portlet.asset_publisher.view_content" path="portlet.asset_publisher.view_content" />
 		</action>
 
-		<!-- Asset Tag Admin -->
-
-		<action path="/asset_tag_admin/edit_tag" type="com.liferay.portlet.assettagadmin.action.EditTagAction">
-			<forward name="portlet.asset_tag_admin.edit_tag" path="portlet.asset_tag_admin.edit_tag" />
-			<forward name="portlet.asset_tag_admin.error" path="portlet.asset_tag_admin.error" />
-		</action>
-
-		<action path="/asset_tag_admin/merge_tag" type="com.liferay.portlet.assettagadmin.action.EditTagAction">
-			<forward name="portlet.asset_tag_admin.edit_tag" path="portlet.asset_tag_admin.merge_tag" />
-			<forward name="portlet.asset_tag_admin.error" path="portlet.asset_tag_admin.error" />
-		</action>
-
-		<action path="/asset_tag_admin/view" forward="portlet.asset_tag_admin.view" />
-
 		<!-- Asset Tags Cloud -->
 
 		<action path="/asset_tags_cloud/view" forward="portlet.asset_tags_navigation.view" />

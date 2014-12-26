@@ -173,7 +173,8 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 //				fields = DDMUtil.getFields(
 //					ddmStructure.getStructureId(), namespace, serviceContext);
 				ddmFormValues = DDMUtil.getDDMFormValues(
-						ddmStructure.getStructureId(), namespace, serviceContext);
+						ddmStructure.getStructureId(), namespace,
+						serviceContext);
 			}
 
 //			fieldsMap.put(ddmStructure.getStructureKey(), fields);

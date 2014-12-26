@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.io;
 
-import com.liferay.portal.kernel.util.CharBufferPool;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ClassResolverUtil;
 
@@ -24,6 +23,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 
 /**
  * Deserializes data in a ClassLoader-aware manner. This class is the
@@ -185,26 +185,24 @@ public class Deserializer {
 		if (asciiCode) {
 			detectBufferUnderflow(length);
 
-			char[] chars = CharBufferPool.borrow(length);
+			String s = new String(buffer, index, length);
 
-			for (int i = 0; i < length; i++) {
-				chars[i] = (char)buffer[index++];
-			}
+			index += length;
 
-			return new String(chars, 0, length);
+			return s;
 		}
 
-		detectBufferUnderflow(length * 2);
+		length <<= 1;
 
-		char[] chars = CharBufferPool.borrow(length);
+		detectBufferUnderflow(length);
 
-		for (int i = 0; i < length; i++) {
-			chars[i] = BigEndianCodec.getChar(buffer, index);
+		ByteBuffer byteBuffer = ByteBuffer.wrap(buffer, index, length);
 
-			index += 2;
-		}
+		index += length;
 
-		return new String(chars, 0, length);
+		CharBuffer charBuffer = byteBuffer.asCharBuffer();
+
+		return charBuffer.toString();
 	}
 
 	/**

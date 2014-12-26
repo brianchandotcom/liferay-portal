@@ -104,12 +104,16 @@
 	}
 
 	#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image {
+		display: block;
 		float: left;
+		height: 128px;
+		margin-right: 1em;
+		text-align: center;
 	}
 
 	#<@liferay_portlet.namespace />assetEntryAbstract .asset-entry-abstract-image img {
 		display: block;
-		margin-right: 2em;
+		margin: 0 auto;
 	}
 
 	#<@liferay_portlet.namespace />assetEntryAbstract .taglib-icon {

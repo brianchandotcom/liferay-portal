@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<portlet-preferences>
+	<preference>
+		<name>classNameId</name>
+		<value>0</value>
+	</preference>
+	<preference>
+		<name>displayStyle</name>
+		<value>cloud</value>
+	</preference>
+	<preference>
+		<name>maxAssetTags</name>
+		<value>10</value>
+	</preference>
+	<preference>
+		<name>showAssetCount</name>
+		<value>true</value>
+	</preference>
+	<preference>
+		<name>showZeroAssetCount</name>
+		<value>false</value>
+	</preference>
+</portlet-preferences>

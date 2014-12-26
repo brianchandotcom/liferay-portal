@@ -292,7 +292,7 @@ public class VerifyProperties extends VerifyProcess {
 		},
 		new String[] {
 			"asset.tags.navigation.display.templates.config",
-			"display.templates.config", "com.liferay.asset.tags.navigation.web"
+			"display.templates.config", "com.liferay.asset.tags.web"
 		},
 
 		// Bookmarks

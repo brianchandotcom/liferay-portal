@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Asset Tags Navigation Web
-Bundle-SymbolicName: com.liferay.asset.tags.navigation.web
+Bundle-Name: Liferay Asset Tags Web
+Bundle-SymbolicName: com.liferay.asset.tags.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\

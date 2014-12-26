@@ -64,7 +64,7 @@ public class AssetTagsWebUpgrade {
 		};
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.asset.tags.navigation.web",
+			"com.liferay.asset.tags.web",
 			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
 			false);
 	}

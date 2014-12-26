@@ -42,6 +42,41 @@ import javax.portlet.RenderResponse;
  */
 public class AssetTagsAdminPortlet extends MVCPortlet {
 
+	public void deleteTag(ActionRequest actionRequest) throws PortalException {
+		long[] deleteTagIds = null;
+
+		long tagId = ParamUtil.getLong(actionRequest, "tagId");
+
+		if (tagId > 0) {
+			deleteTagIds = new long[] {tagId};
+		}
+		else {
+			deleteTagIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteTagIds"), 0L);
+		}
+
+		for (long deleteTagId : deleteTagIds) {
+			AssetTagServiceUtil.deleteTag(deleteTagId);
+		}
+	}
+
+	public void mergeTag(ActionRequest actionRequest) throws Exception {
+		long[] mergeTagIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "mergeTagIds"), 0L);
+		long targetTagId = ParamUtil.getLong(actionRequest, "targetTagId");
+		boolean overrideTagsProperties = ParamUtil.getBoolean(
+			actionRequest, "overrideTagsProperties");
+
+		for (long mergeTagId : mergeTagIds) {
+			if (targetTagId == mergeTagId) {
+				continue;
+			}
+
+			AssetTagServiceUtil.mergeTags(
+				mergeTagId, targetTagId, overrideTagsProperties);
+		}
+	}
+
 	@Override
 	public void processAction(
 			ActionMapping actionMapping, ActionForm actionForm,
@@ -95,23 +130,28 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 			getForward(renderRequest, "portlet.asset_tag_admin.edit_tag"));
 	}
 
-	protected void deleteTag(ActionRequest actionRequest)
-		throws PortalException {
-
-		long[] deleteTagIds = null;
-
+	public void updateTag(ActionRequest actionRequest) throws Exception {
 		long tagId = ParamUtil.getLong(actionRequest, "tagId");
 
-		if (tagId > 0) {
-			deleteTagIds = new long[] {tagId};
+		String name = ParamUtil.getString(actionRequest, "name");
+
+		String[] tagProperties = getTagProperties(actionRequest);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			AssetTag.class.getName(), actionRequest);
+
+		if (tagId <= 0) {
+
+			// Add tag
+
+			AssetTagServiceUtil.addTag(name, tagProperties, serviceContext);
 		}
 		else {
-			deleteTagIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteTagIds"), 0L);
-		}
 
-		for (long deleteTagId : deleteTagIds) {
-			AssetTagServiceUtil.deleteTag(deleteTagId);
+			// Update tag
+
+			AssetTagServiceUtil.updateTag(
+				tagId, name, tagProperties, serviceContext);
 		}
 	}
 
@@ -139,48 +179,6 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 		}
 
 		return tagProperties;
-	}
-
-	protected void mergeTag(ActionRequest actionRequest) throws Exception {
-		long[] mergeTagIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "mergeTagIds"), 0L);
-		long targetTagId = ParamUtil.getLong(actionRequest, "targetTagId");
-		boolean overrideTagsProperties = ParamUtil.getBoolean(
-			actionRequest, "overrideTagsProperties");
-
-		for (long mergeTagId : mergeTagIds) {
-			if (targetTagId == mergeTagId) {
-				continue;
-			}
-
-			AssetTagServiceUtil.mergeTags(
-				mergeTagId, targetTagId, overrideTagsProperties);
-		}
-	}
-
-	protected void updateTag(ActionRequest actionRequest) throws Exception {
-		long tagId = ParamUtil.getLong(actionRequest, "tagId");
-
-		String name = ParamUtil.getString(actionRequest, "name");
-
-		String[] tagProperties = getTagProperties(actionRequest);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			AssetTag.class.getName(), actionRequest);
-
-		if (tagId <= 0) {
-
-			// Add tag
-
-			AssetTagServiceUtil.addTag(name, tagProperties, serviceContext);
-		}
-		else {
-
-			// Update tag
-
-			AssetTagServiceUtil.updateTag(
-				tagId, name, tagProperties, serviceContext);
-		}
 	}
 
 }

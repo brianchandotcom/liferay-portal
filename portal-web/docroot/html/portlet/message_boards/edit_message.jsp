@@ -293,7 +293,7 @@ else {
 
 				<%
 				for (int i = 0; i < priorities.length; i++) {
-					String[] priority = StringUtil.split(priorities[i]);
+					String[] priority = StringUtil.split(priorities[i], StringPool.PIPE);
 
 					try {
 						String priorityName = priority[0];

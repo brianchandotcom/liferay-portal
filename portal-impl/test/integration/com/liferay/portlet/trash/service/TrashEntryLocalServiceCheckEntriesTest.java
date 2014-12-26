@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
@@ -131,7 +130,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 
 		createFileEntryTrashEntry(group, false);
 
-		disableTrashForGroup(group);
+		TrashUtil.disableTrash(group);
 
 		TrashEntryLocalServiceUtil.checkEntries();
 
@@ -188,7 +187,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 	public void testStagingTrashDisabled() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 
-		Group group = disableTrashForGroup(createGroup(companyId));
+		Group group = TrashUtil.disableTrash(createGroup(companyId));
 		User user = UserTestUtil.getAdminUser(companyId);
 
 		ServiceContext serviceContext =
@@ -299,17 +298,6 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 		Assert.assertEquals(
 			_NOT_EXPIRED_TRASH_ENTRIES_COUNT,
 			TrashEntryLocalServiceUtil.getTrashEntriesCount());
-	}
-
-	protected Group disableTrashForGroup(Group group) throws Exception {
-		UnicodeProperties typeSettingsProperties =
-			group.getParentLiveGroupTypeSettingsProperties();
-
-		typeSettingsProperties.setProperty("trashEnabled", StringPool.FALSE);
-
-		group.setTypeSettingsProperties(typeSettingsProperties);
-
-		return GroupLocalServiceUtil.updateGroup(group);
 	}
 
 	protected Group updateTrashEntriesMaxAge(Group group, int days)

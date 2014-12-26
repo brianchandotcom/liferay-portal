@@ -72,6 +72,8 @@ public interface Trash {
 			String[] attachmentFileNames)
 		throws PortalException;
 
+	public Group disableTrash(Group group);
+
 	public List<TrashEntry> getEntries(Hits hits) throws PortalException;
 
 	public OrderByComparator<TrashEntry> getEntryOrderByComparator(

@@ -47,7 +47,7 @@ public class DLFileEntryDDMFieldReader extends BaseDDMFieldReader {
 	public DDMFormValues getDDMFormValues() throws PortalException {
 		DDMFormValues ddmFormValues = new DDMFormValues(new DDMForm());
 		DDMForm ddmForm = ddmFormValues.getDDMForm();
-		
+
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
 			DLFileEntryMetadata.class);
 
@@ -65,17 +65,19 @@ public class DLFileEntryDDMFieldReader extends BaseDDMFieldReader {
 				continue;
 			}
 
-			DDMFormValues ddmStorageDDMFormValues = 
+			DDMFormValues ddmStorageDDMFormValues =
 					StorageEngineUtil.getDDMFormValues(
-							dlFileEntryMetadata.getDDMStorageId());
+						dlFileEntryMetadata.getDDMStorageId());
 
-			for (DDMFormField ddmFormField : ddmStorageDDMFormValues.getDDMForm().getDDMFormFields()) {
-				
+			for (DDMFormField ddmFormField :
+					ddmStorageDDMFormValues.getDDMForm().getDDMFormFields()) {
+
 				ddmForm.addDDMFormField(ddmFormField);
 			}
-			
-			for (DDMFormFieldValue ddmFormFieldValue : ddmStorageDDMFormValues.getDDMFormFieldValues()) {
-				
+
+			for (DDMFormFieldValue ddmFormFieldValue :
+					ddmStorageDDMFormValues.getDDMFormFieldValues()) {
+
 				ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 			}
 		}

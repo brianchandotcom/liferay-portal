@@ -88,8 +88,8 @@ public class GroupFinderImpl
 	public static final String FIND_BY_C_P =
 		GroupFinder.class.getName() + ".findByC_P";
 
-	public static final String FIND_BY_C_N =
-		GroupFinder.class.getName() + ".findByC_N";
+	public static final String FIND_BY_C_GK =
+		GroupFinder.class.getName() + ".findByC_GK";
 
 	public static final String FIND_BY_C_C_PG_N_D =
 		GroupFinder.class.getName() + ".findByC_C_PG_N_D";
@@ -643,17 +643,17 @@ public class GroupFinderImpl
 	}
 
 	@Override
-	public Group findByC_N(long companyId, String name)
+	public Group findByC_GK(long companyId, String groupKey)
 		throws NoSuchGroupException {
 
-		name = StringUtil.lowerCase(name);
+		groupKey = StringUtil.lowerCase(groupKey);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_C_N);
+			String sql = CustomSQLUtil.get(FIND_BY_C_GK);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -662,7 +662,7 @@ public class GroupFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
-			qPos.add(name);
+			qPos.add(groupKey);
 
 			List<Group> groups = q.list();
 
@@ -681,8 +681,8 @@ public class GroupFinderImpl
 
 		sb.append("No Group exists with the key {companyId=");
 		sb.append(companyId);
-		sb.append(", name=");
-		sb.append(name);
+		sb.append(", groupKey=");
+		sb.append(groupKey);
 		sb.append("}");
 
 		throw new NoSuchGroupException(sb.toString());

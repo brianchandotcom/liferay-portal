@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class GroupNameException extends PortalException {
+public class GroupKeyException extends PortalException {
 
-	public GroupNameException() {
+	public GroupKeyException() {
 	}
 
-	public GroupNameException(String msg) {
+	public GroupKeyException(String msg) {
 		super(msg);
 	}
 
-	public GroupNameException(String msg, Throwable cause) {
+	public GroupKeyException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public GroupNameException(Throwable cause) {
+	public GroupKeyException(Throwable cause) {
 		super(cause);
 	}
 

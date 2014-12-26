@@ -201,14 +201,14 @@ public interface GroupService extends BaseService {
 	* Returns the group with the name.
 	*
 	* @param companyId the primary key of the company
-	* @param name the group's name
-	* @return the group with the name
+	* @param groupKey the group's key
+	* @return the group with the groupKey
 	* @throws PortalException if a matching group could not be found or if the
 	current user did not have permission to view the group
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group getGroup(long companyId,
-		java.lang.String name)
+		java.lang.String groupKey)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -703,7 +703,7 @@ public interface GroupService extends BaseService {
 	*
 	* @param groupId the primary key of the group
 	* @param parentGroupId the primary key of the parent group
-	* @param name the group's new name
+	* @param groupKey the group's key
 	* @param description the group's new description (optionally
 	<code>null</code>)
 	* @param type the group's new type. For more information see {@link
@@ -724,7 +724,7 @@ public interface GroupService extends BaseService {
 	friendly URL was invalid or could one not be created
 	*/
 	public com.liferay.portal.model.Group updateGroup(long groupId,
-		long parentGroupId, java.lang.String name,
+		long parentGroupId, java.lang.String groupKey,
 		java.lang.String description, int type, boolean manualMembership,
 		int membershipRestriction, java.lang.String friendlyURL,
 		boolean inheritContent, boolean active,

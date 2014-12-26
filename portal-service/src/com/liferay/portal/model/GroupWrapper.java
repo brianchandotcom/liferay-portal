@@ -60,6 +60,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		attributes.put("parentGroupId", getParentGroupId());
 		attributes.put("liveGroupId", getLiveGroupId());
 		attributes.put("treePath", getTreePath());
+		attributes.put("groupKey", getGroupKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
@@ -135,6 +136,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 		if (treePath != null) {
 			setTreePath(treePath);
+		}
+
+		String groupKey = (String)attributes.get("groupKey");
+
+		if (groupKey != null) {
+			setGroupKey(groupKey);
 		}
 
 		String name = (String)attributes.get("name");
@@ -406,6 +413,16 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public long getGroupId() {
 		return _group.getGroupId();
+	}
+
+	/**
+	* Returns the group key of this group.
+	*
+	* @return the group key of this group
+	*/
+	@Override
+	public java.lang.String getGroupKey() {
+		return _group.getGroupKey();
 	}
 
 	@Override
@@ -999,6 +1016,16 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public void setGroupId(long groupId) {
 		_group.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the group key of this group.
+	*
+	* @param groupKey the group key of this group
+	*/
+	@Override
+	public void setGroupKey(java.lang.String groupKey) {
+		_group.setGroupKey(groupKey);
 	}
 
 	/**

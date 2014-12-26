@@ -341,16 +341,16 @@ public class GroupServiceSoap {
 	* Returns the group with the name.
 	*
 	* @param companyId the primary key of the company
-	* @param name the group's name
-	* @return the group with the name
+	* @param groupKey the group's key
+	* @return the group with the groupKey
 	* @throws PortalException if a matching group could not be found or if the
 	current user did not have permission to view the group
 	*/
 	public static com.liferay.portal.model.GroupSoap getGroup(long companyId,
-		java.lang.String name) throws RemoteException {
+		java.lang.String groupKey) throws RemoteException {
 		try {
 			com.liferay.portal.model.Group returnValue = GroupServiceUtil.getGroup(companyId,
-					name);
+					groupKey);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
 		}
@@ -1054,7 +1054,7 @@ public class GroupServiceSoap {
 	*
 	* @param groupId the primary key of the group
 	* @param parentGroupId the primary key of the parent group
-	* @param name the group's new name
+	* @param groupKey the group's key
 	* @param description the group's new description (optionally
 	<code>null</code>)
 	* @param type the group's new type. For more information see {@link
@@ -1075,7 +1075,7 @@ public class GroupServiceSoap {
 	friendly URL was invalid or could one not be created
 	*/
 	public static com.liferay.portal.model.GroupSoap updateGroup(long groupId,
-		long parentGroupId, java.lang.String name,
+		long parentGroupId, java.lang.String groupKey,
 		java.lang.String description, int type, boolean manualMembership,
 		int membershipRestriction, java.lang.String friendlyURL,
 		boolean inheritContent, boolean active,
@@ -1083,9 +1083,9 @@ public class GroupServiceSoap {
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.Group returnValue = GroupServiceUtil.updateGroup(groupId,
-					parentGroupId, name, description, type, manualMembership,
-					membershipRestriction, friendlyURL, inheritContent, active,
-					serviceContext);
+					parentGroupId, groupKey, description, type,
+					manualMembership, membershipRestriction, friendlyURL,
+					inheritContent, active, serviceContext);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
 		}

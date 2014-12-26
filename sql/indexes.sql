@@ -245,11 +245,11 @@ create index IX_38FA468D on ExportImportConfiguration (groupId, status);
 create index IX_47CC6234 on ExportImportConfiguration (groupId, type_, status);
 
 create unique index IX_D0D5E397 on Group_ (companyId, classNameId, classPK);
-create unique index IX_5DE0BE11 on Group_ (companyId, classNameId, liveGroupId, name);
+create unique index IX_A729E3A6 on Group_ (companyId, classNameId, liveGroupId, groupKey);
 create index IX_ABE2D54 on Group_ (companyId, classNameId, parentGroupId);
 create unique index IX_5BDDB872 on Group_ (companyId, friendlyURL);
-create unique index IX_BBCA55B on Group_ (companyId, liveGroupId, name);
-create unique index IX_5AA68501 on Group_ (companyId, name);
+create unique index IX_ACD2B296 on Group_ (companyId, groupKey);
+create unique index IX_AACD15F0 on Group_ (companyId, liveGroupId, groupKey);
 create index IX_D4BFF38B on Group_ (companyId, parentGroupId, site, inheritContent);
 create index IX_63A2AABD on Group_ (companyId, site);
 create index IX_16218A38 on Group_ (liveGroupId);

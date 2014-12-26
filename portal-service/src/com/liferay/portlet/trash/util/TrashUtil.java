@@ -97,6 +97,10 @@ public class TrashUtil {
 			companyId, repositoryId, date, attachmentFileNames);
 	}
 
+	public static Group disableTrash(Group group) {
+		return getTrash().disableTrash(group);
+	}
+
 	public static List<TrashEntry> getEntries(Hits hits)
 		throws PortalException {
 

@@ -19,12 +19,10 @@ import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
@@ -42,6 +40,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.InputStream;
 
@@ -77,7 +76,7 @@ public class MBMessageLocalServiceTest {
 	public void testDeleteAttachmentsWhenUpdatingMessageAndTrashDisabled()
 		throws Exception {
 
-		disableTrashForGroup(_group);
+		TrashUtil.disableTrash(_group);
 
 		User user = TestPropsValues.getUser();
 
@@ -210,17 +209,6 @@ public class MBMessageLocalServiceTest {
 		Assert.assertEquals(
 			dateFormat.format(mbThread.getLastPostDate()),
 			dateFormat.format(firstReplyMessage.getModifiedDate()));
-	}
-
-	protected Group disableTrashForGroup(Group group) throws Exception {
-		UnicodeProperties typeSettingsProperties =
-			group.getParentLiveGroupTypeSettingsProperties();
-
-		typeSettingsProperties.setProperty("trashEnabled", StringPool.FALSE);
-
-		group.setTypeSettingsProperties(typeSettingsProperties);
-
-		return GroupLocalServiceUtil.updateGroup(group);
 	}
 
 	@DeleteAfterTestRun

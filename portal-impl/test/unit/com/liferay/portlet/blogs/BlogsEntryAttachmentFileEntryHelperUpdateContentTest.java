@@ -23,9 +23,9 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.test.RandomTestUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,6 +69,23 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 	}
 
 	@Test
+	public void
+			testUpdateContentWithEmptyBlogsEntryAttachmentFileEntryReferences()
+		throws Exception {
+
+		String content =
+			_blogsEntryAttachmentFileEntryHelper.updateContent(
+				populateContentWithSingleImgTag(_tempFileEntryImgTag),
+				Collections.
+					<BlogsEntryAttachmentFileEntryReference>emptyList());
+
+		String expectedContent = populateContentWithSingleImgTag(
+			_tempFileEntryImgTag);
+
+		Assert.assertEquals(expectedContent, content);
+	}
+
+	@Test
 	public void testUpdateContentWithMultipleImgTags() throws Exception {
 		String content =
 			_blogsEntryAttachmentFileEntryHelper.updateContent(
@@ -76,19 +93,6 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 				_blogsEntryAttachmentFileEntryReferences);
 
 		String expectedContent = populateContentWithMultipleImgTags(
-			"<img src=\"" + _FILE_ENTRY_IMAGE_URL + "\" />");
-
-		Assert.assertEquals(expectedContent, content);
-	}
-
-	@Test
-	public void testUpdateContentWithSingleImgTag() throws Exception {
-		String content =
-			_blogsEntryAttachmentFileEntryHelper.updateContent(
-				populateContentWithSingleImgTag(_tempFileEntryImgTag),
-				_blogsEntryAttachmentFileEntryReferences);
-
-		String expectedContent = populateContentWithSingleImgTag(
 			"<img src=\"" + _FILE_ENTRY_IMAGE_URL + "\" />");
 
 		Assert.assertEquals(expectedContent, content);
@@ -108,19 +112,30 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 	}
 
 	@Test
-	public void
-		testUpdateContentWithEmptyBlogsEntryAttachmentFileEntryReferences()
-		throws Exception {
-
+	public void testUpdateContentWithSingleImgTag() throws Exception {
 		String content =
 			_blogsEntryAttachmentFileEntryHelper.updateContent(
 				populateContentWithSingleImgTag(_tempFileEntryImgTag),
-				Collections.emptyList());
+				_blogsEntryAttachmentFileEntryReferences);
 
 		String expectedContent = populateContentWithSingleImgTag(
-			_tempFileEntryImgTag);
+			"<img src=\"" + _FILE_ENTRY_IMAGE_URL + "\" />");
 
 		Assert.assertEquals(expectedContent, content);
+	}
+
+	protected String getTempFileEntryImgTag(long dataImageId, String url) {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("<img ");
+		sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
+		sb.append("=\"");
+		sb.append(dataImageId);
+		sb.append("\" src=\"");
+		sb.append(url);
+		sb.append("\"/>");
+
+		return sb.toString();
 	}
 
 	protected String populateContentWithMultipleImgTags(String imgTag) {
@@ -140,20 +155,6 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 		sb.append("<p>Sample Text</p><a href=\"www.liferay.com\">");
 		sb.append(imgTag);
 		sb.append("<span></a>");
-
-		return sb.toString();
-	}
-
-	private String getTempFileEntryImgTag(long dataImageId, String url) {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("<img ");
-		sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-		sb.append("=\"");
-		sb.append(dataImageId);
-		sb.append("\" src=\"");
-		sb.append(url);
-		sb.append("\"/>");
 
 		return sb.toString();
 	}

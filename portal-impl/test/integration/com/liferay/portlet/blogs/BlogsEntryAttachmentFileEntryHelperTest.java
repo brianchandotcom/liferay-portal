@@ -17,7 +17,7 @@ package com.liferay.portlet.blogs;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.AggregateTestRule;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -65,8 +65,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	public void testGetBlogsEntryAttachmentFileEntryLink() throws Exception {
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
-			"image.jpg", _getInputStream(),
-			MimeTypesUtil.getContentType("image.jpg"));
+			"image.jpg", _getInputStream(), ContentTypes.IMAGE_JPEG);
 
 		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
 			null, tempFileEntry, StringPool.BLANK);
@@ -81,8 +80,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	public void testGetTempBlogsEntryAttachmentFileEntries() throws Exception {
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
-			"image.jpg", _getInputStream(),
-			MimeTypesUtil.getContentType("image.jpg"));
+			"image.jpg", _getInputStream(), ContentTypes.IMAGE_JPEG);
 
 		String tempfileEntryLink = _getTempFileEntryLink(tempFileEntry);
 
@@ -111,8 +109,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
-			"image.jpg", _getInputStream(),
-			MimeTypesUtil.getContentType("image.jpg"));
+			"image.jpg", _getInputStream(), ContentTypes.IMAGE_JPEG);
 
 		String tempfileEntryLink = _getManuallyModifiedTempFileEntryLink(
 			tempFileEntry);
@@ -139,8 +136,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	public void testUpdateContent() throws Exception {
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
-			"image.jpg", _getInputStream(),
-			MimeTypesUtil.getContentType("image.jpg"));
+			"image.jpg", _getInputStream(), ContentTypes.IMAGE_JPEG);
 
 		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
 

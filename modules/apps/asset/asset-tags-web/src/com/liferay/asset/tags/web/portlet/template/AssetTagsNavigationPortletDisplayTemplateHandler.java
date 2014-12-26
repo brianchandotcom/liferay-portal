@@ -14,8 +14,8 @@
 
 package com.liferay.asset.tags.web.portlet.template;
 
-import com.liferay.asset.tags.web.configuration.AssetTagsNavigationWebConfigurationValues;
-import com.liferay.asset.tags.web.constants.AssetTagsNavigationPortletKeys;
+import com.liferay.asset.tags.web.configuration.AssetTagsWebConfigurationValues;
+import com.liferay.asset.tags.web.constants.AssetTagsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AssetTagsNavigationPortletKeys.TAGS_NAVIGATION
+		"javax.portlet.name=" + AssetTagsPortletKeys.TAGS_NAVIGATION
 	},
 	service = TemplateHandler.class
 )
@@ -59,7 +59,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 			"content.Language");
 
 		String portletTitle = PortalUtil.getPortletTitle(
-			AssetTagsNavigationPortletKeys.TAGS_NAVIGATION, resourceBundle);
+			AssetTagsPortletKeys.TAGS_NAVIGATION, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -67,7 +67,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return AssetTagsNavigationPortletKeys.TAGS_NAVIGATION;
+		return AssetTagsPortletKeys.TAGS_NAVIGATION;
 	}
 
 	@Override
@@ -107,8 +107,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return
-			AssetTagsNavigationWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
+		return AssetTagsWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

@@ -17,7 +17,7 @@ package com.liferay.asset.tags.web.constants;
 /**
  * @author Eudaldo Alonso
  */
-public class AssetTagsNavigationPortletKeys {
+public class AssetTagsPortletKeys {
 
 	public static final String TAGS_CLOUD =
 		"com_liferay_asset_tags_navigation_web_portlet_" +

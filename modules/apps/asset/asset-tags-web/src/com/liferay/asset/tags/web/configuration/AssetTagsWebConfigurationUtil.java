@@ -14,15 +14,20 @@
 
 package com.liferay.asset.tags.web.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-public class AssetTagsNavigationWebConfigurationValues {
+public class AssetTagsWebConfigurationUtil {
 
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		AssetTagsNavigationWebConfigurationUtil.get(
-			"display.templates.config"));
+	public static String get(String key) {
+		return _configuration.get(key);
+	}
+
+	private static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			AssetTagsWebConfigurationUtil.class.getClassLoader(), "portlet");
 
 }

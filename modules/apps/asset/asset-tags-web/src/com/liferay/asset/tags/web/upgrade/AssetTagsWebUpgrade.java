@@ -14,7 +14,7 @@
 
 package com.liferay.asset.tags.web.upgrade;
 
-import com.liferay.asset.tags.web.constants.AssetTagsNavigationPortletKeys;
+import com.liferay.asset.tags.web.constants.AssetTagsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = AssetTagsNavigationWebUpgrade.class)
-public class AssetTagsNavigationWebUpgrade {
+@Component(immediate = true, service = AssetTagsWebUpgrade.class)
+public class AssetTagsWebUpgrade {
 
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
@@ -53,10 +53,10 @@ public class AssetTagsNavigationWebUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"141", AssetTagsNavigationPortletKeys.TAGS_NAVIGATION
+						"141", AssetTagsPortletKeys.TAGS_NAVIGATION
 					},
 					new String[] {
-						"148", AssetTagsNavigationPortletKeys.TAGS_CLOUD
+						"148", AssetTagsPortletKeys.TAGS_CLOUD
 					}
 				};
 			}

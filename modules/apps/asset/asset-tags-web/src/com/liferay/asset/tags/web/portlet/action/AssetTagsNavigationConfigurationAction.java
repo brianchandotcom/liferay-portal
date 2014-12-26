@@ -14,7 +14,7 @@
 
 package com.liferay.asset.tags.web.portlet.action;
 
-import com.liferay.asset.tags.web.constants.AssetTagsNavigationPortletKeys;
+import com.liferay.asset.tags.web.constants.AssetTagsPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AssetTagsNavigationPortletKeys.TAGS_NAVIGATION
+		"javax.portlet.name=" + AssetTagsPortletKeys.TAGS_NAVIGATION
 	},
 	service = ConfigurationAction.class
 )

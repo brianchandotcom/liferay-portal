@@ -68,18 +68,9 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
 			"image.jpg", _getInputStream(), ContentTypes.IMAGE_JPEG);
 
-		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
-
-		List<FileEntry> tempFileEntries = new ArrayList<>();
-
-		tempFileEntries.add(tempFileEntry);
-
 		List<BlogsEntryAttachmentFileEntryReference>
 			blogsEntryAttachmentFileEntryReferences =
-				_blogsEntryAttachmentFileEntryHelper.
-					addBlogsEntryAttachmentFileEntries(
-						_group.getGroupId(), _user.getUserId(),
-						entry.getEntryId(), tempFileEntries);
+				getBlogsEntryAttachmentFileEntryReferences(tempFileEntry);
 
 		Assert.assertEquals(1, blogsEntryAttachmentFileEntryReferences.size());
 
@@ -181,8 +172,6 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
 			"image.jpg", _getInputStream(), ContentTypes.IMAGE_JPEG);
 
-		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
-
 		String tempfileEntryLink = _getTempFileEntryLink(tempFileEntry);
 
 		String initialContent =
@@ -190,16 +179,9 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 				tempfileEntryLink + StringPool.SPACE +
 					RandomTestUtil.randomString(50);
 
-		List<FileEntry> tempFileEntries = new ArrayList<>();
-
-		tempFileEntries.add(tempFileEntry);
-
 		List<BlogsEntryAttachmentFileEntryReference>
 			blogsEntryAttachmentFileEntryReferences =
-				_blogsEntryAttachmentFileEntryHelper.
-					addBlogsEntryAttachmentFileEntries(
-						_group.getGroupId(), _user.getUserId(),
-						entry.getEntryId(), tempFileEntries);
+				getBlogsEntryAttachmentFileEntryReferences(tempFileEntry);
 
 		String content = _blogsEntryAttachmentFileEntryHelper.updateContent(
 			initialContent, blogsEntryAttachmentFileEntryReferences);
@@ -218,6 +200,24 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			content.contains(
 				PortletFileRepositoryUtil.getPortletFileEntryURL(
 					null, fileEntry, StringPool.BLANK)));
+	}
+
+	protected List<BlogsEntryAttachmentFileEntryReference>
+		getBlogsEntryAttachmentFileEntryReferences(
+			FileEntry tempFileEntry)
+		throws Exception {
+
+		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
+
+		List<FileEntry> tempFileEntries = new ArrayList<>();
+
+		tempFileEntries.add(tempFileEntry);
+
+		return
+			_blogsEntryAttachmentFileEntryHelper.
+				addBlogsEntryAttachmentFileEntries(
+					_group.getGroupId(), _user.getUserId(), entry.getEntryId(),
+					tempFileEntries);
 	}
 
 	private InputStream _getInputStream() {

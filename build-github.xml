@@ -286,13 +286,24 @@
 					sb.append("</p>");
 				}
 
-				String githubJenkinsResultsURL = project.getProperty("github.jenkins.results.url");
+				sb.append("<h1>See below links for more information.</h1>");
+				sb.append("<ul>");
 
-				if (githubJenkinsResultsURL != null) {
-					sb.append("<p>Click <a href=\\\"");
-					sb.append(githubJenkinsResultsURL);
-					sb.append("\\\">here</a> for more information.</p>");
+				String githubJenkinsJobInvocationUrlPathsString = project.getProperty("github.jenkins.job.invocation.url.paths");
+
+				String[] githubJenkinsJobInvocationUrlPaths = githubJenkinsJobInvocationUrlPathsString.split(" ");
+
+				for (String githubJenkinsJobInvocationUrlPath : githubJenkinsJobInvocationUrlPaths) {
+					String remoteGithubJenkinsJobInvocationUrl = getRemoteGithubJenkinsUrl() + githubJenkinsJobInvocationUrlPath;
+
+					sb.append("<li><a href=\\\"");
+					sb.append(remoteGithubJenkinsJobInvocationUrl);
+					sb.append("\\\">");
+					sb.append(remoteGithubJenkinsJobInvocationUrl);
+					sb.append("</a></li>");
 				}
+
+				sb.append("</ul>");
 
 				String githubJenkinsFailureCount = project.getProperty("github.jenkins.failure.count");
 
@@ -492,13 +503,24 @@
 					sb.append("</p>");
 				}
 
-				String githubJenkinsResultsURL = project.getProperty("github.jenkins.results.url");
+				sb.append("<h1>See below links for more information.</h1>");
+				sb.append("<ul>");
 
-				if (githubJenkinsResultsURL != null) {
-					sb.append("<p>Click <a href=\\\"");
-					sb.append(githubJenkinsResultsURL);
-					sb.append("\\\">here</a> for more information.</p>");
+				String githubJenkinsJobInvocationUrlPathsString = project.getProperty("github.jenkins.job.invocation.url.paths");
+
+				String[] githubJenkinsJobInvocationUrlPaths = githubJenkinsJobInvocationUrlPathsString.split(" ");
+
+				for (String githubJenkinsJobInvocationUrlPath : githubJenkinsJobInvocationUrlPaths) {
+					String remoteGithubJenkinsJobInvocationUrl = getRemoteGithubJenkinsUrl() + githubJenkinsJobInvocationUrlPath;
+
+					sb.append("<li><a href=\\\"");
+					sb.append(remoteGithubJenkinsJobInvocationUrl);
+					sb.append("\\\">");
+					sb.append(remoteGithubJenkinsJobInvocationUrl);
+					sb.append("</a></li>");
 				}
+
+				sb.append("</ul>");
 
 				project.setProperty("github.post.comment.body", sb.toString());
 			]]>

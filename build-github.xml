@@ -384,6 +384,36 @@
 			<![CDATA[
 				import java.util.concurrent.TimeUnit;
 
+				import org.json.JSONObject;
+
+				public String fixURL(String url) {
+					if (url.contains("(")) {
+						url = url.replace("(", "%28");
+					}
+
+					if (url.contains(")")) {
+						url = url.replace(")", "%29");
+					}
+
+					if (url.contains("[")) {
+						url = url.replace("[", "%5B");
+					}
+
+					if (url.contains("]")) {
+						url = url.replace("]", "%5D");
+					}
+
+					return url;
+				}
+
+				public String getRemoteGithubJenkinsUrl() {
+					JSONObject jsonObject = toJSONObject(project.getProperty("github.jenkins.url") + "/api/json");
+
+					JSONObject primaryViewJSONObject = jsonObject.get("primaryView");
+
+					return primaryViewJSONObject.get("url");
+				}
+
 				public String toFormattedBuildTime(String githubJenkinsBuildTime) {
 					int milliseconds = Integer.parseInt(githubJenkinsBuildTime);
 
@@ -421,6 +451,31 @@
 					if (seconds > 1) {
 						sb.append("s");
 					}
+
+					return sb.toString();
+				}
+
+				public JSONObject toJSONObject(String url) {
+					return new JSONObject(toString(url));
+				}
+
+				public String toString(String url) {
+					StringBuilder sb = new StringBuilder();
+
+					URL urlObject = new URL(fixURL(url));
+
+					InputStreamReader inputStreamReader = new InputStreamReader(urlObject.openStream());
+
+					BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+					String line = null;
+
+					while ((line = bufferedReader.readLine()) != null) {
+						sb.append(line);
+						sb.append("\n");
+					}
+
+					bufferedReader.close();
 
 					return sb.toString();
 				}

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.wab.generator;
 
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -71,7 +71,8 @@ public class ServiceBeanPostProcessor
 			return bean;
 		}
 
-		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		Dictionary<String, Object> properties =
+			new HashMapDictionary<String, Object>();
 
 		properties.put("bean.id", beanName);
 

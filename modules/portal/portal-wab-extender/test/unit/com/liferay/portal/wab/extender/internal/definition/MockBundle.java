@@ -14,6 +14,7 @@
 
 package com.liferay.portal.wab.extender.internal.definition;
 
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
@@ -27,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -85,12 +85,12 @@ public class MockBundle implements Bundle {
 
 	@Override
 	public Dictionary<String, String> getHeaders() {
-		return new Hashtable<String, String>();
+		return new HashMapDictionary<String, String>();
 	}
 
 	@Override
 	public Dictionary<String, String> getHeaders(String locale) {
-		return new Hashtable<String, String>();
+		return new HashMapDictionary<String, String>();
 	}
 
 	@Override

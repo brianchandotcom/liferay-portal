@@ -14,11 +14,11 @@
 
 package com.liferay.portal.wab.generator.internal;
 
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.wab.generator.internal.artifact.WarArtifactUrlTransformer;
 import com.liferay.portal.wab.generator.internal.handler.WabURLStreamHandlerService;
 
 import java.util.Dictionary;
-import java.util.Hashtable;
 
 import javax.servlet.ServletContext;
 
@@ -72,7 +72,8 @@ public class WabGenerator {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		Dictionary<String, Object> properties =
+			new HashMapDictionary<String, Object>();
 
 		properties.put(
 			URLConstants.URL_HANDLER_PROTOCOL, new String[] {"webbundle"});

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,7 +30,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Dictionary;
-import java.util.Hashtable;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
@@ -177,7 +177,8 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 		PortletConfig portletConfig = getPortletConfig();
 		PortletContext portletContext = getPortletContext();
 
-		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		Dictionary<String, Object> properties =
+			new HashMapDictionary<String, Object>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,

@@ -14,9 +14,10 @@
 
 package com.liferay.portal.wab.extender.internal.adaptor;
 
+import com.liferay.portal.kernel.util.HashMapDictionary;
+
 import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.Hashtable;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -94,7 +95,8 @@ public class HttpAdapter {
 			return;
 		}
 
-		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		Dictionary<String, Object> properties =
+			new HashMapDictionary<String, Object>();
 
 		properties.put("bean.id", HttpServlet.class.getName());
 		properties.put("original.bean", Boolean.TRUE.toString());

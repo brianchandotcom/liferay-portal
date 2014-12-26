@@ -78,6 +78,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 			{ "parentGroupId", Types.BIGINT },
 			{ "liveGroupId", Types.BIGINT },
 			{ "treePath", Types.VARCHAR },
+			{ "groupKey", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "type_", Types.INTEGER },
@@ -90,7 +91,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 			{ "inheritContent", Types.BOOLEAN },
 			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Group_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,name VARCHAR(150) null,description STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Group_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,groupKey VARCHAR(150) null,name VARCHAR(150) null,description STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 	public static final String ORDER_BY_JPQL = " ORDER BY group_.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Group_.name ASC";
@@ -112,13 +113,14 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static final long COMPANYID_COLUMN_BITMASK = 8L;
 	public static final long FRIENDLYURL_COLUMN_BITMASK = 16L;
 	public static final long GROUPID_COLUMN_BITMASK = 32L;
-	public static final long INHERITCONTENT_COLUMN_BITMASK = 64L;
-	public static final long LIVEGROUPID_COLUMN_BITMASK = 128L;
-	public static final long NAME_COLUMN_BITMASK = 256L;
+	public static final long GROUPKEY_COLUMN_BITMASK = 64L;
+	public static final long INHERITCONTENT_COLUMN_BITMASK = 128L;
+	public static final long LIVEGROUPID_COLUMN_BITMASK = 256L;
 	public static final long PARENTGROUPID_COLUMN_BITMASK = 512L;
 	public static final long SITE_COLUMN_BITMASK = 1024L;
 	public static final long TYPE_COLUMN_BITMASK = 2048L;
 	public static final long UUID_COLUMN_BITMASK = 4096L;
+	public static final long NAME_COLUMN_BITMASK = 8192L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -143,6 +145,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		model.setParentGroupId(soapModel.getParentGroupId());
 		model.setLiveGroupId(soapModel.getLiveGroupId());
 		model.setTreePath(soapModel.getTreePath());
+		model.setGroupKey(soapModel.getGroupKey());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setType(soapModel.getType());
@@ -260,6 +263,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		attributes.put("parentGroupId", getParentGroupId());
 		attributes.put("liveGroupId", getLiveGroupId());
 		attributes.put("treePath", getTreePath());
+		attributes.put("groupKey", getGroupKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
@@ -338,6 +342,12 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		if (treePath != null) {
 			setTreePath(treePath);
+		}
+
+		String groupKey = (String)attributes.get("groupKey");
+
+		if (groupKey != null) {
+			setGroupKey(groupKey);
 		}
 
 		String name = (String)attributes.get("name");
@@ -647,6 +657,32 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@JSON
 	@Override
+	public String getGroupKey() {
+		if (_groupKey == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _groupKey;
+		}
+	}
+
+	@Override
+	public void setGroupKey(String groupKey) {
+		_columnBitmask |= GROUPKEY_COLUMN_BITMASK;
+
+		if (_originalGroupKey == null) {
+			_originalGroupKey = _groupKey;
+		}
+
+		_groupKey = groupKey;
+	}
+
+	public String getOriginalGroupKey() {
+		return GetterUtil.getString(_originalGroupKey);
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -660,15 +696,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public void setName(String name) {
 		_columnBitmask = -1L;
 
-		if (_originalName == null) {
-			_originalName = _name;
-		}
-
 		_name = name;
-	}
-
-	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -915,6 +943,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		groupImpl.setParentGroupId(getParentGroupId());
 		groupImpl.setLiveGroupId(getLiveGroupId());
 		groupImpl.setTreePath(getTreePath());
+		groupImpl.setGroupKey(getGroupKey());
 		groupImpl.setName(getName());
 		groupImpl.setDescription(getDescription());
 		groupImpl.setType(getType());
@@ -1012,7 +1041,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		groupModelImpl._setOriginalLiveGroupId = false;
 
-		groupModelImpl._originalName = groupModelImpl._name;
+		groupModelImpl._originalGroupKey = groupModelImpl._groupKey;
 
 		groupModelImpl._originalType = groupModelImpl._type;
 
@@ -1071,6 +1100,14 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 			groupCacheModel.treePath = null;
 		}
 
+		groupCacheModel.groupKey = getGroupKey();
+
+		String groupKey = groupCacheModel.groupKey;
+
+		if ((groupKey != null) && (groupKey.length() == 0)) {
+			groupCacheModel.groupKey = null;
+		}
+
 		groupCacheModel.name = getName();
 
 		String name = groupCacheModel.name;
@@ -1122,7 +1159,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -1144,6 +1181,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		sb.append(getLiveGroupId());
 		sb.append(", treePath=");
 		sb.append(getTreePath());
+		sb.append(", groupKey=");
+		sb.append(getGroupKey());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", description=");
@@ -1173,7 +1212,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(70);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Group");
@@ -1218,6 +1257,10 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		sb.append(
 			"<column><column-name>treePath</column-name><column-value><![CDATA[");
 		sb.append(getTreePath());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupKey</column-name><column-value><![CDATA[");
+		sb.append(getGroupKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -1296,8 +1339,9 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private long _originalLiveGroupId;
 	private boolean _setOriginalLiveGroupId;
 	private String _treePath;
+	private String _groupKey;
+	private String _originalGroupKey;
 	private String _name;
-	private String _originalName;
 	private String _description;
 	private int _type;
 	private int _originalType;

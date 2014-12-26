@@ -389,6 +389,7 @@
 		<property name="parentGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="liveGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="treePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />

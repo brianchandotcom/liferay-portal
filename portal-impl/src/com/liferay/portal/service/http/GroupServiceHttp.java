@@ -397,14 +397,14 @@ public class GroupServiceHttp {
 	}
 
 	public static com.liferay.portal.model.Group getGroup(
-		HttpPrincipal httpPrincipal, long companyId, java.lang.String name)
+		HttpPrincipal httpPrincipal, long companyId, java.lang.String groupKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getGroup", _getGroupParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, name);
+					companyId, groupKey);
 
 			Object returnObj = null;
 
@@ -1235,7 +1235,7 @@ public class GroupServiceHttp {
 
 	public static com.liferay.portal.model.Group updateGroup(
 		HttpPrincipal httpPrincipal, long groupId, long parentGroupId,
-		java.lang.String name, java.lang.String description, int type,
+		java.lang.String groupKey, java.lang.String description, int type,
 		boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean inheritContent, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1245,9 +1245,9 @@ public class GroupServiceHttp {
 					"updateGroup", _updateGroupParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					parentGroupId, name, description, type, manualMembership,
-					membershipRestriction, friendlyURL, inheritContent, active,
-					serviceContext);
+					parentGroupId, groupKey, description, type,
+					manualMembership, membershipRestriction, friendlyURL,
+					inheritContent, active, serviceContext);
 
 			Object returnObj = null;
 

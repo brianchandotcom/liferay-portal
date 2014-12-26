@@ -806,6 +806,7 @@ create table Group_ (
 	parentGroupId LONG,
 	liveGroupId LONG,
 	treePath STRING null,
+	groupKey VARCHAR(150) null,
 	name VARCHAR(150) null,
 	description STRING null,
 	type_ INTEGER,

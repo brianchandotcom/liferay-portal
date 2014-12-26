@@ -457,7 +457,7 @@
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
-			<var name="expected" value="True" />
+			<var name="expected" value="true" />
 		</execute>
 	</command>
 

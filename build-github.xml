@@ -294,20 +294,26 @@
 					sb.append("\\\">here</a> for more information.</p>");
 				}
 
+				String githubJenkinsFailureCount = project.getProperty("github.jenkins.failure.count");
+
+				if (githubJenkinsFailureCount == null) {
+					githubJenkinsFailureCount = "0";
+				}
+
 				sb.append("<h1>");
+				sb.append(githubJenkinsFailureCount);
+				sb.append(" Failure");
+
+				if (!githubJenkinsFailureCount.equals("1")) {
+					sb.append("s");
+				}
+
+				sb.append(".</h1>");
 
 				String githubJenkinsFailureURLPathsString = project.getProperty("github.jenkins.failure.url.paths");
 
 				String[] githubJenkinsFailureURLPaths = githubJenkinsFailureURLPathsString.split(" ");
 
-				sb.append(githubJenkinsFailureURLPaths.length);
-				sb.append(" Failure");
-
-				if (githubJenkinsFailureURLPaths.length != 1) {
-					sb.append("s");
-				}
-
-				sb.append(":</h1>");
 				sb.append("<ul>");
 
 				for (String githubJenkinsFailureURLPath : githubJenkinsFailureURLPaths) {

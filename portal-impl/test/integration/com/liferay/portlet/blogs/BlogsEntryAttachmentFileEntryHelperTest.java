@@ -62,7 +62,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	}
 
 	@Test
-	public void testGetAttachmentLink() throws Exception {
+	public void testGetBlogsEntryAttachmentFileEntryLink() throws Exception {
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
 			"image.jpg", _getInputStream(),
@@ -78,7 +78,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	}
 
 	@Test
-	public void testGetTempBlogsEntryAttachments() throws Exception {
+	public void testGetTempBlogsEntryAttachmentFileEntries() throws Exception {
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
 			"image.jpg", _getInputStream(),
@@ -105,7 +105,8 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	}
 
 	@Test
-	public void testGetTempBlogsEntryAttachmentsWithManuallyModifiedLink()
+	public void
+			testGetTempBlogsEntryAttachmentFileEntriesWithManuallyModifiedLink()
 		throws Exception {
 
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(

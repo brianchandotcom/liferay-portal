@@ -107,7 +107,7 @@ public class BlogsEntryAttachmentFileEntryHelper {
 
 			content = content.replaceAll(
 				sb.toString(),
-				getBlogsEntryAttachmentFileEntryLink(
+				getBlogsEntryAttachmentFileEntryImgTag(
 					blogsEntryAttachmentFileEntryReference.
 						getBlogsEntryAttachmentFileEntry()));
 		}
@@ -129,7 +129,7 @@ public class BlogsEntryAttachmentFileEntryHelper {
 			true);
 	}
 
-	protected String getBlogsEntryAttachmentFileEntryLink(
+	protected String getBlogsEntryAttachmentFileEntryImgTag(
 		FileEntry blogsEntryAttachmentEntryFileEntry) {
 
 		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(

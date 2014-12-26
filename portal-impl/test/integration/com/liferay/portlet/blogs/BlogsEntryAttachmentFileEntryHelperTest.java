@@ -97,7 +97,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	}
 
 	@Test
-	public void testGetBlogsEntryAttachmentFileEntryLink() throws Exception {
+	public void testGetBlogsEntryAttachmentFileEntryImgTag() throws Exception {
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
 			"image.jpg", _getInputStream(), ContentTypes.IMAGE_JPEG);
@@ -108,7 +108,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 		Assert.assertEquals(
 			"<img src=\"" + fileEntryURL + "\" />",
 			_blogsEntryAttachmentFileEntryHelper.
-				getBlogsEntryAttachmentFileEntryLink(tempFileEntry));
+				getBlogsEntryAttachmentFileEntryImgTag(tempFileEntry));
 	}
 
 	@Test
@@ -134,15 +134,14 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	}
 
 	@Test
-	public void
-			testGetTempBlogsEntryAttachmentFileEntriesWithManuallyModifiedLink()
+	public void testGetTempBlogsEntryAttachmentFileEntriesWithModifiedImgTag()
 		throws Exception {
 
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
 			"image.jpg", _getInputStream(), ContentTypes.IMAGE_JPEG);
 
-		String tempFileEntryImgTag = _getManuallyModifiedTempFileEntryImgTag(
+		String tempFileEntryImgTag = _getModifiedTempFileEntryImgTag(
 			tempFileEntry);
 
 		List<FileEntry> tempBlogsEntryAttachments =
@@ -235,9 +234,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			"com/liferay/portal/util/dependencies/test.jpg");
 	}
 
-	private String _getManuallyModifiedTempFileEntryImgTag(
-		FileEntry tempFileEntry) {
-
+	private String _getModifiedTempFileEntryImgTag(FileEntry tempFileEntry) {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("<img ");

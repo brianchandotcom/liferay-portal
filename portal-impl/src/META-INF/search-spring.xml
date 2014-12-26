@@ -189,11 +189,14 @@
 				<entry key="entryClassName" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="entryClassPK" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="extension" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="firstName" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key="groupId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="groupRoleId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="installedVersion" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="lastName" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key="layoutUuid" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="license" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
+				<entry key="middleName" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<!--<entry key="path">
 					<bean id="org.apache.lucene.analysis.miscellaneous.PatternAnalyzer" class="org.apache.lucene.analysis.miscellaneous.PatternAnalyzer">
 						<constructor-arg ref="org.apache.lucene.util.Version" />
@@ -211,6 +214,7 @@
 				<entry key="path" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key="roleId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="rootEntryClassPK" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="screenName" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key="status" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="structureId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="tag" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />

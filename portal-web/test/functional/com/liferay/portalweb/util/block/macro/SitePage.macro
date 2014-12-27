@@ -362,6 +362,15 @@
 		<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="${sitePageName}" />
 	</command>
 
+	<command name="openPageTree">
+		<while>
+			<condition action="CPSitepages#isVisible" locator-key1="PAGE_TREE_PLUS" />
+			<then>
+				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PLUS" />
+			</then>
+		</while>
+	</command>
+
 	<command name="pageLockCheckPG">
 		<execute action="Dockbar#assertTextEquals" locator-key1="PAGE_INFO_MESSAGE" value1="This page is linked to a site template which does not allow modifications to it." />
 	</command>

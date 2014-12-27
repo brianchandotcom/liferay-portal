@@ -78,6 +78,8 @@
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
+		<execute macro="SitePage#openPageTree" />
+
 		<execute macro="SitePage#addPageTranslations">
 			<var name="childPageName" value="Blog Page" />
 			<var name="pageTranslation" value="es_ES" />

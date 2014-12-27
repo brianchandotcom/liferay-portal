@@ -142,6 +142,11 @@
 </tr>
 <!--PAGE_TREE-->
 <tr>
+	<td>PAGE_TREE_PLUS</td>
+	<td>//div[contains(@class,'tree-collapsed')]/span[contains(@class,'tree-hitarea')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TREE_ROOT_ARROW_PLUS</td>
 	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div[contains(@class,'tree-collapse')]/span[contains(@class,'tree-hitarea')]</td>
 	<td></td>

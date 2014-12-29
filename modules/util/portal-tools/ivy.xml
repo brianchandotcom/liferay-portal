@@ -15,4 +15,9 @@
 		<artifact type="pom" />
 		<artifact m2:classifier="sources" />
 	</publications>
+
+	<dependencies defaultconf="default">
+		<dependency name="com.liferay.wiki.api" org="com.liferay" rev="latest.integration" />
+		<dependency name="com.liferay.wiki.service" org="com.liferay" rev="latest.integration" />
+	</dependencies>
 </ivy-module>

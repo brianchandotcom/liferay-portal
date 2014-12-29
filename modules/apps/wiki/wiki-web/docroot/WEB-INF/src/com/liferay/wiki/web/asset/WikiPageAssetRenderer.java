@@ -33,7 +33,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermission;
-import com.liferay.wiki.util.WikiServiceUtil;
+import com.liferay.wiki.util.WikiUtil;
 
 import java.util.Date;
 import java.util.Locale;
@@ -114,7 +114,7 @@ public class WikiPageAssetRenderer
 
 		try {
 			content = HtmlUtil.extractText(
-				WikiServiceUtil.convert(_page, null, null, null));
+				WikiUtil.convert(_page, null, null, null));
 		}
 		catch (Exception e) {
 		}

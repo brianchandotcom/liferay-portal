@@ -44,7 +44,7 @@ import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermission;
-import com.liferay.wiki.util.WikiServiceUtil;
+import com.liferay.wiki.util.WikiUtil;
 
 import java.util.Locale;
 
@@ -191,7 +191,7 @@ public class WikiPageIndexer extends BaseIndexer {
 		document.addUID(PORTLET_ID, page.getNodeId(), page.getTitle());
 
 		String content = HtmlUtil.extractText(
-			WikiServiceUtil.convert(page, null, null, null));
+			WikiUtil.convert(page, null, null, null));
 
 		document.addText(Field.CONTENT, content);
 

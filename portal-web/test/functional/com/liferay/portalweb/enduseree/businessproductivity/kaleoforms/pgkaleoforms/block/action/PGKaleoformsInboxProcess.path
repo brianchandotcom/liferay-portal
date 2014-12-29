@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROCESS_TITLE</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${key_kfProcessName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_STATUS</td>
 	<td>//div[@class='lfr-asset-summary']//div</td>
 	<td></td>

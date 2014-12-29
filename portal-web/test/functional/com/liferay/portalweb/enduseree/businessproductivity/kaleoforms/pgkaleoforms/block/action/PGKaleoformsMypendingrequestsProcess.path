@@ -56,7 +56,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TASKS_TABLE_REVEIW_COMPLETED</td>
+	<td>TASKS_TABLE_REVIEW_COMPLETED</td>
 	<td>//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(.,'Review')]/td[3]</td>
 	<td></td>
 </tr>

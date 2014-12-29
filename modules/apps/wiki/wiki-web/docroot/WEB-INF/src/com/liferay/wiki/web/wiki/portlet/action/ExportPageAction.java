@@ -35,7 +35,7 @@ import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.util.WikiServiceUtil;
+import com.liferay.wiki.util.WikiUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -141,11 +141,11 @@ public class ExportPageAction extends PortletAction {
 
 		String content = page.getContent();
 
-		String attachmentURLPrefix = WikiServiceUtil.getAttachmentURLPrefix(
+		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
 			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);
 
 		try {
-			content = WikiServiceUtil.convert(
+			content = WikiUtil.convert(
 				page, viewPageURL, editPageURL, attachmentURLPrefix);
 		}
 		catch (Exception e) {

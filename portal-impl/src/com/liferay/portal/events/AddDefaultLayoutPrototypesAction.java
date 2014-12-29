@@ -28,7 +28,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;import com.liferay.portlet.blogs.model.BlogsEntry;
 
 import java.util.HashMap;
 import java.util.List;
@@ -146,7 +145,7 @@ public class AddDefaultLayoutPrototypesAction
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 	}
-	
+
 	protected void doRun(long companyId) throws Exception {
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
 

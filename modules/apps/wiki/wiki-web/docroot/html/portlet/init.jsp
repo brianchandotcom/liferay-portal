@@ -105,7 +105,6 @@ page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
 page import="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
-page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.portlet.social.model.SocialActivity" %><%@
 page import="com.liferay.portlet.social.model.SocialActivityConstants" %><%@
 page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" %><%@

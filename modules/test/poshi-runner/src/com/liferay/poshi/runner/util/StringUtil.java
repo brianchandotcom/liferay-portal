@@ -52,6 +52,66 @@ public class StringUtil {
 		return s;
 	}
 
+	public static String replaceFirst(String s, char oldSub, char newSub) {
+		if (s == null) {
+			return null;
+		}
+
+		return replaceFirst(s, String.valueOf(oldSub), String.valueOf(newSub));
+	}
+
+	public static String replaceFirst(String s, char oldSub, String newSub) {
+		if ((s == null) || (newSub == null)) {
+			return null;
+		}
+
+		return replaceFirst(s, String.valueOf(oldSub), newSub);
+	}
+
+	public static String replaceFirst(String s, String oldSub, String newSub) {
+		return replaceFirst(s, oldSub, newSub, 0);
+	}
+
+	public static String replaceFirst(
+		String s, String oldSub, String newSub, int fromIndex) {
+
+		if ((s == null) || (oldSub == null) || (newSub == null)) {
+			return null;
+		}
+
+		if (oldSub.equals(newSub)) {
+			return s;
+		}
+
+		int y = s.indexOf(oldSub, fromIndex);
+
+		if (y >= 0) {
+			return s.substring(0, y).concat(newSub).concat(
+				s.substring(y + oldSub.length()));
+		}
+		else {
+			return s;
+		}
+	}
+
+	public static String replaceFirst(
+		String s, String[] oldSubs, String[] newSubs) {
+
+		if ((s == null) || (oldSubs == null) || (newSubs == null)) {
+			return null;
+		}
+
+		if (oldSubs.length != newSubs.length) {
+			return s;
+		}
+
+		for (int i = 0; i < oldSubs.length; i++) {
+			s = replaceFirst(s, oldSubs[i], newSubs[i]);
+		}
+
+		return s;
+	}
+
 	public static String[] split(String s) {
 		return split(s, StringPool.COMMA);
 	}

@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.poshi.runner.selenium;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.poshi.runner.util.GetterUtil;
+import com.liferay.poshi.runner.util.ListUtil;
+import com.liferay.poshi.runner.util.StringUtil;
 
 import com.thoughtworks.selenium.Selenium;
 
@@ -43,6 +40,8 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
+
+import junit.framework.TestCase;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -628,7 +627,7 @@ public class WebDriverToSeleniumBridge
 			return nodeList.item(0);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			e.printStackTrace();
 		}
 
 		return null;
@@ -1605,7 +1604,7 @@ public class WebDriverToSeleniumBridge
 			}
 		}
 
-		BaseTestCase.fail("Unable to find the window ID \"" + windowID + "\"");
+		TestCase.fail("Unable to find the window ID \"" + windowID + "\"");
 	}
 
 	@Override
@@ -1742,9 +1741,6 @@ public class WebDriverToSeleniumBridge
 
 		select.selectByIndex(index);
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		WebDriverToSeleniumBridge.class);
 
 	private Map<String, String> _keysSpecialChars =
 		new HashMap<String, String>();

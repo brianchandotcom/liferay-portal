@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.poshi.runner.selenium;
 
 import com.thoughtworks.selenium.Selenium;
 

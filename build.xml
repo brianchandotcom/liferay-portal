@@ -64,175 +64,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="setup-sdk">
-		<sequential>
-			<delete dir="${project.dir}/tools/sdk" />
-
-			<unzip
-				dest="${project.dir}/tools"
-				src="${project.dir}/tools/liferay-plugins-sdk-7.0.0.zip"
-			>
-				<mapper
-					type="glob"
-					from="liferay-plugins-sdk-7.0.0/*"
-					to="sdk/*"
-				/>
-			</unzip>
-
-			<propertyselector
-				casesensitive="false"
-				delimiter=","
-				distinct="true"
-				match="app\.(server\.(geronimo|glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere).+)\.dir"
-				override="true"
-				property="app.server.dir.property.list"
-				select="\1"
-			/>
-
-			<sortlist
-				delimiter=","
-				override="true"
-				property="app.server.dir.property.list"
-				value="${app.server.dir.property.list}"
-			/>
-
-			<for list="${app.server.dir.property.list}" param="app.server.dir.property">
-				<sequential>
-					<propertycopy
-						from="app.@{app.server.dir.property}.dir"
-						name="temp.app.server.dir"
-					/>
-
-					<echo
-						append="true"
-						file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
-					>
-						app.@{app.server.dir.property}.dir=${temp.app.server.dir}
-					</echo>
-
-					<var name="temp.app.server.dir" unset="true" />
-				</sequential>
-			</for>
-
-			<propertyselector
-				casesensitive="false"
-				delimiter="," match="ivy.pom.(.+)"
-				property="ivy.pom.property.list"
-				select="\1"
-			/>
-
-			<sortlist
-				delimiter=","
-				override="true"
-				property="ivy.pom.property.list"
-				value="${ivy.pom.property.list}"
-			/>
-
-			<if>
-				<not>
-					<equals arg1="${ivy.pom.property.list}" arg2="$${ivy.pom.property.list}" />
-				</not>
-				<then>
-					<for list="${ivy.pom.property.list}" param="ivy.pom.property">
-						<sequential>
-							<propertycopy
-								from="ivy.pom.@{ivy.pom.property}"
-								name="temp.ivy.pom"
-							/>
-
-							<echo
-								append="true"
-								file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
-							>
-								ivy.pom.@{ivy.pom.property}=${temp.ivy.pom}
-							</echo>
-
-							<var name="temp.ivy.pom" unset="true" />
-						</sequential>
-					</for>
-				</then>
-			</if>
-
-			<propertyselector
-				casesensitive="false"
-				delimiter="," match="sonatype.(.+)"
-				property="sonatype.property.list"
-				select="\1"
-			/>
-
-			<sortlist
-				delimiter=","
-				override="true"
-				property="sonatype.property.list"
-				value="${sonatype.property.list}"
-			/>
-
-			<if>
-				<not>
-					<equals arg1="${sonatype.property.list}" arg2="$${sonatype.property.list}" />
-				</not>
-				<then>
-					<for list="${sonatype.property.list}" param="sonatype.property">
-						<sequential>
-							<propertycopy
-								from="sonatype.@{sonatype.property}"
-								name="temp.sonatype"
-							/>
-
-							<echo
-								append="true"
-								file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
-							>
-								sonatype.@{sonatype.property}=${temp.sonatype}
-							</echo>
-
-							<var name="temp.sonatype" unset="true" />
-						</sequential>
-					</for>
-				</then>
-			</if>
-
-			<echo
-				append="true"
-				file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
-			>
-				app.server.type=${app.server.type}
-				auto.deploy.dir=${liferay.home}/osgi/apps
-				clean.delete.ivy.md5=true
-				clean.delete.lib=true
-				ivy.home=${project.dir}/.ivy
-				liferay.home=${liferay.home}
-				module.framework.base.dir=${liferay.home}/osgi
-			</echo>
-
-			<copy file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties" tofile="${project.dir}/tools/sdk/build.${env.HOST}.properties" />
-			<copy file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties" tofile="${project.dir}/tools/sdk/build.${env.HOSTNAME}.properties" />
-
-			<if>
-				<not>
-					<available file="${app.server.dir}" />
-				</not>
-				<then>
-					<if>
-						<equals arg1="${app.server.type}" arg2="tomcat" />
-						<then>
-							<ant antfile="build-dist.xml" target="unzip-tomcat" inheritAll="false" />
-						</then>
-					</if>
-				</then>
-			</if>
-
-			<!--
-			This is a temporary workaround needed so that registry-api can
-			compile because the SDK assumes a deployed portal, but we are
-			compiling registry-api before the portal is deployed.
-			-->
-
-			<mkdir dir="${app.server.lib.global.dir}" />
-			<mkdir dir="${app.server.lib.portal.dir}" />
-		</sequential>
-	</macrodef>
-
 	<target name="all">
 		<antcall target="clean" />
 		<antcall target="compile" />
@@ -259,6 +90,8 @@
 		<ant dir="portal-web" target="clean" inheritAll="false" />
 
 		<ant dir="sql" target="clean" inheritAll="false" />
+
+		<delete dir="tools/sdk" />
 
 		<delete dir="${doc.dir}" />
 
@@ -384,24 +217,29 @@
 			</then>
 		</if>
 
-		<setup-sdk />
+		<antcall target="print-current-time" />
+	</target>
 
+	<target name="check-sdk-uptodate">
+		<uptodate property="sdk.uptodate">
+			<mapper to="${project.dir}/tools/sdk" type="merge" />
+			<srcfiles dir="${project.dir}/tools" includes="liferay-plugins-sdk-7.0.0.zip*" />
+		</uptodate>
+	</target>
+
+	<target name="build-registry-api" depends="setup-sdk">
 		<ant-execute
 			ant.dir="${project.dir}/modules"
 			ant.target="clean"
 		/>
 
-		<antcall target="print-current-time" />
-	</target>
-
-	<target name="compile">
-		<setup-sdk />
-
 		<ant-execute
 			ant.dir="${project.dir}/modules/core/registry-api"
 			ant.target="compile"
 		/>
+	</target>
 
+	<target name="compile" depends="build-registry-api">
 		<delete file="javac.output.txt" />
 
 		<ant dir="portal-service" target="compile" inheritAll="false" />
@@ -442,7 +280,7 @@
 		<ant dir="util-java" target="compile-test" inheritAll="false" />
 	</target>
 
-	<target name="deploy">
+	<target name="deploy" depends="setup-sdk">
 		<if>
 			<or>
 				<equals arg1="${app.server.type}" arg2="glassfish" />
@@ -462,14 +300,7 @@
 				</not>
 			</and>
 			<then>
-				<fail>
-.
-
-Tomcat is not installed in ${app.server.tomcat.dir}. If you already have Tomcat
-installed, make sure the property "$${app.server.tomcat.dir}" points to your
-Tomcat installation. If you wish to automatically install Tomcat into
-${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
-				</fail>
+				<ant antfile="build-dist.xml" target="unzip-tomcat" />
 			</then>
 		</if>
 
@@ -1055,8 +886,148 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		<setup-jrebel />
 	</target>
 
-	<target name="setup-sdk">
-		<setup-sdk />
+	<target name="setup-sdk" depends="check-sdk-uptodate" unless="sdk.uptodate">
+		<delete dir="${project.dir}/tools/sdk" />
+
+		<unzip
+			dest="${project.dir}/tools"
+			src="${project.dir}/tools/liferay-plugins-sdk-7.0.0.zip"
+		>
+			<mapper
+				type="glob"
+				from="liferay-plugins-sdk-7.0.0/*"
+				to="sdk/*"
+			/>
+		</unzip>
+
+		<propertyselector
+			casesensitive="false"
+			delimiter=","
+			distinct="true"
+			match="app\.(server\.(geronimo|glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere).+)\.dir"
+			override="true"
+			property="app.server.dir.property.list"
+			select="\1"
+		/>
+
+		<sortlist
+			delimiter=","
+			override="true"
+			property="app.server.dir.property.list"
+			value="${app.server.dir.property.list}"
+		/>
+
+		<for list="${app.server.dir.property.list}" param="app.server.dir.property">
+			<sequential>
+				<propertycopy
+					from="app.@{app.server.dir.property}.dir"
+					name="temp.app.server.dir"
+				/>
+
+				<echo
+					append="true"
+					file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
+				>
+					app.@{app.server.dir.property}.dir=${temp.app.server.dir}
+				</echo>
+
+				<var name="temp.app.server.dir" unset="true" />
+			</sequential>
+		</for>
+
+		<propertyselector
+			casesensitive="false"
+			delimiter="," match="ivy.pom.(.+)"
+			property="ivy.pom.property.list"
+			select="\1"
+		/>
+
+		<sortlist
+			delimiter=","
+			override="true"
+			property="ivy.pom.property.list"
+			value="${ivy.pom.property.list}"
+		/>
+
+		<if>
+			<not>
+				<equals arg1="${ivy.pom.property.list}" arg2="$${ivy.pom.property.list}" />
+			</not>
+			<then>
+				<for list="${ivy.pom.property.list}" param="ivy.pom.property">
+					<sequential>
+						<propertycopy
+							from="ivy.pom.@{ivy.pom.property}"
+							name="temp.ivy.pom"
+						/>
+
+						<echo
+							append="true"
+							file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
+						>
+							ivy.pom.@{ivy.pom.property}=${temp.ivy.pom}
+						</echo>
+
+						<var name="temp.ivy.pom" unset="true" />
+					</sequential>
+				</for>
+			</then>
+		</if>
+
+		<propertyselector
+			casesensitive="false"
+			delimiter="," match="sonatype.(.+)"
+			property="sonatype.property.list"
+			select="\1"
+		/>
+
+		<sortlist
+			delimiter=","
+			override="true"
+			property="sonatype.property.list"
+			value="${sonatype.property.list}"
+		/>
+
+		<if>
+			<not>
+				<equals arg1="${sonatype.property.list}" arg2="$${sonatype.property.list}" />
+			</not>
+			<then>
+				<for list="${sonatype.property.list}" param="sonatype.property">
+					<sequential>
+						<propertycopy
+							from="sonatype.@{sonatype.property}"
+							name="temp.sonatype"
+						/>
+
+						<echo
+							append="true"
+							file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
+						>
+							sonatype.@{sonatype.property}=${temp.sonatype}
+						</echo>
+
+						<var name="temp.sonatype" unset="true" />
+					</sequential>
+				</for>
+			</then>
+		</if>
+
+		<echo
+			append="true"
+			file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
+		>
+			app.server.type=${app.server.type}
+			auto.deploy.dir=${liferay.home}/osgi/apps
+			clean.delete.ivy.md5=true
+			clean.delete.lib=true
+			ivy.home=${project.dir}/.ivy
+			liferay.home=${liferay.home}
+			module.framework.base.dir=${liferay.home}/osgi
+		</echo>
+
+		<copy file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties" tofile="${project.dir}/tools/sdk/build.${env.HOST}.properties" />
+		<copy file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties" tofile="${project.dir}/tools/sdk/build.${env.HOSTNAME}.properties" />
 	</target>
 
 	<target name="sort-xml-attributes">

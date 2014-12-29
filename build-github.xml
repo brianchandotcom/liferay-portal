@@ -177,7 +177,7 @@
 				public String getConsoleErrorMessage(String githubJenkinsFailureURL) {
 					String consoleOutput = toString(githubJenkinsFailureURL + "/logText/progressiveText");
 
-					Pattern pattern = Pattern.compile("\\n[a-z\\-]+\\:\\n");
+					Pattern pattern = Pattern.compile("\\n[a-z\\-\\.]+\\:\\n");
 
 					Matcher matcher = pattern.matcher(consoleOutput);
 

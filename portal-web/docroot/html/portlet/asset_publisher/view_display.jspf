@@ -15,6 +15,10 @@
 --%>
 
 <%
+if (StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+	assetPublisherDisplayContext.setDisplayStyle(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLE_DEFAULT);
+}
+
 if (!ArrayUtil.contains(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES, assetPublisherDisplayContext.getDisplayStyle())) {
 %>
 

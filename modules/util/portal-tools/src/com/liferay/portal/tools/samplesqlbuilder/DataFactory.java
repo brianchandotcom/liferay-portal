@@ -1111,7 +1111,8 @@ public class DataFactory {
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
-				plid, WikiPortletKeys.WIKI, PortletConstants.DEFAULT_PREFERENCES));
+				plid, WikiPortletKeys.WIKI,
+				PortletConstants.DEFAULT_PREFERENCES));
 
 		return portletPreferencesModels;
 	}

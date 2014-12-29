@@ -86,7 +86,7 @@ public class WikiCacheUtil {
 			key);
 
 		if (links == null) {
-			links = WikiServiceUtil.getLinks(page);
+			links = WikiUtil.getLinks(page);
 
 			_portalCache.put(key, (Serializable)links);
 		}

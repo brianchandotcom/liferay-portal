@@ -32,7 +32,7 @@ if (Validator.isNotNull(strutsAction)) {
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
-List<WikiNode> nodes = WikiServiceUtil.getNodes(wikiConfigurationDisplayContext.getAllNodes(), wikiPortletInstanceSettings.getHiddenNodes(), permissionChecker);
+List<WikiNode> nodes = WikiUtil.getNodes(wikiConfigurationDisplayContext.getAllNodes(), wikiPortletInstanceSettings.getHiddenNodes(), permissionChecker);
 
 boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT);
 

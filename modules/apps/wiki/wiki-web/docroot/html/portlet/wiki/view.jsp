@@ -159,7 +159,7 @@ entries.add(wikiPage);
 String formattedContent = null;
 
 try {
-	formattedContent = WikiServiceUtil.getFormattedContent(renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
+	formattedContent = WikiUtil.getFormattedContent(renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
 }
 catch (Exception e) {
 	formattedContent = wikiPage.getContent();

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -58,6 +59,15 @@ public class AssetQueryRule {
 
 	public String[] getValues() {
 		return _values;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _contains);
+
+		hash = HashUtil.hash(hash, _andOperator);
+
+		return HashUtil.hash(hash, _name);
 	}
 
 	public boolean isAndOperator() {

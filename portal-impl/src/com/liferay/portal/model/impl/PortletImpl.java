@@ -2253,6 +2253,13 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	@Override
+	public int hashCode() {
+		String portletId = getPortletId();
+
+		return portletId.hashCode();
+	}
+
+	@Override
 	public boolean hasHeaderPortalCss() {
 		return !_headerPortalCss.isEmpty();
 	}

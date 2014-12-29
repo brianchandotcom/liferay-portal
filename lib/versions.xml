@@ -659,6 +659,30 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/pmd-core.jar</file-name>
+				<version>5.2.3</version>
+				<project-name>PMD</project-name>
+				<project-url>http://pmd.sourceforge.net/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD Style License</license-name>
+						<license-url>http://pmd.sourceforge.net/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/pmd-java.jar</file-name>
+				<version>5.2.3</version>
+				<project-name>PMD</project-name>
+				<project-url>http://pmd.sourceforge.net/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD Style License</license-name>
+						<license-url>http://pmd.sourceforge.net/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/postgresql.jar</file-name>
 				<version>9.1-901 JDBC 3</version>
 				<project-name>PostgreSQL JDBC Driver</project-name>
@@ -779,6 +803,18 @@
 					<license>
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/saxon.jar</file-name>
+				<version>9.1.0.8</version>
+				<project-name>Saxon-B</project-name>
+				<project-url>http://saxon.sourceforge.net//</project-url>
+				<licenses>
+					<license>
+						<license-name>MPL 1.0</license-name>
+						<license-url>http://www.mozilla.org/MPL/1.0</license-url>
 					</license>
 				</licenses>
 			</library>

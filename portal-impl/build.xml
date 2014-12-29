@@ -1585,6 +1585,17 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../sql" target="rebuild-hypersonic" />
 	</target>
 
+	<target name="run-pmd">
+		<taskdef name="pmd" classpathref="project.classpath" classname="net.sourceforge.pmd.ant.PMDTask" />
+
+		<pmd shortFilenames="true">
+			<sourceLanguage name="java" version="${ant.build.javac.source}" />
+			<ruleset>${pmd.java.ruleset}</ruleset>
+			<formatter type="text" toConsole="true" />
+			<fileset dir="${project.dir}" includes="${pmd.java.includes}" excludes="${pmd.java.excludes}" />
+		</pmd>
+	</target>
+
 	<target name="sync-plugins-git-to-svn">
 		<java
 			classname="com.liferay.portal.tools.PluginsGitSvnSyncer"

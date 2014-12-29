@@ -78,6 +78,15 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public T get() {
 		ThreadLocalMap threadLocalMap = _getThreadLocalMap();
 

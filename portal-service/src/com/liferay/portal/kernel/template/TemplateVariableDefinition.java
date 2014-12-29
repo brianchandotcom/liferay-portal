@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.template;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -109,6 +110,13 @@ public class TemplateVariableDefinition {
 
 	public TemplateVariableCodeHandler getTemplateVariableCodeHandler() {
 		return _templateVariableCodeHandler;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _name);
+
+		return HashUtil.hash(hash, _accessor);
 	}
 
 	public boolean isCollection() {

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -89,6 +90,13 @@ public class SearchResult {
 
 	public List<String> getVersions() {
 		return _versions;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _classPK);
+
+		return HashUtil.hash(hash, _className);
 	}
 
 	public void setClassName(String className) {

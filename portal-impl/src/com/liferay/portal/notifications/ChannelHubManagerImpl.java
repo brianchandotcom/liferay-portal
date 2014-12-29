@@ -171,22 +171,10 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		ChannelHub channelHub = getChannelHub(companyId);
 
 		channelHub.destroyChannel(userId);
-	}
 
-	@Override
-	public void destroyChannelHub(long companyId) throws ChannelException {
-		ChannelHub channelHub = _channelHubs.remove(companyId);
-
-		if (channelHub != null) {
-			channelHub.destroy();
+		if (!ClusterInvokeThreadLocal.isEnabled()) {
+			return;
 		}
-	}
-
-	@Override
-	public void destroyClusterChannel(long companyId, long userId)
-		throws ChannelException {
-
-		destroyChannel(companyId, userId);
 
 		MethodHandler methodHandler = new MethodHandler(
 			_destroyChannelMethodKey, companyId, userId);
@@ -200,6 +188,15 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		catch (Exception e) {
 			throw new ChannelException(
 				"Unable to destroy channel across cluster", e);
+		}
+	}
+
+	@Override
+	public void destroyChannelHub(long companyId) throws ChannelException {
+		ChannelHub channelHub = _channelHubs.remove(companyId);
+
+		if (channelHub != null) {
+			channelHub.destroy();
 		}
 	}
 

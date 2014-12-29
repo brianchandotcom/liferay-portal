@@ -217,14 +217,6 @@ public class ChannelHubManagerUtil {
 			companyId, userId, notificationEventUuids);
 	}
 
-	public static void sendClusterNotificationEvent(
-			long companyId, long userId, NotificationEvent notificationEvent)
-		throws ChannelException {
-
-		getChannelHubManager().sendClusterNotificationEvent(
-			companyId, userId, notificationEvent);
-	}
-
 	public static void sendNotificationEvent(
 			long companyId, long userId, NotificationEvent notificationEvent)
 		throws ChannelException {

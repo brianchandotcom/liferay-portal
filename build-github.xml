@@ -132,6 +132,8 @@
 				import java.io.File;
 
 				import java.util.concurrent.TimeUnit;
+				import java.util.regex.Matcher;
+				import java.util.regex.Pattern;
 
 				import org.apache.commons.io.FileUtils;
 
@@ -175,10 +177,17 @@
 				public String getConsoleErrorMessage(String githubJenkinsFailureURL) {
 					String consoleOutput = toString(githubJenkinsFailureURL + "/logText/progressiveText");
 
-					int x = consoleOutput.lastIndexOf("BUILD FAILED");
-					int y = consoleOutput.lastIndexOf("Total time:");
+					Pattern pattern = Pattern.compile("\\n[a-z\\-]+\\:\\n");
 
-					String errorMessage = consoleOutput.substring(x, y - 2);
+					Matcher matcher = pattern.matcher(consoleOutput);
+
+					int x = 0;
+
+					while (matcher.find()) {
+						x = matcher.start() + 1;
+					}
+
+					String errorMessage = consoleOutput.substring(x);
 
 					return fixJSON(errorMessage);
 				}

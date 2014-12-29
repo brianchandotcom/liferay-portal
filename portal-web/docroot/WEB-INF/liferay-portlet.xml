@@ -648,19 +648,6 @@
 		<active>false</active>
 	</portlet>
 	<portlet>
-		<portlet-name>99</portlet-name>
-		<icon>/html/icons/asset_tag_admin.png</icon>
-		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
-		<control-panel-entry-weight>20.0</control-panel-entry-weight>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/asset_tag_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-asset-tag-admin</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>101</portlet-name>
 		<icon>/html/icons/asset_publisher.png</icon>
 		<configuration-action-class>com.liferay.portlet.assetpublisher.action.ConfigurationActionImpl</configuration-action-class>

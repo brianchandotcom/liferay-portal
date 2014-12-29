@@ -246,7 +246,7 @@ if (Validator.isNull(redirect)) {
 				</c:if>
 
 				<%
-					Collection<String> formats = WikiServiceUtil.getFormats();
+					Collection<String> formats = WikiUtil.getFormats();
 				%>
 
 				<c:choose>
@@ -278,7 +278,7 @@ if (Validator.isNull(redirect)) {
 				request.setAttribute("edit_page.jsp-wikiPage", wikiPage);
 				%>
 
-				<liferay-util:include page="<%= WikiServiceUtil.getEditPage(selectedFormat) %>" servletContext="<%= application %>" />
+				<liferay-util:include page="<%= WikiUtil.getEditPage(selectedFormat) %>" servletContext="<%= application %>" />
 			</div>
 
 			<c:if test="<%= wikiPage != null %>">

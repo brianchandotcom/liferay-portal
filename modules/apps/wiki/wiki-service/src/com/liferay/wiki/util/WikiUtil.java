@@ -96,7 +96,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-public class WikiServiceUtil {
+public class WikiUtil {
 
 	public static String convert(
 			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
@@ -783,10 +783,9 @@ public class WikiServiceUtil {
 		StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH
 	};
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		WikiServiceUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(WikiUtil.class);
 
-	private static final WikiServiceUtil _instance = new WikiServiceUtil();
+	private static final WikiUtil _instance = new WikiUtil();
 
 	private static final Pattern _editPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE_EDIT\\$\\](.*?)" +
@@ -799,7 +798,7 @@ public class WikiServiceUtil {
 		WikiImporterTracker, WikiImporterTracker> _wikiImporterServiceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(WikiServiceUtil.class);
+		Bundle bundle = FrameworkUtil.getBundle(WikiUtil.class);
 
 		_wikiEngineServiceTracker = new ServiceTracker<>(
 			bundle.getBundleContext(), WikiEngineTracker.class, null);

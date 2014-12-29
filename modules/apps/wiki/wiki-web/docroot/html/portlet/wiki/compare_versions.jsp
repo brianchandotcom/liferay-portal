@@ -58,7 +58,7 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 
 <liferay-ui:diff-version-comparator
 	diffHtmlResults="<%= diffHtmlResults %>"
-	diffVersionsInfo="<%= WikiServiceUtil.getDiffVersionsInfo(nodeId, title, sourceVersion, targetVersion, request) %>"
+	diffVersionsInfo="<%= WikiUtil.getDiffVersionsInfo(nodeId, title, sourceVersion, targetVersion, request) %>"
 	portletURL="<%= portletURL %>"
 	resourceURL="<%= resourceURL %>"
 	sourceVersion="<%= sourceVersion %>"

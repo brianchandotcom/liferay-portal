@@ -27,6 +27,14 @@
 
 		<execute action="PGDocumentsandmediaAddfolder#type" locator-key1="NAME_FIELD" value1="${dmFolderName}" />
 		<execute action="PGDocumentsandmediaAddfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${dmFolderDescription}" />
+
+		<if>
+			<isset var="viewableBy" />
+			<then>
+				<execute action="PGDocumentsandmediaAddfolder#select" locator-key1="PERMISSIONS_SELECT" value1="${viewableBy}" />
+			</then>
+		</if>
+
 		<execute action="PGDocumentsandmediaAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<if>

@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.poshi.runner.selenium;
 
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.util.TestPropsValues;
+import com.liferay.poshi.runner.util.CharPool;
+import com.liferay.poshi.runner.util.GetterUtil;
+import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.Validator;
 
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
+
+import junit.framework.TestCase;
 
 import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
@@ -45,7 +45,7 @@ public class WebDriverHelper {
 			WebDriver webDriver, String ignoreJavaScriptError)
 		throws Exception {
 
-		if (!TestPropsValues.TEST_ASSERT_JAVASCRIPT_ERRORS) {
+		if (!PropsValues.TEST_ASSERT_JAVASCRIPT_ERRORS) {
 			return;
 		}
 
@@ -364,7 +364,7 @@ public class WebDriverHelper {
 		JavascriptExecutor javascriptExecutor =
 			(JavascriptExecutor)wrappedWebDriver;
 
-		StringBundler sb = new StringBundler(4);
+		StringBuilder sb = new StringBuilder();
 
 		sb.append("var element = arguments[0];");
 		sb.append("element.style.cssText = 'display:inline !important';");
@@ -383,22 +383,22 @@ public class WebDriverHelper {
 		String targetURL = "";
 
 		if (url.startsWith("/")) {
-			targetURL = TestPropsValues.PORTAL_URL + url;
+			targetURL = PropsValues.PORTAL_URL + url;
 		}
 		else {
 			targetURL = url;
 		}
 
 		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_IMPLICIT_WAIT) {
+			if (second >= PropsValues.TIMEOUT_IMPLICIT_WAIT) {
 				break;
 			}
 
 			try {
 				webDriver.get(targetURL);
 
-				if (TestPropsValues.BROWSER_TYPE.equals("*iehta") ||
-					TestPropsValues.BROWSER_TYPE.equals("*iexplore")) {
+				if (PropsValues.BROWSER_TYPE.equals("*iehta") ||
+					PropsValues.BROWSER_TYPE.equals("*iexplore")) {
 
 					refresh(webDriver);
 				}
@@ -462,8 +462,7 @@ public class WebDriverHelper {
 				}
 			}
 
-			BaseTestCase.fail(
-				"Unable to find the window ID \"" + windowID + "\"");
+			TestCase.fail("Unable to find the window ID \"" + windowID + "\"");
 		}
 		else if (windowID.equals("null")) {
 			WebDriver.TargetLocator targetLocator = webDriver.switchTo();
@@ -487,13 +486,12 @@ public class WebDriverHelper {
 				}
 			}
 
-			BaseTestCase.fail(
-				"Unable to find the window ID \"" + windowID + "\"");
+			TestCase.fail("Unable to find the window ID \"" + windowID + "\"");
 		}
 	}
 
 	public static void setDefaultTimeoutImplicit(WebDriver webDriver) {
-		int timeout = TestPropsValues.TIMEOUT_IMPLICIT_WAIT * 1000;
+		int timeout = PropsValues.TIMEOUT_IMPLICIT_WAIT * 1000;
 
 		setTimeoutImplicit(webDriver, String.valueOf(timeout));
 	}

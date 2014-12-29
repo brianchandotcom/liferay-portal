@@ -31,6 +31,8 @@ Export-Package:\
 	com.liferay.portal.upload,\
 	com.liferay.portal.verify,\
 	com.liferay.portal.xml,\
+	com.liferay.portlet.asset.model.impl,\
+	com.liferay.portlet.asset.service.permission,\
 	com.liferay.portlet.dynamicdatamapping.service.permission,\
 	com.liferay.portlet.documentlibrary,\
 	com.liferay.portlet.documentlibrary.action,\

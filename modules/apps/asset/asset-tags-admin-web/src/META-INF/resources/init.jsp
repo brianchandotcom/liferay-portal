@@ -22,4 +22,4 @@ page import="com.liferay.portlet.asset.NoSuchTagException" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetPermission" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetTagPermission" %>
 
-<%@ include file="/html/portlet/asset_tag_admin/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

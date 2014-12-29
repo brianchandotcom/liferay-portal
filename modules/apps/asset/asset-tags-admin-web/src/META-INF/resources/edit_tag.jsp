@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_tag_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(renderRequest, "redirect");
@@ -31,7 +31,7 @@ AssetTag tag = AssetTagLocalServiceUtil.fetchAssetTag(tagId);
 <portlet:actionURL name="editTag" var="editTagURL" />
 
 <aui:form action="<%= editTagURL %>" method="post" name="fm">
-	<aui:input name="mvcPath" type="hidden" value="/html/portlet/asset_tag_admin/edit_tag.jsp" />
+	<aui:input name="mvcPath" type="hidden" value="/edit_tag.jsp" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:error exception="<%= AssetTagException.class %>">

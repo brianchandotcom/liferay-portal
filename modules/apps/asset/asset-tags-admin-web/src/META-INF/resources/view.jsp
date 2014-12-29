@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_tag_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <aui:form name="fm">
 	<aui:input name="deleteTagIds" type="hidden" />
@@ -27,7 +27,7 @@
 			<aui:nav cssClass="navbar-nav">
 				<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG) %>">
 					<portlet:renderURL var="editTagURL">
-						<portlet:param name="mvcPath" value="/html/portlet/asset_tag_admin/edit_tag.jsp" />
+						<portlet:param name="mvcPath" value="/edit_tag.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:renderURL>
 
@@ -89,7 +89,7 @@
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/asset_tag_admin/tag_action.jsp"
+				path="/tag_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
@@ -132,7 +132,7 @@
 		function() {
 			if (form.fm('rowIds').filter(':checked').length > 1) {
 				<portlet:renderURL var="mergeURL">
-					<portlet:param name="mvcPath" value="/html/portlet/asset_tag_admin/merge_tag.jsp" />
+					<portlet:param name="mvcPath" value="/merge_tag.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 

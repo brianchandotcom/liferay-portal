@@ -44,7 +44,7 @@ import com.liferay.wiki.importers.WikiImporter;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.base.WikiNodeLocalServiceBaseImpl;
-import com.liferay.wiki.util.WikiServiceUtil;
+import com.liferay.wiki.util.WikiUtil;
 
 import java.io.InputStream;
 
@@ -357,7 +357,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		WikiNode node = getNode(nodeId);
 
-		WikiImporter wikiImporter = WikiServiceUtil.getWikiImporter(importer);
+		WikiImporter wikiImporter = WikiUtil.getWikiImporter(importer);
 
 		wikiImporter.importPages(userId, node, inputStreams, options);
 	}

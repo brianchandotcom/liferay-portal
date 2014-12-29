@@ -234,7 +234,7 @@
 
 		<execute action="PGKaleoforms#assertClick" locator-key1="SUBMIT_NEW_MENULIST_PROCESS" value1="${kfProcessName}" />
 
-		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_TITLE" value1="New ${kfProcessName}" />
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_NAME" value1="New ${kfProcessName}" />
 	</command>
 
 	<command name="updateProcessDueDate">
@@ -328,7 +328,7 @@
 	<command name="viewInboxProcessName">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="PROCESS_TITLE" value1="${workflowTask}: ${kfProcessName}" />
+		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="PROCESS_NAME" value1="${workflowTask}: ${kfProcessName}" />
 	</command>
 
 	<command name="viewMyCompletedRequests">
@@ -384,7 +384,7 @@
 	<command name="viewMyCompletedRequestsProcessName">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="PROCESS_TITLE" value1="${workflowDefinitionTitle}: ${kfProcessName}" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="PROCESS_NAME" value1="${workflowDefinitionTitle}: ${kfProcessName}" />
 	</command>
 
 	<command name="viewMyCompletedRequestsTasks">

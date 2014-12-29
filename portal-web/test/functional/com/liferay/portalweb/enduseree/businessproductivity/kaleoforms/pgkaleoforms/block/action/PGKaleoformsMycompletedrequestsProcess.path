@@ -19,7 +19,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PROCESS_TITLE</td>
+	<td>PROCESS_NAME</td>
 	<td>//h3[@class='header-title']/span[contains(.,'${key_kfProcessName}')]</td>
 	<td></td>
 </tr>

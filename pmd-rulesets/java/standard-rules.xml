@@ -7,4 +7,40 @@
 	<description>
 		Selected standard rules from PMD out of box rule sets. Please refer to the origin rule set file, rule name and version info for future update.
 	</description>
+
+	<rule name="OverrideBothEqualsAndHashcode"
+		  language="java"
+		  since="0.4"
+		  message="Ensure you override both equals() and hashCode()"
+		  class="net.sourceforge.pmd.lang.java.rule.basic.OverrideBothEqualsAndHashcodeRule"
+		  externalInfoUrl="http://pmd.sourceforge.net/snapshot/pmd-java/rules/java/basic.html#OverrideBothEqualsAndHashcode">
+		<description>
+			[Origin rule set file rulesets/java/basic.xml] Override both public boolean Object.equals(Object other), and public int Object.hashCode(), or override neither.  Even if you are inheriting a hashCode() from a parent class, consider implementing hashCode and explicitly delegating to your superclass.
+		</description>
+		<priority>3</priority>
+		<example>
+<![CDATA[
+public class Bar {		// poor, missing a hashcode() method
+	public boolean equals(Object o) {
+	  // do some comparison
+	}
+}
+
+public class Baz {		// poor, missing an equals() method
+	public int hashCode() {
+	  // return some hash value
+	}
+}
+
+public class Foo {		// perfect, both methods provided
+	public boolean equals(Object other) {
+	  // do some comparison
+	}
+	public int hashCode() {
+	  // return some hash value
+	}
+}
+]]>
+		</example>
+	</rule>
 </ruleset>

@@ -67,8 +67,8 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	found, or if a valid friendly URL could not be created for
 	the group
 	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
-	long, long, String, String, int, boolean, int, String,
-	boolean, boolean, ServiceContext)}
+	long, long, Map, Map, int, boolean, int, String, boolean,
+	boolean, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -106,8 +106,8 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	found, or if a valid friendly URL could not be created for
 	the group
 	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
-	long, long, String, String, int, boolean, int, String,
-	boolean, boolean, ServiceContext)}
+	long, long, Map, Map, int, boolean, int, String, boolean,
+	boolean, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -149,7 +149,11 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @throws PortalException if a creator could not be found, if the group's
 	information was invalid, if a layout could not be found, or if a
 	valid friendly URL could not be created for the group
+	* @deprecated As of 7.0.0, replaced by {@link #addGroup(long, long, String,
+	long, long, Map, Map, int, boolean, int, String, boolean,
+	boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Group addGroup(long userId,
 		long parentGroupId, java.lang.String className, long classPK,
@@ -166,15 +170,33 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	@Override
 	public com.liferay.portal.model.Group addGroup(long userId,
 		long parentGroupId, java.lang.String className, long classPK,
-		long liveGroupId, java.lang.String name, java.lang.String description,
+		long liveGroupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int type, boolean manualMembership, int membershipRestriction,
+		java.lang.String friendlyURL, boolean site, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _groupLocalService.addGroup(userId, parentGroupId, className,
+			classPK, liveGroupId, nameMap, descriptionMap, type,
+			manualMembership, membershipRestriction, friendlyURL, site, active,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.model.Group addGroup(long userId,
+		long parentGroupId, java.lang.String className, long classPK,
+		long liveGroupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int type, boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean site, boolean inheritContent,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _groupLocalService.addGroup(userId, parentGroupId, className,
-			classPK, liveGroupId, name, description, type, manualMembership,
-			membershipRestriction, friendlyURL, site, inheritContent, active,
-			serviceContext);
+			classPK, liveGroupId, nameMap, descriptionMap, type,
+			manualMembership, membershipRestriction, friendlyURL, site,
+			inheritContent, active, serviceContext);
 	}
 
 	/**
@@ -201,8 +223,8 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	found, or if a valid friendly URL could not be created for
 	the group
 	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
-	long, long, String, String, int, boolean, int, String,
-	boolean, boolean, ServiceContext)}
+	long, long, Map, Map, int, boolean, int, String, boolean,
+	boolean, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -2703,7 +2725,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param groupId the primary key of the group
 	* @param parentGroupId the primary key of the parent group
-	* @param name the group's new name
+	* @param name the name's key
 	* @param description the group's new description (optionally
 	<code>null</code>)
 	* @param type the group's new type. For more information see {@link
@@ -2722,7 +2744,11 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @throws PortalException if a group with the primary key could not be
 	found or if the friendly URL was invalid or could one not be
 	created
+	* @deprecated As of 7.0.0, replaced by {@link #updateGroup(long, long, Map,
+	Map, int, boolean, int, String, boolean, boolean,
+	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Group updateGroup(long groupId,
 		long parentGroupId, java.lang.String name,
@@ -2733,6 +2759,20 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _groupLocalService.updateGroup(groupId, parentGroupId, name,
 			description, type, manualMembership, membershipRestriction,
+			friendlyURL, inheritContent, active, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.model.Group updateGroup(long groupId,
+		long parentGroupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int type, boolean manualMembership, int membershipRestriction,
+		java.lang.String friendlyURL, boolean inheritContent, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _groupLocalService.updateGroup(groupId, parentGroupId, nameMap,
+			descriptionMap, type, manualMembership, membershipRestriction,
 			friendlyURL, inheritContent, active, serviceContext);
 	}
 

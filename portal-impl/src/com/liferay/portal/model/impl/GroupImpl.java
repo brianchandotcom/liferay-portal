@@ -192,7 +192,7 @@ public class GroupImpl extends GroupBaseImpl {
 	public String getDescriptiveName(Locale locale) throws PortalException {
 		Group curGroup = this;
 
-		String name = getName();
+		String name = getName(locale);
 
 		if (isCompany() && !isCompanyStagingGroup()) {
 			name = LanguageUtil.get(locale, "global");

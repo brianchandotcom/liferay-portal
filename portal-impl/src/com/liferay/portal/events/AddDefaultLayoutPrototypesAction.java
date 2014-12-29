@@ -28,6 +28,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortletKeys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -64,10 +65,6 @@ public class AddDefaultLayoutPrototypesAction
 		if (layout == null) {
 			return;
 		}
-
-		addPortletId(layout, PortletKeys.BLOGS, "column-1");
-
-		addPortletId(layout, PortletKeys.RECENT_BLOGGERS, "column-2");
 	}
 
 	protected Layout addLayoutPrototype(
@@ -130,7 +127,6 @@ public class AddDefaultLayoutPrototypesAction
 			return;
 		}
 
-		addPortletId(layout, PortletKeys.SEARCH, "column-2");
 		String portletId = addPortletId(
 			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
 

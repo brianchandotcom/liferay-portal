@@ -40,7 +40,7 @@ import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.base.WikiPageServiceBaseImpl;
 import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.service.permission.WikiPagePermission;
-import com.liferay.wiki.util.WikiServiceUtil;
+import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 
 import com.sun.syndication.feed.synd.SyndContent;
@@ -402,7 +402,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		List<WikiPage> pages = wikiPagePersistence.filterFindByG_N_H_S(
 			groupId, nodeId, true, WorkflowConstants.STATUS_APPROVED);
 
-		return WikiServiceUtil.filterOrphans(pages);
+		return WikiUtil.filterOrphans(pages);
 	}
 
 	@Override
@@ -789,12 +789,12 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 					String value = null;
 
 					if (latestPage == null) {
-						value = WikiServiceUtil.convert(
+						value = WikiUtil.convert(
 							page, null, null, attachmentURLPrefix);
 					}
 					else {
 						try {
-							value = WikiServiceUtil.diffHtml(
+							value = WikiUtil.diffHtml(
 								latestPage, page, null, null,
 								attachmentURLPrefix);
 						}
@@ -831,7 +831,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 					value = StringPool.BLANK;
 				}
 				else {
-					value = WikiServiceUtil.convert(
+					value = WikiUtil.convert(
 						page, null, null, attachmentURLPrefix);
 				}
 

@@ -900,6 +900,10 @@ public class AssetPublisherDisplayContext {
 		return _subtypeFieldsFilterEnabled;
 	}
 
+	public void setDisplayStyle(String displayStyle) {
+		_displayStyle = displayStyle;
+	}
+
 	public void setSelectionStyle(String selectionStyle) {
 		_selectionStyle = selectionStyle;
 	}

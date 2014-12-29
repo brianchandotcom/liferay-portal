@@ -325,6 +325,12 @@
 		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_TEXT_BOX_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
+	<command name="viewInboxProcessName">
+		<var name="key_kfProcessName" value="${kfProcessName}" />
+
+		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="PROCESS_TITLE" value1="${workflowTask}: ${kfProcessName}" />
+	</command>
+
 	<command name="viewMyCompletedRequests">
 		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS" value1="My Completed Requests" />
 
@@ -375,9 +381,15 @@
 		<execute action="PGKaleoformsMycompletedrequestsProcess#assertElementNotPresent" locator-key1="CURRENT_ENTRY_FIELD" />\
 	</command>
 
+	<command name="viewMyCompletedRequestsProcessName">
+		<var name="key_kfProcessName" value="${kfProcessName}" />
+
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="PROCESS_TITLE" value1="${workflowDefinitionTitle}: ${kfProcessName}" />
+	</command>
+
 	<command name="viewMyCompletedRequestsTasks">
 		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_REVIEW_TASK" value1="Review" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_REVEIW_COMPLETED" value1="Yes" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_REVIEW_COMPLETED" value1="Yes" />
 	</command>
 
 	<command name="viewMyPendingRequests">
@@ -404,7 +416,7 @@
 
 	<command name="viewMyPendingRequestsTasksRejected">
 		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_UPDATE_TASK" value1="Update" />
-		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_REVEIW_COMPLETED" value1="No" />
+		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="TASKS_TABLE_REVIEW_COMPLETED" value1="No" />
 	</command>
 
 	<command name="viewNoCompletedRequests">

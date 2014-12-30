@@ -198,7 +198,8 @@ public class LocalizationImpl implements Localization {
 				locale, testValueOptionsProperty, StringPool.BLANK);
 
 			if (!valueOptionsString.isEmpty()) {
-				fullNameField.setValueOptions(StringUtil.split(valueOptionsString));
+				fullNameField.setValueOptions(
+					StringUtil.split(valueOptionsString));
 			}
 
 			fullNameDefinition.addField(fullNameField);

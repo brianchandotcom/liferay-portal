@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -86,7 +85,7 @@ public class ConfigurationHelper {
 
 	public List<ConfigurationModel> getFactoryInstances(
 			String languageId, String factoryPid)
-		throws IOException, PortletException {
+		throws IOException {
 
 		List<ConfigurationModel> models = new ArrayList<ConfigurationModel>();
 
@@ -136,7 +135,7 @@ public class ConfigurationHelper {
 	public String render(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			ConfigurationModel model)
-		throws InvalidSyntaxException, IOException, PortalException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

@@ -115,7 +115,9 @@ public class ActionUtil {
 			fileVersion = fileEntry.getFileVersion();
 		}
 
-		RawMetadataProcessorUtil.generateMetadata(fileVersion);
+		if (RawMetadataProcessorUtil.isSupported(fileVersion)) {
+			RawMetadataProcessorUtil.generateMetadata(fileVersion);
+		}
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 

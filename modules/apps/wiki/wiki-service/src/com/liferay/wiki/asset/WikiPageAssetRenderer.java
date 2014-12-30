@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.asset;
+package com.liferay.wiki.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;

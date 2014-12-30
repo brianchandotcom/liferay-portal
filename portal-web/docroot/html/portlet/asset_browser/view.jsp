@@ -86,7 +86,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				<liferay-ui:search-container-column-text
 					name="title"
-					value="<%= HtmlUtil.escape(assetEntry.getTitle(locale)) %>"
+					value="<%= assetEntry.getTitle(locale) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

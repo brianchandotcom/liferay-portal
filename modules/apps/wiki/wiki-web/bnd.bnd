@@ -26,17 +26,20 @@ Import-Package: \
 	com.liferay.portal.theme,\
 	com.liferay.portal.util,\
 	com.liferay.portal.webserver,\
+	com.liferay.portal,\
 	\
 	com.liferay.portlet.asset.util,\
 	com.liferay.portlet.documentlibrary.antivirus,\
 	com.liferay.portlet.portletdisplaytemplate.util,\
 	com.liferay.portlet.social.service,\
 	\
+	com.liferay.wiki.asset,\
 	com.liferay.wiki.indexer,\
 	com.liferay.wiki.lar,\
 	com.liferay.wiki.model.impl,\
 	com.liferay.wiki.opensearch,\
 	com.liferay.wiki.service.permission,\
+	com.liferay.wiki.social,\
 	com.liferay.wiki.util,\
 	com.liferay.wiki.util.comparator,\
 	\

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.poshi.runner.selenium;
 
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portalweb.util.TestPropsValues;
+import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.StringPool;
+import com.liferay.poshi.runner.util.StringUtil;
 
 import java.io.File;
 
@@ -51,14 +51,14 @@ public class FirefoxWebDriverImpl extends BaseWebDriverImpl {
 
 			_firefoxProfile.addExtension(
 				new File(
-					TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
+					PropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
 						"addons/jserrorcollector.xpi"));
 		}
 		catch (Exception e) {
 		}
 
 		_firefoxProfile.setPreference(
-			"browser.download.dir", TestPropsValues.OUTPUT_DIR_NAME);
+			"browser.download.dir", PropsValues.OUTPUT_DIR_NAME);
 		_firefoxProfile.setPreference("browser.download.folderList", 2);
 		_firefoxProfile.setPreference(
 			"browser.download.manager.showWhenStarting", false);
@@ -72,10 +72,10 @@ public class FirefoxWebDriverImpl extends BaseWebDriverImpl {
 		_firefoxProfile.setPreference("dom.max_chrome_script_run_time", 300);
 		_firefoxProfile.setPreference("dom.max_script_run_time", 300);
 
-		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
+		if (PropsValues.MOBILE_DEVICE_ENABLED) {
 			_firefoxProfile.setPreference(
 				"general.useragent.override",
-				TestPropsValues.MOBILE_DEVICE_USER_AGENT);
+				PropsValues.MOBILE_DEVICE_USER_AGENT);
 		}
 	}
 

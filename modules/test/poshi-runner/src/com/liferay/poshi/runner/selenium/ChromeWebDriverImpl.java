@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.util.liferayselenium;
+package com.liferay.poshi.runner.selenium;
 
-import com.liferay.portalweb.util.TestPropsValues;
+import com.liferay.poshi.runner.util.PropsValues;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +40,7 @@ public class ChromeWebDriverImpl extends BaseWebDriverImpl {
 		Map<String, Object> preferences = new HashMap<String, Object>();
 
 		preferences.put(
-			"download.default_directory", TestPropsValues.OUTPUT_DIR_NAME);
+			"download.default_directory", PropsValues.OUTPUT_DIR_NAME);
 		preferences.put("download.prompt_for_download", false);
 
 		_desiredCapabilities.setCapability("chrome.prefs", preferences);

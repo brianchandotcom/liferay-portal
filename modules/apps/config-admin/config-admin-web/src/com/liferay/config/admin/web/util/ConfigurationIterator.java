@@ -15,7 +15,6 @@
 package com.liferay.config.admin.web.util;
 
 import com.liferay.config.admin.web.model.ConfigurationModel;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -30,13 +29,11 @@ public class ConfigurationIterator {
 		_models = models;
 	}
 
-	public List<ConfigurationModel> getResults(int start, int end)
-		throws PortalException {
-
+	public List<ConfigurationModel> getResults(int start, int end) {
 		return ListUtil.subList(_models, start, end);
 	}
 
-	public int getTotal() throws PortalException {
+	public int getTotal() {
 		return _models.size();
 	}
 

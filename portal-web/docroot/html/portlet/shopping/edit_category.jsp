@@ -105,9 +105,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 		var form = $(document.<portlet:namespace />fm);
 
-		form.fm('parentCategoryId').val('<%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>');
-
-		form.fm('parentCategoryName').val('');
+		Liferay.Util.removeEntitySelection('parentCategoryId', 'parentCategoryName', this, '<portlet:namespace />');
 
 		$('#<portlet:namespace />mergeParentCheckboxDiv').addClass('hide');
 

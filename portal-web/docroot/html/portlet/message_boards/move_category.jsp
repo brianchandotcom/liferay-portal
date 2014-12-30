@@ -62,7 +62,11 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 			<aui:button name="selectCategoryButton" value="select" />
 
-			<aui:button disabled="<%= (parentCategoryId <= 0) %>" name="removeCategoryButton" onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
+			<%
+			String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentCategoryId', 'parentCategoryName', this, '" + renderResponse.getNamespace() + "');";
+			%>
+
+			<aui:button disabled="<%= (parentCategoryId <= 0) %>" name="removeCategoryButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 		</div>
 
 		<aui:input label="merge-with-parent-category" name="mergeWithParentCategory" type="checkbox" />
@@ -74,16 +78,6 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />removeCategory() {
-		document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = '<%= MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>';
-
-		document.getElementById('<portlet:namespace />parentCategoryName').value = '';
-
-		Liferay.Util.toggleDisabled('#<portlet:namespace />removeCategoryButton', true);
-	}
-</aui:script>
 
 <%
 if (category != null) {

@@ -48,7 +48,11 @@ if (organizationId > 0) {
 
 			<aui:button name="selectOrganizationButton" value="select" />
 
-			<aui:button disabled="<%= organizationId <= 0 %>" name="removeOrganizationButton" onClick='<%= renderResponse.getNamespace() + "removeOrganization();" %>' value="remove" />
+			<%
+			String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('organizationId', 'organizationName', this, '" + renderResponse.getNamespace() + "');";
+			%>
+
+			<aui:button disabled="<%= organizationId <= 0 %>" name="removeOrganizationButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 		</div>
 
 		<aui:select name="preferences--displayStyle--">
@@ -108,16 +112,6 @@ if (organizationId > 0) {
 			);
 		}
 	);
-
-	function <portlet:namespace />removeOrganization() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('organizationId').val('');
-
-		form.fm('organizationName').val('');
-
-		Liferay.Util.toggleDisabled('#<portlet:namespace />removeOrganizationButton', true);
-	}
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />selectionMethod', 'users', '<portlet:namespace />UsersSelectionOptions');
 </aui:script>

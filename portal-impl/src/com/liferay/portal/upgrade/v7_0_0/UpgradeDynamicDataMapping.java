@@ -17,20 +17,27 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMContentTable;
-import com.liferay.portal.upgrade.v7_0_0.util.DDMFormValuesXSDDeserializer;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMStructureTable;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.model.Value;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,7 +45,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -220,210 +233,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected void convertDDLRecord(
-			Connection con, long ddmStructureId, long ddlRecordSetId)
-		throws Exception {
-
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append("select DDMStorageId from DDLRecord where ");
-			sb.append("recordSetId=?");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			ps.setLong(1, ddlRecordSetId);
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long ddmContentId = rs.getLong("ddmStorageId");
-
-				convertDDMContent(con, ddmStructureId, ddmContentId);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(rs);
-			DataAccess.cleanUp(ps);
-		}
-	}
-
-	protected void convertDDLRecordSet(Connection con, long structureId)
-		throws Exception {
-
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append("select classPK from DDMStructureLink where ");
-			sb.append("classNameId=? and structureId=?");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			long classNameId = PortalUtil.getClassNameId(
-				DDLRecordSet.class.getName());
-
-			ps.setLong(1, classNameId);
-			ps.setLong(2, structureId);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long ddlRecordSetId = rs.getLong("classPK");
-
-				convertDDLRecord(con, structureId, ddlRecordSetId);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(rs);
-			DataAccess.cleanUp(ps);
-		}
-	}
-
-	protected void convertDDMContent(
-			Connection con, long ddmStructureId, long ddmContentId)
-		throws Exception {
-
-		PreparedStatement ps = null;
-
-		try {
-			DDMForm ddmForm = fetchDDMForm(ddmStructureId);
-
-			String ddmContentData = fetchDDMContentData(ddmContentId);
-
-			DDMFormValues ddmFormValues =
-				DDMFormValuesXSDDeserializer.deserialize(
-					ddmForm, ddmContentData);
-
-			String sql = "update DDMContent set data_=? where contentId=?";
-
-			ps = con.prepareStatement(sql);
-
-			ps.setString(
-				1, DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues));
-			ps.setLong(2, ddmContentId);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
-	}
-
-	protected void convertDDMStructureStorageType(
-			Connection connection, long structureId)
-		throws SQLException {
-
-		PreparedStatement ps = null;
-
-		try {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append("update DDMStructure set storageType=\"json\" ");
-			sb.append("where structureId=? ");
-
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
-
-			ps.setLong(1, structureId);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
-	}
-
-	protected void convertDDMStructureVersionStorageType(
-			Connection connection, long structureId)
-		throws SQLException {
-
-		PreparedStatement ps = null;
-
-		try {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append("update DDMStructureVersion set storageType=\"json\" ");
-			sb.append("where structureId=? ");
-
-			String sql = sb.toString();
-
-			ps = connection.prepareStatement(sql);
-
-			ps.setLong(1, structureId);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
-	}
-
-	protected void convertToJSONStorage() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select * from DDMStructure");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long structureId = rs.getLong("structureId");
-
-				StorageType storageType = StorageType.parse(
-					rs.getString("storageType"));
-
-				if (storageType.equals(StorageType.XML)) {
-					convertToJSONStorage(structureId);
-				}
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected void convertToJSONStorage(long structureId) throws Exception {
-		Connection con = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			con.setAutoCommit(false);
-
-			convertDDLRecordSet(con, structureId);
-
-			convertDDMStructureStorageType(con, structureId);
-
-			convertDDMStructureVersionStorageType(con, structureId);
-
-			con.commit();
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to upgrade dynamic data mapping structure version " +
-					"with structure ID " + structureId);
-
-			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(con);
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		try {
@@ -446,12 +255,12 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				DDMStructureTable.TABLE_SQL_ADD_INDEXES);
 		}
 
-		convertToJSONStorage();
 		addStructureVersions();
 		addTemplateVersions();
+		upgradeXMLStorageAdapter();
 	}
 
-	protected String fetchDDMContentData(long ddmContentId) throws Exception {
+	protected DDMForm getDDMForm(long structureId) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -459,24 +268,55 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			String sql = "select data_ from DDMContent where contentId=?";
+			ps = con.prepareStatement(
+				"select parentStructureId, definition from DDMStructure " +
+					"where structureId = ?" );
 
-			ps = con.prepareStatement(sql);
-
-			ps.setLong(1, ddmContentId);
+			ps.setLong(1, structureId);
 
 			rs = ps.executeQuery();
 
-			rs.first();
+			if (rs.next()) {
+				long parentStructureId = rs.getLong("parentStructureId");
+				String definition = rs.getString("definition");
 
-			return rs.getString("data_");
+				DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
+					definition);
+
+				if (parentStructureId > 0) {
+					DDMForm parentDDMForm = getDDMForm(parentStructureId);
+
+					List<DDMFormField> ddmFormFields =
+						ddmForm.getDDMFormFields();
+
+					ddmFormFields.addAll(parentDDMForm.getDDMFormFields());
+				}
+
+				return ddmForm;
+			}
+
+			throw new UpgradeException(
+				"Unable to find dynamic data mapping structure with ID " +
+					structureId);
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 
-	protected DDMForm fetchDDMForm(long ddmStructureId) throws Exception {
+	protected String toJSON(DDMForm ddmForm, String xml) {
+		DDMFormValuesXSDDeserializer ddmFormValuesXSDDeserializer =
+			new DDMFormValuesXSDDeserializer();
+
+		DDMFormValues ddmFormValues = ddmFormValuesXSDDeserializer.deserialize(
+			ddmForm, xml);
+
+		return DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
+	}
+
+	protected void updateContent(DDMForm ddmForm, long contentId)
+		throws Exception {
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -484,37 +324,106 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(2);
+			ps = con.prepareStatement(
+				"select data_ from DDMContent where contentId = ?");
 
-			sb.append("select parentStructureId, definition from DDMStructure");
-			sb.append(" where structureId=?");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			ps.setLong(1, ddmStructureId);
+			ps.setLong(1, contentId);
 
 			rs = ps.executeQuery();
 
-			rs.first();
+			if (rs.next()) {
+				String xml = rs.getString("data_");
 
-			String definition = rs.getString("definition");
-
-			DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
-				definition);
-
-			long parentStructureId = rs.getLong("parentStructureId");
-
-			if (parentStructureId != 0) {
-				DDMForm parentDDMForm = fetchDDMForm(parentStructureId);
-
-				List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
-
-				ddmFormFields.addAll(parentDDMForm.getDDMFormFields());
+				updateContent(contentId, toJSON(ddmForm, xml));
 			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
 
-			return ddmForm;
+	protected void updateContent(long contentId, String data_)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update DDMContent set data_= ? where contentId = ?");
+
+			ps.setString(1, data_);
+			ps.setLong(2, contentId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateStructureStorageType(long structureId)
+		throws Exception {
+
+		runSQL(
+			"update DDMStructure set storageType='json' where structureId = " +
+				structureId);
+	}
+
+	protected void updateStructureVersionStorageType(long structureId)
+		throws Exception {
+
+		runSQL(
+			"update DDMStructureVersion set storageType='json' where " +
+				"structureId = " + structureId);
+	}
+
+	protected void upgradeXMLStorageAdapter() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("select DDMStorageLink.classPK, DDMStorageLink.");
+			sb.append("structureId from DDMStorageLink inner join ");
+			sb.append("DDMStructure on (DDMStorageLink.structureId = ");
+			sb.append("DDMStructure.structureId) where DDMStorageLink.");
+			sb.append("classNameId = ? and DDMStructure.storageType = ?");
+
+			ps = con.prepareStatement(sb.toString());
+
+			ps.setLong(1, PortalUtil.getClassNameId(DDMContent.class));
+			ps.setString(2, "xml");
+
+			rs = ps.executeQuery();
+
+			Map<Long, DDMForm> ddmFormMap = new HashMap<Long, DDMForm>();
+
+			while (rs.next()) {
+				long structureId = rs.getLong("structureId");
+				long classPK = rs.getLong("classPK");
+
+				DDMForm ddmForm = ddmFormMap.get(structureId);
+
+				if (ddmForm == null) {
+					ddmForm = getDDMForm(structureId);
+
+					ddmFormMap.put(structureId, ddmForm);
+				}
+
+				updateContent(ddmForm, classPK);
+
+				updateStructureStorageType(structureId);
+
+				updateStructureVersionStorageType(structureId);
+			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
@@ -523,5 +432,113 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeDynamicDataMapping.class);
+
+	private class DDMFormValuesXSDDeserializer {
+
+		public DDMFormValues deserialize(DDMForm ddmForm, String xml) {
+			DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+			try {
+				Document document = SAXReaderUtil.read(xml);
+
+				Element rootElement = document.getRootElement();
+
+				// TODO(pablo.carvalho): set ddmFormValues available and default
+				// languages
+
+				ddmFormValues.setDDMFormFieldValues(
+					getDDMFormFieldValues(
+						rootElement.elements("dynamic-element")));
+
+				updateLocales(ddmFormValues);
+			}
+			catch (DocumentException e) {
+
+				// TODO(pablo.carvalho): decide what to do with this exception.
+				// throw again?
+
+			}
+
+			return ddmFormValues;
+		}
+
+		protected DDMFormFieldValue getDDMFormFieldValue(
+			Element dynamicElement) {
+
+			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+			ddmFormFieldValue.setName(dynamicElement.attributeValue("name"));
+
+			List<Element> dynamicContentElements = dynamicElement.elements(
+				"dynamic-content");
+
+			ddmFormFieldValue.setValue(getValue(dynamicContentElements));
+
+			ddmFormFieldValue.setNestedDDMFormFields(
+				getDDMFormFieldValues(
+					dynamicElement.elements("dynamic-element")));
+
+			return ddmFormFieldValue;
+		}
+
+		protected List<DDMFormFieldValue> getDDMFormFieldValues(
+			List<Element> dynamicElements) {
+
+			if (dynamicElements == null) {
+				return null;
+			}
+
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				new ArrayList<DDMFormFieldValue>();
+
+			for (Element dynamicElement : dynamicElements) {
+				ddmFormFieldValues.add(getDDMFormFieldValue(dynamicElement));
+			}
+
+			return ddmFormFieldValues;
+		}
+
+		protected Value getValue(List<Element> dynamicContentElements) {
+			Value value = new LocalizedValue();
+
+			for (Element dynamicContentElement : dynamicContentElements) {
+				String fieldValue = dynamicContentElement.getText();
+
+				String languageId = dynamicContentElement.attributeValue(
+					"language-id");
+
+				Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+				value.addString(locale, fieldValue);
+			}
+
+			return value;
+		}
+
+		protected void updateLocales(DDMFormValues ddmFormValues) {
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				ddmFormValues.getDDMFormFieldValues();
+
+			Set<Locale> availableLocales = new LinkedHashSet<Locale>();
+
+			Locale defaultLocale = null;
+
+			for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+				Value value = ddmFormFieldValue.getValue();
+
+				for (Locale availableLocale : value.getAvailableLocales()) {
+					availableLocales.add(availableLocale);
+				}
+
+				if (defaultLocale == null) {
+					defaultLocale = value.getDefaultLocale();
+				}
+			}
+
+			ddmFormValues.setAvailableLocales(availableLocales);
+			ddmFormValues.setDefaultLocale(defaultLocale);
+		}
+
+	}
 
 }

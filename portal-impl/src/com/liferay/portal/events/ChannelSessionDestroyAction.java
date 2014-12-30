@@ -61,7 +61,7 @@ public class ChannelSessionDestroyAction extends SessionAction {
 			}
 
 			try {
-				ChannelHubManagerUtil.destroyClusterChannel(
+				ChannelHubManagerUtil.destroyChannel(
 					user.getCompanyId(), user.getUserId());
 			}
 			catch (ChannelException ce) {

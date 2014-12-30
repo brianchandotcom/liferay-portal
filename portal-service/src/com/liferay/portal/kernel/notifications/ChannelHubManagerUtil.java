@@ -100,12 +100,6 @@ public class ChannelHubManagerUtil {
 		getChannelHubManager().destroyChannelHub(companyId);
 	}
 
-	public static void destroyClusterChannel(long companyId, long userId)
-		throws ChannelException {
-
-		getChannelHubManager().destroyClusterChannel(companyId, userId);
-	}
-
 	public static ChannelHub fetchChannelHub(long companyId)
 		throws ChannelException {
 
@@ -221,14 +215,6 @@ public class ChannelHubManagerUtil {
 
 		getChannelHubManager().removeTransientNotificationEventsByUuid(
 			companyId, userId, notificationEventUuids);
-	}
-
-	public static void sendClusterNotificationEvent(
-			long companyId, long userId, NotificationEvent notificationEvent)
-		throws ChannelException {
-
-		getChannelHubManager().sendClusterNotificationEvent(
-			companyId, userId, notificationEvent);
 	}
 
 	public static void sendNotificationEvent(

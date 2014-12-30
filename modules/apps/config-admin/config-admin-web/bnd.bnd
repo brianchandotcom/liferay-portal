@@ -9,6 +9,5 @@ Include-Resource:\
 	@../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
 	@../../../../util-bridges/util-bridges.jar!/com/liferay/util/bridges/freemarker/FreeMarkerPortlet.class,\
 	@../../../../util-taglib/util-taglib.jar!/META-INF/*.tld
-Private-Package: com.liferay.config.admin.web.*
 
 -metatype: *

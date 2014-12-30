@@ -1,5 +1,9 @@
 .lfr-search-container .entry-action {
 	width: 1px;
+
+	.taglib-icon {
+		white-space: nowrap;
+	}
 }
 
 .user-info {

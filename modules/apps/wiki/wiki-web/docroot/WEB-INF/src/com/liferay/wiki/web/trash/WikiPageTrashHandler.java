@@ -47,7 +47,7 @@ import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.service.permission.WikiPagePermission;
 import com.liferay.wiki.util.WikiPageAttachmentsUtil;
-import com.liferay.wiki.web.asset.WikiPageAssetRenderer;
+import com.liferay.wiki.asset.WikiPageAssetRenderer;
 
 import java.util.ArrayList;
 import java.util.List;

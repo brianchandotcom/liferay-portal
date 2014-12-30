@@ -23,6 +23,5 @@
 	<resource file="resource-actions/social.xml" />
 	<resource file="resource-actions/softwarecatalog.xml" />
 	<resource file="resource-actions/test.xml" />
-	<resource file="resource-actions/wiki.xml" />
 	<resource file="resource-actions/workflow.xml" />
 </resource-action-mapping>

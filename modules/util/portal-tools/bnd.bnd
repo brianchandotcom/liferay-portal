@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Tools
-Bundle-SymbolicName: com.liferay.portal.tools
-Bundle-Version: 1.0.0
-Private-Package: com.liferay.portal.tools.*

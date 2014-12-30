@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.wiki.model.WikiNode">
+		<field name="uuid" type="String" />
+		<field name="nodeId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="lastPostDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.wiki.model.WikiPage">
+		<field name="uuid" type="String" />
+		<field name="pageId" type="long" />
+		<field name="resourcePrimKey" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="nodeId" type="long" />
+		<field name="title" type="String">
+			<hint name="max-length">255</hint>
+			<sanitize content-type="text/plain" modes="ALL" />
+			<validator name="required" />
+		</field>
+		<field name="version" type="double" />
+		<field name="minorEdit" type="boolean" />
+		<field name="content" type="String">
+			<hint-collection name="CLOB" />
+			<hint name="display-height">475</hint>
+			<hint name="display-width">99%</hint>
+			<hint name="check-tab">true</hint>
+		</field>
+		<field name="summary" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-height">15</hint>
+		</field>
+		<field name="format" type="String" />
+		<field name="head" type="boolean" />
+		<field name="parentTitle" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="redirectTitle" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.wiki.model.WikiPageResource">
+		<field name="uuid" type="String" />
+		<field name="resourcePrimKey" type="long" />
+		<field name="nodeId" type="long" />
+		<field name="title" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+	</model>
+</model-hints>

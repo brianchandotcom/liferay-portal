@@ -68,7 +68,7 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		}
 
 		MethodHandler methodHandler = new MethodHandler(
-			_confirmDeliveriesMethodKey, companyId, userId,
+			_confirmDeliveryMethodKey, companyId, userId,
 			notificationEventUuids, archive);
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
@@ -97,28 +97,9 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 			boolean archive)
 		throws ChannelException {
 
-		ChannelHub channelHub = getChannelHub(companyId);
-
-		channelHub.confirmDelivery(userId, notificationEventUuid, archive);
-
-		if (!ClusterInvokeThreadLocal.isEnabled()) {
-			return;
-		}
-
-		MethodHandler methodHandler = new MethodHandler(
-			_confirmDeliveryMethodKey, companyId, userId, notificationEventUuid,
+		confirmDelivery(
+			companyId, userId, Collections.singleton(notificationEventUuid),
 			archive);
-
-		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
-			methodHandler, true);
-
-		try {
-			ClusterExecutorUtil.execute(clusterRequest);
-		}
-		catch (Exception e) {
-			throw new ChannelException(
-				"Unable to confirm delivery of event across cluster", e);
-		}
 	}
 
 	@Override
@@ -427,14 +408,10 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		channelHub.unregisterChannelListener(userId, channelListener);
 	}
 
-	private static final MethodKey _confirmDeliveriesMethodKey =
-		new MethodKey(
-			ChannelHubManagerUtil.class, "confirmDelivery", long.class,
-			long.class, Collection.class, boolean.class);
 	private static final MethodKey _confirmDeliveryMethodKey =
 		new MethodKey(
 			ChannelHubManagerUtil.class, "confirmDelivery", long.class,
-			long.class, String.class, boolean.class);
+			long.class, Collection.class, boolean.class);
 	private static final MethodKey _destroyChannelMethodKey =
 		new MethodKey(
 			ChannelHubManagerUtil.class, "destroyChannel", long.class,

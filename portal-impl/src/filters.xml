@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<pagefilters>
-	<filter>
-		<class>com.liferay.portlet.wiki.engines.jspwiki.filters.CreoleFilter</class>
-	</filter>
-</pagefilters>

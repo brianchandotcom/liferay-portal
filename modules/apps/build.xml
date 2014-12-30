@@ -22,6 +22,7 @@
 		<dirset dir="social" includes="*" />
 		<dirset dir="unit-converter" includes="*" />
 		<dirset dir="web-proxy" includes="*" />
+		<dirset dir="wiki" includes="*" />
 		<dirset dir="xsl-content" includes="*" />
 	</path>
 

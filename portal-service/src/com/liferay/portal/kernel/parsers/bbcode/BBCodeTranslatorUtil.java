@@ -14,7 +14,9 @@
 
 package com.liferay.portal.kernel.parsers.bbcode;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Iliyan Peychev
@@ -23,10 +25,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 public class BBCodeTranslatorUtil {
 
 	public static BBCodeTranslator getBBCodeTranslator() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			BBCodeTranslatorUtil.class);
-
-		return _bbCodeTranslator;
+		return _instance._getBBCodeTranslator();
 	}
 
 	public static String[] getEmoticonDescriptions() {
@@ -53,12 +52,22 @@ public class BBCodeTranslatorUtil {
 		return getBBCodeTranslator().parse(message);
 	}
 
-	public void setBBCodeTranslator(BBCodeTranslator bbCodeTranslator) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	private BBCodeTranslatorUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		_bbCodeTranslator = bbCodeTranslator;
+		_serviceTracker = registry.trackServices(BBCodeTranslator.class);
+
+		_serviceTracker.open();
 	}
 
-	private static BBCodeTranslator _bbCodeTranslator;
+	private BBCodeTranslator _getBBCodeTranslator() {
+		return _serviceTracker.getService();
+	}
+
+	private static final BBCodeTranslatorUtil _instance =
+		new BBCodeTranslatorUtil();
+
+	private final ServiceTracker<BBCodeTranslator, BBCodeTranslator>
+		_serviceTracker;
 
 }

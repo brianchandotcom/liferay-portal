@@ -246,17 +246,23 @@
 
 		<ant dir="portal-service" target="compile" inheritAll="false" />
 
-		<ant dir="util-bridges" target="compile" inheritAll="false" />
-		<ant dir="util-java" target="compile" inheritAll="false" />
-		<ant dir="util-slf4j" target="compile" inheritAll="false" />
-		<ant dir="util-taglib" target="compile" inheritAll="false" />
+		<parallel failonany="true" threadcount="${parallel.thread.count}">
+			<ant dir="util-bridges" target="compile" inheritAll="false" />
+			<ant dir="util-java" target="compile" inheritAll="false" />
+			<ant dir="util-slf4j" target="compile" inheritAll="false" />
+		</parallel>
 
-		<ant dir="portal-impl" target="compile" inheritAll="false" />
-		<ant dir="portal-pacl" target="compile" inheritAll="false" />
-		<ant dir="portal-test" target="compile" inheritAll="false" />
-		<ant dir="portal-test-internal" target="compile" inheritAll="false" />
+		<parallel failonany="true" threadcount="${parallel.thread.count}">
+			<ant dir="portal-impl" target="compile" inheritAll="false" />
+			<ant dir="portal-test" target="compile" inheritAll="false" />
+			<ant dir="util-taglib" target="compile" inheritAll="false" />
+		</parallel>
 
-		<ant dir="support-tomcat" target="compile" inheritAll="false" />
+		<parallel failonany="true" threadcount="${parallel.thread.count}">
+			<ant dir="portal-pacl" target="compile" inheritAll="false" />
+			<ant dir="portal-test-internal" target="compile" inheritAll="false" />
+			<ant dir="support-tomcat" target="compile" inheritAll="false" />
+		</parallel>
 
 		<if>
 			<available file="javac.output.txt" />

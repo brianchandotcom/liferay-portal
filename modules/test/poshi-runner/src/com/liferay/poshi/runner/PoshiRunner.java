@@ -14,7 +14,8 @@
 
 package com.liferay.poshi.runner;
 
-import com.liferay.poshi.runner.util.PropsUtil;
+import com.liferay.poshi.runner.selenium.LiferaySelenium;
+import com.liferay.poshi.runner.selenium.SeleniumUtil;
 
 import java.io.File;
 
@@ -33,8 +34,14 @@ import org.dom4j.io.SAXReader;
  */
 public class PoshiRunner extends TestCase {
 
-	public PoshiRunner() {
-		PropsUtil.printProperties();
+	@Override
+	public void setUp() throws Exception {
+		SeleniumUtil.startSelenium();
+	}
+
+	@Override
+	public void tearDown() throws Exception {
+		SeleniumUtil.stopSelenium();
 	}
 
 	public void testPoshiRunner() throws Exception {
@@ -45,6 +52,14 @@ public class PoshiRunner extends TestCase {
 		_findFiles(file);
 
 		System.out.println("Test " + file.exists());
+
+		LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
+
+		liferaySelenium.open("http://www.google.com/");
+		liferaySelenium.waitForVisible("//input[@id='gbqfq']");
+		liferaySelenium.type("//input[@id='gbqfq']", "Liferay");
+		liferaySelenium.waitForTextPresent("Liferay");
+		liferaySelenium.assertTextPresent("Liferay");
 	}
 
 	private void _findFiles(File file) throws Exception {

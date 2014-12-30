@@ -450,7 +450,7 @@
 
 		<execute action="CPKaleoformsadminViewprocessrecords#assertClick" locator-key1="SUBMIT_NEW" value1="Submit New ${kfProcessName}" />
 
-		<execute action="CPKaleoformsadminViewprocessrecordsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_TITLE" value1="New ${kfProcessName}" />
+		<execute action="CPKaleoformsadminViewprocessrecordsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_NAME" value1="New ${kfProcessName}" />
 	</command>
 
 	<command name="tearDownProcess">

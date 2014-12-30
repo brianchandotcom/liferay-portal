@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>SELECT_SITE_SEARCH_BUTTON</td>
-	<td>//div[@class='form-search']//button[contains(.,'Search')]</td>
+	<td>//div[@class='form-search']//i[@class='icon-search']</td>
 	<td></td>
 </tr>
 <tr>

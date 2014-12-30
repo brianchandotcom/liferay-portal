@@ -3,7 +3,6 @@
 
 <project>
 	<property name="import.shared" value="social-networking-api" />
-
 	<property name="osgi.ide.dependencies" value="spring-context.jar" />
 	<property name="service.input.file" value="service.xml" />
 

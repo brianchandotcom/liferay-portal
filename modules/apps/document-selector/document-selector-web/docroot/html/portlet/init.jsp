@@ -88,10 +88,10 @@ page import="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil" %
 page import="com.liferay.portlet.journal.search.FileEntryDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.FileEntrySearch" %><%@
 page import="com.liferay.portlet.layoutsadmin.context.LayoutsAdminDisplayContext" %><%@
-page import="com.liferay.portlet.wiki.model.WikiPage" %><%@
-page import="com.liferay.portlet.wiki.model.WikiPageResource" %><%@
-page import="com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil" %><%@
-page import="com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil" %>
+page import="com.liferay.wiki.model.WikiPage" %><%@
+page import="com.liferay.wiki.model.WikiPageResource" %><%@
+page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
+page import="com.liferay.wiki.service.WikiPageResourceLocalServiceUtil" %>
 
 <%@ page import="java.util.Arrays" %><%@
 page import="java.util.Collections" %><%@

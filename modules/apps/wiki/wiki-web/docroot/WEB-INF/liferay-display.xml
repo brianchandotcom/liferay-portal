@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE display PUBLIC "-//Liferay//DTD Display 7.0.0//EN" "http://www.liferay.com/dtd/liferay-display_7_0_0.dtd">
+
+<display>
+	<category name="category.collaboration">
+		<portlet id="36" />
+	</category>
+	<category name="category.hidden">
+		<portlet id="154" />
+	</category>
+	<category name="category.wiki">
+		<portlet id="36" />
+		<portlet id="54" />
+	</category>
+</display>

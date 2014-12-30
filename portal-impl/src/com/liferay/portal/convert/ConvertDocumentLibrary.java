@@ -342,7 +342,8 @@ public class ConvertDocumentLibrary
 
 					MBMessage mbMessage = (MBMessage)object;
 
-					for (FileEntry fileEntry :
+					for (
+						FileEntry fileEntry :
 							mbMessage.getAttachmentsFileEntries()) {
 
 						DLFileEntry dlFileEntry =
@@ -370,7 +371,8 @@ public class ConvertDocumentLibrary
 		Collection<DLStoreConvertProcess> dlStoreConvertProcesses =
 			_getDLStoreConvertProcesses();
 
-		for (DLStoreConvertProcess dlStoreConvertProcess :
+		for (
+			DLStoreConvertProcess dlStoreConvertProcess :
 				dlStoreConvertProcesses) {
 
 			dlStoreConvertProcess.migrate(this);

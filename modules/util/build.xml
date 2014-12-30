@@ -2,5 +2,24 @@
 <!DOCTYPE project>
 
 <project>
+	<path id="plugins.includes.path">
+		<dirset dir="freemarker-osgi-bridge" includes="*" />
+		<dirset dir="io-delta" includes="*" />
+		<dirset dir="ip-geocoder" includes="*" />
+		<dirset dir="ip-geocoder-sample-web" includes="*" />
+		<dirset dir="markdown-converter" includes="*" />
+		<dirset dir="osgi-util" includes="*" />
+		<dirset dir="sync-engine" includes="*" />
+	</path>
+
+	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />
+
 	<import file="../../tools/sdk/build-common-plugins.xml" />
 </project>
+
+
+
+
+
+
+

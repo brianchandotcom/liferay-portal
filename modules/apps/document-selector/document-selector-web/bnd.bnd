@@ -13,8 +13,8 @@ Import-Package: \
     com.liferay.portlet.dynamicdatamapping.storage,\
     com.liferay.portlet.journal.search,\
     com.liferay.portlet.layoutsadmin.context,\
-    com.liferay.portlet.wiki.model,\
-    com.liferay.portlet.wiki.service,\
+    com.liferay.wiki.model,\
+    com.liferay.wiki.service,\
     \
 	org.apache.struts.action,\
 	org.apache.struts.action.*,\

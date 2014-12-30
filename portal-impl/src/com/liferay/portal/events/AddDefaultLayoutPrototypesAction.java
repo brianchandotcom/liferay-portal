@@ -65,10 +65,6 @@ public class AddDefaultLayoutPrototypesAction
 		if (layout == null) {
 			return;
 		}
-
-		addPortletId(layout, PortletKeys.BLOGS, "column-1");
-
-		addPortletId(layout, PortletKeys.RECENT_BLOGGERS, "column-2");
 	}
 
 	protected Layout addLayoutPrototype(
@@ -131,7 +127,6 @@ public class AddDefaultLayoutPrototypesAction
 			return;
 		}
 
-		addPortletId(layout, PortletKeys.SEARCH, "column-2");
 		String portletId = addPortletId(
 			layout, PortletKeys.ASSET_PUBLISHER, "column-2");
 
@@ -147,23 +142,6 @@ public class AddDefaultLayoutPrototypesAction
 			layout.getTypeSettings());
 	}
 
-	protected void addWikiPage(
-			long companyId, long defaultUserId,
-			List<LayoutPrototype> layoutPrototypes)
-		throws Exception {
-
-		Layout layout = addLayoutPrototype(
-			companyId, defaultUserId, "layout-prototype-wiki-title",
-			"layout-prototype-wiki-description", "2_columns_iii",
-			layoutPrototypes);
-
-		if (layout == null) {
-			return;
-		}
-
-		addPortletId(layout, PortletKeys.WIKI, "column-1");
-	}
-
 	protected void doRun(long companyId) throws Exception {
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
@@ -173,7 +151,6 @@ public class AddDefaultLayoutPrototypesAction
 
 		addBlogPage(companyId, defaultUserId, layoutPrototypes);
 		addWebContentPage(companyId, defaultUserId, layoutPrototypes);
-		addWikiPage(companyId, defaultUserId, layoutPrototypes);
 	}
 
 }

@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -67,6 +68,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
@@ -216,7 +218,11 @@ import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.util.FacebookUtil;
-import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.util.Encryptor;
 import com.liferay.util.JS;
 
@@ -510,6 +516,13 @@ public class PortalImpl implements Portal {
 
 			_validPortalDomainCheckDisabled = true;
 		}
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_alwaysAllowDoAsUserTracker = registry.trackServices(
+			AlwaysAllowDoAsUser.class);
+
+		_alwaysAllowDoAsUserTracker.open();
 	}
 
 	@Override
@@ -5590,10 +5603,8 @@ public class PortalImpl implements Portal {
 			strutsAction.equals("/document_library_display/edit_file_entry") ||
 			strutsAction.equals("/image_gallery_display/edit_file_entry") ||
 			strutsAction.equals("/image_gallery_display/edit_image") ||
-			strutsAction.equals("/wiki/edit_page_attachment") ||
-			strutsAction.equals("/wiki_admin/edit_page_attachment") ||
-			strutsAction.equals("/wiki_display/edit_page_attachment") ||
-			actionName.equals("addFile")) {
+			actionName.equals("addFile") ||
+			_isRegisteredAlwaysAllowDoAsUser(path, strutsAction, actionName) ) {
 
 			try {
 				alwaysAllowDoAsUser = isAlwaysAllowDoAsUser(request);
@@ -5967,10 +5978,8 @@ public class PortalImpl implements Portal {
 			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL." +
 				"MBMESSAGE$]",
 			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL." +
-				"MBTHREAD$]",
-			"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.WIKI.MODEL.WIKIPAGE$]",
-			"[$RESOURCE_SCOPE_COMPANY$]", "[$RESOURCE_SCOPE_GROUP$]",
-			"[$RESOURCE_SCOPE_GROUP_TEMPLATE$]",
+				"MBTHREAD$]", "[$RESOURCE_SCOPE_COMPANY$]",
+			"[$RESOURCE_SCOPE_GROUP$]", "[$RESOURCE_SCOPE_GROUP_TEMPLATE$]",
 			"[$RESOURCE_SCOPE_INDIVIDUAL$]",
 			"[$SOCIAL_RELATION_TYPE_BI_COWORKER$]",
 			"[$SOCIAL_RELATION_TYPE_BI_FRIEND$]",
@@ -5995,8 +6004,7 @@ public class PortalImpl implements Portal {
 			getClassNameId(DLFileEntry.class), getClassNameId(DLFolder.class),
 			getClassNameId(JournalFolder.class),
 			getClassNameId(MBMessage.class), getClassNameId(MBThread.class),
-			getClassNameId(WikiPage.class), ResourceConstants.SCOPE_COMPANY,
-			ResourceConstants.SCOPE_GROUP,
+			ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP,
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			SocialRelationConstants.TYPE_BI_COWORKER,
@@ -8282,6 +8290,37 @@ public class PortalImpl implements Portal {
 		themeDisplay.setLocale(locale);
 	}
 
+	private boolean _isRegisteredAlwaysAllowDoAsUser(
+		String path, String strutsAction, String actionName) {
+
+		for (AlwaysAllowDoAsUser alwaysAllowDoAsUser : _alwaysAllowDoAsUsers) {
+			Collection<String> paths = alwaysAllowDoAsUser.getPaths();
+
+			if (paths.contains(path)) {
+				return true;
+			}
+
+			Collection<String> strutsActions =
+				alwaysAllowDoAsUser.getStrutsActions();
+
+			if (strutsActions.contains(strutsAction)) {
+				return true;
+			}
+
+			Collection<String> actionNames =
+				alwaysAllowDoAsUser.getActionNames();
+
+			if (actionNames.contains(actionName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static Log _logWebServerServlet = LogFactoryUtil.getLog(
+		WebServerServlet.class);
+
 	private static final String _J_SECURITY_CHECK = "j_security_check";
 
 	private static final String _LOCALHOST = "localhost";
@@ -8296,22 +8335,23 @@ public class PortalImpl implements Portal {
 		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING;
 
 	private static Log _log = LogFactoryUtil.getLog(PortalImpl.class);
-
-	private static Log _logWebServerServlet = LogFactoryUtil.getLog(
-		WebServerServlet.class);
+	private static MethodHandler _resetCDNHostsMethodHandler =
+		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
 
 	private static Map<Long, String> _cdnHostHttpMap =
 		new ConcurrentHashMap<Long, String>();
 	private static Map<Long, String> _cdnHostHttpsMap =
 		new ConcurrentHashMap<Long, String>();
-	private static MethodHandler _resetCDNHostsMethodHandler =
-		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
 	private static Date _upTime = new Date();
 
 	private String[] _allSystemGroups;
 	private String[] _allSystemOrganizationRoles;
 	private String[] _allSystemRoles;
 	private String[] _allSystemSiteRoles;
+	private final List<AlwaysAllowDoAsUser> _alwaysAllowDoAsUsers =
+		new ArrayList<>();
+	private ServiceTracker<AlwaysAllowDoAsUser, AlwaysAllowDoAsUser>
+		_alwaysAllowDoAsUserTracker;
 	private Pattern _bannedResourceIdPattern = Pattern.compile(
 		PropsValues.PORTLET_RESOURCE_ID_BANNED_PATHS_REGEXP,
 		Pattern.CASE_INSENSITIVE);
@@ -8377,5 +8417,67 @@ public class PortalImpl implements Portal {
 	private String[] _sortedSystemRoles;
 	private String[] _sortedSystemSiteRoles;
 	private boolean _validPortalDomainCheckDisabled;
+
+	private class AlwaysAllowAsDoUserServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<
+			AlwaysAllowDoAsUser, AlwaysAllowDoAsUser> {
+
+		@Override
+		public AlwaysAllowDoAsUser addingService(
+			ServiceReference<AlwaysAllowDoAsUser> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			AlwaysAllowDoAsUser alwaysAllowDoAsUser = registry.getService(
+				serviceReference);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Add AlwaysAllowDoAsUser " +
+						alwaysAllowDoAsUser.getClass().getName());
+			}
+
+			_alwaysAllowDoAsUsers.add(alwaysAllowDoAsUser);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"AlwaysAllowDoAsUsers size " +
+						_alwaysAllowDoAsUsers.size());
+			}
+
+			return alwaysAllowDoAsUser;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<AlwaysAllowDoAsUser> serviceReference,
+			AlwaysAllowDoAsUser alwaysAllowDoAsUser) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<AlwaysAllowDoAsUser> serviceReference,
+			AlwaysAllowDoAsUser alwaysAllowDoAsUser) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Delete AlwaysAllowDoAsUser " +
+						ClassUtil.getClassName(alwaysAllowDoAsUser));
+			}
+
+			_alwaysAllowDoAsUsers.remove(alwaysAllowDoAsUser);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"alwaysAllowDoAsUsers size " +
+						_alwaysAllowDoAsUsers.size());
+			}
+		}
+
+	}
 
 }

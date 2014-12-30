@@ -23,20 +23,22 @@ import java.util.List;
  * @author Kamesh Sampath
  * @author Raymond Augé
  */
-public class ConfigurationIterator {
+public class ConfigurationModelIterator {
 
-	public ConfigurationIterator(List<ConfigurationModel> models) {
-		_models = models;
+	public ConfigurationModelIterator(
+		List<ConfigurationModel> configurationModels) {
+
+		_configurationModels = configurationModels;
 	}
 
 	public List<ConfigurationModel> getResults(int start, int end) {
-		return ListUtil.subList(_models, start, end);
+		return ListUtil.subList(_configurationModels, start, end);
 	}
 
 	public int getTotal() {
-		return _models.size();
+		return _configurationModels.size();
 	}
 
-	private final List<ConfigurationModel> _models;
+	private final List<ConfigurationModel> _configurationModels;
 
 }

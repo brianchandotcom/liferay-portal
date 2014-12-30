@@ -1293,13 +1293,15 @@
 
 	Liferay.provide(
 		Util,
-		'removeFolderSelection',
-		function(folderIdString, folderNameString, namespace) {
-			A.byIdNS(namespace, folderIdString).val(0);
+		'removeEntitySelection',
+		function(entityIdString, entityNameString, removeEntityButton, namespace) {
+			A.byIdNS(namespace, entityIdString).val(0);
 
-			A.byIdNS(namespace, folderNameString).val('');
+			A.byIdNS(namespace, entityNameString).val('');
 
-			Liferay.Util.toggleDisabled(A.byIdNS(namespace, 'removeFolderButton'), true);
+			Liferay.Util.toggleDisabled(removeEntityButton, true);
+
+			Liferay.fire('entitySelectionRemoved');
 		},
 		['aui-base', 'liferay-node']
 	);
@@ -1486,6 +1488,12 @@
 					Util.getWindow().hide();
 				},
 				'.selector-button'
+			);
+
+			openingLiferay.on('entitySelectionRemoved',
+				function(event) {
+					selectorButtons.attr('disabled', false);
+				}
 			);
 		},
 		['aui-base']

@@ -1464,14 +1464,18 @@
 		Util,
 		'selectEntityHandler',
 		function(container, selectEventName, disableButton) {
+			container = A.one(container);
 			var openingLiferay = Util.getOpener().Liferay;
+			var selectorButtons = container.all('.selector-button');
 
-			A.one(container).delegate(
+			container.delegate(
 				'click',
 				function(event) {
 					var currentTarget = event.currentTarget;
 
 					if (disableButton !== false) {
+						selectorButtons.attr('disabled', false);
+
 						currentTarget.attr('disabled', true);
 					}
 

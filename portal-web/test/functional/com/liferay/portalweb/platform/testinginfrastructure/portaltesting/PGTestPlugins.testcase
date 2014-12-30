@@ -207,18 +207,6 @@
 		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 
-	<command name="ViewMisc" priority="5">
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Test Misc Localized Title Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Test Misc Localized Title" />
-		</execute>
-
-		<execute action="PGTestPortlet#assertElementNotPresent" locator-key1="TEST_PORTLET_BODY_FAILED" value1="FAILED" />
-	</command>
-
 	<command name="ViewPublisherSubscriber" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Publisher Subscriber Page" />

@@ -16,7 +16,7 @@ package com.liferay.config.admin.web.portlet;
 
 import com.liferay.config.admin.web.model.ConfigurationModel;
 import com.liferay.config.admin.web.util.ConfigurationHelper;
-import com.liferay.config.admin.web.util.ConfigurationIterator;
+import com.liferay.config.admin.web.util.ConfigurationModelIterator;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -110,32 +110,32 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String languageId = themeDisplay.getLanguageId();
-
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
+
 		String pid = ParamUtil.getString(renderRequest, "pid", factoryPid);
+
 		String viewType = ParamUtil.getString(renderRequest, "viewType");
 
 		ConfigurationHelper configurationHelper = new ConfigurationHelper(
-			_bundleContext, _configurationAdmin, _metaTypeService, languageId);
+			_bundleContext, _configurationAdmin, _metaTypeService,
+			themeDisplay.getLanguageId());
 
-		if ("/edit_configuration.ftl".equals(path)) {
-			ConfigurationModel model = configurationHelper.getModel(pid);
+		if (path.equals("/edit_configuration.ftl")) {
+			ConfigurationModel configurationModel =
+				configurationHelper.getModel(pid);
 
-			if (model != null) {
-
-				// Get an instance configuration model
-
-				model = new ConfigurationModel(
-					model.getObjectClassDefinition(),
+			if (configurationModel != null) {
+				configurationModel = new ConfigurationModel(
+					configurationModel.getObjectClassDefinition(),
 					configurationHelper.getConfiguration(pid),
-					model.getBundleLocation(), model.isFactory());
+					configurationModel.getBundleLocation(),
+					configurationModel.isFactory());
 			}
 
 			renderRequest.setAttribute(
 				"configurationHelper", configurationHelper);
 			renderRequest.setAttribute("factoryPid", factoryPid);
-			renderRequest.setAttribute("model", model);
+			renderRequest.setAttribute("model", configurationModel);
 			renderRequest.setAttribute("pid", pid);
 		}
 		else if ("factoryInstances".equals(viewType)) {
@@ -144,17 +144,21 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 
 			renderRequest.setAttribute("factoryModel", factoryModel);
 
-			List<ConfigurationModel> models =
-				configurationHelper.getFactoryInstances(languageId, factoryPid);
+			List<ConfigurationModel> configurationModels =
+				configurationHelper.getFactoryInstances(
+					themeDisplay.getLanguageId(), factoryPid);
 
 			renderRequest.setAttribute(
-				"modelIterator", new ConfigurationIterator(models));
+				"modelIterator",
+				new ConfigurationModelIterator(configurationModels));
 		}
 		else {
-			List<ConfigurationModel> models = configurationHelper.getModels();
+			List<ConfigurationModel> configurationModels =
+				configurationHelper.getModels();
 
 			renderRequest.setAttribute(
-				"modelIterator", new ConfigurationIterator(models));
+				"modelIterator",
+				new ConfigurationModelIterator(configurationModels));
 		}
 
 		include(

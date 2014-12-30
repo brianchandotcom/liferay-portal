@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.social;
+package com.liferay.wiki.social;
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.repository.model.FileEntry;

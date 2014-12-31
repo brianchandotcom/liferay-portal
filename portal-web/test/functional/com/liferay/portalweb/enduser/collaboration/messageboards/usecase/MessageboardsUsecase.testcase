@@ -1126,7 +1126,7 @@
 	</command>
 
 	<command name="ViewNoMBThreadXSS" priority="5">
-		<var name="source" value="True" />
+		<var name="source" value="true" />
 		<var name="threadBody" value="[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 

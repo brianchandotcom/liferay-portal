@@ -266,14 +266,10 @@ public class ClassUtil {
 			_ANNOTATION_PARAMETERS_REGEXP.matcher(s);
 
 		if (annotationNameMatcher.matches()) {
-			String annotationClassName = annotationNameMatcher.group(1);
-
-			tokens.add(annotationClassName.replace("@", ""));
+			tokens.add(annotationNameMatcher.group(1));
 		}
 		else if (annotationParametersMatcher.matches()) {
-			String annotationClassName = annotationParametersMatcher.group(1);
-
-			tokens.add(annotationClassName);
+			tokens.add(annotationParametersMatcher.group(1));
 
 			String annotationParameters = null;
 

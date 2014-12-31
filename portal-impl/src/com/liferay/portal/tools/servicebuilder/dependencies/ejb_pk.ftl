@@ -3,6 +3,7 @@ package ${packagePath}.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -139,21 +140,13 @@ public class ${entity.PKClassName} implements Comparable<${entity.PKClassName}>,
 
 	@Override
 	public int hashCode() {
-		return (
+		int hashCode = 0;
 
 		<#list entity.PKList as column>
-			<#if !column.isPrimitiveType() && column.type != "String">
-				${column.name}.toString()
-			<#else>
-				String.valueOf(${column.name})
-			</#if>
-
-			<#if column_has_next>
-				+
-			</#if>
+			hashCode = HashUtil.hash(hashCode, ${column.name});
 		</#list>
 
-		).hashCode();
+		return hashCode;
 	}
 
 	@Override

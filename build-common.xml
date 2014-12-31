@@ -1303,6 +1303,8 @@ rerun your task.
 						<misc>
 							<jvmarg value="-Dliferay.lib.portal.dir=${project.dir}/lib/portal" />
 							<jvmarg value="-Dliferay.mode=test" />
+							<jvmarg value="-Dtest.class.group.index=${test.class.group.index}" />
+							<jvmarg value="-Dtest.class.groups=${TEST_CLASS_GROUPS}" />
 						</misc>
 						<test.classes>
 							<batchtest todir="test-results/@{test.type}">

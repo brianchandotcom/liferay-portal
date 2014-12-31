@@ -16,6 +16,7 @@ package com.liferay.portlet.softwarecatalog.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 
@@ -58,7 +59,7 @@ public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreen
 
 	@Override
 	public int hashCode() {
-		return (int)productScreenshotId;
+		return HashUtil.hash(0, productScreenshotId);
 	}
 
 	@Override

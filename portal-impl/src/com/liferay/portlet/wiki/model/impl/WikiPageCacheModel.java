@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -60,7 +61,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 
 	@Override
 	public int hashCode() {
-		return (int)pageId;
+		return HashUtil.hash(0, pageId);
 	}
 
 	@Override

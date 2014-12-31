@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -59,7 +60,7 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 
 	@Override
 	public int hashCode() {
-		return (int)fileEntryMetadataId;
+		return HashUtil.hash(0, fileEntryMetadataId);
 	}
 
 	@Override

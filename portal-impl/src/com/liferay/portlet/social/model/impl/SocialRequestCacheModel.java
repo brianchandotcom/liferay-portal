@@ -16,6 +16,7 @@ package com.liferay.portlet.social.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -59,7 +60,7 @@ public class SocialRequestCacheModel implements CacheModel<SocialRequest>,
 
 	@Override
 	public int hashCode() {
-		return (int)requestId;
+		return HashUtil.hash(0, requestId);
 	}
 
 	@Override

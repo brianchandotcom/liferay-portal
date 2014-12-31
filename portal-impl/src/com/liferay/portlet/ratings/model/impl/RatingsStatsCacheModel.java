@@ -16,6 +16,7 @@ package com.liferay.portlet.ratings.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 
@@ -58,7 +59,7 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 
 	@Override
 	public int hashCode() {
-		return (int)statsId;
+		return HashUtil.hash(0, statsId);
 	}
 
 	@Override

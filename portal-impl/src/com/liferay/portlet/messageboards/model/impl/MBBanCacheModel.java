@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -60,7 +61,7 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 
 	@Override
 	public int hashCode() {
-		return (int)banId;
+		return HashUtil.hash(0, banId);
 	}
 
 	@Override

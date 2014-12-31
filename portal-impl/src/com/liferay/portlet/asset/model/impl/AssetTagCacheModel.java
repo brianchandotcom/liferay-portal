@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -60,7 +61,7 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 
 	@Override
 	public int hashCode() {
-		return (int)tagId;
+		return HashUtil.hash(0, tagId);
 	}
 
 	@Override

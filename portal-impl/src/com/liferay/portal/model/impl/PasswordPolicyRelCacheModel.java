@@ -16,6 +16,7 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
@@ -59,7 +60,9 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 
 	@Override
 	public int hashCode() {
-		return (int)((passwordPolicyRelId * 11) + mvccVersion);
+		int hashCode = HashUtil.hash(0, passwordPolicyRelId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.portlet.trash.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -61,7 +62,7 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 
 	@Override
 	public int hashCode() {
-		return (int)entryId;
+		return HashUtil.hash(0, entryId);
 	}
 
 	@Override

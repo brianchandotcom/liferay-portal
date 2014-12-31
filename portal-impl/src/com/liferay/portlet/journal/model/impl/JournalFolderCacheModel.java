@@ -16,6 +16,7 @@ package com.liferay.portlet.journal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -61,7 +62,7 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 
 	@Override
 	public int hashCode() {
-		return (int)folderId;
+		return HashUtil.hash(0, folderId);
 	}
 
 	@Override

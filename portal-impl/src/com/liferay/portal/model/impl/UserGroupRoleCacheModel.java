@@ -16,6 +16,7 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
@@ -49,7 +50,7 @@ public class UserGroupRoleCacheModel implements CacheModel<UserGroupRole>,
 
 		UserGroupRoleCacheModel userGroupRoleCacheModel = (UserGroupRoleCacheModel)obj;
 
-		if ((userGroupRolePK.equals(userGroupRoleCacheModel.userGroupRolePK)) &&
+		if (userGroupRolePK.equals(userGroupRoleCacheModel.userGroupRolePK) &&
 				(mvccVersion == userGroupRoleCacheModel.mvccVersion)) {
 			return true;
 		}
@@ -60,7 +61,9 @@ public class UserGroupRoleCacheModel implements CacheModel<UserGroupRole>,
 
 	@Override
 	public int hashCode() {
-		return (int)((userGroupRolePK.hashCode() * 11) + mvccVersion);
+		int hashCode = HashUtil.hash(0, userGroupRolePK);
+
+		return HashUtil.hash(hashCode, mvccVersion);
 	}
 
 	@Override

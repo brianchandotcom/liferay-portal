@@ -57,7 +57,7 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 			</#if>
 		<#else>
 			<#if entity.isMvccEnabled()>
-				if ((${entity.PKVarName}.equals(${entity.varName}CacheModel.${entity.PKVarName})) && (mvccVersion == ${entity.varName}CacheModel.mvccVersion)) {
+				if (${entity.PKVarName}.equals(${entity.varName}CacheModel.${entity.PKVarName}) && (mvccVersion == ${entity.varName}CacheModel.mvccVersion)) {
 			<#else>
 				if (${entity.PKVarName}.equals(${entity.varName}CacheModel.${entity.PKVarName})) {
 			</#if>

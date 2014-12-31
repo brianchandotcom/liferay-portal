@@ -25,44 +25,66 @@ import org.junit.Test;
 
 /**
  * @author André de Oliveira
+ * @author Hugo Huijser
  */
 public class ClassUtilTest {
+
+	@Test
+	public void testGetClassesFromAnnotation() throws Exception {
+		testGetClassesFromAnnotation("Annotation", "Annotation");
+		testGetClassesFromAnnotation(
+			"AnnotationClass.Annotation", "AnnotationClass");
+	}
 
 	@Test
 	public void testGetClassesFromAnnotationsWithArrayParameter()
 		throws Exception {
 
-		testGetClassesFromAnnotationWithArrayParameter("A");
-		testGetClassesFromAnnotationWithArrayParameter("A", "B");
-		testGetClassesFromAnnotationWithArrayParameter("A", "B", "C");
+		testGetClassesFromAnnotation("Annotation", "Annotation", "A");
+		testGetClassesFromAnnotation("Annotation", "Annotation", "A", "B");
+		testGetClassesFromAnnotation("Annotation", "Annotation", "A", "B", "C");
+
+		testGetClassesFromAnnotation(
+			"AnnotationClass.Annotation", "AnnotationClass", "A");
+		testGetClassesFromAnnotation(
+			"AnnotationClass.Annotation", "AnnotationClass", "A", "B");
+		testGetClassesFromAnnotation(
+			"AnnotationClass.Annotation", "AnnotationClass", "A", "B", "C");
 	}
 
-	protected void testGetClassesFromAnnotationWithArrayParameter(
-			String... classNames)
+	protected void testGetClassesFromAnnotation(
+			String annotation, String expectedAnnotationClassName,
+			String... arrayParameterClassNames)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(classNames.length * 3 + 1);
+		StringBundler sb = new StringBundler(
+			arrayParameterClassNames.length * 3 + 2);
 
-		sb.append("@AnnotationWithArrayParameter({");
+		sb.append(StringPool.AT);
+		sb.append(annotation);
 
-		for (int i = 0; i < classNames.length; i++) {
-			sb.append(classNames[i]);
-			sb.append(".class");
+		if (arrayParameterClassNames.length > 0) {
+			sb.append("({");
 
-			if (i < (classNames.length - 1)) {
-				sb.append(StringPool.COMMA);
+			for (int i = 0; i < arrayParameterClassNames.length; i++) {
+				sb.append(arrayParameterClassNames[i]);
+				sb.append(".class");
+
+				if (i < (arrayParameterClassNames.length - 1)) {
+					sb.append(StringPool.COMMA);
+				}
 			}
-		}
 
-		sb.append("})");
+			sb.append("})");
+		}
 
 		Set<String> actualClassNames = ClassUtil.getClasses(
 			new StringReader(sb.toString()), null);
 
 		Set<String> expectedClassNames = new HashSet<String>();
 
-		expectedClassNames.add("AnnotationWithArrayParameter");
-		expectedClassNames.addAll(Arrays.asList(classNames));
+		expectedClassNames.add(expectedAnnotationClassName);
+		expectedClassNames.addAll(Arrays.asList(arrayParameterClassNames));
 
 		Assert.assertEquals(expectedClassNames, actualClassNames);
 	}

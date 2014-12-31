@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 
@@ -36,6 +37,31 @@ import java.io.ObjectOutput;
 @ProviderType
 public class AssetTagStatsCacheModel implements CacheModel<AssetTagStats>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AssetTagStatsCacheModel)) {
+			return false;
+		}
+
+		AssetTagStatsCacheModel assetTagStatsCacheModel = (AssetTagStatsCacheModel)obj;
+
+		if (tagStatsId == assetTagStatsCacheModel.tagStatsId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, tagStatsId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);

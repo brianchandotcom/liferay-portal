@@ -16,6 +16,7 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -37,6 +38,34 @@ import java.io.ObjectOutput;
 @ProviderType
 public class PortalPreferencesCacheModel implements CacheModel<PortalPreferences>,
 	Externalizable, MVCCModel {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PortalPreferencesCacheModel)) {
+			return false;
+		}
+
+		PortalPreferencesCacheModel portalPreferencesCacheModel = (PortalPreferencesCacheModel)obj;
+
+		if ((portalPreferencesId == portalPreferencesCacheModel.portalPreferencesId) &&
+				(mvccVersion == portalPreferencesCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		int hashCode = HashUtil.hash(0, portalPreferencesId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
 	@Override
 	public long getMvccVersion() {
 		return mvccVersion;

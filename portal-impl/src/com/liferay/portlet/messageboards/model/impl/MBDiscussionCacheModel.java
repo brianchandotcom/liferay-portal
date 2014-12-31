@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -39,6 +40,31 @@ import java.util.Date;
 @ProviderType
 public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBDiscussionCacheModel)) {
+			return false;
+		}
+
+		MBDiscussionCacheModel mbDiscussionCacheModel = (MBDiscussionCacheModel)obj;
+
+		if (discussionId == mbDiscussionCacheModel.discussionId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, discussionId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(23);

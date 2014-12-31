@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -37,6 +38,31 @@ import java.io.ObjectOutput;
 @ProviderType
 public class DLContentCacheModel implements CacheModel<DLContent>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DLContentCacheModel)) {
+			return false;
+		}
+
+		DLContentCacheModel dlContentCacheModel = (DLContentCacheModel)obj;
+
+		if (contentId == dlContentCacheModel.contentId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, contentId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);

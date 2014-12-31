@@ -16,6 +16,7 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -39,6 +40,34 @@ import java.util.Date;
 @ProviderType
 public class ImageCacheModel implements CacheModel<Image>, Externalizable,
 	MVCCModel {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ImageCacheModel)) {
+			return false;
+		}
+
+		ImageCacheModel imageCacheModel = (ImageCacheModel)obj;
+
+		if ((imageId == imageCacheModel.imageId) &&
+				(mvccVersion == imageCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		int hashCode = HashUtil.hash(0, imageId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
 	@Override
 	public long getMvccVersion() {
 		return mvccVersion;

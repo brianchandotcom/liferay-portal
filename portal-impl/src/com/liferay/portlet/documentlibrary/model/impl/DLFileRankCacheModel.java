@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 
@@ -38,6 +39,31 @@ import java.util.Date;
 @ProviderType
 public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DLFileRankCacheModel)) {
+			return false;
+		}
+
+		DLFileRankCacheModel dlFileRankCacheModel = (DLFileRankCacheModel)obj;
+
+		if (fileRankId == dlFileRankCacheModel.fileRankId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, fileRankId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);

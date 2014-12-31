@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -37,6 +38,31 @@ import java.io.ObjectOutput;
 @ProviderType
 public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DLSyncEventCacheModel)) {
+			return false;
+		}
+
+		DLSyncEventCacheModel dlSyncEventCacheModel = (DLSyncEventCacheModel)obj;
+
+		if (syncEventId == dlSyncEventCacheModel.syncEventId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, syncEventId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);

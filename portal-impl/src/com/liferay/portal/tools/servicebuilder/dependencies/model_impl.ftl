@@ -1327,6 +1327,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			${entity.varName}CacheModel.${cacheField.name} = get${methodName}();
 		</#list>
 
+		<#if entity.hasCompoundPK()>
+			${entity.varName}CacheModel.${entity.PKVarName} = getPrimaryKey();
+		</#if>
+
 		return ${entity.varName}CacheModel;
 	}
 

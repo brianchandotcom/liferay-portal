@@ -16,6 +16,7 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Address;
@@ -39,6 +40,34 @@ import java.util.Date;
 @ProviderType
 public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 	MVCCModel {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AddressCacheModel)) {
+			return false;
+		}
+
+		AddressCacheModel addressCacheModel = (AddressCacheModel)obj;
+
+		if ((addressId == addressCacheModel.addressId) &&
+				(mvccVersion == addressCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		int hashCode = HashUtil.hash(0, addressId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
 	@Override
 	public long getMvccVersion() {
 		return mvccVersion;

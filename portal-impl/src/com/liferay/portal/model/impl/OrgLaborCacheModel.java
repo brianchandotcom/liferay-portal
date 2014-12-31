@@ -16,6 +16,7 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
@@ -36,6 +37,34 @@ import java.io.ObjectOutput;
 @ProviderType
 public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable,
 	MVCCModel {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof OrgLaborCacheModel)) {
+			return false;
+		}
+
+		OrgLaborCacheModel orgLaborCacheModel = (OrgLaborCacheModel)obj;
+
+		if ((orgLaborId == orgLaborCacheModel.orgLaborId) &&
+				(mvccVersion == orgLaborCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		int hashCode = HashUtil.hash(0, orgLaborId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
 	@Override
 	public long getMvccVersion() {
 		return mvccVersion;

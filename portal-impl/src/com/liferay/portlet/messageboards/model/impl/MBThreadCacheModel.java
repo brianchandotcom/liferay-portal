@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -38,6 +39,31 @@ import java.util.Date;
  */
 @ProviderType
 public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBThreadCacheModel)) {
+			return false;
+		}
+
+		MBThreadCacheModel mbThreadCacheModel = (MBThreadCacheModel)obj;
+
+		if (threadId == mbThreadCacheModel.threadId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, threadId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(43);

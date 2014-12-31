@@ -16,10 +16,12 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.OrgGroupRole;
+import com.liferay.portal.service.persistence.OrgGroupRolePK;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,6 +38,34 @@ import java.io.ObjectOutput;
 @ProviderType
 public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 	Externalizable, MVCCModel {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof OrgGroupRoleCacheModel)) {
+			return false;
+		}
+
+		OrgGroupRoleCacheModel orgGroupRoleCacheModel = (OrgGroupRoleCacheModel)obj;
+
+		if (orgGroupRolePK.equals(orgGroupRoleCacheModel.orgGroupRolePK) &&
+				(mvccVersion == orgGroupRoleCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		int hashCode = HashUtil.hash(0, orgGroupRolePK);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
 	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
@@ -83,6 +113,8 @@ public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 		organizationId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		roleId = objectInput.readLong();
+
+		orgGroupRolePK = new OrgGroupRolePK(organizationId, groupId, roleId);
 	}
 
 	@Override
@@ -98,4 +130,5 @@ public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 	public long organizationId;
 	public long groupId;
 	public long roleId;
+	public transient OrgGroupRolePK orgGroupRolePK;
 }

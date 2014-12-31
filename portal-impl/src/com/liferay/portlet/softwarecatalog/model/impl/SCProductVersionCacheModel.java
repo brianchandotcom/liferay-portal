@@ -16,6 +16,7 @@ package com.liferay.portlet.softwarecatalog.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -39,6 +40,31 @@ import java.util.Date;
 @ProviderType
 public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SCProductVersionCacheModel)) {
+			return false;
+		}
+
+		SCProductVersionCacheModel scProductVersionCacheModel = (SCProductVersionCacheModel)obj;
+
+		if (productVersionId == scProductVersionCacheModel.productVersionId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, productVersionId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);

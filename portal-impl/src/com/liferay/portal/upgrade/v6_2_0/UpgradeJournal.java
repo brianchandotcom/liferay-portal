@@ -365,7 +365,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		_ddmStructureIds.put(groupId + "#" + structureId, ddmStructureId);
 		_ddmStructurePKs.put(id_, ddmStructureId);
 
-		return 0;
+		return ddmStructureId;
 	}
 
 	protected long updateStructure(String structureId) throws Exception {

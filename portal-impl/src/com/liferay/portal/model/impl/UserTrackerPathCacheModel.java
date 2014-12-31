@@ -40,6 +40,32 @@ import java.util.Date;
 public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof UserTrackerPathCacheModel)) {
+			return false;
+		}
+
+		UserTrackerPathCacheModel userTrackerPathCacheModel = (UserTrackerPathCacheModel)obj;
+
+		if ((userTrackerPathId == userTrackerPathCacheModel.userTrackerPathId) &&
+				(mvccVersion == userTrackerPathCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((userTrackerPathId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

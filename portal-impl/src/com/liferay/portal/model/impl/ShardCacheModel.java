@@ -38,6 +38,32 @@ import java.io.ObjectOutput;
 public class ShardCacheModel implements CacheModel<Shard>, Externalizable,
 	MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ShardCacheModel)) {
+			return false;
+		}
+
+		ShardCacheModel shardCacheModel = (ShardCacheModel)obj;
+
+		if ((shardId == shardCacheModel.shardId) &&
+				(mvccVersion == shardCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((shardId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

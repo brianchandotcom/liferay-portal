@@ -39,6 +39,31 @@ import java.util.Date;
 @ProviderType
 public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBThreadCacheModel)) {
+			return false;
+		}
+
+		MBThreadCacheModel mbThreadCacheModel = (MBThreadCacheModel)obj;
+
+		if (threadId == mbThreadCacheModel.threadId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)threadId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(43);
 

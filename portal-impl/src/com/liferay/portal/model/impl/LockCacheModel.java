@@ -40,6 +40,32 @@ import java.util.Date;
 public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 	MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LockCacheModel)) {
+			return false;
+		}
+
+		LockCacheModel lockCacheModel = (LockCacheModel)obj;
+
+		if ((lockId == lockCacheModel.lockId) &&
+				(mvccVersion == lockCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((lockId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

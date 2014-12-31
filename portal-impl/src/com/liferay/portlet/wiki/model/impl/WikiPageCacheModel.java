@@ -39,6 +39,31 @@ import java.util.Date;
 @ProviderType
 public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WikiPageCacheModel)) {
+			return false;
+		}
+
+		WikiPageCacheModel wikiPageCacheModel = (WikiPageCacheModel)obj;
+
+		if (pageId == wikiPageCacheModel.pageId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)pageId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(47);
 

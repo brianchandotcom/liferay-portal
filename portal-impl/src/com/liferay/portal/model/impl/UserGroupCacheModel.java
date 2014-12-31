@@ -40,6 +40,32 @@ import java.util.Date;
 public class UserGroupCacheModel implements CacheModel<UserGroup>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof UserGroupCacheModel)) {
+			return false;
+		}
+
+		UserGroupCacheModel userGroupCacheModel = (UserGroupCacheModel)obj;
+
+		if ((userGroupId == userGroupCacheModel.userGroupId) &&
+				(mvccVersion == userGroupCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((userGroupId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

@@ -40,6 +40,31 @@ import java.util.Date;
 public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof RatingsEntryCacheModel)) {
+			return false;
+		}
+
+		RatingsEntryCacheModel ratingsEntryCacheModel = (RatingsEntryCacheModel)obj;
+
+		if (entryId == ratingsEntryCacheModel.entryId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)entryId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 

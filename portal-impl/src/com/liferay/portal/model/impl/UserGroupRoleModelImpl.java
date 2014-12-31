@@ -409,6 +409,8 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 
 		userGroupRoleCacheModel.roleId = getRoleId();
 
+		userGroupRoleCacheModel.userGroupRolePK = getPrimaryKey();
+
 		return userGroupRoleCacheModel;
 	}
 

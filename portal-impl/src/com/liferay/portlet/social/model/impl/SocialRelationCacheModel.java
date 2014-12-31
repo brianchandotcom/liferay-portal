@@ -38,6 +38,31 @@ import java.io.ObjectOutput;
 public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SocialRelationCacheModel)) {
+			return false;
+		}
+
+		SocialRelationCacheModel socialRelationCacheModel = (SocialRelationCacheModel)obj;
+
+		if (relationId == socialRelationCacheModel.relationId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)relationId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 

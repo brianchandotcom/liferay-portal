@@ -37,6 +37,31 @@ import java.io.ObjectOutput;
 public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreenshot>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SCProductScreenshotCacheModel)) {
+			return false;
+		}
+
+		SCProductScreenshotCacheModel scProductScreenshotCacheModel = (SCProductScreenshotCacheModel)obj;
+
+		if (productScreenshotId == scProductScreenshotCacheModel.productScreenshotId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)productScreenshotId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 

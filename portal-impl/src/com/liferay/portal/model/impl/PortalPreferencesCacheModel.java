@@ -38,6 +38,32 @@ import java.io.ObjectOutput;
 public class PortalPreferencesCacheModel implements CacheModel<PortalPreferences>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PortalPreferencesCacheModel)) {
+			return false;
+		}
+
+		PortalPreferencesCacheModel portalPreferencesCacheModel = (PortalPreferencesCacheModel)obj;
+
+		if ((portalPreferencesId == portalPreferencesCacheModel.portalPreferencesId) &&
+				(mvccVersion == portalPreferencesCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((portalPreferencesId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

@@ -38,6 +38,32 @@ import java.io.ObjectOutput;
 public class RegionCacheModel implements CacheModel<Region>, Externalizable,
 	MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof RegionCacheModel)) {
+			return false;
+		}
+
+		RegionCacheModel regionCacheModel = (RegionCacheModel)obj;
+
+		if ((regionId == regionCacheModel.regionId) &&
+				(mvccVersion == regionCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((regionId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

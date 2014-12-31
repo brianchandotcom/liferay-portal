@@ -40,6 +40,32 @@ import java.util.Date;
 public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 	MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof RoleCacheModel)) {
+			return false;
+		}
+
+		RoleCacheModel roleCacheModel = (RoleCacheModel)obj;
+
+		if ((roleId == roleCacheModel.roleId) &&
+				(mvccVersion == roleCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((roleId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

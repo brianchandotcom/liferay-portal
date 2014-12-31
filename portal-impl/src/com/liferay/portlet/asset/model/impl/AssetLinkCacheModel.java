@@ -40,6 +40,31 @@ import java.util.Date;
 public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AssetLinkCacheModel)) {
+			return false;
+		}
+
+		AssetLinkCacheModel assetLinkCacheModel = (AssetLinkCacheModel)obj;
+
+		if (linkId == assetLinkCacheModel.linkId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)linkId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 

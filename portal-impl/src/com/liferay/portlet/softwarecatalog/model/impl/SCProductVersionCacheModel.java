@@ -40,6 +40,31 @@ import java.util.Date;
 public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SCProductVersionCacheModel)) {
+			return false;
+		}
+
+		SCProductVersionCacheModel scProductVersionCacheModel = (SCProductVersionCacheModel)obj;
+
+		if (productVersionId == scProductVersionCacheModel.productVersionId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)productVersionId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
 

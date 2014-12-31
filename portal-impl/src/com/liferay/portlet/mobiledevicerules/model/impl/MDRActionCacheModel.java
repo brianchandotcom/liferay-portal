@@ -40,6 +40,31 @@ import java.util.Date;
 public class MDRActionCacheModel implements CacheModel<MDRAction>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MDRActionCacheModel)) {
+			return false;
+		}
+
+		MDRActionCacheModel mdrActionCacheModel = (MDRActionCacheModel)obj;
+
+		if (actionId == mdrActionCacheModel.actionId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)actionId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
 

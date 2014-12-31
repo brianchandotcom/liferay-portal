@@ -40,6 +40,32 @@ import java.util.Date;
 public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 	MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AddressCacheModel)) {
+			return false;
+		}
+
+		AddressCacheModel addressCacheModel = (AddressCacheModel)obj;
+
+		if ((addressId == addressCacheModel.addressId) &&
+				(mvccVersion == addressCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((addressId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

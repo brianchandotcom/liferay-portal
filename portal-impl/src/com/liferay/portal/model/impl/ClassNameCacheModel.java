@@ -38,6 +38,32 @@ import java.io.ObjectOutput;
 public class ClassNameCacheModel implements CacheModel<ClassName>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ClassNameCacheModel)) {
+			return false;
+		}
+
+		ClassNameCacheModel classNameCacheModel = (ClassNameCacheModel)obj;
+
+		if ((classNameId == classNameCacheModel.classNameId) &&
+				(mvccVersion == classNameCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((classNameId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

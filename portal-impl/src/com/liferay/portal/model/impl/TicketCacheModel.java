@@ -40,6 +40,32 @@ import java.util.Date;
 public class TicketCacheModel implements CacheModel<Ticket>, Externalizable,
 	MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof TicketCacheModel)) {
+			return false;
+		}
+
+		TicketCacheModel ticketCacheModel = (TicketCacheModel)obj;
+
+		if ((ticketId == ticketCacheModel.ticketId) &&
+				(mvccVersion == ticketCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((ticketId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

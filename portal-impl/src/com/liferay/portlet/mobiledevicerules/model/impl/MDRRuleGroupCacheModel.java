@@ -40,6 +40,31 @@ import java.util.Date;
 public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MDRRuleGroupCacheModel)) {
+			return false;
+		}
+
+		MDRRuleGroupCacheModel mdrRuleGroupCacheModel = (MDRRuleGroupCacheModel)obj;
+
+		if (ruleGroupId == mdrRuleGroupCacheModel.ruleGroupId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)ruleGroupId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 

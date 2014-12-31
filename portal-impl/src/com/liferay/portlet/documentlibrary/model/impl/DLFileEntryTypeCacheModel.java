@@ -40,6 +40,31 @@ import java.util.Date;
 public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DLFileEntryTypeCacheModel)) {
+			return false;
+		}
+
+		DLFileEntryTypeCacheModel dlFileEntryTypeCacheModel = (DLFileEntryTypeCacheModel)obj;
+
+		if (fileEntryTypeId == dlFileEntryTypeCacheModel.fileEntryTypeId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)fileEntryTypeId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 

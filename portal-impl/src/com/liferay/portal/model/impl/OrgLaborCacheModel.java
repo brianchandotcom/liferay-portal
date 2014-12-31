@@ -37,6 +37,32 @@ import java.io.ObjectOutput;
 public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable,
 	MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof OrgLaborCacheModel)) {
+			return false;
+		}
+
+		OrgLaborCacheModel orgLaborCacheModel = (OrgLaborCacheModel)obj;
+
+		if ((orgLaborId == orgLaborCacheModel.orgLaborId) &&
+				(mvccVersion == orgLaborCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((orgLaborId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

@@ -38,6 +38,32 @@ import java.io.ObjectOutput;
 public class ResourceActionCacheModel implements CacheModel<ResourceAction>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ResourceActionCacheModel)) {
+			return false;
+		}
+
+		ResourceActionCacheModel resourceActionCacheModel = (ResourceActionCacheModel)obj;
+
+		if ((resourceActionId == resourceActionCacheModel.resourceActionId) &&
+				(mvccVersion == resourceActionCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((resourceActionId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

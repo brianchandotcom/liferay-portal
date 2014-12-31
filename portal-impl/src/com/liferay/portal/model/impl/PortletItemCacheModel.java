@@ -40,6 +40,32 @@ import java.util.Date;
 public class PortletItemCacheModel implements CacheModel<PortletItem>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PortletItemCacheModel)) {
+			return false;
+		}
+
+		PortletItemCacheModel portletItemCacheModel = (PortletItemCacheModel)obj;
+
+		if ((portletItemId == portletItemCacheModel.portletItemId) &&
+				(mvccVersion == portletItemCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((portletItemId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

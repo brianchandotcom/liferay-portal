@@ -39,6 +39,31 @@ import java.util.Date;
 public class MBStatsUserCacheModel implements CacheModel<MBStatsUser>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBStatsUserCacheModel)) {
+			return false;
+		}
+
+		MBStatsUserCacheModel mbStatsUserCacheModel = (MBStatsUserCacheModel)obj;
+
+		if (statsUserId == mbStatsUserCacheModel.statsUserId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)statsUserId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
 

@@ -38,6 +38,32 @@ import java.io.ObjectOutput;
 public class VirtualHostCacheModel implements CacheModel<VirtualHost>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof VirtualHostCacheModel)) {
+			return false;
+		}
+
+		VirtualHostCacheModel virtualHostCacheModel = (VirtualHostCacheModel)obj;
+
+		if ((virtualHostId == virtualHostCacheModel.virtualHostId) &&
+				(mvccVersion == virtualHostCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((virtualHostId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

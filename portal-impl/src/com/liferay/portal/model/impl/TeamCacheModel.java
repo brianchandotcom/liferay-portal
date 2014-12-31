@@ -40,6 +40,32 @@ import java.util.Date;
 public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 	MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof TeamCacheModel)) {
+			return false;
+		}
+
+		TeamCacheModel teamCacheModel = (TeamCacheModel)obj;
+
+		if ((teamId == teamCacheModel.teamId) &&
+				(mvccVersion == teamCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((teamId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

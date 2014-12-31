@@ -40,6 +40,31 @@ import java.util.Date;
 public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AssetCategoryCacheModel)) {
+			return false;
+		}
+
+		AssetCategoryCacheModel assetCategoryCacheModel = (AssetCategoryCacheModel)obj;
+
+		if (categoryId == assetCategoryCacheModel.categoryId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)categoryId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
 

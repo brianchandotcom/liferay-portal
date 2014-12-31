@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.UserGroupRole;
+import com.liferay.portal.service.persistence.UserGroupRolePK;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,6 +37,32 @@ import java.io.ObjectOutput;
 @ProviderType
 public class UserGroupRoleCacheModel implements CacheModel<UserGroupRole>,
 	Externalizable, MVCCModel {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof UserGroupRoleCacheModel)) {
+			return false;
+		}
+
+		UserGroupRoleCacheModel userGroupRoleCacheModel = (UserGroupRoleCacheModel)obj;
+
+		if ((userGroupRolePK.equals(userGroupRoleCacheModel.userGroupRolePK)) &&
+				(mvccVersion == userGroupRoleCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((userGroupRolePK.hashCode() * 11) + mvccVersion);
+	}
+
 	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
@@ -83,6 +110,8 @@ public class UserGroupRoleCacheModel implements CacheModel<UserGroupRole>,
 		userId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		roleId = objectInput.readLong();
+
+		userGroupRolePK = new UserGroupRolePK(userId, groupId, roleId);
 	}
 
 	@Override
@@ -98,4 +127,5 @@ public class UserGroupRoleCacheModel implements CacheModel<UserGroupRole>,
 	public long userId;
 	public long groupId;
 	public long roleId;
+	public transient UserGroupRolePK userGroupRolePK;
 }

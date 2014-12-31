@@ -40,6 +40,31 @@ import java.util.Date;
 public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDLRecordSetCacheModel)) {
+			return false;
+		}
+
+		DDLRecordSetCacheModel ddlRecordSetCacheModel = (DDLRecordSetCacheModel)obj;
+
+		if (recordSetId == ddlRecordSetCacheModel.recordSetId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)recordSetId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
 

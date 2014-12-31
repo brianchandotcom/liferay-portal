@@ -40,6 +40,32 @@ import java.util.Date;
 public class ExportImportConfigurationCacheModel implements CacheModel<ExportImportConfiguration>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ExportImportConfigurationCacheModel)) {
+			return false;
+		}
+
+		ExportImportConfigurationCacheModel exportImportConfigurationCacheModel = (ExportImportConfigurationCacheModel)obj;
+
+		if ((exportImportConfigurationId == exportImportConfigurationCacheModel.exportImportConfigurationId) &&
+				(mvccVersion == exportImportConfigurationCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((exportImportConfigurationId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

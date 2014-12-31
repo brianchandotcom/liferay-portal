@@ -38,6 +38,32 @@ import java.io.ObjectOutput;
 public class PortletCacheModel implements CacheModel<Portlet>, Externalizable,
 	MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PortletCacheModel)) {
+			return false;
+		}
+
+		PortletCacheModel portletCacheModel = (PortletCacheModel)obj;
+
+		if ((id == portletCacheModel.id) &&
+				(mvccVersion == portletCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((id * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

@@ -40,6 +40,31 @@ import java.util.Date;
 public class MBThreadFlagCacheModel implements CacheModel<MBThreadFlag>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBThreadFlagCacheModel)) {
+			return false;
+		}
+
+		MBThreadFlagCacheModel mbThreadFlagCacheModel = (MBThreadFlagCacheModel)obj;
+
+		if (threadFlagId == mbThreadFlagCacheModel.threadFlagId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)threadFlagId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 

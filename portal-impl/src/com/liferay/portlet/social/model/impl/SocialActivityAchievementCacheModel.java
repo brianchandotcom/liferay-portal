@@ -38,6 +38,31 @@ import java.io.ObjectOutput;
 public class SocialActivityAchievementCacheModel implements CacheModel<SocialActivityAchievement>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SocialActivityAchievementCacheModel)) {
+			return false;
+		}
+
+		SocialActivityAchievementCacheModel socialActivityAchievementCacheModel = (SocialActivityAchievementCacheModel)obj;
+
+		if (activityAchievementId == socialActivityAchievementCacheModel.activityAchievementId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)activityAchievementId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 

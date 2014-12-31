@@ -40,6 +40,31 @@ import java.util.Date;
 public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVersion>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMStructureVersionCacheModel)) {
+			return false;
+		}
+
+		DDMStructureVersionCacheModel ddmStructureVersionCacheModel = (DDMStructureVersionCacheModel)obj;
+
+		if (structureVersionId == ddmStructureVersionCacheModel.structureVersionId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)structureVersionId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(27);
 

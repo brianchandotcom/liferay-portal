@@ -39,6 +39,31 @@ import java.util.Date;
 public class ExpandoRowCacheModel implements CacheModel<ExpandoRow>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ExpandoRowCacheModel)) {
+			return false;
+		}
+
+		ExpandoRowCacheModel expandoRowCacheModel = (ExpandoRowCacheModel)obj;
+
+		if (rowId == expandoRowCacheModel.rowId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)rowId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
 

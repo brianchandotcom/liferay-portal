@@ -40,6 +40,32 @@ import java.util.Date;
 public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutRevisionCacheModel)) {
+			return false;
+		}
+
+		LayoutRevisionCacheModel layoutRevisionCacheModel = (LayoutRevisionCacheModel)obj;
+
+		if ((layoutRevisionId == layoutRevisionCacheModel.layoutRevisionId) &&
+				(mvccVersion == layoutRevisionCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((layoutRevisionId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

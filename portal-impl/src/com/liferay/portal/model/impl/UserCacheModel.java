@@ -40,6 +40,32 @@ import java.util.Date;
 public class UserCacheModel implements CacheModel<User>, Externalizable,
 	MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof UserCacheModel)) {
+			return false;
+		}
+
+		UserCacheModel userCacheModel = (UserCacheModel)obj;
+
+		if ((userId == userCacheModel.userId) &&
+				(mvccVersion == userCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((userId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

@@ -39,6 +39,31 @@ import java.util.Date;
 @ProviderType
 public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof CalEventCacheModel)) {
+			return false;
+		}
+
+		CalEventCacheModel calEventCacheModel = (CalEventCacheModel)obj;
+
+		if (eventId == calEventCacheModel.eventId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)eventId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(47);
 

@@ -40,6 +40,32 @@ import java.util.Date;
 public class PasswordTrackerCacheModel implements CacheModel<PasswordTracker>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PasswordTrackerCacheModel)) {
+			return false;
+		}
+
+		PasswordTrackerCacheModel passwordTrackerCacheModel = (PasswordTrackerCacheModel)obj;
+
+		if ((passwordTrackerId == passwordTrackerCacheModel.passwordTrackerId) &&
+				(mvccVersion == passwordTrackerCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((passwordTrackerId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

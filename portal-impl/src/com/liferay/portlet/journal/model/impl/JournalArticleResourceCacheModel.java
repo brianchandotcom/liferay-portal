@@ -38,6 +38,31 @@ import java.io.ObjectOutput;
 public class JournalArticleResourceCacheModel implements CacheModel<JournalArticleResource>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof JournalArticleResourceCacheModel)) {
+			return false;
+		}
+
+		JournalArticleResourceCacheModel journalArticleResourceCacheModel = (JournalArticleResourceCacheModel)obj;
+
+		if (resourcePrimKey == journalArticleResourceCacheModel.resourcePrimKey) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)resourcePrimKey;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
 

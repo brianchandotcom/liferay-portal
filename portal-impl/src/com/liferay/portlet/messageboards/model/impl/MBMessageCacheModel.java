@@ -40,6 +40,31 @@ import java.util.Date;
 public class MBMessageCacheModel implements CacheModel<MBMessage>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBMessageCacheModel)) {
+			return false;
+		}
+
+		MBMessageCacheModel mbMessageCacheModel = (MBMessageCacheModel)obj;
+
+		if (messageId == mbMessageCacheModel.messageId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)messageId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(51);
 

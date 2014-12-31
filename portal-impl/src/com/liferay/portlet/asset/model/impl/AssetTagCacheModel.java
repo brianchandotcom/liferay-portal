@@ -39,6 +39,31 @@ import java.util.Date;
 @ProviderType
 public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AssetTagCacheModel)) {
+			return false;
+		}
+
+		AssetTagCacheModel assetTagCacheModel = (AssetTagCacheModel)obj;
+
+		if (tagId == assetTagCacheModel.tagId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)tagId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 

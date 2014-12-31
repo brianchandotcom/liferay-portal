@@ -37,6 +37,32 @@ import java.io.ObjectOutput;
 public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PasswordPolicyRelCacheModel)) {
+			return false;
+		}
+
+		PasswordPolicyRelCacheModel passwordPolicyRelCacheModel = (PasswordPolicyRelCacheModel)obj;
+
+		if ((passwordPolicyRelId == passwordPolicyRelCacheModel.passwordPolicyRelId) &&
+				(mvccVersion == passwordPolicyRelCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((passwordPolicyRelId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

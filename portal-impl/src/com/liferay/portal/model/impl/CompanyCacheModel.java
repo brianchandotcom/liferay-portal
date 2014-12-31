@@ -38,6 +38,32 @@ import java.io.ObjectOutput;
 public class CompanyCacheModel implements CacheModel<Company>, Externalizable,
 	MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof CompanyCacheModel)) {
+			return false;
+		}
+
+		CompanyCacheModel companyCacheModel = (CompanyCacheModel)obj;
+
+		if ((companyId == companyCacheModel.companyId) &&
+				(mvccVersion == companyCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((companyId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

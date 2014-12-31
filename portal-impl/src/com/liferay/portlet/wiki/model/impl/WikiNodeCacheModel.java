@@ -39,6 +39,31 @@ import java.util.Date;
 @ProviderType
 public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WikiNodeCacheModel)) {
+			return false;
+		}
+
+		WikiNodeCacheModel wikiNodeCacheModel = (WikiNodeCacheModel)obj;
+
+		if (nodeId == wikiNodeCacheModel.nodeId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)nodeId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
 

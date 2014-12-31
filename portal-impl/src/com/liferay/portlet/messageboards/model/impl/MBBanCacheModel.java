@@ -39,6 +39,31 @@ import java.util.Date;
 @ProviderType
 public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBBanCacheModel)) {
+			return false;
+		}
+
+		MBBanCacheModel mbBanCacheModel = (MBBanCacheModel)obj;
+
+		if (banId == mbBanCacheModel.banId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)banId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 

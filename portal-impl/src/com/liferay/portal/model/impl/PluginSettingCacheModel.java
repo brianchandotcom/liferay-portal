@@ -38,6 +38,32 @@ import java.io.ObjectOutput;
 public class PluginSettingCacheModel implements CacheModel<PluginSetting>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PluginSettingCacheModel)) {
+			return false;
+		}
+
+		PluginSettingCacheModel pluginSettingCacheModel = (PluginSettingCacheModel)obj;
+
+		if ((pluginSettingId == pluginSettingCacheModel.pluginSettingId) &&
+				(mvccVersion == pluginSettingCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((pluginSettingId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

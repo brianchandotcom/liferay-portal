@@ -40,6 +40,32 @@ import java.util.Date;
 public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SystemEventCacheModel)) {
+			return false;
+		}
+
+		SystemEventCacheModel systemEventCacheModel = (SystemEventCacheModel)obj;
+
+		if ((systemEventId == systemEventCacheModel.systemEventId) &&
+				(mvccVersion == systemEventCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((systemEventId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

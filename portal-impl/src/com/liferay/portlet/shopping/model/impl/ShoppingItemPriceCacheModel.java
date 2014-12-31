@@ -37,6 +37,31 @@ import java.io.ObjectOutput;
 public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ShoppingItemPriceCacheModel)) {
+			return false;
+		}
+
+		ShoppingItemPriceCacheModel shoppingItemPriceCacheModel = (ShoppingItemPriceCacheModel)obj;
+
+		if (itemPriceId == shoppingItemPriceCacheModel.itemPriceId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)itemPriceId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(21);
 

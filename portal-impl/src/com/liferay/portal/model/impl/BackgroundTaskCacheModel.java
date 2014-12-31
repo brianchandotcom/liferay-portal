@@ -42,6 +42,32 @@ import java.util.Map;
 public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 	Externalizable, MVCCModel {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BackgroundTaskCacheModel)) {
+			return false;
+		}
+
+		BackgroundTaskCacheModel backgroundTaskCacheModel = (BackgroundTaskCacheModel)obj;
+
+		if ((backgroundTaskId == backgroundTaskCacheModel.backgroundTaskId) &&
+				(mvccVersion == backgroundTaskCacheModel.mvccVersion)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)((backgroundTaskId * 11) + mvccVersion);
+	}
+
+	@Override
 	public long getMvccVersion() {
 		return mvccVersion;
 	}

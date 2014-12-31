@@ -40,6 +40,31 @@ import java.util.Date;
 public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMTemplateCacheModel)) {
+			return false;
+		}
+
+		DDMTemplateCacheModel ddmTemplateCacheModel = (DDMTemplateCacheModel)obj;
+
+		if (templateId == ddmTemplateCacheModel.templateId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)templateId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(45);
 

@@ -38,6 +38,31 @@ import java.io.ObjectOutput;
 public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DLSyncEventCacheModel)) {
+			return false;
+		}
+
+		DLSyncEventCacheModel dlSyncEventCacheModel = (DLSyncEventCacheModel)obj;
+
+		if (syncEventId == dlSyncEventCacheModel.syncEventId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)syncEventId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
 

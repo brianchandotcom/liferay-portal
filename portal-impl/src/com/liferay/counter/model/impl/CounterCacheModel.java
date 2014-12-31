@@ -37,6 +37,31 @@ import java.io.ObjectOutput;
 @ProviderType
 public class CounterCacheModel implements CacheModel<Counter>, Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof CounterCacheModel)) {
+			return false;
+		}
+
+		CounterCacheModel counterCacheModel = (CounterCacheModel)obj;
+
+		if (name.equals(counterCacheModel.name)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(5);
 

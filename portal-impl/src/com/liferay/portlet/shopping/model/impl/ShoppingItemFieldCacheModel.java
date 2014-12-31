@@ -38,6 +38,31 @@ import java.io.ObjectOutput;
 public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField>,
 	Externalizable {
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ShoppingItemFieldCacheModel)) {
+			return false;
+		}
+
+		ShoppingItemFieldCacheModel shoppingItemFieldCacheModel = (ShoppingItemFieldCacheModel)obj;
+
+		if (itemFieldId == shoppingItemFieldCacheModel.itemFieldId) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return (int)itemFieldId;
+	}
+
+	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
 

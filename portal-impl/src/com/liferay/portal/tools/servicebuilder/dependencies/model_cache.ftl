@@ -8,6 +8,7 @@ import ${packagePath}.model.${entity.name};
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -73,22 +74,12 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 
 	@Override
 	public int hashCode() {
-		<#if entity.hasPrimitivePK(false)>
-			<#if entity.isMvccEnabled()>
-				return (int)(${entity.PKVarName} * 11 + mvccVersion);
-			<#else>
-				<#if entity.PKClassName == "int">
-					return ${entity.PKVarName};
-				<#else>
-					return (int)${entity.PKVarName};
-				</#if>
-			</#if>
+		<#if entity.isMvccEnabled()>
+			int hashCode = HashUtil.hash(0, ${entity.PKVarName});
+
+			return HashUtil.hash(hashCode, mvccVersion);
 		<#else>
-			<#if entity.isMvccEnabled()>
-				return (int)(${entity.PKVarName}.hashCode() * 11 + mvccVersion);
-			<#else>
-				return ${entity.PKVarName}.hashCode();
-			</#if>
+			return HashUtil.hash(0, ${entity.PKVarName});
 		</#if>
 	}
 

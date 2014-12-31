@@ -266,19 +266,19 @@ public class ClassUtil {
 			_ANNOTATION_PARAMETERS_REGEXP.matcher(s);
 
 		if (annotationNameMatcher.matches()) {
-			String annotationName = annotationNameMatcher.group();
+			String annotationClassName = annotationNameMatcher.group(1);
 
-			tokens.add(annotationName.replace("@", ""));
+			tokens.add(annotationClassName.replace("@", ""));
 		}
 		else if (annotationParametersMatcher.matches()) {
-			String annotationName = annotationParametersMatcher.group(1);
+			String annotationClassName = annotationParametersMatcher.group(1);
 
-			tokens.add(annotationName);
+			tokens.add(annotationClassName);
 
 			String annotationParameters = null;
 
 			if (s.trim().endsWith(")")) {
-				annotationParameters = annotationParametersMatcher.group(2);
+				annotationParameters = annotationParametersMatcher.group(3);
 			}
 			else {
 				StringBundler sb = new StringBundler();
@@ -367,10 +367,11 @@ public class ClassUtil {
 	}
 
 	private static final Pattern _ANNOTATION_NAME_REGEXP = Pattern.compile(
-		"@(\\w+)$");
+		"@(\\w+)\\.?(\\w*)$");
 
 	private static final Pattern _ANNOTATION_PARAMETERS_REGEXP =
-		Pattern.compile("@(\\w+)\\({0,1}\\{{0,1}([^)}]+)\\}{0,1}\\){0,1}");
+		Pattern.compile(
+			"@(\\w+)\\.?(\\w*)\\({0,1}\\{{0,1}([^)}]+)\\}{0,1}\\){0,1}");
 
 	private static final String _CLASS_EXTENSION = ".class";
 

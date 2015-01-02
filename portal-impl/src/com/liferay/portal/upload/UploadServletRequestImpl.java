@@ -498,7 +498,7 @@ public class UploadServletRequestImpl
 		if (ArrayUtil.isNotEmpty(liferayFileItems)) {
 			FileItem liferayFileItem = liferayFileItems[0];
 
-			return new Boolean(liferayFileItem.isFormField());
+			return liferayFileItem.isFormField();
 		}
 
 		return null;

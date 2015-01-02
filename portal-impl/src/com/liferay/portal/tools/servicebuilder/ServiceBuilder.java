@@ -3019,7 +3019,7 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 		context.put("methods", _getMethods(javaClass));
-		context.put("hasHttpMethods", new Boolean(_hasHttpMethods(javaClass)));
+		context.put("hasHttpMethods", _hasHttpMethods(javaClass));
 
 		context = _putDeprecatedKeys(context, javaClass);
 

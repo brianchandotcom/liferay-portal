@@ -1,19 +1,7 @@
 <definition>
-	<command name="assertElementNotPresent">
-		<case locator-key1="VIEW_FORM_NODE">
-			<execute function="AssertElementNotPresent#assertElementNotPresent" ignore-javascript-error="is null" />
-		</case>
-	</command>
-
 	<command name="assertTextEquals">
 		<case locator-key1="SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT">
 			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-	</command>
-
-	<command name="confirm">
-		<case locator-key1="CONFIRMATION">
-			<execute function="Confirm#assertConfirmation" ignore-javascript-error="is null" />
 		</case>
 	</command>
 

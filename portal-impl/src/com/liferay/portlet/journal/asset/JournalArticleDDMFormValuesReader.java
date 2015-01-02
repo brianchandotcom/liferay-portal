@@ -16,7 +16,7 @@ package com.liferay.portlet.journal.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.model.BaseDDMFieldReader;
+import com.liferay.portlet.asset.model.BaseDDMFormValuesReader;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
@@ -28,9 +28,9 @@ import com.liferay.portlet.journal.util.JournalConverterUtil;
 /**
  * @author Adolfo Pérez
  */
-final class JournalArticleDDMFieldReader extends BaseDDMFieldReader {
+final class JournalArticleDDMFormValuesReader extends BaseDDMFormValuesReader {
 
-	public JournalArticleDDMFieldReader(JournalArticle article) {
+	public JournalArticleDDMFormValuesReader(JournalArticle article) {
 		_article = article;
 	}
 

@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseDDMFieldReader implements DDMFieldReader {
+public abstract class BaseDDMFormValuesReader implements DDMFormValuesReader {
 
 	@Override
 	public DDMFormValues getDDMFormValues(String ddmFormFieldType)

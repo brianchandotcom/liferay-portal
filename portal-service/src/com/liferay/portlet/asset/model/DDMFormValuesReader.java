@@ -12,29 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.asset;
+package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.asset.model.BaseDDMFieldReader;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 /**
  * @author Adolfo Pérez
  */
-public class DDLRecordDDMFieldReader extends BaseDDMFieldReader {
+public interface DDMFormValuesReader {
 
-	public DDLRecordDDMFieldReader(DDLRecord ddlRecord) {
-		_ddlRecord = ddlRecord;
-	}
+	public DDMFormValues getDDMFormValues() throws PortalException;
 
-	@Override
-	public DDMFormValues getDDMFormValues() throws PortalException {
-		DDMFormValues ddmFormValues = _ddlRecord.getDDMFormValues();
-
-		return ddmFormValues;
-	}
-
-	private final DDLRecord _ddlRecord;
+	public DDMFormValues getDDMFormValues(String ddmFormFieldType)
+		throws PortalException;
 
 }

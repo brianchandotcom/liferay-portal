@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.model.BaseDDMFieldReader;
+import com.liferay.portlet.asset.model.BaseDDMFormValuesReader;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
@@ -36,9 +36,9 @@ import java.util.Map;
 /**
  * @author Adolfo Pérez
  */
-public class DLFileEntryDDMFieldReader extends BaseDDMFieldReader {
+public class DLFileEntryDDMFormValuesReader extends BaseDDMFormValuesReader {
 
-	public DLFileEntryDDMFieldReader(
+	public DLFileEntryDDMFormValuesReader(
 		FileEntry dlFileEntry, FileVersion fileVersion) {
 
 		_fileEntry = dlFileEntry;

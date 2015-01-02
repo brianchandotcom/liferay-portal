@@ -26,7 +26,7 @@
 
 	<#assign ddmReader = assetRenderer.getDDMFieldReader() />
 
-	<#assign fields = ddmReader.getFields("geolocation") />
+	<#assign fields = ddmReader.getFields("ddm-geolocation") />
 
 	<#assign coordinatesJSONObjects = [] />
 

@@ -67,7 +67,7 @@ public class DLFileEntryDDMFieldReader extends BaseDDMFieldReader {
 	}
 
 	@Override
-	public DDMFormValues getDDMFormValues(String ddmType)
+	public DDMFormValues getDDMFormValues(String ddmFormFieldType)
 		throws PortalException {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(null);
@@ -92,7 +92,7 @@ public class DLFileEntryDDMFieldReader extends BaseDDMFieldReader {
 				DDMFormField ddmFormField = currentDDMFormFieldsMap.get(
 					ddmFormFieldValue.getName());
 
-				if (ddmType.equals(ddmFormField.getDataType())) {
+				if (ddmFormFieldType.equals(ddmFormField.getType())) {
 					ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 				}
 			}

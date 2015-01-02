@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
@@ -66,6 +67,10 @@ public class TemporaryFileEntriesCapabilityImpl
 		File file = null;
 
 		try {
+			if (inputStream == null) {
+				inputStream = new UnsyncByteArrayInputStream(new byte[0]);
+			}
+
 			file = FileUtil.createTempFile(inputStream);
 
 			ServiceContext serviceContext = new ServiceContext();

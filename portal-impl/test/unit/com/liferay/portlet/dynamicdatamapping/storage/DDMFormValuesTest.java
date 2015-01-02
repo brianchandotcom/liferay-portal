@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -31,25 +30,24 @@ import org.junit.Test;
  */
 public class DDMFormValuesTest extends BaseDDMTestCase {
 
-	@Before
-	public void setUp() {
-		_ddmFormValues = createDDMFormValues(null);
-
-		_ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue(_FIELD_NAME, null));
-		_ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue(_FIELD_NAME, null));
-		_ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue(_FIELD_NAME, null));
-	}
-
 	@Test
 	public void testDDMFormFieldValuesMap() {
+		DDMFormValues ddmFormValues = createDDMFormValues(null);
+
+		String fieldName = StringUtil.randomString();
+
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(fieldName, null));
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(fieldName, null));
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(fieldName, null));
+
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-			_ddmFormValues.getDDMFormFieldValuesMap();
+			ddmFormValues.getDDMFormFieldValuesMap();
 
 		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
-			_FIELD_NAME);
+			fieldName);
 
 		Assert.assertEquals(3, ddmFormFieldValues.size());
 	}
@@ -141,9 +139,5 @@ public class DDMFormValuesTest extends BaseDDMTestCase {
 
 		Assert.assertTrue(ddmFormValues1.equals(ddmFormValues2));
 	}
-
-	private static final String _FIELD_NAME = StringUtil.randomString();
-
-	private DDMFormValues _ddmFormValues;
 
 }

@@ -24,24 +24,18 @@
 <#list entries as entry>
 	<#assign assetRenderer = entry.getAssetRenderer() />
 
-	<#assign ddmReader = assetRenderer.getDDMFieldReader() />
+	<#assign ddmFormValuesReader = assetRenderer.getDDMFormValuesReader() />
 
-	<#assign fields = ddmReader.getFields("ddm-geolocation") />
+	<#assign ddmFormValues = ddmFormValuesReader.getDDMFormValues("ddm-geolocation") />
 
 	<#assign coordinatesJSONObjects = [] />
 
-	<#list fields.iterator() as field>
-		<#if (field.isRepeatable())>
-			<#list field.getValue() as value >
-				<#assign coordinatesJSONObject = jsonFactoryUtil.createJSONObject(value) />
+	<#list ddmFormValues.getDDMFormFieldValues() as ddmFormFieldValue>
+		<#assign value = ddmFormFieldValue.getValue() />
 
-				<#assign coordinatesJSONObjects = coordinatesJSONObjects + [coordinatesJSONObject] />
-			</#list>
-		<#else>
-			<#assign coordinatesJSONObject = jsonFactoryUtil.createJSONObject(field.getValue()) />
+		<#assign coordinatesJSONObject = jsonFactoryUtil.createJSONObject(value.getString(locale)) />
 
-			<#assign coordinatesJSONObjects = coordinatesJSONObjects + [coordinatesJSONObject] />
-		</#if>
+		<#assign coordinatesJSONObjects = coordinatesJSONObjects + [coordinatesJSONObject] />
 	</#list>
 
 	<#list coordinatesJSONObjects as coordinatesJSONObject>

@@ -727,7 +727,7 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_PROCESSORS = "dl.file.entry.processors";
 
-	public static final String DL_FILE_ENTRY_RAW_METADATA_PROCESSOR_EXCLUDE_MIME_TYPES = "dl.file.entry.raw.metadata.processor.exclude.mime.types";
+	public static final String DL_FILE_ENTRY_RAW_METADATA_PROCESSOR_EXCLUDED_MIME_TYPES = "dl.file.entry.raw.metadata.processor.excluded.mime.types";
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT = "dl.file.entry.thumbnail.custom1.max.height";
 

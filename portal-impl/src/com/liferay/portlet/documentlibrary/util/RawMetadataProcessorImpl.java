@@ -111,7 +111,8 @@ public class RawMetadataProcessorImpl
 	@Override
 	public boolean isSupported(String mimeType) {
 		return !ArrayUtil.contains(
-			PropsValues.DL_FILE_ENTRY_RAW_METADATA_PROCESSOR_EXCLUDE_MIME_TYPES,
+			PropsValues.
+				DL_FILE_ENTRY_RAW_METADATA_PROCESSOR_EXCLUDED_MIME_TYPES,
 			mimeType);
 	}
 

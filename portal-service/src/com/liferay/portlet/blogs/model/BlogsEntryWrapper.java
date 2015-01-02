@@ -330,6 +330,13 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		return _blogsEntry.getCoverImageURL();
 	}
 
+	@Override
+	public java.lang.String getCoverImageURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntry.getCoverImageURL(themeDisplay);
+	}
+
 	/**
 	* Returns the create date of this blogs entry.
 	*

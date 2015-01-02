@@ -28,7 +28,7 @@ import java.util.Map;
 public abstract class BaseDDMFieldReader implements DDMFieldReader {
 
 	@Override
-	public DDMFormValues getDDMFormValues(String ddmType)
+	public DDMFormValues getDDMFormValues(String ddmFormFieldType)
 		throws PortalException {
 
 		DDMFormValues filteredDDMFormValues = new DDMFormValues(null);
@@ -51,7 +51,7 @@ public abstract class BaseDDMFieldReader implements DDMFieldReader {
 			DDMFormField ddmFormField = currentDDMFormFieldsMap.get(
 				ddmFormFieldValue.getName());
 
-			if (ddmType.equals(ddmFormField.getDataType())) {
+			if (ddmFormFieldType.equals(ddmFormField.getType())) {
 				filteredDDMFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 			}
 		}

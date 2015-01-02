@@ -427,7 +427,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		}
 
 		@Override
-		public DDMFormValues getDDMFormValues(String ddmType) {
+		public DDMFormValues getDDMFormValues(String ddmFormFieldType) {
 			return getDDMFormValues();
 		}
 

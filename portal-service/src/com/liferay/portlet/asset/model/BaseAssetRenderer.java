@@ -97,8 +97,8 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	}
 
 	@Override
-	public DDMFieldReader getDDMFieldReader() {
-		return _nullDDMFieldReader;
+	public DDMFormValuesReader getDDMFormValuesReader() {
+		return _nullDDMFormValuesReader;
 	}
 
 	@Override
@@ -411,7 +411,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return PortalUtil.addPreservedParameters(themeDisplay, sb.toString());
 	}
 
-	private static final String[] _AVAILABLE_LANGUAGE_IDS = new String[0];
+	pprivate static final String[] _AVAILABLE_LANGUAGE_IDS = new String[0];
 
 	private static final DDMFieldReader _nullDDMFieldReader =
 		new NullDDMFieldReader();
@@ -419,7 +419,8 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	private AssetRendererFactory _assetRendererFactory;
 	private int _assetRendererType = AssetRendererFactory.TYPE_LATEST_APPROVED;
 
-	private static final class NullDDMFieldReader implements DDMFieldReader {
+	private static final class NullDDMFormValuesReader
+		implements DDMFormValuesReader {
 
 		@Override
 		public DDMFormValues getDDMFormValues() {

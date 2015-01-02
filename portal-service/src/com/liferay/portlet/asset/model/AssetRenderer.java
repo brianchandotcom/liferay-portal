@@ -61,7 +61,7 @@ public interface AssetRenderer {
 
 	public long getClassPK();
 
-	public DDMFieldReader getDDMFieldReader();
+	public DDMFormValuesReader getDDMFormValuesReader();
 
 	public String getDiscussionPath();
 

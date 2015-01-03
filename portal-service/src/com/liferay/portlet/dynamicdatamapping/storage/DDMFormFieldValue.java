@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 
 import java.util.ArrayList;
@@ -33,6 +34,31 @@ public class DDMFormFieldValue {
 		nestedDDMFormFieldValue.setDDMFormValues(_ddmFormValues);
 
 		_nestedDDMFormFieldValues.add(nestedDDMFormFieldValue);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMFormFieldValue)) {
+			return false;
+		}
+
+		DDMFormFieldValue ddmFormFieldValue = (DDMFormFieldValue)obj;
+
+		if (Validator.equals(_instanceId, ddmFormFieldValue._instanceId) &&
+			Validator.equals(_name, ddmFormFieldValue._name) &&
+			Validator.equals(_value, ddmFormFieldValue._value) &&
+			Validator.equals(
+				_nestedDDMFormFieldValues,
+				ddmFormFieldValue._nestedDDMFormFieldValues)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public DDMFormValues getDDMFormValues() {

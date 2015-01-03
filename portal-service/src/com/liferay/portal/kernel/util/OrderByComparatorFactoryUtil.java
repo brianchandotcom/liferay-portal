@@ -184,7 +184,7 @@ public class OrderByComparatorFactoryUtil {
 			new HashMap<Class<?>, Object>();
 
 		static {
-			_primitiveObjects.put(boolean.class, new Boolean(true));
+			_primitiveObjects.put(boolean.class, Boolean.TRUE);
 			_primitiveObjects.put(byte.class, new Byte("0"));
 			_primitiveObjects.put(char.class, new Character('0'));
 			_primitiveObjects.put(double.class, new Double(0));

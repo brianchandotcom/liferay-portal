@@ -1166,7 +1166,7 @@ public class ArrayUtil {
 
 		for (int i = 0; i < array.length; i++) {
 			if (value != array[i]) {
-				list.add(new Boolean(array[i]));
+				list.add(array[i]);
 			}
 		}
 

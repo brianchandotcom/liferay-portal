@@ -10,6 +10,30 @@
 		Selected standard rules from PMD out of box rule sets. Please refer to the origin rule set file, rule name and version info for future update.
 	</description>
 	<rule
+		class="net.sourceforge.pmd.lang.java.rule.basic.BooleanInstantiationRule"
+		externalInfoUrl="http://pmd.sourceforge.net/snapshot/pmd-java/rules/java/basic.html#BooleanInstantiation"
+		message="Avoid instantiating Boolean objects; reference Boolean.TRUE or Boolean.FALSE or call Boolean.valueOf() instead."
+		name="BooleanInstantiation"
+		since="1.2"
+	>
+		<description>
+			[Origin rule set file rulesets/java/basic.xml] Avoid instantiating Boolean objects; you can reference Boolean.TRUE, Boolean.FALSE, or call Boolean.valueOf() instead.
+		</description>
+		<priority>2</priority>
+		<example><![CDATA[
+
+// unnecessary creation, just reference Boolean.TRUE;
+
+Boolean bar = new Boolean("true");
+
+// unnecessary creation, just reference Boolean.FALSE;
+
+Boolean buz = Boolean.valueOf(false);
+	]]>
+		</example>
+	</rule>
+
+	<rule
 		class="net.sourceforge.pmd.lang.java.rule.basic.OverrideBothEqualsAndHashcodeRule"
 		externalInfoUrl="http://pmd.sourceforge.net/snapshot/pmd-java/rules/java/basic.html#OverrideBothEqualsAndHashcode"
 		language="java"
@@ -38,7 +62,7 @@ public class Bar {
 public class Baz {
 
 	public int hashCode() {
-	  return 0;
+		return 0;
 	}
 
 }

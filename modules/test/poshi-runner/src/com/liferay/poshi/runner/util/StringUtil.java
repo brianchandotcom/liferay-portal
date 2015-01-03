@@ -28,6 +28,26 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class StringUtil {
 
+	public static int count(String s, String text) {
+		if ((s == null) || (s.length() == 0) || (text == null) ||
+			(text.length() == 0)) {
+
+			return 0;
+		}
+
+		int count = 0;
+
+		int pos = s.indexOf(text);
+
+		while (pos != -1) {
+			pos = s.indexOf(text, pos + text.length());
+
+			count++;
+		}
+
+		return count;
+	}
+
 	public static String replace(String s, String oldSub, String newSub) {
 		if (s == null) {
 			return null;

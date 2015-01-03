@@ -1405,10 +1405,10 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets a role for assistive technologies to interpret for HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag could be used for something other than a paragraph.</description>
 			<name>ariaRole</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<description>Sets a role for assistive technologies to interpret for HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag could be used for something other than a paragraph.</description>
 		</attribute>
 		<attribute>
 			<description>Sets a CSS class for styling this component.</description>

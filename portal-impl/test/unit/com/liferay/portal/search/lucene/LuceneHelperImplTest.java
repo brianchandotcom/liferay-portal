@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -145,6 +146,8 @@ public class LuceneHelperImplTest {
 		luceneHelperUtil.setLuceneHelper(_luceneHelperImpl);
 
 		_clusterNode = new ClusterNode(_CLUSER_NODE_ID, _localhostInetAddress);
+
+		_clusterNode.setPortalProtocol(Http.HTTP);
 
 		_captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			LuceneHelperImpl.class.getName(), Level.ALL);
@@ -820,6 +823,8 @@ public class LuceneHelperImplTest {
 				try {
 					clusterNode.setPortalInetSocketAddress(
 						new InetSocketAddress(_portalInetAddress, _port));
+
+					clusterNode.setPortalProtocol(Http.HTTP);
 				}
 				catch (IllegalArgumentException iae) {
 				}

@@ -348,7 +348,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			int pos = file.indexOf("!/");
 
 			if (pos != -1) {
-				file.substring(0, pos);
+				file = file.substring(0, pos);
 			}
 
 			return new URI(file);

@@ -128,7 +128,11 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 				<aui:button id="selectCategoryButton" value="select" />
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
+				<%
+				String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('categoryId', 'categoryName', this, '" + renderResponse.getNamespace() + "');";
+				%>
+
+				<aui:button onClick="<%= taglibRemoveFolder %>" value="remove" />
 			</div>
 
 			<aui:script sandbox="<%= true %>">
@@ -607,14 +611,6 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 				uri: itemQuantitiesURL
 			}
 		);
-	}
-
-	function <portlet:namespace />removeCategory() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('categoryId').val('<%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>');
-
-		form.fm('categoryName').val('');
 	}
 
 	function <portlet:namespace />saveItem() {

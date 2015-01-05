@@ -56,7 +56,7 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 					<aui:button name="openFolderSelectorButton" value="select" />
 
 					<%
-					String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('rootFolderId', 'rootFolderName', '" + renderResponse.getNamespace() + "');";
+					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + renderResponse.getNamespace() + "');";
 					%>
 
 					<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />

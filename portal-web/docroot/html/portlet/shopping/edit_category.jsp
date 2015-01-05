@@ -71,7 +71,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 				<aui:button id="selectCategoryButton" value="select" />
 
-				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
+				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory(this);" %>' value="remove" />
 			</div>
 
 			<div class="<%= (category.getParentCategoryId() == ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ? "hide" : "" %>" id="<portlet:namespace />mergeParentCheckboxDiv">
@@ -100,14 +100,12 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />removeCategory() {
+	function <portlet:namespace />removeCategory(button) {
 		var $ = AUI.$;
 
 		var form = $(document.<portlet:namespace />fm);
 
-		form.fm('parentCategoryId').val('<%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>');
-
-		form.fm('parentCategoryName').val('');
+		Liferay.Util.removeEntitySelection('parentCategoryId', 'parentCategoryName', button, '<portlet:namespace />');
 
 		$('#<portlet:namespace />mergeParentCheckboxDiv').addClass('hide');
 

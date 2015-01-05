@@ -65,18 +65,12 @@ public class UserStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, User user)
-		throws Exception {
-
-		return;
+		PortletDataContext portletDataContext, User user) {
 	}
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, User user)
-		throws Exception {
-
-		return;
+		PortletDataContext portletDataContext, User user) {
 	}
 
 }

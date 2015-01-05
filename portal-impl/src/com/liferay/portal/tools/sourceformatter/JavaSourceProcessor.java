@@ -373,8 +373,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					fileName, "Use " + s + ": " + fileName + " " + lineCount);
 			}
 		}
-
-		return;
 	}
 
 	protected void checkRegexPattern(

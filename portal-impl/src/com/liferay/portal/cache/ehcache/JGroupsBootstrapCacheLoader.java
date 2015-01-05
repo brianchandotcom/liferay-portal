@@ -40,7 +40,6 @@ public class JGroupsBootstrapCacheLoader
 
 	@Override
 	public void load(Ehcache cache) {
-		return;
 	}
 
 }

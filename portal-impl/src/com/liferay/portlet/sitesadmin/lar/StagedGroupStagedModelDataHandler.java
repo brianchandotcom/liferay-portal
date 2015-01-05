@@ -105,18 +105,12 @@ public class StagedGroupStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, StagedGroup stagedGroup)
-		throws Exception {
-
-		return;
+		PortletDataContext portletDataContext, StagedGroup stagedGroup) {
 	}
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, StagedGroup stagedGroup)
-		throws Exception {
-
-		return;
+		PortletDataContext portletDataContext, StagedGroup stagedGroup) {
 	}
 
 	protected Group fetchExistingGroup(

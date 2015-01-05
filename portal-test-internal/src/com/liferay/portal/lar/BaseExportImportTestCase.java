@@ -92,7 +92,6 @@ public class BaseExportImportTestCase {
 	}
 
 	protected void deleteStagedModel(StagedModel stagedModel) throws Exception {
-		return;
 	}
 
 	protected Map<String, String[]> getExportParameterMap() throws Exception {

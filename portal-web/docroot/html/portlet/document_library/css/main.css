@@ -2,12 +2,6 @@
 @import "mixins";
 
 .portlet-document-library, .portlet-document-library-display {
-	.select-all-entries {
-		display: inline-block;
-		margin-left: 10px;
-		margin-top: 15px;
-	}
-
 	.file-entry-list-description {
 		font-style: italic;
 		margin-left: 10px;

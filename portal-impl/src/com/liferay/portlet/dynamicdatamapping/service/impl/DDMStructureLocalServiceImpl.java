@@ -648,29 +648,6 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
-	 *             long)}
-	 */
-	@Deprecated
-	@Override
-	public List<DDMStructure> getClassStructures(long classNameId) {
-		return ddmStructurePersistence.findByClassNameId(classNameId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
-	 *             long, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<DDMStructure> getClassStructures(
-		long classNameId, int start, int end) {
-
-		return ddmStructurePersistence.findByClassNameId(
-			classNameId, start, end);
-	}
-
-	/**
 	 * Returns all the structures matching the class name ID.
 	 *
 	 * @param  companyId the primary key of the structure's company
@@ -732,20 +709,6 @@ public class DDMStructureLocalServiceImpl
 
 		return ddmStructurePersistence.findByC_C(
 			companyId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
-	 *             long, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<DDMStructure> getClassStructures(
-		long classNameId, OrderByComparator<DDMStructure> orderByComparator) {
-
-		return ddmStructurePersistence.findByClassNameId(
-			classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			orderByComparator);
 	}
 
@@ -902,36 +865,6 @@ public class DDMStructureLocalServiceImpl
 		long groupId, String name, String description) {
 
 		return ddmStructurePersistence.findByG_N_D(groupId, name, description);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getStructures}
-	 */
-	@Deprecated
-	@Override
-	public List<DDMStructure> getStructureEntries() {
-		return getStructures();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getStructures(long)}
-	 */
-	@Deprecated
-	@Override
-	public List<DDMStructure> getStructureEntries(long groupId) {
-		return getStructures(groupId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getStructures(long, int,
-	 *             int)}
-	 */
-	@Deprecated
-	@Override
-	public List<DDMStructure> getStructureEntries(
-		long groupId, int start, int end) {
-
-		return getStructures(groupId, start, end);
 	}
 
 	/**

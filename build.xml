@@ -177,13 +177,6 @@
 				/>
 			</delete>
 
-			<delete failonerror="false">
-				<fileset
-					dir="${app.server.lib.portal.dir}"
-					excludes="${jdbc.drivers}"
-				/>
-			</delete>
-
 			<if>
 				<equals arg1="${clean.log.dir}" arg2="true" />
 				<then>
@@ -202,6 +195,14 @@
 					<delete dir="${app.server.portal.dir}" />
 					<delete file="${app.server.portal.dir}" />
 				</then>
+				<else>
+					<delete failonerror="false">
+						<fileset
+							dir="${app.server.lib.portal.dir}"
+							excludes="${jdbc.drivers}"
+						/>
+					</delete>
+				</else>
 			</if>
 
 			<if>

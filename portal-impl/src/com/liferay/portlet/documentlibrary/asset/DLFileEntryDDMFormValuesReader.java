@@ -29,7 +29,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,18 +48,20 @@ public class DLFileEntryDDMFormValuesReader extends BaseDDMFormValuesReader {
 	public DDMFormValues getDDMFormValues() throws PortalException {
 		DDMFormValues ddmFormValues = new DDMFormValues(null);
 
-		for (DLFileEntryMetadata dlFileEntryMetadata :
-				getDLFileEntryMetadatas()) {
+		DLFileEntryMetadata dlFileEntryMetadata = getDLFileEntryMetadata();
 
-			DDMFormValues ddmStorageDDMFormValues =
-				StorageEngineUtil.getDDMFormValues(
-					dlFileEntryMetadata.getDDMStorageId());
+		if (dlFileEntryMetadata == null) {
+			return ddmFormValues;
+		}
 
-			for (DDMFormFieldValue ddmFormFieldValue :
-					ddmStorageDDMFormValues.getDDMFormFieldValues()) {
+		DDMFormValues ddmStorageDDMFormValues =
+			StorageEngineUtil.getDDMFormValues(
+				dlFileEntryMetadata.getDDMStorageId());
 
-				ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-			}
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmStorageDDMFormValues.getDDMFormFieldValues()) {
+
+			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 		}
 
 		return ddmFormValues;
@@ -72,58 +73,57 @@ public class DLFileEntryDDMFormValuesReader extends BaseDDMFormValuesReader {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(null);
 
-		for (DLFileEntryMetadata dlFileEntryMetadata :
-				getDLFileEntryMetadatas()) {
+		DLFileEntryMetadata dlFileEntryMetadata = getDLFileEntryMetadata();
 
-			DDMStructure ddmStructure = dlFileEntryMetadata.getDDMStructure();
+		if (dlFileEntryMetadata == null) {
+			return ddmFormValues;
+		}
 
-			DDMForm ddmForm = ddmStructure.getDDMForm();
+		DDMStructure ddmStructure = dlFileEntryMetadata.getDDMStructure();
 
-			Map<String, DDMFormField> currentDDMFormFieldsMap =
-				ddmForm.getDDMFormFieldsMap(false);
+		DDMForm ddmForm = ddmStructure.getDDMForm();
 
-			DDMFormValues ddmStorageDDMFormValues =
-				StorageEngineUtil.getDDMFormValues(
-					dlFileEntryMetadata.getDDMStorageId());
+		Map<String, DDMFormField> currentDDMFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(false);
 
-			for (DDMFormFieldValue ddmFormFieldValue :
-					ddmStorageDDMFormValues.getDDMFormFieldValues()) {
+		DDMFormValues ddmStorageDDMFormValues =
+			StorageEngineUtil.getDDMFormValues(
+				dlFileEntryMetadata.getDDMStorageId());
 
-				DDMFormField ddmFormField = currentDDMFormFieldsMap.get(
-					ddmFormFieldValue.getName());
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmStorageDDMFormValues.getDDMFormFieldValues()) {
 
-				if (ddmFormFieldType.equals(ddmFormField.getType())) {
-					ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-				}
+			DDMFormField ddmFormField = currentDDMFormFieldsMap.get(
+				ddmFormFieldValue.getName());
+
+			if (ddmFormFieldType.equals(ddmFormField.getType())) {
+				ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 			}
 		}
 
 		return ddmFormValues;
 	}
 
-	protected List<DLFileEntryMetadata> getDLFileEntryMetadatas() {
-		List<DLFileEntryMetadata> dlFileEntryMetadatas =
-			new ArrayList<DLFileEntryMetadata>();
-
+	protected DLFileEntryMetadata getDLFileEntryMetadata() {
 		List<DDMStructure> ddmStructures =
 			DDMStructureLocalServiceUtil.getClassStructures(
 				_fileEntry.getCompanyId(),
 				PortalUtil.getClassNameId(DLFileEntryMetadata.class));
 
+		DLFileEntryMetadata dlFileEntryMetadata = null;
+
 		for (DDMStructure ddmStructure : ddmStructures) {
-			DLFileEntryMetadata dlFileEntryMetadata =
+			dlFileEntryMetadata =
 				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
 					ddmStructure.getStructureId(),
 					_fileVersion.getFileVersionId());
 
-			if (dlFileEntryMetadata == null) {
-				continue;
+			if (dlFileEntryMetadata != null) {
+				break;
 			}
-
-			dlFileEntryMetadatas.add(dlFileEntryMetadata);
 		}
 
-		return dlFileEntryMetadatas;
+		return dlFileEntryMetadata;
 	}
 
 	private final FileEntry _fileEntry;

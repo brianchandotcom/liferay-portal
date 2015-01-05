@@ -968,6 +968,128 @@ body.yui3-skin-sam .yui3-widget-mask {
 	}
 }
 
+/* ---------- Liferay Source Editor ---------- */
+
+.lfr-source-editor {
+	border: solid 0 #CCC;
+	border-bottom-width: 2px;
+	border-top-width: 2px;
+	padding-right: 30px;
+	position: relative;
+
+	.lfr-source-editor-toolbar {
+		font-size: 16px;
+		padding: 5px 0;
+		position: absolute;
+		right: 0;
+		text-align: center;
+		top: 0;
+		width: 30px;
+
+		li {
+			list-style-type: none;
+
+			> a {
+				color: #717383;
+				text-decoration: none;
+			}
+		}
+	}
+
+	.lfr-source-editor-code {
+		background-color: #FFF;
+		color: #2B4259;
+
+		.ace_gutter {
+			background-color: #EDEDEF;
+			color: #868896;
+			overflow : hidden;
+
+			.ace_fold-widget {
+				font-family: fontawesome-alloy;
+				text-align: center;
+				vertical-align: middle;
+
+				&.ace_open, &.ace_closed {
+					background-image: none;
+				}
+
+				&.ace_open:before {
+					content: "\f0d7";
+				}
+
+				&.ace_closed:before {
+					content: "\f0dA";
+				}
+			}
+
+			.ace_gutter-active-cell {
+				color: #FFF;
+			}
+
+			.ace_gutter-active-line {
+				background-color : #717383;
+			}
+
+			.ace_gutter-layer {
+				border-right: solid 1px #CCC;
+			}
+
+			.ace_info {
+				background-image: none;
+			}
+		}
+
+		.ace_content {
+			.ace_active-line {
+				background-color: #EDEDEF;
+			}
+
+			.ace_constant {
+				color: #34ADAB;
+			}
+
+			.ace_tag {
+				color: #1D5EC7;
+			}
+
+			.ace_string {
+				color: #FF6C58;
+
+				&.ace_regex {
+					color: #F00;
+				}
+			}
+		}
+	}
+
+	&.ace_dark {
+		.lfr-source-editor-code {
+			background-color: #35353D;
+			color: #FFF;
+
+			.ace_gutter {
+				background: #393B44;
+				color: #FFF;
+
+				.ace_gutter-active-line {
+					background-color : #009AED;
+				}
+			}
+
+			.ace_content {
+				.ace_active-line {
+					background-color: #00283E;
+				}
+
+				.ace_cursor {
+					color: #FFF;
+				}
+			}
+		}
+	}
+}
+
 /* ---------- Alloy editor ---------- */
 
 .alloy-editor {
@@ -997,6 +1119,22 @@ body.yui3-skin-sam .yui3-widget-mask {
 
 .alloy-editor-tooltip-link .link-container .icon-link-container {
 	line-height: 20px;
+}
+
+.alloy-editor-wrapper {
+	.lfr-source-editor {
+		display: none;
+	}
+
+	&.show-source {
+		.alloy-editor-placeholder {
+			display: none;
+		}
+
+		.lfr-source-editor {
+			display: block;
+		}
+	}
 }
 
 /* ---------- Extras ---------- */

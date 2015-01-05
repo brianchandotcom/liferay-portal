@@ -242,12 +242,6 @@ AUI.add(
 
 					instance._setARIARoles(trigger, menu, listContainer);
 
-					Util.createFlyouts(
-						{
-							container: listContainer.getDOM()
-						}
-					);
-
 					if (trigger.hasClass('select')) {
 						listContainer.delegate(
 							'click',

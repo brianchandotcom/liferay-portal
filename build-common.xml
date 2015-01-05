@@ -704,7 +704,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					</copy>
 
 					<javac
-						classpathref="test.classpath"
+						classpathref="test.compile.classpath"
 						compiler="${javac.compiler}"
 						debug="${javac.debug}"
 						deprecation="${javac.deprecation}"
@@ -916,7 +916,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<misc />
 				<jvmarg value="-Duser.timezone=GMT" />
 				<classpath location="test-coverage" />
-				<classpath refid="test.classpath" />
+				<classpath refid="test.runtime.classpath" />
 				<formatter type="brief" usefile="false" />
 				<formatter type="xml" />
 				<test.classes />
@@ -1190,7 +1190,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				</then>
 			</if>
 
-			<path id="test.classpath">
+			<path id="test.runtime.classpath">
 				<pathelement path="test-classes/@{test.type}" />
 				<pathelement path="${junit.classpath}" />
 				<pathelement path="${test.additional.classpath}" />
@@ -1198,6 +1198,11 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />
 				<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 				<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />
+			</path>
+
+			<path id="test.compile.classpath">
+				<path refid="test.runtime.classpath" />
+				<pathelement path="${project.dir}/lib/portal/ant.jar" />
 			</path>
 		</sequential>
 	</macrodef>
@@ -1303,6 +1308,8 @@ rerun your task.
 						<misc>
 							<jvmarg value="-Dliferay.lib.portal.dir=${project.dir}/lib/portal" />
 							<jvmarg value="-Dliferay.mode=test" />
+							<jvmarg value="-Dtest.class.group.index=${test.class.group.index}" />
+							<jvmarg value="-Dtest.class.groups=${TEST_CLASS_GROUPS}" />
 						</misc>
 						<test.classes>
 							<batchtest todir="test-results/@{test.type}">

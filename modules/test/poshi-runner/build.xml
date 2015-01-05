@@ -7,12 +7,15 @@
 	<!--<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />-->
 
 	<target name="start-poshi-runner" depends="compile">
+		<fail message="Please set the property 'test.case.name'" unless="test.case.name" />
+
 		<mkdir dir="test-results" />
 
 		<junit printsummary="on" showoutput="true">
 			<classpath refid="plugin.classpath" />
 			<formatter type="brief" usefile="false" />
 			<formatter type="xml" />
+			<sysproperty key="test.case.name" value="${test.case.name}" />
 			<test name="com.liferay.poshi.runner.PoshiRunner" todir="test-results" />
 		</junit>
 	</target>

@@ -92,6 +92,9 @@ public class PluginsEnvironmentBuilder {
 			if (content.contains(
 					"<import file=\"../../build-common-osgi-plugin.xml\" />") ||
 				content.contains(
+					"<import file=\"../../../build-common-osgi-plugin.xml\" />")
+					||
+				content.contains(
 					"../tools/sdk/build-common-osgi-plugin.xml\" />")) {
 
 				osgiProject = true;

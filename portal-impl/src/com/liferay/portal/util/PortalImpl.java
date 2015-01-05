@@ -6969,22 +6969,18 @@ public class PortalImpl implements Portal {
 			serverInetAddress, request.getServerPort());
 
 		if (secure) {
-			if (StringUtil.equalsIgnoreCase(
-					Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)) {
+			if (_securePortalLocalInetSocketAddress.compareAndSet(
+					null, localInetSocketAddress)) {
 
-				if (_securePortalLocalInetSocketAddress.compareAndSet(
-						null, localInetSocketAddress)) {
+				notifyPortalInetSocketAddressEventListeners(
+					localInetSocketAddress, true, true);
+			}
 
-					notifyPortalInetSocketAddressEventListeners(
-						localInetSocketAddress, true);
-				}
+			if (_securePortalServerInetSocketAddress.compareAndSet(
+					null, serverInetSocketAddress)) {
 
-				if (_securePortalServerInetSocketAddress.compareAndSet(
-						null, serverInetSocketAddress)) {
-
-					notifyPortalInetSocketAddressEventListeners(
-						serverInetSocketAddress, false);
-				}
+				notifyPortalInetSocketAddressEventListeners(
+					serverInetSocketAddress, false, true);
 			}
 		}
 		else {
@@ -6992,14 +6988,14 @@ public class PortalImpl implements Portal {
 					null, localInetSocketAddress)) {
 
 				notifyPortalInetSocketAddressEventListeners(
-					localInetSocketAddress, true);
+					localInetSocketAddress, true, false);
 			}
 
 			if (_portalServerInetSocketAddress.compareAndSet(
 					null, serverInetSocketAddress)) {
 
 				notifyPortalInetSocketAddressEventListeners(
-					serverInetSocketAddress, false);
+					serverInetSocketAddress, false, false);
 			}
 		}
 	}
@@ -8196,7 +8192,7 @@ public class PortalImpl implements Portal {
 	}
 
 	protected void notifyPortalInetSocketAddressEventListeners(
-		InetSocketAddress inetSocketAddress, boolean local) {
+		InetSocketAddress inetSocketAddress, boolean local, boolean secure) {
 
 		for (PortalInetSocketAddressEventListener
 				portalInetSocketAddressEventListener :
@@ -8204,11 +8200,13 @@ public class PortalImpl implements Portal {
 
 			if (local) {
 				portalInetSocketAddressEventListener.
-					portalLocalInetSockAddressConfigured(inetSocketAddress);
+					portalLocalInetSockAddressConfigured(
+						inetSocketAddress, secure);
 			}
 			else {
 				portalInetSocketAddressEventListener.
-					portalServerInetSocketAddressConfigured(inetSocketAddress);
+					portalServerInetSocketAddressConfigured(
+						inetSocketAddress, secure);
 			}
 		}
 	}

@@ -49,6 +49,7 @@ import java.io.Serializable;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -224,9 +225,6 @@ public class ClusterExecutorImpl
 			return;
 		}
 
-		_secure = StringUtil.equalsIgnoreCase(
-			Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL);
-
 		_executorService = PortalExecutorManagerUtil.getPortalExecutor(
 			CLUSTER_EXECUTOR_CALLBACK_THREAD_POOL);
 
@@ -287,16 +285,21 @@ public class ClusterExecutorImpl
 
 	@Override
 	public void portalLocalInetSockAddressConfigured(
-		InetSocketAddress inetSocketAddress) {
+		InetSocketAddress inetSocketAddress, boolean secure) {
 
-		if (!isEnabled() ||
-			(_localClusterNode.getPortalInetSocketAddress() != null)) {
-
+		if (!isEnabled() || (_localClusterNode.getPortalProtocol() != null)) {
 			return;
 		}
 
 		try {
 			_localClusterNode.setPortalInetSocketAddress(inetSocketAddress);
+
+			if (secure) {
+				_localClusterNode.setPortalProtocol(Http.HTTPS);
+			}
+			else {
+				_localClusterNode.setPortalProtocol(Http.HTTP);
+			}
 
 			memberJoined(_localAddress, _localClusterNode);
 
@@ -312,7 +315,7 @@ public class ClusterExecutorImpl
 
 	@Override
 	public void portalServerInetSocketAddressConfigured(
-		InetSocketAddress inetSocketAddress) {
+		InetSocketAddress inetSocketAddress, boolean secure) {
 	}
 
 	@Override
@@ -379,44 +382,6 @@ public class ClusterExecutorImpl
 		return clusterNodeResponse;
 	}
 
-	protected InetSocketAddress getConfiguredPortalInetSockAddress(
-		boolean secure) {
-
-		InetSocketAddress inetSocketAddress = null;
-
-		String portalInetSocketAddressValue = null;
-
-		if (secure) {
-			portalInetSocketAddressValue =
-				PropsValues.PORTAL_INSTANCE_HTTPS_INET_SOCKET_ADDRESS;
-		}
-		else {
-			portalInetSocketAddressValue =
-				PropsValues.PORTAL_INSTANCE_HTTP_INET_SOCKET_ADDRESS;
-		}
-
-		if (Validator.isNotNull(portalInetSocketAddressValue)) {
-			String[] parts = StringUtil.split(
-				portalInetSocketAddressValue, CharPool.COLON);
-
-			if (parts.length == 2) {
-				try {
-					inetSocketAddress = new InetSocketAddress(
-						InetAddress.getByName(parts[0]),
-						GetterUtil.getIntegerStrict(parts[1]));
-				}
-				catch (Exception e) {
-					_log.error(
-						"Unable to parse portal InetSocketAddress from " +
-							portalInetSocketAddressValue,
-						e);
-				}
-			}
-		}
-
-		return inetSocketAddress;
-	}
-
 	protected JChannel getControlChannel() {
 		return _controlJChannel;
 	}
@@ -445,12 +410,53 @@ public class ClusterExecutorImpl
 		ClusterNode clusterNode = new ClusterNode(
 			PortalUUIDUtil.generate(), inetAddress);
 
-		InetSocketAddress inetSocketAddress =
-			getConfiguredPortalInetSockAddress(_secure);
+		if (Validator.isNull(PropsValues.PORTAL_INSTANCE_PROTOCOL)) {
+			_localClusterNode = clusterNode;
 
-		if (inetSocketAddress != null) {
-			clusterNode.setPortalInetSocketAddress(inetSocketAddress);
+			return;
 		}
+
+		if (Validator.isNull(PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS)) {
+			throw new IllegalArgumentException(
+				"Portal instance inet socket address is not configured, " +
+					"please set it by \"portal.instance.inet.socket.address\"");
+		}
+
+		String[] parts = StringUtil.split(
+			PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS, CharPool.COLON);
+
+		if (parts.length != 2) {
+			throw new IllegalArgumentException(
+				"Unable to parse portal InetSocketAddress from " +
+					PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS);
+		}
+
+		InetAddress hostInetAddress = null;
+
+		try {
+			hostInetAddress = InetAddress.getByName(parts[0]);
+		}
+		catch (UnknownHostException uhe) {
+			throw new IllegalArgumentException(
+				"Unable to parse portal InetSocketAddress host from " +
+					PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS, uhe);
+		}
+
+		int port = -1;
+
+		try {
+			port = GetterUtil.getIntegerStrict(parts[1]);
+		}
+		catch (NumberFormatException nfe) {
+			throw new IllegalArgumentException(
+				"Unable to parse portal InetSocketAddress port from " +
+					PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS, nfe);
+		}
+
+		clusterNode.setPortalInetSocketAddress(
+			new InetSocketAddress(hostInetAddress, port));
+
+		clusterNode.setPortalProtocol(PropsValues.PORTAL_INSTANCE_PROTOCOL);
 
 		_localClusterNode = clusterNode;
 	}
@@ -599,7 +605,6 @@ public class ClusterExecutorImpl
 		new ConcurrentHashMap<Address, ClusterNode>();
 	private Address _localAddress;
 	private ClusterNode _localClusterNode;
-	private boolean _secure;
 	private boolean _shortcutLocalMethod;
 
 	private class ClusterResponseCallbackJob implements Runnable {

@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class DefaultCapabilityRegistry
 	extends BaseCapabilityProvider
-	implements CapabilityRegistry, CapabilityProvider {
+	implements CapabilityRegistry<DocumentRepository>, CapabilityProvider {
 
 	public DefaultCapabilityRegistry(DocumentRepository documentRepository) {
 		_documentRepository = documentRepository;
@@ -53,7 +53,7 @@ public class DefaultCapabilityRegistry
 	}
 
 	@Override
-	public DocumentRepository getDocumentRepository() {
+	public DocumentRepository getTarget() {
 		return _documentRepository;
 	}
 

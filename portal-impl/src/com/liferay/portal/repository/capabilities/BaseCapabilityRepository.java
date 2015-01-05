@@ -36,10 +36,6 @@ public abstract class BaseCapabilityRepository<R>
 		return _capabilityProvider.getCapability(capabilityClass);
 	}
 
-	public R getRepository() {
-		return _repository;
-	}
-
 	@Override
 	public abstract long getRepositoryId();
 
@@ -48,6 +44,10 @@ public abstract class BaseCapabilityRepository<R>
 		Class<T> capabilityClass) {
 
 		return _capabilityProvider.isCapabilityProvided(capabilityClass);
+	}
+
+	protected R getRepository() {
+		return _repository;
 	}
 
 	private final CapabilityProvider _capabilityProvider;

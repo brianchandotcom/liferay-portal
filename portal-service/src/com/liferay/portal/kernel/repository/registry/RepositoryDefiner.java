@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.repository.registry;
 
+import com.liferay.portal.kernel.repository.DocumentRepository;
+
 /**
  * @author Adolfo Pérez
  */
@@ -23,7 +25,8 @@ public interface RepositoryDefiner {
 
 	public boolean isExternalRepository();
 
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry);
+	public void registerCapabilities(
+		CapabilityRegistry<DocumentRepository> capabilityRegistry);
 
 	public void registerRepositoryEventListeners(
 		RepositoryEventRegistry repositoryEventRegistry);

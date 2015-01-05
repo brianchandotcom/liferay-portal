@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.repository.registry;
 
+import com.liferay.portal.kernel.repository.DocumentRepository;
+
 /**
  * @author Adolfo Pérez
  */
@@ -26,7 +28,8 @@ public abstract class BaseRepositoryDefiner implements RepositoryDefiner {
 	public abstract boolean isExternalRepository();
 
 	@Override
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
+	public void registerCapabilities(
+		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
 	}
 
 	@Override

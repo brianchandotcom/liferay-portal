@@ -14,13 +14,12 @@
 
 package com.liferay.portal.kernel.repository.registry;
 
-import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 
 /**
  * @author Adolfo Pérez
  */
-public interface CapabilityRegistry {
+public interface CapabilityRegistry<T> {
 
 	public <S extends Capability, T extends S> void addExportedCapability(
 		Class<S> capabilityClass, T capability);
@@ -28,6 +27,6 @@ public interface CapabilityRegistry {
 	public <S extends Capability, T extends S> void addSupportedCapability(
 		Class<S> capabilityClass, T capability);
 
-	public DocumentRepository getDocumentRepository();
+	public T getTarget();
 
 }

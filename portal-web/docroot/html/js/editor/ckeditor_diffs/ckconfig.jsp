@@ -36,6 +36,7 @@ languageId = LocaleUtil.toLanguageId(locale);
 
 String name = ParamUtil.getString(request, "name");
 boolean resizable = ParamUtil.getBoolean(request, "resizable");
+boolean showSource = ParamUtil.getBoolean(request, "showSource");
 
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
@@ -126,7 +127,9 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['Styles'],
 		['SpellChecker', 'Scayt', '-', 'SpecialChar'],
 		['Undo', 'Redo'],
-		['Source'],
+		<c:if test="<%= showSource %>">
+			['Source'],
+		</c:if>
 		['A11YBtn']
 	];
 
@@ -140,7 +143,9 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		'/',
 		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo' ],
 		['SpellChecker', 'Scayt'],
-		['Source'],
+		<c:if test="<%= showSource %>">
+			['Source'],
+		</c:if>
 		['A11YBtn']
 	];
 
@@ -163,7 +168,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll' , '-', 'Undo', 'Redo'],
 		['Find', 'Replace', '-', 'SpellChecker', 'Scayt'],
 
-		<c:if test="<%= !inlineEdit %>">
+		<c:if test="<%= !inlineEdit && showSource %>">
 			['Source'],
 		</c:if>
 
@@ -182,7 +187,9 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		'/',
 		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo'],
 		['Find', 'Replace', '-', 'SpellChecker', 'Scayt'],
-		['Source'],
+		<c:if test="<%= showSource %>">
+			['Source'],
+		</c:if>
 		['A11YBtn']
 	];
 
@@ -190,17 +197,23 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['Bold', 'Italic', 'Underline'],
 		['NumberedList', 'BulletedList'],
 		['Link', 'Unlink'],
-		['Image'],
-		['Source']
+		['Image']
 	];
+
+	<c:if test="<%= showSource %>">
+		config.toolbar_phone.push(['Source']);
+	</c:if>
 
 	config.toolbar_simple = [
 		['Bold', 'Italic', 'Underline', 'Strike'],
 		['NumberedList', 'BulletedList'],
 		['Link', 'Unlink'],
-		['Table', 'Image'],
-		['Source']
+		['Table', 'Image']
 	];
+
+	<c:if test="<%= showSource %>">
+		config.toolbar_simple.push(['Source']);
+	</c:if>
 
 	config.toolbar_tablet = [
 		['Bold', 'Italic', 'Underline', 'Strike'],
@@ -208,9 +221,12 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['NumberedList', 'BulletedList'],
 		['Styles', 'FontSize'],
 		['Link', 'Unlink'],
-		['Image'],
-		['Source']
+		['Image']
 	];
+
+	<c:if test="<%= showSource %>">
+		config.toolbar_tablet.push(['Source']);
+	</c:if>
 
 	ckEditor.on(
 		'dialogDefinition',

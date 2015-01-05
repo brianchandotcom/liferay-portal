@@ -36,6 +36,7 @@ languageId = LocaleUtil.toLanguageId(locale);
 
 String name = ParamUtil.getString(request, "name");
 boolean resizable = ParamUtil.getBoolean(request, "resizable");
+boolean showSource = ParamUtil.getBoolean(request, "showSource");
 long wikiPageResourcePrimKey = ParamUtil.getLong(request, "wikiPageResourcePrimKey");
 
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
@@ -118,34 +119,40 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		'/',
 		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo'],
 		['Find','Replace'],
-		['Source'],
+		<c:if test="<%= showSource %>">
+			['Source'],
+		</c:if>
 		['A11YBtn']
 	];
 
 	config.toolbar_phone = [
 		['Bold', 'Italic'],
 		['NumberedList', 'BulletedList'],
-		['Link', 'Unlink'],
-
-		<c:if test="<%= (wikiPageResourcePrimKey > 0) %>">
-			['Image'],
-		</c:if>
-
-		['Source']
+		['Link', 'Unlink']
 	];
+
+	<c:if test="<%= (wikiPageResourcePrimKey > 0) %>">
+		config.toolbar_phone.push(['Image']);
+	</c:if>
+
+	<c:if test="<%= showSource %>">
+		config.toolbar_phone.push(['Source']);
+	</c:if>
 
 	config.toolbar_tablet = [
 		['Bold', 'Italic'],
 		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
 		['Format'],
-		['Link', 'Unlink'],
-
-		<c:if test="<%= (wikiPageResourcePrimKey > 0) %>">
-			['Image'],
-		</c:if>
-
-		['Source']
+		['Link', 'Unlink']
 	];
+
+	<c:if test="<%= (wikiPageResourcePrimKey > 0) %>">
+		config.toolbar_tablet.push(['Image']);
+	</c:if>
+
+	<c:if test="<%= showSource %>">
+		config.toolbar_tablet.push(['Source']);
+	</c:if>
 
 	ckEditor.on(
 		'dialogDefinition',

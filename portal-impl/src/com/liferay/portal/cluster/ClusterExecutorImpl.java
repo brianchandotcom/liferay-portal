@@ -49,6 +49,7 @@ import java.io.Serializable;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -416,26 +417,44 @@ public class ClusterExecutorImpl
 		}
 
 		if (Validator.isNull(PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS)) {
-			throw new NullPointerException(
-				"Portal insttance inet socket address is null, please set it " +
-					"by \"portal.instance.inet.socket.address\"");
+			throw new IllegalArgumentException(
+				"Portal instance inet socket address is not configured, " +
+					"please set it by \"portal.instance.inet.socket.address\"");
 		}
 
 		String[] parts = StringUtil.split(
 			PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS, CharPool.COLON);
 
-		try {
-			clusterNode.setPortalInetSocketAddress(
-				new InetSocketAddress(
-					InetAddress.getByName(parts[0]),
-					GetterUtil.getIntegerStrict(parts[1])));
-		}
-		catch (Exception e) {
-			_log.error(
+		if (parts.length != 2) {
+			throw new IllegalArgumentException(
 				"Unable to parse portal InetSocketAddress from " +
-					PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS,
-				e);
+					PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS);
 		}
+
+		InetAddress hostInetAddress = null;
+
+		try {
+			hostInetAddress = InetAddress.getByName(parts[0]);
+		}
+		catch (UnknownHostException uhe) {
+			throw new IllegalArgumentException(
+				"Unable to parse portal InetSocketAddress host from " +
+					PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS, uhe);
+		}
+
+		int port = -1;
+
+		try {
+			port = GetterUtil.getIntegerStrict(parts[1]);
+		}
+		catch (NumberFormatException nfe) {
+			throw new IllegalArgumentException(
+				"Unable to parse portal InetSocketAddress port from " +
+					PropsValues.PORTAL_INSTANCE_INET_SOCKET_ADDRESS, nfe);
+		}
+
+		clusterNode.setPortalInetSocketAddress(
+			new InetSocketAddress(hostInetAddress, port));
 
 		clusterNode.setPortalProtocol(PropsValues.PORTAL_INSTANCE_PROTOCOL);
 

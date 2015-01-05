@@ -707,11 +707,6 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
-	public boolean isFieldPrivate(java.lang.String fieldName) {
-		return _ddmStructure.isFieldPrivate(fieldName);
-	}
-
-	@Override
 	public boolean isFieldRepeatable(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructure.isFieldRepeatable(fieldName);

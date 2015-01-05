@@ -226,10 +226,6 @@ public class DDLImpl implements DDL {
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			String name = ddmFormField.getName();
 
-			if (ddmStructure.isFieldPrivate(name)) {
-				continue;
-			}
-
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			String dataType = ddmFormField.getDataType();

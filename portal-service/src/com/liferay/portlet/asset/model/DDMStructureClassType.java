@@ -97,11 +97,9 @@ public class DDMStructureClassType implements ClassType {
 			String indexType = ddmFormField.getIndexType();
 			String name = ddmFormField.getName();
 
-			boolean privateField = ddmStructure.isFieldPrivate(name);
-
 			String type = ddmFormField.getType();
 
-			if (Validator.isNull(indexType) || privateField ||
+			if (Validator.isNull(indexType) ||
 				!ArrayUtil.contains(_SELECTABLE_DDM_STRUCTURE_FIELDS, type)) {
 
 				continue;

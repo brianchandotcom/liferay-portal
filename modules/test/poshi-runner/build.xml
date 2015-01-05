@@ -6,18 +6,16 @@
 
 	<!--<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />-->
 
+	<target name="prepare-poshi-runner">
+		<fail message="Please set the property ${test.case.name}." unless="test.case.name" />
+
+		<echo file="src/poshi-runner-ext.properties">
+			test.case.name=${test.case.name}
+		</echo>
+	</target>
+
 	<target name="start-poshi-runner">
-		<if>
-			<isset property="test.case.name" />
-			<then>
-				<echo file="src/poshi-runner-ext.properties">
-					test.case.name=${test.case.name}
-				</echo>
-			</then>
-			<else>
-				<fail message="Please give me the test case name!" />
-			</else>
-		</if>
+		<antcall target="prepare-poshi-runner" />
 
 		<antcall target="compile" />
 

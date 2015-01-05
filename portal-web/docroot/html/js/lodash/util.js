@@ -3,18 +3,18 @@
 
 	_.mixin(
 		{
-			bindRight: function(fn, context) {
-				var args = _.toArray(arguments).slice(2);
-
-				args.unshift(_.bind(fn, context));
-
-				return _.partialRight.apply(_, args);
-			},
-
 			bindKeyRight: function(context, key) {
 				var args = _.toArray(arguments).slice(2);
 
 				args.unshift(_.bindKey(context, key));
+
+				return _.partialRight.apply(_, args);
+			},
+
+			bindRight: function(fn, context) {
+				var args = _.toArray(arguments).slice(2);
+
+				args.unshift(_.bind(fn, context));
 
 				return _.partialRight.apply(_, args);
 			},
@@ -35,7 +35,7 @@
 
 				return string.replace ? string.replace(
 					REGEX_SUB,
-					function (match, key) {
+					function(match, key) {
 						return _.isUndefined(data[key]) ? match : data[key];
 					}
 				) : string;

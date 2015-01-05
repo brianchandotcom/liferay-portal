@@ -52,10 +52,6 @@ public class DDLRecordTestHelper {
 			LocaleUtil.US);
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			if (ddmStructure.isFieldPrivate(ddmFormField.getName())) {
-				continue;
-			}
-
 			if (ddmFormField.isLocalizable()) {
 				ddmFormValues.addDDMFormFieldValue(
 					DDLRecordTestUtil.createLocalizedTextDDMFormFieldValue(

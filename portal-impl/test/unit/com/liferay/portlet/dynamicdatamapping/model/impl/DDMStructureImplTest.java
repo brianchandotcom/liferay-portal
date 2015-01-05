@@ -187,7 +187,6 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 		expectedFieldNames.add("child2Field1");
 		expectedFieldNames.add("field2");
 		expectedFieldNames.add("field3");
-		expectedFieldNames.add("_fieldsDisplay");
 
 		Assert.assertEquals(expectedFieldNames, structure.getFieldNames());
 	}
@@ -222,7 +221,6 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 		expectedFieldNames.add("field3");
 		expectedFieldNames.add("field4");
 		expectedFieldNames.add("field5");
-		expectedFieldNames.add("_fieldsDisplay");
 
 		Assert.assertEquals(expectedFieldNames, childStructure.getFieldNames());
 	}
@@ -294,7 +292,6 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 		expectedFieldNames.add("field1");
 		expectedFieldNames.add("field2");
 		expectedFieldNames.add("field3");
-		expectedFieldNames.add("_fieldsDisplay");
 
 		Assert.assertEquals(expectedFieldNames, structure.getRootFieldNames());
 	}

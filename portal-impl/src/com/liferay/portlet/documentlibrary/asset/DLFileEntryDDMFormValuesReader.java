@@ -46,17 +46,18 @@ public class DLFileEntryDDMFormValuesReader extends BaseDDMFormValuesReader {
 
 	@Override
 	public DDMFormValues getDDMFormValues() throws PortalException {
-		DDMFormValues ddmFormValues = new DDMFormValues(null);
-
 		DLFileEntryMetadata dlFileEntryMetadata = getDLFileEntryMetadata();
 
 		if (dlFileEntryMetadata == null) {
-			return ddmFormValues;
+			return new DDMFormValues(null);
 		}
 
 		DDMFormValues ddmStorageDDMFormValues =
 			StorageEngineUtil.getDDMFormValues(
 				dlFileEntryMetadata.getDDMStorageId());
+
+		DDMFormValues ddmFormValues = new DDMFormValues(
+			ddmStorageDDMFormValues.getDDMForm());
 
 		for (DDMFormFieldValue ddmFormFieldValue :
 				ddmStorageDDMFormValues.getDDMFormFieldValues()) {
@@ -71,12 +72,10 @@ public class DLFileEntryDDMFormValuesReader extends BaseDDMFormValuesReader {
 	public DDMFormValues getDDMFormValues(String ddmFormFieldType)
 		throws PortalException {
 
-		DDMFormValues ddmFormValues = new DDMFormValues(null);
-
 		DLFileEntryMetadata dlFileEntryMetadata = getDLFileEntryMetadata();
 
 		if (dlFileEntryMetadata == null) {
-			return ddmFormValues;
+			return new DDMFormValues(null);
 		}
 
 		DDMStructure ddmStructure = dlFileEntryMetadata.getDDMStructure();
@@ -85,6 +84,8 @@ public class DLFileEntryDDMFormValuesReader extends BaseDDMFormValuesReader {
 
 		Map<String, DDMFormField> currentDDMFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 		DDMFormValues ddmStorageDDMFormValues =
 			StorageEngineUtil.getDDMFormValues(

@@ -31,8 +31,6 @@ public abstract class BaseDDMFormValuesReader implements DDMFormValuesReader {
 	public DDMFormValues getDDMFormValues(String ddmFormFieldType)
 		throws PortalException {
 
-		DDMFormValues filteredDDMFormValues = new DDMFormValues(null);
-
 		DDMFormValues currentDDMFormValues = getDDMFormValues();
 
 		DDMForm currentDDMForm = currentDDMFormValues.getDDMForm();
@@ -41,6 +39,8 @@ public abstract class BaseDDMFormValuesReader implements DDMFormValuesReader {
 			throw new IllegalStateException(
 				"Unable to filter by type when DDMForm reference is null");
 		}
+
+		DDMFormValues filteredDDMFormValues = new DDMFormValues(currentDDMForm);
 
 		Map<String, DDMFormField> currentDDMFormFieldsMap =
 			currentDDMForm.getDDMFormFieldsMap(false);

@@ -153,7 +153,7 @@ public class BlogsUtil {
 
 		definitionTerms.put(
 			"[$PORTLET_NAME$]", HtmlUtil.escape(
-					PortalUtil.getPortletTitle(portletRequest)));
+				PortalUtil.getPortletTitle(portletRequest)));
 		definitionTerms.put(
 			"[$SITE_NAME$]",
 			LanguageUtil.get(
@@ -208,7 +208,7 @@ public class BlogsUtil {
 				"the-company-name-associated-with-the-blog"));
 		definitionTerms.put(
 			"[$PORTLET_NAME$]", HtmlUtil.escape(
-					PortalUtil.getPortletTitle(portletRequest)));
+				PortalUtil.getPortletTitle(portletRequest)));
 		definitionTerms.put(
 			"[$SITE_NAME$]",
 			LanguageUtil.get(

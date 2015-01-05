@@ -951,7 +951,7 @@ public class JournalUtil {
 
 		definitionTerms.put(
 			"[$PORTLET_NAME$]", HtmlUtil.escape(
-					PortalUtil.getPortletTitle(portletRequest)));
+				PortalUtil.getPortletTitle(portletRequest)));
 		definitionTerms.put(
 			"[$TO_ADDRESS$]",
 			LanguageUtil.get(

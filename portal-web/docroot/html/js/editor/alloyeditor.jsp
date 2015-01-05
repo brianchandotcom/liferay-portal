@@ -61,7 +61,12 @@ if (Validator.isNotNull(onInitMethod)) {
 }
 
 String placeholder = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:placeholder"));
+boolean showSource = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:showSource"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
+
+if (alloyEditorMode.equals("text")) {
+	showSource = false;
+}
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
@@ -112,7 +117,30 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	CKEDITOR.env.isCompatible = true;
 </script>
 
-<div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
+<liferay-util:buffer var="alloyEditor">
+	<div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
+</liferay-util:buffer>
+
+<c:choose>
+	<c:when test='<%= showSource %>'>
+		<div class="alloy-editor-switch">
+			<a href="javscript:;" id="<%= name %>Switch">&lt;&#47;&gt;</a>
+		</div>
+
+		<div class="alloy-editor-container" id="<%= name %>Container">
+			<div class="wrapper">
+				<%= alloyEditor %>
+
+				<div id="<%= name %>Source">
+					<div class="lfr-source-editor-code"></div>
+				</div>
+			</div>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<%= alloyEditor %>
+	</c:otherwise>
+</c:choose>
 
 <aui:script use="aui-base,alloy-editor,liferay-editor-image-uploader">
 	document.getElementById('<%= name %>').setAttribute('contenteditable', true);
@@ -158,7 +186,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 					</c:otherwise>
 				</c:choose>
 
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.BLOGS %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/document_selector/view" />
 				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 				<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
@@ -288,6 +316,14 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			window['<%= name %>'].editor.destroy();
 
 			window['<%= name %>'] = null;
+
+			<c:if test="<%= showSource %>">
+				var sourceEditor = Liferay.component('<%= name %>Source');
+
+				if (sourceEditor) {
+					sourceEditor.destroy();
+				}
+			</c:if>
 		},
 
 		focus: function() {
@@ -334,7 +370,17 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 					return text;
 				</c:when>
 				<c:otherwise>
-					return window['<%= name %>'].getCkData();
+					var content = window['<%= name %>'].getCkData();
+
+					<c:if test="<%= showSource %>">
+						var sourceEditor = Liferay.component('<%= name %>Source');
+
+						if (sourceEditor && sourceEditor.get('boundingBox').test(':visible')) {
+							content = sourceEditor.get('value');
+						}
+					</c:if>
+
+					return content;
 				</c:otherwise>
 			</c:choose>
 		},
@@ -349,6 +395,67 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			CKEDITOR.instances['<%= name %>'].setData(value);
 		}
 	};
+
+	<c:if test='<%= showSource %>'>
+		var CSS_SHOW_SOURCE = 'show-source';
+		var STR_VALUE = 'value';
+
+		var editorContainer = A.one('#<%= name %>Container');
+		var editorSwitch = A.one('#<%= name %>Switch');
+
+		var toggleEditorModeUI = function() {
+			editorContainer.toggleClass(CSS_SHOW_SOURCE);
+
+			editorSwitch.setHTML(editorContainer.hasClass(CSS_SHOW_SOURCE) ? 'abc' : '&lt;/&gt;');
+		};
+
+		var createSourceEditor = function() {
+			A.use('liferay-source-editor', function(A) {
+				var sourceEditor = new A.LiferaySourceEditor(
+					{
+						boundingBox: A.one('#<%= name %>Source'),
+						mode: 'html',
+						value: window['<%= name %>'].getHTML()
+					}
+				).render();
+
+				toggleEditorModeUI();
+
+				Liferay.component('<%= name %>Source', sourceEditor);
+			});
+		};
+
+		editorSwitch.on(
+			'click',
+			function(event) {
+				event.preventDefault();
+
+				var editor = Liferay.component('<%= name %>Source');
+
+				if (editorContainer.hasClass(CSS_SHOW_SOURCE)) {
+					if (editor) {
+						window['<%= name %>'].setHTML(editor.get(STR_VALUE));
+					}
+
+					toggleEditorModeUI();
+				}
+				else {
+					if (editor) {
+						var currentContent = window['<%= name %>'].getHTML();
+
+						if (currentContent !== editor.get(STR_VALUE)) {
+							editor.set(STR_VALUE, currentContent);
+						}
+
+						toggleEditorModeUI();
+					}
+					else {
+						createSourceEditor();
+					}
+				}
+			}
+		);
+	</c:if>
 
 	var destroyInstance = function(event) {
 		if (event.portletId === '<%= portletId %>') {

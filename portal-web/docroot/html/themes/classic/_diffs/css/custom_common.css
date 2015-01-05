@@ -1121,8 +1121,23 @@ body.yui3-skin-sam .yui3-widget-mask {
 	line-height: 20px;
 }
 
-.alloy-editor-wrapper {
-	.lfr-source-editor {
+.alloy-editor-switch {
+	position: relative;
+
+	a {
+		background-color: #DDD;
+		bottom: 0;
+		color: #868896;
+		font-size: 16px;
+		padding: 0 5px;
+		position: absolute;
+		right: 0;
+		text-decoration: none;
+	}
+}
+
+.alloy-editor-container {
+	.lfr-source-editor {
 		display: none;
 	}
 
@@ -1244,6 +1259,34 @@ $prefixes: ("-webkit-", "-moz-", "-o-", "");
 
 .alloy-editor-toolbar.alloy-editor-toolbar-styles .link-wrapper .input-container input:focus {
 	@include box-shadow(none);
+}
+
+.alloy-editor-container {
+	.alloy-editor {
+		@include backface-visibility(hidden);
+	}
+
+	.lfr-source-editor {
+		@include backface-visibility(hidden);
+		@include transform(rotateY(180deg));
+	}
+
+	&.show-source {
+		.wrapper {
+			@include transform(rotateY(180deg));
+		}
+	}
+
+	.wrapper {
+		@include transition-duration(0.6s);
+		@include transform-style(preserve-3d);
+	}
+}
+
+.ie .alloy-editor-container {
+	.alloy-editor, .lfr-source-editor {
+		@include backface-visibility(visible);
+	}
 }
 
 body.yui3-skin-sam .yui3-widget-mask {

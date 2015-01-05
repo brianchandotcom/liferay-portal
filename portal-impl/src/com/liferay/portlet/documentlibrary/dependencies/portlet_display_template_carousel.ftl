@@ -32,20 +32,26 @@
 	<@aui.script use="aui-carousel">
 		var carousel = new A.Carousel(
 			{
+				after: {
+					responsive: function(event) {
+						var boundingBox = event.currentTarget.get('boundingBox');
+
+						boundingBox.all('.image-viewer-base-image-list, .image-viewer-base-image').setStyles(
+							{
+								height: 'auto',
+								maxHeight: event.height,
+								maxWidth: event.width,
+								width: 'auto'
+							}
+						);
+					}
+				},
+
 				contentBox: '#<@liferay_portlet.namespace />carousel',
 				height: 250,
 				intervalTime: 2,
 				width: 700
 			}
 		).render();
-
-		carousel.after('responsive', function() {
-			this.get('boundingBox').all('.image-viewer-base-image-list, .image-viewer-base-image').setStyles({
-				height: 'auto',
-				maxHeight: event.height,
-				maxWidth: event.width,
-				width: 'auto'
-			});
-		});
 	</@aui.script>
 </#if>

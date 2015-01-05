@@ -557,34 +557,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public java.lang.String getBeanIdentifier();
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
-	long)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
-		long classNameId);
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
-	long, OrderByComparator)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
-	long, int, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
-		long classNameId, int start, int end);
-
-	/**
 	* Returns all the structures matching the class name ID.
 	*
 	* @param companyId the primary key of the structure's company
@@ -854,30 +826,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure(
 		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getStructures}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries();
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
-		long groupId);
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long, int,
-	int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
-		long groupId, int start, int end);
 
 	/**
 	* Returns all the structures present in the system.

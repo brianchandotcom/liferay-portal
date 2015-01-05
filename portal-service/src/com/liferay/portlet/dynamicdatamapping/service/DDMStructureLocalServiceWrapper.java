@@ -719,42 +719,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
-	long)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
-		long classNameId) {
-		return _ddmStructureLocalService.getClassStructures(classNameId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
-	long, OrderByComparator)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator) {
-		return _ddmStructureLocalService.getClassStructures(classNameId,
-			orderByComparator);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
-	long, int, int)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
-		long classNameId, int start, int end) {
-		return _ddmStructureLocalService.getClassStructures(classNameId, start,
-			end);
-	}
-
-	/**
 	* Returns all the structures matching the class name ID.
 	*
 	* @param companyId the primary key of the structure's company
@@ -1089,36 +1053,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLocalService.getStructure(structureId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getStructures}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries() {
-		return _ddmStructureLocalService.getStructureEntries();
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
-		long groupId) {
-		return _ddmStructureLocalService.getStructureEntries(groupId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long, int,
-	int)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
-		long groupId, int start, int end) {
-		return _ddmStructureLocalService.getStructureEntries(groupId, start, end);
 	}
 
 	/**

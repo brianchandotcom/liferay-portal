@@ -826,19 +826,6 @@
 
 	Liferay.provide(
 		Util,
-		'check',
-		function(form, name, checked) {
-			var checkbox = A.one(form[name]);
-
-			if (checkbox) {
-				checkbox.attr(STR_CHECKED, checked);
-			}
-		},
-		['aui-base']
-	);
-
-	Liferay.provide(
-		Util,
 		'checkAll',
 		function(form, name, allBox, selectClassName) {
 			var selector;
@@ -1302,24 +1289,6 @@
 			Liferay.Util.toggleDisabled(A.byIdNS(namespace, 'removeFolderButton'), true);
 		},
 		['aui-base', 'liferay-node']
-	);
-
-	Liferay.provide(
-		Util,
-		'removeItem',
-		function(box, value) {
-			box = A.one(box);
-
-			var selectedIndex = box.get('selectedIndex');
-
-			if (!value) {
-				box.all('option').item(selectedIndex).remove(true);
-			}
-			else {
-				box.all('option[value=' + value + STR_RIGHT_SQUARE_BRACKET).item(selectedIndex).remove(true);
-			}
-		},
-		['aui-base']
 	);
 
 	Liferay.provide(

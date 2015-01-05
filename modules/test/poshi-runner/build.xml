@@ -6,7 +6,21 @@
 
 	<!--<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />-->
 
-	<target name="start-poshi-runner" depends="compile">
+	<target name="start-poshi-runner">
+		<if>
+			<isset property="test.case.name" />
+			<then>
+				<echo file="src/poshi-runner-ext.properties">
+					test.case.name=${test.case.name}
+				</echo>
+			</then>
+			<else>
+				<fail message="Please give me the test case name!" />
+			</else>
+		</if>
+
+		<antcall target="compile" />
+
 		<mkdir dir="test-results" />
 
 		<junit printsummary="on" showoutput="true">

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -41,7 +40,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
@@ -240,9 +238,7 @@ public class DDMImpl implements DDM {
 			boolean localizable = GetterUtil.getBoolean(
 				ddmStructure.getFieldProperty(fieldName, "localizable"), true);
 
-			if (!localizable && translating &&
-				!ddmStructure.isFieldPrivate(fieldName)) {
-
+			if (!localizable && translating) {
 				continue;
 			}
 
@@ -457,7 +453,7 @@ public class DDMImpl implements DDM {
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
 
-		if (ddmStructure.isFieldPrivate(fieldName)) {
+		if (fieldName.startsWith(StringPool.UNDERLINE)) {
 			locale = LocaleUtil.getSiteDefault();
 
 			defaultLocale = LocaleUtil.getSiteDefault();
@@ -532,24 +528,14 @@ public class DDMImpl implements DDM {
 			(String)serviceContext.getAttribute(
 				fieldNamespace + FIELDS_DISPLAY_NAME));
 
-		List<String> privateFieldNames = ListUtil.fromArray(
-			PropsValues.DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_NAMES);
-
 		List<String> fieldNames = new ArrayList<String>();
 
-		if ((fieldsDisplayValues.length == 0) ||
-			privateFieldNames.contains(fieldName)) {
+		for (String namespacedFieldName : fieldsDisplayValues) {
+			String fieldNameValue = StringUtil.extractFirst(
+				namespacedFieldName, INSTANCE_SEPARATOR);
 
-			fieldNames.add(fieldNamespace + fieldName);
-		}
-		else {
-			for (String namespacedFieldName : fieldsDisplayValues) {
-				String fieldNameValue = StringUtil.extractFirst(
-					namespacedFieldName, INSTANCE_SEPARATOR);
-
-				if (fieldNameValue.equals(fieldName)) {
-					fieldNames.add(fieldNamespace + namespacedFieldName);
-				}
+			if (fieldNameValue.equals(fieldName)) {
+				fieldNames.add(fieldNamespace + namespacedFieldName);
 			}
 		}
 

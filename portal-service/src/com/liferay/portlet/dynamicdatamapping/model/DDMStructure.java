@@ -113,8 +113,6 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 
 	public boolean hasField(java.lang.String fieldName);
 
-	public boolean isFieldPrivate(java.lang.String fieldName);
-
 	public boolean isFieldRepeatable(java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

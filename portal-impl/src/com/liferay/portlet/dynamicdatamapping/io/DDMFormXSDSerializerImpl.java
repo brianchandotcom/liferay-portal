@@ -80,8 +80,7 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 	protected void addDynamicElementElement(
 		DDMFormField ddmFormField, Element element) {
 
-		Element dynamicElementElement = SAXReaderUtil.createElement(
-			"dynamic-element");
+		Element dynamicElementElement = element.addElement("dynamic-element");
 
 		addDynamicElementAttributes(ddmFormField, dynamicElementElement);
 
@@ -101,12 +100,6 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 			getDDMFormFieldMetadataMap(ddmFormField);
 
 		addMetadataElements(metadataMap, dynamicElementElement);
-
-		List<Element> elements = dynamicElementElement.elements();
-
-		if (!elements.isEmpty()) {
-			element.add(dynamicElementElement);
-		}
 	}
 
 	protected void addDynamicElementElements(

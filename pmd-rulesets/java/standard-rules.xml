@@ -85,6 +85,31 @@ public class Foo {
 		</example>
 	</rule>
 	<rule
+		class="net.sourceforge.pmd.lang.java.rule.unnecessary.UnnecessaryReturnRule"
+		externalInfoUrl="http://pmd.sourceforge.net/snapshot/pmd-java/rules/java/unnecessary.html#UnnecessaryReturn"
+		message="Avoid unnecessary return statements"
+		name="UnnecessaryReturn"
+		since="1.3">
+		<description>
+			[Origin rule set file rulesets/java/unnecessary.xml] Avoid the use of unnecessary return statements.
+		</description>
+		<priority>3</priority>
+		<example>
+			<![CDATA[
+
+public class Foo {
+
+	public void bar() {
+		int x = 42;
+
+		return;
+	}
+
+}
+			]]>
+		</example>
+	</rule>
+	<rule
 		class="net.sourceforge.pmd.lang.java.rule.unnecessary.UselessOperationOnImmutableRule"
 		externalInfoUrl="http://pmd.sourceforge.net/snapshot/pmd-java/rules/java/unnecessary.html#UselessOperationOnImmutable"
 		message="An operation on an Immutable object (String, BigDecimal or BigInteger) won't change the object itself"

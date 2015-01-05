@@ -292,7 +292,6 @@ public abstract class BaseUserNotificationTestCase {
 	protected abstract BaseModel<?> addBaseModel() throws Exception;
 
 	protected void addContainerModel() throws Exception {
-		return;
 	}
 
 	protected void deleteUserNotificationDeliveries() throws Exception {

@@ -115,8 +115,6 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 				}
 			}
 		}
-
-		return;
 	}
 
 	protected List<String> getAdvancedFileNames(

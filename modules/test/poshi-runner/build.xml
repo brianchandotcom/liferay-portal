@@ -11,6 +11,7 @@
 
 		<junit printsummary="on" showoutput="true">
 			<classpath refid="plugin.classpath" />
+			<formatter type="brief" usefile="false" />
 			<formatter type="xml" />
 			<test name="com.liferay.poshi.runner.PoshiRunner" todir="test-results" />
 		</junit>

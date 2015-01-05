@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -728,6 +729,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
+	private String _decodePath(String path) {
+		path = StringUtil.replace(path, StringPool.SLASH, _TEMP_SLASH);
+		path = URLCodec.decodeURL(path, StringPool.UTF8);
+		path = StringUtil.replace(path, _TEMP_SLASH, StringPool.SLASH);
+
+		return path;
+	}
+
 	private String _getFelixFileInstallDir() {
 		return PropsValues.MODULE_FRAMEWORK_PORTAL_DIR + StringPool.COMMA +
 			StringUtil.merge(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
@@ -1143,7 +1152,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			Constants.BUNDLE_SYMBOLICNAME);
 
 		if (Validator.isNull(bundleSymbolicName)) {
-			String urlString = url.toString();
+			String urlString = _decodePath(url.toString());
 
 			if (urlString.contains(_getLiferayLibPortalDir())) {
 				manifest = _calculateManifest(url, manifest);
@@ -1315,6 +1324,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		frameworkWiring.refreshBundles(refreshBundles, frameworkListener);
 	}
+
+	private static final String _TEMP_SLASH = "_LIFERAY_TEMP_SLASH_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);

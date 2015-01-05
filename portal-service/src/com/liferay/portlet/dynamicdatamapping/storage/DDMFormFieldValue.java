@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 
@@ -106,6 +107,16 @@ public class DDMFormFieldValue {
 
 	public Value getValue() {
 		return _value;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _instanceId);
+
+		hash = HashUtil.hash(hash, _name);
+		hash = HashUtil.hash(hash, _value);
+
+		return HashUtil.hash(hash, _nestedDDMFormFieldValues);
 	}
 
 	public void setDDMFormValues(DDMFormValues ddmFormValues) {

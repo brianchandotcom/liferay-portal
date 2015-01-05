@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
@@ -99,6 +100,15 @@ public class DDMFormValues {
 
 	public Locale getDefaultLocale() {
 		return _defaultLocale;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _availableLocales);
+
+		hash = HashUtil.hash(hash, _defaultLocale);
+
+		return HashUtil.hash(hash, _ddmFormFieldValues);
 	}
 
 	public void setAvailableLocales(Set<Locale> availableLocales) {

@@ -16,7 +16,6 @@ package com.liferay.portlet.dynamicdatamapping.render;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 
@@ -38,10 +37,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		StringBundler sb = new StringBundler(ddmFormFields.size());
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			if (isPrivateDDMFormField(ddmFormField)) {
-				continue;
-			}
-
 			DDMFormFieldRenderer ddmFormFieldRenderer =
 				DDMFormFieldRendererRegistryUtil.getDDMFormFieldRenderer(
 					ddmFormField.getType());
@@ -52,16 +47,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		}
 
 		return sb.toString();
-	}
-
-	protected boolean isPrivateDDMFormField(DDMFormField ddmFormField) {
-		String name = ddmFormField.getName();
-
-		if (name.startsWith(StringPool.UNDERLINE)) {
-			return true;
-		}
-
-		return false;
 	}
 
 }

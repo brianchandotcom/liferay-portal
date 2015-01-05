@@ -97,10 +97,6 @@ public abstract class BaseDDLExporter implements DDLExporter {
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 		for (DDMFormField ddmFormField : ddmStructure.getDDMFormFields(false)) {
-			if (ddmStructure.isFieldPrivate(ddmFormField.getName())) {
-				continue;
-			}
-
 			ddmFormFields.add(ddmFormField);
 		}
 

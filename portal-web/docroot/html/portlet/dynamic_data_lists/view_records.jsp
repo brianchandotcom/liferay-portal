@@ -53,10 +53,6 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 	List<DDMFormField> ddmFormfields = ddmForm.getDDMFormFields();
 
 	for (DDMFormField ddmFormField : ddmFormfields) {
-		if (ddmStructure.isFieldPrivate(ddmFormField.getName())) {
-			continue;
-		}
-
 		LocalizedValue label = ddmFormField.getLabel();
 
 		headerNames.add(label.getString(locale));
@@ -147,9 +143,6 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 			// Columns
 
 			for (DDMFormField ddmFormField : ddmFormfields) {
-				if (ddmStructure.isFieldPrivate(ddmFormField.getName())) {
-					continue;
-				}
 			%>
 
 				<%@ include file="/html/portlet/dynamic_data_lists/record_row_value.jspf" %>

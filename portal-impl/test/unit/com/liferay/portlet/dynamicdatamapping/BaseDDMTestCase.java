@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -571,28 +570,6 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 			props.get(PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE)
 		).thenReturn(
 			"51200"
-		);
-
-		String ddmStructurePrivateFieldDataTypeKey =
-			PropsKeys.DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_DATATYPE;
-
-		when(
-			props.get(
-				Matchers.eq(ddmStructurePrivateFieldDataTypeKey),
-				Matchers.any(Filter.class))
-		).thenReturn(
-			"string"
-		);
-
-		String ddmStructurePrivateFieldRepeatableKey =
-			PropsKeys.DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_REPEATABLE;
-
-		when(
-			props.get(
-				Matchers.eq(ddmStructurePrivateFieldRepeatableKey),
-				Matchers.any(Filter.class))
-		).thenReturn(
-			"false"
 		);
 
 		when(

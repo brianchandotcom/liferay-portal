@@ -20,7 +20,7 @@ package com.liferay.sync.engine.util;
 public interface PropsKeys {
 
 	public static final String SYNC_BATCH_EVENTS_MAX_COUNT =
-		"sync.batch.events.total.count";
+		"sync.batch.events.max.count";
 
 	public static final String SYNC_BATCH_EVENTS_MAX_FILE_SIZE =
 		"sync.batch.events.max.file.size";

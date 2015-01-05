@@ -133,8 +133,61 @@ public class FileUtil {
 		return filePath.toString();
 	}
 
-	public static String getSanitizedFileName(String title, String extension) {
-		String fileName = title.replace("/", "_");
+	public static String getNextFilePathName(String filePathName) {
+		Path filePath = Paths.get(filePathName);
+
+		Path parentFilePath = filePath.getParent();
+
+		for (int i = 0;; i++) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(FilenameUtils.getBaseName(filePathName));
+
+			if (i > 0) {
+				sb.append(" (");
+				sb.append(i);
+				sb.append(")");
+			}
+
+			String extension = FilenameUtils.getExtension(filePathName);
+
+			if (extension.length() > 0) {
+				sb.append(".");
+				sb.append(extension);
+			}
+
+			String tempFilePathName = FileUtil.getFilePathName(
+				parentFilePath.toString(), sb.toString());
+
+			if (SyncFileService.fetchSyncFile(tempFilePathName) == null) {
+				Path tempFilePath = Paths.get(tempFilePathName);
+
+				if (!Files.exists(tempFilePath)) {
+					return tempFilePathName;
+				}
+			}
+		}
+	}
+
+	public static String getSanitizedFileName(
+		String fileName, String extension) {
+
+		for (String blacklistChar : PropsValues.SYNC_FILE_BLACKLIST_CHARS) {
+			fileName = fileName.replace(blacklistChar, "_");
+		}
+
+		for (String blacklistCharLast :
+				PropsValues.SYNC_FILE_BLACKLIST_CHARS_LAST) {
+
+			if (blacklistCharLast.startsWith("\\u")) {
+				blacklistCharLast = StringEscapeUtils.unescapeJava(
+					blacklistCharLast);
+			}
+
+			if (fileName.endsWith(blacklistCharLast)) {
+				fileName = fileName.substring(0, fileName.length() - 1);
+			}
+		}
 
 		if ((extension != null) && !extension.equals("")) {
 			int x = fileName.lastIndexOf(".");
@@ -312,6 +365,11 @@ public class FileUtil {
 	}
 
 	protected static void checkFilePath(Path filePath) {
+
+		// Check to see if the file or folder is still being written to. If
+		// it is, wait until the process is finished before making any future
+		// modifications. This is used to prevent file system interruptions.
+
 		try {
 			while (true) {
 				long size1 = FileUtils.sizeOf(filePath.toFile());

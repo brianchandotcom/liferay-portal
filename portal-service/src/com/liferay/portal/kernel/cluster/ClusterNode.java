@@ -187,7 +187,7 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{bindInetAddress=");
 		sb.append(_bindInetAddress);

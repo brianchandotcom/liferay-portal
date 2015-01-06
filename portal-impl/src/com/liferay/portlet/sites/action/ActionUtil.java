@@ -65,7 +65,8 @@ public class ActionUtil
 		List<String> targetPortletIds = targetLayoutTypePortlet.getPortletIds();
 
 		for (String targetPortletId : targetPortletIds) {
-			targetLayoutTypePortlet.removePortletId(themeDisplay.getUserId(), targetPortletId);
+			targetLayoutTypePortlet.removePortletId(
+				themeDisplay.getUserId(), targetPortletId);
 		}
 
 		for (String sourcePortletId : sourcePortletIds) {

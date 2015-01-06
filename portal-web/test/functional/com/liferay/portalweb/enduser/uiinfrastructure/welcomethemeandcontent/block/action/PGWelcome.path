@@ -212,7 +212,7 @@
 </tr>
 <tr>
 	<td>WELCOME_ENTERPRISE_LEVEL_OPTIONS_SUBHEADER</td>
-	<td>//div[@class='page-heading']/p</td>
+	<td>//h2</td>
 	<td></td>
 </tr>
 </tbody>

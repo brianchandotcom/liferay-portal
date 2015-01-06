@@ -175,9 +175,9 @@ AUI.add(
 
 						fieldRules[validatorName] = value;
 
-						fieldRules.custom = rule.custom;
-
 						if (rule.custom) {
+							fieldRules.custom = rule.custom;
+
 							DEFAULTS_FORM_VALIDATOR.RULES[validatorName] = rule.body;
 						}
 

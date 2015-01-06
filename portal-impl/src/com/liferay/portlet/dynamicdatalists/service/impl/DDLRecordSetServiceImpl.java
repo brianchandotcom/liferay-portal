@@ -68,6 +68,11 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 	}
 
 	@Override
+	public List<DDLRecordSet> getRecordSets(long[] groupIds) {
+		return ddlRecordSetPersistence.filterFindByGroupId(groupIds);
+	}
+
+	@Override
 	public List<DDLRecordSet> search(
 		long companyId, long groupId, String keywords, int scope, int start,
 		int end, OrderByComparator<DDLRecordSet> orderByComparator) {

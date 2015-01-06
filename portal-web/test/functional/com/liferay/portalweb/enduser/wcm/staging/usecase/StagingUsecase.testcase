@@ -1368,7 +1368,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingDemoLocalLive3" priority="5">
+	<command known-issues="LPS-43693" name="StagingDemoLocalLive3" priority="5">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />
@@ -1696,7 +1696,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingDemoLocalLive4" priority="5">
+	<command known-issues="LPS-43693" name="StagingDemoLocalLive4" priority="5">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />

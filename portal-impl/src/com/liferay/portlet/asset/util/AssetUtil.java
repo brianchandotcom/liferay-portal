@@ -77,6 +77,7 @@ import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.assetpublisher.util.AssetSearcher;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl;
@@ -392,6 +393,11 @@ public class AssetUtil {
 		if (classTypeId > 0) {
 			addPortletURL.setParameter(
 				"classTypeId", String.valueOf(classTypeId));
+
+			if (className.equals(DDLRecord.class.getName())) {
+				addPortletURL.setParameter(
+					"recordSetId", String.valueOf(classTypeId));
+			}
 
 			if (className.equals(DLFileEntry.class.getName())) {
 				addPortletURL.setParameter(Constants.CMD, Constants.ADD);

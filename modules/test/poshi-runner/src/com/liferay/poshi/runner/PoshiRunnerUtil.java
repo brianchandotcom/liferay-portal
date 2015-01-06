@@ -99,12 +99,12 @@ public class PoshiRunnerUtil {
 
 	private static Pattern _pattern = Pattern.compile("<[a-z\\-]+");
 	private static List<String> _reservedTags = Arrays.asList(
-			new String[] {
-				"and", "case", "command", "condition", "contains", "default",
-				"definition", "delimiter", "description", "echo", "else",
-				"elseif", "equals", "execute", "fail", "for", "if", "isset",
-				"not", "or", "property", "set-up", "take-screenshot", "td",
-				"tear-down", "then", "tr", "while", "var"
-			});
+		new String[] {
+			"and", "case", "command", "condition", "contains", "default",
+			"definition", "delimiter", "description", "echo", "else", "elseif",
+			"equals", "execute", "fail", "for", "if", "isset", "not", "or",
+			"property", "set-up", "take-screenshot", "td", "tear-down", "then",
+			"tr", "while", "var"
+		});
 
 }

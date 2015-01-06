@@ -150,7 +150,7 @@
 				<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 				<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
-				<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+				<execute action="CPBlogsEntry#assertTextPresent" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 			</else>
 		</if>
 	</command>

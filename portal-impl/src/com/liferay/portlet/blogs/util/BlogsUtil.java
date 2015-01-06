@@ -152,8 +152,8 @@ public class BlogsUtil {
 		definitionTerms.put("[$PORTAL_URL$]", company.getVirtualHostname());
 
 		definitionTerms.put(
-			"[$PORTLET_NAME$]", HtmlUtil.escape(
-				PortalUtil.getPortletTitle(portletRequest)));
+			"[$PORTLET_NAME$]",
+			HtmlUtil.escape(PortalUtil.getPortletTitle(portletRequest)));
 		definitionTerms.put(
 			"[$SITE_NAME$]",
 			LanguageUtil.get(
@@ -207,8 +207,8 @@ public class BlogsUtil {
 				themeDisplay.getLocale(),
 				"the-company-name-associated-with-the-blog"));
 		definitionTerms.put(
-			"[$PORTLET_NAME$]", HtmlUtil.escape(
-				PortalUtil.getPortletTitle(portletRequest)));
+			"[$PORTLET_NAME$]",
+			HtmlUtil.escape(PortalUtil.getPortletTitle(portletRequest)));
 		definitionTerms.put(
 			"[$SITE_NAME$]",
 			LanguageUtil.get(

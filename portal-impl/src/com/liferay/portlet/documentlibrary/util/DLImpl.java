@@ -623,8 +623,8 @@ public class DLImpl implements DL {
 			LanguageUtil.get(
 				themeDisplay.getLocale(), "the-user-who-added-the-document"));
 		definitionTerms.put(
-			"[$PORTLET_NAME$]", HtmlUtil.escape(
-				PortalUtil.getPortletTitle(portletRequest)));
+			"[$PORTLET_NAME$]",
+			HtmlUtil.escape(PortalUtil.getPortletTitle(portletRequest)));
 		definitionTerms.put(
 			"[$SITE_NAME$]",
 			LanguageUtil.get(

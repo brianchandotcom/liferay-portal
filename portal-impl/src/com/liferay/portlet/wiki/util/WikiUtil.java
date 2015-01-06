@@ -270,8 +270,8 @@ public class WikiUtil {
 			LanguageUtil.get(
 				themeDisplay.getLocale(), "the-user-who-added-the-page"));
 		definitionTerms.put(
-			"[$PORTLET_NAME$]", HtmlUtil.escape(
-				PortalUtil.getPortletTitle(request)));
+			"[$PORTLET_NAME$]",
+			HtmlUtil.escape(PortalUtil.getPortletTitle(request)));
 		definitionTerms.put(
 			"[$SITE_NAME$]",
 			LanguageUtil.get(

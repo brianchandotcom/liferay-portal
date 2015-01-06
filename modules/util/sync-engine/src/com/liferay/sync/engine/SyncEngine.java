@@ -30,7 +30,6 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
-import com.liferay.sync.engine.service.SyncPropService;
 import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.service.SyncWatchEventService;
 import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
@@ -39,7 +38,6 @@ import com.liferay.sync.engine.util.ConnectionRetryUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.LoggerUtil;
 import com.liferay.sync.engine.util.PropsValues;
-import com.liferay.sync.engine.util.SyncClientUpdater;
 import com.liferay.sync.engine.util.SyncEngineUtil;
 
 import java.io.IOException;
@@ -217,9 +215,6 @@ public class SyncEngine {
 
 		UpgradeUtil.upgrade();
 
-		SyncClientUpdater.scheduleAutoUpdateChecker(
-			SyncPropService.getInteger("updateCheckInterval", 1440));
-
 		for (long activeSyncAccountId :
 				SyncAccountService.getActiveSyncAccountIds()) {
 
@@ -244,8 +239,6 @@ public class SyncEngine {
 		_executorService.shutdownNow();
 		_localEventsScheduledExecutorService.shutdownNow();
 		_remoteEventsScheduledExecutorService.shutdownNow();
-
-		SyncClientUpdater.cancelAutoUpdateChecker();
 
 		SyncAccountPersistence syncAccountPersistence =
 			SyncAccountService.getSyncAccountPersistence();

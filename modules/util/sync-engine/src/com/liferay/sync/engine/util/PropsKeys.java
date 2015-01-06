@@ -71,6 +71,4 @@ public interface PropsKeys {
 
 	public static final String SYNC_PRODUCT_NAME = "sync.product.name";
 
-	public static final String SYNC_UPDATE_CHECK_URL = "sync.update.check.url";
-
 }

@@ -82,6 +82,24 @@ import org.slf4j.LoggerFactory;
  */
 public class Session {
 
+	public static HttpRoutePlanner getHttpRoutePlanner() {
+		if (_httpRoutePlanner != null) {
+			return _httpRoutePlanner;
+		}
+
+		ProxySearch proxySearch = ProxySearch.getDefaultProxySearch();
+
+		ProxySelector proxySelector = proxySearch.getProxySelector();
+
+		if (proxySelector == null) {
+			proxySelector = ProxySelector.getDefault();
+		}
+
+		_httpRoutePlanner = new SystemDefaultRoutePlanner(proxySelector);
+
+		return _httpRoutePlanner;
+	}
+
 	public Session(
 		URL url, String login, String password, boolean trustSelfSigned,
 		int maxConnections) {
@@ -111,7 +129,7 @@ public class Session {
 
 		httpClientBuilder.setMaxConnPerRoute(maxConnections);
 		httpClientBuilder.setMaxConnTotal(maxConnections);
-		httpClientBuilder.setRoutePlanner(_getHttpRoutePlanner());
+		httpClientBuilder.setRoutePlanner(getHttpRoutePlanner());
 
 		if (trustSelfSigned) {
 			try {
@@ -397,24 +415,6 @@ public class Session {
 			}
 
 		};
-	}
-
-	private HttpRoutePlanner _getHttpRoutePlanner() {
-		if (_httpRoutePlanner != null) {
-			return _httpRoutePlanner;
-		}
-
-		ProxySearch proxySearch = ProxySearch.getDefaultProxySearch();
-
-		ProxySelector proxySelector = proxySearch.getProxySelector();
-
-		if (proxySelector == null) {
-			proxySelector = ProxySelector.getDefault();
-		}
-
-		_httpRoutePlanner = new SystemDefaultRoutePlanner(proxySelector);
-
-		return _httpRoutePlanner;
 	}
 
 	private MultipartEntityBuilder _getMultipartEntityBuilder(

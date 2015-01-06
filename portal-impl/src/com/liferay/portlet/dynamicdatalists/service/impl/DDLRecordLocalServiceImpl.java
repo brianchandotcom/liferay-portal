@@ -687,6 +687,14 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			}
 		}
 
+		// Asset
+
+		Locale locale = serviceContext.getLocale();
+
+		updateAsset(
+			userId, record, recordVersion, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(), locale);
+
 		return record;
 	}
 

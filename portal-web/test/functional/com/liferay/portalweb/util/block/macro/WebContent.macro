@@ -327,19 +327,28 @@
 
 				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
-				<execute action="PGWebcontentdisplayAddwebcontent#click" locator-key1="PUBLISH_BUTTON" />
-			</else>
-		</if>
 
-		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
+				<if>
+					<equals arg1="${draft}" arg2="true" />
+					<then>
+						<execute action="PGWebcontentdisplayAddwebcontent#click" locator-key1="SAVE_AS_DRAFT_BUTTON" />
+						<execute action="PGWebcontentdisplayAddwebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+					</then>
+					<else>
+						<execute action="PGWebcontentdisplayAddwebcontent#click" locator-key1="PUBLISH_BUTTON" />
+						<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
 
-		<if>
-			<equals arg1="${webContentJavascript}" arg2="true" />
-			<then>
-				<execute action="PGWebcontentdisplay#assertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
-			</then>
-			<else>
-				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+						<if>
+							<equals arg1="${webContentJavascript}" arg2="true" />
+							<then>
+								<execute action="PGWebcontentdisplay#assertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
+							</then>
+							<else>
+								<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+							</else>
+						</if>
+					</else>
+				</if>
 			</else>
 		</if>
 	</command>
@@ -1506,10 +1515,16 @@
 
 	<command name="viewPGViaWCD">
 		<if>
-			<equals arg1="${expiredContent}" arg2="true" />
+			<equals arg1="${draft}" arg2="true" />
 			<then>
-				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="${webContentTitle} is expired." />
+				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="${webContentTitle} is not approved." />
 			</then>
+			<elseif>
+				<equals arg1="${expiredContent}" arg2="true" />
+				<then>
+					<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="${webContentTitle} is expired." />
+				</then>
+			</elseif>
 			<else>
 				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 			</else>

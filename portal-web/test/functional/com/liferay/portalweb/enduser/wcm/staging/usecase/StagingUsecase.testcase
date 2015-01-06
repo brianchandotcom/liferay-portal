@@ -237,7 +237,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49023" name="EditPublishTemplate" priority="4">
+	<command name="EditPublishTemplate" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -1102,7 +1102,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49227" name="StagingDemoLocalLive1" priority="5">
+	<command name="StagingDemoLocalLive1" priority="5">
 		<var name="pageName" value="Staging Test Page" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="${siteName}" />
@@ -1368,7 +1368,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-43693" name="StagingDemoLocalLive3" priority="5">
+	<command name="StagingDemoLocalLive3" priority="5">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />
@@ -1696,7 +1696,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-43693" name="StagingDemoLocalLive4" priority="5">
+	<command name="StagingDemoLocalLive4" priority="5">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />
@@ -2589,7 +2589,7 @@
 		<execute macro="DMDocument#viewStagingDetailsPG" />
 	</command>
 
-	<command known-issues="LPS-44150" name="StagingOnlyApprovedPublishToLive" priority="5">
+	<command name="StagingOnlyApprovedPublishToLive" priority="5">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<execute macro="Page#gotoPG">

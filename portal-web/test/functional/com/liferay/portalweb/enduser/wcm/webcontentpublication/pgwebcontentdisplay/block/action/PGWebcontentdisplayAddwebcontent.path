@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_STRUCTURE</td>
 	<td>//fieldset[contains(@class,'fieldset') and contains(@class,'article-structure-toolbar')]/div/div/span[2]/a/span</td>
 	<td></td>

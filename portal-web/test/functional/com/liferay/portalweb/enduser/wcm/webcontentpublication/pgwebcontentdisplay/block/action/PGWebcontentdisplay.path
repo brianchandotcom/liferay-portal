@@ -29,6 +29,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRINT_WEB_CONTENT</td>
+	<td>//span[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_WEB_CONTENT</td>
 	<td>//i[@class='icon-pencil']</td>
 	<td></td>
@@ -61,6 +71,148 @@
 <tr>
 	<td>ERROR_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS</td>
+	<td>//div[contains(@class,'asset-links')]//a[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING</td>
+	<td>xPath=(//div[@class='rating-label'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE</td>
+	<td>xPath=(//div[@class='rating-label'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NO_COMMENTS_MESSAGE</td>
+	<td>//div[contains(.,'No comments yet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BE_THE_FIRST</td>
+	<td>//a[contains(.,'Be the first')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCRIBE_TO_COMMENTS</td>
+	<td>//span[@class='subscribe-link']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNSUBCRIBE_FROM_COMMENTS</td>
+	<td>//span[@class='subscribe-link']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_CONVERSION-->
+<tr>
+	<td>DOCUMENT_CONVERSION_DOC</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'DOC')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_DOC_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'DOC')]/../i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_ODT</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'ODT')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_ODT_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'ODT')]/../i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_PDF</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'PDF')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_PDF_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'PDF')]/../i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_RTF</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'RTF')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_RTF_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'RTF')]/../i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_SXW</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'SXW')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_SXW_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'SXW')]/../i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_TXT</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'TXT')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_TXT_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'TXT')]/../i</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENT-->
+<tr>
+	<td>COMMENT_LABEL</td>
+	<td>//label[contains(.,'Comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_FIELD</td>
+	<td>//textarea[contains(@name,'post')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_REPLY_BUTTON</td>
+	<td>//button[contains(.,'Reply')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_REPLY_BUTTON</td>
+	<td>//button[contains(.,'Reply')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_THUMBS_UP</td>
+	<td>//a[contains(@class,'thumbs-up')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_THUMBS_DOWN</td>
+	<td>//a[contains(@class,'thumbs-down')]</td>
 	<td></td>
 </tr>
 <tr>

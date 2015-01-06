@@ -381,12 +381,12 @@
 </tr>
 <tr>
 	<td>ADT_SOCIAL_TWITTER</td>
-	<td>//li[@class='taglib-social-bookmark-twitter']</td>
+	<td>//li[contains(@class,'taglib-social-bookmark-twitter')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADT_SOCIAL_GOOGLE_PLUS</td>
-	<td>//li[@class='taglib-social-bookmark-plusone']</td>
+	<td>//li[contains(@class,'taglib-social-bookmark-plusone')]</td>
 	<td></td>
 </tr>
 <tr>

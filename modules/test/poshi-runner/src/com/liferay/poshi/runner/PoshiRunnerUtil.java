@@ -15,10 +15,13 @@
 package com.liferay.poshi.runner;
 
 import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 
@@ -36,6 +39,19 @@ import org.dom4j.io.SAXReader;
  * @author Michael Hashimoto
  */
 public class PoshiRunnerUtil {
+
+	public static String getCanonicalPath(String dir) {
+		try {
+			File file = new File(dir);
+
+			return file.getCanonicalPath();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return dir;
+	}
 
 	public static String getCommandNameFromFileCommandName(
 		String fileCommandName) {
@@ -56,6 +72,14 @@ public class PoshiRunnerUtil {
 		int y = fileName.lastIndexOf(".");
 
 		return fileName.substring(x + 1, y);
+	}
+
+	public static String getProjectDir() {
+		File file = new File(StringPool.PERIOD);
+
+		String absolutePath = file.getAbsolutePath();
+
+		return absolutePath.substring(0, absolutePath.length() - 1);
 	}
 
 	public static Element getRootElementFromFileName(String fileName)

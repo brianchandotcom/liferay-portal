@@ -28,6 +28,23 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="AddDraftNotApprovedWCD" priority="5">
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="draft" value="true" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="draft" value="true" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
+
 	<command known-issues="LIFERAYQA-6795" name="AddNewWebContentViaAddContentPanel" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Page" />
@@ -239,6 +256,34 @@
 		</execute>
 	</command>
 
+	<command name="DeletingWCArticleReflectsOnWCD" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="pageName" value="Web Content Display Page" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#deleteCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#viewDeletedArticlePGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
+
 	<command name="EditWebContent" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
@@ -297,6 +342,12 @@
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />
+		</execute>
+	</command>
+
+	<command name="RemoveWCDPortletSite" priority="5">
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 	</command>
 
@@ -412,9 +463,97 @@
 		</execute>
 	</command>
 
+	<command name="ViewAllFileTypesEnabledWCD" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="pageName" value="Web Content Display Page" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureExternalServices">
+			<var name="enableOpenOfficeIntegration" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#configureSetupPG">
+			<var name="enableFileTypes" value="DOC,ODT,PDF,RTF,SXW,TXT" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#viewEnabledFileTypesPGViaWCD">
+			<var name="fileTypes" value="DOC,ODT,PDF,RTF,SXW,TXT" />
+		</execute>
+	</command>
+
+	<command name="ViewAllSettingsEnabledWCDConfiguration" priority="5">
+		<execute macro="WebContentDisplayPortlet#configureSetupPG">
+			<var name="wcdConfigurationSettings" value="Enable Print,Enable Related Assets,Enable Ratings,Enable Comments,Enable Comment Ratings,Enable View Count Increment" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content 1" />
+			<var name="webContentTitle" value="Web Content Title 1" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content 2" />
+			<var name="webContentTitle" value="Web Content Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addExistingRelatedAssetCP">
+			<var name="assetTitle" value="Web Content Title 2" />
+			<var name="assetType" value="Basic Web Content" />
+			<var name="siteName" value="Liferay" />
+			<var name="webContentTitle" value="Web Content Title 1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#selectWebContent">
+			<var name="webContentTitle" value="Web Content Title 1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#viewAllSettingsEnabledPG">
+			<var name="relatedAssetTitle" value="Web Content Title 2" />
+			<var name="webContentContent" value="Web Content Content 1" />
+		</execute>
+	</command>
+
 	<command name="ViewPortletWCDShowAvailableLocales" priority="5">
 		<execute macro="WebContentDisplayPortlet#configureSetupPG">
-			<var name="wcdPortletShowAvailableLocales" value="true" />
+			<var name="wcdConfigurationSettings" value="Show Available Locales" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

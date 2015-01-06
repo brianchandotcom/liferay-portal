@@ -773,7 +773,7 @@ h3 {
 			position: absolute;
 			top: 0;
 			width: 225px;
-			z-index: 1000;
+			z-index: 10;
 		}
 
 		.toggler-content-collapsed {

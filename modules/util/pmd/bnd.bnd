@@ -1,0 +1,3 @@
+Bundle-Name: Liferay PMD
+Bundle-SymbolicName: com.liferay.pmd
+Bundle-Version: 1.0.0

@@ -57,7 +57,16 @@ public class ActionUtil
 		LayoutTypePortlet sourceLayoutTypePortlet =
 			(LayoutTypePortlet)sourceLayout.getLayoutType();
 
+		LayoutTypePortlet targetLayoutTypePortlet =
+			(LayoutTypePortlet)targetLayout.getLayoutType();
+
 		List<String> sourcePortletIds = sourceLayoutTypePortlet.getPortletIds();
+
+		List<String> targetPortletIds = targetLayoutTypePortlet.getPortletIds();
+
+		for (String targetPortletId : targetPortletIds) {
+			targetLayoutTypePortlet.removePortletId(themeDisplay.getUserId(), targetPortletId);
+		}
 
 		for (String sourcePortletId : sourcePortletIds) {
 

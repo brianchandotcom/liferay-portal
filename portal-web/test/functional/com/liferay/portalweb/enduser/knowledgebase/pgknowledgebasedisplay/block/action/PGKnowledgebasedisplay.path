@@ -111,12 +111,12 @@
 </tr>
 <tr>
 	<td>ARTICLE_PREVIOUS</td>
-	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-previous']</td>
+	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-previous']/a/i[contains(@class,'left')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ARTICLE_NEXT</td>
-	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-next']</td>
+	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-next']/a/i[contains(@class,'right')]</td>
 	<td></td>
 </tr>
 <tr>

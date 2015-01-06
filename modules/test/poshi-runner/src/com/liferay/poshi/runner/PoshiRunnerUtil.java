@@ -33,16 +33,19 @@ import org.dom4j.io.SAXReader;
 
 /**
  * @author Karen Dang
+ * @author Michael Hashimoto
  */
 public class PoshiRunnerUtil {
 
-	public static String getCommandName(String fileCommandName) {
+	public static String getCommandNameFromFileCommandName(
+		String fileCommandName) {
+
 		int x = fileCommandName.indexOf("#");
 
 		return fileCommandName.substring(x + 1);
 	}
 
-	public static String getName(String fileCommandName) {
+	public static String getNameFromFileCommandName(String fileCommandName) {
 		int x = fileCommandName.indexOf("#");
 
 		return fileCommandName.substring(0, x);
@@ -55,7 +58,9 @@ public class PoshiRunnerUtil {
 		return fileName.substring(x + 1, y);
 	}
 
-	public static Element getRootElement(String fileName) throws Exception {
+	public static Element getRootElementFromFileName(String fileName)
+		throws Exception {
+
 		StringBuilder sb = new StringBuilder();
 
 		int lineNumber = 1;

@@ -1382,6 +1382,12 @@ rerun your task.
 		<echoproperties />
 	</target>
 
+	<target name="run-pmd">
+		<ant antfile="build-common.xml" dir="${project.dir}/tools/sdk" inheritRefs="true" target="run-pmd">
+			<property name="pmd.basedir" value="${basedir}" />
+		</ant>
+	</target>
+
 	<target name="setproxy" if="setproxy.proxy.host">
 		<setproxy proxyhost="${setproxy.proxy.host}" proxyport="${setproxy.proxy.port}" />
 	</target>

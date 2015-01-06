@@ -78,43 +78,42 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		}
 
 		_modificationCheckInterval = modificationCheckInterval;
-
-		String cacheName = TemplateResourceLoader.class.getName();
-
-		cacheName = cacheName.concat(StringPool.PERIOD).concat(name);
-
-		_multiVMPortalCache = MultiVMPoolUtil.getCache(cacheName);
-
-		CacheListener<String, TemplateResource> cacheListener =
-			new TemplateResourceCacheListener(name);
-
-		_multiVMPortalCache.registerCacheListener(
-			cacheListener, CacheListenerScope.ALL);
-
-		_singleVMPortalCache = SingleVMPoolUtil.getCache(cacheName);
-
-		_singleVMPortalCache.registerCacheListener(
-			cacheListener, CacheListenerScope.ALL);
+	
+		try{
+			initializeCache(name);
+			
+		}catch(Exception e){
+			_log.warn("Cache was not initialized, single/multi PoolVms not initialized yet" + e.getMessage());
+		}
+		
 	}
 
 	@Override
 	public void clearCache() {
-		_multiVMPortalCache.removeAll();
-		_singleVMPortalCache.removeAll();
+		if(isCacheInitialized()){
+			_multiVMPortalCache.removeAll();
+			
+			_singleVMPortalCache.removeAll();
+		}
 	}
 
 	@Override
 	public void clearCache(String templateId) {
-		_multiVMPortalCache.remove(templateId);
-		_singleVMPortalCache.remove(templateId);
+		if(isCacheInitialized()){
+			_multiVMPortalCache.remove(templateId);
+			
+			_singleVMPortalCache.remove(templateId);
+		}
 	}
 
 	@Override
 	public void destroy() {
-		MultiVMPoolUtil.removeCache(_multiVMPortalCache.getName());
-		SingleVMPoolUtil.removeCache(_singleVMPortalCache.getName());
+		if(isCacheInitialized()){
+			MultiVMPoolUtil.removeCache(_multiVMPortalCache.getName());
+			SingleVMPoolUtil.removeCache(_singleVMPortalCache.getName());
 
-		_templateResourceParsers.clear();
+			_templateResourceParsers.clear();
+		}
 	}
 
 	@Override
@@ -124,6 +123,16 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	@Override
 	public TemplateResource getTemplateResource(String templateId) {
+		
+		if(!isCacheInitialized()){
+			try{
+				initializeCache(getName());
+			}catch(Exception e){
+				_log.warn("Unable to initialize cache for:" + getName(), e);
+			}
+			
+		}
+		
 		if (_modificationCheckInterval == 0) {
 			return _loadFromParser(templateId);
 		}
@@ -154,6 +163,34 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		}
 
 		return false;
+	}
+	
+	public boolean isCacheInitialized(){
+		return _cacheInitialized;
+	}
+
+	public void initializeCache(String name) throws Exception {
+		
+		_cacheInitialized=false;
+
+		String cacheName = TemplateResourceLoader.class.getName();
+
+		cacheName = cacheName.concat(StringPool.PERIOD).concat(name);
+
+		_multiVMPortalCache = MultiVMPoolUtil.getCache(cacheName);
+
+		CacheListener<String, TemplateResource> cacheListener =
+			new TemplateResourceCacheListener(name);
+
+		_multiVMPortalCache.registerCacheListener(
+			cacheListener, CacheListenerScope.ALL);
+
+		_singleVMPortalCache = SingleVMPoolUtil.getCache(cacheName);
+
+		_singleVMPortalCache.registerCacheListener(
+			cacheListener, CacheListenerScope.ALL);
+		
+		_cacheInitialized=true;
 	}
 
 	private TemplateResource _loadFromCache(
@@ -280,6 +317,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		_multiVMPortalCache.put(templateId, templateResource);
 	}
 
+	private boolean _cacheInitialized;
+	
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultTemplateResourceLoader.class);
 
@@ -287,11 +326,13 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		_nullHolderTemplateResource = new NullHolderTemplateResource();
 
 	private long _modificationCheckInterval;
-	private final PortalCache<String, TemplateResource> _multiVMPortalCache;
+	private PortalCache<String, TemplateResource> _multiVMPortalCache;
 	private final String _name;
-	private final PortalCache<String, TemplateResource> _singleVMPortalCache;
+	private PortalCache<String, TemplateResource> _singleVMPortalCache;
 	private final Set<TemplateResourceParser> _templateResourceParsers =
 		new HashSet<TemplateResourceParser>();
+	
+
 
 	private static class NullHolderTemplateResource
 		implements TemplateResource {

@@ -4,11 +4,14 @@
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="src" />
 	<classpathentry kind="src" path="/portal-master" />
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" />
-	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="test/integration" />
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="test/unit" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/junit.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/mockito.jar" />
-	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-mockito.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-api-mockito.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-api-support.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-core.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-module-junit4.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-module-junit4-common.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/spring-test.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/activation.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/annotations.jar" />
@@ -44,6 +47,5 @@
 	<classpathentry kind="lib" path="lib/ormlite-core.jar" />
 	<classpathentry kind="lib" path="lib/ormlite-jdbc.jar" />
 	<classpathentry kind="lib" path="lib/slf4j-api.jar" />
-	<classpathentry kind="lib" path="lib/slf4j-log4j12.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

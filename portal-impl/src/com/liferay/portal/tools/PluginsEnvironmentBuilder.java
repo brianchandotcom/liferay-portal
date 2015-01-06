@@ -622,6 +622,8 @@ public class PluginsEnvironmentBuilder {
 			addClasspathEntry(
 				sb, "/portal/lib/development/powermock-api-support.jar");
 			addClasspathEntry(
+				sb, "/portal/lib/development/powermock-core.jar");
+			addClasspathEntry(
 				sb, "/portal/lib/development/powermock-module-junit4.jar");
 			addClasspathEntry(
 				sb,

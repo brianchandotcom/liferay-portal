@@ -154,7 +154,7 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 		}
 		else {
 			List<ConfigurationModel> configurationModels =
-				configurationHelper.getModels();
+				configurationHelper.getConfigurationModels();
 
 			renderRequest.setAttribute(
 				"modelIterator",

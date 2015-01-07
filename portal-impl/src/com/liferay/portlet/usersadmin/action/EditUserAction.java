@@ -271,14 +271,21 @@ public class EditUserAction extends PortletAction {
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
 
+				String password1 = actionRequest.getParameter("password1");
+				String password2 = actionRequest.getParameter("password2");
+
+				boolean isPasswordSubmited =
+					!Validator.isBlank(password1) ||
+					!Validator.isBlank(password2);
+
 				if (e instanceof CompanyMaxUsersException ||
 					e instanceof RequiredUserException ||
-					e instanceof UserPasswordException) {
+					isPasswordSubmited) {
 
 					String redirect = PortalUtil.escapeRedirect(
 						ParamUtil.getString(actionRequest, "redirect"));
 
-					if (e instanceof UserPasswordException) {
+					if (isPasswordSubmited) {
 						User user = PortalUtil.getSelectedUser(actionRequest);
 
 						redirect = HttpUtil.setParameter(

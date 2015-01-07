@@ -192,7 +192,7 @@ portletURL.setParameter("type", type);
 			title="folders"
 		/>
 
-		<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
+		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 
 		<liferay-ui:search-container
 			emptyResultsMessage="there-are-no-folders"

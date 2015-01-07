@@ -62,7 +62,7 @@ public class ConfigurationHelper {
 		_configurationAdmin = configurationAdmin;
 		_metaTypeService = metaTypeService;
 
-		_models = _getModels(languageId);
+		_configurationModels = _getConfigurationModels(languageId);
 	}
 
 	public Configuration getConfiguration(String pid) {
@@ -111,12 +111,13 @@ public class ConfigurationHelper {
 			return models;
 		}
 
-		ConfigurationModel factoryOCD = getConfigurationModel(factoryPid);
+		ConfigurationModel configurationModel = getConfigurationModel(
+			factoryPid);
 
 		for (Configuration configuration : configurations) {
 			ConfigurationModel model = new ConfigurationModel(
-				factoryOCD, configuration, configuration.getBundleLocation(),
-				false);
+				configurationModel, configuration,
+				configuration.getBundleLocation(), false);
 
 			models.add(model);
 		}
@@ -125,11 +126,11 @@ public class ConfigurationHelper {
 	}
 
 	public ConfigurationModel getConfigurationModel(String pid) {
-		return _models.get(pid);
+		return _configurationModels.get(pid);
 	}
 
 	public List<ConfigurationModel> getConfigurationModels() {
-		return new ArrayList<>(_models.values());
+		return new ArrayList<>(_configurationModels.values());
 	}
 
 	public String render(
@@ -170,7 +171,7 @@ public class ConfigurationHelper {
 			ddmForm, ddmFormFieldRenderingContext);
 	}
 
-	private void _collectModels(
+	private void _collectConfigurationModels(
 		Bundle bundle, Map<String, ConfigurationModel> modelMap, String locale,
 		boolean factory) {
 
@@ -191,17 +192,18 @@ public class ConfigurationHelper {
 		}
 
 		for (String pid : pids) {
-			ConfigurationModel model = _getModel(bundle, pid, factory, locale);
+			ConfigurationModel configurationModel = _getConfigurationModel(
+				bundle, pid, factory, locale);
 
-			if (model == null) {
+			if (configurationModel == null) {
 				continue;
 			}
 
-			modelMap.put(pid, model);
+			modelMap.put(pid, configurationModel);
 		}
 	}
 
-	private ConfigurationModel _getModel(
+	private ConfigurationModel _getConfigurationModel(
 		Bundle bundle, String pid, boolean factory, String locale) {
 
 		MetaTypeInformation metaTypeInformation =
@@ -216,18 +218,22 @@ public class ConfigurationHelper {
 			getConfiguration(pid), bundle.getLocation(), factory);
 	}
 
-	private Map<String, ConfigurationModel> _getModels(String locale) {
-		Map<String, ConfigurationModel> modelMap =
+	private Map<String, ConfigurationModel> _getConfigurationModels(
+		String locale) {
+
+		Map<String, ConfigurationModel> configurationModelMap =
 			new HashMap<String, ConfigurationModel>();
 
 		Bundle[] bundles = _bundleContext.getBundles();
 
 		for (Bundle bundle : bundles) {
-			_collectModels(bundle, modelMap, locale, false);
-			_collectModels(bundle, modelMap, locale, true);
+			_collectConfigurationModels(
+				bundle, configurationModelMap, locale, false);
+			_collectConfigurationModels(
+				bundle, configurationModelMap, locale, true);
 		}
 
-		return modelMap;
+		return configurationModelMap;
 	}
 
 	private String _getPidFilterString(String pid, boolean factory) {
@@ -255,6 +261,6 @@ public class ConfigurationHelper {
 	private final BundleContext _bundleContext;
 	private final ConfigurationAdmin _configurationAdmin;
 	private final MetaTypeService _metaTypeService;
-	private final Map<String, ConfigurationModel> _models;
+	private final Map<String, ConfigurationModel> _configurationModels;
 
 }

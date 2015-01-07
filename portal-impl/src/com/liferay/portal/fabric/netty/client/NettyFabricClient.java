@@ -41,7 +41,6 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoop;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -183,9 +182,7 @@ public class NettyFabricClient implements FabricClient {
 
 			disposeRepository(_channel);
 
-			EventLoop eventLoop = _channel.eventLoop();
-
-			EventLoopGroup eventLoopGroup = eventLoop.parent();
+			EventLoopGroup eventLoopGroup = _bootstrap.group();
 
 			if (_reconnectCounter.getAndDecrement() > 0) {
 				eventLoopGroup.schedule(

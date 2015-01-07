@@ -685,6 +685,16 @@
 	}
 }
 
+/* ---------- CKEditor table ---------- */
+
+.cke_show_border {
+	width: 500px;
+
+	td {
+		height: 15px;
+	}
+}
+
 /* ---------- HTML editor ---------- */
 
 .html-editor.portlet {

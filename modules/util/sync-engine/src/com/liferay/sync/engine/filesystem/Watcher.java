@@ -477,13 +477,14 @@ public class Watcher implements Runnable {
 		return false;
 	}
 
-	protected void processMissingFilePath(Path filePath) {
+	protected void processMissingFilePath(Path missingFilePath) {
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			_watchEventListener.getSyncAccountId());
 
-		String filePathName = filePath.toString();
+		Path syncAccountFilePath = java.nio.file.Paths.get(
+			syncAccount.getFilePathName());
 
-		if (filePathName.equals(syncAccount.getFilePathName())) {
+		if (Files.notExists(syncAccountFilePath)) {
 			syncAccount.setActive(false);
 			syncAccount.setUiEvent(
 				SyncAccount.UI_EVENT_SYNC_ACCOUNT_FOLDER_MISSING);
@@ -492,7 +493,7 @@ public class Watcher implements Runnable {
 		}
 		else {
 			SyncSite syncSite = SyncSiteService.fetchSyncSite(
-				filePath.toString(), syncAccount.getSyncAccountId());
+				missingFilePath.toString(), syncAccount.getSyncAccountId());
 
 			if (syncSite != null) {
 				syncSite.setActive(false);

@@ -1937,7 +1937,8 @@ public class SeleniumBuilderFileUtil {
 
 			if (!methodValue.startsWith("MathUtil") &&
 				!methodValue.startsWith("selenium") &&
-				!methodValue.startsWith("StringUtil")) {
+				!methodValue.startsWith("StringUtil") &&
+				!methodValue.startsWith("TestPropsUtil")) {
 
 				throwValidationException(1005, fileName, element, "method");
 			}

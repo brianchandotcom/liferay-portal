@@ -93,6 +93,8 @@
 		<#assign objectName = "MathUtil">
 	<#elseif "${method}"?starts_with("StringUtil")>
 		<#assign objectName = "StringUtil">
+	<#elseif "${method}"?starts_with("TestPropsUtil")>
+		<#assign objectName = "TestPropsUtil">
 	<#else>
 		<#assign objectName = "${selenium}">
 	</#if>

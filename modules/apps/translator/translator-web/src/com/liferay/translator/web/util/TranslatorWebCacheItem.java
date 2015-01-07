@@ -25,9 +25,9 @@ import com.liferay.translator.web.model.Translation;
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
  */
-public class TranslationWebCacheItem implements WebCacheItem {
+public class TranslatorWebCacheItem implements WebCacheItem {
 
-	public TranslationWebCacheItem(
+	public TranslatorWebCacheItem(
 		String fromLanguageId, String toLanguageId, String fromText) {
 
 		_fromLanguageId = fromLanguageId;

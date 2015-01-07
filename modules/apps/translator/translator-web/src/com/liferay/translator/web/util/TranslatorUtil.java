@@ -96,7 +96,7 @@ public class TranslatorUtil {
 			String fromLanguageId, String toLanguageId, String fromText)
 		throws WebCacheException {
 
-		WebCacheItem wci = new TranslationWebCacheItem(
+		WebCacheItem wci = new TranslatorWebCacheItem(
 			fromLanguageId, toLanguageId, fromText);
 
 		return (Translation)wci.convert("");

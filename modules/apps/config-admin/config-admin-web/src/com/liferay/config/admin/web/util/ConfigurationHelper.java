@@ -128,7 +128,7 @@ public class ConfigurationHelper {
 		return _models.get(pid);
 	}
 
-	public List<ConfigurationModel> getModels() {
+	public List<ConfigurationModel> getConfigurationModels() {
 		return new ArrayList<>(_models.values());
 	}
 

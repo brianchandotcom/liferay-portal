@@ -83,7 +83,10 @@
 			<ant dir="util-slf4j" target="clean" inheritAll="false" />
 			<ant dir="util-taglib" target="clean" inheritAll="false" />
 
-			<ant dir="portal-impl" target="clean" inheritAll="false" />
+			<ant dir="portal-impl" target="clean" inheritAll="false">
+				<property name="global.clean" value="true" />
+			</ant>
+
 			<ant dir="portal-pacl" target="clean" inheritAll="false" />
 			<ant dir="portal-test" target="clean" inheritAll="false" />
 			<ant dir="portal-test-internal" target="clean" inheritAll="false" />

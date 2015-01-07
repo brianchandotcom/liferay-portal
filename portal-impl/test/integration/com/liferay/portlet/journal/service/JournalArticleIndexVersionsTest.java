@@ -172,6 +172,33 @@ public class JournalArticleIndexVersionsTest {
 		Assert.assertEquals(article.getId(), searchArticle.getId());
 	}
 
+	@Test
+	public void testIndexableCheck() throws Exception {
+		long initialSearchCount = searchCount();
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertEquals(initialSearchCount + 1, searchCount());
+
+		article.setIndexable(false);
+
+		article = JournalTestUtil.updateArticle(
+			article, article.getTitle(), article.getContent(), true, true,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(initialSearchCount, searchCount());
+
+		article.setIndexable(true);
+
+		article = JournalTestUtil.updateArticle(
+			article, article.getTitle(), article.getContent(), true, true,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(initialSearchCount + 1, searchCount());
+	}
+
 	protected List<JournalArticle> search() throws Exception {
 		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
 

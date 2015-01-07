@@ -135,11 +135,32 @@ public class QueryConfig implements Serializable {
 		String[] selectedFieldNames = (String[])_attributes.get(
 			_SELECTED_FIELD_NAMES);
 
-		if (selectedFieldNames != null) {
-			return selectedFieldNames;
+		if (ArrayUtil.isEmpty(selectedFieldNames)) {
+			return StringPool.EMPTY_ARRAY;
 		}
 
-		return StringPool.EMPTY_ARRAY;
+		return selectedFieldNames;
+	}
+
+	public String[] getSelectedIndexNames() {
+		String[] selectedIndexNames = (String[])_attributes.get(
+			_SELECTED_INDEX_NAMES);
+
+		if (ArrayUtil.isEmpty(selectedIndexNames)) {
+			return StringPool.EMPTY_ARRAY;
+		}
+
+		return selectedIndexNames;
+	}
+
+	public String[] getSelectedTypes() {
+		String[] selectedTypes = (String[])_attributes.get(_SELECTED_TYPES);
+
+		if (ArrayUtil.isEmpty(selectedTypes)) {
+			return StringPool.EMPTY_ARRAY;
+		}
+
+		return selectedTypes;
 	}
 
 	public boolean isAllFieldsSelected() {
@@ -319,6 +340,14 @@ public class QueryConfig implements Serializable {
 		_attributes.put(_SELECTED_FIELD_NAMES, selectedFieldNames);
 	}
 
+	public void setSelectedIndexNames(String... selectedIndexNames) {
+		_attributes.put(_SELECTED_INDEX_NAMES, selectedIndexNames);
+	}
+
+	public void setSelectedTypes(String... selectedTypes) {
+		_attributes.put(_SELECTED_TYPES, selectedTypes);
+	}
+
 	private static final String _HIGHLIGHT_FIELD_NAMES = "highlightFieldNames";
 
 	private static final String _HITS_PROCESSING_ENABLED =
@@ -384,6 +413,10 @@ public class QueryConfig implements Serializable {
 			PropsUtil.get(PropsKeys.INDEX_SEARCH_SCORING_ENABLED));
 
 	private static final String _SELECTED_FIELD_NAMES = "selectedFieldNames";
+
+	private static final String _SELECTED_INDEX_NAMES = "selectedIndexNames";
+
+	private static final String _SELECTED_TYPES = "selectedTypes";
 
 	private final Map<String, Serializable> _attributes =
 		new HashMap<String, Serializable>();

@@ -444,7 +444,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		return searchResponse;
 	}
 
-	protected Document processSearchHit(SearchHit hit) {
+	protected Document processSearchHit(
+		SearchHit hit, QueryConfig queryConfig) {
+
 		Document document = new DocumentImpl();
 
 		Map<String, SearchHitField> searchHitFields = hit.getFields();
@@ -463,6 +465,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 			document.add(field);
 		}
+
+		populateUID(document, queryConfig);
 
 		return document;
 	}
@@ -485,7 +489,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			SearchHit[] searchHitsArray = searchHits.getHits();
 
 			for (SearchHit searchHit : searchHitsArray) {
-				Document document = processSearchHit(searchHit);
+				Document document = processSearchHit(
+					searchHit, query.getQueryConfig());
 
 				documents.add(document);
 

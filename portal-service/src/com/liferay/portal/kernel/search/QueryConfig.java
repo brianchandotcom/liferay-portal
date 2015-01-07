@@ -63,6 +63,10 @@ public class QueryConfig implements Serializable {
 				new String[selectedFieldNamesSet.size()]));
 	}
 
+	public String getAlternateUidFieldName() {
+		return (String)_attributes.get(_ALTERNATE_UID_FIELD_NAME);
+	}
+
 	public Serializable getAttribute(String name) {
 		return _attributes.get(name);
 	}
@@ -230,6 +234,10 @@ public class QueryConfig implements Serializable {
 		return _attributes.remove(name);
 	}
 
+	public void setAlternateUidFieldName(String name) {
+		_attributes.put(_ALTERNATE_UID_FIELD_NAME, name);
+	}
+
 	public void setAttribute(String name, Serializable value) {
 		_attributes.put(name, value);
 	}
@@ -347,6 +355,9 @@ public class QueryConfig implements Serializable {
 	public void setSelectedTypes(String... selectedTypes) {
 		_attributes.put(_SELECTED_TYPES, selectedTypes);
 	}
+
+	private static final String _ALTERNATE_UID_FIELD_NAME =
+		"alternateUidFieldName";
 
 	private static final String _HIGHLIGHT_FIELD_NAMES = "highlightFieldNames";
 

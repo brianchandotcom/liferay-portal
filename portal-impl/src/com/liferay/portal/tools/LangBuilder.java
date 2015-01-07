@@ -36,6 +36,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
@@ -645,12 +646,11 @@ public class LangBuilder {
 
 			System.out.println(sb.toString());
 
-			MicrosoftTranslator microsoftTranslator = 
+			MicrosoftTranslator microsoftTranslator =
 				MicrosoftTranslatorFactoryUtil.getMicrosoftTranslator();
 
 			toText = microsoftTranslator.translate(
 				fromLanguageId, toLanguageId, fromText);
-
 		}
 		catch (Exception e) {
 			Throwable cause = e.getCause();

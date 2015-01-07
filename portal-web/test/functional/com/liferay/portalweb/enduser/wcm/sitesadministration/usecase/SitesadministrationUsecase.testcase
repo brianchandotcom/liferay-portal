@@ -817,7 +817,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51046,LPS-51074" name="SitesDemoSiteManagement" priority="5">
+	<command known-issues="LPS-51074" name="SitesDemoSiteManagement" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

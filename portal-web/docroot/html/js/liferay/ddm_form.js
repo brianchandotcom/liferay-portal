@@ -1489,7 +1489,11 @@ AUI.add(
 						var translationManager = Liferay.component(instance.get('portletNamespace') + 'translationManager');
 
 						if (!translationManager) {
-							translationManager = new Liferay.TranslationManager();
+							translationManager = new Liferay.TranslationManager(
+								{
+									defaultLocale: themeDisplay.getLanguageId()
+								}
+							);
 						}
 
 						translationManager.addTarget(instance);

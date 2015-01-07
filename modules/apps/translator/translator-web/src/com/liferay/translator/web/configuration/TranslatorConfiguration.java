@@ -25,11 +25,6 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface TranslatorConfiguration {
 
-	public static final String TRANSLATOR_DEFAULT_LANGUAGES =
-		"translator.default.languages";
-
-	public static final String TRANSLATOR_LANGUAGES = "translator.languages";
-
 	public static final String TRANSLATOR_TRANSLATION =
 		"TRANSLATOR_TRANSLATION";
 

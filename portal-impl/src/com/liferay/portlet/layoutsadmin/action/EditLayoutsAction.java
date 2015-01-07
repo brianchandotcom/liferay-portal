@@ -1031,6 +1031,8 @@ public class EditLayoutsAction extends PortletAction {
 							layoutTypeSettingsProperties =
 								copyLayout.getTypeSettingsProperties();
 
+							ActionUtil.removePortletIds(actionRequest, layout);
+
 							ActionUtil.copyPreferences(
 								actionRequest, layout, copyLayout);
 

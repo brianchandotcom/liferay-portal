@@ -27,15 +27,15 @@
 	/>
 </#if>
 
-<#assign modelIterator = Request["modelIterator"] />
+<#assign configurationModelIterator = Request["configurationModelIterator"] />
 
 <@liferay_ui["search-container"]
 	emptyResultsMessage="no-configurations-were-found"
-	total=modelIterator.getTotal()
+	total=configurationModelIterator.getTotal()
 >
 
 	<@liferay_ui["search-container-results"]
-		results=modelIterator.getResults(searchContainer.getStart(), searchContainer.getEnd())
+		results=configurationModelIterator.getResults(searchContainer.getStart(), searchContainer.getEnd())
 	/>
 
 	<@liferay_ui["search-container-row"]

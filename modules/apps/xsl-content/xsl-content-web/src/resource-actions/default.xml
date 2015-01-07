@@ -20,9 +20,6 @@
 				<action-key>ADD_TO_PAGE</action-key>
 				<action-key>CONFIGURATION</action-key>
 			</guest-unsupported>
-			<layout-manager>
-				<action-key>VIEW</action-key>
-			</layout-manager>
 		</permissions>
 	</portlet-resource>
 </resource-action-mapping>

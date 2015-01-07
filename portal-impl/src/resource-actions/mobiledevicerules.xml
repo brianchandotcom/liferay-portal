@@ -14,9 +14,6 @@
 			<guest-unsupported>
 				<action-key>CONFIGURATION</action-key>
 			</guest-unsupported>
-			<layout-manager>
-				<action-key>VIEW</action-key>
-			</layout-manager>
 		</permissions>
 	</portlet-resource>
 	<model-resource>
@@ -40,9 +37,6 @@
 				<action-key>ADD_RULE_GROUP_INSTANCE</action-key>
 				<action-key>CONFIGURATION</action-key>
 			</guest-unsupported>
-			<layout-manager>
-				<action-key>VIEW</action-key>
-			</layout-manager>
 		</permissions>
 	</model-resource>
 	<model-resource>

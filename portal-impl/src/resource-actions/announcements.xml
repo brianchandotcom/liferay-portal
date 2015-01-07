@@ -21,9 +21,6 @@
 				<action-key>ADD_ENTRY</action-key>
 				<action-key>CONFIGURATION</action-key>
 			</guest-unsupported>
-			<layout-manager>
-				<action-key>VIEW</action-key>
-			</layout-manager>
 		</permissions>
 	</portlet-resource>
 	<portlet-resource>
@@ -45,9 +42,6 @@
 				<action-key>ADD_ENTRY</action-key>
 				<action-key>CONFIGURATION</action-key>
 			</guest-unsupported>
-			<layout-manager>
-				<action-key>VIEW</action-key>
-			</layout-manager>
 		</permissions>
 	</portlet-resource>
 	<model-resource>

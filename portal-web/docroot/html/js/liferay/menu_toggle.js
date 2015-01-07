@@ -146,8 +146,13 @@ AUI.add(
 					_getEventOutside: function(event) {
 						var eventOutside = event._event.type;
 
-						if (eventOutside.toLowerCase().indexOf('pointerup') !== -1) {
+						eventOutside = eventOutside.toLowerCase();
+
+						if (eventOutside.indexOf('pointerup') > -1) {
 							eventOutside = 'mouseup';
+						}
+						else if (eventOutside.indexOf('touchend') > -1) {
+							eventOutside = 'mouseover';
 						}
 
 						eventOutside = eventOutside + 'outside';

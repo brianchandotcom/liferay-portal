@@ -111,9 +111,7 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
-
 		String pid = ParamUtil.getString(renderRequest, "pid", factoryPid);
-
 		String viewType = ParamUtil.getString(renderRequest, "viewType");
 
 		ConfigurationHelper configurationHelper = new ConfigurationHelper(

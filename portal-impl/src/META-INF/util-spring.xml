@@ -331,35 +331,36 @@
 	<bean id="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil">
 		<property name="springFactory" ref="com.liferay.portal.kernel.spring.util.SpringFactory" />
 	</bean>
+	<!-- Beans out of alphabetical order for loading purposes, OSGI containers must initiate before services  -->
 	<bean id="com.liferay.portal.kernel.template.TemplateManagerUtil" class="com.liferay.portal.kernel.template.TemplateManagerUtil">
-		<property name="templateManagers">
-			<list>
-				<bean class="com.liferay.portal.freemarker.FreeMarkerManager">
-					<property name="templateContextHelper">
-						<bean class="com.liferay.portal.freemarker.FreeMarkerTemplateContextHelper" />
-					</property>
-				</bean>
-				<bean class="com.liferay.portal.velocity.VelocityManager">
-					<property name="templateContextHelper">
-						<bean class="com.liferay.portal.velocity.VelocityTemplateContextHelper" />
-					</property>
-				</bean>
-				<bean class="com.liferay.portal.xsl.XSLManager">
-					<property name="templateContextHelper">
-						<bean class="com.liferay.portal.template.TemplateContextHelper" />
-					</property>
-				</bean>
-			</list>
+		<property name="templateManagerRegistry" ref="com.liferay.portal.kernel.template.TemplateManagerRegistry" />
+	</bean>
+	<bean id="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil" class="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil" />
+	<bean id="com.liferay.portal.template.FreemarkerTemplateResourceLoader" class="com.liferay.portal.template.FreemarkerTemplateResourceLoader" />
+	<bean id="com.liferay.portal.template.VelocityTemplateResourceLoader" class="com.liferay.portal.template.VelocityTemplateResourceLoader" />
+	<bean id="com.liferay.portal.kernel.template.TemplateManagerRegistry" class="com.liferay.portal.kernel.template.TemplateManagerRegistry" depends-on="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil" />
+	<bean id="com.liferay.portal.freemarker.FreeMarkerManager" class="com.liferay.portal.freemarker.FreeMarkerManager" depends-on="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil">
+		<property name="templateContextHelper">
+			<bean class="com.liferay.portal.freemarker.FreeMarkerTemplateContextHelper" />
+		</property>
+		<property name="templateResourceLoader">
+			<bean class="com.liferay.portal.template.FreemarkerTemplateResourceLoader" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil" class="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil">
-		<property name="templateResourceLoaders">
-			<list>
-				<bean class="com.liferay.portal.template.FreemarkerTemplateResourceLoader" />
-				<bean class="com.liferay.portal.template.VelocityTemplateResourceLoader" />
-			</list>
+	<bean id="com.liferay.portal.velocity.VelocityManager" class="com.liferay.portal.velocity.VelocityManager" depends-on="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil">
+		<property name="templateContextHelper">
+			<bean class="com.liferay.portal.velocity.VelocityTemplateContextHelper" />
+		</property>
+		<property name="templateResourceLoader">
+			<bean class="com.liferay.portal.template.VelocityTemplateResourceLoader" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.xsl.XSLManager" class="com.liferay.portal.xsl.XSLManager">
+		<property name="templateContextHelper">
+			<bean class="com.liferay.portal.template.TemplateContextHelper" />
+		</property>
+	</bean>
+	<!-- End of Beans out of alphabetical order for loading purposes -->
 	<bean id="com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil" class="com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil">
 		<property name="transactionCallbackRegistry">
 			<bean class="com.liferay.portal.spring.transaction.TransactionCommitCallbackRegistryImpl" />

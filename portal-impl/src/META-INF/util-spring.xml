@@ -959,6 +959,16 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONDeserializerUtil" class="com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONDeserializerUtil">
+		<property name="DDMFormLayoutJSONDeserializer">
+			<bean class="com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONDeserializerImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONSerializerUtil" class="com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONSerializerUtil">
+		<property name="DDMFormLayoutJSONSerializer">
+			<bean class="com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONSerializerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerUtil" class="com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerUtil">
 		<property name="DDMFormValuesJSONDeserializer">
 			<bean class="com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerImpl" />

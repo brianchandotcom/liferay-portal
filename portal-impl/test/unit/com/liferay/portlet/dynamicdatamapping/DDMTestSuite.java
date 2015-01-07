@@ -16,6 +16,8 @@ package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerTest;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerTest;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONDeserializerTest;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONSerializerTest;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerTest;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerTest;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerTest;
@@ -48,6 +50,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	{
 		DDMFormFieldValueRendererTest.class, DDMFormFieldValueTest.class,
 		DDMFormJSONDeserializerTest.class, DDMFormJSONSerializerTest.class,
+		DDMFormLayoutJSONDeserializerTest.class,
+		DDMFormLayoutJSONSerializerTest.class,
 		DDMFormTemplateSynchonizerTest.class, DDMFormValidatorTest.class,
 		DDMFormValuesJSONDeserializerTest.class,
 		DDMFormValuesJSONSerializerTest.class, DDMFormValuesTest.class,

@@ -38,6 +38,8 @@ import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerImpl;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
@@ -179,6 +181,31 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		String name, Value value) {
 
 		return createDDMFormFieldValue(StringUtil.randomString(), name, value);
+	}
+
+	protected List<DDMFormLayoutColumn> createDDMFormLayoutColumns(
+		String... fieldNames) {
+
+		List<DDMFormLayoutColumn> ddmFormLayoutColumns =
+			new ArrayList<DDMFormLayoutColumn>();
+
+		int size = 12 / fieldNames.length;
+
+		for (String fieldName : fieldNames) {
+			ddmFormLayoutColumns.add(new DDMFormLayoutColumn(fieldName, size));
+		}
+
+		return ddmFormLayoutColumns;
+	}
+
+	protected DDMFormLayoutRow createDDMFormLayoutRow(
+		List<DDMFormLayoutColumn> ddmFormLayoutColumns) {
+
+		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+
+		ddmFormLayoutRow.setDDMFormLayoutColumns(ddmFormLayoutColumns);
+
+		return ddmFormLayoutRow;
 	}
 
 	protected DDMFormValues createDDMFormValues(DDMForm ddmForm) {

@@ -1,0 +1,40 @@
+{
+	"rows": [
+		{
+			columns: [
+				{
+					fieldName: "text1",
+					size: 6
+				},
+				{
+					fieldName: "text2",
+					size: 6
+				}
+			]
+		},
+		{
+			columns: [
+				{
+					fieldName: "text3",
+					size: 4
+				},
+				{
+					fieldName: "text4",
+					size: 4
+				},
+				{
+					fieldName: "text5",
+					size: 4
+				}
+			]
+		},
+		{
+			columns: [
+				{
+					fieldName: "text6",
+					size: 12
+				}
+			]
+		}
+	]
+}

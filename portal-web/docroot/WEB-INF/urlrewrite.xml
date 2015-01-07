@@ -7,7 +7,7 @@
 		<to type="redirect">%{context-path}/webdav$1</to>
 	</rule>
 	<rule>
-		<from>^/(.{1,1000/)?blog/blogs/rss(.{0,1000})</from>
+		<from>^/(.{1,1000}/)?blog/blogs/rss(.{0,1000})</from>
 		<to type="permanent-redirect">%{context-path}/$1blog/-/blogs/rss$2</to>
 	</rule>
 	<rule>

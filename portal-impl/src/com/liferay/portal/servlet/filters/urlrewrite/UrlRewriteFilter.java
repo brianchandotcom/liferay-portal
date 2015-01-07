@@ -14,6 +14,8 @@
 
 package com.liferay.portal.servlet.filters.urlrewrite;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import javax.servlet.FilterChain;

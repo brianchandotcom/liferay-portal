@@ -57,7 +57,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -140,9 +139,16 @@ public class NettyFabricClient implements FabricClient {
 
 	@Override
 	public synchronized void disconnect() throws InterruptedException {
+		if (_channel == null) {
+			throw new IllegalStateException(
+				"Netty fabric client is not started");
+		}
+
 		_reconnectCounter.set(0);
 
-		doDisconnect();
+		ChannelFuture channelFuture = _channel.close();
+
+		channelFuture.sync();
 	}
 
 	protected void disposeRepository(Channel channel) {
@@ -164,76 +170,11 @@ public class NettyFabricClient implements FabricClient {
 		_channel = channelFuture.channel();
 
 		channelFuture.addListener(new PostConnectChannelFutureListener());
-	}
 
-	protected void doDisconnect() throws InterruptedException {
-		if (_channel == null) {
-			throw new IllegalStateException(
-				"Netty fabric client is not started");
-		}
+		ChannelFuture closeChannelFuture = _channel.closeFuture();
 
-		try {
-			ChannelFuture channelFuture = _channel.close();
-
-			channelFuture.sync();
-		}
-		finally {
-			terminateFabricWorkers(_channel);
-
-			disposeRepository(_channel);
-
-			EventLoopGroup eventLoopGroup = _bootstrap.group();
-
-			if (_reconnectCounter.getAndDecrement() > 0) {
-				eventLoopGroup.schedule(
-					new Callable<Void>() {
-
-						@Override
-						public Void call() {
-							doConnect();
-
-							return null;
-						}
-
-					},
-					_nettyFabricClientConfig.getReconnectInterval(),
-					TimeUnit.MILLISECONDS);
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Try to reconnect " +
-							_nettyFabricClientConfig.getReconnectInterval() +
-								"ms later");
-				}
-			}
-			else {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Shutting down Netty fabric client on " + _channel);
-				}
-
-				try {
-					eventLoopGroup.shutdownGracefully();
-
-					shutdownEventExecutorGroup(
-						_channel, _executionEventExecutorGroupAttributeKey);
-					shutdownEventExecutorGroup(
-						_channel, _fileServerEventExecutorGroupAttributeKey);
-					shutdownEventExecutorGroup(
-						_channel, _rpcEventExecutorGroupAttributeKey);
-
-					_channel = null;
-					_bootstrap = null;
-				}
-				finally {
-					_nettyFabricClientShutdownCallback.shutdown();
-
-					Runtime runtime = Runtime.getRuntime();
-
-					runtime.removeShutdownHook(_shutdownThread);
-				}
-			}
-		}
+		closeChannelFuture.addListener(
+			new PostDisconnectChannelFutureListener());
 	}
 
 	protected EventExecutorGroup getEventExecutorGroup(
@@ -428,8 +369,6 @@ public class NettyFabricClient implements FabricClient {
 					"Unable to connect to " + serverAddress,
 					channelFuture.cause());
 			}
-
-			doDisconnect();
 		}
 
 	}
@@ -438,16 +377,60 @@ public class NettyFabricClient implements FabricClient {
 		implements ChannelFutureListener {
 
 		@Override
-		public void operationComplete(ChannelFuture channelFuture)
-			throws InterruptedException {
+		public void operationComplete(ChannelFuture channelFuture) {
+			terminateFabricWorkers(_channel);
 
-			Channel channel = channelFuture.channel();
+			disposeRepository(_channel);
 
-			if (_log.isInfoEnabled()) {
-				_log.info("Disconnected from " + channel.remoteAddress());
+			EventLoopGroup eventLoopGroup = _bootstrap.group();
+
+			if (_reconnectCounter.getAndDecrement() > 0) {
+				eventLoopGroup.schedule(
+					new Runnable() {
+
+						@Override
+						public void run() {
+							doConnect();
+						}
+
+					},
+					_nettyFabricClientConfig.getReconnectInterval(),
+					TimeUnit.MILLISECONDS);
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Try to reconnect " +
+							_nettyFabricClientConfig.getReconnectInterval() +
+								"ms later");
+				}
 			}
+			else {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Shutting down Netty fabric client on " + _channel);
+				}
 
-			doDisconnect();
+				try {
+					eventLoopGroup.shutdownGracefully();
+
+					shutdownEventExecutorGroup(
+						_channel, _executionEventExecutorGroupAttributeKey);
+					shutdownEventExecutorGroup(
+						_channel, _fileServerEventExecutorGroupAttributeKey);
+					shutdownEventExecutorGroup(
+						_channel, _rpcEventExecutorGroupAttributeKey);
+
+					_channel = null;
+					_bootstrap = null;
+				}
+				finally {
+					_nettyFabricClientShutdownCallback.shutdown();
+
+					Runtime runtime = Runtime.getRuntime();
+
+					runtime.removeShutdownHook(_shutdownThread);
+				}
+			}
 		}
 
 	}
@@ -456,28 +439,27 @@ public class NettyFabricClient implements FabricClient {
 		implements ChannelFutureListener {
 
 		@Override
-		public void operationComplete(ChannelFuture channelFuture)
-			throws InterruptedException {
-
+		public void operationComplete(ChannelFuture channelFuture) {
 			if (channelFuture.isSuccess()) {
-				_reconnectCounter.set(
-					_nettyFabricClientConfig.getReconnectCount());
+				int reconnectCount =
+					_nettyFabricClientConfig.getReconnectCount();
+
+				if (reconnectCount < 0) {
+					reconnectCount = Integer.MAX_VALUE;
+				}
+
+				_reconnectCounter.set(reconnectCount);
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Registered Netty fabric agent on " + _channel);
 				}
-
-				channelFuture = _channel.closeFuture();
-
-				channelFuture.addListener(
-					new PostDisconnectChannelFutureListener());
 
 				return;
 			}
 
 			_log.error("Unable to register Netty fabric agent on " + _channel);
 
-			doDisconnect();
+			_channel.close();
 		}
 
 	}

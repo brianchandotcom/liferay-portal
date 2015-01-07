@@ -17,7 +17,7 @@
 <#include "init.ftl">
 
 <#assign configurationHelper = Request["configurationHelper"] />
-<#assign model = Request["model"] />
+<#assign configurationModel = Request["configurationModel"] />
 
 <#assign redirectURL = renderResponse.createRenderURL() />
 
@@ -26,17 +26,17 @@
 
 <@liferay_ui["header"]
 	backURL="${redirectURL}"
-	title='${model.getName()}'
+	title='${configurationModel.getName()}'
 />
 
 <@aui["form"] action="${bindConfigActionURL}" method="post" name="fm">
 
 	<@aui["input"] name="redirect" type="hidden" value="${redirectURL}" />
-	<@aui["input"] name="pid" type="hidden" value="${model.getID()}" />
-	<@aui["input"] name="factoryPid" type="hidden" value="${model.getFactoryPid()}" />
+	<@aui["input"] name="pid" type="hidden" value="${configurationModel.getID()}" />
+	<@aui["input"] name="factoryPid" type="hidden" value="${configurationModel.getFactoryPid()}" />
 
 	<div class="lfr-ddm-container" id="xyz">
-		${configurationHelper.render(renderRequest, renderResponse, model)}
+		${configurationHelper.render(renderRequest, renderResponse, configurationModel)}
 
 		<#assign configFieldJSON = Request["configFieldJSON"] />
 		<#assign plId = Request["plId"] />
@@ -64,7 +64,7 @@
 	</div>
 
 	<@aui["button-row"]>
-		<#if model.getConfiguration()??>
+		<#if configurationModel.getConfiguration()??>
 			<@aui["button"] value="update" type="submit" />
 
 			<#assign deleteAttributesOnClickValue = renderResponse.getNamespace() + "deleteConfig();">

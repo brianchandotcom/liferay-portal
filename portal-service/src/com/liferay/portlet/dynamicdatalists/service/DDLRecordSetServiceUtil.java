@@ -72,6 +72,11 @@ public class DDLRecordSetServiceUtil {
 		return getService().getRecordSet(recordSetId);
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> getRecordSets(
+		long[] groupIds) {
+		return getService().getRecordSets(groupIds);
+	}
+
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
 		long companyId, long groupId, java.lang.String keywords, int scope,
 		int start, int end,

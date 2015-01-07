@@ -122,6 +122,21 @@ public class DDLRecordSetServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap[] getRecordSets(
+		long[] groupIds) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> returnValue =
+				DDLRecordSetServiceUtil.getRecordSets(groupIds);
+
+			return com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap[] search(
 		long companyId, long groupId, java.lang.String keywords, int scope,
 		int start, int end,

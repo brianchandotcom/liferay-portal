@@ -389,12 +389,21 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		Client client = _elasticsearchConnectionManager.getClient();
 
-		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(
-			String.valueOf(searchContext.getCompanyId()));
+		QueryConfig queryConfig = query.getQueryConfig();
+
+		String[] selectedIndexNames = queryConfig.getSelectedIndexNames();
+
+		SearchRequestBuilder searchRequestBuilder = null;
+
+		if (ArrayUtil.isEmpty(selectedIndexNames)) {
+			searchRequestBuilder = client.prepareSearch(
+				String.valueOf(searchContext.getCompanyId()));
+		}
+		else {
+			searchRequestBuilder = client.prepareSearch(selectedIndexNames);
+		}
 
 		if (!count) {
-			QueryConfig queryConfig = query.getQueryConfig();
-
 			addFacets(searchRequestBuilder, searchContext);
 			addHighlights(searchRequestBuilder, queryConfig);
 			addPagination(searchRequestBuilder, start, end);
@@ -411,7 +420,14 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		searchRequestBuilder.setQuery(queryBuilder);
 
-		searchRequestBuilder.setTypes(DocumentTypes.LIFERAY);
+		String[] selectedTypes = queryConfig.getSelectedTypes();
+
+		if (ArrayUtil.isEmpty(selectedTypes)) {
+			searchRequestBuilder.setTypes(DocumentTypes.LIFERAY);
+		}
+		else {
+			searchRequestBuilder.setTypes(selectedTypes);
+		}
 
 		SearchRequest searchRequest = searchRequestBuilder.request();
 
@@ -428,7 +444,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		return searchResponse;
 	}
 
-	protected Document processSearchHit(SearchHit hit) {
+	protected Document processSearchHit(
+		SearchHit hit, QueryConfig queryConfig) {
+
 		Document document = new DocumentImpl();
 
 		Map<String, SearchHitField> searchHitFields = hit.getFields();
@@ -447,6 +465,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 			document.add(field);
 		}
+
+		populateUID(document, queryConfig);
 
 		return document;
 	}
@@ -469,7 +489,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			SearchHit[] searchHitsArray = searchHits.getHits();
 
 			for (SearchHit searchHit : searchHitsArray) {
-				Document document = processSearchHit(searchHit);
+				Document document = processSearchHit(
+					searchHit, query.getQueryConfig());
 
 				documents.add(document);
 

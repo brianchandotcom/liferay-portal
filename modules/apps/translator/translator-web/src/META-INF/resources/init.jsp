@@ -40,9 +40,9 @@ page import="com.liferay.translator.web.util.TranslatorUtil" %>
 <portlet:defineObjects />
 
 <%
-TranslatorConfiguration translatorConfiguration = (TranslatorConfiguration)request.getAttribute(TranslatorConfiguration.class.getName());
-
 WindowState windowState = liferayPortletRequest.getWindowState();
+
+TranslatorConfiguration translatorConfiguration = (TranslatorConfiguration)request.getAttribute(TranslatorConfiguration.class.getName());
 %>
 
 <%@ include file="/init-ext.jsp" %>

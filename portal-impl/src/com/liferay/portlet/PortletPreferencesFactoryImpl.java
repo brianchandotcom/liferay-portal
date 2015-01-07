@@ -45,7 +45,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
@@ -504,7 +503,7 @@ public class PortletPreferencesFactoryImpl
 
 		try {
 			LayoutTypePortlet layoutTypePortlet =
-				LayoutTypePortletFactoryUtil.create(layout);
+				(LayoutTypePortlet)layout.getLayoutType();
 
 			if (layoutTypePortlet.hasPortletId(portletId)) {
 				return getPortletSetup(

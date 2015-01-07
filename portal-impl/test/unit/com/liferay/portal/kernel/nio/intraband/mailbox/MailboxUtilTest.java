@@ -284,7 +284,11 @@ public class MailboxUtilTest {
 
 		Constructor<?> constructor = clazz.getConstructor(long.class);
 
-		return constructor.newInstance(0);
+		Object object = constructor.newInstance(0);
+
+		Assert.assertEquals(0, object.hashCode());
+
+		return object;
 	}
 
 	private static class RecorderUncaughtExceptionHandler

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.concurrent;
 
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -53,19 +54,44 @@ public class DefaultNoticeableFutureTest {
 			Assert.assertEquals("Future listener is null", npe.getMessage());
 		}
 
-		RecordedFutureListener<Object> recordedFutureListener =
+		Object futureListeners = ReflectionTestUtil.getFieldValue(
+			defaultNoticeableFuture, "_futureListeners");
+
+		Assert.assertEquals(0, futureListeners.hashCode());
+
+		RecordedFutureListener<Object> recordedFutureListener1 =
 			new RecordedFutureListener<Object>();
 
 		Assert.assertTrue(
-			defaultNoticeableFuture.addFutureListener(recordedFutureListener));
+			defaultNoticeableFuture.addFutureListener(recordedFutureListener1));
+		Assert.assertEquals(
+			recordedFutureListener1.hashCode(), futureListeners.hashCode());
+
+		RecordedFutureListener<Object> recordedFutureListener2 =
+			new RecordedFutureListener<Object>();
+
+		Assert.assertTrue(
+			defaultNoticeableFuture.addFutureListener(recordedFutureListener2));
+		Assert.assertEquals(
+			recordedFutureListener1.hashCode() +
+				recordedFutureListener2.hashCode(),
+			futureListeners.hashCode());
 		Assert.assertFalse(
-			defaultNoticeableFuture.addFutureListener(recordedFutureListener));
+			defaultNoticeableFuture.addFutureListener(recordedFutureListener1));
+		Assert.assertFalse(
+			defaultNoticeableFuture.addFutureListener(recordedFutureListener2));
 		Assert.assertTrue(
 			defaultNoticeableFuture.removeFutureListener(
-				recordedFutureListener));
+				recordedFutureListener1));
 		Assert.assertFalse(
 			defaultNoticeableFuture.removeFutureListener(
-				recordedFutureListener));
+				recordedFutureListener1));
+		Assert.assertTrue(
+			defaultNoticeableFuture.removeFutureListener(
+				recordedFutureListener2));
+		Assert.assertFalse(
+			defaultNoticeableFuture.removeFutureListener(
+				recordedFutureListener2));
 	}
 
 	@Test

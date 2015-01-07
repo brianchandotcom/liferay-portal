@@ -18,11 +18,11 @@ import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateResourceLoader;
 
 import java.security.AccessControlContext;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-
 import java.util.Map;
 
 /**
@@ -87,6 +87,14 @@ public abstract class BaseTemplateManager implements TemplateManager {
 		Map<String, Object> helperUtilities, boolean privileged);
 
 	protected TemplateContextHelper templateContextHelper;
+	
+	protected TemplateResourceLoader templateResourceLoader;
+	
+	public void setTemplateResourceLoader(
+			TemplateResourceLoader templateResourceLoader) {
+
+			this.templateResourceLoader = templateResourceLoader;
+	}
 
 	private class DoGetHelperUtilitiesPrivilegedAction
 		implements PrivilegedAction<Map<String, Object>> {

@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
+Group group = (Group)request.getAttribute("site.group");
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 long liveGroupId = ((Long)request.getAttribute("site.liveGroupId")).longValue();
 UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribute("site.liveGroupTypeSettings");
@@ -44,6 +45,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 <c:if test="<%= liveGroupRemoteStaging %>">
 	<div class="alert alert-info">
 		<liferay-ui:message key="live-group-remote-staging-alert" />
+		<liferay-ui:message arguments='<%= "javascript:" + renderResponse.getNamespace() + "saveGroup(true);" %>' key="you-also-have-the-option-to-forcibly-disable-remote-staging" />
 	</div>
 </c:if>
 

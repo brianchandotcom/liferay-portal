@@ -821,6 +821,13 @@ public class EditGroupAction extends PortletAction {
 			StagingUtil.updateStaging(actionRequest, liveGroup);
 		}
 
+		boolean forceDisable = ParamUtil.getBoolean(
+			actionRequest, "forceDisable");
+
+		if (forceDisable) {
+			GroupLocalServiceUtil.disableStaging(liveGroupId);
+		}
+
 		return liveGroup;
 	}
 

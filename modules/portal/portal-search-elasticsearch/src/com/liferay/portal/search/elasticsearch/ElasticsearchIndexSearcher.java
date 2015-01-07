@@ -389,12 +389,21 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		Client client = _elasticsearchConnectionManager.getClient();
 
-		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(
-			String.valueOf(searchContext.getCompanyId()));
+		QueryConfig queryConfig = query.getQueryConfig();
+
+		String[] selectedIndexNames = queryConfig.getSelectedIndexNames();
+
+		SearchRequestBuilder searchRequestBuilder = null;
+
+		if (ArrayUtil.isEmpty(selectedIndexNames)) {
+			searchRequestBuilder = client.prepareSearch(
+				String.valueOf(searchContext.getCompanyId()));
+		}
+		else {
+			searchRequestBuilder = client.prepareSearch(selectedIndexNames);
+		}
 
 		if (!count) {
-			QueryConfig queryConfig = query.getQueryConfig();
-
 			addFacets(searchRequestBuilder, searchContext);
 			addHighlights(searchRequestBuilder, queryConfig);
 			addPagination(searchRequestBuilder, start, end);
@@ -411,7 +420,14 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		searchRequestBuilder.setQuery(queryBuilder);
 
-		searchRequestBuilder.setTypes(DocumentTypes.LIFERAY);
+		String[] selectedTypes = queryConfig.getSelectedTypes();
+
+		if (ArrayUtil.isEmpty(selectedTypes)) {
+			searchRequestBuilder.setTypes(DocumentTypes.LIFERAY);
+		}
+		else {
+			searchRequestBuilder.setTypes(selectedTypes);
+		}
 
 		SearchRequest searchRequest = searchRequestBuilder.request();
 

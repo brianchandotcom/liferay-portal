@@ -90,7 +90,7 @@ public class BindConfigurationAction implements ActionCommand {
 		ConfigurationHelper configurationHelper = new ConfigurationHelper(
 			_bundleContext, _configurationAdmin, _metaTypeService, languageId);
 
-		ConfigurationModel model = configurationHelper.getModel(pid);
+		ConfigurationModel model = configurationHelper.getConfigurationModel(pid);
 
 		Configuration configuration = configurationHelper.getConfiguration(pid);
 

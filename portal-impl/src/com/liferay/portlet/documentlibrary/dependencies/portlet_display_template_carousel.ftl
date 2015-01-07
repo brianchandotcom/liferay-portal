@@ -34,6 +34,8 @@
 			{
 				after: {
 					responsive: function(event) {
+						event.stopImmediatePropagation();
+
 						var boundingBox = event.currentTarget.get('boundingBox');
 
 						boundingBox.all('.image-viewer-base-image-list, .image-viewer-base-image').setStyles(

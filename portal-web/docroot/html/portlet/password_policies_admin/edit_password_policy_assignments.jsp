@@ -208,7 +208,7 @@ portletURL.setParameter("tabs3", tabs3);
 						orderable="<%= true %>"
 					>
 
-						<%= HtmlUtil.escape(organization.getName()) %>
+						<%= organization.getName() %>
 
 						<%
 						PasswordPolicyRel passwordPolicyRel = PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(Organization.class.getName(), organization.getOrganizationId());

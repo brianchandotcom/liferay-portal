@@ -14,10 +14,8 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.runner.PoshiRunnerUtil;
 import com.liferay.poshi.runner.util.PropsValues;
-import com.liferay.poshi.runner.util.StringPool;
-
-import java.io.File;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,12 +43,7 @@ public class SeleniumUtil extends PropsValues {
 	}
 
 	private void _startSelenium() {
-		File file = new File(StringPool.PERIOD);
-
-		String absolutePath = file.getAbsolutePath();
-
-		String projectDir = absolutePath.substring(
-			0, absolutePath.length() - 1);
+		String projectDir = PoshiRunnerUtil.getProjectDir();
 
 		String portalURL = PORTAL_URL;
 

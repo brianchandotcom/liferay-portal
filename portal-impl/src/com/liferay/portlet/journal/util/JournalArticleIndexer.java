@@ -491,8 +491,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
 			int status = article.getStatus();
 
-			if ((status != WorkflowConstants.STATUS_APPROVED) &&
-				(status != WorkflowConstants.STATUS_IN_TRASH)) {
+			if (!article.isIndexable() ||
+				((status != WorkflowConstants.STATUS_APPROVED) &&
+				 (status != WorkflowConstants.STATUS_IN_TRASH))) {
 
 				deleteDocument(
 					article.getCompanyId(), article.getResourcePrimKey());
@@ -611,10 +612,15 @@ public class JournalArticleIndexer extends BaseIndexer {
 			articles = new ArrayList<JournalArticle>();
 
 			JournalArticle latestIndexableArticle =
-				JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
-					article.getResourcePrimKey());
+				JournalArticleLocalServiceUtil.fetchLatestArticle(
+					article.getResourcePrimKey(),
+					new int[] {
+						WorkflowConstants.STATUS_APPROVED,
+						WorkflowConstants.STATUS_IN_TRASH});
 
-			if (latestIndexableArticle != null) {
+			if ((latestIndexableArticle != null) &&
+				latestIndexableArticle.isIndexable()) {
+
 				articles.add(latestIndexableArticle);
 			}
 		}

@@ -83,6 +83,14 @@ public class ConfigurationHelper {
 		return null;
 	}
 
+	public ConfigurationModel getConfigurationModel(String pid) {
+		return _configurationModels.get(pid);
+	}
+
+	public List<ConfigurationModel> getConfigurationModels() {
+		return new ArrayList<>(_configurationModels.values());
+	}
+
 	public List<ConfigurationModel> getFactoryInstances(
 			String languageId, String factoryPid)
 		throws IOException {
@@ -123,14 +131,6 @@ public class ConfigurationHelper {
 		}
 
 		return models;
-	}
-
-	public ConfigurationModel getConfigurationModel(String pid) {
-		return _configurationModels.get(pid);
-	}
-
-	public List<ConfigurationModel> getConfigurationModels() {
-		return new ArrayList<>(_configurationModels.values());
 	}
 
 	public String render(
@@ -260,7 +260,7 @@ public class ConfigurationHelper {
 
 	private final BundleContext _bundleContext;
 	private final ConfigurationAdmin _configurationAdmin;
-	private final MetaTypeService _metaTypeService;
 	private final Map<String, ConfigurationModel> _configurationModels;
+	private final MetaTypeService _metaTypeService;
 
 }

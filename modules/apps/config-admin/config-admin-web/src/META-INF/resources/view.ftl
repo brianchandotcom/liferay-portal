@@ -61,13 +61,11 @@
 		>
 			<#if model.isFactory()>
 				<@aui["a"] href=(viewFactoryInstancesURL.toString())>${model.getName()}</@>
-
-				<em>(<@liferay_ui["message"] key="factory" />)</em>
 			<#else>
 				<@aui["a"] href=(editURL.toString())>${model.getName()}</@>
 			</#if>
 
-			<#if model??>
+			<#if factoryModel??>
 				<br/>
 
 				${model.getID()}

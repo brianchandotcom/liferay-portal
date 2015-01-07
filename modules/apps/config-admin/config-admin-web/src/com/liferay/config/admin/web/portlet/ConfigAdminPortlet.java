@@ -122,7 +122,7 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 
 		if (path.equals("/edit_configuration.ftl")) {
 			ConfigurationModel configurationModel =
-				configurationHelper.getModel(pid);
+				configurationHelper.getConfigurationModel(pid);
 
 			if (configurationModel != null) {
 				configurationModel = new ConfigurationModel(
@@ -139,8 +139,8 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 			renderRequest.setAttribute("pid", pid);
 		}
 		else if ("factoryInstances".equals(viewType)) {
-			ConfigurationModel factoryModel = configurationHelper.getModel(
-				factoryPid);
+			ConfigurationModel factoryModel =
+				configurationHelper.getConfigurationModel(factoryPid);
 
 			renderRequest.setAttribute("factoryModel", factoryModel);
 

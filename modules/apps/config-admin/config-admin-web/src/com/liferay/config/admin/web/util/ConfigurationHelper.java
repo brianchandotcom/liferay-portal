@@ -111,7 +111,7 @@ public class ConfigurationHelper {
 			return models;
 		}
 
-		ConfigurationModel factoryOCD = getModel(factoryPid);
+		ConfigurationModel factoryOCD = getConfigurationModel(factoryPid);
 
 		for (Configuration configuration : configurations) {
 			ConfigurationModel model = new ConfigurationModel(
@@ -124,7 +124,7 @@ public class ConfigurationHelper {
 		return models;
 	}
 
-	public ConfigurationModel getModel(String pid) {
+	public ConfigurationModel getConfigurationModel(String pid) {
 		return _models.get(pid);
 	}
 

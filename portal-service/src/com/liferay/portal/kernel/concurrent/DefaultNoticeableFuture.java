@@ -120,6 +120,11 @@ public class DefaultNoticeableFuture<T>
 			return _futureListener.equals(onceFutureListener._futureListener);
 		}
 
+		@Override
+		public int hashCode() {
+			return _futureListener.hashCode();
+		}
+
 		private final FutureListener<V> _futureListener;
 		private final AtomicBoolean _ran = new AtomicBoolean();
 

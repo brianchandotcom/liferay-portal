@@ -176,6 +176,11 @@ public class MailboxUtil {
 			return _receipt;
 		}
 
+		@Override
+		public int hashCode() {
+			return (int)_receipt;
+		}
+
 		private final long _expireTime;
 		private final long _receipt;
 

@@ -81,6 +81,11 @@ public class UnlocalizedValue implements Value {
 	}
 
 	@Override
+	public int hashCode() {
+		return _values.hashCode();
+	}
+
+	@Override
 	public boolean isLocalized() {
 		return false;
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -123,6 +124,13 @@ public class Fields implements Iterable<Field>, Serializable {
 
 	public Set<String> getNames() {
 		return _fieldsMap.keySet();
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _fieldsMap);
+
+		return HashUtil.hash(hash, getFieldsList(true));
 	}
 
 	@Override

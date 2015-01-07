@@ -170,7 +170,8 @@
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateName" value="WC Template Name" />
-			<var name="webContentText" value="WC WebContent Content" />
+			<var name="webContentText" value="Text" />
+			<var name="webContentTextBox" value="Text Box" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -180,8 +181,9 @@
 
 		<execute macro="WebContent#addTranslationCP">
 			<var name="localizedLanguage" value="Spanish (Spain)" />
-			<var name="unlocalizableField" value="Text Box" />
-			<var name="unlocalizableFieldLocator" value="TEXT_BOX_FIELD" />
+			<var name="localizedText" value="Text Spanish" />
+			<var name="localizedTextBox" value="Text Box Spanish" />
+			<var name="localizedTitle" value="Title Spanish" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -189,10 +191,13 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentStructures#viewCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text,Text Box" />
-			<var name="structureName" value="WC Structure Name" />
+		<execute macro="WebContent#viewUnlocalizableTextBox">
+			<var name="editLocalizedTextBox" value="Text Box Unlocalized" />
+			<var name="localizedText" value="Text Spanish" />
+			<var name="localizedTextBox" value="Text Box Spanish" />
+			<var name="localizedTitle" value="Title Spanish" />
+			<var name="webContentTextBox" value="Text Box" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
 

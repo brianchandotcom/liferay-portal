@@ -46,8 +46,8 @@ public class PoshiRunnerUtil {
 
 			return file.getCanonicalPath();
 		}
-		catch (IOException e) {
-			e.printStackTrace();
+		catch (IOException ioe) {
+			ioe.printStackTrace();
 		}
 
 		return dir;

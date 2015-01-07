@@ -73,9 +73,9 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-		if (!Validator.isBlank(uri) &&
-			(uri.length() > _invokerFilterURILengthHardLimit)) {
+		String requestURL = getURL(request);
 
+		if (requestURL.length() > _invokerFilterURILengthHardLimit) {
 			response.sendError(HttpServletResponse.SC_REQUEST_URI_TOO_LONG);
 
 			if (_log.isWarnEnabled()) {
@@ -275,6 +275,23 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		}
 
 		return HttpUtil.removePathParameters(uri);
+	}
+
+	protected String getURL(HttpServletRequest request) {
+		StringBuffer requestURL = request.getRequestURL();
+
+		if (requestURL == null) {
+			return StringPool.BLANK;
+		}
+
+		String queryString = request.getQueryString();
+
+		if (!Validator.isBlank(queryString)) {
+			requestURL.append(StringPool.QUESTION);
+			requestURL.append(request.getQueryString());
+		}
+
+		return requestURL.toString();
 	}
 
 	protected HttpServletRequest handleNonSerializableRequest(

@@ -20,6 +20,7 @@ import com.liferay.config.admin.web.util.ConfigurationModelIterator;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -121,6 +122,13 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 		if (path.equals("/edit_configuration.ftl")) {
 			ConfigurationModel configurationModel =
 				configurationHelper.getConfigurationModel(pid);
+
+			if ((configurationModel == null) &&
+				Validator.isNotNull(factoryPid)) {
+
+				configurationModel = configurationHelper.getConfigurationModel(
+					factoryPid);
+			}
 
 			if (configurationModel != null) {
 				configurationModel = new ConfigurationModel(

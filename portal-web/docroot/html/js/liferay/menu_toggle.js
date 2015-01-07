@@ -148,11 +148,10 @@ AUI.add(
 
 						eventOutside = eventOutside.toLowerCase();
 
-						if (eventOutside.indexOf('pointerup') !== -1) {
+						if (eventOutside.indexOf('pointerup') > -1) {
 							eventOutside = 'mouseup';
 						}
-
-						if (eventOutside.indexOf('touchend') !== -1) {
+						else if (eventOutside.indexOf('touchend') > -1) {
 							eventOutside = 'mouseover';
 						}
 

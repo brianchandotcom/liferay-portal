@@ -148,7 +148,7 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 					themeDisplay.getLanguageId(), factoryPid);
 
 			renderRequest.setAttribute(
-				"modelIterator",
+				"configurationModelIterator",
 				new ConfigurationModelIterator(configurationModels));
 		}
 		else {
@@ -156,7 +156,7 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 				configurationHelper.getConfigurationModels();
 
 			renderRequest.setAttribute(
-				"modelIterator",
+				"configurationModelIterator",
 				new ConfigurationModelIterator(configurationModels));
 		}
 

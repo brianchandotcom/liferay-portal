@@ -139,8 +139,6 @@ public class StartupAction extends SimpleAction {
 			_log.debug("Initialize template manager");
 		}
 
-		TemplateManagerUtil.init();
-
 		// Indexers
 
 		IndexerRegistryUtil.register(new MBMessageIndexer());

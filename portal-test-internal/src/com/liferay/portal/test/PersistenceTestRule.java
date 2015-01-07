@@ -72,8 +72,6 @@ public class PersistenceTestRule extends BaseTestRule<Object, Object> {
 
 		try {
 			DBUpgrader.upgrade();
-
-			TemplateManagerUtil.init();
 		}
 		catch (Throwable t) {
 			throw new ExceptionInInitializerError(t);

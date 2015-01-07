@@ -672,9 +672,19 @@
 					</then>
 				</if>
 
-				<sync todir="@{module.name}">
+				<sync todir="@{module.name}" overwrite="true">
 					<fileset dir="docroot/html/themes/_unstyled" excludes="templates/init.ftl,templates/init.vm" />
+					<preserveintarget>
+						<include name="**/*" />
+					</preserveintarget>
+				</sync>
+				<sync todir="@{module.name}" overwrite="true">
 					<fileset dir="docroot/html/themes/_styled" />
+					<preserveintarget>
+						<include name="**/*" />
+					</preserveintarget>
+				</sync>
+				<sync todir="@{module.name}" overwrite="true">
 					<fileset dir="@{module.name}/_diffs" />
 					<preserveintarget>
 						<include name="**/*" />

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -511,6 +513,9 @@ public class PortletPreferencesFactoryImpl
 			}
 		}
 		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 
 		return getPortletSetup(
@@ -822,6 +827,9 @@ public class PortletPreferencesFactoryImpl
 					xmlEventReader.close();
 				}
 				catch (XMLStreamException xse) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(xse, xse);
+					}
 				}
 			}
 		}
@@ -834,6 +842,9 @@ public class PortletPreferencesFactoryImpl
 
 		return preferencesMap;
 	}
+
+	private final Log _log = LogFactoryUtil.getLog(
+		PortletPreferencesFactoryImpl.class);
 
 	private final PortalCache<String, Map<String, Preference>>
 		_preferencesMapPortalCache = SingleVMPoolUtil.getCache(

@@ -502,21 +502,20 @@ public class PortletPreferencesFactoryImpl
 		long siteGroupId, Layout layout, String portletId,
 		String defaultPreferences) {
 
-		boolean strictMode = true;
-
 		try {
 			LayoutTypePortlet layoutTypePortlet =
 				LayoutTypePortletFactoryUtil.create(layout);
 
 			if (layoutTypePortlet.hasPortletId(portletId)) {
-				strictMode = false;
+				return getPortletSetup(
+					siteGroupId, layout, portletId, defaultPreferences, false);
 			}
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 		}
 
 		return getPortletSetup(
-			siteGroupId, layout, portletId, defaultPreferences, strictMode);
+			siteGroupId, layout, portletId, defaultPreferences, true);
 	}
 
 	@Override

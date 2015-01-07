@@ -91,134 +91,134 @@
 			<ant dir="portal-web" target="clean" inheritAll="false" />
 
 			<ant dir="sql" target="clean" inheritAll="false" />
-
-			<delete dir="tools/sdk" />
-
-			<delete dir="${doc.dir}" />
-
-			<delete>
-				<fileset dir="." includes="*.ear,*.jar,*.war,*.zip" />
-			</delete>
-
-			<delete failonerror="false" includeemptydirs="true">
-				<fileset
-					dir="${app.server.bin.dir}"
-					includes="*.log*"
-				/>
-			</delete>
-
-			<delete dir="${liferay.home}/data/elasticsearch" />
-
-			<delete failonerror="false">
-				<fileset
-					dir="${liferay.home}/data/hsql"
-					includes="${database.name}.*"
-				/>
-			</delete>
-
-			<delete dir="${liferay.home}/osgi" />
-
-			<delete dir="test-coverage" />
-			<delete dir="test-results" />
-
-			<if>
-				<equals arg1="${app.server.type}" arg2="glassfish" />
-				<then>
-					<delete dir="${app.server.instance.dir}/applications/liferay-portal" />
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${app.server.type}" arg2="resin" />
-				<then>
-					<ant dir="support-resin" target="clean" inheritAll="false" />
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${app.server.type}" arg2="tomcat" />
-				<then>
-					<delete failonerror="false">
-						<fileset
-							dir="${app.server.dir}/conf/Catalina/localhost"
-							includes="*-hook.xml,*-portlet.xml"
-						/>
-					</delete>
-
-					<ant dir="support-tomcat" target="clean" inheritAll="false" />
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${app.server.type}" arg2="websphere" />
-				<then>
-					<ant dir="support-websphere" target="clean" inheritAll="false" />
-				</then>
-			</if>
-
-			<delete failonerror="false">
-				<fileset
-					dir="${app.server.classes.portal.dir}"
-					includes="portal-*.properties,system-*.properties"
-				/>
-			</delete>
-
-			<delete failonerror="false" includeemptydirs="true">
-				<fileset
-					dir="${app.server.deploy.dir}"
-					includes="*-ext/**,*-ext.war/**,*-hook/**,*-hook.war/**,*-layouttpl/**,*-layouttpl.war/**,*-portlet/**,*-portlet.war/**,*-theme/**,*-theme.war/**,*-web/**,*-web.war/**"
-				/>
-			</delete>
-
-			<delete failonerror="false">
-				<fileset
-					dir="${app.server.lib.global.dir}"
-					excludes="${jdbc.drivers}"
-				/>
-			</delete>
-
-			<if>
-				<equals arg1="${clean.log.dir}" arg2="true" />
-				<then>
-					<delete dir="${app.server.log.dir}" />
-				</then>
-			</if>
-
-			<if>
-				<not>
-					<and>
-						<equals arg1="${app.server.type}" arg2="tomcat" />
-						<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
-					</and>
-				</not>
-				<then>
-					<delete dir="${app.server.portal.dir}" />
-					<delete file="${app.server.portal.dir}" />
-				</then>
-				<else>
-					<delete failonerror="false">
-						<fileset
-							dir="${app.server.lib.portal.dir}"
-							excludes="${jdbc.drivers}"
-						/>
-					</delete>
-				</else>
-			</if>
-
-			<if>
-				<equals arg1="${clean.temp.dir}" arg2="true" />
-				<then>
-					<delete dir="${app.server.temp.dir}" />
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${clean.work.dir}" arg2="true" />
-				<then>
-					<delete dir="${app.server.work.dir}" />
-				</then>
-			</if>
 		</parallel>
+
+		<delete dir="tools/sdk" />
+
+		<delete dir="${doc.dir}" />
+
+		<delete>
+			<fileset dir="." includes="*.ear,*.jar,*.war,*.zip" />
+		</delete>
+
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset
+				dir="${app.server.bin.dir}"
+				includes="*.log*"
+			/>
+		</delete>
+
+		<delete dir="${liferay.home}/data/elasticsearch" />
+
+		<delete failonerror="false">
+			<fileset
+				dir="${liferay.home}/data/hsql"
+				includes="${database.name}.*"
+			/>
+		</delete>
+
+		<delete dir="${liferay.home}/osgi" />
+
+		<delete dir="test-coverage" />
+		<delete dir="test-results" />
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="glassfish" />
+			<then>
+				<delete dir="${app.server.instance.dir}/applications/liferay-portal" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="resin" />
+			<then>
+				<ant dir="support-resin" target="clean" inheritAll="false" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="tomcat" />
+			<then>
+				<delete failonerror="false">
+					<fileset
+						dir="${app.server.dir}/conf/Catalina/localhost"
+						includes="*-hook.xml,*-portlet.xml"
+					/>
+				</delete>
+
+				<ant dir="support-tomcat" target="clean" inheritAll="false" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="websphere" />
+			<then>
+				<ant dir="support-websphere" target="clean" inheritAll="false" />
+			</then>
+		</if>
+
+		<delete failonerror="false">
+			<fileset
+				dir="${app.server.classes.portal.dir}"
+				includes="portal-*.properties,system-*.properties"
+			/>
+		</delete>
+
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset
+				dir="${app.server.deploy.dir}"
+				includes="*-ext/**,*-ext.war/**,*-hook/**,*-hook.war/**,*-layouttpl/**,*-layouttpl.war/**,*-portlet/**,*-portlet.war/**,*-theme/**,*-theme.war/**,*-web/**,*-web.war/**"
+			/>
+		</delete>
+
+		<delete failonerror="false">
+			<fileset
+				dir="${app.server.lib.global.dir}"
+				excludes="${jdbc.drivers}"
+			/>
+		</delete>
+
+		<if>
+			<equals arg1="${clean.log.dir}" arg2="true" />
+			<then>
+				<delete dir="${app.server.log.dir}" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<and>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
+				</and>
+			</not>
+			<then>
+				<delete dir="${app.server.portal.dir}" />
+				<delete file="${app.server.portal.dir}" />
+			</then>
+			<else>
+				<delete failonerror="false">
+					<fileset
+						dir="${app.server.lib.portal.dir}"
+						excludes="${jdbc.drivers}"
+					/>
+				</delete>
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${clean.temp.dir}" arg2="true" />
+			<then>
+				<delete dir="${app.server.temp.dir}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${clean.work.dir}" arg2="true" />
+			<then>
+				<delete dir="${app.server.work.dir}" />
+			</then>
+		</if>
 
 		<antcall target="print-current-time" />
 	</target>

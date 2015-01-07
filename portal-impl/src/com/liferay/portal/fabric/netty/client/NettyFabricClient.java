@@ -185,64 +185,6 @@ public class NettyFabricClient implements FabricClient {
 		return attribute.get();
 	}
 
-	protected Repository<Channel> getRepository(Channel channel)
-		throws IOException {
-
-		Attribute<Repository<Channel>> attribute = channel.attr(
-			_repositoryAttributeKey);
-
-		Repository<Channel> repository = attribute.get();
-
-		if (repository == null) {
-			Path repositoryPath = _nettyFabricClientConfig.getRepositoryPath();
-
-			Files.createDirectories(repositoryPath);
-
-			repository = new NettyRepository(
-				repositoryPath,
-				_nettyFabricClientConfig.getRepositoryGetFileTimeout());
-
-			Repository<Channel> previousRepository = attribute.setIfAbsent(
-				repository);
-
-			if (previousRepository != null) {
-				repository.dispose(true);
-
-				repository = previousRepository;
-			}
-
-			ChannelPipeline channelPipeline = channel.pipeline();
-
-			channelPipeline.addLast(
-				new FileResponseChannelHandler(
-					repository.getAsyncBroker(),
-					getEventExecutorGroup(
-						_channel, _fileServerEventExecutorGroupAttributeKey)));
-		}
-
-		return repository;
-	}
-
-	protected void registerNettyFabricAgent() throws IOException {
-		ChannelPipeline channelPipeline = _channel.pipeline();
-
-		Repository<Channel> repository = getRepository(_channel);
-
-		channelPipeline.addLast(
-			getEventExecutorGroup(
-				_channel, _executionEventExecutorGroupAttributeKey),
-			new NettyFabricWorkerExecutionChannelHandler(
-				repository, new LocalFabricAgent(_processExecutor),
-				_nettyFabricClientConfig.getExecutionTimeout()));
-
-		Path repositoryPath = repository.getRepositoryPath();
-
-		ChannelFuture channelFuture = _channel.writeAndFlush(
-			new NettyFabricAgentConfig(repositoryPath.toFile()));
-
-		channelFuture.addListener(new PostRegisterChannelFutureListener());
-	}
-
 	protected void shutdownEventExecutorGroup(
 		Channel channel, AttributeKey<EventExecutorGroup> attributeKey) {
 
@@ -316,7 +258,22 @@ public class NettyFabricClient implements FabricClient {
 		extends ChannelInitializer<SocketChannel> {
 
 		@Override
-		protected void initChannel(SocketChannel socketChannel) {
+		protected void initChannel(SocketChannel socketChannel)
+			throws IOException {
+
+			Path repositoryPath = _nettyFabricClientConfig.getRepositoryPath();
+
+			Files.createDirectories(repositoryPath);
+
+			Repository<Channel> repository = new NettyRepository(
+				repositoryPath,
+				_nettyFabricClientConfig.getRepositoryGetFileTimeout());
+
+			Attribute<Repository<Channel>> attribute = socketChannel.attr(
+				_repositoryAttributeKey);
+
+			attribute.set(repository);
+
 			ChannelPipeline channelPipeline = socketChannel.pipeline();
 
 			channelPipeline.addLast(
@@ -331,9 +288,20 @@ public class NettyFabricClient implements FabricClient {
 					_nettyFabricClientConfig.
 						getFileServerFolderCompressionLevel()));
 			channelPipeline.addLast(
+				new FileResponseChannelHandler(
+					repository.getAsyncBroker(),
+					getEventExecutorGroup(
+						_channel, _fileServerEventExecutorGroupAttributeKey)));
+			channelPipeline.addLast(
 				getEventExecutorGroup(
 					socketChannel, _rpcEventExecutorGroupAttributeKey),
 				NettyRPCChannelHandler.NAME, NettyRPCChannelHandler.INSTANCE);
+			channelPipeline.addLast(
+				getEventExecutorGroup(
+					_channel, _executionEventExecutorGroupAttributeKey),
+				new NettyFabricWorkerExecutionChannelHandler(
+					repository, new LocalFabricAgent(_processExecutor),
+					_nettyFabricClientConfig.getExecutionTimeout()));
 		}
 
 	}
@@ -352,7 +320,14 @@ public class NettyFabricClient implements FabricClient {
 					_log.info("Connected to " + channel.remoteAddress());
 				}
 
-				registerNettyFabricAgent();
+				Path repositoryPath =
+					_nettyFabricClientConfig.getRepositoryPath();
+
+				ChannelFuture registerChannelFuture = _channel.writeAndFlush(
+					new NettyFabricAgentConfig(repositoryPath.toFile()));
+
+				registerChannelFuture.addListener(
+					new PostRegisterChannelFutureListener());
 
 				return;
 			}

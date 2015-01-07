@@ -136,7 +136,7 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 			renderRequest.setAttribute("model", configurationModel);
 			renderRequest.setAttribute("pid", pid);
 		}
-		else if ("factoryInstances".equals(viewType)) {
+		else if (viewType.equals("factoryInstances")) {
 			ConfigurationModel factoryModel =
 				configurationHelper.getConfigurationModel(factoryPid);
 

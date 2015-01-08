@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.blogs.util.test;
 
+import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -208,6 +210,22 @@ public class BlogsTestUtil {
 			expectedEntry.isAllowTrackbacks(), actualEntry.isAllowTrackbacks());
 		Assert.assertEquals(
 			expectedEntry.isSmallImage(), actualEntry.isSmallImage());
+	}
+
+	public static String getBlogsEntryAttachmentFileEntryImgTag(
+		long dataImageId, String url) {
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("<img ");
+		sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
+		sb.append("=\"");
+		sb.append(dataImageId);
+		sb.append("\" src=\"");
+		sb.append(url);
+		sb.append("\"/>");
+
+		return sb.toString();
 	}
 
 	public static BlogsEntry updateEntry(BlogsEntry entry, boolean approved)

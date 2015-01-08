@@ -14,13 +14,13 @@
 
 package com.liferay.portlet.blogs;
 
-import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,8 +64,9 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 			new BlogsEntryAttachmentFileEntryReference(
 				tempFileEntryId, _fileEntry));
 
-		_tempFileEntryImgTag = getTempFileEntryImgTag(
-			tempFileEntryId, _TEMP_FILE_ENTRY_IMAGE_URL);
+		_tempFileEntryImgTag =
+			BlogsTestUtil.getBlogsEntryAttachmentFileEntryImgTag(
+				tempFileEntryId, _TEMP_FILE_ENTRY_IMAGE_URL);
 	}
 
 	@Test
@@ -122,20 +123,6 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 			"<img src=\"" + _FILE_ENTRY_IMAGE_URL + "\" />");
 
 		Assert.assertEquals(expectedContent, content);
-	}
-
-	protected String getTempFileEntryImgTag(long dataImageId, String url) {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("<img ");
-		sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-		sb.append("=\"");
-		sb.append(dataImageId);
-		sb.append("\" src=\"");
-		sb.append(url);
-		sb.append("\"/>");
-
-		return sb.toString();
 	}
 
 	protected String populateContentWithMultipleImgTags(String imgTag) {

@@ -14,9 +14,14 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.runner.util.StringUtil;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -56,6 +61,10 @@ public class PoshiRunnerContext {
 		return _pathLocators.get(pathLocatorKey);
 	}
 
+	public static int getSeleniumParameter(String commandName) {
+		return _seleniumParameterCounts.get(commandName);
+	}
+
 	public static Element getTestcaseCommandElement(String classCommandName) {
 		return _commandElements.get("testcase#" + classCommandName);
 	}
@@ -64,7 +73,7 @@ public class PoshiRunnerContext {
 		return _rootElements.get("testcase#" + className);
 	}
 
-	private static void _readFiles() throws Exception {
+	private static void _readPoshiFiles() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(_BASE_DIR);
@@ -148,6 +157,42 @@ public class PoshiRunnerContext {
 		}
 	}
 
+	private static void _readSeleniumFiles() throws Exception {
+		String[] fileNames = {
+			"LiferaySelenium.java", "WebDriverToSeleniumBridge.java"
+		};
+
+		for (String fileName : fileNames) {
+			String content = FileUtil.read(
+				"src/com/liferay/poshi/runner/selenium/" + fileName);
+
+			Matcher matcher = _pattern.matcher(content);
+
+			while (matcher.find()) {
+				String methodSignature = matcher.group();
+
+				int x = methodSignature.indexOf(" ", 7);
+				int y = methodSignature.indexOf("(");
+
+				String commandName = methodSignature.substring(x + 1, y);
+
+				int count = 0;
+
+				int z = methodSignature.indexOf(")");
+
+				String parameters = methodSignature.substring(y + 1, z);
+
+				if (!parameters.equals("")) {
+					count = StringUtil.count(parameters, ",") + 1;
+				}
+
+				_seleniumParameterCounts.put(commandName, count);
+			}
+		}
+
+		_seleniumParameterCounts.put("open", 1);
+	}
+
 	private static final String _BASE_DIR = PoshiRunnerUtil.getCanonicalPath(
 		"../../../portal-web/test/functional/com/liferay/portalweb/");
 
@@ -155,12 +200,17 @@ public class PoshiRunnerContext {
 		new HashMap<String, Element>();
 	private static final Map<String, String> _pathLocators =
 		new HashMap<String, String>();
+	private static final Pattern _pattern = Pattern.compile(
+		"public [a-z]* [A-Za-z0-9_]*\\(.*?\\)");
 	private static final Map<String, Element> _rootElements =
 		new HashMap<String, Element>();
+	private static final Map<String, Integer> _seleniumParameterCounts =
+		new HashMap<String, Integer>();
 
 	static {
 		try {
-			_readFiles();
+			_readPoshiFiles();
+			_readSeleniumFiles();
 		}
 		catch (Exception e) {
 			e.printStackTrace();

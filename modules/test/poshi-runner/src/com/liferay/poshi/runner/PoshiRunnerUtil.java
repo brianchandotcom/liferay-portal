@@ -53,25 +53,33 @@ public class PoshiRunnerUtil {
 		return dir;
 	}
 
-	public static String getCommandNameFromFileCommandName(
-		String fileCommandName) {
+	public static String getClassNameFromClassCommandName(
+		String classCommandName) {
 
-		int x = fileCommandName.indexOf("#");
+		int x = classCommandName.indexOf("#");
 
-		return fileCommandName.substring(x + 1);
+		return classCommandName.substring(0, x);
 	}
 
-	public static String getNameFromFileCommandName(String fileCommandName) {
-		int x = fileCommandName.indexOf("#");
+	public static String getClassNameFromFilePath(String filePath) {
+		int x = filePath.lastIndexOf("/");
+		int y = filePath.lastIndexOf(".");
 
-		return fileCommandName.substring(0, x);
+		return filePath.substring(x + 1, y);
 	}
 
-	public static String getNameFromFileName(String fileName) {
-		int x = fileName.lastIndexOf("/");
-		int y = fileName.lastIndexOf(".");
+	public static String getClassTypeFromFilePath(String filePath) {
+		int x = filePath.lastIndexOf(".");
 
-		return fileName.substring(x + 1, y);
+		return filePath.substring(x + 1);
+	}
+
+	public static String getCommandNameFromClassCommandName(
+		String classCommandName) {
+
+		int x = classCommandName.indexOf("#");
+
+		return classCommandName.substring(x + 1);
 	}
 
 	public static String getProjectDir() {
@@ -82,7 +90,7 @@ public class PoshiRunnerUtil {
 		return absolutePath.substring(0, absolutePath.length() - 1);
 	}
 
-	public static Element getRootElementFromFileName(String fileName)
+	public static Element getRootElementFromFilePath(String filePath)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -90,7 +98,7 @@ public class PoshiRunnerUtil {
 		int lineNumber = 1;
 
 		BufferedReader bufferedReader = new BufferedReader(
-			new StringReader(FileUtil.read(fileName)));
+			new StringReader(FileUtil.read(filePath)));
 
 		String line = null;
 

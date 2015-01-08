@@ -192,11 +192,11 @@
 	</command>
 
 	<command name="viewEnabledFileTypesPGViaWCD">
-		<var name="key_assetTitle" value="${webContentTitle}" />
-
 		<for list="${fileTypes}" param="fileType">
-			<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="DOCUMENT_CONVERSION_${fileType}" value1="${fileType}" />
-			<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="DOCUMENT_CONVERSION_${fileType}_ICON" />
+			<var name="key_fileType" value="${fileType}" />
+
+			<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="DOCUMENT_CONVERSION_TYPE" value1="${fileType}" />
+			<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="DOCUMENT_CONVERSION_TYPE_ICON" />
 		</for>
 	</command>
 </definition>

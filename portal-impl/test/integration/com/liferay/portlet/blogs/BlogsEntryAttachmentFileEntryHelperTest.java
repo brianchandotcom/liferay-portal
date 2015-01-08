@@ -158,38 +158,6 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 		}
 	}
 
-	@Test
-	public void testUpdateContent() throws Exception {
-		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
-			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
-			"image.jpg", getInputStream(), ContentTypes.IMAGE_JPEG);
-
-		String tempFileEntryImgTag = getTempFileEntryImgTag(tempFileEntry);
-
-		List<BlogsEntryAttachmentFileEntryReference>
-			blogsEntryAttachmentFileEntryReferences =
-				getBlogsEntryAttachmentFileEntryReferences(tempFileEntry);
-
-		String content = _blogsEntryAttachmentFileEntryHelper.updateContent(
-			getContent(tempFileEntryImgTag),
-			blogsEntryAttachmentFileEntryReferences);
-
-		Assert.assertFalse(content.contains(tempFileEntryImgTag));
-
-		BlogsEntryAttachmentFileEntryReference
-			blogsEntryAttachmentFileEntryReference =
-				blogsEntryAttachmentFileEntryReferences.get(0);
-
-		FileEntry fileEntry =
-			blogsEntryAttachmentFileEntryReference.
-				getBlogsEntryAttachmentFileEntry();
-
-		Assert.assertTrue(
-			content.contains(
-				PortletFileRepositoryUtil.getPortletFileEntryURL(
-					null, fileEntry, StringPool.BLANK)));
-	}
-
 	protected List<BlogsEntryAttachmentFileEntryReference>
 		getBlogsEntryAttachmentFileEntryReferences(
 			FileEntry tempFileEntry)

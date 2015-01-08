@@ -350,7 +350,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, String,
-	String, ServiceContext)} *
+	String, ServiceContext)}
 	*/
 	@Deprecated
 	@Override

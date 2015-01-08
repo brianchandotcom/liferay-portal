@@ -11,6 +11,16 @@
 	<short-name>liferay-ui</short-name>
 	<uri>http://liferay.com/tld/ui</uri>
 	<tag>
+		<name>add-content-portlet-toolbar</name>
+		<tag-class>com.liferay.taglib.ui.AddContentPortletToolbarTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>toolbarItems</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Deprecated as of 7.0.0, replaced by liferay-aui:nav-item</description>
 		<name>app-view-display-style</name>
 		<tag-class>com.liferay.taglib.ui.AppViewDisplayStyleTag</tag-class>

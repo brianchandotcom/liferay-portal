@@ -15,6 +15,7 @@
 package com.liferay.taglib.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.toolbar.item.AddContentPortletToolbarItem;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.template.Template;
@@ -50,6 +51,7 @@ import com.liferay.taglib.servlet.PipingPageContext;
 import com.liferay.taglib.theme.LayoutIconTag;
 import com.liferay.taglib.theme.MetaTagsTag;
 import com.liferay.taglib.theme.WrapPortletTag;
+import com.liferay.taglib.ui.AddContentPortletToolbarTag;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
 import com.liferay.taglib.ui.AssetLinksTag;
 import com.liferay.taglib.ui.AssetTagsSummaryTag;
@@ -71,6 +73,7 @@ import com.liferay.taglib.ui.ToggleTag;
 
 import java.io.Writer;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -199,6 +202,22 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		return actionURL(
 			windowState, portletMode, LayoutConstants.DEFAULT_PLID, portletName,
 			queryString);
+	}
+
+	@Override
+	public void addContentPortletToolbar(
+			List<AddContentPortletToolbarItem> addContentPortletToolbarItems)
+		throws Exception {
+
+		AddContentPortletToolbarTag addContentPortletToolbarTag =
+			new AddContentPortletToolbarTag();
+
+		setUp(addContentPortletToolbarTag);
+
+		addContentPortletToolbarTag.setToolbarItems(
+			addContentPortletToolbarItems);
+
+		addContentPortletToolbarTag.runTag();
 	}
 
 	@Override
@@ -346,6 +365,18 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		flagsTag.setReportedUserId(reportedUserId);
 
 		flagsTag.runTag();
+	}
+
+	@Override
+	public AddContentPortletToolbarTag getAddContentPortletToolbarTag()
+		throws Exception {
+
+		AddContentPortletToolbarTag addContentPortletToolbarTag =
+			new AddContentPortletToolbarTag();
+
+		setUp(addContentPortletToolbarTag);
+
+		return addContentPortletToolbarTag;
 	}
 
 	@Override

@@ -218,8 +218,8 @@ public class ActionUtil
 		}
 
 		LayoutServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getLayoutId(), layout.getTypeSettings());
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 	public static void removePortletIds(
@@ -231,4 +231,5 @@ public class ActionUtil
 
 		removePortletIds(request, layout);
 	}
+
 }

@@ -137,7 +137,9 @@ AUI.add(
 
 						A.Array.invoke(instance._eventHandles, 'detach');
 
-						instance._ddHandler.destroy();
+						if (instance._ddHandler) {
+							instance._ddHandler.destroy();
+						}
 					},
 
 					_editEntry: function(event) {

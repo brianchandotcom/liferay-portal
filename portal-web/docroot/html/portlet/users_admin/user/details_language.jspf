@@ -35,30 +35,50 @@
 </portlet:renderURL>
 
 <aui:script sandbox="<%= true %>" use='liferay-portlet-url'>
+	var formData = {};
+
 	var select = $('#<portlet:namespace />languageId');
 
 	var userDetailsURL = Liferay.PortletURL.createURL('<%= userDetailsURL %>');
 
+	var userNameFields =$('#<portlet:namespace />user-name-fields');
+
 	select.on('change', function(event) {
-		var formData = $('#<portlet:namespace />fm').formToArray();
+		_.forEach($('#<portlet:namespace />fm').formToArray(), function(field) {
+			if (userNameFields.find('#' + field.name).length) {
+				formData[field.name] = field.value;
+			}
+		});
 
 		userDetailsURL.setParameter('languageId', select.val());
 
 		$.ajax(
 			userDetailsURL.toString(),
 			{
-				complete: function() {
-					formData.forEach(function(field) {
-						var node = $('#' + field.name);
+				beforeSend: function() {
+					userNameFields.before('<div id="loading-user-name-fields" class="loading-animation"></div>');
 
-						if (node) {
-							node.val(field.value);
-						}
+					userNameFields.hide();
+				},
+				complete: function() {
+					var loadingDiv = $('#loading-user-name-fields');
+
+					if (loadingDiv) {
+						loadingDiv.remove();
+					}
+
+					userNameFields.show();
+
+					_.forIn(formData, function(value, key) {
+						userNameFields.find('#' + key).val(value);
 					});
 				},
 				success: function(responseData) {
-					$('#<portlet:namespace />details').html(responseData);
-				}
+					var responseUserNameFields = $(responseData).find('#<portlet:namespace />user-name-fields').html();
+
+					userNameFields.html(responseUserNameFields);
+				},
+				timeout: 5000
 			}
 		)
 	});

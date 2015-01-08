@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(property = {"javax.portlet.name=33"})
+@Component(property = {"javax.portlet.name=33", "struts.action="})
 public class BlogsAddContentPortletToolbarItem
 	implements AddContentPortletToolbarItem {
 

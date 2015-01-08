@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -57,6 +58,13 @@ public class Capability implements Serializable {
 
 	public String getValue() {
 		return _value;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _name);
+
+		return HashUtil.hash(hash, _value);
 	}
 
 	@Override

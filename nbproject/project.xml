@@ -304,8 +304,6 @@
 				<classpath mode="compile">lib/development/objenesis.jar</classpath>
 				<classpath mode="compile">lib/development/orangevolt-ant-tasks.jar</classpath>
 				<classpath mode="compile">lib/development/p6spy.jar</classpath>
-				<classpath mode="compile">lib/development/pmd-core.jar</classpath>
-				<classpath mode="compile">lib/development/pmd-java.jar</classpath>
 				<classpath mode="compile">lib/development/persistence.jar</classpath>
 				<classpath mode="compile">lib/development/postgresql.jar</classpath>
 				<classpath mode="compile">lib/development/powermock-api-mockito.jar</classpath>
@@ -317,7 +315,6 @@
 				<classpath mode="compile">lib/development/qdox.jar</classpath>
 				<classpath mode="compile">lib/development/resin.jar</classpath>
 				<classpath mode="compile">lib/development/sap.jar</classpath>
-				<classpath mode="compile">lib/development/saxon.jar</classpath>
 				<classpath mode="compile">lib/development/saxpath.jar</classpath>
 				<classpath mode="compile">lib/development/script-10.jar</classpath>
 				<classpath mode="compile">lib/development/sdk-addon-api-0.2.jar</classpath>

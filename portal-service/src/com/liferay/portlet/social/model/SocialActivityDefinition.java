@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.model;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -137,6 +138,20 @@ public class SocialActivityDefinition implements Serializable {
 	public String getName(Locale locale) {
 		return LanguageUtil.get(
 			locale, "social.activity." + _modelName + "." + _languageKey);
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _achievements);
+
+		hash = HashUtil.hash(hash, _activityCounterDefinitions);
+		hash = HashUtil.hash(hash, _activityProcessor);
+		hash = HashUtil.hash(hash, _activityType);
+		hash = HashUtil.hash(hash, _countersEnabled);
+		hash = HashUtil.hash(hash, _languageKey);
+		hash = HashUtil.hash(hash, _logActivity);
+
+		return HashUtil.hash(hash, _modelName);
 	}
 
 	public boolean isCountersEnabled() {

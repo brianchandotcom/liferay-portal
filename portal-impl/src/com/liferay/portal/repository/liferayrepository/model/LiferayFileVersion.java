@@ -305,6 +305,11 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	}
 
 	@Override
+	public int hashCode() {
+		return _dlFileVersion.hashCode();
+	}
+
+	@Override
 	public boolean isApproved() {
 		return _dlFileVersion.isApproved();
 	}

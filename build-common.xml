@@ -1303,6 +1303,8 @@ rerun your task.
 						<misc>
 							<jvmarg value="-Dliferay.lib.portal.dir=${project.dir}/lib/portal" />
 							<jvmarg value="-Dliferay.mode=test" />
+							<jvmarg value="-Dtest.class.group.index=${test.class.group.index}" />
+							<jvmarg value="-Dtest.class.groups=${TEST_CLASS_GROUPS}" />
 						</misc>
 						<test.classes>
 							<batchtest todir="test-results/@{test.type}">
@@ -1380,6 +1382,12 @@ rerun your task.
 
 	<target name="print-properties">
 		<echoproperties />
+	</target>
+
+	<target name="run-pmd">
+		<ant antfile="build-common.xml" dir="${project.dir}/tools/sdk" inheritRefs="true" target="run-pmd">
+			<property name="pmd.basedir" value="${basedir}" />
+		</ant>
 	</target>
 
 	<target name="setproxy" if="setproxy.proxy.host">

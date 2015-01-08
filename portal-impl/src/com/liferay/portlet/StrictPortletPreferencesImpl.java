@@ -66,6 +66,11 @@ public class StrictPortletPreferencesImpl
 		return super.equals(obj);
 	}
 
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
 	private final long _companyId;
 
 }

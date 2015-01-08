@@ -3689,8 +3689,6 @@ if (ppstate.equals("normal")) {
 
 					directoryScanner.scan();
 
-					String[] fileNames = directoryScanner.getIncludedFiles();
-
 					List classFileNames = new ArrayList();
 
 					for (String fileName : directoryScanner.getIncludedFiles()) {
@@ -3710,6 +3708,10 @@ if (ppstate.equals("normal")) {
 
 				int allTestClassGroupsSize = Integer.parseInt(project.getProperty("test.class.groups.size"));
 
+				String autoBalanceTestClassNamesString = project.getProperty("test.class.names.auto.balance");
+
+				String[] autoBalanceTestClassNames = autoBalanceTestClassNamesString.split(",");
+
 				List classFileNames = getClassFileNames();
 
 				List testClassGroups = getClassGroups(classFileNames, allTestClassGroupsSize);
@@ -3726,7 +3728,14 @@ if (ppstate.equals("normal")) {
 						sb.append(",");
 					}
 
-					if (!testClassGroup.isEmpty()) {
+					for (String testClass : autoBalanceTestClassNames) {
+						if (!testClassGroup.contains(testClass)) {
+							sb.append(testClass);
+							sb.append(",");
+						}
+					}
+
+					if (!testClassGroup.isEmpty() || autoBalanceTestClassNames.length > 0) {
 						sb.setLength(sb.length() - 1);
 					}
 

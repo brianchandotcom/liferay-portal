@@ -80,7 +80,7 @@ public class DDMFormLayoutJSONDeserializerTest extends BaseDDMTestCase {
 	protected void assertEquals(
 		DDMFormLayoutRow expectedDDMFormLayoutRow,
 		DDMFormLayoutRow actualDDMFormLayoutRow) {
-		
+
 		List<DDMFormLayoutColumn> expectedDDMFormLayoutColumns =
 			expectedDDMFormLayoutRow.getDDMFormLayoutColumns();
 

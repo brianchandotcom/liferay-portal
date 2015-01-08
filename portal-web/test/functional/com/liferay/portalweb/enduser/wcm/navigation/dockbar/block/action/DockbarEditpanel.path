@@ -41,7 +41,7 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_PERMISSIONS</td>
-	<td>//a[contains(@title,'Permissions')]</td>
+	<td>//ul[@id='_145_layoutsNav']/li/a[@title='Permissions']</td>
 	<td></td>
 </tr>
 <tr>

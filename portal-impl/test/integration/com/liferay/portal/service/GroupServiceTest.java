@@ -527,6 +527,17 @@ public class GroupServiceTest {
 	}
 
 	@Test
+	public void testIndividualResourcePermission() throws Exception {
+		int resourcePermissionsCount =
+			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+				_group.getCompanyId(), Group.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(_group.getGroupId()));
+
+		Assert.assertEquals(resourcePermissionsCount, 1);
+	}
+
+	@Test
 	public void testInheritLocalesByDefault() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 

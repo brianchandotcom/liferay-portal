@@ -341,12 +341,20 @@ public class JavaClass {
 		StringBundler sb = new StringBundler(6);
 		String javaTermName = javaTerm.getName();
 
-		sb.append("(((\\+\\+( ?))|(--( ?)))" + javaTermName + ")");
-		sb.append("|((\\b|\\.)");
-		sb.append(javaTermName);
-		sb.append("((( )((=)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)))");
-		sb.append("|(\\+\\+)|(--)");
-		sb.append("|(( )((\\|=)|(&=)|(^=)))))");
+		if (true) {
+			sb.append("(\\b|\\.)");
+			sb.append(javaTermName);
+			sb.append(" (=)|(\\+\\+)|(--)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)");
+			sb.append("|(\\|=)|(&=)|(^=) ");
+		}
+		else {
+			sb.append("(((\\+\\+( ?))|(--( ?)))" + javaTermName + ")");
+			sb.append("|((\\b|\\.)");
+			sb.append(javaTermName);
+			sb.append("((( )((=)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)))");
+			sb.append("|(\\+\\+)|(--)");
+			sb.append("|(( )((\\|=)|(&=)|(^=)))))");
+		}
 
 		Pattern pattern = Pattern.compile(sb.toString());
 
@@ -1205,9 +1213,16 @@ public class JavaClass {
 
 			Matcher matcher = pattern.matcher(content);
 
-			if (content.contains(javaTerm.getName())) {
+			if (true) {
 				if (matcher.find()) {
 					return false;
+				}
+			}
+			else {
+				if (content.contains(javaTerm.getName())) {
+					if (matcher.find()) {
+						return false;
+					}
 				}
 			}
 		}

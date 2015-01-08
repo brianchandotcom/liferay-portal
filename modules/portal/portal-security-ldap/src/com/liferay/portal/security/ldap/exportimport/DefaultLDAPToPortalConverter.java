@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,7 +45,6 @@ import com.liferay.portal.service.ListTypeServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.ContactUtil;
 import com.liferay.portal.service.persistence.UserUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.text.ParseException;
 

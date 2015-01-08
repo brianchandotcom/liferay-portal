@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.security.ldap.exportimport;
 
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserScreenNameException;
@@ -34,6 +34,12 @@ import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.security.ldap.ContactConverterKeys;
+import com.liferay.portal.security.ldap.GroupConverterKeys;
+import com.liferay.portal.security.ldap.LDAPGroup;
+import com.liferay.portal.security.ldap.LDAPToPortalConverter;
+import com.liferay.portal.security.ldap.LDAPUser;
+import com.liferay.portal.security.ldap.UserConverterKeys;
 import com.liferay.portal.service.ListTypeServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.ContactUtil;

@@ -2087,6 +2087,10 @@ public interface PropsKeys {
 
 	public static final String PORTAL_FABRIC_SERVER_WORKER_STARTUP_TIMEOUT = "portal.fabric.server.worker.startup.timeout";
 
+	public static final String PORTAL_FABRIC_SHUTDOWN_QUIET_PERIOD = "portal.fabric.shutdown.quiet.period";
+
+	public static final String PORTAL_FABRIC_SHUTDOWN_TIMEOUT = "portal.fabric.shutdown.timeout";
+
 	public static final String PORTAL_IMPERSONATION_ENABLE = "portal.impersonation.enable";
 
 	public static final String PORTAL_INSTANCE_INET_SOCKET_ADDRESS = "portal.instance.inet.socket.address";

@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslator;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException;
+import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
@@ -27,9 +29,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webcache.WebCacheItem;
-import com.liferay.portlet.translator.model.Translation;
-import com.liferay.portlet.translator.util.TranslationWebCacheItem;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -647,12 +646,11 @@ public class LangBuilder {
 
 			System.out.println(sb.toString());
 
-			WebCacheItem wci = new TranslationWebCacheItem(
+			MicrosoftTranslator microsoftTranslator =
+				MicrosoftTranslatorFactoryUtil.getMicrosoftTranslator();
+
+			toText = microsoftTranslator.translate(
 				fromLanguageId, toLanguageId, fromText);
-
-			Translation translation = (Translation)wci.convert("");
-
-			toText = translation.getToText();
 		}
 		catch (Exception e) {
 			Throwable cause = e.getCause();

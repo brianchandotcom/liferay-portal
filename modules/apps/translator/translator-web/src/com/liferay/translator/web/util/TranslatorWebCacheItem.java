@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.translator.util;
+package com.liferay.translator.web.util;
 
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslator;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
-import com.liferay.portlet.translator.model.Translation;
+import com.liferay.translator.web.model.Translation;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
  */
-public class TranslationWebCacheItem implements WebCacheItem {
+public class TranslatorWebCacheItem implements WebCacheItem {
 
-	public TranslationWebCacheItem(
+	public TranslatorWebCacheItem(
 		String fromLanguageId, String toLanguageId, String fromText) {
 
 		_fromLanguageId = fromLanguageId;

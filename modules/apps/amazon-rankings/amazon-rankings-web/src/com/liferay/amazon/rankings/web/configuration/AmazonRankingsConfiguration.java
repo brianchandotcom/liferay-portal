@@ -23,17 +23,17 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface AmazonRankingsConfiguration {
 
 	@Meta.AD(required = false)
-	public String amazonAccessKeyId();
+	public String getAmazonAccessKeyId();
 
 	@Meta.AD(required = false)
-	public String amazonAssociateTag();
+	public String getAmazonAssociateTag();
 
 	@Meta.AD(required = false)
-	public String amazonSecretAccessKey();
+	public String getAmazonSecretAccessKey();
 
 	@Meta.AD(
 		deflt = "0066620996|0131412752|0201633612|0310205719|0310241448",
 		required = false)
-	public String[] isbns();
+	public String[] getIsbns();
 
 }

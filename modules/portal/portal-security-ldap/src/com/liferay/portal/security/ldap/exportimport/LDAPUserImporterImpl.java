@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.security.ldap.exportimport;
 
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.NoSuchUserGroupException;
@@ -48,6 +48,14 @@ import com.liferay.portal.security.exportimport.UserGroupImportTransactionThread
 import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;
 import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
+import com.liferay.portal.security.ldap.AttributesTransformer;
+import com.liferay.portal.security.ldap.AttributesTransformerFactory;
+import com.liferay.portal.security.ldap.LDAPGroup;
+import com.liferay.portal.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.security.ldap.LDAPToPortalConverter;
+import com.liferay.portal.security.ldap.LDAPUser;
+import com.liferay.portal.security.ldap.LDAPUserImporter;
+import com.liferay.portal.security.ldap.PortalLDAPUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;

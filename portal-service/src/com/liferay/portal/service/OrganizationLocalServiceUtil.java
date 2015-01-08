@@ -1491,7 +1491,7 @@ public class OrganizationLocalServiceUtil {
 	information was invalid
 	* @deprecated As of 7.0.0, replaced by {@link #updateOrganization(long,
 	long, long, String, String, long, long, int, String, boolean,
-	boolean, byte[], ServiceContext)}
+	byte[], boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.Organization updateOrganization(

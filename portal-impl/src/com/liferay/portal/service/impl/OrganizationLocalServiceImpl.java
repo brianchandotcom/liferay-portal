@@ -845,7 +845,6 @@ public class OrganizationLocalServiceImpl
 	 * @return the organization IDs of organizations associated with the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 *         or if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long[] getUserOrganizationIds(
@@ -1954,7 +1953,7 @@ public class OrganizationLocalServiceImpl
 	 *             information was invalid
 	 * @deprecated As of 7.0.0, replaced by {@link #updateOrganization(long,
 	 *             long, long, String, String, long, long, int, String, boolean,
-	 *             boolean, byte[], ServiceContext)}
+	 *             byte[], boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

@@ -30,8 +30,8 @@ import java.lang.reflect.Method;
  * For a usage example see {@link
  * com.liferay.portlet.shopping.util.ShoppingUtil#getBreadcrumbs(
  * com.liferay.portlet.shopping.model.ShoppingCategory,
- * javax.servlet.jsp.PageContext, javax.portlet.RenderRequest,
- * javax.portlet.RenderResponse) ShoppingUtil.getBreadcrumbs} .
+ * javax.portlet.RenderRequest, javax.portlet.RenderResponse)
+ * ShoppingUtil#getBreadcrumbs}.
  * </p>
  *
  * @author Shuyang Zhou

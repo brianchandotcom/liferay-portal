@@ -53,6 +53,9 @@ import com.liferay.util.ThirdPartyThreadLocalRegistry;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -236,7 +239,11 @@ public class GlobalShutdownAction extends SimpleAction {
 
 		if (PropsValues.PORTAL_FABRIC_ENABLED) {
 			try {
-				FabricServerUtil.stop();
+				Future<?> future = FabricServerUtil.stop();
+
+				future.get(
+					PropsValues.PORTAL_FABRIC_SHUTDOWN_TIMEOUT,
+					TimeUnit.MILLISECONDS);
 			}
 			catch (Exception e) {
 				_log.error("Unable to stop fabric server", e);

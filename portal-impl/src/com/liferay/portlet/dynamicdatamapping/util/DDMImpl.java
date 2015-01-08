@@ -34,8 +34,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -104,21 +106,22 @@ public class DDMImpl implements DDM {
 	public static final String TYPE_SELECT = "select";
 
 	@Override
-	public DDMDisplay getDDMDisplay(ServiceContext serviceContext) {
-		String refererPortletName = (String)serviceContext.getAttribute(
-			"refererPortletName");
+	public DDMDisplay getDDMDisplay(long classNameId) throws PortalException {
+		ClassName className = ClassNameLocalServiceUtil.getClassName(
+			classNameId);
 
-		if (refererPortletName == null) {
-			refererPortletName = serviceContext.getPortletId();
+		List<DDMDisplay> ddmDisplays = DDMDisplayRegistryUtil.getDDMDisplays();
 
-			if (refererPortletName == null) {
-				throw new IllegalArgumentException(
-					"Service context must have values for either " +
-						"the referer portlet nme or portlet preference IDs");
+		for (DDMDisplay ddmDisplay : ddmDisplays) {
+			if (ArrayUtil.contains(
+					ddmDisplay.getClassNames(), className.getClassName())) {
+
+				return ddmDisplay;
 			}
 		}
 
-		return DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
+		throw new IllegalArgumentException(
+			"No DDMDisplay registered for " + className.getClassName());
 	}
 
 	@Override

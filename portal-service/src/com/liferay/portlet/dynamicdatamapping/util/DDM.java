@@ -31,7 +31,7 @@ import java.io.Serializable;
  */
 public interface DDM {
 
-	public DDMDisplay getDDMDisplay(ServiceContext serviceContext);
+	public DDMDisplay getDDMDisplay(long classNameId) throws PortalException;
 
 	public Serializable getDisplayFieldValue(
 			ThemeDisplay themeDisplay, Serializable fieldValue, String type)

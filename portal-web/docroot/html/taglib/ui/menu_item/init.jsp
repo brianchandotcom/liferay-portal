@@ -18,5 +18,4 @@
 
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.JavascriptMenuItem" %><%@
-page import="com.liferay.portal.kernel.servlet.taglib.ui.MenuItem" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem" %>

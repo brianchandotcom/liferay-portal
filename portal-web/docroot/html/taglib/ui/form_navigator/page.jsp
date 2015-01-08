@@ -35,9 +35,9 @@ if (Validator.isNull(backURL)) {
 	backURL = redirect;
 }
 
-if (Validator.isNull(backURL)) {
-	PortletURL portletURL = liferayPortletResponse.createRenderURL();
+PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
+if (Validator.isNull(backURL)) {
 	backURL = portletURL.toString();
 }
 
@@ -317,7 +317,7 @@ if (Validator.isNotNull(historyKey)) {
 					var redirect = A.one('#<portlet:namespace />redirect');
 
 					if (redirect) {
-						var url = new A.Url(redirect.val() || location.href);
+						var url = new A.Url(redirect.val() || '<%= portletURL.toString() %>');
 
 						url.setAnchor(null);
 						url.setParameter('<portlet:namespace />historyKey', sectionId);

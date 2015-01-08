@@ -16,7 +16,6 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.portlet.toolbar.item.AddContentPortletToolbarItem" %><%@
-page import="com.liferay.portal.kernel.servlet.taglib.ui.MenuItem" %>
+<%@ page import="com.liferay.portal.kernel.portlet.toolbar.item.AddContentPortletToolbarItem" %>
 
 <portlet:defineObjects />

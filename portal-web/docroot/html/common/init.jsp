@@ -98,6 +98,7 @@ page import="com.liferay.portal.kernel.servlet.ServletContextPool" %><%@
 page import="com.liferay.portal.kernel.servlet.ServletContextUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.ui.MenuItem" %><%@
 page import="com.liferay.portal.kernel.settings.SettingsFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.portal.kernel.staging.StagingUtil" %><%@

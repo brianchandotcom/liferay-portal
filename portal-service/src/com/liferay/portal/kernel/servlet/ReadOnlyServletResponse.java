@@ -108,6 +108,9 @@ public class ReadOnlyServletResponse extends HttpServletResponseWrapper {
 	@Deprecated
 	@Override
 	/**
+	 /**
+	  * @deprecated As of 7.0.0
+	  */
 	 * @deprecated As of 7.0.0
 	 */
 	public void setStatus(int status, String message) {

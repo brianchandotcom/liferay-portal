@@ -14,18 +14,11 @@
 
 package com.liferay.poshi.runner;
 
-import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
-
-import java.io.File;
-
-import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.dom4j.Document;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,50 +38,14 @@ public class PoshiRunner extends TestCase {
 	}
 
 	public void testPoshiRunner() throws Exception {
-		File file = new File(
-			"../../../portal-web/test/functional/com/liferay/portalweb" +
-				"/development/tools/testinginfrastructure");
+		String classCommandName = System.getProperty("test.case.name");
 
-		_findFiles(file);
+		String className = PoshiRunnerUtil.getClassNameFromClassCommandName(
+			classCommandName);
 
-		System.out.println("Test " + file.exists());
+		Element element = PoshiRunnerContext.getTestcaseRootElement(className);
 
-		LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
-
-		liferaySelenium.open("http://www.google.com/");
-
-		liferaySelenium.waitForVisible("//input[@id='gbqfq']");
-
-		liferaySelenium.type("//input[@id='gbqfq']", "Liferay");
-
-		liferaySelenium.waitForTextPresent("Liferay");
-
-		liferaySelenium.assertTextPresent("Liferay");
-	}
-
-	private void _findFiles(File file) throws Exception {
-		if (file.isDirectory()) {
-			for (File childFile : file.listFiles()) {
-				_findFiles(childFile);
-			}
-		}
-		else {
-			_parseFile(file);
-		}
-	}
-
-	private void _parseFile(File file) throws Exception {
-		SAXReader saxReader = new SAXReader();
-
-		Document document = saxReader.read(file);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> elements = rootElement.elements("command");
-
-		for (Element element : elements) {
-			System.out.println(element.attributeValue("name"));
-		}
+		System.out.println(element.getName());
 	}
 
 }

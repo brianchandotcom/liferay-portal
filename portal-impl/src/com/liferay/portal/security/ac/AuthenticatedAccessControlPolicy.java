@@ -14,17 +14,33 @@
 
 package com.liferay.portal.security.ac;
 
-import org.aopalliance.intercept.MethodInvocation;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
+
+import java.lang.reflect.Method;
 
 /**
+ * @author Tomas Polesovsky
+ * @author Igor Spasic
  * @author Michael C. Han
  * @author Raymond Augé
  */
-public interface AccessControlAdvisor {
+public class AuthenticatedAccessControlPolicy extends BaseAccessControlPolicy {
 
-	public void accept(
-			MethodInvocation methodInvocation,
+	@Override
+	public void onServiceRemoteAccess(
+			Method method, Object[] arguments,
 			AccessControlled accessControlled)
-		throws SecurityException;
+		throws SecurityException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!accessControlled.guestAccessEnabled() &&
+			((permissionChecker == null) || !permissionChecker.isSignedIn())) {
+
+			throw new SecurityException("Authenticated access required");
+		}
+	}
 
 }

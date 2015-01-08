@@ -593,6 +593,8 @@
 			<bean class="com.liferay.portal.security.ac.AccessControlImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.security.ac.AllowedHostsAccessControlPolicy" class="com.liferay.portal.security.ac.AllowedHostsAccessControlPolicy" />
+	<bean id="com.liferay.portal.security.ac.AuthenticatedAccessControlPolicy" class="com.liferay.portal.security.ac.AuthenticatedAccessControlPolicy" />
 	<bean id="com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil" class="com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil">
 		<property name="authenticatedUserUUIDStore">
 			<bean class="com.liferay.portal.security.auth.DefaultAuthenticatedUserUUIDStoreImpl" />

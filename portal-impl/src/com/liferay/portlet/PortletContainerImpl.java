@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
+import com.liferay.portal.kernel.portlet.toolbar.PortletToolbar;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -54,6 +55,8 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.PortletDisplayFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
@@ -86,6 +89,10 @@ import javax.servlet.http.HttpSession;
  * @author Raymond Augé
  */
 public class PortletContainerImpl implements PortletContainer {
+
+	public PortletContainerImpl() {
+		_portletToolbars = ServiceTrackerCollections.list(PortletToolbar.class);
+	}
 
 	@Override
 	public void preparePortlet(HttpServletRequest request, Portlet portlet)
@@ -609,6 +616,10 @@ public class PortletContainerImpl implements PortletContainer {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
+		if (!_portletToolbars.isEmpty()) {
+			portletDisplay.setPortletToolbar(_portletToolbars.get(0));
+		}
+
 		PortletDisplay portletDisplayClone = PortletDisplayFactory.create();
 
 		portletDisplay.copyTo(portletDisplayClone);
@@ -808,5 +819,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletContainerImpl.class);
+
+	private final ServiceTrackerList<PortletToolbar> _portletToolbars;
 
 }

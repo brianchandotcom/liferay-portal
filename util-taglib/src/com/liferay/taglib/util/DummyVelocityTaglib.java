@@ -14,12 +14,14 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.portlet.toolbar.item.AddContentPortletToolbarItem;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.aui.ColumnTag;
 import com.liferay.taglib.aui.LayoutTag;
+import com.liferay.taglib.ui.AddContentPortletToolbarTag;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
 import com.liferay.taglib.ui.AssetLinksTag;
 import com.liferay.taglib.ui.AssetTagsSummaryTag;
@@ -32,6 +34,8 @@ import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
 import com.liferay.taglib.ui.QuickAccessTag;
 import com.liferay.taglib.ui.RatingsTag;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
@@ -107,6 +111,14 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
+	public void addContentPortletToolbar(
+			List<AddContentPortletToolbarItem> addContentPortletToolbarItems)
+		throws Exception {
+
+		return;
+	}
+
+	@Override
 	public void assetCategoriesSummary(
 			String className, long classPK, String message,
 			PortletURL portletURL)
@@ -167,6 +179,13 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 			String className, long classPK, String contentTitle, boolean label,
 			String message, long reportedUserId)
 		throws Exception {
+	}
+
+	@Override
+	public AddContentPortletToolbarTag getAddContentPortletToolbarTag()
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

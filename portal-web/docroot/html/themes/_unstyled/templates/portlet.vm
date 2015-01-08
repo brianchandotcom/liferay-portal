@@ -4,11 +4,19 @@
 #set ($portlet_title = $htmlUtil.escape($portlet_display.getTitle()))
 #set ($portlet_back_url = $htmlUtil.escapeHREF($portlet_display.getURLBack()))
 
+#set ($portlet_toolbar = $portlet_display.getPortletToolbar())
+
 <section class="portlet" id="portlet_$portlet_id">
 	<header class="portlet-topper">
 		<h1 class="portlet-title">
 			<span class="portlet-title-text">$portlet_title</span>
 		</h1>
+
+		#if ($portlet_toolbar)
+			<menu class="portlet-topper-toolbar add-content" id="portlet-topper-toolbar-add-content_$portlet_id" type="toolbar">
+				#addContentPortletToolbar($portlet_toolbar.getAddContentPortletToolbarItems($renderRequest))
+			</menu>
+		#end
 
 		<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_$portlet_id" type="toolbar">
 			#if ($portlet_display.isShowBackIcon())

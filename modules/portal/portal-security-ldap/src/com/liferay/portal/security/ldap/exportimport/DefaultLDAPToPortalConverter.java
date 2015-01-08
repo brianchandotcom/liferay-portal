@@ -59,10 +59,13 @@ import java.util.Properties;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Edward Han
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = LDAPToPortalConverter.class)
 public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 	@Override

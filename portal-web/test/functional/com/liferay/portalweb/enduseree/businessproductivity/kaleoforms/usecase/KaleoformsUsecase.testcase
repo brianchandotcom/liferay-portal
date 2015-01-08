@@ -7733,13 +7733,6 @@
 		<execute macro="Gmail#viewMailNotPresent">
 			<var name="gmailAssetType" value="Update Notification Description" />
 		</execute>
-
-		<execute action="Home#open" locator1="http://localhost:8080" />
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
 	</command>
 
 	<command name="ViewKaleoProcessNameOpenedViaNotifications" priority="4">

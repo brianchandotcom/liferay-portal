@@ -117,7 +117,11 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			_group.getGroupId(), _user.getUserId(), _TEMP_FOLDER_NAME,
 			"image.jpg", getInputStream(), ContentTypes.IMAGE_JPEG);
 
-		String tempFileEntryImgTag = getTempFileEntryImgTag(tempFileEntry);
+		String tempFileEntryImgTag =
+			BlogsTestUtil.getBlogsEntryAttachmentFileEntryImgTag(
+				tempFileEntry.getFileEntryId(),
+				PortletFileRepositoryUtil.getPortletFileEntryURL(
+					null, tempFileEntry, StringPool.BLANK));
 
 		List<FileEntry> tempBlogsEntryAttachments =
 			_blogsEntryAttachmentFileEntryHelper.
@@ -214,22 +218,6 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			PortletFileRepositoryUtil.getPortletFileEntryURL(
 				null, tempFileEntry, StringPool.BLANK));
 		sb.append("\" title=\"test-title\" />");
-
-		return sb.toString();
-	}
-
-	protected String getTempFileEntryImgTag(FileEntry tempFileEntry) {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("<img ");
-		sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-		sb.append("=\"");
-		sb.append(tempFileEntry.getFileEntryId());
-		sb.append("\" src=\"");
-		sb.append(
-			PortletFileRepositoryUtil.getPortletFileEntryURL(
-				null, tempFileEntry, StringPool.BLANK));
-		sb.append("\"/>");
 
 		return sb.toString();
 	}

@@ -387,6 +387,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 						<%
 						Group group = themeDisplay.getScopeGroup();
+						Map<String, String[]> parameterMap = Collections.emptyMap();
 						%>
 
 						<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>

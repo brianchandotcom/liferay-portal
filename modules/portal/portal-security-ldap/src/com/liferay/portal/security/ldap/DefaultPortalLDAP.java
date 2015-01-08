@@ -54,6 +54,8 @@ import javax.naming.ldap.LdapContext;
 import javax.naming.ldap.PagedResultsControl;
 import javax.naming.ldap.PagedResultsResponseControl;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael Young
  * @author Brian Wing Shun Chan
@@ -67,6 +69,7 @@ import javax.naming.ldap.PagedResultsResponseControl;
  * @author Hugo Huijser
  * @author Edward Han
  */
+@Component(immediate = true, service = PortalLDAP.class)
 public class DefaultPortalLDAP implements PortalLDAP {
 
 	@Override

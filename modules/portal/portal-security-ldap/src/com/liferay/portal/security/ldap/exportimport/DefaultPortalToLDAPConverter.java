@@ -56,12 +56,15 @@ import javax.naming.directory.DirContext;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  * @author Wesley Gong
  */
+@Component(immediate = true, service = PortalToLDAPConverter.class)
 public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	public DefaultPortalToLDAPConverter() {

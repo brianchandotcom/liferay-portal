@@ -86,24 +86,24 @@ public class NettyFabricServer implements FabricServer {
 		serverBootstrap.handler(new LoggingHandler(LogLevel.INFO));
 		serverBootstrap.childHandler(new ChildChannelInitializer());
 
-		EventLoopGroup bossGroup = new NioEventLoopGroup(
+		EventLoopGroup bossEventLoopGroup = new NioEventLoopGroup(
 			_nettyFabricServerConfig.getBossGroupThreadCount(),
 			new NamedThreadFactory(
 				"Netty Fabric Server/Boss Event Loop Group",
 				Thread.NORM_PRIORITY, null));
 
-		EventLoopGroup workerGroup = new NioEventLoopGroup(
+		EventLoopGroup workerEventLoopGroup = new NioEventLoopGroup(
 			_nettyFabricServerConfig.getWorkerGroupThreadCount(),
 			new NamedThreadFactory(
 				"Netty Fabric Server/Worker Event Loop Group",
 				Thread.NORM_PRIORITY, null));
 
 		NettyUtil.bindShutdown(
-			bossGroup, workerGroup,
+			bossEventLoopGroup, workerEventLoopGroup,
 			_nettyFabricServerConfig.getShutdownQuietPeriod(),
 			_nettyFabricServerConfig.getShutdownTimeout());
 
-		serverBootstrap.group(bossGroup, workerGroup);
+		serverBootstrap.group(bossEventLoopGroup, workerEventLoopGroup);
 
 		ChannelFuture channelFuture = serverBootstrap.bind(
 			_nettyFabricServerConfig.getNettyFabricServerHost(),
@@ -127,7 +127,7 @@ public class NettyFabricServer implements FabricServer {
 
 		EventLoop eventLoop = _serverChannel.eventLoop();
 
-		EventLoopGroup bossGroup = eventLoop.parent();
+		EventLoopGroup bossEventLoopGroup = eventLoop.parent();
 
 		DefaultNoticeableFuture<?> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<Object>();
@@ -138,7 +138,7 @@ public class NettyFabricServer implements FabricServer {
 			channelFuture.sync();
 		}
 		finally {
-			Future<?> future = bossGroup.shutdownGracefully(
+			Future<?> future = bossEventLoopGroup.shutdownGracefully(
 				_nettyFabricServerConfig.getShutdownQuietPeriod(),
 				_nettyFabricServerConfig.getShutdownTimeout(),
 				TimeUnit.MILLISECONDS);

@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.repository.capabilities.Capability;
  */
 public interface CapabilityRegistry<T> {
 
-	public <S extends Capability, T extends S> void addExportedCapability(
-		Class<S> capabilityClass, T capability);
+	public <S extends Capability> void addExportedCapability(
+		Class<S> capabilityClass, S capability);
 
-	public <S extends Capability, T extends S> void addSupportedCapability(
-		Class<S> capabilityClass, T capability);
+	public <S extends Capability> void addSupportedCapability(
+		Class<S> capabilityClass, S capability);
 
 	public T getTarget();
 

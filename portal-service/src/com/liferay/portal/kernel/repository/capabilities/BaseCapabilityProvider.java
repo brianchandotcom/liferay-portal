@@ -52,16 +52,16 @@ public abstract class BaseCapabilityProvider implements CapabilityProvider {
 		return _exportedCapabilityClasses.contains(capabilityClass);
 	}
 
-	protected <S extends Capability, T extends S> void addExportedCapability(
-		Class<S> capabilityClass, T capability) {
+	protected <S extends Capability> void addExportedCapability(
+		Class<S> capabilityClass, S capability) {
 
 		addSupportedCapability(capabilityClass, capability);
 
 		_exportedCapabilityClasses.add(capabilityClass);
 	}
 
-	protected <S extends Capability, T extends S> void addSupportedCapability(
-		Class<S> capabilityClass, T capability) {
+	protected <S extends Capability> void addSupportedCapability(
+		Class<S> capabilityClass, S capability) {
 
 		if (_supportedCapabilities.containsKey(capabilityClass)) {
 			throw new IllegalStateException(

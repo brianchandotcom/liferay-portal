@@ -39,15 +39,15 @@ public class DefaultCapabilityRegistry
 	}
 
 	@Override
-	public <S extends Capability, T extends S> void addExportedCapability(
-		Class<S> capabilityClass, T capability) {
+	public <S extends Capability> void addExportedCapability(
+		Class<S> capabilityClass, S capability) {
 
 		super.addExportedCapability(capabilityClass, capability);
 	}
 
 	@Override
-	public <S extends Capability, T extends S> void addSupportedCapability(
-		Class<S> capabilityClass, T capability) {
+	public <S extends Capability> void addSupportedCapability(
+		Class<S> capabilityClass, S capability) {
 
 		super.addSupportedCapability(capabilityClass, capability);
 	}

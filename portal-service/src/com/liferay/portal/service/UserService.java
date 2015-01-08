@@ -1042,12 +1042,12 @@ public interface UserService extends BaseService {
 	operation was not allowed by the membership policy
 	* @deprecated As of 7.0.0, replaced by {@link #updateUser(long, String,
 	String, String, boolean, String, String, String, String,
-	long, String, String, String, String, String, String, String,
-	String, int, int, boolean, int, int, int, String, String,
-	String, String, String, String, String, String, String,
-	String, String, long[], long[], long[], java.util.List,
-	long[], java.util.List, java.util.List, java.util.List,
-	java.util.List, java.util.List, boolean, byte[],
+	long, String, boolean, byte[], String, String, String,
+	String, String, String, String, int, int, boolean, int, int,
+	int, String, String, String, String, String, String, String,
+	String, String, String, String, long[], long[], long[],
+	java.util.List, long[], java.util.List, java.util.List,
+	java.util.List, java.util.List, java.util.List,
 	com.liferay.portal.service.ServiceContext)}
 	*/
 	@java.lang.Deprecated

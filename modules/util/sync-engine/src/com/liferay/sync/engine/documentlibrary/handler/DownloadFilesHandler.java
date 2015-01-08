@@ -41,8 +41,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
-* @author Shinn Lok
-*/
+ * @author Shinn Lok
+ */
 public class DownloadFilesHandler extends BaseHandler {
 
 	public DownloadFilesHandler(Event event) {

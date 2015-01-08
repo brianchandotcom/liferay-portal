@@ -1306,7 +1306,7 @@ public interface OrganizationLocalService extends BaseLocalService,
 	information was invalid
 	* @deprecated As of 7.0.0, replaced by {@link #updateOrganization(long,
 	long, long, String, String, long, long, int, String, boolean,
-	boolean, byte[], ServiceContext)}
+	byte[], boolean, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portal.model.Organization updateOrganization(

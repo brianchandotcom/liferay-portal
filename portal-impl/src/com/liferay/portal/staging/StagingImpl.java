@@ -205,9 +205,9 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link StagingLocalServiceUtil#
-	 *             checkDefaultLayoutSetBranches(long, Group, boolean, boolean,
-	 *             boolean, ServiceContext))}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             StagingLocalServiceUtil#checkDefaultLayoutSetBranches(long,
+	 *             Group, boolean, boolean, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

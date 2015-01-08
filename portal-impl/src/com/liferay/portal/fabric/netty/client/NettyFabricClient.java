@@ -25,8 +25,10 @@ import com.liferay.portal.fabric.netty.handlers.NettyChannelAttributes;
 import com.liferay.portal.fabric.netty.handlers.NettyFabricWorkerExecutionChannelHandler;
 import com.liferay.portal.fabric.netty.repository.NettyRepository;
 import com.liferay.portal.fabric.netty.rpc.handlers.NettyRPCChannelHandler;
+import com.liferay.portal.fabric.netty.util.NettyUtil;
 import com.liferay.portal.fabric.repository.Repository;
 import com.liferay.portal.fabric.worker.FabricWorker;
+import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,13 +47,15 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.Attribute;
-import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.FutureListener;
 
 import java.io.IOException;
 import java.io.Serializable;
+
+import java.lang.Thread.State;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -96,27 +100,6 @@ public class NettyFabricClient implements FabricClient {
 
 		_bootstrap = new Bootstrap();
 
-		_bootstrap.attr(
-			_executionEventExecutorGroupAttributeKey,
-			new DefaultEventExecutorGroup(
-				_nettyFabricClientConfig.getExecutionGroupThreadCount(),
-				new NamedThreadFactory(
-					"Netty Fabric Client/Execution Event Executor Group",
-					Thread.NORM_PRIORITY, null)));
-		_bootstrap.attr(
-			_fileServerEventExecutorGroupAttributeKey,
-			new DefaultEventExecutorGroup(
-				_nettyFabricClientConfig.getFileServerGroupThreadCount(),
-				new NamedThreadFactory(
-					"Netty Fabric Client/File Server Event Executor Group",
-					Thread.NORM_PRIORITY, null)));
-		_bootstrap.attr(
-			_rpcEventExecutorGroupAttributeKey,
-			new DefaultEventExecutorGroup(
-				_nettyFabricClientConfig.getRPCGroupThreadCount(),
-				new NamedThreadFactory(
-					"Netty Fabric Client/RPC Event Executor Group",
-					Thread.NORM_PRIORITY, null)));
 		_bootstrap.channel(NioSocketChannel.class);
 		_bootstrap.group(
 			new NioEventLoopGroup(
@@ -138,7 +121,9 @@ public class NettyFabricClient implements FabricClient {
 	}
 
 	@Override
-	public synchronized void disconnect() throws InterruptedException {
+	public synchronized java.util.concurrent.Future<?> disconnect()
+		throws InterruptedException {
+
 		if (_channel == null) {
 			throw new IllegalStateException(
 				"Netty fabric client is not started");
@@ -146,20 +131,41 @@ public class NettyFabricClient implements FabricClient {
 
 		_reconnectCounter.set(0);
 
-		ChannelFuture channelFuture = _channel.close();
+		_channel.close();
 
-		channelFuture.sync();
+		EventExecutorGroup eventExecutorGroup = _bootstrap.group();
+
+		Future<?> future = eventExecutorGroup.terminationFuture();
+
+		final DefaultNoticeableFuture<?> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<Object>();
+
+		future.addListener(
+			new FutureListener<Object>() {
+
+				@Override
+				public void operationComplete(Future<Object> future) {
+					defaultNoticeableFuture.run();
+				}
+
+			});
+
+		return defaultNoticeableFuture;
 	}
 
-	protected void disposeRepository(Channel channel) {
-		Attribute<Repository<Channel>> attribute = channel.attr(
-			_repositoryAttributeKey);
+	protected EventExecutorGroup createEventExecutorGroup(
+		int threadCount, String threadPoolName) {
 
-		Repository<Channel> repository = attribute.getAndRemove();
+		EventExecutorGroup eventExecutorGroup = new DefaultEventExecutorGroup(
+			threadCount,
+			new NamedThreadFactory(threadPoolName, Thread.NORM_PRIORITY, null));
 
-		if (repository != null) {
-			repository.dispose(true);
-		}
+		NettyUtil.bindShutdown(
+			_bootstrap.group(), eventExecutorGroup,
+			_nettyFabricClientConfig.getShutdownQuietPeriod(),
+			_nettyFabricClientConfig.getShutdownTimeout());
+
+		return eventExecutorGroup;
 	}
 
 	protected void doConnect() {
@@ -170,31 +176,6 @@ public class NettyFabricClient implements FabricClient {
 		_channel = channelFuture.channel();
 
 		channelFuture.addListener(new PostConnectChannelFutureListener());
-
-		ChannelFuture closeChannelFuture = _channel.closeFuture();
-
-		closeChannelFuture.addListener(
-			new PostDisconnectChannelFutureListener());
-	}
-
-	protected EventExecutorGroup getEventExecutorGroup(
-		Channel channel, AttributeKey<EventExecutorGroup> attributeKey) {
-
-		Attribute<EventExecutorGroup> attribute = channel.attr(attributeKey);
-
-		return attribute.get();
-	}
-
-	protected void shutdownEventExecutorGroup(
-		Channel channel, AttributeKey<EventExecutorGroup> attributeKey) {
-
-		Attribute<EventExecutorGroup> attribute = channel.attr(attributeKey);
-
-		EventExecutorGroup eventExecutorGroup = attribute.getAndRemove();
-
-		if (eventExecutorGroup != null) {
-			eventExecutorGroup.shutdownGracefully();
-		}
 	}
 
 	protected void terminateFabricWorkers(Channel channel) {
@@ -269,10 +250,10 @@ public class NettyFabricClient implements FabricClient {
 				repositoryPath,
 				_nettyFabricClientConfig.getRepositoryGetFileTimeout());
 
-			Attribute<Repository<Channel>> attribute = socketChannel.attr(
-				_repositoryAttributeKey);
+			ChannelFuture channelFuture = socketChannel.closeFuture();
 
-			attribute.set(repository);
+			channelFuture.addListener(
+				new PostDisconnectChannelFutureListener(repository));
 
 			ChannelPipeline channelPipeline = socketChannel.pipeline();
 
@@ -280,25 +261,29 @@ public class NettyFabricClient implements FabricClient {
 				AnnotatedObjectEncoder.NAME, AnnotatedObjectEncoder.INSTANCE);
 			channelPipeline.addLast(
 				AnnotatedObjectDecoder.NAME, new AnnotatedObjectDecoder());
+
+			EventExecutorGroup fileServerEventExecutorGroup =
+				createEventExecutorGroup(
+					_nettyFabricClientConfig.getFileServerGroupThreadCount(),
+					"Netty Fabric Client/File Server Event Executor Group");
+
 			channelPipeline.addLast(
-				getEventExecutorGroup(
-					socketChannel, _fileServerEventExecutorGroupAttributeKey),
-				FileRequestChannelHandler.NAME,
+				fileServerEventExecutorGroup, FileRequestChannelHandler.NAME,
 				new FileRequestChannelHandler(
 					_nettyFabricClientConfig.
 						getFileServerFolderCompressionLevel()));
 			channelPipeline.addLast(
 				new FileResponseChannelHandler(
-					repository.getAsyncBroker(),
-					getEventExecutorGroup(
-						_channel, _fileServerEventExecutorGroupAttributeKey)));
+					repository.getAsyncBroker(), fileServerEventExecutorGroup));
 			channelPipeline.addLast(
-				getEventExecutorGroup(
-					socketChannel, _rpcEventExecutorGroupAttributeKey),
+				createEventExecutorGroup(
+					_nettyFabricClientConfig.getRPCGroupThreadCount(),
+					"Netty Fabric Client/RPC Event Executor Group"),
 				NettyRPCChannelHandler.NAME, NettyRPCChannelHandler.INSTANCE);
 			channelPipeline.addLast(
-				getEventExecutorGroup(
-					_channel, _executionEventExecutorGroupAttributeKey),
+				createEventExecutorGroup(
+					_nettyFabricClientConfig.getExecutionGroupThreadCount(),
+					"Netty Fabric Client/Execution Event Executor Group"),
 				new NettyFabricWorkerExecutionChannelHandler(
 					repository, new LocalFabricAgent(_processExecutor),
 					_nettyFabricClientConfig.getExecutionTimeout()));
@@ -310,9 +295,7 @@ public class NettyFabricClient implements FabricClient {
 		implements ChannelFutureListener {
 
 		@Override
-		public void operationComplete(ChannelFuture channelFuture)
-			throws Exception {
-
+		public void operationComplete(ChannelFuture channelFuture) {
 			Channel channel = channelFuture.channel();
 
 			if (channelFuture.isSuccess()) {
@@ -355,7 +338,7 @@ public class NettyFabricClient implements FabricClient {
 		public void operationComplete(ChannelFuture channelFuture) {
 			terminateFabricWorkers(_channel);
 
-			disposeRepository(_channel);
+			repository.dispose(true);
 
 			EventLoopGroup eventLoopGroup = _bootstrap.group();
 
@@ -385,28 +368,22 @@ public class NettyFabricClient implements FabricClient {
 						"Shutting down Netty fabric client on " + _channel);
 				}
 
-				try {
-					eventLoopGroup.shutdownGracefully();
+				Future<?> future = eventLoopGroup.shutdownGracefully(
+					_nettyFabricClientConfig.getShutdownQuietPeriod(),
+					_nettyFabricClientConfig.getShutdownTimeout(),
+					TimeUnit.MILLISECONDS);
 
-					shutdownEventExecutorGroup(
-						_channel, _executionEventExecutorGroupAttributeKey);
-					shutdownEventExecutorGroup(
-						_channel, _fileServerEventExecutorGroupAttributeKey);
-					shutdownEventExecutorGroup(
-						_channel, _rpcEventExecutorGroupAttributeKey);
-
-					_channel = null;
-					_bootstrap = null;
-				}
-				finally {
-					_nettyFabricClientShutdownCallback.shutdown();
-
-					Runtime runtime = Runtime.getRuntime();
-
-					runtime.removeShutdownHook(_shutdownThread);
-				}
+				future.addListener(new PostShutdownChannelFutureListener());
 			}
 		}
+
+		protected PostDisconnectChannelFutureListener(
+			Repository<Channel> repository) {
+
+			this.repository = repository;
+		}
+
+		protected final Repository<Channel> repository;
 
 	}
 
@@ -439,22 +416,29 @@ public class NettyFabricClient implements FabricClient {
 
 	}
 
+	protected class PostShutdownChannelFutureListener
+		implements FutureListener<Object> {
+
+		@Override
+		public void operationComplete(Future<Object> future) {
+			_channel = null;
+			_bootstrap = null;
+
+			_nettyFabricClientShutdownCallback.shutdown();
+
+			if (_shutdownThread.getState() == State.NEW) {
+				Runtime runtime = Runtime.getRuntime();
+
+				runtime.removeShutdownHook(_shutdownThread);
+			}
+		}
+
+	}
+
 	private static final int _FABRIC_AGENT_SHUTDOWN_CODE = 211;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NettyFabricClient.class);
-
-	private static final AttributeKey<EventExecutorGroup>
-		_executionEventExecutorGroupAttributeKey = AttributeKey.valueOf(
-			"ExecutionEventExecutorGroup");
-	private static final AttributeKey<EventExecutorGroup>
-		_fileServerEventExecutorGroupAttributeKey = AttributeKey.valueOf(
-			"FileServerEventExecutorGroup");
-	private static final AttributeKey<Repository<Channel>>
-		_repositoryAttributeKey = AttributeKey.valueOf("Repository");
-	private static final AttributeKey<EventExecutorGroup>
-		_rpcEventExecutorGroupAttributeKey = AttributeKey.valueOf(
-			"RPCEventExecutorGroup");
 
 	private static final ProcessCallable<Serializable>
 		_runtimeExitProcessCallable = new ProcessCallable<Serializable>() {
@@ -488,7 +472,7 @@ public class NettyFabricClient implements FabricClient {
 
 		};
 
-	private Bootstrap _bootstrap;
+	private volatile Bootstrap _bootstrap;
 	private volatile Channel _channel;
 	private final NettyFabricClientConfig _nettyFabricClientConfig;
 	private final NettyFabricClientShutdownCallback

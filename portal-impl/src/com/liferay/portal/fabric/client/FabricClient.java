@@ -14,6 +14,8 @@
 
 package com.liferay.portal.fabric.client;
 
+import java.util.concurrent.Future;
+
 /**
  * @author Shuyang Zhou
  */
@@ -21,6 +23,6 @@ public interface FabricClient {
 
 	public void connect() throws Exception;
 
-	public void disconnect() throws Exception;
+	public Future<?> disconnect() throws Exception;
 
 }

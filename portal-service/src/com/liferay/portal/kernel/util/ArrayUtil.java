@@ -680,6 +680,29 @@ public class ArrayUtil {
 		return false;
 	}
 
+	public static boolean contains(
+		String[] array, String value, boolean ignoreCase) {
+
+		if (isEmpty(array)) {
+			return false;
+		}
+
+		for (int i = 0; i < array.length; i++) {
+			if (ignoreCase) {
+				if (StringUtil.equalsIgnoreCase(array[i], value )) {
+					return true;
+				}
+			}
+			else {
+				if (array[i].equals(value)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean containsAll(boolean[] array1, boolean[] array2) {
 		if (isEmpty(array1) || isEmpty(array2)) {
 			return false;

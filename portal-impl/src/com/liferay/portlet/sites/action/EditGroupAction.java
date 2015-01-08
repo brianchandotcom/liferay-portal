@@ -551,9 +551,9 @@ public class EditGroupAction extends PortletAction {
 			liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
 
 			nameMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "name");
+				actionRequest, "name", liveGroup.getNameMap());
 			descriptionMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "description");
+				actionRequest, "description", liveGroup.getDescriptionMap());
 			type = ParamUtil.getInteger(
 				actionRequest, "type", liveGroup.getType());
 			manualMembership = ParamUtil.getBoolean(

@@ -3296,9 +3296,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		long classNameId = group.getClassNameId();
 		long classPK = group.getClassPK();
 
-		String groupKey = StringPool.BLANK;
+		String groupKey = group.getGroupKey();
 
-		if (nameMap != null) {
+		if ((nameMap != null) &&
+			Validator.isNotNull(nameMap.get(LocaleUtil.getDefault()))) {
+
 			groupKey = nameMap.get(LocaleUtil.getDefault());
 		}
 

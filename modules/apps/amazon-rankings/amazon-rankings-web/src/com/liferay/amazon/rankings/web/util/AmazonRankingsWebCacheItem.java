@@ -75,9 +75,11 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 		Map<String, String> parameters = new HashMap<String, String>();
 
 		parameters.put(
-			"AssociateTag", _amazonRankingsConfiguration.amazonAssociateTag());
+			"AssociateTag",
+			_amazonRankingsConfiguration.getAmazonAssociateTag());
 		parameters.put(
-			"AWSAccessKeyId", _amazonRankingsConfiguration.amazonAccessKeyId());
+			"AWSAccessKeyId",
+			_amazonRankingsConfiguration.getAmazonAccessKeyId());
 		parameters.put("IdType", "ASIN");
 		parameters.put("ItemId", _isbn);
 		parameters.put("Operation", "ItemLookup");

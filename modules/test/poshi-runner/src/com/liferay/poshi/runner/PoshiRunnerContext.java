@@ -76,21 +76,21 @@ public class PoshiRunnerContext {
 
 		directoryScanner.scan();
 
-		String[] fileNames = directoryScanner.getIncludedFiles();
+		String[] filePaths = directoryScanner.getIncludedFiles();
 
-		for (String fileName : fileNames) {
-			fileName = _BASE_DIR + "/" + fileName;
+		for (String filePath : filePaths) {
+			filePath = _BASE_DIR + "/" + filePath;
 
 			String className = PoshiRunnerUtil.getClassNameFromFilePath(
-				fileName);
+				filePath);
 			String classType = PoshiRunnerUtil.getClassTypeFromFilePath(
-				fileName);
+				filePath);
 
 			if (classType.equals("action") || classType.equals("function") ||
 				classType.equals("macro") || classType.equals("testcase")) {
 
 				Element element = PoshiRunnerUtil.getRootElementFromFilePath(
-					fileName);
+					filePath);
 
 				_rootElements.put(classType + "#" + className, element);
 
@@ -124,7 +124,7 @@ public class PoshiRunnerContext {
 			}
 			else if (classType.equals("path")) {
 				Element rootElement =
-					PoshiRunnerUtil.getRootElementFromFilePath(fileName);
+					PoshiRunnerUtil.getRootElementFromFilePath(filePath);
 
 				Element bodyElement = rootElement.element("body");
 

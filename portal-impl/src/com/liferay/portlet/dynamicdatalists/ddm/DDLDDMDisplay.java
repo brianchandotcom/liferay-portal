@@ -30,6 +30,13 @@ import java.util.Locale;
  */
 public class DDLDDMDisplay extends BaseDDMDisplay {
 
+	public static final String[] CLASS_NAMES = {DDLRecordSet.class.getName()};
+
+	@Override
+	public String[] getClassNames() {
+		return CLASS_NAMES;
+	}
+
 	@Override
 	public String getPortletId() {
 		return PortletKeys.DYNAMIC_DATA_LISTS;

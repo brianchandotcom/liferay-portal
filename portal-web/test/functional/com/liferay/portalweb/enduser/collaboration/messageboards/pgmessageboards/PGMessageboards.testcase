@@ -429,19 +429,11 @@
 	</command>
 
 	<command name="AddMBThreadWithInvalidAttachmentSize" priority="4">
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureDMFileUploadMaxSize">
+		<execute macro="ServerAdministration#configureFileUploadOverallMaximumFileSize">
 			<var name="maxFileSize" value="10000" />
 		</execute>
 

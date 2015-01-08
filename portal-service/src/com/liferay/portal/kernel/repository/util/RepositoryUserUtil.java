@@ -22,8 +22,7 @@ import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.BaseServiceImpl;
 
 /**
- * @author Adolfo Pérez
- *
+ * @author     Adolfo Pérez
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

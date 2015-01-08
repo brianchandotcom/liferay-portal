@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
-*/
+ */
 @Component(
 	immediate = true,
 	property = {

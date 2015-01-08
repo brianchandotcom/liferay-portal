@@ -17,6 +17,9 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String portletId = portletDisplay.getRootPortletId();
+
+boolean autoCreate =  GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
 String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
@@ -40,6 +43,10 @@ boolean showSource = GetterUtil.getBoolean((String)request.getAttribute("liferay
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 %>
 
+<liferay-util:buffer var="editor">
+	<textarea id="<%= name %>" name="<%= name %>" style="height: 100%; visibility: hidden; width: 100%;"><%= (contents != null) ? contents : StringPool.BLANK %></textarea>
+</liferay-util:buffer>
+
 <c:if test="<%= !skipEditorLoading %>">
 	<liferay-util:html-top outputKey="js_editor_tinymce">
 
@@ -55,8 +62,10 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	</liferay-util:html-top>
 </c:if>
 
-<div class="<%= cssClass %>">
-	<textarea id="<%= name %>" name="<%= name %>" style="height: 100%; visibility: hidden; width: 100%;"><%= (contents != null) ? contents : StringPool.BLANK %></textarea>
+<div class="<%= cssClass %>" id="<%= name %>_container">
+	<c:if test="<%= autoCreate %>">
+		<%= editor %>
+	</c:if>
 </div>
 
 <aui:script use="aui-node-base">
@@ -71,10 +80,36 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			window['<%= name %>'].setHTML(value);
 		},
 
+		create: function() {
+			var editorEl = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
+
+			var editorContainer = A.one('#<%= name %>_container');
+
+			editorContainer.appendChild(editorEl);
+
+			window['<%= name %>'].initEditor();
+		},
+
 		destroy: function() {
-			tinyMCE.editors['<%= name %>'].destroy();
+			window['<%= name %>'].dispose();
 
 			window['<%= name %>'] = null;
+		},
+
+		dispose: function() {
+			var editorEl= A.one('textarea#<%= name %>');
+
+			if (editorEl) {
+				editorEl.remove();
+			}
+
+			var tinyMCEEditor = tinyMCE.editors['<%= name %>'];
+
+			if (tinyMCEEditor) {
+				tinyMCEEditor.remove();
+
+				tinyMCEEditor.destroy();
+			}
 		},
 
 		fileBrowserCallback: function(field_name, url, type) {
@@ -87,7 +122,9 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		getHTML: function() {
 			var data;
 
-			if ((contents == null) && !window['<%= name %>'].instanceReady && window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
+			var contents = '<%= contents %>';
+
+			if ((contents === '') && !window['<%= name %>'].instanceReady && window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
 				data = <%= HtmlUtil.escape(namespace + initMethod) %>();
 			}
 			else {
@@ -95,6 +132,44 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			}
 
 			return data;
+		},
+
+		initEditor: function() {
+			tinyMCE.init(
+				{
+					content_css: '<%= HtmlUtil.escapeJS(themeDisplay.getPathThemeCss()) %>/aui.css,<%= HtmlUtil.escapeJS(themeDisplay.getPathThemeCss()) %>/main.css',
+					convert_urls: false,
+					elements: '<%= name %>',
+					extended_valid_elements: 'a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|usemap],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]',
+					file_browser_callback: window['<%= name %>'].fileBrowserCallback,
+					init_instance_callback: window['<%= name %>'].initInstanceCallback,
+					invalid_elements: 'script',
+					language: '<%= HtmlUtil.escape(locale.getLanguage()) %>',
+					mode: 'textareas',
+
+					<%
+					if (Validator.isNotNull(onChangeMethod)) {
+					%>
+
+						onchange_callback: window['<%= name %>'].onChangeCallback,
+
+					<%
+					}
+					%>
+
+					plugins: 'preview,print,contextmenu',
+					relative_urls: false,
+					remove_script_host: false,
+					theme: 'advanced',
+					theme_advanced_buttons2: '',
+					theme_advanced_buttons3: '',
+					theme_advanced_buttons1_add: '<c:if test="<%= showSource %>">code,</c:if>preview,print',
+					theme_advanced_disable: 'formatselect,styleselect,help,strikethrough',
+					theme_advanced_resize_horizontal: '<%= resizable %>',
+					theme_advanced_toolbar_align: 'left',
+					theme_advanced_toolbar_location: 'top'
+				}
+			);
 		},
 
 		initInstanceCallback: function() {
@@ -159,39 +234,17 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		}
 	};
 
-	tinyMCE.init(
-		{
-			content_css: '<%= HtmlUtil.escapeJS(themeDisplay.getPathThemeCss()) %>/aui.css,<%= HtmlUtil.escapeJS(themeDisplay.getPathThemeCss()) %>/main.css',
-			convert_urls: false,
-			elements: '<%= name %>',
-			extended_valid_elements: 'a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|usemap],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]',
-			file_browser_callback: window['<%= name %>'].fileBrowserCallback,
-			init_instance_callback: window['<%= name %>'].initInstanceCallback,
-			invalid_elements: 'script',
-			language: '<%= HtmlUtil.escape(locale.getLanguage()) %>',
-			mode: 'textareas',
+	<c:if test="<%= autoCreate %>">
+		window['<%= name %>'].initEditor();
+	</c:if>
 
-			<%
-			if (Validator.isNotNull(onChangeMethod)) {
-			%>
+	var destroyInstance = function(event) {
+		if (event.portletId === '<%= portletId %>') {
+			window['<%= name %>'].destroy();
 
-				onchange_callback: window['<%= name %>'].onChangeCallback,
-
-			<%
-			}
-			%>
-
-			plugins: 'preview,print,contextmenu',
-			relative_urls: false,
-			remove_script_host: false,
-			theme: 'advanced',
-			theme_advanced_buttons2: '',
-			theme_advanced_buttons3: '',
-			theme_advanced_buttons1_add: '<c:if test="<%= showSource %>">code,</c:if>preview,print',
-			theme_advanced_disable: 'formatselect,styleselect,help,strikethrough',
-			theme_advanced_resize_horizontal: '<%= resizable %>',
-			theme_advanced_toolbar_align: 'left',
-			theme_advanced_toolbar_location: 'top'
+			Liferay.detach('destroyPortlet', destroyInstance);
 		}
-	);
+	};
+
+	Liferay.on('destroyPortlet', destroyInstance);
 </aui:script>

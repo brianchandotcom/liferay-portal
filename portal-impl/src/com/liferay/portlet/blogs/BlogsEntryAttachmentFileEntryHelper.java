@@ -95,15 +95,18 @@ public class BlogsEntryAttachmentFileEntryHelper {
 				blogsEntryAttachmentFileEntryReference :
 					blogsEntryAttachmentFileEntryReferences) {
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(8);
 
-			sb.append("<img.*");
+			sb.append("<\\s*?img");
+			sb.append(_ATTRIBUTE_LIST_REGEXP);
 			sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-			sb.append("=\\s?\"");
+			sb.append("\\s*?=\\s*?\"");
 			sb.append(
 				blogsEntryAttachmentFileEntryReference.
 					getTempBlogsEntryAttachmentFileEntryId());
-			sb.append("\".*src=\\s?\"(.*)\".*/>");
+			sb.append("\"");
+			sb.append(_ATTRIBUTE_LIST_REGEXP);
+			sb.append("/>");
 
 			content = content.replaceAll(
 				sb.toString(),
@@ -137,5 +140,8 @@ public class BlogsEntryAttachmentFileEntryHelper {
 
 		return "<img src=\"" + fileEntryURL + "\" />";
 	}
+
+	private static final String _ATTRIBUTE_LIST_REGEXP =
+		"(\\s*?\\w+\\s*?=\\s*?\"[^\"]*\")*?\\s*?";
 
 }

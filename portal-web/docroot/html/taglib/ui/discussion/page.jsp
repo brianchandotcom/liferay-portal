@@ -258,6 +258,18 @@ SearchContainer searchContainer = null;
 			document.getElementById(rowId).style.display = 'block';
 		}
 
+		function <%= randomNamespace %>hideEditor(editorName, formId) {
+			if (window[editorName].dispose) {
+				window[editorName].dispose();
+			}
+			<%= randomNamespace %>hideForm(formId);
+		}
+
+		function <%= randomNamespace %>showEditor(editorName, formId) {
+			window[editorName].create();
+			<%= randomNamespace %>showForm(formId);
+		}
+
 		Liferay.provide(
 			window,
 			'<%= randomNamespace %>afterLogin',
@@ -324,7 +336,7 @@ SearchContainer searchContainer = null;
 
 				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-				var body = window['<%= namespace %>postReplyBody0Editor'].getHTML();
+				var body = window['<%= namespace %>postReplyBody' + i].getHTML();
 				var parentMessageId = form.one('#<%= namespace %>parentMessageId' + i).val();
 
 				form.one('#<%= namespace %><%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.ADD %>');
@@ -474,7 +486,7 @@ SearchContainer searchContainer = null;
 
 				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-				var body = window['<%= namespace %>editReplyBody' + i + 'Editor'].getHTML();
+				var body = window['<%= namespace %>editReplyBody' + i].getHTML();
 				var messageId = form.one('#<%= namespace %>messageId' + i).val();
 
 				if (pending) {

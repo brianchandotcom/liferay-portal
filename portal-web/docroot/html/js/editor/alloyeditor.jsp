@@ -124,7 +124,9 @@ if (alloyEditorMode.equals("text")) {
 <c:choose>
 	<c:when test='<%= showSource %>'>
 		<div class="alloy-editor-switch">
-			<a href="javscript:;" id="<%= name %>Switch">&lt;&#47;&gt;</a>
+			<button class="btn btn-default" id="<%= name %>Switch" type="button">
+				&lt;&#47;&gt;
+			</button>
 		</div>
 
 		<div class="alloy-editor-container" id="<%= name %>Container">
@@ -186,7 +188,7 @@ if (alloyEditorMode.equals("text")) {
 					</c:otherwise>
 				</c:choose>
 
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.BLOGS %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/document_selector/view" />
 				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 				<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
@@ -428,8 +430,6 @@ if (alloyEditorMode.equals("text")) {
 		editorSwitch.on(
 			'click',
 			function(event) {
-				event.preventDefault();
-
 				var editor = Liferay.component('<%= name %>Source');
 
 				if (editorContainer.hasClass(CSS_SHOW_SOURCE)) {

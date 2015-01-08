@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var CLASS_ACTIVE_CELL = 'ace_gutter-active-cell';
+		var CSS_ACTIVE_CELL = 'ace_gutter-active-cell';
 
 		var STR_BOUNDING_BOX = 'boundingBox';
 
@@ -25,12 +25,32 @@ AUI.add(
 
 		var TPL_TOOLBAR = '<ul class="{cssClass}">{buttons}</ul>';
 
-		var TPL_THEME_BUTTON = '<li data-action="{action}"><a href="javascript:;"><i class="{iconCssClass}"></i></a></li>';
+		var TPL_THEME_BUTTON = '<li data-action="{action}"><button type="button" class="btn btn-default"><i class="{iconCssClass}"></i></button></li>';
 
 		var LiferaySourceEditor = A.Component.create(
 			{
 				ATTRS: {
+					aceOptions: {
+						validator: Lang.isObject,
+						valueFn: function() {
+							var instance = this;
+
+							var aceEditor = instance.getEditor();
+
+							return {
+								fontSize: 13,
+								maxLines: Math.floor(A.DOM.winHeight() / aceEditor.renderer.lineHeight) - 15,
+								minLines: 10,
+								showInvisibles: false,
+								showPrintMargin: false
+							};
+						}
+					},
+
 					height: {
+						validator: function(value) {
+							return Lang.isString(value) || Lang.isNumber(value);
+						},
 						value: 'auto'
 					},
 
@@ -49,11 +69,12 @@ AUI.add(
 					},
 
 					width: {
+						validator: function(value) {
+							return Lang.isString(value) || Lang.isNumber(value);
+						},
 						value: '100%'
 					}
 				},
-
-				AUGMENTS: [],
 
 				CSS_PREFIX: 'lfr-source-editor',
 
@@ -69,15 +90,7 @@ AUI.add(
 
 						var aceEditor = instance.getEditor();
 
-						aceEditor.setOptions(
-							{
-								fontSize: 13,
-								maxLines: Math.floor(A.DOM.winHeight() / aceEditor.renderer.lineHeight) - 15,
-								minLines: 10,
-								showInvisibles: false,
-								showPrintMargin: false
-							}
-						);
+						aceEditor.setOptions(instance.get('aceOptions'));
 
 						instance._initializeThemes();
 						instance._highlightActiveGutterLine(0);
@@ -107,6 +120,8 @@ AUI.add(
 
 						aceEditor.selection.removeAllListeners(STR_CHANGE_CURSOR);
 						aceEditor.session.removeAllListeners(STR_CHANGE_FOLD);
+
+						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					getEditor: function() {
@@ -137,7 +152,7 @@ AUI.add(
 									Lang.sub(
 										TPL_TOOLBAR,
 										{
-											buttons: instance._getToolbarButtons(),
+											buttons: instance._getButtonsMarkup(),
 											cssClass: instance.getClassName(STR_TOOLBAR)
 										}
 									)
@@ -150,7 +165,7 @@ AUI.add(
 						return instance.editor;
 					},
 
-					_getToolbarButtons: function() {
+					_getButtonsMarkup: function() {
 						var instance = this;
 
 						var toolbarButtons = '';
@@ -176,10 +191,10 @@ AUI.add(
 						var session = instance.getSession();
 
 						if (instance._currentLine !== null) {
-							session.removeGutterDecoration(instance._currentLine, CLASS_ACTIVE_CELL);
+							session.removeGutterDecoration(instance._currentLine, CSS_ACTIVE_CELL);
 						}
 
-						session.addGutterDecoration(line, CLASS_ACTIVE_CELL);
+						session.addGutterDecoration(line, CSS_ACTIVE_CELL);
 
 						instance._currentLine = line;
 					},

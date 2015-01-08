@@ -989,7 +989,9 @@ body.yui3-skin-sam .yui3-widget-mask {
 		li {
 			list-style-type: none;
 
-			> a {
+			> .btn {
+				background-color: #FFF;
+				border: transparent;
 				color: #717383;
 				text-decoration: none;
 			}
@@ -1124,7 +1126,7 @@ body.yui3-skin-sam .yui3-widget-mask {
 .alloy-editor-switch {
 	position: relative;
 
-	a {
+	.btn {
 		background-color: #DDD;
 		bottom: 0;
 		color: #868896;

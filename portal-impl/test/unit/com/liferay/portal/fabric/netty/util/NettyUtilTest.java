@@ -29,10 +29,13 @@ import io.netty.channel.SingleThreadEventLoop;
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.channel.local.LocalEventLoopGroup;
 import io.netty.util.concurrent.EventExecutor;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.FutureListener;
 import io.netty.util.concurrent.ScheduledFuture;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -51,6 +54,89 @@ public class NettyUtilTest {
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
 		CodeCoverageAssertor.INSTANCE;
+
+	@Test
+	public void testBindShutdownSuccess() throws InterruptedException {
+		MockEventLoopGroup masterEventLoopGroup = new MockEventLoopGroup();
+		MockEventLoopGroup salveEventLoopGroup = new MockEventLoopGroup();
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			NettyUtil.class.getName(), Level.WARNING);
+
+		try {
+			NettyUtil.bindShutdown(
+				masterEventLoopGroup, salveEventLoopGroup, 0, 10);
+
+			Future<?> masterFuture = masterEventLoopGroup.shutdownGracefully();
+
+			SyncFutureListener syncFutureListener = new SyncFutureListener();
+
+			masterFuture.addListener(syncFutureListener);
+
+			syncFutureListener.sync();
+
+			Future<?> slaveFuture = salveEventLoopGroup.terminationFuture();
+
+			slaveFuture.sync();
+
+			Assert.assertTrue(slaveFuture.isSuccess());
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.isEmpty());
+		}
+		finally {
+			captureHandler.close();
+		}
+	}
+
+	@Test
+	public void testBindShutdownTimeout() throws InterruptedException {
+		MockEventLoopGroup masterEventLoopGroup = new MockEventLoopGroup();
+		MockEventLoopGroup salveEventLoopGroup = new MockEventLoopGroup() {
+
+			@Override
+			public boolean awaitTermination(long timeout, TimeUnit unit) {
+				return false;
+			}
+
+		};
+
+		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
+			NettyUtil.class.getName(), Level.WARNING);
+
+		try {
+			NettyUtil.bindShutdown(
+				masterEventLoopGroup, salveEventLoopGroup, 0, 10);
+
+			Future<?> masterFuture = masterEventLoopGroup.shutdownGracefully();
+
+			SyncFutureListener syncFutureListener = new SyncFutureListener();
+
+			masterFuture.addListener(syncFutureListener);
+
+			syncFutureListener.sync();
+
+			Future<?> slaveFuture = salveEventLoopGroup.terminationFuture();
+
+			slaveFuture.sync();
+
+			Assert.assertTrue(slaveFuture.isSuccess());
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Bind shutdown timeout " + salveEventLoopGroup,
+				logRecord.getMessage());
+		}
+		finally {
+			captureHandler.close();
+		}
+	}
 
 	@Test
 	public void testConstructor() {
@@ -214,6 +300,21 @@ public class NettyUtilTest {
 		}
 
 		mockEventLoopGroup.shutdownGracefully();
+	}
+
+	protected class SyncFutureListener implements FutureListener<Object> {
+
+		@Override
+		public void operationComplete(Future<Object> f) throws Exception {
+			_countDownLatch.countDown();
+		}
+
+		public void sync() throws InterruptedException {
+			_countDownLatch.await();
+		}
+
+		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
+
 	}
 
 	private final EmbeddedChannel _embeddedChannel =

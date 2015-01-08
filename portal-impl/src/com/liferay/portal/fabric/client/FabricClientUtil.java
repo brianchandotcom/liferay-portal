@@ -16,6 +16,8 @@ package com.liferay.portal.fabric.client;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
+import java.util.concurrent.Future;
+
 /**
  * @author Shuyang Zhou
  */
@@ -25,8 +27,8 @@ public class FabricClientUtil {
 		getFabricClient().connect();
 	}
 
-	public static void disconnect() throws Exception {
-		getFabricClient().disconnect();
+	public static Future<?> disconnect() throws Exception {
+		return getFabricClient().disconnect();
 	}
 
 	public static FabricClient getFabricClient() {

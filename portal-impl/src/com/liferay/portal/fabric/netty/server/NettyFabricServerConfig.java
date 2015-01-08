@@ -73,6 +73,14 @@ public class NettyFabricServerConfig implements Serializable {
 		return PropsValues.PORTAL_FABRIC_SERVER_RPC_RELAY_TIMEOUT;
 	}
 
+	public long getShutdownQuietPeriod() {
+		return PropsValues.PORTAL_FABRIC_SHUTDOWN_QUIET_PERIOD;
+	}
+
+	public long getShutdownTimeout() {
+		return PropsValues.PORTAL_FABRIC_SHUTDOWN_TIMEOUT;
+	}
+
 	public int getWorkerGroupThreadCount() {
 		return PropsValues.PORTAL_FABRIC_SERVER_WORKER_GROUP_THREAD_COUNT;
 	}
@@ -83,7 +91,7 @@ public class NettyFabricServerConfig implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{bossGroupThreadCount=");
 		sb.append(getBossGroupThreadCount());
@@ -109,6 +117,10 @@ public class NettyFabricServerConfig implements Serializable {
 		sb.append(getWorkerGroupThreadCount());
 		sb.append(", workerStartupTimeout=");
 		sb.append(getWorkerStartupTimeout());
+		sb.append(", shutdownQuietPeriod=");
+		sb.append(getShutdownQuietPeriod());
+		sb.append(", shutdownTimeout=");
+		sb.append(getShutdownTimeout());
 		sb.append("}");
 
 		return sb.toString();

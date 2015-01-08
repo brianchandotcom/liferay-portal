@@ -14,6 +14,8 @@
 
 package com.liferay.portal.fabric.server;
 
+import java.util.concurrent.Future;
+
 /**
  * @author Shuyang Zhou
  */
@@ -21,6 +23,6 @@ public interface FabricServer {
 
 	public void start() throws Exception;
 
-	public void stop() throws Exception;
+	public Future<?> stop() throws Exception;
 
 }

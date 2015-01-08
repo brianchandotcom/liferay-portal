@@ -120,9 +120,22 @@ public class NettyFabricClientConfig implements Serializable {
 			1);
 	}
 
+	public long getShutdownQuietPeriod() {
+		return GetterUtil.getLong(
+			_properties.getProperty(
+				PropsKeys.PORTAL_FABRIC_SHUTDOWN_QUIET_PERIOD),
+			1);
+	}
+
+	public long getShutdownTimeout() {
+		return GetterUtil.getLong(
+			_properties.getProperty(PropsKeys.PORTAL_FABRIC_SHUTDOWN_TIMEOUT),
+			1);
+	}
+
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{eventLoopGroupThreadCount=");
 		sb.append(getEventLoopGroupThreadCount());
@@ -150,6 +163,10 @@ public class NettyFabricClientConfig implements Serializable {
 		sb.append(getRepositoryPath());
 		sb.append(", rpcGroupThreadCount=");
 		sb.append(getRPCGroupThreadCount());
+		sb.append(", shutdownQuietPeriod=");
+		sb.append(getShutdownQuietPeriod());
+		sb.append(", shutdownTimeout=");
+		sb.append(getShutdownTimeout());
 		sb.append("}");
 
 		return sb.toString();

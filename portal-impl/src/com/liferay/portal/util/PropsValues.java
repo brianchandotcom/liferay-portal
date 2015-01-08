@@ -1474,6 +1474,10 @@ public class PropsValues {
 
 	public static final long PORTAL_FABRIC_SERVER_WORKER_STARTUP_TIMEOUT = GetterUtil.getLong(PropsUtil.get(PropsKeys.PORTAL_FABRIC_SERVER_WORKER_STARTUP_TIMEOUT));
 
+	public static final long PORTAL_FABRIC_SHUTDOWN_QUIET_PERIOD = GetterUtil.getLong(PropsUtil.get(PropsKeys.PORTAL_FABRIC_SHUTDOWN_QUIET_PERIOD));
+
+	public static final long PORTAL_FABRIC_SHUTDOWN_TIMEOUT = GetterUtil.getLong(PropsUtil.get(PropsKeys.PORTAL_FABRIC_SHUTDOWN_TIMEOUT));
+
 	public static final boolean PORTAL_IMPERSONATION_ENABLE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PORTAL_IMPERSONATION_ENABLE));
 
 	public static final String PORTAL_INSTANCE_INET_SOCKET_ADDRESS = PropsUtil.get(PropsKeys.PORTAL_INSTANCE_INET_SOCKET_ADDRESS);

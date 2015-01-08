@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.security.ldap.exportimport;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,6 +24,12 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.exportimport.UserExporter;
 import com.liferay.portal.security.exportimport.UserOperation;
+import com.liferay.portal.security.ldap.GroupConverterKeys;
+import com.liferay.portal.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.security.ldap.Modifications;
+import com.liferay.portal.security.ldap.PortalLDAPContext;
+import com.liferay.portal.security.ldap.PortalLDAPUtil;
+import com.liferay.portal.security.ldap.PortalToLDAPConverter;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;

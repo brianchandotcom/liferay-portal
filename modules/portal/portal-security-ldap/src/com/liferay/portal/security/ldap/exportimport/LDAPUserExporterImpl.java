@@ -16,7 +16,6 @@ package com.liferay.portal.security.ldap.exportimport;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -51,6 +50,9 @@ import javax.naming.directory.ModificationItem;
 import javax.naming.directory.SchemaViolationException;
 import javax.naming.ldap.LdapContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
@@ -58,7 +60,7 @@ import javax.naming.ldap.LdapContext;
  * @author Wesley Gong
  * @author Vilmos Papp
  */
-@DoPrivileged
+@Component(immediate = true, service = UserExporter.class)
 public class LDAPUserExporterImpl implements UserExporter {
 
 	@Override
@@ -332,6 +334,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 		}
 	}
 
+	@Reference
 	public void setPortalToLDAPConverter(
 		PortalToLDAPConverter portalToLDAPConverter) {
 

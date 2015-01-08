@@ -30,11 +30,14 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Properties;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Edward Han
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = LDAPSettings.class)
 public class DefaultLDAPSettings implements LDAPSettings {
 
 	@Override

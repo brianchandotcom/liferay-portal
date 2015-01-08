@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleReference;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -64,11 +64,16 @@ public class JspServlet
 
 		final ServletContext servletContext = servletConfig.getServletContext();
 
-		BundleContext bundleContext =
-			(BundleContext)servletContext.getAttribute("osgi-bundlecontext");
+		ClassLoader classLoader = servletContext.getClassLoader();
+
+		if (!(classLoader instanceof BundleReference)) {
+			throw new IllegalStateException();
+		}
+
+		BundleReference bundleReference = (BundleReference)classLoader;
 
 		_jspBundleClassloader = new JspBundleClassloader(
-			bundleContext.getBundle(), _jspBundle);
+			bundleReference.getBundle(), _jspBundle);
 
 		servletContext.setAttribute(JSP_CLASS_LOADER, _jspBundleClassloader);
 

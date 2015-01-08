@@ -110,16 +110,16 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
+	
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
-		String pid = ParamUtil.getString(renderRequest, "pid", factoryPid);
-		String viewType = ParamUtil.getString(renderRequest, "viewType");
-
+	
 		ConfigurationHelper configurationHelper = new ConfigurationHelper(
 			_bundleContext, _configurationAdmin, _metaTypeService,
 			themeDisplay.getLanguageId());
 
 		if (path.equals("/edit_configuration.ftl")) {
+			String pid = ParamUtil.getString(renderRequest, "pid", factoryPid);
+
 			ConfigurationModel configurationModel =
 				configurationHelper.getConfigurationModel(pid);
 
@@ -145,27 +145,31 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 			renderRequest.setAttribute("factoryPid", factoryPid);
 			renderRequest.setAttribute("pid", pid);
 		}
-		else if (viewType.equals("factoryInstances")) {
-			ConfigurationModel factoryModel =
-				configurationHelper.getConfigurationModel(factoryPid);
-
-			renderRequest.setAttribute("factoryModel", factoryModel);
-
-			List<ConfigurationModel> configurationModels =
-				configurationHelper.getFactoryInstances(
-					themeDisplay.getLanguageId(), factoryPid);
-
-			renderRequest.setAttribute(
-				"configurationModelIterator",
-				new ConfigurationModelIterator(configurationModels));
-		}
 		else {
-			List<ConfigurationModel> configurationModels =
-				configurationHelper.getConfigurationModels();
+			String viewType = ParamUtil.getString(renderRequest, "viewType");
 
-			renderRequest.setAttribute(
-				"configurationModelIterator",
-				new ConfigurationModelIterator(configurationModels));
+			if (viewType.equals("factoryInstances")) {
+				ConfigurationModel factoryModel =
+					configurationHelper.getConfigurationModel(factoryPid);
+	
+				renderRequest.setAttribute("factoryModel", factoryModel);
+	
+				List<ConfigurationModel> configurationModels =
+					configurationHelper.getFactoryInstances(
+						themeDisplay.getLanguageId(), factoryPid);
+	
+				renderRequest.setAttribute(
+					"configurationModelIterator",
+					new ConfigurationModelIterator(configurationModels));
+			}
+			else {
+				List<ConfigurationModel> configurationModels =
+					configurationHelper.getConfigurationModels();
+	
+				renderRequest.setAttribute(
+					"configurationModelIterator",
+					new ConfigurationModelIterator(configurationModels));
+			}
 		}
 
 		include(

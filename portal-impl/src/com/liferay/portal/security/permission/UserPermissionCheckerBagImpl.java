@@ -86,7 +86,7 @@ public class UserPermissionCheckerBagImpl implements UserPermissionCheckerBag {
 				groupsSize += _userUserGroupGroups.size();
 			}
 
-			_groups = new ArrayList<Group>(groupsSize);
+			_groups = new ArrayList<>(groupsSize);
 
 			for (Collection<Group> groupsItem : groupsArray) {
 				if (groupsItem != null) {

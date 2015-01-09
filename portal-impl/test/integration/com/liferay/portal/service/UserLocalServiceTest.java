@@ -88,6 +88,6 @@ public class UserLocalServiceTest {
 	}
 
 	@DeleteAfterTestRun
-	private final List<User> _users = new ArrayList<User>();
+	private final List<User> _users = new ArrayList<>();
 
 }

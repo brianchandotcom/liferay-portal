@@ -80,7 +80,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 		_threadFactory = threadFactory;
 		_threadPoolHandler = threadPoolHandler;
 		_taskQueue = new TaskQueue<Runnable>(maxQueueSize);
-		_workerTasks = new HashSet<WorkerTask>();
+		_workerTasks = new HashSet<>();
 	}
 
 	public void adjustPoolSize(int newCorePoolSize, int newMaxPoolSize) {
@@ -392,7 +392,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 				workerTask._thread.interrupt();
 			}
 
-			List<Runnable> runnables = new ArrayList<Runnable>();
+			List<Runnable> runnables = new ArrayList<>();
 
 			_taskQueue.drainTo(runnables);
 

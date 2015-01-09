@@ -104,7 +104,7 @@ public class LayoutSetPrototypeServiceImpl
 		throws PortalException {
 
 		List<LayoutSetPrototype> filteredLayoutSetPrototypes =
-			new ArrayList<LayoutSetPrototype>();
+			new ArrayList<>();
 
 		List<LayoutSetPrototype> layoutSetPrototypes =
 			layoutSetPrototypeLocalService.search(

@@ -38,7 +38,7 @@ public class MessagingConfiguratorRegistry {
 			_messagingConfigurators.get(servletContextName);
 
 		if (messagingConfigurators == null) {
-			messagingConfigurators = new ArrayList<MessagingConfigurator>();
+			messagingConfigurators = new ArrayList<>();
 
 			_messagingConfigurators.put(
 				servletContextName, messagingConfigurators);
@@ -64,7 +64,6 @@ public class MessagingConfiguratorRegistry {
 	}
 
 	private static final Map<String, List<MessagingConfigurator>>
-		_messagingConfigurators =
-			new ConcurrentHashMap<String, List<MessagingConfigurator>>();
+		_messagingConfigurators = new ConcurrentHashMap<>();
 
 }

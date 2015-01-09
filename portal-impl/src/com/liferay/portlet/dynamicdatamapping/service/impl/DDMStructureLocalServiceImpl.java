@@ -1413,7 +1413,7 @@ public class DDMStructureLocalServiceImpl
 	protected Set<Long> deleteStructures(List<DDMStructure> structures)
 		throws PortalException {
 
-		Set<Long> deletedStructureIds = new HashSet<Long>();
+		Set<Long> deletedStructureIds = new HashSet<>();
 
 		for (DDMStructure structure : structures) {
 			if (deletedStructureIds.contains(structure.getStructureId())) {
@@ -1508,7 +1508,7 @@ public class DDMStructureLocalServiceImpl
 	protected List<Long> getChildrenStructureIds(long groupId, long structureId)
 		throws PortalException {
 
-		List<Long> structureIds = new ArrayList<Long>();
+		List<Long> structureIds = new ArrayList<>();
 
 		getChildrenStructureIds(structureIds, groupId, structureId);
 
@@ -1521,8 +1521,7 @@ public class DDMStructureLocalServiceImpl
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		Set<String> ddmFormFieldsNames = new HashSet<String>(
-			ddmFormFieldsMap.size());
+		Set<String> ddmFormFieldsNames = new HashSet<>(ddmFormFieldsMap.size());
 
 		for (String ddmFormFieldName : ddmFormFieldsMap.keySet()) {
 			ddmFormFieldsNames.add(StringUtil.toLowerCase(ddmFormFieldName));

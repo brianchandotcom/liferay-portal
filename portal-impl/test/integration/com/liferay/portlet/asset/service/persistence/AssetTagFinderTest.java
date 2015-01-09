@@ -379,7 +379,7 @@ public class AssetTagFinderTest {
 
 		Layout layout = LayoutTestUtil.addLayout(group);
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		String name = RandomTestUtil.randomString();
 

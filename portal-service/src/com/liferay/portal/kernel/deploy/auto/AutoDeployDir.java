@@ -44,7 +44,7 @@ public class AutoDeployDir {
 		throws AutoDeployException {
 
 		List<String> duplicateApplicableAutoDeployListenerClassNames =
-			new ArrayList<String>();
+			new ArrayList<>();
 
 		for (AutoDeployListener autoDeployListener : autoDeployListeners) {
 			if (autoDeployListener.deploy(autoDeploymentContext) !=
@@ -81,9 +81,8 @@ public class AutoDeployDir {
 		_deployDir = deployDir;
 		_destDir = destDir;
 		_interval = interval;
-		_autoDeployListeners = new CopyOnWriteArrayList<AutoDeployListener>(
-			autoDeployListeners);
-		_blacklistFileTimestamps = new HashMap<String, Long>();
+		_autoDeployListeners = new CopyOnWriteArrayList<>(autoDeployListeners);
+		_blacklistFileTimestamps = new HashMap<>();
 	}
 
 	public File getDeployDir() {

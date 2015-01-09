@@ -68,8 +68,7 @@ public class SPIAgentResponse extends SPIAgentSerializable {
 
 		removedSessionAttributeNames.removeAll(newSessionAttributes.keySet());
 
-		deltaSessionAttributes = new HashMap<String, Serializable>(
-			newSessionAttributes);
+		deltaSessionAttributes = new HashMap<>(newSessionAttributes);
 
 		for (String removedSessionAttributeName :
 				removedSessionAttributeNames) {

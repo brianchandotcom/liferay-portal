@@ -190,7 +190,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		throws Exception {
 
 		List<PortletDataHandlerBoolean> configurationControls =
-			new ArrayList<PortletDataHandlerBoolean>();
+			new ArrayList<>();
 
 		// Setup
 
@@ -280,7 +280,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		String[] configurationPortletOptions) {
 
 		List<PortletDataHandlerBoolean> configurationControls =
-			new ArrayList<PortletDataHandlerBoolean>();
+			new ArrayList<>();
 
 		// Setup
 

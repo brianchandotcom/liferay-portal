@@ -82,7 +82,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 		syndFeed.setDescription(feed.getDescription());
 
-		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
+		List<SyndEntry> syndEntries = new ArrayList<>();
 
 		syndFeed.setEntries(syndEntries);
 
@@ -136,7 +136,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		syndFeed.setFeedType(
 			feed.getFeedFormat() + "_" + feed.getFeedVersion());
 
-		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
+		List<SyndLink> syndLinks = new ArrayList<>();
 
 		syndFeed.setLinks(syndLinks);
 

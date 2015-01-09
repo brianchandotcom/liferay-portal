@@ -488,7 +488,7 @@ public class JAASTest {
 			AppConfigurationEntry[] appConfigurationEntries =
 				new AppConfigurationEntry[1];
 
-			Map<String, Object> options = new HashMap<String, Object>();
+			Map<String, Object> options = new HashMap<>();
 
 			options.put("debug", Boolean.TRUE);
 

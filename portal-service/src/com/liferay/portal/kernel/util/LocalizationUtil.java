@@ -231,7 +231,7 @@ public class LocalizationUtil {
 			return Collections.emptyList();
 		}
 
-		List<Locale> modifiedLocales = new ArrayList<Locale>();
+		List<Locale> modifiedLocales = new ArrayList<>();
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 

@@ -448,7 +448,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			Map<String, Long> bitwiseValues = new HashMap<String, Long>();
+			Map<String, Long> bitwiseValues = new HashMap<>();
 
 			while (rs.next()) {
 				String actionId = rs.getString("actionId");
@@ -612,7 +612,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	protected List<String> getResourceActionIds(
 		Map<String, Long> bitwiseValues, long actionIdsLong) {
 
-		List<String> actionIds = new ArrayList<String>();
+		List<String> actionIds = new ArrayList<>();
 
 		for (String actionId : bitwiseValues.keySet()) {
 			long bitwiseValue = bitwiseValues.get(actionId);
@@ -831,7 +831,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			Map<Long, Long> folderIds = new HashMap<Long, Long>();
+			Map<Long, Long> folderIds = new HashMap<>();
 
 			while (rs.next()) {
 				String uuid = rs.getString("uuid_");

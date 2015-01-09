@@ -41,9 +41,8 @@ public class SandboxDeployDir {
 		_name = name;
 		_deployDir = deployDir;
 		_interval = interval;
-		_sandboxDeployListeners =
-			new CopyOnWriteArrayList<SandboxDeployListener>(
-				sandboxDeployListeners);
+		_sandboxDeployListeners = new CopyOnWriteArrayList<>(
+			sandboxDeployListeners);
 	}
 
 	public File getDeployDir() {

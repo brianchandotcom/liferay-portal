@@ -63,7 +63,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 			return null;
 		}
 
-		Map<String, Object> outputObjects = new HashMap<String, Object>();
+		Map<String, Object> outputObjects = new HashMap<>();
 
 		for (String outputName : outputNames) {
 			outputObjects.put(outputName, binding.getVariable(outputName));
@@ -114,7 +114,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 
 	private volatile GroovyShell _groovyShell = new GroovyShell();
 	private final ConcurrentMap<ClassLoader, GroovyShell> _groovyShells =
-		new ConcurrentReferenceKeyHashMap<ClassLoader, GroovyShell>(
+		new ConcurrentReferenceKeyHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 }

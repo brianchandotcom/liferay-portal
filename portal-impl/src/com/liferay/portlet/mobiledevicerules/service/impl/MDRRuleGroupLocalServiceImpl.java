@@ -195,8 +195,7 @@ public class MDRRuleGroupLocalServiceImpl
 	public List<MDRRuleGroup> search(
 		long groupId, String name, boolean andOperator, int start, int end) {
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("includeGlobalScope", Boolean.TRUE);
 
@@ -223,8 +222,7 @@ public class MDRRuleGroupLocalServiceImpl
 		long groupId, String keywords, boolean andOperator, int start,
 		int end) {
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("includeGlobalScope", Boolean.TRUE);
 
@@ -250,8 +248,7 @@ public class MDRRuleGroupLocalServiceImpl
 	public int searchByKeywordsCount(
 		long groupId, String keywords, boolean andOperator) {
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("includeGlobalScope", Boolean.TRUE);
 
@@ -273,8 +270,7 @@ public class MDRRuleGroupLocalServiceImpl
 	@Deprecated
 	@Override
 	public int searchCount(long groupId, String name, boolean andOperator) {
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("includeGlobalScope", Boolean.TRUE);
 

@@ -79,7 +79,7 @@ public class ClassResolverUtil {
 	}
 
 	private static final Map<String, Class<?>> _primitiveClasses =
-		new HashMap<String, Class<?>>(9, 1.0F);
+		new HashMap<>(9, 1.0F);
 
 	static {
 		_primitiveClasses.put("boolean", boolean.class);

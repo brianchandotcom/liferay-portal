@@ -140,8 +140,7 @@ public class ThreadLocalDistributor implements Externalizable {
 
 	private ClassLoader _classLoader;
 	private int _index;
-	private List<ThreadLocal<Serializable>> _threadLocals =
-		new ArrayList<ThreadLocal<Serializable>>();
+	private List<ThreadLocal<Serializable>> _threadLocals = new ArrayList<>();
 	private List<KeyValuePair> _threadLocalSources;
 	private Serializable[] _threadLocalValues;
 

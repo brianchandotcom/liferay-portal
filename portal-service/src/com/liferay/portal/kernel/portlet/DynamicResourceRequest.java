@@ -56,7 +56,7 @@ public class DynamicResourceRequest extends ResourceRequestWrapper {
 
 		super(resourceRequest);
 
-		_params = new HashMap<String, String[]>();
+		_params = new HashMap<>();
 		_inherit = inherit;
 
 		if (params != null) {
@@ -111,7 +111,7 @@ public class DynamicResourceRequest extends ResourceRequestWrapper {
 
 	@Override
 	public Map<String, String[]> getParameterMap() {
-		Map<String, String[]> map = new HashMap<String, String[]>();
+		Map<String, String[]> map = new HashMap<>();
 
 		if (_inherit) {
 			map.putAll(super.getParameterMap());
@@ -124,7 +124,7 @@ public class DynamicResourceRequest extends ResourceRequestWrapper {
 
 	@Override
 	public Enumeration<String> getParameterNames() {
-		Set<String> names = new LinkedHashSet<String>();
+		Set<String> names = new LinkedHashSet<>();
 
 		if (_inherit) {
 			Enumeration<String> enu = super.getParameterNames();

@@ -116,7 +116,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		Set<Header> values = _metaData._headers.get(HttpHeaders.SET_COOKIE);
 
 		if (values == null) {
-			values = new HashSet<Header>();
+			values = new HashSet<>();
 
 			_metaData._headers.put(HttpHeaders.SET_COOKIE, values);
 		}
@@ -133,7 +133,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		Set<Header> values = _metaData._headers.get(name);
 
 		if (values == null) {
-			values = new HashSet<Header>();
+			values = new HashSet<>();
 
 			_metaData._headers.put(name, values);
 		}
@@ -156,7 +156,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		Set<Header> values = _metaData._headers.get(name);
 
 		if (values == null) {
-			values = new HashSet<Header>();
+			values = new HashSet<>();
 
 			_metaData._headers.put(name, values);
 		}
@@ -173,7 +173,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		Set<Header> values = _metaData._headers.get(name);
 
 		if (values == null) {
-			values = new HashSet<Header>();
+			values = new HashSet<>();
 
 			_metaData._headers.put(name, values);
 		}
@@ -278,7 +278,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 			return Collections.emptyList();
 		}
 
-		List<String> stringValues = new ArrayList<String>();
+		List<String> stringValues = new ArrayList<>();
 
 		for (Header header : values) {
 			stringValues.add(header.toString());
@@ -488,7 +488,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void setDateHeader(String name, long value) {
-		Set<Header> values = new HashSet<Header>();
+		Set<Header> values = new HashSet<>();
 
 		_metaData._headers.put(name, values);
 
@@ -507,7 +507,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 			return;
 		}
 
-		Set<Header> values = new HashSet<Header>();
+		Set<Header> values = new HashSet<>();
 
 		_metaData._headers.put(name, values);
 
@@ -520,7 +520,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void setIntHeader(String name, int value) {
-		Set<Header> values = new HashSet<Header>();
+		Set<Header> values = new HashSet<>();
 
 		_metaData._headers.put(name, values);
 
@@ -605,8 +605,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		private String _contentType;
 		private boolean _error;
 		private String _errorMessage;
-		private final Map<String, Set<Header>> _headers =
-			new HashMap<String, Set<Header>>();
+		private final Map<String, Set<Header>> _headers = new HashMap<>();
 		private Locale _locale;
 		private String _location;
 		private int _status = SC_OK;

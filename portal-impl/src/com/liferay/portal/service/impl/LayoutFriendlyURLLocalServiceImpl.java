@@ -89,8 +89,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		List<LayoutFriendlyURL> layoutFriendlyURLs =
-			new ArrayList<LayoutFriendlyURL>();
+		List<LayoutFriendlyURL> layoutFriendlyURLs = new ArrayList<>();
 
 		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
 
@@ -267,8 +266,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		List<LayoutFriendlyURL> layoutFriendlyURLs =
-			new ArrayList<LayoutFriendlyURL>();
+		List<LayoutFriendlyURL> layoutFriendlyURLs = new ArrayList<>();
 
 		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
 

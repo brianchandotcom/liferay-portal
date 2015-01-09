@@ -75,7 +75,7 @@ public class SocialRequestInterpreterLocalServiceImpl
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		SocialRequestInterpreterImpl requestInterpreterImpl =
 			(SocialRequestInterpreterImpl)requestInterpreter;
@@ -273,10 +273,9 @@ public class SocialRequestInterpreterLocalServiceImpl
 		SocialRequestInterpreterLocalServiceImpl.class);
 
 	private List<SocialRequestInterpreter> _requestInterpreters =
-		new CopyOnWriteArrayList<SocialRequestInterpreter>();
+		new CopyOnWriteArrayList<>();
 	private ServiceRegistrationMap<SocialRequestInterpreter>
-		_serviceRegistrations =
-			new ServiceRegistrationMap<SocialRequestInterpreter>();
+		_serviceRegistrations = new ServiceRegistrationMap<>();
 	private ServiceTracker<SocialRequestInterpreter, SocialRequestInterpreter>
 		_serviceTracker;
 

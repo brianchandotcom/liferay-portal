@@ -51,6 +51,6 @@ public class TransactionalPersistenceAdvice implements MethodInterceptor {
 	}
 
 	private final Map<Serializable, BasePersistence<?>> _basePersistences =
-		new HashMap<Serializable, BasePersistence<?>>();
+		new HashMap<>();
 
 }

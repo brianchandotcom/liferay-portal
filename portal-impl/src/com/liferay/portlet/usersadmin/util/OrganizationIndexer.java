@@ -232,8 +232,7 @@ public class OrganizationIndexer extends BaseIndexer {
 		else if (obj instanceof long[]) {
 			long[] organizationIds = (long[])obj;
 
-			Map<Long, Collection<Document>> documentsMap =
-				new HashMap<Long, Collection<Document>>();
+			Map<Long, Collection<Document>> documentsMap = new HashMap<>();
 
 			for (long organizationId : organizationIds) {
 				Organization organization =
@@ -251,7 +250,7 @@ public class OrganizationIndexer extends BaseIndexer {
 				Collection<Document> documents = documentsMap.get(companyId);
 
 				if (documents == null) {
-					documents = new ArrayList<Document>();
+					documents = new ArrayList<>();
 
 					documentsMap.put(companyId, documents);
 				}

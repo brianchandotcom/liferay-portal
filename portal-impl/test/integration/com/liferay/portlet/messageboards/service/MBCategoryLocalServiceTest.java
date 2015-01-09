@@ -200,7 +200,7 @@ public class MBCategoryLocalServiceTest {
 		List<MBCategory> initialCategories =
 			MBCategoryLocalServiceUtil.getCategories(_group.getGroupId());
 
-		List<MBCategory> expectedCategories = new ArrayList<MBCategory>();
+		List<MBCategory> expectedCategories = new ArrayList<>();
 
 		expectedCategories.addAll(initialCategories);
 		expectedCategories.add(MBTestUtil.addCategory(_group.getGroupId()));
@@ -240,7 +240,7 @@ public class MBCategoryLocalServiceTest {
 		List<MBCategory> initialCategories =
 			MBCategoryLocalServiceUtil.getCategories(_group.getGroupId());
 
-		List<MBCategory> expectedCategories = new ArrayList<MBCategory>();
+		List<MBCategory> expectedCategories = new ArrayList<>();
 
 		expectedCategories.addAll(initialCategories);
 		expectedCategories.add(MBTestUtil.addCategory(_group.getGroupId()));
@@ -274,7 +274,7 @@ public class MBCategoryLocalServiceTest {
 			MBCategoryLocalServiceUtil.getCategories(
 				_group.getGroupId(),  WorkflowConstants.STATUS_APPROVED);
 
-		List<MBCategory> expectedCategories = new ArrayList<MBCategory>();
+		List<MBCategory> expectedCategories = new ArrayList<>();
 
 		expectedCategories.addAll(initialCategories);
 		expectedCategories.add(MBTestUtil.addCategory(_group.getGroupId()));
@@ -324,7 +324,7 @@ public class MBCategoryLocalServiceTest {
 			MBCategoryLocalServiceUtil.getCategories(
 				_group.getGroupId(), WorkflowConstants.STATUS_APPROVED);
 
-		List<MBCategory> expectedCategories = new ArrayList<MBCategory>();
+		List<MBCategory> expectedCategories = new ArrayList<>();
 
 		expectedCategories.addAll(initialCategories);
 		expectedCategories.add(MBTestUtil.addCategory(_group.getGroupId()));

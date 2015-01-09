@@ -100,7 +100,7 @@ public class LayoutPrototypeLocalServiceImpl
 		if (GetterUtil.getBoolean(
 				serviceContext.getAttribute("addDefaultLayout"), true)) {
 
-			Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+			Map<Locale, String> friendlyURLMap = new HashMap<>();
 
 			friendlyURLMap.put(LocaleUtil.getSiteDefault(), "/layout");
 
@@ -142,7 +142,7 @@ public class LayoutPrototypeLocalServiceImpl
 			String description, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(LocaleUtil.getDefault(), description);
 
@@ -320,7 +320,7 @@ public class LayoutPrototypeLocalServiceImpl
 			String description, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(LocaleUtil.getDefault(), description);
 

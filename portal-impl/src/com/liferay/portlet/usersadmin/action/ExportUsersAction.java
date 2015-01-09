@@ -171,8 +171,7 @@ public class ExportUsersAction extends PortletAction {
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)userSearch.getSearchTerms();
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		long organizationId = searchTerms.getOrganizationId();
 

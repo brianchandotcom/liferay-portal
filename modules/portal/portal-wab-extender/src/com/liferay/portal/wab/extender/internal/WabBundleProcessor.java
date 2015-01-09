@@ -228,8 +228,8 @@ public class WabBundleProcessor implements ServletContextListener {
 		Map<String, FilterDefinition> filterDefinitions =
 			_webXMLDefinition.getFilterDefinitions();
 
-		List<FilterDefinition> filterDefinitionsList =
-			new ArrayList<FilterDefinition>(filterDefinitions.values());
+		List<FilterDefinition> filterDefinitionsList = new ArrayList<>(
+			filterDefinitions.values());
 
 		Collections.reverse(filterDefinitionsList);
 
@@ -269,8 +269,8 @@ public class WabBundleProcessor implements ServletContextListener {
 		Map<String, ServletDefinition> servletDefinitions =
 			_webXMLDefinition.getServletDefinitions();
 
-		List<ServletDefinition> servletDefinitionsList =
-			new ArrayList<ServletDefinition>(servletDefinitions.values());
+		List<ServletDefinition> servletDefinitionsList = new ArrayList<>(
+			servletDefinitions.values());
 
 		Collections.reverse(servletDefinitionsList);
 

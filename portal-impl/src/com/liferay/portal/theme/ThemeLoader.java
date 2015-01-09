@@ -178,7 +178,7 @@ public class ThemeLoader {
 	private static Log _log = LogFactoryUtil.getLog(ThemeLoader.class);
 
 	private File _fileStorage;
-	private Map<String, Long> _lastModifiedMap = new HashMap<String, Long>();
+	private Map<String, Long> _lastModifiedMap = new HashMap<>();
 	private boolean _loadFromServletContext = true;
 	private ServletContext _servletContext;
 	private String _servletContextName;

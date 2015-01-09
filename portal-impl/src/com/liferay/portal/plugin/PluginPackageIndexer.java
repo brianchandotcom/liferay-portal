@@ -220,7 +220,7 @@ public class PluginPackageIndexer extends BaseIndexer {
 			getSearchEngineId(), CompanyConstants.SYSTEM, PORTLET_ID,
 			isCommitImmediately());
 
-		Collection<Document> documents = new ArrayList<Document>();
+		Collection<Document> documents = new ArrayList<>();
 
 		for (PluginPackage pluginPackage :
 				PluginPackageUtil.getAllAvailablePluginPackages()) {

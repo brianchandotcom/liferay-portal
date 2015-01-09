@@ -49,7 +49,7 @@ public class ListUtil {
 			return null;
 		}
 
-		return new ArrayList<E>(master);
+		return new ArrayList<>(master);
 	}
 
 	public static <E> void copy(
@@ -89,7 +89,7 @@ public class ListUtil {
 			return;
 		}
 
-		Set<E> set = new HashSet<E>();
+		Set<E> set = new HashSet<>();
 
 		Iterator<? extends E> itr = list.iterator();
 
@@ -148,10 +148,10 @@ public class ListUtil {
 
 	public static <E> List<E> fromArray(E[] array) {
 		if (ArrayUtil.isEmpty(array)) {
-			return new ArrayList<E>();
+			return new ArrayList<>();
 		}
 
-		return new ArrayList<E>(Arrays.asList(array));
+		return new ArrayList<>(Arrays.asList(array));
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -161,10 +161,10 @@ public class ListUtil {
 		}
 
 		if ((c == null) || c.isEmpty()) {
-			return new ArrayList<E>();
+			return new ArrayList<>();
 		}
 
-		List<E> list = new ArrayList<E>(c.size());
+		List<E> list = new ArrayList<>(c.size());
 
 		list.addAll(c);
 
@@ -172,7 +172,7 @@ public class ListUtil {
 	}
 
 	public static <E> List<E> fromEnumeration(Enumeration<? extends E> enu) {
-		List<E> list = new ArrayList<E>();
+		List<E> list = new ArrayList<>();
 
 		while (enu.hasMoreElements()) {
 			E obj = enu.nextElement();
@@ -185,10 +185,10 @@ public class ListUtil {
 
 	public static List<String> fromFile(File file) throws IOException {
 		if (!file.exists()) {
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new FileReader(file))) {
@@ -209,10 +209,10 @@ public class ListUtil {
 
 	public static <E> List<E> fromMapKeys(Map<? extends E, ?> map) {
 		if (MapUtil.isEmpty(map)) {
-			return new ArrayList<E>();
+			return new ArrayList<>();
 		}
 
-		List<E> list = new ArrayList<E>(map.size());
+		List<E> list = new ArrayList<>(map.size());
 
 		for (Map.Entry<? extends E, ?> entry : map.entrySet()) {
 			list.add(entry.getKey());
@@ -223,10 +223,10 @@ public class ListUtil {
 
 	public static <E> List<E> fromMapValues(Map<?, ? extends E> map) {
 		if (MapUtil.isEmpty(map)) {
-			return new ArrayList<E>();
+			return new ArrayList<>();
 		}
 
-		List<E> list = new ArrayList<E>(map.size());
+		List<E> list = new ArrayList<>(map.size());
 
 		for (Map.Entry<?, ? extends E> entry : map.entrySet()) {
 			list.add(entry.getValue());
@@ -371,10 +371,10 @@ public class ListUtil {
 
 	public static List<Boolean> toList(boolean[] array) {
 		if (ArrayUtil.isEmpty(array)) {
-			return new ArrayList<Boolean>();
+			return new ArrayList<>();
 		}
 
-		List<Boolean> list = new ArrayList<Boolean>(array.length);
+		List<Boolean> list = new ArrayList<>(array.length);
 
 		for (boolean value : array) {
 			list.add(value);
@@ -385,10 +385,10 @@ public class ListUtil {
 
 	public static List<Character> toList(char[] array) {
 		if (ArrayUtil.isEmpty(array)) {
-			return new ArrayList<Character>();
+			return new ArrayList<>();
 		}
 
-		List<Character> list = new ArrayList<Character>(array.length);
+		List<Character> list = new ArrayList<>(array.length);
 
 		for (char value : array) {
 			list.add(value);
@@ -399,10 +399,10 @@ public class ListUtil {
 
 	public static List<Double> toList(double[] array) {
 		if (ArrayUtil.isEmpty(array)) {
-			return new ArrayList<Double>();
+			return new ArrayList<>();
 		}
 
-		List<Double> list = new ArrayList<Double>(array.length);
+		List<Double> list = new ArrayList<>(array.length);
 
 		for (double value : array) {
 			list.add(value);
@@ -413,18 +413,18 @@ public class ListUtil {
 
 	public static <E> List<E> toList(E[] array) {
 		if (ArrayUtil.isEmpty(array)) {
-			return new ArrayList<E>();
+			return new ArrayList<>();
 		}
 
-		return new ArrayList<E>(Arrays.asList(array));
+		return new ArrayList<>(Arrays.asList(array));
 	}
 
 	public static List<Float> toList(float[] array) {
 		if (ArrayUtil.isEmpty(array)) {
-			return new ArrayList<Float>();
+			return new ArrayList<>();
 		}
 
-		List<Float> list = new ArrayList<Float>(array.length);
+		List<Float> list = new ArrayList<>(array.length);
 
 		for (float value : array) {
 			list.add(value);
@@ -435,10 +435,10 @@ public class ListUtil {
 
 	public static List<Integer> toList(int[] array) {
 		if (ArrayUtil.isEmpty(array)) {
-			return new ArrayList<Integer>();
+			return new ArrayList<>();
 		}
 
-		List<Integer> list = new ArrayList<Integer>(array.length);
+		List<Integer> list = new ArrayList<>(array.length);
 
 		for (int value : array) {
 			list.add(value);
@@ -448,7 +448,7 @@ public class ListUtil {
 	}
 
 	public static <T, A> List<A> toList(List<T> list, Accessor<T, A> accessor) {
-		List<A> aList = new ArrayList<A>(list.size());
+		List<A> aList = new ArrayList<>(list.size());
 
 		for (T t : list) {
 			aList.add(accessor.get(t));
@@ -463,10 +463,10 @@ public class ListUtil {
 
 	public static List<Long> toList(long[] array) {
 		if (ArrayUtil.isEmpty(array)) {
-			return new ArrayList<Long>();
+			return new ArrayList<>();
 		}
 
-		List<Long> list = new ArrayList<Long>(array.length);
+		List<Long> list = new ArrayList<>(array.length);
 
 		for (long value : array) {
 			list.add(value);
@@ -477,10 +477,10 @@ public class ListUtil {
 
 	public static List<Short> toList(short[] array) {
 		if (ArrayUtil.isEmpty(array)) {
-			return new ArrayList<Short>();
+			return new ArrayList<>();
 		}
 
-		List<Short> list = new ArrayList<Short>(array.length);
+		List<Short> list = new ArrayList<>(array.length);
 
 		for (short value : array) {
 			list.add(value);
@@ -591,7 +591,7 @@ public class ListUtil {
 	}
 
 	public static <T> List<T> unique(List<T> list) {
-		Set<T> set = new LinkedHashSet<T>();
+		Set<T> set = new LinkedHashSet<>();
 
 		set.addAll(list);
 
@@ -599,7 +599,7 @@ public class ListUtil {
 			return list;
 		}
 
-		return new ArrayList<T>(set);
+		return new ArrayList<>(set);
 	}
 
 	private static Class<? extends List<?>> _unmodifiableListClass;

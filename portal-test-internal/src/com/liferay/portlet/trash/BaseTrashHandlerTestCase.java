@@ -1265,7 +1265,7 @@ public abstract class BaseTrashHandlerTestCase {
 				getSearchKeywords(), serviceContext);
 		}
 
-		List<Integer> originalStatuses = new ArrayList<Integer>();
+		List<Integer> originalStatuses = new ArrayList<>();
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 

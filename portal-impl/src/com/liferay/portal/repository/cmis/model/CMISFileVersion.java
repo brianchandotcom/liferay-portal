@@ -93,7 +93,7 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 
 	@Override
 	public Map<String, Serializable> getAttributes() {
-		return new HashMap<String, Serializable>();
+		return new HashMap<>();
 	}
 
 	@Override

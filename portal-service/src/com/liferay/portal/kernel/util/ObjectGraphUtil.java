@@ -31,7 +31,7 @@ import java.util.Set;
 public class ObjectGraphUtil {
 
 	public static void walkObjectGraph(Object object, Visitor visitor) {
-		Queue<Object> queue = new LinkedList<Object>();
+		Queue<Object> queue = new LinkedList<>();
 
 		queue.offer(object);
 

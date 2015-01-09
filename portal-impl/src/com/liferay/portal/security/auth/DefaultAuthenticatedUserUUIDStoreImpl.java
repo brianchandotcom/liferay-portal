@@ -41,6 +41,6 @@ public class DefaultAuthenticatedUserUUIDStoreImpl
 		return _userUUIDStore.remove(userUUID);
 	}
 
-	private final Set<String> _userUUIDStore = new ConcurrentHashSet<String>();
+	private final Set<String> _userUUIDStore = new ConcurrentHashSet<>();
 
 }

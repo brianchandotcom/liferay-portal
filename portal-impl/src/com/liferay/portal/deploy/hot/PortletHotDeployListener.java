@@ -413,7 +413,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		Set<String> portletIds = new HashSet<String>();
+		Set<String> portletIds = new HashSet<>();
 
 		if (portlets != null) {
 			if (_log.isInfoEnabled()) {
@@ -636,8 +636,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		PortletHotDeployListener.class);
 
 	private static final Map<String, Boolean> _dataSourceBindStates =
-		new HashMap<String, Boolean>();
-	private static final Map<String, List<Portlet>> _portlets =
-		new HashMap<String, List<Portlet>>();
+		new HashMap<>();
+	private static final Map<String, List<Portlet>> _portlets = new HashMap<>();
 
 }

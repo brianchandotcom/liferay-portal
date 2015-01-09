@@ -28,11 +28,11 @@ import java.util.Queue;
 public class AnnotationLocator {
 
 	public static List<Annotation> locate(Class<?> targetClass) {
-		Queue<Class<?>> queue = new LinkedList<Class<?>>();
+		Queue<Class<?>> queue = new LinkedList<>();
 
 		queue.offer(targetClass);
 
-		ArrayList<Annotation> annotationsList = new ArrayList<Annotation>();
+		ArrayList<Annotation> annotationsList = new ArrayList<>();
 
 		Class<?> clazz = null;
 
@@ -52,7 +52,7 @@ public class AnnotationLocator {
 	public static <T extends Annotation> T locate(
 		Class<?> targetClass, Class<T> annotationClass) {
 
-		Queue<Class<?>> queue = new LinkedList<Class<?>>();
+		Queue<Class<?>> queue = new LinkedList<>();
 
 		queue.offer(targetClass);
 
@@ -73,7 +73,7 @@ public class AnnotationLocator {
 	}
 
 	public static List<Annotation> locate(Method method, Class<?> targetClass) {
-		Queue<Class<?>> queue = new LinkedList<Class<?>>();
+		Queue<Class<?>> queue = new LinkedList<>();
 
 		if (targetClass == null) {
 			queue.offer(method.getDeclaringClass());
@@ -82,7 +82,7 @@ public class AnnotationLocator {
 			queue.offer(targetClass);
 		}
 
-		ArrayList<Annotation> annotationsList = new ArrayList<Annotation>();
+		ArrayList<Annotation> annotationsList = new ArrayList<>();
 
 		Class<?> clazz = null;
 
@@ -122,7 +122,7 @@ public class AnnotationLocator {
 	public static <T extends Annotation> T locate(
 		Method method, Class<?> targetClass, Class<T> annotationClass) {
 
-		Queue<Class<?>> queue = new LinkedList<Class<?>>();
+		Queue<Class<?>> queue = new LinkedList<>();
 
 		if (targetClass == null) {
 			queue.offer(method.getDeclaringClass());

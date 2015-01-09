@@ -321,7 +321,7 @@ public class HookHotDeployListener
 				"Properties length is not an even number");
 		}
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		for (int i = 0; i < propertyKVPs.length; i += 2) {
 			String propertyName = String.valueOf(propertyKVPs[i]);
@@ -985,7 +985,7 @@ public class HookHotDeployListener
 		boolean customJspGlobal = GetterUtil.getBoolean(
 			rootElement.elementText("custom-jsp-global"), true);
 
-		List<String> customJsps = new ArrayList<String>();
+		List<String> customJsps = new ArrayList<>();
 
 		String webDir = servletContext.getRealPath(StringPool.SLASH);
 
@@ -1972,7 +1972,7 @@ public class HookHotDeployListener
 		Filter filter = (Filter)InstanceFactory.newInstance(
 			portletClassLoader, filterClassName);
 
-		List<Class<?>> interfaces = new ArrayList<Class<?>>();
+		List<Class<?>> interfaces = new ArrayList<>();
 
 		if (filter instanceof TryFilter) {
 			interfaces.add(TryFilter.class);
@@ -2021,7 +2021,7 @@ public class HookHotDeployListener
 			return;
 		}
 
-		Map<String, Tuple> filterTuples = new HashMap<String, Tuple>();
+		Map<String, Tuple> filterTuples = new HashMap<>();
 
 		List<Element> servletFilterMappingElements = parentElement.elements(
 			"servlet-filter-mapping");
@@ -2039,7 +2039,7 @@ public class HookHotDeployListener
 			List<Element> urlPatternElements =
 				servletFilterMappingElement.elements("url-pattern");
 
-			List<String> urlPatterns = new ArrayList<String>();
+			List<String> urlPatterns = new ArrayList<>();
 
 			for (Element urlPatternElement : urlPatternElements) {
 				String urlPattern = urlPatternElement.getTextTrim();
@@ -2050,7 +2050,7 @@ public class HookHotDeployListener
 			List<Element> dispatcherElements =
 				servletFilterMappingElement.elements("dispatcher");
 
-			List<String> dispatchers = new ArrayList<String>();
+			List<String> dispatchers = new ArrayList<>();
 
 			for (Element dispatcherElement : dispatcherElements) {
 				String dispatcher = dispatcherElement.getTextTrim();
@@ -2074,7 +2074,7 @@ public class HookHotDeployListener
 			List<Element> initParamElements = servletFilterElement.elements(
 				"init-param");
 
-			Map<String, Object> properties = new HashMap<String, Object>();
+			Map<String, Object> properties = new HashMap<>();
 
 			for (Element initParamElement : initParamElements) {
 				String paramName = initParamElement.elementText("param-name");
@@ -2166,7 +2166,7 @@ public class HookHotDeployListener
 	}
 
 	protected <S, T> Map<S, T> newMap() {
-		return new ConcurrentHashMap<S, T>();
+		return new ConcurrentHashMap<>();
 	}
 
 	protected void resetPortalProperties(
@@ -2504,30 +2504,25 @@ public class HookHotDeployListener
 	private static Log _log = LogFactoryUtil.getLog(
 		HookHotDeployListener.class);
 
-	private Map<String, CustomJspBag> _customJspBagsMap =
-		new HashMap<String, CustomJspBag>();
+	private Map<String, CustomJspBag> _customJspBagsMap = new HashMap<>();
 	private Map<String, DLFileEntryProcessorContainer>
-		_dlFileEntryProcessorContainerMap =
-			new HashMap<String, DLFileEntryProcessorContainer>();
+		_dlFileEntryProcessorContainerMap = new HashMap<>();
 	private Map<String, DLRepositoryContainer> _dlRepositoryContainerMap =
-		new HashMap<String, DLRepositoryContainer>();
+		new HashMap<>();
 	private Map<String, HotDeployListenersContainer>
-		_hotDeployListenersContainerMap =
-			new HashMap<String, HotDeployListenersContainer>();
+		_hotDeployListenersContainerMap = new HashMap<>();
 	private Map<String, StringArraysContainer> _mergeStringArraysContainerMap =
-		new HashMap<String, StringArraysContainer>();
+		new HashMap<>();
 	private Map<String, StringArraysContainer>
-		_overrideStringArraysContainerMap =
-			new HashMap<String, StringArraysContainer>();
-	private Map<String, Properties> _portalPropertiesMap =
-		new HashMap<String, Properties>();
+		_overrideStringArraysContainerMap = new HashMap<>();
+	private Map<String, Properties> _portalPropertiesMap = new HashMap<>();
 	private Set<String> _propsKeysEvents = SetUtil.fromArray(
 		_PROPS_KEYS_EVENTS);
 	private Set<String> _propsKeysSessionEvents = SetUtil.fromArray(
 		_PROPS_KEYS_SESSION_EVENTS);
 	private Map<String, Map<Object, ServiceRegistration<?>>>
 		_serviceRegistrations = newMap();
-	private Set<String> _servletContextNames = new HashSet<String>();
+	private Set<String> _servletContextNames = new HashSet<>();
 
 	private class CustomJspBag {
 
@@ -2574,7 +2569,7 @@ public class HookHotDeployListener
 			_dlProcessors.clear();
 		}
 
-		private List<DLProcessor> _dlProcessors = new ArrayList<DLProcessor>();
+		private List<DLProcessor> _dlProcessors = new ArrayList<>();
 
 	}
 
@@ -2600,7 +2595,7 @@ public class HookHotDeployListener
 			_classNames.clear();
 		}
 
-		private List<String> _classNames = new ArrayList<String>();
+		private List<String> _classNames = new ArrayList<>();
 
 	}
 
@@ -2620,8 +2615,7 @@ public class HookHotDeployListener
 			}
 		}
 
-		private List<HotDeployListener> _hotDeployListeners =
-			new ArrayList<HotDeployListener>();
+		private List<HotDeployListener> _hotDeployListeners = new ArrayList<>();
 
 	}
 
@@ -2629,7 +2623,7 @@ public class HookHotDeployListener
 
 		@Override
 		public String[] getStringArray() {
-			Set<String> mergedStringSet = new LinkedHashSet<String>();
+			Set<String> mergedStringSet = new LinkedHashSet<>();
 
 			mergedStringSet.addAll(Arrays.asList(_portalStringArray));
 
@@ -2659,8 +2653,7 @@ public class HookHotDeployListener
 			_portalStringArray = PropsUtil.getArray(key);
 		}
 
-		private Map<String, String[]> _pluginStringArrayMap =
-			new HashMap<String, String[]>();
+		private Map<String, String[]> _pluginStringArrayMap = new HashMap<>();
 		private String[] _portalStringArray;
 
 	}

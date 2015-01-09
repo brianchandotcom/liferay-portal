@@ -73,7 +73,7 @@ public class CookieUtil {
 			cookieMap = Collections.emptyMap();
 		}
 		else {
-			cookieMap = new HashMap<String, Cookie>(cookies.length * 4 / 3);
+			cookieMap = new HashMap<>(cookies.length * 4 / 3);
 
 			for (Cookie cookie : cookies) {
 				String cookieName = GetterUtil.getString(cookie.getName());

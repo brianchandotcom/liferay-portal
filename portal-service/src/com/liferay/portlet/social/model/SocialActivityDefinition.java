@@ -201,11 +201,9 @@ public class SocialActivityDefinition implements Serializable {
 		_modelName = modelName;
 	}
 
-	private final List<SocialAchievement> _achievements =
-		new ArrayList<SocialAchievement>();
+	private final List<SocialAchievement> _achievements = new ArrayList<>();
 	private final Map<String, SocialActivityCounterDefinition>
-		_activityCounterDefinitions =
-			new HashMap<String, SocialActivityCounterDefinition>();
+		_activityCounterDefinitions = new HashMap<>();
 	private SocialActivityProcessor _activityProcessor;
 	private int _activityType;
 	private boolean _countersEnabled = true;

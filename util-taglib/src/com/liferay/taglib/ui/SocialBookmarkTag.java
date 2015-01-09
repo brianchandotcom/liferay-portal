@@ -105,7 +105,7 @@ public class SocialBookmarkTag extends IncludeTag {
 	}
 
 	protected String getPostUrl() {
-		Map<String, String> vars = new HashMap<String, String>();
+		Map<String, String> vars = new HashMap<>();
 
 		vars.put("liferay:social-bookmark:title", HttpUtil.encodeURL(_title));
 		vars.put("liferay:social-bookmark:url", _url);
@@ -161,8 +161,7 @@ public class SocialBookmarkTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/social_bookmark/page.jsp";
 
-	private static final Map<String, String> _jspPaths =
-		new HashMap<String, String>();
+	private static final Map<String, String> _jspPaths = new HashMap<>();
 
 	private String _contentId;
 	private String _displayStyle;

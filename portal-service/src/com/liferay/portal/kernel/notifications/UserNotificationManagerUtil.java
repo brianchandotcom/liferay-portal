@@ -151,7 +151,7 @@ public class UserNotificationManagerUtil {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("javax.portlet.name", portletId);
 
@@ -314,7 +314,7 @@ public class UserNotificationManagerUtil {
 			<String, Map<String, UserNotificationHandler>>();
 	private final ServiceRegistrationMap<UserNotificationHandler>
 		_userNotificationHandlerServiceRegistrations =
-			new ServiceRegistrationMap<UserNotificationHandler>();
+			new ServiceRegistrationMap<>();
 	private final
 		ServiceTracker<UserNotificationHandler, UserNotificationHandler>
 			_userNotificationHandlerServiceTracker;
@@ -338,8 +338,7 @@ public class UserNotificationManagerUtil {
 				_userNotificationHandlers.get(selector);
 
 			if (userNotificationHandlers == null) {
-				userNotificationHandlers =
-					new HashMap<String, UserNotificationHandler>();
+				userNotificationHandlers = new HashMap<>();
 
 				_userNotificationHandlers.put(
 					selector, userNotificationHandlers);

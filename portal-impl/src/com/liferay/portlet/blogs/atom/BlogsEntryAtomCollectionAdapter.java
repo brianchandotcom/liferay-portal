@@ -49,7 +49,7 @@ public class BlogsEntryAtomCollectionAdapter
 
 	@Override
 	public List<String> getEntryAuthors(BlogsEntry blogsEntry) {
-		List<String> authors = new ArrayList<String>();
+		List<String> authors = new ArrayList<>();
 
 		authors.add(blogsEntry.getUserName());
 

@@ -63,7 +63,7 @@ import java.util.Set;
 public class JournalConverterImpl implements JournalConverter {
 
 	public JournalConverterImpl() {
-		_ddmDataTypes = new HashMap<String, String>();
+		_ddmDataTypes = new HashMap<>();
 
 		_ddmDataTypes.put("boolean", "boolean");
 		_ddmDataTypes.put("document_library", "document-library");
@@ -75,13 +75,13 @@ public class JournalConverterImpl implements JournalConverter {
 		_ddmDataTypes.put("text_area", "html");
 		_ddmDataTypes.put("text_box", "string");
 
-		_ddmMetadataAttributes = new HashMap<String, String>();
+		_ddmMetadataAttributes = new HashMap<>();
 
 		_ddmMetadataAttributes.put("instructions", "tip");
 		_ddmMetadataAttributes.put("label", "label");
 		_ddmMetadataAttributes.put("predefinedValue", "predefinedValue");
 
-		_ddmTypesToJournalTypes = new HashMap<String, String>();
+		_ddmTypesToJournalTypes = new HashMap<>();
 
 		_ddmTypesToJournalTypes.put("checkbox", "boolean");
 		_ddmTypesToJournalTypes.put("ddm-documentlibrary", "document_library");
@@ -93,7 +93,7 @@ public class JournalConverterImpl implements JournalConverter {
 		_ddmTypesToJournalTypes.put("text", "text");
 		_ddmTypesToJournalTypes.put("textarea", "text_box");
 
-		_journalTypesToDDMTypes = new HashMap<String, String>();
+		_journalTypesToDDMTypes = new HashMap<>();
 
 		_journalTypesToDDMTypes.put("boolean", "checkbox");
 		_journalTypesToDDMTypes.put("document_library", "ddm-documentlibrary");

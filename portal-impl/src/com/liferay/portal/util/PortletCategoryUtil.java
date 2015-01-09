@@ -65,7 +65,7 @@ public class PortletCategoryUtil {
 		for (PortletCategory curPortletCategory :
 				portletCategory.getCategories()) {
 
-			Set<String> portletIds = new HashSet<String>();
+			Set<String> portletIds = new HashSet<>();
 
 			if (curPortletCategory.isHidden()) {
 				continue;

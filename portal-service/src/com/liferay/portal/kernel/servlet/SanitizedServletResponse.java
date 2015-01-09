@@ -222,7 +222,7 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 					StringPool.PERIOD,
 				true));
 
-		List<KeyValuePair> xFrameOptionKVPs = new ArrayList<KeyValuePair>(
+		List<KeyValuePair> xFrameOptionKVPs = new ArrayList<>(
 			properties.size());
 
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {

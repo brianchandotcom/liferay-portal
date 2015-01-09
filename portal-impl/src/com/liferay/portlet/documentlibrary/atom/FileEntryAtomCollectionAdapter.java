@@ -52,7 +52,7 @@ public class FileEntryAtomCollectionAdapter
 
 	@Override
 	public List<String> getEntryAuthors(FileEntry fileEntry) {
-		List<String> authors = new ArrayList<String>();
+		List<String> authors = new ArrayList<>();
 
 		authors.add(fileEntry.getUserName());
 

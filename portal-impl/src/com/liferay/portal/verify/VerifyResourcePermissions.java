@@ -60,8 +60,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				companyId, RoleConstants.OWNER);
 
 			List<VerifyResourcedModelRunnable> verifyResourcedModelRunnables =
-				new ArrayList<VerifyResourcedModelRunnable>(
-					verifiableResourcedModels.length);
+				new ArrayList<>(verifiableResourcedModels.length);
 
 			for (VerifiableResourcedModel verifiableResourcedModel :
 					verifiableResourcedModels) {

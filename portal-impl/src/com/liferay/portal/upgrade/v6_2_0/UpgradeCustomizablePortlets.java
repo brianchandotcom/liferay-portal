@@ -216,7 +216,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 				String value = portalPreferencesImpl.getValue(
 					CustomizedPages.namespacePlid(plid), key);
 
-				List<String> newPortletIds = new ArrayList<String>();
+				List<String> newPortletIds = new ArrayList<>();
 
 				for (String customPortletId : StringUtil.split(value)) {
 					String newPortletId =

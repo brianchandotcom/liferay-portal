@@ -343,8 +343,7 @@ public class NestedSetsTreeManagerTest {
 		SimpleNestedSetsTreeNode... ancestorSimpleNestedSetsTreeNodes) {
 
 		List<SimpleNestedSetsTreeNode> simpleNestedSetsTreeNodes =
-			new ArrayList<SimpleNestedSetsTreeNode>(
-				Arrays.asList(ancestorSimpleNestedSetsTreeNodes));
+			new ArrayList<>(Arrays.asList(ancestorSimpleNestedSetsTreeNodes));
 
 		simpleNestedSetsTreeNodes.add(simpleNestedSetsTreeNode);
 
@@ -360,8 +359,7 @@ public class NestedSetsTreeManagerTest {
 		SimpleNestedSetsTreeNode... childSimpleNestedSetsTreeNodes) {
 
 		List<SimpleNestedSetsTreeNode> simpleNestedSetsTreeNodes =
-			new ArrayList<SimpleNestedSetsTreeNode>(
-				Arrays.asList(childSimpleNestedSetsTreeNodes));
+			new ArrayList<>(Arrays.asList(childSimpleNestedSetsTreeNodes));
 
 		simpleNestedSetsTreeNodes.add(simpleNestedSetsTreeNode);
 
@@ -516,8 +514,7 @@ public class NestedSetsTreeManagerTest {
 
 			Collections.sort(_simpleNestedSetsTreeNodeList);
 
-			Deque<SimpleNestedSetsTreeNode> deque =
-				new LinkedList<SimpleNestedSetsTreeNode>();
+			Deque<SimpleNestedSetsTreeNode> deque = new LinkedList<>();
 
 			for (SimpleNestedSetsTreeNode simpleNestedSetsTreeNode :
 					_simpleNestedSetsTreeNodeList) {
@@ -618,7 +615,7 @@ public class NestedSetsTreeManagerTest {
 			long nestedSetsTreeNodeRight) {
 
 			List<SimpleNestedSetsTreeNode> simpleNestedSetsTreeNodes =
-				new ArrayList<SimpleNestedSetsTreeNode>();
+				new ArrayList<>();
 
 			for (SimpleNestedSetsTreeNode simpleNestedSetsTreeNode :
 					_simpleNestedSetsTreeNodeList) {
@@ -643,7 +640,7 @@ public class NestedSetsTreeManagerTest {
 			long nestedSetsTreeNodeRight) {
 
 			List<SimpleNestedSetsTreeNode> simpleNestedSetsTreeNodes =
-				new ArrayList<SimpleNestedSetsTreeNode>();
+				new ArrayList<>();
 
 			for (SimpleNestedSetsTreeNode simpleNestedSetsTreeNode :
 					_simpleNestedSetsTreeNodeList) {
@@ -834,7 +831,7 @@ public class NestedSetsTreeManagerTest {
 		}
 
 		private List<SimpleNestedSetsTreeNode> _simpleNestedSetsTreeNodeList =
-			new ArrayList<SimpleNestedSetsTreeNode>();
+			new ArrayList<>();
 
 	}
 

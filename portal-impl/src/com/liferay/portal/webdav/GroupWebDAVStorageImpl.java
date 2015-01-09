@@ -48,7 +48,7 @@ public class GroupWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 		verifyGroup(webDAVRequest);
 
-		List<Resource> resources = new ArrayList<Resource>();
+		List<Resource> resources = new ArrayList<>();
 
 		String path = getRootPath() + webDAVRequest.getPath();
 

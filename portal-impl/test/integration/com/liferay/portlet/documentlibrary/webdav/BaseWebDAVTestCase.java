@@ -84,7 +84,7 @@ public class BaseWebDAVTestCase {
 		}
 
 		if (headers == null) {
-			headers = new HashMap<String, String>();
+			headers = new HashMap<>();
 		}
 
 		headers.put(HttpHeaders.USER_AGENT, getUserAgent());
@@ -150,7 +150,7 @@ public class BaseWebDAVTestCase {
 			byte[] responseBody =
 				mockHttpServletResponse.getContentAsByteArray();
 
-			Map<String, String> responseHeaders = new HashMap<String, String>();
+			Map<String, String> responseHeaders = new HashMap<>();
 
 			for (String name : mockHttpServletResponse.getHeaderNames()) {
 				responseHeaders.put(
@@ -171,7 +171,7 @@ public class BaseWebDAVTestCase {
 		String destination, int depth, boolean overwrite) {
 
 		if (headers == null) {
-			headers = new HashMap<String, String>();
+			headers = new HashMap<>();
 		}
 
 		headers.put("Depth", getDepth(depth));
@@ -199,7 +199,7 @@ public class BaseWebDAVTestCase {
 		Map<String, String> headers = null;
 
 		if (Validator.isNotNull(lock)) {
-			headers = new HashMap<String, String>();
+			headers = new HashMap<>();
 
 			headers.put("If", "<opaquelocktoken:" + lock + ">");
 		}
@@ -219,7 +219,7 @@ public class BaseWebDAVTestCase {
 		String path, Map<String, String> headers, int depth) {
 
 		if (headers == null) {
-			headers = new HashMap<String, String>();
+			headers = new HashMap<>();
 		}
 
 		headers.put("Depth", getDepth(depth));
@@ -240,7 +240,7 @@ public class BaseWebDAVTestCase {
 		Map<String, String> headers = null;
 
 		if (Validator.isNotNull(lock)) {
-			headers = new HashMap<String, String>();
+			headers = new HashMap<>();
 
 			headers.put("If", "<opaquelocktoken:" + lock + ">");
 		}
@@ -252,7 +252,7 @@ public class BaseWebDAVTestCase {
 		Map<String, String> headers = null;
 
 		if (Validator.isNotNull(lock)) {
-			headers = new HashMap<String, String>();
+			headers = new HashMap<>();
 
 			headers.put("Lock-Token", "<opaquelocktoken:" + lock + ">");
 		}

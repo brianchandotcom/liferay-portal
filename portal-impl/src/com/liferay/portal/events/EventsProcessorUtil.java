@@ -97,7 +97,7 @@ public class EventsProcessorUtil {
 			key);
 
 		if (lifecycleActions == null) {
-			Map<String, Object> properties = new HashMap<String, Object>();
+			Map<String, Object> properties = new HashMap<>();
 
 			properties.put("key", key);
 
@@ -168,7 +168,6 @@ public class EventsProcessorUtil {
 		new EventsProcessorUtil();
 
 	private final ConcurrentMap<String, Collection<LifecycleAction>>
-		_lifecycleActions =
-			new ConcurrentHashMap<String, Collection<LifecycleAction>>();
+		_lifecycleActions = new ConcurrentHashMap<>();
 
 }

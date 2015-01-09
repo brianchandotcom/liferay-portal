@@ -101,7 +101,7 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getPages(
 			getNodeId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
+		List<FileEntry> fileEntries = new ArrayList<>();
 
 		for (WikiPage wikiPage : wikiPages) {
 			fileEntries.addAll(wikiPage.getDeletedAttachmentsFileEntries());

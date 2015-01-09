@@ -446,7 +446,7 @@ public class Session {
 	private HttpEntity _getURLEncodedFormEntity(Map<String, Object> parameters)
 		throws Exception {
 
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		List<NameValuePair> nameValuePairs = new ArrayList<>();
 
 		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
 			NameValuePair nameValuePair = new BasicNameValuePair(
@@ -471,7 +471,7 @@ public class Session {
 	private final ExecutorService _executorService;
 	private final HttpClient _httpClient;
 	private final HttpHost _httpHost;
-	private final Set<String> _ignoredParameterKeys = new HashSet<String>(
+	private final Set<String> _ignoredParameterKeys = new HashSet<>(
 		Arrays.asList("filePath", "syncFile", "syncSite", "uiEvent"));
 	private String _token;
 	private final AtomicInteger _uploadedBytes = new AtomicInteger(0);

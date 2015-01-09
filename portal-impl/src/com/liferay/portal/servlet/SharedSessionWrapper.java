@@ -244,7 +244,7 @@ public class SharedSessionWrapper implements HttpSession {
 	private static final Map<String, String> _sharedSessionAttributesExcludes;
 
 	static {
-		_sharedSessionAttributesExcludes = new HashMap<String, String>();
+		_sharedSessionAttributesExcludes = new HashMap<>();
 
 		for (String name : PropsValues.SESSION_SHARED_ATTRIBUTES_EXCLUDES) {
 			_sharedSessionAttributesExcludes.put(name, name);

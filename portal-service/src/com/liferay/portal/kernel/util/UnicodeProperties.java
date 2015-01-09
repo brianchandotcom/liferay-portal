@@ -185,7 +185,7 @@ public class UnicodeProperties extends HashMap<String, String> {
 	public String toString() {
 		StringBuilder sb = new StringBuilder(_length);
 
-		Set<String> keys = new TreeSet<String>(keySet());
+		Set<String> keys = new TreeSet<>(keySet());
 
 		for (String key : keys) {
 			String value = get(key);

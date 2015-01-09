@@ -250,7 +250,7 @@ public class VerifySQLServer extends VerifyProcess {
 	}
 
 	protected List<String> getPrimaryKeyColumnNames(String indexName) {
-		List<String> columnNames = new ArrayList<String>();
+		List<String> columnNames = new ArrayList<>();
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -305,6 +305,6 @@ public class VerifySQLServer extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifySQLServer.class);
 
-	private final List<String> _addPrimaryKeySQLs = new ArrayList<String>();
+	private final List<String> _addPrimaryKeySQLs = new ArrayList<>();
 
 }

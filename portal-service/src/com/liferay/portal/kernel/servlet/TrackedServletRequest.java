@@ -42,7 +42,7 @@ public class TrackedServletRequest extends HttpServletRequestWrapper {
 	@Override
 	public void setAttribute(String name, Object obj) {
 		if (_setAttributes == null) {
-			_setAttributes = new HashSet<String>();
+			_setAttributes = new HashSet<>();
 		}
 
 		_setAttributes.add(name);

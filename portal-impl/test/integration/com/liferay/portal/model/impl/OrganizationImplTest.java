@@ -96,7 +96,6 @@ public class OrganizationImplTest {
 	private Organization _organization4;
 
 	@DeleteAfterTestRun
-	private final List<Organization> _organizations =
-		new ArrayList<Organization>();
+	private final List<Organization> _organizations = new ArrayList<>();
 
 }

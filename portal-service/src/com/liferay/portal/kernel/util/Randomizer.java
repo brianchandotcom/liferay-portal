@@ -43,7 +43,7 @@ public class Randomizer extends Random {
 			size = n;
 		}
 
-		Set<Integer> set = new LinkedHashSet<Integer>();
+		Set<Integer> set = new LinkedHashSet<>();
 
 		for (int i = 0; i < size; i++) {
 			while (true) {

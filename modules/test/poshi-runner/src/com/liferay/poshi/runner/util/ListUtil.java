@@ -30,7 +30,7 @@ public class ListUtil {
 			return null;
 		}
 
-		return new ArrayList<E>(master);
+		return new ArrayList<>(master);
 	}
 
 	public static boolean isEmpty(List<?> list) {

@@ -60,7 +60,7 @@ public class TemplateManagerUtil {
 
 		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
 
-		supportedLanguageTypes = new HashSet<String>();
+		supportedLanguageTypes = new HashSet<>();
 
 		for (String templateManagerName : templateManagers.keySet()) {
 			String content = PropsUtil.get(
@@ -190,8 +190,8 @@ public class TemplateManagerUtil {
 	}
 
 	private static final Map<String, Set<String>> _supportedLanguageTypes =
-		new ConcurrentHashMap<String, Set<String>>();
+		new ConcurrentHashMap<>();
 	private static final Map<String, TemplateManager> _templateManagers =
-		new ConcurrentHashMap<String, TemplateManager>();
+		new ConcurrentHashMap<>();
 
 }

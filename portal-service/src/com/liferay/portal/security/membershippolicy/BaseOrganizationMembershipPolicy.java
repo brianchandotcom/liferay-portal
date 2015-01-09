@@ -123,7 +123,7 @@ public abstract class BaseOrganizationMembershipPolicy
 	public boolean isRoleAllowed(long userId, long organizationId, long roleId)
 		throws PortalException {
 
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+		List<UserGroupRole> userGroupRoles = new ArrayList<>();
 
 		Organization organization =
 			OrganizationLocalServiceUtil.getOrganization(organizationId);
@@ -184,7 +184,7 @@ public abstract class BaseOrganizationMembershipPolicy
 	public boolean isRoleRequired(long userId, long organizationId, long roleId)
 		throws PortalException {
 
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+		List<UserGroupRole> userGroupRoles = new ArrayList<>();
 
 		Organization organization =
 			OrganizationLocalServiceUtil.getOrganization(organizationId);

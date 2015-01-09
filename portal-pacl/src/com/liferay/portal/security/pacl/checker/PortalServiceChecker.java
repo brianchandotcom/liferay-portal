@@ -178,8 +178,7 @@ public class PortalServiceChecker extends BaseChecker {
 
 	private static final String _PORTAL_SERVLET_CONTEXT_NAME = "portal";
 
-	private final Map<String, Set<String>> _pluginServices =
-		new HashMap<String, Set<String>>();
+	private final Map<String, Set<String>> _pluginServices = new HashMap<>();
 	private Set<String> _portalServices = Collections.emptySet();
 
 }

@@ -75,7 +75,7 @@ public class PortletResourceBundle extends ResourceBundle {
 			return Collections.enumeration(_portletInfos.keySet());
 		}
 
-		Set<String> keys = new HashSet<String>(parent.keySet());
+		Set<String> keys = new HashSet<>(parent.keySet());
 
 		keys.addAll(_portletInfos.keySet());
 
@@ -109,7 +109,6 @@ public class PortletResourceBundle extends ResourceBundle {
 		return _portletInfos.keySet();
 	}
 
-	private final Map<String, String> _portletInfos =
-		new HashMap<String, String>();
+	private final Map<String, String> _portletInfos = new HashMap<>();
 
 }

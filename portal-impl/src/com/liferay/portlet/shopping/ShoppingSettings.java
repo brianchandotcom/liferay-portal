@@ -73,7 +73,7 @@ public class ShoppingSettings {
 		String[] ids = null;
 
 		try {
-			Set<String> set = new TreeSet<String>();
+			Set<String> set = new TreeSet<>();
 
 			Locale[] locales = Locale.getAvailableLocales();
 

@@ -44,6 +44,6 @@ public class GetAllFolderSyncDLObjectsHandler extends BaseJSONHandler {
 			response, new TypeReference<List<SyncFile>>() {});
 	}
 
-	private List<SyncFile> _syncFiles = new ArrayList<SyncFile>();
+	private List<SyncFile> _syncFiles = new ArrayList<>();
 
 }

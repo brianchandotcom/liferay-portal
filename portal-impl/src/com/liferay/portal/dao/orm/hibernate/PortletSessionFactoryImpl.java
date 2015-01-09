@@ -183,6 +183,6 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	private DataSource _dataSource;
 	private final Map<DataSource, SessionFactory> _sessionFactories =
-		new HashMap<DataSource, SessionFactory>();
+		new HashMap<>();
 
 }

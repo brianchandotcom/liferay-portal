@@ -386,7 +386,7 @@ public class StagingImpl implements Staging {
 			UnicodeProperties typeSettingsProperties =
 				layout.getTypeSettingsProperties();
 
-			Set<String> keys = new HashSet<String>();
+			Set<String> keys = new HashSet<>();
 
 			for (String key : typeSettingsProperties.keySet()) {
 				if (key.startsWith("last-import-")) {
@@ -1004,8 +1004,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public Map<String, String[]> getStagingParameters() {
-		Map<String, String[]> parameterMap =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.DATA_STRATEGY,
@@ -1068,9 +1067,8 @@ public class StagingImpl implements Staging {
 	public Map<String, String[]> getStagingParameters(
 		PortletRequest portletRequest) {
 
-		Map<String, String[]> parameterMap =
-			new LinkedHashMap<String, String[]>(
-				portletRequest.getParameterMap());
+		Map<String, String[]> parameterMap = new LinkedHashMap<>(
+			portletRequest.getParameterMap());
 
 		if (!parameterMap.containsKey(PortletDataHandlerKeys.DATA_STRATEGY)) {
 			parameterMap.put(
@@ -1313,7 +1311,7 @@ public class StagingImpl implements Staging {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-		List<Layout> layouts = new ArrayList<Layout>();
+		List<Layout> layouts = new ArrayList<>();
 
 		layouts.add(layout);
 
@@ -1338,8 +1336,7 @@ public class StagingImpl implements Staging {
 			long userId, ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
-		Map<String, Serializable> taskContextMap =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> taskContextMap = new HashMap<>();
 
 		taskContextMap.put(Constants.CMD, Constants.PUBLISH_TO_LIVE);
 		taskContextMap.put(
@@ -1916,8 +1913,7 @@ public class StagingImpl implements Staging {
 			boolean secureConnection, boolean remotePrivateLayout)
 		throws PortalException {
 
-		Map<String, Serializable> taskContextMap =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> taskContextMap = new HashMap<>();
 
 		taskContextMap.put(Constants.CMD, Constants.PUBLISH_TO_REMOTE);
 		taskContextMap.put(

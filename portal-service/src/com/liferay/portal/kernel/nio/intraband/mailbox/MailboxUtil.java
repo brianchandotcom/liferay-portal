@@ -103,7 +103,7 @@ public class MailboxUtil {
 			PropsUtil.get(PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE));
 
 	private static final Map<Long, ByteBuffer> _mailMap =
-		new ConcurrentHashMap<Long, ByteBuffer>();
+		new ConcurrentHashMap<>();
 	private static final BlockingQueue<ReceiptStub> _overdueMailQueue =
 		new DelayQueue<ReceiptStub>();
 	private static final AtomicLong _receiptGenerator = new AtomicLong();

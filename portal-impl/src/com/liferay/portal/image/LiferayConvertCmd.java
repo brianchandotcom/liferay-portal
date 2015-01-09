@@ -38,7 +38,7 @@ public class LiferayConvertCmd extends ConvertCmd {
 
 		setGlobalSearchPath(globalSearchPath);
 
-		LinkedList<String> arguments = new LinkedList<String>();
+		LinkedList<String> arguments = new LinkedList<>();
 
 		arguments.addAll(_instance.getCommand());
 		arguments.addAll(resourceLimits);

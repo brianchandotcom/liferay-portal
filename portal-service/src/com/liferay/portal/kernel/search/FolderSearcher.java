@@ -31,7 +31,7 @@ public class FolderSearcher extends BaseSearcher {
 		setFilterSearch(true);
 		setPermissionAware(true);
 
-		List<String> folderClassNames = new ArrayList<String>();
+		List<String> folderClassNames = new ArrayList<>();
 
 		for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
 			if (indexer instanceof FolderIndexer) {

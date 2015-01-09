@@ -169,7 +169,7 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 
 	@Override
 	public List<JGroupsManager> listRemoteCachePeers(Ehcache ehcache) {
-		List<JGroupsManager> cachePeers = new ArrayList<JGroupsManager>();
+		List<JGroupsManager> cachePeers = new ArrayList<>();
 
 		cachePeers.add(this);
 
@@ -197,8 +197,7 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 	public void send(Address address, List eventMessages)
 		throws RemoteException {
 
-		ArrayList<JGroupEventMessage> jGroupEventMessages =
-			new ArrayList<JGroupEventMessage>();
+		ArrayList<JGroupEventMessage> jGroupEventMessages = new ArrayList<>();
 
 		for (Object eventMessage : eventMessages) {
 			if (eventMessage instanceof JGroupEventMessage) {

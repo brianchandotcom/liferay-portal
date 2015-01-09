@@ -78,7 +78,7 @@ public class MockPortletContainer implements PortletContainer {
 			requestLayout.setTypeSettings(MOCK_LAYOUT_TYPE_SETTINGS);
 		}
 
-		events = new ArrayList<Event>();
+		events = new ArrayList<>();
 
 		return events;
 	}

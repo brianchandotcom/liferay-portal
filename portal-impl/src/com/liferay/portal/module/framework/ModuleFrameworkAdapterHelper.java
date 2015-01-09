@@ -128,8 +128,7 @@ public class ModuleFrameworkAdapterHelper {
 		ModuleFrameworkAdapterHelper.class);
 
 	private static ClassLoader _classLoader;
-	private static final Map<MethodKey, Method> _methods =
-		new HashMap<MethodKey, Method>();
+	private static final Map<MethodKey, Method> _methods = new HashMap<>();
 
 	private final Object _adaptedObject;
 

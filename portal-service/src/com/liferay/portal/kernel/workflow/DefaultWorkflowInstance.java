@@ -146,7 +146,7 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 	}
 
 	private List<WorkflowInstance> _childrenWorkflowInstances =
-		new ArrayList<WorkflowInstance>();
+		new ArrayList<>();
 	private Date _endDate;
 	private WorkflowInstance _parentWorkflowInstance;
 	private Date _startDate;

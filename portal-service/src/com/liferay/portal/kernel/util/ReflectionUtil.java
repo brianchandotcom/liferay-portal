@@ -97,7 +97,7 @@ public class ReflectionUtil {
 	public static Class<?>[] getInterfaces(
 		Object object, ClassLoader classLoader) {
 
-		Set<Class<?>> interfaceClasses = new LinkedHashSet<Class<?>>();
+		Set<Class<?>> interfaceClasses = new LinkedHashSet<>();
 
 		Class<?> clazz = object.getClass();
 
@@ -158,7 +158,7 @@ public class ReflectionUtil {
 	}
 
 	public static Set<Method> getVisibleMethods(Class<?> clazz) {
-		Set<Method> visibleMethods = new HashSet<Method>(
+		Set<Method> visibleMethods = new HashSet<>(
 			Arrays.asList(clazz.getMethods()));
 
 		visibleMethods.addAll(Arrays.asList(clazz.getDeclaredMethods()));

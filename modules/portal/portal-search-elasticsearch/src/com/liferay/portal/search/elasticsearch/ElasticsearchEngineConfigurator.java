@@ -169,6 +169,6 @@ public class ElasticsearchEngineConfigurator
 	private IndexWriter _indexWriter;
 	private MessageBus _messageBus;
 	private final Map<String, SearchEngine> _searchEngines =
-		new ConcurrentHashMap<String, SearchEngine>();
+		new ConcurrentHashMap<>();
 
 }

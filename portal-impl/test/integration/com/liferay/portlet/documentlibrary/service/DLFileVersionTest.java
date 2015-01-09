@@ -275,7 +275,7 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 	protected Field createFieldsDisplayField(
 		DDMStructure ddmStructure, Set<String> fieldNames) {
 
-		List<String> fieldsDisplayValues = new ArrayList<String>();
+		List<String> fieldsDisplayValues = new ArrayList<>();
 
 		for (String fieldName : fieldNames) {
 			fieldsDisplayValues.add(

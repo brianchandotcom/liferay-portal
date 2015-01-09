@@ -73,7 +73,7 @@ public class MemoryMultiValueMap<K extends Serializable, V extends Serializable>
 		Set<V> values = _map.get(key);
 
 		if (values == null) {
-			values = new HashSet<V>();
+			values = new HashSet<>();
 		}
 
 		values.add(value);
@@ -88,7 +88,7 @@ public class MemoryMultiValueMap<K extends Serializable, V extends Serializable>
 		Set<V> oldValues = _map.get(key);
 
 		if (oldValues == null) {
-			oldValues = new HashSet<V>();
+			oldValues = new HashSet<>();
 		}
 
 		oldValues.addAll(values);
@@ -111,6 +111,6 @@ public class MemoryMultiValueMap<K extends Serializable, V extends Serializable>
 		return value;
 	}
 
-	private final Map<K, Set<V>> _map = new HashMap<K, Set<V>>();
+	private final Map<K, Set<V>> _map = new HashMap<>();
 
 }

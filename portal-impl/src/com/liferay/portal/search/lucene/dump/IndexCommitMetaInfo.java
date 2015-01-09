@@ -38,10 +38,9 @@ public class IndexCommitMetaInfo implements Serializable {
 			return;
 		}
 
-		List<String> fileNames = new ArrayList<String>(
-			indexCommit.getFileNames());
+		List<String> fileNames = new ArrayList<>(indexCommit.getFileNames());
 
-		_segments = new ArrayList<Segment>(fileNames.size());
+		_segments = new ArrayList<>(fileNames.size());
 
 		Directory directory = indexCommit.getDirectory();
 

@@ -71,7 +71,7 @@ public class LiferayMethodExceptionEventHandler
 			return "className=" + clazz.getName();
 		}
 
-		List<String> proxyInterfaceClassNames = new ArrayList<String>();
+		List<String> proxyInterfaceClassNames = new ArrayList<>();
 
 		for (Class<?> interfaceClass : interfaceClasses) {
 			proxyInterfaceClassNames.add(interfaceClass.getName());

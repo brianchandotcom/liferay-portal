@@ -40,7 +40,7 @@ public class GeolocationFieldRenderer extends BaseFieldRenderer {
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
-		List<String> values = new ArrayList<String>();
+		List<String> values = new ArrayList<>();
 
 		for (Serializable value : field.getValues(locale)) {
 			String valueString = String.valueOf(value);

@@ -66,7 +66,7 @@ public class ServiceLoader {
 		Enumeration<URL> enu = classLoader.getResources(
 			"META-INF/services/" + clazz.getName());
 
-		List<S> services = new ArrayList<S>();
+		List<S> services = new ArrayList<>();
 
 		while (enu.hasMoreElements()) {
 			URL url = enu.nextElement();

@@ -36,7 +36,7 @@ public class FileMultiValueMapTest extends MultiValueMapTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		multiValueMap = new FileMultiValueMap<Integer, String>();
+		multiValueMap = new FileMultiValueMap<>();
 	}
 
 }

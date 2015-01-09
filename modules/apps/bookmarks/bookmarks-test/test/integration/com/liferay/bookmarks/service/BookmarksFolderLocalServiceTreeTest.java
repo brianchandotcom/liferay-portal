@@ -49,7 +49,7 @@ public class BookmarksFolderLocalServiceTreeTest
 	public void testFolderTreePathWhenMovingFolderWithSubfolder()
 		throws Exception {
 
-		List<BookmarksFolder> folders = new ArrayList<BookmarksFolder>();
+		List<BookmarksFolder> folders = new ArrayList<>();
 
 		BookmarksFolder folderA = BookmarksTestUtil.addFolder(
 			group.getGroupId(), "Folder A");

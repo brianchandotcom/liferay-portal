@@ -184,7 +184,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			return new long[] {classPK};
 		}
 
-		List<Long> classPKs = new ArrayList<Long>();
+		List<Long> classPKs = new ArrayList<>();
 
 		classPKs.add(0L);
 

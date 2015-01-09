@@ -92,7 +92,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 	}
 
 	protected Set<Locale> getAvailableLocales(Element rootElement) {
-		Set<Locale> availableLocales = new HashSet<Locale>();
+		Set<Locale> availableLocales = new HashSet<>();
 
 		String availableLanguageIds = rootElement.attributeValue(
 			"available-locales");
@@ -160,7 +160,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 	}
 
 	protected List<DDMFormField> getDDMFormFields(Element rootElement) {
-		List<DDMFormField> ddmFormFields = new ArrayList<DDMFormField>();
+		List<DDMFormField> ddmFormFields = new ArrayList<>();
 
 		for (Element dynamicElement : rootElement.elements("dynamic-element")) {
 			DDMFormField ddmFormField = getDDMFormField(dynamicElement);

@@ -48,6 +48,6 @@ public class BackgroundTaskStatus implements Serializable {
 	}
 
 	private final Map<String, Serializable> _attributes =
-		new ConcurrentHashMap<String, Serializable>();
+		new ConcurrentHashMap<>();
 
 }

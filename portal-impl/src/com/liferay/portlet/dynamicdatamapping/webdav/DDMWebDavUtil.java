@@ -70,7 +70,7 @@ public class DDMWebDavUtil {
 
 			DDMForm ddmForm = getDDMForm(definition);
 
-			Map<Locale, String> nameMap = new HashMap<Locale, String>();
+			Map<Locale, String> nameMap = new HashMap<>();
 
 			Locale defaultLocale = ddmForm.getDefaultLocale();
 

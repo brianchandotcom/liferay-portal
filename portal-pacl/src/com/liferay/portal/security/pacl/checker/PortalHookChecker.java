@@ -204,7 +204,7 @@ public class PortalHookChecker extends BaseChecker {
 		_indexers = getPropertySet("security-manager-hook-indexers");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> indexers = new TreeSet<String>(_indexers);
+			Set<String> indexers = new TreeSet<>(_indexers);
 
 			for (String indexer : indexers) {
 				_log.debug("Allowing indexer " + indexer);
@@ -217,7 +217,7 @@ public class PortalHookChecker extends BaseChecker {
 			"security-manager-hook-language-properties-locales");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> languageIds = new TreeSet<String>(
+			Set<String> languageIds = new TreeSet<>(
 				_languagePropertiesLanguageIds);
 
 			for (String languageId : languageIds) {
@@ -231,7 +231,7 @@ public class PortalHookChecker extends BaseChecker {
 			"security-manager-hook-portal-properties-keys");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> keys = new TreeSet<String>(_portalPropertiesKeys);
+			Set<String> keys = new TreeSet<>(_portalPropertiesKeys);
 
 			for (String key : keys) {
 				_log.debug("Allowing portal.properties key " + key);
@@ -243,7 +243,7 @@ public class PortalHookChecker extends BaseChecker {
 		_services = getPropertySet("security-manager-hook-services");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> services = new TreeSet<String>(_services);
+			Set<String> services = new TreeSet<>(_services);
 
 			for (String service : services) {
 				_log.debug("Allowing service " + service);
@@ -265,8 +265,7 @@ public class PortalHookChecker extends BaseChecker {
 			"security-manager-hook-struts-action-paths");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> strutsActionPaths = new TreeSet<String>(
-				_strutsActionPaths);
+			Set<String> strutsActionPaths = new TreeSet<>(_strutsActionPaths);
 
 			for (String strutsActionPath : strutsActionPaths) {
 				_log.debug("Allowing Struts action path " + strutsActionPath);

@@ -63,7 +63,7 @@ public class IGConfigurationDisplayContext {
 		String[] mediaGalleryMimeTypes =
 			_dlPortletInstanceSettings.getMimeTypes();
 
-		_currentMimeTypes = new ArrayList<KeyValuePair>();
+		_currentMimeTypes = new ArrayList<>();
 
 		for (String mimeType : mediaGalleryMimeTypes) {
 			_currentMimeTypes.add(
@@ -72,7 +72,7 @@ public class IGConfigurationDisplayContext {
 					LanguageUtil.get(_themeDisplay.getLocale(), mimeType)));
 		}
 
-		_availableMimeTypes = new ArrayList<KeyValuePair>();
+		_availableMimeTypes = new ArrayList<>();
 
 		Set<String> allMediaGalleryMimeTypes =
 			DLUtil.getAllMediaGalleryMimeTypes();

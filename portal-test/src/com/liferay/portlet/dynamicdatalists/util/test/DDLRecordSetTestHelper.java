@@ -42,7 +42,7 @@ public class DDLRecordSetTestHelper {
 	public DDLRecordSet addRecordSet(DDMStructure ddmStructure)
 		throws Exception {
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.US, RandomTestUtil.randomString());
 

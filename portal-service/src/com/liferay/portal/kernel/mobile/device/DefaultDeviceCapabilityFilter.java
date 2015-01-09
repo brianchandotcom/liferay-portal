@@ -61,7 +61,6 @@ public class DefaultDeviceCapabilityFilter implements DeviceCapabilityFilter {
 		_acceptableCapabilityNames.addAll(acceptableCapabilityNames);
 	}
 
-	private final Set<String> _acceptableCapabilityNames =
-		new HashSet<String>();
+	private final Set<String> _acceptableCapabilityNames = new HashSet<>();
 
 }

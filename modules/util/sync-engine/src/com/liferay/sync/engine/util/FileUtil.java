@@ -392,7 +392,7 @@ public class FileUtil {
 
 	private static Logger _logger = LoggerFactory.getLogger(FileUtil.class);
 
-	private static Set<String> _syncFileIgnoreNames = new HashSet<String>(
+	private static Set<String> _syncFileIgnoreNames = new HashSet<>(
 		Arrays.asList(PropsValues.SYNC_FILE_IGNORE_NAMES));
 
 }

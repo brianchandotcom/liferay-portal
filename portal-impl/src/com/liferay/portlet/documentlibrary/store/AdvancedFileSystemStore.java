@@ -47,7 +47,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 		String[] directories = FileUtil.listDirs(repositoryDir);
 
-		List<String> fileNames = new ArrayList<String>();
+		List<String> fileNames = new ArrayList<>();
 
 		for (String directory : directories) {
 			fileNames.addAll(
@@ -120,7 +120,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	protected List<String> getAdvancedFileNames(
 		long companyId, long repositoryId, String fileName) {
 
-		List<String> fileNames = new ArrayList<String>();
+		List<String> fileNames = new ArrayList<>();
 
 		String shortFileName = FileUtil.getShortFileName(fileName);
 

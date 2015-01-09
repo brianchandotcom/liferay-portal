@@ -482,7 +482,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			return defaultAddresses;
 		}
 
-		List<Address> addresses = new ArrayList<Address>();
+		List<Address> addresses = new ArrayList<>();
 
 		int[] addressesIndexes = StringUtil.split(addressesIndexesString, 0);
 
@@ -562,7 +562,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			return defaultEmailAddresses;
 		}
 
-		List<EmailAddress> emailAddresses = new ArrayList<EmailAddress>();
+		List<EmailAddress> emailAddresses = new ArrayList<>();
 
 		int[] emailAddressesIndexes = StringUtil.split(
 			emailAddressesIndexesString, 0);
@@ -706,8 +706,7 @@ public class UsersAdminImpl implements UsersAdmin {
 
 		List<Document> documents = hits.toList();
 
-		List<Organization> organizations = new ArrayList<Organization>(
-			documents.size());
+		List<Organization> organizations = new ArrayList<>(documents.size());
 
 		for (Document document : documents) {
 			long organizationId = GetterUtil.getLong(
@@ -737,7 +736,7 @@ public class UsersAdminImpl implements UsersAdmin {
 
 	@Override
 	public List<OrgLabor> getOrgLabors(ActionRequest actionRequest) {
-		List<OrgLabor> orgLabors = new ArrayList<OrgLabor>();
+		List<OrgLabor> orgLabors = new ArrayList<>();
 
 		int[] orgLaborsIndexes = StringUtil.split(
 			ParamUtil.getString(actionRequest, "orgLaborsIndexes"), 0);
@@ -823,7 +822,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			return defaultPhones;
 		}
 
-		List<Phone> phones = new ArrayList<Phone>();
+		List<Phone> phones = new ArrayList<>();
 
 		int[] phonesIndexes = StringUtil.split(phonesIndexesString, 0);
 
@@ -987,14 +986,14 @@ public class UsersAdminImpl implements UsersAdmin {
 				portletRequest, user, "deleteGroupRolesGroupIds",
 				"deleteGroupRolesRoleIds"));
 
-		return new ArrayList<UserGroupRole>(userGroupRoles);
+		return new ArrayList<>(userGroupRoles);
 	}
 
 	@Override
 	public List<UserGroup> getUserGroups(Hits hits) throws PortalException {
 		List<Document> documents = hits.toList();
 
-		List<UserGroup> userGroups = new ArrayList<UserGroup>(documents.size());
+		List<UserGroup> userGroups = new ArrayList<>(documents.size());
 
 		for (Document document : documents) {
 			long userGroupId = GetterUtil.getLong(
@@ -1060,7 +1059,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	public List<User> getUsers(Hits hits) throws PortalException {
 		List<Document> documents = hits.toList();
 
-		List<User> users = new ArrayList<User>(documents.size());
+		List<User> users = new ArrayList<>(documents.size());
 
 		for (Document document : documents) {
 			long userId = GetterUtil.getLong(document.get(Field.USER_ID));
@@ -1101,7 +1100,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			return defaultWebsites;
 		}
 
-		List<Website> websites = new ArrayList<Website>();
+		List<Website> websites = new ArrayList<>();
 
 		int[] websitesIndexes = StringUtil.split(websitesIndexesString, 0);
 
@@ -1283,7 +1282,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			String className, long classPK, List<Address> addresses)
 		throws PortalException {
 
-		Set<Long> addressIds = new HashSet<Long>();
+		Set<Long> addressIds = new HashSet<>();
 
 		for (Address address : addresses) {
 			long addressId = address.getAddressId();
@@ -1330,7 +1329,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			String className, long classPK, List<EmailAddress> emailAddresses)
 		throws PortalException {
 
-		Set<Long> emailAddressIds = new HashSet<Long>();
+		Set<Long> emailAddressIds = new HashSet<>();
 
 		for (EmailAddress emailAddress : emailAddresses) {
 			long emailAddressId = emailAddress.getEmailAddressId();
@@ -1369,7 +1368,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	public void updateOrgLabors(long classPK, List<OrgLabor> orgLabors)
 		throws PortalException {
 
-		Set<Long> orgLaborsIds = new HashSet<Long>();
+		Set<Long> orgLaborsIds = new HashSet<>();
 
 		for (OrgLabor orgLabor : orgLabors) {
 			long orgLaborId = orgLabor.getOrgLaborId();
@@ -1421,7 +1420,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	public void updatePhones(String className, long classPK, List<Phone> phones)
 		throws PortalException {
 
-		Set<Long> phoneIds = new HashSet<Long>();
+		Set<Long> phoneIds = new HashSet<>();
 
 		for (Phone phone : phones) {
 			long phoneId = phone.getPhoneId();
@@ -1460,7 +1459,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			String className, long classPK, List<Website> websites)
 		throws PortalException {
 
-		Set<Long> websiteIds = new HashSet<Long>();
+		Set<Long> websiteIds = new HashSet<>();
 
 		for (Website website : websites) {
 			long websiteId = website.getWebsiteId();
@@ -1519,7 +1518,7 @@ public class UsersAdminImpl implements UsersAdmin {
 		PortletRequest portletRequest, User user, String groupIdsParam,
 		String roleIdsParam) {
 
-		Set<UserGroupRole> userGroupRoles = new HashSet<UserGroupRole>();
+		Set<UserGroupRole> userGroupRoles = new HashSet<>();
 
 		long[] groupRolesGroupIds = StringUtil.split(
 			ParamUtil.getString(portletRequest, groupIdsParam), 0L);

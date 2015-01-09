@@ -32,7 +32,7 @@ public class FutureClusterResponsesTest {
 
 	@Test
 	public void testMultipleResponseFailure() throws UnknownHostException {
-		List<Address> addresses = new ArrayList<Address>();
+		List<Address> addresses = new ArrayList<>();
 
 		addresses.add(new MockAddress("1.2.3.4"));
 		addresses.add(new MockAddress("1.2.3.5"));
@@ -69,7 +69,7 @@ public class FutureClusterResponsesTest {
 
 	@Test
 	public void testMultipleResponseSuccess() throws UnknownHostException {
-		List<Address> addresses = new ArrayList<Address>();
+		List<Address> addresses = new ArrayList<>();
 
 		addresses.add(new MockAddress("1.2.3.4"));
 		addresses.add(new MockAddress("1.2.3.5"));
@@ -112,7 +112,7 @@ public class FutureClusterResponsesTest {
 
 	@Test
 	public void testSingleResponseFailure() {
-		List<Address> addresses = new ArrayList<Address>();
+		List<Address> addresses = new ArrayList<>();
 
 		addresses.add(new MockAddress("1.2.3.4"));
 
@@ -133,7 +133,7 @@ public class FutureClusterResponsesTest {
 
 	@Test
 	public void testSingleResponseSuccess() throws UnknownHostException {
-		List<Address> addresses = new ArrayList<Address>();
+		List<Address> addresses = new ArrayList<>();
 
 		addresses.add(new MockAddress("1.2.3.4"));
 

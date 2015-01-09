@@ -370,7 +370,7 @@ public class PortletBagFactory {
 	protected <S> ServiceTrackerList<S> getServiceTrackerList(
 		Class<S> clazz, Portlet portlet) {
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("javax.portlet.name", portlet.getPortletId());
 
@@ -591,7 +591,7 @@ public class PortletBagFactory {
 			Indexer indexerInstance = (Indexer)newInstance(
 				Indexer.class, indexerClass);
 
-			Map<String, Object> properties = new HashMap<String, Object>();
+			Map<String, Object> properties = new HashMap<>();
 
 			String[] classNames = ArrayUtil.append(
 				indexerInstance.getClassNames(),

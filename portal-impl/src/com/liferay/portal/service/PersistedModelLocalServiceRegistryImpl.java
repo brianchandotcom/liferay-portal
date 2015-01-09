@@ -82,7 +82,6 @@ public class PersistedModelLocalServiceRegistryImpl
 		PersistedModelLocalServiceRegistryImpl.class);
 
 	private final Map<String, PersistedModelLocalService>
-		_persistedModelLocalServices =
-			new ConcurrentHashMap<String, PersistedModelLocalService>();
+		_persistedModelLocalServices = new ConcurrentHashMap<>();
 
 }

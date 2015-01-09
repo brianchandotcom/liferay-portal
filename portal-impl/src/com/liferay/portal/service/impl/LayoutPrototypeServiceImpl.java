@@ -120,8 +120,7 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 			OrderByComparator<LayoutPrototype> obc)
 		throws PortalException {
 
-		List<LayoutPrototype> filteredLayoutPrototypes =
-			new ArrayList<LayoutPrototype>();
+		List<LayoutPrototype> filteredLayoutPrototypes = new ArrayList<>();
 
 		List<LayoutPrototype> layoutPrototypes =
 			layoutPrototypeLocalService.search(

@@ -48,8 +48,7 @@ public class ExportImportLifecycleEventImpl
 		_code = code;
 	}
 
-	private final List<Serializable> _attributes =
-		new ArrayList<Serializable>();
+	private final List<Serializable> _attributes = new ArrayList<>();
 	private int _code;
 
 }

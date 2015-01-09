@@ -200,7 +200,7 @@ public class EncryptTag extends TagSupport {
 	private String _protocol;
 	private String _style;
 	private String _target;
-	private Set<String> _unencryptedParamsSet = new HashSet<String>();
+	private Set<String> _unencryptedParamsSet = new HashSet<>();
 	private String _url;
 
 }

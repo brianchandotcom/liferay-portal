@@ -75,8 +75,8 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * optional service context parameters.
 	 */
 	public ServiceContext() {
-		_attributes = new LinkedHashMap<String, Serializable>();
-		_expandoBridgeAttributes = new LinkedHashMap<String, Serializable>();
+		_attributes = new LinkedHashMap<>();
+		_expandoBridgeAttributes = new LinkedHashMap<>();
 	}
 
 	/**
@@ -147,8 +147,8 @@ public class ServiceContext implements Cloneable, Serializable {
 		Role defaultGroupRole = RoleLocalServiceUtil.getDefaultGroupRole(
 			siteGroupId);
 
-		List<String> groupPermissions = new ArrayList<String>();
-		List<String> guestPermissions = new ArrayList<String>();
+		List<String> groupPermissions = new ArrayList<>();
+		List<String> guestPermissions = new ArrayList<>();
 
 		String[] roleNames = {RoleConstants.GUEST, defaultGroupRole.getName()};
 

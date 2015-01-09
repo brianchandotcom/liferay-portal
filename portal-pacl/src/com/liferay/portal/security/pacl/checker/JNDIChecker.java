@@ -75,7 +75,7 @@ public class JNDIChecker extends BaseChecker {
 	protected void initNames() {
 		Set<String> names = getPropertySet("security-manager-jndi-names");
 
-		_patterns = new ArrayList<Pattern>(names.size());
+		_patterns = new ArrayList<>(names.size());
 
 		for (String name : names) {
 			Pattern pattern = Pattern.compile(name);

@@ -112,7 +112,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	@Override
 	public Map<String, Serializable> getAttributes() {
-		return new HashMap<String, Serializable>();
+		return new HashMap<>();
 	}
 
 	@Override
@@ -210,8 +210,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		try {
 			List<Document> documents = getAllVersions();
 
-			List<FileVersion> fileVersions = new ArrayList<FileVersion>(
-				documents.size());
+			List<FileVersion> fileVersions = new ArrayList<>(documents.size());
 
 			for (Document document : documents) {
 				FileVersion fileVersion =

@@ -147,7 +147,7 @@ public class StrutsUtil {
 	public static Map<String, Object> removeStrutsAttributes(
 		PortletContext portletContext, PortletRequest portletRequest) {
 
-		Map<String, Object> strutsAttributes = new HashMap<String, Object>();
+		Map<String, Object> strutsAttributes = new HashMap<>();
 
 		Enumeration<String> enu = portletRequest.getAttributeNames();
 

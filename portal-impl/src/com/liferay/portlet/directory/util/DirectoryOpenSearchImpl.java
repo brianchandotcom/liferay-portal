@@ -96,8 +96,7 @@ public class DirectoryOpenSearchImpl extends HitsOpenSearchImpl {
 	protected LinkedHashMap<String, Object> getUserParams(
 		long companyId, String keywords) {
 
-		LinkedHashMap<String, Object> userParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			companyId, User.class.getName());

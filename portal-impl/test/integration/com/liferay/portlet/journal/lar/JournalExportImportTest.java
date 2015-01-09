@@ -222,7 +222,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	protected Map<String, String[]> getBaseParameterMap(long groupId, long plid)
 		throws Exception {
 
-		Map<String, String[]> parameterMap = new HashMap<String, String[]>();
+		Map<String, String[]> parameterMap = new HashMap<>();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PERMISSIONS,

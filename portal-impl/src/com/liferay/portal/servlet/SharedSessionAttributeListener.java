@@ -46,7 +46,7 @@ public class SharedSessionAttributeListener
 			_sessionIds = null;
 		}
 		else {
-			_sessionIds = new ConcurrentHashSet<String>();
+			_sessionIds = new ConcurrentHashSet<>();
 		}
 	}
 

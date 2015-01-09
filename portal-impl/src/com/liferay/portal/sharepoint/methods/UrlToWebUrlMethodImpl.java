@@ -39,7 +39,7 @@ public class UrlToWebUrlMethodImpl extends BaseMethodImpl {
 	protected List<ResponseElement> getElements(
 		SharepointRequest sharepointRequest) {
 
-		List<ResponseElement> elements = new ArrayList<ResponseElement>();
+		List<ResponseElement> elements = new ArrayList<>();
 
 		String url = sharepointRequest.getParameterValue("url");
 

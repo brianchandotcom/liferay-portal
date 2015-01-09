@@ -56,7 +56,7 @@ public class ClassUtil {
 	public static Set<String> getClasses(Reader reader, String className)
 		throws IOException {
 
-		Set<String> classes = new HashSet<String>();
+		Set<String> classes = new HashSet<>();
 
 		StreamTokenizer st = new StreamTokenizer(reader);
 
@@ -259,7 +259,7 @@ public class ClassUtil {
 
 		s = s.trim();
 
-		List<String> tokens = new ArrayList<String>();
+		List<String> tokens = new ArrayList<>();
 
 		Matcher annotationNameMatcher = _ANNOTATION_NAME_REGEXP.matcher(s);
 		Matcher annotationParametersMatcher =

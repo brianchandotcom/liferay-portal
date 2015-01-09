@@ -191,10 +191,9 @@ public class PortletRequestModel implements Serializable {
 			_themeDisplayModel = null;
 		}
 
-		_parameters = new HashMap<String, String[]>(
-			portletRequest.getParameterMap());
+		_parameters = new HashMap<>(portletRequest.getParameterMap());
 
-		_attributes = new HashMap<String, Object>();
+		_attributes = new HashMap<>();
 
 		Enumeration<String> enumeration = portletRequest.getAttributeNames();
 
@@ -335,8 +334,7 @@ public class PortletRequestModel implements Serializable {
 	}
 
 	public Map<String, Object> toMap() {
-		Map<String, Object> portletRequestModelMap =
-			new HashMap<String, Object>();
+		Map<String, Object> portletRequestModelMap = new HashMap<>();
 
 		portletRequestModelMap.put("container-type", "portlet");
 		portletRequestModelMap.put("container-namespace", _contextPath);
@@ -394,8 +392,7 @@ public class PortletRequestModel implements Serializable {
 		}
 
 		if (_themeDisplayModel != null) {
-			Map<String, Object> themeDisplayModelMap =
-				new HashMap<String, Object>();
+			Map<String, Object> themeDisplayModelMap = new HashMap<>();
 
 			portletRequestModelMap.put("theme-display", themeDisplayModelMap);
 
@@ -451,8 +448,7 @@ public class PortletRequestModel implements Serializable {
 				_themeDisplayModel.getPortletDisplayModel();
 
 			if (portletDisplayModel != null) {
-				Map<String, Object> portletDisplayModelMap =
-					new HashMap<String, Object>();
+				Map<String, Object> portletDisplayModelMap = new HashMap<>();
 
 				themeDisplayModelMap.put(
 					"portlet-display", portletDisplayModelMap);
@@ -477,7 +473,7 @@ public class PortletRequestModel implements Serializable {
 
 		portletRequestModelMap.put("attributes", _attributes);
 
-		Map<String, Object> portletSessionMap = new HashMap<String, Object>();
+		Map<String, Object> portletSessionMap = new HashMap<>();
 
 		portletRequestModelMap.put("portlet-session", portletSessionMap);
 

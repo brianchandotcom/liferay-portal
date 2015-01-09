@@ -115,7 +115,7 @@ public class JspResourceResolver implements ResourceResolver {
 			return resources;
 		}
 
-		resources = new ArrayList<String>();
+		resources = new ArrayList<>();
 
 		Map<String, List<URL>> extraPackageMap = _serviceTracker.getService();
 

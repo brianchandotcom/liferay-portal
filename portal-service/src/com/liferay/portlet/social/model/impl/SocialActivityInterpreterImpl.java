@@ -97,7 +97,7 @@ public class SocialActivityInterpreterImpl
 	}
 
 	private final SocialActivityInterpreter _activityInterpreter;
-	private final Set<String> _classNames = new HashSet<String>();
+	private final Set<String> _classNames = new HashSet<>();
 	private final String _portletId;
 
 }

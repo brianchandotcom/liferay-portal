@@ -624,17 +624,15 @@ public class PersistenceNestedSetsTreeManagerTest {
 	protected void assertGetAncestors(
 		AssetCategory assetCategory, AssetCategory... ancestorAssetCategories) {
 
-		List<AssetCategory> expectedAssetCategories =
-			new ArrayList<AssetCategory>(
-				Arrays.asList(ancestorAssetCategories));
+		List<AssetCategory> expectedAssetCategories = new ArrayList<>(
+			Arrays.asList(ancestorAssetCategories));
 
 		expectedAssetCategories.add(assetCategory);
 
 		Collections.sort(expectedAssetCategories);
 
-		List<AssetCategory> actualAssetCategories =
-			new ArrayList<AssetCategory>(
-				_nestedSetsTreeManager.getAncestors(assetCategory));
+		List<AssetCategory> actualAssetCategories = new ArrayList<>(
+			_nestedSetsTreeManager.getAncestors(assetCategory));
 
 		Collections.sort(actualAssetCategories);
 
@@ -644,16 +642,15 @@ public class PersistenceNestedSetsTreeManagerTest {
 	protected void assertGetDescendants(
 		AssetCategory assetCategory, AssetCategory... childAssetCategories) {
 
-		List<AssetCategory> expectedAssetCategories =
-			new ArrayList<AssetCategory>(Arrays.asList(childAssetCategories));
+		List<AssetCategory> expectedAssetCategories = new ArrayList<>(
+			Arrays.asList(childAssetCategories));
 
 		expectedAssetCategories.add(assetCategory);
 
 		Collections.sort(expectedAssetCategories);
 
-		List<AssetCategory> actualAssetCategories =
-			new ArrayList<AssetCategory>(
-				_nestedSetsTreeManager.getDescendants(assetCategory));
+		List<AssetCategory> actualAssetCategories = new ArrayList<>(
+			_nestedSetsTreeManager.getDescendants(assetCategory));
 
 		Collections.sort(actualAssetCategories);
 

@@ -110,6 +110,6 @@ public class ElementHandler implements ContentHandler {
 
 	private Element _element;
 	private ElementProcessor _elementProcessor;
-	private Set<String> _triggers = new HashSet<String>();
+	private Set<String> _triggers = new HashSet<>();
 
 }

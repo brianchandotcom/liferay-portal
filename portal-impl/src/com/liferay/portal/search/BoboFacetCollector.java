@@ -56,7 +56,6 @@ public class BoboFacetCollector implements FacetCollector {
 
 	private final FacetAccessible _facetAccessible;
 	private final String _fieldName;
-	private final List<TermCollector> _termCollectors =
-		new ArrayList<TermCollector>();
+	private final List<TermCollector> _termCollectors = new ArrayList<>();
 
 }

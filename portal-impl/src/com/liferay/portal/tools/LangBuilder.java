@@ -489,7 +489,7 @@ public class LangBuilder {
 			UnsyncBufferedWriter unsyncBufferedWriter =
 				new UnsyncBufferedWriter(new FileWriter(propertiesFile))) {
 
-			Map<String, String> messages = new TreeMap<String, String>(
+			Map<String, String> messages = new TreeMap<>(
 				new NaturalOrderStringComparator(true, true));
 
 			boolean begin = false;

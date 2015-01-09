@@ -45,7 +45,7 @@ public class PortletContextFactory {
 	}
 
 	private PortletContextFactory() {
-		_pool = new ConcurrentHashMap<String, Map<String, PortletContext>>();
+		_pool = new ConcurrentHashMap<>();
 	}
 
 	private PortletContext _create(
@@ -55,7 +55,7 @@ public class PortletContextFactory {
 			portlet.getRootPortletId());
 
 		if (portletContexts == null) {
-			portletContexts = new ConcurrentHashMap<String, PortletContext>();
+			portletContexts = new ConcurrentHashMap<>();
 
 			_pool.put(portlet.getRootPortletId(), portletContexts);
 		}

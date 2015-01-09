@@ -86,7 +86,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		List<Long> threadIds = mbMessageFinder.filterFindByG_U_MD_C_S(
 			groupId, userId, modifiedDate, categoryIds, status, start, end);
 
-		List<MBThread> threads = new ArrayList<MBThread>(threadIds.size());
+		List<MBThread> threads = new ArrayList<>(threadIds.size());
 
 		for (long threadId : threadIds) {
 			MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
@@ -143,7 +143,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			}
 		}
 
-		List<MBThread> threads = new ArrayList<MBThread>(threadIds.size());
+		List<MBThread> threads = new ArrayList<>(threadIds.size());
 
 		for (long threadId : threadIds) {
 			MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);

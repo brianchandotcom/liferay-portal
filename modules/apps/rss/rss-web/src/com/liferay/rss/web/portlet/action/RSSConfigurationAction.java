@@ -58,7 +58,7 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 		int[] subscriptionIndexes = StringUtil.split(
 			ParamUtil.getString(actionRequest, "subscriptionIndexes"), 0);
 
-		Map<String, String> subscriptions = new LinkedHashMap<String, String>();
+		Map<String, String> subscriptions = new LinkedHashMap<>();
 
 		for (int subscriptionIndex : subscriptionIndexes) {
 			String url = ParamUtil.getString(

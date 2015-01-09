@@ -34,15 +34,13 @@ public class PortalCacheManagerConfiguration {
 			_cacheManagerListenerConfigurations = Collections.emptySet();
 		}
 		else {
-			_cacheManagerListenerConfigurations =
-				new HashSet<CallbackConfiguration>(
-					cacheManagerListenerConfigurations);
+			_cacheManagerListenerConfigurations = new HashSet<>(
+				cacheManagerListenerConfigurations);
 		}
 
 		_defaultPortalCacheConfiguration = defaultPortalCacheConfiguration;
 
-		_portalCacheConfigurations =
-			new ConcurrentHashMap<String, PortalCacheConfiguration>();
+		_portalCacheConfigurations = new ConcurrentHashMap<>();
 
 		if (portalCacheConfigurations != null) {
 			for (PortalCacheConfiguration portalCacheConfiguration :

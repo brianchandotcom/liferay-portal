@@ -35,7 +35,6 @@ public class UniqueStringRandomizerBumper implements RandomizerBumper<String> {
 		return _randomValues.add(randomValue);
 	}
 
-	private static final Set<String> _randomValues =
-		new ConcurrentHashSet<String>();
+	private static final Set<String> _randomValues = new ConcurrentHashSet<>();
 
 }

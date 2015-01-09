@@ -437,7 +437,7 @@ public class EditMessageAction extends PortletAction {
 				}
 			}
 			else {
-				List<String> existingFiles = new ArrayList<String>();
+				List<String> existingFiles = new ArrayList<>();
 
 				for (int i = 1; i <= 5; i++) {
 					String path = ParamUtil.getString(

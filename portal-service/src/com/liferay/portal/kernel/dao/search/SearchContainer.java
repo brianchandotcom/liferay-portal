@@ -146,7 +146,7 @@ public class SearchContainer<R> {
 					portletRequest, DisplayTerms.AND_OPERATOR, true)));
 
 		if (headerNames != null) {
-			_headerNames = new ArrayList<String>(headerNames.size());
+			_headerNames = new ArrayList<>(headerNames.size());
 
 			_headerNames.addAll(headerNames);
 
@@ -484,7 +484,7 @@ public class SearchContainer<R> {
 			return;
 		}
 
-		_normalizedHeaderNames = new ArrayList<String>(headerNames.size());
+		_normalizedHeaderNames = new ArrayList<>(headerNames.size());
 
 		for (String headerName : headerNames) {
 			_normalizedHeaderNames.add(
@@ -553,8 +553,8 @@ public class SearchContainer<R> {
 	private String _orderByTypeParam = DEFAULT_ORDER_BY_TYPE_PARAM;
 	private final PortletRequest _portletRequest;
 	private int _resultEnd;
-	private final List<ResultRow> _resultRows = new ArrayList<ResultRow>();
-	private List<R> _results = new ArrayList<R>();
+	private final List<ResultRow> _resultRows = new ArrayList<>();
+	private List<R> _results = new ArrayList<>();
 	private RowChecker _rowChecker;
 	private final DisplayTerms _searchTerms;
 	private int _start;

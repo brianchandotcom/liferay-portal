@@ -547,7 +547,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			_dependentSyncWatchEventsMaps.get(filePathName);
 
 		if (syncWatchEvents == null) {
-			syncWatchEvents = new ArrayList<SyncWatchEvent>();
+			syncWatchEvents = new ArrayList<>();
 
 			_dependentSyncWatchEventsMaps.put(filePathName, syncWatchEvents);
 		}
@@ -562,10 +562,9 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncEngine.getEventProcessorExecutorService();
 
 	private final Map<String, List<SyncWatchEvent>>
-		_dependentSyncWatchEventsMaps =
-			new HashMap<String, List<SyncWatchEvent>>();
-	private final Set<Long> _pendingTypePKSyncFileIds = new HashSet<Long>();
-	private final Set<Long> _processedSyncWatchEventIds = new HashSet<Long>();
+		_dependentSyncWatchEventsMaps = new HashMap<>();
+	private final Set<Long> _pendingTypePKSyncFileIds = new HashSet<>();
+	private final Set<Long> _processedSyncWatchEventIds = new HashSet<>();
 	private final long _syncAccountId;
 
 }

@@ -37,8 +37,8 @@ public class RegexTransformerUtil {
 	}
 
 	private RegexTransformerUtil() {
-		_patterns = new ArrayList<Pattern>();
-		_replacements = new ArrayList<String>();
+		_patterns = new ArrayList<>();
+		_replacements = new ArrayList<>();
 
 		for (int i = 0; i < 100; i++) {
 			String regex = PropsUtil.get(

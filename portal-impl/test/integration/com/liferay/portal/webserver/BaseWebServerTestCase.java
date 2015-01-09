@@ -41,11 +41,11 @@ public abstract class BaseWebServerTestCase extends BaseDLAppTestCase {
 		throws Exception {
 
 		if (headers == null) {
-			headers = new HashMap<String, String>();
+			headers = new HashMap<>();
 		}
 
 		if (params == null) {
-			params = new HashMap<String, String>();
+			params = new HashMap<>();
 		}
 
 		if (user == null) {

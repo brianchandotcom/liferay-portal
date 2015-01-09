@@ -64,7 +64,7 @@ public class ConcurrentReferenceKeyHashMapTest
 	@Test
 	public void testConstructor() {
 		ConcurrentMap<Reference<String>, Object> innerConcurrentMap =
-			new ConcurrentHashMap<Reference<String>, Object>();
+			new ConcurrentHashMap<>();
 
 		ConcurrentReferenceKeyHashMap<String, Object>
 			concurrentReferenceKeyHashMap =

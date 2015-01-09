@@ -264,8 +264,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	private ClusterEventListener _clusterEventListener;
 	private ClusterExecutor _clusterExecutor;
 	private final Set<ClusterMasterTokenTransitionListener>
-		_clusterMasterTokenTransitionListeners =
-			new HashSet<ClusterMasterTokenTransitionListener>();
+		_clusterMasterTokenTransitionListeners = new HashSet<>();
 	private volatile boolean _enabled;
 	private volatile String _localClusterNodeAddress;
 

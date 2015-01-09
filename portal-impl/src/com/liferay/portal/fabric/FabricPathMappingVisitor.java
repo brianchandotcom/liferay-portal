@@ -77,7 +77,7 @@ public class FabricPathMappingVisitor extends AnnotatedFieldMappingVisitor {
 		return mappedPath.toFile();
 	}
 
-	private final Map<Path, Path> _pathMap = new HashMap<Path, Path>();
+	private final Map<Path, Path> _pathMap = new HashMap<>();
 	private final Path _remoteRepositoryPath;
 	private final boolean _reverseMapping;
 

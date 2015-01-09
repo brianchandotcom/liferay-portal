@@ -28,11 +28,10 @@ public class StringPlus {
 
 	public static List<String> asList(Object object) {
 		if (object instanceof String) {
-			return new ArrayList<String>(
-				Collections.singletonList((String)object));
+			return new ArrayList<>(Collections.singletonList((String)object));
 		}
 		else if (object instanceof String[]) {
-			return new ArrayList<String>(Arrays.asList((String[])object));
+			return new ArrayList<>(Arrays.asList((String[])object));
 		}
 		else if (object instanceof Collection) {
 			Collection<?> collection = (Collection<?>)object;
@@ -43,12 +42,12 @@ public class StringPlus {
 				Object element = iterator.next();
 
 				if (element instanceof String) {
-					return new ArrayList<String>((Collection<String>)object);
+					return new ArrayList<>((Collection<String>)object);
 				}
 			}
 		}
 
-		return new ArrayList<String>();
+		return new ArrayList<>();
 	}
 
 }

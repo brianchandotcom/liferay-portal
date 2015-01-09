@@ -136,7 +136,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected Set<Locale> createAvailableLocales(Locale... locales) {
-		Set<Locale> availableLocales = new LinkedHashSet<Locale>();
+		Set<Locale> availableLocales = new LinkedHashSet<>();
 
 		for (Locale locale : locales) {
 			availableLocales.add(locale);
@@ -186,8 +186,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	protected List<DDMFormLayoutColumn> createDDMFormLayoutColumns(
 		String... fieldNames) {
 
-		List<DDMFormLayoutColumn> ddmFormLayoutColumns =
-			new ArrayList<DDMFormLayoutColumn>();
+		List<DDMFormLayoutColumn> ddmFormLayoutColumns = new ArrayList<>();
 
 		int size = 12 / fieldNames.length;
 
@@ -374,7 +373,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected List<Serializable> createValuesList(String... valuesString) {
-		List<Serializable> values = new ArrayList<Serializable>();
+		List<Serializable> values = new ArrayList<>();
 
 		for (String valueString : valuesString) {
 			values.add(valueString);
@@ -386,8 +385,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	protected Map<Locale, List<Serializable>> createValuesMap(
 		List<Serializable> enValues, List<Serializable> ptValues) {
 
-		Map<Locale, List<Serializable>> valuesMap =
-			new HashMap<Locale, List<Serializable>>();
+		Map<Locale, List<Serializable>> valuesMap = new HashMap<>();
 
 		if (enValues != null) {
 			valuesMap.put(LocaleUtil.US, enValues);
@@ -645,10 +643,8 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	@Mock
 	protected Language _language;
 
-	protected Map<Long, DDMStructure> structures =
-		new HashMap<Long, DDMStructure>();
-	protected Map<Long, DDMTemplate> templates =
-		new HashMap<Long, DDMTemplate>();
+	protected Map<Long, DDMStructure> structures = new HashMap<>();
+	protected Map<Long, DDMTemplate> templates = new HashMap<>();
 
 	protected class MockField extends Field {
 

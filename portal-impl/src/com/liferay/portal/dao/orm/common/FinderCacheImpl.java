@@ -282,8 +282,7 @@ public class FinderCacheImpl
 				return (Serializable)Collections.emptyList();
 			}
 
-			Set<Serializable> primaryKeysSet = new HashSet<Serializable>(
-				primaryKeys);
+			Set<Serializable> primaryKeysSet = new HashSet<>(primaryKeys);
 
 			Map<Serializable, ? extends BaseModel<?>> map =
 				basePersistenceImpl.fetchByPrimaryKeys(primaryKeysSet);
@@ -292,8 +291,7 @@ public class FinderCacheImpl
 				return null;
 			}
 
-			List<Serializable> list = new ArrayList<Serializable>(
-				primaryKeys.size());
+			List<Serializable> list = new ArrayList<>(primaryKeys.size());
 
 			for (Serializable curPrimaryKey : primaryKeys) {
 				list.add(map.get(curPrimaryKey));
@@ -325,8 +323,7 @@ public class FinderCacheImpl
 				return (Serializable)Collections.emptyList();
 			}
 
-			ArrayList<Serializable> cachedList = new ArrayList<Serializable>(
-				list.size());
+			ArrayList<Serializable> cachedList = new ArrayList<>(list.size());
 
 			for (Serializable curResult : list) {
 				Serializable primaryKey = _resultToPrimaryKey(curResult);

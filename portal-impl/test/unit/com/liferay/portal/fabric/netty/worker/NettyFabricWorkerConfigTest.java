@@ -134,7 +134,7 @@ public class NettyFabricWorkerConfigTest {
 		ProcessCallable<String> processCallable =
 			new ReturnProcessCallable<String>("Test ProcessCallable");
 
-		Map<Path, Path> inputPathMap = new HashMap<Path, Path>();
+		Map<Path, Path> inputPathMap = new HashMap<>();
 
 		inputPathMap.put(Paths.get("path1"), Paths.get("path2"));
 		inputPathMap.put(Paths.get("path3"), Paths.get("path4"));

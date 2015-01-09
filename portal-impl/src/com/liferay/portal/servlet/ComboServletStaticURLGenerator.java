@@ -34,7 +34,7 @@ import java.util.Set;
 public class ComboServletStaticURLGenerator {
 
 	public List<String> generate(List<Portlet> portlets) {
-		List<String> urls = new ArrayList<String>();
+		List<String> urls = new ArrayList<>();
 
 		StringBundler sb = new StringBundler();
 

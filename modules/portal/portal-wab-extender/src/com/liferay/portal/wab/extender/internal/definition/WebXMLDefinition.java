@@ -95,14 +95,11 @@ public class WebXMLDefinition {
 		_servletDefinitions = servletDefinitions;
 	}
 
-	private Map<String, String> _contextParameters =
-		new HashMap<String, String>();
-	private Map<String, FilterDefinition> _filterDefinitions =
-		new HashMap<String, FilterDefinition>();
+	private Map<String, String> _contextParameters = new HashMap<>();
+	private Map<String, FilterDefinition> _filterDefinitions = new HashMap<>();
 	private Map<String, String> _jspTaglibMappings;
-	private List<ListenerDefinition> _listenerDefinitions =
-		new ArrayList<ListenerDefinition>();
+	private List<ListenerDefinition> _listenerDefinitions = new ArrayList<>();
 	private Map<String, ServletDefinition> _servletDefinitions =
-		new HashMap<String, ServletDefinition>();
+		new HashMap<>();
 
 }

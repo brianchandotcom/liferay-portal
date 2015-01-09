@@ -79,8 +79,7 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 			return Collections.emptyMap();
 		}
 
-		Map<String, List<String>> suggestionsMap =
-			new HashMap<String, List<String>>();
+		Map<String, List<String>> suggestionsMap = new HashMap<>();
 
 		for (Object entry : suggestion.getEntries()) {
 			Suggest.Suggestion.Entry<? extends Suggest.Suggestion.Entry.Option>
@@ -93,7 +92,7 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 			List<String> suggestionsList = suggestionsMap.get(text);
 
 			if (suggestionsList == null) {
-				suggestionsList = new ArrayList<String>();
+				suggestionsList = new ArrayList<>();
 
 				suggestionsMap.put(text, suggestionsList);
 			}
@@ -140,7 +139,7 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 				(Suggest.Suggestion.Entry
 					<? extends Suggest.Suggestion.Entry.Option>)entries.get(0);
 
-		List<String> keywordQueries = new ArrayList<String>();
+		List<String> keywordQueries = new ArrayList<>();
 
 		for (Suggest.Suggestion.Entry.Option option :
 				suggestionEntry.getOptions()) {

@@ -78,7 +78,7 @@ public class Field implements Serializable {
 		List<Serializable> values = _valuesMap.get(locale);
 
 		if (values == null) {
-			values = new ArrayList<Serializable>();
+			values = new ArrayList<>();
 
 			_valuesMap.put(locale, values);
 		}
@@ -267,7 +267,7 @@ public class Field implements Serializable {
 		}
 
 		if (values == null) {
-			values = new ArrayList<Serializable>();
+			values = new ArrayList<>();
 
 			values.add(value);
 		}
@@ -324,7 +324,6 @@ public class Field implements Serializable {
 	private long _ddmStructureId;
 	private Locale _defaultLocale;
 	private String _name;
-	private Map<Locale, List<Serializable>> _valuesMap =
-		new HashMap<Locale, List<Serializable>>();
+	private Map<Locale, List<Serializable>> _valuesMap = new HashMap<>();
 
 }

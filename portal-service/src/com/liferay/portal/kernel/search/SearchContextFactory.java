@@ -49,8 +49,7 @@ public class SearchContextFactory {
 
 		// Attributes
 
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> attributes = new HashMap<>();
 
 		Map<String, String[]> parameters = request.getParameterMap();
 

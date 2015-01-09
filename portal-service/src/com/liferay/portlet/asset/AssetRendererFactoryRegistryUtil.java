@@ -135,7 +135,7 @@ public class AssetRendererFactoryRegistryUtil {
 		boolean filterSelectable) {
 
 		Map<String, AssetRendererFactory> filteredAssetRendererFactories =
-			new ConcurrentHashMap<String, AssetRendererFactory>();
+			new ConcurrentHashMap<>();
 
 		for (String className : assetRendererFactories.keySet()) {
 			AssetRendererFactory assetRendererFactory =
@@ -232,13 +232,11 @@ public class AssetRendererFactoryRegistryUtil {
 		new AssetRendererFactoryRegistryUtil();
 
 	private Map<String, AssetRendererFactory>
-		_assetRenderFactoriesMapByClassName =
-			new ConcurrentHashMap<String, AssetRendererFactory>();
+		_assetRenderFactoriesMapByClassName = new ConcurrentHashMap<>();
 	private Map<String, AssetRendererFactory>
-		_assetRenderFactoriesMapByClassType =
-			new ConcurrentHashMap<String, AssetRendererFactory>();
+		_assetRenderFactoriesMapByClassType = new ConcurrentHashMap<>();
 	private ServiceRegistrationMap<AssetRendererFactory> _serviceRegistrations =
-		new ServiceRegistrationMap<AssetRendererFactory>();
+		new ServiceRegistrationMap<>();
 	private ServiceTracker<AssetRendererFactory, AssetRendererFactory>
 		_serviceTracker;
 

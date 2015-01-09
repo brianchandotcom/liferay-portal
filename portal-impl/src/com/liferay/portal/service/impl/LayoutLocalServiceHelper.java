@@ -118,7 +118,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			Map<Locale, String> friendlyURLMap)
 		throws PortalException {
 
-		Map<Locale, String> newFriendlyURLMap = new HashMap<Locale, String>();
+		Map<Locale, String> newFriendlyURLMap = new HashMap<>();
 
 		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
 

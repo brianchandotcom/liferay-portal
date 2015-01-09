@@ -469,6 +469,6 @@ public class CalendarUtil {
 	}
 
 	private static Map<String, String[]> _calendarPool =
-		new ConcurrentHashMap<String, String[]>();
+		new ConcurrentHashMap<>();
 
 }

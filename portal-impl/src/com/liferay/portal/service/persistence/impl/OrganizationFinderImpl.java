@@ -120,8 +120,7 @@ public class OrganizationFinderImpl
 
 	@Override
 	public int countByO_U(long organizationId, long userId) {
-		LinkedHashMap<String, Object> params1 =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params1 = new LinkedHashMap<>();
 
 		params1.put("usersOrgs", userId);
 
@@ -419,7 +418,7 @@ public class OrganizationFinderImpl
 		zips = CustomSQLUtil.keywords(zips);
 
 		if (params == null) {
-			params = new LinkedHashMap<String, Object>();
+			params = new LinkedHashMap<>();
 		}
 
 		StringBundler sb = new StringBundler(4);
@@ -511,7 +510,7 @@ public class OrganizationFinderImpl
 			qPos.add(cities, 2);
 			qPos.add(zips, 2);
 
-			List<Organization> organizations = new ArrayList<Organization>();
+			List<Organization> organizations = new ArrayList<>();
 
 			Iterator<Long> itr = (Iterator<Long>)QueryUtil.iterate(
 				q, getDialect(), start, end);

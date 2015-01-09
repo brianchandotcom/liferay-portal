@@ -51,12 +51,12 @@ public class JobState implements Cloneable, Serializable {
 
 		this(triggerState, exceptionsMaxSize);
 
-		_triggerDates = new HashMap<String, Date>(triggerDates);
+		_triggerDates = new HashMap<>(triggerDates);
 	}
 
 	public void addException(Exception exception, Date date) {
 		if (_exceptions == null) {
-			_exceptions = new LinkedList<ObjectValuePair<Exception, Date>>();
+			_exceptions = new LinkedList<>();
 		}
 
 		_exceptions.add(new ObjectValuePair<Exception, Date>(exception, date));
@@ -78,7 +78,7 @@ public class JobState implements Cloneable, Serializable {
 
 		if (_exceptions != null) {
 			Queue<ObjectValuePair<Exception, Date>> exceptions =
-				new LinkedList<ObjectValuePair<Exception, Date>>();
+				new LinkedList<>();
 
 			exceptions.addAll(_exceptions);
 
@@ -86,8 +86,7 @@ public class JobState implements Cloneable, Serializable {
 		}
 
 		if (_triggerDates != null) {
-			Map<String, Date> triggerTimeInfomation =
-				new HashMap<String, Date>();
+			Map<String, Date> triggerTimeInfomation = new HashMap<>();
 
 			triggerTimeInfomation.putAll(_triggerDates);
 
@@ -131,7 +130,7 @@ public class JobState implements Cloneable, Serializable {
 
 	public void setTriggerDate(String key, Date date) {
 		if (_triggerDates == null) {
-			_triggerDates = new HashMap<String, Date>();
+			_triggerDates = new HashMap<>();
 		}
 
 		_triggerDates.put(key, date);

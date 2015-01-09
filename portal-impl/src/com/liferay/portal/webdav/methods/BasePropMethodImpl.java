@@ -93,7 +93,7 @@ public abstract class BasePropMethodImpl implements Method {
 
 		// Make a deep copy of the props
 
-		props = new HashSet<QName>(props);
+		props = new HashSet<>(props);
 
 		// Start building multistatus response
 

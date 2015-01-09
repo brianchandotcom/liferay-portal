@@ -267,9 +267,9 @@ public class UpgradeCustomizablePortletsTest
 	};
 
 	@DeleteAfterTestRun
-	private final List<Group> _groups = new ArrayList<Group>();
+	private final List<Group> _groups = new ArrayList<>();
 
 	private boolean _invokeSuper;
-	private List<String> _newPortletIds = new ArrayList<String>();
+	private List<String> _newPortletIds = new ArrayList<>();
 
 }

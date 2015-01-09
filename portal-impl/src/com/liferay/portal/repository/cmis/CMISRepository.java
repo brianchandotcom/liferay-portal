@@ -155,7 +155,7 @@ public class CMISRepository extends BaseCmisRepository {
 			org.apache.chemistry.opencmis.client.api.Folder cmisFolder =
 				getCmisFolder(session, folderId);
 
-			Map<String, Object> properties = new HashMap<String, Object>();
+			Map<String, Object> properties = new HashMap<>();
 
 			properties.put(PropertyIds.NAME, title);
 			properties.put(
@@ -208,7 +208,7 @@ public class CMISRepository extends BaseCmisRepository {
 			org.apache.chemistry.opencmis.client.api.Folder cmisFolder =
 				getCmisFolder(session, parentFolderId);
 
-			Map<String, Object> properties = new HashMap<String, Object>();
+			Map<String, Object> properties = new HashMap<>();
 
 			properties.put(PropertyIds.NAME, name);
 			properties.put(
@@ -461,7 +461,7 @@ public class CMISRepository extends BaseCmisRepository {
 		long folderId, long fileEntryTypeId, int start, int end,
 		OrderByComparator<FileEntry> obc) {
 
-		return new ArrayList<FileEntry>();
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -475,7 +475,7 @@ public class CMISRepository extends BaseCmisRepository {
 		List<FileEntry> fileEntries = fileEntriesCache.get(folderId);
 
 		if ((fileEntries == null) || (mimeTypes != null)) {
-			fileEntries = new ArrayList<FileEntry>();
+			fileEntries = new ArrayList<>();
 
 			List<String> documentIds = getDocumentIds(
 				getSession(), folderId, mimeTypes);
@@ -815,7 +815,7 @@ public class CMISRepository extends BaseCmisRepository {
 		long parentFolderId, int start, int end,
 		OrderByComparator<Folder> obc) {
 
-		return new ArrayList<Folder>();
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -890,7 +890,7 @@ public class CMISRepository extends BaseCmisRepository {
 	@Override
 	public List<Long> getSubfolderIds(long folderId, boolean recurse) {
 		try {
-			List<Long> subfolderIds = new ArrayList<Long>();
+			List<Long> subfolderIds = new ArrayList<>();
 
 			List<Folder> subfolders = getFolders(
 				folderId, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -1324,7 +1324,7 @@ public class CMISRepository extends BaseCmisRepository {
 			ContentStream contentStream = null;
 
 			if (Validator.isNotNull(title) && !title.equals(currentTitle)) {
-				properties = new HashMap<String, Object>();
+				properties = new HashMap<>();
 
 				properties.put(PropertyIds.NAME, title);
 			}
@@ -1448,7 +1448,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 			String currentTitle = cmisFolder.getName();
 
-			Map<String, Object> properties = new HashMap<String, Object>();
+			Map<String, Object> properties = new HashMap<>();
 
 			if (Validator.isNotNull(name) && !name.equals(currentTitle)) {
 				properties.put(PropertyIds.NAME, name);
@@ -1505,9 +1505,9 @@ public class CMISRepository extends BaseCmisRepository {
 				return;
 			}
 
-			List<Object> foldersAndFileEntries = new ArrayList<Object>();
-			List<Folder> folders = new ArrayList<Folder>();
-			List<FileEntry> fileEntries = new ArrayList<FileEntry>();
+			List<Object> foldersAndFileEntries = new ArrayList<>();
+			List<Folder> folders = new ArrayList<>();
+			List<FileEntry> fileEntries = new ArrayList<>();
 
 			Session session = getSession();
 
@@ -1697,9 +1697,9 @@ public class CMISRepository extends BaseCmisRepository {
 		int total = 0;
 
 		List<com.liferay.portal.kernel.search.Document> documents =
-			new ArrayList<com.liferay.portal.kernel.search.Document>();
-		List<String> snippets = new ArrayList<String>();
-		List<Float> scores = new ArrayList<Float>();
+			new ArrayList<>();
+		List<String> snippets = new ArrayList<>();
+		List<Float> scores = new ArrayList<>();
 
 		for (QueryResult queryResult : queryResults) {
 			total++;
@@ -1853,7 +1853,7 @@ public class CMISRepository extends BaseCmisRepository {
 		ItemIterable<QueryResult> queryResults = session.query(
 			query, isAllVersionsSearchableSupported(session));
 
-		List<String> cmsFolderIds = new ArrayList<String>();
+		List<String> cmsFolderIds = new ArrayList<>();
 
 		for (QueryResult queryResult : queryResults) {
 			PropertyData<String> propertyData = queryResult.getPropertyById(
@@ -1932,7 +1932,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 		ItemIterable<QueryResult> queryResults = session.query(query, false);
 
-		List<String> cmisDocumentIds = new ArrayList<String>();
+		List<String> cmisDocumentIds = new ArrayList<>();
 
 		for (QueryResult queryResult : queryResults) {
 			String objectId = queryResult.getPropertyValueByQueryName(
@@ -1953,7 +1953,7 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected List<FileEntry> getFileEntries(long folderId, long repositoryId) {
-		return new ArrayList<FileEntry>();
+		return new ArrayList<>();
 	}
 
 	protected FileVersion getFileVersion(Session session, long fileVersionId)
@@ -1999,7 +1999,7 @@ public class CMISRepository extends BaseCmisRepository {
 			List<String> folderIds = getCmisFolderIds(
 				getSession(), parentFolderId);
 
-			folders = new ArrayList<Folder>(folderIds.size());
+			folders = new ArrayList<>(folderIds.size());
 
 			for (String folderId : folderIds) {
 				folders.add(toFolder(folderId));

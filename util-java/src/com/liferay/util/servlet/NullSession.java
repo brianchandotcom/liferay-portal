@@ -33,7 +33,7 @@ import javax.servlet.http.HttpSession;
 public class NullSession implements HttpSession {
 
 	public NullSession() {
-		_attributes = new HashMap<String, Object>();
+		_attributes = new HashMap<>();
 		_creationTime = System.currentTimeMillis();
 		_id =
 			NullSession.class.getName() + StringPool.POUND +

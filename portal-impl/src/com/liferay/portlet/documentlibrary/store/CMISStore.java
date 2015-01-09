@@ -113,7 +113,7 @@ public class CMISStore extends BaseStore {
 		ObjectId versioningFolderObjectId = new ObjectIdImpl(
 			versioningFolder.getId());
 
-		Map<String, Object> documentProperties = new HashMap<String, Object>();
+		Map<String, Object> documentProperties = new HashMap<>();
 
 		String title = String.valueOf(toVersionLabel);
 
@@ -408,7 +408,7 @@ public class CMISStore extends BaseStore {
 		document = getVersionedDocument(
 			companyId, repositoryId, fileName, fromVersionLabel);
 
-		Map<String, Object> documentProperties = new HashMap<String, Object>();
+		Map<String, Object> documentProperties = new HashMap<>();
 
 		documentProperties.put(PropertyIds.NAME, title);
 
@@ -418,7 +418,7 @@ public class CMISStore extends BaseStore {
 	protected Document createDocument(
 		Folder versioningFolder, String title, InputStream is) {
 
-		Map<String, Object> documentProperties = new HashMap<String, Object>();
+		Map<String, Object> documentProperties = new HashMap<>();
 
 		documentProperties.put(PropertyIds.NAME, title);
 		documentProperties.put(
@@ -432,7 +432,7 @@ public class CMISStore extends BaseStore {
 	}
 
 	protected Folder createFolder(ObjectId parentFolderId, String name) {
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put(PropertyIds.NAME, name);
 		properties.put(
@@ -485,7 +485,7 @@ public class CMISStore extends BaseStore {
 	}
 
 	protected List<Folder> getFolders(Folder folder) {
-		List<Folder> folders = new ArrayList<Folder>();
+		List<Folder> folders = new ArrayList<>();
 
 		ItemIterable<CmisObject> cmisObjects = folder.getChildren();
 
@@ -562,7 +562,7 @@ public class CMISStore extends BaseStore {
 		private static final Session session;
 
 		static {
-			Map<String, String> parameters = new HashMap<String, String>();
+			Map<String, String> parameters = new HashMap<>();
 
 			parameters.put(
 				SessionParameter.ATOMPUB_URL,

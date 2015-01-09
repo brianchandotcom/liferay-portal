@@ -422,7 +422,7 @@ public class RuntimeChecker extends BaseChecker {
 		Set<String> environmentVariables = getPropertySet(
 			"security-manager-environment-variables");
 
-		_environmentVariablePatterns = new ArrayList<Pattern>(
+		_environmentVariablePatterns = new ArrayList<>(
 			environmentVariables.size());
 
 		for (String environmentVariable : environmentVariables) {

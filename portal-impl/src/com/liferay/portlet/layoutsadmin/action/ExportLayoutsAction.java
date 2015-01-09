@@ -159,7 +159,7 @@ public class ExportLayoutsAction extends PortletAction {
 	protected long[] getLayoutIds(PortletRequest portletRequest)
 		throws Exception {
 
-		Set<Layout> layouts = new LinkedHashSet<Layout>();
+		Set<Layout> layouts = new LinkedHashSet<>();
 
 		Map<Long, Boolean> layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(
 			portletRequest);

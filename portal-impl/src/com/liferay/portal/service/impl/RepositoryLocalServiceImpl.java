@@ -210,8 +210,8 @@ public class RepositoryLocalServiceImpl
 		List<Repository> repositories = repositoryPersistence.findByGroupId(
 			groupId);
 
-		List<LocalRepository> localRepositories =
-			new ArrayList<LocalRepository>(repositories.size() + 1);
+		List<LocalRepository> localRepositories = new ArrayList<>(
+			repositories.size() + 1);
 
 		for (Repository repository : repositories) {
 			localRepositories.add(
@@ -450,7 +450,7 @@ public class RepositoryLocalServiceImpl
 		RepositoryLocalServiceImpl.class);
 
 	private final Map<Long, LocalRepository> _localRepositoriesByRepositoryId =
-		new ConcurrentHashMap<Long, LocalRepository>();
+		new ConcurrentHashMap<>();
 	private final Map<Long, com.liferay.portal.kernel.repository.Repository>
 		_repositoriesByRepositoryId = new ConcurrentHashMap
 			<Long, com.liferay.portal.kernel.repository.Repository>();

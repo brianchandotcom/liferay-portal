@@ -693,7 +693,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		if (!ArrayUtil.isEmpty(getDefaultSelectedLocalizedFieldNames())) {
 			if (selectedFieldNames == null) {
-				selectedFieldNames = new HashSet<String>();
+				selectedFieldNames = new HashSet<>();
 			}
 
 			if (isSelectAllLocales()) {
@@ -917,8 +917,7 @@ public abstract class BaseIndexer implements Indexer {
 	protected void addSearchAssetCategoryTitles(
 		Document document, String field, List<AssetCategory> assetCategories) {
 
-		Map<Locale, List<String>> assetCategoryTitles =
-			new HashMap<Locale, List<String>>();
+		Map<Locale, List<String>> assetCategoryTitles = new HashMap<>();
 
 		Locale defaultLocale = LocaleUtil.getDefault();
 
@@ -936,7 +935,7 @@ public abstract class BaseIndexer implements Indexer {
 				List<String> titles = assetCategoryTitles.get(locale);
 
 				if (titles == null) {
-					titles = new ArrayList<String>();
+					titles = new ArrayList<>();
 
 					assetCategoryTitles.put(locale, titles);
 				}
@@ -1657,7 +1656,7 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected Set<String> getLocalizedCountryNames(Country country) {
-		Set<String> countryNames = new HashSet<String>();
+		Set<String> countryNames = new HashSet<>();
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
@@ -1748,9 +1747,9 @@ public abstract class BaseIndexer implements Indexer {
 			long countryId)
 		throws PortalException {
 
-		List<String> cities = new ArrayList<String>();
+		List<String> cities = new ArrayList<>();
 
-		List<String> countries = new ArrayList<String>();
+		List<String> countries = new ArrayList<>();
 
 		if (countryId > 0) {
 			try {
@@ -1765,7 +1764,7 @@ public abstract class BaseIndexer implements Indexer {
 			}
 		}
 
-		List<String> regions = new ArrayList<String>();
+		List<String> regions = new ArrayList<>();
 
 		if (regionId > 0) {
 			try {
@@ -1780,8 +1779,8 @@ public abstract class BaseIndexer implements Indexer {
 			}
 		}
 
-		List<String> streets = new ArrayList<String>();
-		List<String> zips = new ArrayList<String>();
+		List<String> streets = new ArrayList<>();
+		List<String> zips = new ArrayList<>();
 
 		for (Address address : addresses) {
 			cities.add(StringUtil.toLowerCase(address.getCity()));

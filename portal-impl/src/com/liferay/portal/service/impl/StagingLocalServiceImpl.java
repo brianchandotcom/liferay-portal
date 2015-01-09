@@ -213,7 +213,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		typeSettingsProperties.remove("staged");
 		typeSettingsProperties.remove("stagedRemotely");
 
-		Set<String> keys = new HashSet<String>();
+		Set<String> keys = new HashSet<>();
 
 		for (String key : typeSettingsProperties.keySet()) {
 			if (key.startsWith(StagingConstants.STAGED_PORTLET)) {
@@ -548,8 +548,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		// Find the latest layout revision for all the published layouts
 
-		Map<Long, LayoutRevision> layoutRevisions =
-			new HashMap<Long, LayoutRevision>();
+		Map<Long, LayoutRevision> layoutRevisions = new HashMap<>();
 
 		List<LayoutSetBranch> layoutSetBranches =
 			layoutSetBranchLocalService.getLayoutSetBranches(
@@ -855,7 +854,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			remoteURL, user.getLogin(), user.getPassword(),
 			user.getPasswordEncrypted());
 
-		Map<String, String> stagedPortletIds = new HashMap<String, String>();
+		Map<String, String> stagedPortletIds = new HashMap<>();
 
 		for (String key : typeSettingsProperties.keySet()) {
 			if (key.startsWith(StagingConstants.STAGED_PORTLET)) {

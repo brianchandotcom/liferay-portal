@@ -183,7 +183,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 			fileEntry.getGroupId() + "/" + fileEntry.getFolderId() + "/" +
 				fileEntry.getTitle();
 
-		Map<String, String> headers = new HashMap<String, String>();
+		Map<String, String> headers = new HashMap<>();
 
 		if (Validator.isNotNull(rangeHeader)) {
 			headers.put(HttpHeaders.RANGE, rangeHeader);

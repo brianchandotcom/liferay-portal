@@ -213,6 +213,6 @@ public abstract class BaseLocalServiceTreeTestCase {
 	@DeleteAfterTestRun
 	protected Group group;
 
-	private List<TreeModel> _treeModels = new ArrayList<TreeModel>();
+	private List<TreeModel> _treeModels = new ArrayList<>();
 
 }

@@ -103,7 +103,7 @@ public class EventUtil
 		if (collision) {
 			properties.put("collision", contextPath);
 
-			List<Long> collidedBundleIds = new ArrayList<Long>();
+			List<Long> collidedBundleIds = new ArrayList<>();
 
 			BundleContext bundleContext = bundle.getBundleContext();
 

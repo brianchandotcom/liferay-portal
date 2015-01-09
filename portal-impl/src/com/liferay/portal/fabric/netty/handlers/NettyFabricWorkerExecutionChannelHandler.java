@@ -130,12 +130,12 @@ public class NettyFabricWorkerExecutionChannelHandler
 		Channel channel,
 		NettyFabricWorkerConfig<Serializable> nettyFabricWorkerConfig) {
 
-		Map<Path, Path> mergedPaths = new HashMap<Path, Path>();
+		Map<Path, Path> mergedPaths = new HashMap<>();
 
 		ProcessConfig processConfig =
 			nettyFabricWorkerConfig.getProcessConfig();
 
-		final Map<Path, Path> bootstrapPaths = new LinkedHashMap<Path, Path>();
+		final Map<Path, Path> bootstrapPaths = new LinkedHashMap<>();
 
 		for (String pathString :
 				processConfig.getBootstrapClassPathElements()) {
@@ -145,7 +145,7 @@ public class NettyFabricWorkerExecutionChannelHandler
 
 		mergedPaths.putAll(bootstrapPaths);
 
-		final Map<Path, Path> runtimePaths = new LinkedHashMap<Path, Path>();
+		final Map<Path, Path> runtimePaths = new LinkedHashMap<>();
 
 		for (String pathString : processConfig.getRuntimeClassPathElements()) {
 			runtimePaths.put(Paths.get(pathString), null);
@@ -165,9 +165,9 @@ public class NettyFabricWorkerExecutionChannelHandler
 			protected LoadedPaths convert(Map<Path, Path> mergedPaths)
 				throws IOException {
 
-				Map<Path, Path> loadedInputPaths = new HashMap<Path, Path>();
+				Map<Path, Path> loadedInputPaths = new HashMap<>();
 
-				List<Path> missedInputPaths = new ArrayList<Path>();
+				List<Path> missedInputPaths = new ArrayList<>();
 
 				for (Path path : inputPaths.keySet()) {
 					Path loadedInputPath = mergedPaths.get(path);
@@ -185,9 +185,9 @@ public class NettyFabricWorkerExecutionChannelHandler
 						"Unable to get input paths: " + missedInputPaths);
 				}
 
-				List<Path> loadedBootstrapPaths = new ArrayList<Path>();
+				List<Path> loadedBootstrapPaths = new ArrayList<>();
 
-				List<Path> missedBootstrapPaths = new ArrayList<Path>();
+				List<Path> missedBootstrapPaths = new ArrayList<>();
 
 				for (Path path : bootstrapPaths.keySet()) {
 					Path loadedBootstrapPath = mergedPaths.get(path);
@@ -206,9 +206,9 @@ public class NettyFabricWorkerExecutionChannelHandler
 							missedBootstrapPaths);
 				}
 
-				List<Path> loadedRuntimePaths = new ArrayList<Path>();
+				List<Path> loadedRuntimePaths = new ArrayList<>();
 
-				List<Path> missedRuntimePaths = new ArrayList<Path>();
+				List<Path> missedRuntimePaths = new ArrayList<>();
 
 				for (Path path : runtimePaths.keySet()) {
 					Path loadedRuntimePath = mergedPaths.get(path);

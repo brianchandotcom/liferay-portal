@@ -164,8 +164,7 @@ public class LiveUsers {
 			clusterNodeId);
 
 		if (clusterUsers == null) {
-			clusterUsers =
-				new ConcurrentHashMap<Long, Map<Long, Set<String>>>();
+			clusterUsers = new ConcurrentHashMap<>();
 
 			_clusterUsers.put(clusterNodeId, clusterUsers);
 		}
@@ -173,7 +172,7 @@ public class LiveUsers {
 		Map<Long, Set<String>> companyUsers = clusterUsers.get(companyId);
 
 		if (companyUsers == null) {
-			companyUsers = new ConcurrentHashMap<Long, Set<String>>();
+			companyUsers = new ConcurrentHashMap<>();
 
 			clusterUsers.put(companyId, companyUsers);
 		}
@@ -181,7 +180,7 @@ public class LiveUsers {
 		Set<String> userSessions = companyUsers.get(userId);
 
 		if (userSessions == null) {
-			userSessions = new ConcurrentHashSet<String>();
+			userSessions = new ConcurrentHashSet<>();
 
 			companyUsers.put(userId, userSessions);
 		}
@@ -198,7 +197,7 @@ public class LiveUsers {
 			userTrackers.add(userTracker);
 		}
 		else {
-			userTrackers = new ArrayList<UserTracker>();
+			userTrackers = new ArrayList<>();
 
 			userTrackers.add(userTracker);
 
@@ -221,7 +220,7 @@ public class LiveUsers {
 		Set<Long> groupUsers = liveUsers.get(groupId);
 
 		if (groupUsers == null) {
-			groupUsers = new ConcurrentHashSet<Long>();
+			groupUsers = new ConcurrentHashSet<>();
 
 			liveUsers.put(groupId, groupUsers);
 		}
@@ -233,7 +232,7 @@ public class LiveUsers {
 		Map<Long, Set<Long>> liveUsers = _liveUsers.get(companyId);
 
 		if (liveUsers == null) {
-			liveUsers = new ConcurrentHashMap<Long, Set<Long>>();
+			liveUsers = new ConcurrentHashMap<>();
 
 			_liveUsers.put(companyId, liveUsers);
 		}
@@ -255,7 +254,7 @@ public class LiveUsers {
 		Map<String, UserTracker> sessionUsers = _sessionUsers.get(companyId);
 
 		if (sessionUsers == null) {
-			sessionUsers = new ConcurrentHashMap<String, UserTracker>();
+			sessionUsers = new ConcurrentHashMap<>();
 
 			_sessionUsers.put(companyId, sessionUsers);
 		}
@@ -281,7 +280,7 @@ public class LiveUsers {
 			companyId);
 
 		if (userTrackersMap == null) {
-			userTrackersMap = new ConcurrentHashMap<Long, List<UserTracker>>();
+			userTrackersMap = new ConcurrentHashMap<>();
 
 			_userTrackers.put(companyId, userTrackersMap);
 		}
@@ -522,8 +521,7 @@ public class LiveUsers {
 
 		Map<Long, Set<Long>> liveUsers = _getLiveUsers(companyId);
 
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("usersGroups", userId);
 
@@ -553,12 +551,12 @@ public class LiveUsers {
 	// PLACEHOLDER 26
 
 	private final Map<String, Map<Long, Map<Long, Set<String>>>> _clusterUsers =
-		new ConcurrentHashMap<String, Map<Long, Map<Long, Set<String>>>>();
+		new ConcurrentHashMap<>();
 	private final Map<Long, Map<Long, Set<Long>>> _liveUsers =
-		new ConcurrentHashMap<Long, Map<Long, Set<Long>>>();
+		new ConcurrentHashMap<>();
 	private final Map<Long, Map<String, UserTracker>> _sessionUsers =
-		new ConcurrentHashMap<Long, Map<String, UserTracker>>();
+		new ConcurrentHashMap<>();
 	private final Map<Long, Map<Long, List<UserTracker>>> _userTrackers =
-		new ConcurrentHashMap<Long, Map<Long, List<UserTracker>>>();
+		new ConcurrentHashMap<>();
 
 }

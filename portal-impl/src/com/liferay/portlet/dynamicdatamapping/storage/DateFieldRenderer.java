@@ -37,7 +37,7 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 	protected String doRender(Field field, Locale locale) throws Exception {
 		Format format = FastDateFormatFactoryUtil.getDate(locale);
 
-		List<String> values = new ArrayList<String>();
+		List<String> values = new ArrayList<>();
 
 		for (Serializable value : field.getValues(locale)) {
 			if (Validator.isNull(value)) {

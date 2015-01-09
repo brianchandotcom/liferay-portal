@@ -470,7 +470,7 @@ public class Logger {
 
 		sb.append("<p>");
 
-		Queue<String> xPathQueue = new LinkedList<String>();
+		Queue<String> xPathQueue = new LinkedList<>();
 
 		while (xPathIdStack.size() > 1) {
 			String xPath = generateXPath(xPathIdStack);

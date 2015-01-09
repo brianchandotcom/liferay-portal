@@ -140,7 +140,7 @@ public class ModuleId implements Serializable {
 	}
 
 	private static final Map<String, ModuleId> _moduleIds =
-		new ConcurrentHashMap<String, ModuleId>();
+		new ConcurrentHashMap<>();
 
 	private final String _artifactId;
 	private final String _groupId;

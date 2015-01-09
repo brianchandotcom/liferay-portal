@@ -118,7 +118,7 @@ public class GroupImpl extends GroupBaseImpl {
 			group = this;
 		}
 
-		List<Group> groups = new ArrayList<Group>();
+		List<Group> groups = new ArrayList<>();
 
 		while (!group.isRoot()) {
 			group = group.getParentGroup();
@@ -174,14 +174,14 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public List<Group> getDescendants(boolean site) {
-		Set<Group> descendants = new LinkedHashSet<Group>();
+		Set<Group> descendants = new LinkedHashSet<>();
 
 		for (Group group : getChildren(site)) {
 			descendants.add(group);
 			descendants.addAll(group.getDescendants(site));
 		}
 
-		return new ArrayList<Group>(descendants);
+		return new ArrayList<>(descendants);
 	}
 
 	@Override

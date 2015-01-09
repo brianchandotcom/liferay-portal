@@ -93,7 +93,7 @@ public class GetArticlesAction extends Action {
 
 		long folderId = ParamUtil.getLong(request, "folderId");
 
-		List<Long> folderIds = new ArrayList<Long>(1);
+		List<Long> folderIds = new ArrayList<>(1);
 
 		folderIds.add(folderId);
 

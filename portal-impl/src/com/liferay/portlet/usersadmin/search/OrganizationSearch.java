@@ -42,9 +42,8 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 	public static final String EMPTY_RESULTS_MESSAGE =
 		"no-organizations-were-found";
 
-	public static List<String> headerNames = new ArrayList<String>();
-	public static Map<String, String> orderableHeaders =
-		new HashMap<String, String>();
+	public static List<String> headerNames = new ArrayList<>();
+	public static Map<String, String> orderableHeaders = new HashMap<>();
 
 	static {
 		headerNames.add("name");

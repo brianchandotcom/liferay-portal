@@ -42,7 +42,7 @@ public class CurrencyConverterPreferencesValidator
 	public void validate(PortletPreferences portletPreferences)
 		throws ValidatorException {
 
-		List<String> badSymbols = new ArrayList<String>();
+		List<String> badSymbols = new ArrayList<>();
 
 		String[] symbols = portletPreferences.getValues(
 			"symbols", new String[0]);

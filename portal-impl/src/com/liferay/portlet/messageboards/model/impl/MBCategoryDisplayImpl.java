@@ -138,10 +138,9 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 
 		_categoryTree = new ListTree<MBCategory>(_rootCategory);
 
-		_categoryNodesMap = new HashMap<Long, TreeNode<MBCategory>>();
+		_categoryNodesMap = new HashMap<>();
 
-		Map<Long, List<MBCategory>> categoriesMap =
-			new HashMap<Long, List<MBCategory>>();
+		Map<Long, List<MBCategory>> categoriesMap = new HashMap<>();
 
 		for (MBCategory category : _allCategories) {
 			Long parentCategoryId = category.getParentCategoryId();
@@ -150,7 +149,7 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 				parentCategoryId);
 
 			if (curCategories == null) {
-				curCategories = new ArrayList<MBCategory>();
+				curCategories = new ArrayList<>();
 
 				categoriesMap.put(parentCategoryId, curCategories);
 			}

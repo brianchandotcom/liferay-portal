@@ -186,7 +186,7 @@ public class LayoutTestUtil {
 	public static LayoutPrototype addLayoutPrototype(String name)
 		throws Exception {
 
-		HashMap<Locale, String> nameMap = new HashMap<Locale, String>();
+		HashMap<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), name);
 
@@ -199,7 +199,7 @@ public class LayoutTestUtil {
 	public static LayoutSetPrototype addLayoutSetPrototype(String name)
 		throws Exception {
 
-		HashMap<Locale, String> nameMap = new HashMap<Locale, String>();
+		HashMap<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), name);
 

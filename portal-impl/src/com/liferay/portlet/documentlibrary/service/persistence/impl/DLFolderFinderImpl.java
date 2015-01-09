@@ -488,7 +488,7 @@ public class DLFolderFinderImpl
 				qPos.add(mimeTypes);
 			}
 
-			List<Object> models = new ArrayList<Object>();
+			List<Object> models = new ArrayList<>();
 
 			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
 				q, getDialect(), queryDefinition.getStart(),
@@ -577,7 +577,7 @@ public class DLFolderFinderImpl
 			qPos.add(queryDefinition.getStatus());
 			qPos.add(folderId);
 
-			List<Object> models = new ArrayList<Object>();
+			List<Object> models = new ArrayList<>();
 
 			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
 				q, getDialect(), queryDefinition.getStart(),

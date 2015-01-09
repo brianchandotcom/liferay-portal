@@ -49,7 +49,7 @@ public class MessageValuesThreadLocal {
 		Map<String, Object> messageValues = _messageValuesThreadLocal.get();
 
 		if (messageValues == null) {
-			messageValues = new HashMap<String, Object>();
+			messageValues = new HashMap<>();
 
 			_messageValuesThreadLocal.set(messageValues);
 		}

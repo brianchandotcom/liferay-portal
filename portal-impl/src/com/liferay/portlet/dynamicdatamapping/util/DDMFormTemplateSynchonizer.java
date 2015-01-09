@@ -91,7 +91,7 @@ public class DDMFormTemplateSynchonizer {
 	protected DDMFormField getDDMFormField(
 		List<DDMFormField> ddmFormFields, String name) {
 
-		Queue<DDMFormField> queue = new LinkedList<DDMFormField>(ddmFormFields);
+		Queue<DDMFormField> queue = new LinkedList<>(ddmFormFields);
 
 		DDMFormField ddmFormField = null;
 
@@ -171,7 +171,7 @@ public class DDMFormTemplateSynchonizer {
 		DDMTemplateLocalServiceUtil.updateDDMTemplate(ddmTemplate);
 	}
 
-	private List<DDMTemplate> _ddmFormTemplates = new ArrayList<DDMTemplate>();
+	private List<DDMTemplate> _ddmFormTemplates = new ArrayList<>();
 	private DDMForm _structureDDMForm;
 
 }

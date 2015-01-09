@@ -108,7 +108,7 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		writer.write(loadMethod);
 		writer.write("(");
 
-		Set<String> useSet = new TreeSet<String>();
+		Set<String> useSet = new TreeSet<>();
 
 		for (PortletData portletData : _portletDataMap.values()) {
 			useSet.addAll(portletData._useSet);
@@ -170,9 +170,9 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private ConcurrentMap<String, PortletData> _portletDataMap =
-		new ConcurrentHashMap<String, PortletData>();
+		new ConcurrentHashMap<>();
 	private List<ObjectValuePair<StringBundler, Integer>> _sbIndexList =
-		new ArrayList<ObjectValuePair<StringBundler, Integer>>();
+		new ArrayList<>();
 
 	private class PortletData implements Serializable {
 
@@ -214,7 +214,7 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 		private StringBundler _callbackSB = new StringBundler();
 		private StringBundler _rawSB = new StringBundler();
-		private Set<String> _useSet = new TreeSet<String>();
+		private Set<String> _useSet = new TreeSet<>();
 
 	}
 

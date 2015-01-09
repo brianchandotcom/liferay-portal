@@ -36,11 +36,11 @@ public class FabricAgentRegistry {
 	}
 
 	public List<FabricAgentListener> getFabricAgentListeners() {
-		return new ArrayList<FabricAgentListener>(_fabricAgentListeners);
+		return new ArrayList<>(_fabricAgentListeners);
 	}
 
 	public List<FabricAgent> getFabricAgents() {
-		return new ArrayList<FabricAgent>(_fabricAgents);
+		return new ArrayList<>(_fabricAgents);
 	}
 
 	public boolean registerFabricAgent(
@@ -97,8 +97,8 @@ public class FabricAgentRegistry {
 
 	private final FabricAgent _defaultFabricAgent;
 	private final CopyOnWriteArrayList<FabricAgentListener>
-		_fabricAgentListeners = new CopyOnWriteArrayList<FabricAgentListener>();
+		_fabricAgentListeners = new CopyOnWriteArrayList<>();
 	private final CopyOnWriteArrayList<FabricAgent> _fabricAgents =
-		new CopyOnWriteArrayList<FabricAgent>();
+		new CopyOnWriteArrayList<>();
 
 }

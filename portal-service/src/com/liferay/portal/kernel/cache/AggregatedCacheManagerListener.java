@@ -86,6 +86,6 @@ public class AggregatedCacheManagerListener implements CacheManagerListener {
 	}
 
 	private final Set<CacheManagerListener> _cacheManagerListeners =
-		new CopyOnWriteArraySet<CacheManagerListener>();
+		new CopyOnWriteArraySet<>();
 
 }

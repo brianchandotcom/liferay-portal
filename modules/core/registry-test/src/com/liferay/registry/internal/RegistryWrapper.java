@@ -232,7 +232,6 @@ public class RegistryWrapper implements Registry {
 
 	private final Registry _registry;
 	private final ConcurrentHashMap<ServiceReference<?>, AtomicInteger>
-		_serviceReferenceCountsMap =
-			new ConcurrentHashMap<ServiceReference<?>, AtomicInteger>();
+		_serviceReferenceCountsMap = new ConcurrentHashMap<>();
 
 }

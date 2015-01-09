@@ -216,7 +216,7 @@ public class SyncAccountService {
 		}
 
 		try {
-			_activeSyncAccountIds = new HashSet<Long>(
+			_activeSyncAccountIds = new HashSet<>(
 				_syncAccountPersistence.findByActive(true));
 
 			return _activeSyncAccountIds;

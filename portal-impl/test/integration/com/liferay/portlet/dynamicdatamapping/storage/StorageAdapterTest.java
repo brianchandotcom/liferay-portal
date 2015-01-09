@@ -78,8 +78,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap =
-			new HashMap<Locale, List<Serializable>>();
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {true, true, true});
@@ -116,8 +115,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap =
-			new HashMap<Locale, List<Serializable>>();
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		Date date1 = PortalUtil.getDate(0, 1, 2013);
 		Date date2 = PortalUtil.getDate(0, 2, 2013);
@@ -159,8 +157,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap =
-			new HashMap<Locale, List<Serializable>>();
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {1.1, 1.2, 1.3});
@@ -198,8 +195,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap =
-			new HashMap<Locale, List<Serializable>>();
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		FileEntry file1 = DLAppTestUtil.addFileEntry(
 			TestPropsValues.getGroupId(),
@@ -247,8 +243,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap =
-			new HashMap<Locale, List<Serializable>>();
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {1, 2, 3});
@@ -285,8 +280,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap =
-			new HashMap<Locale, List<Serializable>>();
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {
@@ -323,8 +317,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap =
-			new HashMap<Locale, List<Serializable>>();
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {1, 1.5f, 2});
@@ -361,8 +354,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap =
-			new HashMap<Locale, List<Serializable>>();
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {"[\"value 1\"]", "[\"value 2\"]"});
@@ -398,8 +390,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap =
-			new HashMap<Locale, List<Serializable>>();
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {"[\"value 1\",\"value 2\"]", "[\"value 3\"]"});
@@ -435,8 +426,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Fields fields = new Fields();
 
-		Map<Locale, List<Serializable>> dataMap =
-			new HashMap<Locale, List<Serializable>>();
+		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {"one", "two", "three"});
@@ -484,7 +474,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	}
 
 	protected List<Serializable> createValuesList(String... valuesString) {
-		List<Serializable> values = new ArrayList<Serializable>();
+		List<Serializable> values = new ArrayList<>();
 
 		for (String valueString : valuesString) {
 			values.add(valueString);

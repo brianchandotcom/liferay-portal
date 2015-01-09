@@ -50,7 +50,6 @@ public class ReportFormatExporterRegistry {
 	}
 
 	private final Map<ReportFormat, ReportFormatExporter>
-		_reportFormatExporters =
-			new ConcurrentHashMap<ReportFormat, ReportFormatExporter>();
+		_reportFormatExporters = new ConcurrentHashMap<>();
 
 }

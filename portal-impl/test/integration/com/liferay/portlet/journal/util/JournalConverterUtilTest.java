@@ -579,7 +579,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		field.setDDMStructureId(ddmStructureId);
 		field.setName("boolean");
 
-		List<Serializable> enValues = new ArrayList<Serializable>();
+		List<Serializable> enValues = new ArrayList<>();
 
 		enValues.add(true);
 		enValues.add(false);
@@ -623,8 +623,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 			String content)
 		throws Exception {
 
-		Map<String, Map<Locale, List<String>>> fieldsMap =
-			new HashMap<String, Map<Locale, List<String>>>();
+		Map<String, Map<Locale, List<String>>> fieldsMap = new HashMap<>();
 
 		Document document = SAXReaderUtil.read(content);
 
@@ -641,7 +640,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 	}
 
 	protected Map<String, Layout> getLayoutsMap() throws Exception {
-		Map<String, Layout> layouts = new LinkedHashMap<String, Layout>(4);
+		Map<String, Layout> layouts = new LinkedHashMap<>(4);
 
 		User user = TestPropsValues.getUser();
 
@@ -669,7 +668,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		field.setDDMStructureId(ddmStructureId);
 		field.setName("link_to_layout");
 
-		List<Serializable> enValues = new ArrayList<Serializable>();
+		List<Serializable> enValues = new ArrayList<>();
 
 		for (Layout layout : layoutsMap.values()) {
 			enValues.add(getLinkToLayoutFieldValue(layout, false));
@@ -728,14 +727,14 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		contact.setDDMStructureId(ddmStructureId);
 		contact.setName("contact");
 
-		List<Serializable> enValues = new ArrayList<Serializable>();
+		List<Serializable> enValues = new ArrayList<>();
 
 		enValues.add("joe");
 		enValues.add("richard");
 
 		contact.setValues(_enLocale, enValues);
 
-		List<Serializable> ptValues = new ArrayList<Serializable>();
+		List<Serializable> ptValues = new ArrayList<>();
 
 		ptValues.add("joao");
 		ptValues.add("ricardo");
@@ -751,7 +750,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		phone.setDDMStructureId(ddmStructureId);
 		phone.setName("phone");
 
-		List<Serializable> values = new ArrayList<Serializable>();
+		List<Serializable> values = new ArrayList<>();
 
 		values.add("123");
 		values.add("456");
@@ -768,7 +767,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		ext.setDDMStructureId(ddmStructureId);
 		ext.setName("ext");
 
-		values = new ArrayList<Serializable>();
+		values = new ArrayList<>();
 
 		values.add("1");
 		values.add("2");
@@ -811,7 +810,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		field.setDDMStructureId(ddmStructureId);
 		field.setName("text_box");
 
-		List<Serializable> enValues = new ArrayList<Serializable>();
+		List<Serializable> enValues = new ArrayList<>();
 
 		enValues.add("one");
 		enValues.add("two");
@@ -819,7 +818,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		field.addValues(_enLocale, enValues);
 
-		List<Serializable> ptValues = new ArrayList<Serializable>();
+		List<Serializable> ptValues = new ArrayList<>();
 
 		ptValues.add("um");
 		ptValues.add("dois");
@@ -848,7 +847,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		List<String> values = valuesMap.get(locale);
 
 		if (values == null) {
-			values = new ArrayList<String>();
+			values = new ArrayList<>();
 
 			valuesMap.put(locale, values);
 		}
@@ -912,7 +911,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		Map<Locale, List<String>> valuesMap = fieldsMap.get(name);
 
 		if (valuesMap == null) {
-			valuesMap = new HashMap<Locale,  List<String>>();
+			valuesMap = new HashMap<>();
 
 			fieldsMap.put(name, valuesMap);
 		}

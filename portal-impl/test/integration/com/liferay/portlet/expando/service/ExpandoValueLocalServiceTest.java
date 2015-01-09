@@ -72,7 +72,7 @@ public class ExpandoValueLocalServiceTest {
 			_expandoTable, "Test Column",
 			ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
 
-		Map<Locale, String[]> dataMap = new HashMap<Locale, String[]>();
+		Map<Locale, String[]> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, new String[] {"one", "two", "three"});
 		dataMap.put(_ptLocale, new String[] {"um", "dois", "tres"});
@@ -102,7 +102,7 @@ public class ExpandoValueLocalServiceTest {
 			_expandoTable, "Test Column",
 			ExpandoColumnConstants.STRING_LOCALIZED);
 
-		Map<Locale, String> dataMap = new HashMap<Locale, String>();
+		Map<Locale, String> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, "Test");
 		dataMap.put(_ptLocale, "Teste");
@@ -142,7 +142,7 @@ public class ExpandoValueLocalServiceTest {
 		ExpandoColumn column = ExpandoTestUtil.addColumn(
 			_expandoTable, "Test Column", ExpandoColumnConstants.STRING);
 
-		Map<Locale, String> dataMap = new HashMap<Locale, String>();
+		Map<Locale, String> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, "one");
 		dataMap.put(_ptLocale, "um");
@@ -159,7 +159,7 @@ public class ExpandoValueLocalServiceTest {
 
 	@Test
 	public void testGetDefaultColumnValue() throws Exception {
-		Map<Locale, String> defaultData = new HashMap<Locale, String>();
+		Map<Locale, String> defaultData = new HashMap<>();
 
 		defaultData.put(_enLocale, "Test");
 
@@ -181,7 +181,7 @@ public class ExpandoValueLocalServiceTest {
 			_expandoTable, "Test Column",
 			ExpandoColumnConstants.STRING_LOCALIZED);
 
-		Map<Locale, String> dataMap = new HashMap<Locale, String>();
+		Map<Locale, String> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, "one");
 		dataMap.put(_ptLocale, "um");
@@ -209,7 +209,7 @@ public class ExpandoValueLocalServiceTest {
 			_expandoTable, "Test Column",
 			ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
 
-		Map<Locale, String[]> dataMap = new HashMap<Locale, String[]>();
+		Map<Locale, String[]> dataMap = new HashMap<>();
 
 		dataMap.put(_enLocale, new String[] {"Hello, Joe", "Hi, Joe"});
 		dataMap.put(_ptLocale, new String[] {"Ola, Joao", "Oi, Joao"});

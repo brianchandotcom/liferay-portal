@@ -73,7 +73,6 @@ public class AnnotationTransactionAttributeSource
 		new DefaultTransactionAttribute();
 
 	private final Map<MethodTargetClassKey, TransactionAttribute>
-		_transactionAttributes =
-			new ConcurrentHashMap<MethodTargetClassKey, TransactionAttribute>();
+		_transactionAttributes = new ConcurrentHashMap<>();
 
 }

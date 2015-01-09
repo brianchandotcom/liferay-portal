@@ -96,11 +96,11 @@ public class JournalArticleScheduledTest {
 			long groupId, Date displayDate, int when, boolean approved)
 		throws Exception {
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(
 			LocaleUtil.getDefault(), RandomTestUtil.randomString());

@@ -82,8 +82,7 @@ public class LogUtil {
 
 		int count = 0;
 
-		List<StackTraceElement> stackTraceElementsList =
-			new ArrayList<StackTraceElement>();
+		List<StackTraceElement> stackTraceElementsList = new ArrayList<>();
 
 		for (StackTraceElement stackTraceElement : stackTraceElements) {
 

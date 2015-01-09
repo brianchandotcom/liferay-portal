@@ -221,7 +221,7 @@ public class CompareVersionsAction extends PortletAction {
 			JournalArticleLocalServiceUtil.fetchArticle(
 				groupId, articleId, targetVersion);
 
-		Set<Locale> locales = new HashSet<Locale>();
+		Set<Locale> locales = new HashSet<>();
 
 		for (String locale : sourceArticle.getAvailableLanguageIds()) {
 			locales.add(LocaleUtil.fromLanguageId(locale));

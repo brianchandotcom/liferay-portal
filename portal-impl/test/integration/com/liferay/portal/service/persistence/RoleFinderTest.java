@@ -137,7 +137,7 @@ public class RoleFinderTest {
 
 		String name = RandomTestUtil.randomString() + "Model";
 
-		List<String> actionIds = new ArrayList<String>();
+		List<String> actionIds = new ArrayList<>();
 
 		actionIds.add(ActionKeys.UPDATE);
 		actionIds.add(ActionKeys.VIEW);

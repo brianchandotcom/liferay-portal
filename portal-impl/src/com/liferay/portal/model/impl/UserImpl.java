@@ -688,7 +688,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public Set<String> getReminderQueryQuestions() throws PortalException {
-		Set<String> questions = new TreeSet<String>();
+		Set<String> questions = new TreeSet<>();
 
 		List<Organization> organizations =
 			OrganizationLocalServiceUtil.getUserOrganizations(getUserId());
@@ -1007,7 +1007,7 @@ public class UserImpl extends UserBaseImpl {
 	private PasswordPolicy _passwordPolicy;
 	private String _passwordUnencrypted;
 	private transient Map<String, RemotePreference> _remotePreferences =
-		new HashMap<String, RemotePreference>();
+		new HashMap<>();
 	private TimeZone _timeZone;
 
 }

@@ -115,9 +115,8 @@ public class AnnouncementsDeliveryLocalServiceImpl
 	public List<AnnouncementsDelivery> getUserDeliveries(long userId)
 		throws PortalException {
 
-		List<AnnouncementsDelivery> deliveries =
-			new ArrayList<AnnouncementsDelivery>(
-				AnnouncementsEntryConstants.TYPES.length);
+		List<AnnouncementsDelivery> deliveries = new ArrayList<>(
+			AnnouncementsEntryConstants.TYPES.length);
 
 		for (String type : AnnouncementsEntryConstants.TYPES) {
 			deliveries.add(getUserDelivery(userId, type));

@@ -225,7 +225,7 @@ public class PingbackMethodImpl implements Method {
 		long plid = PortalUtil.getPlidFromFriendlyURL(companyId, friendlyURL);
 		long groupId = PortalUtil.getScopeGroupId(plid);
 
-		Map<String, String[]> params = new HashMap<String, String[]>();
+		Map<String, String[]> params = new HashMap<>();
 
 		FriendlyURLMapperThreadLocal.setPRPIdentifiers(
 			new HashMap<String, String>());
@@ -245,7 +245,7 @@ public class PingbackMethodImpl implements Method {
 				end + Portal.FRIENDLY_URL_SEPARATOR.length() - 1);
 		}
 
-		Map<String, Object> requestContext = new HashMap<String, Object>();
+		Map<String, Object> requestContext = new HashMap<>();
 
 		friendlyURLMapper.populateParams(friendlyURL, params, requestContext);
 

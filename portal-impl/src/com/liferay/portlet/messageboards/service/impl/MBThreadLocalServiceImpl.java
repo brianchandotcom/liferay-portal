@@ -577,7 +577,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			return mbThreadPersistence.findByC_P(categoryId, priority);
 		}
 
-		List<MBThread> threads = new ArrayList<MBThread>();
+		List<MBThread> threads = new ArrayList<>();
 
 		while ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
 			   (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
@@ -658,7 +658,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			long groupId, long threadId, long trashEntryId)
 		throws PortalException {
 
-		Set<Long> userIds = new HashSet<Long>();
+		Set<Long> userIds = new HashSet<>();
 
 		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
 			threadId, WorkflowConstants.STATUS_ANY);
@@ -909,7 +909,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	public void restoreDependentsFromTrash(long groupId, long threadId)
 		throws PortalException {
 
-		Set<Long> userIds = new HashSet<Long>();
+		Set<Long> userIds = new HashSet<>();
 
 		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
 			threadId, WorkflowConstants.STATUS_ANY);

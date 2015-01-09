@@ -465,9 +465,8 @@ public class ConfigurationImpl
 	private static Object _nullValue = new Object();
 
 	private ComponentConfiguration _componentConfiguration;
-	private Set<String> _printedSources = new HashSet<String>();
+	private Set<String> _printedSources = new HashSet<>();
 	private Properties _properties;
-	private Map<String, Object> _values =
-		new ConcurrentHashMap<String, Object>();
+	private Map<String, Object> _values = new ConcurrentHashMap<>();
 
 }

@@ -129,7 +129,7 @@ public class LayoutSetPrototypeLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(LocaleUtil.getDefault(), description);
 
@@ -312,7 +312,7 @@ public class LayoutSetPrototypeLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(LocaleUtil.getDefault(), description);
 

@@ -111,7 +111,7 @@ public abstract class BaseHotDeployListener implements HotDeployListener {
 			return;
 		}
 
-		clpMessageListeners = new ArrayList<MessageListener>();
+		clpMessageListeners = new ArrayList<>();
 
 		Set<String> classNames = ServletContextUtil.getClassNames(
 			servletContext);

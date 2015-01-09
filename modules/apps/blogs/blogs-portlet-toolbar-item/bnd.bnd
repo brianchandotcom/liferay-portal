@@ -1,8 +1,5 @@
-Bundle-Name: Blogs Portlet Toolbar Items
-Bundle-SymbolicName: com.liferay.portlet.blogs.toolbar.item
+Bundle-Name: Liferay Blogs Toolbar Items
+Bundle-SymbolicName: com.liferay.blogs.toolbar.item
 Bundle-Version: 1.0.0
-Export-Package:
-Import-Package:\
-	*
 Include-Resource:\
 	classes

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface ResourcePermissionChecker {
 
 	public Boolean checkResource(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException;
+		PermissionChecker permissionChecker, long classPK, String actionId);
 
 }

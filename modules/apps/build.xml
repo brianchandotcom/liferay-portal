@@ -7,7 +7,7 @@
 		<dirset dir="asset" includes="*" />
 		<dirset dir="blogs" includes="*" />
 		<dirset dir="bookmarks" includes="*" />
-		<dirset dir="config-admin" includes="*" />
+		<dirset dir="configuration-admin" includes="*" />
 		<dirset dir="currency-converter" includes="*" />
 		<dirset dir="dictionary" includes="*" />
 		<dirset dir="document-library" includes="*" />

@@ -19,6 +19,8 @@
 </div>
 
 <aui:fieldset>
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+
 	<aui:input name="currentTitle" type="resource" value="<%= wikiPage.getTitle() %>" />
 
 	<aui:input name="newTitle" value="<%= newTitle %>" />

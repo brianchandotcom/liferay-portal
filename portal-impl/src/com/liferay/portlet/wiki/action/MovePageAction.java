@@ -22,18 +22,22 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.wiki.DuplicatePageException;
 import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.NodeChangeException;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.PageTitleException;
+import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.service.WikiNodeServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -56,18 +60,22 @@ public class MovePageAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
 			if (cmd.equals(Constants.CHANGE_PARENT)) {
 				changeParentPage(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE)) {
 				changeNode(actionRequest);
+
+				redirect = getRedirect(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.RENAME)) {
 				renamePage(actionRequest);
 			}
 
 			if (Validator.isNotNull(cmd)) {
-				sendRedirect(actionRequest, actionResponse);
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
 		catch (Exception e) {
@@ -149,6 +157,27 @@ public class MovePageAction extends PortletAction {
 
 		WikiPageServiceUtil.changeParent(
 			nodeId, title, newParentTitle, serviceContext);
+	}
+
+	protected String getRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long newNodeId = ParamUtil.getLong(actionRequest, "newNodeId");
+
+		WikiNode node = WikiNodeServiceUtil.getNode(newNodeId);
+
+		ActionResponseImpl actionResponseImpl =
+			(ActionResponseImpl)actionResponse;
+
+		PortletURL portletURL = actionResponseImpl.createRenderURL();
+
+		portletURL.setParameter("struts_action", "/wiki/view");
+		portletURL.setParameter("nodeName", node.getName());
+		portletURL.setParameter(
+			"title", ParamUtil.getString(actionRequest, "title"));
+
+		return portletURL.toString();
 	}
 
 	@Override

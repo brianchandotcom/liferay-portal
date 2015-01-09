@@ -12,24 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.ldap.exportimport;
 
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -48,6 +48,14 @@ import com.liferay.portal.security.exportimport.UserGroupImportTransactionThread
 import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;
 import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
+import com.liferay.portal.security.ldap.AttributesTransformer;
+import com.liferay.portal.security.ldap.AttributesTransformerFactory;
+import com.liferay.portal.security.ldap.LDAPGroup;
+import com.liferay.portal.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.security.ldap.LDAPToPortalConverter;
+import com.liferay.portal.security.ldap.LDAPUser;
+import com.liferay.portal.security.ldap.LDAPUserImporter;
+import com.liferay.portal.security.ldap.PortalLDAPUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
@@ -55,7 +63,6 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
@@ -86,13 +93,19 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.LdapContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
  * @author Hugo Huijser
  */
-@DoPrivileged
+@Component(
+	immediate = true,
+	service = {LDAPUserImporter.class, UserImporter.class}
+)
 public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	@Override
@@ -439,10 +452,17 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		}
 	}
 
+	@Reference
 	public void setLDAPToPortalConverter(
 		LDAPToPortalConverter ldapToPortalConverter) {
 
 		_ldapToPortalConverter = ldapToPortalConverter;
+	}
+
+	@Reference
+	public void setSingleVMPool(SingleVMPool singleVMPool) {
+		_portalCache = (PortalCache<String, Long>)singleVMPool.getCache(
+			UserImporter.class.getName(), false);
 	}
 
 	protected void addRole(
@@ -1346,7 +1366,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	private LDAPToPortalConverter _ldapToPortalConverter;
 	private Set<String> _ldapUserIgnoreAttributes = SetUtil.fromArray(
 		PropsValues.LDAP_USER_IGNORE_ATTRIBUTES);
-	private PortalCache<String, Long> _portalCache = SingleVMPoolUtil.getCache(
-		UserImporter.class.getName(), false);
+	private PortalCache<String, Long> _portalCache;
 
 }

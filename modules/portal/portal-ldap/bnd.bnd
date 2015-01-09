@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal LDAP Integration
+Bundle-SymbolicName: com.liferay.portal.ldap
+Bundle-Version: 1.0.0
+Include-Resource: classes

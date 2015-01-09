@@ -32,6 +32,6 @@
 	<logger name="org.apache" level="ERROR" />
 
 	<root level="TRACE">
-		<appender-ref ref="FILE" />
+		<appender-ref ref="CONSOLE" />
 	</root>
 </configuration>

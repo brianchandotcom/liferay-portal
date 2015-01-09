@@ -740,12 +740,12 @@
 		<if>
 			<equals arg1="${previous}" arg2="true" />
 			<then>
-				<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="ARTICLE_PREVIOUS" value1="Previous" />
+				<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="ARTICLE_PREVIOUS" />
 			</then>
 			<elseif>
 				<equals arg1="${previous}" arg2="false" />
 				<then>
-					<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_PREVIOUS" value1="Previous" />
+					<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_PREVIOUS" />
 				</then>
 			</elseif>
 		</if>
@@ -753,12 +753,12 @@
 		<if>
 			<equals arg1="${next}" arg2="true" />
 			<then>
-				<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="ARTICLE_NEXT" value1="Next" />
+				<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="ARTICLE_NEXT" />
 			</then>
 			<elseif>
 				<equals arg1="${next}" arg2="false" />
 				<then>
-					<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_NEXT" value1="Next" />
+					<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="ARTICLE_NEXT" />
 				</then>
 			</elseif>
 		</if>

@@ -308,7 +308,7 @@
 		</execute>
 
 		<execute macro="KBArticle#rateArticlePG">
-			<var name="articleVoteCount" value="+1 (1 Vote)" />
+			<var name="articleVoteCount" value="1" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="rateUp" value="true" />
 		</execute>
@@ -567,33 +567,58 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
+		</execute>
+
 		<execute macro="KBArticle#viewNavigationLinksPG">
 			<var name="next" value="true" />
 			<var name="previous" value="false" />
 		</execute>
 
-		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_NEXT" value1="Knowledge Base Article Title 2" />
+		<execute action="PGKnowledgebasedisplay#click" locator-key1="ARTICLE_NEXT" />
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
+		</execute>
 
 		<execute macro="KBArticle#viewNavigationLinksPG">
 			<var name="next" value="true" />
 			<var name="previous" value="true" />
 		</execute>
 
-		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_NEXT" value1="Knowledge Base Article Title 3" />
+		<execute action="PGKnowledgebasedisplay#click" locator-key1="ARTICLE_NEXT" />
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 3" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 3" />
+		</execute>
 
 		<execute macro="KBArticle#viewNavigationLinksPG">
 			<var name="next" value="false" />
 			<var name="previous" value="true" />
 		</execute>
 
-		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_PREVIOUS" value1="Knowledge Base Article Title 2" />
+		<execute action="PGKnowledgebasedisplay#click" locator-key1="ARTICLE_PREVIOUS" />
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
+		</execute>
 
 		<execute macro="KBArticle#viewNavigationLinksPG">
 			<var name="next" value="true" />
 			<var name="previous" value="true" />
 		</execute>
 
-		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_PREVIOUS" value1="Knowledge Base Article Title 1" />
+		<execute action="PGKnowledgebasedisplay#click" locator-key1="ARTICLE_PREVIOUS" />
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
+		</execute>
 
 		<execute macro="KBArticle#viewNavigationLinksPG">
 			<var name="next" value="true" />

@@ -30,17 +30,17 @@
 </tr>
 <tr>
 	<td>DEFAULT_LANGUAGE_SELECT</td>
-	<td>//select[@id='_130_languageId']</td>
+	<td>//select[contains(@id,'languageId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVAILABLE_LANGUAGES_CURRENT_SELECT</td>
-	<td>//select[@id='_130_currentLanguageIds']</td>
+	<td>//select[contains(@id,'currentLanguageIds')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVAILABLE_LANGUAGES_CURRENT_PRESENT</td>
-	<td>//select[@id='_130_currentLanguageIds']/option</td>
+	<td>//select[contains(@id,'currentLanguageIds')]/option</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>AVAILABLE_LANGUAGES_AVAILABLE_SELECT</td>
-	<td>//select[@id='_130_availableLanguageIds']</td>
+	<td>//select[contains(@id,'availableLanguageIds')]</td>
 	<td></td>
 </tr>
 </tbody>

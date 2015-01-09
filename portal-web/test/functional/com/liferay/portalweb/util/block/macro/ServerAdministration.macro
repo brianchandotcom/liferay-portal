@@ -1,15 +1,4 @@
 <definition>
-	<command name="configureDMFileUploadMaxSize">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
-		</execute>
-
-		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_FILE_UPLOADS" value1="File Uploads" />
-		<execute action="CPServeradministrationFileuploads#type" locator-key1="DOCUMENTS_AND_MEDIA_MAX_FILE_SIZE" value1="${maxFileSize}" />
-		<execute action="CPServeradministrationFileuploads#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPServeradministrationFileuploads#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
 	<command name="configureExternalServices">
 		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_EXTERNAL_SERVICES" value1="External Services" />
 
@@ -48,6 +37,17 @@
 
 		<execute action="CPServeradministrationExternalservices#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPServeradministrationExternalservices#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="configureFileUploadOverallMaximumFileSize">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_FILE_UPLOADS" value1="File Uploads" />
+		<execute action="CPServeradministrationFileuploads#type" locator-key1="FILE_UPLOADS_GENERAL_OVERALL_MAX_FILE_SIZE_FIELD" value1="${maxFileSize}" />
+		<execute action="CPServeradministrationFileuploads#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPServeradministrationFileuploads#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="configureMailServerSettings">

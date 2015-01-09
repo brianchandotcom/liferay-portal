@@ -14,6 +14,10 @@
 			<execute function="AssertTextEquals#assertTextWaitForInlineCKEditor" />
 		</case>
 
+		<case locator-key1="ENTRY_CONTENT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
 		<case locator-key1="ENTRY_VOCABULARY">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>

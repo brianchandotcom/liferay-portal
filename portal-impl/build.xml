@@ -1292,31 +1292,9 @@ public class Creole10Parser]]></replacevalue>
 	</target>
 
 	<target name="compile">
-		<if>
-			<and>
-				<equals arg1="${app.server.type}" arg2="tomcat" />
-				<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
-			</and>
-			<then>
-				<delete file="${app.server.lib.portal.dir}/portal-impl.jar" />
-			</then>
-		</if>
-
 		<antcall target="compile-dependencies" />
 
 		<antcall target="build-common-java.compile" />
-
-		<if>
-			<and>
-				<equals arg1="${app.server.type}" arg2="tomcat" />
-				<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
-			</and>
-			<then>
-				<copy todir="${app.server.classes.portal.dir}" overwrite="true" preservelastmodified="true">
-					<fileset dir="classes" />
-				</copy>
-			</then>
-		</if>
 
 		<antcall target="print-current-time" />
 	</target>
@@ -1412,7 +1390,7 @@ public class Creole10Parser]]></replacevalue>
 		/>
 	</target>
 
-	<target name="deploy">
+	<target name="deploy" depends="check-deploy-uptodate,jar" unless="${deploy.uptodate}">
 		<ant dir="../portal-service" target="deploy" inheritAll="false" />
 
 		<antcall target="deploy-properties" />
@@ -1423,17 +1401,9 @@ public class Creole10Parser]]></replacevalue>
 				<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
 			</and>
 			<then>
-				<delete file="${app.server.lib.portal.dir}/portal-impl.jar" />
+				<delete file="${app.server.lib.portal.dir}/portal-impl.jar" failonerror="false" />
 
-				<copy todir="${app.server.classes.portal.dir}/com/liferay/portal/definitions" preservelastmodified="true">
-					<fileset dir="${project.dir}/definitions" />
-				</copy>
-
-				<copy todir="${app.server.classes.portal.dir}" preservelastmodified="true">
-					<fileset dir="src" includes="**/dependencies/**,**/service.xml" />
-				</copy>
-
-				<antcall target="compile" />
+				<unjar dest="${app.server.classes.portal.dir}" src="portal-impl.jar" />
 			</then>
 			<else>
 				<antcall target="build-common-java.deploy" />

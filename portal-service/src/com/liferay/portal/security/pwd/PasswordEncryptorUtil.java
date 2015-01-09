@@ -17,10 +17,7 @@ package com.liferay.portal.security.pwd;
 import com.liferay.portal.PwdEncryptorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,10 +27,12 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class PasswordEncryptorUtil {
 
-	public static final String PASSWORDS_ENCRYPTION_ALGORITHM =
-		StringUtil.toUpperCase(
-			GetterUtil.getString(
-				PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)));
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getDefaultPasswordAlgorithmType()}
+	 */
+	@Deprecated
+	public static String PASSWORDS_ENCRYPTION_ALGORITHM = StringPool.BLANK;
 
 	public static final String TYPE_BCRYPT = "BCRYPT";
 
@@ -78,9 +77,8 @@ public class PasswordEncryptorUtil {
 		}
 
 		try {
-			return encrypt(
-				PASSWORDS_ENCRYPTION_ALGORITHM, plainTextPassword,
-				encryptedPassword);
+			return _passwordEncryptor.encrypt(
+				plainTextPassword, encryptedPassword);
 		}
 		finally {
 			if (_log.isDebugEnabled()) {
@@ -100,12 +98,21 @@ public class PasswordEncryptorUtil {
 			algorithm, plainTextPassword, encryptedPassword);
 	}
 
+	public static String getDefaultPasswordAlgorithmType()
+		throws PwdEncryptorException {
+
+		return _passwordEncryptor.getDefaultPasswordAlgorithmType();
+	}
+
 	public PasswordEncryptor getPasswordEncryptor() {
 		return _passwordEncryptor;
 	}
 
 	public void setPasswordEncryptor(PasswordEncryptor passwordEncryptor) {
 		_passwordEncryptor = passwordEncryptor;
+
+		PASSWORDS_ENCRYPTION_ALGORITHM =
+			_passwordEncryptor.getDefaultPasswordAlgorithmType();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

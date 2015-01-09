@@ -259,14 +259,14 @@ SearchContainer searchContainer = null;
 		}
 
 		function <%= randomNamespace %>hideEditor(editorName, formId) {
-			if (window[editorName].dispose) {
-				window[editorName].dispose();
+			if (window[editorName+'Editor'].dispose) {
+				window[editorName+'Editor'].dispose();
 			}
 			<%= randomNamespace %>hideForm(formId);
 		}
 
 		function <%= randomNamespace %>showEditor(editorName, formId) {
-			window[editorName].create();
+			window[editorName+'Editor'].create();
 			<%= randomNamespace %>showForm(formId);
 		}
 
@@ -336,7 +336,8 @@ SearchContainer searchContainer = null;
 
 				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-				var body = window['<%= namespace %>postReplyBody' + i].getHTML();
+				var editorInstance = window['<%= namespace %>postReplyBody' + i+'Editor'];
+				var body = editorInstance.getHTML();
 				var parentMessageId = form.one('#<%= namespace %>parentMessageId' + i).val();
 
 				form.one('#<%= namespace %><%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.ADD %>');
@@ -361,6 +362,7 @@ SearchContainer searchContainer = null;
 				}
 				else {
 					<portlet:namespace />sendMessage(form);
+					editorInstance.dispose();
 				}
 			},
 			['aui-base']
@@ -486,7 +488,8 @@ SearchContainer searchContainer = null;
 
 				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-				var body = window['<%= namespace %>editReplyBody' + i].getHTML();
+				var editorInstance = window['<%= namespace %>editReplyBody' + i+'Editor'];
+				var body = editorInstance.getHTML();
 				var messageId = form.one('#<%= namespace %>messageId' + i).val();
 
 				if (pending) {
@@ -498,6 +501,7 @@ SearchContainer searchContainer = null;
 				form.one('#<%= namespace %>body').val(body);
 
 				<portlet:namespace />sendMessage(form);
+				editorInstance.dispose();
 			},
 			['aui-base']
 		);

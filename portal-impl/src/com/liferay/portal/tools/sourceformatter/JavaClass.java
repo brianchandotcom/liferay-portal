@@ -338,19 +338,24 @@ public class JavaClass {
 			}
 		}
 
-		StringBundler sb = new StringBundler(6);
-		String javaTermName = javaTerm.getName();
+		StringBundler sb = null;
 
 		if (true) {
+			sb = new StringBundler(4);
+
 			sb.append("(\\b|\\.)");
-			sb.append(javaTermName);
+			sb.append(javaTerm.getName());
 			sb.append(" (=)|(\\+\\+)|(--)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)");
 			sb.append("|(\\|=)|(&=)|(^=) ");
 		}
 		else {
-			sb.append("(((\\+\\+( ?))|(--( ?)))" + javaTermName + ")");
+			sb = new StringBundler(8);
+
+			sb.append("(((\\+\\+( ?))|(--( ?)))");
+			sb.append(javaTerm.getName());
+			sb.append(")");
 			sb.append("|((\\b|\\.)");
-			sb.append(javaTermName);
+			sb.append(javaTerm.getName());
 			sb.append("((( )((=)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)))");
 			sb.append("|(\\+\\+)|(--)");
 			sb.append("|(( )((\\|=)|(&=)|(^=)))))");
@@ -1218,12 +1223,8 @@ public class JavaClass {
 					return false;
 				}
 			}
-			else {
-				if (content.contains(javaTerm.getName())) {
-					if (matcher.find()) {
-						return false;
-					}
-				}
+			else if (content.contains(javaTerm.getName()) && matcher.find()) {
+				return false;
 			}
 		}
 

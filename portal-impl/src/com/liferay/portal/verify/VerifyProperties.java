@@ -357,6 +357,17 @@ public class VerifyProperties extends VerifyProcess {
 			"publish.to.live.by.default", "com.liferay.journal.content.web"
 		},
 
+		// Nested Portlets
+
+		new String[] {
+			"nested.portlets.layout.template.default",
+			"layout.template.default", "com.liferay.nested.portlets.web"
+		},
+		new String[] {
+			"nested.portlets.layout.template.unsupported",
+			"layout.template.unsupported", "com.liferay.nested.portlets.web"
+		},
+
 		// Polls
 
 		new String[] {
@@ -469,9 +480,7 @@ public class VerifyProperties extends VerifyProcess {
 		"memory.cluster.scheduler.lock.cache.enabled",
 		"message.boards.email.message.added.signature",
 		"message.boards.email.message.updated.signature",
-		"message.boards.thread.locking.enabled",
-		"nested.portlets.layout.template.default",
-		"nested.portlets.layout.template.unsupported", "portal.ctx",
+		"message.boards.thread.locking.enabled", "portal.ctx",
 		"portal.security.manager.enable", "permissions.list.filter",
 		"permissions.thread.local.cache.max.size",
 		"permissions.user.check.algorithm", "persistence.provider",

@@ -445,7 +445,7 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute action="PGDocumentsandmediaAddshortcut#type" locator-key1="SELECT_SITE_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator-key1="SELECT_SITE_SEARCH_BUTTON" />
+		<execute action="PGDocumentsandmediaAddshortcut#click" locator-key1="SELECT_SITE_SEARCH_BUTTON" />
 		<execute action="PGDocumentsandmediaAddshortcut#assertTextEquals" locator-key1="SELECT_SITE_TABLE_NAME" value1="${siteName}" />
 		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator-key1="SELECT_SITE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 		<execute action="PGDocumentsandmediaAddshortcut#selectFrameTop" value1="relative=top" />

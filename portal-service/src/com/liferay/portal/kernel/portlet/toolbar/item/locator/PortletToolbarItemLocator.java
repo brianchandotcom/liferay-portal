@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.portlet.toolbar.item.locator;
 
-import com.liferay.portal.kernel.portlet.toolbar.item.AddContentPortletToolbarItem;
+import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
 
 import java.util.List;
 
@@ -23,9 +23,9 @@ import javax.portlet.PortletRequest;
 /**
  * @author Sergio González
  */
-public interface AddContentPortletToolbarItemLocator {
+public interface PortletToolbarItemLocator {
 
-	public List<AddContentPortletToolbarItem> getPortletToolbarItems(
+	public List<PortletToolbarMenuItem> getPortletToolbarItems(
 		String portletId, PortletRequest portletRequest);
 
 }

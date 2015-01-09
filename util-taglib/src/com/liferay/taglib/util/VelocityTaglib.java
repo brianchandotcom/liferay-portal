@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.util;
 
-import com.liferay.portal.kernel.portlet.toolbar.item.AddContentPortletToolbarItem;
+import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -86,7 +86,7 @@ public interface VelocityTaglib {
 		throws Exception;
 
 	public void addContentPortletToolbar(
-			List<AddContentPortletToolbarItem> addContentPortletToolbarItems)
+			List<PortletToolbarMenuItem> portletToolbarMenuItems)
 		throws Exception;
 
 	public void assetCategoriesSummary(

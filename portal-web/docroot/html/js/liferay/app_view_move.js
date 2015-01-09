@@ -32,9 +32,9 @@ AUI.add(
 
 		var STR_MOVE = 'move';
 
-		var STR_MOVE_TO_TRASH = 'move_to_trash';
-
 		var STR_MOVE_ENTRY_URL = 'moveEntryRenderUrl';
+
+		var STR_MOVE_TO_TRASH = 'move_to_trash';
 
 		var STR_NODE = 'node';
 

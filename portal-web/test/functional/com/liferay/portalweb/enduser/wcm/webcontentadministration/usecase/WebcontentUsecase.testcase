@@ -94,7 +94,7 @@
 		<execute macro="WebContent#viewAudioViaWCD" />
 	</command>
 
-	<command known-issues="LPS-51174" name="AddContentWithTitleAndAllFieldsNull" priority="5">
+	<command known-issues="LIFERAYQA-12835" name="AddContentWithTitleAndAllFieldsNull" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -323,7 +323,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49842,LPS-50293,LPS-50660" name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
+	<command known-issues="LPS-49842,LPS-50660" name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="siteScopeName" value="Global" />
 		</execute>
@@ -537,7 +537,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51261, LPS-51174" name="EditContentWithTitleAndAllFieldsNull" priority="5">
+	<command name="EditContentWithTitleAndAllFieldsNull" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -704,7 +704,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-47455" name="StagingPublishExpiredWebContentViaWCD" priority="4">
+	<command name="StagingPublishExpiredWebContentViaWCD" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

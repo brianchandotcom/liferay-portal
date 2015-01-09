@@ -476,14 +476,14 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		String displayStyle = getDisplayTemplate(
+		String displayStyle = getDisplayStyle(
 			portletDataContext, portletId, portletPreferences);
 
 		if (Validator.isNotNull(displayStyle) &&
 			displayStyle.startsWith(
 				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 
-			long displayStyleGroupId = getDisplayTemplateGroupId(
+			long displayStyleGroupId = getDisplayStyleGroupId(
 				portletDataContext, portletId, portletPreferences);
 
 			long previousScopeGroupId = portletDataContext.getScopeGroupId();
@@ -523,7 +523,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		throws PortletDataException {
 
 		try {
-			String displayStyle = getDisplayTemplate(
+			String displayStyle = getDisplayStyle(
 				portletDataContext, portletId, portletPreferences);
 
 			if (Validator.isNotNull(displayStyle) &&
@@ -533,7 +533,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 				StagedModelDataHandlerUtil.importReferenceStagedModels(
 					portletDataContext, DDMTemplate.class);
 
-				long displayStyleGroupId = getDisplayTemplateGroupId(
+				long displayStyleGroupId = getDisplayStyleGroupId(
 					portletDataContext, portletId, portletPreferences);
 
 				Map<Long, Long> groupIds =
@@ -706,7 +706,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return portletPreferences;
 	}
 
-	protected String getDisplayTemplate(
+	protected String getDisplayStyle(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
@@ -724,7 +724,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return null;
 	}
 
-	protected long getDisplayTemplateGroupId(
+	protected long getDisplayStyleGroupId(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 

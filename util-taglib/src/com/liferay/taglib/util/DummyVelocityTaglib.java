@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.util;
 
-import com.liferay.portal.kernel.portlet.toolbar.item.AddContentPortletToolbarItem;
+import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
@@ -112,7 +112,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public void addContentPortletToolbar(
-			List<AddContentPortletToolbarItem> addContentPortletToolbarItems)
+			List<PortletToolbarMenuItem> portletToolbarMenuItems)
 		throws Exception {
 
 		return;

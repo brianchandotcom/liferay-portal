@@ -21,7 +21,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Sergio González
  */
-public interface AddContentPortletToolbarItem {
+public interface PortletToolbarMenuItem {
 
 	public MenuItem getMenuItem(PortletRequest portletRequest);
 

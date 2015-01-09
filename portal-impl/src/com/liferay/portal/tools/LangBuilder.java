@@ -212,9 +212,6 @@ public class LangBuilder {
 
 			String line = null;
 
-			Boolean hasPrefix = true;
-			Boolean hasSuffix = true;
-
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				line = line.trim();
 
@@ -270,15 +267,6 @@ public class LangBuilder {
 						else if (translatedText.endsWith(AUTOMATIC_COPY)) {
 							translatedText = value + AUTOMATIC_COPY;
 						}
-						else if (key.equals("lang.user.name.fields")) {
-							if (!translatedText.contains("prefix")) {
-								hasPrefix = false;
-							}
-
-							if (!translatedText.contains("suffix")) {
-								hasSuffix = false;
-							}
-						}
 					}
 
 					if ((translatedText == null) || translatedText.equals("")) {
@@ -309,23 +297,13 @@ public class LangBuilder {
 						else if (key.equals("lang.line.end")) {
 							translatedText = "right";
 						}
-						else if (key.equals("lang.user.name.fields")) {
-							translatedText =
-								"prefix,first-name,middle-name,last-name," +
-									"suffix";
-						}
-						else if (key.equals(
-							"lang.user.name.prefix.value.options")) {
-
-							translatedText = "dr,mr,ms,mrs";
-						}
-						else if (key.equals("lang.user.name.required.fields")) {
-							translatedText = "last-name";
-						}
-						else if (key.equals(
-							"lang.user.name.suffix.value.options")) {
-
-							translatedText = "ii,iii,iv,jr,phd,sr";
+						else if (key.equals("lang.user.name.fields") ||
+								 key.equals(
+									"lang.user.name.prefix.value.options") ||
+								 key.equals("lang.user.name.required.fields") ||
+								 key.equals(
+									"lang.user.name.suffix.value.options")) {
+										translatedText = "";
 						}
 						else if (languageId.equals("el") &&
 								 (key.equals("enabled") || key.equals("on") ||
@@ -377,16 +355,6 @@ public class LangBuilder {
 							throw new IOException(
 								"IP was blocked because of over usage. " +
 									"Please use another IP.");
-						}
-
-						if (key.equals("lang.user.name.prefix.value.options") &&
-							!hasPrefix) {
-							translatedText = "";
-						}
-						else if (
-							key.equals("lang.user.name.suffix.value.options") &&
-							!hasSuffix) {
-							translatedText = "";
 						}
 
 						translatedText = _fixTranslation(translatedText);

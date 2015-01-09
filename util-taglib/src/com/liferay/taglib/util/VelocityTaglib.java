@@ -20,7 +20,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.aui.ColumnTag;
 import com.liferay.taglib.aui.LayoutTag;
-import com.liferay.taglib.ui.AddContentPortletToolbarTag;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
 import com.liferay.taglib.ui.AssetLinksTag;
 import com.liferay.taglib.ui.AssetTagsSummaryTag;
@@ -31,6 +30,7 @@ import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
+import com.liferay.taglib.ui.PortletToolbarMenuTag;
 import com.liferay.taglib.ui.QuickAccessTag;
 import com.liferay.taglib.ui.RatingsTag;
 
@@ -134,9 +134,6 @@ public interface VelocityTaglib {
 			String message, long reportedUserId)
 		throws Exception;
 
-	public AddContentPortletToolbarTag getAddContentPortletToolbarTag()
-		throws Exception;
-
 	public AssetCategoriesSummaryTag getAssetCategoriesSummaryTag()
 		throws Exception;
 
@@ -163,6 +160,8 @@ public interface VelocityTaglib {
 	public PageContext getPageContext();
 
 	public PngImageTag getPngImageTag() throws Exception;
+
+	public PortletToolbarMenuTag getPortletToolbarMenuTag() throws Exception;
 
 	public QuickAccessTag getQuickAccessTag() throws Exception;
 

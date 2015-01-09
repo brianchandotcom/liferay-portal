@@ -81,7 +81,7 @@ public class BookmarksPermission implements ResourcePermissionChecker {
 
 	@Override
 	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId){
+		PermissionChecker permissionChecker, long classPK, String actionId) {
 
 		return contains(permissionChecker, classPK, actionId);
 	}

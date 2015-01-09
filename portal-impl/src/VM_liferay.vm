@@ -1,9 +1,9 @@
-#macro (addContentPortletToolbar $toolbarItems)
-	#set ($add_content_portlet_toolbar_tag = $theme.getAddContentPortletToolbarTag())
+#macro (portletToolbarMenu $items)
+	#set ($portlet_toolbar_menu_tag = $theme.getPortletToolbarMenuTag())
 
-	$add_content_portlet_toolbar_tag.setToolbarItems($toolbarItems)
+	$portlet_toolbar_menu_tag.setToolbarItems($items)
 
-	$add_content_portlet_toolbar_tag.runTag()
+	$portlet_toolbar_menu_tag.runTag()
 #end
 
 #macro (breadcrumbs $control_panel)

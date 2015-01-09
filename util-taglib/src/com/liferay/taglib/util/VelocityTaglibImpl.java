@@ -51,7 +51,6 @@ import com.liferay.taglib.servlet.PipingPageContext;
 import com.liferay.taglib.theme.LayoutIconTag;
 import com.liferay.taglib.theme.MetaTagsTag;
 import com.liferay.taglib.theme.WrapPortletTag;
-import com.liferay.taglib.ui.AddContentPortletToolbarTag;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
 import com.liferay.taglib.ui.AssetLinksTag;
 import com.liferay.taglib.ui.AssetTagsSummaryTag;
@@ -64,6 +63,7 @@ import com.liferay.taglib.ui.JournalContentSearchTag;
 import com.liferay.taglib.ui.LanguageTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
+import com.liferay.taglib.ui.PortletToolbarMenuTag;
 import com.liferay.taglib.ui.QuickAccessTag;
 import com.liferay.taglib.ui.RatingsTag;
 import com.liferay.taglib.ui.SearchTag;
@@ -209,14 +209,14 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			List<PortletToolbarMenuItem> portletToolbarMenuItems)
 		throws Exception {
 
-		AddContentPortletToolbarTag addContentPortletToolbarTag =
-			new AddContentPortletToolbarTag();
+		PortletToolbarMenuTag portletToolbarMenuTag =
+			new PortletToolbarMenuTag();
 
-		setUp(addContentPortletToolbarTag);
+		setUp(portletToolbarMenuTag);
 
-		addContentPortletToolbarTag.setToolbarItems(portletToolbarMenuItems);
+		portletToolbarMenuTag.setItems(portletToolbarMenuItems);
 
-		addContentPortletToolbarTag.runTag();
+		portletToolbarMenuTag.runTag();
 	}
 
 	@Override
@@ -367,18 +367,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
-	public AddContentPortletToolbarTag getAddContentPortletToolbarTag()
-		throws Exception {
-
-		AddContentPortletToolbarTag addContentPortletToolbarTag =
-			new AddContentPortletToolbarTag();
-
-		setUp(addContentPortletToolbarTag);
-
-		return addContentPortletToolbarTag;
-	}
-
-	@Override
 	public AssetCategoriesSummaryTag getAssetCategoriesSummaryTag()
 		throws Exception {
 
@@ -492,6 +480,16 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		setUp(pngImageTag);
 
 		return pngImageTag;
+	}
+
+	@Override
+	public PortletToolbarMenuTag getPortletToolbarMenuTag() throws Exception {
+		PortletToolbarMenuTag portletToolbarMenuTag =
+			new PortletToolbarMenuTag();
+
+		setUp(portletToolbarMenuTag);
+
+		return portletToolbarMenuTag;
 	}
 
 	@Override

@@ -11,8 +11,8 @@
 	<short-name>liferay-ui</short-name>
 	<uri>http://liferay.com/tld/ui</uri>
 	<tag>
-		<name>add-content-portlet-toolbar</name>
-		<tag-class>com.liferay.taglib.ui.AddContentPortletToolbarTag</tag-class>
+		<name>portlet-toolbar-menu</name>
+		<tag-class>com.liferay.taglib.ui.PortletToolbarMenuTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>toolbarItems</name>

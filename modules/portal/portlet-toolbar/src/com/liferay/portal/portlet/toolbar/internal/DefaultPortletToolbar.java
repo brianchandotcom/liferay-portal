@@ -14,12 +14,26 @@
 
 package com.liferay.portal.portlet.toolbar.internal;
 
-import org.osgi.service.component.annotations.*;
+import com.liferay.portal.kernel.portlet.toolbar.PortletToolbar;
+import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
+import com.liferay.portal.kernel.portlet.toolbar.item.locator.PortletToolbarItemLocator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.portlet.PortletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Sergio González
  */
-@Component(immediate = true)x
+@Component(immediate = true)
 public class DefaultPortletToolbar implements PortletToolbar {
 
 	@Override
@@ -29,9 +43,8 @@ public class DefaultPortletToolbar implements PortletToolbar {
 		List<PortletToolbarMenuItem> portletToolbarMenuItems =
 			new ArrayList<>();
 
-		for (PortletToolbarItemLocator
-			portletToolbarItemLocator :
-			_portletToolbarItemLocators) {
+		for (PortletToolbarItemLocator portletToolbarItemLocator :
+				_portletToolbarItemLocators) {
 
 			List<PortletToolbarMenuItem>
 				curPortletToolbarMenuItems =

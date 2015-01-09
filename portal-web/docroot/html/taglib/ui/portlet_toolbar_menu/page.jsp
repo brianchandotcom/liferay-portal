@@ -14,17 +14,17 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/add_content_portlet_toolbar/init.jsp" %>
+<%@ include file="/html/taglib/ui/portlet_toolbar_menu/init.jsp" %>
 
 <%
-List<AddContentPortletToolbarItem> toolbarItems = (List<AddContentPortletToolbarItem>)request.getAttribute("liferay-ui:add_content_portlet_toolbar:toolbarItems");
+List<PortletToolbarMenuItem> portletToolbarMenuItems = (List<PortletToolbarMenuItem>)request.getAttribute("liferay-ui:portlet_toolbar_menu:items");
 %>
 
 <liferay-ui:icon-menu cssClass="portlet-options" direction="down" extended="<%= false %>" icon="../aui/plus-sign-2" message="add" showArrow="<%= true %>" showWhenSingleIcon="<%= true %>">
 
 	<%
-	for (AddContentPortletToolbarItem toolbarItem : toolbarItems) {
-		MenuItem menuItem = toolbarItem.getMenuItem(renderRequest);
+	for (PortletToolbarMenuItem portletToolbarMenuItem : portletToolbarMenuItems) {
+		MenuItem menuItem = portletToolbarMenuItem.getMenuItem(renderRequest);
 	%>
 
 		<c:if test="<%= menuItem != null %>">

@@ -40,7 +40,7 @@ public class VerifyGroupedModel extends VerifyProcess {
 	public void verify(VerifiableGroupedModel ... verifiableGroupedModels)
 		throws Exception {
 
-		List<String> unverifiedTableNames = new ArrayList<String>();
+		List<String> unverifiedTableNames = new ArrayList<>();
 
 		for (VerifiableGroupedModel verifiableGroupedModel :
 				verifiableGroupedModels) {
@@ -49,8 +49,7 @@ public class VerifyGroupedModel extends VerifyProcess {
 		}
 
 		List<VerifiableGroupedModelRunnable> verifiableGroupedModelRunnables =
-			new ArrayList<VerifiableGroupedModelRunnable>(
-				unverifiedTableNames.size());
+			new ArrayList<>(unverifiedTableNames.size());
 
 		while (!unverifiedTableNames.isEmpty()) {
 			int count = unverifiedTableNames.size();

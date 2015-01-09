@@ -45,7 +45,7 @@ public class SandboxDeployUtil {
 	}
 
 	private SandboxDeployUtil() {
-		_sandboxDeployDirs = new HashMap<String, SandboxDeployDir>();
+		_sandboxDeployDirs = new HashMap<>();
 	}
 
 	private SandboxDeployDir _getDir(String name) {

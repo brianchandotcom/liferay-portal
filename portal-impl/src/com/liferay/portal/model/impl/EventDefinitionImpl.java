@@ -33,7 +33,7 @@ public class EventDefinitionImpl implements EventDefinition {
 		_valueType = valueType;
 		_portletApp = portletApp;
 
-		_qNames = new HashSet<QName>();
+		_qNames = new HashSet<>();
 
 		_qNames.add(_qName);
 	}

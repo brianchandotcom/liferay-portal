@@ -221,8 +221,8 @@ public class DeployManagerImpl implements DeployManager {
 		DeployManagerImpl.class);
 
 	private final List<String[]> _levelsRequiredDeploymentContexts =
-		new ArrayList<String[]>();
+		new ArrayList<>();
 	private final List<String[]> _levelsRequiredDeploymentWARFileNames =
-		new ArrayList<String[]>();
+		new ArrayList<>();
 
 }

@@ -90,7 +90,7 @@ public class ShardSessionFactoryTargetSource implements TargetSource {
 	}
 
 	private static final Map<String, SessionFactory> _sessionFactories =
-		new HashMap<String, SessionFactory>();
+		new HashMap<>();
 
 	private static final ThreadLocal<SessionFactory> _sessionFactory =
 		new CentralizedThreadLocal<SessionFactory>(false) {

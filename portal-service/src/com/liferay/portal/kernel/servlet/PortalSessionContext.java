@@ -48,7 +48,7 @@ public class PortalSessionContext {
 	}
 
 	protected PortalSessionContext() {
-		_sessionPool = new ConcurrentHashMap<String, HttpSession>();
+		_sessionPool = new ConcurrentHashMap<>();
 	}
 
 	private int _count() {

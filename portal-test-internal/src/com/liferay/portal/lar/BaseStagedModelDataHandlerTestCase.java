@@ -166,7 +166,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			clazz.getSimpleName());
 
 		if (dependentStagedModels == null) {
-			dependentStagedModels = new ArrayList<StagedModel>();
+			dependentStagedModels = new ArrayList<>();
 
 			dependentStagedModelsMap.put(
 				clazz.getSimpleName(), dependentStagedModels);
@@ -181,7 +181,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			Group group)
 		throws Exception {
 
-		return new HashMap<String, List<StagedModel>>();
+		return new HashMap<>();
 	}
 
 	protected void addRatings(StagedModel stagedModel) throws Exception {
@@ -214,8 +214,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	}
 
 	protected Map<String, String[]> getParameterMap() {
-		Map<String, String[]> parameterMap =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.DATA_STRATEGY,
@@ -477,7 +476,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		Element rootElement = portletDataContext.getExportDataRootElement();
 
-		List<Element> stagedModelGroupElements = new ArrayList<Element>();
+		List<Element> stagedModelGroupElements = new ArrayList<>();
 
 		Class<?> stagedModelClass = getStagedModelClass();
 
@@ -500,7 +499,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 				dependentStagedModelsMap.get(className);
 
 			if (dependentStagedModels == null) {
-				dependentStagedModels = new ArrayList<StagedModel>();
+				dependentStagedModels = new ArrayList<>();
 			}
 			else {
 				dependentStagedModels = ListUtil.copy(dependentStagedModels);

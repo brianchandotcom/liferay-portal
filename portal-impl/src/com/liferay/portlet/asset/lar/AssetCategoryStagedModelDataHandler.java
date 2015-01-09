@@ -298,7 +298,7 @@ public class AssetCategoryStagedModelDataHandler
 		Map<Locale, String> titleMap = category.getTitleMap();
 
 		if (titleMap == null) {
-			titleMap = new HashMap<Locale, String>();
+			titleMap = new HashMap<>();
 		}
 
 		titleMap.put(PortalUtil.getSiteDefaultLocale(groupId), name);

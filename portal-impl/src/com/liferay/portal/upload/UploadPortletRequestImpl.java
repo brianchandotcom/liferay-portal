@@ -191,7 +191,7 @@ public class UploadPortletRequestImpl
 			return Collections.emptyMap();
 		}
 
-		Map<String, FileItem[]> map = new HashMap<String, FileItem[]>();
+		Map<String, FileItem[]> map = new HashMap<>();
 
 		UploadServletRequestImpl uploadServletRequestImpl =
 			(UploadServletRequestImpl)_uploadServletRequest;
@@ -227,7 +227,7 @@ public class UploadPortletRequestImpl
 
 	@Override
 	public Map<String, String[]> getParameterMap() {
-		Map<String, String[]> map = new HashMap<String, String[]>();
+		Map<String, String[]> map = new HashMap<>();
 
 		Enumeration<String> enu = getParameterNames();
 
@@ -242,7 +242,7 @@ public class UploadPortletRequestImpl
 
 	@Override
 	public Enumeration<String> getParameterNames() {
-		List<String> parameterNames = new ArrayList<String>();
+		List<String> parameterNames = new ArrayList<>();
 
 		Enumeration<String> enu = _uploadServletRequest.getParameterNames();
 
@@ -283,7 +283,7 @@ public class UploadPortletRequestImpl
 			return Collections.emptyMap();
 		}
 
-		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		Map<String, List<String>> map = new HashMap<>();
 
 		UploadServletRequestImpl uploadServletRequestImpl =
 			(UploadServletRequestImpl)_uploadServletRequest;

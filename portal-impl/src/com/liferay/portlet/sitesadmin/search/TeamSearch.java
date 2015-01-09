@@ -30,7 +30,7 @@ public class TeamSearch extends SearchContainer<Role> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-teams-were-found";
 
-	public static List<String> headerNames = new ArrayList<String>();
+	public static List<String> headerNames = new ArrayList<>();
 
 	static {
 		headerNames.add("name");

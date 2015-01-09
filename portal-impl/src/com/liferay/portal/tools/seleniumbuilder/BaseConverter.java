@@ -33,7 +33,7 @@ public class BaseConverter {
 	}
 
 	protected Map<String, Object> getContext() {
-		Map<String, Object> context = new HashMap<String, Object>();
+		Map<String, Object> context = new HashMap<>();
 
 		context.put("seleniumBuilderContext", seleniumBuilderContext);
 		context.put("seleniumBuilderFileUtil", seleniumBuilderFileUtil);

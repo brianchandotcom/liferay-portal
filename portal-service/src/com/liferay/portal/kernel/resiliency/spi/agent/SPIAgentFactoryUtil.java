@@ -93,7 +93,6 @@ public class SPIAgentFactoryUtil {
 	}
 
 	private static final Map<String, Class<? extends SPIAgent>>
-		_spiAgentClasses =
-			new ConcurrentHashMap<String, Class<? extends SPIAgent>>();
+		_spiAgentClasses = new ConcurrentHashMap<>();
 
 }

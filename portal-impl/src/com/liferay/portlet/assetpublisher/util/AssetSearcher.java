@@ -109,7 +109,7 @@ public class AssetSearcher extends BaseSearcher {
 				continue;
 			}
 
-			List<Long> categoryIds = new ArrayList<Long>();
+			List<Long> categoryIds = new ArrayList<>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
 				categoryIds.addAll(
@@ -210,7 +210,7 @@ public class AssetSearcher extends BaseSearcher {
 				continue;
 			}
 
-			List<Long> categoryIds = new ArrayList<Long>();
+			List<Long> categoryIds = new ArrayList<>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
 				categoryIds.addAll(
@@ -338,7 +338,7 @@ public class AssetSearcher extends BaseSearcher {
 				continue;
 			}
 
-			List<Long> categoryIds = new ArrayList<Long>();
+			List<Long> categoryIds = new ArrayList<>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
 				categoryIds.addAll(
@@ -416,7 +416,7 @@ public class AssetSearcher extends BaseSearcher {
 				continue;
 			}
 
-			List<Long> categoryIds = new ArrayList<Long>();
+			List<Long> categoryIds = new ArrayList<>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
 				categoryIds.addAll(

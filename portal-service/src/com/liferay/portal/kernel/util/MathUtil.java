@@ -197,8 +197,7 @@ public class MathUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(MathUtil.class);
 
-	private static Map<Long, Integer> _base2LogValues =
-		new HashMap<Long, Integer>();
+	private static Map<Long, Integer> _base2LogValues = new HashMap<>();
 
 	static {
 		_base2LogValues.put(0L, Integer.MIN_VALUE);

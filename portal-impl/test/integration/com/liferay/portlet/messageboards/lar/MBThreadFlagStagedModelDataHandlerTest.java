@@ -54,7 +54,7 @@ public class MBThreadFlagStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		MBMessage message = MBTestUtil.addMessage(group.getGroupId());
 

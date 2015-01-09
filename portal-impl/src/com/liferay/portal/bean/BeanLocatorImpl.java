@@ -189,7 +189,7 @@ public class BeanLocatorImpl implements BeanLocator {
 	private final ClassLoader _classLoader;
 	private String _paclServletContextName;
 	private final Map<String, Object> _velocityBeans =
-		new ConcurrentHashMap<String, Object>();
+		new ConcurrentHashMap<>();
 
 	private static class NoPACL implements PACL {
 

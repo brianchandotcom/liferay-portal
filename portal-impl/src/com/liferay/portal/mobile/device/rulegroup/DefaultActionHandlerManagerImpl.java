@@ -106,6 +106,6 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 		DefaultActionHandlerManagerImpl.class);
 
 	private final Map<String, ActionHandler> _deviceActionHandlers =
-		new HashMap<String, ActionHandler>();
+		new HashMap<>();
 
 }

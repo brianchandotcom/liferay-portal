@@ -138,7 +138,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	public Map<String, Fields> getFieldsMap(long fileVersionId)
 		throws PortalException {
 
-		Map<String, Fields> fieldsMap = new HashMap<String, Fields>();
+		Map<String, Fields> fieldsMap = new HashMap<>();
 
 		DLFileVersion dlFileVersion =
 			DLFileVersionLocalServiceUtil.getFileVersion(fileVersionId);

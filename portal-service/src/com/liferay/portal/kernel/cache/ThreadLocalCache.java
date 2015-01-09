@@ -50,7 +50,7 @@ public class ThreadLocalCache<T> {
 
 	public void put(String key, T obj) {
 		if (_cache == null) {
-			_cache = new HashMap<String, T>();
+			_cache = new HashMap<>();
 		}
 
 		_cache.put(key, obj);

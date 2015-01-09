@@ -183,7 +183,7 @@ public class JournalTestUtilTest {
 	@Test
 	public void testAddDynamicContent() {
 		try {
-			Map<Locale, String> contents = new HashMap<Locale, String>();
+			Map<Locale, String> contents = new HashMap<>();
 
 			contents.put(LocaleUtil.BRAZIL, "Joe Bloggs");
 			contents.put(LocaleUtil.US, "Joe Bloggs");
@@ -251,7 +251,7 @@ public class JournalTestUtilTest {
 		JournalArticle article = JournalTestUtil.addArticle(
 			_group.getGroupId(), "Test Article", "This is a test article.");
 
-		Map<Locale, String> contents = new HashMap<Locale, String>();
+		Map<Locale, String> contents = new HashMap<>();
 
 		contents.put(Locale.US, "This is an updated test article.");
 

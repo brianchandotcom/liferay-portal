@@ -108,7 +108,7 @@ public class DLFileEntryLocalServiceTreeTest {
 	}
 
 	protected List<FileEntry> createTree() throws Exception {
-		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
+		List<FileEntry> fileEntries = new ArrayList<>();
 
 		FileEntry fileEntryA = DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,

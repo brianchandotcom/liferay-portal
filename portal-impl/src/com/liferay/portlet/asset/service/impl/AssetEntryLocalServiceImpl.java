@@ -148,7 +148,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public List<AssetEntry> getAncestorEntries(long entryId)
 		throws PortalException {
 
-		List<AssetEntry> entries = new ArrayList<AssetEntry>();
+		List<AssetEntry> entries = new ArrayList<>();
 
 		AssetEntry parentEntry = getParentEntry(entryId);
 
@@ -165,7 +165,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public List<AssetEntry> getChildEntries(long entryId)
 		throws PortalException {
 
-		List<AssetEntry> entries = new ArrayList<AssetEntry>();
+		List<AssetEntry> entries = new ArrayList<>();
 
 		List<AssetLink> links = assetLinkLocalService.getDirectLinks(
 			entryId, AssetLinkConstants.TYPE_CHILD);

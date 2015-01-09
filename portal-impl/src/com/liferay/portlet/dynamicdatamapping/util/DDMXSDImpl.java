@@ -666,7 +666,7 @@ public class DDMXSDImpl implements DDMXSD {
 			(Element)dynamicElementElement.selectSingleNode(
 				"meta-data[@locale='" + structureLanguageId + "']");
 
-		fieldContext = new HashMap<String, Object>();
+		fieldContext = new HashMap<>();
 
 		if (metadataElement != null) {
 			for (Element metadataEntry : metadataElement.elements()) {
@@ -743,7 +743,7 @@ public class DDMXSDImpl implements DDMXSD {
 				fieldsContextKey);
 
 		if (fieldsContext == null) {
-			fieldsContext = new HashMap<String, Map<String, Object>>();
+			fieldsContext = new HashMap<>();
 
 			request.setAttribute(fieldsContextKey, fieldsContext);
 		}
@@ -789,7 +789,7 @@ public class DDMXSDImpl implements DDMXSD {
 	}
 
 	protected String[] getFieldsDisplayValues(String fieldDisplayValue) {
-		List<String> fieldsDisplayValues = new ArrayList<String>();
+		List<String> fieldsDisplayValues = new ArrayList<>();
 
 		for (String value : StringUtil.split(fieldDisplayValue)) {
 			String fieldName = StringUtil.extractFirst(
@@ -807,13 +807,13 @@ public class DDMXSDImpl implements DDMXSD {
 		String portletNamespace, String namespace,
 		Element dynamicElementElement, Locale locale) {
 
-		Map<String, Object> freeMarkerContext = new HashMap<String, Object>();
+		Map<String, Object> freeMarkerContext = new HashMap<>();
 
 		Map<String, Object> fieldContext = getFieldContext(
 			request, response, portletNamespace, namespace,
 			dynamicElementElement, locale);
 
-		Map<String, Object> parentFieldContext = new HashMap<String, Object>();
+		Map<String, Object> parentFieldContext = new HashMap<>();
 
 		Element parentElement = dynamicElementElement.getParent();
 

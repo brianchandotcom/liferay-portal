@@ -346,7 +346,7 @@ public class SPIRegistryImplTest {
 					String methodName = method.getName();
 
 					if (methodName.equals("getPortlets")) {
-						List<Portlet> portlets = new ArrayList<Portlet>(
+						List<Portlet> portlets = new ArrayList<>(
 							portletIds.size());
 
 						for (String portletId : portletIds) {

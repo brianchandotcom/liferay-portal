@@ -40,7 +40,7 @@ import javax.servlet.ServletContext;
 public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 	public PortletInstanceFactoryImpl() {
-		_pool = new ConcurrentHashMap<String, Map<String, InvokerPortlet>>();
+		_pool = new ConcurrentHashMap<>();
 	}
 
 	@Override
@@ -101,8 +101,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 			portletInstances = _pool.get(rootPortletId);
 
 			if (portletInstances == null) {
-				portletInstances =
-					new ConcurrentHashMap<String, InvokerPortlet>();
+				portletInstances = new ConcurrentHashMap<>();
 
 				_pool.put(rootPortletId, portletInstances);
 			}

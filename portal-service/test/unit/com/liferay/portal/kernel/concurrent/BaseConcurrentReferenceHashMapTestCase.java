@@ -36,7 +36,7 @@ import org.junit.Assert;
 public class BaseConcurrentReferenceHashMapTestCase {
 
 	protected Map<String, Object> createDataMap() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 
 		map.put("testKey1", new Object());
 		map.put("testKey2", new Object());

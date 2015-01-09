@@ -293,7 +293,7 @@ public class ChannelImpl extends BaseChannelImpl {
 	public void removeTransientNotificationEventsByUuid(
 		Collection<String> notificationEventUuids) {
 
-		Set<String> notificationEventUuidsSet = new HashSet<String>(
+		Set<String> notificationEventUuidsSet = new HashSet<>(
 			notificationEventUuids);
 
 		_reentrantLock.lock();
@@ -359,7 +359,7 @@ public class ChannelImpl extends BaseChannelImpl {
 			long currentTime = System.currentTimeMillis();
 
 			List<NotificationEvent> persistedNotificationEvents =
-				new ArrayList<NotificationEvent>(notificationEvents.size());
+				new ArrayList<>(notificationEvents.size());
 
 			for (NotificationEvent notificationEvent : notificationEvents) {
 				doStoreNotificationEvent(notificationEvent, currentTime);
@@ -425,7 +425,7 @@ public class ChannelImpl extends BaseChannelImpl {
 			Map<String, NotificationEvent> unconfirmedNotificationEvents =
 				_getUnconfirmedNotificationEvents();
 
-			List<String> invalidNotificationEventUuids = new ArrayList<String>(
+			List<String> invalidNotificationEventUuids = new ArrayList<>(
 				unconfirmedNotificationEvents.size());
 
 			Set<Map.Entry<String, NotificationEvent>>
@@ -496,7 +496,7 @@ public class ChannelImpl extends BaseChannelImpl {
 			notificationEventsSet.retainAll(notificationEvents);
 		}
 
-		List<String> invalidNotificationEventUuids = new ArrayList<String>(
+		List<String> invalidNotificationEventUuids = new ArrayList<>(
 			unconfirmedNotificationEvents.size());
 
 		Set<Map.Entry<String, NotificationEvent>>
@@ -545,7 +545,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		Map<String, NotificationEvent> unconfirmedNotificationEvents =
 			_getUnconfirmedNotificationEvents();
 
-		List<String> invalidNotificationEventUuids = new ArrayList<String>(
+		List<String> invalidNotificationEventUuids = new ArrayList<>(
 			unconfirmedNotificationEvents.size());
 
 		long currentTime = System.currentTimeMillis();
@@ -639,7 +639,7 @@ public class ChannelImpl extends BaseChannelImpl {
 
 	private TreeSet<NotificationEvent> _getNotificationEvents() {
 		if (_notificationEvents == null) {
-			_notificationEvents = new TreeSet<NotificationEvent>(_comparator);
+			_notificationEvents = new TreeSet<>(_comparator);
 		}
 
 		return _notificationEvents;
@@ -647,8 +647,7 @@ public class ChannelImpl extends BaseChannelImpl {
 
 	private Map<String, NotificationEvent> _getUnconfirmedNotificationEvents() {
 		if (_unconfirmedNotificationEvents == null) {
-			_unconfirmedNotificationEvents =
-				new LinkedHashMap<String, NotificationEvent>();
+			_unconfirmedNotificationEvents = new LinkedHashMap<>();
 		}
 
 		return _unconfirmedNotificationEvents;

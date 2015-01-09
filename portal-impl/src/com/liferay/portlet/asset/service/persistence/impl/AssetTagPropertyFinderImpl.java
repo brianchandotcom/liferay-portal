@@ -106,8 +106,7 @@ public class AssetTagPropertyFinderImpl
 			qPos.add(groupId);
 			qPos.add(key);
 
-			List<AssetTagProperty> tagProperties =
-				new ArrayList<AssetTagProperty>();
+			List<AssetTagProperty> tagProperties = new ArrayList<>();
 
 			Iterator<String> itr = (Iterator<String>)QueryUtil.iterate(
 				q, getDialect(), start, end);

@@ -159,10 +159,8 @@ public class BufferedIncrementAdvice
 		};
 
 	private Map<String, BufferedIncrementConfiguration>
-		_bufferedIncrementConfigurations =
-			new ConcurrentHashMap<String, BufferedIncrementConfiguration>();
+		_bufferedIncrementConfigurations = new ConcurrentHashMap<>();
 	private ConcurrentMap<Method, BufferedIncrementProcessor>
-		_bufferedIncrementProcessors =
-			new ConcurrentHashMap<Method, BufferedIncrementProcessor>();
+		_bufferedIncrementProcessors = new ConcurrentHashMap<>();
 
 }

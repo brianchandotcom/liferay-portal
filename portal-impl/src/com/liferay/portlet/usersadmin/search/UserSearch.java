@@ -44,9 +44,8 @@ public class UserSearch extends SearchContainer<User> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-users-were-found";
 
-	public static List<String> headerNames = new ArrayList<String>();
-	public static Map<String, String> orderableHeaders =
-		new HashMap<String, String>();
+	public static List<String> headerNames = new ArrayList<>();
+	public static Map<String, String> orderableHeaders = new HashMap<>();
 
 	static {
 		headerNames.add("first-name");

@@ -64,7 +64,7 @@ public class MediaWikiEngine implements WikiEngine {
 
 		ParserOutput parserOutput = getParserOutput(page);
 
-		Map<String, Boolean> outgoingLinks = new HashMap<String, Boolean>();
+		Map<String, Boolean> outgoingLinks = new HashMap<>();
 
 		for (String title : parserOutput.getLinks()) {
 			Boolean existsObj = outgoingLinks.get(title);

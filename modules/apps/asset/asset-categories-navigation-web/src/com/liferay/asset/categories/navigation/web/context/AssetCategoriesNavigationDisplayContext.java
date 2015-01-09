@@ -107,8 +107,7 @@ public class AssetCategoriesNavigationDisplayContext {
 	public List<KeyValuePair> getAvailableVocabularyNames()
 		throws PortalException {
 
-		List<KeyValuePair> availableVocabularNames =
-			new ArrayList<KeyValuePair>();
+		List<KeyValuePair> availableVocabularNames = new ArrayList<>();
 
 		long[] assetVocabularyIds = getAssetVocabularyIds();
 
@@ -141,8 +140,7 @@ public class AssetCategoriesNavigationDisplayContext {
 	public List<KeyValuePair> getCurrentVocabularyNames()
 		throws PortalException {
 
-		List<KeyValuePair> currentVocabularNames =
-			new ArrayList<KeyValuePair>();
+		List<KeyValuePair> currentVocabularNames = new ArrayList<>();
 
 		for (long assetVocabularyId : getAssetVocabularyIds()) {
 			AssetVocabulary assetVocabulary =
@@ -167,7 +165,7 @@ public class AssetCategoriesNavigationDisplayContext {
 			return _ddmTemplateAssetVocabularies;
 		}
 
-		_ddmTemplateAssetVocabularies = new ArrayList<AssetVocabulary>();
+		_ddmTemplateAssetVocabularies = new ArrayList<>();
 
 		if (isAllAssetVocabularies()) {
 			_ddmTemplateAssetVocabularies = getAssetVocabularies();

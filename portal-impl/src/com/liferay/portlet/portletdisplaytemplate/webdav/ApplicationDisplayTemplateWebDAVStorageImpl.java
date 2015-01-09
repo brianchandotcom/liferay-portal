@@ -61,7 +61,7 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 				return getTemplates(webDAVRequest);
 			}
 
-			return new ArrayList<Resource>();
+			return new ArrayList<>();
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);
@@ -77,7 +77,7 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 	protected List<Resource> getFolders(WebDAVRequest webDAVRequest)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<Resource>();
+		List<Resource> resources = new ArrayList<>();
 
 		resources.add(
 			DDMWebDavUtil.toResource(
@@ -90,7 +90,7 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 	protected List<Resource> getTemplates(WebDAVRequest webDAVRequest)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<Resource>();
+		List<Resource> resources = new ArrayList<>();
 
 		List<DDMTemplate> ddmTemplates =
 			DDMTemplateLocalServiceUtil.getTemplatesByClassPK(

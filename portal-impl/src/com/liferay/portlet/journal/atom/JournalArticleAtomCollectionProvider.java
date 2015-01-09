@@ -52,7 +52,7 @@ public class JournalArticleAtomCollectionProvider
 
 	@Override
 	public List<String> getEntryAuthors(JournalArticle journalArticle) {
-		List<String> authors = new ArrayList<String>(1);
+		List<String> authors = new ArrayList<>(1);
 
 		authors.add(journalArticle.getUserName());
 
@@ -123,7 +123,7 @@ public class JournalArticleAtomCollectionProvider
 			AtomRequestContext atomRequestContext)
 		throws Exception {
 
-		List<JournalArticle> journalArticles = new ArrayList<JournalArticle>();
+		List<JournalArticle> journalArticles = new ArrayList<>();
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 		long groupId = atomRequestContext.getLongParameter("groupId");
@@ -178,11 +178,11 @@ public class JournalArticleAtomCollectionProvider
 
 		Locale locale = LocaleUtil.getDefault();
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(locale, title);
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		String ddmStructureKey = null;
 		String ddmTemplateKey = null;

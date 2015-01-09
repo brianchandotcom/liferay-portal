@@ -46,7 +46,7 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 
 	@Override
 	public Enumeration<URL> getResources(String name) throws IOException {
-		final List<URL> urls = new ArrayList<URL>();
+		final List<URL> urls = new ArrayList<>();
 
 		urls.addAll(_buildURLs(null));
 
@@ -108,10 +108,10 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 
 	private List<URL> _buildURLs(Enumeration<URL> url) {
 		if (url == null) {
-			return new ArrayList<URL>();
+			return new ArrayList<>();
 		}
 
-		List<URL> urls = new ArrayList<URL>();
+		List<URL> urls = new ArrayList<>();
 
 		while (url.hasMoreElements()) {
 			urls.add(url.nextElement());

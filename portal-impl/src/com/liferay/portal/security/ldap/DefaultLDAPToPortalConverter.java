@@ -302,8 +302,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 			Attributes attributes, Properties expandoMappings)
 		throws NamingException {
 
-		Map<String, String[]> expandoAttributes =
-			new HashMap<String, String[]>();
+		Map<String, String[]> expandoAttributes = new HashMap<>();
 
 		for (Object key : expandoMappings.keySet()) {
 			String name = (String)key;

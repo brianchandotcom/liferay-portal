@@ -73,7 +73,7 @@ public class FolderSoap implements Serializable {
 	}
 
 	public static FolderSoap[] toSoapModels(List<Folder> models) {
-		List<FolderSoap> soapModels = new ArrayList<FolderSoap>(models.size());
+		List<FolderSoap> soapModels = new ArrayList<>(models.size());
 
 		for (Folder model : models) {
 			soapModels.add(toSoapModel(model));

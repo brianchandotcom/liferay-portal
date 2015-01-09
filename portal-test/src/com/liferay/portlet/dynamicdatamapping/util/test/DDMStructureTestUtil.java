@@ -82,7 +82,7 @@ public class DDMStructureTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(defaultLocale, "Test Structure");
 
@@ -219,7 +219,7 @@ public class DDMStructureTestUtil {
 	public static String getSampleStructuredContent(
 		String name, String keywords) {
 
-		Map<Locale, String> contents = new HashMap<Locale, String>();
+		Map<Locale, String> contents = new HashMap<>();
 
 		contents.put(Locale.US, keywords);
 
@@ -276,8 +276,7 @@ public class DDMStructureTestUtil {
 	public static Map<String, Map<String, String>> getXSDMap(String xsd)
 		throws Exception {
 
-		Map<String, Map<String, String>> map =
-			new HashMap<String, Map<String, String>>();
+		Map<String, Map<String, String>> map = new HashMap<>();
 
 		Document document = SAXReaderUtil.read(xsd);
 
@@ -327,7 +326,7 @@ public class DDMStructureTestUtil {
 	}
 
 	protected static Map<String, String> getElementMap(Element element) {
-		Map<String, String> elementMap = new HashMap<String, String>();
+		Map<String, String> elementMap = new HashMap<>();
 
 		// Attributes
 

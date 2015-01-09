@@ -173,7 +173,7 @@ public class AssetEntryFinderImpl
 		String categoryIdsString = null;
 
 		if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-			List<Long> categoryIdsList = new ArrayList<Long>();
+			List<Long> categoryIdsList = new ArrayList<>();
 
 			for (long categoryId : categoryIds) {
 				categoryIdsList.addAll(getSubcategoryIds(categoryId));
@@ -587,7 +587,7 @@ public class AssetEntryFinderImpl
 		String notCategoryIdsString = null;
 
 		if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-			List<Long> notCategoryIdsList = new ArrayList<Long>();
+			List<Long> notCategoryIdsList = new ArrayList<>();
 
 			for (long notCategoryId : notCategoryIds) {
 				notCategoryIdsList.addAll(getSubcategoryIds(notCategoryId));

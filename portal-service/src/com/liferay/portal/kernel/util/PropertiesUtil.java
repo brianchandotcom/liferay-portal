@@ -198,7 +198,7 @@ public class PropertiesUtil {
 
 	@SuppressWarnings("rawtypes")
 	public static Map toMap(Properties properties) {
-		Map<String, String> propertiesMap = new HashMap<String, String>();
+		Map<String, String> propertiesMap = new HashMap<>();
 
 		Enumeration<?> enumeration = properties.propertyNames();
 

@@ -184,8 +184,7 @@ public class BaseIntrabandTest {
 			private final int _start;
 		}
 
-		List<RegisterJob> registerJobs = new ArrayList<RegisterJob>(
-			threadCount);
+		List<RegisterJob> registerJobs = new ArrayList<>(threadCount);
 
 		for (int i = 0; i < threadCount; i++) {
 			registerJobs.add(new RegisterJob(i));
@@ -934,7 +933,7 @@ public class BaseIntrabandTest {
 
 		Pipe pipe = Pipe.open();
 
-		Queue<Datagram> sendingQueue = new LinkedList<Datagram>();
+		Queue<Datagram> sendingQueue = new LinkedList<>();
 
 		try (SourceChannel sourceChannel = pipe.source();
 			SinkChannel sinkChannel = pipe.sink()) {

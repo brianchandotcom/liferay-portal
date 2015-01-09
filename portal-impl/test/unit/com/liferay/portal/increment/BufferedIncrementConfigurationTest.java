@@ -99,7 +99,7 @@ public class BufferedIncrementConfigurationTest {
 	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testValidSetting() {
-		Map<String, String> props = new HashMap<String, String>();
+		Map<String, String> props = new HashMap<>();
 
 		props.put(PropsKeys.BUFFERED_INCREMENT_ENABLED, "false");
 		props.put(PropsKeys.BUFFERED_INCREMENT_STANDBY_QUEUE_THRESHOLD, "10");
@@ -182,7 +182,7 @@ public class BufferedIncrementConfigurationTest {
 	}
 
 	private CaptureHandler _doTestInvalidSetting(Level level) {
-		Map<String, String> props = new HashMap<String, String>();
+		Map<String, String> props = new HashMap<>();
 
 		props.put(PropsKeys.BUFFERED_INCREMENT_ENABLED, "false");
 

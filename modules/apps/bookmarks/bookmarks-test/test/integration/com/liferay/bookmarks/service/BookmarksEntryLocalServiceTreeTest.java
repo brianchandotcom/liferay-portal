@@ -101,7 +101,7 @@ public class BookmarksEntryLocalServiceTreeTest {
 	}
 
 	protected List<BookmarksEntry> createTree() throws Exception {
-		List<BookmarksEntry> entries = new ArrayList<BookmarksEntry>();
+		List<BookmarksEntry> entries = new ArrayList<>();
 
 		BookmarksEntry entryA = BookmarksTestUtil.addEntry(
 			_group.getGroupId(), true);

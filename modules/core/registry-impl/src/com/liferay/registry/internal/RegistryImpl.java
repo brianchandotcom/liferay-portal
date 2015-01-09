@@ -130,8 +130,8 @@ public class RegistryImpl implements Registry {
 			return Collections.emptyList();
 		}
 
-		Collection<ServiceReference<T>> serviceReferences =
-			new ArrayList<ServiceReference<T>>(osgiServiceReferences.size());
+		Collection<ServiceReference<T>> serviceReferences = new ArrayList<>(
+			osgiServiceReferences.size());
 
 		Iterator<org.osgi.framework.ServiceReference<T>> iterator =
 			osgiServiceReferences.iterator();
@@ -187,7 +187,7 @@ public class RegistryImpl implements Registry {
 			return Collections.emptyList();
 		}
 
-		List<T> services = new ArrayList<T>();
+		List<T> services = new ArrayList<>();
 
 		Iterator<org.osgi.framework.ServiceReference<T>> iterator =
 			serviceReferences.iterator();
@@ -405,7 +405,7 @@ public class RegistryImpl implements Registry {
 		Bundle bundle = _bundleContext.getBundle();
 
 		if (properties == null) {
-			properties = new HashMap<String, Object>();
+			properties = new HashMap<>();
 		}
 
 		properties.put("bundle.id", bundle.getBundleId());

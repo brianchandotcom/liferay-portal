@@ -57,11 +57,11 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		long defaultUserId = _userLocalService.getDefaultUserId(
 			_company.getCompanyId());
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), "Google Docs Metadata");
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(LocaleUtil.getDefault(), "Google Docs Metadata");
 
@@ -112,11 +112,11 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		long defaultUserId = _userLocalService.getDefaultUserId(
 			_company.getCompanyId());
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), "Google Docs");
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(LocaleUtil.getDefault(), "Google Docs");
 

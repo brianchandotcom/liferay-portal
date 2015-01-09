@@ -984,7 +984,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public List<WikiPage> getIncomingLinks(long nodeId, String title)
 		throws PortalException {
 
-		Set<WikiPage> links = new HashSet<WikiPage>();
+		Set<WikiPage> links = new HashSet<>();
 
 		List<WikiPage> pages = wikiPagePersistence.findByN_H(nodeId, true);
 
@@ -1099,7 +1099,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
-		Map<String, WikiPage> pages = new LinkedHashMap<String, WikiPage>();
+		Map<String, WikiPage> pages = new LinkedHashMap<>();
 
 		Map<String, Boolean> links = WikiCacheUtil.getOutgoingLinks(page);
 
@@ -1634,7 +1634,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		pageVersions = ListUtil.sort(pageVersions, new PageVersionComparator());
 
 		List<ObjectValuePair<Long, Integer>> pageVersionStatusOVPs =
-			new ArrayList<ObjectValuePair<Long, Integer>>();
+			new ArrayList<>();
 
 		if ((pageVersions != null) && !pageVersions.isEmpty()) {
 			pageVersionStatusOVPs = getPageVersionStatuses(pageVersions);
@@ -3147,8 +3147,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			long userId, WikiPage page, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> workflowContext = new HashMap<>();
 
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_COMMAND, serviceContext.getCommand());

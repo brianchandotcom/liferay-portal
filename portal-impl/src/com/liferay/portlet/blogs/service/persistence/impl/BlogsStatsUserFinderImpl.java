@@ -54,7 +54,7 @@ public class BlogsStatsUserFinderImpl
 
 	@Override
 	public int countByOrganizationId(long organizationId) {
-		List<Long> organizationIds = new ArrayList<Long>();
+		List<Long> organizationIds = new ArrayList<>();
 
 		organizationIds.add(organizationId);
 
@@ -129,7 +129,7 @@ public class BlogsStatsUserFinderImpl
 			qPos.add(groupId);
 			qPos.add(groupId);
 
-			List<BlogsStatsUser> statsUsers = new ArrayList<BlogsStatsUser>();
+			List<BlogsStatsUser> statsUsers = new ArrayList<>();
 
 			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
 				q, getDialect(), start, end);
@@ -165,7 +165,7 @@ public class BlogsStatsUserFinderImpl
 		long organizationId, int start, int end,
 		OrderByComparator<BlogsStatsUser> obc) {
 
-		List<Long> organizationIds = new ArrayList<Long>();
+		List<Long> organizationIds = new ArrayList<>();
 
 		organizationIds.add(organizationId);
 

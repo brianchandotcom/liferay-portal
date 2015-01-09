@@ -231,7 +231,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	protected Set<Long> getOwnerResourceBlockIds(
 		long companyId, long[] groupIds, String className) {
 
-		Set<Long> resourceBlockIds = new HashSet<Long>();
+		Set<Long> resourceBlockIds = new HashSet<>();
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -272,7 +272,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	protected Set<Long> getResourceBlockIds(
 		long companyId, long[] groupIds, String className) {
 
-		Set<Long> resourceBlockIds = new HashSet<Long>();
+		Set<Long> resourceBlockIds = new HashSet<>();
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -302,7 +302,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	protected long[] getRoleIds(long[] groupIds) {
-		Set<Long> roleIds = new HashSet<Long>();
+		Set<Long> roleIds = new HashSet<>();
 
 		for (long groupId : groupIds) {
 			for (long roleId : getRoleIds(groupId)) {
@@ -552,7 +552,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		boolean hasPreviousViewableGroup = false;
 
-		List<Long> viewableGroupIds = new ArrayList<Long>();
+		List<Long> viewableGroupIds = new ArrayList<>();
 
 		for (int j = 0; j < groupIds.length; j++) {
 			long groupId = groupIds[j];

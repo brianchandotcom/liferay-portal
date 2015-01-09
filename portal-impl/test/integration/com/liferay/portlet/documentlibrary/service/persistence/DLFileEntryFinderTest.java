@@ -1379,8 +1379,8 @@ public class DLFileEntryFinderTest {
 			QueryDefinition<DLFileEntry> queryDefinition)
 		throws Exception {
 
-		List<Long> repositoryIds = new ArrayList<Long>();
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> repositoryIds = new ArrayList<>();
+		List<Long> folderIds = new ArrayList<>();
 
 		return doCountBy_G_U_R_F_M(
 			userId, repositoryIds, folderIds, mimeType, queryDefinition);
@@ -1473,8 +1473,8 @@ public class DLFileEntryFinderTest {
 			QueryDefinition<DLFileEntry> queryDefinition)
 		throws Exception {
 
-		List<Long> repositoryIds = new ArrayList<Long>();
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> repositoryIds = new ArrayList<>();
+		List<Long> folderIds = new ArrayList<>();
 
 		return doFindBy_G_U_R_F_M(
 			userId, repositoryIds, folderIds, mimeType, queryDefinition);

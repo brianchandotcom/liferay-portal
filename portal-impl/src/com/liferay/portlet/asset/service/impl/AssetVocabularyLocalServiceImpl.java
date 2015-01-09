@@ -72,7 +72,7 @@ public class AssetVocabularyLocalServiceImpl
 		long defaultUserId = userLocalService.getDefaultUserId(
 			group.getCompanyId());
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(
 			LocaleUtil.getSiteDefault(), PropsValues.ASSET_VOCABULARY_DEFAULT);
@@ -169,13 +169,13 @@ public class AssetVocabularyLocalServiceImpl
 			long userId, String title, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		titleMap.put(locale, title);
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(locale, StringPool.BLANK);
 
@@ -304,7 +304,7 @@ public class AssetVocabularyLocalServiceImpl
 
 		AssetVocabulary vocabulary = addDefaultVocabulary(groupId);
 
-		vocabularies = new ArrayList<AssetVocabulary>();
+		vocabularies = new ArrayList<>();
 
 		vocabularies.add(vocabulary);
 
@@ -340,7 +340,7 @@ public class AssetVocabularyLocalServiceImpl
 	public List<AssetVocabulary> getVocabularies(long[] vocabularyIds)
 		throws PortalException {
 
-		List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
+		List<AssetVocabulary> vocabularies = new ArrayList<>();
 
 		for (long vocabularyId : vocabularyIds) {
 			AssetVocabulary vocabulary = getVocabulary(vocabularyId);

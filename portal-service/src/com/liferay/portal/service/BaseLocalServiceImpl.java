@@ -32,7 +32,7 @@ public abstract class BaseLocalServiceImpl implements BaseLocalService {
 	}
 
 	protected Map<Locale, String> getLocalizationMap(String value) {
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		map.put(LocaleUtil.getDefault(), value);
 

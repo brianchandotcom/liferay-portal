@@ -45,7 +45,7 @@ public class MoveDocumentMethodImpl extends BaseMethodImpl {
 			SharepointRequest sharepointRequest)
 		throws Exception {
 
-		List<ResponseElement> elements = new ArrayList<ResponseElement>();
+		List<ResponseElement> elements = new ArrayList<>();
 
 		String oldUrl = sharepointRequest.getParameterValue("oldUrl");
 

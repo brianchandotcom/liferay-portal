@@ -364,7 +364,7 @@ public class DDMTemplateLocalServiceImpl
 			String type, ServiceContext serviceContext)
 		throws PortalException {
 
-		List<DDMTemplate> newTemplates = new ArrayList<DDMTemplate>();
+		List<DDMTemplate> newTemplates = new ArrayList<>();
 
 		List<DDMTemplate> oldTemplates = ddmTemplatePersistence.findByC_C_T(
 			classNameId, oldClassPK, type);
@@ -700,7 +700,7 @@ public class DDMTemplateLocalServiceImpl
 			boolean includeAncestorTemplates)
 		throws PortalException {
 
-		List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
+		List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
 		ddmTemplates.addAll(
 			ddmTemplatePersistence.findByG_C_C(groupId, classNameId, classPK));

@@ -173,7 +173,7 @@ public class JournalContentDisplayContext {
 
 		Arrays.sort(extensions);
 
-		List<KeyValuePair> availableExtensions = new ArrayList<KeyValuePair>();
+		List<KeyValuePair> availableExtensions = new ArrayList<>();
 
 		for (String conversion : getConversions()) {
 			if (Arrays.binarySearch(extensions, conversion) < 0) {
@@ -200,7 +200,7 @@ public class JournalContentDisplayContext {
 	public List<KeyValuePair> getCurrentExtensions() {
 		String[] extensions = getExtensions();
 
-		List<KeyValuePair> currentExtensions = new ArrayList<KeyValuePair>();
+		List<KeyValuePair> currentExtensions = new ArrayList<>();
 
 		if (extensions == null) {
 			extensions = new String[0];

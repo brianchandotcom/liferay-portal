@@ -30,7 +30,7 @@ public class ScriptingMessageListener extends BaseMessageListener {
 
 	@Override
 	public void doReceive(Message message) throws Exception {
-		Map<String, Object> inputObjects = new HashMap<String, Object>();
+		Map<String, Object> inputObjects = new HashMap<>();
 
 		String language = (String)message.get(SchedulerEngine.LANGUAGE);
 		String script = (String)message.get(SchedulerEngine.SCRIPT);

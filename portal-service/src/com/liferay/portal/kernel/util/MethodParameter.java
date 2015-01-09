@@ -155,7 +155,7 @@ public class MethodParameter {
 		String generics = signatures.substring(
 			leftBracketIndex + 1, rightBracketIndex);
 
-		List<Class<?>> genericTypeslist = new ArrayList<Class<?>>();
+		List<Class<?>> genericTypeslist = new ArrayList<>();
 
 		int level = 0;
 		int index = 0;

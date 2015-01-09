@@ -32,9 +32,9 @@ public class TreePathUtil {
 			TreeModelTasks<?> treeModelTasks)
 		throws PortalException {
 
-		List<TreeModel> modifiedTreeModels = new ArrayList<TreeModel>();
+		List<TreeModel> modifiedTreeModels = new ArrayList<>();
 
-		Deque<Object[]> traces = new LinkedList<Object[]>();
+		Deque<Object[]> traces = new LinkedList<>();
 
 		traces.push(new Object[] {parentPrimaryKey, parentTreePath, 0L});
 

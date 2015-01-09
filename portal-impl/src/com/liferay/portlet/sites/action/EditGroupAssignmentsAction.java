@@ -141,7 +141,7 @@ public class EditGroupAssignmentsAction extends PortletAction {
 	protected long[] filterAddUserIds(long groupId, long[] userIds)
 		throws Exception {
 
-		Set<Long> filteredUserIds = new HashSet<Long>(userIds.length);
+		Set<Long> filteredUserIds = new HashSet<>(userIds.length);
 
 		for (long userId : userIds) {
 			if (!UserLocalServiceUtil.hasGroupUser(groupId, userId)) {
@@ -156,7 +156,7 @@ public class EditGroupAssignmentsAction extends PortletAction {
 	protected long[] filterRemoveUserIds(long groupId, long[] userIds)
 		throws Exception {
 
-		Set<Long> filteredUserIds = new HashSet<Long>(userIds.length);
+		Set<Long> filteredUserIds = new HashSet<>(userIds.length);
 
 		for (long userId : userIds) {
 			if (UserLocalServiceUtil.hasGroupUser(groupId, userId)) {

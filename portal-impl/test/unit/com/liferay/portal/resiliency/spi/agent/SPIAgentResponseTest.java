@@ -356,7 +356,7 @@ public class SPIAgentResponseTest {
 		spiAgentResponse.portalResiliencyResponse = true;
 
 		Map<String, Serializable> distributedRequestAttributes =
-			new HashMap<String, Serializable>();
+			new HashMap<>();
 
 		distributedRequestAttributes.put(
 			RequestAttributes.ATTRIBUTE_1, RequestAttributes.ATTRIBUTE_1);
@@ -366,8 +366,7 @@ public class SPIAgentResponseTest {
 		spiAgentResponse.distributedRequestAttributes =
 			distributedRequestAttributes;
 
-		Map<String, Serializable> deltaSessionAttributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> deltaSessionAttributes = new HashMap<>();
 
 		deltaSessionAttributes.put(_SESSION_ATTRIBUTE_1, _SESSION_ATTRIBUTE_1);
 		deltaSessionAttributes.put(_SESSION_ATTRIBUTE_2, _SESSION_ATTRIBUTE_2);

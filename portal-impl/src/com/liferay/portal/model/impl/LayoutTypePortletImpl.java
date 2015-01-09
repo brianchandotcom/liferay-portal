@@ -220,11 +220,11 @@ public class LayoutTypePortletImpl
 		// specified
 
 		if (startPortlets == null) {
-			startPortlets = new ArrayList<Portlet>();
+			startPortlets = new ArrayList<>();
 		}
 
 		if (endPortlets == null) {
-			endPortlets = new ArrayList<Portlet>();
+			endPortlets = new ArrayList<>();
 		}
 
 		if (startPortlets.isEmpty() && endPortlets.isEmpty()) {
@@ -233,7 +233,7 @@ public class LayoutTypePortletImpl
 
 		// New array of portlets that contain the static portlets
 
-		List<Portlet> list = new ArrayList<Portlet>(
+		List<Portlet> list = new ArrayList<>(
 			portlets.size() + startPortlets.size() + endPortlets.size());
 
 		if (!startPortlets.isEmpty()) {
@@ -261,7 +261,7 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public List<Portlet> getAllPortlets() throws PortalException {
-		List<Portlet> portlets = new ArrayList<Portlet>();
+		List<Portlet> portlets = new ArrayList<>();
 
 		List<String> columns = getColumns();
 
@@ -284,7 +284,7 @@ public class LayoutTypePortletImpl
 	public List<Portlet> getAllPortlets(boolean includeSystem)
 		throws PortalException {
 
-		List<Portlet> filteredPortlets = new ArrayList<Portlet>();
+		List<Portlet> filteredPortlets = new ArrayList<>();
 
 		List<Portlet> portlets = getAllPortlets();
 
@@ -307,7 +307,7 @@ public class LayoutTypePortletImpl
 
 		String[] portletIds = StringUtil.split(columnValue);
 
-		List<Portlet> portlets = new ArrayList<Portlet>(portletIds.length);
+		List<Portlet> portlets = new ArrayList<>(portletIds.length);
 
 		for (String portletId : portletIds) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
@@ -356,7 +356,7 @@ public class LayoutTypePortletImpl
 			layoutTemplate = new LayoutTemplateImpl(
 				StringPool.BLANK, StringPool.BLANK);
 
-			List<String> columns = new ArrayList<String>();
+			List<String> columns = new ArrayList<>();
 
 			for (int i = 1; i <= 10; i++) {
 				columns.add(LayoutTypePortletConstants.COLUMN_PREFIX + i);
@@ -429,7 +429,7 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public List<String> getPortletIds() {
-		List<String> portletIds = new ArrayList<String>();
+		List<String> portletIds = new ArrayList<>();
 
 		List<String> columns = getColumns();
 
@@ -449,7 +449,7 @@ public class LayoutTypePortletImpl
 	public List<Portlet> getPortlets() {
 		List<String> portletIds = getPortletIds();
 
-		List<Portlet> portlets = new ArrayList<Portlet>(portletIds.size());
+		List<Portlet> portlets = new ArrayList<>(portletIds.size());
 
 		for (int i = 0; i < portletIds.size(); i++) {
 			String portletId = portletIds.get(i);
@@ -1044,7 +1044,7 @@ public class LayoutTypePortletImpl
 
 		long plid = getPlid();
 
-		Set<String> customPortletIds = new HashSet<String>();
+		Set<String> customPortletIds = new HashSet<>();
 
 		for (String columnId : getColumns()) {
 			String value = _portalPreferences.getValue(
@@ -1392,7 +1392,7 @@ public class LayoutTypePortletImpl
 	}
 
 	protected List<String> getColumns() {
-		List<String> columns = new ArrayList<String>();
+		List<String> columns = new ArrayList<>();
 
 		Layout layout = getLayout();
 
@@ -1450,7 +1450,7 @@ public class LayoutTypePortletImpl
 			return _embeddedPortlets;
 		}
 
-		List<Portlet> portlets = new ArrayList<Portlet>();
+		List<Portlet> portlets = new ArrayList<>();
 
 		Layout layout = getLayout();
 
@@ -1562,7 +1562,7 @@ public class LayoutTypePortletImpl
 
 		String[] portletIds = getStaticPortletIds(position);
 
-		List<Portlet> portlets = new ArrayList<Portlet>();
+		List<Portlet> portlets = new ArrayList<>();
 
 		for (String portletId : portletIds) {
 			if (Validator.isNull(portletId) ||
@@ -1644,7 +1644,7 @@ public class LayoutTypePortletImpl
 			return value;
 		}
 
-		List<String> newPortletIds = new ArrayList<String>();
+		List<String> newPortletIds = new ArrayList<>();
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -1800,7 +1800,7 @@ public class LayoutTypePortletImpl
 	}
 
 	protected void onRemoveFromLayout(String[] portletIds) {
-		Set<String> portletIdList = new HashSet<String>();
+		Set<String> portletIdList = new HashSet<>();
 
 		for (String portletId : portletIds) {
 			removeModesPortletId(portletId);

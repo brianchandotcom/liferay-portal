@@ -233,8 +233,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					classPK, roleIdsArray, ActionKeys.VIEW);
 		}
 
-		List<Long> roleIds = new ArrayList<Long>();
-		List<String> groupRoleIds = new ArrayList<String>();
+		List<Long> roleIds = new ArrayList<>();
+		List<String> groupRoleIds = new ArrayList<>();
 
 		for (int i = 0; i < hasResourcePermissions.length; i++) {
 			if (!hasResourcePermissions[i]) {
@@ -294,10 +294,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			return query;
 		}
 
-		Set<Group> groups = new LinkedHashSet<Group>();
-		Set<Role> roles = new LinkedHashSet<Role>();
-		Set<UserGroupRole> userGroupRoles = new LinkedHashSet<UserGroupRole>();
-		Map<Long, List<Role>> groupIdsToRoles = new HashMap<Long, List<Role>>();
+		Set<Group> groups = new LinkedHashSet<>();
+		Set<Role> roles = new LinkedHashSet<>();
+		Set<UserGroupRole> userGroupRoles = new LinkedHashSet<>();
+		Map<Long, List<Role>> groupIdsToRoles = new HashMap<>();
 
 		roles.addAll(permissionCheckerBag.getRoles());
 

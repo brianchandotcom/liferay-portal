@@ -256,6 +256,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		DLProcessorRegistryImpl.class);
 
 	private final Map<String, DLProcessor> _dlProcessors =
-		new ConcurrentHashMap<String, DLProcessor>();
+		new ConcurrentHashMap<>();
 
 }

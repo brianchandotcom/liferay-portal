@@ -173,7 +173,7 @@ public class DDLImpl implements DDL {
 
 	@Override
 	public List<DDLRecord> getRecords(Hits hits) throws Exception {
-		List<DDLRecord> records = new ArrayList<DDLRecord>();
+		List<DDLRecord> records = new ArrayList<>();
 
 		List<com.liferay.portal.kernel.search.Document> documents =
 			hits.toList();
@@ -304,7 +304,7 @@ public class DDLImpl implements DDL {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		Map<String, Object> contextObjects = new HashMap<String, Object>();
+		Map<String, Object> contextObjects = new HashMap<>();
 
 		contextObjects.put(
 			DDLConstants.RESERVED_DDM_STRUCTURE_ID,

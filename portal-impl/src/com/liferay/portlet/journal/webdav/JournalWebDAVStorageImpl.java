@@ -76,7 +76,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				}
 			}
 
-			return new ArrayList<Resource>();
+			return new ArrayList<>();
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);
@@ -93,7 +93,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	protected List<Resource> getFolders(WebDAVRequest webDAVRequest)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<Resource>();
+		List<Resource> resources = new ArrayList<>();
 
 		resources.add(
 			DDMWebDavUtil.toResource(
@@ -110,7 +110,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	protected List<Resource> getStructures(WebDAVRequest webDAVRequest)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<Resource>();
+		List<Resource> resources = new ArrayList<>();
 
 		List<DDMStructure> ddmStructures =
 			DDMStructureLocalServiceUtil.getStructures(
@@ -130,7 +130,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	protected List<Resource> getTemplates(WebDAVRequest webDAVRequest)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<Resource>();
+		List<Resource> resources = new ArrayList<>();
 
 		List<DDMTemplate> ddmTemplates =
 			DDMTemplateLocalServiceUtil.getTemplatesByStructureClassNameId(

@@ -121,6 +121,6 @@ public class MBeanRegistry {
 
 	private MBeanServer _mBeanServer;
 	private final Map<String, ObjectName> _objectNameCache =
-		new ConcurrentHashMap<String, ObjectName>();
+		new ConcurrentHashMap<>();
 
 }

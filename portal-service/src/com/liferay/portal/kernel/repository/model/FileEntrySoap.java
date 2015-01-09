@@ -78,8 +78,7 @@ public class FileEntrySoap implements Serializable {
 	}
 
 	public static FileEntrySoap[] toSoapModels(List<FileEntry> models) {
-		List<FileEntrySoap> soapModels = new ArrayList<FileEntrySoap>(
-			models.size());
+		List<FileEntrySoap> soapModels = new ArrayList<>(models.size());
 
 		for (FileEntry model : models) {
 			soapModels.add(toSoapModel(model));

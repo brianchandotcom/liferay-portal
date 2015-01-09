@@ -80,7 +80,7 @@ public class VerifyProcessTracker {
 	}
 
 	public void execute(int index) throws VerifyException {
-		List<VerifyProcess> verifyProcesses = new ArrayList<VerifyProcess>(
+		List<VerifyProcess> verifyProcesses = new ArrayList<>(
 			_verifyProcesses.values());
 
 		try {
@@ -143,6 +143,6 @@ public class VerifyProcessTracker {
 	private static Log _log = LogFactoryUtil.getLog(VerifyProcessTracker.class);
 
 	private ConcurrentMap<String, VerifyProcess> _verifyProcesses =
-		new ConcurrentSkipListMap<String, VerifyProcess>();
+		new ConcurrentSkipListMap<>();
 
 }

@@ -38,7 +38,7 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 
 	@Override
 	public Session getSession() throws PortalException {
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, String> parameters = new HashMap<>();
 
 		parameters.put(
 			SessionParameter.ATOMPUB_URL, getTypeSettingsValue(_ATOMPUB_URL));

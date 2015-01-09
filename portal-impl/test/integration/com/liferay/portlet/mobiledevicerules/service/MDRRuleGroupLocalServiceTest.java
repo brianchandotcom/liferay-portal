@@ -77,8 +77,7 @@ public class MDRRuleGroupLocalServiceTest {
 
 		Layout layout = LayoutTestUtil.addLayout(_group);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		if (includeGlobalGroup) {
 			params.put("includeGlobalScope", Boolean.TRUE);

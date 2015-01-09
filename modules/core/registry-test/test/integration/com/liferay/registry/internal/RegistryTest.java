@@ -133,7 +133,7 @@ public class RegistryTest {
 
 		InterfaceOne interfaceOneB = getInstance();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("a.property", "G");
 
@@ -258,7 +258,7 @@ public class RegistryTest {
 
 		InterfaceOne interfaceOneB = getInstance();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("a.property", "G");
 
@@ -340,7 +340,7 @@ public class RegistryTest {
 
 		InterfaceOne interfaceOneB = getInstance();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("a.property", "G");
 
@@ -385,7 +385,7 @@ public class RegistryTest {
 
 		InterfaceOne interfaceOneB = getInstance();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("a.property", "G");
 
@@ -445,7 +445,7 @@ public class RegistryTest {
 	public void testRegisterServiceByClassAndProperties() {
 		InterfaceOne interfaceOne = getInstance();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("a.property", "A");
 		properties.put("b.property", "B");
@@ -504,7 +504,7 @@ public class RegistryTest {
 
 	@Test
 	public void testRegisterServiceByClassNamesAndProperties() {
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("a.property", "E");
 		properties.put("b.property", "F");
@@ -563,7 +563,7 @@ public class RegistryTest {
 	public void testRegisterServiceByFilterStringAndProperties() {
 		InterfaceOne interfaceOne = getInstance();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("a.property", "C");
 		properties.put("b.property", "D");
@@ -794,7 +794,7 @@ public class RegistryTest {
 
 			InterfaceOne interfaceOneB = getInstance();
 
-			Map<String, Object> properties = new HashMap<String, Object>();
+			Map<String, Object> properties = new HashMap<>();
 
 			properties.put("a.property", "G");
 
@@ -889,7 +889,7 @@ public class RegistryTest {
 
 			Assert.assertNotNull(serviceRegistrationA);
 
-			Map<String, Object> properties = new HashMap<String, Object>();
+			Map<String, Object> properties = new HashMap<>();
 
 			properties.put("a.property", "G");
 

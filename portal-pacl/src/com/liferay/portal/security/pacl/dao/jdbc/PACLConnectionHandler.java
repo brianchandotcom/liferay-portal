@@ -94,7 +94,7 @@ public class PACLConnectionHandler implements InvocationHandler {
 	}
 
 	protected Class<?>[] getInterfaces(Class<?> returnType) {
-		List<Class<?>> interfaceClasses = new ArrayList<Class<?>>();
+		List<Class<?>> interfaceClasses = new ArrayList<>();
 
 		interfaceClasses.add(Statement.class);
 

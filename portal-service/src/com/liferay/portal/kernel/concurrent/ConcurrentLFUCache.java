@@ -173,8 +173,8 @@ public class ConcurrentLFUCache<K, V> {
 	}
 
 	private void _cleanUp() {
-		List<Entry<K, ValueWrapper>> valueWrappers =
-			new ArrayList<Entry<K, ValueWrapper>>(_cache.entrySet());
+		List<Entry<K, ValueWrapper>> valueWrappers = new ArrayList<>(
+			_cache.entrySet());
 
 		Collections.sort(valueWrappers, _entryComparator);
 
@@ -199,7 +199,7 @@ public class ConcurrentLFUCache<K, V> {
 		}
 	}
 
-	private Map<K, ValueWrapper> _cache = new HashMap<K, ValueWrapper>();
+	private Map<K, ValueWrapper> _cache = new HashMap<>();
 	private final EntryComparator _entryComparator = new EntryComparator();
 	private final AtomicLong _evictCount = new AtomicLong();
 	private final int _expectedSize;

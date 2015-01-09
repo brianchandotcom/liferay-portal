@@ -79,7 +79,7 @@ public class PropertiesTransformerListener extends BaseTransformerListener {
 		Properties properties = new Properties();
 
 		try {
-			Map<String, String> newTokens = new HashMap<String, String>();
+			Map<String, String> newTokens = new HashMap<>();
 
 			MapUtil.copy(tokens, newTokens);
 

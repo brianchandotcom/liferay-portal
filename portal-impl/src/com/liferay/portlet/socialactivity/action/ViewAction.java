@@ -116,8 +116,7 @@ public class ViewAction extends PortletAction {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		Map<String, Boolean> activitySettingsMap =
-			new LinkedHashMap<String, Boolean>();
+		Map<String, Boolean> activitySettingsMap = new LinkedHashMap<>();
 
 		List<SocialActivitySetting> activitySettings =
 			SocialActivitySettingServiceUtil.getActivitySettings(
@@ -245,7 +244,7 @@ public class ViewAction extends PortletAction {
 			}
 
 			List<SocialActivityCounterDefinition> activityCounterDefinitions =
-				new ArrayList<SocialActivityCounterDefinition>();
+				new ArrayList<>();
 
 			activityCounterDefinitions.add(
 				updateActivityCounterDefinition(

@@ -99,7 +99,7 @@ public class RSSDisplayContext {
 	}
 
 	public List<RSSFeed> getRSSFeeds() {
-		List<RSSFeed> rssFeeds = new ArrayList<RSSFeed>();
+		List<RSSFeed> rssFeeds = new ArrayList<>();
 
 		String[] titles = getTitles();
 

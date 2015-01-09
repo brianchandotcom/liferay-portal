@@ -247,7 +247,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		_extraPackageLock.lock();
 
 		try {
-			List<URL> extraPackageURLs = new ArrayList<URL>();
+			List<URL> extraPackageURLs = new ArrayList<>();
 
 			for (List<URL> urls : _extraPackageMap.values()) {
 				extraPackageURLs.addAll(urls);
@@ -538,7 +538,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private Map<String, String> _buildFrameworkProperties(Class<?> clazz) {
-		Map<String, String> properties = new HashMap<String, String>();
+		Map<String, String> properties = new HashMap<>();
 
 		properties.put(
 			Constants.BUNDLE_DESCRIPTION, ReleaseInfo.getReleaseInfo());
@@ -781,7 +781,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private Set<Class<?>> _getInterfaces(Object bean) {
-		Set<Class<?>> interfaces = new HashSet<Class<?>>();
+		Set<Class<?>> interfaces = new HashSet<>();
 
 		Class<?> beanClass = bean.getClass();
 
@@ -888,7 +888,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		_extraPackageMap = new TreeMap<String, List<URL>>();
+		_extraPackageMap = new TreeMap<>();
 
 		StringBundler sb = new StringBundler();
 
@@ -1205,7 +1205,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			List<URL> urls = _extraPackageMap.get(key);
 
 			if (urls == null) {
-				urls = new ArrayList<URL>();
+				urls = new ArrayList<>();
 
 				_extraPackageMap.put(key, urls);
 			}
@@ -1258,7 +1258,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			return;
 		}
 
-		List<String> names = new ArrayList<String>(interfaces.size());
+		List<String> names = new ArrayList<>(interfaces.size());
 
 		for (Class<?> interfaceClass : interfaces) {
 			String interfaceClassName = interfaceClass.getName();
@@ -1310,9 +1310,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		FrameworkWiring frameworkWiring = _framework.adapt(
 			FrameworkWiring.class);
 
-		List<Bundle> lazyActivationBundles = new ArrayList<Bundle>();
-		List<Bundle> startBundles = new ArrayList<Bundle>();
-		List<Bundle> refreshBundles = new ArrayList<Bundle>();
+		List<Bundle> lazyActivationBundles = new ArrayList<>();
+		List<Bundle> startBundles = new ArrayList<>();
+		List<Bundle> refreshBundles = new ArrayList<>();
 
 		for (String initialBundle :
 				PropsValues.MODULE_FRAMEWORK_INITIAL_BUNDLES) {

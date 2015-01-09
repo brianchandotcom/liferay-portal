@@ -113,8 +113,7 @@ public class ThreadLocalCacheManager {
 			threadLocalCacheMaps.get(lifecycle);
 
 		if (threadLocalCacheMap == null) {
-			threadLocalCacheMap =
-				new HashMap<Serializable, ThreadLocalCache<?>>();
+			threadLocalCacheMap = new HashMap<>();
 
 			threadLocalCacheMaps.put(lifecycle, threadLocalCacheMap);
 		}

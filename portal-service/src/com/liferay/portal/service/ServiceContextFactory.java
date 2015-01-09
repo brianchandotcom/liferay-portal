@@ -129,8 +129,7 @@ public class ServiceContextFactory {
 
 		// Attributes
 
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> attributes = new HashMap<>();
 
 		Map<String, String[]> parameters = request.getParameterMap();
 
@@ -200,7 +199,7 @@ public class ServiceContextFactory {
 
 		// Request
 
-		Map<String, String> headerMap = new HashMap<String, String>();
+		Map<String, String> headerMap = new HashMap<>();
 
 		Enumeration<String> enu = request.getHeaderNames();
 
@@ -222,7 +221,7 @@ public class ServiceContextFactory {
 
 		Map<String, String[]> parameterMap = request.getParameterMap();
 
-		List<Long> assetCategoryIdsList = new ArrayList<Long>();
+		List<Long> assetCategoryIdsList = new ArrayList<>();
 
 		boolean updateAssetCategoryIds = false;
 
@@ -327,8 +326,7 @@ public class ServiceContextFactory {
 
 		// Attributes
 
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> attributes = new HashMap<>();
 
 		Enumeration<String> enu = portletRequest.getParameterNames();
 
@@ -402,7 +400,7 @@ public class ServiceContextFactory {
 
 		// Request
 
-		Map<String, String> headerMap = new HashMap<String, String>();
+		Map<String, String> headerMap = new HashMap<>();
 
 		enu = request.getHeaderNames();
 
@@ -424,7 +422,7 @@ public class ServiceContextFactory {
 
 		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
 
-		List<Long> assetCategoryIdsList = new ArrayList<Long>();
+		List<Long> assetCategoryIdsList = new ArrayList<>();
 
 		boolean updateAssetCategoryIds = false;
 

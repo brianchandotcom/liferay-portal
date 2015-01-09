@@ -100,7 +100,7 @@ public abstract class BaseMembershipPolicyTestCase {
 	protected Group group;
 
 	protected Set<ServiceRegistration<?>> serviceRegistrations =
-		new HashSet<ServiceRegistration<?>>();
+		new HashSet<>();
 
 	private static boolean _propagateMembership;
 	private static boolean _propagateRoles;

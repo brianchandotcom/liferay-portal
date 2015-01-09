@@ -151,7 +151,7 @@ public class JournalArticleStagedModelDataHandler
 	public Map<String, String> getReferenceAttributes(
 		PortletDataContext portletDataContext, JournalArticle article) {
 
-		Map<String, String> referenceAttributes = new HashMap<String, String>();
+		Map<String, String> referenceAttributes = new HashMap<>();
 
 		String articleResourceUuid = null;
 
@@ -583,7 +583,7 @@ public class JournalArticleStagedModelDataHandler
 				}
 			}
 
-			Map<String, byte[]> images = new HashMap<String, byte[]>();
+			Map<String, byte[]> images = new HashMap<>();
 
 			List<Element> imagesElements =
 				portletDataContext.getReferenceDataElements(

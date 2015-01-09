@@ -83,7 +83,7 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 						SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
 					PortletKeys.STAGING_BAR);
 
-				Map<String, String> data = new HashMap<String, String>();
+				Map<String, String> data = new HashMap<>();
 
 				data.put("preventNotification", Boolean.TRUE.toString());
 

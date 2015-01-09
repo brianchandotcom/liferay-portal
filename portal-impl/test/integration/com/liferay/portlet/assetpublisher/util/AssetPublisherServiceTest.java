@@ -195,7 +195,7 @@ public class AssetPublisherServiceTest {
 			boolean manualMode)
 		throws Exception {
 
-		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
+		List<AssetEntry> assetEntries = new ArrayList<>();
 
 		for (int i = 0; i < count; i++) {
 			JournalArticle article = JournalTestUtil.addArticle(
@@ -265,7 +265,7 @@ public class AssetPublisherServiceTest {
 	private static final String[] _NO_ASSET_TAG_NAMES = new String[0];
 
 	private long[] _assetCategoryIds = new long[0];
-	private List<AssetEntry> _assetEntries = new ArrayList<AssetEntry>();
+	private List<AssetEntry> _assetEntries = new ArrayList<>();
 	private String[] _assetEntryXmls = new String[0];
 
 	@DeleteAfterTestRun

@@ -70,7 +70,7 @@ public class WikiPageStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		WikiNode node = WikiTestUtil.addNode(group.getGroupId());
 
@@ -133,7 +133,7 @@ public class WikiPageStagedModelDataHandlerTest
 	protected List<StagedModel> addWorkflowedStagedModels(Group group)
 		throws Exception {
 
-		List<StagedModel> stagedModels = new ArrayList<StagedModel>();
+		List<StagedModel> stagedModels = new ArrayList<>();
 
 		WikiNode node = WikiTestUtil.addNode(group.getGroupId());
 

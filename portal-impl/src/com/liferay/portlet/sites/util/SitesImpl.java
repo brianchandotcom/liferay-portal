@@ -579,7 +579,7 @@ public class SitesImpl implements Sites {
 
 	@Override
 	public Long[] filterGroups(List<Group> groups, String[] groupKeys) {
-		List<Long> groupIds = new ArrayList<Long>();
+		List<Long> groupIds = new ArrayList<>();
 
 		for (Group group : groups) {
 			if (!ArrayUtil.contains(groupKeys, group.getGroupKey())) {
@@ -621,8 +621,7 @@ public class SitesImpl implements Sites {
 	public Map<String, String[]> getLayoutSetPrototypeParameters(
 		ServiceContext serviceContext) {
 
-		Map<String, String[]> parameterMap =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.DATA_STRATEGY,
@@ -757,7 +756,7 @@ public class SitesImpl implements Sites {
 			MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
 
 		if (Validator.isNotNull(uuids)) {
-			List<Layout> layouts = new ArrayList<Layout>();
+			List<Layout> layouts = new ArrayList<>();
 
 			for (String uuid : StringUtil.split(uuids)) {
 				Layout layout =
@@ -1649,8 +1648,7 @@ public class SitesImpl implements Sites {
 	protected Map<String, String[]> getLayoutSetPrototypesParameters(
 		boolean importData) {
 
-		Map<String, String[]> parameterMap =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,

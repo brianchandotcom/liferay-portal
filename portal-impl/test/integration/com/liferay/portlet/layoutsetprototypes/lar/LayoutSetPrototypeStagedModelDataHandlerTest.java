@@ -96,7 +96,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		List<Layout> layouts = _layouts.get(clazz.getSimpleName());
 
 		if (layouts == null) {
-			layouts = new ArrayList<Layout>();
+			layouts = new ArrayList<>();
 
 			_layouts.put(clazz.getSimpleName(), layouts);
 		}
@@ -119,7 +119,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			clazz.getSimpleName());
 
 		if (layoutFriendlyURLs == null) {
-			layoutFriendlyURLs = new ArrayList<LayoutFriendlyURL>();
+			layoutFriendlyURLs = new ArrayList<>();
 
 			_layoutFriendlyURLs.put(clazz.getSimpleName(), layoutFriendlyURLs);
 		}
@@ -298,7 +298,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 
 		List<Element> elements = layoutElement.elements();
 
-		List<Layout> importedLayouts = new ArrayList<Layout>(elements.size());
+		List<Layout> importedLayouts = new ArrayList<>(elements.size());
 
 		for (Element element : elements) {
 			String layoutPrototypeUuid = element.attributeValue(
@@ -412,10 +412,9 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 	}
 
 	private final Map<String, List<LayoutFriendlyURL>> _layoutFriendlyURLs =
-		new HashMap<String, List<LayoutFriendlyURL>>();
+		new HashMap<>();
 	private LayoutPrototype _layoutPrototype;
-	private final Map<String, List<Layout>> _layouts =
-		new HashMap<String, List<Layout>>();
+	private final Map<String, List<Layout>> _layouts = new HashMap<>();
 	private LayoutSetPrototype _layoutSetPrototype;
 
 }

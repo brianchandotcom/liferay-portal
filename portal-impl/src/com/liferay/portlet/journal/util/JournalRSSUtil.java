@@ -106,7 +106,7 @@ public class JournalRSSUtil {
 	public static List<SyndEnclosure> getDLEnclosures(
 		String portalURL, String url) {
 
-		List<SyndEnclosure> syndEnclosures = new ArrayList<SyndEnclosure>();
+		List<SyndEnclosure> syndEnclosures = new ArrayList<>();
 
 		FileEntry fileEntry = getFileEntry(url);
 
@@ -126,7 +126,7 @@ public class JournalRSSUtil {
 	}
 
 	public static List<SyndLink> getDLLinks(String portalURL, String url) {
-		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
+		List<SyndLink> syndLinks = new ArrayList<>();
 
 		FileEntry fileEntry = getFileEntry(url);
 
@@ -228,7 +228,7 @@ public class JournalRSSUtil {
 	public static List<SyndEnclosure> getIGEnclosures(
 		String portalURL, String url) {
 
-		List<SyndEnclosure> syndEnclosures = new ArrayList<SyndEnclosure>();
+		List<SyndEnclosure> syndEnclosures = new ArrayList<>();
 
 		Object[] imageProperties = getImageProperties(url);
 
@@ -250,7 +250,7 @@ public class JournalRSSUtil {
 	}
 
 	public static List<SyndLink> getIGLinks(String portalURL, String url) {
-		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
+		List<SyndLink> syndLinks = new ArrayList<>();
 
 		Object[] imageProperties = getImageProperties(url);
 

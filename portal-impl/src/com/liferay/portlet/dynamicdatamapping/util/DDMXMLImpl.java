@@ -390,7 +390,7 @@ public class DDMXMLImpl implements DDMXML {
 
 		List<Node> nodes = xPathSelector.selectNodes(document);
 
-		Set<String> elementNames = new HashSet<String>();
+		Set<String> elementNames = new HashSet<>();
 
 		for (Node node : nodes) {
 			Element element = (Element)node;

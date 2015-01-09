@@ -183,13 +183,13 @@ public class PollerRequestHandlerImpl
 
 		Map<String, Boolean> portletIdsMap = pollerHeader.getPortletIdsMap();
 
-		List<PollerRequest> pollerRequests = new ArrayList<PollerRequest>(
+		List<PollerRequest> pollerRequests = new ArrayList<>(
 			portletIdsMap.size());
 
 		Set<String> receiveRequestPortletIds = null;
 
 		if (receiveRequest) {
-			receiveRequestPortletIds = new HashSet<String>(
+			receiveRequestPortletIds = new HashSet<>(
 				(int)(pollerRequestChunks.length / 0.75) + 1);
 		}
 
@@ -371,7 +371,7 @@ public class PollerRequestHandlerImpl
 		Map<String, Object> oldParameterMap =
 			(Map<String, Object>)pollerRequestChunk.get("data");
 
-		Map<String, String> newParameterMap = new HashMap<String, String>();
+		Map<String, String> newParameterMap = new HashMap<>();
 
 		if (oldParameterMap == null) {
 			return newParameterMap;
@@ -439,7 +439,6 @@ public class PollerRequestHandlerImpl
 	private static Log _log = LogFactoryUtil.getLog(
 		PollerRequestHandlerImpl.class);
 
-	private Map<String, PollerSession> _pollerSessions =
-		new HashMap<String, PollerSession>();
+	private Map<String, PollerSession> _pollerSessions = new HashMap<>();
 
 }

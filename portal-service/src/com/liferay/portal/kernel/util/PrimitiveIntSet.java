@@ -23,11 +23,11 @@ import java.util.Set;
 public class PrimitiveIntSet {
 
 	public PrimitiveIntSet() {
-		_elements = new HashSet<Integer>();
+		_elements = new HashSet<>();
 	}
 
 	public PrimitiveIntSet(int capacity) {
-		_elements = new HashSet<Integer>(capacity);
+		_elements = new HashSet<>(capacity);
 	}
 
 	public void add(int value) {

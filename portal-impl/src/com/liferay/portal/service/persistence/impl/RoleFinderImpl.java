@@ -626,8 +626,7 @@ public class RoleFinderImpl
 			qPos.add(scope);
 			qPos.add(primKey);
 
-			Map<String, List<String>> roleMap =
-				new HashMap<String, List<String>>();
+			Map<String, List<String>> roleMap = new HashMap<>();
 
 			Iterator<Object[]> itr = q.iterate();
 
@@ -640,7 +639,7 @@ public class RoleFinderImpl
 				List<String> roleList = roleMap.get(roleName);
 
 				if (roleList == null) {
-					roleList = new ArrayList<String>();
+					roleList = new ArrayList<>();
 				}
 
 				roleList.add(actionId);

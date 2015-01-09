@@ -63,8 +63,8 @@ public class PortletContainerUtil {
 				throw new PortletContainerException(se);
 			}
 
-			List<LayoutTypePortlet> layoutTypePortlets =
-				new ArrayList<LayoutTypePortlet>(layouts.size());
+			List<LayoutTypePortlet> layoutTypePortlets = new ArrayList<>(
+				layouts.size());
 
 			for (Layout curLayout : layouts) {
 				LayoutTypePortlet layoutTypePortlet =
@@ -77,8 +77,7 @@ public class PortletContainerUtil {
 		}
 
 		if (layout.isTypePortlet()) {
-			List<LayoutTypePortlet> layoutTypePortlets =
-				new ArrayList<LayoutTypePortlet>(1);
+			List<LayoutTypePortlet> layoutTypePortlets = new ArrayList<>(1);
 
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();

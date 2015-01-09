@@ -52,10 +52,10 @@ public class PortletJSONUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Set<String> footerCssSet = new LinkedHashSet<String>();
-		Set<String> footerJavaScriptSet = new LinkedHashSet<String>();
-		Set<String> headerCssSet = new LinkedHashSet<String>();
-		Set<String> headerJavaScriptSet = new LinkedHashSet<String>();
+		Set<String> footerCssSet = new LinkedHashSet<>();
+		Set<String> footerJavaScriptSet = new LinkedHashSet<>();
+		Set<String> headerCssSet = new LinkedHashSet<>();
+		Set<String> headerJavaScriptSet = new LinkedHashSet<>();
 
 		boolean portletOnLayout = false;
 

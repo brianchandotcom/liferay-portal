@@ -133,7 +133,7 @@ public class BasePersistenceImpl<TT extends BaseModel, TID>
 	protected void notifyModelListenersOnUpdate(TT sourceModel, TT targetModel)
 		throws SQLException {
 
-		Map<String, Object> originalValues = new HashMap<String, Object>();
+		Map<String, Object> originalValues = new HashMap<>();
 
 		for (String syncNotificationFieldName :
 				getSyncNotificationFieldNames(dataClass.getSimpleName())) {
@@ -192,9 +192,8 @@ public class BasePersistenceImpl<TT extends BaseModel, TID>
 
 	private static ConnectionSource _connectionSource;
 
-	private final List<ModelListener<TT>> _modelListeners =
-		new ArrayList<ModelListener<TT>>();
+	private final List<ModelListener<TT>> _modelListeners = new ArrayList<>();
 	private final Map<String, String[]> _syncNotificationFieldNames =
-		new HashMap<String, String[]>();
+		new HashMap<>();
 
 }

@@ -96,7 +96,7 @@ public class SeleniumBuilderFileUtil {
 	public List<Element> getAllChildElements(
 		Element element, String elementName) {
 
-		List<Element> allChildElements = new ArrayList<Element>();
+		List<Element> allChildElements = new ArrayList<>();
 
 		List<Element> childElements = element.elements();
 
@@ -125,7 +125,7 @@ public class SeleniumBuilderFileUtil {
 	public Set<String> getChildElementAttributeValues(
 		Element element, String attributeName) {
 
-		Set<String> childElementAttributeValues = new TreeSet<String>();
+		Set<String> childElementAttributeValues = new TreeSet<>();
 
 		List<Element> childElements = element.elements();
 
@@ -154,7 +154,7 @@ public class SeleniumBuilderFileUtil {
 	}
 
 	public Set<String> getChildElementLineNumbers(Element element) {
-		Set<String> childElementLineNumbers = new TreeSet<String>();
+		Set<String> childElementLineNumbers = new TreeSet<>();
 
 		List<Element> childElements = element.elements();
 
@@ -266,7 +266,7 @@ public class SeleniumBuilderFileUtil {
 
 			String pathTbody = content.substring(x, y + 8);
 
-			Map<String, Object> context = new HashMap<String, Object>();
+			Map<String, Object> context = new HashMap<>();
 
 			context.put("pathName", getName(fileName));
 			context.put("pathTbody", pathTbody);
@@ -1175,8 +1175,7 @@ public class SeleniumBuilderFileUtil {
 		String[] allowedExecuteChildElementNames,
 		String[] allowedIfConditionElementNames) {
 
-		Map<String, Boolean> hasNeededAttributes =
-			new HashMap<String, Boolean>();
+		Map<String, Boolean> hasNeededAttributes = new HashMap<>();
 
 		for (String neededAttribute : neededAttributes) {
 			hasNeededAttributes.put(neededAttribute, false);
@@ -1267,7 +1266,7 @@ public class SeleniumBuilderFileUtil {
 
 		List<Element> elements = ifElement.elements();
 
-		Set<String> elementNames = new HashSet<String>();
+		Set<String> elementNames = new HashSet<>();
 
 		boolean hasAllowedIfConditionElementNames = false;
 
@@ -1619,8 +1618,7 @@ public class SeleniumBuilderFileUtil {
 	protected void validateSimpleElement(
 		String fileName, Element element, String[] neededAttributes) {
 
-		Map<String, Boolean> hasNeededAttributes =
-			new HashMap<String, Boolean>();
+		Map<String, Boolean> hasNeededAttributes = new HashMap<>();
 
 		for (String neededAttribute : neededAttributes) {
 			hasNeededAttributes.put(neededAttribute, false);
@@ -1862,7 +1860,7 @@ public class SeleniumBuilderFileUtil {
 	protected void validateVarElement(String fileName, Element element) {
 		List<Attribute> attributes = element.attributes();
 
-		Map<String, String> attributeMap = new HashMap<String, String>();
+		Map<String, String> attributeMap = new HashMap<>();
 
 		for (Attribute attribute : attributes) {
 			String attributeName = attribute.getName();

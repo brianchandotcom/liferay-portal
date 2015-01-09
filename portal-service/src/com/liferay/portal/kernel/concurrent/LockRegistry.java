@@ -28,7 +28,7 @@ public class LockRegistry {
 			groupName);
 
 		if (lockGroup == null) {
-			lockGroup = new ConcurrentHashMap<String, ReentrantLock>();
+			lockGroup = new ConcurrentHashMap<>();
 
 			ConcurrentHashMap<String, ReentrantLock> oldLockGroup =
 				_lockGroupMap.putIfAbsent(groupName, lockGroup);
@@ -160,6 +160,6 @@ public class LockRegistry {
 				new ConcurrentHashMap
 					<String, ConcurrentHashMap<String, ReentrantLock>>();
 	private static final Map<String, Object> _prematureLockReleases =
-		new ConcurrentHashMap<String, Object>();
+		new ConcurrentHashMap<>();
 
 }

@@ -331,7 +331,7 @@ public class LocaleUtil {
 	}
 
 	private Map<String, String> _getISOLanguages(Locale locale) {
-		Map<String, String> isoLanguages = new TreeMap<String, String>(
+		Map<String, String> isoLanguages = new TreeMap<>(
 			String.CASE_INSENSITIVE_ORDER);
 
 		for (String isoLanguageId : Locale.getISOLanguages()) {
@@ -542,6 +542,6 @@ public class LocaleUtil {
 	private static LocaleUtil _instance = new LocaleUtil();
 
 	private Locale _locale;
-	private Map<String, Locale> _locales = new HashMap<String, Locale>();
+	private Map<String, Locale> _locales = new HashMap<>();
 
 }

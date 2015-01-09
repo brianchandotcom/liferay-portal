@@ -113,7 +113,7 @@ public class SharepointUtil {
 	}
 
 	private SharepointUtil() {
-		_storageMap = new HashMap<String, String>();
+		_storageMap = new HashMap<>();
 
 		String[] tokens = PropsUtil.getArray(
 			PropsKeys.SHAREPOINT_STORAGE_TOKENS);

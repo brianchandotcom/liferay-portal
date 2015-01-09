@@ -147,7 +147,7 @@ public class SPIClassPathContextListenerTest {
 
 		// Mock lookup
 
-		final Map<String, URL> resources = new HashMap<String, URL>();
+		final Map<String, URL> resources = new HashMap<>();
 
 		final String driverClassName = "TestDriver";
 
@@ -435,7 +435,7 @@ public class SPIClassPathContextListenerTest {
 	}
 
 	protected void deleteFile(File file) {
-		Queue<File> fileQueue = new LinkedList<File>();
+		Queue<File> fileQueue = new LinkedList<>();
 
 		fileQueue.offer(file);
 

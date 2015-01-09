@@ -194,8 +194,7 @@ public class PortletRequestDispatcherImpl
 				pathNoQueryString = _path.substring(0, pos);
 				queryString = _path.substring(pos + 1);
 
-				Map<String, String[]> queryParams =
-					new HashMap<String, String[]>();
+				Map<String, String[]> queryParams = new HashMap<>();
 
 				String[] queryParamsArray = StringUtil.split(
 					queryString, CharPool.AMPERSAND);

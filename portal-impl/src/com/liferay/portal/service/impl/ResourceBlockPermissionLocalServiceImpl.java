@@ -101,13 +101,12 @@ public class ResourceBlockPermissionLocalServiceImpl
 			resourceBlockPermissionPersistence.findByResourceBlockId(
 				resourceBlock.getResourceBlockId());
 
-		Map<Long, Set<String>> roleIdsToActionIds =
-			new HashMap<Long, Set<String>>();
+		Map<Long, Set<String>> roleIdsToActionIds = new HashMap<>();
 
 		for (ResourceBlockPermission resourceBlockPermission :
 				resourceBlockPermissions) {
 
-			Set<String> availableActionIds = new HashSet<String>();
+			Set<String> availableActionIds = new HashSet<>();
 
 			List<String> resourceBlockActionIds =
 				resourceBlockLocalService.getActionIds(

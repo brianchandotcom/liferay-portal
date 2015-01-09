@@ -266,7 +266,7 @@ public class TransactionalPortalCacheHelper {
 		private boolean _removeAll;
 		private boolean _skipReplicator = true;
 		private final Map<Serializable, ValueEntry> _uncommittedMap =
-			new HashMap<Serializable, ValueEntry>();
+			new HashMap<>();
 
 	}
 

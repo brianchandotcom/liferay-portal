@@ -56,7 +56,7 @@ public class TempAttributesServletRequest extends HttpServletRequestWrapper {
 			return superEnumeration;
 		}
 
-		Set<String> names = new HashSet<String>();
+		Set<String> names = new HashSet<>();
 
 		while (superEnumeration.hasMoreElements()) {
 			names.add(superEnumeration.nextElement());
@@ -84,7 +84,6 @@ public class TempAttributesServletRequest extends HttpServletRequestWrapper {
 
 	private static final Object _nullValue = new Object();
 
-	private final Map<String, Object> _attributes =
-		new HashMap<String, Object>();
+	private final Map<String, Object> _attributes = new HashMap<>();
 
 }

@@ -508,7 +508,7 @@ public class S3Store extends BaseStore {
 	}
 
 	protected String[] getFileNames(S3Object[] s3Objects) {
-		List<String> fileNames = new ArrayList<String>();
+		List<String> fileNames = new ArrayList<>();
 
 		for (S3Object s3Object : s3Objects) {
 			String fileName = getFileName(s3Object.getKey());

@@ -152,11 +152,9 @@ public class PoshiRunnerContext {
 		"../../../portal-web/test/functional/com/liferay/portalweb/");
 
 	private static final Map<String, Element> _commandElements =
-		new HashMap<String, Element>();
-	private static final Map<String, String> _pathLocators =
-		new HashMap<String, String>();
-	private static final Map<String, Element> _rootElements =
-		new HashMap<String, Element>();
+		new HashMap<>();
+	private static final Map<String, String> _pathLocators = new HashMap<>();
+	private static final Map<String, Element> _rootElements = new HashMap<>();
 
 	static {
 		try {

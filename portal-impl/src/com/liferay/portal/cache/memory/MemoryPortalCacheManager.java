@@ -144,8 +144,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 					ClusterLinkCallbackFactory.INSTANCE, new Properties());
 
 			Map<CallbackConfiguration, CacheListenerScope>
-				cacheListenerConfigurations =
-					new HashMap<CallbackConfiguration, CacheListenerScope>();
+				cacheListenerConfigurations = new HashMap<>();
 
 			cacheListenerConfigurations.put(
 				cacheListenerConfiguration, CacheListenerScope.ALL);
@@ -170,9 +169,8 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 			throw new NullPointerException("Name is null");
 		}
 
-		_memoryPortalCaches =
-			new ConcurrentHashMap<String, MemoryPortalCache<K, V>>(
-				_cacheManagerInitialCapacity);
+		_memoryPortalCaches = new ConcurrentHashMap<>(
+			_cacheManagerInitialCapacity);
 
 		aggregatedCacheManagerListener.init();
 	}

@@ -159,8 +159,8 @@ public class StagingImplTest {
 			long groupId, String title, String description)
 		throws Exception {
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		for (Locale locale : _locales) {
 			titleMap.put(locale, title.concat(LocaleUtil.toLanguageId(locale)));
@@ -375,7 +375,7 @@ public class StagingImplTest {
 			AssetCategory category, String name)
 		throws Exception {
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		for (Locale locale : _locales) {
 			titleMap.put(locale, name.concat(LocaleUtil.toLanguageId(locale)));

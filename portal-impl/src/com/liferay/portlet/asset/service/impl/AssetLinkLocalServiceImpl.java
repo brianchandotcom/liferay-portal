@@ -175,7 +175,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		List<AssetLink> assetLinks = assetLinkPersistence.findByE1(entryId);
 
 		if (!assetLinks.isEmpty()) {
-			List<AssetLink> filteredAssetLinks = new ArrayList<AssetLink>(
+			List<AssetLink> filteredAssetLinks = new ArrayList<>(
 				assetLinks.size());
 
 			for (AssetLink assetLink : assetLinks) {
@@ -213,7 +213,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 			entryId, typeId);
 
 		if (!assetLinks.isEmpty()) {
-			List<AssetLink> filteredAssetLinks = new ArrayList<AssetLink>(
+			List<AssetLink> filteredAssetLinks = new ArrayList<>(
 				assetLinks.size());
 
 			for (AssetLink assetLink : assetLinks) {
@@ -244,7 +244,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		List<AssetLink> e1Links = assetLinkPersistence.findByE1(entryId);
 		List<AssetLink> e2Links = assetLinkPersistence.findByE2(entryId);
 
-		List<AssetLink> links = new ArrayList<AssetLink>(
+		List<AssetLink> links = new ArrayList<>(
 			e1Links.size() + e2Links.size());
 
 		links.addAll(e1Links);
@@ -274,7 +274,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		List<AssetLink> e2Links = assetLinkPersistence.findByE2_T(
 			entryId, typeId);
 
-		List<AssetLink> links = new ArrayList<AssetLink>(
+		List<AssetLink> links = new ArrayList<>(
 			e1Links.size() + e2Links.size());
 
 		links.addAll(e1Links);

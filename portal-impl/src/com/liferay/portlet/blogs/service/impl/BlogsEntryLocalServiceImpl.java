@@ -1895,7 +1895,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		Map<String, String> parts = new HashMap<String, String>();
+		Map<String, String> parts = new HashMap<>();
 
 		String excerpt = StringUtil.shorten(
 			HtmlUtil.extractText(entry.getContent()),
@@ -1915,7 +1915,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			trackbacksSet = SetUtil.fromArray(trackbacks);
 		}
 		else {
-			trackbacksSet = new HashSet<String>();
+			trackbacksSet = new HashSet<>();
 		}
 
 		if (pingOldTrackbacks) {
@@ -1930,7 +1930,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		Set<String> oldTrackbacks = SetUtil.fromArray(
 			StringUtil.split(entry.getTrackbacks()));
 
-		Set<String> validTrackbacks = new HashSet<String>();
+		Set<String> validTrackbacks = new HashSet<>();
 
 		for (String trackback : trackbacksSet) {
 			if (oldTrackbacks.contains(trackback)) {
@@ -1964,8 +1964,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			long userId, BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> workflowContext = new HashMap<>();
 
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_URL, getEntryURL(entry, serviceContext));

@@ -152,7 +152,7 @@ public class SearchContainerRowTag<R>
 
 	public List<String> getHeaderNames() {
 		if (_headerNames == null) {
-			_headerNames = new ArrayList<String>();
+			_headerNames = new ArrayList<>();
 		}
 
 		return _headerNames;
@@ -172,7 +172,7 @@ public class SearchContainerRowTag<R>
 
 	public Map<String, String> getOrderableHeaders() {
 		if (_orderableHeaders == null) {
-			_orderableHeaders = new LinkedHashMap<String, String>();
+			_orderableHeaders = new LinkedHashMap<>();
 		}
 
 		return _orderableHeaders;

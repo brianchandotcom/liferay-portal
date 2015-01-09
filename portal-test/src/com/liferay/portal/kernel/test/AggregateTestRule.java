@@ -78,7 +78,7 @@ public class AggregateTestRule implements TestRule {
 			}
 
 			private int getIndex(Class<?> testRuleClass) {
-				Set<String> testRuleClassNames = new HashSet<String>();
+				Set<String> testRuleClassNames = new HashSet<>();
 
 				while (TestRule.class.isAssignableFrom(testRuleClass)) {
 					testRuleClassNames.add(testRuleClass.getName());

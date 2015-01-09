@@ -151,7 +151,7 @@ public class PortalImplGetSitesTest {
 
 		long[] groupIds = getSharedContentSiteGroupIds();
 
-		Set<Long> set = new HashSet<Long>(ListUtil.toList(groupIds));
+		Set<Long> set = new HashSet<>(ListUtil.toList(groupIds));
 
 		Assert.assertFalse(set.size() < groupIds.length);
 	}
@@ -164,11 +164,11 @@ public class PortalImplGetSitesTest {
 	private Group _group;
 
 	@DeleteAfterTestRun
-	private final List<Group> _groups = new ArrayList<Group>();
+	private final List<Group> _groups = new ArrayList<>();
 
 	private User _user;
 
 	@DeleteAfterTestRun
-	private final List<User> _users = new ArrayList<User>();
+	private final List<User> _users = new ArrayList<>();
 
 }

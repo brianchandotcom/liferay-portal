@@ -120,9 +120,7 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 		Map<String, ThreadPoolExecutor> threadPoolExecutors) {
 
 		if (threadPoolExecutors != null) {
-			_threadPoolExecutors =
-				new ConcurrentHashMap<String, ThreadPoolExecutor>(
-					threadPoolExecutors);
+			_threadPoolExecutors = new ConcurrentHashMap<>(threadPoolExecutors);
 		}
 	}
 
@@ -180,6 +178,6 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 
 	private PortalExecutorFactory _portalExecutorFactory;
 	private Map<String, ThreadPoolExecutor> _threadPoolExecutors =
-		new ConcurrentHashMap<String, ThreadPoolExecutor>();
+		new ConcurrentHashMap<>();
 
 }

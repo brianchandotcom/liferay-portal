@@ -113,7 +113,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testBooleanArray8() {
-		Collection<String> booleans = new ArrayList<String>();
+		Collection<String> booleans = new ArrayList<>();
 
 		booleans.add("true");
 		booleans.add("false");
@@ -128,7 +128,7 @@ public class ExpandoValueConversionTest {
 
 	@Test(expected = TypeConversionException.class)
 	public void testBooleanArray9() {
-		Collection<String> booleans = new ArrayList<String>();
+		Collection<String> booleans = new ArrayList<>();
 
 		booleans.add("true");
 		booleans.add("other");
@@ -345,7 +345,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testDoubleArray8() {
-		Collection<String> doubles = new ArrayList<String>();
+		Collection<String> doubles = new ArrayList<>();
 
 		doubles.add(String.valueOf(Double.MAX_VALUE));
 		doubles.add(String.valueOf(Integer.MAX_VALUE));
@@ -360,7 +360,7 @@ public class ExpandoValueConversionTest {
 
 	@Test(expected = TypeConversionException.class)
 	public void testDoubleArray9() {
-		Collection<String> booleans = new ArrayList<String>();
+		Collection<String> booleans = new ArrayList<>();
 
 		booleans.add("12.5");
 		booleans.add("other");
@@ -457,7 +457,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testFloatArray8() {
-		Collection<String> floats = new ArrayList<String>();
+		Collection<String> floats = new ArrayList<>();
 
 		floats.add(String.valueOf(Float.MAX_VALUE));
 		floats.add(String.valueOf(Integer.MAX_VALUE));
@@ -472,7 +472,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testFloatArray9() {
-		Collection<String> floats = new ArrayList<String>();
+		Collection<String> floats = new ArrayList<>();
 
 		floats.add(String.valueOf(Double.MAX_VALUE));
 		floats.add(String.valueOf(Integer.MAX_VALUE));
@@ -575,7 +575,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testIntegerArray8() {
-		Collection<String> integers = new ArrayList<String>();
+		Collection<String> integers = new ArrayList<>();
 
 		integers.add(String.valueOf(Integer.MIN_VALUE));
 		integers.add(String.valueOf(Integer.MAX_VALUE));
@@ -590,7 +590,7 @@ public class ExpandoValueConversionTest {
 
 	@Test(expected = TypeConversionException.class)
 	public void testIntegerArray9() {
-		Collection<String> integers = new ArrayList<String>();
+		Collection<String> integers = new ArrayList<>();
 
 		integers.add(String.valueOf(Double.MAX_VALUE));
 		integers.add(String.valueOf(Integer.MAX_VALUE));
@@ -685,7 +685,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testLongArray8() {
-		Collection<String> longs = new ArrayList<String>();
+		Collection<String> longs = new ArrayList<>();
 
 		longs.add(String.valueOf(Long.MIN_VALUE));
 		longs.add(String.valueOf(Long.MAX_VALUE));
@@ -700,7 +700,7 @@ public class ExpandoValueConversionTest {
 
 	@Test(expected = TypeConversionException.class)
 	public void testLongArray9() {
-		Collection<String> longs = new ArrayList<String>();
+		Collection<String> longs = new ArrayList<>();
 
 		longs.add(String.valueOf(Double.MAX_VALUE));
 		longs.add(String.valueOf(Long.MAX_VALUE));
@@ -814,7 +814,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testNumberArray8() {
-		Collection<String> numbers = new ArrayList<String>();
+		Collection<String> numbers = new ArrayList<>();
 
 		numbers.add(String.valueOf(Double.MIN_VALUE));
 		numbers.add(String.valueOf(Double.MAX_VALUE));
@@ -831,7 +831,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testNumberArray9() {
-		Collection<String> numbers = new ArrayList<String>();
+		Collection<String> numbers = new ArrayList<>();
 
 		numbers.add(String.valueOf(Double.MAX_VALUE));
 		numbers.add(String.valueOf(Long.MAX_VALUE));
@@ -943,7 +943,7 @@ public class ExpandoValueConversionTest {
 
 	@Test
 	public void testShortArray8() {
-		Collection<String> shorts = new ArrayList<String>();
+		Collection<String> shorts = new ArrayList<>();
 
 		shorts.add(String.valueOf(Short.MIN_VALUE));
 		shorts.add(String.valueOf(Short.MAX_VALUE));
@@ -958,7 +958,7 @@ public class ExpandoValueConversionTest {
 
 	@Test(expected = TypeConversionException.class)
 	public void testShortArray9() {
-		Collection<String> shorts = new ArrayList<String>();
+		Collection<String> shorts = new ArrayList<>();
 
 		shorts.add(String.valueOf(Double.MAX_VALUE));
 		shorts.add(String.valueOf(Short.MAX_VALUE));

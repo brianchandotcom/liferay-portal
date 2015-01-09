@@ -134,10 +134,10 @@ public class PortletBeanFactoryCleaner implements BeanFactoryAware {
 		PortletBeanFactoryCleaner.class);
 
 	private static final Set<AspectJExpressionPointcut>
-		_aspectJExpressionPointcuts = new HashSet<AspectJExpressionPointcut>();
+		_aspectJExpressionPointcuts = new HashSet<>();
 	private static BeanFactory _beanFactory;
 	private static final Set<BeanFactoryAware> _beanFactoryAwares =
-		new HashSet<BeanFactoryAware>();
+		new HashSet<>();
 
 	static {
 		try {

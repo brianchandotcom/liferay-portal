@@ -64,7 +64,7 @@ public class WSDDMerger {
 
 		rootElement = document.getRootElement();
 
-		Map<String, Element> servicesMap = new TreeMap<String, Element>();
+		Map<String, Element> servicesMap = new TreeMap<>();
 
 		List<Element> serviceElements = rootElement.elements("service");
 

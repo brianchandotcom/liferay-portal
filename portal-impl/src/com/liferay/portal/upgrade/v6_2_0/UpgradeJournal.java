@@ -532,7 +532,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	private static Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
 
-	private Map<String, Long> _ddmStructureIds = new HashMap<String, Long>();
-	private Map<Long, Long> _ddmStructurePKs = new HashMap<Long, Long>();
+	private Map<String, Long> _ddmStructureIds = new HashMap<>();
+	private Map<Long, Long> _ddmStructurePKs = new HashMap<>();
 
 }

@@ -135,14 +135,13 @@ public class WikiUtil {
 	public static List<WikiPage> filterOrphans(List<WikiPage> pages)
 		throws PortalException {
 
-		List<Map<String, Boolean>> pageTitles =
-			new ArrayList<Map<String, Boolean>>();
+		List<Map<String, Boolean>> pageTitles = new ArrayList<>();
 
 		for (WikiPage page : pages) {
 			pageTitles.add(WikiCacheUtil.getOutgoingLinks(page));
 		}
 
-		Set<WikiPage> notOrphans = new HashSet<WikiPage>();
+		Set<WikiPage> notOrphans = new HashSet<>();
 
 		for (WikiPage page : pages) {
 			for (Map<String, Boolean> pageTitle : pageTitles) {
@@ -158,7 +157,7 @@ public class WikiUtil {
 			}
 		}
 
-		List<WikiPage> orphans = new ArrayList<WikiPage>();
+		List<WikiPage> orphans = new ArrayList<>();
 
 		for (WikiPage page : pages) {
 			if (!notOrphans.contains(page)) {
@@ -213,7 +212,7 @@ public class WikiUtil {
 			}
 		}
 
-		List<DiffVersion> diffVersions = new ArrayList<DiffVersion>();
+		List<DiffVersion> diffVersions = new ArrayList<>();
 
 		for (WikiPage page : pages) {
 			String extraInfo = StringPool.BLANK;
@@ -242,8 +241,7 @@ public class WikiUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms =
-			new LinkedHashMap<String, String>();
+		Map<String, String> definitionTerms = new LinkedHashMap<>();
 
 		definitionTerms.put(
 			"[$COMPANY_ID$]",
@@ -287,8 +285,7 @@ public class WikiUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms =
-			new LinkedHashMap<String, String>();
+		Map<String, String> definitionTerms = new LinkedHashMap<>();
 
 		definitionTerms.put(
 			"[$COMPANY_ID$]",
@@ -382,7 +379,7 @@ public class WikiUtil {
 	}
 
 	public static List<Object> getEntries(Hits hits) {
-		List<Object> entries = new ArrayList<Object>();
+		List<Object> entries = new ArrayList<>();
 
 		for (Document document : hits.getDocs()) {
 			String entryClassName = GetterUtil.getString(
@@ -524,7 +521,7 @@ public class WikiUtil {
 	}
 
 	public static List<String> getNodeNames(List<WikiNode> nodes) {
-		List<String> nodeNames = new ArrayList<String>(nodes.size());
+		List<String> nodeNames = new ArrayList<>(nodes.size());
 
 		for (WikiNode node : nodes) {
 			nodeNames.add(node.getName());
@@ -590,7 +587,7 @@ public class WikiUtil {
 
 		nodes = ListUtil.copy(nodes);
 
-		List<WikiNode> orderedNodes = new ArrayList<WikiNode>(nodes.size());
+		List<WikiNode> orderedNodes = new ArrayList<>(nodes.size());
 
 		for (String visibleNodeName : visibleNodeNames) {
 			for (WikiNode node : nodes) {
@@ -821,7 +818,6 @@ public class WikiUtil {
 	private static final Pattern _viewPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE\\$\\](.*?)\\[\\$END_PAGE_TITLE\\$\\]");
 
-	private final Map<String, WikiEngine> _engines =
-		new ConcurrentHashMap<String, WikiEngine>();
+	private final Map<String, WikiEngine> _engines = new ConcurrentHashMap<>();
 
 }

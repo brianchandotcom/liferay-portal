@@ -30,7 +30,7 @@ public class PluginUtil {
 	public static <P extends Plugin> List<P> restrictPlugins(
 		List<P> plugins, long companyId, long userId) {
 
-		List<P> visiblePlugins = new ArrayList<P>(plugins.size());
+		List<P> visiblePlugins = new ArrayList<>(plugins.size());
 
 		for (P plugin : plugins) {
 			PluginSetting pluginSetting =

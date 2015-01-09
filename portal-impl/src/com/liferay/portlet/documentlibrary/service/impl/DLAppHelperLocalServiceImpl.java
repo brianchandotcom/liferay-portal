@@ -1563,7 +1563,7 @@ public class DLAppHelperLocalServiceImpl
 			dlFileVersions, new FileVersionVersionComparator());
 
 		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
-			new ArrayList<ObjectValuePair<Long, Integer>>();
+			new ArrayList<>();
 
 		if ((dlFileVersions != null) && !dlFileVersions.isEmpty()) {
 			dlFileVersionStatusOVPs = getDlFileVersionStatuses(dlFileVersions);

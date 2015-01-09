@@ -726,7 +726,7 @@ public class ClusterMasterExecutorImplTest {
 
 		@Override
 		public FutureClusterResponses execute(ClusterRequest clusterRequest) {
-			List<Address> addresses = new ArrayList<Address>();
+			List<Address> addresses = new ArrayList<>();
 
 			Collection<Address> clusterNodeAddresses =
 				clusterRequest.getTargetClusterNodeAddresses();
@@ -831,9 +831,9 @@ public class ClusterMasterExecutorImplTest {
 			_clusterEventListeners.remove(clusterEventListener);
 		}
 
-		private final List<Address> _addresses = new ArrayList<Address>();
+		private final List<Address> _addresses = new ArrayList<>();
 		private final List<ClusterEventListener> _clusterEventListeners =
-			new ArrayList<ClusterEventListener>();
+			new ArrayList<>();
 		private final boolean _enabled;
 
 	}

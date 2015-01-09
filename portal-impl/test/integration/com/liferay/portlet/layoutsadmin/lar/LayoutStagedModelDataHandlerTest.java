@@ -62,7 +62,7 @@ public class LayoutStagedModelDataHandlerTest
 		initExport();
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			stagingGroup.getGroupId(),
@@ -95,7 +95,7 @@ public class LayoutStagedModelDataHandlerTest
 		initExport();
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		Layout linkedLayout = LayoutTestUtil.addLayout(stagingGroup);
 
@@ -169,7 +169,7 @@ public class LayoutStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		Layout parentLayout = LayoutTestUtil.addLayout(group);
 

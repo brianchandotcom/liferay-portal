@@ -46,7 +46,7 @@ public class BreadcrumbEntry {
 
 	public void putData(String key, Object value) {
 		if (_data == null) {
-			_data = new HashMap<String, Object>();
+			_data = new HashMap<>();
 		}
 
 		_data.put(key, value);

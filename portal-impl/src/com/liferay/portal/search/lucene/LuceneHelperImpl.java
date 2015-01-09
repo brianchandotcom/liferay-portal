@@ -525,7 +525,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 			}
 		}
 
-		Set<String> queryTerms = new HashSet<String>();
+		Set<String> queryTerms = new HashSet<>();
 
 		for (WeightedTerm weightedTerm : weightedTerms) {
 			queryTerms.add(weightedTerm.getTerm());
@@ -882,7 +882,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		Query query, BooleanClause.Occur occur) {
 
 		if (query instanceof TermQuery) {
-			Set<Term> terms = new HashSet<Term>();
+			Set<Term> terms = new HashSet<>();
 
 			TermQuery termQuery = (TermQuery)query;
 
@@ -1014,7 +1014,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 	private Analyzer _analyzer;
 	private Map<Long, IndexAccessor> _indexAccessors =
-		new ConcurrentHashMap<Long, IndexAccessor>();
+		new ConcurrentHashMap<>();
 	private LoadIndexClusterEventListener _loadIndexClusterEventListener;
 	private ThreadPoolExecutor _luceneIndexThreadPoolExecutor;
 	private Version _version;

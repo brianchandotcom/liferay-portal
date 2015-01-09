@@ -44,10 +44,10 @@ public class SortedProperties extends Properties {
 		_comparator = comparator;
 
 		if (comparator != null) {
-			_names = new TreeSet<String>(comparator);
+			_names = new TreeSet<>(comparator);
 		}
 		else {
-			_names = new TreeSet<String>();
+			_names = new TreeSet<>();
 		}
 
 		if (properties != null) {

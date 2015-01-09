@@ -223,7 +223,7 @@ public class DataFactory {
 		_socialActivityCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
 
-		_classNameModels = new ArrayList<ClassNameModel>();
+		_classNameModels = new ArrayList<>();
 
 		List<String> models = ModelHintsUtil.getModels();
 
@@ -302,7 +302,7 @@ public class DataFactory {
 			return Collections.emptyList();
 		}
 
-		List<Long> assetCategoryIds = new ArrayList<Long>(
+		List<Long> assetCategoryIds = new ArrayList<>(
 			_maxAssetEntryToAssetCategoryCount);
 
 		for (int i = 0; i < _maxAssetEntryToAssetCategoryCount; i++) {
@@ -318,8 +318,7 @@ public class DataFactory {
 	}
 
 	public List<AssetCategoryModel> getAssetCategoryModels() {
-		List<AssetCategoryModel> allAssetCategoryModels =
-			new ArrayList<AssetCategoryModel>();
+		List<AssetCategoryModel> allAssetCategoryModels = new ArrayList<>();
 
 		for (List<AssetCategoryModel> assetCategoryModels :
 				_assetCategoryModelsArray) {
@@ -346,8 +345,7 @@ public class DataFactory {
 			return Collections.emptyList();
 		}
 
-		List<Long> assetTagIds = new ArrayList<Long>(
-			_maxAssetEntryToAssetTagCount);
+		List<Long> assetTagIds = new ArrayList<>(_maxAssetEntryToAssetTagCount);
 
 		for (int i = 0; i < _maxAssetEntryToAssetTagCount; i++) {
 			int index = (int)counter.get() % assetTagModels.size();
@@ -361,7 +359,7 @@ public class DataFactory {
 	}
 
 	public List<AssetTagModel> getAssetTagModels() {
-		List<AssetTagModel> allAssetTagModels = new ArrayList<AssetTagModel>();
+		List<AssetTagModel> allAssetTagModels = new ArrayList<>();
 
 		for (List<AssetTagModel> assetTagModels : _assetTagModelsArray) {
 			allAssetTagModels.addAll(assetTagModels);
@@ -371,8 +369,7 @@ public class DataFactory {
 	}
 
 	public List<AssetTagStatsModel> getAssetTagStatsModels() {
-		List<AssetTagStatsModel> allAssetTagStatsModels =
-			new ArrayList<AssetTagStatsModel>();
+		List<AssetTagStatsModel> allAssetTagStatsModels = new ArrayList<>();
 
 		for (List<AssetTagStatsModel> assetTagStatsModels :
 				_assetTagStatsModelsArray) {
@@ -384,8 +381,7 @@ public class DataFactory {
 	}
 
 	public List<AssetVocabularyModel> getAssetVocabularyModels() {
-		List<AssetVocabularyModel> allAssetVocabularyModels =
-			new ArrayList<AssetVocabularyModel>();
+		List<AssetVocabularyModel> allAssetVocabularyModels = new ArrayList<>();
 
 		allAssetVocabularyModels.add(_defaultAssetVocabularyModel);
 
@@ -547,7 +543,7 @@ public class DataFactory {
 	}
 
 	public List<Long> getNewUserGroupIds(long groupId) {
-		List<Long> groupIds = new ArrayList<Long>(_maxUserToGroupCount + 1);
+		List<Long> groupIds = new ArrayList<>(_maxUserToGroupCount + 1);
 
 		groupIds.add(_guestGroupModel.getGroupId());
 
@@ -575,7 +571,7 @@ public class DataFactory {
 	}
 
 	public List<Integer> getSequence(int size) {
-		List<Integer> sequence = new ArrayList<Integer>(size);
+		List<Integer> sequence = new ArrayList<>(size);
 
 		for (int i = 1; i <= size; i++) {
 			sequence.add(i);
@@ -608,11 +604,10 @@ public class DataFactory {
 		StringBundler sb = new StringBundler(4);
 
 		for (int i = 1; i <= _maxGroupsCount; i++) {
-			List<AssetVocabularyModel> assetVocabularyModels =
-				new ArrayList<AssetVocabularyModel>(_maxAssetVocabularyCount);
-			List<AssetCategoryModel> assetCategoryModels =
-				new ArrayList<AssetCategoryModel>(
-					_maxAssetVocabularyCount * _maxAssetCategoryCount);
+			List<AssetVocabularyModel> assetVocabularyModels = new ArrayList<>(
+				_maxAssetVocabularyCount);
+			List<AssetCategoryModel> assetCategoryModels = new ArrayList<>(
+				_maxAssetVocabularyCount * _maxAssetCategoryCount);
 
 			long lastRightCategoryId = 2;
 
@@ -661,10 +656,10 @@ public class DataFactory {
 			(List<AssetTagStatsModel>[])new List<?>[_maxGroupsCount];
 
 		for (int i = 1; i <= _maxGroupsCount; i++) {
-			List<AssetTagModel> assetTagModels = new ArrayList<AssetTagModel>(
+			List<AssetTagModel> assetTagModels = new ArrayList<>(
 				_maxAssetTagCount);
-			List<AssetTagStatsModel> assetTagStatsModels =
-				new ArrayList<AssetTagStatsModel>(_maxAssetTagCount * 3);
+			List<AssetTagStatsModel> assetTagStatsModels = new ArrayList<>(
+				_maxAssetTagCount * 3);
 
 			for (int j = 0; j < _maxAssetTagCount; j++) {
 				AssetTagModel assetTagModel = new AssetTagModelImpl();
@@ -850,7 +845,7 @@ public class DataFactory {
 			_guestGroupId, groupClassNameId, _guestGroupId,
 			GroupConstants.GUEST, true);
 
-		_groupModels = new ArrayList<GroupModel>(_maxGroupsCount);
+		_groupModels = new ArrayList<>(_maxGroupsCount);
 
 		for (int i = 1; i <= _maxGroupsCount; i++) {
 			GroupModel groupModel = newGroupModel(
@@ -886,7 +881,7 @@ public class DataFactory {
 	}
 
 	public void initRoleModels() {
-		_roleModels = new ArrayList<RoleModel>();
+		_roleModels = new ArrayList<>();
 
 		// Administrator
 
@@ -979,7 +974,7 @@ public class DataFactory {
 	}
 
 	public void initUserNames() throws IOException {
-		_firstNames = new ArrayList<String>();
+		_firstNames = new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(getResourceInputStream("first_names.txt")));
@@ -992,7 +987,7 @@ public class DataFactory {
 
 		unsyncBufferedReader.close();
 
-		_lastNames = new ArrayList<String>();
+		_lastNames = new ArrayList<>();
 
 		unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(getResourceInputStream("last_names.txt")));
@@ -1100,7 +1095,7 @@ public class DataFactory {
 		newAssetPublisherPortletPreferencesModels(long plid) {
 
 		List<PortletPreferencesModel> portletPreferencesModels =
-			new ArrayList<PortletPreferencesModel>(4);
+			new ArrayList<>(4);
 
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
@@ -1121,7 +1116,7 @@ public class DataFactory {
 	}
 
 	public List<BlogsEntryModel> newBlogsEntryModels(long groupId) {
-		List<BlogsEntryModel> blogEntryModels = new ArrayList<BlogsEntryModel>(
+		List<BlogsEntryModel> blogEntryModels = new ArrayList<>(
 			_maxBlogsEntryCount);
 
 		for (int i = 1; i <= _maxBlogsEntryCount; i++) {
@@ -1177,7 +1172,7 @@ public class DataFactory {
 	}
 
 	public List<CounterModel> newCounterModels() {
-		List<CounterModel> counterModels = new ArrayList<CounterModel>();
+		List<CounterModel> counterModels = new ArrayList<>();
 
 		// Counter
 
@@ -1245,7 +1240,7 @@ public class DataFactory {
 		newDDLPortletPreferencesModels(long plid) {
 
 		List<PortletPreferencesModel> portletPreferencesModels =
-			new ArrayList<PortletPreferencesModel>(2);
+			new ArrayList<>(2);
 
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
@@ -1456,8 +1451,8 @@ public class DataFactory {
 	public List<DLFileEntryModel> newDlFileEntryModels(
 		DLFolderModel dlFolerModel) {
 
-		List<DLFileEntryModel> dlFileEntryModels =
-			new ArrayList<DLFileEntryModel>(_maxDLFileEntryCount);
+		List<DLFileEntryModel> dlFileEntryModels = new ArrayList<>(
+			_maxDLFileEntryCount);
 
 		for (int i = 1; i <= _maxDLFileEntryCount; i++) {
 			dlFileEntryModels.add(newDlFileEntryModel(dlFolerModel, i));
@@ -1497,8 +1492,7 @@ public class DataFactory {
 	public List<DLFolderModel> newDLFolderModels(
 		long groupId, long parentFolderId) {
 
-		List<DLFolderModel> dlFolderModels = new ArrayList<DLFolderModel>(
-			_maxDLFolderCount);
+		List<DLFolderModel> dlFolderModels = new ArrayList<>(_maxDLFolderCount);
 
 		for (int i = 1; i <= _maxDLFolderCount; i++) {
 			dlFolderModels.add(newDLFolderModel(groupId, parentFolderId, i));
@@ -1617,7 +1611,7 @@ public class DataFactory {
 		newJournalPortletPreferencesModels(long plid) {
 
 		List<PortletPreferencesModel> portletPreferencesModels =
-			new ArrayList<PortletPreferencesModel>(2);
+			new ArrayList<>(2);
 
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
@@ -1697,7 +1691,7 @@ public class DataFactory {
 	public List<LayoutSetModel> newLayoutSetModels(
 		long groupId, int publicLayoutSetPageCount) {
 
-		List<LayoutSetModel> layoutSetModels = new ArrayList<LayoutSetModel>(2);
+		List<LayoutSetModel> layoutSetModels = new ArrayList<>(2);
 
 		layoutSetModels.add(newLayoutSetModel(groupId, true, 0));
 		layoutSetModels.add(
@@ -1707,7 +1701,7 @@ public class DataFactory {
 	}
 
 	public List<MBCategoryModel> newMBCategoryModels(long groupId) {
-		List<MBCategoryModel> mbCategoryModels = new ArrayList<MBCategoryModel>(
+		List<MBCategoryModel> mbCategoryModels = new ArrayList<>(
 			_maxMBCategoryCount);
 
 		for (int i = 1; i <= _maxMBCategoryCount; i++) {
@@ -1793,7 +1787,7 @@ public class DataFactory {
 	public List<MBMessageModel> newMBMessageModels(
 		MBThreadModel mbThreadModel) {
 
-		List<MBMessageModel> mbMessageModels = new ArrayList<MBMessageModel>(
+		List<MBMessageModel> mbMessageModels = new ArrayList<>(
 			_maxMBMessageCount);
 
 		mbMessageModels.add(
@@ -1821,8 +1815,7 @@ public class DataFactory {
 		MBThreadModel mbThreadModel, long classNameId, long classPK,
 		int maxMessageCount) {
 
-		List<MBMessageModel> mbMessageModels = new ArrayList<MBMessageModel>(
-			maxMessageCount);
+		List<MBMessageModel> mbMessageModels = new ArrayList<>(maxMessageCount);
 
 		for (int i = 1; i <= maxMessageCount; i++) {
 			mbMessageModels.add(
@@ -1876,8 +1869,7 @@ public class DataFactory {
 	public List<MBThreadModel> newMBThreadModels(
 		MBCategoryModel mbCategoryModel) {
 
-		List<MBThreadModel> mbThreadModels = new ArrayList<MBThreadModel>(
-			_maxMBThreadCount);
+		List<MBThreadModel> mbThreadModels = new ArrayList<>(_maxMBThreadCount);
 
 		for (int i = 0; i < _maxMBThreadCount; i++) {
 			mbThreadModels.add(
@@ -1995,7 +1987,7 @@ public class DataFactory {
 	}
 
 	public List<LayoutModel> newPublicLayoutModels(long groupId) {
-		List<LayoutModel> layoutModels = new ArrayList<LayoutModel>();
+		List<LayoutModel> layoutModels = new ArrayList<>();
 
 		layoutModels.add(newLayoutModel(groupId, "welcome", "58,", "47,"));
 		layoutModels.add(newLayoutModel(groupId, "blogs", "", "33,"));
@@ -2028,7 +2020,7 @@ public class DataFactory {
 
 		if (assetVocabularyModel.getUserId() == _defaultUserId) {
 			List<ResourcePermissionModel> resourcePermissionModels =
-				new ArrayList<ResourcePermissionModel>(1);
+				new ArrayList<>(1);
 
 			resourcePermissionModels.add(
 				newResourcePermissionModel(
@@ -2057,7 +2049,7 @@ public class DataFactory {
 		DDLRecordSetModel ddlRecordSetModel) {
 
 		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<ResourcePermissionModel>(1);
+			new ArrayList<>(1);
 
 		resourcePermissionModels.add(
 			newResourcePermissionModel(
@@ -2072,7 +2064,7 @@ public class DataFactory {
 		DDMStructureModel ddmStructureModel) {
 
 		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<ResourcePermissionModel>(1);
+			new ArrayList<>(1);
 
 		resourcePermissionModels.add(
 			newResourcePermissionModel(
@@ -2271,7 +2263,7 @@ public class DataFactory {
 	}
 
 	public List<UserModel> newUserModels() {
-		List<UserModel> userModels = new ArrayList<UserModel>(_maxUserCount);
+		List<UserModel> userModels = new ArrayList<>(_maxUserCount);
 
 		for (int i = 0; i < _maxUserCount; i++) {
 			String[] userName = nextUserName(i);
@@ -2285,8 +2277,7 @@ public class DataFactory {
 	}
 
 	public List<WikiNodeModel> newWikiNodeModels(long groupId) {
-		List<WikiNodeModel> wikiNodeModels = new ArrayList<WikiNodeModel>(
-			_maxWikiNodeCount);
+		List<WikiNodeModel> wikiNodeModels = new ArrayList<>(_maxWikiNodeCount);
 
 		for (int i = 1; i <= _maxWikiNodeCount; i++) {
 			wikiNodeModels.add(newWikiNodeModel(groupId, i));
@@ -2296,8 +2287,7 @@ public class DataFactory {
 	}
 
 	public List<WikiPageModel> newWikiPageModels(WikiNodeModel wikiNodeModel) {
-		List<WikiPageModel> wikiPageModels = new ArrayList<WikiPageModel>(
-			_maxWikiPageCount);
+		List<WikiPageModel> wikiPageModels = new ArrayList<>(_maxWikiPageCount);
 
 		for (int i = 1; i <= _maxWikiPageCount; i++) {
 			wikiPageModels.add(newWikiPageModel(wikiNodeModel, i));
@@ -2836,7 +2826,7 @@ public class DataFactory {
 		String name, String primKey, long ownerId) {
 
 		List<ResourcePermissionModel> resourcePermissionModels =
-			new ArrayList<ResourcePermissionModel>(3);
+			new ArrayList<>(3);
 
 		resourcePermissionModels.add(
 			newResourcePermissionModel(
@@ -3019,19 +3009,17 @@ public class DataFactory {
 	private long _accountId;
 	private AccountModel _accountModel;
 	private RoleModel _administratorRoleModel;
-	private Map<Long, SimpleCounter> _assetCategoryCounters =
-		new HashMap<Long, SimpleCounter>();
+	private Map<Long, SimpleCounter> _assetCategoryCounters = new HashMap<>();
 	private List<AssetCategoryModel>[] _assetCategoryModelsArray;
 	private Map<Long, SimpleCounter> _assetPublisherQueryCounter =
-		new HashMap<Long, SimpleCounter>();
+		new HashMap<>();
 	private String _assetPublisherQueryName;
-	private Map<Long, SimpleCounter> _assetTagCounters =
-		new HashMap<Long, SimpleCounter>();
+	private Map<Long, SimpleCounter> _assetTagCounters = new HashMap<>();
 	private List<AssetTagModel>[] _assetTagModelsArray;
 	private List<AssetTagStatsModel>[] _assetTagStatsModelsArray;
 	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
 	private List<ClassNameModel> _classNameModels;
-	private Map<String, Long> _classNameModelsMap = new HashMap<String, Long>();
+	private Map<String, Long> _classNameModelsMap = new HashMap<>();
 	private long _companyId;
 	private CompanyModel _companyModel;
 	private SimpleCounter _counter;
@@ -3054,12 +3042,10 @@ public class DataFactory {
 	private RoleModel _guestRoleModel;
 	private UserModel _guestUserModel;
 	private String _journalArticleContent;
-	private Map<Long, String> _journalArticleResourceUUIDs =
-		new HashMap<Long, String>();
+	private Map<Long, String> _journalArticleResourceUUIDs = new HashMap<>();
 	private String _journalDDMStructureContent;
 	private List<String> _lastNames;
-	private Map<Long, SimpleCounter> _layoutCounters =
-		new HashMap<Long, SimpleCounter>();
+	private Map<Long, SimpleCounter> _layoutCounters = new HashMap<>();
 	private int _maxAssetCategoryCount;
 	private int _maxAssetEntryToAssetCategoryCount;
 	private int _maxAssetEntryToAssetTagCount;

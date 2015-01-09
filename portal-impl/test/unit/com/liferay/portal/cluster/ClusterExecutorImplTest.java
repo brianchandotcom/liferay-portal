@@ -100,7 +100,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			// Test 3, set cluster event listener
 
-			clusterEventListeners = new ArrayList<ClusterEventListener>();
+			clusterEventListeners = new ArrayList<>();
 
 			clusterEventListeners.add(clusterEventListener);
 
@@ -687,7 +687,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			clusterExecutorImpl.addClusterEventListener(
 				mockClusterEventListener);
 
-			List<Address> addresses = new ArrayList<Address>();
+			List<Address> addresses = new ArrayList<>();
 
 			addresses.add(new AddressImpl(new MockAddress()));
 
@@ -739,7 +739,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			// Test 4, set cluster event listener
 
-			clusterEventListeners = new ArrayList<ClusterEventListener>();
+			clusterEventListeners = new ArrayList<>();
 
 			clusterEventListeners.add(new MockClusterEventListener());
 

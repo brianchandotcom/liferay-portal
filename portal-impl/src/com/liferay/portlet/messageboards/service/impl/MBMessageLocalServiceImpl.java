@@ -1438,7 +1438,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
-		List<String> existingFiles = new ArrayList<String>();
+		List<String> existingFiles = new ArrayList<>();
 		double priority = 0.0;
 		boolean allowPingbacks = false;
 
@@ -2048,7 +2048,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			categoryName += " - " + group.getDescriptiveName();
 		}
 
-		List<Long> categoryIds = new ArrayList<Long>();
+		List<Long> categoryIds = new ArrayList<>();
 
 		categoryIds.add(message.getCategoryId());
 
@@ -2251,8 +2251,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long userId, MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> workflowContext = new HashMap<>();
 
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_URL,

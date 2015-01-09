@@ -178,7 +178,7 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 		int numOfFiles = ParamUtil.getInteger(actionRequest, "numOfFiles");
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			new ArrayList<ObjectValuePair<String, InputStream>>();
+			new ArrayList<>();
 
 		try {
 			if (numOfFiles == 0) {

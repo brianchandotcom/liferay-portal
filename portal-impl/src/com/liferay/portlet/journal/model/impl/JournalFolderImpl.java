@@ -30,7 +30,7 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 
 	@Override
 	public List<Long> getAncestorFolderIds() throws PortalException {
-		List<Long> ancestorFolderIds = new ArrayList<Long>();
+		List<Long> ancestorFolderIds = new ArrayList<>();
 
 		JournalFolder folder = this;
 
@@ -54,7 +54,7 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 
 	@Override
 	public List<JournalFolder> getAncestors() throws PortalException {
-		List<JournalFolder> ancestors = new ArrayList<JournalFolder>();
+		List<JournalFolder> ancestors = new ArrayList<>();
 
 		JournalFolder folder = this;
 

@@ -97,7 +97,7 @@ public class PACLAggregateTest {
 	protected ProcessConfig createProcessConfig() {
 		Builder builder = new Builder();
 
-		List<String> arguments = new ArrayList<String>();
+		List<String> arguments = new ArrayList<>();
 
 		arguments.add(_JVM_XMX);
 		arguments.add(_JVM_MAX_PERM_SIZE);
@@ -154,7 +154,7 @@ public class PACLAggregateTest {
 
 		ClassLoader classLoader = PACLAggregateTest.class.getClassLoader();
 
-		List<Class<?>> classes = new ArrayList<Class<?>>();
+		List<Class<?>> classes = new ArrayList<>();
 
 		for (File file : files) {
 			String fileName = file.getName();

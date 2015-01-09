@@ -90,7 +90,7 @@ public class ClassLoaderProxy {
 
 			Class<?> clazz = Class.forName(_className, true, _classLoader);
 
-			List<Class<?>> parameterTypes = new ArrayList<Class<?>>();
+			List<Class<?>> parameterTypes = new ArrayList<>();
 
 			for (int i = 0; i < args.length; i++) {
 				Object arg = args[i];

@@ -90,6 +90,6 @@ public class ResourceBlockPermissionsContainer {
 		}
 	}
 
-	private SortedMap<Long, Long> _permissions = new TreeMap<Long, Long>();
+	private SortedMap<Long, Long> _permissions = new TreeMap<>();
 
 }

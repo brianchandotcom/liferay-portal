@@ -139,7 +139,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			long classPK, int start, int end)
 		throws PortalException {
 
-		List<TrashRenderer> trashRenderers = new ArrayList<TrashRenderer>();
+		List<TrashRenderer> trashRenderers = new ArrayList<>();
 
 		List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(
 			classPK, true, WorkflowConstants.STATUS_IN_TRASH, start, end);

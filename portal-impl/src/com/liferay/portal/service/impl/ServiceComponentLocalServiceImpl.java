@@ -363,7 +363,7 @@ public class ServiceComponentLocalServiceImpl
 	protected List<String> getModels(ClassLoader classLoader)
 		throws DocumentException, IOException {
 
-		List<String> models = new ArrayList<String>();
+		List<String> models = new ArrayList<>();
 
 		String xml = StringUtil.read(
 			classLoader, "META-INF/portlet-model-hints.xml");
@@ -388,7 +388,7 @@ public class ServiceComponentLocalServiceImpl
 	}
 
 	protected List<String> getModels(String xml) throws DocumentException {
-		List<String> models = new ArrayList<String>();
+		List<String> models = new ArrayList<>();
 
 		Document document = SAXReaderUtil.read(xml);
 

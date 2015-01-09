@@ -108,6 +108,6 @@ public class ServerStatistics
 	}
 
 	private final Map<String, ServiceStatistics> _serviceStatistics =
-		new ConcurrentHashMap<String, ServiceStatistics>();
+		new ConcurrentHashMap<>();
 
 }

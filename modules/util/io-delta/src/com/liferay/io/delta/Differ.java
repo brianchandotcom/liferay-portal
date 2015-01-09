@@ -67,7 +67,7 @@ public class Differ {
 	}
 
 	protected void readChecksums() throws IOException {
-		_blockDatas = new HashMap<Integer, BlockData>(_blocksCount);
+		_blockDatas = new HashMap<>(_blocksCount);
 
 		for (int blockNumber = 0; blockNumber < _blocksCount; blockNumber++) {
 			_checksumsByteChannelReader.ensureData(20);

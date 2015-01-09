@@ -73,7 +73,7 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 
 	@Override
 	public Set<QName> getPropsSet() throws Exception {
-		Set<QName> propsSet = new HashSet<QName>();
+		Set<QName> propsSet = new HashSet<>();
 
 		Document doc = _getPropsDocument();
 

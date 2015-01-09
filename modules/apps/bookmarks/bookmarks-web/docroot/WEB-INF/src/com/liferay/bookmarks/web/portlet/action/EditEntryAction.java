@@ -182,7 +182,7 @@ public class EditEntryAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
 		}
 
-		List<TrashedModel> trashedModels = new ArrayList<TrashedModel>();
+		List<TrashedModel> trashedModels = new ArrayList<>();
 
 		for (long deleteEntryId : deleteEntryIds) {
 			if (moveToTrash) {

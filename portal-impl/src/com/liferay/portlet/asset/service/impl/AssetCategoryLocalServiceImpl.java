@@ -178,13 +178,13 @@ public class AssetCategoryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		titleMap.put(locale, title);
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(locale, StringPool.BLANK);
 
@@ -222,7 +222,7 @@ public class AssetCategoryLocalServiceImpl
 	public void deleteCategories(List<AssetCategory> categories)
 		throws PortalException {
 
-		List<Long> rebuildTreeGroupIds = new ArrayList<Long>();
+		List<Long> rebuildTreeGroupIds = new ArrayList<>();
 
 		for (AssetCategory category : categories) {
 			if (!rebuildTreeGroupIds.contains(category.getGroupId()) &&
@@ -252,7 +252,7 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public void deleteCategories(long[] categoryIds) throws PortalException {
-		List<AssetCategory> categories = new ArrayList<AssetCategory>();
+		List<AssetCategory> categories = new ArrayList<>();
 
 		for (long categoryId : categoryIds) {
 			AssetCategory category = assetCategoryPersistence.findByPrimaryKey(
@@ -747,8 +747,7 @@ public class AssetCategoryLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.ASSET_PARENT_CATEGORY_IDS, parentCategoryIds);
 		attributes.put(Field.ASSET_VOCABULARY_IDS, vocabularyIds);

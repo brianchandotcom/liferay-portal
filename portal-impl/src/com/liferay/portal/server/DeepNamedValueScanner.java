@@ -131,7 +131,7 @@ public class DeepNamedValueScanner {
 	public boolean scan(Object target) throws Exception {
 		_elapsedTime = System.currentTimeMillis();
 
-		_visitedIds = new HashSet<String>();
+		_visitedIds = new HashSet<>();
 
 		_scanning = true;
 
@@ -187,8 +187,8 @@ public class DeepNamedValueScanner {
 		_trackUsageCount = trackUsageCount;
 
 		if (trackUsageCount) {
-			_nameDatasets = new HashMap<String, Dataset>();
-			_typeDatasets = new HashMap<String, Dataset>();
+			_nameDatasets = new HashMap<>();
+			_typeDatasets = new HashMap<>();
 		}
 	}
 
@@ -358,7 +358,7 @@ public class DeepNamedValueScanner {
 	}
 
 	private void _printStatistics(Collection<Dataset> datasets, int topCount) {
-		List<Dataset> datasetsList = new ArrayList<Dataset>();
+		List<Dataset> datasetsList = new ArrayList<>();
 
 		for (Dataset dataset : datasets) {
 			datasetsList.add(dataset);

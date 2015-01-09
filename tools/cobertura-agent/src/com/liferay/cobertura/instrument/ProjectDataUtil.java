@@ -266,6 +266,6 @@ public class ProjectDataUtil {
 		};
 
 	private static final Set<Runnable> _mergeHooks =
-		new CopyOnWriteArraySet<Runnable>();
+		new CopyOnWriteArraySet<>();
 
 }

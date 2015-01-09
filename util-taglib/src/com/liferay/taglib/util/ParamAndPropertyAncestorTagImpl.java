@@ -52,7 +52,7 @@ public class ParamAndPropertyAncestorTagImpl
 			params.remove(name);
 
 			if (_removedParameterNames == null) {
-				_removedParameterNames = new HashSet<String>();
+				_removedParameterNames = new HashSet<>();
 			}
 
 			_removedParameterNames.add(name);
@@ -81,7 +81,7 @@ public class ParamAndPropertyAncestorTagImpl
 	@Override
 	public void addProperty(String name, String value) {
 		if (_properties == null) {
-			_properties = new LinkedHashMap<String, String[]>();
+			_properties = new LinkedHashMap<>();
 		}
 
 		String[] values = _properties.get(name);

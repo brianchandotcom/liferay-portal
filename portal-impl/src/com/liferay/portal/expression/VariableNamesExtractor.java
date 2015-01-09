@@ -30,7 +30,7 @@ public class VariableNamesExtractor {
 			return Collections.emptyList();
 		}
 
-		List<String> variableNames = new ArrayList<String>();
+		List<String> variableNames = new ArrayList<>();
 
 		Matcher matcher = _pattern.matcher(expressionString);
 

@@ -37,7 +37,7 @@ public class ChromeWebDriverImpl extends BaseWebDriverImpl {
 	static {
 		_desiredCapabilities = DesiredCapabilities.chrome();
 
-		Map<String, Object> preferences = new HashMap<String, Object>();
+		Map<String, Object> preferences = new HashMap<>();
 
 		preferences.put(
 			"download.default_directory", TestPropsValues.OUTPUT_DIR_NAME);

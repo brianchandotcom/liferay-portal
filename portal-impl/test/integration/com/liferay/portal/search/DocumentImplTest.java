@@ -343,7 +343,7 @@ public class DocumentImplTest {
 	}
 
 	protected Double[] getDoubleArray(Document document) {
-		List<Double> list = new ArrayList<Double>();
+		List<Double> list = new ArrayList<>();
 
 		for (String value : document.getValues(_FIELD_DOUBLE_ARRAY)) {
 			list.add(Double.valueOf(value));
@@ -353,7 +353,7 @@ public class DocumentImplTest {
 	}
 
 	protected Float[] getFloatArray(Document document) {
-		List<Float> list = new ArrayList<Float>();
+		List<Float> list = new ArrayList<>();
 
 		for (String value : document.getValues(_FIELD_FLOAT_ARRAY)) {
 			list.add(Float.valueOf(value));
@@ -363,7 +363,7 @@ public class DocumentImplTest {
 	}
 
 	protected Integer[] getIntegerArray(Document document) {
-		List<Integer> list = new ArrayList<Integer>();
+		List<Integer> list = new ArrayList<>();
 
 		for (String value : document.getValues(_FIELD_INTEGER_ARRAY)) {
 			list.add(Integer.valueOf(value));
@@ -373,7 +373,7 @@ public class DocumentImplTest {
 	}
 
 	protected Long[] getLongArray(Document document) {
-		List<Long> list = new ArrayList<Long>();
+		List<Long> list = new ArrayList<>();
 
 		for (String value : document.getValues(_FIELD_LONG_ARRAY)) {
 			list.add(Long.valueOf(value));
@@ -513,21 +513,19 @@ public class DocumentImplTest {
 	private static final String[] _SCREEN_NAMES_ODD_MIXED =
 		new String[] {"firstuser", "fifthuser", "thirduser"};
 
-	private Map<String, Double[]> _doubleArrays =
-		new HashMap<String, Double[]>();
-	private Map<String, Double> _doubles = new HashMap<String, Double>();
-	private Map<String, Float[]> _floatArrays = new HashMap<String, Float[]>();
-	private Map<String, Float> _floats = new HashMap<String, Float>();
+	private Map<String, Double[]> _doubleArrays = new HashMap<>();
+	private Map<String, Double> _doubles = new HashMap<>();
+	private Map<String, Float[]> _floatArrays = new HashMap<>();
+	private Map<String, Float> _floats = new HashMap<>();
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private Indexer _indexer;
 	private IndexerPostProcessor _indexerPostProcessor;
-	private Map<String, Integer[]> _integerArrays =
-		new HashMap<String, Integer[]>();
-	private Map<String, Integer> _integers = new HashMap<String, Integer>();
-	private Map<String, Long[]> _longArrays = new HashMap<String, Long[]>();
-	private Map<String, Long> _longs = new HashMap<String, Long>();
+	private Map<String, Integer[]> _integerArrays = new HashMap<>();
+	private Map<String, Integer> _integers = new HashMap<>();
+	private Map<String, Long[]> _longArrays = new HashMap<>();
+	private Map<String, Long> _longs = new HashMap<>();
 
 }

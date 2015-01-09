@@ -31,7 +31,7 @@ public class ListTree<T extends Comparable<T>> {
 	}
 
 	public List<TreeNode<T>> getChildNodes(TreeNode<T> node) {
-		List<TreeNode<T>> nodes = new ArrayList<TreeNode<T>>();
+		List<TreeNode<T>> nodes = new ArrayList<>();
 
 		getChildNodes(node, nodes);
 

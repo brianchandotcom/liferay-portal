@@ -38,7 +38,7 @@ public class JavaScriptBundleUtil {
 		String[] fileNames = _portalCache.get(bundleId);
 
 		if (fileNames == null) {
-			List<String> fileNamesList = new ArrayList<String>();
+			List<String> fileNamesList = new ArrayList<>();
 
 			Set<String> dependencies = _getDependencies(
 				bundleId, new LinkedHashSet<String>());

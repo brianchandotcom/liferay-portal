@@ -165,10 +165,9 @@ public class SynchronousDestinationTestRule
 			_sync = sync;
 		}
 
-		private final List<String> _absentDestinationNames =
-			new ArrayList<String>();
+		private final List<String> _absentDestinationNames = new ArrayList<>();
 		private final List<Destination> _asyncServiceDestinations =
-			new ArrayList<Destination>();
+			new ArrayList<>();
 		private boolean _forceSync;
 		private Sync _sync;
 

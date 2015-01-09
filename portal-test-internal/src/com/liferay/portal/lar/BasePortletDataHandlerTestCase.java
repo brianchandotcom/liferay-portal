@@ -68,8 +68,8 @@ public abstract class BasePortletDataHandlerTestCase {
 		Map<String, LongWrapper> modelAdditionCounters =
 			manifestSummary.getModelAdditionCounters();
 
-		Map<String, LongWrapper> expectedModelAdditionCounters =
-			new HashMap<String, LongWrapper>(modelAdditionCounters);
+		Map<String, LongWrapper> expectedModelAdditionCounters = new HashMap<>(
+			modelAdditionCounters);
 
 		modelAdditionCounters.clear();
 
@@ -145,8 +145,7 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	protected void initExport() throws Exception {
-		Map<String, String[]> parameterMap =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
 		addParameters(parameterMap);
 

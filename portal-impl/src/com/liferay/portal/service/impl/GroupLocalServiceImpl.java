@@ -1047,7 +1047,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				UnicodeProperties typeSettingsProperties =
 					group.getTypeSettingsProperties();
 
-				List<String> keys = new ArrayList<String>();
+				List<String> keys = new ArrayList<>();
 
 				for (String key : typeSettingsProperties.keySet()) {
 					if (key.startsWith(StagingConstants.STAGED_PORTLET)) {
@@ -1384,7 +1384,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Group> getGroups(long[] groupIds) throws PortalException {
-		List<Group> groups = new ArrayList<Group>(groupIds.length);
+		List<Group> groups = new ArrayList<>(groupIds.length);
 
 		for (long groupId : groupIds) {
 			Group group = getGroup(groupId);
@@ -1656,7 +1656,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public List<Group> getOrganizationsGroups(
 		List<Organization> organizations) {
 
-		List<Group> organizationGroups = new ArrayList<Group>();
+		List<Group> organizationGroups = new ArrayList<>();
 
 		for (int i = 0; i < organizations.size(); i++) {
 			Organization organization = organizations.get(i);
@@ -1679,7 +1679,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public List<Group> getOrganizationsRelatedGroups(
 		List<Organization> organizations) {
 
-		List<Group> organizationGroups = new ArrayList<Group>();
+		List<Group> organizationGroups = new ArrayList<>();
 
 		for (int i = 0; i < organizations.size(); i++) {
 			Organization organization = organizations.get(i);
@@ -1706,7 +1706,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public List<Group> getParentGroups(long groupId) throws PortalException {
 		if (groupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-			return new ArrayList<Group>();
+			return new ArrayList<>();
 		}
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
@@ -1816,8 +1816,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (inherit) {
 			User user = userPersistence.findByPrimaryKey(userId);
 
-			LinkedHashMap<String, Object> groupParams =
-				new LinkedHashMap<String, Object>();
+			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 			groupParams.put("usersGroups", new Long(userId));
 
@@ -1841,7 +1840,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public List<Group> getUserGroupsGroups(List<UserGroup> userGroups)
 		throws PortalException {
 
-		List<Group> userGroupGroups = new ArrayList<Group>();
+		List<Group> userGroupGroups = new ArrayList<>();
 
 		for (int i = 0; i < userGroups.size(); i++) {
 			UserGroup userGroup = userGroups.get(i);
@@ -1862,7 +1861,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Group> getUserGroupsRelatedGroups(List<UserGroup> userGroups) {
-		List<Group> userGroupGroups = new ArrayList<Group>();
+		List<Group> userGroupGroups = new ArrayList<>();
 
 		for (int i = 0; i < userGroups.size(); i++) {
 			UserGroup userGroup = userGroups.get(i);
@@ -1906,7 +1905,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			long userId, int start, int end)
 		throws PortalException {
 
-		List<Group> userOrgsGroups = new ArrayList<Group>();
+		List<Group> userOrgsGroups = new ArrayList<>();
 
 		List<Organization> userOrgs =
 			organizationLocalService.getUserOrganizations(userId, start, end);
@@ -1950,8 +1949,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public List<Group> getUserSitesGroups(long userId) throws PortalException {
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("inherit", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
@@ -1971,7 +1969,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return getUserSitesGroups(userId);
 		}
 
-		Set<Group> sites = new HashSet<Group>();
+		Set<Group> sites = new HashSet<>();
 
 		List<UserGroupRole> userGroupRoles =
 			userGroupRoleLocalService.getUserGroupRoles(userId);
@@ -1992,7 +1990,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		sites.addAll(getUserSitesGroups(userId));
 
-		return new ArrayList<Group>(sites);
+		return new ArrayList<>(sites);
 	}
 
 	/**
@@ -3627,7 +3625,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		long defaultUserId = userLocalService.getDefaultUserId(
 			group.getCompanyId());
 
-		Map<String, String[]> parameterMap = new HashMap<String, String[]>();
+		Map<String, String[]> parameterMap = new HashMap<>();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PERMISSIONS,
@@ -3732,10 +3730,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Long userId = (Long)params.remove("usersGroups");
 
 		if (userId == null) {
-			groups = new ArrayList<Group>();
+			groups = new ArrayList<>();
 		}
 		else {
-			groups = new HashSet<Group>();
+			groups = new HashSet<>();
 		}
 
 		for (long classNameId : classNameIds) {
@@ -3951,7 +3949,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		// Join by Users_Groups
 
-		Set<Group> joinedGroups = new HashSet<Group>(
+		Set<Group> joinedGroups = new HashSet<>(
 			userPersistence.getGroups(userId));
 
 		boolean inherit = GetterUtil.getBoolean(params.remove("inherit"), true);
@@ -4075,8 +4073,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		List<Portlet> portlets = portletLocalService.getPortlets(
 			group.getCompanyId());
 
-		List<PortletDataHandler> portletDataHandlers =
-			new ArrayList<PortletDataHandler>(portlets.size());
+		List<PortletDataHandler> portletDataHandlers = new ArrayList<>(
+			portlets.size());
 
 		for (Portlet portlet : portlets) {
 			if (!portlet.isActive()) {
@@ -4361,7 +4359,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			groupList = (List<Group>)groups;
 		}
 		else {
-			groupList = new ArrayList<Group>(groups);
+			groupList = new ArrayList<>(groups);
 		}
 
 		Collections.sort(groupList, obc);
@@ -4636,6 +4634,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	private volatile long[] _classNameIds;
 	private volatile long[] _complexSQLClassNameIds;
-	private Map<String, Group> _systemGroupsMap = new HashMap<String, Group>();
+	private Map<String, Group> _systemGroupsMap = new HashMap<>();
 
 }

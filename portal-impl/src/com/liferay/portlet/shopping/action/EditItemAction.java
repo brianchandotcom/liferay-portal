@@ -170,7 +170,7 @@ public class EditItemAction extends PortletAction {
 		int fieldsCount = ParamUtil.getInteger(
 			uploadPortletRequest, "fieldsCount", 1);
 
-		List<ShoppingItemField> itemFields = new ArrayList<ShoppingItemField>();
+		List<ShoppingItemField> itemFields = new ArrayList<>();
 
 		for (int i = 0; i < fieldsCount; i ++) {
 			String fieldName = ParamUtil.getString(
@@ -195,7 +195,7 @@ public class EditItemAction extends PortletAction {
 		int pricesCount = ParamUtil.getInteger(
 			uploadPortletRequest, "pricesCount", 1);
 
-		List<ShoppingItemPrice> itemPrices = new ArrayList<ShoppingItemPrice>();
+		List<ShoppingItemPrice> itemPrices = new ArrayList<>();
 
 		for (int i = 0; i < pricesCount; i ++) {
 			int minQuantity = ParamUtil.getInteger(

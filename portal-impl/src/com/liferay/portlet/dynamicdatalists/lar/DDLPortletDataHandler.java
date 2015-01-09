@@ -116,7 +116,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "data-definitions")) {
 
-			List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
+			List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
 			ActionableDynamicQuery ddmStructureActionableDynamicQuery =
 				getDDMStructureActionableDynamicQuery(
@@ -217,7 +217,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
+		List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
 		ActionableDynamicQuery ddmStructureActionableDynamicQuery =
 			getDDMStructureActionableDynamicQuery(

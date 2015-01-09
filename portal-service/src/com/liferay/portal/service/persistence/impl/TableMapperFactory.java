@@ -63,6 +63,6 @@ public class TableMapperFactory {
 	}
 
 	protected static Map<String, TableMapper<?, ?>> tableMappers =
-		new ConcurrentHashMap<String, TableMapper<?, ?>>();
+		new ConcurrentHashMap<>();
 
 }

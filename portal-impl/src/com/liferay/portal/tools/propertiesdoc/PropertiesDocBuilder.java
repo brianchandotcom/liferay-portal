@@ -63,7 +63,7 @@ public class PropertiesDocBuilder {
 
 		File propertiesFile = new File(propertiesFileName);
 
-		Map<String, Object> context = new HashMap<String, Object>();
+		Map<String, Object> context = new HashMap<>();
 
 		context.put("pageTitle", title);
 
@@ -130,7 +130,7 @@ public class PropertiesDocBuilder {
 	}
 
 	protected List<String> extractComments(String[] lines) {
-		List<String> comments = new ArrayList<String>();
+		List<String> comments = new ArrayList<>();
 
 		StringBundler sb = new StringBundler();
 
@@ -228,8 +228,7 @@ public class PropertiesDocBuilder {
 	}
 
 	protected List<PropertyComment> extractPropertyComments(String[] lines) {
-		List<PropertyComment> propertyComments =
-			new ArrayList<PropertyComment>();
+		List<PropertyComment> propertyComments = new ArrayList<>();
 
 		StringBundler sb = new StringBundler();
 
@@ -331,8 +330,8 @@ public class PropertiesDocBuilder {
 
 		String[] sections = content.split("\n\n");
 
-		List<PropertiesSection> propertiesSections =
-			new ArrayList<PropertiesSection>(sections.length);
+		List<PropertiesSection> propertiesSections = new ArrayList<>(
+			sections.length);
 
 		for (String section : sections) {
 			section = StringUtil.trimLeading(section, CharPool.SPACE);

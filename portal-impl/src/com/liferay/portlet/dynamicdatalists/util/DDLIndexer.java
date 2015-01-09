@@ -296,8 +296,7 @@ public class DDLIndexer extends BaseIndexer {
 				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, startRecordId,
 				endRecordId);
 
-		Collection<Document> documents = new ArrayList<Document>(
-			records.size());
+		Collection<Document> documents = new ArrayList<>(records.size());
 
 		for (DDLRecord record : records) {
 			Document document = getDocument(record);

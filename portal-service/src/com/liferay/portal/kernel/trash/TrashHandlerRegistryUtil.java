@@ -99,10 +99,10 @@ public class TrashHandlerRegistryUtil {
 		new TrashHandlerRegistryUtil();
 
 	private final ServiceRegistrationMap<TrashHandler> _serviceRegistrations =
-		new ServiceRegistrationMap<TrashHandler>();
+		new ServiceRegistrationMap<>();
 	private final ServiceTracker<TrashHandler, TrashHandler> _serviceTracker;
 	private final Map<String, TrashHandler> _trashHandlers =
-		new ConcurrentSkipListMap<String, TrashHandler>();
+		new ConcurrentSkipListMap<>();
 
 	private class TrashHandlerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<TrashHandler, TrashHandler> {

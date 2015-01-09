@@ -302,7 +302,7 @@ public class PluginsEnvironmentBuilder {
 	}
 
 	protected List<String> getCommonJars() {
-		List<String> jars = new ArrayList<String>();
+		List<String> jars = new ArrayList<>();
 
 		jars.add("commons-logging.jar");
 		jars.add("log4j.jar");
@@ -323,7 +323,7 @@ public class PluginsEnvironmentBuilder {
 		int x = content.indexOf("import.shared");
 
 		if (x == -1) {
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 
 		x = content.indexOf("value=\"", x);
@@ -332,16 +332,16 @@ public class PluginsEnvironmentBuilder {
 		int y = content.indexOf("\" />", x);
 
 		if ((x == -1) || (y == -1)) {
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 
 		String[] importShared = StringUtil.split(content.substring(x + 1, y));
 
 		if (importShared.length == 0) {
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 
-		List<String> jars = new ArrayList<String>();
+		List<String> jars = new ArrayList<>();
 
 		for (String currentImportShared : importShared) {
 			jars.add(currentImportShared + ".jar");
@@ -374,7 +374,7 @@ public class PluginsEnvironmentBuilder {
 			File libDir, Properties properties)
 		throws Exception {
 
-		List<String> jars = new ArrayList<String>();
+		List<String> jars = new ArrayList<>();
 
 		String[] requiredDeploymentContexts = StringUtil.split(
 			properties.getProperty("required-deployment-contexts"));
@@ -446,7 +446,7 @@ public class PluginsEnvironmentBuilder {
 
 		properties.load(new FileInputStream(propertiesFile));
 
-		Set<String> jars = new TreeSet<String>();
+		Set<String> jars = new TreeSet<>();
 
 		jars.addAll(getCommonJars());
 
@@ -505,11 +505,11 @@ public class PluginsEnvironmentBuilder {
 			return;
 		}
 
-		Set<String> globalJars = new LinkedHashSet<String>();
-		List<String> portalJars = new ArrayList<String>();
+		Set<String> globalJars = new LinkedHashSet<>();
+		List<String> portalJars = new ArrayList<>();
 
-		Set<String> extGlobalJars = new LinkedHashSet<String>();
-		Set<String> extPortalJars = new LinkedHashSet<String>();
+		Set<String> extGlobalJars = new LinkedHashSet<>();
+		Set<String> extPortalJars = new LinkedHashSet<>();
 
 		String libDirPath = StringUtil.replace(
 			libDir.getPath(), StringPool.BACK_SLASH, StringPool.SLASH);
@@ -578,7 +578,7 @@ public class PluginsEnvironmentBuilder {
 			Collections.sort(customJars);
 		}
 		else {
-			customJars = new ArrayList<String>();
+			customJars = new ArrayList<>();
 		}
 
 		StringBundler sb = new StringBundler();
@@ -639,7 +639,7 @@ public class PluginsEnvironmentBuilder {
 		addClasspathEntry(sb, "/portal/lib/development/mail.jar");
 		addClasspathEntry(sb, "/portal/lib/development/servlet-api.jar");
 
-		Map<String, String> attributes = new HashMap<String, String>();
+		Map<String, String> attributes = new HashMap<>();
 
 		if (libDirPath.contains("/ext/")) {
 			attributes.put("optional", "true");
@@ -752,7 +752,7 @@ public class PluginsEnvironmentBuilder {
 
 		for (String sourceDirName : _SOURCE_DIR_NAMES) {
 			if (_fileUtil.exists(projectDirName + "/" + sourceDirName)) {
-				List<String> gitIgnores = new ArrayList<String>();
+				List<String> gitIgnores = new ArrayList<>();
 
 				if (sourceDirName.endsWith("ext-impl/src")) {
 					gitIgnores.add("/classes");

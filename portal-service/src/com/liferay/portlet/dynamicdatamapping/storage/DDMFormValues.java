@@ -79,14 +79,14 @@ public class DDMFormValues {
 
 	public Map<String, List<DDMFormFieldValue>> getDDMFormFieldValuesMap() {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-			new LinkedHashMap<String, List<DDMFormFieldValue>>();
+			new LinkedHashMap<>();
 
 		for (DDMFormFieldValue ddmFormFieldValue : _ddmFormFieldValues) {
 			List<DDMFormFieldValue> ddmFormFieldValues =
 				ddmFormFieldValuesMap.get(ddmFormFieldValue.getName());
 
 			if (ddmFormFieldValues == null) {
-				ddmFormFieldValues = new ArrayList<DDMFormFieldValue>();
+				ddmFormFieldValues = new ArrayList<>();
 
 				ddmFormFieldValuesMap.put(
 					ddmFormFieldValue.getName(), ddmFormFieldValues);
@@ -131,8 +131,7 @@ public class DDMFormValues {
 
 	private Set<Locale> _availableLocales;
 	private final DDMForm _ddmForm;
-	private List<DDMFormFieldValue> _ddmFormFieldValues =
-		new ArrayList<DDMFormFieldValue>();
+	private List<DDMFormFieldValue> _ddmFormFieldValues = new ArrayList<>();
 	private Locale _defaultLocale;
 
 }

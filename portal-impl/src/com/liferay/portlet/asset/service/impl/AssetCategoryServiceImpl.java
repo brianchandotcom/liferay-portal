@@ -103,7 +103,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			long[] categoryIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		List<AssetCategory> failedCategories = new ArrayList<AssetCategory>();
+		List<AssetCategory> failedCategories = new ArrayList<>();
 
 		for (long categoryId : categoryIds) {
 			try {

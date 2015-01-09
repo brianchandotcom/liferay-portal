@@ -79,7 +79,7 @@ public class ReflectionServiceTracker implements Closeable {
 	}
 
 	protected List<Method> getInjectionPointMethods(Object target) {
-		List<Method> injectionPointMethods = new ArrayList<Method>();
+		List<Method> injectionPointMethods = new ArrayList<>();
 
 		Class<?> targetClass = target.getClass();
 
@@ -106,7 +106,7 @@ public class ReflectionServiceTracker implements Closeable {
 
 		ClassLoader classLoader = targetClass.getClassLoader();
 
-		List<Class<?>> interfaceClasses = new ArrayList<Class<?>>();
+		List<Class<?>> interfaceClasses = new ArrayList<>();
 
 		List<Method> injectionPointMethods = getInjectionPointMethods(target);
 
@@ -123,7 +123,7 @@ public class ReflectionServiceTracker implements Closeable {
 			classLoader, interfaceClasses.toArray(new Class[0]),
 			_invocationHandler);
 
-		List<InjectionPoint> injectionPoints = new ArrayList<InjectionPoint>();
+		List<InjectionPoint> injectionPoints = new ArrayList<>();
 
 		for (Method injectionPointMethod : injectionPointMethods) {
 			InjectionPoint injectionPoint = createInjectionPoint(
@@ -260,7 +260,7 @@ public class ReflectionServiceTracker implements Closeable {
 		};
 
 	private final List<ServiceTracker<?, ?>> _serviceTrackers =
-		new ArrayList<ServiceTracker<?, ?>>();
+		new ArrayList<>();
 	private Object _unavailableServiceProxy;
 
 	private static class InjectionPoint {

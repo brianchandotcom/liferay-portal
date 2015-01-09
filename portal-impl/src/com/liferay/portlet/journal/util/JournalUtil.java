@@ -314,7 +314,7 @@ public class JournalUtil {
 		else {
 			portletURL.setParameter("struts_action", "/journal/view");
 
-			Map<String, Object> data = new HashMap<String, Object>();
+			Map<String, Object> data = new HashMap<>();
 
 			data.put("direction-right", Boolean.TRUE.toString());
 			data.put(
@@ -337,7 +337,7 @@ public class JournalUtil {
 			portletURL.setParameter(
 				"folderId", String.valueOf(ancestorFolder.getFolderId()));
 
-			Map<String, Object> data = new HashMap<String, Object>();
+			Map<String, Object> data = new HashMap<>();
 
 			data.put("direction-right", Boolean.TRUE.toString());
 			data.put("folder-id", ancestorFolder.getFolderId());
@@ -354,7 +354,7 @@ public class JournalUtil {
 
 			JournalFolder unescapedFolder = folder.toUnescapedModel();
 
-			Map<String, Object> data = new HashMap<String, Object>();
+			Map<String, Object> data = new HashMap<>();
 
 			data.put("direction-right", Boolean.TRUE.toString());
 			data.put("folder-id", folder.getFolderId());
@@ -603,8 +603,7 @@ public class JournalUtil {
 		List<com.liferay.portal.kernel.search.Document> documents =
 			hits.toList();
 
-		List<JournalArticle> articles = new ArrayList<JournalArticle>(
-			documents.size());
+		List<JournalArticle> articles = new ArrayList<>(documents.size());
 
 		for (com.liferay.portal.kernel.search.Document document : documents) {
 			String articleId = document.get(Field.ARTICLE_ID);
@@ -659,7 +658,7 @@ public class JournalUtil {
 			}
 		}
 
-		List<DiffVersion> diffVersions = new ArrayList<DiffVersion>();
+		List<DiffVersion> diffVersions = new ArrayList<>();
 
 		for (JournalArticle article : articles) {
 			DiffVersion diffVersion = new DiffVersion(
@@ -915,8 +914,7 @@ public class JournalUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms =
-			new LinkedHashMap<String, String>();
+		Map<String, String> definitionTerms = new LinkedHashMap<>();
 
 		definitionTerms.put(
 			"[$ARTICLE_CONTENT]",
@@ -1163,7 +1161,7 @@ public class JournalUtil {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Map<String, String> tokens = new HashMap<String, String>();
+		Map<String, String> tokens = new HashMap<>();
 
 		if (themeDisplay != null) {
 			_populateTokens(tokens, articleGroupId, themeDisplay);
@@ -1228,7 +1226,7 @@ public class JournalUtil {
 			boolean recursive)
 		throws PortalException {
 
-		List<Long> ancestorFolderIds = new ArrayList<Long>();
+		List<Long> ancestorFolderIds = new ArrayList<>();
 
 		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
@@ -1741,7 +1739,7 @@ public class JournalUtil {
 	private static void _populateCustomTokens(Map<String, String> tokens) {
 		if (_customTokens == null) {
 			synchronized (JournalUtil.class) {
-				_customTokens = new HashMap<String, String>();
+				_customTokens = new HashMap<>();
 
 				for (String customToken :
 						PropsValues.JOURNAL_ARTICLE_CUSTOM_TOKENS) {

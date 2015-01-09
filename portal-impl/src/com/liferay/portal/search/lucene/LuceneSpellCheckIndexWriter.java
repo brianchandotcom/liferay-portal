@@ -183,7 +183,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 		IndexSearcher indexSearcher = null;
 
 		try {
-			List<IndexReader> indexReaders = new ArrayList<IndexReader>();
+			List<IndexReader> indexReaders = new ArrayList<>();
 
 			indexSearcher = LuceneHelperUtil.getIndexSearcher(
 				searchContext.getCompanyId());
@@ -246,14 +246,14 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			indexSearcher = LuceneHelperUtil.getIndexSearcher(
 				searchContext.getCompanyId());
 
-			List<IndexReader> indexReaders = new ArrayList<IndexReader>();
+			List<IndexReader> indexReaders = new ArrayList<>();
 
 			if (indexSearcher.maxDoc() > 0) {
 				ReaderUtil.gatherSubReaders(
 					indexReaders, indexSearcher.getIndexReader());
 			}
 
-			Collection<Document> documents = new ArrayList<Document>();
+			Collection<Document> documents = new ArrayList<>();
 
 			DictionaryReader dictionaryReader = new DictionaryReader(
 				inputStream, StringPool.UTF8);

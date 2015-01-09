@@ -89,7 +89,7 @@ public class DDMStructureClassType implements ClassType {
 	protected List<ClassTypeField> getClassTypeFields(
 		DDMStructure ddmStructure) {
 
-		List<ClassTypeField> classTypeFields = new ArrayList<ClassTypeField>();
+		List<ClassTypeField> classTypeFields = new ArrayList<>();
 
 		List<DDMFormField> ddmFormFields = ddmStructure.getDDMFormFields(false);
 

@@ -51,7 +51,7 @@ public enum CompressionLevel {
 	}
 
 	private static final Map<Integer, CompressionLevel> _compressionLevels =
-		new HashMap<Integer, CompressionLevel>();
+		new HashMap<>();
 
 	static {
 		for (CompressionLevel compressionLevel : EnumSet.allOf(

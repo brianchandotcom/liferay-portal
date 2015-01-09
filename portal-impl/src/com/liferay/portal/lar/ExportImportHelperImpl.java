@@ -277,8 +277,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			Map<String, String[]> parameterMap, String type)
 		throws Exception {
 
-		Map<String, Boolean> exportPortletControlsMap =
-			new HashMap<String, Boolean>();
+		Map<String, Boolean> exportPortletControlsMap = new HashMap<>();
 
 		boolean exportPortletData = getExportPortletData(
 			companyId, portletId, parameterMap);
@@ -347,8 +346,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		boolean importCurPortletData = getImportPortletData(
 			companyId, portletId, parameterMap, portletDataElement);
 
-		Map<String, Boolean> importPortletControlsMap =
-			new HashMap<String, Boolean>();
+		Map<String, Boolean> importPortletControlsMap = new HashMap<>();
 
 		importPortletControlsMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA, importCurPortletData);
@@ -364,7 +362,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	public Map<Long, Boolean> getLayoutIdMap(PortletRequest portletRequest)
 		throws PortalException {
 
-		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<Long, Boolean>();
+		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<>();
 
 		String layoutIdsJSON = ParamUtil.getString(portletRequest, "layoutIds");
 
@@ -415,7 +413,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return new long[0];
 		}
 
-		List<Layout> layouts = new ArrayList<Layout>();
+		List<Layout> layouts = new ArrayList<>();
 
 		for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
 			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
@@ -571,7 +569,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
 		throws PortalException {
 
-		List<Layout> missingParentLayouts = new ArrayList<Layout>();
+		List<Layout> missingParentLayouts = new ArrayList<>();
 
 		long parentLayoutId = layout.getParentLayoutId();
 
@@ -1111,8 +1109,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			StagedModel entityStagedModel, String content)
 		throws Exception {
 
-		List<String> oldLinksToLayout = new ArrayList<String>();
-		List<String> newLinksToLayout = new ArrayList<String>();
+		List<String> oldLinksToLayout = new ArrayList<>();
+		List<String> newLinksToLayout = new ArrayList<>();
 
 		Matcher matcher = _exportLinksToLayoutPattern.matcher(content);
 
@@ -1411,8 +1409,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			PortletDataContext portletDataContext, String content)
 		throws Exception {
 
-		List<String> oldLinksToLayout = new ArrayList<String>();
-		List<String> newLinksToLayout = new ArrayList<String>();
+		List<String> oldLinksToLayout = new ArrayList<>();
+		List<String> newLinksToLayout = new ArrayList<>();
 
 		Matcher matcher = _importLinksToLayoutPattern.matcher(content);
 
@@ -1844,7 +1842,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return null;
 		}
 
-		Map<String, String[]> map = new HashMap<String, String[]>();
+		Map<String, String[]> map = new HashMap<>();
 
 		String dlReference = content.substring(beginPos, endPos);
 
@@ -2086,8 +2084,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 							StringPool.UNDERLINE + rootPortletId);
 		}
 
-		Map<String, Boolean> exportPortletSetupControlsMap =
-			new HashMap<String, Boolean>();
+		Map<String, Boolean> exportPortletSetupControlsMap = new HashMap<>();
 
 		exportPortletSetupControlsMap.put(
 			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
@@ -2385,8 +2382,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 							StringPool.UNDERLINE + rootPortletId);
 		}
 
-		Map<String, Boolean> importPortletSetupMap =
-			new HashMap<String, Boolean>();
+		Map<String, Boolean> importPortletSetupMap = new HashMap<>();
 
 		importPortletSetupMap.put(
 			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,

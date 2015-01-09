@@ -261,7 +261,7 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<JournalArticle> articles = new ArrayList<JournalArticle>();
+		List<JournalArticle> articles = new ArrayList<>();
 
 		String[] articleIds = StringUtil.split(
 			ParamUtil.getString(request, "articleIds"));
@@ -363,7 +363,7 @@ public class ActionUtil {
 		long[] folderIds = StringUtil.split(
 			ParamUtil.getString(request, "folderIds"), 0L);
 
-		List<JournalFolder> folders = new ArrayList<JournalFolder>();
+		List<JournalFolder> folders = new ArrayList<>();
 
 		for (long folderId : folderIds) {
 			try {
@@ -474,7 +474,7 @@ public class ActionUtil {
 			String content, Fields fields, Locale locale)
 		throws Exception {
 
-		Map<String, byte[]> images = new HashMap<String, byte[]>();
+		Map<String, byte[]> images = new HashMap<>();
 
 		for (Field field : fields) {
 			String dataType = field.getDataType();

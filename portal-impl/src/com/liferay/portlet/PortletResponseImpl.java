@@ -201,7 +201,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			}
 			else {
 				if (element != null) {
-					values = new ArrayList<Element>();
+					values = new ArrayList<>();
 
 					values.add(element);
 
@@ -379,8 +379,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 	@Override
 	public Map<String, String[]> getProperties() {
-		Map<String, String[]> properties =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> properties = new LinkedHashMap<>();
 
 		for (Map.Entry<String, Object> entry : _headers.entrySet()) {
 			String name = entry.getKey();
@@ -536,7 +535,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			MimeResponse.MARKUP_HEAD_ELEMENT);
 
 		if (markupHeadElements == null) {
-			markupHeadElements = new ArrayList<String>();
+			markupHeadElements = new ArrayList<>();
 
 			request.setAttribute(
 				MimeResponse.MARKUP_HEAD_ELEMENT, markupHeadElements);
@@ -740,11 +739,11 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 	private long _companyId;
 	private Map<String, Constructor<? extends PortletURLImpl>> _constructors =
-		new ConcurrentHashMap<String, Constructor<? extends PortletURLImpl>>();
+		new ConcurrentHashMap<>();
 	private Document _document;
-	private Map<String, Object> _headers = new LinkedHashMap<String, Object>();
+	private Map<String, Object> _headers = new LinkedHashMap<>();
 	private Map<String, List<Element>> _markupHeadElements =
-		new LinkedHashMap<String, List<Element>>();
+		new LinkedHashMap<>();
 	private String _namespace;
 	private long _plid;
 	private Portlet _portlet;

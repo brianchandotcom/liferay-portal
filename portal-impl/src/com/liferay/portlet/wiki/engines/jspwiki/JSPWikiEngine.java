@@ -88,7 +88,7 @@ public class JSPWikiEngine implements WikiEngine {
 			Collection<String> titles = engine.scanWikiLinks(
 				jspWikiPage, _encodeJSPWikiContent(page.getContent()));
 
-			Map<String, Boolean> links = new HashMap<String, Boolean>();
+			Map<String, Boolean> links = new HashMap<>();
 
 			for (String title : titles) {
 				if (title.startsWith("[[")) {
@@ -301,7 +301,7 @@ public class JSPWikiEngine implements WikiEngine {
 		"[\\[]{1,2}(.+?)[\\]]{1,2}", Pattern.DOTALL);
 
 	private final Map<Long, LiferayJSPWikiEngine> _engines =
-		new ConcurrentHashMap<Long, LiferayJSPWikiEngine>();
+		new ConcurrentHashMap<>();
 	private Properties _properties;
 
 }

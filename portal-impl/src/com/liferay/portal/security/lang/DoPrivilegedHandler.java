@@ -109,7 +109,7 @@ public class DoPrivilegedHandler
 	}
 
 	private void _initNotPrivilegedMethods() {
-		_notPrivilegedMethods = new ArrayList<MethodKey>();
+		_notPrivilegedMethods = new ArrayList<>();
 
 		Class<?> beanClass = _bean.getClass();
 

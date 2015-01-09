@@ -118,7 +118,7 @@ public class MethodNodeGenerator extends GeneratorAdapter {
 		methodNode.name = method.getName();
 		methodNode.desc = Type.getMethodDescriptor(method);
 
-		List<String> exceptions = new ArrayList<String>();
+		List<String> exceptions = new ArrayList<>();
 
 		for (Class<?> exceptionClass : method.getExceptionTypes()) {
 			exceptions.add(Type.getInternalName(exceptionClass));

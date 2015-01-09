@@ -38,7 +38,7 @@ public class UserGroupRoleLocalServiceImpl
 	public List<UserGroupRole> addUserGroupRoles(
 		long userId, long groupId, long[] roleIds) {
 
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+		List<UserGroupRole> userGroupRoles = new ArrayList<>();
 
 		for (long roleId : roleIds) {
 			UserGroupRole userGroupRole = addUserGroupRole(
@@ -62,7 +62,7 @@ public class UserGroupRoleLocalServiceImpl
 	public List<UserGroupRole> addUserGroupRoles(
 		long[] userIds, long groupId, long roleId) {
 
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+		List<UserGroupRole> userGroupRoles = new ArrayList<>();
 
 		for (long userId : userIds) {
 			UserGroupRole userGroupRole = addUserGroupRole(

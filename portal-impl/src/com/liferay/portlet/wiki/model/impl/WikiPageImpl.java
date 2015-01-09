@@ -100,7 +100,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 
 	@Override
 	public List<FileEntry> getAttachmentsFileEntries(int start, int end) {
-		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
+		List<FileEntry> fileEntries = new ArrayList<>();
 
 		long attachmentsFolderId = getAttachmentsFolderId();
 
@@ -191,7 +191,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	public List<FileEntry> getDeletedAttachmentsFileEntries(
 		int start, int end) {
 
-		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
+		List<FileEntry> fileEntries = new ArrayList<>();
 
 		long attachmentsFolderId = getAttachmentsFolderId();
 
@@ -249,7 +249,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 
 	@Override
 	public List<WikiPage> getParentPages() {
-		List<WikiPage> parentPages = new ArrayList<WikiPage>();
+		List<WikiPage> parentPages = new ArrayList<>();
 
 		WikiPage parentPage = fetchParentPage();
 
@@ -308,7 +308,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 
 	@Override
 	public List<WikiPage> getViewableParentPages() {
-		List<WikiPage> pages = new ArrayList<WikiPage>();
+		List<WikiPage> pages = new ArrayList<>();
 
 		WikiPage page = getViewableParentPage();
 

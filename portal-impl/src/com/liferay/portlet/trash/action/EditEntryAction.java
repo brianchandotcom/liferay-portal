@@ -157,11 +157,11 @@ public class EditEntryAction extends PortletAction {
 			return;
 		}
 
-		List<String> restoreClassNames = new ArrayList<String>();
-		List<String> restoreEntryLinks = new ArrayList<String>();
-		List<String> restoreEntryMessages = new ArrayList<String>();
-		List<String> restoreLinks = new ArrayList<String>();
-		List<String> restoreMessages = new ArrayList<String>();
+		List<String> restoreClassNames = new ArrayList<>();
+		List<String> restoreEntryLinks = new ArrayList<>();
+		List<String> restoreEntryMessages = new ArrayList<>();
+		List<String> restoreLinks = new ArrayList<>();
+		List<String> restoreMessages = new ArrayList<>();
 
 		for (int i = 0; i < entryOVPs.size(); i++) {
 			ObjectValuePair<String, Long> entryOVP = entryOVPs.get(i);
@@ -197,7 +197,7 @@ public class EditEntryAction extends PortletAction {
 			restoreMessages.add(restoreMessage);
 		}
 
-		Map<String, List<String>> data = new HashMap<String, List<String>>();
+		Map<String, List<String>> data = new HashMap<>();
 
 		data.put("restoreClassNames", restoreClassNames);
 		data.put("restoreEntryLinks", restoreEntryLinks);
@@ -254,8 +254,7 @@ public class EditEntryAction extends PortletAction {
 	protected List<ObjectValuePair<String, Long>> getEntryOVPs(
 		String className, long classPK) {
 
-		List<ObjectValuePair<String, Long>> entryOVPs =
-			new ArrayList<ObjectValuePair<String, Long>>();
+		List<ObjectValuePair<String, Long>> entryOVPs = new ArrayList<>();
 
 		ObjectValuePair<String, Long> entryOVP =
 			new ObjectValuePair<String, Long>(className, classPK);
@@ -298,8 +297,7 @@ public class EditEntryAction extends PortletAction {
 		long[] restoreEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
-		List<ObjectValuePair<String, Long>> entryOVPs =
-			new ArrayList<ObjectValuePair<String, Long>>();
+		List<ObjectValuePair<String, Long>> entryOVPs = new ArrayList<>();
 
 		for (long restoreEntryId : restoreEntryIds) {
 			TrashEntry entry = TrashEntryServiceUtil.restoreEntry(

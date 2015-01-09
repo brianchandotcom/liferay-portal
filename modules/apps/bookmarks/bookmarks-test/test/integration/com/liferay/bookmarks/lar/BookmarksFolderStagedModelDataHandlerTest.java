@@ -53,7 +53,7 @@ public class BookmarksFolderStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
 			group.getGroupId(), RandomTestUtil.randomString());

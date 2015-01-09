@@ -779,8 +779,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 			List<SocialActivity> activities, int start, int end)
 		throws PortalException {
 
-		List<SocialActivity> filteredActivities =
-			new ArrayList<SocialActivity>();
+		List<SocialActivity> filteredActivities = new ArrayList<>();
 
 		List<SocialActivityInterpreter> activityInterpreters =
 			socialActivityInterpreterLocalService.getActivityInterpreters(

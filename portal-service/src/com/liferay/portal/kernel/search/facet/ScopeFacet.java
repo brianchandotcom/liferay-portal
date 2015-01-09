@@ -51,7 +51,7 @@ public class ScopeFacet extends MultiValueFacet {
 
 	protected long[] addScopeGroup(long groupId) {
 		try {
-			List<Long> groupIds = new ArrayList<Long>();
+			List<Long> groupIds = new ArrayList<>();
 
 			groupIds.add(groupId);
 

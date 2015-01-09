@@ -540,7 +540,7 @@ public class BaselineJarTask extends BaseBndTask {
 
 	private String _baselineResportsDirName;
 	private Path _classpath;
-	private final List<File> _classpathFiles = new ArrayList<File>();
+	private final List<File> _classpathFiles = new ArrayList<>();
 	private final DiffPluginImpl _diffPluginImpl = new DiffPluginImpl();
 	private File _file;
 	private boolean _headerPrinted;

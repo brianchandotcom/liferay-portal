@@ -511,7 +511,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		WikiNode node = wikiNodeLocalService.addDefaultNode(
 			defaultUserId, serviceContext);
 
-		List<WikiNode> nodes = new ArrayList<WikiNode>(1);
+		List<WikiNode> nodes = new ArrayList<>(1);
 
 		nodes.add(node);
 
@@ -599,7 +599,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeLocalServiceImpl.class);
 
-	private final Map<String, WikiImporter> _wikiImporters =
-		new HashMap<String, WikiImporter>();
+	private final Map<String, WikiImporter> _wikiImporters = new HashMap<>();
 
 }

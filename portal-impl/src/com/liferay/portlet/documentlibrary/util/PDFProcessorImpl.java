@@ -455,7 +455,7 @@ public class PDFProcessorImpl
 		String tempFileId = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
-		List<String> arguments = new ArrayList<String>();
+		List<String> arguments = new ArrayList<>();
 
 		arguments.add("-sDEVICE=png16m");
 

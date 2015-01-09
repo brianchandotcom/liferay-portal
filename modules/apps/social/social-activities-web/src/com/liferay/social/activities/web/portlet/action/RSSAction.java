@@ -114,7 +114,7 @@ public class RSSAction implements ActionCommand {
 
 		syndFeed.setDescription(GetterUtil.getString(description, title));
 
-		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
+		List<SyndEntry> syndEntries = new ArrayList<>();
 
 		syndFeed.setEntries(syndEntries);
 
@@ -161,7 +161,7 @@ public class RSSAction implements ActionCommand {
 
 		syndFeed.setFeedType(RSSUtil.getFeedType(format, version));
 
-		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
+		List<SyndLink> syndLinks = new ArrayList<>();
 
 		syndFeed.setLinks(syndLinks);
 

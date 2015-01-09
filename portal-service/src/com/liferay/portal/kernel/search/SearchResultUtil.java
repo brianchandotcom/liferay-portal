@@ -52,7 +52,7 @@ public class SearchResultUtil {
 		Hits hits, Locale locale, PortletURL portletURL,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		List<SearchResult> searchResults = new ArrayList<SearchResult>();
+		List<SearchResult> searchResults = new ArrayList<>();
 
 		for (Document document : hits.getDocs()) {
 			String entryClassName = GetterUtil.getString(

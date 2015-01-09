@@ -434,7 +434,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 
 	@Override
 	protected List<Serializable> createValuesList(String... valuesString) {
-		List<Serializable> values = new ArrayList<Serializable>();
+		List<Serializable> values = new ArrayList<>();
 
 		for (String valueString : valuesString) {
 			values.add(valueString);
@@ -444,7 +444,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 	}
 
 	protected void setUpAvailableLocales() {
-		_availableLocales = new LinkedHashSet<Locale>();
+		_availableLocales = new LinkedHashSet<>();
 
 		_availableLocales.add(LocaleUtil.BRAZIL);
 		_availableLocales.add(LocaleUtil.US);

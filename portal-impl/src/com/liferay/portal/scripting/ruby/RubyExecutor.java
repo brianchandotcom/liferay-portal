@@ -96,7 +96,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 		_basePath = PropsValues.LIFERAY_LIB_PORTAL_DIR;
 
-		_loadPaths = new ArrayList<String>(
+		_loadPaths = new ArrayList<>(
 			PropsValues.SCRIPTING_JRUBY_LOAD_PATHS.length);
 
 		for (String gemLibPath : PropsValues.SCRIPTING_JRUBY_LOAD_PATHS) {
@@ -197,7 +197,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 				return null;
 			}
 
-			Map<String, Object> outputObjects = new HashMap<String, Object>();
+			Map<String, Object> outputObjects = new HashMap<>();
 
 			for (String outputName : outputNames) {
 				outputObjects.put(

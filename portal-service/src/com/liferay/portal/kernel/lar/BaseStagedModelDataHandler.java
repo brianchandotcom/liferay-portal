@@ -211,7 +211,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	public Map<String, String> getReferenceAttributes(
 		PortletDataContext portletDataContext, T stagedModel) {
 
-		return new HashMap<String, String>();
+		return new HashMap<>();
 	}
 
 	/**
@@ -527,8 +527,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			portletDataContext.getReferenceElements(
 				stagedModel, AssetCategory.class);
 
-		List<Long> assetCategoryIds = new ArrayList<Long>(
-			referenceElements.size());
+		List<Long> assetCategoryIds = new ArrayList<>(referenceElements.size());
 
 		for (Element referenceElement : referenceElements) {
 			long classPK = GetterUtil.getLong(

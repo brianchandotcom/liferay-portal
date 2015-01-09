@@ -107,8 +107,7 @@ public class ResourceBlockLocalServiceTest {
 		Callable<Void> releaseResourceBlockCallable =
 			new ReleaseResourceBlockCallable(permissionedModel, semaphore);
 
-		List<Callable<Void>> callables = new ArrayList<Callable<Void>>(
-			_REFERENCE_COUNT * 2);
+		List<Callable<Void>> callables = new ArrayList<>(_REFERENCE_COUNT * 2);
 
 		for (int i = 0; i < _REFERENCE_COUNT; i++) {
 			callables.add(updateResourceBlockIdCallable);
@@ -142,8 +141,7 @@ public class ResourceBlockLocalServiceTest {
 		Callable<Void> releaseResourceBlockCallable =
 			new ReleaseResourceBlockCallable(permissionedModel, null);
 
-		List<Callable<Void>> callables = new ArrayList<Callable<Void>>(
-			_REFERENCE_COUNT);
+		List<Callable<Void>> callables = new ArrayList<>(_REFERENCE_COUNT);
 
 		for (int i = 0; i < _REFERENCE_COUNT; i++) {
 			callables.add(releaseResourceBlockCallable);
@@ -191,8 +189,7 @@ public class ResourceBlockLocalServiceTest {
 			new UpdateResourceBlockIdCallable(
 				permissionedModel, resourceBlockPermissionsContainer, null);
 
-		List<Callable<Void>> callables = new ArrayList<Callable<Void>>(
-			_REFERENCE_COUNT);
+		List<Callable<Void>> callables = new ArrayList<>(_REFERENCE_COUNT);
 
 		for (int i = 0; i < _REFERENCE_COUNT; i++) {
 			callables.add(updateResourceBlockIdCallable);

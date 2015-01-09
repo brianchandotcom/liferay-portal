@@ -56,7 +56,7 @@ public class ServletContextPool {
 	}
 
 	private ServletContextPool() {
-		_servletContexts = new ConcurrentHashMap<String, ServletContext>();
+		_servletContexts = new ConcurrentHashMap<>();
 	}
 
 	private boolean _containsKey(String servletContextName) {

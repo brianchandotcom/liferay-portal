@@ -49,7 +49,7 @@ public class InvokerFilterChain implements FilterChain {
 
 	public void addFilter(Filter filter) {
 		if (_filters == null) {
-			_filters = new ArrayList<Filter>();
+			_filters = new ArrayList<>();
 		}
 
 		_filters.add(filter);

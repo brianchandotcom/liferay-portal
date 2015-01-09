@@ -43,7 +43,7 @@ public class PortletSessionTracker {
 		Map<String, HttpSession> sessions = _sessions.get(sessionId);
 
 		if (sessions == null) {
-			sessions = new ConcurrentHashMap<String, HttpSession>();
+			sessions = new ConcurrentHashMap<>();
 
 			Map<String, HttpSession> previousSessions = _sessions.putIfAbsent(
 				sessionId, sessions);
@@ -86,6 +86,6 @@ public class PortletSessionTracker {
 	}
 
 	private static final ConcurrentMap<String, Map<String, HttpSession>>
-		_sessions = new ConcurrentHashMap<String, Map<String, HttpSession>>();
+		_sessions = new ConcurrentHashMap<>();
 
 }

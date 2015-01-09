@@ -135,7 +135,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 
 	@Override
 	public long[] getParticipantUserIds() {
-		Set<Long> participantUserIds = new HashSet<Long>();
+		Set<Long> participantUserIds = new HashSet<>();
 
 		List<MBMessage> messages = MBMessageLocalServiceUtil.getThreadMessages(
 			getThreadId(), WorkflowConstants.STATUS_ANY);

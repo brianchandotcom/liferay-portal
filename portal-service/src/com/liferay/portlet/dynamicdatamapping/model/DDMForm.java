@@ -33,8 +33,7 @@ public class DDMForm implements Serializable {
 	}
 
 	public DDMForm(DDMForm ddmForm) {
-		_availableLocales = new LinkedHashSet<Locale>(
-			ddmForm._availableLocales);
+		_availableLocales = new LinkedHashSet<>(ddmForm._availableLocales);
 		_defaultLocale = ddmForm._defaultLocale;
 
 		for (DDMFormField ddmFormField : ddmForm._ddmFormFields) {
@@ -63,8 +62,7 @@ public class DDMForm implements Serializable {
 	public Map<String, DDMFormField> getDDMFormFieldsMap(
 		boolean includeNestedDDMFormFields) {
 
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			new LinkedHashMap<String, DDMFormField>();
+		Map<String, DDMFormField> ddmFormFieldsMap = new LinkedHashMap<>();
 
 		for (DDMFormField ddmFormField : _ddmFormFields) {
 			ddmFormFieldsMap.put(ddmFormField.getName(), ddmFormField);
@@ -99,7 +97,7 @@ public class DDMForm implements Serializable {
 	}
 
 	private Set<Locale> _availableLocales;
-	private List<DDMFormField> _ddmFormFields = new ArrayList<DDMFormField>();
+	private List<DDMFormField> _ddmFormFields = new ArrayList<>();
 	private Locale _defaultLocale;
 
 }

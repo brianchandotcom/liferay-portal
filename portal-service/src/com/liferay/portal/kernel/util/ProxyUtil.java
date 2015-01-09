@@ -50,9 +50,8 @@ public class ProxyUtil {
 			_classReferences.get(classLoader);
 
 		if (classReferences == null) {
-			classReferences =
-				new ConcurrentReferenceValueHashMap<LookupKey, Class<?>>(
-					FinalizeManager.WEAK_REFERENCE_FACTORY);
+			classReferences = new ConcurrentReferenceValueHashMap<>(
+				FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 			ConcurrentMap<LookupKey, Class<?>> oldClassReferences =
 				_classReferences.putIfAbsent(classLoader, classReferences);
@@ -124,7 +123,7 @@ public class ProxyUtil {
 				<ClassLoader, ConcurrentMap<LookupKey, Class<?>>>(
 					FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static ConcurrentMap<Class<?>, Constructor<?>> _constructors =
-		new ConcurrentReferenceKeyHashMap<Class<?>, Constructor<?>>(
+		new ConcurrentReferenceKeyHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static Field _invocationHandlerField;
 

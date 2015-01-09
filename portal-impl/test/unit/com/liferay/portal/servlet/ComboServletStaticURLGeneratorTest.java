@@ -188,7 +188,7 @@ public class ComboServletStaticURLGeneratorTest {
 
 		comboServletStaticURLGenerator.setURLPrefix(_URL_PREFIX);
 
-		Set<String> visitedURLs = new HashSet<String>();
+		Set<String> visitedURLs = new HashSet<>();
 
 		comboServletStaticURLGenerator.setVisitedURLs(visitedURLs);
 

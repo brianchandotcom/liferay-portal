@@ -51,7 +51,7 @@ public abstract class BaseRoleMembershipPolicyTestCase
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("service.ranking", 1);
 

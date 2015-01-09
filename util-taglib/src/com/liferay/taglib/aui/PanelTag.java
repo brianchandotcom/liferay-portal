@@ -33,7 +33,7 @@ public class PanelTag extends BasePanelTag {
 
 	public void addToolTag(ToolTag toolTag) {
 		if (_toolTags == null) {
-			_toolTags = new ArrayList<ToolTag>();
+			_toolTags = new ArrayList<>();
 		}
 
 		_toolTags.add(toolTag);

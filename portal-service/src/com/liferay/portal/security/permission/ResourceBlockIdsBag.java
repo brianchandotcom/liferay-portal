@@ -46,7 +46,7 @@ public class ResourceBlockIdsBag implements Serializable {
 	}
 
 	public List<Long> getResourceBlockIds(long actionIdsLong) {
-		List<Long> resourceBlockIds = new ArrayList<Long>();
+		List<Long> resourceBlockIds = new ArrayList<>();
 
 		for (Map.Entry<Long, Long> permission : _permissions.entrySet()) {
 			if ((permission.getValue() & actionIdsLong) == actionIdsLong) {
@@ -68,6 +68,6 @@ public class ResourceBlockIdsBag implements Serializable {
 		}
 	}
 
-	private Map<Long, Long> _permissions = new HashMap<Long, Long>();
+	private Map<Long, Long> _permissions = new HashMap<>();
 
 }

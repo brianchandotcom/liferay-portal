@@ -250,7 +250,7 @@ public class DocumentConversionUtil {
 		}
 		else {
 			if (ArrayUtil.contains(conversions, extension)) {
-				List<String> conversionsList = new ArrayList<String>();
+				List<String> conversionsList = new ArrayList<>();
 
 				for (int i = 0; i < conversions.length; i++) {
 					String conversion = conversions[i];
@@ -316,7 +316,7 @@ public class DocumentConversionUtil {
 			PropsKeys.OPENOFFICE_CONVERSION_TARGET_EXTENSIONS, filter);
 
 		for (String sourceExtension : sourceExtensions) {
-			List<String> conversions = new SortedArrayList<String>();
+			List<String> conversions = new SortedArrayList<>();
 
 			DocumentFormat sourceDocumentFormat =
 				documentFormatRegistry.getFormatByFileExtension(
@@ -395,8 +395,7 @@ public class DocumentConversionUtil {
 	private static DocumentConversionUtil _instance =
 		new DocumentConversionUtil();
 
-	private Map<String, String[]> _conversionsMap =
-		new HashMap<String, String[]>();
+	private Map<String, String[]> _conversionsMap = new HashMap<>();
 	private DocumentConverter _documentConverter;
 	private OpenOfficeConnection _openOfficeConnection;
 

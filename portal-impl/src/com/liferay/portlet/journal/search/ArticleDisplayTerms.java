@@ -112,7 +112,7 @@ public class ArticleDisplayTerms extends DisplayTerms {
 			return folderIds;
 		}
 
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(folderId);
 

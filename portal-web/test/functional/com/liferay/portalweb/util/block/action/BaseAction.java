@@ -113,8 +113,7 @@ public class BaseAction {
 	}
 
 	protected LiferaySelenium liferaySelenium;
-	protected Map<String, String> pathDescriptions =
-		new HashMap<String, String>();
-	protected Map<String, String> pathLocators = new HashMap<String, String>();
+	protected Map<String, String> pathDescriptions = new HashMap<>();
+	protected Map<String, String> pathLocators = new HashMap<>();
 
 }

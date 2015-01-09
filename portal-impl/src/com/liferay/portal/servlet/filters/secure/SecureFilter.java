@@ -331,7 +331,7 @@ public class SecureFilter extends BasePortalFilter {
 
 	private boolean _basicAuthEnabled;
 	private boolean _digestAuthEnabled;
-	private final Set<String> _hostsAllowed = new HashSet<String>();
+	private final Set<String> _hostsAllowed = new HashSet<>();
 	private boolean _httpsRequired;
 	private boolean _usePermissionChecker;
 

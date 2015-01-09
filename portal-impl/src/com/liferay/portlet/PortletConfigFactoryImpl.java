@@ -33,7 +33,7 @@ import javax.servlet.ServletContext;
 public class PortletConfigFactoryImpl implements PortletConfigFactory {
 
 	public PortletConfigFactoryImpl() {
-		_pool = new ConcurrentHashMap<String, Map<String, PortletConfig>>();
+		_pool = new ConcurrentHashMap<>();
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 			portlet.getRootPortletId());
 
 		if (portletConfigs == null) {
-			portletConfigs = new ConcurrentHashMap<String, PortletConfig>();
+			portletConfigs = new ConcurrentHashMap<>();
 
 			_pool.put(portlet.getRootPortletId(), portletConfigs);
 		}

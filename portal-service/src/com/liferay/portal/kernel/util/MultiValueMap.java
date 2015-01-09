@@ -84,7 +84,7 @@ public abstract class MultiValueMap
 
 	@Override
 	public Collection<V> values() {
-		Set<V> values = new HashSet<V>();
+		Set<V> values = new HashSet<>();
 
 		Set<K> keys = keySet();
 

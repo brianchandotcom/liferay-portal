@@ -281,7 +281,7 @@ public class ShoppingCouponLocalServiceImpl
 
 		// Category IDs
 
-		List<Long> categoryIds = new ArrayList<Long>();
+		List<Long> categoryIds = new ArrayList<>();
 
 		String[] categoryNames = StringUtil.split(limitCategories);
 
@@ -292,7 +292,7 @@ public class ShoppingCouponLocalServiceImpl
 			categoryIds.add(category.getCategoryId());
 		}
 
-		List<Long> invalidCategoryIds = new ArrayList<Long>();
+		List<Long> invalidCategoryIds = new ArrayList<>();
 
 		for (long categoryId : categoryIds) {
 			ShoppingCategory category =
@@ -316,7 +316,7 @@ public class ShoppingCouponLocalServiceImpl
 
 		String[] skus = StringUtil.split(limitSkus);
 
-		List<String> invalidSkus = new ArrayList<String>();
+		List<String> invalidSkus = new ArrayList<>();
 
 		for (String sku : skus) {
 			ShoppingItem item = shoppingItemPersistence.fetchByC_S(

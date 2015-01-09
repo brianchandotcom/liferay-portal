@@ -62,7 +62,7 @@ public class WAIAutoDeployer extends PortletAutoDeployer {
 			portletName = pluginPackage.getName();
 		}
 
-		Map<String, String> filterMap = new HashMap<String, String>();
+		Map<String, String> filterMap = new HashMap<>();
 
 		filterMap.put("portlet_name", displayName);
 		filterMap.put("portlet_title", portletName);

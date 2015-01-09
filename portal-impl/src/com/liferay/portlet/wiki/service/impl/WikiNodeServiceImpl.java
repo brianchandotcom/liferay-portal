@@ -89,7 +89,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 			groupId, status);
 
 		if (nodes.isEmpty()) {
-			nodes = new ArrayList<WikiNode>();
+			nodes = new ArrayList<>();
 
 			List<WikiNode> allNodes = wikiNodeLocalService.getNodes(
 				groupId, status);

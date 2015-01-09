@@ -206,7 +206,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 			long ddmStructureId, long[] classPKs, List<String> fieldNames)
 		throws Exception {
 
-		Map<Long, Fields> fieldsMap = new HashMap<Long, Fields>();
+		Map<Long, Fields> fieldsMap = new HashMap<>();
 
 		List<Fields> fieldsList = _doQuery(
 			ddmStructureId, classPKs, fieldNames, null, null);
@@ -225,7 +225,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 			Condition condition, OrderByComparator<Fields> orderByComparator)
 		throws Exception {
 
-		List<Fields> fieldsList = new ArrayList<Fields>();
+		List<Fields> fieldsList = new ArrayList<>();
 
 		XPath conditionXPath = null;
 
@@ -254,7 +254,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 	}
 
 	private long[] _getStructureClassPKs(long ddmStructureId) throws Exception {
-		List<Long> classPKs = new ArrayList<Long>();
+		List<Long> classPKs = new ArrayList<>();
 
 		List<DDMStorageLink> ddmStorageLinks =
 			DDMStorageLinkLocalServiceUtil.getStructureStorageLinks(

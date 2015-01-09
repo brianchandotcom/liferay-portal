@@ -59,7 +59,7 @@ public class DDMTemplateRendererTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_contextObjects = new HashMap<String, Object>();
+		_contextObjects = new HashMap<>();
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
 		_entries = null;
@@ -85,7 +85,7 @@ public class DDMTemplateRendererTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/ddm_template_renderer/page.jsp";
 
-	private Map<String, Object> _contextObjects = new HashMap<String, Object>();
+	private Map<String, Object> _contextObjects = new HashMap<>();
 	private String _displayStyle;
 	private long _displayStyleGroupId;
 	private List<?> _entries;

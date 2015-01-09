@@ -145,11 +145,11 @@ public class DLFileEntryTypeLocalServiceImpl
 			long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(LocaleUtil.getSiteDefault(), description);
 
@@ -308,8 +308,7 @@ public class DLFileEntryTypeLocalServiceImpl
 				folderId);
 		}
 		else {
-			dlFileEntryTypes = new ArrayList<DLFileEntryType>(
-				getFileEntryTypes(groupIds));
+			dlFileEntryTypes = new ArrayList<>(getFileEntryTypes(groupIds));
 
 			DLFileEntryType dlFileEntryType =
 				dlFileEntryTypePersistence.findByPrimaryKey(
@@ -435,11 +434,11 @@ public class DLFileEntryTypeLocalServiceImpl
 			long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(LocaleUtil.getSiteDefault(), description);
 
@@ -586,7 +585,7 @@ public class DLFileEntryTypeLocalServiceImpl
 	protected List<Long> getFileEntryTypeIds(
 		List<DLFileEntryType> dlFileEntryTypes) {
 
-		List<Long> fileEntryTypeIds = new SortedArrayList<Long>();
+		List<Long> fileEntryTypeIds = new SortedArrayList<>();
 
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			fileEntryTypeIds.add(dlFileEntryType.getFileEntryTypeId());

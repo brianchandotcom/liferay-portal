@@ -161,7 +161,7 @@ public class LuceneHelperImplTest {
 	@AdviseWith(
 		adviceClasses = {
 			DisableIndexOnStartUpAdvice.class, EnableClusterLinkAdvice.class,
-			EnableLuceneReplicateWriteAdvice.class,
+			EnableLuceneReplicateWriteAdvice.class
 		}
 	)
 	@Test

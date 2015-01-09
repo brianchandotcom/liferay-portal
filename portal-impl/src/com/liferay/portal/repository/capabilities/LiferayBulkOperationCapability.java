@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -37,8 +38,10 @@ import java.util.Map;
  */
 public class LiferayBulkOperationCapability implements BulkOperationCapability {
 
-	public LiferayBulkOperationCapability(long repositoryId) {
-		_repositoryId = repositoryId;
+	public LiferayBulkOperationCapability(
+		DocumentRepository documentRepository) {
+
+		_documentRepository = documentRepository;
 	}
 
 	@Override
@@ -95,7 +98,7 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 		_fieldNames.put(Field.CreateDate.class, "createDate");
 	}
 
-	private final long _repositoryId;
+	private final DocumentRepository _documentRepository;
 
 	private static class FileEntryPerformActionMethod
 		implements ActionableDynamicQuery.PerformActionMethod {
@@ -155,7 +158,8 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 		@Override
 		public void addCriteria(DynamicQuery dynamicQuery) {
 			dynamicQuery.add(
-				RestrictionsFactoryUtil.eq("repositoryId", _repositoryId));
+				RestrictionsFactoryUtil.eq(
+					"repositoryId", _documentRepository.getRepositoryId()));
 
 			if (_filter != null) {
 				addFilterCriteria(dynamicQuery);

@@ -41,34 +41,34 @@
 	<@liferay_ui["search-container-row"]
 		className="com.liferay.configuration.admin.model.ConfigurationModel"
 		keyProperty="ID"
-		modelVar="model"
+		modelVar="configurationModel"
 	>
 
 		<@portlet["renderURL"] varImpl="editURL">
 			<@portlet["param"] name="mvcPath" value="/edit_configuration.ftl" />
-			<@portlet["param"] name="pid" value="${model.getID()}" />
-			<@portlet["param"] name="factoryPid" value="${model.getFactoryPid()}" />
+			<@portlet["param"] name="pid" value="${configurationModel.getID()}" />
+			<@portlet["param"] name="factoryPid" value="${configurationModel.getFactoryPid()}" />
 		</@>
 
 		<@portlet["renderURL"] varImpl="viewFactoryInstancesURL">
-			<@portlet["param"] name="pid" value="${model.getID()}" />
-			<@portlet["param"] name="factoryPid" value="${model.getFactoryPid()}" />
+			<@portlet["param"] name="pid" value="${configurationModel.getID()}" />
+			<@portlet["param"] name="factoryPid" value="${configurationModel.getFactoryPid()}" />
 			<@portlet["param"] name="viewType" value="factoryInstances" />
 		</@>
 
 		<@liferay_ui["search-container-column-text"]
 			name="name"
 		>
-			<#if model.isFactory()>
-				<@aui["a"] href=(viewFactoryInstancesURL.toString())>${model.getName()}</@>
+			<#if configurationModel.isFactory()>
+				<@aui["a"] href=(viewFactoryInstancesURL.toString())>${configurationModel.getName()}</@>
 			<#else>
-				<@aui["a"] href=(editURL.toString())>${model.getName()}</@>
+				<@aui["a"] href=(editURL.toString())>${configurationModel.getName()}</@>
 			</#if>
 
 			<#if factoryConfigurationModel??>
 				<br/>
 
-				${model.getID()}
+				${configurationModel.getID()}
 			</#if>
 		</@>
 
@@ -76,12 +76,12 @@
 			align="center"
 			name="status"
 		>
-			<#if model.isFactory()>
+			<#if configurationModel.isFactory()>
 				<@liferay_ui["icon"]
 					image="add"
 					message="factory"
 				/>
-			<#elseif model.getConfiguration()??>
+			<#elseif configurationModel.getConfiguration()??>
 				<@liferay_ui["icon"]
 					image="checked"
 					message="active"
@@ -99,7 +99,7 @@
 			name=""
 		>
 			<@liferay_ui["icon-menu"]>
-				<#if model.isFactory()>
+				<#if configurationModel.isFactory()>
 					<@liferay_ui["icon"]
 						image="view"
 						label=true
@@ -110,7 +110,7 @@
 
 					<@portlet["renderURL"] varImpl="creatFactoryConfigURL">
 						<@portlet["param"] name="mvcPath" value="/edit_configuration.ftl" />
-						<@portlet["param"] name="factoryPid" value="${model.getID()}" />
+						<@portlet["param"] name="factoryPid" value="${configurationModel.getID()}" />
 					</@>
 
 					<@liferay_ui["icon"]
@@ -129,10 +129,10 @@
 						url="${editURL}"
 					/>
 
-					<#if model.getConfiguration()??>
+					<#if configurationModel.getConfiguration()??>
 						<@portlet["actionURL"] name="deleteConfiguration" varImpl="deleteConfigActionURL">
-							<@portlet["param"] name="factoryPid" value="${model.getFactoryPid()}" />
-							<@portlet["param"] name="pid" value="${model.getID()}" />
+							<@portlet["param"] name="factoryPid" value="${configurationModel.getFactoryPid()}" />
+							<@portlet["param"] name="pid" value="${configurationModel.getID()}" />
 						</@>
 
 						<@liferay_ui["icon"]

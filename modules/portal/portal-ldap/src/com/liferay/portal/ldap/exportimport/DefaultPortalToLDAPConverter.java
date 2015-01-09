@@ -15,6 +15,7 @@
 package com.liferay.portal.ldap.exportimport;
 
 import com.liferay.portal.PwdEncryptorException;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,8 +54,6 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttribute;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
-
-import org.apache.commons.beanutils.PropertyUtils;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -357,7 +356,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			GetterUtil.getString(
 				userMappings.getProperty(_userDNFieldName), _DEFAULT_DN));
 		sb.append(StringPool.EQUAL);
-		sb.append(PropertyUtils.getProperty(user, _userDNFieldName));
+		sb.append(BeanPropertiesUtil.getStringSilent(user, _userDNFieldName));
 		sb.append(StringPool.COMMA);
 		sb.append(PortalLDAPUtil.getUsersDN(ldapServerId, user.getCompanyId()));
 
@@ -468,7 +467,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			String ldapAttributeName = (String)entry.getValue();
 
 			try {
-				Object attributeValue = PropertyUtils.getProperty(
+				Object attributeValue = BeanPropertiesUtil.getObjectSilent(
 					object, fieldName);
 
 				if (attributeValue != null) {

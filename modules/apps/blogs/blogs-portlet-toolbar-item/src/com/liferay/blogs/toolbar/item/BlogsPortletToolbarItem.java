@@ -12,38 +12,39 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.toolbar.item;
+package com.liferay.blogs.toolbar.item;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.toolbar.item.AddContentPortletToolbarItem;
+import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  */
 @Component(property = {"javax.portlet.name=33", "struts.action="})
-public class BlogsAddContentPortletToolbarItem
-	implements AddContentPortletToolbarItem {
+public class BlogsPortletToolbarItem  implements PortletToolbarMenuItem {
 
 	@Override
 	public MenuItem getMenuItem(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!BlogsPermission.contains(
+		if (!_resourcePermissionChecker.checkResource(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY)) {
 
@@ -69,5 +70,14 @@ public class BlogsAddContentPortletToolbarItem
 
 		return urlMenuItem;
 	}
+
+	@Reference(target = "resource.name=com.liferay.portlet.blogs", unbind = "-")
+	protected void setResourcePermissionChecker(
+		ResourcePermissionChecker resourcePermissionChecker) {
+
+		_resourcePermissionChecker = resourcePermissionChecker;
+	}
+
+	ResourcePermissionChecker _resourcePermissionChecker;
 
 }

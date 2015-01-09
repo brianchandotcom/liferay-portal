@@ -65,7 +65,7 @@ public class CombineLines
 			getString("test1", "test2", "test3") + getString("test4", "test5");
 
 		List<String> testList =
-			new ArrayList<String>();
+			new ArrayList<>();
 
 		for (String test2 :
 				testList) {

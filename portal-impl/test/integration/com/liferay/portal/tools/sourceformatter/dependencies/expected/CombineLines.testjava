@@ -52,7 +52,7 @@ public class CombineLines extends SuperClass {
 		String test4 =
 			getString("test1", "test2", "test3") + getString("test4", "test5");
 
-		List<String> testList = new ArrayList<String>();
+		List<String> testList = new ArrayList<>();
 
 		for (String test2 : testList) {
 		}

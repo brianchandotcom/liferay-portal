@@ -149,11 +149,12 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 			String viewType = ParamUtil.getString(renderRequest, "viewType");
 
 			if (viewType.equals("factoryInstances")) {
-				ConfigurationModel configurationModel =
+				ConfigurationModel factoryConfigurationModel =
 					configurationHelper.getConfigurationModel(factoryPid);
-	
-				renderRequest.setAttribute("factoryModel", configurationModel);
-	
+
+				renderRequest.setAttribute(
+					"factoryConfigurationModel", factoryConfigurationModel);
+
 				List<ConfigurationModel> configurationModels =
 					configurationHelper.getFactoryInstances(
 						themeDisplay.getLanguageId(), factoryPid);

@@ -18,12 +18,12 @@
 
 <#assign redirectURL = renderResponse.createRenderURL() />
 
-<#if Request["factoryModel"]??>
-	<#assign factoryModel = Request["factoryModel"] />
+<#if Request["factoryConfigurationModel"]??>
+	<#assign factoryConfigurationModel = Request["factoryConfigurationModel"] />
 
 	<@liferay_ui["header"]
 		backURL="${redirectURL}"
-		title='${factoryModel.getName()}'
+		title='${factoryConfigurationModel.getName()}'
 	/>
 </#if>
 
@@ -65,7 +65,7 @@
 				<@aui["a"] href=(editURL.toString())>${model.getName()}</@>
 			</#if>
 
-			<#if factoryModel??>
+			<#if factoryConfigurationModel??>
 				<br/>
 
 				${model.getID()}

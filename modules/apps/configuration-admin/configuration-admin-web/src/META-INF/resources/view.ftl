@@ -39,7 +39,7 @@
 	/>
 
 	<@liferay_ui["search-container-row"]
-		className="com.liferay.osgi.config.admin.model.ConfigurationModel"
+		className="com.liferay.configuration.admin.model.ConfigurationModel"
 		keyProperty="ID"
 		modelVar="model"
 	>

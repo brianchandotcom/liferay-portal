@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.config.admin.web.portlet.action;
+package com.liferay.configuration.admin.web.portlet.action;
 
-import com.liferay.config.admin.web.model.ConfigurationModel;
-import com.liferay.config.admin.web.util.ConfigurationConverter;
-import com.liferay.config.admin.web.util.ConfigurationHelper;
-import com.liferay.config.admin.web.util.ConfigurationProperties;
+import com.liferay.configuration.admin.web.model.ConfigurationModel;
+import com.liferay.configuration.admin.web.util.ConfigurationConverter;
+import com.liferay.configuration.admin.web.util.ConfigurationHelper;
+import com.liferay.configuration.admin.web.util.ConfigurationProperties;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -63,7 +63,7 @@ import org.osgi.service.metatype.ObjectClassDefinition;
 	immediate = true, service = ActionCommand.class,
 	property = {
 		"action.command.name=bindConfiguration",
-		"javax.portlet.name=com_liferay_config_admin_web_portlet_" +
+		"javax.portlet.name=com_liferay_configuration_admin_web_portlet_" +
 			"ConfigAdminPortlet"
 	}
 )

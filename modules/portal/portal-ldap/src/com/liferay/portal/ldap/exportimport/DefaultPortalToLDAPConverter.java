@@ -94,7 +94,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		sb.append(
 			GetterUtil.getString(
-				groupMappings.getProperty(_groupDNFieldName), _DEFAULT_DN));
+				groupMappings.getProperty(_GROUP_DNFIELD_NAME), _DEFAULT_DN));
 		sb.append(StringPool.EQUAL);
 		sb.append(userGroup.getName());
 		sb.append(StringPool.COMMA);
@@ -556,9 +556,12 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	private static final String _DEFAULT_DN = "cn";
 
+	private static final String _GROUP_DNFIELD_NAME =
+		GroupConverterKeys.GROUP_NAME;
+
 	private static final String _OBJECT_CLASS = "objectclass";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultPortalToLDAPConverter.class);
 
 	private String _groupDNFieldName = GroupConverterKeys.GROUP_NAME;

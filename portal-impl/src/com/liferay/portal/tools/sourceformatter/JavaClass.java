@@ -31,6 +31,7 @@ import com.thoughtworks.qdox.model.JavaMethod;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -336,6 +337,21 @@ public class JavaClass {
 				return;
 			}
 		}
+
+		// Temporarily disable
+
+		/*
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("(((\\+\\+( ?))|(--( ?)))");
+		sb.append(javaTerm.getName());
+		sb.append(")");
+		sb.append("|((\\b|\\.)");
+		sb.append(javaTerm.getName());
+		sb.append("((( )((=)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)))");
+		sb.append("|(\\+\\+)|(--)");
+		sb.append("|(( )((\\|=)|(&=)|(^=)))))");
+		*/
 
 		StringBundler sb = new StringBundler(4);
 
@@ -878,10 +894,6 @@ public class JavaClass {
 	}
 
 	protected Set<JavaTerm> getJavaTerms() throws Exception {
-		if (_javaTerms != null) {
-			return _javaTerms;
-		}
-
 		Set<JavaTerm> javaTerms = new TreeSet<JavaTerm>(
 			new JavaTermComparator(false));
 		List<JavaTerm> staticBlocks = new ArrayList<JavaTerm>();
@@ -923,7 +935,7 @@ public class JavaClass {
 				Tuple tuple = getJavaTermTuple(line, _content, index);
 
 				if (tuple == null) {
-					return null;
+					return Collections.emptySet();
 				}
 
 				int javaTermEndPosition = 0;
@@ -943,7 +955,7 @@ public class JavaClass {
 						javaTermStartPosition, javaTermEndPosition);
 
 					if (javaTerm == null) {
-						return null;
+						return Collections.emptySet();
 					}
 
 					if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
@@ -1001,7 +1013,7 @@ public class JavaClass {
 				javaTermStartPosition, javaTermEndPosition);
 
 			if (javaTerm == null) {
-				return null;
+				return Collections.emptySet();
 			}
 
 			if (javaTermType == JavaTerm.TYPE_STATIC_BLOCK) {
@@ -1012,9 +1024,7 @@ public class JavaClass {
 			}
 		}
 
-		_javaTerms = addStaticBlocks(javaTerms, staticBlocks);
-
-		return _javaTerms;
+		return addStaticBlocks(javaTerms, staticBlocks);
 	}
 
 	protected Tuple getJavaTermTuple(String line, String accessModifier) {
@@ -1203,8 +1213,11 @@ public class JavaClass {
 				continue;
 			}
 
-			Matcher matcher = pattern.matcher(curJavaTerm.getContent());
+			String content = curJavaTerm.getContent();
 
+			Matcher matcher = pattern.matcher(content);
+
+			//if (content.contains(javaTerm.getName()) && matcher.find()) {
 			if (matcher.find()) {
 				return false;
 			}

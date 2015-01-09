@@ -20,6 +20,7 @@ import com.liferay.portal.captcha.recaptcha.ReCaptchaImpl;
 import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.portal.convert.ConvertException;
 import com.liferay.portal.convert.ConvertProcess;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
@@ -43,8 +44,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingHelperUtil;
 import com.liferay.portal.kernel.scripting.ScriptingUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -64,7 +63,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
-import com.liferay.portal.search.SearchEngineInitializer;
+import com.liferay.portal.search.backgroundtask.IndexBackgroundTaskExecutor;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy;
@@ -77,6 +76,7 @@ import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
@@ -93,11 +93,11 @@ import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
+import java.io.Serializable;
 
 import java.util.Enumeration;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -375,57 +375,21 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void reindex(ActionRequest actionRequest) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String className = ParamUtil.getString(actionRequest, "className");
+		Map<String, Serializable> taskContextMap = new HashMap<>();
 
 		long[] companyIds = PortalInstances.getCompanyIds();
 
-		Set<String> usedSearchEngineIds = new HashSet<>();
+		taskContextMap.put("companyIds", companyIds);
+		taskContextMap.put("className", className);
 
-		if (Validator.isNull(className)) {
-			for (long companyId : companyIds) {
-				try {
-					SearchEngineInitializer searchEngineInitializer =
-						new SearchEngineInitializer(companyId);
-
-					searchEngineInitializer.reindex();
-
-					usedSearchEngineIds.addAll(
-						searchEngineInitializer.getUsedSearchEngineIds());
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
-		}
-		else {
-			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(className);
-
-			if (indexer == null) {
-				return;
-			}
-
-			Set<String> searchEngineIds = new HashSet<>();
-
-			searchEngineIds.add(indexer.getSearchEngineId());
-
-			for (String searchEngineId : searchEngineIds) {
-				for (long companyId : companyIds) {
-					SearchEngineUtil.deleteEntityDocuments(
-						searchEngineId, companyId, className, true);
-				}
-			}
-
-			for (long companyId : companyIds) {
-				try {
-					indexer.reindex(new String[] {String.valueOf(companyId)});
-
-					usedSearchEngineIds.add(indexer.getSearchEngineId());
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
-		}
+		BackgroundTaskManagerUtil.addBackgroundTask(
+			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), "reindex",
+			null, IndexBackgroundTaskExecutor.class, taskContextMap,
+			new ServiceContext());
 	}
 
 	protected void reindexDictionaries(ActionRequest actionRequest)

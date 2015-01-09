@@ -86,7 +86,7 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 				var loadingMask = A.getBody().plug(A.LoadingMask).loadingmask;
 
-				Liferay.once(
+				var submitFormHandler = Liferay.once(
 					'submitForm',
 					function(event) {
 						var form = event.form;
@@ -133,6 +133,16 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 						}
 					}
 				);
+
+				var onDockbarHidePanel = function(event) {
+					if (event.id == 'editLayoutPanel') {
+						Liferay.detach('submitForm', submitFormHandler);
+
+						Liferay.detach('dockbarHidePanel', onDockbarHidePanel);
+					}
+				};
+
+				Liferay.once('dockbarHidePanel', onDockbarHidePanel);
 			</aui:script>
 		</c:otherwise>
 	</c:choose>

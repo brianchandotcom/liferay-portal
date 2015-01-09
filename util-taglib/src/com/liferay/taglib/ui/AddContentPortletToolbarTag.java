@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.portlet.toolbar.item.AddContentPortletToolbarItem;
+import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -31,9 +31,7 @@ public class AddContentPortletToolbarTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public void setToolbarItems(
-		List<AddContentPortletToolbarItem> toolbarItems) {
-
+	public void setToolbarItems(List<PortletToolbarMenuItem> toolbarItems) {
 		_toolbarItems = toolbarItems;
 	}
 
@@ -64,6 +62,6 @@ public class AddContentPortletToolbarTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/add_content_portlet_toolbar/page.jsp";
 
-	private List<AddContentPortletToolbarItem> _toolbarItems;
+	private List<PortletToolbarMenuItem> _toolbarItems;
 
 }

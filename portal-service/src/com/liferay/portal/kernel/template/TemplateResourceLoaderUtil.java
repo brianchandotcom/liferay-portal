@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.template;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -110,11 +108,7 @@ public class TemplateResourceLoaderUtil {
 		return templateResourceLoader;
 	}
 
-	private static final Map<String, TemplateResourceLoader> 
-		_templateResourceLoaders = 
-		new ConcurrentHashMap<String, TemplateResourceLoader>();
-	
-	public TemplateResourceLoaderUtil() {
+	private TemplateResourceLoaderUtil() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
@@ -122,51 +116,54 @@ public class TemplateResourceLoaderUtil {
 			new TemplateResourceLoaderTrackerCustomizer());
 
 		_serviceTracker.open();
-
 	}
-	
-	private final ServiceTracker<TemplateResourceLoader, TemplateResourceLoader> 
-	_serviceTracker;
-	
-	private static Log _log = LogFactoryUtil.getLog(TemplateResourceLoaderUtil.class);
-	
+
+	private static final Map<String, TemplateResourceLoader>
+		_templateResourceLoaders =
+			new ConcurrentHashMap<String, TemplateResourceLoader>();
+
+	private final ServiceTracker<TemplateResourceLoader, TemplateResourceLoader>
+		_serviceTracker;
+
 	private static class TemplateResourceLoaderTrackerCustomizer
-	implements ServiceTrackerCustomizer<TemplateResourceLoader, TemplateResourceLoader> {
+		implements ServiceTrackerCustomizer
+			<TemplateResourceLoader, TemplateResourceLoader> {
 
 		@Override
 		public TemplateResourceLoader addingService(
 			ServiceReference<TemplateResourceLoader> serviceReference) {
-	
+
 			Registry registry = RegistryUtil.getRegistry();
-	
+
 			TemplateResourceLoader templateResourceLoader = registry.getService(
 				serviceReference);
-			
+
 			_templateResourceLoaders.put(
 				templateResourceLoader.getName(), templateResourceLoader);
-			
+
 			return templateResourceLoader;
 		}
-	
+
 		@Override
 		public void modifiedService(
 			ServiceReference<TemplateResourceLoader> serviceReference,
 			TemplateResourceLoader templateResourceLoader) {
 		}
-	
+
 		@Override
 		public void removedService(
 			ServiceReference<TemplateResourceLoader> serviceReference,
 			TemplateResourceLoader templateResourceLoader) {
-			
+
 			_templateResourceLoaders.remove(templateResourceLoader.getName());
-			
+
 			templateResourceLoader.destroy();
 
 			Registry registry = RegistryUtil.getRegistry();
-	
+
 			registry.ungetService(serviceReference);
-	
 		}
+
 	}
+
 }

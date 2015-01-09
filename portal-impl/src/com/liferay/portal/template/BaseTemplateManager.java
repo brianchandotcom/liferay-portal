@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import java.security.AccessControlContext;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+
 import java.util.Map;
 
 /**
@@ -81,20 +82,19 @@ public abstract class BaseTemplateManager implements TemplateManager {
 		this.templateContextHelper = templateContextHelper;
 	}
 
+	public void setTemplateResourceLoader(
+		TemplateResourceLoader templateResourceLoader) {
+
+		this.templateResourceLoader = templateResourceLoader;
+	}
+
 	protected abstract Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, boolean restricted,
 		Map<String, Object> helperUtilities, boolean privileged);
 
 	protected TemplateContextHelper templateContextHelper;
-	
 	protected TemplateResourceLoader templateResourceLoader;
-	
-	public void setTemplateResourceLoader(
-			TemplateResourceLoader templateResourceLoader) {
-
-			this.templateResourceLoader = templateResourceLoader;
-	}
 
 	private class DoGetHelperUtilitiesPrivilegedAction
 		implements PrivilegedAction<Map<String, Object>> {

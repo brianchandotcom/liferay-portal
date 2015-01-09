@@ -351,7 +351,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			List<Resource> fileEntries = getFileEntries(
 				webDAVRequest, folderId);
 
-			List<Resource> resources = new ArrayList<Resource>(
+			List<Resource> resources = new ArrayList<>(
 				folders.size() + fileEntries.size());
 
 			resources.addAll(folders);
@@ -906,7 +906,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			WebDAVRequest webDAVRequest, long parentFolderId)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<Resource>();
+		List<Resource> resources = new ArrayList<>();
 
 		List<FileEntry> fileEntries = DLAppServiceUtil.getFileEntries(
 			webDAVRequest.getGroupId(), parentFolderId);
@@ -961,7 +961,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			WebDAVRequest webDAVRequest, long parentFolderId)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<Resource>();
+		List<Resource> resources = new ArrayList<>();
 
 		long groupId = webDAVRequest.getGroupId();
 

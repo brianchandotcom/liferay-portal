@@ -106,7 +106,7 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 	protected Map<String, Fields> createDDMFieldsMap(
 		Metadata metadata, Map<String, Field[]> fieldsMap) {
 
-		Map<String, Fields> ddmFieldsMap = new HashMap<String, Fields>();
+		Map<String, Fields> ddmFieldsMap = new HashMap<>();
 
 		if (metadata == null) {
 			return ddmFieldsMap;
@@ -175,11 +175,10 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseRawMetadataProcessor.class);
 
-	private static final Map<String, Field[]> _fields =
-		new HashMap<String, Field[]>();
+	private static final Map<String, Field[]> _fields = new HashMap<>();
 
 	static {
-		List<Field> fields = new ArrayList<Field>();
+		List<Field> fields = new ArrayList<>();
 
 		_addFields(ClimateForcast.class, fields);
 		_addFields(CreativeCommons.class, fields);

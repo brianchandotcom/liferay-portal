@@ -29,7 +29,7 @@ public class MBCategoryImpl extends MBCategoryBaseImpl {
 
 	@Override
 	public List<Long> getAncestorCategoryIds() throws PortalException {
-		List<Long> ancestorCategoryIds = new ArrayList<Long>();
+		List<Long> ancestorCategoryIds = new ArrayList<>();
 
 		MBCategory category = this;
 
@@ -45,7 +45,7 @@ public class MBCategoryImpl extends MBCategoryBaseImpl {
 
 	@Override
 	public List<MBCategory> getAncestors() throws PortalException {
-		List<MBCategory> ancestors = new ArrayList<MBCategory>();
+		List<MBCategory> ancestors = new ArrayList<>();
 
 		MBCategory category = this;
 

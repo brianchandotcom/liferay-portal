@@ -23,7 +23,7 @@ import java.util.List;
 public class WorkflowHandlerUtil {
 
 	public static String[] getSearchableAssetTypes() {
-		List<String> assetTypes = new ArrayList<String>();
+		List<String> assetTypes = new ArrayList<>();
 
 		List<WorkflowHandler<?>> workflowHandlers =
 			WorkflowHandlerRegistryUtil.getWorkflowHandlers();

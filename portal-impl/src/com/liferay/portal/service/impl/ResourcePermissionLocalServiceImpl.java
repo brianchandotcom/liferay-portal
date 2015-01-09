@@ -343,16 +343,15 @@ public class ResourcePermissionLocalServiceImpl
 		List<ResourcePermission> resourcePermissions = getResourcePermissions(
 			companyId, name, scope, primKey);
 
-		Map<Long, Set<String>> roleIdsToActionIds =
-			new HashMap<Long, Set<String>>(resourcePermissions.size());
+		Map<Long, Set<String>> roleIdsToActionIds = new HashMap<>(
+			resourcePermissions.size());
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			if (resourcePermission.getActionIds() == 0) {
 				continue;
 			}
 
-			Set<String> availableActionIds = new HashSet<String>(
-				actionIds.size());
+			Set<String> availableActionIds = new HashSet<>(actionIds.size());
 
 			for (String actionId : actionIds) {
 				if (resourcePermission.hasActionId(actionId)) {
@@ -399,8 +398,7 @@ public class ResourcePermissionLocalServiceImpl
 			return Collections.emptyList();
 		}
 
-		List<String> availableActionIds = new ArrayList<String>(
-			actionIds.size());
+		List<String> availableActionIds = new ArrayList<>(actionIds.size());
 
 		for (String actionId : actionIds) {
 			ResourceAction resourceAction =

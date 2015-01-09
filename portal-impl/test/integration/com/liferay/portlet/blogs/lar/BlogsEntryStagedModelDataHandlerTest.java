@@ -58,7 +58,7 @@ public class BlogsEntryStagedModelDataHandlerTest
 	protected List<StagedModel> addWorkflowedStagedModels(Group group)
 		throws Exception {
 
-		List<StagedModel> stagedModels = new ArrayList<StagedModel>();
+		List<StagedModel> stagedModels = new ArrayList<>();
 
 		stagedModels.add(BlogsTestUtil.addEntry(group, true));
 		stagedModels.add(BlogsTestUtil.addEntry(group, false));

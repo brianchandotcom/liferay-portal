@@ -301,7 +301,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		// File entry types
 
-		List<Long> fileEntryTypeIds = new ArrayList<Long>();
+		List<Long> fileEntryTypeIds = new ArrayList<>();
 
 		for (DLFileEntryType dlFileEntryType :
 				dlFileEntryTypeLocalService.getDLFolderDLFileEntryTypes(
@@ -697,7 +697,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Override
 	public List<Long> getGroupFolderIds(long groupId, long parentFolderId) {
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(parentFolderId);
 
@@ -750,7 +750,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public List<Long> getRepositoryFolderIds(
 		long repositoryId, long parentFolderId) {
 
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(parentFolderId);
 
@@ -1026,7 +1026,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			DLFolder dlFolder = null;
 
-			Set<Long> originalFileEntryTypeIds = new HashSet<Long>();
+			Set<Long> originalFileEntryTypeIds = new HashSet<>();
 
 			if (folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				originalFileEntryTypeIds = getFileEntryTypeIds(
@@ -1044,7 +1044,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			// Workflow definitions
 
 			List<ObjectValuePair<Long, String>> workflowDefinitionOVPs =
-				new ArrayList<ObjectValuePair<Long, String>>();
+				new ArrayList<>();
 
 			if (restrictionType ==
 					DLFolderConstants.
@@ -1384,7 +1384,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	protected Set<Long> getFileEntryTypeIds(
 		List<DLFileEntryType> dlFileEntryTypes) {
 
-		Set<Long> fileEntryTypeIds = new HashSet<Long>();
+		Set<Long> fileEntryTypeIds = new HashSet<>();
 
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			fileEntryTypeIds.add(dlFileEntryType.getFileEntryTypeId());
@@ -1409,7 +1409,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					"Cannot move folder %s into itself", parentFolderId));
 		}
 
-		List<Long> subfolderIds = new ArrayList<Long>();
+		List<Long> subfolderIds = new ArrayList<>();
 
 		getGroupSubfolderIds(
 			subfolderIds, dlFolder.getGroupId(), dlFolder.getFolderId());

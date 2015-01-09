@@ -55,8 +55,7 @@ public class ReportRequestContext implements Serializable {
 		_attributes.put(key, value);
 	}
 
-	private final Map<String, Serializable> _attributes =
-		new HashMap<String, Serializable>();
+	private final Map<String, Serializable> _attributes = new HashMap<>();
 	private final ReportDataSourceType _reportDataSourceType;
 
 }

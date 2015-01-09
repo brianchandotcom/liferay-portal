@@ -37,7 +37,7 @@ public class AssetCategoryUtil {
 	public static long[] filterCategoryIds(
 		long vocabularyId, long[] categoryIds) {
 
-		List<Long> filteredCategoryIds = new ArrayList<Long>();
+		List<Long> filteredCategoryIds = new ArrayList<>();
 
 		for (long categoryId : categoryIds) {
 			AssetCategory category =

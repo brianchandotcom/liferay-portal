@@ -37,7 +37,7 @@ public class DLFileEntryClassTypeReader implements ClassTypeReader {
 	public List<ClassType> getAvailableClassTypes(
 		long[] groupIds, Locale locale) {
 
-		List<ClassType> classTypes = new ArrayList<ClassType>();
+		List<ClassType> classTypes = new ArrayList<>();
 
 		classTypes.add(getBasicDocumentClassType(locale));
 

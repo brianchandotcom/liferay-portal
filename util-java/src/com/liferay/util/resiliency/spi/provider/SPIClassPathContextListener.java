@@ -66,7 +66,7 @@ public class SPIClassPathContextListener implements ServletContextListener {
 		String spiEmbeddedLibDirName = servletContext.getInitParameter(
 			"spiEmbeddedLibDir");
 
-		Set<File> jarFiles = new LinkedHashSet<File>();
+		Set<File> jarFiles = new LinkedHashSet<>();
 
 		// Load embedded Tomcat
 

@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
 public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 	public HtmlBBCodeTranslatorImpl() {
-		_listStyles = new HashMap<String, String>();
+		_listStyles = new HashMap<>();
 
 		_listStyles.put("a", "list-style: lower-alpha outside;");
 		_listStyles.put("A", "list-style: upper-alpha outside;");
@@ -54,7 +54,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		_listStyles.put("i", "list-style: lower-roman outside;");
 		_listStyles.put("I", "list-style: upper-roman outside;");
 
-		_excludeNewLineTypes = new HashMap<String, Integer>();
+		_excludeNewLineTypes = new HashMap<>();
 
 		_excludeNewLineTypes.put("*", BBCodeParser.TYPE_TAG_START_END);
 		_excludeNewLineTypes.put("li", BBCodeParser.TYPE_TAG_START_END);
@@ -63,7 +63,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		_excludeNewLineTypes.put("th", BBCodeParser.TYPE_TAG_START_END);
 		_excludeNewLineTypes.put("tr", BBCodeParser.TYPE_TAG_START_END);
 
-		_bbCodeCharacters = new HashMap<String, String>();
+		_bbCodeCharacters = new HashMap<>();
 
 		_bbCodeCharacters.put("&", "&amp;");
 		_bbCodeCharacters.put("<", "&lt;");

@@ -54,7 +54,7 @@ public class TLDFormatter {
 			return;
 		}
 
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		DirectoryScanner ds = new DirectoryScanner();
 
@@ -122,7 +122,7 @@ public class TLDFormatter {
 	private static void _sortElements(
 		Element parentElement, String name, String sortBy) {
 
-		Map<String, Element> map = new TreeMap<String, Element>();
+		Map<String, Element> map = new TreeMap<>();
 
 		List<Element> elements = parentElement.elements(name);
 

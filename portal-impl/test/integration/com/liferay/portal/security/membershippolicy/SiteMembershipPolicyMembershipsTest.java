@@ -285,7 +285,7 @@ public class SiteMembershipPolicyMembershipsTest
 	public void testVerifyWhenUpdatingGroup() throws Exception {
 		Group group = MembershipPolicyTestUtil.addGroup();
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 

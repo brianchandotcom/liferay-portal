@@ -61,11 +61,11 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 			long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(LocaleUtil.getSiteDefault(), description);
 
@@ -163,11 +163,11 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 			long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(LocaleUtil.getSiteDefault(), description);
 

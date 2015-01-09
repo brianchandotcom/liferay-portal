@@ -36,7 +36,7 @@ public class LastPath implements Serializable {
 
 		_contextPath = contextPath;
 		_path = path;
-		_parameterMap = new LinkedHashMap<String, String[]>(parameterMap);
+		_parameterMap = new LinkedHashMap<>(parameterMap);
 	}
 
 	public String getContextPath() {

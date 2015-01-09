@@ -74,7 +74,7 @@ public class PollerProcessorUtil {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("javax.portlet.name", portletId);
 
@@ -158,8 +158,7 @@ public class PollerProcessorUtil {
 			});
 
 	private final StringServiceRegistrationMap<PollerProcessor>
-		_serviceRegistrations =
-			new StringServiceRegistrationMap<PollerProcessor>();
+		_serviceRegistrations = new StringServiceRegistrationMap<>();
 	private final ServiceTracker<PollerProcessor, PollerProcessor>
 		_serviceTracker;
 

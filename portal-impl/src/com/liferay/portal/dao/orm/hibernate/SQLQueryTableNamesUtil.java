@@ -36,7 +36,7 @@ public class SQLQueryTableNamesUtil {
 
 		String lowerCaseSQL = StringUtil.toLowerCase(sql);
 
-		Set<String> tableNameSet = new HashSet<String>();
+		Set<String> tableNameSet = new HashSet<>();
 
 		// Find table name from the "from" clause
 

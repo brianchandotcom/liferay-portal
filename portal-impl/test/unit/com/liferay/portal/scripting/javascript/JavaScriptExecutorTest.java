@@ -49,7 +49,7 @@ public class JavaScriptExecutorTest extends ScriptingExecutorTestCase {
 	public void testReturnValue() throws ScriptingException {
 		Map<String, Object> inputObjects = Collections.emptyMap();
 
-		Set<String> outputNames = new HashSet<String>();
+		Set<String> outputNames = new HashSet<>();
 
 		outputNames.add("returnValue");
 

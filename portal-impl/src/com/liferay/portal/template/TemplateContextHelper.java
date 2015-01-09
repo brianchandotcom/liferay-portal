@@ -179,7 +179,7 @@ public class TemplateContextHelper {
 			}
 		}
 
-		Map<String, Object> helperUtilities = new HashMap<String, Object>();
+		Map<String, Object> helperUtilities = new HashMap<>();
 
 		populateCommonHelperUtilities(helperUtilities);
 		populateExtraHelperUtilities(helperUtilities);
@@ -898,7 +898,7 @@ public class TemplateContextHelper {
 	private static final PACL _pacl = new NoPACL();
 
 	private final Map<ClassLoader, Map<String, Object>[]> _helperUtilitiesMaps =
-		new ConcurrentHashMap<ClassLoader, Map<String, Object>[]>();
+		new ConcurrentHashMap<>();
 
 	private static class NoPACL implements PACL {
 

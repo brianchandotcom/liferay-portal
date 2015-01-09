@@ -221,7 +221,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			HttpPrincipal httpPrincipal)
 		throws PortalException {
 
-		List<Layout> layouts = new ArrayList<Layout>();
+		List<Layout> layouts = new ArrayList<>();
 
 		if (layoutIdMap != null) {
 			for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
@@ -268,7 +268,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			HttpPrincipal httpPrincipal, Layout layout, long remoteGroupId)
 		throws PortalException {
 
-		List<Layout> missingRemoteParentLayouts = new ArrayList<Layout>();
+		List<Layout> missingRemoteParentLayouts = new ArrayList<>();
 
 		long parentLayoutId = layout.getParentLayoutId();
 

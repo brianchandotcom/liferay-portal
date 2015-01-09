@@ -192,7 +192,6 @@ public class AggregatedCacheListener<K extends Serializable, V>
 			AggregatedCacheListener.class + "._remoteInvokeThreadLocal", false);
 
 	private final ConcurrentMap<CacheListener<K, V>, CacheListenerScope>
-		_cacheListeners =
-			new ConcurrentHashMap<CacheListener<K, V>, CacheListenerScope>();
+		_cacheListeners = new ConcurrentHashMap<>();
 
 }

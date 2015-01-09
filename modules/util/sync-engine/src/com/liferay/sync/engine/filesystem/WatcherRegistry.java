@@ -34,7 +34,6 @@ public class WatcherRegistry {
 		_watchers.remove(syncAccountId);
 	}
 
-	private static final Map<Long, Watcher> _watchers =
-		new HashMap<Long, Watcher>();
+	private static final Map<Long, Watcher> _watchers = new HashMap<>();
 
 }

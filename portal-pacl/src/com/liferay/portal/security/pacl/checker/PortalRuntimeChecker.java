@@ -397,7 +397,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 			"security-manager-class-loader-reference-ids");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> classLoaderReferenceIds = new TreeSet<String>(
+			Set<String> classLoaderReferenceIds = new TreeSet<>(
 				_classLoaderReferenceIds);
 
 			for (String classLoaderReferenceId : classLoaderReferenceIds) {
@@ -413,8 +413,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 			"security-manager-expando-bridge");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> classNames = new TreeSet<String>(
-				_expandoBridgeClassNames);
+			Set<String> classNames = new TreeSet<>(_expandoBridgeClassNames);
 
 			for (String className : classNames) {
 				_log.debug("Allowing Expando bridge on class " + className);
@@ -447,7 +446,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 			if (_log.isDebugEnabled() &&
 				!servletContextName.equals(_PORTAL_SERVLET_CONTEXT_NAME)) {
 
-				Set<String> classNames = new TreeSet<String>(
+				Set<String> classNames = new TreeSet<>(
 					getBeanPropertyClassNames);
 
 				for (String className : classNames) {
@@ -476,8 +475,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 			_PORTAL_SERVLET_CONTEXT_NAME, getBeanPropertyClassNames);
 
 		if (_log.isDebugEnabled()) {
-			Set<String> classNames = new TreeSet<String>(
-				getBeanPropertyClassNames);
+			Set<String> classNames = new TreeSet<>(getBeanPropertyClassNames);
 
 			for (String className : classNames) {
 				_log.debug(
@@ -492,7 +490,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 		Set<String> portletBagPoolPortletIds = getPropertySet(
 			"security-manager-portlet-bag-pool-portlet-ids");
 
-		_portletBagPoolPortletIdPatterns = new ArrayList<Pattern>(
+		_portletBagPoolPortletIdPatterns = new ArrayList<>(
 			portletBagPoolPortletIds.size());
 
 		for (String portletBagPoolPortletId : portletBagPoolPortletIds) {
@@ -514,7 +512,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 		_searchEngineIds = getPropertySet("security-manager-search-engine-ids");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> searchEngineIds = new TreeSet<String>(_searchEngineIds);
+			Set<String> searchEngineIds = new TreeSet<>(_searchEngineIds);
 
 			for (String searchEngineId : searchEngineIds) {
 				_log.debug("Allowing search engine " + searchEngineId);
@@ -547,7 +545,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 			if (_log.isDebugEnabled() &&
 				!servletContextName.equals(_PORTAL_SERVLET_CONTEXT_NAME)) {
 
-				Set<String> classNames = new TreeSet<String>(
+				Set<String> classNames = new TreeSet<>(
 					setBeanPropertyClassNames);
 
 				for (String className : classNames) {
@@ -576,8 +574,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 			_PORTAL_SERVLET_CONTEXT_NAME, setBeanPropertyClassNames);
 
 		if (_log.isDebugEnabled()) {
-			Set<String> classNames = new TreeSet<String>(
-				setBeanPropertyClassNames);
+			Set<String> classNames = new TreeSet<>(setBeanPropertyClassNames);
 
 			for (String className : classNames) {
 				_log.debug(
@@ -592,7 +589,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 		Set<String> threadPoolExecutorNames = getPropertySet(
 			"security-manager-thread-pool-executor-names");
 
-		_threadPoolExecutorNamePatterns = new ArrayList<Pattern>(
+		_threadPoolExecutorNamePatterns = new ArrayList<>(
 			threadPoolExecutorNames.size());
 
 		for (String threadPoolExecutorName : threadPoolExecutorNames) {
@@ -617,11 +614,11 @@ public class PortalRuntimeChecker extends BaseChecker {
 	private Set<String> _classLoaderReferenceIds;
 	private Set<String> _expandoBridgeClassNames;
 	private final Map<String, Set<String>> _getBeanPropertyClassNames =
-		new HashMap<String, Set<String>>();
+		new HashMap<>();
 	private List<Pattern> _portletBagPoolPortletIdPatterns;
 	private Set<String> _searchEngineIds;
 	private final Map<String, Set<String>> _setBeanPropertyClassNames =
-		new HashMap<String, Set<String>>();
+		new HashMap<>();
 	private List<Pattern> _threadPoolExecutorNamePatterns;
 
 }

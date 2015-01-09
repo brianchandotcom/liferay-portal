@@ -360,7 +360,7 @@ public class Version implements Comparable<Version>, Serializable {
 	private static final String _SEPARATOR = StringPool.PERIOD;
 
 	private static final Map<String, Version> _versions =
-		new ConcurrentHashMap<String, Version>();
+		new ConcurrentHashMap<>();
 
 	private String _bugFix;
 	private final String _buildNumber;

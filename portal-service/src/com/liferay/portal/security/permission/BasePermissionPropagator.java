@@ -66,7 +66,7 @@ public abstract class BasePermissionPropagator implements PermissionPropagator {
 		Set<String> parentActionIds = getActionIds(parentClassName);
 		Set<String> childActionIds = getActionIds(childClassName);
 
-		Set<String> parentAndChildCommonActionIds = new HashSet<String>();
+		Set<String> parentAndChildCommonActionIds = new HashSet<>();
 
 		for (String actionId : childActionIds) {
 			if (parentActionIds.contains(actionId)) {
@@ -81,7 +81,7 @@ public abstract class BasePermissionPropagator implements PermissionPropagator {
 			themeDisplay.getCompanyId(), childClassName, childPrimKey, roleId,
 			childActionIds);
 
-		List<String> actionIds = new ArrayList<String>();
+		List<String> actionIds = new ArrayList<>();
 
 		for (String actionId : parentAndChildCommonActionIds) {
 			if (parentAvailableActionIds.contains(actionId)) {

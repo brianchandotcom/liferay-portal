@@ -196,7 +196,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			ddmFormField.getDDMFormFieldOptions();
 
 		for (String value : ddmFormFieldOptions.getOptionsValues()) {
-			Map<String, Object> fieldStructure = new HashMap<String, Object>();
+			Map<String, Object> fieldStructure = new HashMap<>();
 
 			fieldStructure.put("children", StringPool.BLANK);
 			fieldStructure.put("fieldNamespace", StringUtil.randomId());
@@ -247,7 +247,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			structureLocale = defaultLocale;
 		}
 
-		fieldContext = new HashMap<String, Object>();
+		fieldContext = new HashMap<>();
 
 		addLayoutProperties(ddmFormField, fieldContext, structureLocale);
 
@@ -430,7 +430,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 				fieldsContextKey);
 
 		if (fieldsContext == null) {
-			fieldsContext = new HashMap<String, Map<String, Object>>();
+			fieldsContext = new HashMap<>();
 
 			request.setAttribute(fieldsContextKey, fieldsContext);
 		}
@@ -476,7 +476,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 	}
 
 	protected String[] getFieldsDisplayValues(String fieldDisplayValue) {
-		List<String> fieldsDisplayValues = new ArrayList<String>();
+		List<String> fieldsDisplayValues = new ArrayList<>();
 
 		for (String value : StringUtil.split(fieldDisplayValue)) {
 			String fieldName = StringUtil.extractFirst(
@@ -495,13 +495,13 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		DDMFormField parentDDMFormField, boolean showEmptyFieldLabel,
 		Locale locale) {
 
-		Map<String, Object> freeMarkerContext = new HashMap<String, Object>();
+		Map<String, Object> freeMarkerContext = new HashMap<>();
 
 		Map<String, Object> fieldContext = getFieldContext(
 			request, response, portletNamespace, namespace, ddmFormField,
 			locale);
 
-		Map<String, Object> parentFieldContext = new HashMap<String, Object>();
+		Map<String, Object> parentFieldContext = new HashMap<>();
 
 		if (parentDDMFormField != null) {
 			parentFieldContext = getFieldContext(

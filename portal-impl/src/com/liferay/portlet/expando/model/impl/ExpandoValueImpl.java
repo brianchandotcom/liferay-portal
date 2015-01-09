@@ -49,7 +49,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 			return null;
 		}
 
-		List<Locale> locales = new ArrayList<Locale>();
+		List<Locale> locales = new ArrayList<>();
 
 		for (String languageId :
 				LocalizationUtil.getAvailableLanguageIds(getData())) {
@@ -314,8 +314,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		Map<Locale, String> stringMap = LocalizationUtil.getLocalizationMap(
 			getData());
 
-		Map<Locale, String[]> stringArrayMap = new HashMap<Locale, String[]>(
-			stringMap.size());
+		Map<Locale, String[]> stringArrayMap = new HashMap<>(stringMap.size());
 
 		for (Map.Entry<Locale, String> entry : stringMap.entrySet()) {
 			stringArrayMap.put(entry.getKey(), split(entry.getValue()));
@@ -504,7 +503,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 
 		validate(ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
 
-		Map<Locale, String> stringMap = new HashMap<Locale, String>();
+		Map<Locale, String> stringMap = new HashMap<>();
 
 		for (Map.Entry<Locale, String[]> entry : dataMap.entrySet()) {
 			stringMap.put(entry.getKey(), merge(entry.getValue()));

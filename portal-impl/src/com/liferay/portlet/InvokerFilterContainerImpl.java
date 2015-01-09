@@ -82,7 +82,7 @@ public class InvokerFilterContainerImpl
 			return;
 		}
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("javax.portlet.name", rootPortletId);
 		properties.put("preinitialized.filter", Boolean.TRUE);
@@ -214,7 +214,7 @@ public class InvokerFilterContainerImpl
 					serviceReference.getProperty("service.id"),
 					ClassUtil.getClassName(portletFilter));
 
-				Map<String, String> params = new HashMap<String, String>();
+				Map<String, String> params = new HashMap<>();
 
 				for (String key : serviceReference.getPropertyKeys()) {
 					String value = GetterUtil.getString(

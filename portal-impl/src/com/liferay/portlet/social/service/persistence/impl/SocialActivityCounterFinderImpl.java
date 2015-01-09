@@ -157,7 +157,7 @@ public class SocialActivityCounterFinderImpl
 			qPos.add(periodLength);
 			qPos.add(endPeriod);
 
-			activityCounters = new ArrayList<SocialActivityCounter>();
+			activityCounters = new ArrayList<>();
 
 			Iterator<Object[]> itr = q.iterate();
 
@@ -218,8 +218,7 @@ public class SocialActivityCounterFinderImpl
 			qPos.add(periodLength);
 			qPos.add(endPeriod);
 
-			List<SocialActivityCounter> activityCounters =
-				new ArrayList<SocialActivityCounter>();
+			List<SocialActivityCounter> activityCounters = new ArrayList<>();
 
 			Iterator<Object[]> itr = q.iterate();
 

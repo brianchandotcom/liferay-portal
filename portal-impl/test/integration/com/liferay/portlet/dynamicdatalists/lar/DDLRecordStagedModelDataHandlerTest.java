@@ -61,7 +61,7 @@ public class DDLRecordStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), DDLRecordSet.class.getName());

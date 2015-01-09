@@ -114,8 +114,8 @@ public class XMLMerger {
 			return;
 		}
 
-		List<Element> originalElements = new ArrayList<Element>();
-		List<Element> duplicateElements = new ArrayList<Element>();
+		List<Element> originalElements = new ArrayList<>();
+		List<Element> duplicateElements = new ArrayList<>();
 
 		for (int i = 0; i < childElements.size(); i++) {
 			Element childElement = childElements.get(i);
@@ -156,7 +156,7 @@ public class XMLMerger {
 			return;
 		}
 
-		List<Element> elements = new ArrayList<Element>();
+		List<Element> elements = new ArrayList<>();
 
 		for (int i = 0; i < orderedChildrenNames.length; i++) {
 			elements.addAll(parentElement.elements(orderedChildrenNames[i]));

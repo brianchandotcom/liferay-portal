@@ -59,7 +59,7 @@ public class AmazonSignedRequestsUtil {
 			return StringPool.BLANK;
 		}
 
-		parameters = new TreeMap<String, String>(parameters);
+		parameters = new TreeMap<>(parameters);
 
 		Set<Map.Entry<String, String>> parametersSet = parameters.entrySet();
 

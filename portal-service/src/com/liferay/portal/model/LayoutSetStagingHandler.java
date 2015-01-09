@@ -158,7 +158,7 @@ public class LayoutSetStagingHandler
 		LayoutSetStagingHandler.class);
 
 	private static final Set<String> _layoutSetBranchMethodNames =
-		new HashSet<String>();
+		new HashSet<>();
 
 	static {
 		_layoutSetBranchMethodNames.add("getColorScheme");

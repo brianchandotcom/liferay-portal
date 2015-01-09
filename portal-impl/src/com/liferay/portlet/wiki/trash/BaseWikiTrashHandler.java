@@ -95,7 +95,7 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 			long classPK, long containerModelId, int start, int end)
 		throws PortalException {
 
-		List<ContainerModel> containerModels = new ArrayList<ContainerModel>();
+		List<ContainerModel> containerModels = new ArrayList<>();
 
 		WikiPage page = null;
 
@@ -194,7 +194,7 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 	public List<ContainerModel> getRootContainerModels(long groupId)
 		throws PortalException {
 
-		List<ContainerModel> containerModels = new ArrayList<ContainerModel>();
+		List<ContainerModel> containerModels = new ArrayList<>();
 
 		List<WikiNode> nodes = WikiNodeLocalServiceUtil.getNodes(
 			groupId, WorkflowConstants.STATUS_APPROVED);

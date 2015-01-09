@@ -48,8 +48,7 @@ public class IndexerRegistryUtil {
 	}
 
 	public static List<Indexer> getIndexers() {
-		List<Indexer> indexers = new ArrayList<Indexer>(
-			_instance._indexers.values());
+		List<Indexer> indexers = new ArrayList<>(_instance._indexers.values());
 
 		return Collections.unmodifiableList(indexers);
 	}
@@ -90,7 +89,7 @@ public class IndexerRegistryUtil {
 	private Set<String> _aggregrateClassNames(
 		String[] classNames, String... moreClassNames) {
 
-		Set<String> set = new HashSet<String>();
+		Set<String> set = new HashSet<>();
 
 		if (classNames != null) {
 			for (String className : classNames) {
@@ -132,7 +131,7 @@ public class IndexerRegistryUtil {
 	private void _register(String className, Indexer indexer) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		Set<String> classNames = _aggregrateClassNames(
 			indexer.getClassNames(), ClassUtil.getClassName(indexer),
@@ -178,10 +177,9 @@ public class IndexerRegistryUtil {
 
 	private static final Indexer _dummyIndexer = new DummyIndexer();
 
-	private final Map<String, Indexer> _indexers =
-		new ConcurrentHashMap<String, Indexer>();
+	private final Map<String, Indexer> _indexers = new ConcurrentHashMap<>();
 	private final StringServiceRegistrationMap<Indexer> _serviceRegistrations =
-		new StringServiceRegistrationMap<Indexer>();
+		new StringServiceRegistrationMap<>();
 	private final ServiceTracker<Indexer, Indexer> _serviceTracker;
 
 	private class IndexerServiceTrackerCustomizer

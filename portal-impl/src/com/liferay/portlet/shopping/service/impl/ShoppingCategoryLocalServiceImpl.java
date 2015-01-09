@@ -227,8 +227,7 @@ public class ShoppingCategoryLocalServiceImpl
 	public List<ShoppingCategory> getParentCategories(ShoppingCategory category)
 		throws PortalException {
 
-		List<ShoppingCategory> parentCategories =
-			new ArrayList<ShoppingCategory>();
+		List<ShoppingCategory> parentCategories = new ArrayList<>();
 
 		ShoppingCategory tempCategory = category;
 
@@ -354,7 +353,7 @@ public class ShoppingCategoryLocalServiceImpl
 			return category.getParentCategoryId();
 		}
 
-		List<Long> subcategoryIds = new ArrayList<Long>();
+		List<Long> subcategoryIds = new ArrayList<>();
 
 		getSubcategoryIds(
 			subcategoryIds, category.getGroupId(), category.getCategoryId());

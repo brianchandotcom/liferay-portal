@@ -54,7 +54,7 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 		_processCallable = new NettyFabricWorkerProcessCallable<T>(
 			processCallable);
 
-		_inputPathHolderMap = new HashMap<PathHolder, PathHolder>();
+		_inputPathHolderMap = new HashMap<>();
 
 		for (Map.Entry<Path, Path> entry : inputPathMap.entrySet()) {
 			_inputPathHolderMap.put(
@@ -68,7 +68,7 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 	}
 
 	public Map<Path, Path> getInputPathMap() {
-		Map<Path, Path> inputPathMap = new HashMap<Path, Path>();
+		Map<Path, Path> inputPathMap = new HashMap<>();
 
 		for (Map.Entry<PathHolder, PathHolder> entry :
 				_inputPathHolderMap.entrySet()) {

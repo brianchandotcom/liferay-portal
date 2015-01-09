@@ -215,7 +215,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 			recurrence.setInterval(weeklyInterval);
 
-			List<DayAndPosition> dayPos = new ArrayList<DayAndPosition>();
+			List<DayAndPosition> dayPos = new ArrayList<>();
 
 			addWeeklyDayPos(portletRequest, dayPos, Calendar.SUNDAY);
 			addWeeklyDayPos(portletRequest, dayPos, Calendar.MONDAY);

@@ -289,7 +289,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			return;
 		}
 
-		tldMappings = new HashMap<String, String[]>();
+		tldMappings = new HashMap<>();
 
 		ServiceReference<SAXParserFactory> saxParserFactoryServiceReference =
 			_bundleContext.getServiceReference(SAXParserFactory.class);
@@ -366,7 +366,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
-	private final List<File> _classPath = new ArrayList<File>();
+	private final List<File> _classPath = new ArrayList<>();
 	private Bundle _jspBundle;
 	private Logger _logger;
 

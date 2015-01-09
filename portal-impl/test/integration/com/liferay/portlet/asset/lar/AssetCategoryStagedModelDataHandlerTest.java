@@ -54,7 +54,7 @@ public class AssetCategoryStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
 			group.getGroupId());

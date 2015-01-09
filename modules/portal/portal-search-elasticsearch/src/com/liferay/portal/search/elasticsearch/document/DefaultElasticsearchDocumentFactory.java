@@ -68,7 +68,7 @@ public class DefaultElasticsearchDocumentFactory
 		if (!field.isLocalized()) {
 			String[] values = field.getValues();
 
-			List<String> valuesList = new ArrayList<String>(values.length);
+			List<String> valuesList = new ArrayList<>(values.length);
 
 			for (String value : values) {
 				if (Validator.isNull(value)) {

@@ -169,7 +169,7 @@ public class LanguageResources {
 		if (_configNames.length > 0) {
 			String localeName = locale.toString();
 
-			languageMap = new HashMap<String, String>();
+			languageMap = new HashMap<>();
 
 			for (String name : _configNames) {
 				StringBundler sb = new StringBundler(4);
@@ -250,7 +250,7 @@ public class LanguageResources {
 			oldLanguageMap = _languageMaps.get(locale);
 		}
 
-		Map<String, String> newLanguageMap = new HashMap<String, String>();
+		Map<String, String> newLanguageMap = new HashMap<>();
 
 		if (oldLanguageMap != null) {
 			newLanguageMap.putAll(oldLanguageMap);
@@ -269,12 +269,12 @@ public class LanguageResources {
 	private static final Locale _blankLocale = new Locale(StringPool.BLANK);
 	private static String[] _configNames;
 	private static final Map<Locale, Map<String, String>> _languageMaps =
-		new ConcurrentHashMap<Locale, Map<String, String>>(64);
+		new ConcurrentHashMap<>(64);
 	private static final Locale _nullLocale = new Locale(StringPool.BLANK);
 	private static final ServiceTracker<ResourceBundle, ResourceBundle>
 		_serviceTracker;
 	private static final Map<Locale, Locale> _superLocales =
-		new ConcurrentHashMap<Locale, Locale>();
+		new ConcurrentHashMap<>();
 
 	static {
 		Registry registry = RegistryUtil.getRegistry();
@@ -355,7 +355,7 @@ public class LanguageResources {
 
 			String languageId = GetterUtil.getString(
 				serviceReference.getProperty("language.id"), StringPool.BLANK);
-			Map<String, String> languageMap = new HashMap<String, String>();
+			Map<String, String> languageMap = new HashMap<>();
 			Locale locale = null;
 
 			if (Validator.isNotNull(languageId)) {

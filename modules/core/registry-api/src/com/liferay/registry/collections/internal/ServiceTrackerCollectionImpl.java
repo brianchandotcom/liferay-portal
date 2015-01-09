@@ -254,7 +254,7 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
 	@Override
 	public List<S> subList(int fromIndex, int toIndex) {
-		List<S> list = new ArrayList<S>();
+		List<S> list = new ArrayList<>();
 
 		List<EntryWrapper> subList = _services.subList(fromIndex, toIndex);
 
@@ -293,7 +293,7 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 	}
 
 	private Filter _getFilter(Filter filter, Class<S> clazz) {
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("objectClass", clazz.getName());
 
@@ -318,9 +318,8 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 	private final Filter _filter;
 	private final Map<String, Object> _properties;
 	private final ServiceRegistrationMap<S> _serviceRegistrations =
-		new ServiceRegistrationMap<S>();
-	private final List<EntryWrapper> _services =
-		new CopyOnWriteArrayList<EntryWrapper>();
+		new ServiceRegistrationMap<>();
+	private final List<EntryWrapper> _services = new CopyOnWriteArrayList<>();
 	private final ServiceTracker<S, S> _serviceTracker;
 
 	private class DefaultServiceTrackerCustomizer

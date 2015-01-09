@@ -295,7 +295,7 @@ public class BookmarksFolderFinderImpl
 				qPos.add(queryDefinition.getStatus());
 			}
 
-			List<Object> models = new ArrayList<Object>();
+			List<Object> models = new ArrayList<>();
 
 			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
 				q, getDialect(), queryDefinition.getStart(),

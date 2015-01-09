@@ -31,7 +31,7 @@ public class AssetSearch extends SearchContainer<AssetEntry> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-results";
 
-	public static List<String> headerNames = new ArrayList<String>();
+	public static List<String> headerNames = new ArrayList<>();
 
 	static {
 		headerNames.add("title");

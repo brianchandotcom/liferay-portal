@@ -56,8 +56,7 @@ public class PortletStagingBackgroundTaskExecutor
 		MissingReferences missingReferences = null;
 
 		HashMap<String, Serializable> serializableTaskContextMap =
-			new HashMap<String, Serializable>(
-				backgroundTask.getTaskContextMap());
+			new HashMap<>(backgroundTask.getTaskContextMap());
 
 		try {
 			ExportImportThreadLocal.setPortletStagingInProcess(true);

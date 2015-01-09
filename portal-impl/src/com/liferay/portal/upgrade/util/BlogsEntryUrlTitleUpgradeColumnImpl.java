@@ -35,7 +35,7 @@ public class BlogsEntryUrlTitleUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 
 		_entryIdColumn = entryIdColumn;
 		_titleColumn = titleColumn;
-		_urlTitles = new HashSet<String>();
+		_urlTitles = new HashSet<>();
 	}
 
 	@Override

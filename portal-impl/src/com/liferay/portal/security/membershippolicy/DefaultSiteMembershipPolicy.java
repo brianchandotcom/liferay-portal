@@ -157,12 +157,11 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 	protected List<Group> getLimitedChildrenGroups(Group group)
 		throws PortalException {
 
-		List<Group> parentGroups = new ArrayList<Group>();
+		List<Group> parentGroups = new ArrayList<>();
 
 		parentGroups.add(group);
 
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("groupsTree", parentGroups);
 		groupParams.put(

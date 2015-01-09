@@ -77,7 +77,7 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 	}
 
 	protected Set<Locale> getAvailableLocales(JSONArray jsonArray) {
-		Set<Locale> availableLocales = new HashSet<Locale>();
+		Set<Locale> availableLocales = new HashSet<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			Locale availableLocale = LocaleUtil.fromLanguageId(
@@ -145,7 +145,7 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 	}
 
 	protected List<DDMFormField> getDDMFormFields(JSONArray jsonArray) {
-		List<DDMFormField> ddmFormFields = new ArrayList<DDMFormField>();
+		List<DDMFormField> ddmFormFields = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			DDMFormField ddmFormField = getDDMFormField(

@@ -99,9 +99,9 @@ public class XmlRpcMethodUtil {
 	private static final XmlRpcMethodUtil _instance = new XmlRpcMethodUtil();
 
 	private final Map<String, Map<String, Method>> _methodRegistry =
-		new ConcurrentHashMap<String, Map<String, Method>>();
+		new ConcurrentHashMap<>();
 	private final ServiceRegistrationMap<Method> _serviceRegistrations =
-		new ServiceRegistrationMap<Method>();
+		new ServiceRegistrationMap<>();
 	private final ServiceTracker<Method, Method> _serviceTracker;
 
 	private class MethodServiceTrackerCustomizer
@@ -118,7 +118,7 @@ public class XmlRpcMethodUtil {
 			Map<String, Method> methods = _methodRegistry.get(token);
 
 			if (methods == null) {
-				methods = new HashMap<String, Method>();
+				methods = new HashMap<>();
 
 				_methodRegistry.put(token, methods);
 			}

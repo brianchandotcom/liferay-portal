@@ -143,7 +143,7 @@ public class FileServerTestUtil {
 			data, data.length / 2, data.length - data.length / 2);
 	}
 
-	protected static final Set<Path> _paths = new HashSet<Path>();
+	protected static final Set<Path> _paths = new HashSet<>();
 
 	protected static class FolderCompareFileVisitor
 		extends SimpleFileVisitor<Path> {

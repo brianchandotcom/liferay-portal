@@ -30,7 +30,7 @@ public class NGramHolder {
 		List<String> grams = _nGrams.get(key);
 
 		if (grams == null) {
-			grams = new ArrayList<String>();
+			grams = new ArrayList<>();
 
 			_nGrams.put(key, grams);
 		}
@@ -58,11 +58,8 @@ public class NGramHolder {
 		return _nGramStarts;
 	}
 
-	private final Map<String, String> _nGramEnds =
-		new HashMap<String, String>();
-	private final Map<String, List<String>> _nGrams =
-		new HashMap<String, List<String>>();
-	private final Map<String, String> _nGramStarts =
-		new HashMap<String, String>();
+	private final Map<String, String> _nGramEnds = new HashMap<>();
+	private final Map<String, List<String>> _nGrams = new HashMap<>();
+	private final Map<String, String> _nGramStarts = new HashMap<>();
 
 }

@@ -384,7 +384,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			return Collections.emptyList();
 		}
 
-		List<T> slaveBaseModels = new ArrayList<T>(slavePrimaryKeys.length);
+		List<T> slaveBaseModels = new ArrayList<>(slavePrimaryKeys.length);
 
 		try {
 			for (long slavePrimaryKey : slavePrimaryKeys) {

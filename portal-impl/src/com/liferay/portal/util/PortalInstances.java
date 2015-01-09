@@ -293,7 +293,7 @@ public class PortalInstances {
 	}
 
 	private long[] _getCompanyIdsBySQL() throws SQLException {
-		List<Long> companyIds = new ArrayList<Long>();
+		List<Long> companyIds = new ArrayList<>();
 
 		String currentShardName = ShardUtil.setTargetSource(
 			PropsValues.SHARD_DEFAULT_NAME);
@@ -357,7 +357,7 @@ public class PortalInstances {
 			List<Company> companies = CompanyLocalServiceUtil.getCompanies(
 				false);
 
-			List<String> webIdsList = new ArrayList<String>(companies.size());
+			List<String> webIdsList = new ArrayList<>(companies.size());
 
 			for (Company company : companies) {
 				String webId = company.getWebId();

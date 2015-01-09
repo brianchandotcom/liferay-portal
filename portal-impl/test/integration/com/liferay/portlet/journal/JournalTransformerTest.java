@@ -136,7 +136,7 @@ public class JournalTransformerTest {
 	public void testLocaleTransformerListener() throws Exception {
 		Map<String, String> tokens = getTokens();
 
-		Map<Locale, String> contents = new HashMap<Locale, String>();
+		Map<Locale, String> contents = new HashMap<>();
 
 		contents.put(LocaleUtil.BRAZIL, "Joao da Silva");
 		contents.put(LocaleUtil.US, "Joe Bloggs");

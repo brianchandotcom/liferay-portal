@@ -128,11 +128,9 @@ public class AtomCollectionAdapterRegistryUtil {
 		new AtomCollectionAdapterRegistryUtil();
 
 	private final Map<String, AtomCollectionAdapter<?>>
-		_atomCollectionAdapters =
-			new ConcurrentHashMap<String, AtomCollectionAdapter<?>>();
+		_atomCollectionAdapters = new ConcurrentHashMap<>();
 	private final ServiceRegistrationMap<AtomCollectionAdapter<?>>
-		_serviceRegistrations =
-			new ServiceRegistrationMap<AtomCollectionAdapter<?>>();
+		_serviceRegistrations = new ServiceRegistrationMap<>();
 	private final
 		ServiceTracker<AtomCollectionAdapter<?>, AtomCollectionAdapter<?>>
 			_serviceTracker;

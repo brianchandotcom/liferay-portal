@@ -59,7 +59,7 @@ public class TestTask extends BaseBndTask {
 				StringTokenizer stringTokenizer = new StringTokenizer(
 					_runFiles, ",");
 
-				projects = new LinkedList<Project>();
+				projects = new LinkedList<>();
 
 				while (stringTokenizer.hasMoreTokens()) {
 					String runFilePath = stringTokenizer.nextToken();

@@ -179,7 +179,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "structures")) {
-			List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
+			List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
 			ActionableDynamicQuery ddmStructureActionableDynamicQuery =
 				getDDMStructureActionableDynamicQuery(
@@ -301,7 +301,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		articleActionableDynamicQuery.performCount();
 
-		List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
+		List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
 		ActionableDynamicQuery ddmStructureActionableDynamicQuery =
 			getDDMStructureActionableDynamicQuery(

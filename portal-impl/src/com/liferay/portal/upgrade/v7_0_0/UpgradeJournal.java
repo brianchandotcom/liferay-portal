@@ -179,7 +179,7 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				DDMStructure.class.getName());
 
-			List<String> actionIds = new ArrayList<String>();
+			List<String> actionIds = new ArrayList<>();
 
 			actionIds.add(ActionKeys.VIEW);
 
@@ -265,7 +265,7 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				DDMTemplate.class.getName());
 
-			List<String> actionIds = new ArrayList<String>();
+			List<String> actionIds = new ArrayList<>();
 
 			actionIds.add(ActionKeys.VIEW);
 

@@ -251,7 +251,7 @@ public class SanitizerLogWrapper extends LogWrapper {
 	}
 
 	protected Throwable sanitize(Throwable throwable) {
-		List<Throwable> throwables = new ArrayList<Throwable>();
+		List<Throwable> throwables = new ArrayList<>();
 
 		Throwable tempThrowable = throwable;
 

@@ -83,8 +83,7 @@ public class RouteImpl implements Route {
 
 	@Override
 	public String parametersToUrl(Map<String, String> parameters) {
-		InheritableMap<String, String> allParameters =
-			new InheritableMap<String, String>();
+		InheritableMap<String, String> allParameters = new InheritableMap<>();
 
 		allParameters.setParentMap(parameters);
 
@@ -173,12 +172,10 @@ public class RouteImpl implements Route {
 	private static final StringEncoder _urlEncoder = new URLStringEncoder();
 
 	private final Map<String, StringParser> _generatedParameters =
-		new HashMap<String, StringParser>();
-	private final Set<String> _ignoredParameters = new LinkedHashSet<String>();
-	private final Map<String, String> _implicitParameters =
-		new HashMap<String, String>();
-	private final Map<String, String> _overriddenParameters =
-		new HashMap<String, String>();
+		new HashMap<>();
+	private final Set<String> _ignoredParameters = new LinkedHashSet<>();
+	private final Map<String, String> _implicitParameters = new HashMap<>();
+	private final Map<String, String> _overriddenParameters = new HashMap<>();
 	private final StringParser _stringParser;
 
 }

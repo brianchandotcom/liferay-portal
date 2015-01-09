@@ -270,7 +270,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 			long ddmStructureId, long[] classPKs, List<String> fieldNames)
 		throws Exception {
 
-		Map<Long, Fields> fieldsMap = new HashMap<Long, Fields>();
+		Map<Long, Fields> fieldsMap = new HashMap<>();
 
 		List<Fields> fieldsList = _doQuery(
 			ddmStructureId, classPKs, fieldNames, null, null);
@@ -289,7 +289,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 			Condition condition, OrderByComparator<Fields> orderByComparator)
 		throws Exception {
 
-		List<Fields> fieldsList = new ArrayList<Fields>();
+		List<Fields> fieldsList = new ArrayList<>();
 
 		Expression expression = null;
 
@@ -352,7 +352,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 	}
 
 	private long[] _getExpandoRowIds(long ddmStructureId) {
-		List<Long> expandoRowIds = new ArrayList<Long>();
+		List<Long> expandoRowIds = new ArrayList<>();
 
 		List<DDMStorageLink> ddmStorageLinks =
 			DDMStorageLinkLocalServiceUtil.getStructureStorageLinks(
@@ -392,8 +392,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 	private Map<Locale, List<Serializable>> _getValuesMap(
 		int columnType, String fieldType, Serializable data) {
 
-		Map<Locale, List<Serializable>> valuesMap =
-			new HashMap<Locale, List<Serializable>>();
+		Map<Locale, List<Serializable>> valuesMap = new HashMap<>();
 
 		if (columnType == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED) {
 			Map<Locale, String[]> stringArrayMap = (Map<Locale, String[]>)data;
@@ -518,7 +517,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 	}
 
 	private List<Serializable> _transformValue(String type, String value) {
-		List<Serializable> serializables = new ArrayList<Serializable>();
+		List<Serializable> serializables = new ArrayList<>();
 
 		if (FieldConstants.isNumericType(type) &&
 			_NUMERIC_NULL_VALUE.equals(value)) {
@@ -534,7 +533,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 	}
 
 	private List<Serializable> _transformValue(String type, String[] values) {
-		List<Serializable> serializables = new ArrayList<Serializable>();
+		List<Serializable> serializables = new ArrayList<>();
 
 		for (String value : values) {
 			if (FieldConstants.isNumericType(type) &&
@@ -564,8 +563,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 			Map<Locale, ?> dataMap = null;
 
 			if (field.isRepeatable()) {
-				Map<Locale, String[]> stringArrayMap =
-					new HashMap<Locale, String[]>();
+				Map<Locale, String[]> stringArrayMap = new HashMap<>();
 
 				for (Locale locale : field.getAvailableLocales()) {
 					Serializable value = field.getValue(locale);
@@ -592,7 +590,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 				dataMap = stringArrayMap;
 			}
 			else {
-				Map<Locale, String> stringMap = new HashMap<Locale, String>();
+				Map<Locale, String> stringMap = new HashMap<>();
 
 				for (Locale locale : field.getAvailableLocales()) {
 					Serializable value = field.getValue(locale);

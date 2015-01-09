@@ -1218,8 +1218,7 @@ public class IntrabandProxyUtilTest {
 		Assert.assertEquals(name, methodNode.name);
 		Assert.assertEquals(desc, methodNode.desc);
 
-		List<String> exceptions = new ArrayList<String>(
-			exceptionClasses.length);
+		List<String> exceptions = new ArrayList<>(exceptionClasses.length);
 
 		for (Class<?> exceptionClass : exceptionClasses) {
 			exceptions.add(Type.getInternalName(exceptionClass));
@@ -1249,7 +1248,7 @@ public class IntrabandProxyUtilTest {
 	}
 
 	private String[] _buildProxyMethodSignatures(Class<?> clazz) {
-		List<Method> proxyMethods = new ArrayList<Method>();
+		List<Method> proxyMethods = new ArrayList<>();
 
 		for (Method method : ReflectionUtil.getVisibleMethods(clazz)) {
 			if (method.getAnnotation(Proxy.class) != null) {
@@ -2333,7 +2332,7 @@ public class IntrabandProxyUtilTest {
 	}
 
 	private List<Method> _getCopiedMethods(Class<?> clazz) {
-		List<Method> emptyMethods = new ArrayList<Method>();
+		List<Method> emptyMethods = new ArrayList<>();
 
 		for (Method method : ReflectionUtil.getVisibleMethods(clazz)) {
 			String name = method.getName();
@@ -2351,7 +2350,7 @@ public class IntrabandProxyUtilTest {
 	}
 
 	private List<Method> _getEmptyMethods(Class<?> clazz) {
-		List<Method> emptyMethods = new ArrayList<Method>();
+		List<Method> emptyMethods = new ArrayList<>();
 
 		for (Method method : ReflectionUtil.getVisibleMethods(clazz)) {
 			if (Modifier.isAbstract(method.getModifiers()) &&
@@ -2366,7 +2365,7 @@ public class IntrabandProxyUtilTest {
 	}
 
 	private List<Method> _getIdMethods(Class<?> clazz) {
-		List<Method> idMethods = new ArrayList<Method>();
+		List<Method> idMethods = new ArrayList<>();
 
 		for (Method method : ReflectionUtil.getVisibleMethods(clazz)) {
 			if (method.getAnnotation(Id.class) != null) {
@@ -2378,7 +2377,7 @@ public class IntrabandProxyUtilTest {
 	}
 
 	private List<Method> _getProxyMethods(Class<?> clazz) {
-		List<Method> proxyMethods = new ArrayList<Method>();
+		List<Method> proxyMethods = new ArrayList<>();
 
 		for (Method method : ReflectionUtil.getVisibleMethods(clazz)) {
 			if (method.getAnnotation(Proxy.class) != null) {
@@ -2419,14 +2418,11 @@ public class IntrabandProxyUtilTest {
 		return classNode;
 	}
 
-	private static Map<Class<?>, Class<?>> _autoboxingMap =
-		new HashMap<Class<?>, Class<?>>();
+	private static Map<Class<?>, Class<?>> _autoboxingMap = new HashMap<>();
 	private static ClassLoader _classLoader =
 		IntrabandProxyUtilTest.class.getClassLoader();
-	private static Map<Class<?>, Object> _defaultValueMap =
-		new HashMap<Class<?>, Object>();
-	private static Map<Class<?>, Object> _sampleValueMap =
-		new HashMap<Class<?>, Object>();
+	private static Map<Class<?>, Object> _defaultValueMap = new HashMap<>();
+	private static Map<Class<?>, Object> _sampleValueMap = new HashMap<>();
 	private static Type[] _types = {
 		Type.BOOLEAN_TYPE, Type.BYTE_TYPE, Type.CHAR_TYPE, Type.DOUBLE_TYPE,
 		Type.FLOAT_TYPE, Type.INT_TYPE, Type.LONG_TYPE, Type.SHORT_TYPE,

@@ -209,7 +209,7 @@ public class EditFolderAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "folderIds"), 0L);
 		}
 
-		List<TrashedModel> trashedModels = new ArrayList<TrashedModel>();
+		List<TrashedModel> trashedModels = new ArrayList<>();
 
 		for (long deleteFolderId : deleteFolderIds) {
 			if (moveToTrash) {

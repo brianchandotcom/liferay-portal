@@ -43,7 +43,7 @@ public class FolderAtomCollectionAdapter
 
 	@Override
 	public List<String> getEntryAuthors(Folder folder) {
-		List<String> authors = new ArrayList<String>();
+		List<String> authors = new ArrayList<>();
 
 		authors.add(folder.getUserName());
 

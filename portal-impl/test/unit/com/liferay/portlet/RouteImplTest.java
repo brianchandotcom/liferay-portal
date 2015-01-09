@@ -35,13 +35,12 @@ public class RouteImplTest {
 
 		httpUtil.setHttp(new HttpImpl());
 
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, String> parameters = new HashMap<>();
 
 		parameters.put("action", "view");
 		parameters.put("id", "bob");
 
-		Map<String, String> originalParameters = new HashMap<String, String>(
-			parameters);
+		Map<String, String> originalParameters = new HashMap<>(parameters);
 
 		Route route = new RouteImpl("{action}/{id:\\d+}");
 

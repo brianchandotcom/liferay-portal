@@ -51,7 +51,7 @@ public class JournalFolderLocalServiceTreeTest
 	public void testJournalFolderTreePathWhenMovingFolderWithSubfolder()
 		throws Exception {
 
-		List<JournalFolder> folders = new ArrayList<JournalFolder>();
+		List<JournalFolder> folders = new ArrayList<>();
 
 		JournalFolder folderA = JournalTestUtil.addFolder(
 			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,

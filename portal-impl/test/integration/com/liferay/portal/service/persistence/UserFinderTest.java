@@ -96,7 +96,7 @@ public class UserFinderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_inheritedUserGroupsParams = new LinkedHashMap<String, Object>();
+		_inheritedUserGroupsParams = new LinkedHashMap<>();
 
 		_inheritedUserGroupsParams.put("inherit", Boolean.TRUE);
 		_inheritedUserGroupsParams.put(
@@ -112,7 +112,7 @@ public class UserFinderTest {
 
 		_roleId = RoleTestUtil.addRegularRole(_group.getGroupId());
 
-		_inheritedUserRolesParams = new LinkedHashMap<String, Object>();
+		_inheritedUserRolesParams = new LinkedHashMap<>();
 
 		_inheritedUserRolesParams.put("inherit", Boolean.TRUE);
 		_inheritedUserRolesParams.put("usersRoles", _roleId);
@@ -174,8 +174,7 @@ public class UserFinderTest {
 
 	@Test
 	public void testFindByKeywordsGroupUsers() throws Exception {
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("usersGroups", _group.getGroupId());
 
@@ -189,8 +188,7 @@ public class UserFinderTest {
 
 	@Test
 	public void testFindByKeywordsOrganizationUsers() throws Exception {
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("usersOrgs", _organization.getOrganizationId());
 
@@ -204,8 +202,7 @@ public class UserFinderTest {
 
 	@Test
 	public void testFindByKeywordsUserGroupUsers() throws Exception {
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("usersUserGroups", _userGroup.getUserGroupId());
 

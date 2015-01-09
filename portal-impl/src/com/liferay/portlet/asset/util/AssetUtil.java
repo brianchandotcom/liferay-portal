@@ -189,7 +189,7 @@ public class AssetUtil {
 			PermissionChecker permissionChecker, long[] categoryIds)
 		throws PortalException {
 
-		List<Long> viewableCategoryIds = new ArrayList<Long>();
+		List<Long> viewableCategoryIds = new ArrayList<>();
 
 		for (long categoryId : categoryIds) {
 			AssetCategory category =
@@ -211,7 +211,7 @@ public class AssetUtil {
 			PermissionChecker permissionChecker, long[] tagIds)
 		throws PortalException {
 
-		List<Long> viewableTagIds = new ArrayList<Long>();
+		List<Long> viewableTagIds = new ArrayList<>();
 
 		for (long tagId : tagIds) {
 			if (AssetTagPermission.contains(
@@ -229,12 +229,12 @@ public class AssetUtil {
 			PermissionChecker permissionChecker, long[][] tagIdsArray)
 		throws PortalException {
 
-		List<long[]> viewableTagIdsArray = new ArrayList<long[]>();
+		List<long[]> viewableTagIdsArray = new ArrayList<>();
 
 		for (int i = 0; i< tagIdsArray.length; i++) {
 			long[] tagIds = tagIdsArray[i];
 
-			List<Long> viewableTagIds = new ArrayList<Long>();
+			List<Long> viewableTagIds = new ArrayList<>();
 
 			for (long tagId : tagIds) {
 				if (AssetTagPermission.contains(
@@ -278,7 +278,7 @@ public class AssetUtil {
 			PermissionChecker permissionChecker, long[] vocabularyIds)
 		throws PortalException {
 
-		List<Long> viewableVocabularyIds = new ArrayList<Long>();
+		List<Long> viewableVocabularyIds = new ArrayList<>();
 
 		for (long vocabularyId : vocabularyIds) {
 			if (AssetVocabularyPermission.contains(
@@ -341,7 +341,7 @@ public class AssetUtil {
 
 			if (allAssetCategoryIds != null) {
 				Map<Long, String> assetVocabularyAssetCategoryIds =
-					new HashMap<Long, String>();
+					new HashMap<>();
 
 				for (long assetCategoryId : allAssetCategoryIds) {
 					AssetCategory assetCategory =
@@ -459,9 +459,8 @@ public class AssetUtil {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Map<String, PortletURL> addPortletURLs =
-			new TreeMap<String, PortletURL>(
-				new ModelResourceComparator(themeDisplay.getLocale()));
+		Map<String, PortletURL> addPortletURLs = new TreeMap<>(
+			new ModelResourceComparator(themeDisplay.getLocale()));
 
 		if (Validator.isNull(redirect)) {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -564,7 +563,7 @@ public class AssetUtil {
 	}
 
 	public static List<AssetEntry> getAssetEntries(Hits hits) {
-		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
+		List<AssetEntry> assetEntries = new ArrayList<>();
 
 		for (Document document : hits.getDocs()) {
 			String className = GetterUtil.getString(
@@ -609,7 +608,7 @@ public class AssetUtil {
 			WebKeys.ASSET_LAYOUT_TAG_NAMES);
 
 		if (tagNames == null) {
-			tagNames = new HashSet<String>();
+			tagNames = new HashSet<>();
 
 			request.setAttribute(WebKeys.ASSET_LAYOUT_TAG_NAMES, tagNames);
 		}

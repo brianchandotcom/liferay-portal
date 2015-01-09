@@ -334,7 +334,7 @@ public class MediaWikiImporter implements WikiImporter {
 		}
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			new ArrayList<ObjectValuePair<String, InputStream>>();
+			new ArrayList<>();
 
 		try {
 			int percentage = 50;
@@ -452,7 +452,7 @@ public class MediaWikiImporter implements WikiImporter {
 				Element lastRevisionElement = revisionElements.get(
 					revisionElements.size() - 1);
 
-				revisionElements = new ArrayList<Element>();
+				revisionElements = new ArrayList<>();
 
 				revisionElements.add(lastRevisionElement);
 			}
@@ -564,7 +564,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 		Matcher matcher = _categoriesPattern.matcher(content);
 
-		List<String> assetTagNames = new ArrayList<String>();
+		List<String> assetTagNames = new ArrayList<>();
 
 		while (matcher.find()) {
 			String categoryName = matcher.group(1);
@@ -631,7 +631,7 @@ public class MediaWikiImporter implements WikiImporter {
 	protected List<String> readSpecialNamespaces(Element root)
 		throws ImportFilesException {
 
-		List<String> namespaces = new ArrayList<String>();
+		List<String> namespaces = new ArrayList<>();
 
 		Element siteinfoElement = root.element("siteinfo");
 
@@ -664,7 +664,7 @@ public class MediaWikiImporter implements WikiImporter {
 			return Collections.emptyMap();
 		}
 
-		Map<String, String> usersMap = new HashMap<String, String>();
+		Map<String, String> usersMap = new HashMap<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(usersInputStream));

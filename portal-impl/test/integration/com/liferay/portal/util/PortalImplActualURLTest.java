@@ -149,11 +149,11 @@ public class PortalImplActualURLTest {
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(LocaleUtil.US, "Test Journal Article");
 
-		Map<Locale, String> contentMap = new HashMap<Locale, String>();
+		Map<Locale, String> contentMap = new HashMap<>();
 
 		contentMap.put(LocaleUtil.US, "This test content is in English.");
 
@@ -184,7 +184,7 @@ public class PortalImplActualURLTest {
 	}
 
 	protected Map<String, Object> getRequestContext() {
-		Map<String, Object> requestContext = new HashMap<String, Object>();
+		Map<String, Object> requestContext = new HashMap<>();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(Method.GET, "/");

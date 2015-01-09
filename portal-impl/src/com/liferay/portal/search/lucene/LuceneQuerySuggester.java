@@ -305,8 +305,7 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 		IndexSearcher indexSearcher = null;
 
 		try {
-			Map<String, List<String>> suggestions =
-				new LinkedHashMap<String, List<String>>();
+			Map<String, List<String>> suggestions = new LinkedHashMap<>();
 
 			float scoresThreshold = searchContext.getScoresThreshold();
 
@@ -317,7 +316,7 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 			indexSearcher = LuceneHelperUtil.getIndexSearcher(
 				searchContext.getCompanyId());
 
-			List<IndexReader> indexReaders = new ArrayList<IndexReader>();
+			List<IndexReader> indexReaders = new ArrayList<>();
 
 			if (indexSearcher.maxDoc() > 0) {
 				ReaderUtil.gatherSubReaders(

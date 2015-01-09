@@ -45,7 +45,7 @@ public class ServletDefinitionTest {
 	public void testAddMultipleURLPatterns() {
 		String urlPattern = "/o/module";
 
-		List<String> urlPatterns = new ArrayList<String>();
+		List<String> urlPatterns = new ArrayList<>();
 
 		for (int i = 0; i < 10; i++) {
 			urlPatterns.add(urlPattern + "/" + i);
@@ -76,7 +76,7 @@ public class ServletDefinitionTest {
 
 	@Test
 	public void testSetMultipleInitParameters() {
-		Map<String, String> initParameters = new HashMap<String, String>();
+		Map<String, String> initParameters = new HashMap<>();
 
 		for (int i = 0; i < 10; i++) {
 			initParameters.put("parameter-" + i, String.valueOf(i));

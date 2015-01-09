@@ -141,7 +141,7 @@ public class LayoutsTreeTag extends IncludeTag {
 	}
 
 	protected String getModules() {
-		List<String> modules = new ArrayList<String>();
+		List<String> modules = new ArrayList<>();
 
 		modules.add("liferay-layouts-tree");
 

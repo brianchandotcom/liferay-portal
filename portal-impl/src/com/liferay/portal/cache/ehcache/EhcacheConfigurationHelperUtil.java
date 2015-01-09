@@ -136,7 +136,7 @@ public class EhcacheConfigurationHelperUtil {
 				clusterAware, usingDefault);
 
 		Set<PortalCacheConfiguration> portalCacheConfigurations =
-			new HashSet<PortalCacheConfiguration>();
+			new HashSet<>();
 
 		Map<String, CacheConfiguration> cacheConfigurations =
 			ehcacheConfiguration.getCacheConfigurations();
@@ -220,8 +220,7 @@ public class EhcacheConfigurationHelperUtil {
 		}
 
 		Map<CallbackConfiguration, CacheListenerScope>
-			cacheListenerConfigurations =
-				new HashMap<CallbackConfiguration, CacheListenerScope>();
+			cacheListenerConfigurations = new HashMap<>();
 
 		List<CacheEventListenerFactoryConfiguration>
 			cacheEventListenerConfigurations =

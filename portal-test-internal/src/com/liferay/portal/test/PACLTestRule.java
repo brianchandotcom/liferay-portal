@@ -355,9 +355,8 @@ public class PACLTestRule extends BaseTestRule<HotDeployEvent, Object> {
 		}
 
 		private final Map<String, Class<?>> _classes =
-			new ConcurrentHashMap<String, Class<?>>();
-		private final Map<String, URL> _urls =
-			new ConcurrentHashMap<String, URL>();
+			new ConcurrentHashMap<>();
+		private final Map<String, URL> _urls = new ConcurrentHashMap<>();
 
 	}
 

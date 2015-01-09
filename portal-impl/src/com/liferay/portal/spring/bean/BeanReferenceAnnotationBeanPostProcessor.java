@@ -186,6 +186,6 @@ public class BeanReferenceAnnotationBeanPostProcessor
 		BeanReferenceAnnotationBeanPostProcessor.class);
 
 	private BeanFactory _beanFactory;
-	private final Map<String, Object> _beans = new HashMap<String, Object>();
+	private final Map<String, Object> _beans = new HashMap<>();
 
 }

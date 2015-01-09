@@ -201,7 +201,7 @@ public class ImageMagickImpl implements ImageMagick {
 	}
 
 	protected LinkedList<String> getResourceLimits() {
-		LinkedList<String> resourceLimits = new LinkedList<String>();
+		LinkedList<String> resourceLimits = new LinkedList<>();
 
 		if (_resourceLimitsProperties == null) {
 			return resourceLimits;

@@ -470,7 +470,7 @@ public class ImageToolImpl implements ImageTool {
 	public ImageBag read(byte[] bytes) throws IOException {
 		String formatName = null;
 		ImageInputStream imageInputStream = null;
-		Queue<ImageReader> imageReaders = new LinkedList<ImageReader>();
+		Queue<ImageReader> imageReaders = new LinkedList<>();
 		RenderedImage renderedImage = null;
 
 		try {

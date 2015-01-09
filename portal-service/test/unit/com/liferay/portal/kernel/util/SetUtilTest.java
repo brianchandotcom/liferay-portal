@@ -46,13 +46,13 @@ public class SetUtilTest {
 
 	@Test
 	public void testIntersectWithoutWrapping() {
-		Set<String> set1 = new HashSet<String>(Arrays.asList("a", "b", "c"));
-		Set<String> set2 = new HashSet<String>(Arrays.asList("c", "d"));
+		Set<String> set1 = new HashSet<>(Arrays.asList("a", "b", "c"));
+		Set<String> set2 = new HashSet<>(Arrays.asList("c", "d"));
 
 		Assert.assertSame(set2, SetUtil.intersect(set1, set2));
 		Assert.assertEquals(set2, new HashSet<String>(Arrays.asList("c")));
 
-		Set<String> set3 = new HashSet<String>(Arrays.asList("c", "d", "e"));
+		Set<String> set3 = new HashSet<>(Arrays.asList("c", "d", "e"));
 
 		Assert.assertSame(set1, SetUtil.intersect(set1, set3));
 		Assert.assertEquals(set1, new HashSet<String>(Arrays.asList("c")));

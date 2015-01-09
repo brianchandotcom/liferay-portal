@@ -40,7 +40,7 @@ public class RSSPreferencesValidator implements PreferencesValidator {
 	public void validate(PortletPreferences preferences)
 		throws ValidatorException {
 
-		List<String> badURLs = new ArrayList<String>();
+		List<String> badURLs = new ArrayList<>();
 
 		String[] urls = preferences.getValues("urls", new String[0]);
 

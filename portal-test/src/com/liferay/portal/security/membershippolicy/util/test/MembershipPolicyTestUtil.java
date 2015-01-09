@@ -73,7 +73,7 @@ public class MembershipPolicyTestUtil {
 	public static Group addGroup() throws Exception {
 		String name = RandomTestUtil.randomString();
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), name);
 
@@ -199,12 +199,11 @@ public class MembershipPolicyTestUtil {
 		String twitterSn = RandomTestUtil.randomString();
 		String ymSn = RandomTestUtil.randomString();
 
-		List<Address> addresses = new ArrayList<Address>();
-		List<EmailAddress> emailAddresses = new ArrayList<EmailAddress>();
-		List<Phone> phones = new ArrayList<Phone>();
-		List<Website> websites = new ArrayList<Website>();
-		List<AnnouncementsDelivery> announcementsDelivers =
-			new ArrayList<AnnouncementsDelivery>();
+		List<Address> addresses = new ArrayList<>();
+		List<EmailAddress> emailAddresses = new ArrayList<>();
+		List<Phone> phones = new ArrayList<>();
+		List<Website> websites = new ArrayList<>();
+		List<AnnouncementsDelivery> announcementsDelivers = new ArrayList<>();
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -231,8 +230,7 @@ public class MembershipPolicyTestUtil {
 		expandoBridge.addAttribute("key3", false);
 		expandoBridge.addAttribute("key4", false);
 
-		Map<String, Serializable> expandoMap =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> expandoMap = new HashMap<>();
 
 		expandoMap.put("key1", "value1");
 		expandoMap.put("key2", "value2");

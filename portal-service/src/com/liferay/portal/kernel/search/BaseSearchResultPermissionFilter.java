@@ -70,8 +70,8 @@ public abstract class BaseSearchResultPermissionFilter
 		int offset = 0;
 		long startTime = 0;
 
-		List<Document> documents = new ArrayList<Document>();
-		List<Float> scores = new ArrayList<Float>();
+		List<Document> documents = new ArrayList<>();
+		List<Float> scores = new ArrayList<>();
 
 		while (true) {
 			int count = end - documents.size();

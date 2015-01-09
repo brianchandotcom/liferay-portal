@@ -238,7 +238,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 	@Override
 	public Enumeration<String> getAttributeNames() {
-		List<String> columnNames = new ArrayList<String>();
+		List<String> columnNames = new ArrayList<>();
 
 		for (ExpandoColumn column : getAttributeColumns()) {
 			columnNames.add(column.getName());
@@ -275,8 +275,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 	@Override
 	public Map<String, Serializable> getAttributes(boolean secure) {
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> attributes = new HashMap<>();
 
 		for (ExpandoColumn column : getAttributeColumns()) {
 			attributes.put(
@@ -648,7 +647,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	protected List<ExpandoColumn> getAttributeColumns() {
-		List<ExpandoColumn> columns = new ArrayList<ExpandoColumn>();
+		List<ExpandoColumn> columns = new ArrayList<>();
 
 		try {
 			columns = ExpandoColumnLocalServiceUtil.getDefaultTableColumns(

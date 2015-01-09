@@ -39,8 +39,8 @@ public class DefaultSearchResultPermissionFilter
 
 	@Override
 	protected void filterHits(Hits hits, SearchContext searchContext) {
-		List<Document> docs = new ArrayList<Document>();
-		List<Float> scores = new ArrayList<Float>();
+		List<Document> docs = new ArrayList<>();
+		List<Float> scores = new ArrayList<>();
 
 		Document[] documents = hits.getDocs();
 

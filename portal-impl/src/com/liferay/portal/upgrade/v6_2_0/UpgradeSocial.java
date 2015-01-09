@@ -140,7 +140,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			Set<String> keys = new HashSet<String>();
+			Set<String> keys = new HashSet<>();
 
 			con = DataAccess.getUpgradeOptimizedConnection();
 
@@ -256,7 +256,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			Set<String> keys = new HashSet<String>();
+			Set<String> keys = new HashSet<>();
 
 			con = DataAccess.getUpgradeOptimizedConnection();
 

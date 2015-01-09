@@ -102,7 +102,7 @@ public class OracleDB extends BaseDB {
 
 	@Override
 	public List<Index> getIndexes(Connection con) throws SQLException {
-		List<Index> indexes = new ArrayList<Index>();
+		List<Index> indexes = new ArrayList<>();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;

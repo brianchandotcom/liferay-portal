@@ -77,7 +77,6 @@ public class SessionManager {
 	private static final Logger _logger = LoggerFactory.getLogger(
 		SessionManager.class);
 
-	private static final Map<Long, Session> _sessions =
-		new HashMap<Long, Session>();
+	private static final Map<Long, Session> _sessions = new HashMap<>();
 
 }

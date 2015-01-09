@@ -114,6 +114,6 @@ public class FileTimestampUtil {
 		FileTimestampUtil.class);
 
 	private static final Map<String, Long> _timestamps =
-		new ConcurrentHashMap<String, Long>();
+		new ConcurrentHashMap<>();
 
 }

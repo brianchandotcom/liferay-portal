@@ -62,10 +62,9 @@ public class ClusterNodeResponses implements Serializable {
 	}
 
 	private final Map<Address, ClusterNodeResponse> _clusterResponsesByAddress =
-		new HashMap<Address, ClusterNodeResponse>();
+		new HashMap<>();
 	private final Map<String, ClusterNodeResponse>
-		_clusterResponsesByClusterNode =
-			new HashMap<String, ClusterNodeResponse>();
+		_clusterResponsesByClusterNode = new HashMap<>();
 	private final BlockingQueue<ClusterNodeResponse> _clusterResponsesQueue =
 		new LinkedBlockingQueue<ClusterNodeResponse>();
 

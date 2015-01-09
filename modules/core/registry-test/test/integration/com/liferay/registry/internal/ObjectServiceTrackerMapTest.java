@@ -466,7 +466,7 @@ public class ObjectServiceTrackerMapTest {
 			ServiceRegistration<TrackedOne> serviceRegistration4 =
 				registerService(new TrackedOne(), "aTarget2");
 
-			Set<String> targets = new HashSet<String>();
+			Set<String> targets = new HashSet<>();
 
 			targets.add("aTarget1");
 			targets.add("aTarget2");

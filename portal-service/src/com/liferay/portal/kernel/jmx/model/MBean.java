@@ -94,7 +94,7 @@ public class MBean implements Serializable {
 		if (_path == null) {
 			String[] parts = StringUtil.split(_mBeanName);
 
-			_path = new ArrayList<String>(parts.length);
+			_path = new ArrayList<>(parts.length);
 
 			for (String part : parts) {
 				String[] kvp = StringUtil.split(part, CharPool.EQUAL);

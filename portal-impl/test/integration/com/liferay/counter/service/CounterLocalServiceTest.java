@@ -89,7 +89,7 @@ public class CounterLocalServiceTest {
 
 		ProcessConfig processConfig = builder.build();
 
-		List<Future<Long[]>> futuresList = new ArrayList<Future<Long[]>>();
+		List<Future<Long[]>> futuresList = new ArrayList<>();
 
 		for (int i = 0; i < _PROCESS_COUNT; i++) {
 			ProcessCallable<Long[]> processCallable =
@@ -107,7 +107,7 @@ public class CounterLocalServiceTest {
 
 		int total = _PROCESS_COUNT * _INCREMENT_COUNT;
 
-		List<Long> ids = new ArrayList<Long>(total);
+		List<Long> ids = new ArrayList<>(total);
 
 		for (Future<Long[]> futures : futuresList) {
 			ids.addAll(Arrays.asList(futures.get()));
@@ -165,7 +165,7 @@ public class CounterLocalServiceTest {
 					"META-INF/counter-spring.xml"),
 				false);
 
-			List<Long> ids = new ArrayList<Long>();
+			List<Long> ids = new ArrayList<>();
 
 			try {
 				for (int i = 0; i < _incrementCount; i++) {

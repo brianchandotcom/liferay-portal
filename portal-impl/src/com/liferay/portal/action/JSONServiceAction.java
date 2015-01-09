@@ -658,7 +658,6 @@ public class JSONServiceAction extends JSONAction {
 
 	private Set<String> _invalidClassNames;
 	private Set<String> _invalidMethodNames;
-	private Map<String, Object[]> _methodCache =
-		new HashMap<String, Object[]>();
+	private Map<String, Object[]> _methodCache = new HashMap<>();
 
 }

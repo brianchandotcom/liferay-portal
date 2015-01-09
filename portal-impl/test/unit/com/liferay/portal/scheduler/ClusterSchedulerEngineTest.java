@@ -1630,8 +1630,8 @@ public class ClusterSchedulerEngineTest {
 	public static class ClusterableContextThreadLocalAdvice {
 
 		public static Map<String, Serializable> getAndClearThreadLocals() {
-			Map<String, Serializable> threadLocal =
-				new HashMap<String, Serializable>(_threadLocals);
+			Map<String, Serializable> threadLocal = new HashMap<>(
+				_threadLocals);
 
 			_threadLocals.clear();
 
@@ -1648,7 +1648,7 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		private static Map<String, Serializable> _threadLocals =
-			new HashMap<String, Serializable>();
+			new HashMap<>();
 
 	}
 
@@ -1756,8 +1756,7 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	private List<SchedulerResponse> _getMemoryClusteredJobs(String groupName) {
-		List<SchedulerResponse> schedulerResponses =
-			new ArrayList<SchedulerResponse>();
+		List<SchedulerResponse> schedulerResponses = new ArrayList<>();
 
 		for (ObjectValuePair<SchedulerResponse, TriggerState> objectValuePair :
 				_memoryClusteredJobs.values()) {
@@ -1929,15 +1928,14 @@ public class ClusterSchedulerEngineTest {
 
 		@Override
 		public List<SchedulerResponse> getScheduledJobs() {
-			return new ArrayList<SchedulerResponse>(_defaultJobs.values());
+			return new ArrayList<>(_defaultJobs.values());
 		}
 
 		@Override
 		public List<SchedulerResponse> getScheduledJobs(
 			StorageType storageType) {
 
-			List<SchedulerResponse> schedulerResponses =
-				new ArrayList<SchedulerResponse>();
+			List<SchedulerResponse> schedulerResponses = new ArrayList<>();
 
 			for (SchedulerResponse schedulerResponse : _defaultJobs.values()) {
 				if (storageType == schedulerResponse.getStorageType()) {
@@ -1952,8 +1950,7 @@ public class ClusterSchedulerEngineTest {
 		public List<SchedulerResponse> getScheduledJobs(
 			String groupName, StorageType storageType) {
 
-			List<SchedulerResponse> schedulerResponses =
-				new ArrayList<SchedulerResponse>();
+			List<SchedulerResponse> schedulerResponses = new ArrayList<>();
 
 			for (Map.Entry<String, SchedulerResponse> entry :
 					_defaultJobs.entrySet()) {
@@ -2156,7 +2153,7 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		private final Map<String, SchedulerResponse> _defaultJobs =
-			new HashMap<String, SchedulerResponse>();
+			new HashMap<>();
 
 	}
 

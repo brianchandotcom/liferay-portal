@@ -85,7 +85,7 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		for (int i = 0; i < locales.length; i++) {
 			String languageId = LocaleUtil.toLanguageId(locales[i]);
 
-			List<String> priorities = new ArrayList<String>();
+			List<String> priorities = new ArrayList<>();
 
 			for (int j = 0; j < 10; j++) {
 				String name = ParamUtil.getString(
@@ -126,7 +126,7 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 			String[] ranks = StringUtil.splitLines(
 				ParamUtil.getString(actionRequest, "ranks_" + languageId));
 
-			Map<String, String> map = new TreeMap<String, String>(
+			Map<String, String> map = new TreeMap<>(
 				new NaturalOrderStringComparator());
 
 			for (String rank : ranks) {

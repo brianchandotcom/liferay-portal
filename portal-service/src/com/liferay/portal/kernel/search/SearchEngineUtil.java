@@ -357,7 +357,7 @@ public class SearchEngineUtil {
 	}
 
 	public static String[] getEntryClassNames() {
-		Set<String> assetEntryClassNames = new HashSet<String>();
+		Set<String> assetEntryClassNames = new HashSet<>();
 
 		for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
 			for (String className : indexer.getClassNames()) {
@@ -1098,13 +1098,13 @@ public class SearchEngineUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(SearchEngineUtil.class);
 
-	private static Set<Long> _companyIds = new HashSet<Long>();
+	private static Set<Long> _companyIds = new HashSet<>();
 	private static String _defaultSearchEngineId;
-	private static Set<String> _excludedEntryClassNames = new HashSet<String>();
+	private static Set<String> _excludedEntryClassNames = new HashSet<>();
 	private static boolean _indexReadOnly = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.INDEX_READ_ONLY));
 	private static Map<String, SearchEngine> _searchEngines =
-		new ConcurrentHashMap<String, SearchEngine>();
+		new ConcurrentHashMap<>();
 	private static SearchPermissionChecker _searchPermissionChecker;
 
 	private ServiceTracker<SearchEngineConfigurator, SearchEngineConfigurator>

@@ -80,7 +80,7 @@ public class TaskQueueTest {
 		Assert.assertTrue(taskQueue.offer(object3, new boolean[1]));
 		Assert.assertTrue(taskQueue.offer(object4, new boolean[1]));
 
-		Set<Object> set = new HashSet<Object>();
+		Set<Object> set = new HashSet<>();
 
 		taskQueue.drainTo(set);
 

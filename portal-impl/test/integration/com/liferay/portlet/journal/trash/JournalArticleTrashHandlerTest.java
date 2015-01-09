@@ -101,7 +101,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 			"com/liferay/portlet/journal/dependencies" +
 				"/test-journal-content-image-field.xml");
 
-		Map<String, byte[]> images = new HashMap<String, byte[]>();
+		Map<String, byte[]> images = new HashMap<>();
 
 		images.put(
 			"_image_1_0_en_US",

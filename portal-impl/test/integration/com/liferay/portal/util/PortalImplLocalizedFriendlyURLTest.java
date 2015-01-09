@@ -76,13 +76,13 @@ public class PortalImplLocalizedFriendlyURLTest {
 			LocaleUtil.US
 		);
 
-		_nameMap = new HashMap<Locale, String>();
+		_nameMap = new HashMap<>();
 
 		_nameMap.put(LocaleUtil.CANADA_FRENCH, "Accueil");
 		_nameMap.put(LocaleUtil.SPAIN, "Inicio");
 		_nameMap.put(LocaleUtil.US, "Home");
 
-		_friendlyURLMap = new HashMap<Locale, String>();
+		_friendlyURLMap = new HashMap<>();
 
 		_friendlyURLMap.put(LocaleUtil.CANADA_FRENCH, "/accueil");
 		_friendlyURLMap.put(LocaleUtil.SPAIN, "/inicio");

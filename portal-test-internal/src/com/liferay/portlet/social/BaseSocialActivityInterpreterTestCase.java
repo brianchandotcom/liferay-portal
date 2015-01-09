@@ -101,7 +101,7 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 
 		Assert.assertFalse(activities.isEmpty());
 
-		Map<String, String> entryTitles = new HashMap<String, String>();
+		Map<String, String> entryTitles = new HashMap<>();
 
 		SocialActivityInterpreter activityInterpreter =
 			getActivityInterpreter();

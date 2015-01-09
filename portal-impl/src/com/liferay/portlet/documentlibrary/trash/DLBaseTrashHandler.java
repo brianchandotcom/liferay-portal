@@ -74,8 +74,7 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 		List<Folder> folders = repository.getFolders(
 			parentContainerModelId, false, start, end, null);
 
-		List<ContainerModel> containerModels = new ArrayList<ContainerModel>(
-			folders.size());
+		List<ContainerModel> containerModels = new ArrayList<>(folders.size());
 
 		for (Folder folder : folders) {
 			containerModels.add((ContainerModel)folder.getModel());
@@ -98,7 +97,7 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	public List<ContainerModel> getParentContainerModels(long classPK)
 		throws PortalException {
 
-		List<ContainerModel> containerModels = new ArrayList<ContainerModel>();
+		List<ContainerModel> containerModels = new ArrayList<>();
 
 		ContainerModel containerModel = getParentContainerModel(classPK);
 
@@ -154,7 +153,7 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 			long classPK, int start, int end)
 		throws PortalException {
 
-		List<TrashRenderer> trashRenderers = new ArrayList<TrashRenderer>();
+		List<TrashRenderer> trashRenderers = new ArrayList<>();
 
 		Repository repository = getRepository(classPK);
 
@@ -215,7 +214,7 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 			long classPK, int start, int end)
 		throws PortalException {
 
-		List<TrashRenderer> trashRenderers = new ArrayList<TrashRenderer>();
+		List<TrashRenderer> trashRenderers = new ArrayList<>();
 
 		Repository repository = getRepository(classPK);
 

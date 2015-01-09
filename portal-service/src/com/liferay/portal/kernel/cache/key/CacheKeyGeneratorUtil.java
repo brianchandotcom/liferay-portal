@@ -77,7 +77,7 @@ public class CacheKeyGeneratorUtil {
 	}
 
 	private static Map<String, CacheKeyGenerator> _cacheKeyGenerators =
-		new HashMap<String, CacheKeyGenerator>();
+		new HashMap<>();
 	private static CacheKeyGenerator _defaultCacheKeyGenerator;
 
 }

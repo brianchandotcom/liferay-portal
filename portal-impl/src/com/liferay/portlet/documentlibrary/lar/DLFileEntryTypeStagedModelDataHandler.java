@@ -99,7 +99,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 	public Map<String, String> getReferenceAttributes(
 		PortletDataContext portletDataContext, DLFileEntryType fileEntryType) {
 
-		Map<String, String> referenceAttributes = new HashMap<String, String>();
+		Map<String, String> referenceAttributes = new HashMap<>();
 
 		referenceAttributes.put(
 			"file-entry-type-key", fileEntryType.getFileEntryTypeKey());

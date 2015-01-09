@@ -112,7 +112,7 @@ public class PerFieldAnalyzer extends Analyzer implements Tokenizer {
 			String fieldName, String input, String languageId)
 		throws SearchException {
 
-		List<String> tokens = new ArrayList<String>();
+		List<String> tokens = new ArrayList<>();
 		TokenStream tokenStream = null;
 
 		try {
@@ -166,6 +166,6 @@ public class PerFieldAnalyzer extends Analyzer implements Tokenizer {
 
 	private final Analyzer _analyzer;
 	private final Map<String, ObjectValuePair<Pattern, Analyzer>> _analyzers =
-		new LinkedHashMap<String, ObjectValuePair<Pattern, Analyzer>>();
+		new LinkedHashMap<>();
 
 }

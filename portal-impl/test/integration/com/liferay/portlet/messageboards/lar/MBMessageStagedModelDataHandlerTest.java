@@ -65,7 +65,7 @@ public class MBMessageStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		MBCategory category = MBTestUtil.addCategory(group.getGroupId());
 
@@ -127,7 +127,7 @@ public class MBMessageStagedModelDataHandlerTest
 	protected List<StagedModel> addWorkflowedStagedModels(Group group)
 		throws Exception {
 
-		List<StagedModel> stagedModels = new ArrayList<StagedModel>();
+		List<StagedModel> stagedModels = new ArrayList<>();
 
 		stagedModels.add(
 			MBTestUtil.addMessageWithWorkflow(group.getGroupId(), true));

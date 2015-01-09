@@ -151,13 +151,13 @@ public class Entity {
 		_txRequiredList = txRequiredList;
 
 		if (_finderList != null) {
-			Set<EntityColumn> finderColumns = new HashSet<EntityColumn>();
+			Set<EntityColumn> finderColumns = new HashSet<>();
 
 			for (EntityFinder entityFinder : _finderList) {
 				finderColumns.addAll(entityFinder.getColumns());
 			}
 
-			_finderColumnsList = new ArrayList<EntityColumn>(finderColumns);
+			_finderColumnsList = new ArrayList<>(finderColumns);
 
 			Collections.sort(_finderColumnsList);
 		}
@@ -453,7 +453,7 @@ public class Entity {
 
 	public List<String> getUnresolvedReferenceList() {
 		if (_unresolvedReferenceList == null) {
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 
 		return _unresolvedReferenceList;

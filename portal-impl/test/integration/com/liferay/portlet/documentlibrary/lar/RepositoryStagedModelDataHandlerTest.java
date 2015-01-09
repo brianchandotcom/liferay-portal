@@ -54,7 +54,7 @@ public class RepositoryStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		_repository = DLAppTestUtil.addRepository(group.getGroupId());
 

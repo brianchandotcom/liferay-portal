@@ -193,7 +193,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	public List<AssetTag> checkTags(long userId, Group group, String[] names)
 		throws PortalException {
 
-		List<AssetTag> tags = new ArrayList<AssetTag>();
+		List<AssetTag> tags = new ArrayList<>();
 
 		for (String name : names) {
 			AssetTag tag = null;
@@ -315,7 +315,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getGroupsTags(long[] groupIds) {
-		List<AssetTag> groupsTags = new ArrayList<AssetTag>();
+		List<AssetTag> groupsTags = new ArrayList<>();
 
 		for (long groupId : groupIds) {
 			List<AssetTag> groupTags = getGroupTags(groupId);
@@ -381,7 +381,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	public long[] getTagIds(long groupId, String[] names)
 		throws PortalException {
 
-		List<Long> tagIds = new ArrayList<Long>(names.length);
+		List<Long> tagIds = new ArrayList<>(names.length);
 
 		for (String name : names) {
 			try {
@@ -400,7 +400,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	public long[] getTagIds(long[] groupIds, String name)
 		throws PortalException {
 
-		List<Long> tagIds = new ArrayList<Long>(groupIds.length);
+		List<Long> tagIds = new ArrayList<>(groupIds.length);
 
 		for (long groupId : groupIds) {
 			try {

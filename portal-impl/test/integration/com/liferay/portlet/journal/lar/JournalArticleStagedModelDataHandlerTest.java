@@ -101,7 +101,7 @@ public class JournalArticleStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		Company company = CompanyLocalServiceUtil.fetchCompany(
 			stagingGroup.getCompanyId());
@@ -135,7 +135,7 @@ public class JournalArticleStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), JournalArticle.class.getName());
@@ -193,7 +193,7 @@ public class JournalArticleStagedModelDataHandlerTest
 	protected List<StagedModel> addWorkflowedStagedModels(Group group)
 		throws Exception {
 
-		List<StagedModel> stagedModels = new ArrayList<StagedModel>();
+		List<StagedModel> stagedModels = new ArrayList<>();
 
 		stagedModels.add(
 			JournalTestUtil.addArticleWithWorkflow(group.getGroupId(), true));

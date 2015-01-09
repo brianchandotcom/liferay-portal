@@ -36,7 +36,7 @@ public class ResourcePermissionsThreadLocal {
 
 		if (resourcePermissions != null) {
 			Map<Long, ResourcePermission> resourcePermissionMap =
-				new HashMap<Long, ResourcePermission>();
+				new HashMap<>();
 
 			for (ResourcePermission resourcePermission : resourcePermissions) {
 				resourcePermissionMap.put(

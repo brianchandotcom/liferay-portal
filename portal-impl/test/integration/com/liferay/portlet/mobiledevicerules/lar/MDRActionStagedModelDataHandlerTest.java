@@ -79,7 +79,7 @@ public class MDRActionStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		MDRRuleGroup ruleGroup = MDRTestUtil.addRuleGroup(group.getGroupId());
 

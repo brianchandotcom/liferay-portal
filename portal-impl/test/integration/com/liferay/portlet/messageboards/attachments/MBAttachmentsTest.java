@@ -360,7 +360,7 @@ public class MBAttachmentsTest {
 				MBTestUtil.getInputStreamOVPs(
 					"OSX_Test.docx", getClass(), StringPool.BLANK);
 
-			List<String> existingFiles = new ArrayList<String>();
+			List<String> existingFiles = new ArrayList<>();
 
 			List<FileEntry> fileEntries = _message.getAttachmentsFileEntries();
 
@@ -382,7 +382,7 @@ public class MBAttachmentsTest {
 
 		List<FileEntry> fileEntries = _message.getAttachmentsFileEntries();
 
-		List<String> existingFiles = new ArrayList<String>();
+		List<String> existingFiles = new ArrayList<>();
 
 		for (FileEntry fileEntry : fileEntries) {
 			existingFiles.add(String.valueOf(fileEntry.getFileEntryId()));

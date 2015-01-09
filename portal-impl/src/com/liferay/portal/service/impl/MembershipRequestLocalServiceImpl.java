@@ -195,7 +195,7 @@ public class
 	protected List<Long> getGroupAdministratorUserIds(long groupId)
 		throws PortalException {
 
-		Set<Long> userIds = new LinkedHashSet<Long>();
+		Set<Long> userIds = new LinkedHashSet<>();
 
 		Group group = groupLocalService.getGroup(groupId);
 		String modelResource = Group.class.getName();
@@ -246,10 +246,10 @@ public class
 				}
 			}
 
-			List<String> currentIndividualActions = new ArrayList<String>();
-			List<String> currentGroupActions = new ArrayList<String>();
-			List<String> currentGroupTemplateActions = new ArrayList<String>();
-			List<String> currentCompanyActions = new ArrayList<String>();
+			List<String> currentIndividualActions = new ArrayList<>();
+			List<String> currentGroupActions = new ArrayList<>();
+			List<String> currentGroupTemplateActions = new ArrayList<>();
+			List<String> currentCompanyActions = new ArrayList<>();
 
 			ResourcePermissionUtil.populateResourcePermissionActionIds(
 				groupId, role, resource, actions, currentIndividualActions,
@@ -272,7 +272,7 @@ public class
 			}
 		}
 
-		return new ArrayList<Long>(userIds);
+		return new ArrayList<>(userIds);
 	}
 
 	protected void notify(

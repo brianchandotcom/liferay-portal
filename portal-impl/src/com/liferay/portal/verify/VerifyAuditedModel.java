@@ -44,7 +44,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 	public void verify(VerifiableAuditedModel ... verifiableAuditedModels)
 		throws Exception {
 
-		List<String> unverifiedTableNames = new ArrayList<String>();
+		List<String> unverifiedTableNames = new ArrayList<>();
 
 		for (VerifiableAuditedModel verifiableAuditedModel :
 				verifiableAuditedModels) {
@@ -53,8 +53,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 		}
 
 		List<VerifyAuditedModelRunnable> verifyAuditedModelRunnables =
-			new ArrayList<VerifyAuditedModelRunnable>(
-				unverifiedTableNames.size());
+			new ArrayList<>(unverifiedTableNames.size());
 
 		while (!unverifiedTableNames.isEmpty()) {
 			int count = unverifiedTableNames.size();

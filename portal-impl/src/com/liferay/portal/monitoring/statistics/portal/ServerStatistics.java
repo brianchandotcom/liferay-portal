@@ -73,8 +73,7 @@ public class ServerStatistics
 	}
 
 	public Set<CompanyStatistics> getCompanyStatisticsSet() {
-		return new HashSet<CompanyStatistics>(
-			_companyStatisticsByWebId.values());
+		return new HashSet<>(_companyStatisticsByWebId.values());
 	}
 
 	public Set<String> getWebIds() {
@@ -162,8 +161,8 @@ public class ServerStatistics
 
 	private CompanyLocalService _companyLocalService;
 	private final Map<Long, CompanyStatistics> _companyStatisticsByCompanyId =
-		new TreeMap<Long, CompanyStatistics>();
+		new TreeMap<>();
 	private final Map<String, CompanyStatistics> _companyStatisticsByWebId =
-		new TreeMap<String, CompanyStatistics>();
+		new TreeMap<>();
 
 }

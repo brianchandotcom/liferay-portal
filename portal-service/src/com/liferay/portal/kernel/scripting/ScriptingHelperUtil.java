@@ -37,7 +37,7 @@ public class ScriptingHelperUtil {
 		PortletConfig portletConfig, PortletContext portletContext,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Map<String, Object> portletObjects = new HashMap<String, Object>();
+		Map<String, Object> portletObjects = new HashMap<>();
 
 		portletObjects.put("portletConfig", portletConfig);
 		portletObjects.put("portletContext", portletContext);

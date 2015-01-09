@@ -48,7 +48,7 @@ public class BeanReferenceRefreshUtil {
 			targetBean);
 
 		if (refreshPoints == null) {
-			refreshPoints = new ArrayList<RefreshPoint>();
+			refreshPoints = new ArrayList<>();
 
 			_registeredRefreshPoints.put(targetBean, refreshPoints);
 		}
@@ -106,8 +106,7 @@ public class BeanReferenceRefreshUtil {
 
 	private static final PACL _pacl = new NoPACL();
 	private static final Map<Object, List<RefreshPoint>>
-		_registeredRefreshPoints =
-			new IdentityHashMap<Object, List<RefreshPoint>>();
+		_registeredRefreshPoints = new IdentityHashMap<>();
 
 	private static class NoPACL implements PACL {
 

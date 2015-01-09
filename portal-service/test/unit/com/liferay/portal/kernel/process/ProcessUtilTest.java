@@ -215,7 +215,7 @@ public class ProcessUtilTest {
 
 			loggingFuture.cancel(true);
 
-			List<String> messageRecords = new ArrayList<String>();
+			List<String> messageRecords = new ArrayList<>();
 
 			for (LogRecord logRecord : logRecords) {
 				messageRecords.add(logRecord.getMessage());
@@ -501,7 +501,7 @@ public class ProcessUtilTest {
 	private static String[] _buildArguments(
 		Class<?> clazz, String... arguments) {
 
-		List<String> argumentsList = new ArrayList<String>();
+		List<String> argumentsList = new ArrayList<>();
 
 		argumentsList.add("java");
 		argumentsList.add("-cp");

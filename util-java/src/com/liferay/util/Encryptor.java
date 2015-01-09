@@ -247,8 +247,8 @@ public class Encryptor {
 	private static final Log _log = LogFactoryUtil.getLog(Encryptor.class);
 
 	private static final Map<String, Cipher> _decryptCipherMap =
-		new ConcurrentHashMap<String, Cipher>(1, 1f, 1);
+		new ConcurrentHashMap<>(1, 1f, 1);
 	private static final Map<String, Cipher> _encryptCipherMap =
-		new ConcurrentHashMap<String, Cipher>(1, 1f, 1);
+		new ConcurrentHashMap<>(1, 1f, 1);
 
 }

@@ -132,7 +132,7 @@ public class PermissionImporter {
 	}
 
 	protected List<String> getActions(Element element) {
-		List<String> actions = new ArrayList<String>();
+		List<String> actions = new ArrayList<>();
 
 		List<Element> actionKeyElements = element.elements("action-key");
 
@@ -149,7 +149,7 @@ public class PermissionImporter {
 			Element permissionsElement, boolean portletActions)
 		throws Exception {
 
-		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
+		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
 		List<Element> roleElements = permissionsElement.elements("role");
 
@@ -228,7 +228,7 @@ public class PermissionImporter {
 			long resourcePK = GetterUtil.getLong(
 				portletDataElement.attributeValue("resource-pk"));
 
-			List<KeyValuePair> permissions = new ArrayList<KeyValuePair>();
+			List<KeyValuePair> permissions = new ArrayList<>();
 
 			List<Element> permissionsElements = portletDataElement.elements(
 				"permissions");

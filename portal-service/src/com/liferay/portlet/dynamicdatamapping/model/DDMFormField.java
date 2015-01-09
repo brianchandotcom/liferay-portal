@@ -97,7 +97,7 @@ public class DDMFormField implements Serializable {
 
 	public Map<String, DDMFormField> getNestedDDMFormFieldsMap() {
 		Map<String, DDMFormField> nestedDDMFormFieldsMap =
-			new LinkedHashMap<String, DDMFormField>();
+			new LinkedHashMap<>();
 
 		for (DDMFormField nestedDDMFormField : _nestedDDMFormFields) {
 			nestedDDMFormFieldsMap.put(
@@ -238,8 +238,7 @@ public class DDMFormField implements Serializable {
 	private boolean _multiple;
 	private String _name;
 	private String _namespace;
-	private List<DDMFormField> _nestedDDMFormFields =
-		new ArrayList<DDMFormField>();
+	private List<DDMFormField> _nestedDDMFormFields = new ArrayList<>();
 	private LocalizedValue _predefinedValue = new LocalizedValue();
 	private boolean _readOnly;
 	private boolean _repeatable;

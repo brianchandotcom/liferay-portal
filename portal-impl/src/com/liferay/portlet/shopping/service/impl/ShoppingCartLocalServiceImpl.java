@@ -77,8 +77,7 @@ public class ShoppingCartLocalServiceImpl
 	public Map<ShoppingCartItem, Integer> getItems(
 		long groupId, String itemIds) {
 
-		Map<ShoppingCartItem, Integer> items =
-			new TreeMap<ShoppingCartItem, Integer>();
+		Map<ShoppingCartItem, Integer> items = new TreeMap<>();
 
 		String[] itemIdsArray = StringUtil.split(itemIds);
 
@@ -119,7 +118,7 @@ public class ShoppingCartLocalServiceImpl
 			int altShipping, boolean insure)
 		throws PortalException {
 
-		List<Long> badItemIds = new ArrayList<Long>();
+		List<Long> badItemIds = new ArrayList<>();
 
 		Map<ShoppingCartItem, Integer> items = getItems(groupId, itemIds);
 

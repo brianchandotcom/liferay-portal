@@ -33,9 +33,8 @@ import javax.portlet.PortletURL;
  */
 public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 
-	public static List<String> headerNames = new ArrayList<String>();
-	public static Map<String, String> orderableHeaders =
-		new HashMap<String, String>();
+	public static List<String> headerNames = new ArrayList<>();
+	public static Map<String, String> orderableHeaders = new HashMap<>();
 
 	static {
 		headerNames.add("task");

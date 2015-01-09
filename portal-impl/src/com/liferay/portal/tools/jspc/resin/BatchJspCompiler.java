@@ -67,7 +67,7 @@ public class BatchJspCompiler {
 			return;
 		}
 
-		List<String> arguments = new ArrayList<String>();
+		List<String> arguments = new ArrayList<>();
 
 		arguments.add("-app-dir");
 		arguments.add(_appDir);

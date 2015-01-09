@@ -139,7 +139,7 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 					portalCacheManagerName);
 
 				if (portalCaches == null) {
-					portalCaches = new ArrayList<String>();
+					portalCaches = new ArrayList<>();
 
 					_deferredPortalCaches.put(
 						portalCacheManagerName, portalCaches);
@@ -302,7 +302,7 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 			ClusterLinkBootstrapLoaderHelperUtil.class,
 			"createServerSocketFromCluster", String.class, List.class);
 	private static final Map<String, List<String>> _deferredPortalCaches =
-		new HashMap<String, List<String>>();
+		new HashMap<>();
 	private static final ServerSocketConfigurator _serverSocketConfigurator =
 		new SocketCacheServerSocketConfiguration();
 	private static final ThreadLocal<Boolean> _skipBootstrapLoaderThreadLocal =

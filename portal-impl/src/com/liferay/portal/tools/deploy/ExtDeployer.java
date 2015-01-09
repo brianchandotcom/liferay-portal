@@ -28,8 +28,8 @@ public class ExtDeployer extends BaseDeployer {
 	public static void main(String[] args) {
 		ToolDependencies.wireDeployers();
 
-		List<String> wars = new ArrayList<String>();
-		List<String> jars = new ArrayList<String>();
+		List<String> wars = new ArrayList<>();
+		List<String> jars = new ArrayList<>();
 
 		for (String arg : args) {
 			if (arg.endsWith(".war")) {

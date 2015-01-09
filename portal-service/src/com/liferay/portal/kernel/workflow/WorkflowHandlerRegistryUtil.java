@@ -147,7 +147,7 @@ public class WorkflowHandlerRegistryUtil {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
-		workflowContext = new HashMap<String, Serializable>(workflowContext);
+		workflowContext = new HashMap<>(workflowContext);
 
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_COMPANY_ID, String.valueOf(companyId));
@@ -319,14 +319,13 @@ public class WorkflowHandlerRegistryUtil {
 		new WorkflowHandlerRegistryUtil();
 
 	private final Map<String, WorkflowHandler<?>> _scopeableWorkflowHandlerMap =
-		new ConcurrentSkipListMap<String, WorkflowHandler<?>>();
+		new ConcurrentSkipListMap<>();
 	private final ServiceRegistrationMap<WorkflowHandler<?>>
-		_serviceRegistrations =
-			new ServiceRegistrationMap<WorkflowHandler<?>>();
+		_serviceRegistrations = new ServiceRegistrationMap<>();
 	private final ServiceTracker<WorkflowHandler<?>, WorkflowHandler<?>>
 		_serviceTracker;
 	private final Map<String, WorkflowHandler<?>> _workflowHandlerMap =
-		new TreeMap<String, WorkflowHandler<?>>();
+		new TreeMap<>();
 
 	private class WorkflowHandlerServiceTrackerCustomizer
 		implements

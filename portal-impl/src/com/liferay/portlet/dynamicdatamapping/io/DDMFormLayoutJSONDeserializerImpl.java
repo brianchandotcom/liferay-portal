@@ -66,8 +66,7 @@ public class DDMFormLayoutJSONDeserializerImpl
 	protected List<DDMFormLayoutColumn> getDDMFormLayoutColumns(
 		JSONArray jsonArray) {
 
-		List<DDMFormLayoutColumn> ddmFormLayoutColumns =
-			new ArrayList<DDMFormLayoutColumn>();
+		List<DDMFormLayoutColumn> ddmFormLayoutColumns = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			DDMFormLayoutColumn ddmFormLayoutColumn = getDDMFormLayoutColumn(
@@ -91,8 +90,7 @@ public class DDMFormLayoutJSONDeserializerImpl
 	}
 
 	protected List<DDMFormLayoutRow> getDDMFormLayoutRows(JSONArray jsonArray) {
-		List<DDMFormLayoutRow> ddmFormLayoutRows =
-			new ArrayList<DDMFormLayoutRow>();
+		List<DDMFormLayoutRow> ddmFormLayoutRows = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			DDMFormLayoutRow ddmFormLayoutRow = getDDMFormLayoutRow(

@@ -29,7 +29,7 @@ public class SystemPropertiesProcessCallable
 	implements ProcessCallable<Serializable> {
 
 	public SystemPropertiesProcessCallable(Map<String, String> propertiesMap) {
-		_propertiesMap = new HashMap<String, String>(propertiesMap);
+		_propertiesMap = new HashMap<>(propertiesMap);
 	}
 
 	@Override

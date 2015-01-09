@@ -306,8 +306,7 @@ public class SecurePluginContextListener
 
 		if (listener instanceof HttpSessionActivationListener) {
 			if (_httpSessionActivationListeners == null) {
-				_httpSessionActivationListeners =
-					new CopyOnWriteArrayList<HttpSessionActivationListener>();
+				_httpSessionActivationListeners = new CopyOnWriteArrayList<>();
 			}
 
 			_httpSessionActivationListeners.add(
@@ -316,8 +315,7 @@ public class SecurePluginContextListener
 
 		if (listener instanceof HttpSessionAttributeListener) {
 			if (_httpSessionAttributeListeners == null) {
-				_httpSessionAttributeListeners =
-					new CopyOnWriteArrayList<HttpSessionAttributeListener>();
+				_httpSessionAttributeListeners = new CopyOnWriteArrayList<>();
 			}
 
 			_httpSessionAttributeListeners.add(
@@ -326,8 +324,7 @@ public class SecurePluginContextListener
 
 		if (listener instanceof HttpSessionBindingListener) {
 			if (_httpSessionBindingListeners == null) {
-				_httpSessionBindingListeners =
-					new CopyOnWriteArrayList<HttpSessionBindingListener>();
+				_httpSessionBindingListeners = new CopyOnWriteArrayList<>();
 			}
 
 			_httpSessionBindingListeners.add(
@@ -336,8 +333,7 @@ public class SecurePluginContextListener
 
 		if (listener instanceof HttpSessionListener) {
 			if (_httpSessionListeners == null) {
-				_httpSessionListeners =
-					new CopyOnWriteArrayList<HttpSessionListener>();
+				_httpSessionListeners = new CopyOnWriteArrayList<>();
 			}
 
 			_httpSessionListeners.add((HttpSessionListener)listener);
@@ -345,8 +341,7 @@ public class SecurePluginContextListener
 
 		if (listener instanceof ServletContextListener) {
 			if (_servletContextListeners == null) {
-				_servletContextListeners =
-					new CopyOnWriteArrayList<ServletContextListener>();
+				_servletContextListeners = new CopyOnWriteArrayList<>();
 			}
 
 			ServletContextListener servletContextListener =
@@ -363,7 +358,7 @@ public class SecurePluginContextListener
 		if (listener instanceof ServletRequestAttributeListener) {
 			if (_servletRequestAttributeListeners == null) {
 				_servletRequestAttributeListeners =
-					new CopyOnWriteArrayList<ServletRequestAttributeListener>();
+					new CopyOnWriteArrayList<>();
 			}
 
 			_servletRequestAttributeListeners.add(
@@ -372,8 +367,7 @@ public class SecurePluginContextListener
 
 		if (listener instanceof ServletRequestListener) {
 			if (_servletRequestListeners == null) {
-				_servletRequestListeners =
-					new CopyOnWriteArrayList<ServletRequestListener>();
+				_servletRequestListeners = new CopyOnWriteArrayList<>();
 			}
 
 			_servletRequestListeners.add((ServletRequestListener)listener);

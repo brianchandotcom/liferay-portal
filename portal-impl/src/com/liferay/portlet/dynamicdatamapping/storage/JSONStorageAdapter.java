@@ -159,7 +159,7 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 			long ddmStructureId, long[] classPKs, List<String> fieldNames)
 		throws Exception {
 
-		Map<Long, Fields> fieldsMapByClasses = new HashMap<Long, Fields>();
+		Map<Long, Fields> fieldsMapByClasses = new HashMap<>();
 
 		for (long classPK : classPKs) {
 			fieldsMapByClasses.put(classPK, _getFields(classPK, fieldNames));

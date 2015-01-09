@@ -40,7 +40,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 
 		_name = name;
 
-		_concurrentMap = new ConcurrentHashMap<K, V>(initialCapacity);
+		_concurrentMap = new ConcurrentHashMap<>(initialCapacity);
 	}
 
 	public void destroy() {
@@ -52,7 +52,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 
 	@Override
 	public List<K> getKeys() {
-		List<K> keys = new ArrayList<K>();
+		List<K> keys = new ArrayList<>();
 
 		for (K key : _concurrentMap.keySet()) {
 			keys.add(key);

@@ -277,7 +277,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public void addDefaultGroups(long userId) throws PortalException {
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		Set<Long> groupIdsSet = new HashSet<Long>();
+		Set<Long> groupIdsSet = new HashSet<>();
 
 		String[] defaultGroupNames = PrefsPropsUtil.getStringArray(
 			user.getCompanyId(), PropsKeys.ADMIN_DEFAULT_GROUP_NAMES,
@@ -348,7 +348,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public void addDefaultRoles(long userId) throws PortalException {
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		Set<Long> roleIdSet = new HashSet<Long>();
+		Set<Long> roleIdSet = new HashSet<>();
 
 		String[] defaultRoleNames = PrefsPropsUtil.getStringArray(
 			user.getCompanyId(), PropsKeys.ADMIN_DEFAULT_ROLE_NAMES,
@@ -389,7 +389,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public void addDefaultUserGroups(long userId) throws PortalException {
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		Set<Long> userGroupIdSet = new HashSet<Long>();
+		Set<Long> userGroupIdSet = new HashSet<>();
 
 		String[] defaultUserGroupNames = PrefsPropsUtil.getStringArray(
 			user.getCompanyId(), PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES,
@@ -888,7 +888,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// Groups
 
 		if (groupIds != null) {
-			List<Group> groups = new ArrayList<Group>();
+			List<Group> groups = new ArrayList<>();
 
 			for (long groupId : groupIds) {
 				Group group = groupLocalService.fetchGroup(groupId);
@@ -2157,8 +2157,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("usersGroups", new Long(groupId));
 
@@ -2172,8 +2171,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Role role = rolePersistence.findByPrimaryKey(roleId);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("inherit", Boolean.TRUE);
 		params.put("usersRoles", roleId);
@@ -2244,8 +2242,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Organization organization = organizationPersistence.findByPrimaryKey(
 			organizationId);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("usersOrgs", new Long(organizationId));
 
@@ -2278,8 +2275,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Role role = rolePersistence.findByPrimaryKey(roleId);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("usersRoles", new Long(roleId));
 
@@ -2389,7 +2385,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					socialRelations);
 			}
 
-			List<User> users = new ArrayList<User>();
+			List<User> users = new ArrayList<>();
 
 			for (SocialRelation socialRelation : socialRelations) {
 				User user = userPersistence.findByPrimaryKey(
@@ -2456,8 +2452,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user1 = userPersistence.findByPrimaryKey(userId1);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put(
 			"socialMutualRelationType",
@@ -2501,8 +2496,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user1 = userPersistence.findByPrimaryKey(userId1);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("socialMutualRelation", new Long[] {userId1, userId2});
 
@@ -2599,8 +2593,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user1 = userPersistence.findByPrimaryKey(userId1);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("socialMutualRelation", new Long[] {userId1, userId2});
 
@@ -2629,8 +2622,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user1 = userPersistence.findByPrimaryKey(userId1);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put(
 			"socialMutualRelationType",
@@ -2827,8 +2819,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
 			userGroupId);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("usersUserGroups", new Long(userGroupId));
 
@@ -3438,8 +3429,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put(
 			"socialRelationType",
@@ -3457,8 +3447,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public List<User> searchSocial(
 		long companyId, long[] groupIds, String keywords, int start, int end) {
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("usersGroups", ArrayUtil.toLongArray(groupIds));
 		params.put("wildcardMode", WildcardMode.TRAILING);
@@ -3476,8 +3465,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put(
 			"socialRelationType",
@@ -5544,7 +5532,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	protected void addDefaultRolesAndTeams(long groupId, long[] userIds)
 		throws PortalException {
 
-		List<Role> defaultSiteRoles = new ArrayList<Role>();
+		List<Role> defaultSiteRoles = new ArrayList<>();
 
 		Group group = groupLocalService.getGroup(groupId);
 
@@ -5569,7 +5557,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			defaultSiteRoles.add(defaultSiteRole);
 		}
 
-		List<Team> defaultTeams = new ArrayList<Team>();
+		List<Team> defaultTeams = new ArrayList<>();
 
 		long[] defaultTeamIds = StringUtil.split(
 			typeSettingsProperties.getProperty("defaultTeamIds"), 0L);
@@ -5589,7 +5577,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		for (long userId : userIds) {
-			Set<Long> userRoleIdsSet = new HashSet<Long>();
+			Set<Long> userRoleIdsSet = new HashSet<>();
 
 			for (Role role : defaultSiteRoles) {
 				if (!userPersistence.containsRole(userId, role.getRoleId())) {
@@ -5603,7 +5591,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			userGroupRoleLocalService.addUserGroupRoles(
 				userId, groupId, userRoleIds);
 
-			Set<Long> userTeamIdsSet = new HashSet<Long>();
+			Set<Long> userTeamIdsSet = new HashSet<>();
 
 			for (Team team : defaultTeams) {
 				if (!userPersistence.containsTeam(userId, team.getTeamId())) {
@@ -5916,8 +5904,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		searchContext.setAndSearch(andSearch);
 
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put("city", city);
 		attributes.put("country", country);
@@ -6305,7 +6292,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return;
 		}
 
-		userGroupRoles = new ArrayList<UserGroupRole>(userGroupRoles);
+		userGroupRoles = new ArrayList<>(userGroupRoles);
 
 		for (UserGroupRole userGroupRole : previousUserGroupRoles) {
 			if (userGroupRoles.contains(userGroupRole)) {
@@ -6686,6 +6673,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	private static Log _log = LogFactoryUtil.getLog(UserLocalServiceImpl.class);
 
-	private Map<Long, User> _defaultUsers = new ConcurrentHashMap<Long, User>();
+	private Map<Long, User> _defaultUsers = new ConcurrentHashMap<>();
 
 }

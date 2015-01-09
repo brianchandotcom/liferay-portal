@@ -61,7 +61,7 @@ public class DLFileShortcutStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		Folder folder = DLAppTestUtil.addFolder(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);

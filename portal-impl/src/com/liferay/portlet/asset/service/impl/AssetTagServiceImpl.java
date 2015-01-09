@@ -86,8 +86,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public List<AssetTag> getGroupsTags(long[] groupIds) {
-		Set<AssetTag> groupsTags = new TreeSet<AssetTag>(
-			new AssetTagNameComparator());
+		Set<AssetTag> groupsTags = new TreeSet<>(new AssetTagNameComparator());
 
 		for (long groupId : groupIds) {
 			List<AssetTag> groupTags = getGroupTags(groupId);
@@ -95,7 +94,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 			groupsTags.addAll(groupTags);
 		}
 
-		return new ArrayList<AssetTag>(groupsTags);
+		return new ArrayList<>(groupsTags);
 	}
 
 	@Override

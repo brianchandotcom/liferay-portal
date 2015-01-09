@@ -53,10 +53,10 @@ import java.util.TreeSet;
 public class ModelHintsImpl implements ModelHints {
 
 	public void afterPropertiesSet() {
-		_hintCollections = new HashMap<String, Map<String, String>>();
-		_defaultHints = new HashMap<String, Map<String, String>>();
-		_modelFields = new HashMap<String, Object>();
-		_models = new TreeSet<String>();
+		_hintCollections = new HashMap<>();
+		_defaultHints = new HashMap<>();
+		_modelFields = new HashMap<>();
+		_models = new TreeSet<>();
 
 		try {
 			ClassLoader classLoader = getClass().getClassLoader();
@@ -184,7 +184,7 @@ public class ModelHintsImpl implements ModelHints {
 			return Collections.emptyList();
 		}
 
-		List<Tuple> sanitizeTuples = new ArrayList<Tuple>();
+		List<Tuple> sanitizeTuples = new ArrayList<>();
 
 		for (Map.Entry<String, Object> entry : fields.entrySet()) {
 			String key = entry.getKey();
@@ -321,7 +321,7 @@ public class ModelHintsImpl implements ModelHints {
 			Map<String, String> hints = _hintCollections.get(name);
 
 			if (hints == null) {
-				hints = new HashMap<String, String>();
+				hints = new HashMap<>();
 
 				_hintCollections.put(name, hints);
 			}
@@ -345,7 +345,7 @@ public class ModelHintsImpl implements ModelHints {
 				ClassNameLocalServiceUtil.getClassName(name);
 			}
 
-			Map<String, String> defaultHints = new HashMap<String, String>();
+			Map<String, String> defaultHints = new HashMap<>();
 
 			_defaultHints.put(name, defaultHints);
 
@@ -367,7 +367,7 @@ public class ModelHintsImpl implements ModelHints {
 				name);
 
 			if (fields == null) {
-				fields = new LinkedHashMap<String, Object>();
+				fields = new LinkedHashMap<>();
 
 				_modelFields.put(name, fields);
 			}
@@ -382,7 +382,7 @@ public class ModelHintsImpl implements ModelHints {
 				boolean fieldLocalized = GetterUtil.getBoolean(
 					fieldElement.attributeValue("localized"));
 
-				Map<String, String> fieldHints = new HashMap<String, String>();
+				Map<String, String> fieldHints = new HashMap<>();
 
 				fieldHints.putAll(defaultHints);
 
@@ -417,8 +417,7 @@ public class ModelHintsImpl implements ModelHints {
 					fieldSanitize = new Tuple(fieldName, contentType, modes);
 				}
 
-				Map<String, Tuple> fieldValidators =
-					new TreeMap<String, Tuple>();
+				Map<String, Tuple> fieldValidators = new TreeMap<>();
 
 				fieldElements = fieldElement.elements("validator");
 

@@ -104,7 +104,7 @@ public class DLConfigurationDisplayContext {
 	private void _populateDisplayViews() {
 		String[] displayViews = _dlPortletInstanceSettings.getDisplayViews();
 
-		_currentDisplayViews = new ArrayList<KeyValuePair>();
+		_currentDisplayViews = new ArrayList<>();
 
 		for (String displayView : displayViews) {
 			_currentDisplayViews.add(
@@ -115,7 +115,7 @@ public class DLConfigurationDisplayContext {
 
 		Arrays.sort(displayViews);
 
-		_availableDisplayViews = new ArrayList<KeyValuePair>();
+		_availableDisplayViews = new ArrayList<>();
 
 		Set<String> allDisplayViews = SetUtil.fromArray(
 			PropsValues.DL_DISPLAY_VIEWS);
@@ -137,7 +137,7 @@ public class DLConfigurationDisplayContext {
 	private void _populateEntryColumns() {
 		String[] entryColumns = _dlPortletInstanceSettings.getEntryColumns();
 
-		_currentEntryColumns = new ArrayList<KeyValuePair>();
+		_currentEntryColumns = new ArrayList<>();
 
 		for (String entryColumn : entryColumns) {
 			_currentEntryColumns.add(
@@ -148,7 +148,7 @@ public class DLConfigurationDisplayContext {
 
 		Arrays.sort(entryColumns);
 
-		_availableEntryColumns = new ArrayList<KeyValuePair>();
+		_availableEntryColumns = new ArrayList<>();
 
 		Set<String> allEntryColumns = SetUtil.fromArray(_getAllEntryColumns());
 

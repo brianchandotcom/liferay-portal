@@ -96,7 +96,7 @@ public class PluginsGitSvnSyncer {
 	}
 
 	private String[] _getExecOutput(InputStream is) throws IOException {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = null;
 
@@ -242,7 +242,7 @@ public class PluginsGitSvnSyncer {
 		List<String> ignores = null;
 
 		if (!dirName.contains("/docroot")) {
-			ignores = new ArrayList<String>();
+			ignores = new ArrayList<>();
 
 			ignores.add("bin");
 			ignores.add("classes");

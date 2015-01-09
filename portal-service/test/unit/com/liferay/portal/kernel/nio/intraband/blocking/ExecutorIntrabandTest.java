@@ -91,7 +91,7 @@ public class ExecutorIntrabandTest {
 
 	@Test
 	public void testDoSendDatagram() {
-		Queue<Datagram> sendingQueue = new LinkedList<Datagram>();
+		Queue<Datagram> sendingQueue = new LinkedList<>();
 
 		FutureRegistrationReference futureRegistrationReference =
 			new FutureRegistrationReference(

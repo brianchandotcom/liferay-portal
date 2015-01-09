@@ -217,7 +217,7 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 			return;
 		}
 
-		List<ExpandoColumn> indexedColumns = new ArrayList<ExpandoColumn>();
+		List<ExpandoColumn> indexedColumns = new ArrayList<>();
 
 		for (ExpandoColumn expandoColumn : expandoColumns) {
 			UnicodeProperties properties =

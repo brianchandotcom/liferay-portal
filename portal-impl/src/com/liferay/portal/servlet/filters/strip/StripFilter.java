@@ -753,7 +753,7 @@ public class StripFilter extends BasePortalFilter {
 	private static Pattern _javaScriptPattern = Pattern.compile(
 		"[Jj][aA][vV][aA][sS][cC][rR][iI][pP][tT]");
 
-	private Set<String> _ignorePaths = new HashSet<String>();
+	private Set<String> _ignorePaths = new HashSet<>();
 	private ConcurrentLFUCache<String, String> _minifierCache;
 	private ServletContext _servletContext;
 

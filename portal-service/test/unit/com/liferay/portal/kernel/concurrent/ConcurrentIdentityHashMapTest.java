@@ -39,7 +39,7 @@ public class ConcurrentIdentityHashMapTest {
 	@Test
 	public void testConcurrentIdentityHashMap() {
 		ConcurrentIdentityHashMap<String, Object> concurrentIdentityHashMap =
-			new ConcurrentIdentityHashMap<String, Object>();
+			new ConcurrentIdentityHashMap<>();
 
 		Assert.assertFalse(concurrentIdentityHashMap.containsKey(_TEST_KEY_1));
 		Assert.assertFalse(
@@ -80,7 +80,7 @@ public class ConcurrentIdentityHashMapTest {
 	@Test
 	public void testConstructor() {
 		ConcurrentMap<IdentityKey<String>, Object> innerConcurrentMap =
-			new ConcurrentHashMap<IdentityKey<String>, Object>();
+			new ConcurrentHashMap<>();
 
 		ConcurrentIdentityHashMap<String, Object> concurrentIdentityHashMap =
 			new ConcurrentIdentityHashMap<String, Object>(innerConcurrentMap);
@@ -100,7 +100,7 @@ public class ConcurrentIdentityHashMapTest {
 	}
 
 	protected Map<String, Object> createDataMap() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 
 		map.put(_TEST_KEY_1, _testValue1);
 		map.put("testKey2", _testValue2);

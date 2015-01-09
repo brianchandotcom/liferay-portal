@@ -238,9 +238,8 @@ public class AuthVerifierFilter extends BasePortalFilter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AuthVerifierFilter.class.getName());
 
-	private final Set<String> _hostsAllowed = new HashSet<String>();
+	private final Set<String> _hostsAllowed = new HashSet<>();
 	private boolean _httpsRequired;
-	private final Map<String, Object> _initParametersMap =
-		new HashMap<String, Object>();
+	private final Map<String, Object> _initParametersMap = new HashMap<>();
 
 }

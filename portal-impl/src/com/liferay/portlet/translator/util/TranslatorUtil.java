@@ -67,7 +67,7 @@ public class TranslatorUtil {
 	}
 
 	public static Map<String, String> getLanguageIdsMap(Locale locale) {
-		Map<String, String> languageIdsMap = new HashMap<String, String>();
+		Map<String, String> languageIdsMap = new HashMap<>();
 
 		String[] languageIds = PrefsPropsUtil.getStringArray(
 			PropsKeys.TRANSLATOR_LANGUAGES, StringPool.COMMA);
@@ -77,7 +77,7 @@ public class TranslatorUtil {
 				languageId, LanguageUtil.get(locale, "language." + languageId));
 		}
 
-		Map<String, String> sortedLanguageIdsMap = new TreeMap<String, String>(
+		Map<String, String> sortedLanguageIdsMap = new TreeMap<>(
 			new ValueComparator(languageIdsMap));
 
 		sortedLanguageIdsMap.putAll(languageIdsMap);

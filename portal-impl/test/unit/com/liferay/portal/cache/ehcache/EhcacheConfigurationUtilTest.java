@@ -527,8 +527,7 @@ public class EhcacheConfigurationUtilTest {
 	private List<CacheConfiguration> _getAllCacheConfigurations(
 		Configuration configuration) {
 
-		List<CacheConfiguration> cacheConfigurations =
-			new ArrayList<CacheConfiguration>();
+		List<CacheConfiguration> cacheConfigurations = new ArrayList<>();
 
 		CacheConfiguration defaultCacheConfiguration =
 			configuration.getDefaultCacheConfiguration();

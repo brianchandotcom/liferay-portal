@@ -224,7 +224,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		List<TrashEntry> entries = trashEntryPersistence.findByGroupId(
 			groupId, 0, end + PropsValues.TRASH_SEARCH_LIMIT, obc);
 
-		List<TrashEntry> filteredEntries = new ArrayList<TrashEntry>();
+		List<TrashEntry> filteredEntries = new ArrayList<>();
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 

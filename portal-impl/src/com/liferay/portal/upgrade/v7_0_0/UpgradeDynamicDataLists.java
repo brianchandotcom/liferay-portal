@@ -203,7 +203,7 @@ public class UpgradeDynamicDataLists extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			Map<String, String> fieldsMap = new HashMap<String, String>();
+			Map<String, String> fieldsMap = new HashMap<>();
 
 			while (rs.next()) {
 				String name = rs.getString("name");
@@ -312,7 +312,7 @@ public class UpgradeDynamicDataLists extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			Set<Long> ddmStorageIds = new HashSet<Long>();
+			Set<Long> ddmStorageIds = new HashSet<>();
 
 			while (rs.next()) {
 				long recordVersionId = rs.getLong("recordVersionId");

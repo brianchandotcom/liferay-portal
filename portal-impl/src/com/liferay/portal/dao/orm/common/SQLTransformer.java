@@ -56,7 +56,7 @@ public class SQLTransformer {
 
 	private void _reloadSQLTransformer() {
 		if (_transformedSqls == null) {
-			_transformedSqls = new ConcurrentHashMap<String, String>();
+			_transformedSqls = new ConcurrentHashMap<>();
 		}
 		else {
 			_transformedSqls.clear();

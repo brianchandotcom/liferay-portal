@@ -147,7 +147,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		try {
-			List<Group> groups = new ArrayList<Group>();
+			List<Group> groups = new ArrayList<>();
 
 			groups.add(guestGroup);
 
@@ -377,7 +377,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			List<Group> groups = userPermissionCheckerBag.getGroups();
 
-			Set<Role> roles = new HashSet<Role>();
+			Set<Role> roles = new HashSet<>();
 
 			if (!groups.isEmpty()) {
 				List<Role> userRelatedRoles =
@@ -723,8 +723,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			roles.add(role);
 		}
 
-		LinkedHashMap<String, Object> teamParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> teamParams = new LinkedHashMap<>();
 
 		teamParams.put("usersUserGroups", userId);
 
@@ -810,7 +809,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		// Individual
 
-		List<Resource> resources = new ArrayList<Resource>(4);
+		List<Resource> resources = new ArrayList<>(4);
 
 		Resource individualResource = ResourceLocalServiceUtil.getResource(
 			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
@@ -866,7 +865,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return userOrgs;
 		}
 
-		Set<Organization> organizations = new LinkedHashSet<Organization>();
+		Set<Organization> organizations = new LinkedHashSet<>();
 
 		for (Organization organization : userOrgs) {
 			if (!organizations.contains(organization)) {
@@ -880,7 +879,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			}
 		}
 
-		return new ArrayList<Organization>(organizations);
+		return new ArrayList<>(organizations);
 	}
 
 	protected boolean hasGuestPermission(
@@ -1339,7 +1338,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	@Deprecated
 	protected static final String RESULTS_SEPARATOR = "_RESULTS_SEPARATOR_";
 
-	protected Map<Long, Boolean> companyAdmins = new HashMap<Long, Boolean>();
+	protected Map<Long, Boolean> companyAdmins = new HashMap<>();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AdvancedPermissionChecker.class);

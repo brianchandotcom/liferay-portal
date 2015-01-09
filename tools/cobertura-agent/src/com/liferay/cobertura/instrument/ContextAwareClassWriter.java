@@ -38,11 +38,11 @@ public class ContextAwareClassWriter extends ClassWriter {
 			return type1;
 		}
 
-		List<String> list1 = new ArrayList<String>();
+		List<String> list1 = new ArrayList<>();
 
 		list1.add(type1);
 
-		List<String> list2 = new ArrayList<String>();
+		List<String> list2 = new ArrayList<>();
 
 		list2.add(type2);
 

@@ -127,8 +127,8 @@ public class MailMessageListener extends BaseMessageListener {
 			return null;
 		}
 
-		List<InternetAddress> filteredInternetAddresses =
-			new ArrayList<InternetAddress>(internetAddresses.length);
+		List<InternetAddress> filteredInternetAddresses = new ArrayList<>(
+			internetAddresses.length);
 
 		for (InternetAddress internetAddress : internetAddresses) {
 			InternetAddress filteredInternetAddress = filterInternetAddress(

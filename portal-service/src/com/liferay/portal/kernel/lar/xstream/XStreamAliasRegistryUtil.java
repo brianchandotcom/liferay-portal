@@ -81,10 +81,10 @@ public class XStreamAliasRegistryUtil {
 		new XStreamAliasRegistryUtil();
 
 	private final ServiceRegistrationMap<XStreamAlias> _serviceRegistrations =
-		new ServiceRegistrationMap<XStreamAlias>();
+		new ServiceRegistrationMap<>();
 	private final ServiceTracker<XStreamAlias, XStreamAlias> _serviceTracker;
 	private final Map<Class<?>, String> _xstreamAliases =
-		new ConcurrentHashMap<Class<?>, String>();
+		new ConcurrentHashMap<>();
 
 	private class XStreamAlias {
 

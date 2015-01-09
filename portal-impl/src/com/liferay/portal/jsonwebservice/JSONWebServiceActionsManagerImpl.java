@@ -63,7 +63,7 @@ public class JSONWebServiceActionsManagerImpl
 
 	@Override
 	public Set<String> getContextNames() {
-		Set<String> contextNames = new TreeSet<String>();
+		Set<String> contextNames = new TreeSet<>();
 
 		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
 				_jsonWebServiceActionConfigs) {
@@ -171,8 +171,7 @@ public class JSONWebServiceActionsManagerImpl
 		String contextName) {
 
 		List<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
-			new ArrayList<JSONWebServiceActionMapping>(
-				_jsonWebServiceActionConfigs.size());
+			new ArrayList<>(_jsonWebServiceActionConfigs.size());
 
 		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
 				_jsonWebServiceActionConfigs) {
@@ -651,8 +650,7 @@ public class JSONWebServiceActionsManagerImpl
 		JSONWebServiceActionsManagerImpl.class);
 
 	private SortedArrayList<JSONWebServiceActionConfig>
-		_jsonWebServiceActionConfigs =
-			new SortedArrayList<JSONWebServiceActionConfig>();
+		_jsonWebServiceActionConfigs = new SortedArrayList<>();
 	private JSONWebServiceNaming _jsonWebServiceNaming =
 		new JSONWebServiceNaming();
 	private BinarySearch<String> _pathBinarySearch = new PathBinarySearch();

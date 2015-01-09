@@ -116,7 +116,7 @@ public class PermissionExportImportTest extends PowerMockito {
 			Group exportGroup, Role role, String exportResourcePrimKey)
 		throws Exception {
 
-		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
+		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
 		if (ResourceBlockLocalServiceUtil.isSupported(_PORTLET_ID)) {
 			roleIdsToActionIds.put(role.getRoleId(), _ACTION_IDS);
@@ -188,7 +188,7 @@ public class PermissionExportImportTest extends PowerMockito {
 			TestPropsValues.getCompanyId(), _PORTLET_ID,
 			ResourceConstants.SCOPE_INDIVIDUAL, importResourcePrimKey);
 
-		List<String> currentIndividualActions = new ArrayList<String>();
+		List<String> currentIndividualActions = new ArrayList<>();
 
 		ResourcePermissionUtil.populateResourcePermissionActionIds(
 			importGroup.getGroupId(), role, resource, actions,

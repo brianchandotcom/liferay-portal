@@ -72,7 +72,7 @@ public class FacetFactoryUtil {
 	private static final FacetFactoryUtil _instance = new FacetFactoryUtil();
 
 	private final Map<String, FacetFactory> _facetFactories =
-		new ConcurrentHashMap<String, FacetFactory>();
+		new ConcurrentHashMap<>();
 	private final ServiceTracker<FacetFactory, FacetFactory> _serviceTracker;
 
 	private class FacetFactoryServiceTrackerCustomizer

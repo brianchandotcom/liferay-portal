@@ -515,7 +515,7 @@ public class CompanyLocalServiceTest {
 			long companyId, long userId, String name)
 		throws Exception {
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), name);
 

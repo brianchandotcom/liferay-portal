@@ -47,7 +47,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 	}
 
 	public Map<String, String[]> getMap() {
-		Map<String, String[]> map = new HashMap<String, String[]>();
+		Map<String, String[]> map = new HashMap<>();
 
 		Map<String, Preference> preferences = getPreferences();
 
@@ -141,7 +141,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 	}
 
 	public void reset() {
-		_modifiedPreferences = new ConcurrentHashMap<String, Preference>();
+		_modifiedPreferences = new ConcurrentHashMap<>();
 	}
 
 	public abstract void reset(String key) throws ReadOnlyException;
@@ -250,7 +250,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 	protected Map<String, Preference> getModifiedPreferences() {
 		if (_modifiedPreferences == null) {
-			_modifiedPreferences = new ConcurrentHashMap<String, Preference>(
+			_modifiedPreferences = new ConcurrentHashMap<>(
 				_originalPreferences);
 		}
 

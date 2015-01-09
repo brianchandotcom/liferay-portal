@@ -445,7 +445,7 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	}
 
 	protected List<Role> filterRoles(List<Role> roles) throws PortalException {
-		List<Role> filteredRoles = new ArrayList<Role>();
+		List<Role> filteredRoles = new ArrayList<>();
 
 		for (Role role : roles) {
 			if (RolePermissionUtil.contains(

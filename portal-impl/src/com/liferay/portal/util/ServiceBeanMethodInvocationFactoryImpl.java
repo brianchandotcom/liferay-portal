@@ -90,7 +90,7 @@ public class ServiceBeanMethodInvocationFactoryImpl
 			return methodInterceptors;
 		}
 
-		methodInterceptors = new ArrayList<MethodInterceptor>();
+		methodInterceptors = new ArrayList<>();
 
 		for (String methodInterceptorBeanId : methodInterceptorBeanIds) {
 			MethodInterceptor methodInterceptor =
@@ -106,6 +106,6 @@ public class ServiceBeanMethodInvocationFactoryImpl
 	}
 
 	private final Map<String, List<MethodInterceptor>> _methodInterceptors =
-		new HashMap<String, List<MethodInterceptor>>();
+		new HashMap<>();
 
 }

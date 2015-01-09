@@ -800,8 +800,7 @@ public class HtmlImpl implements Html {
 		'(', ')', '[', ']', '.', '@', ',', ':', '/', '|', '+', '-', '=', '!',
 		'<', '>', '*', '$', '"', '"', ' ', 9, 10, 13, 133, 8232};
 
-	private static final Map<String, String> _unescapeMap =
-		new HashMap<String, String>();
+	private static final Map<String, String> _unescapeMap = new HashMap<>();
 
 	static {
 		_unescapeMap.put("lt", "<");

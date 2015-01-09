@@ -41,8 +41,7 @@ public class AntDeploymentScenarioGenerator
 			return defaultDeploymentDescriptions;
 		}
 
-		List<DeploymentDescription> deploymentDescriptions =
-			new ArrayList<DeploymentDescription>();
+		List<DeploymentDescription> deploymentDescriptions = new ArrayList<>();
 
 		WebArchive webArchive = WebArchiveBuilder.build();
 

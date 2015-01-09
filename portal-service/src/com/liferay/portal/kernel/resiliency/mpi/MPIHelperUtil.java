@@ -102,7 +102,7 @@ public class MPIHelperUtil {
 	}
 
 	public static List<SPIProvider> getSPIProviders() {
-		List<SPIProvider> spiProviders = new ArrayList<SPIProvider>();
+		List<SPIProvider> spiProviders = new ArrayList<>();
 
 		for (SPIProviderContainer spiProviderContainer :
 				_spiProviderContainers.values()) {
@@ -114,7 +114,7 @@ public class MPIHelperUtil {
 	}
 
 	public static List<SPI> getSPIs() {
-		List<SPI> spis = new ArrayList<SPI>();
+		List<SPI> spis = new ArrayList<>();
 
 		for (SPIProviderContainer spiProviderContainer :
 				_spiProviderContainers.values()) {
@@ -132,7 +132,7 @@ public class MPIHelperUtil {
 	}
 
 	public static List<SPI> getSPIs(String spiProviderName) {
-		List<SPI> spis = new ArrayList<SPI>();
+		List<SPI> spis = new ArrayList<>();
 
 		SPIProviderContainer spiProviderContainer = _spiProviderContainers.get(
 			spiProviderName);
@@ -418,8 +418,7 @@ public class MPIHelperUtil {
 	private static final MPI _mpi;
 	private static final MPI _mpiImpl;
 	private static final ConcurrentMap<String, SPIProviderContainer>
-		_spiProviderContainers =
-			new ConcurrentHashMap<String, SPIProviderContainer>();
+		_spiProviderContainers = new ConcurrentHashMap<>();
 	private static final ThreadLocal<SPI> _unregisteringSPIThreadLocal =
 		new CentralizedThreadLocal<SPI>(true);
 
@@ -492,7 +491,7 @@ public class MPIHelperUtil {
 
 		private final SPIProvider _spiProvider;
 		private final ConcurrentMap<String, SPI> _spis =
-			new ConcurrentHashMap<String, SPI>();
+			new ConcurrentHashMap<>();
 
 	}
 

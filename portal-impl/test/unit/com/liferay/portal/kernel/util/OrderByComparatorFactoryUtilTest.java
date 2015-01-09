@@ -51,12 +51,12 @@ public class OrderByComparatorFactoryUtilTest {
 		EmailAddress emailAddress2 = newEmailAddress(
 			2, newDate(0, 2, 2012), "abc@liferay.com");
 
-		List<EmailAddress> expectedList = new ArrayList<EmailAddress>();
+		List<EmailAddress> expectedList = new ArrayList<>();
 
 		expectedList.add(emailAddress1);
 		expectedList.add(emailAddress2);
 
-		List<EmailAddress> actualList = new ArrayList<EmailAddress>();
+		List<EmailAddress> actualList = new ArrayList<>();
 
 		actualList.add(emailAddress2);
 		actualList.add(emailAddress1);
@@ -80,12 +80,12 @@ public class OrderByComparatorFactoryUtilTest {
 		EmailAddress emailAddress2 = newEmailAddress(
 			2, newDate(0, 2, 2012), "abc@liferay.com");
 
-		List<EmailAddress> expectedList = new ArrayList<EmailAddress>();
+		List<EmailAddress> expectedList = new ArrayList<>();
 
 		expectedList.add(emailAddress2);
 		expectedList.add(emailAddress1);
 
-		List<EmailAddress> actualList = new ArrayList<EmailAddress>();
+		List<EmailAddress> actualList = new ArrayList<>();
 
 		actualList.add(emailAddress1);
 		actualList.add(emailAddress2);
@@ -107,12 +107,12 @@ public class OrderByComparatorFactoryUtilTest {
 		EmailAddress emailAddress2 = newEmailAddress(
 			2, newDate(0, 2, 2012), "def@liferay.com");
 
-		List<EmailAddress> expectedList = new ArrayList<EmailAddress>();
+		List<EmailAddress> expectedList = new ArrayList<>();
 
 		expectedList.add(emailAddress1);
 		expectedList.add(emailAddress2);
 
-		List<EmailAddress> actualList = new ArrayList<EmailAddress>();
+		List<EmailAddress> actualList = new ArrayList<>();
 
 		actualList.add(emailAddress2);
 		actualList.add(emailAddress1);
@@ -133,12 +133,12 @@ public class OrderByComparatorFactoryUtilTest {
 		EmailAddress emailAddress2 = newEmailAddress(
 			2, newDate(0, 2, 2012), "def@liferay.com");
 
-		List<EmailAddress> expectedList = new ArrayList<EmailAddress>();
+		List<EmailAddress> expectedList = new ArrayList<>();
 
 		expectedList.add(emailAddress2);
 		expectedList.add(emailAddress1);
 
-		List<EmailAddress> actualList = new ArrayList<EmailAddress>();
+		List<EmailAddress> actualList = new ArrayList<>();
 
 		actualList.add(emailAddress1);
 		actualList.add(emailAddress2);
@@ -161,12 +161,12 @@ public class OrderByComparatorFactoryUtilTest {
 		EmailAddress emailAddress2 = newEmailAddress(
 			2, newDate(0, 2, 2012), "abc@liferay.com");
 
-		List<EmailAddress> expectedList = new ArrayList<EmailAddress>();
+		List<EmailAddress> expectedList = new ArrayList<>();
 
 		expectedList.add(emailAddress1);
 		expectedList.add(emailAddress2);
 
-		List<EmailAddress> actualList = new ArrayList<EmailAddress>();
+		List<EmailAddress> actualList = new ArrayList<>();
 
 		actualList.add(emailAddress2);
 		actualList.add(emailAddress1);
@@ -189,12 +189,12 @@ public class OrderByComparatorFactoryUtilTest {
 		EmailAddress emailAddress2 = newEmailAddress(
 			2, newDate(0, 2, 2012), "abc@liferay.com");
 
-		List<EmailAddress> expectedList = new ArrayList<EmailAddress>();
+		List<EmailAddress> expectedList = new ArrayList<>();
 
 		expectedList.add(emailAddress2);
 		expectedList.add(emailAddress1);
 
-		List<EmailAddress> actualList = new ArrayList<EmailAddress>();
+		List<EmailAddress> actualList = new ArrayList<>();
 
 		actualList.add(emailAddress1);
 		actualList.add(emailAddress2);

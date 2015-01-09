@@ -204,11 +204,10 @@ public abstract class BaseDestination implements Destination {
 		return unregistered;
 	}
 
-	protected Set<MessageListener> messageListeners =
-		new ConcurrentHashSet<MessageListener>();
+	protected Set<MessageListener> messageListeners = new ConcurrentHashSet<>();
 	protected String name = StringPool.BLANK;
 
 	private final Set<DestinationEventListener> _destinationEventListeners =
-		new ConcurrentHashSet<DestinationEventListener>();
+		new ConcurrentHashSet<>();
 
 }

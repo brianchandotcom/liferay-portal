@@ -125,7 +125,7 @@ public class ComboServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		Set<String> modulePathsSet = new LinkedHashSet<String>();
+		Set<String> modulePathsSet = new LinkedHashSet<>();
 
 		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
 			request.getQueryString());

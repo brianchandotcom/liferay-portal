@@ -156,7 +156,7 @@ public class HttpImpl implements Http {
 			return;
 		}
 
-		List<String> authPrefs = new ArrayList<String>();
+		List<String> authPrefs = new ArrayList<>();
 
 		if (_PROXY_AUTH_TYPE.equals("username-password")) {
 			_proxyCredentials = new UsernamePasswordCredentials(
@@ -724,15 +724,13 @@ public class HttpImpl implements Http {
 
 	@Override
 	public Map<String, String[]> parameterMapFromString(String queryString) {
-		Map<String, String[]> parameterMap =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
 		if (Validator.isNull(queryString)) {
 			return parameterMap;
 		}
 
-		Map<String, List<String>> tempParameterMap =
-			new LinkedHashMap<String, List<String>>();
+		Map<String, List<String>> tempParameterMap = new LinkedHashMap<>();
 
 		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
 
@@ -767,7 +765,7 @@ public class HttpImpl implements Http {
 				List<String> values = tempParameterMap.get(key);
 
 				if (values == null) {
-					values = new ArrayList<String>();
+					values = new ArrayList<>();
 
 					tempParameterMap.put(key, values);
 				}
@@ -1293,7 +1291,7 @@ public class HttpImpl implements Http {
 			}
 		}
 		else {
-			List<Part> partsList = new ArrayList<Part>();
+			List<Part> partsList = new ArrayList<>();
 
 			if (parts != null) {
 				for (Map.Entry<String, String> entry : parts.entrySet()) {

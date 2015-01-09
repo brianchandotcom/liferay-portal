@@ -34,7 +34,7 @@ public class AssetCategoryImpl extends AssetCategoryBaseImpl {
 
 	@Override
 	public List<AssetCategory> getAncestors() throws PortalException {
-		List<AssetCategory> categories = new ArrayList<AssetCategory>();
+		List<AssetCategory> categories = new ArrayList<>();
 
 		AssetCategory category = this;
 

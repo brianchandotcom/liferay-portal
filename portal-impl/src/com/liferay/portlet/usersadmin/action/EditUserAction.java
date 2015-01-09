@@ -484,8 +484,7 @@ public class EditUserAction extends PortletAction {
 	protected List<AnnouncementsDelivery> getAnnouncementsDeliveries(
 		ActionRequest actionRequest) {
 
-		List<AnnouncementsDelivery> announcementsDeliveries =
-			new ArrayList<AnnouncementsDelivery>();
+		List<AnnouncementsDelivery> announcementsDeliveries = new ArrayList<>();
 
 		for (String type : AnnouncementsEntryConstants.TYPES) {
 			boolean email = ParamUtil.getBoolean(

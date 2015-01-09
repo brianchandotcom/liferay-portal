@@ -310,8 +310,7 @@ public class BackgroundTaskLocalServiceTest {
 	}
 
 	protected Map<String, Serializable> getTaskContextMap() throws Exception {
-		Map<String, Serializable> taskContext =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> taskContext = new HashMap<>();
 
 		taskContext.put("param1", RandomTestUtil.randomBoolean());
 		taskContext.put("param2", RandomTestUtil.randomString());

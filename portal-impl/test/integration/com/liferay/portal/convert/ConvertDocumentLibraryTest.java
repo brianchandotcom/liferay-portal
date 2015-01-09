@@ -257,7 +257,7 @@ public class ConvertDocumentLibraryTest {
 	}
 
 	protected DLFileEntry getDLFileEntry(Object object) throws Exception {
-		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
+		List<FileEntry> fileEntries = new ArrayList<>();
 
 		if (object instanceof MBMessage) {
 			fileEntries = ((MBMessage)object).getAttachmentsFileEntries(0, 1);

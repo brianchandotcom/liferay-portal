@@ -164,6 +164,6 @@ public class LayoutTemplateHotDeployListener extends BaseHotDeployListener {
 		LayoutTemplateHotDeployListener.class);
 
 	private static final Map<String, List<LayoutTemplate>> _layoutTemplates =
-		new HashMap<String, List<LayoutTemplate>>();
+		new HashMap<>();
 
 }

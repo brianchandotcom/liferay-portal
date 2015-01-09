@@ -212,7 +212,7 @@ public class BatchablePipeTest {
 
 		// Do statistics
 
-		Map<String, Integer> verifyMap = new HashMap<String, Integer>();
+		Map<String, Integer> verifyMap = new HashMap<>();
 
 		for (IncreasableEntry<String, Integer> increasableEntry :
 				resultBlockingQueue) {

@@ -396,7 +396,7 @@ public abstract class AbstractSearchEngineConfigurator
 
 	private String _originalSearchEngineId;
 	private final List<SearchEngineRegistration> _searchEngineRegistrations =
-		new ArrayList<SearchEngineRegistration>();
+		new ArrayList<>();
 	private Map<String, SearchEngine> _searchEngines;
 
 	private class SearchEngineRegistration {
@@ -473,11 +473,9 @@ public abstract class AbstractSearchEngineConfigurator
 
 		private SearchEngineProxyWrapper _originalSearchEngineProxyWrapper;
 		private final List<InvokerMessageListener>
-			_originalSearchReaderMessageListeners =
-				new ArrayList<InvokerMessageListener>();
+			_originalSearchReaderMessageListeners = new ArrayList<>();
 		private final List<InvokerMessageListener>
-			_originalSearchWriterMessageListeners =
-				new ArrayList<InvokerMessageListener>();
+			_originalSearchWriterMessageListeners = new ArrayList<>();
 		private boolean _override;
 		private final String _searchEngineId;
 		private String _searchReaderDestinationName;

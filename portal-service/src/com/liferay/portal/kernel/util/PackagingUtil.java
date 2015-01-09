@@ -28,7 +28,7 @@ import java.util.Stack;
 public class PackagingUtil {
 
 	public static List<String> getPackagesFromPath(File file) {
-		Set<String> packages = new HashSet<String>();
+		Set<String> packages = new HashSet<>();
 		Stack<String> packageStack = new Stack<String>();
 
 		subPackages(file, packages, packageStack);

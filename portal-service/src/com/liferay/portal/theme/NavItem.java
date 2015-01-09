@@ -65,7 +65,7 @@ public class NavItem implements Serializable {
 			return null;
 		}
 
-		List<NavItem> navItems = new ArrayList<NavItem>(layouts.size());
+		List<NavItem> navItems = new ArrayList<>(layouts.size());
 
 		for (Layout layout : layouts) {
 			navItems.add(new NavItem(request, layout, template));

@@ -160,7 +160,7 @@ public class AssetEntryServiceTest {
 		RatingsTestUtil.addStats(
 			assetEntry3.getClassName(), assetEntry3.getClassPK(), 3000);
 
-		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>(3);
+		List<AssetEntry> assetEntries = new ArrayList<>(3);
 
 		assetEntries.add(assetEntry3);
 		assetEntries.add(assetEntry1);

@@ -535,10 +535,10 @@ public abstract class BaseIntraband implements Intraband {
 	protected final long defaultTimeout;
 	protected volatile boolean open = true;
 	protected final Map<Long, Datagram> responseWaitingMap =
-		new ConcurrentHashMap<Long, Datagram>();
+		new ConcurrentHashMap<>();
 	protected final AtomicLong sequenceIdGenerator = new AtomicLong();
 	protected final NavigableMap<Long, Long> timeoutMap =
-		new ConcurrentSkipListMap<Long, Long>();
+		new ConcurrentSkipListMap<>();
 
 	protected static class SendSyncDatagramCompletionHandler
 		implements CompletionHandler<Object> {

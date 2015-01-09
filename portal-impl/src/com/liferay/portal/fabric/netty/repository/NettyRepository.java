@@ -111,8 +111,7 @@ public class NettyRepository implements Repository<Channel> {
 			return defaultNoticeableFuture;
 		}
 
-		final Map<Path, Path> resultPathMap =
-			new ConcurrentHashMap<Path, Path>();
+		final Map<Path, Path> resultPathMap = new ConcurrentHashMap<>();
 
 		final AtomicInteger counter = new AtomicInteger(pathMap.size());
 
@@ -310,8 +309,7 @@ public class NettyRepository implements Repository<Channel> {
 	protected final AsyncBroker<Path, FileResponse> asyncBroker =
 		new AsyncBroker<Path, FileResponse>();
 	protected final long getFileTimeout;
-	protected final Map<Path, Path> pathMap =
-		new ConcurrentHashMap<Path, Path>();
+	protected final Map<Path, Path> pathMap = new ConcurrentHashMap<>();
 	protected final Path repositoryPath;
 
 	private static final Log _log = LogFactoryUtil.getLog(

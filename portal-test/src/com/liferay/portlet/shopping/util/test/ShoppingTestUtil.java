@@ -126,8 +126,8 @@ public class ShoppingTestUtil {
 		boolean largeImage = false;
 		String largeImageURL = null;
 		File largeImageFile = null;
-		List<ShoppingItemField> itemFields = new ArrayList<ShoppingItemField>();
-		List<ShoppingItemPrice> itemPrices = new ArrayList<ShoppingItemPrice>();
+		List<ShoppingItemField> itemFields = new ArrayList<>();
+		List<ShoppingItemPrice> itemPrices = new ArrayList<>();
 
 		return ShoppingItemServiceUtil.addItem(
 			groupId, parentCategoryId, sku, name, description, properties,

@@ -418,12 +418,12 @@ public class Field implements Serializable {
 		}
 
 		private final LinkedList<Field> _nestedFieldsBuilderFields =
-			new LinkedList<Field>();
+			new LinkedList<>();
 
 	}
 
 	private float _boost = 1;
-	private final List<Field> _fields = new ArrayList<Field>();
+	private final List<Field> _fields = new ArrayList<>();
 	private Map<Locale, String> _localizedValues;
 	private String _name;
 	private boolean _numeric;

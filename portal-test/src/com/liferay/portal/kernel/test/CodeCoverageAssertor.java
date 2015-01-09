@@ -57,7 +57,7 @@ public class CodeCoverageAssertor extends BaseTestRule<String, Object> {
 	protected void afterClass(Description description, String className)
 		throws Exception {
 
-		List<Class<?>> assertClasses = new ArrayList<Class<?>>();
+		List<Class<?>> assertClasses = new ArrayList<>();
 
 		ClassLoader classLoader = getClassLoader();
 
@@ -112,7 +112,7 @@ public class CodeCoverageAssertor extends BaseTestRule<String, Object> {
 	}
 
 	private String[] _generateIncludes(String mainClassName) throws Exception {
-		List<Class<?>> assertClasses = new ArrayList<Class<?>>();
+		List<Class<?>> assertClasses = new ArrayList<>();
 
 		String jvmClassPath = ClassPathUtil.getJVMClassPath(false);
 

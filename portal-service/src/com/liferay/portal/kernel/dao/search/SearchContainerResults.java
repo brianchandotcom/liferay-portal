@@ -46,7 +46,7 @@ public class SearchContainerResults<R> {
 		this._total = total;
 	}
 
-	private List<R> _results = new ArrayList<R>();
+	private List<R> _results = new ArrayList<>();
 	private int _total;
 
 }

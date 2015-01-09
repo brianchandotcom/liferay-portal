@@ -55,7 +55,7 @@ public class ActionUtil {
 	public static void getFileEntries(HttpServletRequest request)
 		throws Exception {
 
-		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
+		List<FileEntry> fileEntries = new ArrayList<>();
 
 		long[] fileEntryIds = StringUtil.split(
 			ParamUtil.getString(request, "fileEntryIds"), 0L);
@@ -166,7 +166,7 @@ public class ActionUtil {
 		long[] fileShortcutIds = StringUtil.split(
 			ParamUtil.getString(request, "fileShortcutIds"), 0L);
 
-		List<DLFileShortcut> fileShortcuts = new ArrayList<DLFileShortcut>();
+		List<DLFileShortcut> fileShortcuts = new ArrayList<>();
 
 		for (long fileShortcutId : fileShortcutIds) {
 			if (fileShortcutId > 0) {
@@ -246,7 +246,7 @@ public class ActionUtil {
 		long[] folderIds = StringUtil.split(
 			ParamUtil.getString(request, "folderIds"), 0L);
 
-		List<Folder> folders = new ArrayList<Folder>();
+		List<Folder> folders = new ArrayList<>();
 
 		for (long folderId : folderIds) {
 			try {

@@ -121,7 +121,7 @@ public abstract class BaseGenericSpellCheckIndexWriter
 			String typeFieldValue, int maxNGramLength)
 		throws Exception {
 
-		Set<Document> documents = new HashSet<Document>();
+		Set<Document> documents = new HashSet<>();
 
 		try {
 			DictionaryReader dictionaryReader = new DictionaryReader(

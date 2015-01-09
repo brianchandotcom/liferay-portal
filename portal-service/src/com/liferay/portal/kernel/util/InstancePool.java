@@ -46,7 +46,7 @@ public class InstancePool {
 	}
 
 	private InstancePool() {
-		_instances = new ConcurrentHashMap<String, Object>();
+		_instances = new ConcurrentHashMap<>();
 	}
 
 	private boolean _contains(String className) {

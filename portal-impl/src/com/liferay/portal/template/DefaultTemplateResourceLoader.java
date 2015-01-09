@@ -291,7 +291,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	private final String _name;
 	private final PortalCache<String, TemplateResource> _singleVMPortalCache;
 	private final Set<TemplateResourceParser> _templateResourceParsers =
-		new HashSet<TemplateResourceParser>();
+		new HashSet<>();
 
 	private static class NullHolderTemplateResource
 		implements TemplateResource {

@@ -64,8 +64,7 @@ public class TransactionAttributeBuilder {
 		ruleBasedTransactionAttribute.setReadOnly(readOnly);
 		ruleBasedTransactionAttribute.setTimeout(timeout);
 
-		List<RollbackRuleAttribute> rollbackRuleAttributes =
-			new ArrayList<RollbackRuleAttribute>();
+		List<RollbackRuleAttribute> rollbackRuleAttributes = new ArrayList<>();
 
 		for (int i = 0; i < rollbackForClasses.length; i++) {
 			RollbackRuleAttribute rollbackRuleAttribute =

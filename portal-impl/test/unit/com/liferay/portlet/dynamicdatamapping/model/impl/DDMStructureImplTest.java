@@ -180,7 +180,7 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 		DDMStructure structure = createStructure("Test Structure", ddmForm);
 
-		Set<String> expectedFieldNames = new HashSet<String>();
+		Set<String> expectedFieldNames = new HashSet<>();
 
 		expectedFieldNames.add("field1");
 		expectedFieldNames.add("child1Field1");
@@ -212,7 +212,7 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 		childStructure.setParentStructureId(parentStructure.getStructureId());
 
-		Set<String> expectedFieldNames = new HashSet<String>();
+		Set<String> expectedFieldNames = new HashSet<>();
 
 		expectedFieldNames.add("field1");
 		expectedFieldNames.add("child1Field1");
@@ -287,7 +287,7 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 		DDMStructure structure = createStructure("Test Structure", ddmForm);
 
-		List<String> expectedFieldNames = new ArrayList<String>();
+		List<String> expectedFieldNames = new ArrayList<>();
 
 		expectedFieldNames.add("field1");
 		expectedFieldNames.add("field2");

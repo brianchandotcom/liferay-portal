@@ -49,8 +49,7 @@ public class PublicRenderParametersPool {
 				WebKeys.PUBLIC_RENDER_PARAMETERS_POOL);
 
 		if (publicRenderParametersPool == null) {
-			publicRenderParametersPool =
-				new ConcurrentHashMap<Long, Map<String, String[]>>();
+			publicRenderParametersPool = new ConcurrentHashMap<>();
 
 			session.setAttribute(
 				WebKeys.PUBLIC_RENDER_PARAMETERS_POOL,
@@ -66,7 +65,7 @@ public class PublicRenderParametersPool {
 				publicRenderParametersPool.get(layoutSet.getLayoutSetId());
 
 			if (publicRenderParameters == null) {
-				publicRenderParameters = new HashMap<String, String[]>();
+				publicRenderParameters = new HashMap<>();
 
 				publicRenderParametersPool.put(
 					layoutSet.getLayoutSetId(), publicRenderParameters);
@@ -79,7 +78,7 @@ public class PublicRenderParametersPool {
 				_log.warn(e, e);
 			}
 
-			return new HashMap<String, String[]>();
+			return new HashMap<>();
 		}
 	}
 

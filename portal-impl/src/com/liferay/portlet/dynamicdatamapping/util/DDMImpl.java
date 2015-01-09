@@ -297,7 +297,7 @@ public class DDMImpl implements DDM {
 
 		DDMStructure ddmStructure = fieldsDisplayField.getDDMStructure();
 
-		List<String> fieldsDisplayValues = new ArrayList<String>();
+		List<String> fieldsDisplayValues = new ArrayList<>();
 
 		String[] values = splitFieldsDisplayValue(fieldsDisplayField);
 
@@ -534,7 +534,7 @@ public class DDMImpl implements DDM {
 		List<String> privateFieldNames = ListUtil.fromArray(
 			new String[] {FIELDS_DISPLAY_NAME});
 
-		List<String> fieldNames = new ArrayList<String>();
+		List<String> fieldNames = new ArrayList<>();
 
 		if ((fieldsDisplayValues.length == 0) ||
 			privateFieldNames.contains(fieldName)) {
@@ -607,8 +607,7 @@ public class DDMImpl implements DDM {
 		List<String> fieldNames = getFieldNames(
 			fieldNamespace, fieldName, serviceContext);
 
-		List<Serializable> fieldValues = new ArrayList<Serializable>(
-			fieldNames.size());
+		List<Serializable> fieldValues = new ArrayList<>(fieldNames.size());
 
 		for (String fieldNameValue : fieldNames) {
 			Serializable fieldValue = serviceContext.getAttribute(
@@ -730,7 +729,7 @@ public class DDMImpl implements DDM {
 		Set<Locale> newFieldAvailableLocales,
 		Set<Locale> existingFieldAvailableLocales) {
 
-		Set<Locale> mergedAvailableLocales = new HashSet<Locale>();
+		Set<Locale> mergedAvailableLocales = new HashSet<>();
 
 		mergedAvailableLocales.addAll(newFieldAvailableLocales);
 		mergedAvailableLocales.addAll(existingFieldAvailableLocales);
@@ -748,7 +747,7 @@ public class DDMImpl implements DDM {
 			return newFieldValues;
 		}
 
-		List<Serializable> mergedLocaleValues = new ArrayList<Serializable>();
+		List<Serializable> mergedLocaleValues = new ArrayList<>();
 
 		int repetition = countFieldRepetition(
 			newFieldsDisplayValues, fieldName);

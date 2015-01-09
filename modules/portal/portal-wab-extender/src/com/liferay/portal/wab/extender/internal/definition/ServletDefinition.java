@@ -83,10 +83,10 @@ public class ServletDefinition {
 	}
 
 	private boolean _asyncSupported;
-	private final List<String> _errorPages = new ArrayList<String>();
-	private Map<String, String> _initParameters = new HashMap<String, String>();
+	private final List<String> _errorPages = new ArrayList<>();
+	private Map<String, String> _initParameters = new HashMap<>();
 	private String _name;
 	private Servlet _servlet;
-	private List<String> _urlPatterns = new ArrayList<String>();
+	private List<String> _urlPatterns = new ArrayList<>();
 
 }

@@ -162,7 +162,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		}
 
 		Set<TemplateVariableDefinition> templateVariableDefinitions =
-			new LinkedHashSet<TemplateVariableDefinition>();
+			new LinkedHashSet<>();
 
 		// Declared variables
 
@@ -223,8 +223,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 			templateVariableDefinitions.add(variableDefinition);
 		}
 
-		return new ArrayList<TemplateVariableDefinition>(
-			templateVariableDefinitions);
+		return new ArrayList<>(templateVariableDefinitions);
 	}
 
 	protected JSONObject getAutocompleteVariableJSONObject(Class<?> clazz) {

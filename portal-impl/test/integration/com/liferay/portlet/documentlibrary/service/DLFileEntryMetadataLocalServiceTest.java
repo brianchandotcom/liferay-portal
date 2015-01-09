@@ -88,7 +88,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 		_ddmStructure = ddmStructures.get(0);
 
-		Map<String, Fields> fieldsMap = new HashMap<String, Fields>();
+		Map<String, Fields> fieldsMap = new HashMap<>();
 
 		Fields fields = new Fields();
 

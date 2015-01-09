@@ -60,6 +60,6 @@ public class SearchContainerReference {
 	private final String _namespace;
 	private final HttpServletRequest _request;
 	private final Map<String, SearchContainer<?>> _searchContainers =
-		new HashMap<String, SearchContainer<?>>();
+		new HashMap<>();
 
 }

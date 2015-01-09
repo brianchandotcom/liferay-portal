@@ -53,7 +53,7 @@ public class PortletListerImpl implements PortletLister {
 	public TreeView getTreeView() throws PortalException {
 		_nodeId = 1;
 
-		_list = new ArrayList<TreeNodeView>();
+		_list = new ArrayList<>();
 
 		TreeNodeView rootNodeView = null;
 
@@ -196,7 +196,7 @@ public class PortletListerImpl implements PortletLister {
 			Set<String> portletIds, int parentNodeId, int depth)
 		throws PortalException {
 
-		List<Portlet> portlets = new ArrayList<Portlet>();
+		List<Portlet> portlets = new ArrayList<>();
 
 		String externalPortletCategory = null;
 

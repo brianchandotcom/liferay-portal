@@ -554,10 +554,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		DefaultPortalToLDAPConverter.class);
 
 	private String _groupDNFieldName = GroupConverterKeys.GROUP_NAME;
-	private Map<String, String> _reservedContactFieldNames =
-		new HashMap<String, String>();
-	private Map<String, String> _reservedUserFieldNames =
-		new HashMap<String, String>();
+	private Map<String, String> _reservedContactFieldNames = new HashMap<>();
+	private Map<String, String> _reservedUserFieldNames = new HashMap<>();
 	private String _userDNFieldName = UserConverterKeys.SCREEN_NAME;
 
 }

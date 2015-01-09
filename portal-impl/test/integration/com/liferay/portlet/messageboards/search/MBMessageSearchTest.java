@@ -122,7 +122,7 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 
 		List<FileEntry> fileEntries = message.getAttachmentsFileEntries();
 
-		List<String> existingFiles = new ArrayList<String>();
+		List<String> existingFiles = new ArrayList<>();
 
 		for (FileEntry fileEntry : fileEntries) {
 			existingFiles.add(fileEntry.getTitle());

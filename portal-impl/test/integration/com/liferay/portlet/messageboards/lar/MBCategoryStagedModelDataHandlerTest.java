@@ -52,7 +52,7 @@ public class MBCategoryStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		MBCategory category = MBTestUtil.addCategory(group.getGroupId());
 

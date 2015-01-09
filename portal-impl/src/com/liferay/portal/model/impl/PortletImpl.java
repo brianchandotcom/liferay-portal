@@ -110,33 +110,33 @@ public class PortletImpl extends PortletBaseImpl {
 		setActive(true);
 		setStrutsPath(portletId);
 
-		_assetRendererFactoryClasses = new ArrayList<String>();
-		_atomCollectionAdapterClasses = new ArrayList<String>();
-		_autopropagatedParameters = new LinkedHashSet<String>();
-		_customAttributesDisplayClasses = new ArrayList<String>();
-		_footerPortalCss = new ArrayList<String>();
-		_footerPortalJavaScript = new ArrayList<String>();
-		_footerPortletCss = new ArrayList<String>();
-		_footerPortletJavaScript = new ArrayList<String>();
-		_headerPortalCss = new ArrayList<String>();
-		_headerPortalJavaScript = new ArrayList<String>();
-		_headerPortletCss = new ArrayList<String>();
-		_headerPortletJavaScript = new ArrayList<String>();
-		_indexerClasses = new ArrayList<String>();
-		_initParams = new HashMap<String, String>();
-		_portletFilters = new LinkedHashMap<String, PortletFilter>();
-		_portletModes = new HashMap<String, Set<String>>();
-		_roleMappers = new LinkedHashMap<String, String>();
+		_assetRendererFactoryClasses = new ArrayList<>();
+		_atomCollectionAdapterClasses = new ArrayList<>();
+		_autopropagatedParameters = new LinkedHashSet<>();
+		_customAttributesDisplayClasses = new ArrayList<>();
+		_footerPortalCss = new ArrayList<>();
+		_footerPortalJavaScript = new ArrayList<>();
+		_footerPortletCss = new ArrayList<>();
+		_footerPortletJavaScript = new ArrayList<>();
+		_headerPortalCss = new ArrayList<>();
+		_headerPortalJavaScript = new ArrayList<>();
+		_headerPortletCss = new ArrayList<>();
+		_headerPortletJavaScript = new ArrayList<>();
+		_indexerClasses = new ArrayList<>();
+		_initParams = new HashMap<>();
+		_portletFilters = new LinkedHashMap<>();
+		_portletModes = new HashMap<>();
+		_roleMappers = new LinkedHashMap<>();
 		_rootPortlet = this;
-		_schedulerEntries = new ArrayList<SchedulerEntry>();
-		_socialActivityInterpreterClasses = new ArrayList<String>();
-		_stagedModelDataHandlerClasses = new ArrayList<String>();
-		_supportedLocales = new HashSet<String>();
-		_trashHandlerClasses = new ArrayList<String>();
-		_unlinkedRoles = new HashSet<String>();
-		_userNotificationHandlerClasses = new ArrayList<String>();
-		_windowStates = new HashMap<String, Set<String>>();
-		_workflowHandlerClasses = new ArrayList<String>();
+		_schedulerEntries = new ArrayList<>();
+		_socialActivityInterpreterClasses = new ArrayList<>();
+		_stagedModelDataHandlerClasses = new ArrayList<>();
+		_supportedLocales = new HashSet<>();
+		_trashHandlerClasses = new ArrayList<>();
+		_unlinkedRoles = new HashSet<>();
+		_userNotificationHandlerClasses = new ArrayList<>();
+		_windowStates = new HashMap<>();
+		_workflowHandlerClasses = new ArrayList<>();
 	}
 
 	/**
@@ -504,7 +504,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public Set<String> getAllPortletModes() {
-		Set<String> allPortletModes = new TreeSet<String>();
+		Set<String> allPortletModes = new TreeSet<>();
 
 		for (Map.Entry<String, Set<String>> entry : _portletModes.entrySet()) {
 			Set<String> mimeTypePortletModes = entry.getValue();
@@ -524,7 +524,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public Set<String> getAllWindowStates() {
-		Set<String> allWindowStates = new TreeSet<String>();
+		Set<String> allWindowStates = new TreeSet<>();
 
 		for (Map.Entry<String, Set<String>> entry : _windowStates.entrySet()) {
 			Set<String> mimeTypeWindowStates = entry.getValue();
@@ -2722,7 +2722,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public void linkRoles() {
-		List<String> linkedRoles = new ArrayList<String>();
+		List<String> linkedRoles = new ArrayList<>();
 
 		for (String unlinkedRole : _unlinkedRoles) {
 			String roleLink = _roleMappers.get(unlinkedRole);
@@ -3960,7 +3960,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * Map of the ready states of all portlets keyed by their root portlet ID.
 	 */
 	private static final Map<String, Boolean> _readyMap =
-		new ConcurrentHashMap<String, Boolean>();
+		new ConcurrentHashMap<>();
 
 	/**
 	 * The action timeout of the portlet.
@@ -4294,40 +4294,37 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * The supported processing events of the portlet.
 	 */
-	private final Set<QName> _processingEvents = new HashSet<QName>();
+	private final Set<QName> _processingEvents = new HashSet<>();
 
 	/**
 	 * Map of the supported processing events of the portlet keyed by the QName.
 	 */
-	private final Map<String, QName> _processingEventsByQName =
-		new HashMap<String, QName>();
+	private final Map<String, QName> _processingEventsByQName = new HashMap<>();
 
 	/**
 	 * The supported public render parameters of the portlet.
 	 */
 	private final Set<PublicRenderParameter> _publicRenderParameters =
-		new HashSet<PublicRenderParameter>();
+		new HashSet<>();
 
 	/**
 	 * Map of the supported public render parameters of the portlet keyed by the
 	 * identifier.
 	 */
 	private final Map<String, PublicRenderParameter>
-		_publicRenderParametersByIdentifier =
-			new HashMap<String, PublicRenderParameter>();
+		_publicRenderParametersByIdentifier = new HashMap<>();
 
 	/**
 	 * Map of the supported public render parameters of the portlet keyed by the
 	 * QName.
 	 */
 	private final Map<String, PublicRenderParameter>
-		_publicRenderParametersByQName =
-			new HashMap<String, PublicRenderParameter>();
+		_publicRenderParametersByQName = new HashMap<>();
 
 	/**
 	 * The supported publishing events of the portlet.
 	 */
-	private final Set<QName> _publishingEvents = new HashSet<QName>();
+	private final Set<QName> _publishingEvents = new HashSet<>();
 
 	/**
 	 * <code>True</code> if the portlet supports remoting.

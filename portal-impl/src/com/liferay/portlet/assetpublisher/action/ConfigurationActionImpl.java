@@ -682,7 +682,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		int i = 0;
 
-		List<AssetQueryRule> queryRules = new ArrayList<AssetQueryRule>();
+		List<AssetQueryRule> queryRules = new ArrayList<>();
 
 		for (int queryRulesIndex : queryRulesIndexes) {
 			AssetQueryRule queryRule = getQueryRule(

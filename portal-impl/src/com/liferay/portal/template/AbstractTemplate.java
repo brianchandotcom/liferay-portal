@@ -65,7 +65,7 @@ public abstract class AbstractTemplate implements Template {
 		this.templateResource = templateResource;
 		this.errorTemplateResource = errorTemplateResource;
 
-		this.context = new HashMap<String, Object>();
+		this.context = new HashMap<>();
 
 		if (context != null) {
 			for (Map.Entry<String, Object> entry : context.entrySet()) {

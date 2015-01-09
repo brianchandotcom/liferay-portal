@@ -265,7 +265,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 		User user = UserTestUtil.getAdminUser(group.getCompanyId());
 		Layout layout = LayoutTestUtil.addLayout(group);
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.getDefault(), String.valueOf(layout.getPlid()));
 
@@ -350,9 +350,9 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 	private static int _NOT_EXPIRED_TRASH_ENTRIES_COUNT = 4;
 
 	@DeleteAfterTestRun
-	private List<Company> _companies = new ArrayList<Company>();
+	private List<Company> _companies = new ArrayList<>();
 
 	@DeleteAfterTestRun
-	private List<Group> _groups = new ArrayList<Group>();
+	private List<Group> _groups = new ArrayList<>();
 
 }

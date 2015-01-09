@@ -89,7 +89,7 @@ public class UpgradeProcessUtil {
 	public static List<UpgradeProcess> initUpgradeProcesses(
 		ClassLoader classLoader, String[] upgradeProcessClassNames) {
 
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<UpgradeProcess>();
+		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
 		for (String upgradeProcessClassName : upgradeProcessClassNames) {
 			if (_log.isDebugEnabled()) {
@@ -203,7 +203,6 @@ public class UpgradeProcessUtil {
 		UpgradeProcessUtil.class);
 
 	private static boolean _createIGImageDocumentType = false;
-	private static final Map<Long, String> _languageIds =
-		new HashMap<Long, String>();
+	private static final Map<Long, String> _languageIds = new HashMap<>();
 
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="original.lib.name" value="freemarker" />
+	<property name="original.lib.url" value="http://search.maven.org/remotecontent?filepath=org/freemarker/freemarker" />
+	<property name="original.lib.version" value="2.3.17" />
+
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+
+	<target name="compile">
+		<get
+			dest="freemarker-2.3.17-sources.zip"
+			src="http://search.maven.org/remotecontent?filepath=org/freemarker/freemarker/2.3.17/freemarker-2.3.17-sources.jar"
+		/>
+
+		<unzip
+			dest="src"
+			src="freemarker-2.3.17-sources.zip"
+		>
+			<patternset>
+				<include name="**/DebugBreak.java" />
+				<include name="**/EnvironmentSuspendedEvent.java" />
+				<include name="**/DebuggerServer.java" />
+				<include name="**/DebuggerService.java" />
+				<include name="**/RmiDebuggedEnvironmentImpl.java" />
+				<include name="**/RmiDebuggerImpl.java" />
+				<include name="**/RmiDebuggerService.java" />
+			</patternset>
+		</unzip>
+
+		<delete file="freemarker-2.3.17-sources.zip" />
+
+		<patch
+			dir="src"
+			patchfile="patches/LPS-35775.patch"
+			strip="1"
+		/>
+
+		<compile-java
+			javac.classpathref="plugin.classpath"
+			javac.destdir="classes"
+			javac.srcdir="src"
+		/>
+
+		<get
+			dest="freemarker-2.3.17.jar"
+			src="http://search.maven.org/remotecontent?filepath=org/freemarker/freemarker/2.3.17/freemarker-2.3.17.jar"
+		/>
+
+		<unzip dest="classes" overwrite="false" src="freemarker-2.3.17.jar">
+			<patternset>
+				<exclude name="**/DebugBreak.java" />
+				<exclude name="**/EnvironmentSuspendedEvent.java" />
+				<exclude name="**/DebuggerServer.java" />
+				<exclude name="**/DebuggerService.java" />
+				<exclude name="**/RmiDebuggedEnvironmentImpl.java" />
+				<exclude name="**/RmiDebuggerImpl.java" />
+				<exclude name="**/RmiDebuggerService.java" />
+			</patternset>
+		</unzip>
+
+		<delete file="freemarker-2.3.17.jar" />
+	</target>
+
+	<!-- <target name="jar">
+		<get
+			dest="freemarker.jar.new"
+			src="http://search.maven.org/remotecontent?filepath=org/freemarker/freemarker/2.3.17/freemarker-2.3.17.jar"
+		/>
+
+		<jar destfile="freemarker.jar.new" update="true">
+			<zipfileset dir="classes" />
+		</jar>
+	</target> -->
+</project>

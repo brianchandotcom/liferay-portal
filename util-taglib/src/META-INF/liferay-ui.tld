@@ -1605,7 +1605,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets whether to use the trash icon instead of the remove icon. The default value is<![CDATA[<code>false</code>]]>.</description>
+			<description>Sets whether to use the trash icon instead of the remove icon. The default value is<![CDATA[<code>false</code>]]>.</description>  
 			<name>trash</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1675,7 +1675,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Sets the location of the image file to use in the icon.</description>
+			<description>Sets the location of the image file to use in the icon.</description> 
 			<name>icon</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3262,7 +3262,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets whether to extend the interface with additional styling. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<description>Sets whether to extend the interface with additional styling. The default value is <![CDATA[<code>false</code>]]>.</description> 
 			<name>extended</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3303,11 +3303,11 @@
 		<tag-class>com.liferay.taglib.ui.PngImageTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Sets the height of the image in pixels. A possible value would be <![CDATA[<code>16</code>]]>. <![CDATA[<code>px</code>]]> is then appended to the end of the value.</description>
+			<description>Sets the height of the image in pixels. A possible value would be <![CDATA[<code>16</code>]]>. <![CDATA[<code>px</code>]]> is then appended to the end of the value.</description> 
 			<name>height</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>integer</type>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets the location of the PNG image file to use.</description>
@@ -3320,7 +3320,7 @@
 			<name>width</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>integer</type>
+			<type>int</type>
 		</attribute>
 	</tag>
 	<tag>

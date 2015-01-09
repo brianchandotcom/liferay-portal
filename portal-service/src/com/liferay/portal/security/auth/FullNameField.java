@@ -41,16 +41,16 @@ public class FullNameField {
 		return _required;
 	}
 
-	public void setValueOptions(String[] valueOptions) {
-		_valueOptions = valueOptions;
-	}
-
 	public void setRequired(boolean required) {
 		_required = required;
 	}
 
+	public void setValueOptions(String[] valueOptions) {
+		_valueOptions = valueOptions;
+	}
+
 	private final String _name;
-	private String[] _valueOptions;
 	private boolean _required;
+	private String[] _valueOptions;
 
 }

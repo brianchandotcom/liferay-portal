@@ -371,6 +371,17 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.rss.web"
 		},
 
+		// Translator
+
+		new String[] {
+			"translator.default.languages", "translator.default.languages",
+			"com.liferay.translator.web"
+		},
+		new String[] {
+			"translator.languages", "translator.languages",
+			"com.liferay.translator.web"
+		},
+
 		// XSL content
 
 		new String[] {

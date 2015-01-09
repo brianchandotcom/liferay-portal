@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Config Admin
-Bundle-SymbolicName: com.liferay.config.admin.web
+Bundle-Name: Liferay Configuration Admin
+Bundle-SymbolicName: com.liferay.configuration.admin.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
@@ -9,6 +9,6 @@ Include-Resource:\
 	@../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
 	@../../../../util-bridges/util-bridges.jar!/com/liferay/util/bridges/freemarker/FreeMarkerPortlet.class,\
 	@../../../../util-taglib/util-taglib.jar!/META-INF/*.tld
-Private-Package: com.liferay.config.admin.web.*
+Private-Package: com.liferay.configuration.admin.web.*
 
 -metatype: *

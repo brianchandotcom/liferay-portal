@@ -61,7 +61,7 @@ public class PoshiRunnerContext {
 		return _pathLocators.get(pathLocatorKey);
 	}
 
-	public static int getSeleniumParameter(String commandName) {
+	public static int getSeleniumParameterCount(String commandName) {
 		return _seleniumParameterCounts.get(commandName);
 	}
 
@@ -176,17 +176,17 @@ public class PoshiRunnerContext {
 
 				String commandName = methodSignature.substring(x + 1, y);
 
-				int count = 0;
+				int parameterCount = 0;
 
 				int z = methodSignature.indexOf(")");
 
 				String parameters = methodSignature.substring(y + 1, z);
 
 				if (!parameters.equals("")) {
-					count = StringUtil.count(parameters, ",") + 1;
+					parameterCount = StringUtil.count(parameters, ",") + 1;
 				}
 
-				_seleniumParameterCounts.put(commandName, count);
+				_seleniumParameterCounts.put(commandName, parameterCount);
 			}
 		}
 

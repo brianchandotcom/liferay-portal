@@ -110,9 +110,9 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	
+
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
-	
+
 		ConfigurationHelper configurationHelper = new ConfigurationHelper(
 			_bundleContext, _configurationAdmin, _metaTypeService,
 			themeDisplay.getLanguageId());
@@ -158,7 +158,7 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 				List<ConfigurationModel> configurationModels =
 					configurationHelper.getFactoryInstances(
 						themeDisplay.getLanguageId(), factoryPid);
-	
+
 				renderRequest.setAttribute(
 					"configurationModelIterator",
 					new ConfigurationModelIterator(configurationModels));
@@ -166,7 +166,7 @@ public class ConfigAdminPortlet extends FreeMarkerPortlet {
 			else {
 				List<ConfigurationModel> configurationModels =
 					configurationHelper.getConfigurationModels();
-	
+
 				renderRequest.setAttribute(
 					"configurationModelIterator",
 					new ConfigurationModelIterator(configurationModels));

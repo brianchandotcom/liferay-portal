@@ -64,7 +64,7 @@ import org.osgi.service.metatype.ObjectClassDefinition;
 	property = {
 		"action.command.name=bindConfiguration",
 		"javax.portlet.name=com_liferay_configuration_admin_web_portlet_" +
-			"ConfigAdminPortlet"
+			"ConfigurationAdminPortlet"
 	}
 )
 public class BindConfigurationAction implements ActionCommand {

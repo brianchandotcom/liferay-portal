@@ -65,7 +65,7 @@ import org.osgi.service.metatype.MetaTypeService;
 	},
 	service = Portlet.class
 )
-public class ConfigAdminPortlet extends FreeMarkerPortlet {
+public class ConfigurationAdminPortlet extends FreeMarkerPortlet {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {

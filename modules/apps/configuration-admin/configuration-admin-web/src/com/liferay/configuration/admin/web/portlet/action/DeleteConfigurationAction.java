@@ -43,7 +43,7 @@ import org.osgi.service.metatype.MetaTypeService;
 	property = {
 		"action.command.name=deleteConfiguration",
 		"javax.portlet.name=com_liferay_configuration_admin_web_portlet_" +
-			"ConfigAdminPortlet"
+			"ConfigurationAdminPortlet"
 	}
 )
 public class DeleteConfigurationAction implements ActionCommand {

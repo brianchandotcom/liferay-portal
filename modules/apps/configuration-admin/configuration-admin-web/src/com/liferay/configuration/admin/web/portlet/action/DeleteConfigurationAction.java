@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.config.admin.web.portlet.action;
+package com.liferay.configuration.admin.web.portlet.action;
 
-import com.liferay.config.admin.web.util.ConfigurationHelper;
+import com.liferay.configuration.admin.web.util.ConfigurationHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
@@ -42,7 +42,7 @@ import org.osgi.service.metatype.MetaTypeService;
 	immediate = true, service = ActionCommand.class,
 	property = {
 		"action.command.name=deleteConfiguration",
-		"javax.portlet.name=com_liferay_config_admin_web_portlet_" +
+		"javax.portlet.name=com_liferay_configuration_admin_web_portlet_" +
 			"ConfigAdminPortlet"
 	}
 )

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.config.admin.web.util;
+package com.liferay.configuration.admin.web.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portlet.dynamicdatamapping.model.Value;

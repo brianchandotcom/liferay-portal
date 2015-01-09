@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.config.admin.web.model;
+package com.liferay.configuration.admin.web.model;
 
 import java.io.IOException;
 import java.io.InputStream;

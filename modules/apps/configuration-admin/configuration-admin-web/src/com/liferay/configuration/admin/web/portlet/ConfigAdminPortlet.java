@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.config.admin.web.portlet;
+package com.liferay.configuration.admin.web.portlet;
 
-import com.liferay.config.admin.web.model.ConfigurationModel;
-import com.liferay.config.admin.web.util.ConfigurationHelper;
-import com.liferay.config.admin.web.util.ConfigurationModelIterator;
+import com.liferay.configuration.admin.web.model.ConfigurationModel;
+import com.liferay.configuration.admin.web.util.ConfigurationHelper;
+import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ParamUtil;

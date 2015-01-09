@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.config.admin.web.util;
+package com.liferay.configuration.admin.web.util;
 
-import com.liferay.config.admin.web.model.ConfigurationModel;
+import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

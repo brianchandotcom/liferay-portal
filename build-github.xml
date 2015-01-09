@@ -217,6 +217,40 @@
 					return primaryViewJSONObject.get("url");
 				}
 
+				public String getTestErrorMessage(JSONObject jsonObject) {
+					StringBuilder sb = new StringBuilder();
+
+					if (!jsonObject.isNull("errorDetails")) {
+						sb.append(fixJSON(jsonObject.get("errorDetails")));
+						sb.append("<br /><br />");
+					}
+
+					sb.append(fixJSON(jsonObject.get("errorStackTrace")));
+
+					String errorMessage = sb.toString();
+
+					sb = new StringBuilder();
+
+					sb.append("<pre>");
+
+					if (errorMessage.length() > 20000) {
+						int x = errorMessage.indexOf("<br />", 2000);
+						int y = errorMessage.indexOf("<br />", errorMessage.length() - 2000);
+
+						sb.append(errorMessage.substring(0, x));
+						sb.append("<br />...</pre>");
+						sb.append("<pre>...<br />");
+						sb.append(errorMessage.substring(y));
+					}
+					else {
+						sb.append(errorMessage);
+					}
+
+					sb.append("</pre>");
+
+					return sb.toString();
+				}
+
 				public String toFormattedBuildTime(String githubJenkinsBuildTime) {
 					int milliseconds = Integer.parseInt(githubJenkinsBuildTime);
 
@@ -375,15 +409,7 @@
 						sb.append(".");
 						sb.append(jsonObject.get("name"));
 						sb.append("</a>");
-						sb.append("<pre>");
-
-						if (!jsonObject.isNull("errorDetails")) {
-							sb.append(fixJSON(jsonObject.get("errorDetails")));
-							sb.append("<br /><br />");
-						}
-
-						sb.append(fixJSON(jsonObject.get("errorStackTrace")));
-						sb.append("</pre>");
+						sb.append(getTestErrorMessage(jsonObject));
 						sb.append("</li>");
 					}
 				}

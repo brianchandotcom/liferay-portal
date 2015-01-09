@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.util.Validator;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.JavaMethod;
-import edu.emory.mathcs.backport.java.util.Collections;
 
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;

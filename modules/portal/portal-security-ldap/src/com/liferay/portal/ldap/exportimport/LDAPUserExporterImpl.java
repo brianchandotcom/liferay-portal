@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap.exportimport;
+package com.liferay.portal.ldap.exportimport;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

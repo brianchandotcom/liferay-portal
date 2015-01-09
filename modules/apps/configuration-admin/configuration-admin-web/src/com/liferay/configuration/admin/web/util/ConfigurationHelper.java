@@ -123,11 +123,11 @@ public class ConfigurationHelper {
 			factoryPid);
 
 		for (Configuration configuration : configurations) {
-			ConfigurationModel model = new ConfigurationModel(
+			ConfigurationModel curConfigurationModel = new ConfigurationModel(
 				configurationModel, configuration,
 				configuration.getBundleLocation(), false);
 
-			models.add(model);
+			models.add(curConfigurationModel);
 		}
 
 		return models;
@@ -135,14 +135,15 @@ public class ConfigurationHelper {
 
 	public String render(
 			PortletRequest portletRequest, PortletResponse portletResponse,
-			ConfigurationModel model)
+			ConfigurationModel configurationModel)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		DDMForm ddmForm = ConfigurationConverter.convert(
-			model, model.getConfiguration(), themeDisplay.getLocale());
+			configurationModel, configurationModel.getConfiguration(),
+			themeDisplay.getLocale());
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();

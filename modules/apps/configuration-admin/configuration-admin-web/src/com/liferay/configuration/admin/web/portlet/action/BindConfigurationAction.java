@@ -90,19 +90,19 @@ public class BindConfigurationAction implements ActionCommand {
 		ConfigurationHelper configurationHelper = new ConfigurationHelper(
 			_bundleContext, _configurationAdmin, _metaTypeService, languageId);
 
-		ConfigurationModel model = configurationHelper.getConfigurationModel(
-			pid);
+		ConfigurationModel configurationModel =
+			configurationHelper.getConfigurationModel(pid);
 
 		Configuration configuration = configurationHelper.getConfiguration(pid);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
-			portletRequest, model, configuration, pid, locale);
+			portletRequest, configurationModel, configuration, pid, locale);
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
 
 		Dictionary<String, Object> properties = ConfigurationProperties.load(
-			model, ddmFormFieldValuesMap, locale);
+			configurationModel, ddmFormFieldValuesMap, locale);
 
 		properties.put(Constants.SERVICE_PID, pid);
 
@@ -110,7 +110,7 @@ public class BindConfigurationAction implements ActionCommand {
 			properties.put(ConfigurationAdmin.SERVICE_FACTORYPID, factoryPid);
 		}
 
-		configureTargetService(model, configuration, properties);
+		configureTargetService(configurationModel, configuration, properties);
 
 		return true;
 	}
@@ -121,7 +121,7 @@ public class BindConfigurationAction implements ActionCommand {
 	}
 
 	protected void configureTargetService(
-			ConfigurationModel model, Configuration configuration,
+			ConfigurationModel configurationModel, Configuration configuration,
 			Dictionary<String, Object> properties)
 		throws PortletException {
 
@@ -131,14 +131,15 @@ public class BindConfigurationAction implements ActionCommand {
 
 		try {
 			if (configuration == null) {
-				if (model.isFactory()) {
+				if (configurationModel.isFactory()) {
 					if (_log.isDebugEnabled()) {
 						_log.debug("Creating factory pid");
 					}
 
 					configuration =
 						_configurationAdmin.createFactoryConfiguration(
-							model.getID(), model.getBundleLocation());
+							configurationModel.getID(),
+							configurationModel.getBundleLocation());
 				}
 				else {
 					if (_log.isDebugEnabled()) {
@@ -146,7 +147,8 @@ public class BindConfigurationAction implements ActionCommand {
 					}
 
 					configuration = _configurationAdmin.getConfiguration(
-						model.getID(), model.getBundleLocation());
+						configurationModel.getID(),
+						configurationModel.getBundleLocation());
 				}
 			}
 

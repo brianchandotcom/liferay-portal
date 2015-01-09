@@ -40,6 +40,10 @@ public class BatchDownloadEvent {
 	}
 
 	public synchronized boolean addEvent(DownloadFileEvent downloadFileEvent) {
+		if (!PropsValues.SYNC_BATCH_EVENTS_ENABLED) {
+			return false;
+		}
+
 		Map<String, Object> parameters = downloadFileEvent.getParameters();
 
 		SyncFile syncFile = (SyncFile)parameters.get("syncFile");

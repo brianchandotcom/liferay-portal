@@ -54,6 +54,10 @@ public class BatchEvent {
 	}
 
 	public synchronized boolean addEvent(Event event) {
+		if (!PropsValues.SYNC_BATCH_EVENTS_ENABLED) {
+			return false;
+		}
+
 		try {
 			Map<String, Object> parameters = event.getParameters();
 

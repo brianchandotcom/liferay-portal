@@ -19,6 +19,9 @@ package com.liferay.sync.engine.util;
  */
 public interface PropsKeys {
 
+	public static final String SYNC_BATCH_EVENTS_ENABLED =
+		"sync.batch.events.enabled";
+
 	public static final String SYNC_BATCH_EVENTS_MAX_COUNT =
 		"sync.batch.events.max.count";
 

@@ -19,6 +19,10 @@ package com.liferay.sync.engine.util;
  */
 public class PropsValues {
 
+	public static final boolean SYNC_BATCH_EVENTS_ENABLED =
+		Boolean.parseBoolean(
+			PropsUtil.get(PropsKeys.SYNC_BATCH_EVENTS_ENABLED));
+
 	public static final int SYNC_BATCH_EVENTS_MAX_COUNT = Integer.parseInt(
 		PropsUtil.get(PropsKeys.SYNC_BATCH_EVENTS_MAX_COUNT));
 

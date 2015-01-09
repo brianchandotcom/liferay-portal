@@ -1,5 +1,10 @@
 --- a/src/main/java/freemarker/core/DebugBreak.java
 +++ src/freemarker/core/DebugBreak.java
+@@ -1,3 +1,4 @@
++/* @generated */
+ /*
+  * Copyright (c) 2003 The Visigoth Software Society. All rights
+  * reserved.
 @@ -63,16 +63,19 @@
   */
  public class DebugBreak extends TemplateElement
@@ -24,6 +29,11 @@
          }
 --- a/src/main/java/freemarker/debug/impl/RmiDebuggerImpl.java
 +++ src/freemarker/debug/impl/RmiDebuggerImpl.java
+@@ -1,3 +1,4 @@
++/* @generated */
+ package freemarker.debug.impl;
+ 
+ import java.rmi.RemoteException;
 @@ -28,9 +28,12 @@ implements
          this.service = service;
      }
@@ -41,6 +51,11 @@
      public Object addDebuggerListener(DebuggerListener listener)
 --- a/src/main/java/freemarker/debug/EnvironmentSuspendedEvent.java
 +++ src/freemarker/debug/EnvironmentSuspendedEvent.java
+@@ -1,3 +1,4 @@
++/* @generated */
+ package freemarker.debug;
+ 
+ import java.util.EventObject;
 @@ -12,17 +12,36 @@
  {
      private static final long serialVersionUID = 1L;
@@ -81,6 +96,11 @@
       * @return int the line number
 --- a/src/main/java/freemarker/debug/impl/DebuggerServer.java
 +++ src/freemarker/debug/impl/DebuggerServer.java
+@@ -1,3 +1,4 @@
++/* @generated */
+ /*
+  * Copyright (c) 2003 The Visigoth Software Society. All rights
+  * reserved.
 @@ -82,6 +82,8 @@
      private final byte[] password;
      private final int port;
@@ -127,6 +147,11 @@
  }
 --- a/src/main/java/freemarker/debug/impl/DebuggerService.java
 +++ src/freemarker/debug/impl/DebuggerService.java
+@@ -1,3 +1,4 @@
++/* @generated */
+ /*
+  * Copyright (c) 2003 The Visigoth Software Society. All rights
+  * reserved.
 @@ -96,17 +96,24 @@ public static void registerTemplate(Template template)
      
      abstract void registerTemplateSpi(Template template);
@@ -177,6 +202,11 @@
 \ No newline at end of file
 --- a/src/main/java/freemarker/debug/impl/RmiDebuggedEnvironmentImpl.java
 +++ src/freemarker/debug/impl/RmiDebuggedEnvironmentImpl.java
+@@ -1,3 +1,4 @@
++/* @generated */
+ package freemarker.debug.impl;
+ 
+ import java.rmi.Remote;
 @@ -1,12 +1,16 @@
  package freemarker.debug.impl;
  
@@ -239,6 +269,11 @@
  }
 --- a/src/main/java/freemarker/debug/impl/RmiDebuggerService.java
 +++ src/freemarker/debug/impl/RmiDebuggerService.java
+@@ -1,3 +1,4 @@
++/* @generated */
+ /*
+  * Copyright (c) 2003 The Visigoth Software Society. All rights
+  * reserved.
 @@ -55,8 +55,11 @@
  import java.io.Serializable;
  import java.lang.ref.ReferenceQueue;

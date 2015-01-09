@@ -18,7 +18,7 @@ import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -457,6 +457,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		LDAPToPortalConverter ldapToPortalConverter) {
 
 		_ldapToPortalConverter = ldapToPortalConverter;
+	}
+
+	@Reference
+	public void setSingleVMPool(SingleVMPool singleVMPool) {
+		_portalCache = (PortalCache<String, Long>)singleVMPool.getCache(
+			UserImporter.class.getName(), false);
 	}
 
 	protected void addRole(
@@ -1358,7 +1364,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	private LDAPToPortalConverter _ldapToPortalConverter;
 	private Set<String> _ldapUserIgnoreAttributes = SetUtil.fromArray(
 		PropsValues.LDAP_USER_IGNORE_ATTRIBUTES);
-	private PortalCache<String, Long> _portalCache = SingleVMPoolUtil.getCache(
-		UserImporter.class.getName(), false);
+	private PortalCache<String, Long> _portalCache;
 
 }

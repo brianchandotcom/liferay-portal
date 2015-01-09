@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
  * @author Miguel Pastor
  */

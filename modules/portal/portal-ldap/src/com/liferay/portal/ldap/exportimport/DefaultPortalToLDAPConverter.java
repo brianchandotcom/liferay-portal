@@ -141,8 +141,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			PropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES + postfix,
 			StringPool.COMMA);
 
-		for (int i = 0; i < defaultObjectClasses.length; i++) {
-			objectClass.add(defaultObjectClasses[i]);
+		for (String defaultObjectClass : defaultObjectClasses) {
+			objectClass.add(defaultObjectClass);
 		}
 
 		attributes.put(objectClass);
@@ -207,8 +207,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			PropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES + postfix,
 			StringPool.COMMA);
 
-		for (int i = 0; i < defaultObjectClasses.length; i++) {
-			objectClass.add(defaultObjectClasses[i]);
+		for (String defaultObjectClass : defaultObjectClasses) {
+			objectClass.add(defaultObjectClass);
 		}
 
 		attributes.put(objectClass);

@@ -14,10 +14,14 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.persistence.BasePersistence;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -35,13 +39,21 @@ public class TableMapperFactory {
 		TableMapper<?, ?> tableMapper = tableMappers.get(tableName);
 
 		if (tableMapper == null) {
-			TableMapperImpl<L, R> tableMapperImpl =
-				new TableMapperImpl<L, R>(
+			TableMapperImpl<L, R> tableMapperImpl = null;
+
+			if (cachelessMappingTableNames.contains(tableName)) {
+				tableMapperImpl = new CachelessTableMapperImpl<>(
 					tableName, leftColumnName, rightColumnName, leftPersistence,
 					rightPersistence);
+			}
+			else {
+				tableMapperImpl = new TableMapperImpl<>(
+					tableName, leftColumnName, rightColumnName, leftPersistence,
+					rightPersistence);
+			}
 
 			tableMapperImpl.setReverseTableMapper(
-				new ReverseTableMapper<R, L>(tableMapperImpl));
+				new ReverseTableMapper<>(tableMapperImpl));
 
 			tableMapper = tableMapperImpl;
 
@@ -62,7 +74,11 @@ public class TableMapperFactory {
 		}
 	}
 
-	protected static Map<String, TableMapper<?, ?>> tableMappers =
-		new ConcurrentHashMap<String, TableMapper<?, ?>>();
+	protected static final Set<String> cachelessMappingTableNames =
+		SetUtil.fromArray(
+			PropsUtil.getArray(
+				PropsKeys.TABLE_MAPPER_CACHELESS_MAPPING_TABLE_NAMES));
+	protected static final Map<String, TableMapper<?, ?>> tableMappers =
+		new ConcurrentHashMap<>();
 
 }

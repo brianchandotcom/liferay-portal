@@ -21,7 +21,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.aui.ColumnTag;
 import com.liferay.taglib.aui.LayoutTag;
-import com.liferay.taglib.ui.AddContentPortletToolbarTag;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
 import com.liferay.taglib.ui.AssetLinksTag;
 import com.liferay.taglib.ui.AssetTagsSummaryTag;
@@ -32,6 +31,7 @@ import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
+import com.liferay.taglib.ui.PortletToolbarMenuTag;
 import com.liferay.taglib.ui.QuickAccessTag;
 import com.liferay.taglib.ui.RatingsTag;
 
@@ -182,13 +182,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public AddContentPortletToolbarTag getAddContentPortletToolbarTag()
-		throws Exception {
-
-		return null;
-	}
-
-	@Override
 	public AssetCategoriesSummaryTag getAssetCategoriesSummaryTag()
 		throws Exception {
 
@@ -252,6 +245,11 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public PngImageTag getPngImageTag() throws Exception {
+		return null;
+	}
+
+	@Override
+	public PortletToolbarMenuTag getPortletToolbarMenuTag() throws Exception {
 		return null;
 	}
 

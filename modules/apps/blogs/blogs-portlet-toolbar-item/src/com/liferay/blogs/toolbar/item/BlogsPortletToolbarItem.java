@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -37,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(property = {"javax.portlet.name=33", "struts.action="})
-public class BlogsPortletToolbarItem  implements PortletToolbarMenuItem {
+public class BlogsPortletToolbarItem implements PortletToolbarMenuItem {
 
 	@Override
 	public MenuItem getMenuItem(PortletRequest portletRequest) {
@@ -71,13 +70,15 @@ public class BlogsPortletToolbarItem  implements PortletToolbarMenuItem {
 		return urlMenuItem;
 	}
 
-	@Reference(target = "resource.name=com.liferay.portlet.blogs", unbind = "-")
+	@Reference(
+		target = "(resource.name=com.liferay.portlet.blogs)", unbind = "-"
+	)
 	protected void setResourcePermissionChecker(
 		ResourcePermissionChecker resourcePermissionChecker) {
 
 		_resourcePermissionChecker = resourcePermissionChecker;
 	}
 
-	ResourcePermissionChecker _resourcePermissionChecker;
+	private ResourcePermissionChecker _resourcePermissionChecker;
 
 }

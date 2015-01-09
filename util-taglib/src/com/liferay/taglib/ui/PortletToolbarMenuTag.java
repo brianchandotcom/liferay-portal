@@ -24,20 +24,20 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Sergio González
  */
-public class AddContentPortletToolbarTag extends IncludeTag {
+public class PortletToolbarMenuTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public void setToolbarItems(List<PortletToolbarMenuItem> toolbarItems) {
-		_toolbarItems = toolbarItems;
+	public void setItems(List<PortletToolbarMenuItem> items) {
+		_items = items;
 	}
 
 	@Override
 	protected void cleanUp() {
-		_toolbarItems = null;
+		_items = null;
 	}
 
 	@Override
@@ -52,16 +52,14 @@ public class AddContentPortletToolbarTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-ui:add_content_portlet_toolbar:toolbarItems",
-			_toolbarItems);
+		request.setAttribute("liferay-ui:portlet_toolbar_menu:items", _items);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private static final String _PAGE =
-		"/html/taglib/ui/add_content_portlet_toolbar/page.jsp";
+		"/html/taglib/ui/portlet_toolbar_menu/page.jsp";
 
-	private List<PortletToolbarMenuItem> _toolbarItems;
+	private List<PortletToolbarMenuItem> _items;
 
 }

@@ -14,26 +14,27 @@
 
 package com.liferay.portal.kernel.servlet.taglib;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface DynamicInclude {
+public class TagDynamicIdFactoryRegistry {
 
-	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
-		throws IOException;
-
-	public void register(ItemRegistry registry);
-
-	public interface ItemRegistry {
-		public void register(String key);
-
+	public static TagDynamicIdFactory getTagIdFactory(String tagClassName) {
+		return _instance._tagIdFactories.getService(tagClassName);
 	}
+
+	private TagDynamicIdFactoryRegistry() {
+		_tagIdFactories.open();
+	}
+
+	private static final TagDynamicIdFactoryRegistry _instance =
+		new TagDynamicIdFactoryRegistry();
+
+	private final ServiceTrackerMap<String, TagDynamicIdFactory>
+		_tagIdFactories = ServiceTrackerCollections.singleValueMap(
+			TagDynamicIdFactory.class, "tagClassName");
 
 }

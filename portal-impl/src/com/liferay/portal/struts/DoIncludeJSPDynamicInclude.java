@@ -15,7 +15,6 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -26,12 +25,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.taglib.tiles.ComponentConstants;
 import org.apache.struts.tiles.ComponentContext;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Raymond Augé
  */
-@OSGiBeanProperties(
-	property = {"key=com.liferay.taglib.util.ThemeUtil#doIncludeJSP"}
-)
+@Component
 public class DoIncludeJSPDynamicInclude extends BaseDynamicInclude {
 
 	@Override
@@ -61,6 +60,11 @@ public class DoIncludeJSPDynamicInclude extends BaseDynamicInclude {
 		String tilesTitle = (String)componentContext.getAttribute("title");
 
 		themeDisplay.setTilesTitle(tilesTitle);
+	}
+
+	@Override
+	public void register(ItemRegistry registry) {
+		registry.register("com.liferay.taglib.util.ThemeUtil#doIncludeJS");
 	}
 
 }

@@ -40,12 +40,10 @@ public class PoshiRunner extends TestCase {
 	public void testPoshiRunner() throws Exception {
 		String classCommandName = System.getProperty("test.case.name");
 
-		String className = PoshiRunnerUtil.getClassNameFromClassCommandName(
+		Element element = PoshiRunnerContext.getTestcaseCommandElement(
 			classCommandName);
 
-		Element element = PoshiRunnerContext.getTestcaseRootElement(className);
-
-		System.out.println(element.getName());
+		PoshiRunnerExecutor.parse(element);
 	}
 
 }

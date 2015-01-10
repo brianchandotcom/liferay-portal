@@ -357,6 +357,19 @@ public class VerifyProperties extends VerifyProcess {
 			"publish.to.live.by.default", "com.liferay.journal.content.web"
 		},
 
+		// Nested portlets
+
+		new String[] {
+			"nested.portlets.layout.template.default",
+			"nested.portlets.layout.template.default",
+			"com.liferay.nested.portlets.web"
+		},
+		new String[] {
+			"nested.portlets.layout.template.unsupported",
+			"nested.portlets.layout.template.unsupported",
+			"com.liferay.nested.portlets.web"
+		},
+
 		// Polls
 
 		new String[] {
@@ -375,21 +388,23 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"xsl.content.xml.doctype.declaration.allowed",
-			"xml.doctype.declaration.allowed", "com.liferay.xsl.content.web"
+			"xsl.content.xml.doctype.declaration.allowed",
+			"com.liferay.xsl.content.web"
 		},
 		new String[] {
 			"xsl.content.xml.external.general.entities.allowed",
-			"xml.external.general.entities.allowed",
+			"xsl.content.xml.external.general.entities.allowed",
 			"com.liferay.xsl.content.web"
 		},
 		new String[] {
 			"xsl.content.xml.external.parameter.entities.allowed",
-			"xml.external.parameter.entities.allowed",
+			"xsl.content.xml.external.parameter.entities.allowed",
 			"com.liferay.xsl.content.web"
 		},
 		new String[] {
 			"xsl.content.xsl.secure.processing.enabled",
-			"xsl.secure.processing.enabled", "com.liferay.xsl.content.web"
+			"xsl.content.xsl.secure.processing.enabled",
+			"com.liferay.xsl.content.web"
 		}
 	};
 
@@ -458,9 +473,7 @@ public class VerifyProperties extends VerifyProcess {
 		"memory.cluster.scheduler.lock.cache.enabled",
 		"message.boards.email.message.added.signature",
 		"message.boards.email.message.updated.signature",
-		"message.boards.thread.locking.enabled",
-		"nested.portlets.layout.template.default",
-		"nested.portlets.layout.template.unsupported", "portal.ctx",
+		"message.boards.thread.locking.enabled", "portal.ctx",
 		"portal.security.manager.enable", "permissions.list.filter",
 		"permissions.thread.local.cache.max.size",
 		"permissions.user.check.algorithm", "persistence.provider",

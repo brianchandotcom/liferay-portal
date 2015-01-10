@@ -476,33 +476,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		String displayStyle = getDisplayStyle(
-			portletDataContext, portletId, portletPreferences);
-
-		if (Validator.isNotNull(displayStyle) &&
-			displayStyle.startsWith(
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
-
-			long displayStyleGroupId = getDisplayStyleGroupId(
-				portletDataContext, portletId, portletPreferences);
-
-			long previousScopeGroupId = portletDataContext.getScopeGroupId();
-
-			if (displayStyleGroupId != portletDataContext.getScopeGroupId()) {
-				portletDataContext.setScopeGroupId(displayStyleGroupId);
-			}
-
-			DDMTemplate ddmTemplate =
-				PortletDisplayTemplateUtil.fetchDDMTemplate(
-					portletDataContext.getGroupId(), displayStyle);
-
-			if (ddmTemplate != null) {
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, portletId, ddmTemplate);
-			}
-
-			portletDataContext.setScopeGroupId(previousScopeGroupId);
-		}
+		exportDisplayStyle(portletDataContext, portletId, portletPreferences);
 
 		try {
 			return doProcessExportPortletPreferences(
@@ -523,40 +497,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		throws PortletDataException {
 
 		try {
-			String displayStyle = getDisplayStyle(
+			importDisplayStyle(
 				portletDataContext, portletId, portletPreferences);
-
-			if (Validator.isNotNull(displayStyle) &&
-				displayStyle.startsWith(
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
-
-				StagedModelDataHandlerUtil.importReferenceStagedModels(
-					portletDataContext, DDMTemplate.class);
-
-				long displayStyleGroupId = getDisplayStyleGroupId(
-					portletDataContext, portletId, portletPreferences);
-
-				Map<Long, Long> groupIds =
-					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						Group.class);
-
-				long groupId = MapUtil.getLong(
-					groupIds, displayStyleGroupId, displayStyleGroupId);
-
-				DDMTemplate ddmTemplate =
-					PortletDisplayTemplateUtil.fetchDDMTemplate(
-						groupId, displayStyle);
-
-				if (ddmTemplate != null) {
-					portletPreferences.setValue(
-						"displayStyleGroupId", String.valueOf(
-							ddmTemplate.getGroupId()));
-				}
-			}
-			else {
-				portletPreferences.setValue(
-					"displayStyleGroupId", StringPool.BLANK);
-			}
 
 			return doProcessImportPortletPreferences(
 				portletDataContext, portletId, portletPreferences);
@@ -706,6 +648,41 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return portletPreferences;
 	}
 
+	protected void exportDisplayStyle(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		String displayStyle = getDisplayStyle(
+			portletDataContext, portletId, portletPreferences);
+
+		if (Validator.isNull(displayStyle) ||
+			!displayStyle.startsWith(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
+			return;
+		}
+
+		long displayStyleGroupId = getDisplayStyleGroupId(
+			portletDataContext, portletId, portletPreferences);
+
+		long previousScopeGroupId = portletDataContext.getScopeGroupId();
+
+		if (displayStyleGroupId != portletDataContext.getScopeGroupId()) {
+			portletDataContext.setScopeGroupId(displayStyleGroupId);
+		}
+
+		DDMTemplate ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
+			portletDataContext.getGroupId(), displayStyle);
+
+		if (ddmTemplate != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portletId, ddmTemplate);
+		}
+
+		portletDataContext.setScopeGroupId(previousScopeGroupId);
+	}
+
 	protected String getDisplayStyle(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
@@ -808,6 +785,48 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 
 		return totalModelCount;
+	}
+
+	protected void importDisplayStyle(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		String displayStyle = getDisplayStyle(
+			portletDataContext, portletId, portletPreferences);
+
+		if (Validator.isNull(displayStyle) ||
+			!displayStyle.startsWith(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
+			return;
+		}
+
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, DDMTemplate.class);
+
+		long displayStyleGroupId = getDisplayStyleGroupId(
+			portletDataContext, portletId, portletPreferences);
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		long groupId = MapUtil.getLong(
+			groupIds, displayStyleGroupId, displayStyleGroupId);
+
+		DDMTemplate ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
+			groupId, displayStyle);
+
+		if (ddmTemplate != null) {
+			portletPreferences.setValue(
+				"displayStyleGroupId",
+				String.valueOf(ddmTemplate.getGroupId()));
+		}
+		else {
+			portletPreferences.setValue(
+				"displayStyleGroupId", StringPool.BLANK);
+		}
 	}
 
 	/**

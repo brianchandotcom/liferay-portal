@@ -112,7 +112,13 @@ showSearch = showSearch && !results.isEmpty();
 	portletURL="<%= portletURL %>"
 />
 
-<liferay-ui:ddm-template-renderer displayStyle="<%= blogsPortletInstanceSettings.getDisplayStyle() %>" displayStyleGroupId="<%= blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>" entries="<%= _convertToBlogEntries(results) %>">
+<%
+Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+contextObjects.put("blogsPortletInstanceSettings", blogsPortletInstanceSettings);
+%>
+
+<liferay-ui:ddm-template-renderer contextObjects="<%= contextObjects %>" displayStyle="<%= blogsPortletInstanceSettings.getDisplayStyle() %>" displayStyleGroupId="<%= blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>" entries="<%= _convertToBlogEntries(results) %>">
 
 	<%
 	int index = 0;

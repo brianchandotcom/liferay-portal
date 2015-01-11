@@ -45,7 +45,7 @@ public class SecureXMLFactoryProviderUtil {
 		return getSecureXMLBuilder().newXMLReader();
 	}
 
-	public void setSecureXMLBuilder(
+	public void setSecureXMLFactoryProvider(
 		SecureXMLFactoryProvider secureXMLFactoryProvider) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());

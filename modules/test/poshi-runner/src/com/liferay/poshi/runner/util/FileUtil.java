@@ -55,8 +55,4 @@ public class FileUtil {
 		write(file, s);
 	}
 
-	private FileUtil() {
-		File file = new File("");
-	}
-
 }

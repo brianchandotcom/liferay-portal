@@ -2609,10 +2609,6 @@ public interface PropsKeys {
 
 	public static final String TRANSLATIONS_DISABLED = "translations.disabled";
 
-	public static final String TRANSLATOR_DEFAULT_LANGUAGES = "translator.default.languages";
-
-	public static final String TRANSLATOR_LANGUAGES = "translator.languages";
-
 	public static final String TRASH_ENABLED = "trash.enabled";
 
 	public static final String TRASH_ENTRIES_MAX_AGE = "trash.entries.max.age";

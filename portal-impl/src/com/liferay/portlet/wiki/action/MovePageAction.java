@@ -68,7 +68,7 @@ public class MovePageAction extends PortletAction {
 			else if (cmd.equals(Constants.MOVE)) {
 				changeNode(actionRequest);
 
-				redirect = getRedirect(actionRequest, actionResponse);
+				redirect = getChangeNodeRedirect(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.RENAME)) {
 				renamePage(actionRequest);
@@ -159,7 +159,7 @@ public class MovePageAction extends PortletAction {
 			nodeId, title, newParentTitle, serviceContext);
 	}
 
-	protected String getRedirect(
+	protected String getChangeNodeRedirect(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

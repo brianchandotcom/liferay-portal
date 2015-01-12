@@ -212,7 +212,7 @@ public class BlogsTestUtil {
 			expectedEntry.isSmallImage(), actualEntry.isSmallImage());
 	}
 
-	public static String getBlogsEntryAttachmentFileEntryImgTag(
+	public static String getTempBlogsEntryAttachmentFileEntryImgTag(
 		long dataImageId, String url) {
 
 		StringBundler sb = new StringBundler(7);

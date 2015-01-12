@@ -198,7 +198,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithContactsPredefinedDataDefinition" priority="4">
+	<command known-issues="LIFERAYQA-12730" name="AddListAndRecordWithContactsPredefinedDataDefinition" priority="4">
 		<var name="ddlDataDefinitionName" value="Contacts" />
 
 		<execute macro="Page#gotoContentCP">
@@ -296,7 +296,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithEventsPredefinedDataDefinition" priority="4">
+	<command known-issues="LIFERAYQA-12730" name="AddListAndRecordWithEventsPredefinedDataDefinition" priority="4">
 		<var name="ddlDataDefinitionName" value="Events" />
 
 		<execute macro="Page#gotoContentCP">
@@ -451,7 +451,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithIssuesTrackingPredefinedDataDefinition" priority="4">
+	<command known-issues="LIFERAYQA-12730" name="AddListAndRecordWithIssuesTrackingPredefinedDataDefinition" priority="4">
 		<var name="ddlDataDefinitionName" value="Issues Tracking" />
 
 		<execute macro="Page#gotoContentCP">
@@ -544,7 +544,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithMeetingMinutesPredefinedDataDefinition" priority="4">
+	<command known-issues="LIFERAYQA-12730" name="AddListAndRecordWithMeetingMinutesPredefinedDataDefinition" priority="4">
 		<var name="ddlDataDefinitionName" value="Meeting Minutes" />
 
 		<execute macro="Page#gotoContentCP">
@@ -973,7 +973,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithDocumentsAndMediaFieldChooseFromDocumentLibrary" priority="5">
+	<command known-issues="LIFERAYQA-12730" name="AddListRecordWithDocumentsAndMediaFieldChooseFromDocumentLibrary" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Document Title" />
@@ -2742,7 +2742,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBooleanFieldShowLabel" priority="5">
+	<command known-issues="LPS-51721" name="EditBooleanFieldShowLabel" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Yes" />
@@ -3584,7 +3584,7 @@
 		</execute>
 	</command>
 
-	<command name="ImportLAR" priority="5">
+	<command known-issues="LPS-51926" name="ImportLAR" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Yes" />

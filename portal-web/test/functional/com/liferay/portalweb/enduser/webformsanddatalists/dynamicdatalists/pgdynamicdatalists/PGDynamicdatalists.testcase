@@ -1428,7 +1428,7 @@
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[2]" value1="Name2" />
 	</command>
 
-	<command name="ViewListRecordWithVelocityDisplayTemplate" priority="4">
+	<command known-issues="LPS-51615" name="ViewListRecordWithVelocityDisplayTemplate" priority="4">
 		<property name="custom.properties" value="freemarker.engine.restricted.variables=$${line.separator}velocity.engine.restricted.variables=" />
 
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />

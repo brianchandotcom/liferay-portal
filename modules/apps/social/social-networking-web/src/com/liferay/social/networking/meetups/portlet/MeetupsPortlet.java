@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 public class MeetupsPortlet extends MVCPortlet {
 
 	public static final String JAVAX_PORTLET_NAME =
-		"com_liferay_socialnetworking_meetups_portlet_MeetupsPortlet";
+		"com_liferay_social_networking_meetups_portlet_MeetupsPortlet";
 
 	public void deleteMeetupsEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)

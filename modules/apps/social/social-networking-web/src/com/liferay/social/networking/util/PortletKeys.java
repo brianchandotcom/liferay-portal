@@ -14,13 +14,16 @@
 
 package com.liferay.social.networking.util;
 
+import com.liferay.social.networking.summary.portlet.SummaryPortlet;
+import com.liferay.social.networking.wall.portlet.WallPortlet;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class PortletKeys extends com.liferay.portal.util.PortletKeys {
 
-	public static final String SUMMARY = "1_WAR_socialnetworkingportlet";
+	public static final String SUMMARY = SummaryPortlet.JAVAX_PORTLET_NAME;
 
-	public static final String WALL = "3_WAR_socialnetworkingportlet";
+	public static final String WALL = WallPortlet.JAVAX_PORTLET_NAME;
 
 }

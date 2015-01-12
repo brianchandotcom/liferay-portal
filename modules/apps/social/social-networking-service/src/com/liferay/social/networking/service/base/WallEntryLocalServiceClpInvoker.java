@@ -28,7 +28,7 @@ public class WallEntryLocalServiceClpInvoker {
 		_methodName0 = "addWallEntry";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.socialnetworking.model.WallEntry"
+				"com.liferay.social.networking.model.WallEntry"
 			};
 
 		_methodName1 = "createWallEntry";
@@ -42,7 +42,7 @@ public class WallEntryLocalServiceClpInvoker {
 		_methodName3 = "deleteWallEntry";
 
 		_methodParameterTypes3 = new String[] {
-				"com.liferay.socialnetworking.model.WallEntry"
+				"com.liferay.social.networking.model.WallEntry"
 			};
 
 		_methodName4 = "dynamicQuery";
@@ -114,7 +114,7 @@ public class WallEntryLocalServiceClpInvoker {
 		_methodName18 = "updateWallEntry";
 
 		_methodParameterTypes18 = new String[] {
-				"com.liferay.socialnetworking.model.WallEntry"
+				"com.liferay.social.networking.model.WallEntry"
 			};
 
 		_methodName51 = "getBeanIdentifier";
@@ -143,7 +143,7 @@ public class WallEntryLocalServiceClpInvoker {
 		_methodName60 = "deleteWallEntry";
 
 		_methodParameterTypes60 = new String[] {
-				"com.liferay.socialnetworking.model.WallEntry"
+				"com.liferay.social.networking.model.WallEntry"
 			};
 
 		_methodName61 = "getWallEntries";

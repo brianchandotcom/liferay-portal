@@ -2,10 +2,10 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="com.liferay.socialnetworking.model.MeetupsEntry" />
-	<import class="com.liferay.socialnetworking.model.MeetupsRegistration" />
-	<import class="com.liferay.socialnetworking.model.WallEntry" />
-	<class name="com.liferay.socialnetworking.model.impl.MeetupsEntryImpl" table="MeetupsEntry">
+	<import class="com.liferay.social.networking.model.MeetupsEntry" />
+	<import class="com.liferay.social.networking.model.MeetupsRegistration" />
+	<import class="com.liferay.social.networking.model.WallEntry" />
+	<class name="com.liferay.social.networking.model.impl.MeetupsEntryImpl" table="MeetupsEntry">
 		<cache usage="read-write" />
 		<id name="meetupsEntryId" type="long">
 			<generator class="assigned" />
@@ -24,7 +24,7 @@
 		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="thumbnailId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class name="com.liferay.socialnetworking.model.impl.MeetupsRegistrationImpl" table="MeetupsRegistration">
+	<class name="com.liferay.social.networking.model.impl.MeetupsRegistrationImpl" table="MeetupsRegistration">
 		<cache usage="read-write" />
 		<id name="meetupsRegistrationId" type="long">
 			<generator class="assigned" />
@@ -38,7 +38,7 @@
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="comments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.socialnetworking.model.impl.WallEntryImpl" table="WallEntry">
+	<class name="com.liferay.social.networking.model.impl.WallEntryImpl" table="WallEntry">
 		<cache usage="read-write" />
 		<id name="wallEntryId" type="long">
 			<generator class="assigned" />

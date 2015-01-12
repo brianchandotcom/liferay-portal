@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.socialnetworking.model.MeetupsEntry">
+	<model name="com.liferay.social.networking.model.MeetupsEntry">
 		<field name="meetupsEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -17,7 +17,7 @@
 		<field name="price" type="double" />
 		<field name="thumbnailId" type="long" />
 	</model>
-	<model name="com.liferay.socialnetworking.model.MeetupsRegistration">
+	<model name="com.liferay.social.networking.model.MeetupsRegistration">
 		<field name="meetupsRegistrationId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -28,7 +28,7 @@
 		<field name="status" type="int" />
 		<field name="comments" type="String" />
 	</model>
-	<model name="com.liferay.socialnetworking.model.WallEntry">
+	<model name="com.liferay.social.networking.model.WallEntry">
 		<field name="wallEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

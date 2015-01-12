@@ -41,6 +41,9 @@ public class IndexCommitMetaInfo implements Serializable {
 			return;
 		}
 
+		_empty = false;
+		_generation = indexCommit.getGeneration();
+
 		List<String> fileNames = new ArrayList<>(indexCommit.getFileNames());
 
 		_segments = new ArrayList<>(fileNames.size());
@@ -53,9 +56,6 @@ public class IndexCommitMetaInfo implements Serializable {
 
 			_segments.add(segment);
 		}
-
-		_generation = indexCommit.getGeneration();
-		_empty = false;
 	}
 
 	public long getGeneration() {

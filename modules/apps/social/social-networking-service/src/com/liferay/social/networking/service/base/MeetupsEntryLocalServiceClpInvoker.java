@@ -28,7 +28,7 @@ public class MeetupsEntryLocalServiceClpInvoker {
 		_methodName0 = "addMeetupsEntry";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.socialnetworking.model.MeetupsEntry"
+				"com.liferay.social.networking.model.MeetupsEntry"
 			};
 
 		_methodName1 = "createMeetupsEntry";
@@ -42,7 +42,7 @@ public class MeetupsEntryLocalServiceClpInvoker {
 		_methodName3 = "deleteMeetupsEntry";
 
 		_methodParameterTypes3 = new String[] {
-				"com.liferay.socialnetworking.model.MeetupsEntry"
+				"com.liferay.social.networking.model.MeetupsEntry"
 			};
 
 		_methodName4 = "dynamicQuery";
@@ -114,7 +114,7 @@ public class MeetupsEntryLocalServiceClpInvoker {
 		_methodName18 = "updateMeetupsEntry";
 
 		_methodParameterTypes18 = new String[] {
-				"com.liferay.socialnetworking.model.MeetupsEntry"
+				"com.liferay.social.networking.model.MeetupsEntry"
 			};
 
 		_methodName51 = "getBeanIdentifier";

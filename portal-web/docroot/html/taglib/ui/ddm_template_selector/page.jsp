@@ -18,6 +18,7 @@
 
 <%
 long classNameId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:ddm-template-select:classNameId"));
+String defaultDisplayStyle = (String)request.getAttribute("liferay-ui:ddm-template-select:defaultDisplayStyle");
 String displayStyle = (String)request.getAttribute("liferay-ui:ddm-template-select:displayStyle");
 long displayStyleGroupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:ddm-template-select:displayStyleGroupId"));
 List<String> displayStyles = (List<String>)request.getAttribute("liferay-ui:ddm-template-select:displayStyles");
@@ -34,6 +35,10 @@ DDMTemplate ddmTemplate = null;
 
 if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 	ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(displayStyleGroupId, displayStyle);
+}
+
+if (ddmTemplate == null) {
+	displayStyle = defaultDisplayStyle;
 }
 %>
 

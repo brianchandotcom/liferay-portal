@@ -27,6 +27,7 @@
 
 		<liferay-ui:ddm-template-selector
 			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+			defaultDisplayStyle="<%= PropsValues.ASSET_PUBLISHER_DISPLAY_STYLE_DEFAULT %>"
 			displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
 			displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
 			displayStyles="<%= Arrays.asList(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) %>"

@@ -47,7 +47,7 @@ public class StrutsPortletToolbarItemLocator
 		String portletId, PortletRequest portletRequest) {
 
 		String strutsAction = ParamUtil.getString(
-			portletRequest, "struts_action");
+			portletRequest, "struts_action", "-");
 
 		List<PortletToolbarMenuItem> portletToolbarMenuItems =
 			_serviceTrackerMap.getService(

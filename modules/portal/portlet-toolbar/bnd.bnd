@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Default Portlet Toolbar
+Bundle-SymbolicName: com.liferay.portal.portlet.toolbar
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes

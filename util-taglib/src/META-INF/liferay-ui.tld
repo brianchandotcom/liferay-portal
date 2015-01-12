@@ -3329,6 +3329,16 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>portlet-toolbar-menu</name>
+		<tag-class>com.liferay.taglib.ui.PortletToolbarMenuTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>toolbarItems</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>progress</name>
 		<tag-class>com.liferay.taglib.ui.ProgressTag</tag-class>
 		<body-content>JSP</body-content>

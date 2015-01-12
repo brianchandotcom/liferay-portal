@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -29,8 +30,11 @@ import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
+import com.liferay.taglib.ui.PortletToolbarMenuTag;
 import com.liferay.taglib.ui.QuickAccessTag;
 import com.liferay.taglib.ui.RatingsTag;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
@@ -152,6 +156,8 @@ public interface VelocityTaglib {
 	public PageContext getPageContext();
 
 	public PngImageTag getPngImageTag() throws Exception;
+
+	public PortletToolbarMenuTag getPortletToolbarMenuTag() throws Exception;
 
 	public QuickAccessTag getQuickAccessTag() throws Exception;
 
@@ -349,6 +355,10 @@ public interface VelocityTaglib {
 	public void portletIconPrint() throws Exception;
 
 	public void portletIconRefresh() throws Exception;
+
+	public void portletToolbarMenu(
+			List<PortletToolbarMenuItem> portletToolbarMenuItems)
+		throws Exception;
 
 	public void quickAccess() throws Exception;
 

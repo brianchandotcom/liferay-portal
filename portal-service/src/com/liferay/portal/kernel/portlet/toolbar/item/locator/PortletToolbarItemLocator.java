@@ -12,14 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.portlet.toolbar.item.locator;
+
+import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
+
+import java.util.List;
+
+import javax.portlet.PortletRequest;
 
 /**
- * @author Miguel Pastor
+ * @author Sergio González
  */
-public interface ResourcePermissionChecker {
+public interface PortletToolbarItemLocator {
 
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId);
+	public List<PortletToolbarMenuItem> getPortletToolbarItems(
+		String portletId, PortletRequest portletRequest);
 
 }

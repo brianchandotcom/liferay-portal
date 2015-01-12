@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 		"com.liferay.portlet.category=category.social",
 		"com.liferay.portlet.friendly-url-mapping=map",
 		"com.liferay.portlet.friendly-url-routes=" +
-			"com/liferay/socialnetworking/map/portlet/" +
+			"com/liferay/social/networking/map/portlet/" +
 				"map-friendly-url-routes.xml",
 		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-map",
 		"javax.portlet.display-name=Map",

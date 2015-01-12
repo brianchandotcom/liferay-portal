@@ -249,7 +249,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UpgradeProcess_1_0_0</name>
-		<type>com.liferay.socialnetworking.hook.upgrade.UpgradeProcess_1_0_0</type>
+		<type>com.liferay.social.networking.hook.upgrade.UpgradeProcess_1_0_0</type>
 		<author><![CDATA[Julio Camarero]]></author>
 		<method>
 			<name>getThreshold</name>
@@ -268,7 +268,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UpgradeNamespace</name>
-		<type>com.liferay.socialnetworking.hook.upgrade.v1_0_0.UpgradeNamespace</type>
+		<type>com.liferay.social.networking.hook.upgrade.v1_0_0.UpgradeNamespace</type>
 		<author><![CDATA[Julio Camarero]]></author>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
@@ -318,7 +318,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MeetupsEntryTable</name>
-		<type>com.liferay.socialnetworking.hook.upgrade.v1_0_0.util.MeetupsEntryTable</type>
+		<type>com.liferay.social.networking.hook.upgrade.v1_0_0.util.MeetupsEntryTable</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>TABLE_COLUMNS</name>
@@ -335,7 +335,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MeetupsRegistrationTable</name>
-		<type>com.liferay.socialnetworking.hook.upgrade.v1_0_0.util.MeetupsRegistrationTable</type>
+		<type>com.liferay.social.networking.hook.upgrade.v1_0_0.util.MeetupsRegistrationTable</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>TABLE_COLUMNS</name>
@@ -352,7 +352,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WallEntryTable</name>
-		<type>com.liferay.socialnetworking.hook.upgrade.v1_0_0.util.WallEntryTable</type>
+		<type>com.liferay.social.networking.hook.upgrade.v1_0_0.util.WallEntryTable</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>TABLE_COLUMNS</name>
@@ -1448,7 +1448,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PortletPropsKeys</name>
-		<type>com.liferay.socialnetworking.util.PortletPropsKeys</type>
+		<type>com.liferay.social.networking.util.PortletPropsKeys</type>
 		<author><![CDATA[Marco Abamonga]]></author>
 		<field>
 			<name>WALL_LAYOUT_FRIENDLY_URL</name>
@@ -1456,7 +1456,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PortletPropsValues</name>
-		<type>com.liferay.socialnetworking.util.PortletPropsValues</type>
+		<type>com.liferay.social.networking.util.PortletPropsValues</type>
 		<author><![CDATA[Marco Abamonga]]></author>
 		<field>
 			<name>WALL_LAYOUT_FRIENDLY_URL</name>

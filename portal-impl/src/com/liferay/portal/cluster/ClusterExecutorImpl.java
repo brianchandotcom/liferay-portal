@@ -405,10 +405,7 @@ public class ClusterExecutorImpl
 	}
 
 	protected void initLocalClusterNode() {
-		InetAddress inetAddress = getBindInetAddress(_controlJChannel);
-
-		ClusterNode clusterNode = new ClusterNode(
-			PortalUUIDUtil.generate(), inetAddress);
+		ClusterNode clusterNode = new ClusterNode(PortalUUIDUtil.generate());
 
 		if (Validator.isNull(PropsValues.PORTAL_INSTANCE_PROTOCOL)) {
 			_localClusterNode = clusterNode;

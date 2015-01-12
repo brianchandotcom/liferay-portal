@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class WallPortlet extends MVCPortlet {
 
 	public static final String JAVAX_PORTLET_NAME =
-		"com_liferay_socialnetworking_wall_portlet_WallPortlet";
+		"com_liferay_social_networking_wall_portlet_WallPortlet";
 
 	public void addWallEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)

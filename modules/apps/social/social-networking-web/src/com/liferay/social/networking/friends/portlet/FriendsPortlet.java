@@ -45,6 +45,6 @@ import org.osgi.service.component.annotations.Component;
 public class FriendsPortlet extends MVCPortlet {
 
 	public static final String JAVAX_PORTLET_NAME =
-		"com_liferay_socialnetworking_friends_portlet_FriendsPortlet";
+		"com_liferay_social_networking_friends_portlet_FriendsPortlet";
 
 }

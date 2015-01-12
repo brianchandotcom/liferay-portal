@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 public class MapPortlet extends MVCPortlet {
 
 	public static final String JAVAX_PORTLET_NAME =
-		"com_liferay_socialnetworking_map_portlet_MapPortlet";
+		"com_liferay_social_networking_map_portlet_MapPortlet";
 
 	@Override
 	public void render(

@@ -20,8 +20,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.social.networking.exception.MeetupsEntryEndDateException;
 import com.liferay.social.networking.exception.MeetupsEntryStartDateException;
-import com.liferay.social.networking.service.base.MeetupsEntryLocalServiceBaseImpl;
 import com.liferay.social.networking.model.MeetupsEntry;
+import com.liferay.social.networking.service.base.MeetupsEntryLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;

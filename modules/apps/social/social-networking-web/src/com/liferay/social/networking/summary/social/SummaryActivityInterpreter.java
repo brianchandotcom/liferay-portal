@@ -15,8 +15,8 @@
 package com.liferay.social.networking.summary.social;
 
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
-import com.liferay.social.networking.summary.portlet.SummaryPortlet;
 import com.liferay.social.networking.social.BaseSocialNetworkingActivityInterpreter;
+import com.liferay.social.networking.summary.portlet.SummaryPortlet;
 
 import org.osgi.service.component.annotations.Component;
 

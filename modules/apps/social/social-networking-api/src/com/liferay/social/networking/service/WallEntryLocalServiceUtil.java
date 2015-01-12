@@ -16,7 +16,6 @@ package com.liferay.social.networking.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.social.networking.model.WallEntry;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
@@ -24,7 +23,7 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for WallEntry. This utility wraps
- * {@link com.liferay.socialnetworking.service.impl.WallEntryLocalServiceImpl} and is the
+ * {@link com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on the local server. Methods of this service will not have security checks
  * based on the propagated JAAS credentials because this service can only be
@@ -32,8 +31,8 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author Brian Wing Shun Chan
  * @see WallEntryLocalService
- * @see com.liferay.socialnetworking.service.base.WallEntryLocalServiceBaseImpl
- * @see com.liferay.socialnetworking.service.impl.WallEntryLocalServiceImpl
+ * @see com.liferay.social.networking.service.base.WallEntryLocalServiceBaseImpl
+ * @see com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl
  * @generated
  */
 @ProviderType
@@ -41,9 +40,9 @@ public class WallEntryLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.socialnetworking.service.impl.WallEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static WallEntry addWallEntry(
+	public static com.liferay.social.networking.model.WallEntry addWallEntry(
 		long groupId, long userId, java.lang.String comments,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -56,8 +55,8 @@ public class WallEntryLocalServiceUtil {
 	* @param wallEntry the wall entry
 	* @return the wall entry that was added
 	*/
-	public static WallEntry addWallEntry(
-		WallEntry wallEntry) {
+	public static com.liferay.social.networking.model.WallEntry addWallEntry(
+		com.liferay.social.networking.model.WallEntry wallEntry) {
 		return getService().addWallEntry(wallEntry);
 	}
 
@@ -67,7 +66,7 @@ public class WallEntryLocalServiceUtil {
 	* @param wallEntryId the primary key for the new wall entry
 	* @return the new wall entry
 	*/
-	public static WallEntry createWallEntry(
+	public static com.liferay.social.networking.model.WallEntry createWallEntry(
 		long wallEntryId) {
 		return getService().createWallEntry(wallEntryId);
 	}
@@ -93,8 +92,8 @@ public class WallEntryLocalServiceUtil {
 	* @return the wall entry that was removed
 	* @throws PortalException
 	*/
-	public static WallEntry deleteWallEntry(
-		WallEntry wallEntry)
+	public static com.liferay.social.networking.model.WallEntry deleteWallEntry(
+		com.liferay.social.networking.model.WallEntry wallEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteWallEntry(wallEntry);
 	}
@@ -106,7 +105,7 @@ public class WallEntryLocalServiceUtil {
 	* @return the wall entry that was removed
 	* @throws PortalException if a wall entry with the primary key could not be found
 	*/
-	public static WallEntry deleteWallEntry(
+	public static com.liferay.social.networking.model.WallEntry deleteWallEntry(
 		long wallEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteWallEntry(wallEntryId);
@@ -131,7 +130,7 @@ public class WallEntryLocalServiceUtil {
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -149,7 +148,7 @@ public class WallEntryLocalServiceUtil {
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -190,7 +189,7 @@ public class WallEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static WallEntry fetchWallEntry(
+	public static com.liferay.social.networking.model.WallEntry fetchWallEntry(
 		long wallEntryId) {
 		return getService().fetchWallEntry(wallEntryId);
 	}
@@ -214,7 +213,7 @@ public class WallEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List<WallEntry> getWallEntries(
+	public static java.util.List<com.liferay.social.networking.model.WallEntry> getWallEntries(
 		long groupId, int start, int end) {
 		return getService().getWallEntries(groupId, start, end);
 	}
@@ -223,14 +222,14 @@ public class WallEntryLocalServiceUtil {
 	* Returns a range of all the wall entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of wall entries
 	* @param end the upper bound of the range of wall entries (not inclusive)
 	* @return the range of wall entries
 	*/
-	public static java.util.List<WallEntry> getWallEntries(
+	public static java.util.List<com.liferay.social.networking.model.WallEntry> getWallEntries(
 		int start, int end) {
 		return getService().getWallEntries(start, end);
 	}
@@ -255,13 +254,13 @@ public class WallEntryLocalServiceUtil {
 	* @return the wall entry
 	* @throws PortalException if a wall entry with the primary key could not be found
 	*/
-	public static WallEntry getWallEntry(
+	public static com.liferay.social.networking.model.WallEntry getWallEntry(
 		long wallEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWallEntry(wallEntryId);
 	}
 
-	public static java.util.List<WallEntry> getWallToWallEntries(
+	public static java.util.List<com.liferay.social.networking.model.WallEntry> getWallToWallEntries(
 		long groupId1, long groupId2, long userId1, long userId2, int start,
 		int end) {
 		return getService()
@@ -291,12 +290,12 @@ public class WallEntryLocalServiceUtil {
 	* @param wallEntry the wall entry
 	* @return the wall entry that was updated
 	*/
-	public static WallEntry updateWallEntry(
-		WallEntry wallEntry) {
+	public static com.liferay.social.networking.model.WallEntry updateWallEntry(
+		com.liferay.social.networking.model.WallEntry wallEntry) {
 		return getService().updateWallEntry(wallEntry);
 	}
 
-	public static WallEntry updateWallEntry(
+	public static com.liferay.social.networking.model.WallEntry updateWallEntry(
 		long wallEntryId, java.lang.String comments)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateWallEntry(wallEntryId, comments);

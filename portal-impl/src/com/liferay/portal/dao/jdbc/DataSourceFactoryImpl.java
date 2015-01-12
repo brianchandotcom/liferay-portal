@@ -37,6 +37,9 @@ import com.liferay.portal.util.PropsValues;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 import java.lang.management.ManagementFactory;
 
 import java.util.Enumeration;
@@ -143,6 +146,13 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 			dataSource = initDataSourceDBCP(properties);
 		}
+		else if (StringUtil.equalsIgnoreCase(liferayPoolProvider, "hikaricp")) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Initializing HikariCP data source");
+			}
+
+			dataSource = initDataSourceHikariCP(properties);
+		}
 		else {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Initializing Tomcat data source");
@@ -222,6 +232,12 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				continue;
 			}
 
+			// Ignore HikariCP properties
+
+			if (isPropertyHikariCP(key)) {
+				continue;
+			}
+
 			// Ignore Tomcat
 
 			if (isPropertyTomcat(key)) {
@@ -248,6 +264,63 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		return BasicDataSourceFactory.createDataSource(properties);
 	}
 
+	protected DataSource initDataSourceHikariCP(Properties properties) {
+		HikariConfig hikariConfig = new HikariConfig();
+
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			String key = (String)entry.getKey();
+			String value = (String)entry.getValue();
+
+			// Ignore C3P0 properties
+
+			if (isPropertyC3PO(key)) {
+				continue;
+			}
+
+			// Ignore Liferay properties
+
+			if (isPropertyLiferay(key)) {
+				continue;
+			}
+
+			// Ignore DBCP properties
+
+			if (isPropertyDBCP(key)) {
+				continue;
+			}
+
+			// Ignore Tomcat
+
+			if (isPropertyTomcat(key)) {
+				continue;
+			}
+
+			// Mapping keys for HikariCP
+
+			if (StringUtil.equalsIgnoreCase(key, "url")) {
+				key = "jdbcUrl";
+			}
+			else if (StringUtil.equalsIgnoreCase(
+						key, "hikariConnectionCustomizerClassName")) {
+
+				key = "connectionCustomizerClassName";
+			}
+
+			try {
+				BeanUtil.setProperty(hikariConfig, key, value);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Property " + key + " is not a valid HikariCP " +
+							"Connection Pool property");
+				}
+			}
+		}
+
+		return new HikariDataSource(hikariConfig);
+	}
+
 	protected DataSource initDataSourceTomcat(Properties properties)
 		throws Exception {
 
@@ -260,6 +333,12 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			// Ignore Liferay properties
 
 			if (isPropertyLiferay(key)) {
+				continue;
+			}
+
+			// Ignore HikariCP properties
+
+			if (isPropertyHikariCP(key)) {
 				continue;
 			}
 
@@ -330,6 +409,24 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			StringUtil.equalsIgnoreCase(key, "maxActive") ||
 			StringUtil.equalsIgnoreCase(key, "minIdle") ||
 			StringUtil.equalsIgnoreCase(key, "removeAbandonedTimeout")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	protected boolean isPropertyHikariCP(String key) {
+		if (StringUtil.equalsIgnoreCase(key, "autoCommit") ||
+			StringUtil.equalsIgnoreCase(key, "connectionTimeout") ||
+			StringUtil.equalsIgnoreCase(
+				key, "hikariConnectionCustomizerClassName") ||
+			StringUtil.equalsIgnoreCase(key, "idleTimeout") ||
+			StringUtil.equalsIgnoreCase(key, "maximumPoolSize") ||
+			StringUtil.equalsIgnoreCase(key, "maxLifetime") ||
+			StringUtil.equalsIgnoreCase(key, "minimumIdle") ||
+			StringUtil.equalsIgnoreCase(key, "registerMbeans")) {
 
 			return true;
 		}

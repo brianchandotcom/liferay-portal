@@ -62,7 +62,7 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a wall entry model instance should use the {@link com.liferay.socialnetworking.model.WallEntry} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a wall entry model instance should use the {@link com.liferay.social.networking.model.WallEntry} interface instead.
 	 */
 	public static final String TABLE_NAME = "WallEntry";
 	public static final Object[][] TABLE_COLUMNS = {
@@ -83,19 +83,19 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
 	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
-				"value.object.entity.cache.enabled.com.liferay.socialnetworking.model.WallEntry"),
+				"value.object.entity.cache.enabled.com.liferay.social.networking.model.WallEntry"),
 			true);
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
-				"value.object.finder.cache.enabled.com.liferay.socialnetworking.model.WallEntry"),
+				"value.object.finder.cache.enabled.com.liferay.social.networking.model.WallEntry"),
 			true);
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
-				"value.object.column.bitmask.enabled.com.liferay.socialnetworking.model.WallEntry"),
+				"value.object.column.bitmask.enabled.com.liferay.social.networking.model.WallEntry"),
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 	public static final long USERID_COLUMN_BITMASK = 2L;
 	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
-				"lock.expiration.time.com.liferay.socialnetworking.model.WallEntry"));
+				"lock.expiration.time.com.liferay.social.networking.model.WallEntry"));
 
 	public WallEntryModelImpl() {
 	}
@@ -523,7 +523,7 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.socialnetworking.model.WallEntry");
+		sb.append("com.liferay.social.networking.model.WallEntry");
 		sb.append("</model-name>");
 
 		sb.append(

@@ -131,7 +131,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 
 	@Override
 	public int compareTo(
-		MeetupsRegistration meetupsRegistration) {
+		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration) {
 		return _meetupsRegistration.compareTo(meetupsRegistration);
 	}
 
@@ -424,12 +424,12 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<MeetupsRegistration> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.social.networking.model.MeetupsRegistration> toCacheModel() {
 		return _meetupsRegistration.toCacheModel();
 	}
 
 	@Override
-	public MeetupsRegistration toEscapedModel() {
+	public com.liferay.social.networking.model.MeetupsRegistration toEscapedModel() {
 		return new MeetupsRegistrationWrapper(_meetupsRegistration.toEscapedModel());
 	}
 
@@ -439,7 +439,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	}
 
 	@Override
-	public MeetupsRegistration toUnescapedModel() {
+	public com.liferay.social.networking.model.MeetupsRegistration toUnescapedModel() {
 		return new MeetupsRegistrationWrapper(_meetupsRegistration.toUnescapedModel());
 	}
 

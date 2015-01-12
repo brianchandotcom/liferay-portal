@@ -40,15 +40,12 @@ import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.social.networking.service.MeetupsEntryLocalServiceUtil;
-import com.liferay.social.networking.service.MeetupsRegistrationLocalService;
-import com.liferay.social.networking.service.WallEntryLocalService;
-import com.liferay.social.networking.service.persistence.MeetupsEntryPersistence;
-import com.liferay.social.networking.service.persistence.MeetupsRegistrationPersistence;
-import com.liferay.social.networking.service.persistence.WallEntryPersistence;
 import com.liferay.social.networking.model.MeetupsEntry;
 import com.liferay.social.networking.service.MeetupsEntryLocalService;
+import com.liferay.social.networking.service.persistence.MeetupsEntryPersistence;
+import com.liferay.social.networking.service.persistence.MeetupsRegistrationPersistence;
 import com.liferay.social.networking.service.persistence.WallEntryFinder;
+import com.liferay.social.networking.service.persistence.WallEntryPersistence;
 
 import java.io.Serializable;
 
@@ -75,7 +72,7 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.socialnetworking.service.MeetupsEntryLocalServiceUtil} to access the meetups entry local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.social.networking.service.MeetupsEntryLocalServiceUtil} to access the meetups entry local service.
 	 */
 
 	/**
@@ -234,7 +231,7 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(MeetupsEntryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.social.networking.service.MeetupsEntryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MeetupsEntry.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -245,7 +242,7 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(MeetupsEntryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.social.networking.service.MeetupsEntryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MeetupsEntry.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 
@@ -310,7 +307,7 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	 *
 	 * @return the meetups entry local service
 	 */
-	public MeetupsEntryLocalService getMeetupsEntryLocalService() {
+	public com.liferay.social.networking.service.MeetupsEntryLocalService getMeetupsEntryLocalService() {
 		return meetupsEntryLocalService;
 	}
 
@@ -320,7 +317,7 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	 * @param meetupsEntryLocalService the meetups entry local service
 	 */
 	public void setMeetupsEntryLocalService(
-		MeetupsEntryLocalService meetupsEntryLocalService) {
+		com.liferay.social.networking.service.MeetupsEntryLocalService meetupsEntryLocalService) {
 		this.meetupsEntryLocalService = meetupsEntryLocalService;
 	}
 
@@ -348,7 +345,7 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	 *
 	 * @return the meetups registration local service
 	 */
-	public MeetupsRegistrationLocalService getMeetupsRegistrationLocalService() {
+	public com.liferay.social.networking.service.MeetupsRegistrationLocalService getMeetupsRegistrationLocalService() {
 		return meetupsRegistrationLocalService;
 	}
 
@@ -358,7 +355,7 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	 * @param meetupsRegistrationLocalService the meetups registration local service
 	 */
 	public void setMeetupsRegistrationLocalService(
-		MeetupsRegistrationLocalService meetupsRegistrationLocalService) {
+		com.liferay.social.networking.service.MeetupsRegistrationLocalService meetupsRegistrationLocalService) {
 		this.meetupsRegistrationLocalService = meetupsRegistrationLocalService;
 	}
 
@@ -386,7 +383,7 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	 *
 	 * @return the wall entry local service
 	 */
-	public WallEntryLocalService getWallEntryLocalService() {
+	public com.liferay.social.networking.service.WallEntryLocalService getWallEntryLocalService() {
 		return wallEntryLocalService;
 	}
 
@@ -396,7 +393,7 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	 * @param wallEntryLocalService the wall entry local service
 	 */
 	public void setWallEntryLocalService(
-		WallEntryLocalService wallEntryLocalService) {
+		com.liferay.social.networking.service.WallEntryLocalService wallEntryLocalService) {
 		this.wallEntryLocalService = wallEntryLocalService;
 	}
 
@@ -645,13 +642,13 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.socialnetworking.model.MeetupsEntry",
+		persistedModelLocalServiceRegistry.register("com.liferay.social.networking.model.MeetupsEntry",
 			meetupsEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.socialnetworking.model.MeetupsEntry");
+			"com.liferay.social.networking.model.MeetupsEntry");
 	}
 
 	/**
@@ -706,16 +703,16 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = MeetupsEntryLocalService.class)
-	protected MeetupsEntryLocalService meetupsEntryLocalService;
+	@BeanReference(type = com.liferay.social.networking.service.MeetupsEntryLocalService.class)
+	protected com.liferay.social.networking.service.MeetupsEntryLocalService meetupsEntryLocalService;
 	@BeanReference(type = MeetupsEntryPersistence.class)
 	protected MeetupsEntryPersistence meetupsEntryPersistence;
-	@BeanReference(type = MeetupsRegistrationLocalService.class)
-	protected MeetupsRegistrationLocalService meetupsRegistrationLocalService;
+	@BeanReference(type = com.liferay.social.networking.service.MeetupsRegistrationLocalService.class)
+	protected com.liferay.social.networking.service.MeetupsRegistrationLocalService meetupsRegistrationLocalService;
 	@BeanReference(type = MeetupsRegistrationPersistence.class)
 	protected MeetupsRegistrationPersistence meetupsRegistrationPersistence;
-	@BeanReference(type = WallEntryLocalService.class)
-	protected WallEntryLocalService wallEntryLocalService;
+	@BeanReference(type = com.liferay.social.networking.service.WallEntryLocalService.class)
+	protected com.liferay.social.networking.service.WallEntryLocalService wallEntryLocalService;
 	@BeanReference(type = WallEntryPersistence.class)
 	protected WallEntryPersistence wallEntryPersistence;
 	@BeanReference(type = WallEntryFinder.class)

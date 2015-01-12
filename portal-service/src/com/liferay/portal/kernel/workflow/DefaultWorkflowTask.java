@@ -196,7 +196,7 @@ public class DefaultWorkflowTask implements Serializable, WorkflowTask {
 		Collection<WorkflowTaskAssignee> workflowTaskAssignees) {
 
 		if (_workflowTaskAssignees == null) {
-			_workflowTaskAssignees = new ArrayList<WorkflowTaskAssignee>();
+			_workflowTaskAssignees = new ArrayList<>();
 		}
 
 		_workflowTaskAssignees.addAll(workflowTaskAssignees);

@@ -65,7 +65,7 @@ import org.apache.struts.action.ActionMapping;
 public class LayoutAction extends Action {
 
 	public LayoutAction() {
-		_layoutResetPortletIds = new HashSet<String>(
+		_layoutResetPortletIds = new HashSet<>(
 			Arrays.asList(PropsValues.LAYOUT_RESET_PORTLET_IDS));
 
 		_layoutResetPortletIds.add(StringPool.BLANK);

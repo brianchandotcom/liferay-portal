@@ -237,9 +237,9 @@ public class EditQuestionAction extends PortletAction {
 			expirationDateHour += 12;
 		}
 
-		List<PollsChoice> choices = new ArrayList<PollsChoice>();
+		List<PollsChoice> choices = new ArrayList<>();
 
-		Set<String> readParameters = new HashSet<String>();
+		Set<String> readParameters = new HashSet<>();
 
 		Enumeration<String> enu = actionRequest.getParameterNames();
 

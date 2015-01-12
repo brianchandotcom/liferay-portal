@@ -77,7 +77,6 @@ public class UserNotificationDefinition {
 	private final int _notificationType;
 	private final String _portletId;
 	private final Map<Integer, UserNotificationDeliveryType>
-		_userNotificationDeliveryTypes =
-			new HashMap<Integer, UserNotificationDeliveryType>();
+		_userNotificationDeliveryTypes = new HashMap<>();
 
 }

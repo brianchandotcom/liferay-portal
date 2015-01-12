@@ -73,7 +73,7 @@ public class OrganizationMembershipPolicyRolesTest
 
 	@Test(expected = MembershipPolicyException.class)
 	public void testAssignUserToForbiddenRole() throws Exception {
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+		List<UserGroupRole> userGroupRoles = new ArrayList<>();
 
 		long[] userIds = addUsers();
 		long[] forbiddenRoleIds = addForbiddenRoles();
@@ -102,7 +102,7 @@ public class OrganizationMembershipPolicyRolesTest
 
 	@Test
 	public void testPropagateWhenAssigningRolesToUser() throws Exception {
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+		List<UserGroupRole> userGroupRoles = new ArrayList<>();
 
 		long[] userIds = addUsers();
 		long[] standardRoleIds = addStandardRoles();
@@ -181,8 +181,7 @@ public class OrganizationMembershipPolicyRolesTest
 		List<UserGroupRole> initialUserGroupRoles =
 			UserGroupRoleLocalServiceUtil.getUserGroupRoles(user.getUserId());
 
-		List<UserGroupRole> emptyNonAbstractList =
-			new ArrayList<UserGroupRole>();
+		List<UserGroupRole> emptyNonAbstractList = new ArrayList<>();
 
 		MembershipPolicyTestUtil.updateUser(
 			user, null, null, null, null, emptyNonAbstractList);

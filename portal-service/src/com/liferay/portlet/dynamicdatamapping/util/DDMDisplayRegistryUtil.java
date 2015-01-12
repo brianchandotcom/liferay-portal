@@ -101,9 +101,9 @@ public class DDMDisplayRegistryUtil {
 		new DDMDisplayRegistryUtil();
 
 	private final Map<String, DDMDisplay> _ddmDisplays =
-		new ConcurrentHashMap<String, DDMDisplay>();
+		new ConcurrentHashMap<>();
 	private final ServiceRegistrationMap<DDMDisplay> _serviceRegistrations =
-		new ServiceRegistrationMap<DDMDisplay>();
+		new ServiceRegistrationMap<>();
 	private final ServiceTracker<DDMDisplay, DDMDisplay> _serviceTracker;
 
 	private class DDMDisplayServiceTrackerCustomizer

@@ -75,7 +75,7 @@ public class SassToCssBuilder {
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		List<String> dirNames = new ArrayList<String>();
+		List<String> dirNames = new ArrayList<>();
 
 		String dirName = arguments.get("sass.dir");
 
@@ -129,7 +129,7 @@ public class SassToCssBuilder {
 
 		_initUtil(classLoader);
 
-		List<String> fileNames = new ArrayList<String>();
+		List<String> fileNames = new ArrayList<>();
 
 		for (String dirName : dirNames) {
 			_collectSassFiles(fileNames, dirName, docrootDirName);

@@ -1627,7 +1627,7 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected Set<Integer> getSpecialCharIndexes(String value) {
-		Set<Integer> specialCharIndexes = new TreeSet<Integer>();
+		Set<Integer> specialCharIndexes = new TreeSet<>();
 
 		while (value.contains("-")) {
 			specialCharIndexes.add(value.indexOf("-"));
@@ -1746,7 +1746,6 @@ public class WebDriverToSeleniumBridge
 	private static Log _log = LogFactoryUtil.getLog(
 		WebDriverToSeleniumBridge.class);
 
-	private Map<String, String> _keysSpecialChars =
-		new HashMap<String, String>();
+	private Map<String, String> _keysSpecialChars = new HashMap<>();
 
 }

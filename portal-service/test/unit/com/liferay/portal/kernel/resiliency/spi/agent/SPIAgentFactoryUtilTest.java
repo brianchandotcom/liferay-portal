@@ -111,7 +111,7 @@ public class SPIAgentFactoryUtilTest {
 
 		SPIAgentFactoryUtil spiAgentFactoryUtil = new SPIAgentFactoryUtil();
 
-		Set<String> agentClassNames = new HashSet<String>();
+		Set<String> agentClassNames = new HashSet<>();
 
 		agentClassNames.add(BadMockSPIAgent.class.getName());
 		agentClassNames.add(MockSPIAgent.class.getName());

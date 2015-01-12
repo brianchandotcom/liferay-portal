@@ -48,7 +48,7 @@ public class InitializeLiferayTestEnvironment {
 	}
 
 	protected List<String> getConfigLocations() {
-		List<String> configLocations = new ArrayList<String>();
+		List<String> configLocations = new ArrayList<>();
 
 		ServiceLoader serviceLoader = _instance.get();
 

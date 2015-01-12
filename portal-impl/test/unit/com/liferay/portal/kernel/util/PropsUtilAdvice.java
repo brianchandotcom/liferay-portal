@@ -45,7 +45,6 @@ public class PropsUtilAdvice {
 		return _propsMap.get(key);
 	}
 
-	private static Map<String, String> _propsMap =
-		new HashMap<String, String>();
+	private static Map<String, String> _propsMap = new HashMap<>();
 
 }

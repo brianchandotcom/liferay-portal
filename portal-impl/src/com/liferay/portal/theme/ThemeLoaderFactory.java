@@ -77,6 +77,6 @@ public class ThemeLoaderFactory {
 	}
 
 	private static final Map<String, ThemeLoader> _themeLoaders =
-		new HashMap<String, ThemeLoader>();
+		new HashMap<>();
 
 }

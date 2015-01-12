@@ -115,7 +115,7 @@ public class ResourceActionLocalServiceImpl
 				resourceActionPersistence.update(resourceAction);
 
 				if (newResourceActions == null) {
-					newResourceActions = new ArrayList<ResourceAction>();
+					newResourceActions = new ArrayList<>();
 				}
 
 				newResourceActions.add(resourceAction);
@@ -210,6 +210,6 @@ public class ResourceActionLocalServiceImpl
 	}
 
 	private static Map<String, ResourceAction> _resourceActions =
-		new ConcurrentHashMap<String, ResourceAction>();
+		new ConcurrentHashMap<>();
 
 }

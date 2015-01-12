@@ -207,7 +207,7 @@ public class EditExportConfigurationAction extends PortletAction {
 					actionRequest, "deleteExportImportConfigurationIds"), 0L);
 		}
 
-		List<TrashedModel> trashedModels = new ArrayList<TrashedModel>();
+		List<TrashedModel> trashedModels = new ArrayList<>();
 
 		for (long deleteExportImportConfigurationId :
 				deleteExportImportConfigurationIds) {

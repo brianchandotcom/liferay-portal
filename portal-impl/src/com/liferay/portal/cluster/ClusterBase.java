@@ -98,8 +98,7 @@ public abstract class ClusterBase {
 			return Collections.emptyList();
 		}
 
-		List<Address> addresses = new ArrayList<Address>(
-			jGroupsAddresses.size());
+		List<Address> addresses = new ArrayList<>(jGroupsAddresses.size());
 
 		for (org.jgroups.Address jgroupsAddress : jGroupsAddresses) {
 			addresses.add(new AddressImpl(jgroupsAddress));

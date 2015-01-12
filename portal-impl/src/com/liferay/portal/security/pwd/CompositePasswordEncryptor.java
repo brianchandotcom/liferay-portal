@@ -113,6 +113,6 @@ public class CompositePasswordEncryptor
 
 	private PasswordEncryptor _defaultPasswordEncryptor;
 	private final Map<String, PasswordEncryptor> _passwordEncryptors =
-		new HashMap<String, PasswordEncryptor>();
+		new HashMap<>();
 
 }

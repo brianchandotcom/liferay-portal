@@ -139,7 +139,7 @@ public class TestCacheListener<K extends Serializable, V>
 		Assert.assertTrue(_actions.contains(action));
 	}
 
-	private final List<Action> _actions = new ArrayList<Action>();
+	private final List<Action> _actions = new ArrayList<>();
 
 	private static class Action {
 

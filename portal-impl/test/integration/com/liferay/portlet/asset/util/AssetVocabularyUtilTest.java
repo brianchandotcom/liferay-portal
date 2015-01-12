@@ -56,7 +56,7 @@ public class AssetVocabularyUtilTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(_LOCALE, _TITLE);
 
@@ -85,7 +85,7 @@ public class AssetVocabularyUtilTest {
 	public void testGetUnambiguousVocabularyTitleWithAmbiguity()
 		throws Exception {
 
-		List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
+		List<AssetVocabulary> vocabularies = new ArrayList<>();
 
 		vocabularies.add(_companyVocabulary);
 		vocabularies.add(_vocabulary);
@@ -108,7 +108,7 @@ public class AssetVocabularyUtilTest {
 	public void testGetUnambiguousVocabularyTitleWithoutAmbiguity()
 		throws Exception {
 
-		List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
+		List<AssetVocabulary> vocabularies = new ArrayList<>();
 
 		vocabularies.add(_companyVocabulary);
 

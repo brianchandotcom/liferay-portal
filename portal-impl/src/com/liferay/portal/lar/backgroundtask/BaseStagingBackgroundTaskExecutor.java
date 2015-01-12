@@ -111,7 +111,7 @@ public abstract class BaseStagingBackgroundTaskExecutor
 			backgroundTask.getTaskContextMap();
 
 		if (taskContextMap == null) {
-			taskContextMap = new HashMap<String, Serializable>();
+			taskContextMap = new HashMap<>();
 		}
 
 		taskContextMap.put(backgroundTaskState, Boolean.TRUE);

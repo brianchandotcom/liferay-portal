@@ -244,8 +244,7 @@ public class DefaultMessageBus implements MessageBus {
 		DefaultMessageBus.class);
 
 	private final Set<DestinationEventListener> _destinationEventListeners =
-		new ConcurrentHashSet<DestinationEventListener>();
-	private final Map<String, Destination> _destinations =
-		new HashMap<String, Destination>();
+		new ConcurrentHashSet<>();
+	private final Map<String, Destination> _destinations = new HashMap<>();
 
 }

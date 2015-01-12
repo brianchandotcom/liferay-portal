@@ -122,7 +122,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	public List<ContainerModel> getParentContainerModels(long containerModelId)
 		throws PortalException {
 
-		List<ContainerModel> containerModels = new ArrayList<ContainerModel>();
+		List<ContainerModel> containerModels = new ArrayList<>();
 
 		ContainerModel containerModel = getContainerModel(containerModelId);
 
@@ -217,7 +217,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			long classPK, int start, int end)
 		throws PortalException {
 
-		List<TrashRenderer> trashRenderers = new ArrayList<TrashRenderer>();
+		List<TrashRenderer> trashRenderers = new ArrayList<>();
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
@@ -259,7 +259,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			long classPK, int start, int end)
 		throws PortalException {
 
-		List<TrashRenderer> trashRenderers = new ArrayList<TrashRenderer>();
+		List<TrashRenderer> trashRenderers = new ArrayList<>();
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 

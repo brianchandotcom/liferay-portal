@@ -40,7 +40,7 @@ public class DDLExporterFactory {
 	public void setDDLExporters(Map<String, DDLExporter> exporters) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_exporters = new HashMap<DDLExportFormat, DDLExporter>();
+		_exporters = new HashMap<>();
 
 		for (Map.Entry<String, DDLExporter> entry : exporters.entrySet()) {
 			DDLExportFormat exportFormat = DDLExportFormat.parse(

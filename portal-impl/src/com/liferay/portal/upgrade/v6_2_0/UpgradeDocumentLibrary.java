@@ -152,7 +152,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		Map<Locale, String> localizationMap = new HashMap<Locale, String>();
+		Map<Locale, String> localizationMap = new HashMap<>();
 
 		localizationMap.put(locale, content);
 

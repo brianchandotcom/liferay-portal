@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class NamespaceServletRequest extends DynamicServletRequest {
 
-	public static Set<String> reservedAttrs = new HashSet<String>();
+	public static Set<String> reservedAttrs = new HashSet<>();
 
 	static {
 		reservedAttrs.add(JavaConstants.JAVAX_PORTLET_CONFIG);
@@ -86,7 +86,7 @@ public class NamespaceServletRequest extends DynamicServletRequest {
 
 	@Override
 	public Enumeration<String> getAttributeNames() {
-		List<String> names = new ArrayList<String>();
+		List<String> names = new ArrayList<>();
 
 		Enumeration<String> enu = super.getAttributeNames();
 

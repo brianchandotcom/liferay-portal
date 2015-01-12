@@ -441,8 +441,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		List<UserGroup> userGroups = new ArrayList<UserGroup>(
-			userGroupIds.size());
+		List<UserGroup> userGroups = new ArrayList<>(userGroupIds.size());
 
 		for (Long userGroupId : userGroupIds) {
 			userGroups.add(userGroupPersistence.findByPrimaryKey(userGroupId));
@@ -488,8 +487,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	public List<UserGroup> getUserGroups(long[] userGroupIds)
 		throws PortalException {
 
-		List<UserGroup> userGroups = new ArrayList<UserGroup>(
-			userGroupIds.length);
+		List<UserGroup> userGroups = new ArrayList<>(userGroupIds.length);
 
 		for (long userGroupId : userGroupIds) {
 			UserGroup userGroup = getUserGroup(userGroupId);
@@ -977,8 +975,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		searchContext.setAndSearch(andSearch);
 
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put("description", description);
 		attributes.put("name", name);
@@ -1035,8 +1032,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	protected Map<String, String[]> getLayoutTemplatesParameters() {
-		Map<String, String[]> parameterMap =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.DATA_STRATEGY,

@@ -187,7 +187,7 @@ public class LogAssertionTestRule
 	}
 
 	private static final Map<Thread, Error> _concurrentFailures =
-		new ConcurrentHashMap<Thread, Error>();
+		new ConcurrentHashMap<>();
 	private static volatile Thread _thread;
 
 }

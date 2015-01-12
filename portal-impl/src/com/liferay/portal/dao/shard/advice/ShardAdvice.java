@@ -60,7 +60,7 @@ public class ShardAdvice {
 	public String getCompanyShardName(
 		String webId, String virtualHostname, String mx, String shardName) {
 
-		Map<String, String> shardParams = new HashMap<String, String>();
+		Map<String, String> shardParams = new HashMap<>();
 
 		shardParams.put("webId", webId);
 		shardParams.put("mx", mx);

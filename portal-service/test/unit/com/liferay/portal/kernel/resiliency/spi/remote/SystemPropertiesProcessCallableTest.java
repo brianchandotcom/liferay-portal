@@ -41,7 +41,7 @@ public class SystemPropertiesProcessCallableTest {
 
 		System.setProperties(newProperties);
 
-		Map<String, String> propertiesMap = new HashMap<String, String>();
+		Map<String, String> propertiesMap = new HashMap<>();
 
 		propertiesMap.put("key1", "value1");
 		propertiesMap.put("key2", "value2");

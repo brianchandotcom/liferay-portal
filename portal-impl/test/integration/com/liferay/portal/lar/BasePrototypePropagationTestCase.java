@@ -109,7 +109,7 @@ public abstract class BasePrototypePropagationTestCase {
 			String columnId)
 		throws Exception {
 
-		Map<String, String[]> parameterMap = new HashMap<String, String[]>();
+		Map<String, String[]> parameterMap = new HashMap<>();
 
 		parameterMap.put(
 			"articleId", new String[] {journalArticle.getArticleId()});
@@ -198,8 +198,7 @@ public abstract class BasePrototypePropagationTestCase {
 
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
-		Map<String, String> portletPreferencesMap =
-			new HashMap<String, String>();
+		Map<String, String> portletPreferencesMap = new HashMap<>();
 
 		portletPreferencesMap.put("articleId", StringPool.BLANK);
 		portletPreferencesMap.put(

@@ -63,7 +63,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 			return Collections.emptyList();
 		}
 
-		List<Address> addresses = new ArrayList<Address>(
+		List<Address> addresses = new ArrayList<>(
 			_localTransportAddresses.size());
 
 		for (org.jgroups.Address address : _localTransportAddresses) {
@@ -169,11 +169,10 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 				"Channel count must be between 1 and " + MAX_CHANNEL_COUNT);
 		}
 
-		_localTransportAddresses = new ArrayList<org.jgroups.Address>(
-			_channelCount);
-		_transportJChannels = new ArrayList<JChannel>(_channelCount);
+		_localTransportAddresses = new ArrayList<>(_channelCount);
+		_transportJChannels = new ArrayList<>(_channelCount);
 
-		List<String> keys = new ArrayList<String>(_channelCount);
+		List<String> keys = new ArrayList<>(_channelCount);
 
 		for (Object key : transportProperties.keySet()) {
 			keys.add((String)key);

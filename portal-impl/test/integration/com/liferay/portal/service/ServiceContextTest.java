@@ -48,7 +48,7 @@ public class ServiceContextTest extends PowerMockito {
 
 		serviceContext.setAttribute("TestName", "TestValue");
 
-		Map<String, String> headers = new HashMap<String, String>();
+		Map<String, String> headers = new HashMap<>();
 
 		headers.put("TestHeaderName", "TestHeaderValue");
 

@@ -82,7 +82,7 @@ public class DDMFormFieldValue {
 		getNestedDDMFormFieldValuesMap() {
 
 		Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
-			new HashMap<String, List<DDMFormFieldValue>>();
+			new HashMap<>();
 
 		for (DDMFormFieldValue nestedDDMFormFieldValue :
 				_nestedDDMFormFieldValues) {
@@ -92,7 +92,7 @@ public class DDMFormFieldValue {
 					nestedDDMFormFieldValue.getName());
 
 			if (nestedDDMFormFieldValues == null) {
-				nestedDDMFormFieldValues = new ArrayList<DDMFormFieldValue>();
+				nestedDDMFormFieldValues = new ArrayList<>();
 
 				nestedDDMFormFieldValuesMap.put(
 					nestedDDMFormFieldValue.getName(),
@@ -151,7 +151,7 @@ public class DDMFormFieldValue {
 	private String _instanceId;
 	private String _name;
 	private List<DDMFormFieldValue> _nestedDDMFormFieldValues =
-		new ArrayList<DDMFormFieldValue>();
+		new ArrayList<>();
 	private Value _value;
 
 }

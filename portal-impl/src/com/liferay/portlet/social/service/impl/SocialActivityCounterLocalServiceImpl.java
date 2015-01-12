@@ -353,8 +353,7 @@ public class SocialActivityCounterLocalServiceImpl
 		User assetEntryUser = userPersistence.findByPrimaryKey(
 			assetEntry.getUserId());
 
-		List<SocialActivityCounter> activityCounters =
-			new ArrayList<SocialActivityCounter>();
+		List<SocialActivityCounter> activityCounters = new ArrayList<>();
 
 		for (SocialActivityCounterDefinition activityCounterDefinition :
 				activityDefinition.getActivityCounterDefinitions()) {
@@ -960,8 +959,7 @@ public class SocialActivityCounterLocalServiceImpl
 		for (SocialActivityCounter activityCounter : activityCounters) {
 			if (userId != activityCounter.getClassPK()) {
 				userId = activityCounter.getClassPK();
-				activityCountersMap =
-					new HashMap<String, SocialActivityCounter>();
+				activityCountersMap = new HashMap<>();
 
 				Tuple userActivityCounter = new Tuple(
 					userId, activityCountersMap);

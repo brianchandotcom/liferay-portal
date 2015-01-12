@@ -386,7 +386,7 @@ public class EditServerAction extends PortletAction {
 				ClusterLink.CLUSTER_FORWARD_MESSAGE, true);
 		}
 
-		Set<String> usedSearchEngineIds = new HashSet<String>();
+		Set<String> usedSearchEngineIds = new HashSet<>();
 
 		if (Validator.isNull(portletId)) {
 			for (long companyId : companyIds) {
@@ -418,7 +418,7 @@ public class EditServerAction extends PortletAction {
 				return;
 			}
 
-			Set<String> searchEngineIds = new HashSet<String>();
+			Set<String> searchEngineIds = new HashSet<>();
 
 			for (Indexer indexer : indexers) {
 				searchEngineIds.add(indexer.getSearchEngineId());
@@ -455,8 +455,7 @@ public class EditServerAction extends PortletAction {
 			return;
 		}
 
-		Set<BaseAsyncDestination> searchWriterDestinations =
-			new HashSet<BaseAsyncDestination>();
+		Set<BaseAsyncDestination> searchWriterDestinations = new HashSet<>();
 
 		MessageBus messageBus = MessageBusUtil.getMessageBus();
 

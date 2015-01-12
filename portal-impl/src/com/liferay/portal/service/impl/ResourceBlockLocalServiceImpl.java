@@ -250,7 +250,7 @@ public class ResourceBlockLocalServiceImpl
 		List<ResourceAction> resourceActions =
 			resourceActionLocalService.getResourceActions(name);
 
-		List<String> actionIds = new ArrayList<String>();
+		List<String> actionIds = new ArrayList<>();
 
 		for (ResourceAction resourceAction : resourceActions) {
 			if ((actionIdsLong & resourceAction.getBitwiseValue()) ==

@@ -122,7 +122,7 @@ public class InvokerPortletImpl
 				WebKeys.CACHE_PORTLET_RESPONSES);
 
 		if (responses == null) {
-			responses = new ConcurrentHashMap<String, InvokerPortletResponse>();
+			responses = new ConcurrentHashMap<>();
 
 			session.setAttribute(WebKeys.CACHE_PORTLET_RESPONSES, responses);
 		}

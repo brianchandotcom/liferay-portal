@@ -53,7 +53,7 @@ public class MailServiceTestUtil {
 	public static List<MailMessage> getMailMessages(
 		String headerName, String headerValue) {
 
-		List<MailMessage> mailMessages = new ArrayList<MailMessage>();
+		List<MailMessage> mailMessages = new ArrayList<>();
 
 		for (int i = 0; i < _smtpServer.getEmailCount(); ++i) {
 			MailMessage message = _smtpServer.getMessage(i);

@@ -156,7 +156,6 @@ public class TemplateVariableGroup {
 	private String _label;
 	private final String[] _restrictedVariables;
 	private final Collection<TemplateVariableDefinition>
-		_templateVariableDefinitions =
-			new LinkedHashSet<TemplateVariableDefinition>();
+		_templateVariableDefinitions = new LinkedHashSet<>();
 
 }

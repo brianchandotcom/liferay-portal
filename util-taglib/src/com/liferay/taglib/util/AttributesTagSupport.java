@@ -92,9 +92,7 @@ public class AttributesTagSupport
 	}
 
 	private String _attributeNamespace = StringPool.BLANK;
-	private Map<String, Object> _dynamicAttributes =
-		new HashMap<String, Object>();
-	private Map<String, Object> _scopedAttributes =
-		new HashMap<String, Object>();
+	private Map<String, Object> _dynamicAttributes = new HashMap<>();
+	private Map<String, Object> _scopedAttributes = new HashMap<>();
 
 }

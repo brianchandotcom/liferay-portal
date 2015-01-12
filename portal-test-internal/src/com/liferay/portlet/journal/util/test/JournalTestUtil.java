@@ -209,19 +209,19 @@ public class JournalTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		for (Locale locale : _locales) {
 			titleMap.put(locale, title);
 		}
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		for (Locale locale : _locales) {
 			descriptionMap.put(locale, description);
 		}
 
-		Map<Locale, String> contentMap = new HashMap<Locale, String>();
+		Map<Locale, String> contentMap = new HashMap<>();
 
 		for (Locale locale : _locales) {
 			contentMap.put(locale, content);
@@ -377,19 +377,19 @@ public class JournalTestUtil {
 			boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		for (Locale locale : _locales) {
 			titleMap.put(locale, title);
 		}
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		for (Locale locale : _locales) {
 			descriptionMap.put(locale, RandomTestUtil.randomString(50));
 		}
 
-		Map<Locale, String> contentMap = new HashMap<Locale, String>();
+		Map<Locale, String> contentMap = new HashMap<>();
 
 		for (Locale locale : _locales) {
 			contentMap.put(locale, content);
@@ -440,7 +440,7 @@ public class JournalTestUtil {
 			Map<String, byte[]> images, ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(defaultLocale, "Test Article");
 
@@ -664,8 +664,7 @@ public class JournalTestUtil {
 	public static Map<String, Map<String, String>> getXsdMap(String xsd)
 		throws Exception {
 
-		Map<String, Map<String, String>> map =
-			new HashMap<String, Map<String, String>>();
+		Map<String, Map<String, String>> map = new HashMap<>();
 
 		Document document = SAXReaderUtil.read(xsd);
 
@@ -733,7 +732,7 @@ public class JournalTestUtil {
 			}
 		}
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		for (Locale locale : _locales) {
 			titleMap.put(locale, title);
@@ -813,7 +812,7 @@ public class JournalTestUtil {
 	}
 
 	private static Map<String, String> _getMap(Element dynamicElementElement) {
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<>();
 
 		Element parentElement = dynamicElementElement.getParent();
 

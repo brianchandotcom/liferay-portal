@@ -207,10 +207,10 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 		DirectServletRegistryImpl.class);
 
 	private final Map<String, Long> _dependantTimestamps =
-		new ConcurrentHashMap<String, Long>();
+		new ConcurrentHashMap<>();
 	private boolean _reloadDependants = true;
 	private final Map<String, ServletInfo> _servletInfos =
-		new ConcurrentHashMap<String, ServletInfo>();
+		new ConcurrentHashMap<>();
 
 	private class ServletInfo {
 

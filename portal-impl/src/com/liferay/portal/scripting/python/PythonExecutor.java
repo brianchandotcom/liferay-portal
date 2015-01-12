@@ -69,7 +69,7 @@ public class PythonExecutor extends BaseScriptingExecutor {
 			return null;
 		}
 
-		Map<String, Object> outputObjects = new HashMap<String, Object>();
+		Map<String, Object> outputObjects = new HashMap<>();
 
 		for (String outputName : outputNames) {
 			outputObjects.put(

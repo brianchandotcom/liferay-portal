@@ -74,9 +74,8 @@ public class ServiceBeanAopProxy
 			proxyInterfaces, SpringProxy.class);
 
 		ArrayList<MethodInterceptor> classLevelMethodInterceptors =
-			new ArrayList<MethodInterceptor>();
-		ArrayList<MethodInterceptor> fullMethodInterceptors =
-			new ArrayList<MethodInterceptor>();
+			new ArrayList<>();
+		ArrayList<MethodInterceptor> fullMethodInterceptors = new ArrayList<>();
 
 		while (true) {
 			if (!(methodInterceptor instanceof ChainableMethodAdvice)) {
@@ -190,8 +189,8 @@ public class ServiceBeanAopProxy
 	private List<MethodInterceptor> _getMethodInterceptors(
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
 
-		List<MethodInterceptor> methodInterceptors =
-			new ArrayList<MethodInterceptor>(_fullMethodInterceptors);
+		List<MethodInterceptor> methodInterceptors = new ArrayList<>(
+			_fullMethodInterceptors);
 
 		if (!_mergeSpringMethodInterceptors) {
 			return methodInterceptors;

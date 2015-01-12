@@ -60,7 +60,7 @@ public class VersionableName
 		}
 
 		if (_versions == null) {
-			_versions = new TreeSet<String>();
+			_versions = new TreeSet<>();
 		}
 
 		_versions.add(version);

@@ -50,7 +50,7 @@ public class GhostscriptImpl implements Ghostscript {
 			throw new IllegalStateException(sb.toString());
 		}
 
-		LinkedList<String> arguments = new LinkedList<String>();
+		LinkedList<String> arguments = new LinkedList<>();
 
 		arguments.add(_commandPath);
 		arguments.add("-dBATCH");

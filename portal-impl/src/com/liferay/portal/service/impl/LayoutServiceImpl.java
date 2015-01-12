@@ -1878,7 +1878,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	protected List<Layout> filterLayouts(List<Layout> layouts)
 		throws PortalException {
 
-		List<Layout> filteredLayouts = new ArrayList<Layout>();
+		List<Layout> filteredLayouts = new ArrayList<>();
 
 		for (Layout layout : layouts) {
 			if (LayoutPermissionUtil.contains(

@@ -169,7 +169,7 @@ public class ClassNameLocalServiceImpl
 	}
 
 	private static final Map<String, ClassName> _classNames =
-		new ConcurrentHashMap<String, ClassName>();
+		new ConcurrentHashMap<>();
 	private static final ClassName _nullClassName = new ClassNameImpl();
 
 }

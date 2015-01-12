@@ -58,7 +58,7 @@ public class PropertiesDocIndexBuilder {
 			return;
 		}
 
-		List<String> propertiesHTMLFileNames = new ArrayList<String>();
+		List<String> propertiesHTMLFileNames = new ArrayList<>();
 
 		File[] files = propertiesDir.listFiles();
 
@@ -80,7 +80,7 @@ public class PropertiesDocIndexBuilder {
 			return;
 		}
 
-		Map<String, Object> context = new HashMap<String, Object>();
+		Map<String, Object> context = new HashMap<>();
 
 		context.put("propertiesHTMLFileNames", propertiesHTMLFileNames);
 		context.put("releaseInfoVersion", ReleaseInfo.getVersion());

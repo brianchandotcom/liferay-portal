@@ -140,7 +140,7 @@ public class DefaultLicenseManagerImpl
 
 	@Override
 	public int getLicenseState(String productId) {
-		Map<String, String> licenseProperties = new HashMap<String, String>();
+		Map<String, String> licenseProperties = new HashMap<>();
 
 		licenseProperties.put("productId", productId);
 

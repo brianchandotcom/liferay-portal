@@ -36,7 +36,7 @@ public class GCUtil {
 		SoftReference<Object> softReference = new SoftReference<Object>(
 			new Object(), referenceQueue);
 
-		List<byte[]> list = new ArrayList<byte[]>();
+		List<byte[]> list = new ArrayList<>();
 
 		while (true) {
 			try {

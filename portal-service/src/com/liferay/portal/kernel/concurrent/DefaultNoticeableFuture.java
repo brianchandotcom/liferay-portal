@@ -97,7 +97,7 @@ public class DefaultNoticeableFuture<T>
 		};
 
 	private final Set<FutureListener<T>> _futureListeners =
-		new CopyOnWriteArraySet<FutureListener<T>>();
+		new CopyOnWriteArraySet<>();
 
 	private static class OnceFutureListener<V> implements FutureListener<V> {
 

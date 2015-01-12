@@ -232,7 +232,7 @@ public class SettingsConfigurationAction
 				WebKeys.PORTLET_PREFERENCES_MAP);
 
 		if (portletPreferencesMap == null) {
-			portletPreferencesMap = new HashMap<String, String[]>();
+			portletPreferencesMap = new HashMap<>();
 
 			portletRequest.setAttribute(
 				WebKeys.PORTLET_PREFERENCES_MAP, portletPreferencesMap);

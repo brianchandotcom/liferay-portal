@@ -69,7 +69,7 @@ public class AssetCategoryLocalServiceTest {
 
 	@Test
 	public void testDeleteCategory() throws Exception {
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(LocaleUtil.US, RandomTestUtil.randomString());
 

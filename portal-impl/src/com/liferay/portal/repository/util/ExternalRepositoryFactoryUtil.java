@@ -69,7 +69,6 @@ public class ExternalRepositoryFactoryUtil {
 	}
 
 	private static final ConcurrentHashMap<String, ExternalRepositoryFactory>
-		externalRepositoryFactories =
-			new ConcurrentHashMap<String, ExternalRepositoryFactory>();
+		externalRepositoryFactories = new ConcurrentHashMap<>();
 
 }

@@ -48,7 +48,7 @@ public class BackupAndRestoreIndexesTest {
 
 	@Test
 	public void testBackupAndRestore() throws Exception {
-		Map<Long, String> backupNames = new HashMap<Long, String>();
+		Map<Long, String> backupNames = new HashMap<>();
 
 		for (long companyId : PortalInstances.getCompanyIds()) {
 			String backupName = StringUtil.lowerCase(

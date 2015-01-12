@@ -227,7 +227,7 @@ public class AssetVocabularyStagedModelDataHandler
 		Map<Locale, String> titleMap = vocabulary.getTitleMap();
 
 		if (titleMap == null) {
-			titleMap = new HashMap<Locale, String>();
+			titleMap = new HashMap<>();
 		}
 
 		titleMap.put(PortalUtil.getSiteDefaultLocale(groupId), name);

@@ -213,8 +213,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		try {
 			List<String> groupNames = _persistedScheduler.getJobGroupNames();
 
-			List<SchedulerResponse> schedulerResponses =
-				new ArrayList<SchedulerResponse>();
+			List<SchedulerResponse> schedulerResponses = new ArrayList<>();
 
 			for (String groupName : groupNames) {
 				schedulerResponses.addAll(
@@ -248,8 +247,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 			List<String> groupNames = scheduler.getJobGroupNames();
 
-			List<SchedulerResponse> schedulerResponses =
-				new ArrayList<SchedulerResponse>();
+			List<SchedulerResponse> schedulerResponses = new ArrayList<>();
 
 			for (String groupName : groupNames) {
 				schedulerResponses.addAll(
@@ -814,8 +812,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		groupName = fixMaxLength(groupName, GROUP_NAME_MAX_LENGTH, storageType);
 
-		List<SchedulerResponse> schedulerResponses =
-			new ArrayList<SchedulerResponse>();
+		List<SchedulerResponse> schedulerResponses = new ArrayList<>();
 
 		Set<JobKey> jobKeys = scheduler.getJobKeys(
 			GroupMatcher.jobGroupEquals(groupName));

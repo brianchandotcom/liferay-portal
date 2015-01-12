@@ -77,7 +77,7 @@ public class PermissionConverterImpl implements PermissionConverter {
 			scopes = new int[] {ResourceConstants.SCOPE_GROUP_TEMPLATE};
 		}
 
-		List<Permission> permissions = new ArrayList<Permission>();
+		List<Permission> permissions = new ArrayList<>();
 
 		List<ResourcePermission> resourcePermissions =
 			ResourcePermissionLocalServiceUtil.getRoleResourcePermissions(

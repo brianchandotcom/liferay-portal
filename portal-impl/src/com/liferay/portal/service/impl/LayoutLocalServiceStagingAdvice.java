@@ -182,7 +182,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			Map<Locale, String> friendlyURLMap = null;
 
 			if (Arrays.equals(parameterTypes, _UPDATE_LAYOUT_PARAMETER_TYPES)) {
-				friendlyURLMap = new HashMap<Locale, String>();
+				friendlyURLMap = new HashMap<>();
 
 				friendlyURLMap.put(
 					LocaleUtil.getSiteDefault(), (String)arguments[11]);
@@ -591,7 +591,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			}
 		}
 
-		List<Layout> wrappedLayouts = new ArrayList<Layout>(layouts.size());
+		List<Layout> wrappedLayouts = new ArrayList<>(layouts.size());
 
 		for (int i = 0; i < layouts.size(); i++) {
 			Layout wrappedLayout = wrapLayout(layouts.get(i));
@@ -645,7 +645,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		LayoutLocalServiceStagingAdvice.class);
 
 	private static Set<String> _layoutLocalServiceStagingAdviceMethodNames =
-		new HashSet<String>();
+		new HashSet<>();
 
 	static {
 		_layoutLocalServiceStagingAdviceMethodNames.add("createLayout");

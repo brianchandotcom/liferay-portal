@@ -120,8 +120,7 @@ public class NewEnvTestRule implements TestRule {
 		List<FrameworkMethod> frameworkMethods = testClass.getAnnotatedMethods(
 			annotationClass);
 
-		List<MethodKey> methodKeys = new ArrayList<MethodKey>(
-			frameworkMethods.size());
+		List<MethodKey> methodKeys = new ArrayList<>(frameworkMethods.size());
 
 		for (FrameworkMethod annotatedFrameworkMethod : frameworkMethods) {
 			methodKeys.add(new MethodKey(annotatedFrameworkMethod.getMethod()));
@@ -145,7 +144,7 @@ public class NewEnvTestRule implements TestRule {
 	}
 
 	protected List<String> createArguments(Description description) {
-		List<String> arguments = new ArrayList<String>();
+		List<String> arguments = new ArrayList<>();
 
 		if (Boolean.getBoolean("junit.debug")) {
 			arguments.add(_JPDA_OPTIONS);

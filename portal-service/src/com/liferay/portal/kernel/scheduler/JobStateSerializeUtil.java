@@ -101,13 +101,13 @@ public class JobStateSerializeUtil {
 	}
 
 	private static Map<String, Object> _serialize_1(JobState jobState) {
-		Map<String, Object> jobStateMap = new HashMap<String, Object>();
+		Map<String, Object> jobStateMap = new HashMap<>();
 
 		ObjectValuePair<Exception, Date>[] exceptions =
 			jobState.getExceptions();
 
 		if (exceptions != null) {
-			ArrayList<Object[]> exceptionsList = new ArrayList<Object[]>();
+			ArrayList<Object[]> exceptionsList = new ArrayList<>();
 
 			for (ObjectValuePair<Exception, Date> exception : exceptions) {
 				exceptionsList.add(

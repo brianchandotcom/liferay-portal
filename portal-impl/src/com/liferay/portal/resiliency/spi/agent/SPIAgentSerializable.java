@@ -60,7 +60,7 @@ public class SPIAgentSerializable implements Serializable {
 		HttpServletRequest request, Direction direction) {
 
 		Map<String, Serializable> distributedRequestAttributes =
-			new HashMap<String, Serializable>();
+			new HashMap<>();
 
 		Enumeration<String> enumeration = request.getAttributeNames();
 
@@ -93,7 +93,7 @@ public class SPIAgentSerializable implements Serializable {
 	public static Map<String, List<String>> extractRequestHeaders(
 		HttpServletRequest request) {
 
-		Map<String, List<String>> headers = new HashMap<String, List<String>>();
+		Map<String, List<String>> headers = new HashMap<>();
 
 		Enumeration<String> nameEnumeration = request.getHeaderNames();
 
@@ -118,7 +118,7 @@ public class SPIAgentSerializable implements Serializable {
 				headerName);
 
 			if (valueEnumeration != null) {
-				List<String> values = new ArrayList<String>();
+				List<String> values = new ArrayList<>();
 
 				while (valueEnumeration.hasMoreElements()) {
 					values.add(valueEnumeration.nextElement());
@@ -148,8 +148,7 @@ public class SPIAgentSerializable implements Serializable {
 		String portletSessionAttributesKey =
 			WebKeys.PORTLET_SESSION_ATTRIBUTES.concat(portlet.getContextName());
 
-		Map<String, Serializable> sessionAttributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> sessionAttributes = new HashMap<>();
 
 		HttpSession session = request.getSession();
 
@@ -183,7 +182,7 @@ public class SPIAgentSerializable implements Serializable {
 			request.removeAttribute(WebKeys.PORTLET_SESSION);
 
 			HashMap<String, Serializable> portletSessionAttributes =
-				new HashMap<String, Serializable>();
+				new HashMap<>();
 
 			enumeration = portletSession.getAttributeNames();
 

@@ -431,7 +431,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 	@Test
 	public void testLoadPaths() throws Exception {
-		final Map<Path, Path> mergedPaths = new HashMap<Path, Path>();
+		final Map<Path, Path> mergedPaths = new HashMap<>();
 
 		Path inputPath1 = Paths.get("inputPaths1");
 		Path mappedInputPath1 = Paths.get("mappedInputPath1");
@@ -546,7 +546,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		// With log
 
-		final Map<Path, Path> mergedPaths = new HashMap<Path, Path>();
+		final Map<Path, Path> mergedPaths = new HashMap<>();
 
 		Path bootstrapPath1 = Paths.get("bootstrapPath1");
 		Path mappedBootstrapPath1 = Paths.get("mappedBootstrapPath1");
@@ -682,7 +682,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 	@Test
 	public void testLoadPathsMissedInputPaths() throws InterruptedException {
-		final Map<Path, Path> mergedPaths = new HashMap<Path, Path>();
+		final Map<Path, Path> mergedPaths = new HashMap<>();
 
 		Path inputPath1 = Paths.get("inputPaths1");
 		Path mappedInputPath1 = Paths.get("mappedInputPath1");
@@ -761,7 +761,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		// With log
 
-		final Map<Path, Path> mergedPaths = new HashMap<Path, Path>();
+		final Map<Path, Path> mergedPaths = new HashMap<>();
 
 		Path runtimePath1 = Paths.get("runtimePath1");
 		Path mappedRuntimePath1 = Paths.get("mappedRuntimePath1");
@@ -1040,7 +1040,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		Path inputPath2 = FileServerTestUtil.createEmptyFile(
 			Paths.get("inputPath2"));
 
-		Map<Path, Path> inputPaths = new HashMap<Path, Path>();
+		Map<Path, Path> inputPaths = new HashMap<>();
 
 		inputPaths.put(inputPath1, inputPath1);
 		inputPaths.put(inputPath2, inputPath2);
@@ -1112,7 +1112,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		inputPath2 = FileServerTestUtil.createEmptyFile(
 			Paths.get("inputPath2"));
 
-		inputPaths = new HashMap<Path, Path>();
+		inputPaths = new HashMap<>();
 
 		inputPaths.put(inputPath1, inputPath1);
 		inputPaths.put(inputPath2, inputPath2);

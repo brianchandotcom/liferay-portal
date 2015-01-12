@@ -82,9 +82,8 @@ public class InstrumentationAgent {
 
 			if (_originalClassDefinitions != null) {
 				try {
-					List<ClassDefinition> classDefinitions =
-						new ArrayList<ClassDefinition>(
-							_originalClassDefinitions.size());
+					List<ClassDefinition> classDefinitions = new ArrayList<>(
+						_originalClassDefinitions.size());
 
 					for (int i = 0; i < _originalClassDefinitions.size(); i++) {
 						OriginalClassDefinition originalClassDefinition =
@@ -137,7 +136,7 @@ public class InstrumentationAgent {
 
 		Class<?>[] allLoadedClasses =_instrumentation.getAllLoadedClasses();
 
-		List<Class<?>> modifiableClasses = new ArrayList<Class<?>>();
+		List<Class<?>> modifiableClasses = new ArrayList<>();
 
 		for (Class<?> loadedClass : allLoadedClasses) {
 			if (_instrumentation.isModifiableClass(loadedClass)) {
@@ -249,8 +248,7 @@ public class InstrumentationAgent {
 		}
 
 		if (_originalClassDefinitions == null) {
-			_originalClassDefinitions =
-				new ArrayList<OriginalClassDefinition>();
+			_originalClassDefinitions = new ArrayList<>();
 		}
 
 		OriginalClassDefinition originalClassDefinition =

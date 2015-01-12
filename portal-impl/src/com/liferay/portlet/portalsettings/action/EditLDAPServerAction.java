@@ -111,7 +111,7 @@ public class EditLDAPServerAction extends PortletAction {
 
 		String defaultPostfix = LDAPSettingsUtil.getPropertyPostfix(0);
 
-		Set<String> defaultKeys = new HashSet<String>(_KEYS.length);
+		Set<String> defaultKeys = new HashSet<>(_KEYS.length);
 
 		for (String key : _KEYS) {
 			defaultKeys.add(key + defaultPostfix);

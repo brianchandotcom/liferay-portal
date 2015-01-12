@@ -401,8 +401,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (permissionChecker.isCompanyAdmin()) {
-			LinkedHashMap<String, Object> params =
-				new LinkedHashMap<String, Object>();
+			LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 			params.put("site", Boolean.TRUE);
 
@@ -411,7 +410,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				null, null, params, true, 0, max));
 		}
 
-		Set<Group> groups = new LinkedHashSet<Group>();
+		Set<Group> groups = new LinkedHashSet<>();
 
 		List<Group> userSitesGroups = getUserSitesGroups(null, max);
 
@@ -428,7 +427,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			}
 		}
 
-		return new ArrayList<Group>(groups);
+		return new ArrayList<>(groups);
 	}
 
 	/**
@@ -689,7 +688,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		List<Group> userSiteGroups = new ArrayList<Group>();
+		List<Group> userSiteGroups = new ArrayList<>();
 
 		int start = QueryUtil.ALL_POS;
 		int end = QueryUtil.ALL_POS;
@@ -702,8 +701,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		if ((classNames == null) ||
 			ArrayUtil.contains(classNames, Group.class.getName())) {
 
-			LinkedHashMap<String, Object> groupParams =
-				new LinkedHashMap<String, Object>();
+			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 			groupParams.put("active", true);
 			groupParams.put("usersGroups", userId);
@@ -1244,7 +1242,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	protected List<Group> filterGroups(List<Group> groups)
 		throws PortalException {
 
-		List<Group> filteredGroups = new ArrayList<Group>();
+		List<Group> filteredGroups = new ArrayList<>();
 
 		for (Group group : groups) {
 			if (GroupPermissionUtil.contains(
@@ -1258,7 +1256,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	protected Map<Locale, String> getLocalizationMap(String value) {
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		map.put(LocaleUtil.getDefault(), value);
 

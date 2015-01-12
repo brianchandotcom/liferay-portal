@@ -555,8 +555,7 @@ public class PortletContainerImpl implements PortletContainer {
 			invokerPortlet.processEvent(eventRequestImpl, eventResponseImpl);
 
 			if (eventResponseImpl.isCalledSetRenderParameter()) {
-				Map<String, String[]> renderParameterMap =
-					new HashMap<String, String[]>();
+				Map<String, String[]> renderParameterMap = new HashMap<>();
 
 				renderParameterMap.putAll(
 					eventResponseImpl.getRenderParameterMap());

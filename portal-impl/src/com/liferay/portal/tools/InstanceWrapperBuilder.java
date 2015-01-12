@@ -176,7 +176,7 @@ public class InstanceWrapperBuilder {
 
 			Type[] thrownExceptions = javaMethod.getExceptions();
 
-			Set<String> newExceptions = new LinkedHashSet<String>();
+			Set<String> newExceptions = new LinkedHashSet<>();
 
 			for (int j = 0; j < thrownExceptions.length; j++) {
 				Type thrownException = thrownExceptions[j];

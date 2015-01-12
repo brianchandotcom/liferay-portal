@@ -551,8 +551,7 @@ public class PortletPreferencesFactoryImpl
 		long companyId, long groupId, long ownerId, int ownerType,
 		String portletId, boolean privateLayout) {
 
-		Map<Long, PortletPreferences> portletSetupMap =
-			new HashMap<Long, PortletPreferences>();
+		Map<Long, PortletPreferences> portletSetupMap = new HashMap<>();
 
 		List<com.liferay.portal.model.PortletPreferences>
 			portletPreferencesList =
@@ -737,7 +736,7 @@ public class PortletPreferencesFactoryImpl
 		throws XMLStreamException {
 
 		String name = null;
-		List<String> values = new ArrayList<String>();
+		List<String> values = new ArrayList<>();
 		boolean readOnly = false;
 
 		while (xmlEventReader.hasNext()) {
@@ -810,7 +809,7 @@ public class PortletPreferencesFactoryImpl
 						Preference preference = readPreference(xmlEventReader);
 
 						if (preferencesMap == null) {
-							preferencesMap = new HashMap<String, Preference>();
+							preferencesMap = new HashMap<>();
 						}
 
 						preferencesMap.put(preference.getName(), preference);

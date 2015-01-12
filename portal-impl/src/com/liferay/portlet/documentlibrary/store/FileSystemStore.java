@@ -516,7 +516,7 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	private Map<RepositoryDirKey, File> _repositoryDirs =
-		new ConcurrentHashMap<RepositoryDirKey, File>();
+		new ConcurrentHashMap<>();
 	private File _rootDir;
 
 	private class RepositoryDirKey {

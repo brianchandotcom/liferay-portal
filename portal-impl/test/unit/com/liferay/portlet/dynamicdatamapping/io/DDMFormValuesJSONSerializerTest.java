@@ -73,8 +73,7 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	}
 
 	protected List<DDMFormFieldValue> createBooleanNestedDDMFormFieldValues() {
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			new ArrayList<DDMFormFieldValue>();
+		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
 		ddmFormFieldValues.add(createHTMLDDMFormFieldValue(0, "nabr"));
 		ddmFormFieldValues.add(createHTMLDDMFormFieldValue(1, "uwyg"));
@@ -92,8 +91,7 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	}
 
 	protected List<DDMFormFieldValue> createDDMFormFieldValues() {
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			new ArrayList<DDMFormFieldValue>();
+		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
 		ddmFormFieldValues.addAll(createSeparatorDDMFormFieldValues());
 		ddmFormFieldValues.add(createTextDDMFormFieldValue());
@@ -149,8 +147,7 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	}
 
 	protected List<DDMFormFieldValue> createImageDDMFormFieldValues() {
-		List<DDMFormFieldValue> imageDDMFormFieldValues =
-			new ArrayList<DDMFormFieldValue>();
+		List<DDMFormFieldValue> imageDDMFormFieldValues = new ArrayList<>();
 
 		imageDDMFormFieldValues.add(createImageDDMFormFieldValue(0, "uaht"));
 		imageDDMFormFieldValues.add(createImageDDMFormFieldValue(1, "pppj"));
@@ -182,8 +179,7 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	}
 
 	protected List<DDMFormFieldValue> createSeparatorDDMFormFieldValues() {
-		List<DDMFormFieldValue> separatorDDMFormFieldValues =
-			new ArrayList<DDMFormFieldValue>();
+		List<DDMFormFieldValue> separatorDDMFormFieldValues = new ArrayList<>();
 
 		separatorDDMFormFieldValues.add(
 			createSeparatorDDMFormFieldValue(0, "uayx"));
@@ -197,8 +193,7 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	protected List<DDMFormFieldValue> createSeparatorNestedDDMFormFieldValues(
 		int index, String instanceId) {
 
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			new ArrayList<DDMFormFieldValue>();
+		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
 		ddmFormFieldValues.add(
 			createTextBoxDDMFormFieldValue(index, instanceId));

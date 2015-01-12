@@ -115,8 +115,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			long[] vocabularyIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		List<AssetVocabulary> failedVocabularies =
-			new ArrayList<AssetVocabulary>();
+		List<AssetVocabulary> failedVocabularies = new ArrayList<>();
 
 		for (long vocabularyId : vocabularyIds) {
 			try {
@@ -226,7 +225,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			return vocabularies;
 		}
 
-		vocabularies = new ArrayList<AssetVocabulary>();
+		vocabularies = new ArrayList<>();
 
 		AssetVocabulary vocabulary =
 			assetVocabularyLocalService.addDefaultVocabulary(groupId);
@@ -249,7 +248,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			return vocabularies;
 		}
 
-		vocabularies = new ArrayList<AssetVocabulary>();
+		vocabularies = new ArrayList<>();
 
 		AssetVocabulary vocabulary =
 			assetVocabularyLocalService.addDefaultVocabulary(groupId);
@@ -321,7 +320,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		if (addDefaultVocabulary && (total == 0) &&
 			(assetVocabularyPersistence.countByGroupId(groupId) == 0)) {
 
-			vocabularies = new ArrayList<AssetVocabulary>();
+			vocabularies = new ArrayList<>();
 
 			vocabularies.add(
 				assetVocabularyLocalService.addDefaultVocabulary(groupId));
@@ -427,7 +426,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			total = assetVocabularyPersistence.countByGroupId(groupId);
 
 			if (total == 0) {
-				vocabularies = new ArrayList<AssetVocabulary>(1);
+				vocabularies = new ArrayList<>(1);
 
 				AssetVocabulary defaultVocabulary =
 					assetVocabularyLocalService.addDefaultVocabulary(groupId);

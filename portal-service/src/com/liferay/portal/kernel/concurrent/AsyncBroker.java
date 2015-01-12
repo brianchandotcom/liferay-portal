@@ -137,9 +137,8 @@ public class AsyncBroker<K, V> {
 	}
 
 	private final ConcurrentMap<K, DefaultNoticeableFuture<V>>
-		_defaultNoticeableFutures =
-			new ConcurrentReferenceValueHashMap<K, DefaultNoticeableFuture<V>>(
-				FinalizeManager.WEAK_REFERENCE_FACTORY);
+		_defaultNoticeableFutures = new ConcurrentReferenceValueHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 	private static class CancellationFinalizeAction implements FinalizeAction {
 

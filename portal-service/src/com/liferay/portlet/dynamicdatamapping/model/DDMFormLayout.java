@@ -49,7 +49,6 @@ public class DDMFormLayout {
 		_ddmFormLayoutRows = ddmFormLayoutRows;
 	}
 
-	private List<DDMFormLayoutRow> _ddmFormLayoutRows =
-		new ArrayList<DDMFormLayoutRow>();
+	private List<DDMFormLayoutRow> _ddmFormLayoutRows = new ArrayList<>();
 
 }

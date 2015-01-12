@@ -79,6 +79,6 @@ public class TransientTokenUtil {
 	}
 
 	private static final ConcurrentNavigableMap<Long, String> _tokens =
-		new ConcurrentSkipListMap<Long, String>();
+		new ConcurrentSkipListMap<>();
 
 }

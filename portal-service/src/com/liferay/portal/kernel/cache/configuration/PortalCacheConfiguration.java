@@ -44,9 +44,8 @@ public class PortalCacheConfiguration {
 			_cacheListenerConfigurations = Collections.emptyMap();
 		}
 		else {
-			_cacheListenerConfigurations =
-				new HashMap<CallbackConfiguration, CacheListenerScope>(
-					cacheListenerConfigurations);
+			_cacheListenerConfigurations = new HashMap<>(
+				cacheListenerConfigurations);
 		}
 
 		_bootstrapLoaderConfiguration = bootstrapLoaderConfiguration;

@@ -80,7 +80,7 @@ public class RoleLocalServiceTest {
 
 		List<Role> allRoles = RoleLocalServiceUtil.getRoles(companyId);
 
-		List<Role> expectedRoles = new ArrayList<Role>();
+		List<Role> expectedRoles = new ArrayList<>();
 
 		for (Role role : allRoles) {
 			int type = role.getType();
@@ -221,7 +221,6 @@ public class RoleLocalServiceTest {
 	}
 
 	@DeleteAfterTestRun
-	private final List<Organization> _organizations =
-		new ArrayList<Organization>();
+	private final List<Organization> _organizations = new ArrayList<>();
 
 }

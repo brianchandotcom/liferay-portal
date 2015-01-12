@@ -83,7 +83,7 @@ public class MatchesFunction implements Function {
 			_THREAD_LOCAL_PATTERNS_KEY);
 
 		if (patterns == null) {
-			patterns = new HashMap<String, Pattern>();
+			patterns = new HashMap<>();
 		}
 
 		Pattern pattern = patterns.get(regex);

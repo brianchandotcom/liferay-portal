@@ -257,7 +257,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long groupId, long categoryId, int status, int start, int end)
 		throws PortalException {
 
-		List<MBMessage> messages = new ArrayList<MBMessage>();
+		List<MBMessage> messages = new ArrayList<>();
 
 		List<MBMessage> categoryMessages =
 			mbMessageLocalService.getCategoryMessages(
@@ -309,7 +309,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			description = category.getDescription();
 		}
 
-		List<MBMessage> messages = new ArrayList<MBMessage>();
+		List<MBMessage> messages = new ArrayList<>();
 
 		int lastIntervalStart = 0;
 		boolean listNotExhausted = true;
@@ -355,7 +355,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		String name = company.getName();
 		String description = company.getName();
 
-		List<MBMessage> messages = new ArrayList<MBMessage>();
+		List<MBMessage> messages = new ArrayList<>();
 
 		int lastIntervalStart = 0;
 		boolean listNotExhausted = true;
@@ -409,7 +409,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		String name = StringPool.BLANK;
 		String description = StringPool.BLANK;
 
-		List<MBMessage> messages = new ArrayList<MBMessage>();
+		List<MBMessage> messages = new ArrayList<>();
 
 		int lastIntervalStart = 0;
 		boolean listNotExhausted = true;
@@ -460,7 +460,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		String name = StringPool.BLANK;
 		String description = StringPool.BLANK;
 
-		List<MBMessage> messages = new ArrayList<MBMessage>();
+		List<MBMessage> messages = new ArrayList<>();
 
 		int lastIntervalStart = 0;
 		boolean listNotExhausted = true;
@@ -570,7 +570,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		String name = StringPool.BLANK;
 		String description = StringPool.BLANK;
 
-		List<MBMessage> messages = new ArrayList<MBMessage>();
+		List<MBMessage> messages = new ArrayList<>();
 
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
@@ -756,7 +756,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		syndFeed.setDescription(description);
 
-		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
+		List<SyndEntry> syndEntries = new ArrayList<>();
 
 		syndFeed.setEntries(syndEntries);
 
@@ -809,7 +809,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
 
-		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
+		List<SyndLink> syndLinks = new ArrayList<>();
 
 		syndFeed.setLinks(syndLinks);
 

@@ -103,7 +103,7 @@ public class JournalArticleLocalServiceTreeTest {
 	}
 
 	protected List<JournalArticle> createTree() throws Exception {
-		List<JournalArticle> articles = new ArrayList<JournalArticle>();
+		List<JournalArticle> articles = new ArrayList<>();
 
 		JournalArticle articleA = JournalTestUtil.addArticle(
 			_group.getGroupId(), "Article A", RandomTestUtil.randomString());

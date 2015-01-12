@@ -87,11 +87,10 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Set<String> identifiers = new HashSet<String>();
+		Set<String> identifiers = new HashSet<>();
 
-		Set<PublicRenderParameter> publicRenderParameters =
-			new TreeSet<PublicRenderParameter>(
-				new PublicRenderParameterIdentifierComparator());
+		Set<PublicRenderParameter> publicRenderParameters = new TreeSet<>(
+			new PublicRenderParameterIdentifierComparator());
 
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
@@ -128,8 +127,7 @@ public class ActionUtil {
 				layout, portlet.getPortletId());
 
 		List<PublicRenderParameterConfiguration>
-			publicRenderParameterConfigurations =
-				new ArrayList<PublicRenderParameterConfiguration>();
+			publicRenderParameterConfigurations = new ArrayList<>();
 
 		for (PublicRenderParameter publicRenderParameter :
 				portlet.getPublicRenderParameters()) {

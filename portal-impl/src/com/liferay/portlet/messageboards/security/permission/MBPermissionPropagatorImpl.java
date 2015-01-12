@@ -109,7 +109,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 			else {
 				category = (MBCategory)categoryOrThread;
 
-				List<Long> categoryIds = new ArrayList<Long>();
+				List<Long> categoryIds = new ArrayList<>();
 
 				categoryIds.add(category.getCategoryId());
 

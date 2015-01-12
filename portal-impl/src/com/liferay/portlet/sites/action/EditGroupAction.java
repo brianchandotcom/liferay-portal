@@ -348,7 +348,7 @@ public class EditGroupAction extends PortletAction {
 	protected List<Role> getRoles(PortletRequest portletRequest)
 		throws Exception {
 
-		List<Role> roles = new ArrayList<Role>();
+		List<Role> roles = new ArrayList<>();
 
 		long[] siteRolesRoleIds = StringUtil.split(
 			ParamUtil.getString(portletRequest, "siteRolesRoleIds"), 0L);
@@ -379,7 +379,7 @@ public class EditGroupAction extends PortletAction {
 	protected List<Team> getTeams(PortletRequest portletRequest)
 		throws Exception {
 
-		List<Team> teams = new ArrayList<Team>();
+		List<Team> teams = new ArrayList<>();
 
 		long[] teamsTeamIds = ArrayUtil.unique(
 			StringUtil.split(

@@ -63,7 +63,7 @@ public class ServiceContextThreadLocal {
 						LinkedList<ServiceContext> serviceContexts) {
 
 						LinkedList<ServiceContext> cloneServiceContexts =
-							new LinkedList<ServiceContext>();
+							new LinkedList<>();
 
 						for (ServiceContext serviceContext : serviceContexts) {
 							ServiceContext cloneServiceContext =

@@ -147,8 +147,7 @@ public class GroupFinderTest {
 
 	@Test
 	public void testFindByCompanyId() throws Exception {
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("inherit", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
@@ -200,7 +199,7 @@ public class GroupFinderTest {
 
 		String name = RandomTestUtil.randomString() + "Model";
 
-		List<String> actionIds = new ArrayList<String>();
+		List<String> actionIds = new ArrayList<>();
 
 		actionIds.add(ActionKeys.UPDATE);
 		actionIds.add(ActionKeys.VIEW);
@@ -222,10 +221,9 @@ public class GroupFinderTest {
 			String actionId, String name, long roleId)
 		throws Exception {
 
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
-		List<Object> rolePermissions = new ArrayList<Object>();
+		List<Object> rolePermissions = new ArrayList<>();
 
 		rolePermissions.add(name);
 		rolePermissions.add(new Integer(ResourceConstants.SCOPE_GROUP));

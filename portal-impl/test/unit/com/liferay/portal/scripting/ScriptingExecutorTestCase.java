@@ -70,7 +70,7 @@ public abstract class ScriptingExecutorTestCase extends PowerMockito {
 
 	@Test
 	public void testBindingInputVariables() throws ScriptingException {
-		Map<String, Object> inputObjects = new HashMap<String, Object>();
+		Map<String, Object> inputObjects = new HashMap<>();
 
 		inputObjects.put("variable", "string");
 

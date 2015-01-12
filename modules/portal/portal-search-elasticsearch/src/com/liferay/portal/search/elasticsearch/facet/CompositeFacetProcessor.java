@@ -96,7 +96,6 @@ public class CompositeFacetProcessor
 
 	private static FacetProcessor<SearchRequestBuilder> _defaultFacetProcessor;
 	private static final Map<String, FacetProcessor<SearchRequestBuilder>>
-		_facetProcessors =
-			new HashMap<String, FacetProcessor<SearchRequestBuilder>>();
+		_facetProcessors = new HashMap<>();
 
 }

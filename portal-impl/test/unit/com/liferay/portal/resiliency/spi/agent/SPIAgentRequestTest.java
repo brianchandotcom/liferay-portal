@@ -154,9 +154,8 @@ public class SPIAgentRequestTest {
 
 			@Override
 			public Map<String, String[]> getParameterMap() {
-				Map<String, String[]> parameterMap =
-					new LinkedHashMap<String, String[]>(
-						super.getParameterMap());
+				Map<String, String[]> parameterMap = new LinkedHashMap<>(
+					super.getParameterMap());
 
 				// Parameter with no value
 
@@ -258,8 +257,7 @@ public class SPIAgentRequestTest {
 
 		// Upload servlet request with multipart data
 
-		Map<String, FileItem[]> fileParameters =
-			new HashMap<String, FileItem[]>();
+		Map<String, FileItem[]> fileParameters = new HashMap<>();
 
 		String fileParameter = "fileParameter";
 
@@ -297,12 +295,11 @@ public class SPIAgentRequestTest {
 
 		// Upload servlet request with multipart and regular data
 
-		Map<String, List<String>> regularParameters =
-			new HashMap<String, List<String>>();
+		Map<String, List<String>> regularParameters = new HashMap<>();
 
 		String regularParameter = "regularParameter";
 
-		List<String> parameters = new ArrayList<String>();
+		List<String> parameters = new ArrayList<>();
 
 		regularParameters.put(regularParameter, parameters);
 
@@ -750,7 +747,7 @@ public class SPIAgentRequestTest {
 
 		attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, new MockSPI());
 
-		final List<String> names = new ArrayList<String>();
+		final List<String> names = new ArrayList<>();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest() {
@@ -798,7 +795,7 @@ public class SPIAgentRequestTest {
 
 		attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, new MockSPI());
 
-		final List<String> names = new ArrayList<String>();
+		final List<String> names = new ArrayList<>();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest() {
@@ -917,8 +914,7 @@ public class SPIAgentRequestTest {
 
 		MockHttpSession originalHttpSession = new MockHttpSession();
 
-		Map<String, Serializable> portletSessionAttributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> portletSessionAttributes = new HashMap<>();
 
 		portletSessionAttributes.put("key1", "value1");
 		portletSessionAttributes.put("key2", "value2");

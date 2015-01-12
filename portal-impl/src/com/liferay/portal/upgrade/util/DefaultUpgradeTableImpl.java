@@ -111,7 +111,7 @@ public class DefaultUpgradeTableImpl
 
 		columns = columns.clone();
 
-		List<String> sortedColumnNames = new ArrayList<String>();
+		List<String> sortedColumnNames = new ArrayList<>();
 
 		for (UpgradeColumn upgradeColumn : upgradeColumns) {
 			getSortedColumnName(sortedColumnNames, upgradeColumn);

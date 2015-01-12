@@ -87,12 +87,12 @@ public class TokensTransformerListener extends BaseTransformerListener {
 
 			if (Validator.isNotNull(key) && s.contains(key)) {
 				if (!hasKey) {
-					escapedKeysList = new ArrayList<String>();
-					escapedValuesList = new ArrayList<String>();
-					keysList = new ArrayList<String>();
-					valuesList = new ArrayList<String>();
-					tempEscapedKeysList = new ArrayList<String>();
-					tempEscapedValuesList = new ArrayList<String>();
+					escapedKeysList = new ArrayList<>();
+					escapedValuesList = new ArrayList<>();
+					keysList = new ArrayList<>();
+					valuesList = new ArrayList<>();
+					tempEscapedKeysList = new ArrayList<>();
+					tempEscapedValuesList = new ArrayList<>();
 
 					hasKey = true;
 				}

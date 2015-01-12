@@ -72,7 +72,7 @@ public abstract class BaseLicenseUtilTestCase extends PowerMockito {
 
 		InputStream processInputStream = getInputStream(osName);
 
-		Set<String> macAddresses = new HashSet<String>();
+		Set<String> macAddresses = new HashSet<>();
 
 		Pattern macAddressPattern = getMacAddressPattern();
 

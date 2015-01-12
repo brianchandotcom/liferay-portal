@@ -115,7 +115,7 @@ public class NettyChannelAttributes {
 		Map<Long, FabricWorker<?>> fabricWorkers = attribute.get();
 
 		if (fabricWorkers == null) {
-			fabricWorkers = new ConcurrentHashMap<Long, FabricWorker<?>>();
+			fabricWorkers = new ConcurrentHashMap<>();
 
 			Map<Long, FabricWorker<?>> previousFabricWorkers =
 				attribute.setIfAbsent(fabricWorkers);

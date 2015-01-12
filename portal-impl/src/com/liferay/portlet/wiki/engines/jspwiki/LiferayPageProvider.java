@@ -99,7 +99,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 			_log.debug("Invoking getAllPages()");
 		}
 
-		List<WikiPage> jspWikiPages = new ArrayList<WikiPage>();
+		List<WikiPage> jspWikiPages = new ArrayList<>();
 
 		try {
 			int count = WikiPageLocalServiceUtil.getPagesCount(_nodeId, true);

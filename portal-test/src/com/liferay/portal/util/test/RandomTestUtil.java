@@ -84,7 +84,7 @@ public class RandomTestUtil {
 	}
 
 	public static Map<Locale, String> randomLocaleStringMap(Locale locale) {
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		map.put(LocaleUtil.getDefault(), randomString());
 

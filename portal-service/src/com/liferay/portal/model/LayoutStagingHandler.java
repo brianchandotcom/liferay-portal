@@ -304,7 +304,7 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		LayoutStagingHandler.class);
 
 	private static final Set<String> _layoutRevisionMethodNames =
-		new HashSet<String>();
+		new HashSet<>();
 
 	static {
 		_layoutRevisionMethodNames.add("getColorScheme");

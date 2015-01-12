@@ -244,9 +244,9 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 	}
 
 	protected void readMimeType(Element element) {
-		Set<String> mimeTypes = new HashSet<String>();
+		Set<String> mimeTypes = new HashSet<>();
 
-		Set<String> extensions = new HashSet<String>();
+		Set<String> extensions = new HashSet<>();
 
 		String name = element.getAttribute(MIME_TYPE_TYPE_ATTR);
 
@@ -300,8 +300,7 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 	private static Log _log = LogFactoryUtil.getLog(MimeTypesImpl.class);
 
 	private Detector _detector;
-	private Map<String, Set<String>> _extensionsMap =
-		new HashMap<String, Set<String>>();
-	private Set<String> _webImageMimeTypes = new HashSet<String>();
+	private Map<String, Set<String>> _extensionsMap = new HashMap<>();
+	private Set<String> _webImageMimeTypes = new HashSet<>();
 
 }

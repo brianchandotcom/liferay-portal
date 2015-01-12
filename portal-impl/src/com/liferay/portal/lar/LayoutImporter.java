@@ -472,7 +472,7 @@ public class LayoutImporter {
 		List<Element> portletElements = portletsElement.elements("portlet");
 
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-			List<String> portletIds = new ArrayList<String>();
+			List<String> portletIds = new ArrayList<>();
 
 			for (Element portletElement : portletElements) {
 				String portletId = portletElement.attributeValue("portlet-id");
@@ -515,7 +515,7 @@ public class LayoutImporter {
 
 		// Layouts
 
-		Set<Layout> modifiedLayouts = new HashSet<Layout>();
+		Set<Layout> modifiedLayouts = new HashSet<>();
 		List<Layout> previousLayouts = LayoutUtil.findByG_P(
 			portletDataContext.getGroupId(),
 			portletDataContext.isPrivateLayout());
@@ -563,7 +563,7 @@ public class LayoutImporter {
 			}
 		}
 
-		List<String> sourceLayoutsUuids = new ArrayList<String>();
+		List<String> sourceLayoutsUuids = new ArrayList<>();
 
 		for (Element layoutElement : layoutElements) {
 			importLayout(portletDataContext, sourceLayoutsUuids, layoutElement);
@@ -942,7 +942,7 @@ public class LayoutImporter {
 					scopeGroup = scopeLayout.getScopeGroup();
 				}
 				else {
-					Map<Locale, String> nameMap = new HashMap<Locale, String>();
+					Map<Locale, String> nameMap = new HashMap<>();
 
 					nameMap.put(
 						LocaleUtil.getDefault(),
@@ -1018,7 +1018,7 @@ public class LayoutImporter {
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class + ".layout");
 
-		Map<Long, Integer> layoutPriorities = new HashMap<Long, Integer>();
+		Map<Long, Integer> layoutPriorities = new HashMap<>();
 
 		int maxPriority = Integer.MIN_VALUE;
 
@@ -1191,7 +1191,7 @@ public class LayoutImporter {
 			long companyId, Element layoutsElement)
 		throws Exception {
 
-		List<Tuple> missingLayoutPrototypes = new ArrayList<Tuple>();
+		List<Tuple> missingLayoutPrototypes = new ArrayList<>();
 
 		String layoutSetPrototypeUuid = layoutsElement.attributeValue(
 			"layout-set-prototype-uuid");

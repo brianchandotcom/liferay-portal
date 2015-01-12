@@ -37,7 +37,7 @@ public class DLFileEntryClassType extends DDMStructureClassType {
 
 	@Override
 	public List<ClassTypeField> getClassTypeFields() throws PortalException {
-		List<ClassTypeField> classTypeFields = new ArrayList<ClassTypeField>();
+		List<ClassTypeField> classTypeFields = new ArrayList<>();
 
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(

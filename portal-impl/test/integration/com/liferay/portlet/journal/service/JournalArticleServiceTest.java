@@ -103,7 +103,7 @@ public class JournalArticleServiceTest {
 
 	@Test(expected = StorageFieldRequiredException.class)
 	public void testAddArticleWithEmptyRequiredHTMLField() throws Exception {
-		Map<String, String> requiredFields = new HashMap<String, String>();
+		Map<String, String> requiredFields = new HashMap<>();
 
 		requiredFields.put("HTML2030", "");
 
@@ -114,7 +114,7 @@ public class JournalArticleServiceTest {
 
 	@Test
 	public void testAddArticleWithNotEmptyRequiredHTMLField() throws Exception {
-		Map<String, String> requiredFields = new HashMap<String, String>();
+		Map<String, String> requiredFields = new HashMap<>();
 
 		requiredFields.put("HTML2030", "<p>Hello World!</p>");
 
@@ -496,7 +496,7 @@ public class JournalArticleServiceTest {
 	protected List<JournalArticle> addArticles(int count, String content)
 		throws Exception {
 
-		List<JournalArticle> articles = new ArrayList<JournalArticle>(count);
+		List<JournalArticle> articles = new ArrayList<>(count);
 
 		for (int i = 0; i < count; i++) {
 			JournalArticle article = JournalTestUtil.addArticle(
@@ -530,7 +530,7 @@ public class JournalArticleServiceTest {
 	protected int countArticlesByKeyword(String keyword, int status)
 		throws Exception {
 
-		List<Long> folderIds = new ArrayList<Long>(1);
+		List<Long> folderIds = new ArrayList<>(1);
 
 		folderIds.add(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
@@ -586,7 +586,7 @@ public class JournalArticleServiceTest {
 			String keyword, int status)
 		throws Exception {
 
-		List<Long> folderIds = new ArrayList<Long>(1);
+		List<Long> folderIds = new ArrayList<>(1);
 
 		folderIds.add(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 

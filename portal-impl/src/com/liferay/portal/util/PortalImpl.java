@@ -446,7 +446,7 @@ public class PortalImpl implements Portal {
 
 		// Reserved parameter names
 
-		_reservedParams = new HashSet<String>();
+		_reservedParams = new HashSet<>();
 
 		// Portal authentication
 
@@ -637,7 +637,7 @@ public class PortalImpl implements Portal {
 			(List<BreadcrumbEntry>)request.getAttribute(name);
 
 		if (breadcrumbEntries == null) {
-			breadcrumbEntries = new ArrayList<BreadcrumbEntry>();
+			breadcrumbEntries = new ArrayList<>();
 
 			request.setAttribute(name, breadcrumbEntries);
 		}
@@ -1287,10 +1287,9 @@ public class PortalImpl implements Portal {
 			long userId, long companyId, long groupId, String portletId)
 		throws PortalException {
 
-		List<Group> groups = new ArrayList<Group>();
+		List<Group> groups = new ArrayList<>();
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("usersGroups", new Long(userId));
 
@@ -1316,7 +1315,7 @@ public class PortalImpl implements Portal {
 
 		groups.addAll(0, getCurrentAndAncestorSiteGroups(groupId));
 
-		List<Group> filteredGroups = new ArrayList<Group>();
+		List<Group> filteredGroups = new ArrayList<>();
 
 		for (Group group : ListUtil.unique(groups)) {
 			if (group.hasStagingGroup()) {
@@ -1669,10 +1668,10 @@ public class PortalImpl implements Portal {
 		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 
 		if (params != null) {
-			params = new HashMap<String, String[]>(params);
+			params = new HashMap<>(params);
 		}
 		else {
-			params = new HashMap<String, String[]>();
+			params = new HashMap<>();
 		}
 
 		params.put("p_p_id", new String[] {ppid});
@@ -1713,7 +1712,7 @@ public class PortalImpl implements Portal {
 	public Set<Portlet> getControlPanelPortlets(
 		long companyId, String category) {
 
-		Set<Portlet> portletsSet = new TreeSet<Portlet>(
+		Set<Portlet> portletsSet = new TreeSet<>(
 			new PortletControlPanelWeightComparator());
 
 		if (Validator.isNull(category)) {
@@ -1861,7 +1860,7 @@ public class PortalImpl implements Portal {
 	public List<Group> getCurrentAndAncestorSiteGroups(long groupId)
 		throws PortalException {
 
-		Set<Group> groups = new LinkedHashSet<Group>();
+		Set<Group> groups = new LinkedHashSet<>();
 
 		Group siteGroup = doGetCurrentSiteGroup(groupId);
 
@@ -1871,7 +1870,7 @@ public class PortalImpl implements Portal {
 
 		groups.addAll(doGetAncestorSiteGroups(groupId, false));
 
-		return new ArrayList<Group>(groups);
+		return new ArrayList<>(groups);
 	}
 
 	@Override
@@ -2131,10 +2130,9 @@ public class PortalImpl implements Portal {
 			ExpandoBridge expandoBridge, HttpServletRequest request)
 		throws PortalException {
 
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> attributes = new HashMap<>();
 
-		List<String> names = new ArrayList<String>();
+		List<String> names = new ArrayList<>();
 
 		Enumeration<String> enu = request.getParameterNames();
 
@@ -2682,8 +2680,7 @@ public class PortalImpl implements Portal {
 
 		String layoutActualURL = getLayoutActualURL(layout, mainPath);
 
-		InheritableMap<String, String[]> actualParams =
-			new InheritableMap<String, String[]>();
+		InheritableMap<String, String[]> actualParams = new InheritableMap<>();
 
 		if (params != null) {
 			actualParams.setParentMap(params);
@@ -2796,7 +2793,7 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getLayoutActualURL(Layout layout, String mainPath) {
-		Map<String, String> variables = new HashMap<String, String>();
+		Map<String, String> variables = new HashMap<>();
 
 		variables.put("liferay:groupId", String.valueOf(layout.getGroupId()));
 		variables.put("liferay:mainPath", mainPath);
@@ -3602,8 +3599,7 @@ public class PortalImpl implements Portal {
 		HttpServletRequest request) {
 
 		List<PersistentHttpServletRequestWrapper>
-			persistentHttpServletRequestWrappers =
-				new ArrayList<PersistentHttpServletRequestWrapper>();
+			persistentHttpServletRequestWrappers = new ArrayList<>();
 
 		HttpServletRequest originalRequest = request;
 
@@ -4261,14 +4257,13 @@ public class PortalImpl implements Portal {
 				friendlyURL = url.substring(0, pos);
 
 				InheritableMap<String, String[]> actualParams =
-					new InheritableMap<String, String[]>();
+					new InheritableMap<>();
 
 				if (params != null) {
 					actualParams.setParentMap(params);
 				}
 
-				Map<String, String> prpIdentifiers =
-					new HashMap<String, String>();
+				Map<String, String> prpIdentifiers = new HashMap<>();
 
 				Set<PublicRenderParameter> publicRenderParameters =
 					portlet.getPublicRenderParameters();
@@ -4325,10 +4320,10 @@ public class PortalImpl implements Portal {
 					Map<String, String[]> actualParams = null;
 
 					if (params != null) {
-						actualParams = new HashMap<String, String[]>(params);
+						actualParams = new HashMap<>(params);
 					}
 					else {
-						actualParams = new HashMap<String, String[]>();
+						actualParams = new HashMap<>();
 					}
 
 					actualParams.put("p_p_id", new String[] {ppid});
@@ -4879,7 +4874,7 @@ public class PortalImpl implements Portal {
 			long companyId, long groupId, long userId)
 		throws PortalException {
 
-		Set<Group> groups = new LinkedHashSet<Group>();
+		Set<Group> groups = new LinkedHashSet<>();
 
 		Group siteGroup = doGetCurrentSiteGroup(groupId);
 
@@ -4908,8 +4903,7 @@ public class PortalImpl implements Portal {
 				PropsKeys.
 					SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
 
-			LinkedHashMap<String, Object> groupParams =
-				new LinkedHashMap<String, Object>();
+			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 			groupParams.put("site", Boolean.TRUE);
 			groupParams.put("usersGroups", userId);
@@ -5398,8 +5392,7 @@ public class PortalImpl implements Portal {
 		HttpServletRequest request) {
 
 		List<PersistentHttpServletRequestWrapper>
-			persistentHttpServletRequestWrappers =
-				new ArrayList<PersistentHttpServletRequestWrapper>();
+			persistentHttpServletRequestWrappers = new ArrayList<>();
 
 		HttpServletRequest currentRequest = request;
 
@@ -7479,7 +7472,7 @@ public class PortalImpl implements Portal {
 			long groupId, boolean checkContentSharingWithChildrenEnabled)
 		throws PortalException {
 
-		Set<Group> groups = new LinkedHashSet<Group>();
+		Set<Group> groups = new LinkedHashSet<>();
 
 		long siteGroupId = getSiteGroupId(groupId);
 
@@ -7559,7 +7552,7 @@ public class PortalImpl implements Portal {
 	protected List<Portlet> filterControlPanelPortlets(
 		Set<Portlet> portlets, ThemeDisplay themeDisplay) {
 
-		List<Portlet> filteredPortlets = new ArrayList<Portlet>(portlets);
+		List<Portlet> filteredPortlets = new ArrayList<>(portlets);
 
 		Iterator<Portlet> itr = filteredPortlets.iterator();
 
@@ -7632,7 +7625,7 @@ public class PortalImpl implements Portal {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		categoriesMap = new LinkedHashMap<String, List<Portlet>>();
+		categoriesMap = new LinkedHashMap<>();
 
 		for (String category : categories) {
 			Group group = themeDisplay.getSiteGroup();
@@ -8299,9 +8292,9 @@ public class PortalImpl implements Portal {
 		WebServerServlet.class);
 
 	private static Map<Long, String> _cdnHostHttpMap =
-		new ConcurrentHashMap<Long, String>();
+		new ConcurrentHashMap<>();
 	private static Map<Long, String> _cdnHostHttpsMap =
-		new ConcurrentHashMap<Long, String>();
+		new ConcurrentHashMap<>();
 	private static MethodHandler _resetCDNHostsMethodHandler =
 		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
 	private static Date _upTime = new Date();
@@ -8327,11 +8320,9 @@ public class PortalImpl implements Portal {
 	private String _pathMain;
 	private String _pathModule;
 	private String _pathProxy;
-	private Map<String, Long> _plidToPortletIdMap =
-		new ConcurrentHashMap<String, Long>();
+	private Map<String, Long> _plidToPortletIdMap = new ConcurrentHashMap<>();
 	private Set<PortalInetSocketAddressEventListener>
-		_portalInetSocketAddressEventListeners =
-			new CopyOnWriteArraySet<PortalInetSocketAddressEventListener>();
+		_portalInetSocketAddressEventListeners = new CopyOnWriteArraySet<>();
 	private final AtomicReference<InetSocketAddress>
 		_portalLocalInetSocketAddress =
 			new AtomicReference<InetSocketAddress>();
@@ -8349,7 +8340,7 @@ public class PortalImpl implements Portal {
 	 */
 	@Deprecated
 	private List<PortalPortEventListener> _portalPortEventListeners =
-		new ArrayList<PortalPortEventListener>();
+		new ArrayList<>();
 
 	private final AtomicReference<InetSocketAddress>
 		_portalServerInetSocketAddress =

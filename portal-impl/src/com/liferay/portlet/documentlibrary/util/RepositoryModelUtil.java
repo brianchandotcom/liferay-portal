@@ -41,8 +41,7 @@ public class RepositoryModelUtil {
 	public static List<FileEntry> toFileEntries(
 		List<DLFileEntry> dlFileEntries) {
 
-		List<FileEntry> fileEntries = new ArrayList<FileEntry>(
-			dlFileEntries.size());
+		List<FileEntry> fileEntries = new ArrayList<>(dlFileEntries.size());
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
@@ -95,8 +94,7 @@ public class RepositoryModelUtil {
 	public static List<FileVersion> toFileVersions(
 		List<DLFileVersion> dlFileVersions) {
 
-		List<FileVersion> fileVersions = new ArrayList<FileVersion>(
-			dlFileVersions.size());
+		List<FileVersion> fileVersions = new ArrayList<>(dlFileVersions.size());
 
 		for (DLFileVersion dlFileVersion : dlFileVersions) {
 			FileVersion fileVersion = new LiferayFileVersion(dlFileVersion);
@@ -113,7 +111,7 @@ public class RepositoryModelUtil {
 	}
 
 	public static List<Folder> toFolders(List<DLFolder> dlFolders) {
-		List<Folder> folders = new ArrayList<Folder>(dlFolders.size());
+		List<Folder> folders = new ArrayList<>(dlFolders.size());
 
 		for (DLFolder dlFolder : dlFolders) {
 			Folder folder = new LiferayFolder(dlFolder);

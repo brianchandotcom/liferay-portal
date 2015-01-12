@@ -108,7 +108,6 @@ public class PortalDelegatorServlet extends HttpServlet {
 		}
 	}
 
-	private static final Map<String, HttpServlet> _delegates =
-		new HashMap<String, HttpServlet>();
+	private static final Map<String, HttpServlet> _delegates = new HashMap<>();
 
 }

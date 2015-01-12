@@ -75,7 +75,7 @@ public class FileAvailabilityUtil {
 	}
 
 	private static final Map<String, Boolean> _availabilities =
-		new ConcurrentHashMap<String, Boolean>();
+		new ConcurrentHashMap<>();
 
 	private static class ResourcePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<URL> {

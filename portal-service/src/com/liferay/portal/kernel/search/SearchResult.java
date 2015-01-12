@@ -117,9 +117,9 @@ public class SearchResult {
 
 	private String _className;
 	private long _classPK;
-	private final List<Tuple> _fileEntryTuples = new ArrayList<Tuple>();
-	private List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
+	private final List<Tuple> _fileEntryTuples = new ArrayList<>();
+	private List<MBMessage> _mbMessages = new ArrayList<>();
 	private Summary _summary;
-	private final List<String> _versions = new ArrayList<String>();
+	private final List<String> _versions = new ArrayList<>();
 
 }

@@ -58,7 +58,7 @@ public class BookmarksEntryStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
 			group.getGroupId(), RandomTestUtil.randomString());
@@ -91,7 +91,7 @@ public class BookmarksEntryStagedModelDataHandlerTest
 	protected List<StagedModel> addWorkflowedStagedModels(Group group)
 		throws Exception {
 
-		List<StagedModel> stagedModels = new ArrayList<StagedModel>();
+		List<StagedModel> stagedModels = new ArrayList<>();
 
 		stagedModels.add(BookmarksTestUtil.addEntry(group.getGroupId(), true));
 		stagedModels.add(BookmarksTestUtil.addEntry(group.getGroupId(), false));

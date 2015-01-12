@@ -92,7 +92,7 @@ public class TransactionCommitCallbackUtil {
 			List<Callable<?>> callableList = callbackListList.get(index);
 
 			if (callableList == Collections.<Callable<?>>emptyList()) {
-				callableList = new ArrayList<Callable<?>>();
+				callableList = new ArrayList<>();
 
 				callbackListList.set(index, callableList);
 			}
@@ -126,7 +126,7 @@ public class TransactionCommitCallbackUtil {
 
 				@Override
 				protected List<List<Callable<?>>> initialValue() {
-					return new ArrayList<List<Callable<?>>>();
+					return new ArrayList<>();
 				}
 
 			};

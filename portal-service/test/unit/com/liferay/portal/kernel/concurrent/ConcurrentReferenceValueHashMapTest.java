@@ -64,7 +64,7 @@ public class ConcurrentReferenceValueHashMapTest
 	@Test
 	public void testConstructor() {
 		ConcurrentMap<String, Reference<Object>> innerConcurrentMap =
-			new ConcurrentHashMap<String, Reference<Object>>();
+			new ConcurrentHashMap<>();
 
 		ConcurrentReferenceValueHashMap<String, Object>
 			concurrentReferenceValueHashMap =

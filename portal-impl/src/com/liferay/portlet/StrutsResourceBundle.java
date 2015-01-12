@@ -55,7 +55,7 @@ public class StrutsResourceBundle extends ResourceBundle {
 
 	@Override
 	public Enumeration<String> getKeys() {
-		Set<String> keys = new HashSet<String>();
+		Set<String> keys = new HashSet<>();
 
 		for (String key : _keys) {
 			if (parent.containsKey(_buildKey(key))) {

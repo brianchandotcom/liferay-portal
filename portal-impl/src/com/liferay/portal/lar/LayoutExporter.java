@@ -397,8 +397,7 @@ public class LayoutExporter {
 			}
 		}
 
-		Map<String, Object[]> portletIds =
-			new LinkedHashMap<String, Object[]>();
+		Map<String, Object[]> portletIds = new LinkedHashMap<>();
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			portletDataContext.getGroupId(),

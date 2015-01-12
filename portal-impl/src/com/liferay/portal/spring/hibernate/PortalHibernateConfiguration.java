@@ -93,7 +93,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 	protected static Map<String, Class<?>> getPreloadClassLoaderClasses() {
 		try {
-			Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
+			Map<String, Class<?>> classes = new HashMap<>();
 
 			for (String className : _PRELOAD_CLASS_NAMES) {
 				ClassLoader portalClassLoader =
@@ -290,8 +290,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		PortalHibernateConfiguration.class);
 
 	private static final Map<ProxyFactory, ClassLoader>
-		_proxyFactoryClassLoaders =
-			new WeakHashMap<ProxyFactory, ClassLoader>();
+		_proxyFactoryClassLoaders = new WeakHashMap<>();
 
 	static {
 		ProxyFactory.classLoaderProvider =

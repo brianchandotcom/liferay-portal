@@ -298,9 +298,9 @@ public class IntrabandProxyUtil {
 	}
 
 	protected static MethodsBag extractMethods(Class<?> clazz) {
-		List<Method> idMethods = new ArrayList<Method>();
-		List<Method> proxyMethods = new ArrayList<Method>();
-		List<Method> emptyMethods = new ArrayList<Method>();
+		List<Method> idMethods = new ArrayList<>();
+		List<Method> proxyMethods = new ArrayList<>();
+		List<Method> emptyMethods = new ArrayList<>();
 
 		for (Method method : ReflectionUtil.getVisibleMethods(clazz)) {
 			Id id = method.getAnnotation(Id.class);

@@ -78,8 +78,7 @@ public class BatchEventManager {
 		BatchDownloadEvent.class);
 
 	private static final Map<Long, BatchDownloadEvent> _batchDownloadEvents =
-		new HashMap<Long, BatchDownloadEvent>();
-	private static final Map<Long, BatchEvent> _batchEvents =
-		new HashMap<Long, BatchEvent>();
+		new HashMap<>();
+	private static final Map<Long, BatchEvent> _batchEvents = new HashMap<>();
 
 }

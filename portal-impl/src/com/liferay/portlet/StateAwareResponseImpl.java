@@ -213,8 +213,7 @@ public abstract class StateAwareResponseImpl
 			throw new IllegalArgumentException();
 		}
 		else {
-			Map<String, String[]> newParams =
-				new LinkedHashMap<String, String[]>();
+			Map<String, String[]> newParams = new LinkedHashMap<>();
 
 			for (Map.Entry<String, String[]> entry : params.entrySet()) {
 				String key = entry.getKey();
@@ -326,10 +325,9 @@ public abstract class StateAwareResponseImpl
 		StateAwareResponseImpl.class);
 
 	private boolean _calledSetRenderParameter;
-	private List<Event> _events = new ArrayList<Event>();
+	private List<Event> _events = new ArrayList<>();
 	private Layout _layout;
-	private Map<String, String[]> _params =
-		new LinkedHashMap<String, String[]>();
+	private Map<String, String[]> _params = new LinkedHashMap<>();
 	private PortletMode _portletMode;
 	private String _portletName;
 	private PortletRequestImpl _portletRequestImpl;

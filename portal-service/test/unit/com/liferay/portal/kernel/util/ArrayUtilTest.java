@@ -769,7 +769,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testToDoubleArray() throws Exception {
-		List<Double> list = new ArrayList<Double>();
+		List<Double> list = new ArrayList<>();
 
 		list.add(1.0);
 		list.add(2.0);
@@ -787,7 +787,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testToFloatArray() throws Exception {
-		List<Float> list = new ArrayList<Float>();
+		List<Float> list = new ArrayList<>();
 
 		list.add(1.0F);
 		list.add(2.0F);
@@ -805,7 +805,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testToIntArray() throws Exception {
-		List<Integer> list = new ArrayList<Integer>();
+		List<Integer> list = new ArrayList<>();
 
 		list.add(1);
 		list.add(2);
@@ -823,7 +823,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testToLongArray() throws Exception {
-		List<Long> list = new ArrayList<Long>();
+		List<Long> list = new ArrayList<>();
 
 		list.add(1L);
 		list.add(2L);

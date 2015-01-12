@@ -116,7 +116,7 @@ public class SessionFactoryImpl implements SessionFactory {
 
 	protected Map<String, Class<?>> getPreloadClassLoaderClasses() {
 		try {
-			Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
+			Map<String, Class<?>> classes = new HashMap<>();
 
 			for (String className : _PRELOAD_CLASS_NAMES) {
 				ClassLoader portalClassLoader =

@@ -52,6 +52,6 @@ public class SPISynchronousQueueUtil {
 	}
 
 	private static final Map<String, SynchronousQueue<SPI>> _synchronousQueues =
-		new ConcurrentHashMap<String, SynchronousQueue<SPI>>();
+		new ConcurrentHashMap<>();
 
 }

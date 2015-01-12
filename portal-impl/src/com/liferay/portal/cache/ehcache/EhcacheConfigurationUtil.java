@@ -120,9 +120,8 @@ public class EhcacheConfigurationUtil {
 				cacheConfiguration.getCacheEventListenerConfigurations();
 
 		List<CacheEventListenerFactoryConfiguration>
-			copyCacheEventListenerConfigurations =
-				new ArrayList<CacheEventListenerFactoryConfiguration>(
-					cacheEventListenerConfigurations);
+			copyCacheEventListenerConfigurations = new ArrayList<>(
+				cacheEventListenerConfigurations);
 
 		if (usingDefault) {
 			cacheEventListenerConfigurations.clear();
@@ -198,8 +197,7 @@ public class EhcacheConfigurationUtil {
 	private static List<CacheConfiguration> _getAllCacheConfigurations(
 		Configuration configuration) {
 
-		List<CacheConfiguration> cacheConfigurations =
-			new ArrayList<CacheConfiguration>();
+		List<CacheConfiguration> cacheConfigurations = new ArrayList<>();
 
 		CacheConfiguration defaultCacheConfiguration =
 			configuration.getDefaultCacheConfiguration();

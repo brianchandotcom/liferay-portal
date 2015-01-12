@@ -512,8 +512,8 @@ public class LiferayPortlet extends GenericPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(LiferayPortlet.class);
 
 	private final Map<String, Method> _actionMethods =
-		new ConcurrentHashMap<String, Method>();
+		new ConcurrentHashMap<>();
 	private final Map<String, Method> _resourceMethods =
-		new ConcurrentHashMap<String, Method>();
+		new ConcurrentHashMap<>();
 
 }

@@ -256,7 +256,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public long[] getCategoryIds(long groupId, long categoryId) {
-		List<Long> categoryIds = new ArrayList<Long>();
+		List<Long> categoryIds = new ArrayList<>();
 
 		categoryIds.add(categoryId);
 

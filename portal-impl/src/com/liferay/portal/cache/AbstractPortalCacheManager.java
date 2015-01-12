@@ -260,7 +260,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		aggregatedCacheManagerListener = new AggregatedCacheManagerListener();
 	protected boolean clusterAware;
 	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
-		new ConcurrentHashMap<String, PortalCache<K, V>>();
+		new ConcurrentHashMap<>();
 
 	private void _initPortalCacheListeners(
 		PortalCache<K, V> portalCache,

@@ -30,7 +30,7 @@ public class CouponSearch extends SearchContainer<ShoppingCoupon> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-coupons-were-found";
 
-	public static List<String> headerNames = new ArrayList<String>();
+	public static List<String> headerNames = new ArrayList<>();
 
 	static {
 		headerNames.add("code");

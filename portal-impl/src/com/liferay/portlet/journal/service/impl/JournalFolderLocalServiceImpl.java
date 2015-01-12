@@ -761,7 +761,7 @@ public class JournalFolderLocalServiceImpl
 
 		JournalFolder folder = null;
 
-		Set<Long> originalDDMStructureIds = new HashSet<Long>();
+		Set<Long> originalDDMStructureIds = new HashSet<>();
 
 		if (folderId > JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			originalDDMStructureIds = getDDMStructureIds(
@@ -774,7 +774,7 @@ public class JournalFolderLocalServiceImpl
 		}
 
 		List<ObjectValuePair<Long, String>> workflowDefinitionOVPs =
-			new ArrayList<ObjectValuePair<Long, String>>();
+			new ArrayList<>();
 
 		if (restrictionType ==
 				JournalFolderConstants.
@@ -934,7 +934,7 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	protected void deleteWorkflowDefinitionLink(JournalFolder folder) {
-		List<Long> ddmStructureIds = new ArrayList<Long>();
+		List<Long> ddmStructureIds = new ArrayList<>();
 
 		for (DDMStructure ddmStructure :
 				ddmStructureLocalService.getJournalFolderDDMStructures(
@@ -1022,7 +1022,7 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	protected Set<Long> getDDMStructureIds(List<DDMStructure> ddmStructures) {
-		Set<Long> ddmStructureIds = new HashSet<Long>();
+		Set<Long> ddmStructureIds = new HashSet<>();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			ddmStructureIds.add(ddmStructure.getStructureId());
@@ -1051,7 +1051,7 @@ public class JournalFolderLocalServiceImpl
 			return folder.getParentFolderId();
 		}
 
-		List<Long> subfolderIds = new ArrayList<Long>();
+		List<Long> subfolderIds = new ArrayList<>();
 
 		getSubfolderIds(
 			subfolderIds, folder.getGroupId(), folder.getFolderId());

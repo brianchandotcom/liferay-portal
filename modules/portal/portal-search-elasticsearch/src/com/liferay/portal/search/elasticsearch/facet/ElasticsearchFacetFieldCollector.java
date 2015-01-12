@@ -67,7 +67,7 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 			return _termCollectors;
 		}
 
-		List<TermCollector> termCollectors = new ArrayList<TermCollector>();
+		List<TermCollector> termCollectors = new ArrayList<>();
 
 		for (Map.Entry<String, Integer> entry : _counts.entrySet()) {
 			TermCollector termCollector = new DefaultTermCollector(
@@ -108,8 +108,7 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 	private static final String _TO_STRING = " TO ";
 
 	private Aggregation _aggregation;
-	private final Map<String, Integer> _counts =
-		new ConcurrentHashMap<String, Integer>();
+	private final Map<String, Integer> _counts = new ConcurrentHashMap<>();
 	private List<TermCollector> _termCollectors;
 
 }

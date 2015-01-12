@@ -31,7 +31,7 @@ public class ListUtilTest {
 
 	@Test
 	public void testCountEmptyList() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		PredicateFilter<String> predicateFilter =
 			new PredicateFilter<String>() {
@@ -48,7 +48,7 @@ public class ListUtilTest {
 
 	@Test
 	public void testCountList() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		list.add("a");
 		list.add("b");
@@ -97,7 +97,7 @@ public class ListUtilTest {
 
 	@Test
 	public void testExistsEmptyList() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		PredicateFilter<String> predicateFilter =
 			new PredicateFilter<String>() {
@@ -114,7 +114,7 @@ public class ListUtilTest {
 
 	@Test
 	public void testExistsList() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		list.add("a");
 		list.add("bb");
@@ -167,7 +167,7 @@ public class ListUtilTest {
 
 	@Test
 	public void testFilterWithoutOutputList() {
-		List<String> expectedOutputList = new ArrayList<String>();
+		List<String> expectedOutputList = new ArrayList<>();
 
 		expectedOutputList.add("b");
 
@@ -181,7 +181,7 @@ public class ListUtilTest {
 
 			};
 
-		List<String> inputList = new ArrayList<String>();
+		List<String> inputList = new ArrayList<>();
 
 		inputList.add("a");
 		inputList.add("b");
@@ -195,18 +195,18 @@ public class ListUtilTest {
 
 	@Test
 	public void testFilterWithOutputList() {
-		List<String> expectedOutputList = new ArrayList<String>();
+		List<String> expectedOutputList = new ArrayList<>();
 
 		expectedOutputList.add("0");
 		expectedOutputList.add("b");
 
-		List<String> inputList = new ArrayList<String>();
+		List<String> inputList = new ArrayList<>();
 
 		inputList.add("a");
 		inputList.add("b");
 		inputList.add("c");
 
-		List<String> outputList = new ArrayList<String>();
+		List<String> outputList = new ArrayList<>();
 
 		outputList.add("0");
 
@@ -229,15 +229,15 @@ public class ListUtilTest {
 
 	@Test
 	public void testRemoveEmptyElement() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		list.add("aaa");
 		list.add("bbb");
 		list.add("ccc");
 
-		List<String> removeList = new ArrayList<String>();
+		List<String> removeList = new ArrayList<>();
 
-		List<String> expectedList = new ArrayList<String>();
+		List<String> expectedList = new ArrayList<>();
 
 		expectedList.add("aaa");
 		expectedList.add("bbb");
@@ -250,7 +250,7 @@ public class ListUtilTest {
 	public void testRemoveFromEmptyList() {
 		List<String> list = Collections.<String>emptyList();
 
-		List<String> removeList = new ArrayList<String>();
+		List<String> removeList = new ArrayList<>();
 
 		removeList.add("aaa");
 		removeList.add("bbb");
@@ -262,13 +262,13 @@ public class ListUtilTest {
 
 	@Test
 	public void testRemoveMultipleElements() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		list.add("aaa");
 		list.add("bbb");
 		list.add("ccc");
 
-		List<String> removeList = new ArrayList<String>();
+		List<String> removeList = new ArrayList<>();
 
 		removeList.add("aaa");
 		removeList.add("bbb");
@@ -280,13 +280,13 @@ public class ListUtilTest {
 
 	@Test
 	public void testRemoveNullElement() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		list.add("aaa");
 		list.add("bbb");
 		list.add("ccc");
 
-		List<String> expectedList = new ArrayList<String>();
+		List<String> expectedList = new ArrayList<>();
 
 		expectedList.add("aaa");
 		expectedList.add("bbb");
@@ -299,17 +299,17 @@ public class ListUtilTest {
 
 	@Test
 	public void testRemoveSingleElement() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		list.add("aaa");
 		list.add("bbb");
 		list.add("ccc");
 
-		List<String> removeList = new ArrayList<String>();
+		List<String> removeList = new ArrayList<>();
 
 		removeList.add("aaa");
 
-		List<String> expectedList = new ArrayList<String>();
+		List<String> expectedList = new ArrayList<>();
 
 		expectedList.add("bbb");
 		expectedList.add("ccc");
@@ -319,17 +319,17 @@ public class ListUtilTest {
 
 	@Test
 	public void testRemoveWrongElement() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		list.add("aaa");
 		list.add("bbb");
 		list.add("ccc");
 
-		List<String> removeList = new ArrayList<String>();
+		List<String> removeList = new ArrayList<>();
 
 		removeList.add("ddd");
 
-		List<String> expectedList = new ArrayList<String>();
+		List<String> expectedList = new ArrayList<>();
 
 		expectedList.add("aaa");
 		expectedList.add("bbb");
@@ -428,7 +428,7 @@ public class ListUtilTest {
 
 	@Test
 	public void testToList() throws Exception {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		list.add("aaa");
 		list.add("bbb");
@@ -499,7 +499,7 @@ public class ListUtilTest {
 
 	@Test
 	public void testToStringIntegerList() throws Exception {
-		List<Integer> list = new ArrayList<Integer>();
+		List<Integer> list = new ArrayList<>();
 
 		list.add(111);
 		list.add(222);
@@ -512,7 +512,7 @@ public class ListUtilTest {
 
 	@Test
 	public void testToStringLongList() throws Exception {
-		List<Long> list = new ArrayList<Long>();
+		List<Long> list = new ArrayList<>();
 
 		list.add(111L);
 		list.add(222L);
@@ -526,7 +526,7 @@ public class ListUtilTest {
 
 	@Test
 	public void testToStringStringList() throws Exception {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		list.add("aaa");
 		list.add("bbb");

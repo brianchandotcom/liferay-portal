@@ -52,14 +52,14 @@ import javax.portlet.WindowState;
 public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 	public DefaultFriendlyURLMapper() {
-		defaultIgnoredParameters = new LinkedHashSet<String>();
+		defaultIgnoredParameters = new LinkedHashSet<>();
 
 		defaultIgnoredParameters.add("p_p_id");
 		defaultIgnoredParameters.add("p_p_col_id");
 		defaultIgnoredParameters.add("p_p_col_pos");
 		defaultIgnoredParameters.add("p_p_col_count");
 
-		defaultReservedParameters = new LinkedHashMap<String, String>();
+		defaultReservedParameters = new LinkedHashMap<>();
 
 		defaultReservedParameters.put("p_p_lifecycle", "0");
 		defaultReservedParameters.put(
@@ -97,7 +97,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 	@Override
 	public String buildPath(LiferayPortletURL liferayPortletURL) {
-		Map<String, String> routeParameters = new HashMap<String, String>();
+		Map<String, String> routeParameters = new HashMap<>();
 
 		buildRouteParameters(liferayPortletURL, routeParameters);
 
@@ -147,7 +147,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 				0, friendlyURLPath.length() - 1);
 		}
 
-		Map<String, String> routeParameters = new HashMap<String, String>();
+		Map<String, String> routeParameters = new HashMap<>();
 
 		if (!router.urlToParameters(friendlyURLPath, routeParameters)) {
 			if (_log.isWarnEnabled()) {

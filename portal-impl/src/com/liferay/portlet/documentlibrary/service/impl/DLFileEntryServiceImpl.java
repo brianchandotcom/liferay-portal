@@ -305,7 +305,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		DLFolderPermission.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
 
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(folderId);
 
@@ -349,7 +349,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		DLFolderPermission.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
 
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(folderId);
 
@@ -369,7 +369,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public int getFileEntriesCount(long groupId, long folderId, int status) {
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(folderId);
 
@@ -389,7 +389,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public int getFileEntriesCount(
 		long groupId, long folderId, String[] mimeTypes) {
 
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(folderId);
 
@@ -500,7 +500,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			OrderByComparator<DLFileEntry> obc)
 		throws PortalException {
 
-		List<Long> repositoryIds = new ArrayList<Long>();
+		List<Long> repositoryIds = new ArrayList<>();
 
 		if (repositoryId != 0) {
 			repositoryIds.add(repositoryId);
@@ -565,7 +565,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			String[] mimeTypes, int status)
 		throws PortalException {
 
-		List<Long> repositoryIds = new ArrayList<Long>();
+		List<Long> repositoryIds = new ArrayList<>();
 
 		if (repositoryId != 0) {
 			repositoryIds.add(repositoryId);

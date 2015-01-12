@@ -47,7 +47,7 @@ public class ThemeIds {
 				HttpPrincipal httpPrincipal = new HttpPrincipal(
 					TestPropsValues.PORTAL_URL);
 
-				List<String> themeIds = new ArrayList<String>();
+				List<String> themeIds = new ArrayList<>();
 
 				List<Theme> themes = ThemeServiceHttp.getThemes(
 					httpPrincipal, TestPropsValues.getCompanyId());

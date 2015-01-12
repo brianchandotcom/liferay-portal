@@ -179,7 +179,7 @@ public class TransactionStatusClp implements TransactionStatus {
 	}
 
 	protected void initRemoteMethods(Object remoteTransactionStatus) {
-		_remoteMethods = new HashMap<String, Method>();
+		_remoteMethods = new HashMap<>();
 
 		Method[] methods = TransactionStatus.class.getMethods();
 

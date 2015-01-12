@@ -307,6 +307,6 @@ public class SassFile implements Callable<Void>, SassFragment {
 	private String _fileName;
 	private String _ltrContent;
 	private String _rtlContent;
-	private List<SassFragment> _sassFragments = new ArrayList<SassFragment>();
+	private List<SassFragment> _sassFragments = new ArrayList<>();
 
 }

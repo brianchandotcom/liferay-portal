@@ -226,7 +226,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 				qPos.add(folderId);
 			}
 
-			List<Object> models = new ArrayList<Object>();
+			List<Object> models = new ArrayList<>();
 
 			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
 				q, getDialect(), queryDefinition.getStart(),

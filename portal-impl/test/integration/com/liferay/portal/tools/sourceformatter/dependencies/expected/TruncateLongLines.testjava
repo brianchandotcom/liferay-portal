@@ -61,7 +61,7 @@ public class TruncateLongLines
 			String variable4, String variable5)
 		throws Exception {
 
-		List<String> listWithFairlyLongName = new ArrayList<String>();
+		List<String> listWithFairlyLongName = new ArrayList<>();
 
 		for (String stringWithAveryVeryVeryVeryVeryLongName :
 				listWithFairlyLongName) {

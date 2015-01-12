@@ -48,7 +48,7 @@ public class PutDocumentMethodImpl extends BaseMethodImpl {
 			SharepointRequest sharepointRequest)
 		throws Exception {
 
-		List<ResponseElement> elements = new ArrayList<ResponseElement>();
+		List<ResponseElement> elements = new ArrayList<>();
 
 		elements.add(new Property("message", StringPool.BLANK));
 

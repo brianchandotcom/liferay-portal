@@ -35,8 +35,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PortletQNameImpl implements PortletQName {
 
 	public PortletQNameImpl() {
-		_qNames = new ConcurrentHashMap<String, QName>();
-		_identifiers = new ConcurrentHashMap<String, String>();
+		_qNames = new ConcurrentHashMap<>();
+		_identifiers = new ConcurrentHashMap<>();
 	}
 
 	@Override

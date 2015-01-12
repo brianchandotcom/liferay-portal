@@ -112,7 +112,7 @@ public class TreeNodeView {
 		_parentId = parentId;
 	}
 
-	private List<TreeNodeView> _children = new ArrayList<TreeNodeView>();
+	private List<TreeNodeView> _children = new ArrayList<>();
 	private int _depth;
 	private String _href = "javascript:;";
 	private long _id;

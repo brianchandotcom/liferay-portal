@@ -357,7 +357,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		List<SyncFile> syncFiles = _dependentSyncFilesMap.get(parentFolderId);
 
 		if (syncFiles == null) {
-			syncFiles = new ArrayList<SyncFile>();
+			syncFiles = new ArrayList<>();
 
 			_dependentSyncFilesMap.put(parentFolderId, syncFiles);
 		}
@@ -420,6 +420,6 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		GetSyncDLObjectUpdateHandler.class);
 
 	private final Map<Long, List<SyncFile>> _dependentSyncFilesMap =
-		new HashMap<Long, List<SyncFile>>();
+		new HashMap<>();
 
 }

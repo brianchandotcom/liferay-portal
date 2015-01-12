@@ -100,9 +100,9 @@ public class PortletURLImpl
 		_portletId = portletId;
 		_plid = plid;
 		_lifecycle = lifecycle;
-		_parametersIncludedInPath = new LinkedHashSet<String>();
-		_params = new LinkedHashMap<String, String[]>();
-		_removePublicRenderParameters = new LinkedHashMap<String, String[]>();
+		_parametersIncludedInPath = new LinkedHashSet<>();
+		_params = new LinkedHashMap<>();
+		_removePublicRenderParameters = new LinkedHashMap<>();
 		_secure = PortalUtil.isSecure(request);
 		_wsrp = ParamUtil.getBoolean(request, "wsrp");
 
@@ -298,7 +298,7 @@ public class PortletURLImpl
 			return _reservedParameters;
 		}
 
-		_reservedParameters = new LinkedHashMap<String, String>();
+		_reservedParameters = new LinkedHashMap<>();
 
 		_reservedParameters.put("p_p_id", _portletId);
 
@@ -595,8 +595,7 @@ public class PortletURLImpl
 			throw new IllegalArgumentException();
 		}
 		else {
-			Map<String, String[]> newParams =
-				new LinkedHashMap<String, String[]>();
+			Map<String, String[]> newParams = new LinkedHashMap<>();
 
 			for (Map.Entry<String, String[]> entry : params.entrySet()) {
 				try {

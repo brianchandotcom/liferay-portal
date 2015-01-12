@@ -108,7 +108,7 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 		throws InvalidRequestException, LockException {
 
 		try {
-			Set<QName> newProps = new HashSet<QName>();
+			Set<QName> newProps = new HashSet<>();
 
 			HttpServletRequest request = webDAVRequest.getHttpServletRequest();
 

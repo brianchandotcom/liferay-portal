@@ -71,7 +71,7 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 		throws Exception {
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
-			new LinkedHashMap<String, TemplateVariableGroup>();
+			new LinkedHashMap<>();
 
 		addTemplateVariableGroup(
 			templateVariableGroups, getDDLVariablesTemplateVariableGroups());

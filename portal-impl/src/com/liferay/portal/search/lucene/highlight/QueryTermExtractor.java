@@ -38,11 +38,11 @@ public class QueryTermExtractor {
 			return _emptyWeightedTermArray;
 		}
 
-		Set<WeightedTerm> weightedTerms = new HashSet<WeightedTerm>();
+		Set<WeightedTerm> weightedTerms = new HashSet<>();
 
-		Set<Term> terms = new HashSet<Term>();
+		Set<Term> terms = new HashSet<>();
 
-		LinkedList<Query> queries = new LinkedList<Query>();
+		LinkedList<Query> queries = new LinkedList<>();
 
 		Query lastQuery = query;
 
@@ -111,6 +111,6 @@ public class QueryTermExtractor {
 	private static final WeightedTerm[] _emptyWeightedTermArray =
 		new WeightedTerm[0];
 	private static final CopyOnWriteArrayList<Class<? extends Query>>
-		_queryClasses = new CopyOnWriteArrayList<Class<? extends Query>>();
+		_queryClasses = new CopyOnWriteArrayList<>();
 
 }

@@ -173,13 +173,10 @@ public class ComparableRoute implements Comparable<ComparableRoute> {
 		return _pattern;
 	}
 
-	private Map<String, String> _generatedParameters =
-		new TreeMap<String, String>();
-	private Set<String> _ignoredParameters = new TreeSet<String>();
-	private Map<String, String> _implicitParameters =
-		new TreeMap<String, String>();
-	private Map<String, String> _overriddenParameters =
-		new TreeMap<String, String>();
+	private Map<String, String> _generatedParameters = new TreeMap<>();
+	private Set<String> _ignoredParameters = new TreeSet<>();
+	private Map<String, String> _implicitParameters = new TreeMap<>();
+	private Map<String, String> _overriddenParameters = new TreeMap<>();
 	private String _pattern;
 
 }

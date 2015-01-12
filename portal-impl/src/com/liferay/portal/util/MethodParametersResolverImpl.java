@@ -58,6 +58,6 @@ public class MethodParametersResolverImpl implements MethodParametersResolver {
 	}
 
 	private Map<AccessibleObject, MethodParameter[]> _methodParameters =
-		new HashMap<AccessibleObject, MethodParameter[]>();
+		new HashMap<>();
 
 }

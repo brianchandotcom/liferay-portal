@@ -55,6 +55,6 @@ public class FieldArray extends Field {
 		return true;
 	}
 
-	private final List<Field> _fields = new ArrayList<Field>();
+	private final List<Field> _fields = new ArrayList<>();
 
 }

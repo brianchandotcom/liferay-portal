@@ -161,7 +161,7 @@ public class EditProductEntryAction extends PortletAction {
 			UploadPortletRequest uploadPortletRequest, String imagePrefix)
 		throws Exception {
 
-		List<byte[]> images = new ArrayList<byte[]>();
+		List<byte[]> images = new ArrayList<>();
 
 		for (String name :
 				getSortedParameterNames(uploadPortletRequest, imagePrefix)) {
@@ -237,7 +237,7 @@ public class EditProductEntryAction extends PortletAction {
 			UploadPortletRequest uploadPortletRequest, String imagePrefix)
 		throws Exception {
 
-		List<String> parameterNames = new ArrayList<String>();
+		List<String> parameterNames = new ArrayList<>();
 
 		Enumeration<String> enu = uploadPortletRequest.getParameterNames();
 

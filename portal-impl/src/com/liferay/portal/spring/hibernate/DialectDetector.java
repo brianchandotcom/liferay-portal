@@ -146,6 +146,6 @@ public class DialectDetector {
 		DialectDetector.class);
 
 	private static final Map<String, Dialect> _dialects =
-		new ConcurrentHashMap<String, Dialect>();
+		new ConcurrentHashMap<>();
 
 }

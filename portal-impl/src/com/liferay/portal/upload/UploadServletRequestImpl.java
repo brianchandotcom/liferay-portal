@@ -77,8 +77,8 @@ public class UploadServletRequestImpl
 	public UploadServletRequestImpl(HttpServletRequest request) {
 		super(request);
 
-		_fileParameters = new LinkedHashMap<String, FileItem[]>();
-		_regularParameters = new LinkedHashMap<String, List<String>>();
+		_fileParameters = new LinkedHashMap<>();
+		_regularParameters = new LinkedHashMap<>();
 
 		try {
 			ServletFileUpload servletFileUpload = new LiferayFileUpload(
@@ -182,8 +182,8 @@ public class UploadServletRequestImpl
 
 		super(request);
 
-		_fileParameters = new LinkedHashMap<String, FileItem[]>();
-		_regularParameters = new LinkedHashMap<String, List<String>>();
+		_fileParameters = new LinkedHashMap<>();
+		_regularParameters = new LinkedHashMap<>();
 
 		if (fileParams != null) {
 			_fileParameters.putAll(fileParams);
@@ -422,7 +422,7 @@ public class UploadServletRequestImpl
 
 	@Override
 	public Map<String, String[]> getParameterMap() {
-		Map<String, String[]> map = new HashMap<String, String[]>();
+		Map<String, String[]> map = new HashMap<>();
 
 		Enumeration<String> enu = getParameterNames();
 
@@ -437,7 +437,7 @@ public class UploadServletRequestImpl
 
 	@Override
 	public Enumeration<String> getParameterNames() {
-		Set<String> parameterNames = new LinkedHashSet<String>();
+		Set<String> parameterNames = new LinkedHashSet<>();
 
 		Enumeration<String> enu = super.getParameterNames();
 

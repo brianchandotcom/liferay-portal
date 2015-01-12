@@ -303,8 +303,8 @@ public class EditFileEntryAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		List<KeyValuePair> validFileNameKVPs = new ArrayList<KeyValuePair>();
-		List<KeyValuePair> invalidFileNameKVPs = new ArrayList<KeyValuePair>();
+		List<KeyValuePair> validFileNameKVPs = new ArrayList<>();
+		List<KeyValuePair> invalidFileNameKVPs = new ArrayList<>();
 
 		String[] selectedFileNames = ParamUtil.getParameterValues(
 			actionRequest, "selectedFileName", new String[0], false);
@@ -717,7 +717,7 @@ public class EditFileEntryAction extends PortletAction {
 				DLPortletInstanceSettings.getInstance(
 					themeDisplay.getLayout(), portletDisplay.getId());
 
-			Set<String> extensions = new HashSet<String>();
+			Set<String> extensions = new HashSet<>();
 
 			String[] mimeTypes = dlPortletInstanceSettings.getMimeTypes();
 

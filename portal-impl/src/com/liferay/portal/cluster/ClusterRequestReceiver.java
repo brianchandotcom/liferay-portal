@@ -114,8 +114,8 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			newView.getMembers();
 		List<org.jgroups.Address> lastJGroupsAddresses = oldView.getMembers();
 
-		List<org.jgroups.Address> departJGroupsAddresses =
-			new ArrayList<org.jgroups.Address>(lastJGroupsAddresses);
+		List<org.jgroups.Address> departJGroupsAddresses = new ArrayList<>(
+			lastJGroupsAddresses);
 
 		departJGroupsAddresses.removeAll(currentJGroupsAddresses);
 
@@ -123,7 +123,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			return Collections.emptyList();
 		}
 
-		List<Address> departAddresses = new ArrayList<Address>(
+		List<Address> departAddresses = new ArrayList<>(
 			departJGroupsAddresses.size());
 
 		for (org.jgroups.Address departJGroupsAddress :
@@ -142,8 +142,8 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			newView.getMembers();
 		List<org.jgroups.Address> lastJGroupsAddresses = oldView.getMembers();
 
-		List<org.jgroups.Address> newJGroupsAddresses =
-			new ArrayList<org.jgroups.Address>(currentJGroupsAddresses);
+		List<org.jgroups.Address> newJGroupsAddresses = new ArrayList<>(
+			currentJGroupsAddresses);
 
 		newJGroupsAddresses.removeAll(lastJGroupsAddresses);
 
@@ -151,7 +151,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			return Collections.emptyList();
 		}
 
-		List<Address> newAddresses = new ArrayList<Address>(
+		List<Address> newAddresses = new ArrayList<>(
 			newJGroupsAddresses.size());
 
 		for (org.jgroups.Address newJGroupsAddress : newJGroupsAddresses) {

@@ -136,7 +136,7 @@ public class DeployUtil {
 			FileUtils.touch(contextXml);
 		}
 		else {
-			Map<String, String> filterMap = new HashMap<String, String>();
+			Map<String, String> filterMap = new HashMap<>();
 
 			filterMap.put("context", context);
 

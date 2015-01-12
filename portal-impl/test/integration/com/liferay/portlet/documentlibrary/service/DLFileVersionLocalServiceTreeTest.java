@@ -131,7 +131,7 @@ public class DLFileVersionLocalServiceTreeTest {
 		_fileEntries.add(fileEntryAA);
 	}
 
-	private final List<FileEntry> _fileEntries = new ArrayList<FileEntry>();
+	private final List<FileEntry> _fileEntries = new ArrayList<>();
 	private Folder _folder;
 
 	@DeleteAfterTestRun

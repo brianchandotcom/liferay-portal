@@ -190,7 +190,7 @@ public class PropsUtil {
 		if (GetterUtil.getBoolean(
 				SystemProperties.get("company-id-properties"))) {
 
-			_configurations = new HashMap<Long, Configuration>();
+			_configurations = new HashMap<>();
 		}
 	}
 

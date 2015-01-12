@@ -56,7 +56,7 @@ public class ClassLoaderResourceParser extends URLResourceParser {
 	}
 
 	protected static String normalizePath(String path) {
-		List<String> elements = new ArrayList<String>();
+		List<String> elements = new ArrayList<>();
 
 		boolean absolutePath = false;
 

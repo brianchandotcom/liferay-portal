@@ -663,8 +663,8 @@ public class ShoppingItemLocalServiceImpl
 		}
 
 		if (!itemFields.isEmpty()) {
-			List<String> itemFieldNames = new ArrayList<String>();
-			List<String> duplicateItemFieldNames = new ArrayList<String>();
+			List<String> itemFieldNames = new ArrayList<>();
+			List<String> duplicateItemFieldNames = new ArrayList<>();
 
 			StringBundler sb = new StringBundler(itemFields.size());
 

@@ -278,7 +278,7 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 	protected DDMForm createDDMForm() {
 		DDMForm ddmForm = new DDMForm();
 
-		Set<Locale> availableLocales = new HashSet<Locale>();
+		Set<Locale> availableLocales = new HashSet<>();
 
 		availableLocales.add(LocaleUtil.US);
 

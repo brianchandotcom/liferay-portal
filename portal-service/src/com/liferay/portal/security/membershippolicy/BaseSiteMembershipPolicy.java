@@ -114,7 +114,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 	public boolean isRoleAllowed(long userId, long groupId, long roleId)
 		throws PortalException {
 
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+		List<UserGroupRole> userGroupRoles = new ArrayList<>();
 
 		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
 			userId, groupId, roleId);
@@ -165,7 +165,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 
 	@Override
 	public boolean isRoleRequired(long userId, long groupId, long roleId) {
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+		List<UserGroupRole> userGroupRoles = new ArrayList<>();
 
 		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
 			userId, groupId, roleId);

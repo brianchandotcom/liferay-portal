@@ -261,6 +261,6 @@ public class StringParser {
 	private Pattern _pattern;
 	private StringEncoder _stringEncoder;
 	private List<StringParserFragment> _stringParserFragments =
-		new ArrayList<StringParserFragment>();
+		new ArrayList<>();
 
 }

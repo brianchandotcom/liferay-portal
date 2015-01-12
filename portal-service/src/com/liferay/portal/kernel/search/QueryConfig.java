@@ -429,7 +429,6 @@ public class QueryConfig implements Serializable {
 
 	private static final String _SELECTED_TYPES = "selectedTypes";
 
-	private final Map<String, Serializable> _attributes =
-		new HashMap<String, Serializable>();
+	private final Map<String, Serializable> _attributes = new HashMap<>();
 
 }

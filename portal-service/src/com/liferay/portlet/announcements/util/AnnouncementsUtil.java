@@ -47,7 +47,7 @@ public class AnnouncementsUtil {
 	public static LinkedHashMap<Long, long[]> getAnnouncementScopes(long userId)
 		throws PortalException {
 
-		LinkedHashMap<Long, long[]> scopes = new LinkedHashMap<Long, long[]>();
+		LinkedHashMap<Long, long[]> scopes = new LinkedHashMap<>();
 
 		// General announcements
 
@@ -59,14 +59,13 @@ public class AnnouncementsUtil {
 
 		// Organization announcements
 
-		List<Group> groupsList = new ArrayList<Group>();
+		List<Group> groupsList = new ArrayList<>();
 
 		List<Organization> organizations =
 			OrganizationLocalServiceUtil.getUserOrganizations(userId);
 
 		if (!organizations.isEmpty()) {
-			List<Organization> organizationsList =
-				new ArrayList<Organization>();
+			List<Organization> organizationsList = new ArrayList<>();
 
 			organizationsList.addAll(organizations);
 
@@ -113,7 +112,7 @@ public class AnnouncementsUtil {
 
 		// Role announcements
 
-		Set<Role> roles = new LinkedHashSet<Role>();
+		Set<Role> roles = new LinkedHashSet<>();
 
 		if (!groupsList.isEmpty()) {
 			roles.addAll(

@@ -73,8 +73,8 @@ public class MissingReferences implements Serializable {
 	}
 
 	private final Map<String, MissingReference> _dependencyMissingReferences =
-		new HashMap<String, MissingReference>();
+		new HashMap<>();
 	private final Map<String, MissingReference> _weakMissingReferences =
-		new HashMap<String, MissingReference>();
+		new HashMap<>();
 
 }

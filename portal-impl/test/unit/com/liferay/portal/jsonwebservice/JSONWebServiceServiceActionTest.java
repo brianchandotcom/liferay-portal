@@ -95,9 +95,9 @@ public class JSONWebServiceServiceActionTest
 	public void testInvokerNullCall() throws Exception {
 		registerActionClass(FooService.class);
 
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<>();
 
-		Map<String, Object> params = new LinkedHashMap<String, Object>();
+		Map<String, Object> params = new LinkedHashMap<>();
 
 		map.put("/foo/null-return", params);
 
@@ -119,9 +119,9 @@ public class JSONWebServiceServiceActionTest
 	public void testInvokerSimpleCall() throws Exception {
 		registerActionClass(FooService.class);
 
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<>();
 
-		Map<String, Object> params = new LinkedHashMap<String, Object>();
+		Map<String, Object> params = new LinkedHashMap<>();
 
 		map.put("/foo/hello-world", params);
 
@@ -195,9 +195,9 @@ public class JSONWebServiceServiceActionTest
 
 		registerActionClass(FooService.class, contextName);
 
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<>();
 
-		Map<String, Object> params = new LinkedHashMap<String, Object>();
+		Map<String, Object> params = new LinkedHashMap<>();
 
 		map.put(query, params);
 

@@ -410,7 +410,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			long groupId, long folderId, boolean recurse)
 		throws PortalException {
 
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		getSubfolderIds(folderIds, groupId, folderId, recurse);
 

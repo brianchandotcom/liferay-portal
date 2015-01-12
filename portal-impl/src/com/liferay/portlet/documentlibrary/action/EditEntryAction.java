@@ -232,7 +232,7 @@ public class EditEntryAction extends PortletAction {
 		long[] deleteFolderIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
-		List<TrashedModel> trashedModels = new ArrayList<TrashedModel>();
+		List<TrashedModel> trashedModels = new ArrayList<>();
 
 		for (int i = 0; i < deleteFolderIds.length; i++) {
 			long deleteFolderId = deleteFolderIds[i];

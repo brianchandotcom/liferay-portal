@@ -289,7 +289,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		List<org.apache.lucene.search.BooleanClause> luceneBooleanClauses =
 			_booleanQuery.clauses();
 
-		List<BooleanClause> booleanClauses = new ArrayList<BooleanClause>(
+		List<BooleanClause> booleanClauses = new ArrayList<>(
 			luceneBooleanClauses.size());
 
 		for (int i = 0; i < luceneBooleanClauses.size(); i++) {

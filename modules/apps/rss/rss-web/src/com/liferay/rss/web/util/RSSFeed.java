@@ -109,7 +109,7 @@ public class RSSFeed {
 			return _rssFeedEntries;
 		}
 
-		_rssFeedEntries = new ArrayList<RSSFeedEntry>();
+		_rssFeedEntries = new ArrayList<>();
 
 		SyndFeed syndFeed = getSyndFeed();
 

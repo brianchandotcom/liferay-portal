@@ -126,14 +126,14 @@ public class AssetVocabularyServiceTest {
 
 		String title = RandomTestUtil.randomString();
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(LocaleUtil.US, title + "_US");
 		titleMap.put(LocaleUtil.SPAIN, title + "_ES");
 
 		String description = RandomTestUtil.randomString();
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		descriptionMap.put(LocaleUtil.SPAIN, description + "_ES");
 		descriptionMap.put(LocaleUtil.US, description + "_US");

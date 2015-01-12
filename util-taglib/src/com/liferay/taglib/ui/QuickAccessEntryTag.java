@@ -79,7 +79,7 @@ public class QuickAccessEntryTag extends BaseBodyTagSupport implements BodyTag {
 				WebKeys.PORTLET_QUICK_ACCESS_ENTRIES);
 
 		if (quickAccessEntries == null) {
-			quickAccessEntries = new ArrayList<QuickAccessEntry>();
+			quickAccessEntries = new ArrayList<>();
 
 			request.setAttribute(
 				WebKeys.PORTLET_QUICK_ACCESS_ENTRIES, quickAccessEntries);

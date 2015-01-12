@@ -710,7 +710,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		String[] lines = StringUtil.split(content, StringPool.NEW_LINE);
 
-		List<String> urls = new ArrayList<String>();
+		List<String> urls = new ArrayList<>();
 
 		for (String line : lines) {
 			matcher.reset(line);
@@ -781,7 +781,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			timestampParameter + "?" + timestampParameter +
 				"&width=100&height=100";
 
-		List<String> outURLs = new ArrayList<String>();
+		List<String> outURLs = new ArrayList<>();
 
 		for (String url : urls) {
 			if (!url.contains("[$TIMESTAMP")) {
@@ -878,7 +878,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		@Override
 		public List<String> getEntries() {
-			return new ArrayList<String>(_entries.keySet());
+			return new ArrayList<>(_entries.keySet());
 		}
 
 		@Override
@@ -911,8 +911,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			return StringPool.BLANK;
 		}
 
-		private List<String> _binaryEntries = new ArrayList<String>();
-		private Map<String, String> _entries = new HashMap<String, String>();
+		private List<String> _binaryEntries = new ArrayList<>();
+		private Map<String, String> _entries = new HashMap<>();
 
 	}
 

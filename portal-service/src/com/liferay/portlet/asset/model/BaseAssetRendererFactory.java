@@ -113,7 +113,7 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		List<ClassTypeField> classTypeFields = classType.getClassTypeFields(
 			start, end);
 
-		List<Tuple> tuples = new ArrayList<Tuple>(classTypeFields.size());
+		List<Tuple> tuples = new ArrayList<>(classTypeFields.size());
 
 		for (ClassTypeField classTypeField : classTypeFields) {
 			tuples.add(toTuple(classTypeField));
@@ -149,7 +149,7 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
 			groupId, locale);
 
-		Map<Long, String> classTypesMap = new HashMap<Long, String>();
+		Map<Long, String> classTypesMap = new HashMap<>();
 
 		for (ClassType classType : classTypes) {
 			classTypesMap.put(classType.getClassTypeId(), classType.getName());

@@ -52,7 +52,7 @@ public class BBCodeParser {
 	}
 
 	public List<BBCodeItem> parse(String text) {
-		List<BBCodeItem> bbCodeItems = new ArrayList<BBCodeItem>();
+		List<BBCodeItem> bbCodeItems = new ArrayList<>();
 
 		BBCodeLexer bbCodeLexer = new BBCodeLexer(text);
 		Stack<String> tags = new Stack<String>();

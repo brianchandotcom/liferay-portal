@@ -655,8 +655,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	 * @see com.liferay.portlet.documentlibrary.util.RepositoryModelUtil#toFileEntries
 	 */
 	protected List<FileEntry> toFileEntries(List<DLFileEntry> dlFileEntries) {
-		List<FileEntry> fileEntries = new ArrayList<FileEntry>(
-			dlFileEntries.size());
+		List<FileEntry> fileEntries = new ArrayList<>(dlFileEntries.size());
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);

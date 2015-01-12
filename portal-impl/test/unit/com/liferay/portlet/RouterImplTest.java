@@ -173,7 +173,7 @@ public class RouterImplTest {
 	protected void assertParameterInUrlEquals(
 		String name, String value, String url) {
 
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, String> parameters = new HashMap<>();
 
 		_routerImpl.urlToParameters(url, parameters);
 
@@ -186,7 +186,7 @@ public class RouterImplTest {
 		Map<String, String[]> parameters = HttpUtil.parameterMapFromString(
 			queryString);
 
-		Map<String, String> generatedParameters = new HashMap<String, String>();
+		Map<String, String> generatedParameters = new HashMap<>();
 
 		_routerImpl.urlToParameters(url, generatedParameters);
 
@@ -198,7 +198,7 @@ public class RouterImplTest {
 	}
 
 	protected void assertUrlRegeneratesUrl(String url, String expectedUrl) {
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, String> parameters = new HashMap<>();
 
 		_routerImpl.urlToParameters(url, parameters);
 

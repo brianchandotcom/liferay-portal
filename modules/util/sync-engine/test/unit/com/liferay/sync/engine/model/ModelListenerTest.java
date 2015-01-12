@@ -58,8 +58,7 @@ public class ModelListenerTest extends BaseTestCase {
 
 	private boolean _onCreateCalled;
 	private boolean _onRemoveCalled;
-	private Map<String, Object> _originalFieldValues =
-		new HashMap<String, Object>();
+	private Map<String, Object> _originalFieldValues = new HashMap<>();
 
 	private class SyncFileModelListener implements ModelListener<SyncFile> {
 

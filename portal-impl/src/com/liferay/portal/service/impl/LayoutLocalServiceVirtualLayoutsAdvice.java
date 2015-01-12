@@ -187,7 +187,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 
 		layouts = ListUtil.copy(layouts);
 
-		List<Layout> childLayouts = new ArrayList<Layout>();
+		List<Layout> childLayouts = new ArrayList<>();
 
 		for (Layout layout : layouts) {
 			Layout childLayout = layout;

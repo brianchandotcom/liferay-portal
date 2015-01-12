@@ -158,7 +158,7 @@ public class ProxyRequest implements Externalizable {
 	}
 
 	private static final Map<Method, boolean[]> _localAndSynchronousMap =
-		new ConcurrentHashMap<Method, boolean[]>();
+		new ConcurrentHashMap<>();
 
 	private Object[] _arguments;
 	private boolean _hasReturnValue;

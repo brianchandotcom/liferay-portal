@@ -94,7 +94,7 @@ public class CopyInterfaceBuilder {
 
 		// Methods
 
-		Set<String> imports = new TreeSet<String>();
+		Set<String> imports = new TreeSet<>();
 
 		for (int i = 0; i < methods.length; i++) {
 			JavaMethod javaMethod = methods[i];
@@ -135,7 +135,7 @@ public class CopyInterfaceBuilder {
 
 				Type[] thrownExceptions = javaMethod.getExceptions();
 
-				Set<String> newExceptions = new LinkedHashSet<String>();
+				Set<String> newExceptions = new LinkedHashSet<>();
 
 				for (int j = 0; j < thrownExceptions.length; j++) {
 					Type thrownException = thrownExceptions[j];

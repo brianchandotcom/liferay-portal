@@ -116,7 +116,7 @@ public @interface OSGiBeanProperties {
 		public static Map<String, Object> toMap(
 			OSGiBeanProperties osgiBeanProperties) {
 
-			Map<String, Object> properties = new HashMap<String, Object>();
+			Map<String, Object> properties = new HashMap<>();
 
 			for (String property : osgiBeanProperties.property()) {
 				String[] parts = property.split(StringPool.EQUAL, 2);

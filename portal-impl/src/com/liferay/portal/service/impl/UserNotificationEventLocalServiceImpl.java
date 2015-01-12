@@ -133,8 +133,8 @@ public class UserNotificationEventLocalServiceImpl
 			long userId, Collection<NotificationEvent> notificationEvents)
 		throws PortalException {
 
-		List<UserNotificationEvent> userNotificationEvents =
-			new ArrayList<UserNotificationEvent>(notificationEvents.size());
+		List<UserNotificationEvent> userNotificationEvents = new ArrayList<>(
+			notificationEvents.size());
 
 		for (NotificationEvent notificationEvent : notificationEvents) {
 			UserNotificationEvent userNotificationEvent =
@@ -489,8 +489,7 @@ public class UserNotificationEventLocalServiceImpl
 	public List<UserNotificationEvent> updateUserNotificationEvents(
 		Collection<String> uuids, long companyId, boolean archive) {
 
-		List<UserNotificationEvent> userNotificationEvents =
-			new ArrayList<UserNotificationEvent>();
+		List<UserNotificationEvent> userNotificationEvents = new ArrayList<>();
 
 		for (String uuid : uuids) {
 			userNotificationEvents.add(

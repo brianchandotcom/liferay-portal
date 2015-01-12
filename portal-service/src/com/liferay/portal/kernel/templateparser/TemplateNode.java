@@ -99,7 +99,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	public List<TemplateNode> getChildren() {
-		return new ArrayList<TemplateNode>(_childTemplateNodes.values());
+		return new ArrayList<>(_childTemplateNodes.values());
 	}
 
 	public String getData() {
@@ -280,9 +280,8 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	private static final Log _log = LogFactoryUtil.getLog(TemplateNode.class);
 
 	private final Map<String, TemplateNode> _childTemplateNodes =
-		new LinkedHashMap<String, TemplateNode>();
-	private final List<TemplateNode> _siblingTemplateNodes =
-		new ArrayList<TemplateNode>();
+		new LinkedHashMap<>();
+	private final List<TemplateNode> _siblingTemplateNodes = new ArrayList<>();
 	private ThemeDisplay _themeDisplay;
 
 }

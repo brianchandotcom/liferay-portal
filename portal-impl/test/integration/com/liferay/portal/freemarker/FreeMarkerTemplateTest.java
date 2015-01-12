@@ -268,7 +268,7 @@ public class FreeMarkerTemplateTest {
 
 	@Test
 	public void testProcessTemplate8() throws Exception {
-		Map<String, Object> context = new HashMap<String, Object>();
+		Map<String, Object> context = new HashMap<>();
 
 		context.put(_TEST_KEY, _TEST_VALUE);
 

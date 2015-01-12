@@ -146,9 +146,8 @@ public class LayoutTemplateLocalServiceImpl
 
 	@Override
 	public List<LayoutTemplate> getLayoutTemplates() {
-		List<LayoutTemplate> customLayoutTemplates =
-			new ArrayList<LayoutTemplate>(
-				_portalCustom.size() + _warCustom.size());
+		List<LayoutTemplate> customLayoutTemplates = new ArrayList<>(
+			_portalCustom.size() + _warCustom.size());
 
 		customLayoutTemplates.addAll(ListUtil.fromMapValues(_portalCustom));
 		customLayoutTemplates.addAll(ListUtil.fromMapValues(_warCustom));
@@ -267,8 +266,7 @@ public class LayoutTemplateLocalServiceImpl
 		String servletContextName, ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage) {
 
-		Set<LayoutTemplate> layoutTemplates =
-			new LinkedHashSet<LayoutTemplate>();
+		Set<LayoutTemplate> layoutTemplates = new LinkedHashSet<>();
 
 		try {
 			for (String xml : xmls) {
@@ -282,7 +280,7 @@ public class LayoutTemplateLocalServiceImpl
 			_log.error(e, e);
 		}
 
-		return new ArrayList<LayoutTemplate>(layoutTemplates);
+		return new ArrayList<>(layoutTemplates);
 	}
 
 	@Override
@@ -566,7 +564,7 @@ public class LayoutTemplateLocalServiceImpl
 		catch (Exception e) {
 			_log.error(e);
 
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 	}
 
@@ -576,7 +574,7 @@ public class LayoutTemplateLocalServiceImpl
 		Map<String, LayoutTemplate> layoutTemplates = _themes.get(key);
 
 		if (layoutTemplates == null) {
-			layoutTemplates = new LinkedHashMap<String, LayoutTemplate>();
+			layoutTemplates = new LinkedHashMap<>();
 
 			_themes.put(key, layoutTemplates);
 		}
@@ -590,7 +588,7 @@ public class LayoutTemplateLocalServiceImpl
 		Map<String, LayoutTemplate> layoutTemplates = _themes.get(key);
 
 		if (layoutTemplates == null) {
-			layoutTemplates = new LinkedHashMap<String, LayoutTemplate>();
+			layoutTemplates = new LinkedHashMap<>();
 
 			_themes.put(key, layoutTemplates);
 		}
@@ -603,7 +601,7 @@ public class LayoutTemplateLocalServiceImpl
 			String xml, PluginPackage pluginPackage)
 		throws Exception {
 
-		Set<LayoutTemplate> layoutTemplates = new HashSet<LayoutTemplate>();
+		Set<LayoutTemplate> layoutTemplates = new HashSet<>();
 
 		if (xml == null) {
 			return layoutTemplates;
@@ -636,14 +634,14 @@ public class LayoutTemplateLocalServiceImpl
 		LayoutTemplateLocalServiceImpl.class);
 
 	private static final Map<String, LayoutTemplate> _portalCustom =
-		new LinkedHashMap<String, LayoutTemplate>();
+		new LinkedHashMap<>();
 	private static final Map<String, LayoutTemplate> _portalStandard =
-		new LinkedHashMap<String, LayoutTemplate>();
+		new LinkedHashMap<>();
 	private static final Map<String, Map<String, LayoutTemplate>> _themes =
-		new LinkedHashMap<String, Map<String, LayoutTemplate>>();
+		new LinkedHashMap<>();
 	private static final Map<String, LayoutTemplate> _warCustom =
-		new LinkedHashMap<String, LayoutTemplate>();
+		new LinkedHashMap<>();
 	private static final Map<String, LayoutTemplate> _warStandard =
-		new LinkedHashMap<String, LayoutTemplate>();
+		new LinkedHashMap<>();
 
 }

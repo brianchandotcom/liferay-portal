@@ -41,7 +41,7 @@ public class CheckoutMethodImpl extends BaseMethodImpl {
 			SharepointRequest sharepointRequest)
 		throws Exception {
 
-		List<ResponseElement> elements = new ArrayList<ResponseElement>();
+		List<ResponseElement> elements = new ArrayList<>();
 
 		SharepointStorage storage = sharepointRequest.getSharepointStorage();
 

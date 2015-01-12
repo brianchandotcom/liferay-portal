@@ -77,7 +77,7 @@ public class FolderConverter extends BaseXStreamConverter {
 		return fields;
 	}
 
-	protected static List<String> fields = new LinkedList<String>();
+	protected static List<String> fields = new LinkedList<>();
 
 	static {
 		fields.add(FieldConstants.COMPANY_ID);

@@ -55,8 +55,7 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 		compositePasswordEncryptor.setDefaultPasswordEncryptor(
 			new DefaultPasswordEncryptor());
 
-		List<PasswordEncryptor> passwordEncryptors =
-			new ArrayList<PasswordEncryptor>();
+		List<PasswordEncryptor> passwordEncryptors = new ArrayList<>();
 
 		passwordEncryptors.add(new BCryptPasswordEncryptor());
 		passwordEncryptors.add(new CryptPasswordEncryptor());

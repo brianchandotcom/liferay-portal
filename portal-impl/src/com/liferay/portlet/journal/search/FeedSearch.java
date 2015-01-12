@@ -30,7 +30,7 @@ public class FeedSearch extends SearchContainer<JournalFeed> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-feeds-were-found";
 
-	public static List<String> headerNames = new ArrayList<String>();
+	public static List<String> headerNames = new ArrayList<>();
 
 	static {
 		headerNames.add("id");

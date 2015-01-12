@@ -43,7 +43,6 @@ public class ServiceBeanAopCacheManagerUtil {
 	}
 
 	private static final List<ServiceBeanAopCacheManager>
-		_serviceBeanAopCacheManagers =
-			new CopyOnWriteArrayList<ServiceBeanAopCacheManager>();
+		_serviceBeanAopCacheManagers = new CopyOnWriteArrayList<>();
 
 }

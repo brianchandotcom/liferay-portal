@@ -33,9 +33,9 @@ import javax.portlet.WindowState;
  */
 public class PortalContextImpl implements PortalContext {
 
-	public static List<PortletMode> portletModes = new ArrayList<PortletMode>();
+	public static List<PortletMode> portletModes = new ArrayList<>();
 	public static Properties properties = new Properties();
-	public static List<WindowState> windowStates = new ArrayList<WindowState>();
+	public static List<WindowState> windowStates = new ArrayList<>();
 
 	static {
 		properties.setProperty(

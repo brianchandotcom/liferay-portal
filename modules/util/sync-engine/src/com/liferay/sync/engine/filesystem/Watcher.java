@@ -515,12 +515,12 @@ public class Watcher implements Runnable {
 	private static Logger _logger = LoggerFactory.getLogger(Watcher.class);
 
 	private ConcurrentNavigableMap<Long, String> _createdFilePathNames =
-		new ConcurrentSkipListMap<Long, String>();
+		new ConcurrentSkipListMap<>();
 	private Path _dataFilePath;
-	private List<String> _downloadedFilePathNames = new ArrayList<String>();
-	private List<Path> _failedFilePaths = new CopyOnWriteArrayList<Path>();
+	private List<String> _downloadedFilePathNames = new ArrayList<>();
+	private List<Path> _failedFilePaths = new CopyOnWriteArrayList<>();
 	private BidirectionalMap<WatchKey, Path> _filePaths =
-		new BidirectionalMap<WatchKey, Path>();
+		new BidirectionalMap<>();
 	private boolean _recursive;
 	private WatchEventListener _watchEventListener;
 	private WatchService _watchService;

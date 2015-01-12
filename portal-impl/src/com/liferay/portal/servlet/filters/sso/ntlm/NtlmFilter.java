@@ -291,7 +291,7 @@ public class NtlmFilter extends BasePortalFilter {
 	private static final Log _log = LogFactoryUtil.getLog(NtlmFilter.class);
 
 	private final Map<Long, NtlmManager> _ntlmManagers =
-		new ConcurrentHashMap<Long, NtlmManager>();
+		new ConcurrentHashMap<>();
 	private final PortalCache<String, byte[]> _portalCache =
 		SingleVMPoolUtil.getCache(NtlmFilter.class.getName());
 

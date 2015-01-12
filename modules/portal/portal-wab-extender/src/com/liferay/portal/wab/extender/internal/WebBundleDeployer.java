@@ -141,7 +141,6 @@ public class WebBundleDeployer {
 	private final Logger _logger;
 	private final SAXParserFactory _saxParserFactory;
 	private final ConcurrentMap<Bundle, WabBundleProcessor>
-		_wabBundleProcessors =
-			new ConcurrentHashMap<Bundle, WabBundleProcessor>();
+		_wabBundleProcessors = new ConcurrentHashMap<>();
 
 }

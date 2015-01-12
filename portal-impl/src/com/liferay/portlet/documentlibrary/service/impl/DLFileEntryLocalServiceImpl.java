@@ -628,7 +628,7 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<String, Fields> fieldsMap = new HashMap<String, Fields>();
+		Map<String, Fields> fieldsMap = new HashMap<>();
 
 		List<DDMStructure> ddmStructures = null;
 
@@ -1102,7 +1102,7 @@ public class DLFileEntryLocalServiceImpl
 		long groupId, long folderId, int status, int start, int end,
 		OrderByComparator<DLFileEntry> obc) {
 
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(folderId);
 
@@ -1169,7 +1169,7 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public int getFileEntriesCount(long groupId, long folderId, int status) {
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(folderId);
 

@@ -974,10 +974,10 @@ public class LuceneHelperImplTest {
 			return null;
 		}
 
-		private List<Address> _addresses = new ArrayList<Address>();
+		private List<Address> _addresses = new ArrayList<>();
 		private boolean _autoResponse = true;
 		private final List<ClusterEventListener> _clusterEventListeners =
-			new ArrayList<ClusterEventListener>();
+			new ArrayList<>();
 		private final MethodKey _createTokenMethodKey = new MethodKey(
 			TransientTokenUtil.class, "createToken", long.class);
 		private final MethodKey _getLastGenerationMethodKey = new MethodKey(

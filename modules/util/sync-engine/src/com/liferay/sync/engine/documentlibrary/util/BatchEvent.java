@@ -129,7 +129,7 @@ public class BatchEvent {
 
 			_zipOutputStream.close();
 
-			Map<String, Object> parameters = new HashMap<String, Object>();
+			Map<String, Object> parameters = new HashMap<>();
 
 			parameters.put("handlers", _handlers);
 			parameters.put("zipFilePath", _zipFilePath);
@@ -211,12 +211,10 @@ public class BatchEvent {
 	private static final Logger _logger = LoggerFactory.getLogger(
 		BatchEvent.class);
 
-	private List<Map<String, Object>> _batchParameters =
-		new ArrayList<Map<String, Object>>();
+	private List<Map<String, Object>> _batchParameters = new ArrayList<>();
 	private boolean _closed;
 	private int _eventCount;
-	private Map<String, Handler<Void>> _handlers =
-		new HashMap<String, Handler<Void>>();
+	private Map<String, Handler<Void>> _handlers = new HashMap<>();
 	private long _syncAccountId;
 	private long _totalFileSize;
 	private Path _zipFilePath;

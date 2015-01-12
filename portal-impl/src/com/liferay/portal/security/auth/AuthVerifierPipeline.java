@@ -100,7 +100,7 @@ public class AuthVerifierPipeline {
 		HttpServletRequest request = accessControlContext.getRequest();
 
 		List<AuthVerifierConfiguration> authVerifierConfigurations =
-			new ArrayList<AuthVerifierConfiguration>();
+			new ArrayList<>();
 
 		String requestURI = request.getRequestURI();
 
@@ -297,7 +297,7 @@ public class AuthVerifierPipeline {
 		new AuthVerifierPipeline();
 
 	private final List<AuthVerifierConfiguration> _authVerifierConfigurations =
-		new CopyOnWriteArrayList<AuthVerifierConfiguration>();
+		new CopyOnWriteArrayList<>();
 	private final ServiceTracker<AuthVerifier, AuthVerifierConfiguration>
 		_serviceTracker;
 

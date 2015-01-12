@@ -110,6 +110,6 @@ public class UpgradeCamelCasePortletPreferences
 	}
 
 	private final Map<String, String> _camelCasePreferenceNames =
-		new HashMap<String, String>();
+		new HashMap<>();
 
 }

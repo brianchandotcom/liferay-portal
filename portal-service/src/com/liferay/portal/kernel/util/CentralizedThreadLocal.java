@@ -169,8 +169,7 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 
 	private static final int _HASH_INCREMENT = 0x61c88647;
 
-	private static final Set<Class<?>> _immutableTypes =
-		new HashSet<Class<?>>();
+	private static final Set<Class<?>> _immutableTypes = new HashSet<>();
 	private static final AtomicInteger _longLivedNextHasCode =
 		new AtomicInteger();
 	private static final ThreadLocal<ThreadLocalMap> _longLivedThreadLocals =

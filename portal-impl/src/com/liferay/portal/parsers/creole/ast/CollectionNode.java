@@ -64,7 +64,7 @@ public class CollectionNode extends ASTNode {
 			_astNodes = astNodes;
 		}
 		else {
-			_astNodes = new ArrayList<ASTNode>();
+			_astNodes = new ArrayList<>();
 		}
 	}
 

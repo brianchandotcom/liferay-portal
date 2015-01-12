@@ -194,6 +194,6 @@ public class ScriptingImpl implements Scripting {
 	private static Log _log = LogFactoryUtil.getLog(ScriptingImpl.class);
 
 	private Map<String, ScriptingExecutor> _scriptingExecutors =
-		new ConcurrentHashMap<String, ScriptingExecutor>();
+		new ConcurrentHashMap<>();
 
 }

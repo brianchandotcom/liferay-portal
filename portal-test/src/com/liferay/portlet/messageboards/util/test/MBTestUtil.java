@@ -401,8 +401,7 @@ public class MBTestUtil {
 			MBMessage message, ServiceContext serviceContext)
 		throws Exception {
 
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> workflowContext = new HashMap<>();
 
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
 

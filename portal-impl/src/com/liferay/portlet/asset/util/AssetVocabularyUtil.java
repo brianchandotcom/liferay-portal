@@ -37,8 +37,7 @@ public class AssetVocabularyUtil {
 
 		List<Document> documents = hits.toList();
 
-		List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>(
-			documents.size());
+		List<AssetVocabulary> vocabularies = new ArrayList<>(documents.size());
 
 		for (Document document : documents) {
 			long vocabularyId = GetterUtil.getLong(

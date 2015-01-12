@@ -46,7 +46,7 @@ public class ClassVisibilityChecker {
 		}
 
 		if (!_allowAll && !_denyAll) {
-			_allowedPatterns = new HashSet<Pattern>();
+			_allowedPatterns = new HashSet<>();
 
 			for (String allowedClass : allowedClasses) {
 				Pattern allowedPattern = Pattern.compile(allowedClass);
@@ -79,7 +79,7 @@ public class ClassVisibilityChecker {
 		return false;
 	}
 
-	private static final Set<String> _forbiddenClasses = new HashSet<String>(
+	private static final Set<String> _forbiddenClasses = new HashSet<>(
 		Arrays.asList(PropsValues.SCRIPTING_FORBIDDEN_CLASSES));
 
 	private final boolean _allowAll;

@@ -34,7 +34,7 @@ public class MBTreeWalkerImpl implements MBTreeWalker {
 		MBMessage message, int status,
 		MBMessageLocalService messageLocalService) {
 
-		_messageIdsMap = new HashMap<Long, Integer>();
+		_messageIdsMap = new HashMap<>();
 
 		try {
 			_messages = messageLocalService.getThreadMessages(
@@ -59,7 +59,7 @@ public class MBTreeWalkerImpl implements MBTreeWalker {
 
 	@Override
 	public List<MBMessage> getChildren(MBMessage message) {
-		List<MBMessage> children = new ArrayList<MBMessage>();
+		List<MBMessage> children = new ArrayList<>();
 
 		int[] range = getChildrenRange(message);
 

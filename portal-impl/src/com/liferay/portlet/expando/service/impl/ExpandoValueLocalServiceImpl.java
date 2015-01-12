@@ -1361,8 +1361,8 @@ public class ExpandoValueLocalServiceImpl
 		List<ExpandoColumn> columns = expandoColumnLocalService.getColumns(
 			companyId, className, tableName, columnNames);
 
-		Map<String, Serializable> attributeValues =
-			new HashMap<String, Serializable>((int)(columnNames.size() * 1.4));
+		Map<String, Serializable> attributeValues = new HashMap<>(
+			(int)(columnNames.size() * 1.4));
 
 		ExpandoValue value = new ExpandoValueImpl();
 

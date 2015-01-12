@@ -89,7 +89,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	public List<FileEntry> getAttachmentsFileEntries(int start, int end)
 		throws PortalException {
 
-		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
+		List<FileEntry> fileEntries = new ArrayList<>();
 
 		long attachmentsFolderId = getAttachmentsFolderId();
 
@@ -188,7 +188,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	public List<FileEntry> getDeletedAttachmentsFileEntries(int start, int end)
 		throws PortalException {
 
-		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
+		List<FileEntry> fileEntries = new ArrayList<>();
 
 		long attachmentsFolderId = getAttachmentsFolderId();
 

@@ -45,7 +45,7 @@ public class CalEventLocalUtil {
 			(ConcurrentHashMap<String, List<CalEvent>>)_portalCache.get(key);
 
 		if (eventsPool == null) {
-			eventsPool = new ConcurrentHashMap<String, List<CalEvent>>();
+			eventsPool = new ConcurrentHashMap<>();
 
 			_portalCache.put(key, (Serializable)eventsPool);
 		}

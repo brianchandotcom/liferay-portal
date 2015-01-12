@@ -41,7 +41,7 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 	protected String doRender(Field field, Locale locale) throws Exception {
 		String fieldType = getFieldType(field);
 
-		List<String> values = new ArrayList<String>();
+		List<String> values = new ArrayList<>();
 
 		for (Serializable value : field.getValues(locale)) {
 			String valueString = String.valueOf(value);

@@ -52,7 +52,7 @@ public class PortletBagPool {
 	}
 
 	private PortletBagPool() {
-		_portletBagPool = new ConcurrentHashMap<String, PortletBag>();
+		_portletBagPool = new ConcurrentHashMap<>();
 	}
 
 	private PortletBag _get(String portletId) {

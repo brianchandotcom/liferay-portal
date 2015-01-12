@@ -57,8 +57,7 @@ public class PortletURLListenerFactory {
 				portletApp.getServletContextName());
 
 		if (portletURLGenerationListeners == null) {
-			portletURLGenerationListeners =
-				new ConcurrentHashMap<String, PortletURLGenerationListener>();
+			portletURLGenerationListeners = new ConcurrentHashMap<>();
 
 			_pool.put(
 				portletApp.getServletContextName(),

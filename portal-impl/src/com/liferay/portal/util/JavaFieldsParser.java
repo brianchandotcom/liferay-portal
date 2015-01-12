@@ -35,8 +35,8 @@ public class JavaFieldsParser {
 			return s;
 		}
 
-		List<String> replaceFrom = new ArrayList<String>();
-		List<String> replaceWith = new ArrayList<String>();
+		List<String> replaceFrom = new ArrayList<>();
+		List<String> replaceWith = new ArrayList<>();
 
 		while (true) {
 			if (x == -1) {

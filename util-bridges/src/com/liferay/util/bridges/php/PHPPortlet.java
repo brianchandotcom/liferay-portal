@@ -169,7 +169,7 @@ public class PHPPortlet extends GenericPortlet {
 			quercusServlet = (QuercusServlet)InstanceFactory.newInstance(
 				_QUERCUS_SERVLET);
 
-			Map<String, String> params = new HashMap<String, String>();
+			Map<String, String> params = new HashMap<>();
 
 			Enumeration<String> enu = servletConfig.getInitParameterNames();
 

@@ -59,7 +59,7 @@ public class CompanyWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 		List<Group> groups = WebDAVUtil.getGroups(user);
 
-		List<Resource> resources = new ArrayList<Resource>(groups.size());
+		List<Resource> resources = new ArrayList<>(groups.size());
 
 		for (Group group : groups) {
 			String parentPath = getRootPath();

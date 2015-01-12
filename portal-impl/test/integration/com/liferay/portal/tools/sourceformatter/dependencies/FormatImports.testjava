@@ -31,7 +31,7 @@ public class FormatImports {
 
 		sb.append(StringPool.TAB);
 
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<>();
 
 		for (Entry<String, String> entry : map.entrySet()) {
 			sb.append(entry.getValue());

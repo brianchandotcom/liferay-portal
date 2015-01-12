@@ -55,7 +55,7 @@ public class SpringFactoryImpl implements SpringFactory {
 	}
 
 	public void setBeanDefinitions(Map<String, String> beanDefinitions) {
-		_beanDefinitions = new HashMap<String, Set<String>>();
+		_beanDefinitions = new HashMap<>();
 
 		for (Map.Entry<String, String> entry : beanDefinitions.entrySet()) {
 			String className = entry.getKey();

@@ -140,7 +140,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			}
 		}
 
-		List<RenderedImage> renderedImages = new ArrayList<RenderedImage>();
+		List<RenderedImage> renderedImages = new ArrayList<>();
 
 		Properties spriteProperties = new SortedProperties();
 
@@ -274,10 +274,10 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 				renderedImage, lookupTableJAI, null);
 		}
 		else if (sampleModel.getNumBands() == 2) {
-			List<Byte> bytesList = new ArrayList<Byte>(
+			List<Byte> bytesList = new ArrayList<>(
 				height * width * _NUM_OF_BANDS);
 
-			List<Byte> tempBytesList = new ArrayList<Byte>(_NUM_OF_BANDS);
+			List<Byte> tempBytesList = new ArrayList<>(_NUM_OF_BANDS);
 
 			for (int i = 0; i < dataBuffer.getSize(); i++) {
 				int mod = (i + 1) % 2;
@@ -309,10 +309,10 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 				renderedImage, height, width, newDataBuffer);
 		}
 		else if (colorModel.getTransparency() != Transparency.TRANSLUCENT) {
-			List<Byte> bytesList = new ArrayList<Byte>(
+			List<Byte> bytesList = new ArrayList<>(
 				height * width * _NUM_OF_BANDS);
 
-			List<Byte> tempBytesList = new ArrayList<Byte>(_NUM_OF_BANDS);
+			List<Byte> tempBytesList = new ArrayList<>(_NUM_OF_BANDS);
 
 			for (int i = 0; i < dataBuffer.getSize(); i++) {
 				int mod = (i + 1) % 3;

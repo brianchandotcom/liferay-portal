@@ -61,7 +61,7 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 	}
 
 	protected List<DDMFormField> createDDMFormFields() {
-		List<DDMFormField> ddmFormFields = new ArrayList<DDMFormField>();
+		List<DDMFormField> ddmFormFields = new ArrayList<>();
 
 		ddmFormFields.add(
 			createNestedDDMFormFields("ParentField", "ChildField"));
@@ -77,7 +77,7 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 
 		DDMFormField parentDDMFormField = createTextDDMFormField(parentName);
 
-		List<DDMFormField> nestedDDMFormFields = new ArrayList<DDMFormField>();
+		List<DDMFormField> nestedDDMFormFields = new ArrayList<>();
 
 		nestedDDMFormFields.add(createSelectDDMFormField(childName));
 

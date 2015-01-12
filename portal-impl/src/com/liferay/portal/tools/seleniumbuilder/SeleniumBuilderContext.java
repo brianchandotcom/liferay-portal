@@ -318,7 +318,7 @@ public class SeleniumBuilderContext {
 	}
 
 	public Set<Element> getMacroCommandElements(String macroName) {
-		Set<Element> commandElementsSet = new HashSet<Element>();
+		Set<Element> commandElementsSet = new HashSet<>();
 
 		Element macroRootElement = getMacroRootElement(macroName);
 
@@ -375,7 +375,7 @@ public class SeleniumBuilderContext {
 	}
 
 	public Set<String> getMacroCommandNames(String macroName) {
-		Set<String> commandNames = new TreeSet<String>();
+		Set<String> commandNames = new TreeSet<>();
 
 		Element macroRootElement = getMacroRootElement(macroName);
 
@@ -477,7 +477,7 @@ public class SeleniumBuilderContext {
 	}
 
 	public Set<String> getPathLocatorKeys(Element rootElement) {
-		Set<String> pathLocatorKeys = new HashSet<String>();
+		Set<String> pathLocatorKeys = new HashSet<>();
 
 		Element bodyElement = rootElement.element("body");
 
@@ -610,7 +610,7 @@ public class SeleniumBuilderContext {
 			_seleniumBuilderFileUtil.getAllChildElements(
 				rootElement, "command");
 
-		Set<String> commandElementNames = new HashSet<String>();
+		Set<String> commandElementNames = new HashSet<>();
 
 		for (Element commandElement : commandElements) {
 			String commandName = commandElement.attributeValue("name");
@@ -667,7 +667,7 @@ public class SeleniumBuilderContext {
 			_seleniumBuilderFileUtil.getAllChildElements(
 				rootElement, "command");
 
-		Set<String> commandElementNames = new HashSet<String>();
+		Set<String> commandElementNames = new HashSet<>();
 
 		for (Element commandElement : commandElements) {
 			String commandName = commandElement.attributeValue("name");
@@ -742,7 +742,7 @@ public class SeleniumBuilderContext {
 			_seleniumBuilderFileUtil.getAllChildElements(
 				rootElement, "command");
 
-		Set<String> commandElementNames = new HashSet<String>();
+		Set<String> commandElementNames = new HashSet<>();
 
 		for (Element commandElement : commandElements) {
 			String commandName = commandElement.attributeValue("name");
@@ -805,7 +805,7 @@ public class SeleniumBuilderContext {
 			_seleniumBuilderFileUtil.getAllChildElements(
 				rootElement, "command");
 
-		Set<String> commandElementNames = new HashSet<String>();
+		Set<String> commandElementNames = new HashSet<>();
 
 		for (Element commandElement : commandElements) {
 			String commandName = commandElement.attributeValue("name");
@@ -919,7 +919,7 @@ public class SeleniumBuilderContext {
 			_seleniumBuilderFileUtil.getAllChildElements(
 				rootElement, "command");
 
-		Set<String> commandNames = new TreeSet<String>();
+		Set<String> commandNames = new TreeSet<>();
 
 		for (Element commandElement : commandElements) {
 			commandNames.add(commandElement.attributeValue("name"));
@@ -1227,81 +1227,50 @@ public class SeleniumBuilderContext {
 	private static final Pattern _pattern = Pattern.compile(
 		"public [a-z]* [A-Za-z0-9_]*\\(.*?\\)");
 
-	private final Map<String, String> _actionClassNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _actionFileNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _actionJavaFileNames =
-		new HashMap<String, String>();
-	private final Set<String> _actionNames = new HashSet<String>();
-	private final Map<String, String> _actionPackageNames =
-		new HashMap<String, String>();
-	private final Map<String, Element> _actionRootElements =
-		new HashMap<String, Element>();
-	private final Map<String, String> _actionSimpleClassNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _functionClassNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _functionFileNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _functionJavaFileNames =
-		new HashMap<String, String>();
-	private final Map<String, Integer> _functionLocatorCounts =
-		new HashMap<String, Integer>();
-	private final Set<String> _functionNames = new HashSet<String>();
-	private final Map<String, String> _functionPackageNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _functionReturnTypes =
-		new HashMap<String, String>();
-	private final Map<String, Element> _functionRootElements =
-		new HashMap<String, Element>();
+	private final Map<String, String> _actionClassNames = new HashMap<>();
+	private final Map<String, String> _actionFileNames = new HashMap<>();
+	private final Map<String, String> _actionJavaFileNames = new HashMap<>();
+	private final Set<String> _actionNames = new HashSet<>();
+	private final Map<String, String> _actionPackageNames = new HashMap<>();
+	private final Map<String, Element> _actionRootElements = new HashMap<>();
+	private final Map<String, String> _actionSimpleClassNames = new HashMap<>();
+	private final Map<String, String> _functionClassNames = new HashMap<>();
+	private final Map<String, String> _functionFileNames = new HashMap<>();
+	private final Map<String, String> _functionJavaFileNames = new HashMap<>();
+	private final Map<String, Integer> _functionLocatorCounts = new HashMap<>();
+	private final Set<String> _functionNames = new HashSet<>();
+	private final Map<String, String> _functionPackageNames = new HashMap<>();
+	private final Map<String, String> _functionReturnTypes = new HashMap<>();
+	private final Map<String, Element> _functionRootElements = new HashMap<>();
 	private final Map<String, String> _functionSimpleClassNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _macroClassNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _macroFileNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _macroJavaFileNames =
-		new HashMap<String, String>();
-	private final Set<String> _macroNames = new HashSet<String>();
-	private final Map<String, String> _macroPackageNames =
-		new HashMap<String, String>();
-	private final Map<String, Element> _macroRootElements =
-		new HashMap<String, Element>();
-	private final Map<String, String> _macroSimpleClassNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _pathClassNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _pathFileNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _pathJavaFileNames =
-		new HashMap<String, String>();
-	private final Set<String> _pathNames = new HashSet<String>();
-	private final Map<String, String> _pathPackageNames =
-		new HashMap<String, String>();
-	private final Map<String, Element> _pathRootElements =
-		new HashMap<String, Element>();
-	private final Map<String, String> _pathSimpleClassNames =
-		new HashMap<String, String>();
+		new HashMap<>();
+	private final Map<String, String> _macroClassNames = new HashMap<>();
+	private final Map<String, String> _macroFileNames = new HashMap<>();
+	private final Map<String, String> _macroJavaFileNames = new HashMap<>();
+	private final Set<String> _macroNames = new HashSet<>();
+	private final Map<String, String> _macroPackageNames = new HashMap<>();
+	private final Map<String, Element> _macroRootElements = new HashMap<>();
+	private final Map<String, String> _macroSimpleClassNames = new HashMap<>();
+	private final Map<String, String> _pathClassNames = new HashMap<>();
+	private final Map<String, String> _pathFileNames = new HashMap<>();
+	private final Map<String, String> _pathJavaFileNames = new HashMap<>();
+	private final Set<String> _pathNames = new HashSet<>();
+	private final Map<String, String> _pathPackageNames = new HashMap<>();
+	private final Map<String, Element> _pathRootElements = new HashMap<>();
+	private final Map<String, String> _pathSimpleClassNames = new HashMap<>();
 	private final SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
 	private final Map<String, Integer> _seleniumParameterCounts =
-		new HashMap<String, Integer>();
-	private final Map<String, String> _testCaseClassNames =
-		new HashMap<String, String>();
+		new HashMap<>();
+	private final Map<String, String> _testCaseClassNames = new HashMap<>();
 	private final Map<String, Set<String>> _testCaseCommandNames =
-		new HashMap<String, Set<String>>();
-	private final Map<String, String> _testCaseFileNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _testCaseHTMLFileNames =
-		new HashMap<String, String>();
-	private final Map<String, String> _testCaseJavaFileNames =
-		new HashMap<String, String>();
-	private final Set<String> _testCaseNames = new HashSet<String>();
-	private final Map<String, String> _testCasePackageNames =
-		new HashMap<String, String>();
-	private final Map<String, Element> _testCaseRootElements =
-		new HashMap<String, Element>();
+		new HashMap<>();
+	private final Map<String, String> _testCaseFileNames = new HashMap<>();
+	private final Map<String, String> _testCaseHTMLFileNames = new HashMap<>();
+	private final Map<String, String> _testCaseJavaFileNames = new HashMap<>();
+	private final Set<String> _testCaseNames = new HashSet<>();
+	private final Map<String, String> _testCasePackageNames = new HashMap<>();
+	private final Map<String, Element> _testCaseRootElements = new HashMap<>();
 	private final Map<String, String> _testCaseSimpleClassNames =
-		new HashMap<String, String>();
+		new HashMap<>();
 
 }

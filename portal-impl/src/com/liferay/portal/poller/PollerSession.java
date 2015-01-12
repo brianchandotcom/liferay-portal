@@ -66,10 +66,8 @@ public class PollerSession {
 		return _pollerSessionId;
 	}
 
-	private final Map<String, String> _pendingResponseIds =
-		new HashMap<String, String>();
-	private final Map<String, PollerRequest> _pollerRequests =
-		new HashMap<String, PollerRequest>();
+	private final Map<String, String> _pendingResponseIds = new HashMap<>();
+	private final Map<String, PollerRequest> _pollerRequests = new HashMap<>();
 	private final String _pollerSessionId;
 
 }

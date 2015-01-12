@@ -47,7 +47,7 @@ public class JournalContentSearchLocalServiceImpl
 			_log.info("Checking journal content search for " + companyId);
 		}
 
-		List<Layout> layouts = new ArrayList<Layout>();
+		List<Layout> layouts = new ArrayList<>();
 
 		List<Group> groups = groupLocalService.search(
 			companyId, null, null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -183,7 +183,7 @@ public class JournalContentSearchLocalServiceImpl
 	public List<Long> getLayoutIds(
 		long groupId, boolean privateLayout, String articleId) {
 
-		List<Long> layoutIds = new ArrayList<Long>();
+		List<Long> layoutIds = new ArrayList<>();
 
 		List<JournalContentSearch> contentSearches =
 			journalContentSearchPersistence.findByG_P_A(
@@ -271,8 +271,7 @@ public class JournalContentSearchLocalServiceImpl
 		journalContentSearchPersistence.removeByG_P_L_P(
 			groupId, privateLayout, layoutId, portletId);
 
-		List<JournalContentSearch> contentSearches =
-			new ArrayList<JournalContentSearch>();
+		List<JournalContentSearch> contentSearches = new ArrayList<>();
 
 		for (String articleId : articleIds) {
 			JournalContentSearch contentSearch = updateContentSearch(

@@ -162,6 +162,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
+	protected static boolean isExcludedPath(
+		List<String> exclusionPaths, String absolutePath) {
+
+		if (ListUtil.isEmpty(exclusionPaths)) {
+			return false;
+		}
+
+		for (String exclusionPath : exclusionPaths) {
+			if (absolutePath.contains(exclusionPath)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected static void processErrorMessage(String fileName, String message) {
 		List<String> errorMessages = _errorMessagesMap.get(fileName);
 

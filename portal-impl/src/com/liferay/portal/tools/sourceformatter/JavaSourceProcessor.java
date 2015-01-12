@@ -908,7 +908,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-48153
 
-		if (!isExcluded(_diamondOperatorExclusions, absolutePath)) {
+		if (!isExcluded(_diamondOperatorExclusions, absolutePath) &&
+			!isExcludedPath(_diamondOperatorExclusionPaths, absolutePath)) {
+
 			newContent = applyDiamondOperator(newContent);
 		}
 
@@ -1117,6 +1119,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			getProperty("allow.use.service.util.in.service.impl"));
 		_checkJavaFieldTypesExclusions = getPropertyList(
 			"check.java.field.types.excludes.files");
+		_diamondOperatorExclusionPaths = getPropertyList(
+			"diamond.operator.excludes.paths");
 		_diamondOperatorExclusions = getPropertyList(
 			"diamond.operator.excludes.files");
 		_fitOnSingleLineExclusions = getPropertyList(
@@ -2710,6 +2714,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusions;
 	private boolean _checkUnprocessedExceptions;
+	private List<String> _diamondOperatorExclusionPaths;
 	private List<String> _diamondOperatorExclusions;
 	private Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(Map|Set|List)<(.+)>" +

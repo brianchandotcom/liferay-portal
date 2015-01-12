@@ -383,6 +383,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_CELL_EDITOR_FIELD_ALERT</td>
+	<td>//div[@class='structureFieldName' and @role='alert']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS_CELL_EDITOR_TEXT_AREA</td>
 	<td>//textarea[@name='value']</td>
 	<td></td>

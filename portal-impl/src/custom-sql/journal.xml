@@ -119,7 +119,7 @@
 				ResourcePermission ON
 					(ResourcePermission.companyId = JournalArticle.companyId) AND
 					(ResourcePermission.name = 'com.liferay.portlet.journal.model.JournalArticle') AND
-					(ResourcePermission.primKey = JournalArticle.resourcePrimKey) AND
+					(ResourcePermission.primKey = CAST_TEXT(JournalArticle.resourcePrimKey)) AND
 					(ResourcePermission.scope = ?)
 			WHERE
 				ResourcePermission.primKey IS NULL

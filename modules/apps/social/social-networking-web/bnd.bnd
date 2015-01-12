@@ -7,8 +7,8 @@ Import-Package:\
 	com.liferay.portlet.blogs.model,\
 	com.liferay.portlet.blogs.service,\
 	com.liferay.portlet.messageboards.service,\
-	com.liferay.socialnetworking.exception,\
-	com.liferay.socialnetworking.service.configuration,\
+	com.liferay.social.networking.exception,\
+	com.liferay.social.networking.service.configuration,\
 	*
 Include-Resource:\
 	classes,\

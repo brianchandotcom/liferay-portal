@@ -130,7 +130,7 @@ public class JspServlet extends HttpServlet {
 
 		defaults.put(
 			"compilerClassName",
-			"com.liferay.portal.servlet.jsp.compiler.compiler.JspCompiler");
+			"com.liferay.portal.servlet.jsp.compiler.compiler.internal.JspCompiler");
 		defaults.put("development", "false");
 		defaults.put("httpMethods", "GET,POST,HEAD");
 		defaults.put("keepgenerated", "false");

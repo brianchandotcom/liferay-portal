@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.jsp.compiler.compiler;
-
-import com.liferay.portal.servlet.jsp.compiler.compiler.internal.JspBundleClassloader;
-import com.liferay.portal.servlet.jsp.compiler.compiler.internal.JspResolverFactory;
+package com.liferay.portal.servlet.jsp.compiler.compiler.internal;
 
 import java.io.File;
 import java.io.IOException;

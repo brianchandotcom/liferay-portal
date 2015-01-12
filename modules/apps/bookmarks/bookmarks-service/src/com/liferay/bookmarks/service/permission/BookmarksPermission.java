@@ -46,8 +46,7 @@ public class BookmarksPermission implements ResourcePermissionChecker {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException {
+		PermissionChecker permissionChecker, long classPK, String actionId) {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, classPK, RESOURCE_NAME, classPK,
@@ -82,8 +81,7 @@ public class BookmarksPermission implements ResourcePermissionChecker {
 
 	@Override
 	public Boolean checkResource(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException {
+		PermissionChecker permissionChecker, long classPK, String actionId) {
 
 		return contains(permissionChecker, classPK, actionId);
 	}

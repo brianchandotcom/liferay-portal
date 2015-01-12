@@ -3,7 +3,7 @@
 <javadocs>
 	<javadoc>
 		<name>FriendsActivityInterpreter</name>
-		<type>com.liferay.socialnetworking.friends.social.FriendsActivityInterpreter</type>
+		<type>com.liferay.social.networking.friends.social.FriendsActivityInterpreter</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<author><![CDATA[Zsolt Berentey]]></author>
 		<method>
@@ -117,7 +117,7 @@
 	</javadoc>
 	<javadoc>
 		<name>FriendsActivityKeys</name>
-		<type>com.liferay.socialnetworking.friends.social.FriendsActivityKeys</type>
+		<type>com.liferay.social.networking.friends.social.FriendsActivityKeys</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>ADD_FRIEND</name>
@@ -125,7 +125,7 @@
 	</javadoc>
 	<javadoc>
 		<name>FriendsRequestInterpreter</name>
-		<type>com.liferay.socialnetworking.friends.social.FriendsRequestInterpreter</type>
+		<type>com.liferay.social.networking.friends.social.FriendsRequestInterpreter</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>getClassNames</name>
@@ -179,7 +179,7 @@
 	</javadoc>
 	<javadoc>
 		<name>FriendsRequestKeys</name>
-		<type>com.liferay.socialnetworking.friends.social.FriendsRequestKeys</type>
+		<type>com.liferay.social.networking.friends.social.FriendsRequestKeys</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>ADD_FRIEND</name>
@@ -187,7 +187,7 @@
 	</javadoc>
 	<javadoc>
 		<name>StartupAction</name>
-		<type>com.liferay.socialnetworking.hook.events.StartupAction</type>
+		<type>com.liferay.social.networking.hook.events.StartupAction</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>run</name>
@@ -231,7 +231,7 @@
 	</javadoc>
 	<javadoc>
 		<name>GroupModelListener</name>
-		<type>com.liferay.socialnetworking.hook.listeners.GroupModelListener</type>
+		<type>com.liferay.social.networking.hook.listeners.GroupModelListener</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>onBeforeRemove</name>
@@ -369,7 +369,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MeetupsPortlet</name>
-		<type>com.liferay.socialnetworking.meetups.portlet.MeetupsPortlet</type>
+		<type>com.liferay.social.networking.meetups.portlet.MeetupsPortlet</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>deleteMeetupsEntry</name>
@@ -428,7 +428,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MeetupsConstants</name>
-		<type>com.liferay.socialnetworking.meetups.util.MeetupsConstants</type>
+		<type>com.liferay.social.networking.meetups.util.MeetupsConstants</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>STATUS_MAYBE</name>
@@ -442,7 +442,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MembersActivityInterpreter</name>
-		<type>com.liferay.socialnetworking.members.social.MembersActivityInterpreter</type>
+		<type>com.liferay.social.networking.members.social.MembersActivityInterpreter</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>getClassNames</name>
@@ -555,7 +555,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MembersActivityKeys</name>
-		<type>com.liferay.socialnetworking.members.social.MembersActivityKeys</type>
+		<type>com.liferay.social.networking.members.social.MembersActivityKeys</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>ADD_MEMBER</name>
@@ -563,7 +563,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MembersRequestInterpreter</name>
-		<type>com.liferay.socialnetworking.members.social.MembersRequestInterpreter</type>
+		<type>com.liferay.social.networking.members.social.MembersRequestInterpreter</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<author><![CDATA[M Murali Krishna Reddy]]></author>
 		<method>
@@ -618,7 +618,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MembersRequestKeys</name>
-		<type>com.liferay.socialnetworking.members.social.MembersRequestKeys</type>
+		<type>com.liferay.social.networking.members.social.MembersRequestKeys</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>ADD_MEMBER</name>
@@ -626,7 +626,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MeetupsEntryImpl</name>
-		<type>com.liferay.socialnetworking.model.impl.MeetupsEntryImpl</type>
+		<type>com.liferay.social.networking.model.impl.MeetupsEntryImpl</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>MeetupsEntryImpl</name>
@@ -634,7 +634,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MeetupsRegistrationImpl</name>
-		<type>com.liferay.socialnetworking.model.impl.MeetupsRegistrationImpl</type>
+		<type>com.liferay.social.networking.model.impl.MeetupsRegistrationImpl</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>MeetupsRegistrationImpl</name>
@@ -642,7 +642,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WallEntryImpl</name>
-		<type>com.liferay.socialnetworking.model.impl.WallEntryImpl</type>
+		<type>com.liferay.social.networking.model.impl.WallEntryImpl</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>WallEntryImpl</name>
@@ -650,7 +650,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MeetupsEntryLocalServiceImpl</name>
-		<type>com.liferay.socialnetworking.service.impl.MeetupsEntryLocalServiceImpl</type>
+		<type>com.liferay.social.networking.service.impl.MeetupsEntryLocalServiceImpl</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>addMeetupsEntry</name>
@@ -890,7 +890,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MeetupsRegistrationLocalServiceImpl</name>
-		<type>com.liferay.socialnetworking.service.impl.MeetupsRegistrationLocalServiceImpl</type>
+		<type>com.liferay.social.networking.service.impl.MeetupsRegistrationLocalServiceImpl</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>getMeetupsRegistration</name>
@@ -989,7 +989,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WallEntryLocalServiceImpl</name>
-		<type>com.liferay.socialnetworking.service.impl.WallEntryLocalServiceImpl</type>
+		<type>com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>addWallEntry</name>
@@ -1055,7 +1055,7 @@
 			<name>deleteWallEntry</name>
 			<param>
 				<name>wallEntry</name>
-				<type>com.liferay.socialnetworking.model.WallEntry</type>
+				<type>com.liferay.social.networking.model.WallEntry</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -1202,7 +1202,7 @@
 			<name>sendEmail</name>
 			<param>
 				<name>wallEntry</name>
-				<type>com.liferay.socialnetworking.model.WallEntry</type>
+				<type>com.liferay.social.networking.model.WallEntry</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1219,7 +1219,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WallEntryFinderImpl</name>
-		<type>com.liferay.socialnetworking.service.persistence.impl.WallEntryFinderImpl</type>
+		<type>com.liferay.social.networking.service.persistence.impl.WallEntryFinderImpl</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>countByG1_G2_U1_U2</name>
@@ -1292,7 +1292,7 @@
 	</javadoc>
 	<javadoc>
 		<name>SummaryPortlet</name>
-		<type>com.liferay.socialnetworking.summary.portlet.SummaryPortlet</type>
+		<type>com.liferay.social.networking.summary.portlet.SummaryPortlet</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>addFriend</name>
@@ -1437,7 +1437,7 @@
 	</javadoc>
 	<javadoc>
 		<name>PortletKeys</name>
-		<type>com.liferay.socialnetworking.util.PortletKeys</type>
+		<type>com.liferay.social.networking.util.PortletKeys</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>SUMMARY</name>
@@ -1464,7 +1464,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WallUtil</name>
-		<type>com.liferay.socialnetworking.util.WallUtil</type>
+		<type>com.liferay.social.networking.util.WallUtil</type>
 		<author><![CDATA[Zsolt Berentey]]></author>
 		<method>
 			<name>getWallLayoutFriendlyURL</name>
@@ -1516,7 +1516,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WallPortlet</name>
-		<type>com.liferay.socialnetworking.wall.portlet.WallPortlet</type>
+		<type>com.liferay.social.networking.wall.portlet.WallPortlet</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>addWallEntry</name>
@@ -1557,7 +1557,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WallActivityInterpreter</name>
-		<type>com.liferay.socialnetworking.wall.social.WallActivityInterpreter</type>
+		<type>com.liferay.social.networking.wall.social.WallActivityInterpreter</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<author><![CDATA[Zsolt Berentey]]></author>
 		<method>
@@ -1697,7 +1697,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WallActivityKeys</name>
-		<type>com.liferay.socialnetworking.wall.social.WallActivityKeys</type>
+		<type>com.liferay.social.networking.wall.social.WallActivityKeys</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>ADD_ENTRY</name>

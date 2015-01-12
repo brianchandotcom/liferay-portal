@@ -1,11 +1,3 @@
-#macro (portletToolbarMenu $items)
-	#set ($portlet_toolbar_menu_tag = $theme.getPortletToolbarMenuTag())
-
-	$portlet_toolbar_menu_tag.setItems($items)
-
-	$portlet_toolbar_menu_tag.runTag()
-#end
-
 #macro (breadcrumbs $control_panel)
 	#set ($breadcrumb_tag = $theme.getBreadcrumbTag())
 
@@ -91,6 +83,14 @@ $languageUtil.get($locale, $lang_key)#end
 
 #macro (language_format $lang_key $arguments)
 $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
+
+#macro (portletToolbarMenu $items)
+	#set ($portlet_toolbar_menu_tag = $theme.getPortletToolbarMenuTag())
+
+	$portlet_toolbar_menu_tag.setItems($items)
+
+	$portlet_toolbar_menu_tag.runTag()
+#end
 
 #macro (quick_access $content_id)
 	#set ($quick_access_tag = $theme.getQuickAccessTag())

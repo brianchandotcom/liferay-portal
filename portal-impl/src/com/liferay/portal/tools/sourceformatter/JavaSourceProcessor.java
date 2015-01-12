@@ -731,7 +731,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (!isExcluded(_staticLogVariableExclusions, absolutePath)) {
+		if (!isExcludedFile(_staticLogVariableExclusionFiles, absolutePath)) {
 			newContent = StringUtil.replace(
 				newContent, "private Log _log",
 				"private static final Log _log");
@@ -753,7 +753,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-34911
 
 		if (portalSource &&
-			!isExcluded(_upgradeServiceUtilExclusions, absolutePath) &&
+			!isExcludedFile(_upgradeServiceUtilExclusionFiles, absolutePath) &&
 			fileName.contains("/portal/upgrade/") &&
 			!fileName.contains("/test/") &&
 			newContent.contains("ServiceUtil.")) {
@@ -763,7 +763,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (!isExcludedPath(
 				getRunOutsidePortalExclusionPaths(), absolutePath) &&
-			!isExcluded(_proxyExclusions, absolutePath) &&
+			!isExcludedFile(_proxyExclusionFiles, absolutePath) &&
 			newContent.contains("import java.lang.reflect.Proxy;")) {
 
 			processErrorMessage(fileName, "Proxy: " + fileName);
@@ -846,7 +846,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-39508
 
-		if (!isExcluded(_secureRandomExclusions, absolutePath) &&
+		if (!isExcludedFile(_secureRandomExclusionFiles, absolutePath) &&
 			!isExcludedPath(
 				getRunOutsidePortalExclusionPaths(), absolutePath) &&
 			content.contains("java.security.SecureRandom") &&
@@ -910,7 +910,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-48153
 
-		if (!isExcluded(_diamondOperatorExclusions, absolutePath) &&
+		if (!isExcludedFile(_diamondOperatorExclusionFiles, absolutePath) &&
 			!isExcludedPath(_diamondOperatorExclusionPaths, absolutePath)) {
 
 			newContent = applyDiamondOperator(newContent);
@@ -936,9 +936,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent = formatJavaTerms(
 				className, packagePath, file, fileName, absolutePath,
 				newContent, javaClassContent, javaClassLineCount,
-				_checkJavaFieldTypesExclusions,
-				_javaTermAccessLevelModifierExclusions, _javaTermSortExclusions,
-				_testAnnotationsExclusions);
+				_checkJavaFieldTypesExclusionFiles,
+				_javaTermAccessLevelModifierExclusionFiles,
+				_javaTermSortExclusionFiles, _testAnnotationsExclusionFiles);
 		}
 
 		newContent = formatJava(fileName, absolutePath, newContent);
@@ -1119,29 +1119,30 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			getProperty("add.missing.deprecation.release.version"));
 		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
 			getProperty("allow.use.service.util.in.service.impl"));
-		_checkJavaFieldTypesExclusions = getPropertyList(
+		_checkJavaFieldTypesExclusionFiles = getPropertyList(
 			"check.java.field.types.excludes.files");
+		_diamondOperatorExclusionFiles = getPropertyList(
+			"diamond.operator.excludes.files");
 		_diamondOperatorExclusionPaths = getPropertyList(
 			"diamond.operator.excludes.paths");
-		_diamondOperatorExclusions = getPropertyList(
-			"diamond.operator.excludes.files");
-		_fitOnSingleLineExclusions = getPropertyList(
+		_fitOnSingleLineExclusionFiles = getPropertyList(
 			"fit.on.single.line.excludes.files");
-		_hibernateSQLQueryExclusions = getPropertyList(
+		_hibernateSQLQueryExclusionFiles = getPropertyList(
 			"hibernate.sql.query.excludes.files");
-		_javaTermAccessLevelModifierExclusions = getPropertyList(
+		_javaTermAccessLevelModifierExclusionFiles = getPropertyList(
 			"javaterm.access.level.modifier.excludes.files");
-		_javaTermSortExclusions = getPropertyList(
+		_javaTermSortExclusionFiles = getPropertyList(
 			"javaterm.sort.excludes.files");
-		_lineLengthExclusions = getPropertyList("line.length.excludes.files");
-		_proxyExclusions = getPropertyList("proxy.excludes.files");
-		_secureRandomExclusions = getPropertyList(
+		_lineLengthExclusionFiles = getPropertyList(
+			"line.length.excludes.files");
+		_proxyExclusionFiles = getPropertyList("proxy.excludes.files");
+		_secureRandomExclusionFiles = getPropertyList(
 			"secure.random.excludes.files");
-		_staticLogVariableExclusions = getPropertyList(
+		_staticLogVariableExclusionFiles = getPropertyList(
 			"static.log.excludes.files");
-		_testAnnotationsExclusions = getPropertyList(
+		_testAnnotationsExclusionFiles = getPropertyList(
 			"test.annotations.excludes.files");
-		_upgradeServiceUtilExclusions = getPropertyList(
+		_upgradeServiceUtilExclusionFiles = getPropertyList(
 			"upgrade.service.util.excludes.files");
 
 		for (String fileName : fileNames) {
@@ -1212,7 +1213,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				// LPS-42599
 
-				if (!isExcluded(_hibernateSQLQueryExclusions, absolutePath) &&
+				if (!isExcludedFile(
+						_hibernateSQLQueryExclusionFiles, absolutePath) &&
 					line.contains("= session.createSQLQuery(") &&
 					content.contains(
 						"com.liferay.portal.kernel.dao.orm.Session")) {
@@ -1657,8 +1659,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							 line.contains(" index IX_")) {
 					}
 					else if (lineLength > _MAX_LINE_LENGTH) {
-						if (!isExcluded(
-								_lineLengthExclusions, absolutePath,
+						if (!isExcludedFile(
+								_lineLengthExclusionFiles, absolutePath,
 								lineCount) &&
 							!isAnnotationParameter(content, trimmedLine)) {
 
@@ -1958,7 +1960,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int lineTabCount, int previousLineTabCount) {
 
 		if (Validator.isNull(line) || Validator.isNull(previousLine) ||
-			isExcluded(_fitOnSingleLineExclusions, absolutePath, lineCount)) {
+			isExcludedFile(
+				_fitOnSingleLineExclusionFiles, absolutePath, lineCount)) {
 
 			return null;
 		}
@@ -2714,17 +2717,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\n(\t*)\\)");
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
-	private List<String> _checkJavaFieldTypesExclusions;
+	private List<String> _checkJavaFieldTypesExclusionFiles;
 	private boolean _checkUnprocessedExceptions;
+	private List<String> _diamondOperatorExclusionFiles;
 	private List<String> _diamondOperatorExclusionPaths;
-	private List<String> _diamondOperatorExclusions;
 	private Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(Map|Set|List)<(.+)>" +
 			"\\(\n*\t*(.*)\\);\n");
 	private Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
-	private List<String> _fitOnSingleLineExclusions;
-	private List<String> _hibernateSQLQueryExclusions;
+	private List<String> _fitOnSingleLineExclusionFiles;
+	private List<String> _hibernateSQLQueryExclusionFiles;
 	private Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(
@@ -2733,10 +2736,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 	private Pattern _incorrectLineBreakPattern2 = Pattern.compile(
 		"\\{\n\n\t*\\}");
-	private List<String> _javaTermAccessLevelModifierExclusions;
-	private List<String> _javaTermSortExclusions;
+	private List<String> _javaTermAccessLevelModifierExclusionFiles;
+	private List<String> _javaTermSortExclusionFiles;
 	private Pattern _lineBreakPattern = Pattern.compile("\\}(\\)+) \\{");
-	private List<String> _lineLengthExclusions;
+	private List<String> _lineLengthExclusionFiles;
 	private Pattern _logLevelPattern = Pattern.compile(
 		"\n(\t+)_log.(debug|info|trace|warn)\\(");
 	private Pattern _logPattern = Pattern.compile(
@@ -2744,14 +2747,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"\t*(.+)\\.class\\)");
 	private Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
-	private List<String> _proxyExclusions;
-	private List<String> _secureRandomExclusions;
+	private List<String> _proxyExclusionFiles;
+	private List<String> _secureRandomExclusionFiles;
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
-	private List<String> _staticLogVariableExclusions;
-	private List<String> _testAnnotationsExclusions;
+	private List<String> _staticLogVariableExclusionFiles;
+	private List<String> _testAnnotationsExclusionFiles;
 	private Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
-	private List<String> _upgradeServiceUtilExclusions;
+	private List<String> _upgradeServiceUtilExclusionFiles;
 
 }

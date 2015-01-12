@@ -48,7 +48,7 @@ public class JavaClass {
 			String name, String packagePath, File file, String fileName,
 			String absolutePath, String content, int lineCount, String indent,
 			JavaClass outerClass,
-			List<String> javaTermAccessLevelModifierExclusions)
+			List<String> javaTermAccessLevelModifierExclusionFiles)
 		throws Exception {
 
 		_name = name;
@@ -60,17 +60,17 @@ public class JavaClass {
 		_lineCount = lineCount;
 		_indent = indent;
 		_outerClass = outerClass;
-		_javaTermAccessLevelModifierExclusions =
-			javaTermAccessLevelModifierExclusions;
+		_javaTermAccessLevelModifierExclusionFiles =
+			javaTermAccessLevelModifierExclusionFiles;
 
 		_javaTerms = getJavaTerms();
 	}
 
 	public String formatJavaTerms(
 			Set<String> annotationsExclusions, Set<String> immutableFieldTypes,
-			List<String> checkJavaFieldTypesExclusions,
-			List<String> javaTermSortExclusions,
-			List<String> testAnnotationsExclusions)
+			List<String> checkJavaFieldTypesExclusionFiles,
+			List<String> javaTermSortExclusionFiles,
+			List<String> testAnnotationsExclusionFiles)
 		throws Exception {
 
 		if ((_javaTerms == null) || _javaTerms.isEmpty()) {
@@ -92,8 +92,8 @@ public class JavaClass {
 
 			checkUnusedParameters(javaTerm);
 
-			if (!BaseSourceProcessor.isExcluded(
-					checkJavaFieldTypesExclusions, _absolutePath)) {
+			if (!BaseSourceProcessor.isExcludedFile(
+					checkJavaFieldTypesExclusionFiles, _absolutePath)) {
 
 				checkJavaFieldType(
 					javaTerm, annotationsExclusions, immutableFieldTypes);
@@ -103,9 +103,10 @@ public class JavaClass {
 				return _content;
 			}
 
-			sortJavaTerms(previousJavaTerm, javaTerm, javaTermSortExclusions);
+			sortJavaTerms(
+				previousJavaTerm, javaTerm, javaTermSortExclusionFiles);
 			fixTabsAndIncorrectEmptyLines(javaTerm);
-			formatAnnotations(javaTerm, testAnnotationsExclusions);
+			formatAnnotations(javaTerm, testAnnotationsExclusionFiles);
 
 			if (!originalContent.equals(_content)) {
 				return _content;
@@ -119,8 +120,8 @@ public class JavaClass {
 
 			String newInnerClassContent = innerClass.formatJavaTerms(
 				annotationsExclusions, immutableFieldTypes,
-				checkJavaFieldTypesExclusions, javaTermSortExclusions,
-				testAnnotationsExclusions);
+				checkJavaFieldTypesExclusionFiles, javaTermSortExclusionFiles,
+				testAnnotationsExclusionFiles);
 
 			if (!innerClassContent.equals(newInnerClassContent)) {
 				_content = StringUtil.replace(
@@ -130,7 +131,7 @@ public class JavaClass {
 			}
 		}
 
-		fixJavaTermsDividers(_javaTerms, javaTermSortExclusions);
+		fixJavaTermsDividers(_javaTerms, javaTermSortExclusionFiles);
 
 		return _content;
 	}
@@ -544,7 +545,7 @@ public class JavaClass {
 	}
 
 	protected void fixJavaTermsDividers(
-		Set<JavaTerm> javaTerms, List<String> javaTermSortExclusions) {
+		Set<JavaTerm> javaTerms, List<String> javaTermSortExclusionFiles) {
 
 		JavaTerm previousJavaTerm = null;
 
@@ -577,8 +578,8 @@ public class JavaClass {
 
 			String javaTermName = javaTerm.getName();
 
-			if (BaseSourceProcessor.isExcluded(
-					javaTermSortExclusions, _absolutePath,
+			if (BaseSourceProcessor.isExcludedFile(
+					javaTermSortExclusionFiles, _absolutePath,
 					javaTerm.getLineCount(), javaTermName)) {
 
 				previousJavaTerm = javaTerm;
@@ -788,12 +789,12 @@ public class JavaClass {
 	}
 
 	protected void formatAnnotations(
-			JavaTerm javaTerm, List<String> testAnnotationsExclusions)
+			JavaTerm javaTerm, List<String> testAnnotationsExclusionFiles)
 		throws Exception {
 
 		if ((_indent.length() == 1) &&
-			!BaseSourceProcessor.isExcluded(
-				testAnnotationsExclusions, _absolutePath) &&
+			!BaseSourceProcessor.isExcludedFile(
+				testAnnotationsExclusionFiles, _absolutePath) &&
 			_fileName.endsWith("Test.java")) {
 
 			checkTestAnnotations(javaTerm);
@@ -886,7 +887,7 @@ public class JavaClass {
 		JavaClass innerClass = new JavaClass(
 			name, _packagePath, _file, _fileName, _absolutePath,
 			javaTermContent, lineCount, _indent + StringPool.TAB, this,
-			_javaTermAccessLevelModifierExclusions);
+			_javaTermAccessLevelModifierExclusionFiles);
 
 		_innerClasses.add(innerClass);
 
@@ -982,9 +983,9 @@ public class JavaClass {
 					 !line.startsWith(_indent + StringPool.CLOSE_PARENTHESIS) &&
 					 !line.startsWith(_indent + "extends") &&
 					 !line.startsWith(_indent + "implements") &&
-					 !BaseSourceProcessor.isExcluded(
-						 _javaTermAccessLevelModifierExclusions, _absolutePath,
-						 lineCount)) {
+					 !BaseSourceProcessor.isExcludedFile(
+						 _javaTermAccessLevelModifierExclusionFiles,
+						 _absolutePath, lineCount)) {
 
 				Matcher matcher = _classPattern.matcher(_content);
 
@@ -1271,7 +1272,7 @@ public class JavaClass {
 
 	protected void sortJavaTerms(
 		JavaTerm previousJavaTerm, JavaTerm javaTerm,
-		List<String> javaTermSortExclusions) {
+		List<String> javaTermSortExclusionFiles) {
 
 		if (previousJavaTerm == null) {
 			return;
@@ -1279,8 +1280,8 @@ public class JavaClass {
 
 		String javaTermName = javaTerm.getName();
 
-		if (BaseSourceProcessor.isExcluded(
-				javaTermSortExclusions, _absolutePath, -1, javaTermName)) {
+		if (BaseSourceProcessor.isExcludedFile(
+				javaTermSortExclusionFiles, _absolutePath, -1, javaTermName)) {
 
 			return;
 		}
@@ -1342,7 +1343,7 @@ public class JavaClass {
 	private String _fileName;
 	private String _indent;
 	private List<JavaClass> _innerClasses = new ArrayList<JavaClass>();
-	private List<String> _javaTermAccessLevelModifierExclusions;
+	private List<String> _javaTermAccessLevelModifierExclusionFiles;
 	private Set<JavaTerm> _javaTerms;
 	private int _lineCount;
 	private String _name;

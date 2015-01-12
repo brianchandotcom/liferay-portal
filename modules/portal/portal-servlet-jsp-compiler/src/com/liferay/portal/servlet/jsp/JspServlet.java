@@ -52,9 +52,6 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class JspServlet extends HttpServlet {
 
-	public static final String JSP_CLASS_LOADER =
-		JspServlet.class.getName() + "#JSP_CLASS_LOADER";
-
 	public JspServlet() {
 		_jspBundle = FrameworkUtil.getBundle(
 			com.liferay.portal.servlet.jsp.JspServlet.class);
@@ -126,8 +123,6 @@ public class JspServlet extends HttpServlet {
 
 		_jspBundleClassloader = new JspBundleClassloader(
 			bundleReference.getBundle(), _jspBundle);
-
-		servletContext.setAttribute(JSP_CLASS_LOADER, _jspBundleClassloader);
 
 		final Map<String, String> defaults = new HashMap<String, String>();
 
@@ -227,7 +222,7 @@ public class JspServlet extends HttpServlet {
 			synchronized (this) {
 				if (_jspServletContext == null) {
 					_jspServletContext = (ServletContext)Proxy.newProxyInstance(
-						getClass().getClassLoader(), _INTERFACES,
+						_jspBundleClassloader, _INTERFACES,
 						new JspServletContextInvocationHandler(servletContext));
 				}
 			}

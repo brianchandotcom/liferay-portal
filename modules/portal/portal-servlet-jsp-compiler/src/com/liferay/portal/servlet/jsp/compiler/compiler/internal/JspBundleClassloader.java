@@ -70,6 +70,10 @@ public class JspBundleClassloader extends URLClassLoader {
 		return Collections.enumeration(Collections.<URL>emptyList());
 	}
 
+	public Bundle[] getBundles() {
+		return _bundles;
+	}
+
 	@Override
 	public URL getResource(String name) {
 		return findResource(name);

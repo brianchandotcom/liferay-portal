@@ -14,7 +14,7 @@
 
 package com.liferay.portal.servlet.jsp.compiler.compiler;
 
-import com.liferay.portal.servlet.jsp.JspServlet;
+import com.liferay.portal.servlet.jsp.compiler.compiler.internal.JspBundleClassloader;
 import com.liferay.portal.servlet.jsp.compiler.compiler.internal.JspResolverFactory;
 
 import java.io.File;
@@ -27,7 +27,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLClassLoader;
 
 import java.security.AccessController;
 import java.security.CodeSource;
@@ -91,16 +90,21 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		ServletContext servletContext =
 			jspCompilationContext.getServletContext();
 
-		_bundleContext = (BundleContext)servletContext.getAttribute(
-			"osgi-bundlecontext");
+		ClassLoader classLoader = servletContext.getClassLoader();
 
-		_bundle = _bundleContext.getBundle();
+		if (!(classLoader instanceof JspBundleClassloader)) {
+			throw new IllegalStateException(
+				"ClassLoader is not instance of JspBundleClassloader");
+		}
 
-		URLClassLoader jspClassLoader =
-			(URLClassLoader)servletContext.getAttribute(
-				JspServlet.JSP_CLASS_LOADER);
+		JspBundleClassloader jspBundleClassloader =
+			(JspBundleClassloader)classLoader;
 
-		jspCompilationContext.setClassLoader(jspClassLoader);
+		_bundle = jspBundleClassloader.getBundles()[0];
+
+		_bundleContext = _bundle.getBundleContext();
+
+		jspCompilationContext.setClassLoader(jspBundleClassloader);
 
 		initClassPath(servletContext);
 		initTLDMappings(servletContext);

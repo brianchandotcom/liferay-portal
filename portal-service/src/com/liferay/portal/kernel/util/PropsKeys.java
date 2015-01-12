@@ -2905,4 +2905,8 @@ public interface PropsKeys {
 
 	public static final String YUI_COMPRESSOR_JS_VERBOSE = "yui.compressor.js.verbose";
 
+	public static final String SETUP_LIFERAY_POOL_PROVIDER_JAR_URL = "setup.liferay.pool.provider.jar.url";
+
+	public static final String SETUP_LIFERAY_POOL_PROVIDER_JAR_NAME = "setup.liferay.pool.provider.jar.name";
+
 }

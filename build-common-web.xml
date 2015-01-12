@@ -50,7 +50,7 @@
 
 		<mkdir dir="docroot/WEB-INF/classes/META-INF" />
 
-		<manifest file="docroot/WEB-INF/classes/META-INF/MANIFEST.MF">
+		<manifest file="docroot/WEB-INF/classes/META-INF/MANIFEST.MF" mode="update">
 			<attribute name="Extension-List" value="crypto" />
 			<attribute name="crypto-Extension-Name" value="javax.crypto" />
 		</manifest>

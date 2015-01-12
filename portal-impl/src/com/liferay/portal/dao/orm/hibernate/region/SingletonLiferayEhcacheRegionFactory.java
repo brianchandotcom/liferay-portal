@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.hibernate.cache.CacheDataDescription;
 import org.hibernate.cache.CacheException;
@@ -36,25 +37,18 @@ import org.hibernate.cfg.Settings;
 public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 
 	public static LiferayEhcacheRegionFactory getInstance() {
-		return _liferayEhcacheRegionFactory;
+		return _liferayEhcacheRegionFactoryReference.get();
 	}
 
 	public SingletonLiferayEhcacheRegionFactory(Properties properties) {
-		synchronized (this) {
-			boolean useQueryCache = GetterUtil.getBoolean(
-				properties.get(PropsKeys.HIBERNATE_CACHE_USE_QUERY_CACHE));
-			boolean useSecondLevelCache = GetterUtil.getBoolean(
-				properties.get(
-					PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
+		boolean useQueryCache = GetterUtil.getBoolean(
+			properties.get(PropsKeys.HIBERNATE_CACHE_USE_QUERY_CACHE));
+		boolean useSecondLevelCache = GetterUtil.getBoolean(
+			properties.get(PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 
-			if (useQueryCache || useSecondLevelCache) {
-				_enabled = true;
-			}
-
-			if (_liferayEhcacheRegionFactory == null) {
-				_liferayEhcacheRegionFactory = new LiferayEhcacheRegionFactory(
-					properties);
-			}
+		if (useQueryCache || useSecondLevelCache) {
+			_liferayEhcacheRegionFactoryReference.compareAndSet(
+				null, new LiferayEhcacheRegionFactory(properties));
 		}
 	}
 
@@ -64,7 +58,7 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 			CacheDataDescription cacheDataDescription)
 		throws CacheException {
 
-		return _liferayEhcacheRegionFactory.buildCollectionRegion(
+		return getInstance().buildCollectionRegion(
 			regionName, properties, cacheDataDescription);
 	}
 
@@ -74,7 +68,7 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 			CacheDataDescription cacheDataDescription)
 		throws CacheException {
 
-		return _liferayEhcacheRegionFactory.buildEntityRegion(
+		return getInstance().buildEntityRegion(
 			regionName, properties, cacheDataDescription);
 	}
 
@@ -83,8 +77,7 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 			String regionName, Properties properties)
 		throws CacheException {
 
-		return _liferayEhcacheRegionFactory.buildQueryResultsRegion(
-			regionName, properties);
+		return getInstance().buildQueryResultsRegion(regionName, properties);
 	}
 
 	@Override
@@ -92,43 +85,51 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 			String regionName, Properties properties)
 		throws CacheException {
 
-		return _liferayEhcacheRegionFactory.buildTimestampsRegion(
-			regionName, properties);
+		return getInstance().buildTimestampsRegion(regionName, properties);
 	}
 
 	@Override
 	public AccessType getDefaultAccessType() {
-		return _liferayEhcacheRegionFactory.getDefaultAccessType();
+		return getInstance().getDefaultAccessType();
 	}
 
 	@Override
 	public boolean isMinimalPutsEnabledByDefault() {
-		return _liferayEhcacheRegionFactory.isMinimalPutsEnabledByDefault();
+		return getInstance().isMinimalPutsEnabledByDefault();
 	}
 
 	@Override
 	public long nextTimestamp() {
-		return _liferayEhcacheRegionFactory.nextTimestamp();
+		return getInstance().nextTimestamp();
 	}
 
 	@Override
 	public synchronized void start(Settings settings, Properties properties)
 		throws CacheException {
 
-		if (_enabled && (_instanceCounter++ == 0)) {
-			_liferayEhcacheRegionFactory.start(settings, properties);
+		LiferayEhcacheRegionFactory liferayEhcacheRegionFactory = getInstance();
+
+		if ((liferayEhcacheRegionFactory != null) &&
+			(_instanceCounter++ == 0)) {
+
+			liferayEhcacheRegionFactory.start(settings, properties);
 		}
 	}
 
 	@Override
 	public synchronized void stop() {
-		if (_enabled && (--_instanceCounter == 0)) {
-			_liferayEhcacheRegionFactory.stop();
+		LiferayEhcacheRegionFactory liferayEhcacheRegionFactory = getInstance();
+
+		if ((liferayEhcacheRegionFactory != null) &&
+			(--_instanceCounter == 0)) {
+
+			liferayEhcacheRegionFactory.stop();
 		}
 	}
 
-	private static boolean _enabled;
 	private static int _instanceCounter;
-	private static LiferayEhcacheRegionFactory _liferayEhcacheRegionFactory;
+	private static final AtomicReference<LiferayEhcacheRegionFactory>
+		_liferayEhcacheRegionFactoryReference =
+			new AtomicReference<LiferayEhcacheRegionFactory>();
 
 }

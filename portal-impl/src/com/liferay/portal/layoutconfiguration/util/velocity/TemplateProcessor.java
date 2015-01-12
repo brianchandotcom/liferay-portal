@@ -65,6 +65,9 @@ public class TemplateProcessor implements ColumnProcessor {
 			_portlet = PortletLocalServiceUtil.getPortletById(
 				themeDisplay.getCompanyId(), portletId);
 		}
+		else {
+			_portlet = null;
+		}
 
 		_portletAjaxRender = GetterUtil.getBoolean(
 			request.getAttribute(WebKeys.PORTLET_AJAX_RENDER));
@@ -257,7 +260,7 @@ public class TemplateProcessor implements ColumnProcessor {
 	private static RenderWeightComparator _renderWeightComparator =
 		new RenderWeightComparator();
 
-	private Portlet _portlet;
+	private final Portlet _portlet;
 	private boolean _portletAjaxRender;
 	private Map<Integer, List<PortletRenderer>> _portletRenderers;
 	private HttpServletRequest _request;

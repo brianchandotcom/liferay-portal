@@ -103,6 +103,15 @@ public class LicenseUtil {
 	public static Map<String, String> getClusterServerInfo(String clusterNodeId)
 		throws Exception {
 
+		ClusterNode localClusterNode =
+			ClusterExecutorUtil.getLocalClusterNode();
+
+		String localClusterNodeId = localClusterNode.getClusterNodeId();
+
+		if (clusterNodeId.equals(localClusterNodeId)) {
+			return getServerInfo();
+		}
+
 		List<ClusterNode> clusterNodes = ClusterExecutorUtil.getClusterNodes();
 
 		ClusterNode clusterNode = null;
@@ -122,10 +131,6 @@ public class LicenseUtil {
 		}
 
 		try {
-			if (clusterNode.equals(ClusterExecutorUtil.getLocalClusterNode())) {
-				return getServerInfo();
-			}
-
 			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
 				_getServerInfoMethodHandler, clusterNodeId);
 

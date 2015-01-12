@@ -971,29 +971,15 @@ body.yui3-skin-sam .yui3-widget-mask {
 /* ---------- Liferay source editor ---------- */
 
 .lfr-source-editor {
-	border: solid 0 #CCC;
-	border-bottom-width: 2px;
-	border-top-width: 2px;
-	padding-right: 30px;
-	position: relative;
+	border-color: #CCC;
 
 	.lfr-source-editor-toolbar {
-		font-size: 16px;
-		padding: 5px 0;
-		position: absolute;
-		right: 0;
-		text-align: center;
-		top: 0;
-		width: 30px;
-
 		li {
-			list-style-type: none;
-
 			> .btn {
 				background-color: #FFF;
 				border: transparent;
 				color: #717383;
-				text-decoration: none;
+				outline: 0;
 			}
 		}
 	}
@@ -1067,11 +1053,11 @@ body.yui3-skin-sam .yui3-widget-mask {
 
 	&.ace_dark {
 		.lfr-source-editor-code {
-			background-color: #35353D;
+			background-color: #47474F;
 			color: #FFF;
 
 			.ace_gutter {
-				background: #393B44;
+				background: #54555E;
 				color: #FFF;
 
 				.ace_gutter-active-line {
@@ -1081,11 +1067,15 @@ body.yui3-skin-sam .yui3-widget-mask {
 
 			.ace_content {
 				.ace_active-line {
-					background-color: #00283E;
+					background-color: #11394E;
 				}
 
 				.ace_cursor {
 					color: #FFF;
+				}
+
+				.ace_tag {
+					color: #4D91FF;
 				}
 			}
 		}
@@ -1093,14 +1083,6 @@ body.yui3-skin-sam .yui3-widget-mask {
 }
 
 /* ---------- Alloy editor ---------- */
-
-.alloy-editor {
-	outline: 0;
-
-	a {
-		cursor: auto;
-	}
-}
 
 .alloy-editor-toolbar {
 	.alloy-editor-button {
@@ -1123,34 +1105,14 @@ body.yui3-skin-sam .yui3-widget-mask {
 	line-height: 20px;
 }
 
-.alloy-editor-switch {
-	position: relative;
+.alloy-editor-switch .btn {
+	background-color: #DDD;
+	border-color: transparent;
+	border-radius: 0;
+	color: #868896;
 
-	.btn {
-		background-color: #DDD;
-		bottom: 0;
-		color: #868896;
-		font-size: 16px;
-		padding: 0 5px;
-		position: absolute;
-		right: 0;
-		text-decoration: none;
-	}
-}
-
-.alloy-editor-container {
-	.lfr-source-editor {
-		display: none;
-	}
-
-	&.show-source {
-		.alloy-editor-placeholder {
-			display: none;
-		}
-
-		.lfr-source-editor {
-			display: block;
-		}
+	&:focus {
+		outline: none;
 	}
 }
 
@@ -1261,34 +1223,6 @@ $prefixes: ("-webkit-", "-moz-", "-o-", "");
 
 .alloy-editor-toolbar.alloy-editor-toolbar-styles .link-wrapper .input-container input:focus {
 	@include box-shadow(none);
-}
-
-.alloy-editor-container {
-	.alloy-editor {
-		@include backface-visibility(hidden);
-	}
-
-	.lfr-source-editor {
-		@include backface-visibility(hidden);
-		@include transform(rotateY(180deg));
-	}
-
-	&.show-source {
-		.wrapper {
-			@include transform(rotateY(180deg));
-		}
-	}
-
-	.wrapper {
-		@include transform-style(preserve-3d);
-		@include transition-duration(0.6s);
-	}
-}
-
-.ie .alloy-editor-container {
-	.alloy-editor, .lfr-source-editor {
-		@include backface-visibility(visible);
-	}
 }
 
 body.yui3-skin-sam .yui3-widget-mask {

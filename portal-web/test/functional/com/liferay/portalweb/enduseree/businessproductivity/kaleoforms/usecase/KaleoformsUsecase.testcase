@@ -6935,6 +6935,8 @@
 	</command>
 
 	<command name="ViewApprovedProcessNotificationWithComments" priority="5">
+		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
+
 		<var name="comment" value="Process is approved" />
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />

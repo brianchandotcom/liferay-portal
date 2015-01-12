@@ -34,6 +34,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testDiamondOperator() throws Exception {
+		test("DiamondOperator.testjava");
+	}
+
+	@Test
 	public void testExceedMaxLineLength() throws Exception {
 		test("ExceedMaxLineLength.testjava", "> 80:", 35);
 	}

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 		"com.liferay.portlet.category=category.social",
 		"com.liferay.portlet.icon=/icons/wall.png",
 		"com.liferay.portlet.friendly-url-routes=" +
-			"com/liferay/socialnetworking/wall/portlet/" +
+			"com/liferay/social/networking/wall/portlet/" +
 				"wall-friendly-url-routes.xml",
 		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-wall",
 		"javax.portlet.display-name=Wall",

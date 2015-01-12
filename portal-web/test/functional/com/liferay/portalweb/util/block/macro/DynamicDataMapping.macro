@@ -17,8 +17,8 @@
 
 		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${fieldName}" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
 	<command name="addFieldFormTemplateSpecific">
@@ -56,8 +56,8 @@
 		</if>
 
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
 	<command name="addFieldNested">
@@ -88,8 +88,8 @@
 
 		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${fieldName}" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
 	<command name="deleteField">
@@ -132,8 +132,8 @@
 		</if>
 
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
 	<command name="editFieldIndexable">
@@ -147,8 +147,8 @@
 		<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_NOT_INDEXABLE_RADIO" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
 	<command name="editFieldLabelCmd">
@@ -172,8 +172,8 @@
 		<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
 	<command name="editFieldNameCmd">
@@ -203,8 +203,8 @@
 		<execute macro="DynamicDataMapping#editFieldNameCmd" />
 
 		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_FIELD_ALERT" value1="Please enter only alphanumeric characters." />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
 	<command name="editFieldOptions">
@@ -243,8 +243,8 @@
 		</execute>
 
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
 	<command name="editFieldPredefinedValue">
@@ -319,8 +319,8 @@
 		</execute>
 
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
 	<command name="editFieldRepeatable">
@@ -334,8 +334,8 @@
 		<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
 	<command name="editFieldSettingsCmd">
@@ -371,8 +371,8 @@
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_SHOW_LABEL" value1="${fieldShowLabel}" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
 	<command name="editFieldStyle">
@@ -415,8 +415,8 @@
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_TIP" value1="${fieldTip}" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
 	<command name="editFieldWidth">
@@ -442,6 +442,11 @@
 				<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
 			</then>
 		</if>
+	</command>
+
+	<command name="selectFrameTopCmd">
+		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewCanAddField">

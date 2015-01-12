@@ -3820,6 +3820,70 @@
 		</execute>
 	</command>
 
+	<command known-issues="LPS-52567" name="ViewCannotAddNonAlphanumericCharactersToFieldName" priority="5">
+		<var name="character1"><![CDATA[`]]></var>
+		<var name="character2"><![CDATA[~]]></var>
+		<var name="character3"><![CDATA[!]]></var>
+		<var name="character4"><![CDATA[@]]></var>
+		<var name="character5"><![CDATA[#]]></var>
+		<var name="character6"><![CDATA[$]]></var>
+		<var name="character7"><![CDATA[%]]></var>
+		<var name="character8"><![CDATA[^]]></var>
+		<var name="character9"><![CDATA[&]]></var>
+		<var name="character10"><![CDATA[*]]></var>
+		<var name="character11"><![CDATA[(]]></var>
+		<var name="character12"><![CDATA[)]]></var>
+		<var name="character13"><![CDATA[-]]></var>
+		<var name="character14"><![CDATA[+]]></var>
+		<var name="character15"><![CDATA[=]]></var>
+		<var name="character16"><![CDATA[[]]></var>
+		<var name="character17"><![CDATA[{]]></var>
+		<var name="character18"><![CDATA[}]]></var>
+		<var name="character19"><![CDATA[\]]></var>
+		<var name="character20"><![CDATA[|]]></var>
+		<var name="character21"><![CDATA[;]]></var>
+		<var name="character22"><![CDATA[:]]></var>
+		<var name="character23"><![CDATA[']]></var>
+		<var name="character24"><![CDATA["]]></var>
+		<var name="character25"><![CDATA[>]]></var>
+		<var name="character26"><![CDATA[<]]></var>
+		<var name="character27"><![CDATA[.]]></var>
+		<var name="character28"><![CDATA[/]]></var>
+		<var name="character29"><![CDATA[?]]></var>
+		<var name="character30"><![CDATA[_]]></var>
+		<var name="character31" value="test space" />
+		<var name="character32" value=" frontSpace" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<for list="${character1},${character2},${character3},${character4},${character5},${character6},${character7},${character8},${character9},${character10},${character11},${character12},${character13},${character14},${character15},${character16},${character17}.${character18},${character19},${character20},${character21},${character22},${character23},${character24},${character25},${character26},${character27},${character28},${character29},${character30},${character31},${character32}" param="fieldName">
+			<execute macro="DynamicDataMapping#editFieldNameInvalidCharacter">
+				<var name="field" value="Text" />
+				<var name="fieldFieldLabel" value="Text" />
+				<var name="fieldName" value="${fieldName}" />
+			</execute>
+		</for>
+
+		<execute macro="DynamicDataMapping#editFieldNameInvalidCharacter">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName"><![CDATA[,]]></var>
+		</execute>
+	</command>
+
 	<command name="ViewFormTemplateFieldReadOnlyWithEditMode" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />

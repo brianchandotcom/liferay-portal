@@ -122,7 +122,7 @@
 											assetCategoryClassPK="<%= childGroup.getGroupId() %>"
 											assetTagClassName="<%= Group.class.getName() %>"
 											assetTagClassPK="<%= childGroup.getGroupId() %>"
-											description="<%= HtmlUtil.escape(childGroup.getDescription()) %>"
+											description="<%= HtmlUtil.escape(childGroup.getDescription(locale)) %>"
 											displayStyle="<%= displayStyle %>"
 											showCheckbox="<%= false %>"
 											thumbnailSrc='<%= themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + layoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(layoutSet.getLogoId()) %>'

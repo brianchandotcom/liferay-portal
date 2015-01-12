@@ -30,31 +30,16 @@ import java.net.InetSocketAddress;
 @ProviderType
 public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 
-	public ClusterNode(String clusterNodeId, InetAddress bindInetAddress) {
+	public ClusterNode(String clusterNodeId) {
 		if (clusterNodeId == null) {
 			throw new IllegalArgumentException("Cluster node ID is null");
 		}
 
-		if (bindInetAddress == null) {
-			throw new IllegalArgumentException("Bind inet address is null");
-		}
-
 		_clusterNodeId = clusterNodeId;
-		_bindInetAddress = bindInetAddress;
 	}
 
 	@Override
 	public int compareTo(ClusterNode clusterNode) {
-		InetAddress bindInetAddress = clusterNode._bindInetAddress;
-
-		String hostAddress = _bindInetAddress.getHostAddress();
-
-		int value = hostAddress.compareTo(bindInetAddress.getHostAddress());
-
-		if (value != 0) {
-			return value;
-		}
-
 		if ((_portalProtocol == null) ||
 			(clusterNode._portalProtocol == null)) {
 
@@ -69,7 +54,7 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 			return 0;
 		}
 
-		value = _portalProtocol.compareTo(clusterNode._portalProtocol);
+		int value = _portalProtocol.compareTo(clusterNode._portalProtocol);
 
 		if (value != 0) {
 			return value;
@@ -138,10 +123,6 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 		return false;
 	}
 
-	public InetAddress getBindInetAddress() {
-		return _bindInetAddress;
-	}
-
 	public String getClusterNodeId() {
 		return _clusterNodeId;
 	}
@@ -187,10 +168,8 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("{bindInetAddress=");
-		sb.append(_bindInetAddress);
 		sb.append(", clusterNodeId=");
 		sb.append(_clusterNodeId);
 		sb.append(", portalInetSocketAddress=");
@@ -202,7 +181,6 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 		return sb.toString();
 	}
 
-	private final InetAddress _bindInetAddress;
 	private final String _clusterNodeId;
 	private InetSocketAddress _portalInetSocketAddress;
 	private String _portalProtocol;

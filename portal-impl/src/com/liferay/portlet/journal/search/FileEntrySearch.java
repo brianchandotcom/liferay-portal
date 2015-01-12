@@ -31,7 +31,7 @@ public class FileEntrySearch extends SearchContainer<FileEntry> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-documents";
 
-	public static List<String> headerNames = new ArrayList<String>();
+	public static List<String> headerNames = new ArrayList<>();
 
 	static {
 		headerNames.add("document");

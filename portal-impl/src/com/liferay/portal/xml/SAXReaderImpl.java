@@ -64,46 +64,41 @@ public class SAXReaderImpl implements SAXReader {
 	public static List<Attribute> toNewAttributes(
 		List<org.dom4j.Attribute> oldAttributes) {
 
-		List<Attribute> newAttributes = new ArrayList<Attribute>(
-			oldAttributes.size());
+		List<Attribute> newAttributes = new ArrayList<>(oldAttributes.size());
 
 		for (org.dom4j.Attribute oldAttribute : oldAttributes) {
 			newAttributes.add(new AttributeImpl(oldAttribute));
 		}
 
-		return new NodeList<Attribute, org.dom4j.Attribute>(
-			newAttributes, oldAttributes);
+		return new NodeList<>(newAttributes, oldAttributes);
 	}
 
 	public static List<Element> toNewElements(
 		List<org.dom4j.Element> oldElements) {
 
-		List<Element> newElements = new ArrayList<Element>(oldElements.size());
+		List<Element> newElements = new ArrayList<>(oldElements.size());
 
 		for (org.dom4j.Element oldElement : oldElements) {
 			newElements.add(new ElementImpl(oldElement));
 		}
 
-		return new NodeList<Element, org.dom4j.Element>(
-			newElements, oldElements);
+		return new NodeList<>(newElements, oldElements);
 	}
 
 	public static List<Namespace> toNewNamespaces(
 		List<org.dom4j.Namespace> oldNamespaces) {
 
-		List<Namespace> newNamespaces = new ArrayList<Namespace>(
-			oldNamespaces.size());
+		List<Namespace> newNamespaces = new ArrayList<>(oldNamespaces.size());
 
 		for (org.dom4j.Namespace oldNamespace : oldNamespaces) {
 			newNamespaces.add(new NamespaceImpl(oldNamespace));
 		}
 
-		return new NodeList<Namespace, org.dom4j.Namespace>(
-			newNamespaces, oldNamespaces);
+		return new NodeList<>(newNamespaces, oldNamespaces);
 	}
 
 	public static List<Node> toNewNodes(List<org.dom4j.Node> oldNodes) {
-		List<Node> newNodes = new ArrayList<Node>(oldNodes.size());
+		List<Node> newNodes = new ArrayList<>(oldNodes.size());
 
 		for (org.dom4j.Node oldNode : oldNodes) {
 			if (oldNode instanceof org.dom4j.Element) {
@@ -114,15 +109,14 @@ public class SAXReaderImpl implements SAXReader {
 			}
 		}
 
-		return new NodeList<Node, org.dom4j.Node>(newNodes, oldNodes);
+		return new NodeList<>(newNodes, oldNodes);
 	}
 
 	public static List<ProcessingInstruction> toNewProcessingInstructions(
 		List<org.dom4j.ProcessingInstruction> oldProcessingInstructions) {
 
-		List<ProcessingInstruction> newProcessingInstructions =
-			new ArrayList<ProcessingInstruction>(
-				oldProcessingInstructions.size());
+		List<ProcessingInstruction> newProcessingInstructions = new ArrayList<>(
+			oldProcessingInstructions.size());
 
 		for (org.dom4j.ProcessingInstruction oldProcessingInstruction :
 				oldProcessingInstructions) {
@@ -139,8 +133,8 @@ public class SAXReaderImpl implements SAXReader {
 	public static List<org.dom4j.Attribute> toOldAttributes(
 		List<Attribute> newAttributes) {
 
-		List<org.dom4j.Attribute> oldAttributes =
-			new ArrayList<org.dom4j.Attribute>(newAttributes.size());
+		List<org.dom4j.Attribute> oldAttributes = new ArrayList<>(
+			newAttributes.size());
 
 		for (Attribute newAttribute : newAttributes) {
 			AttributeImpl newAttributeImpl = (AttributeImpl)newAttribute;
@@ -152,8 +146,7 @@ public class SAXReaderImpl implements SAXReader {
 	}
 
 	public static List<org.dom4j.Node> toOldNodes(List<Node> newNodes) {
-		List<org.dom4j.Node> oldNodes = new ArrayList<org.dom4j.Node>(
-			newNodes.size());
+		List<org.dom4j.Node> oldNodes = new ArrayList<>(newNodes.size());
 
 		for (Node newNode : newNodes) {
 			NodeImpl newNodeImpl = (NodeImpl)newNode;
@@ -169,8 +162,7 @@ public class SAXReaderImpl implements SAXReader {
 			List<ProcessingInstruction> newProcessingInstructions) {
 
 		List<org.dom4j.ProcessingInstruction> oldProcessingInstructions =
-			new ArrayList<org.dom4j.ProcessingInstruction>(
-				newProcessingInstructions.size());
+			new ArrayList<>(newProcessingInstructions.size());
 
 		for (ProcessingInstruction newProcessingInstruction :
 				newProcessingInstructions) {
@@ -322,7 +314,7 @@ public class SAXReaderImpl implements SAXReader {
 	public XPath createXPath(
 		String xPathExpression, String prefix, String namespace) {
 
-		Map<String, String> namespaceContextMap = new HashMap<String, String>();
+		Map<String, String> namespaceContextMap = new HashMap<>();
 
 		namespaceContextMap.put(prefix, namespace);
 

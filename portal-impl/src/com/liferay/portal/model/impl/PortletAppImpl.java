@@ -138,7 +138,7 @@ public class PortletAppImpl implements PortletApp {
 
 	@Override
 	public List<Portlet> getPortlets() {
-		return new ArrayList<Portlet>(_portlets);
+		return new ArrayList<>(_portlets);
 	}
 
 	@Override
@@ -223,32 +223,28 @@ public class PortletAppImpl implements PortletApp {
 	}
 
 	private final Map<String, String[]> _containerRuntimeOptions =
-		new HashMap<String, String[]>();
+		new HashMap<>();
 	private String _contextPath = StringPool.BLANK;
 	private final Map<String, String> _customUserAttributes =
-		new LinkedHashMap<String, String>();
+		new LinkedHashMap<>();
 	private String _defaultNamespace = XMLConstants.NULL_NS_URI;
 	private final Set<EventDefinition> _eventDefinitions =
-		new LinkedHashSet<EventDefinition>();
-	private final Set<PortletFilter> _portletFilters =
-		new LinkedHashSet<PortletFilter>();
+		new LinkedHashSet<>();
+	private final Set<PortletFilter> _portletFilters = new LinkedHashSet<>();
 	private final Map<String, PortletFilter> _portletFiltersByFilterName =
-		new HashMap<String, PortletFilter>();
-	private final Set<Portlet> _portlets = new LinkedHashSet<Portlet>();
+		new HashMap<>();
+	private final Set<Portlet> _portlets = new LinkedHashSet<>();
 	private final Set<PortletURLListener> _portletURLListeners =
-		new LinkedHashSet<PortletURLListener>();
+		new LinkedHashSet<>();
 	private final Map<String, PortletURLListener>
-		_portletURLListenersByListenerClass =
-			new HashMap<String, PortletURLListener>();
+		_portletURLListenersByListenerClass = new HashMap<>();
 	private final Map<String, PublicRenderParameter>
-		_publicRenderParametersByIdentifier =
-			new HashMap<String, PublicRenderParameter>();
+		_publicRenderParametersByIdentifier = new HashMap<>();
 	private ServletContext _servletContext;
 	private final String _servletContextName;
-	private final Set<String> _servletURLPatterns = new LinkedHashSet<String>();
-	private final Map<String, SpriteImage> _spriteImagesMap =
-		new HashMap<String, SpriteImage>();
-	private final Set<String> _userAttributes = new LinkedHashSet<String>();
+	private final Set<String> _servletURLPatterns = new LinkedHashSet<>();
+	private final Map<String, SpriteImage> _spriteImagesMap = new HashMap<>();
+	private final Set<String> _userAttributes = new LinkedHashSet<>();
 	private boolean _warFile;
 
 }

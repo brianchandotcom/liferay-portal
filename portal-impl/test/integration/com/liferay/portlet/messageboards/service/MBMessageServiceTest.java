@@ -160,7 +160,7 @@ public class MBMessageServiceTest {
 		protected void doRun() throws Exception {
 			String body = "This is a test message.";
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-				new ArrayList<ObjectValuePair<String, InputStream>>();
+				new ArrayList<>();
 			boolean anonymous = false;
 			double priority = 0.0;
 			boolean allowPingbacks = false;

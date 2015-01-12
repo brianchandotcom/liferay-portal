@@ -107,6 +107,6 @@ public class CacheRegistryImpl implements CacheRegistry {
 
 	private boolean _active = true;
 	private final Map<String, CacheRegistryItem> _cacheRegistryItems =
-		new ConcurrentHashMap<String, CacheRegistryItem>();
+		new ConcurrentHashMap<>();
 
 }

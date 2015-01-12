@@ -41,8 +41,8 @@ public class ContentHits {
 
 		// This can later be optimized according to LEP-915.
 
-		List<Document> docs = new ArrayList<Document>();
-		List<Float> scores = new ArrayList<Float>();
+		List<Document> docs = new ArrayList<>();
+		List<Float> scores = new ArrayList<>();
 
 		Document[] docsArray = hits.getDocs();
 

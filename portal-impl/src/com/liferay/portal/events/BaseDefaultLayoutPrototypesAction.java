@@ -48,7 +48,7 @@ public abstract class BaseDefaultLayoutPrototypesAction extends SimpleAction {
 
 		Group group = layoutSet.getGroup();
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
@@ -56,7 +56,7 @@ public abstract class BaseDefaultLayoutPrototypesAction extends SimpleAction {
 			nameMap.put(locale, LanguageUtil.get(locale, nameKey));
 		}
 
-		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
 
 		friendlyURLMap.put(LocaleUtil.getDefault(), friendlyURL);
 

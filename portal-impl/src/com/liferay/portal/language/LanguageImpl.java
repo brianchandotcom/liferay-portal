@@ -539,7 +539,7 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public Locale[] getSupportedLocales() {
-		List<Locale> supportedLocales = new ArrayList<Locale>();
+		List<Locale> supportedLocales = new ArrayList<>();
 
 		Locale[] locales = getAvailableLocales();
 
@@ -817,11 +817,11 @@ public class LanguageImpl implements Language, Serializable {
 			}
 		}
 
-		_charEncodings = new HashMap<String, String>();
-		_duplicateLanguageCodes = new HashSet<String>();
+		_charEncodings = new HashMap<>();
+		_duplicateLanguageCodes = new HashSet<>();
 		_locales = new Locale[languageIds.length];
-		_localesMap = new HashMap<String, Locale>(languageIds.length);
-		_localesSet = new HashSet<Locale>(languageIds.length);
+		_localesMap = new HashMap<>(languageIds.length);
+		_localesSet = new HashSet<>(languageIds.length);
 
 		for (int i = 0; i < languageIds.length; i++) {
 			String languageId = languageIds[i];
@@ -853,7 +853,7 @@ public class LanguageImpl implements Language, Serializable {
 
 		String[] localesBetaArray = PropsValues.LOCALES_BETA;
 
-		_localesBetaSet = new HashSet<Locale>(localesBetaArray.length);
+		_localesBetaSet = new HashSet<>(localesBetaArray.length);
 
 		for (String languageId : localesBetaArray) {
 			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
@@ -942,9 +942,8 @@ public class LanguageImpl implements Language, Serializable {
 		}
 
 		Locale[] locales = new Locale[languageIds.length];
-		Map<String, Locale> localesMap = new HashMap<String, Locale>(
-			languageIds.length);
-		Set<Locale> localesSet = new HashSet<Locale>(languageIds.length);
+		Map<String, Locale> localesMap = new HashMap<>(languageIds.length);
+		Set<Locale> localesSet = new HashSet<>(languageIds.length);
 
 		for (int i = 0; i < languageIds.length; i++) {
 			String languageId = languageIds[i];
@@ -984,7 +983,7 @@ public class LanguageImpl implements Language, Serializable {
 	private static Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
 
 	private static Map<Long, LanguageImpl> _instances =
-		new ConcurrentHashMap<Long, LanguageImpl>();
+		new ConcurrentHashMap<>();
 	private static Pattern _pattern = Pattern.compile(
 		"Liferay\\.Language\\.get\\([\"']([^)]+)[\"']\\)");
 	private static PortalCache<Long, Serializable> _portalCache =
@@ -1008,10 +1007,8 @@ public class LanguageImpl implements Language, Serializable {
 
 	private Map<String, String> _charEncodings;
 	private Set<String> _duplicateLanguageCodes;
-	private Map<Long, Locale[]> _groupLocalesMap =
-		new HashMap<Long, Locale[]>();
-	private Map<Long, Set<Locale>> _groupLocalesSet =
-		new HashMap<Long, Set<Locale>>();
+	private Map<Long, Locale[]> _groupLocalesMap = new HashMap<>();
+	private Map<Long, Set<Locale>> _groupLocalesSet = new HashMap<>();
 	private Locale[] _locales;
 	private Set<Locale> _localesBetaSet;
 	private Map<String, Locale> _localesMap;

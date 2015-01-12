@@ -30,7 +30,7 @@ public class TemplateSearch extends SearchContainer<DDMTemplate> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-templates";
 
-	public static List<String> headerNames = new ArrayList<String>();
+	public static List<String> headerNames = new ArrayList<>();
 
 	static {
 		headerNames.add("id");

@@ -435,7 +435,7 @@ public class ObjectGraphUtilTest {
 		}
 
 		private List<ObjectValuePair<Field, Object>> _objectValuePairs =
-			new ArrayList<ObjectValuePair<Field, Object>>();
+			new ArrayList<>();
 
 	}
 
@@ -450,7 +450,7 @@ public class ObjectGraphUtilTest {
 		}
 
 		private final List<ObjectValuePair<Field, Object>> _objectValuePairs =
-			new ArrayList<ObjectValuePair<Field, Object>>();
+			new ArrayList<>();
 
 	}
 

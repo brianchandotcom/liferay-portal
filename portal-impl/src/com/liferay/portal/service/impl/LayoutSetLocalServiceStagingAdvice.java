@@ -312,8 +312,7 @@ public class LayoutSetLocalServiceStagingAdvice
 			return layoutSets;
 		}
 
-		List<LayoutSet> wrappedLayoutSets = new ArrayList<LayoutSet>(
-			layoutSets.size());
+		List<LayoutSet> wrappedLayoutSets = new ArrayList<>(layoutSets.size());
 
 		for (int i = 0; i < layoutSets.size(); i++) {
 			LayoutSet wrappedLayoutSet = wrapLayoutSet(layoutSets.get(i));
@@ -340,7 +339,7 @@ public class LayoutSetLocalServiceStagingAdvice
 	}
 
 	private static Set<String> _layoutSetLocalServiceStagingAdviceMethodNames =
-		new HashSet<String>();
+		new HashSet<>();
 
 	static {
 		_layoutSetLocalServiceStagingAdviceMethodNames.add(

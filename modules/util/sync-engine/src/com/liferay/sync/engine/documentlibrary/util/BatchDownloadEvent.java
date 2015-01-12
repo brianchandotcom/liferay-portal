@@ -106,7 +106,7 @@ public class BatchDownloadEvent {
 
 			ObjectMapper objectMapper = new ObjectMapper();
 
-			Map<String, Object> parameters = new HashMap<String, Object>();
+			Map<String, Object> parameters = new HashMap<>();
 
 			parameters.put("handlers", _handlers);
 			parameters.put(
@@ -132,12 +132,10 @@ public class BatchDownloadEvent {
 	private static final Logger _logger = LoggerFactory.getLogger(
 		BatchDownloadEvent.class);
 
-	private List<Map<String, Object>> _batchParameters =
-		new ArrayList<Map<String, Object>>();
+	private List<Map<String, Object>> _batchParameters = new ArrayList<>();
 	private boolean _closed;
 	private int _eventCount;
-	private Map<String, DownloadFileHandler> _handlers =
-		new HashMap<String, DownloadFileHandler>();
+	private Map<String, DownloadFileHandler> _handlers = new HashMap<>();
 	private long _syncAccountId;
 	private long _totalFileSize;
 

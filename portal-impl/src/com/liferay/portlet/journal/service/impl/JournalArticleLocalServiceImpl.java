@@ -1134,8 +1134,7 @@ public class JournalArticleLocalServiceImpl
 	public void deleteArticles(long groupId) throws PortalException {
 		SystemEventHierarchyEntryThreadLocal.push(JournalArticle.class);
 
-		List<JournalArticleResource> articleResources =
-			new ArrayList<JournalArticleResource>();
+		List<JournalArticleResource> articleResources = new ArrayList<>();
 
 		try {
 			JournalArticleResource articleResource = null;
@@ -1201,8 +1200,7 @@ public class JournalArticleLocalServiceImpl
 
 		SystemEventHierarchyEntryThreadLocal.push(JournalArticle.class);
 
-		List<JournalArticleResource> articleResources =
-			new ArrayList<JournalArticleResource>();
+		List<JournalArticleResource> articleResources = new ArrayList<>();
 
 		try {
 			JournalArticleResource articleResource = null;
@@ -2900,7 +2898,7 @@ public class JournalArticleLocalServiceImpl
 		QueryDefinition<JournalArticle> queryDefinition =
 			new QueryDefinition<JournalArticle>(WorkflowConstants.STATUS_ANY);
 
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(folderId);
 
@@ -3387,7 +3385,7 @@ public class JournalArticleLocalServiceImpl
 			articleVersions, new ArticleVersionComparator());
 
 		List<ObjectValuePair<Long, Integer>> articleVersionStatusOVPs =
-			new ArrayList<ObjectValuePair<Long, Integer>>();
+			new ArrayList<>();
 
 		if ((articleVersions != null) && !articleVersions.isEmpty()) {
 			articleVersionStatusOVPs = getArticleVersionStatuses(
@@ -3719,7 +3717,7 @@ public class JournalArticleLocalServiceImpl
 	public List<JournalArticle> search(
 		long groupId, long folderId, int status, int start, int end) {
 
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(folderId);
 
@@ -4219,7 +4217,7 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int searchCount(long groupId, long folderId, int status) {
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(folderId);
 
@@ -5815,8 +5813,7 @@ public class JournalArticleLocalServiceImpl
 
 		searchContext.setAndSearch(andSearch);
 
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.ARTICLE_ID, articleId);
 		attributes.put(Field.CLASS_NAME_ID, classNameId);
@@ -5929,7 +5926,7 @@ public class JournalArticleLocalServiceImpl
 			_log.debug("Expiring " + articles.size() + " articles");
 		}
 
-		Set<Long> companyIds = new HashSet<Long>();
+		Set<Long> companyIds = new HashSet<>();
 
 		for (JournalArticle article : articles) {
 			if (PropsValues.JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
@@ -6142,7 +6139,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected Map<String, String> createFieldsValuesMap(Element parentElement) {
-		Map<String, String> fieldsValuesMap = new HashMap<String, String>();
+		Map<String, String> fieldsValuesMap = new HashMap<>();
 
 		List<Element> dynamicElementElements = parentElement.elements(
 			"dynamic-element");
@@ -7114,8 +7111,7 @@ public class JournalArticleLocalServiceImpl
 			long userId, JournalArticle article, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> workflowContext = new HashMap<>();
 
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_URL,

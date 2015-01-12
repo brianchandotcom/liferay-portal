@@ -77,7 +77,7 @@ public class ServletResponseUtil {
 					rangeString);
 		}
 
-		List<Range> ranges = new ArrayList<Range>();
+		List<Range> ranges = new ArrayList<>();
 
 		String[] rangeFields = StringUtil.split(rangeString.substring(6));
 

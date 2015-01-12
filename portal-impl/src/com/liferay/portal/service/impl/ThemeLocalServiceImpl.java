@@ -293,7 +293,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		String themesPath, boolean loadFromServletContext, String[] xmls,
 		PluginPackage pluginPackage) {
 
-		Set<Theme> themes = new LinkedHashSet<Theme>();
+		Set<Theme> themes = new LinkedHashSet<>();
 
 		try {
 			for (String xml : xmls) {
@@ -309,7 +309,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 		_themesPool.clear();
 
-		return new ArrayList<Theme>(themes);
+		return new ArrayList<>(themes);
 	}
 
 	@Override
@@ -326,7 +326,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	}
 
 	private List<ThemeCompanyId> _getCompanyLimitExcludes(Element element) {
-		List<ThemeCompanyId> includes = new ArrayList<ThemeCompanyId>();
+		List<ThemeCompanyId> includes = new ArrayList<>();
 
 		if (element == null) {
 			return includes;
@@ -362,7 +362,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	}
 
 	private List<ThemeGroupId> _getGroupLimitExcludes(Element element) {
-		List<ThemeGroupId> includes = new ArrayList<ThemeGroupId>();
+		List<ThemeGroupId> includes = new ArrayList<>();
 
 		if (element == null) {
 			return includes;
@@ -404,7 +404,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			return themes;
 		}
 
-		themes = new ConcurrentHashMap<String, Theme>();
+		themes = new ConcurrentHashMap<>();
 
 		for (Map.Entry<String, Theme> entry : _themes.entrySet()) {
 			String themeId = entry.getKey();
@@ -492,7 +492,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			PluginPackage pluginPackage)
 		throws Exception {
 
-		Set<Theme> themes = new HashSet<Theme>();
+		Set<Theme> themes = new HashSet<>();
 
 		if (xml == null) {
 			return themes;
@@ -784,7 +784,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			return;
 		}
 
-		List<URL> imageURLs = new ArrayList<URL>(resourcePaths.size());
+		List<URL> imageURLs = new ArrayList<>(resourcePaths.size());
 
 		for (String curResourcePath : resourcePaths) {
 			if (curResourcePath.endsWith(StringPool.SLASH)) {
@@ -829,9 +829,8 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	private static Log _log = LogFactoryUtil.getLog(
 		ThemeLocalServiceImpl.class);
 
-	private static Map<String, Theme> _themes =
-		new ConcurrentHashMap<String, Theme>();
+	private static Map<String, Theme> _themes = new ConcurrentHashMap<>();
 	private static Map<Long, Map<String, Theme>> _themesPool =
-		new ConcurrentHashMap<Long, Map<String, Theme>>();
+		new ConcurrentHashMap<>();
 
 }

@@ -116,6 +116,6 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 	}
 
 	private static final Map<String, ContextLoaderListener>
-		_contextLoaderListeners = new HashMap<String, ContextLoaderListener>();
+		_contextLoaderListeners = new HashMap<>();
 
 }

@@ -292,7 +292,7 @@ public class PortalMessages {
 				WebKeys.PORTAL_MESSAGES);
 
 			if ((map == null) && createIfAbsent) {
-				map = new LinkedHashMap<String, Object>();
+				map = new LinkedHashMap<>();
 
 				session.setAttribute(WebKeys.PORTAL_MESSAGES, map);
 			}

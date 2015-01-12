@@ -78,7 +78,7 @@ public class XSLTemplate implements Template {
 		catch (TransformerConfigurationException tce) {
 		}
 
-		_context = new HashMap<String, Object>();
+		_context = new HashMap<>();
 	}
 
 	@Override

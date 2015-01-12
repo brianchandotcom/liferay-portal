@@ -128,8 +128,7 @@ public class DLFileShortcutLocalServiceTreeTest {
 		_dlFileShortcuts.add(dlFileShortcutAA);
 	}
 
-	private final List<DLFileShortcut> _dlFileShortcuts =
-		new ArrayList<DLFileShortcut>();
+	private final List<DLFileShortcut> _dlFileShortcuts = new ArrayList<>();
 	private FileEntry _fileEntry;
 	private Folder _folder;
 

@@ -286,7 +286,7 @@ public class DDLExporterTest {
 	}
 
 	protected Map<DDMFormFieldType, String> setUpDDMFormFieldDataTypes() {
-		_ddmFormFieldDataTypes = new HashMap<DDMFormFieldType, String>();
+		_ddmFormFieldDataTypes = new HashMap<>();
 
 		_ddmFormFieldDataTypes.put(DDMFormFieldType.CHECKBOX, "boolean");
 		_ddmFormFieldDataTypes.put(DDMFormFieldType.DATE, "date");
@@ -310,7 +310,7 @@ public class DDLExporterTest {
 	protected Map<DDMFormFieldType, String> setUpDDMFormFieldValues()
 		throws Exception {
 
-		_fieldValues = new HashMap<DDMFormFieldType, String>();
+		_fieldValues = new HashMap<>();
 
 		_fieldValues.put(DDMFormFieldType.CHECKBOX, "false");
 		_fieldValues.put(DDMFormFieldType.DATE, "1/1/70");

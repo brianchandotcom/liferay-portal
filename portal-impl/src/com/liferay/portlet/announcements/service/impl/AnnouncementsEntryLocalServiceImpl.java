@@ -390,8 +390,7 @@ public class AnnouncementsEntryLocalServiceImpl
 
 		long teamId = 0;
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("announcementsDeliveryEmailOrSms", entry.getType());
 

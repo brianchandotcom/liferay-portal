@@ -260,7 +260,7 @@ public class StringUtilTest {
 
 	@Test(timeout = 1000)
 	public void testReplaceMap() throws Exception {
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<>();
 
 		map.put("Hallo", "Hello");
 		map.put("Wirld", "World");
@@ -302,7 +302,7 @@ public class StringUtilTest {
 
 	@Test(timeout = 1000)
 	public void testReplaceWithStringBundle() throws Exception {
-		Map<String, StringBundler> map = new HashMap<String, StringBundler>();
+		Map<String, StringBundler> map = new HashMap<>();
 
 		map.put("Hallo", new StringBundler("Hello"));
 		map.put("Wirld", new StringBundler("World"));

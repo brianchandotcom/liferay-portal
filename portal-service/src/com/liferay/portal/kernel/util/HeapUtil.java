@@ -71,7 +71,7 @@ public class HeapUtil {
 		sb.append("file=");
 		sb.append(file);
 
-		List<String> arguments = new ArrayList<String>();
+		List<String> arguments = new ArrayList<>();
 
 		arguments.add("jmap");
 		arguments.add(sb.toString());

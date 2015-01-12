@@ -62,7 +62,7 @@ public class BlogsEntryFinderImpl
 		long organizationId, Date displayDate,
 		QueryDefinition<BlogsEntry> queryDefinition) {
 
-		List<Long> organizationIds = new ArrayList<Long>();
+		List<Long> organizationIds = new ArrayList<>();
 
 		organizationIds.add(organizationId);
 
@@ -193,7 +193,7 @@ public class BlogsEntryFinderImpl
 		long organizationId, Date displayDate,
 		QueryDefinition<BlogsEntry> queryDefinition) {
 
-		List<Long> organizationIds = new ArrayList<Long>();
+		List<Long> organizationIds = new ArrayList<>();
 
 		organizationIds.add(organizationId);
 

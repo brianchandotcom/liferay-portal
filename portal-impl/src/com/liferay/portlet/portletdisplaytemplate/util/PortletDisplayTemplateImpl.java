@@ -188,7 +188,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			TemplateHandlerRegistryUtil.getTemplateHandlers();
 
 		List<TemplateHandler> portletDisplayTemplateHandlers =
-			new ArrayList<TemplateHandler>();
+			new ArrayList<>();
 
 		for (TemplateHandler templateHandler : templateHandlers) {
 			if (templateHandler instanceof BasePortletDisplayTemplateHandler) {
@@ -219,7 +219,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		String language) {
 
 		Map<String, TemplateVariableGroup> templateVariableGroups =
-			new LinkedHashMap<String, TemplateVariableGroup>();
+			new LinkedHashMap<>();
 
 		TemplateVariableGroup fieldsTemplateVariableGroup =
 			new TemplateVariableGroup("fields");
@@ -283,7 +283,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			long ddmTemplateId, List<?> entries)
 		throws Exception {
 
-		Map<String, Object> contextObjects = new HashMap<String, Object>();
+		Map<String, Object> contextObjects = new HashMap<>();
 
 		return renderDDMTemplate(
 			request, response, ddmTemplateId, entries, contextObjects);
@@ -472,7 +472,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	private Map<String, Object> _getPortletPreferences(
 		RenderRequest renderRequest) {
 
-		Map<String, Object> contextObjects = new HashMap<String, Object>();
+		Map<String, Object> contextObjects = new HashMap<>();
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 

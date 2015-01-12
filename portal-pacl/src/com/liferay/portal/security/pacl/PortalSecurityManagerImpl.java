@@ -641,7 +641,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		}
 
 		private static final Map<Object, Object> _doPrivilegedBeans =
-			new IdentityHashMap<Object, Object>();
+			new IdentityHashMap<>();
 
 	}
 
@@ -1306,8 +1306,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 					PortletClassLoaderUtil.getClassLoader(), _classes));
 		}
 
-		private static final Map<String, Class<?>> _classes =
-			new HashMap<String, Class<?>>();
+		private static final Map<String, Class<?>> _classes = new HashMap<>();
 
 		static {
 			for (String className :

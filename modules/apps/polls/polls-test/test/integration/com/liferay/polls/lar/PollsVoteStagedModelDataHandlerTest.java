@@ -57,7 +57,7 @@ public class PollsVoteStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<String, List<StagedModel>>();
+			new HashMap<>();
 
 		PollsQuestion question = PollsTestUtil.addQuestion(group.getGroupId());
 

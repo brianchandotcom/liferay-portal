@@ -98,8 +98,7 @@ public class AssetCategoryUtil {
 
 		List<Document> documents = hits.toList();
 
-		List<AssetCategory> categories = new ArrayList<AssetCategory>(
-			documents.size());
+		List<AssetCategory> categories = new ArrayList<>(documents.size());
 
 		for (Document document : documents) {
 			long categoryId = GetterUtil.getLong(

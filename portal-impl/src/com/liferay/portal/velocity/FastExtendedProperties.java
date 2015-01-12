@@ -160,6 +160,6 @@ public class FastExtendedProperties extends ExtendedProperties {
 		return _map.values();
 	}
 
-	private Map<Object, Object> _map = new ConcurrentHashMap<Object, Object>();
+	private Map<Object, Object> _map = new ConcurrentHashMap<>();
 
 }

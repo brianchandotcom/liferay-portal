@@ -147,9 +147,9 @@ public class TrashImpl implements Trash {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<String> classNames = new ArrayList<String>();
-		List<Long> restoreTrashEntryIds = new ArrayList<Long>();
-		List<String> titles = new ArrayList<String>();
+		List<String> classNames = new ArrayList<>();
+		List<Long> restoreTrashEntryIds = new ArrayList<>();
+		List<String> titles = new ArrayList<>();
 
 		for (int i = 0; i < trashedModels.size(); i++) {
 			try {
@@ -170,7 +170,7 @@ public class TrashImpl implements Trash {
 			}
 		}
 
-		Map<String, String[]> data = new HashMap<String, String[]>();
+		Map<String, String[]> data = new HashMap<>();
 
 		data.put(Constants.CMD, new String[] {cmd});
 
@@ -200,7 +200,7 @@ public class TrashImpl implements Trash {
 	public void addTrashSessionMessages(
 		ActionRequest actionRequest, TrashedModel trashedModel, String cmd) {
 
-		List<TrashedModel> trashedModels = new ArrayList<TrashedModel>();
+		List<TrashedModel> trashedModels = new ArrayList<>();
 
 		trashedModels.add(trashedModel);
 
@@ -240,7 +240,7 @@ public class TrashImpl implements Trash {
 
 	@Override
 	public List<TrashEntry> getEntries(Hits hits) {
-		List<TrashEntry> entries = new ArrayList<TrashEntry>();
+		List<TrashEntry> entries = new ArrayList<>();
 
 		for (Document document : hits.getDocs()) {
 			String entryClassName = GetterUtil.getString(

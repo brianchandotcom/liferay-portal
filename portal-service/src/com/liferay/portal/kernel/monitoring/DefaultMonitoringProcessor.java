@@ -79,8 +79,7 @@ public class DefaultMonitoringProcessor
 			_dataSampleProcessors.get(namespace);
 
 		if (dataSampleProcessors == null) {
-			dataSampleProcessors =
-				new ArrayList<DataSampleProcessor<DataSample>>();
+			dataSampleProcessors = new ArrayList<>();
 
 			_dataSampleProcessors.put(namespace, dataSampleProcessors);
 		}
@@ -125,7 +124,6 @@ public class DefaultMonitoringProcessor
 	private final Map<String, List<DataSampleProcessor<DataSample>>>
 		_dataSampleProcessors = new ConcurrentHashMap
 			<String, List<DataSampleProcessor<DataSample>>>();
-	private final Map<String, Level> _levels =
-		new ConcurrentHashMap<String, Level>();
+	private final Map<String, Level> _levels = new ConcurrentHashMap<>();
 
 }

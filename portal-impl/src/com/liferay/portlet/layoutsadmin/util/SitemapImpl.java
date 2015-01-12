@@ -188,7 +188,7 @@ public class SitemapImpl implements Sitemap {
 			String canonicalURL, ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException {
 
-		Map<Locale, String> alternateURLs = new HashMap<Locale, String>();
+		Map<Locale, String> alternateURLs = new HashMap<>();
 
 		Locale[] availableLocales = LanguageUtil.getAvailableLocales(
 			layout.getGroupId());
@@ -215,7 +215,7 @@ public class SitemapImpl implements Sitemap {
 			return;
 		}
 
-		Set<String> processedArticleIds = new HashSet<String>();
+		Set<String> processedArticleIds = new HashSet<>();
 
 		for (JournalArticle journalArticle : journalArticles) {
 			if (processedArticleIds.contains(

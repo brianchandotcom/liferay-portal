@@ -224,7 +224,7 @@ public class UnmodifiableList<E> implements List<E>, Serializable {
 
 	@Override
 	public List<E> subList(int fromIndex, int toIndex) {
-		return new UnmodifiableList<E>(_list.subList(fromIndex, toIndex));
+		return new UnmodifiableList<>(_list.subList(fromIndex, toIndex));
 	}
 
 	@Override

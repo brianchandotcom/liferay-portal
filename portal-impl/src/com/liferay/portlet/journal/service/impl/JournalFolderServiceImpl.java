@@ -258,7 +258,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	public List<Long> getSubfolderIds(
 		long groupId, long folderId, boolean recurse) {
 
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		getSubfolderIds(folderIds, groupId, folderId, recurse);
 

@@ -544,10 +544,9 @@ public class Transformer {
 			ThemeDisplay themeDisplay, Element element)
 		throws Exception {
 
-		List<TemplateNode> templateNodes = new ArrayList<TemplateNode>();
+		List<TemplateNode> templateNodes = new ArrayList<>();
 
-		Map<String, TemplateNode> prototypeTemplateNodes =
-			new HashMap<String, TemplateNode>();
+		Map<String, TemplateNode> prototypeTemplateNodes = new HashMap<>();
 
 		List<Element> dynamicElementElements = element.elements(
 			"dynamic-element");
@@ -573,7 +572,7 @@ public class Transformer {
 			String type = dynamicElementElement.attributeValue(
 				"type", StringPool.BLANK);
 
-			Map<String, String> attributes = new HashMap<String, String>();
+			Map<String, String> attributes = new HashMap<>();
 
 			if (dynamicContentElement != null) {
 				for (Attribute attribute : dynamicContentElement.attributes()) {
@@ -635,7 +634,7 @@ public class Transformer {
 	}
 
 	protected Map<String, Object> insertRequestVariables(Element element) {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 
 		if (element == null) {
 			return map;
@@ -661,7 +660,7 @@ public class Transformer {
 					map.put(nameElement.getText(), valueElement.getText());
 				}
 				else {
-					List<String> values = new ArrayList<String>();
+					List<String> values = new ArrayList<>();
 
 					for (Element valueElement : valueElements) {
 						values.add(valueElement.getText());
@@ -736,10 +735,9 @@ public class Transformer {
 	private static final Log _logXmlBeforeListener = LogFactoryUtil.getLog(
 		Transformer.class.getName() + ".XmlBeforeListener");
 
-	private final Map<String, String> _errorTemplateIds =
-		new HashMap<String, String>();
+	private final Map<String, String> _errorTemplateIds = new HashMap<>();
 	private final boolean _restricted;
 	private final Set<TransformerListener> _transformerListeners =
-		new HashSet<TransformerListener>();
+		new HashSet<>();
 
 }

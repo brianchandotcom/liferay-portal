@@ -200,7 +200,7 @@ public class DB2DB extends BaseDB {
 	}
 
 	protected void reorgTables(String[] templates) throws SQLException {
-		Set<String> tableNames = new HashSet<String>();
+		Set<String> tableNames = new HashSet<>();
 
 		for (String template : templates) {
 			if (template.startsWith("alter table")) {

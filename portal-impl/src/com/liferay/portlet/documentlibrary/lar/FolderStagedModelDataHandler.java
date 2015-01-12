@@ -367,7 +367,7 @@ public class FolderStagedModelDataHandler
 			return;
 		}
 
-		List<Long> currentFolderFileEntryTypeIds = new ArrayList<Long>();
+		List<Long> currentFolderFileEntryTypeIds = new ArrayList<>();
 
 		String defaultFileEntryTypeUuid = GetterUtil.getString(
 			folderElement.attributeValue("defaultFileEntryTypeUuid"));

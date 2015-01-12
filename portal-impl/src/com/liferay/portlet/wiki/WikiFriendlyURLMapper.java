@@ -31,7 +31,7 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 	@Override
 	public String buildPath(LiferayPortletURL liferayPortletURL) {
-		Map<String, String> routeParameters = new HashMap<String, String>();
+		Map<String, String> routeParameters = new HashMap<>();
 
 		buildRouteParameters(liferayPortletURL, routeParameters);
 

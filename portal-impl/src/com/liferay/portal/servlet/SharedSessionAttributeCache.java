@@ -60,7 +60,7 @@ public class SharedSessionAttributeCache implements Serializable {
 	}
 
 	private SharedSessionAttributeCache() {
-		_attributes = new ConcurrentHashMap<String, Object>();
+		_attributes = new ConcurrentHashMap<>();
 	}
 
 	private static final String _SESSION_KEY =

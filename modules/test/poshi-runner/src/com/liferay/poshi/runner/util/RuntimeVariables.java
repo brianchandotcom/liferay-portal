@@ -82,7 +82,7 @@ public class RuntimeVariables {
 				String[] arguments = StringUtil.split(
 					statementMatcher.group(3), "'");
 
-				List<String> argumentsList = new ArrayList<String>();
+				List<String> argumentsList = new ArrayList<>();
 
 				for (int i = 1; i < arguments.length; i++) {
 					if ((i % 2) == 1) {
@@ -229,7 +229,6 @@ public class RuntimeVariables {
 		"(.*)\\?(.*)\\(([^\\)]*?)\\)");
 
 	private ContextReplace _contextReplace;
-	private Map<String, String> _runtimeVariables =
-		new HashMap<String, String>();
+	private Map<String, String> _runtimeVariables = new HashMap<>();
 
 }

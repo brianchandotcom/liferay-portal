@@ -48,7 +48,7 @@ public abstract class BaseCacheKeyGeneratorTestCase extends TestCase {
 
 	@Test
 	public void testScan() {
-		Map<Serializable, String> map = new HashMap<Serializable, String>();
+		Map<Serializable, String> map = new HashMap<>();
 
 		for (int i = 0; i < 1000000; i++) {
 			String value = String.valueOf(i);
@@ -67,8 +67,7 @@ public abstract class BaseCacheKeyGeneratorTestCase extends TestCase {
 
 	@Test
 	public void testSpecialCases() {
-		Map<Serializable, String> checkMap =
-			new HashMap<Serializable, String>();
+		Map<Serializable, String> checkMap = new HashMap<>();
 
 		for (String[] values : _SPECIAL_CASES) {
 			String value = Arrays.toString(values);

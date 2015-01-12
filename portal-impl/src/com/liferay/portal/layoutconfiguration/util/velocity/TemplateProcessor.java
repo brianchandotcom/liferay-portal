@@ -69,8 +69,7 @@ public class TemplateProcessor implements ColumnProcessor {
 		_portletAjaxRender = GetterUtil.getBoolean(
 			request.getAttribute(WebKeys.PORTLET_AJAX_RENDER));
 
-		_portletRenderers = new TreeMap<Integer, List<PortletRenderer>>(
-			_renderWeightComparator);
+		_portletRenderers = new TreeMap<>(_renderWeightComparator);
 	}
 
 	public Map<Integer, List<PortletRenderer>> getPortletRenderers() {
@@ -148,7 +147,7 @@ public class TemplateProcessor implements ColumnProcessor {
 					renderWeight);
 
 				if (portletRenderers == null) {
-					portletRenderers = new ArrayList<PortletRenderer>();
+					portletRenderers = new ArrayList<>();
 
 					_portletRenderers.put(renderWeight, portletRenderers);
 				}

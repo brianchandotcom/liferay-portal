@@ -340,7 +340,7 @@ public class RepositorySearchQueryBuilderImpl
 		BooleanClauseOccur booleanClauseOccur = getBooleanClauseOccur(occur);
 
 		if (query instanceof org.apache.lucene.search.TermQuery) {
-			Set<Term> terms = new HashSet<Term>();
+			Set<Term> terms = new HashSet<>();
 
 			query.extractTerms(terms);
 

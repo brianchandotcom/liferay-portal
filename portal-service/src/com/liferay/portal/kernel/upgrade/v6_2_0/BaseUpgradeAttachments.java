@@ -118,7 +118,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				DLFileEntry.class.getName());
 
-			List<String> actionIds = new ArrayList<String>();
+			List<String> actionIds = new ArrayList<>();
 
 			actionIds.add(ActionKeys.VIEW);
 
@@ -267,7 +267,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				DLFolder.class.getName());
 
-			List<String> guestActionIds = new ArrayList<String>();
+			List<String> guestActionIds = new ArrayList<>();
 
 			guestActionIds.add(ActionKeys.VIEW);
 
@@ -278,7 +278,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 				companyId, DLFolder.class.getName(), folderId,
 				getRoleId(companyId, RoleConstants.GUEST), guestBitwiseValue);
 
-			List<String> siteMemberActionIds = new ArrayList<String>();
+			List<String> siteMemberActionIds = new ArrayList<>();
 
 			siteMemberActionIds.add(ActionKeys.ADD_DOCUMENT);
 			siteMemberActionIds.add(ActionKeys.ADD_SUBFOLDER);
@@ -483,7 +483,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			bitwiseValues = new HashMap<String, Long>();
+			bitwiseValues = new HashMap<>();
 
 			while (rs.next()) {
 				String actionId = rs.getString("actionId");
@@ -732,8 +732,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseUpgradeAttachments.class);
 
-	private Map<String, Map<String, Long>> _bitwiseValues =
-		new HashMap<String, Map<String, Long>>();
-	private Map<String, Long> _roleIds = new HashMap<String, Long>();
+	private Map<String, Map<String, Long>> _bitwiseValues = new HashMap<>();
+	private Map<String, Long> _roleIds = new HashMap<>();
 
 }

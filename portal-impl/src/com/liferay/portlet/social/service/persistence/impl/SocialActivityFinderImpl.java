@@ -668,8 +668,7 @@ public class SocialActivityFinderImpl
 			qPos.add(userId);
 			qPos.add(userId);
 
-			List<SocialActivity> socialActivities =
-				new ArrayList<SocialActivity>();
+			List<SocialActivity> socialActivities = new ArrayList<>();
 
 			Iterator<Long> itr = (Iterator<Long>)QueryUtil.iterate(
 				q, getDialect(), start, end);

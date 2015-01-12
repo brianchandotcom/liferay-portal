@@ -57,9 +57,9 @@ public class HotDeployImpl implements HotDeploy {
 			_log.debug("Initializing hot deploy manager " + this.hashCode());
 		}
 
-		_dependentHotDeployEvents = new ArrayList<HotDeployEvent>();
-		_deployedServletContextNames = new HashSet<String>();
-		_hotDeployListeners = new ArrayList<HotDeployListener>();
+		_dependentHotDeployEvents = new ArrayList<>();
+		_deployedServletContextNames = new HashSet<>();
+		_hotDeployListeners = new ArrayList<>();
 	}
 
 	@Override
@@ -244,8 +244,8 @@ public class HotDeployImpl implements HotDeploy {
 			try {
 				setContextClassLoader(ClassLoaderUtil.getPortalClassLoader());
 
-				List<HotDeployEvent> dependentEvents =
-					new ArrayList<HotDeployEvent>(_dependentHotDeployEvents);
+				List<HotDeployEvent> dependentEvents = new ArrayList<>(
+					_dependentHotDeployEvents);
 
 				for (HotDeployEvent dependentEvent : dependentEvents) {
 					setContextClassLoader(
@@ -302,7 +302,7 @@ public class HotDeployImpl implements HotDeploy {
 	protected String getRequiredServletContextNames(
 		HotDeployEvent hotDeployEvent) {
 
-		List<String> requiredServletContextNames = new ArrayList<String>();
+		List<String> requiredServletContextNames = new ArrayList<>();
 
 		for (String dependentServletContextName :
 				hotDeployEvent.getDependentServletContextNames()) {

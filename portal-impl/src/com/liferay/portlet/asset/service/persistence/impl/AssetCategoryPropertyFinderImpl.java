@@ -107,8 +107,7 @@ public class AssetCategoryPropertyFinderImpl
 			qPos.add(groupId);
 			qPos.add(key);
 
-			List<AssetCategoryProperty> categoryProperties =
-				new ArrayList<AssetCategoryProperty>();
+			List<AssetCategoryProperty> categoryProperties = new ArrayList<>();
 
 			Iterator<String> itr = (Iterator<String>)QueryUtil.iterate(
 				q, getDialect(), start, end);

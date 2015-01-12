@@ -148,7 +148,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	public List<ContainerModel> getParentContainerModels(long classPK)
 		throws PortalException {
 
-		List<ContainerModel> containerModels = new ArrayList<ContainerModel>();
+		List<ContainerModel> containerModels = new ArrayList<>();
 
 		containerModels.add(getParentContainerModel(classPK));
 
@@ -223,7 +223,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			long classPK, int start, int end)
 		throws PortalException {
 
-		List<TrashRenderer> trashRenderers = new ArrayList<TrashRenderer>();
+		List<TrashRenderer> trashRenderers = new ArrayList<>();
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
 

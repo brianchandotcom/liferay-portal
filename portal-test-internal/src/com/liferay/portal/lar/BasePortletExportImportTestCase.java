@@ -113,8 +113,7 @@ public abstract class BasePortletExportImportTestCase
 
 		Assert.assertNotNull(importedStagedModel);
 
-		Map<String, String[]> exportParameterMap =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> exportParameterMap = new LinkedHashMap<>();
 
 		exportParameterMap.put(
 			PortletDataHandlerKeys.DELETIONS,
@@ -128,8 +127,7 @@ public abstract class BasePortletExportImportTestCase
 
 		Assert.assertNotNull(importedStagedModel);
 
-		Map<String, String[]> importParameterMap =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> importParameterMap = new LinkedHashMap<>();
 
 		importParameterMap.put(
 			PortletDataHandlerKeys.DELETIONS,
@@ -219,8 +217,7 @@ public abstract class BasePortletExportImportTestCase
 
 		portletPreferences.store();
 
-		Map<String, String[]> exportParameterMap =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> exportParameterMap = new LinkedHashMap<>();
 
 		exportParameterMap.put(
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
@@ -229,8 +226,7 @@ public abstract class BasePortletExportImportTestCase
 			"range",
 			new String[] {ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE});
 
-		Map<String, String[]> importParameterMap =
-			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> importParameterMap = new LinkedHashMap<>();
 
 		Date startDate = new Date(
 			stagedModelCreationDate.getTime() + Time.MINUTE);
@@ -401,7 +397,7 @@ public abstract class BasePortletExportImportTestCase
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			displayStyleGroupId, PortalUtil.getClassNameId(className), 0);
 
-		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
+		Map<String, String[]> preferenceMap = new HashMap<>();
 
 		String displayStyle =
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + ddmTemplate.getUuid();

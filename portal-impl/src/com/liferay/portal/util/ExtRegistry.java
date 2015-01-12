@@ -42,7 +42,7 @@ public class ExtRegistry {
 		Set<String> fileNames = _readExtFileNames(
 			servletContext, "/WEB-INF/ext-" + servletContextName + ".xml");
 
-		Map<String, Set<String>> conflicts = new HashMap<String, Set<String>>();
+		Map<String, Set<String>> conflicts = new HashMap<>();
 
 		for (Map.Entry<String, Set<String>> entry : _extMap.entrySet()) {
 			String curServletContextName = entry.getKey();
@@ -57,7 +57,7 @@ public class ExtRegistry {
 					curServletContextName);
 
 				if (conflictFileNames == null) {
-					conflictFileNames = new TreeSet<String>();
+					conflictFileNames = new TreeSet<>();
 
 					conflicts.put(curServletContextName, conflictFileNames);
 				}
@@ -145,7 +145,7 @@ public class ExtRegistry {
 			ServletContext servletContext, String resourcePath)
 		throws Exception {
 
-		Set<String> fileNames = new TreeSet<String>();
+		Set<String> fileNames = new TreeSet<>();
 
 		Document document = SAXReaderUtil.read(
 			servletContext.getResourceAsStream(resourcePath));
@@ -176,7 +176,6 @@ public class ExtRegistry {
 		"ext-spring.xml", "portal-log4j-ext.xml"
 	};
 
-	private static final Map<String, Set<String>> _extMap =
-		new HashMap<String, Set<String>>();
+	private static final Map<String, Set<String>> _extMap = new HashMap<>();
 
 }

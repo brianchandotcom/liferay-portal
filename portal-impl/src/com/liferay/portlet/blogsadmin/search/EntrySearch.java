@@ -30,7 +30,7 @@ public class EntrySearch extends SearchContainer<BlogsEntry> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-entries-were-found";
 
-	public static List<String> headerNames = new ArrayList<String>();
+	public static List<String> headerNames = new ArrayList<>();
 
 	static {
 		headerNames.add("title");

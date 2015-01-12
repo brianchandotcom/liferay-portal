@@ -444,7 +444,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 	@Override
 	public File exportEvent(long userId, long eventId) throws PortalException {
-		List<CalEvent> events = new ArrayList<CalEvent>();
+		List<CalEvent> events = new ArrayList<>();
 
 		CalEvent event = calEventPersistence.findByPrimaryKey(eventId);
 
@@ -539,7 +539,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		// Create new list
 
-		events = new ArrayList<CalEvent>();
+		events = new ArrayList<>();
 
 		events.addAll(timeZoneSensitiveEvents);
 		events.addAll(timeZoneInsensitiveEvents);
@@ -640,7 +640,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
 				cal.get(Calendar.DATE));
 
-			List<CalEvent> repeatingEvents = new ArrayList<CalEvent>();
+			List<CalEvent> repeatingEvents = new ArrayList<>();
 
 			for (CalEvent event : events) {
 				TZSRecurrence recurrence = event.getRecurrenceObj();
@@ -1679,7 +1679,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		if (Recur.DAILY.equals(frequency)) {
 			recurrence.setFrequency(Recurrence.DAILY);
 
-			List<DayAndPosition> dayPosList = new ArrayList<DayAndPosition>();
+			List<DayAndPosition> dayPosList = new ArrayList<>();
 
 			List<WeekDay> weekDays = recur.getDayList();
 
@@ -1696,7 +1696,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		else if (Recur.WEEKLY.equals(frequency)) {
 			recurrence.setFrequency(Recurrence.WEEKLY);
 
-			List<DayAndPosition> dayPosList = new ArrayList<DayAndPosition>();
+			List<DayAndPosition> dayPosList = new ArrayList<>();
 
 			List<WeekDay> weekDays = recur.getDayList();
 

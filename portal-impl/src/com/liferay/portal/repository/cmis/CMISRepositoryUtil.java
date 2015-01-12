@@ -122,7 +122,7 @@ public class CMISRepositoryUtil {
 		SessionFactoryImpl.newInstance();
 
 	static {
-		Set<String> defaultFilterSet = new HashSet<String>();
+		Set<String> defaultFilterSet = new HashSet<>();
 
 		// Base
 

@@ -36,8 +36,7 @@ public class SitesControlPanelEntry extends BaseControlPanelEntry {
 		throws Exception {
 
 		if (PropsValues.SITES_CONTROL_PANEL_MEMBERS_VISIBLE) {
-			LinkedHashMap<String, Object> groupParams =
-				new LinkedHashMap<String, Object>();
+			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 			groupParams.put("site", Boolean.TRUE);
 			groupParams.put("usersGroups", permissionChecker.getUserId());

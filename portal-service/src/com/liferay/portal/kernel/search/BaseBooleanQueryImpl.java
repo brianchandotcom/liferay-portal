@@ -76,7 +76,7 @@ public abstract class BaseBooleanQueryImpl
 			return StringUtil.split(values, CharPool.SPACE);
 		}
 
-		List<String> keywords = new ArrayList<String>();
+		List<String> keywords = new ArrayList<>();
 
 		while (values.length() > 0) {
 			if (values.startsWith(StringPool.QUOTE)) {

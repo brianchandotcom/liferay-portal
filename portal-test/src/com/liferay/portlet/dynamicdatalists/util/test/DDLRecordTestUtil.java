@@ -37,7 +37,7 @@ import java.util.Set;
 public class DDLRecordTestUtil {
 
 	public static Set<Locale> createAvailableLocales(Locale... locales) {
-		Set<Locale> availableLocales = new LinkedHashSet<Locale>();
+		Set<Locale> availableLocales = new LinkedHashSet<>();
 
 		for (Locale locale : locales) {
 			availableLocales.add(locale);

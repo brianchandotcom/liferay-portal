@@ -95,7 +95,7 @@ public class OrganizationStagedModelDataHandler
 			PortletDataContext portletDataContext, Organization organization)
 		throws Exception {
 
-		Queue<Organization> organizations = new LinkedList<Organization>();
+		Queue<Organization> organizations = new LinkedList<>();
 
 		organizations.add(organization);
 
@@ -299,8 +299,7 @@ public class OrganizationStagedModelDataHandler
 			portletDataContext.getReferenceDataElements(
 				organization, Address.class);
 
-		List<Address> addresses = new ArrayList<Address>(
-			addressElements.size());
+		List<Address> addresses = new ArrayList<>(addressElements.size());
 
 		for (Element addressElement : addressElements) {
 			String addressPath = addressElement.attributeValue("path");
@@ -338,7 +337,7 @@ public class OrganizationStagedModelDataHandler
 			portletDataContext.getReferenceDataElements(
 				organization, EmailAddress.class);
 
-		List<EmailAddress> emailAddresses = new ArrayList<EmailAddress>(
+		List<EmailAddress> emailAddresses = new ArrayList<>(
 			emailAddressElements.size());
 
 		for (Element emailAddressElement : emailAddressElements) {
@@ -436,7 +435,7 @@ public class OrganizationStagedModelDataHandler
 			portletDataContext.getReferenceDataElements(
 				organization, Phone.class);
 
-		List<Phone> phones = new ArrayList<Phone>(phoneElements.size());
+		List<Phone> phones = new ArrayList<>(phoneElements.size());
 
 		for (Element phoneElement : phoneElements) {
 			String phonePath = phoneElement.attributeValue("path");
@@ -479,7 +478,7 @@ public class OrganizationStagedModelDataHandler
 			portletDataContext.getReferenceDataElements(
 				organization, Website.class);
 
-		List<Website> websites = new ArrayList<Website>(websiteElements.size());
+		List<Website> websites = new ArrayList<>(websiteElements.size());
 
 		for (Element websiteElement : websiteElements) {
 			String websitePath = websiteElement.attributeValue("path");

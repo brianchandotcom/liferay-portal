@@ -54,6 +54,6 @@ public class MethodCache {
 	}
 
 	private static final Map<MethodKey, Method> _methods =
-		new ConcurrentHashMap<MethodKey, Method>();
+		new ConcurrentHashMap<>();
 
 }

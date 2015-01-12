@@ -235,7 +235,7 @@ public class LayoutSetPrototypePropagationTest
 		_layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup, true, layoutPrototype, true);
 
-		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
+		Map<String, String[]> preferenceMap = new HashMap<>();
 
 		preferenceMap.put("bulletStyle", new String[] {"Dots"});
 

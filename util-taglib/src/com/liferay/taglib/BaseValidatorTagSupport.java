@@ -44,7 +44,7 @@ public abstract class BaseValidatorTagSupport extends IncludeTag {
 		String validatorName, ValidatorTag validatorTag) {
 
 		if (_validatorTags == null) {
-			_validatorTags = new HashMap<String, ValidatorTag>();
+			_validatorTags = new HashMap<>();
 		}
 
 		_validatorTags.put(validatorName, validatorTag);

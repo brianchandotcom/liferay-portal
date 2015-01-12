@@ -3235,7 +3235,7 @@ public class StringUtil {
 			return splitLines(s);
 		}
 
-		List<String> nodeValues = new ArrayList<String>();
+		List<String> nodeValues = new ArrayList<>();
 
 		int offset = 0;
 		int pos = s.indexOf(delimiter, offset);
@@ -3369,7 +3369,7 @@ public class StringUtil {
 			return split(s, delimiter.charAt(0));
 		}
 
-		List<String> nodeValues = new ArrayList<String>();
+		List<String> nodeValues = new ArrayList<>();
 
 		int offset = 0;
 		int pos = s.indexOf(delimiter, offset);
@@ -3602,7 +3602,7 @@ public class StringUtil {
 
 		s = s.trim();
 
-		List<String> lines = new ArrayList<String>();
+		List<String> lines = new ArrayList<>();
 
 		int lastIndex = 0;
 

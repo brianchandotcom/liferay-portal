@@ -72,7 +72,7 @@ public class PollerCometDelayedJobImpl
 		PollerCometDelayedJobImpl.class);
 
 	private final List<PollerCometDelayedTask> _pollerCometDelayedTasks =
-		new LinkedList<PollerCometDelayedTask>();
+		new LinkedList<>();
 	private Timer _timer;
 
 	private class PollerCometTimerTask extends TimerTask {

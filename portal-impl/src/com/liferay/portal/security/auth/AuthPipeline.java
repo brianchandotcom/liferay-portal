@@ -303,7 +303,7 @@ public class AuthPipeline {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("key", key);
 
@@ -318,7 +318,7 @@ public class AuthPipeline {
 	private void _registerAuthFailure(String key, AuthFailure authFailure) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("key", key);
 
@@ -350,17 +350,14 @@ public class AuthPipeline {
 	private static final AuthPipeline _instance = new AuthPipeline();
 
 	private final Map<String, Authenticator[]> _authenticators =
-		new HashMap<String, Authenticator[]>();
+		new HashMap<>();
 	private final Map<Authenticator, ServiceRegistration<Authenticator>>
-		_authenticatorServiceRegistrations =
-			new ServiceRegistrationMap<Authenticator>();
+		_authenticatorServiceRegistrations = new ServiceRegistrationMap<>();
 	private final ServiceTracker<Authenticator, Authenticator>
 		_authenticatorServiceTracker;
-	private final Map<String, AuthFailure[]> _authFailures =
-		new HashMap<String, AuthFailure[]>();
+	private final Map<String, AuthFailure[]> _authFailures = new HashMap<>();
 	private final Map<AuthFailure, ServiceRegistration<AuthFailure>>
-		_authFailureServiceRegistrations =
-			new ServiceRegistrationMap<AuthFailure>();
+		_authFailureServiceRegistrations = new ServiceRegistrationMap<>();
 	private final ServiceTracker<AuthFailure, AuthFailure>
 		_authFailureServiceTracker;
 

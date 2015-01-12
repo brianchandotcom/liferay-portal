@@ -143,7 +143,7 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 
 	@Test
 	public void test10MkcolWithBody() {
-		Map<String, String> headers = new HashMap<String, String>();
+		Map<String, String> headers = new HashMap<>();
 
 		headers.put(HttpHeaders.CONTENT_TYPE, "xyz-foo/bar-512");
 

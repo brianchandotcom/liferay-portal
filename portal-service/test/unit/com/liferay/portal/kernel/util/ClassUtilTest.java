@@ -81,7 +81,7 @@ public class ClassUtilTest {
 		Set<String> actualClassNames = ClassUtil.getClasses(
 			new StringReader(sb.toString()), null);
 
-		Set<String> expectedClassNames = new HashSet<String>();
+		Set<String> expectedClassNames = new HashSet<>();
 
 		expectedClassNames.add(expectedAnnotationClassName);
 		expectedClassNames.addAll(Arrays.asList(arrayParameterClassNames));

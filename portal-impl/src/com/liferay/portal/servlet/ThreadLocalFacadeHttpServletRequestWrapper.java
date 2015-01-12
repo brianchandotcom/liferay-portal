@@ -49,7 +49,7 @@ public class ThreadLocalFacadeHttpServletRequestWrapper
 
 		_nextHttpServletRequestThreadLocal.set(httpServletRequest);
 
-		_locales = new ArrayList<Locale>();
+		_locales = new ArrayList<>();
 
 		Enumeration<Locale> enumeration = httpServletRequest.getLocales();
 

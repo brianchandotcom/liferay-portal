@@ -49,7 +49,7 @@ public class ServletContextUtil {
 	public static Set<String> getClassNames(ServletContext servletContext)
 		throws IOException {
 
-		Set<String> classNames = new HashSet<String>();
+		Set<String> classNames = new HashSet<>();
 
 		_getClassNames(servletContext, "/WEB-INF/classes", classNames);
 		_getClassNames(servletContext, "/WEB-INF/lib", classNames);
@@ -89,7 +89,7 @@ public class ServletContextUtil {
 
 		long lastModified = 0;
 
-		Queue<String> pathQueue = new LinkedList<String>();
+		Queue<String> pathQueue = new LinkedList<>();
 
 		pathQueue.offer(path);
 

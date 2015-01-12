@@ -41,7 +41,6 @@ public class IntrabandProxySkeletonRegistryUtil {
 	}
 
 	private static final Map<String, IntrabandProxySkeleton>
-		_intrabandProxySkeletons =
-			new ConcurrentHashMap<String, IntrabandProxySkeleton>();
+		_intrabandProxySkeletons = new ConcurrentHashMap<>();
 
 }

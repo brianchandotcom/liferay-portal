@@ -115,8 +115,7 @@ public class DefaultThreadLocalBinder implements ThreadLocalBinder {
 
 	@Override
 	public void record() {
-		Map<ThreadLocal<?>, Object> threadLocalValues =
-			new HashMap<ThreadLocal<?>, Object>();
+		Map<ThreadLocal<?>, Object> threadLocalValues = new HashMap<>();
 
 		for (ThreadLocal<?> threadLocal : _threadLocals) {
 			Object value = threadLocal.get();
@@ -152,8 +151,7 @@ public class DefaultThreadLocalBinder implements ThreadLocalBinder {
 			};
 
 	private ClassLoader _classLoader;
-	private final Set<ThreadLocal<?>> _threadLocals =
-		new HashSet<ThreadLocal<?>>();
+	private final Set<ThreadLocal<?>> _threadLocals = new HashSet<>();
 	private Map<String, String> _threadLocalSources;
 
 }

@@ -108,7 +108,7 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 
 	@Override
 	public Set<String> getPropertySet(String key) {
-		return new TreeSet<String>(SetUtil.fromArray(getPropertyArray(key)));
+		return new TreeSet<>(SetUtil.fromArray(getPropertyArray(key)));
 	}
 
 	@Override
@@ -271,12 +271,11 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 
 	private static final Log _log = LogFactoryUtil.getLog(BasePACLPolicy.class);
 
-	private final Map<String, Checker> _checkers =
-		new HashMap<String, Checker>();
+	private final Map<String, Checker> _checkers = new HashMap<>();
 	private final ClassLoader _classLoader;
 	private Policy _policy;
 	private final Properties _properties;
 	private final String _servletContextName;
-	private final List<URL> _urls = new ArrayList<URL>();
+	private final List<URL> _urls = new ArrayList<>();
 
 }

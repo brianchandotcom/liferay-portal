@@ -74,8 +74,7 @@ public class DeleteAfterTestRunTestRule extends BaseTestRule<Object, Object> {
 	protected void afterMethod(Description description, Object object) {
 		Class<?> testClass = description.getTestClass();
 
-		Map<Class<?>, FieldBag> deleteAfterTestRunFieldBags =
-			new HashMap<Class<?>, FieldBag>();
+		Map<Class<?>, FieldBag> deleteAfterTestRunFieldBags = new HashMap<>();
 
 		while (testClass != null) {
 			for (Field field : testClass.getDeclaredFields()) {
@@ -193,7 +192,7 @@ public class DeleteAfterTestRunTestRule extends BaseTestRule<Object, Object> {
 		Class<? extends PersistedModel> collectionType = null;
 
 		for (Object object : collection) {
-			Queue<Class<?>> classes = new LinkedList<Class<?>>();
+			Queue<Class<?>> classes = new LinkedList<>();
 
 			classes.add(object.getClass());
 
@@ -296,7 +295,7 @@ public class DeleteAfterTestRunTestRule extends BaseTestRule<Object, Object> {
 		}
 
 		private final Class<?> _fieldClass;
-		private final List<Field> _fields = new ArrayList<Field>();
+		private final List<Field> _fields = new ArrayList<>();
 
 	}
 

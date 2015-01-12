@@ -185,7 +185,7 @@ public class HitsImpl implements Hits {
 
 	@Override
 	public List<Document> toList() {
-		List<Document> subset = new ArrayList<Document>(_docs.length);
+		List<Document> subset = new ArrayList<>(_docs.length);
 
 		for (Document _doc : _docs) {
 			subset.add(_doc);

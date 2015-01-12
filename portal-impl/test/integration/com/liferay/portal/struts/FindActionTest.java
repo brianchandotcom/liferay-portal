@@ -135,7 +135,7 @@ public class FindActionTest {
 			LayoutTestUtil.addPortletToLayout(_blogLayout, PortletKeys.BLOGS);
 		}
 
-		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
+		Map<String, String[]> preferenceMap = new HashMap<>();
 
 		preferenceMap.put("assetLinkBehavior", new String[] {"viewInPortlet"});
 

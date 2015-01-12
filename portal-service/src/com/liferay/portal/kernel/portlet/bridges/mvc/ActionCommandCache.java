@@ -131,7 +131,7 @@ public class ActionCommandCache {
 			return actionCommands;
 		}
 
-		actionCommands = new ArrayList<ActionCommand>();
+		actionCommands = new ArrayList<>();
 
 		String[] actionCommandNames = StringUtil.split(actionCommandChain);
 
@@ -164,9 +164,9 @@ public class ActionCommandCache {
 		ActionCommandCache.class);
 
 	private final Map<String, ActionCommand> _actionCommandCache =
-		new ConcurrentHashMap<String, ActionCommand>();
+		new ConcurrentHashMap<>();
 	private final Map<String, List<ActionCommand>> _actionCommandChainCache =
-		new ConcurrentHashMap<String, List<ActionCommand>>();
+		new ConcurrentHashMap<>();
 	private final String _packagePrefix;
 	private final ServiceTracker<ActionCommand, ActionCommand> _serviceTracker;
 

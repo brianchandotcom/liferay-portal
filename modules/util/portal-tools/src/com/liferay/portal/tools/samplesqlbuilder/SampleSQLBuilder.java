@@ -211,10 +211,9 @@ public class SampleSQLBuilder {
 			db = new SampleMySQLDB();
 		}
 
-		Map<String, Writer> insertSQLWriters = new HashMap<String, Writer>();
-		Map<String, StringBundler> insertSQLs =
-			new HashMap<String, StringBundler>();
-		List<String> miscSQLs = new ArrayList<String>();
+		Map<String, Writer> insertSQLWriters = new HashMap<>();
+		Map<String, StringBundler> insertSQLs = new HashMap<>();
+		List<String> miscSQLs = new ArrayList<>();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(reader)) {
@@ -347,7 +346,7 @@ public class SampleSQLBuilder {
 	}
 
 	protected Map<String, Object> getContext() throws Exception {
-		Map<String, Object> context = new HashMap<String, Object>();
+		Map<String, Object> context = new HashMap<>();
 
 		context.put("dataFactory", _dataFactory);
 

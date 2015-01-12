@@ -36,7 +36,7 @@ public class MemoryMultiValueMapTest extends MultiValueMapTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		multiValueMap = new MemoryMultiValueMap<Integer, String>();
+		multiValueMap = new MemoryMultiValueMap<>();
 	}
 
 }

@@ -30,7 +30,7 @@ public class RequestDispatcherAttributeNames {
 		return _attributeNames.contains(name);
 	}
 
-	private static final Set<String> _attributeNames = new HashSet<String>();
+	private static final Set<String> _attributeNames = new HashSet<>();
 
 	static {
 		_attributeNames.add(JavaConstants.JAVAX_SERVLET_FORWARD_CONTEXT_PATH);

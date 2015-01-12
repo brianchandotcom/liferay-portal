@@ -778,7 +778,6 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
-	private final Map<String, Tuple> _equityToActivityMap =
-		new HashMap<String, Tuple>();
+	private final Map<String, Tuple> _equityToActivityMap = new HashMap<>();
 
 }

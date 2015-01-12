@@ -113,8 +113,8 @@ public class ClassLoaderPool {
 	}
 
 	private static final Map<String, ClassLoader> _classLoaders =
-		new ConcurrentHashMap<String, ClassLoader>();
+		new ConcurrentHashMap<>();
 	private static final Map<ClassLoader, String> _contextNames =
-		new ConcurrentHashMap<ClassLoader, String>();
+		new ConcurrentHashMap<>();
 
 }

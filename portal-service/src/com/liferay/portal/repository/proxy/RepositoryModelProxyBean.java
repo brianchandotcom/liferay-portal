@@ -111,7 +111,7 @@ public abstract class RepositoryModelProxyBean {
 			return fileEntries;
 		}
 
-		List<FileEntry> fileEntryProxyBeans = new ArrayList<FileEntry>(
+		List<FileEntry> fileEntryProxyBeans = new ArrayList<>(
 			fileEntries.size());
 
 		for (FileEntry fileEntry : fileEntries) {
@@ -132,7 +132,7 @@ public abstract class RepositoryModelProxyBean {
 			return fileVersions;
 		}
 
-		List<FileVersion> fileVersionProxyBeans = new ArrayList<FileVersion>(
+		List<FileVersion> fileVersionProxyBeans = new ArrayList<>(
 			fileVersions.size());
 
 		for (FileVersion fileVersion : fileVersions) {
@@ -151,7 +151,7 @@ public abstract class RepositoryModelProxyBean {
 			return folders;
 		}
 
-		List<Folder> folderProxyBeans = new ArrayList<Folder>(folders.size());
+		List<Folder> folderProxyBeans = new ArrayList<>(folders.size());
 
 		for (Folder folder : folders) {
 			folderProxyBeans.add(newFolderProxyBean(folder));
@@ -169,7 +169,7 @@ public abstract class RepositoryModelProxyBean {
 			return objects;
 		}
 
-		List<Object> objectProxyBeans = new ArrayList<Object>();
+		List<Object> objectProxyBeans = new ArrayList<>();
 
 		for (Object object : objects) {
 			objectProxyBeans.add(newProxyBean(object));

@@ -1385,7 +1385,7 @@ public class LocalProcessExecutorTest {
 	}
 
 	private static List<String> _createArguments(String jpdaOptions) {
-		List<String> arguments = new ArrayList<String>();
+		List<String> arguments = new ArrayList<>();
 
 		arguments.add(
 			"-D" + SystemProperties.SYSTEM_PROPERTIES_QUIET + "=true");

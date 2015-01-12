@@ -56,7 +56,7 @@ public class MapUtil {
 				"Array length is not an even number");
 		}
 
-		Map<T, T> map = new HashMap<T, T>();
+		Map<T, T> map = new HashMap<>();
 
 		for (int i = 0; i < array.length; i += 2) {
 			T key = array[i];
@@ -292,7 +292,7 @@ public class MapUtil {
 	public static <T> LinkedHashMap<String, T> toLinkedHashMap(
 		String[] params, String delimiter) {
 
-		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
 		if (params == null) {
 			return (LinkedHashMap<String, T>)map;

@@ -380,7 +380,7 @@ public class AssetPublisherPortletDataHandler
 		String companyGroupScopeId =
 			AssetPublisher.SCOPE_ID_GROUP_PREFIX + companyGroupId;
 
-		List<String> newValues = new ArrayList<String>(oldValues.length);
+		List<String> newValues = new ArrayList<>(oldValues.length);
 
 		for (String oldValue : oldValues) {
 			String newValue = StringUtil.replace(

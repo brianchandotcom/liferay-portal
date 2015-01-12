@@ -119,7 +119,7 @@ public class GetArticleAction extends Action {
 			themeDisplay.getCDNDynamicResourcesHost() +
 				themeDisplay.getPathContext() + "/html/portal/css.jsp");
 
-		Map<String, String> arguments = new LinkedHashMap<String, String>();
+		Map<String, String> arguments = new LinkedHashMap<>();
 
 		arguments.put("type", "text/css");
 		arguments.put("href", url);

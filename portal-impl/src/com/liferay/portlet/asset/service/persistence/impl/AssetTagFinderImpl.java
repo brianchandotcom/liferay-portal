@@ -166,7 +166,7 @@ public class AssetTagFinderImpl
 			qPos.add(periodLength);
 			qPos.add(endPeriod);
 
-			List<AssetTag> assetTags = new ArrayList<AssetTag>();
+			List<AssetTag> assetTags = new ArrayList<>();
 
 			Iterator<Object[]> itr = q.iterate();
 

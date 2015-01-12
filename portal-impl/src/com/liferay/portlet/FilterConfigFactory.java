@@ -41,7 +41,7 @@ public class FilterConfigFactory {
 	}
 
 	private FilterConfigFactory() {
-		_pool = new ConcurrentHashMap<String, Map<String, FilterConfig>>();
+		_pool = new ConcurrentHashMap<>();
 	}
 
 	private FilterConfig _create(
@@ -54,7 +54,7 @@ public class FilterConfigFactory {
 			portletApp.getServletContextName());
 
 		if (filterConfigs == null) {
-			filterConfigs = new ConcurrentHashMap<String, FilterConfig>();
+			filterConfigs = new ConcurrentHashMap<>();
 
 			_pool.put(portletApp.getServletContextName(), filterConfigs);
 		}

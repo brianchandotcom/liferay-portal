@@ -52,7 +52,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	public List<AssetEntry> getCompanyEntries(
 		long companyId, int start, int end) {
 
-		List<AssetEntry> entries = new ArrayList<AssetEntry>();
+		List<AssetEntry> entries = new ArrayList<>();
 
 		List<AssetEntry> companyEntries =
 			assetEntryLocalService.getCompanyEntries(companyId, start, end);
@@ -88,7 +88,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			entryQuery);
 
 		if (hasEntryQueryResults(entryQuery, filteredEntryQuery)) {
-			return new ArrayList<AssetEntry>();
+			return new ArrayList<>();
 		}
 
 		Object[] results = filterEntryQuery(filteredEntryQuery, false);
@@ -275,7 +275,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		if (entryQuery.isEnablePermissions()) {
 			PermissionChecker permissionChecker = getPermissionChecker();
 
-			filteredEntries = new ArrayList<AssetEntry>();
+			filteredEntries = new ArrayList<>();
 
 			for (AssetEntry entry : entries) {
 				String className = entry.getClassName();

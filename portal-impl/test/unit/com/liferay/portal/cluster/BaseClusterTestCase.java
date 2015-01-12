@@ -100,7 +100,7 @@ public class BaseClusterTestCase {
 				receiver);
 
 			if (jGroupsMessageList == null) {
-				jGroupsMessageList = new ArrayList<org.jgroups.Message>();
+				jGroupsMessageList = new ArrayList<>();
 
 				List<org.jgroups.Message> previousJgroupsMessageList =
 					_jGroupsMessages.putIfAbsent(receiver, jGroupsMessageList);
@@ -117,8 +117,7 @@ public class BaseClusterTestCase {
 
 		private static CountDownLatch _countDownLatch;
 		private static final ConcurrentMap<Receiver, List<org.jgroups.Message>>
-			_jGroupsMessages =
-				new ConcurrentHashMap<Receiver, List<org.jgroups.Message>>();
+			_jGroupsMessages = new ConcurrentHashMap<>();
 
 	}
 

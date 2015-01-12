@@ -423,6 +423,6 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 
 	private ChannelHub _channelHub;
 	private final ConcurrentMap<Long, ChannelHub> _channelHubs =
-		new ConcurrentHashMap<Long, ChannelHub>();
+		new ConcurrentHashMap<>();
 
 }

@@ -114,7 +114,7 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 		Map<String, Class<?>> classes = _classes.get(classLoader);
 
 		if (classes == null) {
-			classes = new HashMap<String, Class<?>>();
+			classes = new HashMap<>();
 
 			_classes.put(classLoader, classes);
 		}
@@ -134,7 +134,7 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 		DynamicQueryFactoryImpl.class);
 
 	private final Map<ClassLoader, Map<String, Class<?>>> _classes =
-		new HashMap<ClassLoader, Map<String, Class<?>>>();
+		new HashMap<>();
 	private final ClassLoader _portalClassLoader =
 		DynamicQueryFactoryImpl.class.getClassLoader();
 

@@ -47,7 +47,7 @@ public class PortletSandboxHandler extends BaseSandboxHandler {
 	protected void clonePlugin(File dir, PluginPackage pluginPackage)
 		throws Exception {
 
-		Map<String, String> filterMap = new HashMap<String, String>();
+		Map<String, String> filterMap = new HashMap<>();
 
 		filterMap.put(
 			"portlet_class", "com.liferay.util.bridges.alloy.AlloyPortlet");
@@ -131,7 +131,7 @@ public class PortletSandboxHandler extends BaseSandboxHandler {
 		List<Element> portletElements = rootElement.elements("portlet");
 
 		for (Element portletElement : portletElements) {
-			List<Element> elements = new ArrayList<Element>();
+			List<Element> elements = new ArrayList<>();
 
 			Element resourceBundleElement = SAXReaderUtil.createElement(
 				SAXReaderUtil.createQName(

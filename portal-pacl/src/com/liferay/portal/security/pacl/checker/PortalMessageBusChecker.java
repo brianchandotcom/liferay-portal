@@ -107,7 +107,7 @@ public class PortalMessageBusChecker extends BaseChecker {
 			"security-manager-message-bus-listen");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> destinationNames = new TreeSet<String>(
+			Set<String> destinationNames = new TreeSet<>(
 				_listenDestinationNames);
 
 			for (String destinationName : destinationNames) {
@@ -123,8 +123,7 @@ public class PortalMessageBusChecker extends BaseChecker {
 			"security-manager-message-bus-send");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> destinationNames = new TreeSet<String>(
-				_sendDestinationNames);
+			Set<String> destinationNames = new TreeSet<>(_sendDestinationNames);
 
 			for (String destinationName : destinationNames) {
 				_log.debug(

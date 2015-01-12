@@ -90,7 +90,7 @@ public class ReferenceRegistry {
 
 	private static final PACL _pacl = new NoPACL();
 	private static final Set<ReferenceEntry> _referenceEntries =
-		new ConcurrentHashSet<ReferenceEntry>();
+		new ConcurrentHashSet<>();
 
 	private static class NoPACL implements PACL {
 

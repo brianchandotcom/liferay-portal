@@ -76,8 +76,7 @@ public class ParameterMapSettingsTest extends PowerMockito {
 			_parameterMapSettings.getValue("key", "defaultValue"));
 	}
 
-	private Map<String, String[]> _parameterMap =
-		new HashMap<String, String[]>();
+	private Map<String, String[]> _parameterMap = new HashMap<>();
 	private ParameterMapSettings _parameterMapSettings;
 	private MemorySettings _parentSettings = new MemorySettings();
 

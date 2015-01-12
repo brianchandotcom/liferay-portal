@@ -90,7 +90,7 @@ public class CaptureAppender extends AppenderSkeleton {
 	private final Level _level;
 	private final Logger _logger;
 	private final List<LoggingEvent> _loggingEvents =
-		new CopyOnWriteArrayList<LoggingEvent>();
+		new CopyOnWriteArrayList<>();
 	private final Category _parentCategory;
 
 }

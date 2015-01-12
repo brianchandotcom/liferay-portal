@@ -41,7 +41,7 @@ public class FilterMappingTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		_dispatchers = new ArrayList<String>();
+		_dispatchers = new ArrayList<>();
 
 		for (Dispatcher dispatcher : Dispatcher.values()) {
 			_dispatchers.add(dispatcher.name());
@@ -66,7 +66,7 @@ public class FilterMappingTest extends PowerMockito {
 
 	@Test
 	public void testIsMatchURLPattern() {
-		List<String> urlPatterns = new ArrayList<String>();
+		List<String> urlPatterns = new ArrayList<>();
 
 		urlPatterns.add("/c/portal/login");
 

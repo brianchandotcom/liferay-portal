@@ -181,7 +181,7 @@ public class FileRequestChannelHandlerTest {
 			Path expectedRootFolder, InputStream inputStream)
 		throws IOException {
 
-		final List<Path> files = new ArrayList<Path>();
+		final List<Path> files = new ArrayList<>();
 
 		try (ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
 			ZipEntry zipEntry = null;

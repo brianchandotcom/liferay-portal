@@ -356,8 +356,7 @@ public class SyncEngine {
 					SyncSite syncSite = SyncSiteService.fetchSyncSite(
 						syncSiteId);
 
-					Map<String, Object> parameters =
-						new HashMap<String, Object>();
+					Map<String, Object> parameters = new HashMap<>();
 
 					parameters.put("companyId", syncSite.getCompanyId());
 					parameters.put("repositoryId", syncSite.getGroupId());
@@ -415,6 +414,6 @@ public class SyncEngine {
 			Executors.newScheduledThreadPool(5);
 	private static boolean _running;
 	private static final Map<Long, Object[]> _syncAccountTasks =
-		new HashMap<Long, Object[]>();
+		new HashMap<>();
 
 }

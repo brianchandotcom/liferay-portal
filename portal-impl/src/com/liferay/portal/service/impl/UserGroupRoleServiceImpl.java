@@ -37,9 +37,8 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 	public void addUserGroupRoles(long userId, long groupId, long[] roleIds)
 		throws PortalException {
 
-		List<UserGroupRole> organizationUserGroupRoles =
-			new ArrayList<UserGroupRole>();
-		List<UserGroupRole> siteUserGroupRoles = new ArrayList<UserGroupRole>();
+		List<UserGroupRole> organizationUserGroupRoles = new ArrayList<>();
+		List<UserGroupRole> siteUserGroupRoles = new ArrayList<>();
 
 		Group group = groupLocalService.getGroup(groupId);
 
@@ -91,7 +90,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
 
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+		List<UserGroupRole> userGroupRoles = new ArrayList<>();
 
 		for (long userId : userIds) {
 			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
@@ -132,9 +131,8 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		throws PortalException {
 
 		List<UserGroupRole> filteredOrganizationUserGroupRoles =
-			new ArrayList<UserGroupRole>();
-		List<UserGroupRole> filteredSiteUserGroupRoles =
-			new ArrayList<UserGroupRole>();
+			new ArrayList<>();
+		List<UserGroupRole> filteredSiteUserGroupRoles = new ArrayList<>();
 
 		Group group = groupLocalService.getGroup(groupId);
 
@@ -203,8 +201,7 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		UserGroupRolePermissionUtil.check(
 			getPermissionChecker(), groupId, roleId);
 
-		List<UserGroupRole> filteredUserGroupRoles =
-			new ArrayList<UserGroupRole>();
+		List<UserGroupRole> filteredUserGroupRoles = new ArrayList<>();
 
 		Role role = rolePersistence.findByPrimaryKey(roleId);
 

@@ -252,7 +252,7 @@ public class CustomSQL {
 
 		keywords = keywords.trim();
 
-		List<String> keywordsList = new ArrayList<String>();
+		List<String> keywordsList = new ArrayList<>();
 
 		for (int i = 0; i < keywords.length(); i++) {
 			char c = keywords.charAt(i);
@@ -433,7 +433,7 @@ public class CustomSQL {
 		}
 
 		if (_sqlPool == null) {
-			_sqlPool = new HashMap<String, String>();
+			_sqlPool = new HashMap<>();
 		}
 		else {
 			_sqlPool.clear();

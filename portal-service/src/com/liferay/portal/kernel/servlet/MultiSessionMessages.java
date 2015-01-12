@@ -154,7 +154,7 @@ public class MultiSessionMessages {
 	}
 
 	public static Set<String> keySet(PortletRequest portletRequest) {
-		Set<String> set = new HashSet<String>();
+		Set<String> set = new HashSet<>();
 
 		set.addAll(SessionMessages.keySet(portletRequest));
 

@@ -57,7 +57,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			List<Long> fileVersionIds = new ArrayList<Long>();
+			List<Long> fileVersionIds = new ArrayList<>();
 
 			while (rs.next()) {
 				long fileVersionId = rs.getLong("fileVersionId");
@@ -77,7 +77,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		List<Long> tableIds = new ArrayList<Long>();
+		List<Long> tableIds = new ArrayList<>();
 
 		try {
 			long classNameId = PortalUtil.getClassNameId(DLFileEntry.class);

@@ -322,7 +322,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	protected List<UserGroup> filterUserGroups(List<UserGroup> userGroups)
 		throws PortalException {
 
-		List<UserGroup> filteredGroups = new ArrayList<UserGroup>();
+		List<UserGroup> filteredGroups = new ArrayList<>();
 
 		for (UserGroup userGroup : userGroups) {
 			if (UserGroupPermissionUtil.contains(

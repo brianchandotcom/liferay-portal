@@ -131,7 +131,6 @@ public class CometHandlerPool {
 
 	private final ReadWriteLock _cometHandlerPoolReadWriteLock =
 		new ReentrantReadWriteLock();
-	private final Map<String, CometHandler> _cometHandlers =
-		new HashMap<String, CometHandler>();
+	private final Map<String, CometHandler> _cometHandlers = new HashMap<>();
 
 }

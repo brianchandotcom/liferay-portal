@@ -83,7 +83,7 @@ public abstract class BaseSearchTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		Map<Locale, String> keywordsMap = new HashMap<Locale, String>();
+		Map<Locale, String> keywordsMap = new HashMap<>();
 
 		keywordsMap.put(LocaleUtil.getDefault(), "entity title");
 		keywordsMap.put(LocaleUtil.HUNGARY, "entitas neve");

@@ -217,7 +217,7 @@ public abstract class BaseSharepointStorageImpl implements SharepointStorage {
 			long groupId, String path, long defaultParentFolderId)
 		throws Exception {
 
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		folderIds.add(defaultParentFolderId);
 

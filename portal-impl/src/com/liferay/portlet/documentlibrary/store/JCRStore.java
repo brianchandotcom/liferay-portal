@@ -465,7 +465,7 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public String[] getFileNames(long companyId, long repositoryId) {
-		List<String> fileNames = new ArrayList<String>();
+		List<String> fileNames = new ArrayList<>();
 
 		Session session = null;
 
@@ -505,7 +505,7 @@ public class JCRStore extends BaseStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException {
 
-		List<String> fileNames = new ArrayList<String>();
+		List<String> fileNames = new ArrayList<>();
 
 		Session session = null;
 

@@ -99,7 +99,7 @@ public class ClusterRequest implements Serializable {
 		Address... targetClusterNodeAddresses) {
 
 		if (_targetClusterNodeAddresses == null) {
-			_targetClusterNodeAddresses = new HashSet<Address>(
+			_targetClusterNodeAddresses = new HashSet<>(
 				targetClusterNodeAddresses.length);
 		}
 
@@ -110,8 +110,7 @@ public class ClusterRequest implements Serializable {
 
 	public void addTargetClusterNodeIds(String... targetClusterNodeIds) {
 		if (_targetClusterNodeIds == null) {
-			_targetClusterNodeIds = new HashSet<String>(
-				targetClusterNodeIds.length);
+			_targetClusterNodeIds = new HashSet<>(targetClusterNodeIds.length);
 		}
 
 		for (String targetClusterNodeId : targetClusterNodeIds) {

@@ -102,7 +102,7 @@ public class JMXProxyUtil {
 	}
 
 	protected static Object decodeArrayToList(Object array) {
-		List<Object> list = new ArrayList<Object>();
+		List<Object> list = new ArrayList<>();
 
 		for (int i = 0; i < Array.getLength(array); i++) {
 			list.add(Array.get(array, i));

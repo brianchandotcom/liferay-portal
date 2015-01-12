@@ -118,7 +118,7 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 	}
 
 	protected Map<Locale, String> getLocalizationMap(long groupId, String key) {
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
 

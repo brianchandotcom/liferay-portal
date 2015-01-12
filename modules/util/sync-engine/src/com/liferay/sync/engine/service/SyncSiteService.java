@@ -160,7 +160,7 @@ public class SyncSiteService {
 				return activeSyncSiteIds;
 			}
 
-			activeSyncSiteIds = new HashSet<Long>(
+			activeSyncSiteIds = new HashSet<>(
 				_syncSitePersistence.findByA_S(true, syncAccountId));
 
 			_activeSyncSiteIds.put(syncAccountId, activeSyncSiteIds);
@@ -267,7 +267,7 @@ public class SyncSiteService {
 		SyncSiteService.class);
 
 	private static final Map<Long, Set<Long>> _activeSyncSiteIds =
-		new HashMap<Long, Set<Long>>();
+		new HashMap<>();
 	private static SyncSitePersistence _syncSitePersistence =
 		getSyncSitePersistence();
 

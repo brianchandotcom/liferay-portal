@@ -35,6 +35,6 @@ public class RecordUncaughtExceptionHandler
 	}
 
 	private final Map<Thread, Throwable> _uncaughtMap =
-		new ConcurrentHashMap<Thread, Throwable>();
+		new ConcurrentHashMap<>();
 
 }

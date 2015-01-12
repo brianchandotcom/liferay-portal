@@ -268,7 +268,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			long companyId, long groupId)
 		throws Exception {
 
-		Map<String, String> nameLanguageKeys = new HashMap<String, String>();
+		Map<String, String> nameLanguageKeys = new HashMap<>();
 
 		nameLanguageKeys.put(
 			DLFileEntryTypeConstants.NAME_CONTRACT,

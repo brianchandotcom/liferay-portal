@@ -197,15 +197,13 @@ public class PoshiRunnerContext {
 		"../../../portal-web/test/functional/com/liferay/portalweb/");
 
 	private static final Map<String, Element> _commandElements =
-		new HashMap<String, Element>();
-	private static final Map<String, String> _pathLocators =
-		new HashMap<String, String>();
+		new HashMap<>();
+	private static final Map<String, String> _pathLocators = new HashMap<>();
 	private static final Pattern _pattern = Pattern.compile(
 		"public [a-z]* [A-Za-z0-9_]*\\(.*?\\)");
-	private static final Map<String, Element> _rootElements =
-		new HashMap<String, Element>();
+	private static final Map<String, Element> _rootElements = new HashMap<>();
 	private static final Map<String, Integer> _seleniumParameterCounts =
-		new HashMap<String, Integer>();
+		new HashMap<>();
 
 	static {
 		try {

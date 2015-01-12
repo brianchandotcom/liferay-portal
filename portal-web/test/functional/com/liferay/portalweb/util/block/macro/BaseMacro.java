@@ -29,8 +29,7 @@ public class BaseMacro {
 	}
 
 	protected Map<String, String> commandScopeVariables;
-	protected Map<String, String> definitionScopeVariables =
-		new HashMap<String, String>();
+	protected Map<String, String> definitionScopeVariables = new HashMap<>();
 	protected Map<String, String> executeScopeVariables;
 	protected Map<String, String> forScopeVariables;
 	protected LiferaySelenium liferaySelenium;

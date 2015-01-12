@@ -146,7 +146,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 
 		String path = sb.toString();
 
-		Map<String, String> params = new HashMap<String, String>();
+		Map<String, String> params = new HashMap<>();
 
 		if (statusInTrash) {
 			params.put(

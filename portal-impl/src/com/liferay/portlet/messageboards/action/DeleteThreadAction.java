@@ -92,7 +92,7 @@ public class DeleteThreadAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "threadIds"), 0L);
 		}
 
-		List<TrashedModel> trashedModels = new ArrayList<TrashedModel>();
+		List<TrashedModel> trashedModels = new ArrayList<>();
 
 		for (long deleteThreadId : deleteThreadIds) {
 			if (moveToTrash) {

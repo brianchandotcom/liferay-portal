@@ -413,7 +413,7 @@ public class PluginsSummaryBuilder {
 
 		String relengChangeLogContent = FileUtil.read(relengChangeLogFile);
 
-		List<String> relengChangeLogEntries = new ArrayList<String>();
+		List<String> relengChangeLogEntries = new ArrayList<>();
 
 		String[] relengChangeLogEntriesArray = StringUtil.split(
 			relengChangeLogContent, "\n");
@@ -633,8 +633,8 @@ public class PluginsSummaryBuilder {
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 
-	private Set<String> _distinctAuthors = new TreeSet<String>();
-	private Set<String> _distinctLicenses = new TreeSet<String>();
+	private Set<String> _distinctAuthors = new TreeSet<>();
+	private Set<String> _distinctLicenses = new TreeSet<>();
 	private String _latestHASH;
 	private File _pluginsDir;
 

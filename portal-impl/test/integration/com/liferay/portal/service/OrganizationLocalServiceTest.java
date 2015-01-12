@@ -443,7 +443,6 @@ public class OrganizationLocalServiceTest {
 	}
 
 	@DeleteAfterTestRun
-	private final List<Organization> _organizations =
-		new ArrayList<Organization>();
+	private final List<Organization> _organizations = new ArrayList<>();
 
 }

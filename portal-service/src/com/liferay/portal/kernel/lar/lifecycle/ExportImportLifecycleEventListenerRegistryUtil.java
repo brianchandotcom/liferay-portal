@@ -116,17 +116,14 @@ public class ExportImportLifecycleEventListenerRegistryUtil {
 		_instance = new ExportImportLifecycleEventListenerRegistryUtil();
 
 	private final Set<ExportImportLifecycleListener>
-		_asyncExportImportLifecycleListeners =
-			new HashSet<ExportImportLifecycleListener>();
+		_asyncExportImportLifecycleListeners = new HashSet<>();
 	private final ServiceRegistrationMap<ExportImportLifecycleListener>
-		_serviceRegistrations =
-			new ServiceRegistrationMap<ExportImportLifecycleListener>();
+		_serviceRegistrations = new ServiceRegistrationMap<>();
 	private final ServiceTracker
 		<ExportImportLifecycleListener, ExportImportLifecycleListener>
 			_serviceTracker;
 	private final Set<ExportImportLifecycleListener>
-		_syncExportImportLifecycleListeners =
-			new HashSet<ExportImportLifecycleListener>();
+		_syncExportImportLifecycleListeners = new HashSet<>();
 
 	private class ExportImportLifecycleListenerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

@@ -76,7 +76,7 @@ public class ModuleApplicationContextCreator
 	protected String[] buildConfigLocations(
 		Dictionary<String, String> headers) {
 
-		List<String> configLocations = new ArrayList<String>();
+		List<String> configLocations = new ArrayList<>();
 
 		Collections.addAll(
 			configLocations, ConfigUtils.getHeaderLocations(headers));

@@ -119,7 +119,7 @@ public class NestedPortletsConfigurationAction
 	protected List<String> getColumnNames(String content, String portletId) {
 		Matcher matcher = _pattern.matcher(content);
 
-		Set<String> columnIds = new HashSet<String>();
+		Set<String> columnIds = new HashSet<>();
 
 		while (matcher.find()) {
 			if (Validator.isNotNull(matcher.group(1))) {
@@ -127,7 +127,7 @@ public class NestedPortletsConfigurationAction
 			}
 		}
 
-		Set<String> columnNames = new LinkedHashSet<String>();
+		Set<String> columnNames = new LinkedHashSet<>();
 
 		for (String columnId : columnIds) {
 			if (!columnId.contains(portletId)) {
@@ -137,7 +137,7 @@ public class NestedPortletsConfigurationAction
 			}
 		}
 
-		return new ArrayList<String>(columnNames);
+		return new ArrayList<>(columnNames);
 	}
 
 	protected void reorganizeNestedColumns(

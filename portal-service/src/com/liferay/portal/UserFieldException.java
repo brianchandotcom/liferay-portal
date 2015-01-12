@@ -51,6 +51,6 @@ public class UserFieldException extends PortalException {
 		return !_fields.isEmpty();
 	}
 
-	private final List<String> _fields = new ArrayList<String>();
+	private final List<String> _fields = new ArrayList<>();
 
 }

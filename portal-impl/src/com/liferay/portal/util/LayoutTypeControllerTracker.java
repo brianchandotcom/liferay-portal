@@ -96,7 +96,7 @@ public class LayoutTypeControllerTracker {
 			_defaultLayoutTypeControllers.entrySet();
 
 		for (Entry<String, LayoutTypeController> entry : entries) {
-			Map<String, Object> properties = new HashMap<String, Object>();
+			Map<String, Object> properties = new HashMap<>();
 
 			properties.put("layout.type", entry.getKey());
 
@@ -115,11 +115,9 @@ public class LayoutTypeControllerTracker {
 		new LayoutTypeControllerTracker();
 
 	private final Map<String, LayoutTypeController>
-		_defaultLayoutTypeControllers =
-			new ConcurrentHashMap<String, LayoutTypeController>();
+		_defaultLayoutTypeControllers = new ConcurrentHashMap<>();
 	private final ConcurrentMap<String, LayoutTypeController>
-		_layoutTypeControllers =
-			new ConcurrentHashMap<String, LayoutTypeController>();
+		_layoutTypeControllers = new ConcurrentHashMap<>();
 	private final ServiceTracker <LayoutTypeController, LayoutTypeController>
 		_serviceTracker;
 

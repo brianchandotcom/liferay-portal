@@ -32,7 +32,7 @@ public class LiferayFilterTracker {
 			clazz.getName());
 
 		if (liferayFilters == null) {
-			liferayFilters = new HashSet<LiferayFilter>();
+			liferayFilters = new HashSet<>();
 
 			_liferayFilters.put(clazz.getName(), liferayFilters);
 		}
@@ -66,6 +66,6 @@ public class LiferayFilterTracker {
 	}
 
 	private static final Map<String, Set<LiferayFilter>> _liferayFilters =
-		new HashMap<String, Set<LiferayFilter>>();
+		new HashMap<>();
 
 }

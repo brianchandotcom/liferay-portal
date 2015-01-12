@@ -381,8 +381,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> workflowContext = new HashMap<>();
 
 		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
 
@@ -468,7 +467,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			BaseModel<?> baseModel, int status)
 		throws Exception {
 
-		Map<String, String> fieldValues = new HashMap<String, String>();
+		Map<String, String> fieldValues = new HashMap<>();
 
 		Fields fields = StorageEngineUtil.getFields(storageId);
 

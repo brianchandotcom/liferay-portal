@@ -328,8 +328,7 @@ public class UserIndexer extends BaseIndexer {
 		else if (obj instanceof long[]) {
 			long[] userIds = (long[])obj;
 
-			Map<Long, Collection<Document>> documentsMap =
-				new HashMap<Long, Collection<Document>>();
+			Map<Long, Collection<Document>> documentsMap = new HashMap<>();
 
 			for (long userId : userIds) {
 				User user = UserLocalServiceUtil.getUserById(userId);
@@ -345,7 +344,7 @@ public class UserIndexer extends BaseIndexer {
 				Collection<Document> documents = documentsMap.get(companyId);
 
 				if (documents == null) {
-					documents = new ArrayList<Document>();
+					documents = new ArrayList<>();
 
 					documentsMap.put(companyId, documents);
 				}
@@ -408,7 +407,7 @@ public class UserIndexer extends BaseIndexer {
 	protected long[] getAncestorOrganizationIds(long[] organizationIds)
 		throws Exception {
 
-		Set<Long> ancestorOrganizationIds = new HashSet<Long>();
+		Set<Long> ancestorOrganizationIds = new HashSet<>();
 
 		for (long organizationId : organizationIds) {
 			Organization organization =

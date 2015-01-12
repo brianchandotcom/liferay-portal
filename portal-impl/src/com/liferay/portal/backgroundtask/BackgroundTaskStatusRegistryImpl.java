@@ -123,7 +123,7 @@ public class BackgroundTaskStatusRegistryImpl
 		BackgroundTaskStatusRegistryImpl.class);
 
 	private final Map<Long, BackgroundTaskStatus> _backgroundTaskStatuses =
-		new HashMap<Long, BackgroundTaskStatus>();
+		new HashMap<>();
 	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock();
 
 }

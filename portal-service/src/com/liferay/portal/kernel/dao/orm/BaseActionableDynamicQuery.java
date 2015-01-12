@@ -57,7 +57,7 @@ public abstract class BaseActionableDynamicQuery
 	@Override
 	public void addDocument(Document document) throws PortalException {
 		if (_documents == null) {
-			_documents = new ArrayList<Document>();
+			_documents = new ArrayList<>();
 		}
 
 		_documents.add(document);
@@ -227,7 +227,7 @@ public abstract class BaseActionableDynamicQuery
 		throws PortalException {
 
 		if (_documents == null) {
-			_documents = new ArrayList<Document>();
+			_documents = new ArrayList<>();
 		}
 
 		_documents.addAll(documents);

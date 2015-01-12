@@ -78,13 +78,13 @@ public class PortalImplCanonicalURLTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.GERMANY, "Zuhause1");
 		nameMap.put(LocaleUtil.SPAIN, "Casa1");
 		nameMap.put(LocaleUtil.US, "Home1");
 
-		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
 
 		friendlyURLMap.put(LocaleUtil.GERMANY, "/zuhause1");
 		friendlyURLMap.put(LocaleUtil.SPAIN, "/casa1");
@@ -93,13 +93,13 @@ public class PortalImplCanonicalURLTest {
 		_layout1 = LayoutTestUtil.addLayout(
 			_group.getGroupId(), false, nameMap, friendlyURLMap);
 
-		nameMap = new HashMap<Locale, String>();
+		nameMap = new HashMap<>();
 
 		nameMap.put(LocaleUtil.GERMANY, "Zuhause2");
 		nameMap.put(LocaleUtil.SPAIN, "Casa2");
 		nameMap.put(LocaleUtil.US, "Home2");
 
-		friendlyURLMap = new HashMap<Locale, String>();
+		friendlyURLMap = new HashMap<>();
 
 		friendlyURLMap.put(LocaleUtil.GERMANY, "/zuhause2");
 		friendlyURLMap.put(LocaleUtil.SPAIN, "/casa2");

@@ -66,7 +66,7 @@ public class ModelListenerRegistrationUtil {
 		List<ModelListener<?>> modelListeners = _modelListeners.get(clazz);
 
 		if (modelListeners == null) {
-			modelListeners = new ArrayList<ModelListener<?>>();
+			modelListeners = new ArrayList<>();
 
 			List<ModelListener<?>> previousList = _modelListeners.putIfAbsent(
 				clazz, modelListeners);
@@ -103,10 +103,9 @@ public class ModelListenerRegistrationUtil {
 		new ModelListenerRegistrationUtil();
 
 	private final ConcurrentMap<Class<?>, List<ModelListener<?>>>
-		_modelListeners =
-			new ConcurrentHashMap<Class<?>, List<ModelListener<?>>>();
+		_modelListeners = new ConcurrentHashMap<>();
 	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
-		new ConcurrentHashMap<String, ServiceRegistration<?>>();
+		new ConcurrentHashMap<>();
 	private final ServiceTracker<ModelListener<?>, ModelListener<?>>
 		_serviceTracker;
 
@@ -132,7 +131,7 @@ public class ModelListenerRegistrationUtil {
 			List<ModelListener<?>> modelListeners = _modelListeners.get(clazz);
 
 			if (modelListeners == null) {
-				modelListeners = new ArrayList<ModelListener<?>>();
+				modelListeners = new ArrayList<>();
 
 				List<ModelListener<?>> previousModelListeners =
 					_modelListeners.putIfAbsent(clazz, modelListeners);

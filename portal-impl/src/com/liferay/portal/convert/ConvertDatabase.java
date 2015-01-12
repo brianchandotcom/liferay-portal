@@ -91,7 +91,7 @@ public class ConvertDatabase extends BaseConvertProcess {
 
 		List<String> modelNames = ModelHintsUtil.getModels();
 
-		Map<String, Tuple> tableDetails = new LinkedHashMap<String, Tuple>();
+		Map<String, Tuple> tableDetails = new LinkedHashMap<>();
 
 		Connection connection = dataSource.getConnection();
 
@@ -178,7 +178,7 @@ public class ConvertDatabase extends BaseConvertProcess {
 				ServiceComponentLocalServiceUtil.getServiceComponents(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			Set<String> validIndexNames = new HashSet<String>();
+			Set<String> validIndexNames = new HashSet<>();
 
 			for (ServiceComponent serviceComponent : serviceComponents) {
 				String indexesSQL = serviceComponent.getIndexesSQL();

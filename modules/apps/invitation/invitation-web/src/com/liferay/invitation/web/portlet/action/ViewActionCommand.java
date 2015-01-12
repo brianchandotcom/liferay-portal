@@ -64,8 +64,8 @@ public class ViewActionCommand extends BaseActionCommand {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		Set<String> invalidEmailAddresses = new HashSet<String>();
-		Set<String> validEmailAddresses = new HashSet<String>();
+		Set<String> invalidEmailAddresses = new HashSet<>();
+		Set<String> validEmailAddresses = new HashSet<>();
 
 		PortletPreferences portletPreferences = portletRequest.getPreferences();
 

@@ -45,8 +45,7 @@ public class LockListenerRegistryUtil {
 	private static final LockListenerRegistryUtil _instance =
 		new LockListenerRegistryUtil();
 
-	private final Map<String, LockListener> _lockListeners =
-		new HashMap<String, LockListener>();
+	private final Map<String, LockListener> _lockListeners = new HashMap<>();
 	private final ServiceTracker<?, LockListener> _serviceTracker;
 
 	private class LockListenerServiceTrackerCustomizer

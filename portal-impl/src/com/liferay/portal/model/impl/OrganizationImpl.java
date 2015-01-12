@@ -62,7 +62,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 		String[] types = PropsUtil.getArray(
 			PropsKeys.ORGANIZATIONS_TYPES, new Filter(type));
 
-		List<String> parentTypes = new ArrayList<String>();
+		List<String> parentTypes = new ArrayList<>();
 
 		for (String curType : types) {
 			if (ArrayUtil.contains(getChildrenTypes(curType), type)) {
@@ -152,7 +152,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 	@Override
 	public List<Organization> getAncestors() throws PortalException {
-		List<Organization> ancestors = new ArrayList<Organization>();
+		List<Organization> ancestors = new ArrayList<>();
 
 		Organization organization = this;
 
@@ -172,14 +172,14 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 	@Override
 	public List<Organization> getDescendants() {
-		Set<Organization> descendants = new LinkedHashSet<Organization>();
+		Set<Organization> descendants = new LinkedHashSet<>();
 
 		for (Organization suborganization : getSuborganizations()) {
 			descendants.add(suborganization);
 			descendants.addAll(suborganization.getDescendants());
 		}
 
-		return new ArrayList<Organization>(descendants);
+		return new ArrayList<>(descendants);
 	}
 
 	@Override

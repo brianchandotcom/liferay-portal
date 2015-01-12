@@ -126,20 +126,19 @@ public class ManifestSummary implements Serializable {
 		manifestSummary._configurationPortletOptions =
 			new HashMap<String, String[]> (
 				manifestSummary._configurationPortletOptions);
-		manifestSummary._dataPortlets = new ArrayList<Portlet>(_dataPortlets);
-		manifestSummary._layoutPortlets = new ArrayList<Portlet>(
-			_layoutPortlets);
+		manifestSummary._dataPortlets = new ArrayList<>(_dataPortlets);
+		manifestSummary._layoutPortlets = new ArrayList<>(_layoutPortlets);
 
 		if (_exportDate != null) {
 			manifestSummary.setExportDate(new Date(_exportDate.getTime()));
 		}
 
-		manifestSummary._manifestSummaryKeys = new HashSet<String>(
+		manifestSummary._manifestSummaryKeys = new HashSet<>(
 			_manifestSummaryKeys);
-		manifestSummary._modelAdditionCounters =
-			new HashMap<String, LongWrapper>(_modelAdditionCounters);
-		manifestSummary._modelDeletionCounters =
-			new HashMap<String, LongWrapper>(_modelDeletionCounters);
+		manifestSummary._modelAdditionCounters = new HashMap<>(
+			_modelAdditionCounters);
+		manifestSummary._modelDeletionCounters = new HashMap<>(
+			_modelDeletionCounters);
 
 		return manifestSummary;
 	}
@@ -346,14 +345,12 @@ public class ManifestSummary implements Serializable {
 	}
 
 	private Map<String, String[]> _configurationPortletOptions =
-		new HashMap<String, String[]>();
-	private List<Portlet> _dataPortlets = new ArrayList<Portlet>();
+		new HashMap<>();
+	private List<Portlet> _dataPortlets = new ArrayList<>();
 	private Date _exportDate;
-	private List<Portlet> _layoutPortlets = new ArrayList<Portlet>();
-	private Set<String> _manifestSummaryKeys = new HashSet<String>();
-	private Map<String, LongWrapper> _modelAdditionCounters =
-		new HashMap<String, LongWrapper>();
-	private Map<String, LongWrapper> _modelDeletionCounters =
-		new HashMap<String, LongWrapper>();
+	private List<Portlet> _layoutPortlets = new ArrayList<>();
+	private Set<String> _manifestSummaryKeys = new HashSet<>();
+	private Map<String, LongWrapper> _modelAdditionCounters = new HashMap<>();
+	private Map<String, LongWrapper> _modelDeletionCounters = new HashMap<>();
 
 }

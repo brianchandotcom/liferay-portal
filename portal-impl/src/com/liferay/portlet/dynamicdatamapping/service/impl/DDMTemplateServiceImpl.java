@@ -400,7 +400,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			boolean includeAncestorTemplates)
 		throws PortalException {
 
-		List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
+		List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
 		ddmTemplates.addAll(
 			ddmTemplatePersistence.filterFindByG_C_C(

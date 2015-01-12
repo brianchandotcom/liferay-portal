@@ -455,7 +455,7 @@ public class JournalArticleFinderTest {
 			expectedArticles = _articles;
 		}
 		else {
-			expectedArticles = new ArrayList<JournalArticle>(_articles);
+			expectedArticles = new ArrayList<>(_articles);
 
 			Collections.reverse(expectedArticles);
 		}
@@ -488,11 +488,11 @@ public class JournalArticleFinderTest {
 	private static final long _USER_ID = 1234L;
 
 	private JournalArticle _article;
-	private List<JournalArticle> _articles = new ArrayList<JournalArticle>();
+	private List<JournalArticle> _articles = new ArrayList<>();
 	private DDMStructure _basicWebContentDDMStructure;
 	private DDMStructure _ddmStructure;
 	private JournalFolder _folder;
-	private List<Long> _folderIds = new ArrayList<Long>();
+	private List<Long> _folderIds = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private Group _group;

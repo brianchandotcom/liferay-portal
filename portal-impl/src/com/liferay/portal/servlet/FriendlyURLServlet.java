@@ -292,7 +292,7 @@ public class FriendlyURLServlet extends HttpServlet {
 				WebKeys.REDIRECT_TO_DEFAULT_LAYOUT, Boolean.TRUE);
 		}
 
-		Map<String, Object> requestContext = new HashMap<String, Object>();
+		Map<String, Object> requestContext = new HashMap<>();
 
 		requestContext.put("request", request);
 

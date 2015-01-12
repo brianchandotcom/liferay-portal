@@ -219,7 +219,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		Properties groupMappings = LDAPSettingsUtil.getGroupMappings(
 			ldapServerId, companyId);
 
-		List<String> mappedGroupAttributeIds = new ArrayList<String>();
+		List<String> mappedGroupAttributeIds = new ArrayList<>();
 
 		mappedGroupAttributeIds.add(groupMappings.getProperty("groupName"));
 		mappedGroupAttributeIds.add(groupMappings.getProperty("description"));
@@ -382,7 +382,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		String[] attributeIds = {_getNextRange(attribute.getID())};
 
 		while (true) {
-			List<SearchResult> searchResults = new ArrayList<SearchResult>();
+			List<SearchResult> searchResults = new ArrayList<>();
 
 			searchLDAP(
 				companyId, ldapContext, new byte[0], 0, baseDN, filter,

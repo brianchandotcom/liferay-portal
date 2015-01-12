@@ -23,11 +23,11 @@ import java.util.Set;
 public class PrimitiveLongSet {
 
 	public PrimitiveLongSet() {
-		_elements = new HashSet<Long>();
+		_elements = new HashSet<>();
 	}
 
 	public PrimitiveLongSet(int capacity) {
-		_elements = new HashSet<Long>(capacity);
+		_elements = new HashSet<>(capacity);
 	}
 
 	public void add(long value) {

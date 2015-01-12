@@ -65,8 +65,8 @@ public class ExportImportConfigurationSettingsMapFactory {
 			endDate, locale, timeZone);
 
 		if (MapUtil.isNotEmpty(layoutIdMap)) {
-			HashMap<Long, Boolean> serializableLayoutIdMap =
-				new HashMap<Long, Boolean>(layoutIdMap);
+			HashMap<Long, Boolean> serializableLayoutIdMap = new HashMap<>(
+				layoutIdMap);
 
 			settingsMap.put("layoutIdMap", serializableLayoutIdMap);
 		}
@@ -87,8 +87,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 		Map<String, String[]> parameterMap, Date startDate, Date endDate,
 		Locale locale, TimeZone timeZone) {
 
-		Map<String, Serializable> settingsMap =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> settingsMap = new HashMap<>();
 
 		if (endDate != null) {
 			settingsMap.put("endDate", endDate);
@@ -101,8 +100,8 @@ public class ExportImportConfigurationSettingsMapFactory {
 		settingsMap.put("locale", locale);
 
 		if (parameterMap != null) {
-			HashMap<String, String[]> serializableParameterMap =
-				new HashMap<String, String[]>(parameterMap);
+			HashMap<String, String[]> serializableParameterMap = new HashMap<>(
+				parameterMap);
 
 			settingsMap.put("parameterMap", serializableParameterMap);
 		}

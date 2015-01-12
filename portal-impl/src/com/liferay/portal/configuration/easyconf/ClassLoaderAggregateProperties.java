@@ -375,7 +375,7 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 	private final String _componentName;
 	private final CompositeConfiguration _globalCompositeConfiguration =
 		new CompositeConfiguration();
-	private final List<String> _loadedSources = new ArrayList<String>();
+	private final List<String> _loadedSources = new ArrayList<>();
 	private final Configuration _prefixedSystemConfiguration;
 	private final SystemConfiguration _systemConfiguration =
 		new SystemConfiguration();

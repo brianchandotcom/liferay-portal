@@ -418,7 +418,7 @@ public class EditExpandoAction extends PortletAction {
 		UnicodeProperties properties = expandoBridge.getAttributeProperties(
 			name);
 
-		List<String> propertyNames = new ArrayList<String>();
+		List<String> propertyNames = new ArrayList<>();
 
 		while (enu.hasMoreElements()) {
 			String param = enu.nextElement();

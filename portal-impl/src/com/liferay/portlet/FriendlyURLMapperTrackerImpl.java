@@ -75,7 +75,7 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 	public void register(FriendlyURLMapper friendlyURLMapper) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<String, Object>();
+		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("javax.portlet.name", _portlet.getPortletId());
 
@@ -100,8 +100,7 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 
 	private final Portlet _portlet;
 	private final Map<FriendlyURLMapper, ServiceRegistration<?>>
-		_serviceRegistrations =
-			new ConcurrentHashMap<FriendlyURLMapper, ServiceRegistration<?>>();
+		_serviceRegistrations = new ConcurrentHashMap<>();
 	private final ServiceTracker<FriendlyURLMapper, FriendlyURLMapper>
 		_serviceTracker;
 

@@ -557,7 +557,7 @@ public class ElementImpl extends BranchImpl implements Element {
 
 	@Override
 	public void sortAttributes(boolean recursive) {
-		Map<String, Attribute> attributesMap = new TreeMap<String, Attribute>();
+		Map<String, Attribute> attributesMap = new TreeMap<>();
 
 		List<Attribute> attributes = attributes();
 
@@ -588,7 +588,7 @@ public class ElementImpl extends BranchImpl implements Element {
 	public void sortElementsByAttribute(
 		String elementName, String attributeName) {
 
-		Map<String, Element> elementsMap = new TreeMap<String, Element>();
+		Map<String, Element> elementsMap = new TreeMap<>();
 
 		List<Element> elements = elements();
 
@@ -642,7 +642,7 @@ public class ElementImpl extends BranchImpl implements Element {
 	public void sortElementsByChildElement(
 		String elementName, String childElementName) {
 
-		Map<String, Element> elementsMap = new TreeMap<String, Element>();
+		Map<String, Element> elementsMap = new TreeMap<>();
 
 		List<Element> elements = elements();
 

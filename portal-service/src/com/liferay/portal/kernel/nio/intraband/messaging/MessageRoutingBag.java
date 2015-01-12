@@ -155,7 +155,7 @@ public class MessageRoutingBag implements Externalizable {
 	private Message _message;
 	private byte[] _messageData;
 	private boolean _routingDowncast;
-	private ArrayList<String> _routingTrace = new ArrayList<String>();
+	private ArrayList<String> _routingTrace = new ArrayList<>();
 	private boolean _synchronizedBridge;
 
 }

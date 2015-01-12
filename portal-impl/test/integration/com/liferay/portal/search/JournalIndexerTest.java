@@ -337,13 +337,13 @@ public class JournalIndexerTest {
 		int initialSearchCount2 = searchCount(
 			_group.getGroupId(), searchContext2);
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(LocaleUtil.GERMANY, "Titel");
 		titleMap.put(LocaleUtil.SPAIN, "Titulo");
 		titleMap.put(LocaleUtil.US, "Title");
 
-		Map<Locale, String> contentMap = new HashMap<Locale, String>();
+		Map<Locale, String> contentMap = new HashMap<>();
 
 		contentMap.put(LocaleUtil.GERMANY, "Liferay Architektur Ansatz");
 		contentMap.put(LocaleUtil.SPAIN, "Liferay Arquitectura Aproximacion");
@@ -401,13 +401,13 @@ public class JournalIndexerTest {
 		int initialSearchCount2 = searchCount(
 			_group.getGroupId(), searchContext2);
 
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(LocaleUtil.GERMANY, "Titel");
 		titleMap.put(LocaleUtil.SPAIN, "Titulo");
 		titleMap.put(LocaleUtil.US, "Title");
 
-		Map<Locale, String> contentMap = new HashMap<Locale, String>();
+		Map<Locale, String> contentMap = new HashMap<>();
 
 		contentMap.put(LocaleUtil.GERMANY, "Liferay Architektur Ansatz");
 		contentMap.put(LocaleUtil.SPAIN, "Liferay Arquitectura Aproximacion");

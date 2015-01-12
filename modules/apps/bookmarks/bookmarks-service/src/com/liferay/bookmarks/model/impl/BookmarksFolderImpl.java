@@ -33,7 +33,7 @@ public class BookmarksFolderImpl extends BookmarksFolderBaseImpl {
 
 	@Override
 	public List<Long> getAncestorFolderIds() throws PortalException {
-		List<Long> ancestorFolderIds = new ArrayList<Long>();
+		List<Long> ancestorFolderIds = new ArrayList<>();
 
 		BookmarksFolder folder = this;
 
@@ -57,7 +57,7 @@ public class BookmarksFolderImpl extends BookmarksFolderBaseImpl {
 
 	@Override
 	public List<BookmarksFolder> getAncestors() throws PortalException {
-		List<BookmarksFolder> ancestors = new ArrayList<BookmarksFolder>();
+		List<BookmarksFolder> ancestors = new ArrayList<>();
 
 		BookmarksFolder folder = this;
 

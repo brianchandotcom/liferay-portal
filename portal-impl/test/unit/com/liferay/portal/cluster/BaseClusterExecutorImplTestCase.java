@@ -259,7 +259,7 @@ public abstract class BaseClusterExecutorImplTestCase
 			Object exceptedResult, Address expectedAddress)
 		throws Exception {
 
-		List<Address> expectedAddresses = new ArrayList<Address>();
+		List<Address> expectedAddresses = new ArrayList<>();
 
 		expectedAddresses.add(expectedAddress);
 
@@ -313,8 +313,7 @@ public abstract class BaseClusterExecutorImplTestCase
 
 		org.jgroups.Address jAddress = localJChannel.getAddress();
 
-		List<org.jgroups.Address> jAddresses =
-			new ArrayList<org.jgroups.Address>();
+		List<org.jgroups.Address> jAddresses = new ArrayList<>();
 
 		jAddresses.add(jAddress);
 

@@ -77,7 +77,7 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 			}
 		}
 
-		Map<String, Object> parameters = new HashMap<String, Object>();
+		Map<String, Object> parameters = new HashMap<>();
 
 		parameters.put("companyId", syncSite.getCompanyId());
 		parameters.put("lastAccessTime", syncSite.getRemoteSyncTime());

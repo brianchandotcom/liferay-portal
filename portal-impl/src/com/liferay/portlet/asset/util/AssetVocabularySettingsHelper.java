@@ -97,8 +97,8 @@ public class AssetVocabularySettingsHelper {
 	public void setClassNameIdsAndClassTypePKs(
 		long[] classNameIds, long[] classTypePKs, boolean[] requireds) {
 
-		Set<String> requiredClassNameIds = new LinkedHashSet<String>();
-		Set<String> selectedClassNameIds = new LinkedHashSet<String>();
+		Set<String> requiredClassNameIds = new LinkedHashSet<>();
+		Set<String> selectedClassNameIds = new LinkedHashSet<>();
 
 		for (int i = 0; i < classNameIds.length; ++i) {
 			long classNameId = classNameIds[i];

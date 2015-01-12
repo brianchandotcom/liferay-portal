@@ -383,7 +383,7 @@ public class FileChecker extends BaseChecker {
 			return;
 		}
 
-		Set<String> paths = new LinkedHashSet<String>();
+		Set<String> paths = new LinkedHashSet<>();
 
 		// JDK
 

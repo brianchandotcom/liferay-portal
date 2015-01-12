@@ -79,7 +79,7 @@ public class SocialRequestInterpreterImpl implements SocialRequestInterpreter {
 		return _requestInterpreter.processRejection(request, themeDisplay);
 	}
 
-	private final Set<String> _classNames = new HashSet<String>();
+	private final Set<String> _classNames = new HashSet<>();
 	private final String _portletId;
 	private final SocialRequestInterpreter _requestInterpreter;
 

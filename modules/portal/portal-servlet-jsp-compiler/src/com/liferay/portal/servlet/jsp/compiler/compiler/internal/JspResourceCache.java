@@ -60,13 +60,13 @@ public class JspResourceCache implements BundleListener {
 			bundleWiring.getBundle());
 
 		if (resourceMap == null) {
-			resourceMap = new HashMap<String, Collection<String>>();
+			resourceMap = new HashMap<>();
 		}
 
 		resourceMap.put(path, resources);
 	}
 
 	private final Map<Bundle, Map<String, Collection<String>>> _resourceMaps =
-		new ConcurrentHashMap<Bundle, Map<String, Collection<String>>>();
+		new ConcurrentHashMap<>();
 
 }

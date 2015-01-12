@@ -805,7 +805,7 @@ public class WebServerServlet extends HttpServlet {
 			}
 		}
 
-		List<WebServerEntry> webServerEntries = new ArrayList<WebServerEntry>();
+		List<WebServerEntry> webServerEntries = new ArrayList<>();
 
 		webServerEntries.add(new WebServerEntry(path, "../"));
 
@@ -1132,7 +1132,7 @@ public class WebServerServlet extends HttpServlet {
 			return;
 		}
 
-		List<WebServerEntry> webServerEntries = new ArrayList<WebServerEntry>();
+		List<WebServerEntry> webServerEntries = new ArrayList<>();
 
 		List<Group> groups = WebDAVUtil.getGroups(user);
 

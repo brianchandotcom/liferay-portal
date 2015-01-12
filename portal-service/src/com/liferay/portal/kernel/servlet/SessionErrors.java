@@ -407,7 +407,7 @@ public class SessionErrors {
 			map = (Map<String, Object>)session.getAttribute(_CLASS_NAME);
 
 			if ((map == null) && createIfAbsent) {
-				map = new LinkedHashMap<String, Object>();
+				map = new LinkedHashMap<>();
 
 				session.setAttribute(_CLASS_NAME, map);
 			}
@@ -434,7 +434,7 @@ public class SessionErrors {
 			map = (Map<String, Object>)portletSession.getAttribute(_CLASS_NAME);
 
 			if ((map == null) && createIfAbsent) {
-				map = new LinkedHashMap<String, Object>();
+				map = new LinkedHashMap<>();
 
 				portletSession.setAttribute(_CLASS_NAME, map);
 			}

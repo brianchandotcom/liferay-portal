@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MultiValueMap;
 import com.liferay.portal.kernel.util.MultiValueMapFactory;
 
-import java.io.Serializable;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -32,10 +30,10 @@ public class MultiValueMapFactoryImpl implements MultiValueMapFactory {
 	@Override
 	public MultiValueMap<?, ?> getMultiValueMap(int type) {
 		if (type == MultiValueMapFactory.FILE) {
-			return new FileMultiValueMap<Serializable, Serializable>();
+			return new FileMultiValueMap<>();
 		}
 		else {
-			return new MemoryMultiValueMap<Serializable, Serializable>();
+			return new MemoryMultiValueMap<>();
 		}
 	}
 

@@ -34,7 +34,7 @@ public class SyncUserPersistence extends BasePersistenceImpl<SyncUser, Long> {
 	public SyncUser fetchBySyncAccountId(long syncAccountId)
 		throws SQLException {
 
-		Map<String, Object> fieldValues = new HashMap<String, Object>();
+		Map<String, Object> fieldValues = new HashMap<>();
 
 		fieldValues.put("syncAccountId", syncAccountId);
 

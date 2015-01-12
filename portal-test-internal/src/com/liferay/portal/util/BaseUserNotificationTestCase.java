@@ -319,7 +319,7 @@ public abstract class BaseUserNotificationTestCase {
 		throws Exception {
 
 		List<UserNotificationDelivery> userNotificationDeliveries =
-			new ArrayList<UserNotificationDelivery>();
+			new ArrayList<>();
 
 		userNotificationDeliveries.add(
 			UserNotificationDeliveryLocalServiceUtil.
@@ -437,6 +437,6 @@ public abstract class BaseUserNotificationTestCase {
 	protected User user;
 
 	protected List<UserNotificationDelivery> userNotificationDeliveries =
-		new ArrayList<UserNotificationDelivery>();
+		new ArrayList<>();
 
 }

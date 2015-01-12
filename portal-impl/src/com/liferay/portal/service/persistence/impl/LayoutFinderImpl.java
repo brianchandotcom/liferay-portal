@@ -157,8 +157,7 @@ public class LayoutFinderImpl
 			qPos.add(portletId.concat("_INSTANCE_%"));
 			qPos.add(preferences);
 
-			List<LayoutReference> layoutReferences =
-				new ArrayList<LayoutReference>();
+			List<LayoutReference> layoutReferences = new ArrayList<>();
 
 			Iterator<Object[]> itr = q.iterate();
 

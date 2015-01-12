@@ -66,8 +66,7 @@ public class GetUsersCountAction extends AJAXAction {
 		int count = 0;
 
 		for (long organizationId : organizationIds) {
-			LinkedHashMap<String, Object> params =
-				new LinkedHashMap<String, Object>();
+			LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 			params.put("usersOrgs", organizationId);
 
@@ -85,8 +84,7 @@ public class GetUsersCountAction extends AJAXAction {
 		int count = 0;
 
 		for (long userGroupId : userGroupIds) {
-			LinkedHashMap<String, Object> params =
-				new LinkedHashMap<String, Object>();
+			LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 			params.put("usersUserGroups", userGroupId);
 

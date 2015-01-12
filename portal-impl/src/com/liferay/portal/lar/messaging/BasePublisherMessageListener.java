@@ -69,8 +69,7 @@ public abstract class BasePublisherMessageListener
 		serviceContext.setSignedIn(!user.isDefaultUser());
 		serviceContext.setUserId(user.getUserId());
 
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> attributes = new HashMap<>();
 
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String param = entry.getKey();

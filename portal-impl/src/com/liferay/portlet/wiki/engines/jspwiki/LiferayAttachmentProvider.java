@@ -90,7 +90,7 @@ public class LiferayAttachmentProvider implements WikiAttachmentProvider {
 
 	@Override
 	public List<Attachment> getVersionHistory(Attachment attachment) {
-		List<Attachment> history = new ArrayList<Attachment>();
+		List<Attachment> history = new ArrayList<>();
 
 		history.add(attachment);
 

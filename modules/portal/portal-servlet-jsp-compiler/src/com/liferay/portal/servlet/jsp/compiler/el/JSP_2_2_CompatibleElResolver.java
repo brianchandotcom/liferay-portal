@@ -46,8 +46,7 @@ public class JSP_2_2_CompatibleElResolver extends ELResolver {
 	public Iterator<FeatureDescriptor> getFeatureDescriptors(
 		ELContext elContext, Object base) {
 
-		List<FeatureDescriptor> featureDescriptors =
-			new ArrayList<FeatureDescriptor>();
+		List<FeatureDescriptor> featureDescriptors = new ArrayList<>();
 
 		PageContext pageContext = (PageContext)elContext.getContext(
 			JspContext.class);

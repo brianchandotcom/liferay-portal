@@ -1389,7 +1389,7 @@ public class TableMapperTest {
 	private DataSource _dataSource;
 	private MockBasePersistence<Left> _leftBasePersistence;
 	private String _leftColumnName = "leftId";
-	private Map<Long, long[]> _mappingStore = new HashMap<Long, long[]>();
+	private Map<Long, long[]> _mappingStore = new HashMap<>();
 	private MockBasePersistence<Right> _rightBasePersistence;
 	private String _rightColumnName = "rightId";
 	private TableMapperImpl<Left, Right> _tableMapperImpl;
@@ -1515,8 +1515,7 @@ public class TableMapperTest {
 			_listeners.remove(listener);
 		}
 
-		private List<ModelListener<T>> _listeners =
-			new ArrayList<ModelListener<T>>();
+		private List<ModelListener<T>> _listeners = new ArrayList<>();
 		private boolean _noSuchModelException;
 
 	}
@@ -1695,7 +1694,7 @@ public class TableMapperTest {
 
 			Long rightPrimaryKey = (Long)params[0];
 
-			List<Long> leftPrimaryKeysList = new ArrayList<Long>();
+			List<Long> leftPrimaryKeysList = new ArrayList<>();
 
 			for (Map.Entry<Long, long[]> entry : _mappingStore.entrySet()) {
 				long[] rightPrimaryKeys = entry.getValue();
@@ -1749,7 +1748,7 @@ public class TableMapperTest {
 				return Collections.emptyList();
 			}
 
-			List<Long> rightPrimaryKeysList = new ArrayList<Long>(
+			List<Long> rightPrimaryKeysList = new ArrayList<>(
 				rightPrimaryKeys.length);
 
 			for (long rightPrimaryKey : rightPrimaryKeys) {
@@ -1842,8 +1841,7 @@ public class TableMapperTest {
 			_portalCaches.remove(name);
 		}
 
-		private Map<String, PortalCache<?, ?>> _portalCaches =
-			new HashMap<String, PortalCache<?, ?>>();
+		private Map<String, PortalCache<?, ?>> _portalCaches = new HashMap<>();
 
 	}
 

@@ -73,7 +73,7 @@ public class WordsImpl implements Words {
 	@Override
 	public Set<String> getDictionarySet() {
 		if (_dictionarySet == null) {
-			_dictionarySet = new HashSet<String>(getDictionaryList());
+			_dictionarySet = new HashSet<>(getDictionaryList());
 		}
 
 		return _dictionarySet;

@@ -78,6 +78,6 @@ public class MethodFactoryRegistryImpl implements MethodFactoryRegistry {
 
 	private MethodFactory _defaultMethodFactory;
 	private final Map<String, MethodFactory> _methodFactories =
-		new ConcurrentHashMap<String, MethodFactory>();
+		new ConcurrentHashMap<>();
 
 }

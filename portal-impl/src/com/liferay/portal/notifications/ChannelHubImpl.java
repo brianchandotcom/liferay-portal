@@ -363,8 +363,8 @@ public class ChannelHubImpl implements ChannelHub {
 			return;
 		}
 
-		List<NotificationEvent> persistedNotificationEvents =
-			new ArrayList<NotificationEvent>(notificationEvents.size());
+		List<NotificationEvent> persistedNotificationEvents = new ArrayList<>(
+			notificationEvents.size());
 
 		for (NotificationEvent notificationEvent : notificationEvents) {
 			if (notificationEvent.isDeliveryRequired()) {
@@ -414,7 +414,7 @@ public class ChannelHubImpl implements ChannelHub {
 
 	private Channel _channel;
 	private final ConcurrentMap<Long, Channel> _channels =
-		new ConcurrentHashMap<Long, Channel>();
+		new ConcurrentHashMap<>();
 	private long _companyId = CompanyConstants.SYSTEM;
 
 }

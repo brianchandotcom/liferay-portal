@@ -68,7 +68,7 @@ public class BackgroundTaskImpl extends BackgroundTaskBaseImpl {
 
 	@Override
 	public List<FileEntry> getAttachmentsFileEntries(int start, int end) {
-		List<FileEntry> fileEntries = new ArrayList<FileEntry>();
+		List<FileEntry> fileEntries = new ArrayList<>();
 
 		long attachmentsFolderId = getAttachmentsFolderId();
 

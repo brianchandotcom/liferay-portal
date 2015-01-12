@@ -130,7 +130,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			getFullHierarchyDDMFormFieldsMap(true);
 
-		List<DDMFormField> ddmFormFields = new ArrayList<DDMFormField>(
+		List<DDMFormField> ddmFormFields = new ArrayList<>(
 			ddmFormFieldsMap.values());
 
 		if (includeTransientFields) {
@@ -436,7 +436,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	protected List<String> getDDMFormFieldNames(
 		List<DDMFormField> ddmFormFields) {
 
-		List<String> fieldNames = new ArrayList<String>();
+		List<String> fieldNames = new ArrayList<>();
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			fieldNames.add(ddmFormField.getName());

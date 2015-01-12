@@ -1280,8 +1280,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_2);
 	}
 
-	protected Map<String, Future<?>> futures =
-		new ConcurrentHashMap<String, Future<?>>();
+	protected Map<String, Future<?>> futures = new ConcurrentHashMap<>();
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DLPreviewableProcessor.class);

@@ -368,7 +368,7 @@ public class WabProcessor {
 
 		// Class path order is critical
 
-		Map<String, File> classPath = new LinkedHashMap<String, File>();
+		Map<String, File> classPath = new LinkedHashMap<>();
 
 		classPath.put(
 			"ext/WEB-INF/classes", new File(_pluginDir, "ext/WEB-INF/classes"));
@@ -439,7 +439,7 @@ public class WabProcessor {
 			return Collections.emptySet();
 		}
 
-		Set<String> packageNames = new HashSet<String>();
+		Set<String> packageNames = new HashSet<>();
 
 		try {
 			ClassReader classReader = new ClassReader(inputStream);
@@ -686,7 +686,7 @@ public class WabProcessor {
 		int contentX = -1;
 		int contentY = content.length();
 
-		Set<String> packageNames = new HashSet<String>();
+		Set<String> packageNames = new HashSet<>();
 
 		while (true) {
 			contentX = content.lastIndexOf("<%@", contentY);
@@ -1201,10 +1201,10 @@ public class WabProcessor {
 	private String _bundleVersion;
 	private ClassLoader _classLoader;
 	private String _context;
-	private Set<String> _exportPackageNames = new HashSet<String>();
+	private Set<String> _exportPackageNames = new HashSet<>();
 	private File _file;
-	private Set<String> _ignoredResources = new HashSet<String>();
-	private Set<String> _importPackageNames = new HashSet<String>();
+	private Set<String> _ignoredResources = new HashSet<>();
+	private Set<String> _importPackageNames = new HashSet<>();
 	private File _manifestFile;
 	private Map<String, String[]> _parameters;
 	private File _pluginDir;

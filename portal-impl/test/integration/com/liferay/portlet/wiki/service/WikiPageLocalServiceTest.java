@@ -692,7 +692,7 @@ public class WikiPageLocalServiceTest {
 			String parentTitle, int level, ServiceContext serviceContext)
 		throws Exception {
 
-		List<WikiPage> pages = new ArrayList<WikiPage>();
+		List<WikiPage> pages = new ArrayList<>();
 
 		for (int i = 0; i < level; i++) {
 			WikiPage page = WikiTestUtil.addPage(

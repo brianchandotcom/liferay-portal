@@ -85,7 +85,7 @@ public class MBMailMessage {
 	}
 
 	private final List<ObjectValuePair<String, byte[]>> _bytesOVPs =
-		new ArrayList<ObjectValuePair<String, byte[]>>();
+		new ArrayList<>();
 	private String _htmlBody;
 	private String _plainBody;
 

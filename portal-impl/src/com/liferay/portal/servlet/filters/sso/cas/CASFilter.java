@@ -99,7 +99,7 @@ public class CASFilter extends BasePortalFilter {
 		Cas20ProxyTicketValidator cas20ProxyTicketValidator =
 			new Cas20ProxyTicketValidator(serverUrl);
 
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, String> parameters = new HashMap<>();
 
 		parameters.put("serverName", serverName);
 		parameters.put("casServerUrlPrefix", serverUrl);
@@ -209,6 +209,6 @@ public class CASFilter extends BasePortalFilter {
 	private static final Log _log = LogFactoryUtil.getLog(CASFilter.class);
 
 	private static final Map<Long, TicketValidator> _ticketValidators =
-		new ConcurrentHashMap<Long, TicketValidator>();
+		new ConcurrentHashMap<>();
 
 }

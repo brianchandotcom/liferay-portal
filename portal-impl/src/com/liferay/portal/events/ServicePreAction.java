@@ -460,7 +460,7 @@ public class ServicePreAction extends Action {
 				layout = null;
 			}
 			else if (group.isLayoutPrototype()) {
-				layouts = new ArrayList<Layout>();
+				layouts = new ArrayList<>();
 			}
 			else {
 				layouts = LayoutLocalServiceUtil.getLayouts(
@@ -1345,7 +1345,7 @@ public class ServicePreAction extends Action {
 			long userId, long groupId, boolean privateLayout, File larFile)
 		throws PortalException {
 
-		Map<String, String[]> parameterMap = new HashMap<String, String[]>();
+		Map<String, String[]> parameterMap = new HashMap<>();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PERMISSIONS,
@@ -1678,7 +1678,7 @@ public class ServicePreAction extends Action {
 
 			if (layout == null) {
 				LinkedHashMap<String, Object> groupParams =
-					new LinkedHashMap<String, Object>();
+					new LinkedHashMap<>();
 
 				groupParams.put("usersGroups", new Long(user.getUserId()));
 
@@ -1758,7 +1758,7 @@ public class ServicePreAction extends Action {
 			hasViewLayoutPermission = true;
 		}
 
-		List<Layout> accessibleLayouts = new ArrayList<Layout>();
+		List<Layout> accessibleLayouts = new ArrayList<>();
 
 		for (int i = 0; i < layouts.size(); i++) {
 			Layout curLayout = layouts.get(i);

@@ -207,7 +207,7 @@ public class Message implements Cloneable, Serializable {
 		}
 
 		if (_values == null) {
-			_values = new HashMap<String, Object>();
+			_values = new HashMap<>();
 		}
 
 		if (!(value instanceof Serializable)) {

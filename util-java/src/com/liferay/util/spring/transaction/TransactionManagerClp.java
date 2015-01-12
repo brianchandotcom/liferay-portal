@@ -127,7 +127,7 @@ public class TransactionManagerClp implements PlatformTransactionManager {
 	}
 
 	protected void initTransactionManagerMethods() {
-		_transactionManagerMethods = new HashMap<String, Method>();
+		_transactionManagerMethods = new HashMap<>();
 
 		Method[] methods = _transactionManager.getClass().getMethods();
 

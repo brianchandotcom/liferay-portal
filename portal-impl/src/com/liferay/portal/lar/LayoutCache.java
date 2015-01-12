@@ -111,12 +111,9 @@ public class LayoutCache {
 		return userRoles;
 	}
 
-	protected Map<Long, List<Role>> groupRolesMap =
-		new HashMap<Long, List<Role>>();
-	protected Map<Long, List<User>> groupUsersMap =
-		new HashMap<Long, List<User>>();
-	protected Map<String, Role> rolesMap = new HashMap<String, Role>();
-	protected Map<Long, List<Role>> userRolesMap =
-		new HashMap<Long, List<Role>>();
+	protected Map<Long, List<Role>> groupRolesMap = new HashMap<>();
+	protected Map<Long, List<User>> groupUsersMap = new HashMap<>();
+	protected Map<String, Role> rolesMap = new HashMap<>();
+	protected Map<Long, List<Role>> userRolesMap = new HashMap<>();
 
 }

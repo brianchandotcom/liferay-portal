@@ -87,7 +87,6 @@ public class DumpIndexDeletionPolicy implements IndexDeletionPolicy {
 	}
 
 	private volatile IndexCommit _lastIndexCommit;
-	private List<String> _segmentsFileNames =
-		new CopyOnWriteArrayList<String>();
+	private List<String> _segmentsFileNames = new CopyOnWriteArrayList<>();
 
 }

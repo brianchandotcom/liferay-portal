@@ -80,8 +80,7 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 			methodInvocation,
 			annotations.toArray(new Annotation[annotations.size()]));
 
-		Set<Class<? extends Annotation>> annotationClasses =
-			new HashSet<Class<? extends Annotation>>();
+		Set<Class<? extends Annotation>> annotationClasses = new HashSet<>();
 
 		annotation = _nullAnnotation;
 

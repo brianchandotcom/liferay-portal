@@ -31,7 +31,7 @@ public class RuleGroupSearch extends SearchContainer<MDRRuleGroup> {
 	public static final String EMPTY_RESULTS_MESSAGE =
 		"no-device-families-are-configured";
 
-	public static List<String> headerNames = new ArrayList<String>();
+	public static List<String> headerNames = new ArrayList<>();
 
 	static {
 		headerNames.add("name");

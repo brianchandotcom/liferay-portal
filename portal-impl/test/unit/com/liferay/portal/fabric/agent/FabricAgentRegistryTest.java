@@ -205,7 +205,7 @@ public class FabricAgentRegistryTest {
 			_objects.clear();
 		}
 
-		private final List<Object> _objects = new ArrayList<Object>();
+		private final List<Object> _objects = new ArrayList<>();
 
 	}
 

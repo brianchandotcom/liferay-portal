@@ -78,7 +78,7 @@ public class AuthVerifierResult {
 	}
 
 	private String _password;
-	private Map<String, Object> _settings = new HashMap<String, Object>();
+	private Map<String, Object> _settings = new HashMap<>();
 	private State _state = State.NOT_APPLICABLE;
 	private long _userId;
 

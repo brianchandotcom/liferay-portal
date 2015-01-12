@@ -597,7 +597,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 	protected Collection<Document> getArticleVersions(JournalArticle article)
 		throws PortalException {
 
-		Collection<Document> documents = new ArrayList<Document>();
+		Collection<Document> documents = new ArrayList<>();
 
 		List<JournalArticle> articles = null;
 
@@ -608,7 +608,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 						article.getResourcePrimKey());
 		}
 		else {
-			articles = new ArrayList<JournalArticle>();
+			articles = new ArrayList<>();
 
 			JournalArticle latestIndexableArticle =
 				JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(

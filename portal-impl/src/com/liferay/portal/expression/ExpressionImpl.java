@@ -68,7 +68,7 @@ public class ExpressionImpl<T> implements Expression<T> {
 	@Override
 	public Map<String, VariableDependencies> getVariableDependenciesMap() {
 		Map<String, VariableDependencies> variableDependenciesMap =
-			new HashMap<String, VariableDependencies>();
+			new HashMap<>();
 
 		for (Variable variable : _variables.values()) {
 			populateVariableDependenciesMap(variable, variableDependenciesMap);
@@ -180,7 +180,7 @@ public class ExpressionImpl<T> implements Expression<T> {
 	}
 
 	protected Class<?>[] getVariableClasses() {
-		List<Class<?>> variableClasses = new ArrayList<Class<?>>();
+		List<Class<?>> variableClasses = new ArrayList<>();
 
 		for (Variable variable : _variables.values()) {
 			variableClasses.add(variable.getVariableClass());
@@ -190,7 +190,7 @@ public class ExpressionImpl<T> implements Expression<T> {
 	}
 
 	protected String[] getVariableNames() {
-		List<String> variableNames = new ArrayList<String>();
+		List<String> variableNames = new ArrayList<>();
 
 		for (Variable variable : _variables.values()) {
 			variableNames.add(variable.getName());
@@ -224,7 +224,7 @@ public class ExpressionImpl<T> implements Expression<T> {
 	protected Object[] getVariableValues()
 		throws ExpressionEvaluationException {
 
-		List<Object> variableValues = new ArrayList<Object>();
+		List<Object> variableValues = new ArrayList<>();
 
 		for (Variable variable : _variables.values()) {
 			Object variableValue = getVariableValue(variable);
@@ -273,9 +273,7 @@ public class ExpressionImpl<T> implements Expression<T> {
 	private final String _expressionString;
 	private final VariableNamesExtractor _variableNamesExtractor =
 		new VariableNamesExtractor();
-	private final Map<String, Variable> _variables =
-		new TreeMap<String, Variable>();
-	private final Map<String, Object> _variableValues =
-		new HashMap<String, Object>();
+	private final Map<String, Variable> _variables = new TreeMap<>();
+	private final Map<String, Object> _variableValues = new HashMap<>();
 
 }

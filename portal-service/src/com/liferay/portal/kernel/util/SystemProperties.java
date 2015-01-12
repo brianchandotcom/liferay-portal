@@ -153,7 +153,7 @@ public class SystemProperties {
 			}
 		}
 
-		_properties = new ConcurrentHashMap<String, String>();
+		_properties = new ConcurrentHashMap<>();
 
 		// Use a fast concurrent hash map implementation instead of the slower
 		// java.util.Properties

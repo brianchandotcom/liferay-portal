@@ -945,7 +945,7 @@ public class QuartzSchedulerEngineTest {
 
 		@Override
 		public List<String> getJobGroupNames() {
-			List<String> groupNames = new ArrayList<String>();
+			List<String> groupNames = new ArrayList<>();
 
 			for (JobKey jobKey : _jobs.keySet()) {
 				if (!groupNames.contains(jobKey.getGroup())) {
@@ -960,7 +960,7 @@ public class QuartzSchedulerEngineTest {
 		public Set<JobKey> getJobKeys(GroupMatcher<JobKey> groupMatcher) {
 			String groupName = groupMatcher.getCompareToValue();
 
-			Set<JobKey> jobKeys = new HashSet<JobKey>();
+			Set<JobKey> jobKeys = new HashSet<>();
 
 			for (JobKey jobKey : _jobs.keySet()) {
 				if (jobKey.getGroup().equals(groupName)) {
@@ -1224,7 +1224,7 @@ public class QuartzSchedulerEngineTest {
 			return false;
 		}
 
-		private final Map<JobKey, Tuple> _jobs = new HashMap<JobKey, Tuple>();
+		private final Map<JobKey, Tuple> _jobs = new HashMap<>();
 		private boolean _ready;
 
 	}

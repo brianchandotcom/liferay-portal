@@ -300,8 +300,7 @@ public class InvokerFilterHelper {
 			String filterName = filterElement.elementText("filter-name");
 			String filterClassName = filterElement.elementText("filter-class");
 
-			Map<String, String> initParameterMap =
-				new HashMap<String, String>();
+			Map<String, String> initParameterMap = new HashMap<>();
 
 			List<Element> initParamElements = filterElement.elements(
 				"init-param");
@@ -323,7 +322,7 @@ public class InvokerFilterHelper {
 		for (Element filterMappingElement : filterMappingElements) {
 			String filterName = filterMappingElement.elementText("filter-name");
 
-			List<String> urlPatterns = new ArrayList<String>();
+			List<String> urlPatterns = new ArrayList<>();
 
 			List<Element> urlPatternElements = filterMappingElement.elements(
 				"url-pattern");
@@ -332,7 +331,7 @@ public class InvokerFilterHelper {
 				urlPatterns.add(urlPatternElement.getTextTrim());
 			}
 
-			List<String> dispatchers = new ArrayList<String>(4);
+			List<String> dispatchers = new ArrayList<>(4);
 
 			List<Element> dispatcherElements = filterMappingElement.elements(
 				"dispatcher");
@@ -376,13 +375,10 @@ public class InvokerFilterHelper {
 
 	private static Log _log = LogFactoryUtil.getLog(InvokerFilterHelper.class);
 
-	private Map<String, FilterConfig> _filterConfigs =
-		new HashMap<String, FilterConfig>();
-	private List<FilterMapping> _filterMappings =
-		new CopyOnWriteArrayList<FilterMapping>();
-	private Map<String, Filter> _filters = new HashMap<String, Filter>();
-	private List<InvokerFilter> _invokerFilters =
-		new ArrayList<InvokerFilter>();
+	private Map<String, FilterConfig> _filterConfigs = new HashMap<>();
+	private List<FilterMapping> _filterMappings = new CopyOnWriteArrayList<>();
+	private Map<String, Filter> _filters = new HashMap<>();
+	private List<InvokerFilter> _invokerFilters = new ArrayList<>();
 	private ServiceTracker<Filter, FilterMapping> _serviceTracker;
 
 	private class FilterServiceTrackerCustomizer
@@ -418,8 +414,7 @@ public class InvokerFilterHelper {
 				after = true;
 			}
 
-			Map<String, String> initParameterMap =
-				new HashMap<String, String>();
+			Map<String, String> initParameterMap = new HashMap<>();
 
 			Map<String, Object> properties = serviceReference.getProperties();
 

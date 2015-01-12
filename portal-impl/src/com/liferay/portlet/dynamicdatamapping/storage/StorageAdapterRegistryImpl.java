@@ -77,7 +77,7 @@ public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 	private final ServiceTracker<StorageAdapter, StorageAdapter>
 		_serviceTracker;
 	private final Map<String, StorageAdapter> _storageAdaptersMap =
-		new ConcurrentHashMap<String, StorageAdapter>();
+		new ConcurrentHashMap<>();
 
 	private class StorageAdapterServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<StorageAdapter, StorageAdapter> {

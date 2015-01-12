@@ -157,7 +157,7 @@ public class RSSFeedEntry {
 			return _syndEntry.getContents();
 		}
 
-		List<SyndContent> syndContents = new ArrayList<SyndContent>();
+		List<SyndContent> syndContents = new ArrayList<>();
 
 		syndContents.add(syndContent);
 

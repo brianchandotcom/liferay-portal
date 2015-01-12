@@ -76,7 +76,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 
 	@Override
 	public Map<String, Object> getAttributeMap(int scope) {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 
 		Enumeration<String> enu = _getAttributeNames(scope, false);
 
@@ -217,7 +217,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 			return _session.getAttributeNames();
 		}
 
-		List<String> attributeNames = new ArrayList<String>();
+		List<String> attributeNames = new ArrayList<>();
 
 		int portletScopeLength = _portletScope.length();
 

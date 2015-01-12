@@ -67,7 +67,7 @@ public class AtomCollectionAdapterWrapper<E>
 
 	@Override
 	public List<Person> getAuthors(E entry, RequestContext requestContext) {
-		List<Person> persons = new ArrayList<Person>();
+		List<Person> persons = new ArrayList<>();
 
 		List<String> authors = _atomCollectionAdapter.getEntryAuthors(entry);
 

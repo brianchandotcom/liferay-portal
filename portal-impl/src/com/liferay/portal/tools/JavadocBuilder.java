@@ -578,7 +578,7 @@ public class JavadocBuilder {
 				"**\\classes\\**", "**\\portal-client\\**", "**\\portal-web\\**"
 			});
 
-		List<String> includes = new ArrayList<String>();
+		List<String> includes = new ArrayList<>();
 
 		if (Validator.isNotNull(limit) && !limit.startsWith("$")) {
 			String[] limitArray = StringUtil.split(limit, '/');
@@ -675,7 +675,7 @@ public class JavadocBuilder {
 		JavaClass javaClass = _getJavaClass(
 			fileName, new UnsyncStringReader(oldContent));
 
-		Set<Integer> lineNumbers = new HashSet<Integer>();
+		Set<Integer> lineNumbers = new HashSet<>();
 
 		lineNumbers.add(javaClass.getLineNumber());
 
@@ -779,12 +779,12 @@ public class JavadocBuilder {
 
 		Element rootElement = document.getRootElement();
 
-		Map<Integer, String> commentsMap = new TreeMap<Integer, String>();
+		Map<Integer, String> commentsMap = new TreeMap<>();
 
 		commentsMap.put(
 			javaClass.getLineNumber(), _getJavaClassComment(rootElement));
 
-		Map<String, Element> methodElementsMap = new HashMap<String, Element>();
+		Map<String, Element> methodElementsMap = new HashMap<>();
 
 		List<Element> methodElements = rootElement.elements("method");
 
@@ -806,7 +806,7 @@ public class JavadocBuilder {
 				_getJavaMethodComment(lines, methodElementsMap, javaMethod));
 		}
 
-		Map<String, Element> fieldElementsMap = new HashMap<String, Element>();
+		Map<String, Element> fieldElementsMap = new HashMap<>();
 
 		List<Element> fieldElements = rootElement.elements("field");
 

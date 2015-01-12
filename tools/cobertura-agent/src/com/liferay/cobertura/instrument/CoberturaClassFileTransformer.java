@@ -231,7 +231,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 	private final Pattern[] _excludePatterns;
 	private final Pattern[] _includePatterns;
 	private final ConcurrentMap<ClassLoader, ProjectData> _projectDatas =
-		new ConcurrentHashMap<ClassLoader, ProjectData>();
+		new ConcurrentHashMap<>();
 
 	private static class TouchCollectorClassVisitor extends ClassVisitor {
 

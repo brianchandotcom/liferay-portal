@@ -78,6 +78,6 @@ public class PortletBeanLocatorUtil {
 		PortletBeanLocatorUtil.class);
 
 	private static final Map<String, BeanLocator> _beanLocators =
-		new HashMap<String, BeanLocator>();
+		new HashMap<>();
 
 }

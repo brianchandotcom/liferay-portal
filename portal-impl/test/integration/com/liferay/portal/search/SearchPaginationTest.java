@@ -259,7 +259,7 @@ public class SearchPaginationTest {
 
 		Assert.assertEquals(expectedTotal, hits.getDocs().length);
 
-		List<User> returnedUsers = new ArrayList<User>();
+		List<User> returnedUsers = new ArrayList<>();
 
 		for (int i = 0; i < hits.getDocs().length; i++) {
 			Document doc = hits.doc(i);
@@ -298,6 +298,6 @@ public class SearchPaginationTest {
 	private String _randomLastName;
 
 	@DeleteAfterTestRun
-	private List<User> _users = new ArrayList<User>();
+	private List<User> _users = new ArrayList<>();
 
 }

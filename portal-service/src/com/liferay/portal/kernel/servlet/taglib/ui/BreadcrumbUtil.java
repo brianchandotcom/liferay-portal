@@ -70,8 +70,7 @@ public class BreadcrumbUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<BreadcrumbEntry> breadcrumbEntries =
-			new ArrayList<BreadcrumbEntry>();
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		boolean hasAll = ArrayUtil.contains(types, ENTRY_TYPE_ANY);
 
@@ -146,8 +145,7 @@ public class BreadcrumbUtil {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		List<BreadcrumbEntry> breadcrumbEntries =
-			new ArrayList<BreadcrumbEntry>();
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -165,8 +163,7 @@ public class BreadcrumbUtil {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		List<BreadcrumbEntry> breadcrumbEntries =
-			new ArrayList<BreadcrumbEntry>();
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -228,8 +225,7 @@ public class BreadcrumbUtil {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		List<BreadcrumbEntry> breadcrumbEntries =
-			new ArrayList<BreadcrumbEntry>();
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		Layout layout = themeDisplay.getLayout();
 

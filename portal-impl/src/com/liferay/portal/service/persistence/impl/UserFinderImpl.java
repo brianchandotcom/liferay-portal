@@ -463,7 +463,7 @@ public class UserFinderImpl
 				companyId, firstNames, middleNames, lastNames, screenNames,
 				emailAddresses, status, params, andOperator, start, end, obc);
 
-			List<User> users = new ArrayList<User>(userIds.size());
+			List<User> users = new ArrayList<>(userIds.size());
 
 			for (Long userId : userIds) {
 				User user = UserUtil.findByPrimaryKey(userId);
@@ -539,9 +539,9 @@ public class UserFinderImpl
 		if (ArrayUtil.isNotEmpty(groupIds) && inherit &&
 			!socialRelationTypeUnionUserGroups) {
 
-			List<Long> organizationIds = new ArrayList<Long>();
-			List<Long> siteGroupIds = new ArrayList<Long>();
-			List<Long> userGroupIds = new ArrayList<Long>();
+			List<Long> organizationIds = new ArrayList<>();
+			List<Long> siteGroupIds = new ArrayList<>();
+			List<Long> userGroupIds = new ArrayList<>();
 
 			for (long groupId : groupIds) {
 				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
@@ -611,9 +611,9 @@ public class UserFinderImpl
 		if (ArrayUtil.isNotEmpty(roleIds) && inherit &&
 			!socialRelationTypeUnionUserGroups) {
 
-			List<Long> organizationIds = new ArrayList<Long>();
-			List<Long> siteGroupIds = new ArrayList<Long>();
-			List<Long> userGroupIds = new ArrayList<Long>();
+			List<Long> organizationIds = new ArrayList<>();
+			List<Long> siteGroupIds = new ArrayList<>();
+			List<Long> userGroupIds = new ArrayList<>();
 
 			for (long roleId : roleIds) {
 				List<Group> groups = RoleUtil.getGroups(roleId);

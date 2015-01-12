@@ -225,8 +225,7 @@ public class GroupServiceTest {
 		Group group = GroupTestUtil.addGroup(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
@@ -249,8 +248,7 @@ public class GroupServiceTest {
 
 		GroupLocalServiceUtil.updateGroup(group);
 
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
@@ -267,8 +265,7 @@ public class GroupServiceTest {
 		Group group = GroupTestUtil.addGroup(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
@@ -291,8 +288,7 @@ public class GroupServiceTest {
 
 		GroupLocalServiceUtil.updateGroup(group);
 
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
@@ -306,8 +302,7 @@ public class GroupServiceTest {
 
 	@Test
 	public void testFindGuestGroupByCompanyName() throws Exception {
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
@@ -320,8 +315,7 @@ public class GroupServiceTest {
 
 	@Test
 	public void testFindGuestGroupByCompanyNameCapitalized() throws Exception {
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
@@ -334,8 +328,7 @@ public class GroupServiceTest {
 
 	@Test
 	public void testFindNonexistentGroup() throws Exception {
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("manualMembership", Boolean.TRUE);
 		groupParams.put("site", Boolean.TRUE);
@@ -574,7 +567,7 @@ public class GroupServiceTest {
 
 		Assert.assertFalse(layout.hasScopeGroup());
 
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(
 			LocaleUtil.getDefault(), layout.getName(LocaleUtil.getDefault()));
@@ -834,7 +827,7 @@ public class GroupServiceTest {
 
 			Layout scopeLayout = LayoutTestUtil.addLayout(group);
 
-			Map<Locale, String> nameMap = new HashMap<Locale, String>();
+			Map<Locale, String> nameMap = new HashMap<>();
 
 			nameMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
@@ -1023,12 +1016,11 @@ public class GroupServiceTest {
 
 		Assert.assertTrue(group.isRoot());
 
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		params.put("site", Boolean.TRUE);
 
-		List<Long> excludedGroupIds = new ArrayList<Long>();
+		List<Long> excludedGroupIds = new ArrayList<>();
 
 		excludedGroupIds.add(group.getGroupId());
 
@@ -1098,7 +1090,6 @@ public class GroupServiceTest {
 	private Group _group;
 
 	@DeleteAfterTestRun
-	private final List<Organization> _organizations =
-		new ArrayList<Organization>();
+	private final List<Organization> _organizations = new ArrayList<>();
 
 }

@@ -143,7 +143,7 @@ public class RemoteFabricStatus implements FabricStatus {
 			Class<T> mxBeanInterface,
 			ProcessCallableExecutor processCallableExecutor) {
 
-		List<T> list = new ArrayList<T>();
+		List<T> list = new ArrayList<>();
 
 		try {
 			Future<ArrayList<ObjectName>> future =
@@ -177,7 +177,7 @@ public class RemoteFabricStatus implements FabricStatus {
 
 		@Override
 		public ArrayList<ObjectName> call() {
-			ArrayList<ObjectName> objectNames = new ArrayList<ObjectName>();
+			ArrayList<ObjectName> objectNames = new ArrayList<>();
 
 			for (PlatformManagedObject platformManagedObject :
 					ManagementFactory.getPlatformMXBeans(_clazz)) {

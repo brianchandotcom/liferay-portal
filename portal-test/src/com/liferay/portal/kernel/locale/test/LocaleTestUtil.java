@@ -26,7 +26,7 @@ import java.util.Map;
 public class LocaleTestUtil {
 
 	public static Map<Locale, String> getDefaultLocaleMap(String value) {
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		map.put(LocaleUtil.getSiteDefault(), value);
 

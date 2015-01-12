@@ -117,7 +117,7 @@ public class CMISFolder extends CMISModel implements Folder {
 
 	@Override
 	public List<Long> getAncestorFolderIds() throws PortalException {
-		List<Long> folderIds = new ArrayList<Long>();
+		List<Long> folderIds = new ArrayList<>();
 
 		Folder folder = this;
 
@@ -132,7 +132,7 @@ public class CMISFolder extends CMISModel implements Folder {
 
 	@Override
 	public List<Folder> getAncestors() throws PortalException {
-		List<Folder> folders = new ArrayList<Folder>();
+		List<Folder> folders = new ArrayList<>();
 
 		Folder folder = this;
 
@@ -147,7 +147,7 @@ public class CMISFolder extends CMISModel implements Folder {
 
 	@Override
 	public Map<String, Serializable> getAttributes() {
-		return new HashMap<String, Serializable>();
+		return new HashMap<>();
 	}
 
 	@Override

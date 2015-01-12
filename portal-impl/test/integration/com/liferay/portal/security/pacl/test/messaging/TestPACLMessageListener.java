@@ -39,7 +39,7 @@ public class TestPACLMessageListener extends BaseMessageListener {
 	}
 
 	protected Map<String, Object> getResults(Message message) throws Exception {
-		Map<String, Object> results = new HashMap<String, Object>();
+		Map<String, Object> results = new HashMap<>();
 
 		try {
 			int buildNumber = PortalServiceUtil.getBuildNumber();

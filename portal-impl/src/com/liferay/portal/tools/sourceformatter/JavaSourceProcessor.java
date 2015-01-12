@@ -908,7 +908,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-48153
 
-		//newContent = applyDiamondOperator(newContent);
+		newContent = applyDiamondOperator(newContent);
 
 		// LPS-49552
 

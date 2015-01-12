@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.jsp.compiler.jsp;
+package com.liferay.portal.servlet.jsp.compiler.internal.jsp;
 
 import javax.servlet.jsp.JspFactory;
 

@@ -186,9 +186,10 @@ public class ArrayUtilTest {
 
 		Assert.assertFalse(ArrayUtil.contains(array, "c", true));
 		Assert.assertFalse(ArrayUtil.contains(array, "C", false));
-		Assert.assertTrue(ArrayUtil.contains(array, "a", true));
-		Assert.assertTrue(ArrayUtil.contains(array, "a", false));
-		Assert.assertTrue(ArrayUtil.contains(array, "A", true));
+		Assert.assertTrue(ArrayUtil.contains(array, a, true));
+		Assert.assertTrue(ArrayUtil.contains(array, a, false));
+		Assert.assertTrue(
+			ArrayUtil.contains(array, StringUtil.toUpperCase(a), true));
 	}
 
 	@Test

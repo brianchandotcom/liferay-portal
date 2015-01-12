@@ -453,7 +453,7 @@ public class JavaClass {
 
 		String newName = oldName;
 
-		if (newName.charAt(0) != CharPool.UNDERLINE) {
+		if (javaTerm.isPrivate() && (newName.charAt(0) != CharPool.UNDERLINE)) {
 			newName = StringPool.UNDERLINE.concat(newName);
 		}
 

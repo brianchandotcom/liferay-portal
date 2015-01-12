@@ -755,6 +755,13 @@
 	<command name="viewImageViaContentCmd">
 		<execute action="CPKnowledgebaseadminArticle#assertElementPresent" locator-key1="ARTICLE_CONTENT_IMAGE" />
 	</command>
+	
+	<command name="viewKBArticlePriorityViaAdmin">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="ARTICLE_TABLE_PRIORITY" value1="${kbPriority}" />
+	</command>
 
 	<command name="viewKBDisplayPG">
 		<if>

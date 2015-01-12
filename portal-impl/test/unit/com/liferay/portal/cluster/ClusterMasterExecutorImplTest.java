@@ -750,7 +750,7 @@ public class ClusterMasterExecutorImplTest {
 
 				try {
 					clusterNodeResponse.setClusterNode(
-						new ClusterNode(String.valueOf(mockAddress.getName())));
+						new ClusterNode(mockAddress.getName()));
 
 					MethodHandler methodHandler =
 						clusterRequest.getMethodHandler();

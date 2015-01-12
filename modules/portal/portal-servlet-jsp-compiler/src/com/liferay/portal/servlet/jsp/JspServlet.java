@@ -37,6 +37,9 @@ import java.util.Set;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -47,8 +50,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Raymond Augé
  */
-public class JspServlet
-	extends org.apache.jasper.servlet.JspServlet {
+public class JspServlet extends HttpServlet {
 
 	public static final String JSP_CLASS_LOADER =
 		JspServlet.class.getName() + "#JSP_CLASS_LOADER";
@@ -56,6 +58,56 @@ public class JspServlet
 	public JspServlet() {
 		_jspBundle = FrameworkUtil.getBundle(
 			com.liferay.portal.servlet.jsp.JspServlet.class);
+	}
+
+	@Override
+	public void destroy() {
+		_jspServlet.destroy();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return _jspServlet.equals(obj);
+	}
+
+	@Override
+	public String getInitParameter(String name) {
+		return _jspServlet.getInitParameter(name);
+	}
+
+	@Override
+	public Enumeration<String> getInitParameterNames() {
+		return _jspServlet.getInitParameterNames();
+	}
+
+	@Override
+	public ServletConfig getServletConfig() {
+		return _jspServlet.getServletConfig();
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _jspServlet.getServletContext();
+	}
+
+	@Override
+	public String getServletInfo() {
+		return _jspServlet.getServletInfo();
+	}
+
+	@Override
+	public String getServletName() {
+		return _jspServlet.getServletName();
+	}
+
+	@Override
+	public int hashCode() {
+		return _jspServlet.hashCode();
+	}
+
+	@Override
+	public void init() throws ServletException {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -92,10 +144,10 @@ public class JspServlet
 
 		nameSet.addAll(defaults.keySet());
 
-		final Enumeration<String> initParameterNames =
-				Collections.enumeration(nameSet);
+		final Enumeration<String> initParameterNames = Collections.enumeration(
+			nameSet);
 
-		super.init(
+		_jspServlet.init(
 			new ServletConfig() {
 
 				@Override
@@ -128,6 +180,16 @@ public class JspServlet
 	}
 
 	@Override
+	public void log(String message, Throwable t) {
+		_jspServlet.log(message, t);
+	}
+
+	@Override
+	public void log(String msg) {
+		_jspServlet.log(msg);
+	}
+
+	@Override
 	public void service(
 			HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
@@ -139,11 +201,23 @@ public class JspServlet
 		try {
 			currentThread.setContextClassLoader(_jspBundleClassloader);
 
-			super.service(request, response);
+			_jspServlet.service(request, response);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
+	}
+
+	@Override
+	public void service(ServletRequest request, ServletResponse response)
+		throws ServletException, IOException {
+
+		service((HttpServletRequest)request, (HttpServletResponse)response);
+	}
+
+	@Override
+	public String toString() {
+		return _jspServlet.toString();
 	}
 
 	private ServletContext getServletContextWrapper(
@@ -168,6 +242,8 @@ public class JspServlet
 
 	private final Bundle _jspBundle;
 	private URLClassLoader _jspBundleClassloader;
+	private HttpServlet _jspServlet =
+		new org.apache.jasper.servlet.JspServlet();
 	private volatile ServletContext _jspServletContext;
 
 	private class JspServletContextInvocationHandler

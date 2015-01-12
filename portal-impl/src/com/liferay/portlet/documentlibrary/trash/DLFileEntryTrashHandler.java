@@ -300,6 +300,20 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			originalTitle = newName;
 		}
 
+		DLFolder duplicateDLFolder = DLFolderLocalServiceUtil.fetchFolder(
+			dlFileEntry.getGroupId(), containerModelId, originalTitle);
+
+		if (duplicateDLFolder != null) {
+			RestoreEntryException ree = new RestoreEntryException(
+				RestoreEntryException.DUPLICATE);
+
+			ree.setDuplicateEntryId(duplicateDLFolder.getFolderId());
+			ree.setOldName(duplicateDLFolder.getName());
+			ree.setTrashEntryId(entryId);
+
+			throw ree;
+		}
+
 		DLFileEntry duplicateDLFileEntry =
 			DLFileEntryLocalServiceUtil.fetchFileEntry(
 				dlFileEntry.getGroupId(), containerModelId, originalTitle);

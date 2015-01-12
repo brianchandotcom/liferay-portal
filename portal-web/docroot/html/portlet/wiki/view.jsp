@@ -169,6 +169,7 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 contextObjects.put("assetEntry", layoutAssetEntry);
 contextObjects.put("formattedContent", formattedContent);
+contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 %>
 
 <liferay-ui:ddm-template-renderer contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettings.getDisplayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>" entries="<%= entries %>">

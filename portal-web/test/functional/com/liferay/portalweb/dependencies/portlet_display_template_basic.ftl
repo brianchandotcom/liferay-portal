@@ -15,7 +15,7 @@
 		</div>
 
 		<div class="entry-body">
-			<div class="entry-author">
+			<div class="entry-author icon-user">
 				<@liferay.language key="written-by" /> ${htmlUtil.escape(portalUtil.getUserName(entry.getUserId(), entry.getUserName()))}
 			</div>
 
@@ -31,13 +31,13 @@
 		</div>
 
 		<div class="entry-footer">
-			<span class="entry-date">
+			<span class="entry-date icon-date">
 				${dateUtil.getDate(entry.getCreateDate(), "dd MMM yyyy - HH:mm:ss", locale)}
 			</span>
 
 			<#assign blogsEntryClassName = "com.liferay.portlet.blogs.model.BlogsEntry" />
 
-			<#if getterUtil.getBoolean(enableFlags)>
+			<#if blogsPortletInstanceSettings.isEnableFlags()>
 				<@liferay_ui["flags"]
 					className=blogsEntryClassName
 					classPK=entry.getEntryId()

@@ -145,7 +145,7 @@ public class LuceneHelperImplTest {
 
 		luceneHelperUtil.setLuceneHelper(_luceneHelperImpl);
 
-		_clusterNode = new ClusterNode(_CLUSER_NODE_ID, _localhostInetAddress);
+		_clusterNode = new ClusterNode(_CLUSER_NODE_ID);
 
 		_clusterNode.setPortalProtocol(Http.HTTP);
 
@@ -817,8 +817,7 @@ public class LuceneHelperImplTest {
 				clusterNodeResponse.setUuid(clusterRequest.getUuid());
 
 				ClusterNode clusterNode = new ClusterNode(
-					String.valueOf(System.currentTimeMillis()),
-					_localhostInetAddress);
+					String.valueOf(System.currentTimeMillis()));
 
 				try {
 					clusterNode.setPortalInetSocketAddress(

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
@@ -43,15 +42,13 @@ public class FutureClusterResponsesTest {
 
 		ClusterNodeResponse clusterNodeResponse1 = new ClusterNodeResponse();
 
-		clusterNodeResponse1.setClusterNode(
-			new ClusterNode("1.2.3.4", InetAddress.getLocalHost()));
+		clusterNodeResponse1.setClusterNode(new ClusterNode("1.2.3.4"));
 
 		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse1);
 
 		ClusterNodeResponse clusterNodeResponse2 = new ClusterNodeResponse();
 
-		clusterNodeResponse2.setClusterNode(
-			new ClusterNode("1.2.3.5", InetAddress.getLocalHost()));
+		clusterNodeResponse2.setClusterNode(new ClusterNode("1.2.3.5"));
 
 		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse2);
 
@@ -80,22 +77,19 @@ public class FutureClusterResponsesTest {
 
 		ClusterNodeResponse clusterNodeResponse1 = new ClusterNodeResponse();
 
-		clusterNodeResponse1.setClusterNode(
-			new ClusterNode("1.2.3.4", InetAddress.getLocalHost()));
+		clusterNodeResponse1.setClusterNode(new ClusterNode("1.2.3.4"));
 
 		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse1);
 
 		ClusterNodeResponse clusterNodeResponse2 = new ClusterNodeResponse();
 
-		clusterNodeResponse2.setClusterNode(
-			new ClusterNode("1.2.3.5", InetAddress.getLocalHost()));
+		clusterNodeResponse2.setClusterNode(new ClusterNode("1.2.3.5"));
 
 		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse2);
 
 		ClusterNodeResponse clusterNodeResponse3 = new ClusterNodeResponse();
 
-		clusterNodeResponse3.setClusterNode(
-			new ClusterNode("1.2.3.6", InetAddress.getLocalHost()));
+		clusterNodeResponse3.setClusterNode(new ClusterNode("1.2.3.6"));
 
 		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse3);
 
@@ -142,8 +136,7 @@ public class FutureClusterResponsesTest {
 
 		ClusterNodeResponse clusterNodeResponse = new ClusterNodeResponse();
 
-		clusterNodeResponse.setClusterNode(
-			new ClusterNode("test", InetAddress.getLocalHost()));
+		clusterNodeResponse.setClusterNode(new ClusterNode("test"));
 
 		futureClusterResponses.addClusterNodeResponse(clusterNodeResponse);
 

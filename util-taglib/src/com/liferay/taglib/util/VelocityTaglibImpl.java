@@ -205,21 +205,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
-	public void addContentPortletToolbar(
-			List<PortletToolbarMenuItem> portletToolbarMenuItems)
-		throws Exception {
-
-		PortletToolbarMenuTag portletToolbarMenuTag =
-			new PortletToolbarMenuTag();
-
-		setUp(portletToolbarMenuTag);
-
-		portletToolbarMenuTag.setItems(portletToolbarMenuItems);
-
-		portletToolbarMenuTag.runTag();
-	}
-
-	@Override
 	public void assetCategoriesSummary(
 			String className, long classPK, String message,
 			PortletURL portletURL)
@@ -1002,6 +987,21 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		setUp(iconRefreshTag);
 
 		iconRefreshTag.runTag();
+	}
+
+	@Override
+	public void portletToolbarMenu(
+			List<PortletToolbarMenuItem> portletToolbarMenuItems)
+		throws Exception {
+
+		PortletToolbarMenuTag portletToolbarMenuTag =
+			new PortletToolbarMenuTag();
+
+		setUp(portletToolbarMenuTag);
+
+		portletToolbarMenuTag.setItems(portletToolbarMenuItems);
+
+		portletToolbarMenuTag.runTag();
 	}
 
 	@Override

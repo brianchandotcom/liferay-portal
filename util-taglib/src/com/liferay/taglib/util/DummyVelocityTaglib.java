@@ -111,14 +111,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public void addContentPortletToolbar(
-			List<PortletToolbarMenuItem> portletToolbarMenuItems)
-		throws Exception {
-
-		return;
-	}
-
-	@Override
 	public void assetCategoriesSummary(
 			String className, long classPK, String message,
 			PortletURL portletURL)
@@ -575,6 +567,14 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public void portletIconRefresh() throws Exception {
+	}
+
+	@Override
+	public void portletToolbarMenu(
+			List<PortletToolbarMenuItem> portletToolbarMenuItems)
+		throws Exception {
+
+		return;
 	}
 
 	@Override

@@ -85,10 +85,6 @@ public interface VelocityTaglib {
 			String queryString)
 		throws Exception;
 
-	public void addContentPortletToolbar(
-			List<PortletToolbarMenuItem> portletToolbarMenuItems)
-		throws Exception;
-
 	public void assetCategoriesSummary(
 			String className, long classPK, String message,
 			PortletURL portletURL)
@@ -359,6 +355,10 @@ public interface VelocityTaglib {
 	public void portletIconPrint() throws Exception;
 
 	public void portletIconRefresh() throws Exception;
+
+	public void portletToolbarMenu(
+			List<PortletToolbarMenuItem> portletToolbarMenuItems)
+		throws Exception;
 
 	public void quickAccess() throws Exception;
 

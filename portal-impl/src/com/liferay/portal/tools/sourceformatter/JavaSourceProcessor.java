@@ -761,7 +761,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "ServiceUtil: " + fileName);
 		}
 
-		if (!isRunsOutsidePortal(absolutePath) &&
+		if (!isExcludedPath(
+				getRunOutsidePortalExclusionPaths(), absolutePath) &&
 			!isExcluded(_proxyExclusions, absolutePath) &&
 			newContent.contains("import java.lang.reflect.Proxy;")) {
 
@@ -846,7 +847,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-39508
 
 		if (!isExcluded(_secureRandomExclusions, absolutePath) &&
-			!isRunsOutsidePortal(absolutePath) &&
+			!isExcludedPath(
+				getRunOutsidePortalExclusionPaths(), absolutePath) &&
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
 

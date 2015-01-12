@@ -310,7 +310,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkInefficientStringMethods(
 		String line, String fileName, String absolutePath, int lineCount) {
 
-		if (isRunsOutsidePortal(absolutePath) ||
+		if (isExcludedPath(getRunOutsidePortalExclusionPaths(), absolutePath) ||
 			fileName.endsWith("GetterUtil.java")) {
 
 			return;
@@ -1046,6 +1046,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(getProperty(key)), StringPool.COMMA);
 	}
 
+	protected List<String> getRunOutsidePortalExclusionPaths() {
+		if (_runOutsidePortalExclusions != null) {
+			return _runOutsidePortalExclusions;
+		}
+
+		List<String> runOutsidePortalExclusionPaths = getPropertyList(
+			"run.outside.portal.excludes");
+
+		_runOutsidePortalExclusions = runOutsidePortalExclusionPaths;
+
+		return _runOutsidePortalExclusions;
+	}
+
 	protected boolean hasMissingParentheses(String s) {
 		if (Validator.isNull(s)) {
 			return false;
@@ -1142,21 +1155,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Matcher matcher = attributeNamePattern.matcher(attributeName);
 
 		return matcher.matches();
-	}
-
-	protected boolean isRunsOutsidePortal(String absolutePath) {
-		if (_runOutsidePortalExclusions == null) {
-			_runOutsidePortalExclusions = getPropertyList(
-				"run.outside.portal.excludes");
-		}
-
-		for (String runOutsidePortalExclusions : _runOutsidePortalExclusions) {
-			if (absolutePath.contains(runOutsidePortalExclusions)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	protected void processFormattedFile(

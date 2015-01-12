@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portlet.toolbar.item.locator.PortletToolbarItem
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.registry.Registry;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -28,6 +27,8 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -94,8 +95,8 @@ public class StrutsPortletToolbarItemLocator
 		_serviceTrackerMap.close();
 	}
 
-	@Reference(unbind = "-")
-	protected void setRegistry(Registry registry) {
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private static

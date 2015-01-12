@@ -112,13 +112,15 @@ if ((checkedOut || pending) && !dlPortletInstanceSettings.isEnableFileEntryDraft
 	saveAsDraft = true;
 }
 
+DLDisplayContextFactoryUtil dlDisplayContextFactoryUtil = DLDisplayContextFactoryUtil.getInstance();
+
 DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext = null;
 
 if (fileEntry == null) {
-	dlEditFileEntryDisplayContext = DLEditFileEntryDisplayContextUtil.getDLEditFileEntryDisplayContext(request, response, dlFileEntryType);
+	dlEditFileEntryDisplayContext = dlDisplayContextFactoryUtil.getDLEditFileEntryDisplayContext(request, response, dlFileEntryType);
 }
 else {
-	dlEditFileEntryDisplayContext = DLEditFileEntryDisplayContextUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
+	dlEditFileEntryDisplayContext = dlDisplayContextFactoryUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
 }
 %>
 

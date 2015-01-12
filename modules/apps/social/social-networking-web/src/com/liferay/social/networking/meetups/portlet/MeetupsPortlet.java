@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"com.liferay.portlet.category=category.social",
+		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.friendly-url-mapping=meetups",
 		"com.liferay.portlet.friendly-url-routes=" +
 			"com/liferay/social/networking/meetups/portlet/" +

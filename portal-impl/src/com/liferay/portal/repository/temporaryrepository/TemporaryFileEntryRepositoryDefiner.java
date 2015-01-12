@@ -49,8 +49,7 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 
 		capabilityRegistry.addExportedCapability(
 			BulkOperationCapability.class,
-			new LiferayBulkOperationCapability(
-				documentRepository.getRepositoryId()));
+			new LiferayBulkOperationCapability(documentRepository));
 		capabilityRegistry.addExportedCapability(
 			TemporaryFileEntriesCapability.class,
 			new TemporaryFileEntriesCapabilityImpl(documentRepository));

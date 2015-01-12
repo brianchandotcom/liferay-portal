@@ -178,6 +178,21 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testContainsStringArray() throws Exception {
+		String a = "a";
+		String b = "b";
+
+		String[] array = {a, b};
+
+		Assert.assertFalse(ArrayUtil.contains(array, "c", true));
+		Assert.assertFalse(ArrayUtil.contains(array, "C", false));
+		Assert.assertTrue(ArrayUtil.contains(array, a, true));
+		Assert.assertTrue(ArrayUtil.contains(array, a, false));
+		Assert.assertTrue(
+			ArrayUtil.contains(array, StringUtil.toUpperCase(a), true));
+	}
+
+	@Test
 	public void testContainsUserArray() throws Exception {
 		User brian = new User("brian", 20);
 		User julio = new User("julio", 20);

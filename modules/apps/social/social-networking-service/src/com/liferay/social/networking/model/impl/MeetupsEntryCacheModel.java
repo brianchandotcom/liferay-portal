@@ -16,6 +16,7 @@ package com.liferay.social.networking.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -39,6 +40,30 @@ import java.util.Date;
 @ProviderType
 public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MeetupsEntryCacheModel)) {
+			return false;
+		}
+
+		MeetupsEntryCacheModel meetupsEntryCacheModel = (MeetupsEntryCacheModel)obj;
+
+		if (meetupsEntryId == meetupsEntryCacheModel.meetupsEntryId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, meetupsEntryId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(29);

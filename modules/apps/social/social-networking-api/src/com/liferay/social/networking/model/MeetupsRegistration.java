@@ -23,8 +23,8 @@ import com.liferay.portal.model.PersistedModel;
  *
  * @author Brian Wing Shun Chan
  * @see MeetupsRegistrationModel
- * @see com.liferay.socialnetworking.model.impl.MeetupsRegistrationImpl
- * @see com.liferay.socialnetworking.model.impl.MeetupsRegistrationModelImpl
+ * @see com.liferay.social.networking.model.impl.MeetupsRegistrationImpl
+ * @see com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl
  * @generated
  */
 @ProviderType
@@ -33,6 +33,6 @@ public interface MeetupsRegistration extends MeetupsRegistrationModel,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.socialnetworking.model.impl.MeetupsRegistrationImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.social.networking.model.impl.MeetupsRegistrationImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 }

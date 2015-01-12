@@ -14,8 +14,6 @@
 
 package com.liferay.poshi.runner.util;
 
-import java.io.File;
-
 import java.net.InetAddress;
 
 import java.util.ArrayList;
@@ -204,18 +202,6 @@ public class RuntimeVariables {
 		_instance._setValue(key, value);
 	}
 
-	private RuntimeVariables() {
-		File file = new File(StringPool.PERIOD);
-
-		String absolutePath = file.getAbsolutePath();
-
-		if (absolutePath.endsWith(StringPool.PERIOD)) {
-			absolutePath = absolutePath.substring(0, absolutePath.length() - 1);
-
-			_sourceDir = absolutePath;
-		}
-	}
-
 	private String _getValue(String key) {
 		return _runtimeVariables.get(key);
 	}
@@ -245,6 +231,5 @@ public class RuntimeVariables {
 	private ContextReplace _contextReplace;
 	private Map<String, String> _runtimeVariables =
 		new HashMap<String, String>();
-	private String _sourceDir;
 
 }

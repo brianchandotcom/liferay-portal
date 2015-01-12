@@ -46,7 +46,7 @@ public class TruncateLongLines extends ThisIsASuperClassThatAlsoHasASuperLongNam
 			String variable1, String variable2, String variable3, String variable4, String variable5)
 		throws Exception {
 
-		List<String> listWithFairlyLongName = new ArrayList<String>();
+		List<String> listWithFairlyLongName = new ArrayList<>();
 
 		for (String stringWithAveryVeryVeryVeryVeryLongName : listWithFairlyLongName) {
 			stringWithAveryVeryVeryVeryVeryLongName = variable1;	

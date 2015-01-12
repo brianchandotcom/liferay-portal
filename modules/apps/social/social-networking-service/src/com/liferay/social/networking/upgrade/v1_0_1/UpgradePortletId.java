@@ -23,27 +23,27 @@ public class UpgradePortletId
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
 			{"1_WAR_socialnetworkingportlet",
-				"com_liferay_socialnetworking_summary_portlet_" +
+				"com_liferay_social_networking_summary_portlet_" +
 					"SummaryPortlet"},
 			{"2_WAR_socialnetworkingportlet",
-				"com_liferay_socialnetworking_friends_portlet_" +
+				"com_liferay_social_networking_friends_portlet_" +
 					"FriendsPortlet"},
 			{"3_WAR_socialnetworkingportlet",
-				"com_liferay_socialnetworking_wall_portlet_" +
+				"com_liferay_social_networking_wall_portlet_" +
 					"WallPortlet"},
 			{"4_WAR_socialnetworkingportlet",
-				"com_liferay_socialnetworking_friendsactivities_" +
+				"com_liferay_social_networking_friendsactivities_" +
 					"portlet_FriendsActivitiesPortlet"},
 			{"5_WAR_socialnetworkingportlet",
-				"com_liferay_socialnetworking_members_portlet_" +
+				"com_liferay_social_networking_members_portlet_" +
 					"MembersPortlet"},
 			{"6_WAR_socialnetworkingportlet",
-				"com_liferay_socialnetworking_map_portlet_MapPortlet"},
+				"com_liferay_social_networking_map_portlet_MapPortlet"},
 			{"7_WAR_socialnetworkingportlet",
-				"com_liferay_socialnetworking_meetups_portlet_" +
+				"com_liferay_social_networking_meetups_portlet_" +
 					"MeetupsPortlet"},
 			{"8_WAR_socialnetworkingportlet",
-				"com_liferay_socialnetworking_membersactivities_" +
+				"com_liferay_social_networking_membersactivities_" +
 					"portlet_MembersActivitiesPortlet"}
 		};
 	}

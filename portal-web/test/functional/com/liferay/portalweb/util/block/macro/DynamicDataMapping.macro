@@ -8,7 +8,17 @@
 
 		<execute action="Dynamicdatamapping#dragAndDrop" locator-key1="FIELDS_FIELD" locator-key2="FORM_BUILDER" value1="${field}" />
 
-		<execute macro="DynamicDataMapping#editFieldLabelAndFieldNameCmd" />
+		<execute macro="DynamicDataMapping#editFieldLabelCmd" />
+
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+
+		<execute macro="DynamicDataMapping#editFieldNameCmd" />
+
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${fieldName}" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addFieldFormTemplateSpecific">
@@ -67,10 +77,19 @@
 		<var name="key_formField" value="${parentField?lowercase()}" />
 
 		<execute action="Dynamicdatamapping#sikuliMouseMove" locator-key1="FORM_FIELD_PNG" />
-
 		<execute action="Dynamicdatamapping#sikuliLeftMouseUp" />
 
-		<execute macro="DynamicDataMapping#editFieldLabelAndFieldNameCmd" />
+		<execute macro="DynamicDataMapping#editFieldLabelCmd" />
+
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+
+		<execute macro="DynamicDataMapping#editFieldNameCmd" />
+
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${fieldName}" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteField">
@@ -132,7 +151,7 @@
 		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="editFieldLabelAndFieldNameCmd">
+	<command name="editFieldLabelCmd">
 		<var name="key_fieldFieldLabel" value="${field}" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
@@ -140,24 +159,6 @@
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_FIELD_LABEL" />
 		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabel}" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
-		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_NAME" />
-
-		<if>
-			<not>
-				<isset var="fieldName" />
-			</not>
-			<then>
-				<var name="fieldName" value="${fieldFieldLabel?replace(' ', '_')}" />
-			</then>
-		</if>
-
-		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldName}" />
-		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${fieldName}" />
-		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
-		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editFieldLocalizable">
@@ -171,6 +172,37 @@
 		<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="editFieldNameCmd">
+		<var name="key_fieldFieldLabel" value="${field}" />
+
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+
+		<if>
+			<not>
+				<isset var="fieldName" />
+			</not>
+			<then>
+				<var name="fieldName" value="${fieldFieldLabel?replace(' ', '_')}" />
+			</then>
+		</if>
+
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_NAME" />
+		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldName}" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="editFieldNameInvalidCharacter">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<var name="key_fieldFieldLabel" value="${field}" />
+
+		<execute macro="DynamicDataMapping#editFieldNameCmd" />
+
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_FIELD_ALERT" value1="Please enter only alphanumeric characters." />
 		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
 		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>

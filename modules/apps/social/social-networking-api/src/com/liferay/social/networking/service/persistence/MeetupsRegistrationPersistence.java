@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
-import com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 import com.liferay.social.networking.model.MeetupsRegistration;
 
 /**
@@ -47,14 +46,14 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param meetupsEntryId the meetups entry ID
 	* @return the matching meetups registrations
 	*/
-	public java.util.List<MeetupsRegistration> findByMeetupsEntryId(
+	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> findByMeetupsEntryId(
 		long meetupsEntryId);
 
 	/**
 	* Returns a range of all the meetups registrations where meetupsEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param meetupsEntryId the meetups entry ID
@@ -62,14 +61,14 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param end the upper bound of the range of meetups registrations (not inclusive)
 	* @return the range of matching meetups registrations
 	*/
-	public java.util.List<MeetupsRegistration> findByMeetupsEntryId(
+	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> findByMeetupsEntryId(
 		long meetupsEntryId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the meetups registrations where meetupsEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param meetupsEntryId the meetups entry ID
@@ -78,9 +77,9 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching meetups registrations
 	*/
-	public java.util.List<MeetupsRegistration> findByMeetupsEntryId(
+	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> findByMeetupsEntryId(
 		long meetupsEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator);
 
 	/**
 	* Returns the first meetups registration in the ordered set where meetupsEntryId = &#63;.
@@ -88,12 +87,12 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param meetupsEntryId the meetups entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching meetups registration
-	* @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
+	* @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
 	*/
-	public MeetupsRegistration findByMeetupsEntryId_First(
+	public com.liferay.social.networking.model.MeetupsRegistration findByMeetupsEntryId_First(
 		long meetupsEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator)
-		throws NoSuchMeetupsRegistrationException;
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator)
+		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the first meetups registration in the ordered set where meetupsEntryId = &#63;.
@@ -102,9 +101,9 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching meetups registration, or <code>null</code> if a matching meetups registration could not be found
 	*/
-	public MeetupsRegistration fetchByMeetupsEntryId_First(
+	public com.liferay.social.networking.model.MeetupsRegistration fetchByMeetupsEntryId_First(
 		long meetupsEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator);
 
 	/**
 	* Returns the last meetups registration in the ordered set where meetupsEntryId = &#63;.
@@ -112,12 +111,12 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param meetupsEntryId the meetups entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching meetups registration
-	* @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
+	* @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
 	*/
-	public MeetupsRegistration findByMeetupsEntryId_Last(
+	public com.liferay.social.networking.model.MeetupsRegistration findByMeetupsEntryId_Last(
 		long meetupsEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator)
-		throws NoSuchMeetupsRegistrationException;
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator)
+		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the last meetups registration in the ordered set where meetupsEntryId = &#63;.
@@ -126,9 +125,9 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching meetups registration, or <code>null</code> if a matching meetups registration could not be found
 	*/
-	public MeetupsRegistration fetchByMeetupsEntryId_Last(
+	public com.liferay.social.networking.model.MeetupsRegistration fetchByMeetupsEntryId_Last(
 		long meetupsEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator);
 
 	/**
 	* Returns the meetups registrations before and after the current meetups registration in the ordered set where meetupsEntryId = &#63;.
@@ -137,12 +136,12 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param meetupsEntryId the meetups entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next meetups registration
-	* @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
+	* @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
 	*/
-	public MeetupsRegistration[] findByMeetupsEntryId_PrevAndNext(
+	public com.liferay.social.networking.model.MeetupsRegistration[] findByMeetupsEntryId_PrevAndNext(
 		long meetupsRegistrationId, long meetupsEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator)
-		throws NoSuchMeetupsRegistrationException;
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator)
+		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 
 	/**
 	* Removes all the meetups registrations where meetupsEntryId = &#63; from the database.
@@ -160,16 +159,16 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	public int countByMeetupsEntryId(long meetupsEntryId);
 
 	/**
-	* Returns the meetups registration where userId = &#63; and meetupsEntryId = &#63; or throws a {@link com.liferay.socialnetworking.NoSuchMeetupsRegistrationException} if it could not be found.
+	* Returns the meetups registration where userId = &#63; and meetupsEntryId = &#63; or throws a {@link com.liferay.social.networking.NoSuchMeetupsRegistrationException} if it could not be found.
 	*
 	* @param userId the user ID
 	* @param meetupsEntryId the meetups entry ID
 	* @return the matching meetups registration
-	* @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
+	* @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
 	*/
-	public MeetupsRegistration findByU_ME(
+	public com.liferay.social.networking.model.MeetupsRegistration findByU_ME(
 		long userId, long meetupsEntryId)
-		throws NoSuchMeetupsRegistrationException;
+		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the meetups registration where userId = &#63; and meetupsEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -178,7 +177,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param meetupsEntryId the meetups entry ID
 	* @return the matching meetups registration, or <code>null</code> if a matching meetups registration could not be found
 	*/
-	public MeetupsRegistration fetchByU_ME(
+	public com.liferay.social.networking.model.MeetupsRegistration fetchByU_ME(
 		long userId, long meetupsEntryId);
 
 	/**
@@ -189,7 +188,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching meetups registration, or <code>null</code> if a matching meetups registration could not be found
 	*/
-	public MeetupsRegistration fetchByU_ME(
+	public com.liferay.social.networking.model.MeetupsRegistration fetchByU_ME(
 		long userId, long meetupsEntryId, boolean retrieveFromCache);
 
 	/**
@@ -199,9 +198,9 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param meetupsEntryId the meetups entry ID
 	* @return the meetups registration that was removed
 	*/
-	public MeetupsRegistration removeByU_ME(
+	public com.liferay.social.networking.model.MeetupsRegistration removeByU_ME(
 		long userId, long meetupsEntryId)
-		throws NoSuchMeetupsRegistrationException;
+		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the number of meetups registrations where userId = &#63; and meetupsEntryId = &#63;.
@@ -219,14 +218,14 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param status the status
 	* @return the matching meetups registrations
 	*/
-	public java.util.List<MeetupsRegistration> findByME_S(
+	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> findByME_S(
 		long meetupsEntryId, int status);
 
 	/**
 	* Returns a range of all the meetups registrations where meetupsEntryId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param meetupsEntryId the meetups entry ID
@@ -235,14 +234,14 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param end the upper bound of the range of meetups registrations (not inclusive)
 	* @return the range of matching meetups registrations
 	*/
-	public java.util.List<MeetupsRegistration> findByME_S(
+	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> findByME_S(
 		long meetupsEntryId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the meetups registrations where meetupsEntryId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param meetupsEntryId the meetups entry ID
@@ -252,9 +251,9 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching meetups registrations
 	*/
-	public java.util.List<MeetupsRegistration> findByME_S(
+	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> findByME_S(
 		long meetupsEntryId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator);
 
 	/**
 	* Returns the first meetups registration in the ordered set where meetupsEntryId = &#63; and status = &#63;.
@@ -263,12 +262,12 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching meetups registration
-	* @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
+	* @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
 	*/
-	public MeetupsRegistration findByME_S_First(
+	public com.liferay.social.networking.model.MeetupsRegistration findByME_S_First(
 		long meetupsEntryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator)
-		throws NoSuchMeetupsRegistrationException;
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator)
+		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the first meetups registration in the ordered set where meetupsEntryId = &#63; and status = &#63;.
@@ -278,9 +277,9 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching meetups registration, or <code>null</code> if a matching meetups registration could not be found
 	*/
-	public MeetupsRegistration fetchByME_S_First(
+	public com.liferay.social.networking.model.MeetupsRegistration fetchByME_S_First(
 		long meetupsEntryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator);
 
 	/**
 	* Returns the last meetups registration in the ordered set where meetupsEntryId = &#63; and status = &#63;.
@@ -289,12 +288,12 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching meetups registration
-	* @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
+	* @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
 	*/
-	public MeetupsRegistration findByME_S_Last(
+	public com.liferay.social.networking.model.MeetupsRegistration findByME_S_Last(
 		long meetupsEntryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator)
-		throws NoSuchMeetupsRegistrationException;
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator)
+		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the last meetups registration in the ordered set where meetupsEntryId = &#63; and status = &#63;.
@@ -304,9 +303,9 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching meetups registration, or <code>null</code> if a matching meetups registration could not be found
 	*/
-	public MeetupsRegistration fetchByME_S_Last(
+	public com.liferay.social.networking.model.MeetupsRegistration fetchByME_S_Last(
 		long meetupsEntryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator);
 
 	/**
 	* Returns the meetups registrations before and after the current meetups registration in the ordered set where meetupsEntryId = &#63; and status = &#63;.
@@ -316,12 +315,12 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next meetups registration
-	* @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
+	* @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
 	*/
-	public MeetupsRegistration[] findByME_S_PrevAndNext(
+	public com.liferay.social.networking.model.MeetupsRegistration[] findByME_S_PrevAndNext(
 		long meetupsRegistrationId, long meetupsEntryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator)
-		throws NoSuchMeetupsRegistrationException;
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator)
+		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 
 	/**
 	* Removes all the meetups registrations where meetupsEntryId = &#63; and status = &#63; from the database.
@@ -346,7 +345,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param meetupsRegistration the meetups registration
 	*/
 	public void cacheResult(
-		MeetupsRegistration meetupsRegistration);
+		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration);
 
 	/**
 	* Caches the meetups registrations in the entity cache if it is enabled.
@@ -354,7 +353,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param meetupsRegistrations the meetups registrations
 	*/
 	public void cacheResult(
-		java.util.List<MeetupsRegistration> meetupsRegistrations);
+		java.util.List<com.liferay.social.networking.model.MeetupsRegistration> meetupsRegistrations);
 
 	/**
 	* Creates a new meetups registration with the primary key. Does not add the meetups registration to the database.
@@ -362,7 +361,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param meetupsRegistrationId the primary key for the new meetups registration
 	* @return the new meetups registration
 	*/
-	public MeetupsRegistration create(
+	public com.liferay.social.networking.model.MeetupsRegistration create(
 		long meetupsRegistrationId);
 
 	/**
@@ -370,25 +369,25 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	*
 	* @param meetupsRegistrationId the primary key of the meetups registration
 	* @return the meetups registration that was removed
-	* @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
+	* @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
 	*/
-	public MeetupsRegistration remove(
+	public com.liferay.social.networking.model.MeetupsRegistration remove(
 		long meetupsRegistrationId)
-		throws NoSuchMeetupsRegistrationException;
+		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 
-	public MeetupsRegistration updateImpl(
-		MeetupsRegistration meetupsRegistration);
+	public com.liferay.social.networking.model.MeetupsRegistration updateImpl(
+		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration);
 
 	/**
-	* Returns the meetups registration with the primary key or throws a {@link com.liferay.socialnetworking.NoSuchMeetupsRegistrationException} if it could not be found.
+	* Returns the meetups registration with the primary key or throws a {@link com.liferay.social.networking.NoSuchMeetupsRegistrationException} if it could not be found.
 	*
 	* @param meetupsRegistrationId the primary key of the meetups registration
 	* @return the meetups registration
-	* @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
+	* @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
 	*/
-	public MeetupsRegistration findByPrimaryKey(
+	public com.liferay.social.networking.model.MeetupsRegistration findByPrimaryKey(
 		long meetupsRegistrationId)
-		throws NoSuchMeetupsRegistrationException;
+		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the meetups registration with the primary key or returns <code>null</code> if it could not be found.
@@ -396,11 +395,11 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param meetupsRegistrationId the primary key of the meetups registration
 	* @return the meetups registration, or <code>null</code> if a meetups registration with the primary key could not be found
 	*/
-	public MeetupsRegistration fetchByPrimaryKey(
+	public com.liferay.social.networking.model.MeetupsRegistration fetchByPrimaryKey(
 		long meetupsRegistrationId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, MeetupsRegistration> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, com.liferay.social.networking.model.MeetupsRegistration> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -408,27 +407,27 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	*
 	* @return the meetups registrations
 	*/
-	public java.util.List<MeetupsRegistration> findAll();
+	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> findAll();
 
 	/**
 	* Returns a range of all the meetups registrations.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of meetups registrations
 	* @param end the upper bound of the range of meetups registrations (not inclusive)
 	* @return the range of meetups registrations
 	*/
-	public java.util.List<MeetupsRegistration> findAll(
+	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> findAll(
 		int start, int end);
 
 	/**
 	* Returns an ordered range of all the meetups registrations.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of meetups registrations
@@ -436,9 +435,9 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of meetups registrations
 	*/
-	public java.util.List<MeetupsRegistration> findAll(
+	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.social.networking.model.MeetupsRegistration> orderByComparator);
 
 	/**
 	* Removes all the meetups registrations from the database.

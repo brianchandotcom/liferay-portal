@@ -17,7 +17,6 @@ package com.liferay.social.networking.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.ServiceWrapper;
-import com.liferay.social.networking.model.MeetupsEntry;
 
 /**
  * Provides a wrapper for {@link MeetupsEntryLocalService}.
@@ -41,13 +40,13 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	* @return the meetups entry that was added
 	*/
 	@Override
-	public MeetupsEntry addMeetupsEntry(
-		MeetupsEntry meetupsEntry) {
+	public com.liferay.social.networking.model.MeetupsEntry addMeetupsEntry(
+		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
 		return _meetupsEntryLocalService.addMeetupsEntry(meetupsEntry);
 	}
 
 	@Override
-	public MeetupsEntry addMeetupsEntry(
+	public com.liferay.social.networking.model.MeetupsEntry addMeetupsEntry(
 		long userId, java.lang.String title, java.lang.String description,
 		int startDateMonth, int startDateDay, int startDateYear,
 		int startDateHour, int startDateMinute, int endDateMonth,
@@ -68,7 +67,7 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	* @return the new meetups entry
 	*/
 	@Override
-	public MeetupsEntry createMeetupsEntry(
+	public com.liferay.social.networking.model.MeetupsEntry createMeetupsEntry(
 		long meetupsEntryId) {
 		return _meetupsEntryLocalService.createMeetupsEntry(meetupsEntryId);
 	}
@@ -80,8 +79,8 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	* @return the meetups entry that was removed
 	*/
 	@Override
-	public MeetupsEntry deleteMeetupsEntry(
-		MeetupsEntry meetupsEntry) {
+	public com.liferay.social.networking.model.MeetupsEntry deleteMeetupsEntry(
+		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
 		return _meetupsEntryLocalService.deleteMeetupsEntry(meetupsEntry);
 	}
 
@@ -93,7 +92,7 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	* @throws PortalException if a meetups entry with the primary key could not be found
 	*/
 	@Override
-	public MeetupsEntry deleteMeetupsEntry(
+	public com.liferay.social.networking.model.MeetupsEntry deleteMeetupsEntry(
 		long meetupsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _meetupsEntryLocalService.deleteMeetupsEntry(meetupsEntryId);
@@ -130,7 +129,7 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.MeetupsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.MeetupsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -149,7 +148,7 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.MeetupsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.MeetupsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -195,7 +194,7 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	}
 
 	@Override
-	public MeetupsEntry fetchMeetupsEntry(
+	public com.liferay.social.networking.model.MeetupsEntry fetchMeetupsEntry(
 		long meetupsEntryId) {
 		return _meetupsEntryLocalService.fetchMeetupsEntry(meetupsEntryId);
 	}
@@ -219,7 +218,7 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	* Returns a range of all the meetups entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.MeetupsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.MeetupsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of meetups entries
@@ -227,19 +226,19 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	* @return the range of meetups entries
 	*/
 	@Override
-	public java.util.List<MeetupsEntry> getMeetupsEntries(
+	public java.util.List<com.liferay.social.networking.model.MeetupsEntry> getMeetupsEntries(
 		int start, int end) {
 		return _meetupsEntryLocalService.getMeetupsEntries(start, end);
 	}
 
 	@Override
-	public java.util.List<MeetupsEntry> getMeetupsEntriesByCompany(
+	public java.util.List<com.liferay.social.networking.model.MeetupsEntry> getMeetupsEntriesByCompany(
 		long companyId) {
 		return _meetupsEntryLocalService.getMeetupsEntriesByCompany(companyId);
 	}
 
 	@Override
-	public java.util.List<MeetupsEntry> getMeetupsEntriesByUser(
+	public java.util.List<com.liferay.social.networking.model.MeetupsEntry> getMeetupsEntriesByUser(
 		long userId) {
 		return _meetupsEntryLocalService.getMeetupsEntriesByUser(userId);
 	}
@@ -262,7 +261,7 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	* @throws PortalException if a meetups entry with the primary key could not be found
 	*/
 	@Override
-	public MeetupsEntry getMeetupsEntry(
+	public com.liferay.social.networking.model.MeetupsEntry getMeetupsEntry(
 		long meetupsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _meetupsEntryLocalService.getMeetupsEntry(meetupsEntryId);
@@ -292,13 +291,13 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	* @return the meetups entry that was updated
 	*/
 	@Override
-	public MeetupsEntry updateMeetupsEntry(
-		MeetupsEntry meetupsEntry) {
+	public com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
+		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
 		return _meetupsEntryLocalService.updateMeetupsEntry(meetupsEntry);
 	}
 
 	@Override
-	public MeetupsEntry updateMeetupsEntry(
+	public com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
 		long userId, long meetupsEntryId, java.lang.String title,
 		java.lang.String description, int startDateMonth, int startDateDay,
 		int startDateYear, int startDateHour, int startDateMinute,

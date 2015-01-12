@@ -17,7 +17,6 @@ package com.liferay.social.networking.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.ServiceWrapper;
-import com.liferay.social.networking.model.MeetupsRegistration;
 
 /**
  * Provides a wrapper for {@link MeetupsRegistrationLocalService}.
@@ -42,8 +41,8 @@ public class MeetupsRegistrationLocalServiceWrapper
 	* @return the meetups registration that was added
 	*/
 	@Override
-	public MeetupsRegistration addMeetupsRegistration(
-		MeetupsRegistration meetupsRegistration) {
+	public com.liferay.social.networking.model.MeetupsRegistration addMeetupsRegistration(
+		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration) {
 		return _meetupsRegistrationLocalService.addMeetupsRegistration(meetupsRegistration);
 	}
 
@@ -54,7 +53,7 @@ public class MeetupsRegistrationLocalServiceWrapper
 	* @return the new meetups registration
 	*/
 	@Override
-	public MeetupsRegistration createMeetupsRegistration(
+	public com.liferay.social.networking.model.MeetupsRegistration createMeetupsRegistration(
 		long meetupsRegistrationId) {
 		return _meetupsRegistrationLocalService.createMeetupsRegistration(meetupsRegistrationId);
 	}
@@ -66,8 +65,8 @@ public class MeetupsRegistrationLocalServiceWrapper
 	* @return the meetups registration that was removed
 	*/
 	@Override
-	public MeetupsRegistration deleteMeetupsRegistration(
-		MeetupsRegistration meetupsRegistration) {
+	public com.liferay.social.networking.model.MeetupsRegistration deleteMeetupsRegistration(
+		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration) {
 		return _meetupsRegistrationLocalService.deleteMeetupsRegistration(meetupsRegistration);
 	}
 
@@ -79,7 +78,7 @@ public class MeetupsRegistrationLocalServiceWrapper
 	* @throws PortalException if a meetups registration with the primary key could not be found
 	*/
 	@Override
-	public MeetupsRegistration deleteMeetupsRegistration(
+	public com.liferay.social.networking.model.MeetupsRegistration deleteMeetupsRegistration(
 		long meetupsRegistrationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _meetupsRegistrationLocalService.deleteMeetupsRegistration(meetupsRegistrationId);
@@ -116,7 +115,7 @@ public class MeetupsRegistrationLocalServiceWrapper
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -136,7 +135,7 @@ public class MeetupsRegistrationLocalServiceWrapper
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -182,7 +181,7 @@ public class MeetupsRegistrationLocalServiceWrapper
 	}
 
 	@Override
-	public MeetupsRegistration fetchMeetupsRegistration(
+	public com.liferay.social.networking.model.MeetupsRegistration fetchMeetupsRegistration(
 		long meetupsRegistrationId) {
 		return _meetupsRegistrationLocalService.fetchMeetupsRegistration(meetupsRegistrationId);
 	}
@@ -210,14 +209,14 @@ public class MeetupsRegistrationLocalServiceWrapper
 	* @throws PortalException if a meetups registration with the primary key could not be found
 	*/
 	@Override
-	public MeetupsRegistration getMeetupsRegistration(
+	public com.liferay.social.networking.model.MeetupsRegistration getMeetupsRegistration(
 		long meetupsRegistrationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _meetupsRegistrationLocalService.getMeetupsRegistration(meetupsRegistrationId);
 	}
 
 	@Override
-	public MeetupsRegistration getMeetupsRegistration(
+	public com.liferay.social.networking.model.MeetupsRegistration getMeetupsRegistration(
 		long userId, long meetupsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _meetupsRegistrationLocalService.getMeetupsRegistration(userId,
@@ -225,7 +224,7 @@ public class MeetupsRegistrationLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<MeetupsRegistration> getMeetupsRegistrations(
+	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> getMeetupsRegistrations(
 		long meetupsEntryId, int status, int start, int end) {
 		return _meetupsRegistrationLocalService.getMeetupsRegistrations(meetupsEntryId,
 			status, start, end);
@@ -235,7 +234,7 @@ public class MeetupsRegistrationLocalServiceWrapper
 	* Returns a range of all the meetups registrations.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.socialnetworking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of meetups registrations
@@ -243,7 +242,7 @@ public class MeetupsRegistrationLocalServiceWrapper
 	* @return the range of meetups registrations
 	*/
 	@Override
-	public java.util.List<MeetupsRegistration> getMeetupsRegistrations(
+	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> getMeetupsRegistrations(
 		int start, int end) {
 		return _meetupsRegistrationLocalService.getMeetupsRegistrations(start,
 			end);
@@ -289,13 +288,13 @@ public class MeetupsRegistrationLocalServiceWrapper
 	* @return the meetups registration that was updated
 	*/
 	@Override
-	public MeetupsRegistration updateMeetupsRegistration(
-		MeetupsRegistration meetupsRegistration) {
+	public com.liferay.social.networking.model.MeetupsRegistration updateMeetupsRegistration(
+		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration) {
 		return _meetupsRegistrationLocalService.updateMeetupsRegistration(meetupsRegistration);
 	}
 
 	@Override
-	public MeetupsRegistration updateMeetupsRegistration(
+	public com.liferay.social.networking.model.MeetupsRegistration updateMeetupsRegistration(
 		long userId, long meetupsEntryId, int status, java.lang.String comments)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _meetupsRegistrationLocalService.updateMeetupsRegistration(userId,

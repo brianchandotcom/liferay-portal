@@ -15,7 +15,6 @@
 package com.liferay.social.networking.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
-import com.liferay.social.networking.model.WallEntry;
 
 /**
  * @author Brian Wing Shun Chan
@@ -26,7 +25,7 @@ public interface WallEntryFinder {
 	public int countByG1_G2_U1_U2(long groupId1, long groupId2, long userId1,
 		long userId2);
 
-	public java.util.List<WallEntry> findByG1_G2_U1_U2(
+	public java.util.List<com.liferay.social.networking.model.WallEntry> findByG1_G2_U1_U2(
 		long groupId1, long groupId2, long userId1, long userId2, int start,
 		int end);
 }

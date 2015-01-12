@@ -121,7 +121,8 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	}
 
 	@Override
-	public int compareTo(WallEntry wallEntry) {
+	public int compareTo(
+		com.liferay.social.networking.model.WallEntry wallEntry) {
 		return _wallEntry.compareTo(wallEntry);
 	}
 
@@ -394,12 +395,12 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<WallEntry> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.social.networking.model.WallEntry> toCacheModel() {
 		return _wallEntry.toCacheModel();
 	}
 
 	@Override
-	public WallEntry toEscapedModel() {
+	public com.liferay.social.networking.model.WallEntry toEscapedModel() {
 		return new WallEntryWrapper(_wallEntry.toEscapedModel());
 	}
 
@@ -409,7 +410,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	}
 
 	@Override
-	public WallEntry toUnescapedModel() {
+	public com.liferay.social.networking.model.WallEntry toUnescapedModel() {
 		return new WallEntryWrapper(_wallEntry.toUnescapedModel());
 	}
 

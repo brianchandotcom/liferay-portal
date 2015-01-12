@@ -16,6 +16,7 @@ package com.liferay.social.networking.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -33,12 +34,36 @@ import java.util.Date;
  * The cache model class for representing MeetupsRegistration in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.social.networking.model.MeetupsRegistration
+ * @see MeetupsRegistration
  * @generated
  */
 @ProviderType
 public class MeetupsRegistrationCacheModel implements CacheModel<MeetupsRegistration>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MeetupsRegistrationCacheModel)) {
+			return false;
+		}
+
+		MeetupsRegistrationCacheModel meetupsRegistrationCacheModel = (MeetupsRegistrationCacheModel)obj;
+
+		if (meetupsRegistrationId == meetupsRegistrationCacheModel.meetupsRegistrationId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, meetupsRegistrationId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);

@@ -35,9 +35,9 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 import com.liferay.social.networking.model.MeetupsRegistration;
+import com.liferay.social.networking.model.impl.MeetupsRegistrationImpl;
 import com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl;
 import com.liferay.social.networking.service.persistence.MeetupsRegistrationPersistence;
-import com.liferay.social.networking.model.impl.MeetupsRegistrationImpl;
 
 import java.io.Serializable;
 
@@ -57,7 +57,7 @@ import java.util.Set;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.social.networking.service.persistence.MeetupsRegistrationPersistence
+ * @see MeetupsRegistrationPersistence
  * @see MeetupsRegistrationUtil
  * @generated
  */
@@ -261,7 +261,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 * @param meetupsEntryId the meetups entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching meetups registration
-	 * @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
+	 * @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
 	 */
 	@Override
 	public MeetupsRegistration findByMeetupsEntryId_First(long meetupsEntryId,
@@ -313,7 +313,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 * @param meetupsEntryId the meetups entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching meetups registration
-	 * @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
+	 * @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
 	 */
 	@Override
 	public MeetupsRegistration findByMeetupsEntryId_Last(long meetupsEntryId,
@@ -371,7 +371,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 * @param meetupsEntryId the meetups entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next meetups registration
-	 * @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
+	 * @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
 	 */
 	@Override
 	public MeetupsRegistration[] findByMeetupsEntryId_PrevAndNext(
@@ -592,12 +592,12 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the meetups registration where userId = &#63; and meetupsEntryId = &#63; or throws a {@link com.liferay.socialnetworking.NoSuchMeetupsRegistrationException} if it could not be found.
+	 * Returns the meetups registration where userId = &#63; and meetupsEntryId = &#63; or throws a {@link com.liferay.social.networking.NoSuchMeetupsRegistrationException} if it could not be found.
 	 *
 	 * @param userId the user ID
 	 * @param meetupsEntryId the meetups entry ID
 	 * @return the matching meetups registration
-	 * @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
+	 * @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
 	 */
 	@Override
 	public MeetupsRegistration findByU_ME(long userId, long meetupsEntryId)
@@ -998,7 +998,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching meetups registration
-	 * @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
+	 * @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
 	 */
 	@Override
 	public MeetupsRegistration findByME_S_First(long meetupsEntryId,
@@ -1054,7 +1054,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching meetups registration
-	 * @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
+	 * @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
 	 */
 	@Override
 	public MeetupsRegistration findByME_S_Last(long meetupsEntryId, int status,
@@ -1117,7 +1117,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next meetups registration
-	 * @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
+	 * @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
 	 */
 	@Override
 	public MeetupsRegistration[] findByME_S_PrevAndNext(
@@ -1508,7 +1508,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 *
 	 * @param meetupsRegistrationId the primary key of the meetups registration
 	 * @return the meetups registration that was removed
-	 * @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
+	 * @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
 	 */
 	@Override
 	public MeetupsRegistration remove(long meetupsRegistrationId)
@@ -1521,7 +1521,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 *
 	 * @param primaryKey the primary key of the meetups registration
 	 * @return the meetups registration that was removed
-	 * @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
+	 * @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
 	 */
 	@Override
 	public MeetupsRegistration remove(Serializable primaryKey)
@@ -1591,7 +1591,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 	@Override
 	public MeetupsRegistration updateImpl(
-		MeetupsRegistration meetupsRegistration) {
+		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration) {
 		meetupsRegistration = toUnwrappedModel(meetupsRegistration);
 
 		boolean isNew = meetupsRegistration.isNew();
@@ -1710,7 +1710,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	 *
 	 * @param primaryKey the primary key of the meetups registration
 	 * @return the meetups registration
-	 * @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
+	 * @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
 	 */
 	@Override
 	public MeetupsRegistration findByPrimaryKey(Serializable primaryKey)
@@ -1730,11 +1730,11 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	}
 
 	/**
-	 * Returns the meetups registration with the primary key or throws a {@link com.liferay.socialnetworking.NoSuchMeetupsRegistrationException} if it could not be found.
+	 * Returns the meetups registration with the primary key or throws a {@link com.liferay.social.networking.NoSuchMeetupsRegistrationException} if it could not be found.
 	 *
 	 * @param meetupsRegistrationId the primary key of the meetups registration
 	 * @return the meetups registration
-	 * @throws com.liferay.socialnetworking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
+	 * @throws com.liferay.social.networking.NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
 	 */
 	@Override
 	public MeetupsRegistration findByPrimaryKey(long meetupsRegistrationId)

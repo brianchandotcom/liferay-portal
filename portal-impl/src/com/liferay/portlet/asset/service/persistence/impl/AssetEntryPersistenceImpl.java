@@ -3763,6 +3763,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	public AssetEntry create(long entryId) {
 		AssetEntry assetEntry = new AssetEntryImpl();
 
+		assetEntry.setListable(true);
 		assetEntry.setNew(true);
 		assetEntry.setPrimaryKey(entryId);
 

@@ -706,7 +706,7 @@ public class AssetEntryQuery {
 	private String _keywords;
 	private Layout _layout;
 	private long _linkedAssetEntryId = 0;
-	private boolean _listable;
+	private boolean _listable = true;
 	private long[] _notAllCategoryIds = new long[0];
 	private long[] _notAllTagIds = new long[0];
 	private long[][] _notAllTagIdsArray = new long[0][];

@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"com.liferay.portlet.category=category.social",
+		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.header-portlet-css=/summary/css/main.css",
 		"com.liferay.portlet.css-class-wrapper=" +
 			"social-networking-portlet-summary",

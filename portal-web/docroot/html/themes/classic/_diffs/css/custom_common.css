@@ -968,7 +968,7 @@ body.yui3-skin-sam .yui3-widget-mask {
 	}
 }
 
-/* ---------- Liferay Source Editor ---------- */
+/* ---------- Liferay source editor ---------- */
 
 .lfr-source-editor {
 	border: solid 0 #CCC;
@@ -1280,8 +1280,8 @@ $prefixes: ("-webkit-", "-moz-", "-o-", "");
 	}
 
 	.wrapper {
-		@include transition-duration(0.6s);
 		@include transform-style(preserve-3d);
+		@include transition-duration(0.6s);
 	}
 }
 

@@ -23,9 +23,9 @@ AUI.add(
 
 		var TPL_CODE_CONTAINER = '<div class="{cssClass}"></div>';
 
-		var TPL_TOOLBAR = '<ul class="{cssClass}">{buttons}</ul>';
-
 		var TPL_THEME_BUTTON = '<li data-action="{action}"><button type="button" class="btn btn-default"><i class="{iconCssClass}"></i></button></li>';
+
+		var TPL_TOOLBAR = '<ul class="{cssClass}">{buttons}</ul>';
 
 		var LiferaySourceEditor = A.Component.create(
 			{

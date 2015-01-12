@@ -122,7 +122,7 @@ if (alloyEditorMode.equals("text")) {
 </liferay-util:buffer>
 
 <c:choose>
-	<c:when test='<%= showSource %>'>
+	<c:when test="<%= showSource %>">
 		<div class="alloy-editor-switch">
 			<button class="btn btn-default" id="<%= name %>Switch" type="button">
 				&lt;&#47;&gt;
@@ -398,7 +398,7 @@ if (alloyEditorMode.equals("text")) {
 		}
 	};
 
-	<c:if test='<%= showSource %>'>
+	<c:if test="<%= showSource %>">
 		var CSS_SHOW_SOURCE = 'show-source';
 		var STR_VALUE = 'value';
 

@@ -149,6 +149,12 @@ public class LoginUtil {
 			}
 
 			if (authResult != Authenticator.SUCCESS) {
+				User user = UserLocalServiceUtil.fetchUser(userId);
+
+				if (user != null) {
+					UserLocalServiceUtil.checkLockout(user);
+				}
+
 				throw new AuthException();
 			}
 		}

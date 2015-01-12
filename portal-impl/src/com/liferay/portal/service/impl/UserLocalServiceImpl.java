@@ -5799,10 +5799,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
+		if (resultsMap != null) {
+			resultsMap.put("userId", user.getUserId());
+		}
+
 		if (authResult == Authenticator.SUCCESS) {
-			if (resultsMap != null) {
-				resultsMap.put("userId", user.getUserId());
-			}
 
 			// Update digest
 

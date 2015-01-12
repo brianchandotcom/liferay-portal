@@ -65,7 +65,7 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 				tempFileEntryId, _fileEntry));
 
 		_tempFileEntryImgTag =
-			BlogsTestUtil.getBlogsEntryAttachmentFileEntryImgTag(
+			BlogsTestUtil.getTempBlogsEntryAttachmentFileEntryImgTag(
 				tempFileEntryId, _TEMP_FILE_ENTRY_IMAGE_URL);
 	}
 

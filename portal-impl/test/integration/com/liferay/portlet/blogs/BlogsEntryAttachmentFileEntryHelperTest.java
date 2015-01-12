@@ -118,7 +118,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			"image.jpg", getInputStream(), ContentTypes.IMAGE_JPEG);
 
 		String tempFileEntryImgTag =
-			BlogsTestUtil.getBlogsEntryAttachmentFileEntryImgTag(
+			BlogsTestUtil.getTempBlogsEntryAttachmentFileEntryImgTag(
 				tempFileEntry.getFileEntryId(),
 				PortletFileRepositoryUtil.getPortletFileEntryURL(
 					null, tempFileEntry, StringPool.BLANK));

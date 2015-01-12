@@ -16,8 +16,8 @@ package com.liferay.social.networking.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.social.networking.service.WallEntryLocalServiceUtil;
 import com.liferay.social.networking.model.WallEntry;
+import com.liferay.social.networking.service.WallEntryLocalServiceUtil;
 
 /**
  * The extended model base implementation for the WallEntry service. Represents a row in the &quot;WallEntry&quot; database table, with each column mapped to a property of this class.

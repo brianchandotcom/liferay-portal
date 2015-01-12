@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -121,8 +122,9 @@ public class JspServlet extends HttpServlet {
 
 		BundleReference bundleReference = (BundleReference)classLoader;
 
-		_jspBundleClassloader = new JspBundleClassloader(
-			bundleReference.getBundle(), _jspBundle);
+		_bundle = bundleReference.getBundle();
+
+		_jspBundleClassloader = new JspBundleClassloader(_bundle, _jspBundle);
 
 		final Map<String, String> defaults = new HashMap<String, String>();
 
@@ -235,6 +237,7 @@ public class JspServlet extends HttpServlet {
 		ServletContext.class
 	};
 
+	private Bundle _bundle;
 	private final Bundle _jspBundle;
 	private URLClassLoader _jspBundleClassloader;
 	private HttpServlet _jspServlet =
@@ -270,30 +273,53 @@ public class JspServlet extends HttpServlet {
 			return method.invoke(_servletContext, args);
 		}
 
+		private URL getExtension(String path) {
+			Enumeration<URL> enumeration = _bundle.findEntries(
+				"META-INF/resources", path.substring(1), false);
+
+			if (enumeration == null) {
+				return null;
+			}
+
+			List<URL> entries = Collections.list(enumeration);
+
+			return entries.get(entries.size() - 1);
+		}
+
 		private URL getResource(String path) {
 			try {
-				URL url = _servletContext.getResource(path);
-
-				if (url == null) {
-					url = _servletContext.getClassLoader().getResource(path);
-
-					if (url == null) {
-						if (path.startsWith("/")) {
-							path = path.substring(1);
-						}
-
-						if (!path.startsWith("META-INF/")) {
-							url = _servletContext.getResource(
-								"/META-INF/resources/".concat(path));
-						}
-
-						if (url == null) {
-							url = _jspBundle.getEntry(path);
-						}
-					}
+				if (path.charAt(0) != '/') {
+					path = '/' + path;
 				}
 
-				return url;
+				URL url = getExtension(path);
+
+				if (url != null) {
+					return url;
+				}
+
+				url = _servletContext.getResource(path);
+
+				if (url != null) {
+					return url;
+				}
+
+				url = _servletContext.getClassLoader().getResource(path);
+
+				if (url != null) {
+					return url;
+				}
+
+				if (!path.startsWith("/META-INF/")) {
+					url = _servletContext.getResource(
+						"/META-INF/resources".concat(path));
+				}
+
+				if (url != null) {
+					return url;
+				}
+
+				return _jspBundle.getEntry(path);
 			}
 			catch (MalformedURLException e) {
 				// Ignore

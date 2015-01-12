@@ -224,7 +224,11 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		updateStructures();
 		updateTemplates();
 
-		super.doUpgrade();
+		// UpgradeAsset must be executed after calling updateJournal because
+		// Journal Article Structures must already be converted to DDM
+		// Structures
+
+		upgrade(UpgradeAsset.class);
 	}
 
 	protected long getDDMStructureId(long groupId, String structureId) {

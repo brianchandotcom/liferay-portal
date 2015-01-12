@@ -28,7 +28,6 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-
 		updateAssetClassTypeId();
 	}
 
@@ -59,7 +58,6 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateAssetClassTypeId() throws Exception {
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

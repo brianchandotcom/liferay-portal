@@ -56,7 +56,6 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 
 <aui:form action="<%= movePageURL %>" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "changeParent();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
 	<aui:input name="title" type="hidden" value="<%= title %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />

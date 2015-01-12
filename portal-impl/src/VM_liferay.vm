@@ -1,7 +1,7 @@
 #macro (portletToolbarMenu $items)
 	#set ($portlet_toolbar_menu_tag = $theme.getPortletToolbarMenuTag())
 
-	$portlet_toolbar_menu_tag.setToolbarItems($items)
+	$portlet_toolbar_menu_tag.setItems($items)
 
 	$portlet_toolbar_menu_tag.runTag()
 #end

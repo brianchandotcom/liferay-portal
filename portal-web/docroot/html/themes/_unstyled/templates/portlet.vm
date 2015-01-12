@@ -14,7 +14,7 @@
 
 		#if ($portlet_toolbar)
 			<menu class="portlet-topper-toolbar add-content" id="portlet-topper-toolbar-add-content_$portlet_id" type="toolbar">
-				#portletToolbarMenu($portlet_toolbar.getContentAdditionMenuItems($renderRequest))
+				#portletToolbarMenu($portlet_toolbar.getContentAdditionMenuItems($portlet_id, $renderRequest))
 			</menu>
 		#end
 

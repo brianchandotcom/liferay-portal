@@ -110,6 +110,11 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean isDownloadLinkVisible() throws PortalException {
+		return false;
+	}
+
+	@Override
 	public void renderPreview(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {

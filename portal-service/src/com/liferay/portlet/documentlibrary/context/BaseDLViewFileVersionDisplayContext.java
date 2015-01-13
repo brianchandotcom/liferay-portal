@@ -100,6 +100,11 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean isDownloadLinkVisible() throws PortalException {
+		return parentDLDisplayContext.isDownloadLinkVisible();
+	}
+
+	@Override
 	public boolean isEditButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isEditButtonVisible();
 	}

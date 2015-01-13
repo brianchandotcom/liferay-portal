@@ -295,8 +295,8 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 							</blockquote>
 						</c:if>
 
-						<span class="download-document">
-							<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+						<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
+							<span class="download-document">
 								<liferay-ui:icon
 									iconCssClass="icon-download"
 									label="<%= true %>"
@@ -304,61 +304,61 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 									method="get"
 									url="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 								/>
-							</c:if>
-						</span>
+							</span>
 
-						<span class="conversions">
-
-							<%
-							for (int i = 0; i < conversions.length; i++) {
-								String conversion = conversions[i];
-							%>
-
-								<liferay-ui:icon
-									iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
-									label="<%= true %>"
-									message="<%= StringUtil.toUpperCase(conversion) %>"
-									url='<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion) %>'
-								/>
-
-							<%
-							}
-							%>
-
-						</span>
-
-						<span class="webdav-url">
-							<c:choose>
-								<c:when test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
-									<liferay-ui:message key="get-url-or-webdav-url" />
-								</c:when>
-
-								<c:otherwise>
-									<liferay-ui:message key="get-url" />
-								</c:otherwise>
-							</c:choose>
-						</span>
-
-						<div class="hide lfr-asset-field url-file-container">
-							<aui:input name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>" />
-						</div>
-
-						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
-							<div class="hide lfr-asset-field webdav-url-file-container">
+							<span class="conversions">
 
 								<%
-								String webDavHelpMessage = null;
+								for (int i = 0; i < conversions.length; i++) {
+									String conversion = conversions[i];
+								%>
 
-								if (BrowserSnifferUtil.isWindows(request)) {
-									webDavHelpMessage = LanguageUtil.format(request, "webdav-windows-help", new Object[] {"http://www.microsoft.com/downloads/details.aspx?FamilyId=17C36612-632E-4C04-9382-987622ED1D64", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV"}, false);
-								}
-								else {
-									webDavHelpMessage = LanguageUtil.format(request, "webdav-help", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV", false);
+									<liferay-ui:icon
+										iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
+										label="<%= true %>"
+										message="<%= StringUtil.toUpperCase(conversion) %>"
+										url='<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&targetExtension=" + conversion) %>'
+									/>
+
+								<%
 								}
 								%>
 
-								<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL"  type="resource" value="<%= webDavURL %>" />
+							</span>
+
+							<span class="webdav-url">
+								<c:choose>
+									<c:when test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
+										<liferay-ui:message key="get-url-or-webdav-url" />
+									</c:when>
+
+									<c:otherwise>
+										<liferay-ui:message key="get-url" />
+									</c:otherwise>
+								</c:choose>
+							</span>
+
+							<div class="hide lfr-asset-field url-file-container">
+								<aui:input name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>" />
 							</div>
+
+							<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
+								<div class="hide lfr-asset-field webdav-url-file-container">
+
+									<%
+									String webDavHelpMessage = null;
+
+									if (BrowserSnifferUtil.isWindows(request)) {
+										webDavHelpMessage = LanguageUtil.format(request, "webdav-windows-help", new Object[] {"http://www.microsoft.com/downloads/details.aspx?FamilyId=17C36612-632E-4C04-9382-987622ED1D64", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV"}, false);
+									}
+									else {
+										webDavHelpMessage = LanguageUtil.format(request, "webdav-help", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV", false);
+									}
+									%>
+
+									<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL"  type="resource" value="<%= webDavURL %>" />
+								</div>
+							</c:if>
 						</c:if>
 					</div>
 				</c:if>

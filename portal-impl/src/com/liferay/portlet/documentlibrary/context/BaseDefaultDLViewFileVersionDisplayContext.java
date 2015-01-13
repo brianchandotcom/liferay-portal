@@ -234,6 +234,11 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean isDownloadLinkVisible() throws PortalException {
+		return isDownloadButtonVisible();
+	}
+
+	@Override
 	public boolean isEditButtonVisible() throws PortalException {
 		return _fileEntryDisplayContextHelper.isUpdatable();
 	}

@@ -223,6 +223,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		updateStructures();
 		updateTemplates();
+		updateAssetClassTypeId();
 
 		super.doUpgrade();
 	}
@@ -267,6 +268,37 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		return new String[] {
 			"56_INSTANCE_%", "62_INSTANCE_%", "101_INSTANCE_%"
 		};
+	}
+
+	protected void updateAssetClassTypeId() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select groupId, resourcePrimKey, structureId from " +
+					"JournalArticle where structureId != ''");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				long resourcePrimKey = rs.getLong("resourcePrimKey");
+				String structureId = rs.getString("structureId");
+
+				long ddmStructureId = getDDMStructureId(groupId, structureId);
+
+				runSQL(
+					"update AssetEntry set classTypeId = " +
+						ddmStructureId + " where classPK = " + resourcePrimKey);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	protected void updatePreferencesClassPKs(

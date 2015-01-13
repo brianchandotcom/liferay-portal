@@ -149,7 +149,7 @@ public class FileEntryDisplayContextHelper {
 		return false;
 	}
 
-	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
+	public boolean isCheckoutDocumentActionAvailable() throws PortalException {
 		if (hasUpdatePermission() && !isCheckedOut() && isSupportsLocking()) {
 			return true;
 		}

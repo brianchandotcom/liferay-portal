@@ -70,11 +70,6 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isCheckoutDocumentButtonVisible();
-	}
-
-	@Override
 	public boolean isDeleteButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isDeleteButtonVisible();
 	}

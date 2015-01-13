@@ -140,7 +140,8 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.isCheckoutDocumentButtonVisible();
+		return _fileEntryDisplayContextHelper
+			.isCheckoutDocumentActionAvailable();
 	}
 
 	@Override

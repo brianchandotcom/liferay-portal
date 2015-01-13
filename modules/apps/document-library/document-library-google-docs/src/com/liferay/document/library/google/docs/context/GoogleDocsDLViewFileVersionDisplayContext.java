@@ -110,11 +110,6 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
-		return false;
-	}
-
-	@Override
 	public boolean isDownloadLinkVisible() throws PortalException {
 		return false;
 	}

@@ -191,11 +191,6 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isViewButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.hasViewPermission();
-	}
-
-	@Override
 	public boolean isViewOriginalFileButtonVisible() throws PortalException {
 		return _fileEntryDisplayContextHelper.hasViewPermission();
 	}

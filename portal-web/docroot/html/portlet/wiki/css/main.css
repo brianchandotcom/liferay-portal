@@ -276,7 +276,7 @@
 			margin-bottom: 1em;
 			margin-left: 1em;
 
-			@include word-break(normal);
+			@include word-wrap(normal);
 		}
 	}
 

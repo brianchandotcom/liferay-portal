@@ -160,6 +160,8 @@
 
 		.browse-folder, .nav-item-label {
 			@include ellipsis;
+
+			display: inline;
 		}
 
 		.overlay.entry-action {

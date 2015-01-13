@@ -357,7 +357,7 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include background-image(linear-gradient(-45deg, rgba(255, 255, 255, 0.3) 25%, $transparent 25%, $transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, $transparent 75%, $transparent));
 	@include background-size(40px 40px);
 	@include experimental(animation, progress-bar-stripes 0.5s linear infinite);
-	@include single-transition(width, 0.5s, ease-out);
+	@include transition(width, 0.5s, ease-out);
 }
 
 @include keyframes(highlight-animation) {
@@ -380,34 +380,34 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 }
 
 .lfr-surface-loading-bar {
-	@include translateX(100%);
+	@include transform(translateX(100%));
 }
 
 @include keyframes(shift-rightwards) {
 	0% {
-		@include translateX(-100%);
+		@include transform(translateX(-100%));
 	}
 
 	40% {
-		@include translateX(0%);
+		@include transform(translateX(0%));
 	}
 
 	60% {
-		@include translateX(0%);
+		@include transform(translateX(0%));
 	}
 
 	100% {
-		@include translateX(100%);
+		@include transform(translateX(100%));
 	}
 }
 
 body:first-of-type {
 	%portlet-action-bar-fx {
-		@include single-transition(opacity, 0.5s, ease, 0.15s);
+		@include transition(opacity, 0.5s, ease, 0.15s);
 	}
 
 	%portlet-action-bar-fx-hover {
-		@include single-transition(opacity, 0.5s, ease, 0s);
+		@include transition(opacity, 0.5s, ease, 0s);
 	}
 
 	%portlet-action-bar-fx-text {
@@ -415,14 +415,14 @@ body:first-of-type {
 		max-width: 0;
 		overflow: hidden;
 
-		@include single-transition(max-width, 0.3s, ease-in, 0.2s);
+		@include transition(max-width, 0.3s, ease-in, 0.2s);
 
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 
 	%portlet-action-bar-fx-hover-text {
-		@include single-transition(max-width, 0.3s, ease, 0s);
+		@include transition(max-width, 0.3s, ease, 0s);
 	}
 
 	.portlet-borderless-bar {
@@ -456,7 +456,7 @@ body:first-of-type {
 
 		@include respond-to(phone, tablet) {
 			.portlet-borderless-bar {
-				@include single-transition(opacity, 0.5s, ease, 0s);
+				@include transition(opacity, 0.5s, ease, 0s);
 
 				.portlet-actions {
 					max-width: 500px;
@@ -521,7 +521,7 @@ body:first-of-type {
 		background-color: #DDEDDE;
 		border-color: #7D7;
 
-		@include scale(1.1);
+		@include transform(scale(1.1));
 	}
 
 	75% {

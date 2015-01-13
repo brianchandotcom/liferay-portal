@@ -51,7 +51,7 @@
 	}
 
 	.note-content {
-		@include word-break(break-all);
+		@include word-wrap(break-all);
 	}
 }
 

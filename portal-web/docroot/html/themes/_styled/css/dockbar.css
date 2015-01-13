@@ -154,7 +154,7 @@ $editLayoutPanelWidth: 460px;
 		width: 100%;
 
 		@include respond-to(phone, tablet) {
-			@include display-flex;
+			@include display(flex);
 
 			padding: 0;
 		}
@@ -300,7 +300,7 @@ $editLayoutPanelWidth: 460px;
 				}
 
 				@include respond-to(phone, tablet) {
-					@include display-flex;
+					@include display(flex);
 
 					float: left;
 					max-width: 100%;

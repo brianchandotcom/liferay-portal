@@ -349,7 +349,7 @@
 	display: inline-block;
 	white-space: normal;
 
-	@include word-break(break-all);
+	@include word-wrap(break-all);
 }
 
 /* ---------- Menus ---------- */

@@ -76,7 +76,7 @@
 		white-space: normal;
 		width: auto;
 
-		@include word-break(break-all);
+		@include word-wrap(break-all);
 
 		@include respond-to(phone, tablet) {
 			font-size: 18px;

@@ -61,6 +61,8 @@ html {
 		span, a {
 			@include ellipsis;
 
+			display: block;
+
 			@include respond-to(desktop) {
 				max-width: 300px;
 			}
@@ -701,7 +703,7 @@ html {
 
 			@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
 			@include box-shadow(none);
-			@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
+			@include linear-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
 		}
 	}
 }

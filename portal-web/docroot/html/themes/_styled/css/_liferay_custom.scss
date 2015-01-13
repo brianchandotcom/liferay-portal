@@ -32,9 +32,8 @@
 /* ---------- Misc ---------- */
 
 .navbar .nav li > a {
-	@include word-break(break-all);
+	@include word-wrap(break-all);
 }
-
 /* ---------- Status ---------- */
 
 .entry-status {

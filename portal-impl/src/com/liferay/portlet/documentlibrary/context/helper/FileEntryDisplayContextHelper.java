@@ -194,6 +194,10 @@ public class FileEntryDisplayContextHelper {
 		return false;
 	}
 
+	public boolean isMoveActionAvailable() throws PortalException {
+		return isUpdatable();
+	}
+
 	public boolean isSupportsLocking() {
 		if (_supportsLocking == null) {
 			_supportsLocking = _fileEntry.isSupportsLocking();

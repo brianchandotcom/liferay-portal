@@ -170,6 +170,10 @@ public class FileEntryDisplayContextHelper {
 		return _dlFileEntry;
 	}
 
+	public boolean isDownloadActionAvailable() throws PortalException {
+		return hasViewPermission();
+	}
+
 	public boolean isFileEntryDeletable() throws PortalException {
 		if (hasDeletePermission() && !isCheckedOutByOther()) {
 			return true;

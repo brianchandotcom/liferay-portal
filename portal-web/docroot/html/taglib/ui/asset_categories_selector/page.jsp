@@ -22,12 +22,18 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_asset_
 String className = (String)request.getAttribute("liferay-ui:asset-categories-selector:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-selector:classPK"));
 long classTypePK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-selector:classTypePK"));
+long[] groupIds = (long[])request.getAttribute("liferay-ui:asset-categories-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-ui:asset-categories-selector:hiddenInput");
 String curCategoryIds = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-categories-selector:curCategoryIds"), "");
 String curCategoryNames = StringPool.BLANK;
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
 
-long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
+if (ArrayUtil.isEmpty(groupIds)) {
+	groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
+}
+else {
+	groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(groupIds);
+}
 
 List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(groupIds);
 

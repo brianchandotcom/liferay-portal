@@ -537,7 +537,13 @@ public interface Portal {
 	public long[] getCurrentAndAncestorSiteGroupIds(long groupId)
 		throws PortalException;
 
+	public long[] getCurrentAndAncestorSiteGroupIds(long[] groupIds)
+		throws PortalException;
+
 	public List<Group> getCurrentAndAncestorSiteGroups(long groupId)
+		throws PortalException;
+
+	public List<Group> getCurrentAndAncestorSiteGroups(long[] groupIds)
 		throws PortalException;
 
 	public String getCurrentCompleteURL(HttpServletRequest request);

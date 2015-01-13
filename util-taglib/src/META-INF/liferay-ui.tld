@@ -436,6 +436,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>groupIds</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>hiddenInput</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

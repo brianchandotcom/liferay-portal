@@ -711,10 +711,22 @@ public class PortalUtil {
 		return getPortal().getCurrentAndAncestorSiteGroupIds(groupId);
 	}
 
+	public static long[] getCurrentAndAncestorSiteGroupIds(long[] groupIds)
+		throws PortalException {
+
+		return getPortal().getCurrentAndAncestorSiteGroupIds(groupIds);
+	}
+
 	public static List<Group> getCurrentAndAncestorSiteGroups(long groupId)
 		throws PortalException {
 
 		return getPortal().getCurrentAndAncestorSiteGroups(groupId);
+	}
+
+	public static List<Group> getCurrentAndAncestorSiteGroups(long[] groupIds)
+		throws PortalException {
+
+		return getPortal().getCurrentAndAncestorSiteGroups(groupIds);
 	}
 
 	public static String getCurrentCompleteURL(HttpServletRequest request) {

@@ -1857,6 +1857,23 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public long[] getCurrentAndAncestorSiteGroupIds(long[] groupIds)
+		throws PortalException {
+
+		List<Group> groups = getCurrentAndAncestorSiteGroups(groupIds);
+
+		long[] currentAndAncestorSiteGroupIds = new long[groups.size()];
+
+		for (int i = 0; i < groups.size(); i++) {
+			Group group = groups.get(i);
+
+			currentAndAncestorSiteGroupIds[i] = group.getGroupId();
+		}
+
+		return currentAndAncestorSiteGroupIds;
+	}
+
+	@Override
 	public List<Group> getCurrentAndAncestorSiteGroups(long groupId)
 		throws PortalException {
 
@@ -1869,6 +1886,19 @@ public class PortalImpl implements Portal {
 		}
 
 		groups.addAll(doGetAncestorSiteGroups(groupId, false));
+
+		return new ArrayList<>(groups);
+	}
+
+	@Override
+	public List<Group> getCurrentAndAncestorSiteGroups(long[] groupIds)
+		throws PortalException {
+
+		Set<Group> groups = new LinkedHashSet<>();
+
+		for (int i = 0; i < groupIds.length; i++) {
+			groups.addAll(getCurrentAndAncestorSiteGroups(groupIds[i]));
+		}
 
 		return new ArrayList<>(groups);
 	}

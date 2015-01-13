@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.jsp;
+package com.liferay.portal.servlet.jsp.compiler;
 
 import com.liferay.portal.servlet.jsp.compiler.internal.JspBundleClassloader;
 
@@ -55,7 +55,7 @@ public class JspServlet extends HttpServlet {
 
 	public JspServlet() {
 		_jspBundle = FrameworkUtil.getBundle(
-			com.liferay.portal.servlet.jsp.JspServlet.class);
+			com.liferay.portal.servlet.jsp.compiler.JspServlet.class);
 	}
 
 	@Override

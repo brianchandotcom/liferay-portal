@@ -80,7 +80,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		ErrorDispatcher errorDispatcher, boolean suppressLogging) {
 
 		_jspBundle = FrameworkUtil.getBundle(
-			com.liferay.portal.servlet.jsp.JspServlet.class);
+			com.liferay.portal.servlet.jsp.compiler.JspServlet.class);
 
 		_logger = new Logger(_jspBundle.getBundleContext());
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterException;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterMessageType;
+import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
@@ -263,12 +264,17 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			return;
 		}
 
-		if (futureClusterResponses.expectsReply(sourceAddress)) {
+		ClusterNode sourceClusterNode = clusterNodeResponse.getClusterNode();
+
+		if (futureClusterResponses.expectsReply(
+				sourceClusterNode.getClusterNodeId())) {
+
 			futureClusterResponses.addClusterNodeResponse(clusterNodeResponse);
 		}
 		else {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unknown uuid " + uuid + " from " + sourceAddress);
+				_log.warn(
+					"Unknown uuid " + uuid + " from " + sourceClusterNode);
 			}
 		}
 	}

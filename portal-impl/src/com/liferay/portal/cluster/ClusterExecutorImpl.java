@@ -54,9 +54,11 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -116,8 +118,16 @@ public class ClusterExecutorImpl
 
 		List<Address> addresses = prepareAddresses(clusterRequest);
 
+		Set<String> clusterNodeIds = new HashSet<>();
+
+		for (Address address : addresses) {
+			ClusterNode clusterNode = _liveInstances.get(address);
+
+			clusterNodeIds.add(clusterNode.getClusterNodeId());
+		}
+
 		FutureClusterResponses futureClusterResponses =
-			new FutureClusterResponses(addresses);
+			new FutureClusterResponses(clusterNodeIds);
 
 		if (!clusterRequest.isFireAndForget()) {
 			String uuid = clusterRequest.getUuid();

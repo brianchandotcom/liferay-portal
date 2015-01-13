@@ -15,6 +15,7 @@
 package com.liferay.asset.categories.admin.web.portlet;
 
 import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.categories.admin.web.upgrade.AssetCategoriesAdminWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -51,6 +52,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -303,6 +305,11 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetCategoriesAdminUpgrade(
+		AssetCategoriesAdminWebUpgrade assetCategoriesAdminWebUpgrade) {
 	}
 
 }

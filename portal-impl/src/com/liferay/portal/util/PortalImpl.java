@@ -517,12 +517,17 @@ public class PortalImpl implements Portal {
 			_validPortalDomainCheckDisabled = true;
 		}
 
-		Registry registry = RegistryUtil.getRegistry();
+		try {
+			Registry registry = RegistryUtil.getRegistry();
 
-		_alwaysAllowDoAsUserTracker = registry.trackServices(
-			AlwaysAllowDoAsUser.class);
+			_alwaysAllowDoAsUserTracker = registry.trackServices(
+				AlwaysAllowDoAsUser.class,
+				new AlwaysAllowAsDoUserServiceTrackerCustomizer());
 
-		_alwaysAllowDoAsUserTracker.open();
+			_alwaysAllowDoAsUserTracker.open();
+		}
+		catch (NullPointerException npe) {
+		}
 	}
 
 	@Override

@@ -49,7 +49,7 @@ public class BlogsEntryAttachmentFileEntryHelper {
 			blogsEntryAttachmentFileEntryReferences = new ArrayList<>();
 
 		for (FileEntry tempFileEntry : tempFileEntries) {
-			FileEntry blogsAttachmentEntryFileEntry =
+			FileEntry blogsEntryAttachmentFileEntry =
 				addBlogsEntryAttachmentFileEntry(
 					groupId, userId, blogsEntryId, tempFileEntry.getTitle(),
 					tempFileEntry.getMimeType(),
@@ -58,7 +58,7 @@ public class BlogsEntryAttachmentFileEntryHelper {
 			blogsEntryAttachmentFileEntryReferences.add(
 				new BlogsEntryAttachmentFileEntryReference(
 					tempFileEntry.getFileEntryId(),
-					blogsAttachmentEntryFileEntry));
+					blogsEntryAttachmentFileEntry));
 		}
 
 		return blogsEntryAttachmentFileEntryReferences;
@@ -133,10 +133,10 @@ public class BlogsEntryAttachmentFileEntryHelper {
 	}
 
 	protected String getBlogsEntryAttachmentFileEntryImgTag(
-		FileEntry blogsEntryAttachmentEntryFileEntry) {
+		FileEntry blogsEntryAttachmentFileEntry) {
 
 		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
-			null, blogsEntryAttachmentEntryFileEntry, StringPool.BLANK);
+			null, blogsEntryAttachmentFileEntry, StringPool.BLANK);
 
 		return "<img src=\"" + fileEntryURL + "\" />";
 	}

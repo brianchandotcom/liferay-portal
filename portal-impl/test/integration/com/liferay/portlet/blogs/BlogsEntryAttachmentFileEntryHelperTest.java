@@ -123,17 +123,19 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 				PortletFileRepositoryUtil.getPortletFileEntryURL(
 					null, tempFileEntry, StringPool.BLANK));
 
-		List<FileEntry> tempBlogsEntryAttachments =
+		List<FileEntry> tempBlogsEntryAttachmentFileEntries =
 			_blogsEntryAttachmentFileEntryHelper.
 				getTempBlogsEntryAttachmentFileEntries(
 					getContent(tempFileEntryImgTag));
 
-		Assert.assertEquals(1, tempBlogsEntryAttachments.size());
+		Assert.assertEquals(1, tempBlogsEntryAttachmentFileEntries.size());
 
-		for (FileEntry tempBlogsEntryAttachment : tempBlogsEntryAttachments) {
+		for (FileEntry tempBlogsEntryAttachmentFileEntry :
+				tempBlogsEntryAttachmentFileEntries) {
+
 			Assert.assertEquals(
 				tempFileEntry.getFileEntryId(),
-				tempBlogsEntryAttachment.getFileEntryId());
+				tempBlogsEntryAttachmentFileEntry.getFileEntryId());
 		}
 	}
 
@@ -148,17 +150,19 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 		String tempFileEntryImgTag = getModifiedTempFileEntryImgTag(
 			tempFileEntry);
 
-		List<FileEntry> tempBlogsEntryAttachments =
+		List<FileEntry> tempBlogsEntryAttachmentFileEntries =
 			_blogsEntryAttachmentFileEntryHelper.
 				getTempBlogsEntryAttachmentFileEntries(
 					getContent(tempFileEntryImgTag));
 
-		Assert.assertEquals(1, tempBlogsEntryAttachments.size());
+		Assert.assertEquals(1, tempBlogsEntryAttachmentFileEntries.size());
 
-		for (FileEntry tempBlogsEntryAttachment : tempBlogsEntryAttachments) {
+		for (FileEntry tempBlogsEntryAttachmentFileEntry :
+				tempBlogsEntryAttachmentFileEntries) {
+
 			Assert.assertEquals(
 				tempFileEntry.getFileEntryId(),
-				tempBlogsEntryAttachment.getFileEntryId());
+				tempBlogsEntryAttachmentFileEntry.getFileEntryId());
 		}
 	}
 

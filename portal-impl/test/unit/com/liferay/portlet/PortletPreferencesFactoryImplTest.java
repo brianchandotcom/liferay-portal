@@ -19,6 +19,8 @@ import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
+import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.service.util.PortletPreferencesImplTestUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesTestUtil;
 import com.liferay.portal.util.HtmlImpl;
@@ -40,6 +42,12 @@ public class PortletPreferencesFactoryImplTest {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
 		htmlUtil.setHtml(new HtmlImpl());
+
+		SecureXMLFactoryProviderUtil secureXMLFactoryProviderUtil =
+			new SecureXMLFactoryProviderUtil();
+
+		secureXMLFactoryProviderUtil.setSecureXMLFactoryProvider(
+			new SecureXMLFactoryProviderImpl());
 
 		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
 

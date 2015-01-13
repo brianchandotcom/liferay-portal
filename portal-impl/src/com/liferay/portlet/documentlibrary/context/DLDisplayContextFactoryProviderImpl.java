@@ -112,8 +112,24 @@ public class DLDisplayContextFactoryProviderImpl
 			new DefaultDLViewFileVersionDisplayContext(
 				request, response, fileVersion);
 
-		return _getDLViewFileVersionDisplayContext(
-			dlViewFileVersionDisplayContext, request, response, fileVersion);
+		if (fileVersion == null) {
+			return dlViewFileVersionDisplayContext;
+		}
+
+		for (
+			DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
+			_dlDisplayContextFactoryReferences) {
+
+			DLDisplayContextFactory dlDisplayContextFactory =
+				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
+
+			dlViewFileVersionDisplayContext =
+				dlDisplayContextFactory.getDLFileVersionActionsDisplayContext(
+					dlViewFileVersionDisplayContext, request, response,
+					fileVersion);
+		}
+
+		return dlViewFileVersionDisplayContext;
 	}
 
 	@Override
@@ -127,16 +143,6 @@ public class DLDisplayContextFactoryProviderImpl
 			new DefaultIGViewFileVersionDisplayContext(
 				request, response, fileVersion);
 
-		return _getDLViewFileVersionDisplayContext(
-			dlViewFileVersionDisplayContext, request, response, fileVersion);
-	}
-
-	private DLViewFileVersionDisplayContext
-		_getDLViewFileVersionDisplayContext(
-			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
-
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;
 		}
@@ -148,7 +154,7 @@ public class DLDisplayContextFactoryProviderImpl
 				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
 
 			dlViewFileVersionDisplayContext =
-				dlDisplayContextFactory.getDLFileVersionActionsDisplayContext(
+				dlDisplayContextFactory.getIGFileVersionActionsDisplayContext(
 					dlViewFileVersionDisplayContext, request, response,
 					fileVersion);
 		}

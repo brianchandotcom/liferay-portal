@@ -14,6 +14,7 @@
 
 package com.liferay.journal.content.web;
 
+import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
@@ -54,7 +55,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_journal_content_web_portlet_JournalContentPortlet"
+		"javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT
 	},
 	service = PortletLayoutListener.class
 )

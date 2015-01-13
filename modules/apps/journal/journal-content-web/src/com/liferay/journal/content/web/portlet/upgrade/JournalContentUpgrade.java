@@ -14,6 +14,7 @@
 
 package com.liferay.journal.content.web.portlet.upgrade;
 
+import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -52,9 +53,7 @@ public class JournalContentUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"56",
-						"com_liferay_journal_content_web_portlet_" +
-							"JournalContentPortlet"
+						"56", JournalContentPortletKeys.JOURNAL_CONTENT
 					}
 				};
 			}

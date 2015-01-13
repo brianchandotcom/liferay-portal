@@ -939,8 +939,9 @@ public class PortletTracker
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
 			bundlePortletApp.getServletContextName());
 
-		bundleContext.registerService(
-			EventListener.class, bundlePortletApp, properties);
+		serviceRegistrations.addServiceRegistration(
+			bundleContext.registerService(
+				EventListener.class, bundlePortletApp, properties));
 
 		return bundlePortletApp;
 	}

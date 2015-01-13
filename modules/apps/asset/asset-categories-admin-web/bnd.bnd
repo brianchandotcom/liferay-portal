@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Asset Categories Admin Web
+Bundle-SymbolicName: com.liferay.asset.categories.admin.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources,\
+	WEB-INF/tld=../../../../util-taglib/src/META-INF,\
+	@../../../../util-taglib/util-taglib.jar

@@ -1,28 +1,33 @@
+@import "mixins";
+
 .lfr-map {
 	border: 1px solid transparent;
 	min-height: 400px;
 	width: 100%;
 
 	.home-button {
+		height: 35px;
 		margin: 5px;
+		width: 45px;
 	}
 
 	.search-controls {
 		margin-top: 5px;
+		width: 100%;
 
 		.search-input {
 			width: 100%;
 		}
 	}
 
-	@media (max-width: 767px) {
+	@include sm {
 		.home-button {
-			height: 35px;
-			width: 45px;
+			height: auto;
+			width: auto;
 		}
 
 		.search-controls {
-			width: 100%;
+			width: 50%;
 		}
 	}
 }

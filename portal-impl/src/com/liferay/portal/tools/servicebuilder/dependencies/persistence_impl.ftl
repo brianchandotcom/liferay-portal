@@ -398,6 +398,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public ${entity.name} create(${entity.PKClassName} ${entity.PKVarName}) {
 		${entity.name} ${entity.varName} = new ${entity.name}Impl();
 
+		<#if entity.name == "AssetEntry">
+			${entity.varName}.setListable(true);
+		</#if>
 		${entity.varName}.setNew(true);
 		${entity.varName}.setPrimaryKey(${entity.PKVarName});
 

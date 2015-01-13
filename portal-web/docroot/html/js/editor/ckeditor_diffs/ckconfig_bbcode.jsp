@@ -79,9 +79,11 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['Image', '-', 'Smiley'],
 		'/',
 		['Cut', 'Copy', 'Paste', '-', 'SelectAll', '-', 'Undo', 'Redo'],
+
 		<c:if test="<%= showSource %>">
 			['Source'],
 		</c:if>
+
 		['A11YBtn']
 	];
 

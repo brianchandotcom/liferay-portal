@@ -127,9 +127,11 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['Styles'],
 		['SpellChecker', 'Scayt', '-', 'SpecialChar'],
 		['Undo', 'Redo'],
+
 		<c:if test="<%= showSource %>">
 			['Source'],
 		</c:if>
+
 		['A11YBtn']
 	];
 
@@ -143,9 +145,11 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		'/',
 		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo' ],
 		['SpellChecker', 'Scayt'],
+
 		<c:if test="<%= showSource %>">
 			['Source'],
 		</c:if>
+
 		['A11YBtn']
 	];
 
@@ -187,9 +191,11 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		'/',
 		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo'],
 		['Find', 'Replace', '-', 'SpellChecker', 'Scayt'],
+
 		<c:if test="<%= showSource %>">
 			['Source'],
 		</c:if>
+
 		['A11YBtn']
 	];
 

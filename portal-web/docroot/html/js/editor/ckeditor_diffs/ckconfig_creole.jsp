@@ -119,9 +119,11 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		'/',
 		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo'],
 		['Find','Replace'],
+
 		<c:if test="<%= showSource %>">
 			['Source'],
 		</c:if>
+
 		['A11YBtn']
 	];
 

@@ -231,7 +231,6 @@ AUI.add(
 						var nextThemeIndex = (currentThemeIndex + 1) % themes.length;
 
 						var currentTheme = themes[currentThemeIndex];
-
 						var nextTheme = themes[nextThemeIndex];
 
 						var nextThemeIcon = themes[(currentThemeIndex + 2) % themes.length].iconCssClass;

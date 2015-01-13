@@ -6,7 +6,9 @@
 <#assign portlet_title = htmlUtil.escape(portlet_display.getTitle()) />
 <#assign portlet_back_url = htmlUtil.escapeHREF(portlet_display.getURLBack()) />
 
-<#assign portlet_toolbar = portlet_display.getPortletToolbar() />
+<#if portlet_display.getPortletToolbar()??>
+	<#assign portlet_toolbar = portlet_display.getPortletToolbar() />
+</#if>
 
 <section class="portlet" id="portlet_${portlet_id}">
 	<header class="portlet-topper">
@@ -16,7 +18,7 @@
 
 		<#if portlet_toolbar??>
 			<menu class="portlet-topper-toolbar add-content" id="portlet-topper-toolbar-add-content_${portlet_id}" type="toolbar">
-				<@liferay_ui["portlet-toolbar-menu"] items=portlet_toolbar.getContentAdditionMenuItems(portlet_id, renderRequest) />
+				<@liferay_ui["portlet-toolbar-menu"] portletToolbarMenuItems=portlet_toolbar.getContentAdditionMenuItems(portlet_id, renderRequest) />
 			</menu>
 		</#if>
 

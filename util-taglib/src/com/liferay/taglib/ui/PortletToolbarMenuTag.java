@@ -31,13 +31,15 @@ public class PortletToolbarMenuTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public void setItems(List<PortletToolbarMenuItem> items) {
-		_items = items;
+	public void setPortletToolbarMenuItems(
+		List<PortletToolbarMenuItem> portletToolbarMenuItems) {
+
+		_portletToolbarMenuItems = portletToolbarMenuItems;
 	}
 
 	@Override
 	protected void cleanUp() {
-		_items = null;
+		_portletToolbarMenuItems = null;
 	}
 
 	@Override
@@ -52,7 +54,9 @@ public class PortletToolbarMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:portlet_toolbar_menu:items", _items);
+		request.setAttribute(
+			"liferay-ui:portlet_toolbar_menu:portletToolbarMenuItems",
+			_portletToolbarMenuItems);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -60,6 +64,6 @@ public class PortletToolbarMenuTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/portlet_toolbar_menu/page.jsp";
 
-	private List<PortletToolbarMenuItem> _items;
+	private List<PortletToolbarMenuItem> _portletToolbarMenuItems;
 
 }

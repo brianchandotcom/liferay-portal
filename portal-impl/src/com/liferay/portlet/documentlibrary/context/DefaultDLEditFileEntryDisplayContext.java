@@ -130,7 +130,7 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public boolean isCheckinButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.isCheckinButtonVisible();
+		return _fileEntryDisplayContextHelper.isCheckinActionAvailable();
 	}
 
 	@Override

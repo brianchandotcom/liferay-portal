@@ -108,7 +108,7 @@ public class FileEntryDisplayContextHelper {
 	public boolean isCancelCheckoutDocumentActionAvailable()
 		throws PortalException {
 
-		if (isCheckinButtonVisible() ||
+		if (isCheckinActionAvailable() ||
 			(isCheckedOut() && hasOverrideCheckoutPermission())) {
 
 			return true;
@@ -141,7 +141,7 @@ public class FileEntryDisplayContextHelper {
 		return false;
 	}
 
-	public boolean isCheckinButtonVisible() throws PortalException {
+	public boolean isCheckinActionAvailable() throws PortalException {
 		if (hasUpdatePermission() && isLockedByMe() && isSupportsLocking()) {
 			return true;
 		}

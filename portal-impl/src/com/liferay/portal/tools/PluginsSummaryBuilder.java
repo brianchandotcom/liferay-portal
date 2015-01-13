@@ -50,16 +50,20 @@ public class PluginsSummaryBuilder {
 	}
 
 	public PluginsSummaryBuilder(File pluginsDir) {
-		try {
-			_pluginsDir = pluginsDir;
+		_pluginsDir = pluginsDir;
 
-			_latestHASH = _getLatestHASH(pluginsDir);
+		String latestHASH = null;
+
+		try {
+			latestHASH = _getLatestHASH(pluginsDir);
 
 			_createPluginsSummary();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		_latestHASH = latestHASH;
 	}
 
 	private void _createPluginsSummary() throws Exception {
@@ -635,7 +639,7 @@ public class PluginsSummaryBuilder {
 
 	private Set<String> _distinctAuthors = new TreeSet<>();
 	private Set<String> _distinctLicenses = new TreeSet<>();
-	private String _latestHASH;
-	private File _pluginsDir;
+	private final String _latestHASH;
+	private final File _pluginsDir;
 
 }

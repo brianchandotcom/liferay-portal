@@ -65,13 +65,19 @@ import org.jets3t.service.security.AWSCredentials;
 public class S3Store extends BaseStore {
 
 	public S3Store() {
+		S3Service s3Service = null;
+		S3Bucket s3Bucket = null;
+
 		try {
-			_s3Service = getS3Service();
-			_s3Bucket = getS3Bucket();
+			s3Service = getS3Service();
+			s3Bucket = getS3Bucket();
 		}
 		catch (S3ServiceException s3se) {
 			_log.error(s3se.getMessage());
 		}
+
+		_s3Service = s3Service;
+		_s3Bucket = s3Bucket;
 	}
 
 	@Override
@@ -678,7 +684,7 @@ public class S3Store extends BaseStore {
 	private static Log _log = LogFactoryUtil.getLog(S3Store.class);
 
 	private int _calledGetFileCount;
-	private S3Bucket _s3Bucket;
-	private S3Service _s3Service;
+	private final S3Bucket _s3Bucket;
+	private final S3Service _s3Service;
 
 }

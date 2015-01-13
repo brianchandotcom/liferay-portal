@@ -2020,7 +2020,6 @@ public class SeleniumBuilderFileUtil {
 			"locator-key", "method", "name", "path", "pattern",
 			"property-value", "value"
 		});
-	private static List<String> _componentNames;
 	private static List<String> _methodNames = ListUtil.fromArray(
 		new String[] {
 			"getFirstNumber", "getIPAddress", "increment", "length",
@@ -2034,10 +2033,9 @@ public class SeleniumBuilderFileUtil {
 			"property", "set-up", "take-screenshot", "td", "tear-down", "then",
 			"tr", "while", "var"
 		});
-	private static List<String> _testcaseAvailablePropertyNames;
-	private static List<String> _testrayAvailableComponentNames;
 
 	private String _baseDirName;
+	private final List<String> _componentNames;
 	private Pattern _pathTrElementStatementPattern = Pattern.compile(
 		"[A-Z0-9].*");
 	private Pattern _pathTrElementWordPattern1 = Pattern.compile(
@@ -2045,6 +2043,8 @@ public class SeleniumBuilderFileUtil {
 	private Pattern _pathTrElementWordPattern2 = Pattern.compile(
 		"[A-Z0-9][A-Za-z0-9\\-]*");
 	private Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");
+	private final List<String> _testcaseAvailablePropertyNames;
+	private final List<String> _testrayAvailableComponentNames;
 	private Pattern _varElementPattern = Pattern.compile("\\$\\{([^\\}]*?)\\}");
 	private Pattern _varElementStatementPattern = Pattern.compile(
 		"(.*)\\?(.*)\\(([^\\)]*?)\\)");

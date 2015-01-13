@@ -301,6 +301,6 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 	private Detector _detector;
 	private Map<String, Set<String>> _extensionsMap = new HashMap<>();
-	private Set<String> _webImageMimeTypes = new HashSet<>();
+	private final Set<String> _webImageMimeTypes;
 
 }

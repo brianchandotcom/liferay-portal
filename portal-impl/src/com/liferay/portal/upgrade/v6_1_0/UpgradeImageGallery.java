@@ -71,10 +71,11 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	public UpgradeImageGallery() throws Exception {
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
-		_sourceHookClassName = FileSystemHook.class.getName();
-
 		if (Validator.isNotNull(PropsValues.IMAGE_HOOK_IMPL)) {
 			_sourceHookClassName = PropsValues.IMAGE_HOOK_IMPL;
+		}
+		else {
+			_sourceHookClassName = FileSystemHook.class.getName();
 		}
 
 		Class<?> clazz = classLoader.loadClass(_sourceHookClassName);
@@ -1114,6 +1115,6 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	private static Log _log = LogFactoryUtil.getLog(UpgradeImageGallery.class);
 
 	private Hook _sourceHook;
-	private String _sourceHookClassName;
+	private final String _sourceHookClassName;
 
 }

@@ -96,15 +96,21 @@ AUI.add(
 			},
 
 			extractGroupId: function(node) {
-				return node.get(STR_ID).match(/groupId_(\d+)/)[1];
+				var match = node.get(STR_ID).match(/groupId_(\d+)/);
+
+				return match && match[1];
 			},
 
 			extractLayoutId: function(node) {
-				return node.get(STR_ID).match(/layoutId_(\d+)/)[1];
+				var match = node.get(STR_ID).match(/layoutId_(\d+)/);
+
+				return match && match[1];
 			},
 
 			extractPlid: function(node) {
-				return node.get(STR_ID).match(/plid_(\d+)/)[1];
+				var match = node.get(STR_ID).match(/plid_(\d+)/);
+
+				return match && match[1];
 			},
 
 			restoreSelectedNode: function(node) {

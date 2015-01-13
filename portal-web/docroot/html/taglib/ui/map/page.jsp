@@ -71,7 +71,14 @@ name = namespace + name;
 		boundingBox: '#<%= name %>Map',
 
 		<c:if test="<%= geolocation %>">
-			controls: [MapControls.GEOLOCATION, MapControls.HOME, MapControls.PAN, MapControls.SEARCH, MapControls.TYPE, MapControls.ZOOM],
+			<c:choose>
+				<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
+					controls: [MapControls.HOME, MapControls.SEARCH],
+				</c:when>
+				<c:otherwise>
+					controls: [MapControls.HOME, MapControls.PAN, MapControls.SEARCH, MapControls.TYPE, MapControls.ZOOM],
+				</c:otherwise>
+			</c:choose>
 		</c:if>
 
 		<c:if test="<%= Validator.isNotNull(points) %>">

@@ -44,13 +44,39 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=portlet-asset-category-admin",
+		"com.liferay.portlet.control-panel-entry-category=site_administration.content",
+		"com.liferay.portlet.control-panel-entry-weight=21.0",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.icon=/icons/asset_category_admin.png",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Asset Category Admin",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 	public void deleteCategory(

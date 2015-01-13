@@ -434,7 +434,13 @@ AUI.add(
 					children = [instance._formatRootNode(rootConfig, children)];
 				}
 
-				instance.set('children', children);
+				instance.set(
+					'children',
+					children,
+					{
+						src: A.Widget.UI_SRC
+					}
+				);
 
 				instance.getChildren()[0].get('contentBox').addClass('lfr-root-node');
 

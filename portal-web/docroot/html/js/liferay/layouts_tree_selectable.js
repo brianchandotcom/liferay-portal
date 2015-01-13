@@ -113,12 +113,14 @@ AUI.add(
 
 						var host = instance.get(STR_HOST);
 
-						host.fire(
-							'selectableNodeChildrenChange',
-							{
-								node: event.target
-							}
-						);
+						if (event.src !== A.Widget.UI_SRC) {
+							host.fire(
+								'selectableNodeChildrenChange',
+								{
+									node: event.target
+								}
+							);
+						}
 					},
 
 					_onTreeAppend: function(event) {

@@ -70,6 +70,9 @@ public class StripFilter extends BasePortalFilter {
 			_minifierCache = new ConcurrentLFUCache<String, String>(
 				PropsValues.MINIFIER_INLINE_CONTENT_CACHE_SIZE);
 		}
+		else {
+			_minifierCache = null;
+		}
 	}
 
 	@Override
@@ -754,7 +757,7 @@ public class StripFilter extends BasePortalFilter {
 		"[Jj][aA][vV][aA][sS][cC][rR][iI][pP][tT]");
 
 	private Set<String> _ignorePaths = new HashSet<>();
-	private ConcurrentLFUCache<String, String> _minifierCache;
+	private final ConcurrentLFUCache<String, String> _minifierCache;
 	private ServletContext _servletContext;
 
 }

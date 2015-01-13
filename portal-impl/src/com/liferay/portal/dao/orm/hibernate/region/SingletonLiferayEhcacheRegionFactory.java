@@ -51,10 +51,7 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 				_enabled = true;
 			}
 
-			if (_liferayEhcacheRegionFactory == null) {
-				_liferayEhcacheRegionFactory = new LiferayEhcacheRegionFactory(
-					properties);
-			}
+			_init(properties);
 		}
 	}
 
@@ -112,9 +109,7 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 	}
 
 	@Override
-	public synchronized void start(Settings settings, Properties properties)
-		throws CacheException {
-
+	public synchronized void start(Settings settings, Properties properties) {
 		if (_enabled && (_instanceCounter++ == 0)) {
 			_liferayEhcacheRegionFactory.start(settings, properties);
 		}
@@ -124,6 +119,13 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 	public synchronized void stop() {
 		if (_enabled && (--_instanceCounter == 0)) {
 			_liferayEhcacheRegionFactory.stop();
+		}
+	}
+
+	private static void _init(Properties properties) {
+		if (_liferayEhcacheRegionFactory == null) {
+			_liferayEhcacheRegionFactory = new LiferayEhcacheRegionFactory(
+				properties);
 		}
 	}
 

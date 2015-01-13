@@ -44,21 +44,35 @@ public abstract class BaseWebDriverImpl
 
 		super(webDriver);
 
-		_projectDirName = projectDirName;
+		String dependenciesDirName =
+			"portal-web//test//functional//com//liferay//portalweb//" +
+				"dependencies//";
+
+		String outputDirName = PropsValues.OUTPUT_DIR_NAME;
+
+		String sikuliImagesDirName = dependenciesDirName + "sikuli//linux//";
 
 		if (OSDetector.isWindows()) {
-			_dependenciesDirName = StringUtil.replace(
-				_dependenciesDirName, "//", "\\");
+			dependenciesDirName = StringUtil.replace(
+				dependenciesDirName, "//", "\\");
 
-			_outputDirName = StringUtil.replace(_outputDirName, "//", "\\");
+			outputDirName = StringUtil.replace(outputDirName, "//", "\\");
 
-			_projectDirName = StringUtil.replace(_projectDirName, "//", "\\");
+			projectDirName = StringUtil.replace(projectDirName, "//", "\\");
 
-			_sikuliImagesDirName = StringUtil.replace(
-				_sikuliImagesDirName, "//", "\\");
-			_sikuliImagesDirName = StringUtil.replace(
-				_sikuliImagesDirName, "linux", "windows");
+			sikuliImagesDirName = StringUtil.replace(
+				sikuliImagesDirName, "//", "\\");
+			sikuliImagesDirName = StringUtil.replace(
+				sikuliImagesDirName, "linux", "windows");
 		}
+
+		_dependenciesDirName = dependenciesDirName;
+
+		_outputDirName = outputDirName;
+
+		_projectDirName = projectDirName;
+
+		_sikuliImagesDirName = sikuliImagesDirName;
 
 		if (!PropsValues.MOBILE_DEVICE_ENABLED) {
 			WebDriver.Options options = webDriver.manage();
@@ -935,12 +949,10 @@ public abstract class BaseWebDriverImpl
 	}
 
 	private String _clipBoard = "";
-	private String _dependenciesDirName =
-		"portal-web//test//functional//com//liferay//portalweb//dependencies//";
-	private String _outputDirName = PropsValues.OUTPUT_DIR_NAME;
+	private final String _dependenciesDirName;
+	private final String _outputDirName;
 	private String _primaryTestSuiteName;
 	private String _projectDirName;
-	private String _sikuliImagesDirName =
-		_dependenciesDirName + "sikuli//linux//";
+	private final String _sikuliImagesDirName;
 
 }

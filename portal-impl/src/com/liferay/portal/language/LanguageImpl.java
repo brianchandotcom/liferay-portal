@@ -151,6 +151,10 @@ public class LanguageImpl implements Language, Serializable {
 	/**
 	 * Returns the translated pattern using the current request's locale or, if
 	 * the current request locale is not available, the server's default locale.
+	 *
+	 * The lookup will be done on the portlet configuration first, and, if it's
+	 * not found, it will be done on the portal's resource bundle.
+	 *
 	 * If a translation for a given key does not exist, this method returns the
 	 * requested key as the translation.
 	 *
@@ -178,6 +182,10 @@ public class LanguageImpl implements Language, Serializable {
 	/**
 	 * Returns the translated pattern using the current request's locale or, if
 	 * the current request locale is not available, the server's default locale.
+
+	 * The lookup will be done on the portlet configuration first, and, if it's
+	 * not found, it will be done on the portal's resource bundle.
+
 	 * If a translation for a given key does not exist, this method returns the
 	 * requested key as the translation.
 	 *
@@ -209,6 +217,10 @@ public class LanguageImpl implements Language, Serializable {
 	/**
 	 * Returns the translated pattern using the current request's locale or, if
 	 * the current request locale is not available, the server's default locale.
+	 *
+	 * The lookup will be done on the portlet configuration first, and, if it's
+	 * not found, it will be done on the portal's resource bundle.
+	 *
 	 * If a translation for a given key does not exist, this method returns the
 	 * requested key as the translation.
 	 *
@@ -238,6 +250,10 @@ public class LanguageImpl implements Language, Serializable {
 	/**
 	 * Returns the translated pattern using the current request's locale or, if
 	 * the current request locale is not available, the server's default locale.
+	 *
+	 * The lookup will be done on the portlet configuration first, and, if it's
+	 * not found, it will be done on the portal's resource bundle.
+	 *
 	 * If a translation for a given key does not exist, this method returns the
 	 * requested key as the translation.
 	 *
@@ -307,6 +323,10 @@ public class LanguageImpl implements Language, Serializable {
 	/**
 	 * Returns the translated pattern using the current request's locale or, if
 	 * the current request locale is not available, the server's default locale.
+	 *
+	 * The lookup will be done on the portlet configuration first, and, if it's
+	 * not found, it will be done on the portal's resource bundle.
+	 *
 	 * If a translation for a given key does not exist, this method returns the
 	 * requested key as the translation.
 	 *
@@ -334,6 +354,10 @@ public class LanguageImpl implements Language, Serializable {
 	/**
 	 * Returns the translated pattern using the current request's locale or, if
 	 * the current request locale is not available, the server's default locale.
+	 *
+	 * The lookup will be done on the portlet configuration first, and, if it's
+	 * not found, it will be done on the portal's resource bundle.
+	 *
 	 * If a translation for a given key does not exist, this method returns the
 	 * requested key as the translation.
 	 *
@@ -364,6 +388,10 @@ public class LanguageImpl implements Language, Serializable {
 	/**
 	 * Returns the translated pattern using the current request's locale or, if
 	 * the current request locale is not available, the server's default locale.
+	 *
+	 * The lookup will be done on the portlet configuration first, and, if it's
+	 * not found, it will be done on the portal's resource bundle.
+	 *
 	 * If a translation for a given key does not exist, this method returns the
 	 * requested key as the translation.
 	 *
@@ -392,6 +420,10 @@ public class LanguageImpl implements Language, Serializable {
 	/**
 	 * Returns the translated pattern using the current request's locale or, if
 	 * the current request locale is not available, the server's default locale.
+	 *
+	 * The lookup will be done on the portlet configuration first, and, if it's
+	 * not found, it will be done on the portal's resource bundle.
+	 *
 	 * If a translation for a given key does not exist, this method returns the
 	 * requested key as the translation.
 	 *
@@ -456,8 +488,12 @@ public class LanguageImpl implements Language, Serializable {
 
 	/**
 	 * Returns the translated pattern using the locale or, if the locale is not
-	 * available, the server's default locale. If a translation for a given key
-	 * does not exist, this method returns the requested key as the translation.
+	 * available, the server's default locale.
+	 *
+	 * The lookup will be done on the portal's resource bundle.
+	 *
+	 * If a translation for a given key does not exist, this method returns the
+	 * requested key as the translation.
 	 *
 	 * <p>
 	 * The substitute placeholders (e.g. <code>{0}</code>, <code>{1}</code>,
@@ -482,8 +518,12 @@ public class LanguageImpl implements Language, Serializable {
 
 	/**
 	 * Returns the translated pattern using the locale or, if the locale is not
-	 * available, the server's default locale. If a translation for a given key
-	 * does not exist, this method returns the requested key as the translation.
+	 * available, the server's default locale.
+	 *
+	 * The lookup will be done on the portal's resource bundle.
+	 *
+	 * If a translation for a given key does not exist, this method returns the
+	 * requested key as the translation.
 	 *
 	 * <p>
 	 * The substitute placeholder (e.g. <code>{0}</code>) is replaced with the
@@ -505,8 +545,12 @@ public class LanguageImpl implements Language, Serializable {
 
 	/**
 	 * Returns the translated pattern using the locale or, if the locale is not
-	 * available, the server's default locale. If a translation for a given key
-	 * does not exist, this method returns the requested key as the translation.
+	 * available, the server's default locale.
+	 *
+	 * The lookup will be done on the portal's resource bundle.
+	 *
+	 * If a translation for a given key does not exist, this method returns the
+	 * requested key as the translation.
 	 *
 	 * <p>
 	 * The substitute placeholder (e.g. <code>{0}</code>) is replaced with the
@@ -533,8 +577,12 @@ public class LanguageImpl implements Language, Serializable {
 
 	/**
 	 * Returns the translated pattern using the locale or, if the locale is not
-	 * available, the server's default locale. If a translation for a given key
-	 * does not exist, this method returns the requested key as the translation.
+	 * available, the server's default locale.
+	 *
+	 * The lookup will be done on the portal's resource bundle.
+	 *
+	 * If a translation for a given key does not exist, this method returns the
+	 * requested key as the translation.
 	 *
 	 * <p>
 	 * The substitute placeholders (e.g. <code>{0}</code>, <code>{1}</code>,
@@ -557,8 +605,12 @@ public class LanguageImpl implements Language, Serializable {
 
 	/**
 	 * Returns the translated pattern using the locale or, if the locale is not
-	 * available, the server's default locale. If a translation for a given key
-	 * does not exist, this method returns the requested key as the translation.
+	 * available, the server's default locale.
+	 *
+	 * The lookup will be done on the portal's resource bundle.
+	 *
+	 * If a translation for a given key does not exist, this method returns the
+	 * requested key as the translation.
 	 *
 	 * <p>
 	 * The substitute placeholders (e.g. <code>{0}</code>, <code>{1}</code>,

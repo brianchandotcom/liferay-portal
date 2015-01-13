@@ -186,18 +186,6 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isOpenInMsOfficeButtonVisible() throws PortalException {
-		if (_fileEntryDisplayContextHelper.hasViewPermission() &&
-			_fileVersionDisplayContextHelper.isMsOffice() &&
-			_isWebDAVEnabled() && _isIEOnWin32()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isPermissionsButtonVisible() throws PortalException {
 		return _fileEntryDisplayContextHelper.hasPermissionsPermission();
 	}
@@ -379,7 +367,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	protected void addOpenInMsOfficeMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!isOpenInMsOfficeButtonVisible()) {
+		if (!isOpenInMsOfficeActionAvailable()) {
 			return;
 		}
 
@@ -494,6 +482,17 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 
 		if (!isDeleteActionAvailable() &&
 			_fileEntryDisplayContextHelper.isFileEntryDeletable()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isOpenInMsOfficeActionAvailable() throws PortalException {
+		if (_fileEntryDisplayContextHelper.hasViewPermission() &&
+			_fileVersionDisplayContextHelper.isMsOffice() &&
+			_isWebDAVEnabled() && _isIEOnWin32()) {
 
 			return true;
 		}
@@ -665,7 +664,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	private void _addOpenInMsOfficeToolbarItem(List<ToolbarItem> toolbarItems)
 		throws PortalException {
 
-		if (!isOpenInMsOfficeButtonVisible()) {
+		if (!isOpenInMsOfficeActionAvailable()) {
 			return;
 		}
 

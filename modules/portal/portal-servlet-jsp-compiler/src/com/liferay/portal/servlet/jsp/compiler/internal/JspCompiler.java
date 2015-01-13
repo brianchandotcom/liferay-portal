@@ -97,7 +97,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		JspBundleClassloader jspBundleClassloader =
 			(JspBundleClassloader)classLoader;
 
-		_bundle = jspBundleClassloader.getBundles()[0];
+		_allParticipatingBundles = jspBundleClassloader.getBundles();
+
+		_bundle = _allParticipatingBundles[0];
 
 		_bundleContext = _bundle.getBundleContext();
 
@@ -305,8 +307,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		try {
 			SAXParser saxParser = saxParserFactory.newSAXParser();
 
-			collectTLDMappings(saxParser, tldMappings, _jspBundle);
-			collectTLDMappings(saxParser, tldMappings, _bundle);
+			for (Bundle bundle : _allParticipatingBundles) {
+				collectTLDMappings(saxParser, tldMappings, bundle);
+			}
 		}
 		catch (Exception e) {
 			_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
@@ -365,6 +368,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		"javax.servlet.ServletException"
 	};
 
+	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
 	private final List<File> _classPath = new ArrayList<>();

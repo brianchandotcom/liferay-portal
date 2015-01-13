@@ -236,6 +236,25 @@ public class ResultRow
 	}
 
 	@Override
+	public void addJSP(
+		String path, String cssClass, ServletContext servletContext,
+		HttpServletRequest request, HttpServletResponse response) {
+
+		JSPSearchEntry jspSearchEntry = new JSPSearchEntry();
+
+		jspSearchEntry.setAlign(SearchEntry.DEFAULT_ALIGN);
+		jspSearchEntry.setColspan(SearchEntry.DEFAULT_COLSPAN);
+		jspSearchEntry.setCssClass(cssClass);
+		jspSearchEntry.setPath(path);
+		jspSearchEntry.setRequest(request);
+		jspSearchEntry.setResponse(response);
+		jspSearchEntry.setServletContext(servletContext);
+		jspSearchEntry.setValign(SearchEntry.DEFAULT_VALIGN);
+
+		_searchEntries.add(_searchEntries.size(), jspSearchEntry);
+	}
+
+	@Override
 	public void addJSP(String align, String valign, String path) {
 		addJSP(
 			_searchEntries.size(), align, valign, SearchEntry.DEFAULT_COLSPAN,

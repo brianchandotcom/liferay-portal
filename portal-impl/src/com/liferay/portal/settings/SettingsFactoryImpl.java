@@ -186,11 +186,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		settingsId = PortletConstants.getRootPortletId(settingsId);
 
-		if (_multiValuedKeysMap.get(settingsId) != null) {
-			throw new IllegalStateException(
-				"Unable to overwrite multi valued keys for " + settingsId);
-		}
-
 		_fallbackKeysMap.put(settingsId, fallbackKeys);
 
 		List<String> multiValuedKeysList = new ArrayList<>();

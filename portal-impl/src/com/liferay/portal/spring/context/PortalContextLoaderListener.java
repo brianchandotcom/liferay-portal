@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
@@ -232,6 +234,19 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR =
 			tempDir.getAbsolutePath();
+
+		String portalLibDir = servletContext.getRealPath("/WEB-INF/lib");
+
+		if (Validator.isNotNull(portalLibDir)) {
+			if (!portalLibDir.endsWith(StringPool.SLASH)) {
+				portalLibDir += StringPool.SLASH;
+			}
+
+			PropsValues.LIFERAY_LIB_PORTAL_DIR = portalLibDir;
+
+			PropsValues.LIFERAY_WEB_PORTAL_DIR = WebDirDetector.getRootDir(
+				portalLibDir);
+		}
 
 		try {
 			ModuleFrameworkUtilAdapter.startFramework();

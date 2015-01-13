@@ -300,11 +300,9 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 		ClusterExecutorImpl clusterExecutorImpl2 = getClusterExecutorImpl();
 
-		ClusterNode clusterNode2 = clusterExecutorImpl2.getLocalClusterNode();
-
-		ClusterEvent clusterEvent = mockClusterEventListener.waitJoinMessage();
-
-		assertClusterEvent(clusterEvent, ClusterEventType.JOIN, clusterNode2);
+		assertClusterEvent(
+			mockClusterEventListener.waitJoinMessage(), ClusterEventType.JOIN,
+			clusterExecutorImpl2.getLocalClusterNode());
 
 		String timestamp = null;
 

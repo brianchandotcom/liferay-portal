@@ -30,6 +30,10 @@
 		</java>
 	</target>
 
+	<target name="clean" depends="build-common-java.clean">
+		<delete file="${liferay.home}/osgi/portal/${jar.file}.jar" />
+	</target>
+
 	<target name="compile" depends="check-compile-uptodate" unless="${compile.uptodate}">
 		<copy file="src/META-INF/aui.tld" overwrite="true" tofile="src/META-INF/liferay-aui.tld" preservelastmodified="true" />
 
@@ -67,6 +71,8 @@
 	</target>
 
 	<target name="deploy" depends="check-deploy-uptodate,jar" unless="${deploy.uptodate}">
+		<copy file="${jar.file}.jar" todir="${liferay.home}/osgi/portal" preservelastmodified="true" />
+
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>

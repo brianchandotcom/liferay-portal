@@ -146,6 +146,7 @@
 					json = json.replaceAll("<", "&#60;");
 					json = json.replaceAll(">", "&#62;");
 					json = json.replaceAll("\\[", "&#91;");
+					json = json.replaceAll("\\\\", "&#92;");
 					json = json.replaceAll("\\]", "&#93;");
 					json = json.replaceAll("\\{", "&#123;");
 					json = json.replaceAll("\\}", "&#125;");

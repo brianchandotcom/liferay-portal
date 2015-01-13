@@ -22,75 +22,87 @@ import aQute.bnd.annotation.headers.ProvideCapability;
 public class Capabilities {
 
 	@ProvideCapability(
-		name="jsp.taglib", ns="osgi.extender", version = "${@version}",
+		name = "jsp.taglib", ns = "osgi.extender", version = "${@version}",
 		value = "uri=http://alloy.liferay.com/tld/aui"
 	)
-	public class AUI {}
+	public class AUI {
+	}
 
 	@ProvideCapability(
-		name="jsp.taglib", ns="osgi.extender", version = "${@version}",
+		name = "jsp.taglib", ns = "osgi.extender", version = "${@version}",
 		value = "uri=http://liferay.com/tld/ddm"
 	)
-	public class DDM {}
+	public class DDM {
+	}
 
 	@ProvideCapability(
-		name="jsp.taglib", ns="osgi.extender", version = "${@version}",
+		name = "jsp.taglib", ns = "osgi.extender", version = "${@version}",
 		value = "uri=http://liferay.com/tld/aui"
 	)
-	public class LiferayAUI {}
+	public class LiferayAUI {
+	}
 
 	@ProvideCapability(
-		name="jsp.taglib", ns="osgi.extender", version = "${@version}",
+		name = "jsp.taglib", ns = "osgi.extender", version = "${@version}",
 		value = "uri=http://liferay.com/tld/ddm"
 	)
-	public class LiferayDDM {}
+	public class LiferayDDM {
+	}
 
 	@ProvideCapability(
-		name="jsp.taglib", ns="osgi.extender", version = "${@version}",
-		value = "uri=http://liferay.com/tld/portlet"
-	)
-	public class LiferayPortletExt {}
-
-	@ProvideCapability(
-		name="jsp.taglib", ns="osgi.extender", version = "${@version}",
+		name = "jsp.taglib", ns = "osgi.extender", version = "${@version}",
 		value = "uri=http://java.sun.com/portlet"
 	)
-	public class LiferayPortlet {}
+	public class LiferayPortlet {
+	}
 
 	@ProvideCapability(
-		name="jsp.taglib", ns="osgi.extender", version = "${@version}",
+		name = "jsp.taglib", ns = "osgi.extender", version = "${@version}",
+		value = "uri=http://liferay.com/tld/portlet"
+	)
+	public class LiferayPortletExt {
+	}
+
+	@ProvideCapability(
+		name = "jsp.taglib", ns = "osgi.extender", version = "${@version}",
 		value = "uri=http://liferay.com/tld/security"
 	)
-	public class LiferaySecurity {}
+	public class LiferaySecurity {
+	}
 
 	@ProvideCapability(
-		name="jsp.taglib", ns="osgi.extender", version = "${@version}",
+		name = "jsp.taglib", ns = "osgi.extender", version = "${@version}",
 		value = "uri=http://liferay.com/tld/staging"
 	)
-	public class LiferayStaging {}
+	public class LiferayStaging {
+	}
 
 	@ProvideCapability(
-		name="jsp.taglib", ns="osgi.extender", version = "${@version}",
+		name = "jsp.taglib", ns = "osgi.extender", version = "${@version}",
 		value = "uri=http://liferay.com/tld/theme"
 	)
-	public class LiferayTheme {}
+	public class LiferayTheme {
+	}
 
 	@ProvideCapability(
-		name="jsp.taglib", ns="osgi.extender", version = "${@version}",
+		name = "jsp.taglib", ns = "osgi.extender", version = "${@version}",
 		value = "uri=http://liferay.com/tld/ui"
 	)
-	public class LiferayUI {}
+	public class LiferayUI {
+	}
 
 	@ProvideCapability(
-		name="jsp.taglib", ns="osgi.extender", version = "${@version}",
+		name = "jsp.taglib", ns = "osgi.extender", version = "${@version}",
 		value = "uri=http://liferay.com/tld/util"
 	)
-	public class LiferayUtil {}
+	public class LiferayUtil {
+	}
 
 	@ProvideCapability(
-		name="jsp.taglib", ns="osgi.extender", version = "${@version}",
+		name = "jsp.taglib", ns = "osgi.extender", version = "${@version}",
 		value = "uri=http://java.sun.com/portlet_2_0"
 	)
-	public class Portlet {}
+	public class Portlet {
+	}
 
 }

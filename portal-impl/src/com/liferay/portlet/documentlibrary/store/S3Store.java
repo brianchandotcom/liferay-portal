@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -632,7 +633,10 @@ public class S3Store extends BaseStore {
 
 		Jets3tProperties jets3tProperties = getJets3tProperties();
 
-		return new RestS3Service(credentials, null, null, jets3tProperties);
+		String serverInfo = ReleaseInfo.getServerInfo();
+
+		return new RestS3Service(
+			credentials, serverInfo, null, jets3tProperties);
 	}
 
 	protected File getTempFile(S3Object s3Object, String fileName)

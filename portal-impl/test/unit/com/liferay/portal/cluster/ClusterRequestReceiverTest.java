@@ -15,6 +15,7 @@
 package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.cluster.ClusterEventType;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.test.CaptureHandler;
@@ -53,7 +54,17 @@ public class ClusterRequestReceiverTest
 			ClusterRequestReceiver.class.getName(), Level.OFF);
 
 		ClusterExecutorImpl clusterExecutorImpl1 = getClusterExecutorImpl();
+
+		MockClusterEventListener mockClusterEventListener =
+			new MockClusterEventListener();
+
+		clusterExecutorImpl1.addClusterEventListener(mockClusterEventListener);
+
 		ClusterExecutorImpl clusterExecutorImpl2 = getClusterExecutorImpl();
+
+		assertClusterEvent(
+			mockClusterEventListener.waitJoinMessage(), ClusterEventType.JOIN,
+			clusterExecutorImpl2.getLocalClusterNode());
 
 		try {
 
@@ -144,7 +155,17 @@ public class ClusterRequestReceiverTest
 	@Test
 	public void testInvokeWithSingleThreadPool() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl1 = getClusterExecutorImpl();
+
+		MockClusterEventListener mockClusterEventListener =
+			new MockClusterEventListener();
+
+		clusterExecutorImpl1.addClusterEventListener(mockClusterEventListener);
+
 		ClusterExecutorImpl clusterExecutorImpl2 = getClusterExecutorImpl();
+
+		assertClusterEvent(
+			mockClusterEventListener.waitJoinMessage(), ClusterEventType.JOIN,
+			clusterExecutorImpl2.getLocalClusterNode());
 
 		String value = "testValue";
 

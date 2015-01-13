@@ -70,8 +70,10 @@ import java.net.URLStreamHandler;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -800,11 +802,17 @@ public class LuceneHelperImplTest {
 		public FutureClusterResponses execute(ClusterRequest clusterRequest) {
 			if (!_autoResponse) {
 				return new FutureClusterResponses(
-					Collections.<Address>emptyList());
+					Collections.<String>emptySet());
+			}
+
+			Set<String> clusterNodeIds = new HashSet<>();
+
+			for (Address address : _addresses) {
+				clusterNodeIds.add(address.toString());
 			}
 
 			FutureClusterResponses futureClusterResponses =
-				new FutureClusterResponses(_addresses);
+				new FutureClusterResponses(clusterNodeIds);
 
 			for (Address address : _addresses) {
 				ClusterNodeResponse clusterNodeResponse =
@@ -816,8 +824,7 @@ public class LuceneHelperImplTest {
 				clusterNodeResponse.setMulticast(clusterRequest.isMulticast());
 				clusterNodeResponse.setUuid(clusterRequest.getUuid());
 
-				ClusterNode clusterNode = new ClusterNode(
-					String.valueOf(System.currentTimeMillis()));
+				ClusterNode clusterNode = new ClusterNode(address.toString());
 
 				try {
 					clusterNode.setPortalInetSocketAddress(

@@ -14,18 +14,16 @@
  */
 --%>
 
-<c:if test="<%= (fileShortcut != null) %>">
-	<c:if test="<%= dlViewFileVersionDisplayContext.isViewOriginalFileButtonVisible() %>">
-		<portlet:renderURL var="viewOriginalFileURL">
-			<portlet:param name="struts_action" value="/document_library/view_file_entry" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="fileEntryId" value="<%= String.valueOf(fileShortcut.getToFileEntryId()) %>" />
-		</portlet:renderURL>
+<c:if test="<%= DLDisplayContextUtil.containsKey(dlViewFileVersionDisplayContext.getMenuItems(), DLUIItemKeys.VIEW_ORIGINAL_FILE) %>">
+	<portlet:renderURL var="viewOriginalFileURL">
+		<portlet:param name="struts_action" value="/document_library/view_file_entry" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileShortcut.getToFileEntryId()) %>" />
+	</portlet:renderURL>
 
-		<liferay-ui:icon
-			iconCssClass="icon-search"
-			message="view-original-file"
-			url="<%= viewOriginalFileURL %>"
-		/>
-	</c:if>
+	<liferay-ui:icon
+		iconCssClass="icon-search"
+		message="view-original-file"
+		url="<%= viewOriginalFileURL %>"
+	/>
 </c:if>

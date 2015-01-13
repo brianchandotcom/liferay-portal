@@ -80,11 +80,6 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isViewOriginalFileButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isViewOriginalFileButtonVisible();
-	}
-
-	@Override
 	public void renderPreview(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {

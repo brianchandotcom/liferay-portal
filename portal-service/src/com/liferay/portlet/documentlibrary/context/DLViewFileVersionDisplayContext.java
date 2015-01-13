@@ -44,8 +44,6 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public boolean isVersionInfoVisible() throws PortalException;
 
-	public boolean isViewOriginalFileButtonVisible() throws PortalException;
-
 	public void renderPreview(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException;

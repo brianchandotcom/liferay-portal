@@ -47,4 +47,7 @@ public class DLUIItemKeys {
 	public static final String PERMISSIONS =
 		DLUIItemKeys.class.getName() + "#permissions";
 
+	public static final String VIEW_ORIGINAL_FILE =
+		DLUIItemKeys.class.getName() + "#view-original-file";
+
 }

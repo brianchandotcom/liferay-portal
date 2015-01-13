@@ -18,26 +18,21 @@ import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.DuplicateTagException;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.model.AssetTagConstants;
-import com.liferay.portlet.asset.model.AssetTagProperty;
 import com.liferay.portlet.asset.service.base.AssetTagLocalServiceBaseImpl;
 import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
 
 import java.util.ArrayList;
@@ -58,18 +53,13 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 	@Override
 	public AssetTag addTag(
-			long userId, String name, String[] tagProperties,
-			ServiceContext serviceContext)
+			long userId, String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Tag
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
-
-		if (tagProperties == null) {
-			tagProperties = new String[0];
-		}
 
 		Date now = new Date();
 
@@ -113,36 +103,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 				serviceContext.getGuestPermissions());
 		}
 
-		// Properties
-
-		for (int i = 0; i < tagProperties.length; i++) {
-			String[] tagProperty = StringUtil.split(
-				tagProperties[i],
-				AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR);
-
-			if (tagProperty.length <= 1) {
-				tagProperty = StringUtil.split(
-					tagProperties[i], CharPool.COLON);
-			}
-
-			String key = StringPool.BLANK;
-
-			if (tagProperty.length > 0) {
-				key = GetterUtil.getString(tagProperty[0]);
-			}
-
-			String value = StringPool.BLANK;
-
-			if (tagProperty.length > 1) {
-				value = GetterUtil.getString(tagProperty[1]);
-			}
-
-			if (Validator.isNotNull(key)) {
-				assetTagPropertyLocalService.addTagProperty(
-					userId, tagId, key, value);
-			}
-		}
-
 		return tag;
 	}
 
@@ -175,9 +135,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 *
 	 * <p>
 	 * For each name, if a tag with that name doesn't already exist for the
-	 * group, this method creates a new tag with that name for the group. If a
-	 * tag with that name already exists in the company group, this method
-	 * copies that company group's tag's properties to the group's new tag.
+	 * group, this method creates a new tag with that name for the group.
 	 * </p>
 	 *
 	 * @param  userId the primary key of the user
@@ -208,29 +166,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 				serviceContext.setAddGuestPermissions(true);
 				serviceContext.setScopeGroupId(group.getGroupId());
 
-				tag = addTag(
-					userId, name, PropsValues.ASSET_TAG_PROPERTIES_DEFAULT,
-					serviceContext);
-
-				Group companyGroup = groupLocalService.getCompanyGroup(
-					group.getCompanyId());
-
-				try {
-					AssetTag companyGroupTag = getTag(
-						companyGroup.getGroupId(), name);
-
-					List<AssetTagProperty> tagProperties =
-						assetTagPropertyLocalService.getTagProperties(
-							companyGroupTag.getTagId());
-
-					for (AssetTagProperty tagProperty : tagProperties) {
-						assetTagPropertyLocalService.addTagProperty(
-							userId, tag.getTagId(), tagProperty.getKey(),
-							tagProperty.getValue());
-					}
-				}
-				catch (NoSuchTagException nste2) {
-				}
+				tag = addTag(userId, name, serviceContext);
 			}
 
 			if (tag != null) {
@@ -291,10 +227,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		resourceLocalService.deleteResource(
 			tag.getCompanyId(), AssetTag.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, tag.getTagId());
-
-		// Properties
-
-		assetTagPropertyLocalService.deleteTagProperties(tag.getTagId());
 
 		// Indexer
 
@@ -374,7 +306,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 	@Override
 	public AssetTag getTag(long groupId, String name) throws PortalException {
-		return assetTagFinder.findByG_N(groupId, name);
+		return assetTagPersistence.findByG_N(groupId, name);
 	}
 
 	@Override
@@ -516,58 +448,33 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void mergeTags(
-			long fromTagId, long toTagId, boolean overrideProperties)
-		throws PortalException {
-
+	public void mergeTags(long fromTagId, long toTagId) throws PortalException {
 		List<AssetEntry> entries = assetTagPersistence.getAssetEntries(
 			fromTagId);
 
 		assetTagPersistence.addAssetEntries(toTagId, entries);
-
-		List<AssetTagProperty> tagProperties =
-			assetTagPropertyPersistence.findByTagId(fromTagId);
-
-		for (AssetTagProperty fromTagProperty : tagProperties) {
-			AssetTagProperty toTagProperty =
-				assetTagPropertyPersistence.fetchByT_K(
-					toTagId, fromTagProperty.getKey());
-
-			if (overrideProperties && (toTagProperty != null)) {
-				toTagProperty.setValue(fromTagProperty.getValue());
-
-				assetTagPropertyPersistence.update(toTagProperty);
-			}
-			else if (toTagProperty == null) {
-				fromTagProperty.setTagId(toTagId);
-
-				assetTagPropertyPersistence.update(fromTagProperty);
-			}
-		}
 
 		deleteTag(fromTagId);
 	}
 
 	@Override
 	public List<AssetTag> search(
-		long groupId, String name, String[] tagProperties, int start, int end) {
+		long groupId, String name, int start, int end) {
 
-		return search(new long[] {groupId}, name, tagProperties, start, end);
+		return search(new long[] {groupId}, name, start, end);
 	}
 
 	@Override
 	public List<AssetTag> search(
-		long[] groupIds, String name, String[] tagProperties, int start,
-		int end) {
+		long[] groupIds, String name, int start, int end) {
 
-		return assetTagFinder.findByG_N_P(
-			groupIds, name, tagProperties, start, end, null);
+		return assetTagPersistence.findByG_LikeN(
+			groupIds, name, start, end, new AssetTagNameComparator());
 	}
 
 	@Override
 	public AssetTag updateTag(
-			long userId, long tagId, String name, String[] tagProperties,
-			ServiceContext serviceContext)
+			long userId, long tagId, String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Tag
@@ -580,10 +487,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		name = name.trim();
 		name = StringUtil.toLowerCase(name);
-
-		if (tagProperties == null) {
-			tagProperties = new String[0];
-		}
 
 		if (!name.equals(tag.getName()) && hasTag(tag.getGroupId(), name)) {
 			throw new DuplicateTagException(
@@ -608,43 +511,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		tag.setName(name);
 
 		assetTagPersistence.update(tag);
-
-		// Properties
-
-		List<AssetTagProperty> oldTagProperties =
-			assetTagPropertyPersistence.findByTagId(tagId);
-
-		for (AssetTagProperty tagProperty : oldTagProperties) {
-			assetTagPropertyLocalService.deleteTagProperty(tagProperty);
-		}
-
-		for (int i = 0; i < tagProperties.length; i++) {
-			String[] tagProperty = StringUtil.split(
-				tagProperties[i],
-				AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR);
-
-			if (tagProperty.length <= 1) {
-				tagProperty = StringUtil.split(
-					tagProperties[i], CharPool.COLON);
-			}
-
-			String key = StringPool.BLANK;
-
-			if (tagProperty.length > 0) {
-				key = GetterUtil.getString(tagProperty[0]);
-			}
-
-			String value = StringPool.BLANK;
-
-			if (tagProperty.length > 1) {
-				value = GetterUtil.getString(tagProperty[1]);
-			}
-
-			if (Validator.isNotNull(key)) {
-				assetTagPropertyLocalService.addTagProperty(
-					userId, tagId, key, value);
-			}
-		}
 
 		// Indexer
 

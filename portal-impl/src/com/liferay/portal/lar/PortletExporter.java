@@ -78,10 +78,8 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.model.AssetTagProperty;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.util.xml.DocUtil;
 
@@ -525,17 +523,6 @@ public class PortletExporter {
 		assetTag.setUserUuid(assetTag.getUserUuid());
 
 		portletDataContext.addZipEntry(path, assetTag);
-
-		List<AssetTagProperty> assetTagProperties =
-			AssetTagPropertyLocalServiceUtil.getTagProperties(
-				assetTag.getTagId());
-
-		for (AssetTagProperty assetTagProperty : assetTagProperties) {
-			Element propertyElement = assetTagElement.addElement("property");
-
-			propertyElement.addAttribute("key", assetTagProperty.getKey());
-			propertyElement.addAttribute("value", assetTagProperty.getValue());
-		}
 
 		portletDataContext.addPermissions(AssetTag.class, assetTag.getTagId());
 	}

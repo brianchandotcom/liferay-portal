@@ -57,7 +57,6 @@ import com.liferay.portlet.asset.service.AssetTagServiceUtil;
 public class AssetTagServiceHttp {
 	public static com.liferay.portlet.asset.model.AssetTag addTag(
 		HttpPrincipal httpPrincipal, java.lang.String name,
-		java.lang.String[] tagProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -65,7 +64,7 @@ public class AssetTagServiceHttp {
 					"addTag", _addTagParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
-					tagProperties, serviceContext);
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -398,13 +397,13 @@ public class AssetTagServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
-		java.lang.String[] tagProperties, int start, int end) {
+		int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
 					"getTags", _getTagsParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					name, tagProperties, start, end);
+					name, start, end);
 
 			Object returnObj = null;
 
@@ -426,13 +425,13 @@ public class AssetTagServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		HttpPrincipal httpPrincipal, long[] groupIds, java.lang.String name,
-		java.lang.String[] tagProperties, int start, int end) {
+		int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
 					"getTags", _getTagsParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					groupIds, name, tagProperties, start, end);
+					groupIds, name, start, end);
 
 			Object returnObj = null;
 
@@ -485,37 +484,10 @@ public class AssetTagServiceHttp {
 	}
 
 	public static int getTagsCount(HttpPrincipal httpPrincipal, long groupId,
-		long classNameId, java.lang.String name) {
-		try {
-			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
-					"getTagsCount", _getTagsCountParameterTypes15);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					classNameId, name);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getTagsCount(HttpPrincipal httpPrincipal, long groupId,
 		java.lang.String name) {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
-					"getTagsCount", _getTagsCountParameterTypes16);
+					"getTagsCount", _getTagsCountParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					name);
@@ -538,14 +510,43 @@ public class AssetTagServiceHttp {
 		}
 	}
 
-	public static int getTagsCount(HttpPrincipal httpPrincipal, long groupId,
-		java.lang.String name, java.lang.String[] tagProperties) {
+	public static int getVisibleAssetsTagsCount(HttpPrincipal httpPrincipal,
+		long groupId, long classNameId, java.lang.String name) {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
-					"getTagsCount", _getTagsCountParameterTypes17);
+					"getVisibleAssetsTagsCount",
+					_getVisibleAssetsTagsCountParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					name, tagProperties);
+					classNameId, name);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getVisibleAssetsTagsCount(HttpPrincipal httpPrincipal,
+		long groupId, java.lang.String name) {
+		try {
+			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
+					"getVisibleAssetsTagsCount",
+					_getVisibleAssetsTagsCountParameterTypes17);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					name);
 
 			Object returnObj = null;
 
@@ -566,14 +567,14 @@ public class AssetTagServiceHttp {
 	}
 
 	public static void mergeTags(HttpPrincipal httpPrincipal, long fromTagId,
-		long toTagId, boolean overrideProperties)
+		long toTagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
 					"mergeTags", _mergeTagsParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fromTagId, toTagId, overrideProperties);
+					fromTagId, toTagId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -594,14 +595,14 @@ public class AssetTagServiceHttp {
 	}
 
 	public static void mergeTags(HttpPrincipal httpPrincipal,
-		long[] fromTagIds, long toTagId, boolean overrideProperties)
+		long[] fromTagIds, long toTagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
 					"mergeTags", _mergeTagsParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fromTagIds, toTagId, overrideProperties);
+					fromTagIds, toTagId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -623,13 +624,13 @@ public class AssetTagServiceHttp {
 
 	public static com.liferay.portal.kernel.json.JSONArray search(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
-		java.lang.String[] tagProperties, int start, int end) {
+		int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
 					"search", _searchParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					name, tagProperties, start, end);
+					name, start, end);
 
 			Object returnObj = null;
 
@@ -651,13 +652,13 @@ public class AssetTagServiceHttp {
 
 	public static com.liferay.portal.kernel.json.JSONArray search(
 		HttpPrincipal httpPrincipal, long[] groupIds, java.lang.String name,
-		java.lang.String[] tagProperties, int start, int end) {
+		int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
 					"search", _searchParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					groupIds, name, tagProperties, start, end);
+					groupIds, name, start, end);
 
 			Object returnObj = null;
 
@@ -679,7 +680,6 @@ public class AssetTagServiceHttp {
 
 	public static com.liferay.portlet.asset.model.AssetTag updateTag(
 		HttpPrincipal httpPrincipal, long tagId, java.lang.String name,
-		java.lang.String[] tagProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -687,7 +687,7 @@ public class AssetTagServiceHttp {
 					"updateTag", _updateTagParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, tagId,
-					name, tagProperties, serviceContext);
+					name, serviceContext);
 
 			Object returnObj = null;
 
@@ -713,7 +713,7 @@ public class AssetTagServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(AssetTagServiceHttp.class);
 	private static final Class<?>[] _addTagParameterTypes0 = new Class[] {
-			java.lang.String.class, java.lang.String[].class,
+			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteTagParameterTypes1 = new Class[] {
@@ -752,41 +752,37 @@ public class AssetTagServiceHttp {
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getTagsParameterTypes12 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String[].class,
-			int.class, int.class
+			long.class, java.lang.String.class, int.class, int.class
 		};
 	private static final Class<?>[] _getTagsParameterTypes13 = new Class[] {
-			long[].class, java.lang.String.class, java.lang.String[].class,
-			int.class, int.class
+			long[].class, java.lang.String.class, int.class, int.class
 		};
 	private static final Class<?>[] _getTagsParameterTypes14 = new Class[] {
 			java.lang.String.class, long.class
 		};
 	private static final Class<?>[] _getTagsCountParameterTypes15 = new Class[] {
-			long.class, long.class, java.lang.String.class
-		};
-	private static final Class<?>[] _getTagsCountParameterTypes16 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _getTagsCountParameterTypes17 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String[].class
+	private static final Class<?>[] _getVisibleAssetsTagsCountParameterTypes16 = new Class[] {
+			long.class, long.class, java.lang.String.class
+		};
+	private static final Class<?>[] _getVisibleAssetsTagsCountParameterTypes17 = new Class[] {
+			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _mergeTagsParameterTypes18 = new Class[] {
-			long.class, long.class, boolean.class
+			long.class, long.class
 		};
 	private static final Class<?>[] _mergeTagsParameterTypes19 = new Class[] {
-			long[].class, long.class, boolean.class
+			long[].class, long.class
 		};
 	private static final Class<?>[] _searchParameterTypes20 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String[].class,
-			int.class, int.class
+			long.class, java.lang.String.class, int.class, int.class
 		};
 	private static final Class<?>[] _searchParameterTypes21 = new Class[] {
-			long[].class, java.lang.String.class, java.lang.String[].class,
-			int.class, int.class
+			long[].class, java.lang.String.class, int.class, int.class
 		};
 	private static final Class<?>[] _updateTagParameterTypes22 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String[].class,
+			long.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 }

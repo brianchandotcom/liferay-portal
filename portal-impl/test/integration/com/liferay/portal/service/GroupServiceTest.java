@@ -193,7 +193,7 @@ public class GroupServiceTest {
 			group.getGroupId());
 
 		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(), null,
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		Assert.assertEquals(

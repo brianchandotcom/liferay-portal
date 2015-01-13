@@ -3452,7 +3452,7 @@
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.asset.portlet.liferay.com" />
 	</service>
 	<service name="Portlet_Asset_AssetTagService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.asset.portlet.liferay.com" xmlns:cmp-ns="http://model.asset.portlet.liferay.com" qname="ns:ArrayOf_tns2_AssetTagSoap" type="java:com.liferay.portlet.asset.model.AssetTagSoap[]" innerType="cmp-ns:AssetTagSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.asset.portlet.liferay.com" xmlns:cmp-ns="http://model.asset.portlet.liferay.com" qname="ns:ArrayOf_tns3_AssetTagSoap" type="java:com.liferay.portlet.asset.model.AssetTagSoap[]" innerType="cmp-ns:AssetTagSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.asset.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.asset.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.asset.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -3467,7 +3467,6 @@
 		<typeMapping xmlns:ns="http://xml.apache.org/xml-soap" qname="ns:mapItem" type="java:org.apache.xml.xml_soap.MapItem" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://model.asset.portlet.liferay.com" name="addTag" qname="operNS:addTag" returnQName="addTagReturn" returnType="rtns:AssetTagSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="tagProperties" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" name="deleteTag" qname="operNS:deleteTag" soapAction="">
@@ -3485,16 +3484,16 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getGroupTags" qname="operNS:getGroupTags" returnQName="getGroupTagsReturn" returnType="rtns:ArrayOf_tns2_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getGroupTags" qname="operNS:getGroupTags" returnQName="getGroupTagsReturn" returnType="rtns:ArrayOf_tns3_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getGroupTags" qname="operNS:getGroupTags" returnQName="getGroupTagsReturn" returnType="rtns:ArrayOf_tns2_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getGroupTags" qname="operNS:getGroupTags" returnQName="getGroupTagsReturn" returnType="rtns:ArrayOf_tns3_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="obc" type="tns:OrderByComparator"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getGroupsTags" qname="operNS:getGroupsTags" returnQName="getGroupsTagsReturn" returnType="rtns:ArrayOf_tns2_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getGroupsTags" qname="operNS:getGroupsTags" returnQName="getGroupsTagsReturn" returnType="rtns:ArrayOf_tns3_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
 			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getJSONGroupTags" qname="operNS:getJSONGroupTags" returnQName="getJSONGroupTagsReturn" returnType="rtns:string" soapAction="">
@@ -3515,24 +3514,18 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getTagsCount" qname="operNS:getTagsCount" returnQName="getTagsCountReturn" returnType="rtns:int" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="tagProperties" type="tns:ArrayOf_xsd_string"></parameter>
-		</operation>
-		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getTags" qname="operNS:getTags" returnQName="getTagsReturn" returnType="rtns:ArrayOf_tns2_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getTags" qname="operNS:getTags" returnQName="getTagsReturn" returnType="rtns:ArrayOf_tns3_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
 			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="tagProperties" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getTags" qname="operNS:getTags" returnQName="getTagsReturn" returnType="rtns:ArrayOf_tns2_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getTags" qname="operNS:getTags" returnQName="getTagsReturn" returnType="rtns:ArrayOf_tns3_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getTags" qname="operNS:getTags" returnQName="getTagsReturn" returnType="rtns:ArrayOf_tns2_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getTags" qname="operNS:getTags" returnQName="getTagsReturn" returnType="rtns:ArrayOf_tns3_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
@@ -3540,48 +3533,46 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="obc" type="tns:OrderByComparator"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getTags" qname="operNS:getTags" returnQName="getTagsReturn" returnType="rtns:ArrayOf_tns2_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getTags" qname="operNS:getTags" returnQName="getTagsReturn" returnType="rtns:ArrayOf_tns3_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="tagProperties" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getTags" qname="operNS:getTags" returnQName="getTagsReturn" returnType="rtns:ArrayOf_tns2_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getTags" qname="operNS:getTags" returnQName="getTagsReturn" returnType="rtns:ArrayOf_tns3_AssetTagSoap" returnItemType="tns2:AssetTagSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getVisibleTagsCount" qname="operNS:getVisibleTagsCount" returnQName="getVisibleTagsCountReturn" returnType="rtns:int" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" name="mergeTags" qname="operNS:mergeTags" soapAction="">
 			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="fromTagIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="toTagId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="overrideProperties" type="tns:boolean"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" name="mergeTags" qname="operNS:mergeTags" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="fromTagId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="toTagId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="overrideProperties" type="tns:boolean"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:string" soapAction="">
 			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="tagProperties" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:string" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="tagProperties" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://model.asset.portlet.liferay.com" name="updateTag" qname="operNS:updateTag" returnQName="updateTagReturn" returnType="rtns:AssetTagSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="tagId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="urn:http.service.asset.portlet.liferay.com" qname="tagProperties" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addTag deleteTag deleteTags getGroupTags getGroupTagsCount getGroupTagsDisplay getGroupsTags getJSONGroupTags getTag getTags getTagsCount mergeTags search updateTag" />
+		<parameter name="allowedMethods" value="addTag deleteTag deleteTags getGroupTags getGroupTagsCount getGroupTagsDisplay getGroupsTags getJSONGroupTags getTag getTags getTagsCount getVisibleTagsCount mergeTags search updateTag" />
 		<parameter name="className" value="com.liferay.portlet.asset.service.http.AssetTagServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.asset.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.asset.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
@@ -3633,6 +3624,9 @@
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" name="deleteVocabulary" qname="operNS:deleteVocabulary" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="vocabularyId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://model.asset.portlet.liferay.com" name="fetchVocabulary" qname="operNS:fetchVocabulary" returnQName="fetchVocabularyReturn" returnType="rtns:AssetVocabularySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="vocabularyId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="urn:http.service.asset.portlet.liferay.com" xmlns:tns2="http://model.asset.portlet.liferay.com" name="getCompanyVocabularies" qname="operNS:getCompanyVocabularies" returnQName="getCompanyVocabulariesReturn" returnType="rtns:ArrayOf_tns13_AssetVocabularySoap" returnItemType="tns2:AssetVocabularySoap" soapAction="">
@@ -3744,7 +3738,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="settings" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addVocabulary deleteVocabularies deleteVocabulary getCompanyVocabularies getGroupVocabularies getGroupVocabulariesCount getGroupVocabulariesDisplay getGroupsVocabularies getJSONGroupVocabularies getVocabularies getVocabulary searchVocabulariesDisplay updateVocabulary" />
+		<parameter name="allowedMethods" value="addVocabulary deleteVocabularies deleteVocabulary fetchVocabulary getCompanyVocabularies getGroupVocabularies getGroupVocabulariesCount getGroupVocabulariesDisplay getGroupsVocabularies getJSONGroupVocabularies getVocabularies getVocabulary searchVocabulariesDisplay updateVocabulary" />
 		<parameter name="className" value="com.liferay.portlet.asset.service.http.AssetVocabularyServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.asset.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.asset.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

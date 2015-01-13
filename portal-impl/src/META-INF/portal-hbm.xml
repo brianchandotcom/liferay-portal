@@ -85,8 +85,6 @@
 	<import class="com.liferay.portlet.asset.model.AssetEntry" />
 	<import class="com.liferay.portlet.asset.model.AssetLink" />
 	<import class="com.liferay.portlet.asset.model.AssetTag" />
-	<import class="com.liferay.portlet.asset.model.AssetTagProperty" />
-	<import class="com.liferay.portlet.asset.model.AssetTagPropertyKey" />
 	<import class="com.liferay.portlet.asset.model.AssetTagStats" />
 	<import class="com.liferay.portlet.asset.model.AssetVocabulary" />
 	<import class="com.liferay.portlet.blogs.model.BlogsEntry" />
@@ -1426,20 +1424,6 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="assetCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-	</class>
-	<class name="com.liferay.portlet.asset.model.impl.AssetTagPropertyImpl" table="AssetTagProperty">
-		<cache usage="read-write" />
-		<id name="tagPropertyId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="tagId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" column="key_" />
-		<property name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.asset.model.impl.AssetTagStatsImpl" table="AssetTagStats">
 		<cache usage="read-write" />

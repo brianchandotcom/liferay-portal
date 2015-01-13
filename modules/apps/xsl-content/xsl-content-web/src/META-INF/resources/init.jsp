@@ -26,15 +26,7 @@
 <%@ page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portlet.asset.NoSuchTagException" %><%@
-page import="com.liferay.portlet.asset.NoSuchTagPropertyException" %><%@
-page import="com.liferay.portlet.asset.model.AssetTag" %><%@
-page import="com.liferay.portlet.asset.model.AssetTagProperty" %><%@
-page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
-page import="com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil" %><%@
 page import="com.liferay.xsl.content.web.configuration.XSLContentConfiguration" %><%@
 page import="com.liferay.xsl.content.web.util.XSLContentUtil" %>
 

@@ -34,10 +34,10 @@ public class AssetTagServiceWrapper implements AssetTagService,
 
 	@Override
 	public com.liferay.portlet.asset.model.AssetTag addTag(
-		java.lang.String name, java.lang.String[] tagProperties,
+		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetTagService.addTag(name, tagProperties, serviceContext);
+		return _assetTagService.addTag(name, serviceContext);
 	}
 
 	@Override
@@ -134,23 +134,14 @@ public class AssetTagServiceWrapper implements AssetTagService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
-		long groupId, java.lang.String name, java.lang.String[] tagProperties,
-		int start, int end) {
-		return _assetTagService.getTags(groupId, name, tagProperties, start, end);
+		long groupId, java.lang.String name, int start, int end) {
+		return _assetTagService.getTags(groupId, name, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
-		long[] groupIds, java.lang.String name,
-		java.lang.String[] tagProperties, int start, int end) {
-		return _assetTagService.getTags(groupIds, name, tagProperties, start,
-			end);
-	}
-
-	@Override
-	public int getTagsCount(long groupId, long classNameId,
-		java.lang.String name) {
-		return _assetTagService.getTagsCount(groupId, classNameId, name);
+		long[] groupIds, java.lang.String name, int start, int end) {
+		return _assetTagService.getTags(groupIds, name, start, end);
 	}
 
 	@Override
@@ -159,37 +150,39 @@ public class AssetTagServiceWrapper implements AssetTagService,
 	}
 
 	@Override
-	public int getTagsCount(long groupId, java.lang.String name,
-		java.lang.String[] tagProperties) {
-		return _assetTagService.getTagsCount(groupId, name, tagProperties);
+	public int getVisibleAssetsTagsCount(long groupId, long classNameId,
+		java.lang.String name) {
+		return _assetTagService.getVisibleAssetsTagsCount(groupId, classNameId,
+			name);
 	}
 
 	@Override
-	public void mergeTags(long fromTagId, long toTagId,
-		boolean overrideProperties)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetTagService.mergeTags(fromTagId, toTagId, overrideProperties);
+	public int getVisibleAssetsTagsCount(long groupId, java.lang.String name) {
+		return _assetTagService.getVisibleAssetsTagsCount(groupId, name);
 	}
 
 	@Override
-	public void mergeTags(long[] fromTagIds, long toTagId,
-		boolean overrideProperties)
+	public void mergeTags(long fromTagId, long toTagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetTagService.mergeTags(fromTagIds, toTagId, overrideProperties);
+		_assetTagService.mergeTags(fromTagId, toTagId);
+	}
+
+	@Override
+	public void mergeTags(long[] fromTagIds, long toTagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetTagService.mergeTags(fromTagIds, toTagId);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.json.JSONArray search(long groupId,
-		java.lang.String name, java.lang.String[] tagProperties, int start,
-		int end) {
-		return _assetTagService.search(groupId, name, tagProperties, start, end);
+		java.lang.String name, int start, int end) {
+		return _assetTagService.search(groupId, name, start, end);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.json.JSONArray search(long[] groupIds,
-		java.lang.String name, java.lang.String[] tagProperties, int start,
-		int end) {
-		return _assetTagService.search(groupIds, name, tagProperties, start, end);
+		java.lang.String name, int start, int end) {
+		return _assetTagService.search(groupIds, name, start, end);
 	}
 
 	/**
@@ -204,11 +197,10 @@ public class AssetTagServiceWrapper implements AssetTagService,
 
 	@Override
 	public com.liferay.portlet.asset.model.AssetTag updateTag(long tagId,
-		java.lang.String name, java.lang.String[] tagProperties,
+		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetTagService.updateTag(tagId, name, tagProperties,
-			serviceContext);
+		return _assetTagService.updateTag(tagId, name, serviceContext);
 	}
 
 	/**

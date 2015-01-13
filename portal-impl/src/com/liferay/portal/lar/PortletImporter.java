@@ -87,7 +87,6 @@ import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.model.AssetTagConstants;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
@@ -662,22 +661,6 @@ public class PortletImporter {
 		serviceContext.setModifiedDate(assetTag.getModifiedDate());
 		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
 
-		AssetTag importedAssetTag = null;
-
-		List<Element> propertyElements = assetTagElement.elements("property");
-
-		String[] properties = new String[propertyElements.size()];
-
-		for (int i = 0; i < propertyElements.size(); i++) {
-			Element propertyElement = propertyElements.get(i);
-
-			String key = propertyElement.attributeValue("key");
-			String value = propertyElement.attributeValue("value");
-
-			properties[i] = key.concat(
-				AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR).concat(value);
-		}
-
 		AssetTag existingAssetTag = null;
 
 		try {
@@ -698,15 +681,17 @@ public class PortletImporter {
 			}
 		}
 
+		AssetTag importedAssetTag = null;
+
 		try {
 			if (existingAssetTag == null) {
 				importedAssetTag = AssetTagLocalServiceUtil.addTag(
-					userId, assetTag.getName(), properties, serviceContext);
+					userId, assetTag.getName(), serviceContext);
 			}
 			else {
 				importedAssetTag = AssetTagLocalServiceUtil.updateTag(
 					userId, existingAssetTag.getTagId(), assetTag.getName(),
-					properties, serviceContext);
+					serviceContext);
 			}
 
 			assetTagPKs.put(assetTag.getTagId(), importedAssetTag.getTagId());
@@ -1360,13 +1345,14 @@ public class PortletImporter {
 	private PortletImporter() {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortletImporter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletImporter.class);
 
-	private static PortletImporter _instance = new PortletImporter();
+	private static final PortletImporter _instance = new PortletImporter();
 
-	private DeletionSystemEventImporter _deletionSystemEventImporter =
+	private final DeletionSystemEventImporter _deletionSystemEventImporter =
 		DeletionSystemEventImporter.getInstance();
-	private PermissionImporter _permissionImporter =
+	private final PermissionImporter _permissionImporter =
 		PermissionImporter.getInstance();
 
 }

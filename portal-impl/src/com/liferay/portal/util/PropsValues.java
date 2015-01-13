@@ -128,12 +128,6 @@ public class PropsValues {
 
 	public static final boolean ASSET_PUBLISHER_SEARCH_WITH_INDEX = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_SEARCH_WITH_INDEX));
 
-	public static final boolean ASSET_TAG_PERMISSIONS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_TAG_PERMISSIONS_ENABLED));
-
-	public static final String[] ASSET_TAG_PROPERTIES_DEFAULT = PropsUtil.getArray(PropsKeys.ASSET_TAG_PROPERTIES_DEFAULT);
-
-	public static final boolean ASSET_TAG_PROPERTIES_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_TAG_PROPERTIES_ENABLED));
-
 	public static final boolean ASSET_TAG_SUGGESTIONS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_TAG_SUGGESTIONS_ENABLED));
 
 	public static final String ASSET_VOCABULARY_DEFAULT = PropsUtil.get(PropsKeys.ASSET_VOCABULARY_DEFAULT);

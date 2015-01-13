@@ -14,14 +14,13 @@
 
 package com.liferay.portlet.asset.util.comparator;
 
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portlet.asset.model.AssetTag;
-
-import java.util.Comparator;
 
 /**
  * @author Juan Fernández
  */
-public class AssetTagNameComparator implements Comparator<AssetTag> {
+public class AssetTagNameComparator extends OrderByComparator<AssetTag> {
 
 	public AssetTagNameComparator() {
 		this(true, false);

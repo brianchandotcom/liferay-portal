@@ -56,10 +56,10 @@ public class AssetTagServiceTest {
 			_group.getGroupId());
 
 		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(), null,
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			serviceContext);
 		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(), null,
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			serviceContext);
 
 		Assert.assertEquals(

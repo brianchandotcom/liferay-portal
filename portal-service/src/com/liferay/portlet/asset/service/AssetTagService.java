@@ -48,7 +48,7 @@ public interface AssetTagService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AssetTagServiceUtil} to access the asset tag remote service. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetTagServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portlet.asset.model.AssetTag addTag(
-		java.lang.String name, java.lang.String[] tagProperties,
+		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -116,42 +116,35 @@ public interface AssetTagService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
-		long groupId, java.lang.String name, java.lang.String[] tagProperties,
-		int start, int end);
+		long groupId, java.lang.String name, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
-		long[] groupIds, java.lang.String name,
-		java.lang.String[] tagProperties, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTagsCount(long groupId, long classNameId,
-		java.lang.String name);
+		long[] groupIds, java.lang.String name, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTagsCount(long groupId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTagsCount(long groupId, java.lang.String name,
-		java.lang.String[] tagProperties);
+	public int getVisibleAssetsTagsCount(long groupId, long classNameId,
+		java.lang.String name);
 
-	public void mergeTags(long fromTagId, long toTagId,
-		boolean overrideProperties)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getVisibleAssetsTagsCount(long groupId, java.lang.String name);
+
+	public void mergeTags(long fromTagId, long toTagId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void mergeTags(long[] fromTagIds, long toTagId,
-		boolean overrideProperties)
+	public void mergeTags(long[] fromTagIds, long toTagId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.json.JSONArray search(long groupId,
-		java.lang.String name, java.lang.String[] tagProperties, int start,
-		int end);
+		java.lang.String name, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.json.JSONArray search(long[] groupIds,
-		java.lang.String name, java.lang.String[] tagProperties, int start,
-		int end);
+		java.lang.String name, int start, int end);
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -161,7 +154,7 @@ public interface AssetTagService extends BaseService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portlet.asset.model.AssetTag updateTag(long tagId,
-		java.lang.String name, java.lang.String[] tagProperties,
+		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

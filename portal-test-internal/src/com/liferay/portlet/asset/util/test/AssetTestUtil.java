@@ -99,14 +99,11 @@ public class AssetTestUtil {
 	public static AssetTag addTag(long groupId) throws Exception {
 		long userId = TestPropsValues.getUserId();
 
-		String[] tagProperties = null;
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId, userId);
 
 		return AssetTagLocalServiceUtil.addTag(
-			userId, RandomTestUtil.randomString(), tagProperties,
-			serviceContext);
+			userId, RandomTestUtil.randomString(), serviceContext);
 	}
 
 	public static AssetVocabulary addVocabulary(long groupId) throws Exception {

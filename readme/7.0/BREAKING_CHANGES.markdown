@@ -691,3 +691,33 @@ This method was removed due to there being no working use cases in Portal, and
 its overall lack of functionality.
 
 ---------------------------------------
+
+### Removed *Asset Tag Properties*
+- **Date:** 2015-Jan-13
+- **JIRA Ticket:** LPS-52588
+
+#### What changed?
+
+The *Asset Tag Properties* have been removed. The service doesn't exist anymore
+and the API in Asset Tag Service doesn't have this parameter anymore.
+
+The behavior associated to tags properties in Asset Publisher Portlet and XSL
+Portlet has been removed.
+
+#### Who is affected?
+
+This affects any plugin using the Asset Tag Properties service.
+
+#### How should I update my code?
+
+If you are using this functionality, you can achieve the same behaviour with
+*Asset Category Properties*.
+
+If you are using the Asset Tag Service, update your method calls just removing
+the properties[] parameter.
+
+#### Why was this change made?
+
+The Asset Tag Properties were deprecated on 6.2 version.
+
+---------------------------------------

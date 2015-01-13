@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -26,7 +25,6 @@ import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.DuplicateTagException;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.model.AssetTagConstants;
 import com.liferay.portlet.asset.service.AssetTagServiceUtil;
 
 import java.io.IOException;
@@ -71,8 +69,6 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		String[] tagProperties = getTagProperties(actionRequest);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			AssetTag.class.getName(), actionRequest);
 
@@ -80,14 +76,13 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 
 			// Add tag
 
-			AssetTagServiceUtil.addTag(name, tagProperties, serviceContext);
+			AssetTagServiceUtil.addTag(name, serviceContext);
 		}
 		else {
 
 			// Update tag
 
-			AssetTagServiceUtil.updateTag(
-				tagId, name, tagProperties, serviceContext);
+			AssetTagServiceUtil.updateTag(tagId, name, serviceContext);
 		}
 	}
 
@@ -98,16 +93,13 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 		long[] mergeTagIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "mergeTagIds"), 0L);
 		long targetTagId = ParamUtil.getLong(actionRequest, "targetTagId");
-		boolean overrideTagsProperties = ParamUtil.getBoolean(
-			actionRequest, "overrideTagsProperties");
 
 		for (long mergeTagId : mergeTagIds) {
 			if (targetTagId == mergeTagId) {
 				continue;
 			}
 
-			AssetTagServiceUtil.mergeTags(
-				mergeTagId, targetTagId, overrideTagsProperties);
+			AssetTagServiceUtil.mergeTags(mergeTagId, targetTagId);
 		}
 	}
 
@@ -126,32 +118,6 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 		else {
 			super.doDispatch(renderRequest, renderResponse);
 		}
-	}
-
-	protected String[] getTagProperties(ActionRequest actionRequest) {
-		int[] tagPropertiesIndexes = StringUtil.split(
-			ParamUtil.getString(actionRequest, "tagPropertiesIndexes"), 0);
-
-		String[] tagProperties = new String[tagPropertiesIndexes.length];
-
-		for (int i = 0; i < tagPropertiesIndexes.length; i++) {
-			int tagPropertiesIndex = tagPropertiesIndexes[i];
-
-			String key = ParamUtil.getString(
-				actionRequest, "key" + tagPropertiesIndex);
-
-			if (Validator.isNull(key)) {
-				continue;
-			}
-
-			String value = ParamUtil.getString(
-				actionRequest, "value" + tagPropertiesIndex);
-
-			tagProperties[i] =
-				key + AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR + value;
-		}
-
-		return tagProperties;
 	}
 
 	@Override

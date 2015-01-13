@@ -61,36 +61,6 @@
 				AssetCategory.name ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryPropertyFinder.countByG_K">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT AssetCategoryProperty.value) AS COUNT_VALUE
-			FROM
-				AssetCategoryProperty
-			INNER JOIN
-				AssetCategory ON
-					(AssetCategory.categoryId = AssetCategoryProperty.categoryId)
-			WHERE
-				(AssetCategory.groupId = ?) AND
-				(AssetCategoryProperty.key_ = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryPropertyFinder.findByG_K">
-		<![CDATA[
-			SELECT
-				DISTINCT AssetCategoryProperty.value AS categoryPropertyValue
-			FROM
-				AssetCategoryProperty
-			INNER JOIN
-				AssetCategory ON
-					(AssetCategory.categoryId = AssetCategoryProperty.categoryId)
-			WHERE
-				(AssetCategory.groupId = ?) AND
-				(AssetCategoryProperty.key_ = ?)
-			ORDER BY
-				AssetCategoryProperty.value ASC
-		]]>
-	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetEntryFinder.findByAndCategoryIds">
 		<![CDATA[
 			EXISTS
@@ -160,29 +130,6 @@
 				(AssetTag.name LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.countByG_N_P">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT AssetTag.tagId) AS COUNT_VALUE
-			FROM
-				AssetTag
-			[$JOIN$]
-			WHERE
-				(AssetTag.groupId = ?) AND
-				(AssetTag.name LIKE ? OR ? IS NULL)
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_N">
-		<![CDATA[
-			SELECT
-				DISTINCT {AssetTag.*}
-			FROM
-				AssetTag
-			WHERE
-				(AssetTag.groupId = ?) AND
-				(AssetTag.name = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_C_N">
 		<![CDATA[
 			SELECT
@@ -203,20 +150,6 @@
 						(AssetEntry.classNameId = ?) AND
 						(AssetEntry.visible = [$TRUE$])
 				)) AND
-				(AssetTag.name LIKE ? OR ? IS NULL)
-			ORDER BY
-				AssetTag.name ASC
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_N_P">
-		<![CDATA[
-			SELECT
-				DISTINCT {AssetTag.*}
-			FROM
-				AssetTag
-			[$JOIN$]
-			WHERE
-				[$GROUP_ID$]
 				(AssetTag.name LIKE ? OR ? IS NULL)
 			ORDER BY
 				AssetTag.name ASC
@@ -246,64 +179,6 @@
 				(SocialActivityCounter.startPeriod + ? <= ?)
 			GROUP BY
 				AssetTag.tagId, AssetTag.name
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagPropertyFinder.countByG_K">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT AssetTagProperty.value) AS COUNT_VALUE
-			FROM
-				AssetTagProperty
-			INNER JOIN
-				AssetTag ON
-					(AssetTag.tagId = AssetTagProperty.tagId)
-			WHERE
-				(AssetTag.groupId = ?) AND
-				(AssetTagProperty.key_ = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagPropertyFinder.findByG_K">
-		<![CDATA[
-			SELECT
-				DISTINCT AssetTagProperty.value AS tagPropertyValue
-			FROM
-				AssetTagProperty
-			INNER JOIN
-				AssetTag ON
-					(AssetTag.tagId = AssetTagProperty.tagId)
-			WHERE
-				(AssetTag.groupId = ?) AND
-				(AssetTagProperty.key_ = ?)
-			ORDER BY
-				AssetTagProperty.value ASC
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagPropertyKeyFinder.countByGroupId">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT AssetTagProperty.key_) AS COUNT_VALUE
-			FROM
-				AssetTagProperty
-			INNER JOIN
-				AssetTag ON
-					(AssetTag.tagId = AssetTagProperty.tagId)
-			WHERE
-				(AssetTag.groupId = ?) AND
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagPropertyKeyFinder.findByGroupId">
-		<![CDATA[
-			SELECT
-				DISTINCT AssetTagProperty.key_ AS tagPropertyKey
-			FROM
-				AssetTagProperty
-			INNER JOIN
-				AssetTag ON
-					(AssetTag.tagId = AssetTagProperty.tagId)
-			WHERE
-				(AssetTag.groupId = ?) AND
-			ORDER BY
-				tagPropertyKey ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetVocabularyFinder.countByG_N">

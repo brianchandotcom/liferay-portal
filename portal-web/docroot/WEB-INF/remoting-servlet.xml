@@ -393,14 +393,6 @@
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetTagService" />
 		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetTagService" />
 	</bean>
-	<bean name="/com_liferay_portlet_asset_service_spring_AssetTagPropertyService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.asset.service.AssetTagPropertyService" />
-		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetTagPropertyService" />
-	</bean>
-	<bean name="/com_liferay_portlet_asset_service_spring_AssetTagPropertyService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.asset.service.AssetTagPropertyService" />
-		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetTagPropertyService" />
-	</bean>
 	<bean name="/com_liferay_portlet_asset_service_spring_AssetVocabularyService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.asset.service.AssetVocabularyService" />
 		<property name="serviceInterface" value="com.liferay.portlet.asset.service.AssetVocabularyService" />

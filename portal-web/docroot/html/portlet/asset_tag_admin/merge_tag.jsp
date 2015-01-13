@@ -75,10 +75,6 @@ long[] mergeTagIds = StringUtil.split(ParamUtil.getString(renderRequest, "mergeT
 		</aui:select>
 	</div>
 
-	<c:if test="<%= PropsValues.ASSET_TAG_PROPERTIES_ENABLED %>">
-		<aui:input name="overrideTagsProperties" type="checkbox" />
-	</c:if>
-
 	<aui:button-row>
 		<aui:button type="submit" value="merge" />
 

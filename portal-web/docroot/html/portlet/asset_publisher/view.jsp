@@ -33,36 +33,6 @@ if (Validator.isNotNull(assetTagName)) {
 	PortalUtil.setPageKeywords(assetTagName, request);
 }
 
-if (assetPublisherDisplayContext.isMergeURLTags() || assetPublisherDisplayContext.isMergeLayoutTags()) {
-	String[] compilerTagNames = assetPublisherDisplayContext.getCompilerTagNames();
-
-	String titleEntry = ArrayUtil.isNotEmpty(compilerTagNames) ? compilerTagNames[compilerTagNames.length - 1] : null;
-
-	String portletTitle = portletDisplay.getTitle();
-
-	portletTitle = AssetUtil.substituteTagPropertyVariables(scopeGroupId, titleEntry, portletTitle);
-
-	renderResponse.setTitle(portletTitle);
-}
-
-for (String curAssetTagName : assetPublisherDisplayContext.getAllAssetTagNames()) {
-	try {
-		AssetTag assetTag = AssetTagLocalServiceUtil.getTag(scopeGroupId, curAssetTagName);
-
-		AssetTagProperty journalTemplateIdProperty = AssetTagPropertyLocalServiceUtil.getTagProperty(assetTag.getTagId(), "journal-template-id");
-
-		String journalTemplateId = journalTemplateIdProperty.getValue();
-
-		request.setAttribute(WebKeys.JOURNAL_TEMPLATE_ID, journalTemplateId);
-
-		break;
-	}
-	catch (NoSuchTagException nste) {
-	}
-	catch (NoSuchTagPropertyException nstpe) {
-	}
-}
-
 if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && assetPublisherDisplayContext.isSelectionStyleManual() && ((assetPublisherDisplayContext.getAllAssetCategoryIds().length > 0) || (assetPublisherDisplayContext.getAllAssetTagNames().length > 0))) {
 	assetPublisherDisplayContext.setSelectionStyle("dynamic");
 }

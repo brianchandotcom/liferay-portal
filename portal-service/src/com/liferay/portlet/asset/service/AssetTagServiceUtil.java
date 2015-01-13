@@ -41,10 +41,10 @@ public class AssetTagServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetTagServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portlet.asset.model.AssetTag addTag(
-		java.lang.String name, java.lang.String[] tagProperties,
+		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addTag(name, tagProperties, serviceContext);
+		return getService().addTag(name, serviceContext);
 	}
 
 	public static void deleteTag(long tagId)
@@ -126,53 +126,47 @@ public class AssetTagServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
-		long groupId, java.lang.String name, java.lang.String[] tagProperties,
-		int start, int end) {
-		return getService().getTags(groupId, name, tagProperties, start, end);
+		long groupId, java.lang.String name, int start, int end) {
+		return getService().getTags(groupId, name, start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
-		long[] groupIds, java.lang.String name,
-		java.lang.String[] tagProperties, int start, int end) {
-		return getService().getTags(groupIds, name, tagProperties, start, end);
-	}
-
-	public static int getTagsCount(long groupId, long classNameId,
-		java.lang.String name) {
-		return getService().getTagsCount(groupId, classNameId, name);
+		long[] groupIds, java.lang.String name, int start, int end) {
+		return getService().getTags(groupIds, name, start, end);
 	}
 
 	public static int getTagsCount(long groupId, java.lang.String name) {
 		return getService().getTagsCount(groupId, name);
 	}
 
-	public static int getTagsCount(long groupId, java.lang.String name,
-		java.lang.String[] tagProperties) {
-		return getService().getTagsCount(groupId, name, tagProperties);
+	public static int getVisibleAssetsTagsCount(long groupId, long classNameId,
+		java.lang.String name) {
+		return getService().getVisibleAssetsTagsCount(groupId, classNameId, name);
 	}
 
-	public static void mergeTags(long fromTagId, long toTagId,
-		boolean overrideProperties)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().mergeTags(fromTagId, toTagId, overrideProperties);
+	public static int getVisibleAssetsTagsCount(long groupId,
+		java.lang.String name) {
+		return getService().getVisibleAssetsTagsCount(groupId, name);
 	}
 
-	public static void mergeTags(long[] fromTagIds, long toTagId,
-		boolean overrideProperties)
+	public static void mergeTags(long fromTagId, long toTagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().mergeTags(fromTagIds, toTagId, overrideProperties);
+		getService().mergeTags(fromTagId, toTagId);
+	}
+
+	public static void mergeTags(long[] fromTagIds, long toTagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().mergeTags(fromTagIds, toTagId);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray search(
-		long groupId, java.lang.String name, java.lang.String[] tagProperties,
-		int start, int end) {
-		return getService().search(groupId, name, tagProperties, start, end);
+		long groupId, java.lang.String name, int start, int end) {
+		return getService().search(groupId, name, start, end);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray search(
-		long[] groupIds, java.lang.String name,
-		java.lang.String[] tagProperties, int start, int end) {
-		return getService().search(groupIds, name, tagProperties, start, end);
+		long[] groupIds, java.lang.String name, int start, int end) {
+		return getService().search(groupIds, name, start, end);
 	}
 
 	/**
@@ -185,10 +179,10 @@ public class AssetTagServiceUtil {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetTag updateTag(
-		long tagId, java.lang.String name, java.lang.String[] tagProperties,
+		long tagId, java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateTag(tagId, name, tagProperties, serviceContext);
+		return getService().updateTag(tagId, name, serviceContext);
 	}
 
 	public static AssetTagService getService() {

@@ -221,11 +221,6 @@
 	<bean id="com.liferay.portlet.asset.service.AssetTagService" class="com.liferay.portlet.asset.service.impl.AssetTagServiceImpl" />
 	<bean id="com.liferay.portlet.asset.service.persistence.AssetTagPersistence" class="com.liferay.portlet.asset.service.persistence.impl.AssetTagPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.asset.service.persistence.AssetTagFinder" class="com.liferay.portlet.asset.service.persistence.impl.AssetTagFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.asset.service.AssetTagPropertyLocalService" class="com.liferay.portlet.asset.service.impl.AssetTagPropertyLocalServiceImpl" />
-	<bean id="com.liferay.portlet.asset.service.AssetTagPropertyService" class="com.liferay.portlet.asset.service.impl.AssetTagPropertyServiceImpl" />
-	<bean id="com.liferay.portlet.asset.service.persistence.AssetTagPropertyPersistence" class="com.liferay.portlet.asset.service.persistence.impl.AssetTagPropertyPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.asset.service.persistence.AssetTagPropertyFinder" class="com.liferay.portlet.asset.service.persistence.impl.AssetTagPropertyFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.asset.service.persistence.AssetTagPropertyKeyFinder" class="com.liferay.portlet.asset.service.persistence.impl.AssetTagPropertyKeyFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.asset.service.AssetTagStatsLocalService" class="com.liferay.portlet.asset.service.impl.AssetTagStatsLocalServiceImpl" />
 	<bean id="com.liferay.portlet.asset.service.persistence.AssetTagStatsPersistence" class="com.liferay.portlet.asset.service.persistence.impl.AssetTagStatsPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.asset.service.AssetVocabularyLocalService" class="com.liferay.portlet.asset.service.impl.AssetVocabularyLocalServiceImpl" />

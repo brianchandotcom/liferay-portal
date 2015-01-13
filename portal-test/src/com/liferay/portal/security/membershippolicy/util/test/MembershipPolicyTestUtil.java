@@ -253,7 +253,7 @@ public class MembershipPolicyTestUtil {
 		if (includeCategorization) {
 			AssetTag tag = AssetTagLocalServiceUtil.addTag(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				null, new ServiceContext());
+				new ServiceContext());
 
 			serviceContext.setAssetTagNames(new String[] {tag.getName()});
 

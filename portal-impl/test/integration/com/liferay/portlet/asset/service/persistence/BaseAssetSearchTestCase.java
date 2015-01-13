@@ -140,21 +140,19 @@ public abstract class BaseAssetSearchTestCase {
 
 		for (ServiceContext serviceContext : serviceContexts) {
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), "liferay", null, serviceContext);
+				TestPropsValues.getUserId(), "liferay", serviceContext);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), "architecture", null,
-				serviceContext);
+				TestPropsValues.getUserId(), "architecture", serviceContext);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), "modularity", null,
-				serviceContext);
+				TestPropsValues.getUserId(), "modularity", serviceContext);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), "osgi", null, serviceContext);
+				TestPropsValues.getUserId(), "osgi", serviceContext);
 
 			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), "services", null, serviceContext);
+				TestPropsValues.getUserId(), "services", serviceContext);
 		}
 
 		_assetTagsNames1 =

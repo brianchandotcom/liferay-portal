@@ -175,18 +175,6 @@ create table AssetTag (
 	assetCount INTEGER
 );
 
-create table AssetTagProperty (
-	tagPropertyId LONG not null primary key,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	tagId LONG,
-	key_ VARCHAR(75) null,
-	value VARCHAR(255) null
-);
-
 create table AssetTagStats (
 	tagStatsId LONG not null primary key,
 	tagId LONG,

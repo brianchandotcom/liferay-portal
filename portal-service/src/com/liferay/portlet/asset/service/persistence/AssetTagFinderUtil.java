@@ -30,11 +30,6 @@ public class AssetTagFinderUtil {
 		return getFinder().countByG_C_N(groupId, classNameId, name);
 	}
 
-	public static int countByG_N_P(long groupId, java.lang.String name,
-		java.lang.String[] tagProperties) {
-		return getFinder().countByG_N_P(groupId, name, tagProperties);
-	}
-
 	public static int filterCountByG_N(long groupId, java.lang.String name) {
 		return getFinder().filterCountByG_N(groupId, name);
 	}
@@ -42,17 +37,6 @@ public class AssetTagFinderUtil {
 	public static int filterCountByG_C_N(long groupId, long classNameId,
 		java.lang.String name) {
 		return getFinder().filterCountByG_C_N(groupId, classNameId, name);
-	}
-
-	public static int filterCountByG_N_P(long groupId, java.lang.String name,
-		java.lang.String[] tagProperties) {
-		return getFinder().filterCountByG_N_P(groupId, name, tagProperties);
-	}
-
-	public static com.liferay.portlet.asset.model.AssetTag filterFindByG_N(
-		long groupId, java.lang.String name)
-		throws com.liferay.portlet.asset.NoSuchTagException {
-		return getFinder().filterFindByG_N(groupId, name);
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> filterFindByG_C_N(
@@ -64,35 +48,12 @@ public class AssetTagFinderUtil {
 			obc);
 	}
 
-	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> filterFindByG_N_P(
-		long[] groupIds, java.lang.String name,
-		java.lang.String[] tagProperties, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> obc) {
-		return getFinder()
-				   .filterFindByG_N_P(groupIds, name, tagProperties, start,
-			end, obc);
-	}
-
-	public static com.liferay.portlet.asset.model.AssetTag findByG_N(
-		long groupId, java.lang.String name)
-		throws com.liferay.portlet.asset.NoSuchTagException {
-		return getFinder().findByG_N(groupId, name);
-	}
-
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> findByG_C_N(
 		long groupId, long classNameId, java.lang.String name, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> obc) {
 		return getFinder()
 				   .findByG_C_N(groupId, classNameId, name, start, end, obc);
-	}
-
-	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> findByG_N_P(
-		long[] groupIds, java.lang.String name,
-		java.lang.String[] tagProperties, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> obc) {
-		return getFinder()
-				   .findByG_N_P(groupIds, name, tagProperties, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> findByG_N_S_E(

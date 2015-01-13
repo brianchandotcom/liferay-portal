@@ -342,6 +342,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 		</finder>
+		<finder name="G_LikeN" return-type="Collection">
+			<finder-column name="groupId" arrayable-operator="or" />
+			<finder-column name="name" comparator="LIKE" />
+		</finder>
 
 		<!-- References -->
 
@@ -350,59 +354,8 @@
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetTagProperty" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTagStats" />
 	</entity>
-	<entity name="AssetTagProperty" local-service="true" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="tagPropertyId" type="long" primary="true" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="tagId" type="long" />
-		<column name="key" type="String" />
-		<column name="value" type="String" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="key" />
-		</order>
-
-		<!--Finder methods -->
-
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
-		<finder name="TagId" return-type="Collection">
-			<finder-column name="tagId" />
-		</finder>
-		<finder name="C_K" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="key" />
-		</finder>
-		<finder name="T_K" return-type="AssetTagProperty" unique="true">
-			<finder-column name="tagId" />
-			<finder-column name="key" />
-		</finder>
-
-		<!-- References -->
-
-		<reference package-path="com.liferay.portal" entity="Resource" />
-		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetTagPropertyKey" />
-	</entity>
-	<entity name="AssetTagPropertyKey" local-service="false" remote-service="false" />
 	<entity name="AssetTagStats" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
@@ -506,8 +459,6 @@
 		<exception>DuplicateQueryRule</exception>
 		<exception>DuplicateTag</exception>
 		<exception>DuplicateVocabulary</exception>
-		<exception>TagPropertyKey</exception>
-		<exception>TagPropertyValue</exception>
 		<exception>VocabularyName</exception>
 	</exceptions>
 </service-builder>

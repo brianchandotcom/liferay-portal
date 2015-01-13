@@ -38,24 +38,6 @@ AssetTag tag = (AssetTag)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= PropsValues.ASSET_TAG_PERMISSIONS_ENABLED && AssetTagPermission.contains(permissionChecker, tag, ActionKeys.PERMISSIONS) %>">
-		<liferay-security:permissionsURL
-			modelResource="<%= AssetTag.class.getName() %>"
-			modelResourceDescription="<%= tag.getName() %>"
-			resourcePrimKey="<%= String.valueOf(tag.getTagId()) %>"
-			var="permissionsURL"
-			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-		/>
-
-		<liferay-ui:icon
-			iconCssClass="icon-lock"
-			message="permissions"
-			method="get"
-			url="<%= permissionsURL %>"
-			useDialog="<%= true %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= AssetTagPermission.contains(permissionChecker, tag, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteTag" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

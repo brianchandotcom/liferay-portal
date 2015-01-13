@@ -4,6 +4,8 @@ COMMIT_TRANSACTION;
 
 update AssetEntry set listable = TRUE;
 
+drop table AssetTagProperty;
+
 alter table BlogsEntry add subtitle STRING null;
 alter table BlogsEntry add coverImageFileEntryId LONG;
 alter table BlogsEntry add coverImageURL STRING null;

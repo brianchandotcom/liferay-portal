@@ -25,7 +25,6 @@ import java.lang.reflect.Proxy;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -239,7 +238,7 @@ public class JspServlet extends HttpServlet {
 
 	private Bundle _bundle;
 	private final Bundle _jspBundle;
-	private URLClassLoader _jspBundleClassloader;
+	private JspBundleClassloader _jspBundleClassloader;
 	private final HttpServlet _jspServlet =
 		new org.apache.jasper.servlet.JspServlet();
 	private volatile ServletContext _jspServletContext;

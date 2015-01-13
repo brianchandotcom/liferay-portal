@@ -348,6 +348,6 @@ public class PropsUtil {
 	private static PropsUtil _instance = new PropsUtil();
 
 	private final Configuration _configuration;
-	private Map<Long, Configuration> _configurations;
+	private final Map<Long, Configuration> _configurations;
 
 }

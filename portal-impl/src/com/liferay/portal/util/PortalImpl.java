@@ -352,12 +352,9 @@ public class PortalImpl implements Portal {
 
 		_pathProxy = PropsValues.PORTAL_PROXY_PATH;
 
-		String pathContext = ContextPathUtil.getContextPath(
-			PortalContextLoaderListener.getPortalServletContextPath());
-
-		pathContext = _pathProxy.concat(pathContext);
-
-		_pathContext = pathContext;
+		_pathContext = _pathProxy.concat(
+			ContextPathUtil.getContextPath(
+				PortalContextLoaderListener.getPortalServletContextPath()));
 
 		_pathFriendlyURLPrivateGroup =
 			_pathContext + _PRIVATE_GROUP_SERVLET_MAPPING;

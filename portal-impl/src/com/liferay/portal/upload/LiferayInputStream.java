@@ -45,6 +45,7 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		super(request.getInputStream());
 
 		_session = request.getSession();
+
 		long totalSize = request.getContentLength();
 
 		if (totalSize < 0) {

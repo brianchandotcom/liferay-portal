@@ -85,6 +85,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
+import com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -696,6 +697,9 @@ public class EditGroupAction extends PortletAction {
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
+		UnicodeProperties oldTypeSettingsProperties =
+			(UnicodeProperties)typeSettingsProperties.clone();
+
 		typeSettingsProperties.putAll(formTypeSettingsProperties);
 
 		// Virtual hosts
@@ -756,6 +760,11 @@ public class EditGroupAction extends PortletAction {
 
 		liveGroup = GroupServiceUtil.updateGroup(
 			liveGroup.getGroupId(), typeSettingsProperties.toString());
+
+		// Ratings migration
+
+		RatingsDataTransformerUtil.transformGroupRatingsData(
+			liveGroupId, oldTypeSettingsProperties, typeSettingsProperties);
 
 		// Layout set prototypes
 

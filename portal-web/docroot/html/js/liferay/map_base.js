@@ -49,7 +49,7 @@ AUI.add(
 						instance.fire(
 							'featureClick',
 							{
-								feature: instance._wrapNativeFeature(event.feature || event.target.feature)
+								feature: instance._wrapNativeFeature(event.feature || event.target.feature)
 							}
 						);
 					}
@@ -251,7 +251,7 @@ AUI.add(
 
 						var searchControl = instance._customControls[Base.CONTROLS.SEARCH];
 
-						if (searchControl) {
+						if (searchControl) {
 							searchControl.destroy();
 						}
 
@@ -301,7 +301,7 @@ AUI.add(
 									if (features.length > 1) {
 										AArray.each(
 											event.features,
-											function(item, index, collection) {
+											function(item, index) {
 												bounds.extend(item.getGeometry().get());
 											}
 										);
@@ -410,7 +410,7 @@ AUI.add(
 						var controls = instance.get(STR_CONTROLS);
 
 						var availableControls = controls.map(
-							function(item, index, collection) {
+							function(item, index) {
 								return Lang.isString(item) ? item : item.name;
 							}
 						);
@@ -419,13 +419,13 @@ AUI.add(
 
 						A.Object.each(
 							instance.CONTROLS_CONFIG_MAP,
-							function(item, index, collection) {
+							function(item, index) {
 								var controlIndex = AArray.indexOf(availableControls, index);
 
-								if (controlIndex !== -1) {
+								if (controlIndex > -1) {
 									var controlConfig = controls[controlIndex];
 
-									if (Lang.isObject(controlConfig) && controlConfig.cfg) {
+									if (Lang.isObject(controlConfig) && controlConfig.cfg) {
 										config[item + 'Options'] = controlConfig.cfg;
 									}
 								}
@@ -573,7 +573,7 @@ AUI.add(
 						callback(map);
 					}
 					else {
-						var pendingCallbacks = instance._pendingCallbacks[id] || [];
+						var pendingCallbacks = instance._pendingCallbacks[id] || [];
 
 						pendingCallbacks.push(callback);
 
@@ -588,7 +588,7 @@ AUI.add(
 
 					A.Array.each(
 						instance._pendingCallbacks[id],
-						function(item, index, collection) {
+						function(item, index) {
 							item(map);
 						}
 					);

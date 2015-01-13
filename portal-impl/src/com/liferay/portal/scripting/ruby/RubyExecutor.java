@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -44,6 +45,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadFactory;
 
+import javax.servlet.ServletContext;
+
 import jodd.io.ZipUtil;
 
 import org.jruby.Ruby;
@@ -63,13 +66,6 @@ public class RubyExecutor extends BaseScriptingExecutor {
 	public static final String LANGUAGE = "ruby";
 
 	public RubyExecutor() {
-		try {
-			initRubyGems();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
 		_scriptingContainer = new ScriptingContainer(
 			LocalContextScope.THREADSAFE);
 
@@ -229,6 +225,13 @@ public class RubyExecutor extends BaseScriptingExecutor {
 			ClassLoader... classLoaders)
 		throws ScriptingException {
 
+		try {
+			initRubyGems();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
 		if (!_executeInSeparateThread) {
 			return doEval(
 				allowedClasses, inputObjects, outputNames, scriptFile, script,
@@ -260,31 +263,51 @@ public class RubyExecutor extends BaseScriptingExecutor {
 	}
 
 	protected void initRubyGems() throws Exception {
-		File rubyGemsJarFile = new File(
-			PropsValues.LIFERAY_LIB_PORTAL_DIR, "ruby-gems.jar");
-
-		if (!rubyGemsJarFile.exists()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(rubyGemsJarFile + " does not exist");
-			}
-
+		if (_rubyGemsInitialized) {
 			return;
 		}
 
-		String tmpDir = SystemProperties.get(SystemProperties.TMP_DIR);
+		try {
+			synchronized (this) {
+				if (_rubyGemsInitialized) {
+					return;
+				}
 
-		File rubyDir = new File(tmpDir + "/liferay/ruby");
+				ServletContext servletContext = ServletContextPool.get(
+					StringPool.BLANK);
 
-		if (!rubyDir.exists() ||
-			(rubyDir.lastModified() < rubyGemsJarFile.lastModified())) {
+				File rubyGemsJarFile = new File(
+					servletContext.getRealPath("/WEB-INF/lib/ruby-gems.jar"));
 
-			FileUtil.deltree(rubyDir);
+				if (!rubyGemsJarFile.exists()) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(rubyGemsJarFile + " does not exist");
+					}
 
-			rubyDir.mkdirs();
+					return;
+				}
 
-			ZipUtil.unzip(rubyGemsJarFile, rubyDir);
+				String tmpDir = SystemProperties.get(SystemProperties.TMP_DIR);
 
-			rubyDir.setLastModified(rubyGemsJarFile.lastModified());
+				File rubyDir = new File(tmpDir + "/liferay/ruby");
+
+				if (!rubyDir.exists() ||
+					(rubyDir.lastModified() < rubyGemsJarFile.lastModified())) {
+
+					FileUtil.deltree(rubyDir);
+
+					rubyDir.mkdirs();
+
+					ZipUtil.unzip(rubyGemsJarFile, rubyDir);
+
+					rubyDir.setLastModified(rubyGemsJarFile.lastModified());
+				}
+
+				_rubyGemsInitialized = true;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 	}
 
@@ -313,6 +336,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 	private final String _basePath;
 	private boolean _executeInSeparateThread = true;
 	private final List<String> _loadPaths;
+	private boolean _rubyGemsInitialized = false;
 	private final ScriptingContainer _scriptingContainer;
 
 	private class EvalCallable implements Callable<Map<String, Object>> {

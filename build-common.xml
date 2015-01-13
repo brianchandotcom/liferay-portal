@@ -1317,6 +1317,7 @@ rerun your task.
 									<exclude name="${test.excludes}" />
 									<filename regex="${junit.test.excludes}" negate="true" />
 									<filename regex=".*/pacl/test/[\w]+Test.class" negate="true" />
+									<filename regex=".*\\pacl\\test\\[\w]+Test.class" negate="true" />
 								</fileset>
 							</batchtest>
 						</test.classes>

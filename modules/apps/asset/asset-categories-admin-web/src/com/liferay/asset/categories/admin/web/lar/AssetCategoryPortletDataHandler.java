@@ -14,9 +14,11 @@
 
 package com.liferay.asset.categories.admin.web.lar;
 
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
@@ -33,9 +35,19 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mate Thurzo
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" +
+			AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN
+	},
+	service = PortletDataHandler.class
+)
 public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "asset_category";

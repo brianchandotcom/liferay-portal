@@ -27,7 +27,7 @@ import java.lang.reflect.Method;
 public class ClearThreadLocalUtil {
 
 	public static void clearThreadLocal() throws Exception {
-		if (!_initialized) {
+		if (!_INITIALIZED) {
 			return;
 		}
 
@@ -128,48 +128,65 @@ public class ClearThreadLocalUtil {
 		}
 	}
 
+	private static final boolean _INITIALIZED;
+
 	private static Log _log = LogFactoryUtil.getLog(ClearThreadLocalUtil.class);
 
-	private static Method _expungeStaleEntriesMethod;
-	private static Field _inheritableThreadLocalsField;
-	private static boolean _initialized;
-	private static Method _removeMethod;
-	private static Field _tableField;
-	private static Field _threadLocalsField;
-	private static Field _valueField;
+	private static final Method _expungeStaleEntriesMethod;
+	private static final Field _inheritableThreadLocalsField;
+	private static final Method _removeMethod;
+	private static final Field _tableField;
+	private static final Field _threadLocalsField;
+	private static final Field _valueField;
 
 	static {
+		boolean initialized = false;
+
+		Method expungeStaleEntriesMethod = null;
+		Field inheritableThreadLocalsField = null;
+		Method removeMethod = null;
+		Field tableField = null;
+		Field threadLocalsField = null;
+		Field valueField = null;
+
 		try {
-			_inheritableThreadLocalsField = ReflectionUtil.getDeclaredField(
+			inheritableThreadLocalsField = ReflectionUtil.getDeclaredField(
 				Thread.class, "inheritableThreadLocals");
-			_threadLocalsField = ReflectionUtil.getDeclaredField(
+			threadLocalsField = ReflectionUtil.getDeclaredField(
 				Thread.class, "threadLocals");
 
 			Class<?> threadLocalMapClass = Class.forName(
 				"java.lang.ThreadLocal$ThreadLocalMap");
 
-			_expungeStaleEntriesMethod = ReflectionUtil.getDeclaredMethod(
+			expungeStaleEntriesMethod = ReflectionUtil.getDeclaredMethod(
 				threadLocalMapClass, "expungeStaleEntries");
-			_removeMethod = ReflectionUtil.getDeclaredMethod(
+			removeMethod = ReflectionUtil.getDeclaredMethod(
 				threadLocalMapClass, "remove", ThreadLocal.class);
-			_tableField = ReflectionUtil.getDeclaredField(
+			tableField = ReflectionUtil.getDeclaredField(
 				threadLocalMapClass, "table");
 
 			Class<?> threadLocalMapEntryClass = Class.forName(
 				"java.lang.ThreadLocal$ThreadLocalMap$Entry");
 
-			_valueField = ReflectionUtil.getDeclaredField(
+			valueField = ReflectionUtil.getDeclaredField(
 				threadLocalMapEntryClass, "value");
 
-			_initialized = true;
+			initialized = true;
 		}
 		catch (Throwable t) {
-			_initialized = false;
-
 			if (_log.isWarnEnabled()) {
 				_log.warn("Failed to initialize ClearThreadLocalUtil", t);
 			}
 		}
+
+		_expungeStaleEntriesMethod = expungeStaleEntriesMethod;
+		_inheritableThreadLocalsField = inheritableThreadLocalsField;
+		_removeMethod = removeMethod;
+		_tableField = tableField;
+		_threadLocalsField = threadLocalsField;
+		_valueField = valueField;
+
+		_INITIALIZED = initialized;
 	}
 
 }

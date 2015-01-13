@@ -26,11 +26,11 @@ import java.io.Reader;
 public class StripDoctypeFilter {
 
 	public StripDoctypeFilter(InputStream inputStream) {
-		_inputStream = inputStream;
+		this(inputStream, null);
 	}
 
 	public StripDoctypeFilter(Reader reader) {
-		_reader = reader;
+		this(null, reader);
 	}
 
 	public int read() throws IOException {
@@ -130,6 +130,12 @@ public class StripDoctypeFilter {
 		return read;
 	}
 
+	protected StripDoctypeFilter(InputStream inputStream, Reader reader) {
+		_inputStream = inputStream;
+
+		_reader = reader;
+	}
+
 	protected int readFromBuffer() {
 		_bufferLength--;
 
@@ -159,8 +165,8 @@ public class StripDoctypeFilter {
 	private int[] _buffer;
 	private int _bufferLength;
 	private boolean _documentStarted;
-	private InputStream _inputStream;
-	private Reader _reader;
+	private final InputStream _inputStream;
+	private final Reader _reader;
 	private boolean entityDeclaration;
 
 }

@@ -84,8 +84,9 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryC
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
+DLDisplayContextFactoryUtil dlDisplayContextFactoryUtil = DLDisplayContextFactoryUtil.getInstance();
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
-DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLViewFileVersionDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileVersion);
+DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextFactoryUtil.getDLViewFileVersionActionsDisplayContext(request, response, fileVersion);
 %>
 
 <portlet:actionURL var="editFileEntry">

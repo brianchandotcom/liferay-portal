@@ -14,28 +14,58 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Iván Zaera
+ * @author Ivan Zaera
  */
-public interface DLViewFileVersionDisplayContextFactory {
+public abstract class BaseDLDisplayContextFactory
+	implements DLDisplayContextFactory {
 
+	@Override
+	public DLEditFileEntryDisplayContext
+		getDLEditFileEntryDisplayContext(
+			DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
+			HttpServletRequest request, HttpServletResponse response,
+			DLFileEntryType dlFileEntryType) {
+
+		return parentDLEditFileEntryDisplayContext;
+	}
+
+	@Override
+	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
+		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		FileEntry fileEntry) {
+
+		return parentDLEditFileEntryDisplayContext;
+	}
+
+	@Override
 	public DLViewFileVersionDisplayContext
 		getDLFileVersionActionsDisplayContext(
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
+			FileVersion fileVersion) {
 
+		return parentDLViewFileVersionDisplayContext;
+	}
+
+	@Override
 	public DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
+			FileVersion fileVersion) {
+
+		return parentDLViewFileVersionDisplayContext;
+	}
 
 }

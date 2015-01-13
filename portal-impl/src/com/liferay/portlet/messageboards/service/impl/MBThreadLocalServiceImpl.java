@@ -102,7 +102,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			thread.setLastPostByUserId(message.getUserId());
 		}
 
-		thread.setLastPostDate(message.getCreateDate());
+		thread.setLastPostDate(message.getModifiedDate());
 
 		if (message.getPriority() != MBThreadConstants.PRIORITY_NOT_GIVEN) {
 			thread.setPriority(message.getPriority());

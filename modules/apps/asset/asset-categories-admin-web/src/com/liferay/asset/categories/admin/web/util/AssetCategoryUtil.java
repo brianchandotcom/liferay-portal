@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetcategoryadmin.util;
+package com.liferay.asset.categories.admin.web.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

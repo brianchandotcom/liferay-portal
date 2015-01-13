@@ -51,7 +51,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			formatPortalProperties(fileName, content);
 		}
 
-		return content;
+		return formatWhitespace(content);
 	}
 
 	@Override
@@ -91,31 +91,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		String content = fileUtil.read(file);
 
-		StringBundler sb = new StringBundler();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = trimLine(line, true);
-
-				if (line.startsWith(StringPool.TAB)) {
-					line = line.replaceFirst(
-						StringPool.TAB, StringPool.FOUR_SPACES);
-				}
-
-				sb.append(line);
-				sb.append("\n");
-			}
-		}
-
-		String newContent = sb.toString();
-
-		if (newContent.endsWith("\n")) {
-			newContent = newContent.substring(0, newContent.length() - 1);
-		}
+		String newContent = formatWhitespace(content);
 
 		processFormattedFile(file, fileName, content, newContent);
 
@@ -225,6 +201,36 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 		}
+	}
+
+	protected String formatWhitespace(String content) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = trimLine(line, true);
+
+				if (line.startsWith(StringPool.TAB)) {
+					line = line.replaceFirst(
+						StringPool.TAB, StringPool.FOUR_SPACES);
+				}
+
+				sb.append(line);
+				sb.append("\n");
+			}
+		}
+
+		String newContent = sb.toString();
+
+		if (newContent.endsWith("\n")) {
+			newContent = newContent.substring(0, newContent.length() - 1);
+		}
+
+		return newContent;
 	}
 
 	private String _portalPortalPropertiesContent;

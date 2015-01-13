@@ -759,7 +759,7 @@
 		<execute macro="Staging#viewStagingLocalLivePG" />
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="WebContent#expirePGViaWCD">
@@ -790,6 +790,7 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">

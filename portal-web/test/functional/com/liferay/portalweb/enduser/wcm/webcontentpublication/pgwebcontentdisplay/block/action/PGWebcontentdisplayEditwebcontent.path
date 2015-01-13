@@ -182,7 +182,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_VIEW_HISTORY</td>
-	<td>//div[@id='_15_articleToolbar']//div/button[contains(.,'View History')]</td>
+	<td>//div[@id='_15_articleToolbar']/div/a[contains(.,'View History')]</td>
 	<td></td>
 </tr>
 <tr>

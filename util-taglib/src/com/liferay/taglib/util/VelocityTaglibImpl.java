@@ -999,7 +999,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		setUp(portletToolbarMenuTag);
 
-		portletToolbarMenuTag.setItems(portletToolbarMenuItems);
+		portletToolbarMenuTag.setPortletToolbarMenuItems(
+			portletToolbarMenuItems);
 
 		portletToolbarMenuTag.runTag();
 	}

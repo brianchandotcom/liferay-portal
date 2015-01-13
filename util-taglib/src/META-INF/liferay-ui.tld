@@ -3344,7 +3344,7 @@
 		<tag-class>com.liferay.taglib.ui.PortletToolbarMenuTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>toolbarItems</name>
+			<name>portletToolbarMenuItems</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

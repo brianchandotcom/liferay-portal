@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/ui/portlet_toolbar_menu/init.jsp" %>
 
 <%
-List<PortletToolbarMenuItem> portletToolbarMenuItems = (List<PortletToolbarMenuItem>)request.getAttribute("liferay-ui:portlet_toolbar_menu:items");
+List<PortletToolbarMenuItem> portletToolbarMenuItems = (List<PortletToolbarMenuItem>)request.getAttribute("liferay-ui:portlet_toolbar_menu:portletToolbarMenuItems");
 %>
 
 <liferay-ui:icon-menu cssClass="portlet-options" direction="down" extended="<%= false %>" icon="../aui/plus-sign-2" message="add" showArrow="<%= true %>" showWhenSingleIcon="<%= true %>">

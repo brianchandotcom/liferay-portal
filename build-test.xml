@@ -1894,6 +1894,9 @@ ${marketplace.portlet.properties}</echo>
 		<mkdir dir="test-results" />
 
 		<junitreport todir="test-results">
+			<fileset dir="modules" erroronmissingdir="false">
+				<include name="**/TEST-*.xml" />
+			</fileset>
 			<fileset dir="portal-impl/test-results" erroronmissingdir="false">
 				<include name="**/TEST-*.xml" />
 			</fileset>

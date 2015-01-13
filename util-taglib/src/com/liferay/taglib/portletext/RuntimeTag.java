@@ -142,10 +142,10 @@ public class RuntimeTag extends TagSupport {
 						portletId, themeDisplay.getPlid());
 				}
 
-			jsonObject = JSONFactoryUtil.createJSONObject();
+				jsonObject = JSONFactoryUtil.createJSONObject();
 
-			PortletJSONUtil.populatePortletJSONObject(
-				request, StringPool.BLANK, portlet, jsonObject);
+				PortletJSONUtil.populatePortletJSONObject(
+					request, StringPool.BLANK, portlet, jsonObject);
 			}
 
 			if (jsonObject != null) {

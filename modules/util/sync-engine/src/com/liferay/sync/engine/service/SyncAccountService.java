@@ -364,7 +364,7 @@ public class SyncAccountService {
 		syncAccount = setFilePathName(syncAccountId, filePath.toString());
 
 		syncAccount.setActive(true);
-		syncAccount.setUiEvent(SyncAccount.UI_EVENT_DEFAULT);
+		syncAccount.setUiEvent(SyncAccount.UI_EVENT_NONE);
 
 		SyncAccountService.update(syncAccount);
 	}

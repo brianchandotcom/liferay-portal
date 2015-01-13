@@ -259,7 +259,7 @@ public class FileUtil {
 		String fileName = String.valueOf(filePath.getFileName());
 
 		if (_syncFileIgnoreNames.contains(fileName) ||
-			(!Files.isDirectory(filePath) && fileName.startsWith("~$")) ||
+			isOfficeTempFile(fileName, filePath) ||
 			(PropsValues.SYNC_FILE_IGNORE_HIDDEN && isHidden(filePath)) ||
 			Files.isSymbolicLink(filePath) || fileName.endsWith(".lnk")) {
 
@@ -385,6 +385,18 @@ public class FileUtil {
 		}
 		catch (Exception e) {
 			_logger.error(e.getMessage(), e);
+		}
+	}
+
+	protected static boolean isOfficeTempFile(String fileName, Path filePath) {
+		if ((!Files.isDirectory(filePath) && fileName.startsWith("~$")) ||
+			(!Files.isDirectory(filePath) && fileName.startsWith("~") &&
+			 fileName.endsWith(".tmp"))) {
+
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 

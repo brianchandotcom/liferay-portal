@@ -185,7 +185,7 @@ public class BaseJSONHandler extends BaseHandler {
 			SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
 
 			syncFile.setState(SyncFile.STATE_ERROR);
-			syncFile.setUiEvent(SyncFile.UI_EVENT_DEFAULT);
+			syncFile.setUiEvent(SyncFile.UI_EVENT_NONE);
 
 			SyncFileService.update(syncFile);
 		}

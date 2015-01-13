@@ -93,8 +93,6 @@ public class BaseHandler implements Handler<Void> {
 		}
 		else if ((e instanceof ConnectTimeoutException) ||
 				 (e instanceof HttpHostConnectException) ||
-				 (e instanceof NoHttpResponseException) ||
-				 (e instanceof SocketException) ||
 				 (e instanceof SocketTimeoutException) ||
 				 (e instanceof UnknownHostException)) {
 
@@ -111,6 +109,21 @@ public class BaseHandler implements Handler<Void> {
 					SyncAccount.UI_EVENT_AUTHENTICATION_EXCEPTION);
 
 				SyncAccountService.update(syncAccount);
+			}
+			else {
+				retryServerConnection(
+					SyncAccount.UI_EVENT_CONNECTION_EXCEPTION);
+			}
+		}
+		else if ((e instanceof NoHttpResponseException) ||
+				 (e instanceof SocketException)) {
+
+			String message = e.getMessage();
+
+			if (message.equals("Connection reset") ||
+				message.equals("The target server failed to respond")) {
+
+				retryServerConnection(SyncAccount.UI_EVENT_NONE);
 			}
 			else {
 				retryServerConnection(

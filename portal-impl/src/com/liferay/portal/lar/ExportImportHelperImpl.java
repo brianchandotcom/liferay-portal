@@ -138,6 +138,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
 
 /**
  * @author Zsolt Berentey

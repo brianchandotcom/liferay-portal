@@ -1315,9 +1315,8 @@ rerun your task.
 									<exclude name="**/UserServiceHttpTest.class" />
 									<exclude name="**/UserServiceSoapTest.class" />
 									<exclude name="${test.excludes}" />
+									<exclude name="**/pacl/test/*Test.class" />
 									<filename regex="${junit.test.excludes}" negate="true" />
-									<filename regex=".*/pacl/test/[\w]+Test.class" negate="true" />
-									<filename regex=".*\\pacl\\test\\[\w]+Test.class" negate="true" />
 								</fileset>
 							</batchtest>
 						</test.classes>

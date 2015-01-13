@@ -180,8 +180,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 		return _UUID;
 	}
 
-	@Override
-	public boolean isDeleteButtonVisible() throws PortalException {
+	protected boolean isDeleteActionAvailable() throws PortalException {
 		if (_fileEntryDisplayContextHelper.isFileEntryDeletable() &&
 			!_isFileEntryTrashable()) {
 
@@ -213,7 +212,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public boolean isMoveToTheRecycleBinButtonVisible() throws PortalException {
-		if (!isDeleteButtonVisible() &&
+		if (!isDeleteActionAvailable() &&
 			_fileEntryDisplayContextHelper.isFileEntryDeletable()) {
 
 			return true;
@@ -318,7 +317,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	protected void addDeleteMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (isDeleteButtonVisible()) {
+		if (isDeleteActionAvailable()) {
 			DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
 
 			deleteMenuItem.setKey(DLUIItemKeys.DELETE);
@@ -564,7 +563,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	private void _addDeleteToolbarItem(List<ToolbarItem> toolbarItems)
 		throws PortalException {
 
-		if (!isDeleteButtonVisible()) {
+		if (!isDeleteActionAvailable()) {
 			return;
 		}
 

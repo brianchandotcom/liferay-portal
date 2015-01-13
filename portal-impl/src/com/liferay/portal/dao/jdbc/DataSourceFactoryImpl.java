@@ -17,20 +17,18 @@ package com.liferay.portal.dao.jdbc;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.HttpImpl;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.JarUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -38,6 +36,9 @@ import com.liferay.portal.util.PropsValues;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import java.lang.management.ManagementFactory;
+
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.util.Enumeration;
 import java.util.Map;
@@ -490,19 +491,20 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				throw cnfe;
 			}
 
-			if (HttpUtil.getHttp() == null) {
-				HttpUtil httpUtil = new HttpUtil();
+			ClassLoader globalClassLoader =
+				SystemException.class.getClassLoader();
 
-				httpUtil.setHttp(new HttpImpl());
+			if (!(globalClassLoader instanceof URLClassLoader)) {
+				_log.error(
+					"Unable to install jar, global ClassLoader is not " +
+						"URLClassLoader");
+
+				return;
 			}
 
-			if (FileUtil.getFile() == null) {
-				FileUtil fileUtil = new FileUtil();
-
-				fileUtil.setFile(new FileImpl());
-			}
-
-			JarUtil.downloadAndInstallJar(true, url, name, null);
+			JarUtil.downloadAndInstallJar(
+				new URL(url), PropsValues.LIFERAY_LIB_GLOBAL_DIR, name,
+				(URLClassLoader)globalClassLoader);
 		}
 	}
 
@@ -528,19 +530,20 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				throw cnfe;
 			}
 
-			if (HttpUtil.getHttp() == null) {
-				HttpUtil httpUtil = new HttpUtil();
+			ClassLoader portalClassLoader =
+				ClassLoaderUtil.getPortalClassLoader();
 
-				httpUtil.setHttp(new HttpImpl());
+			if (!(portalClassLoader instanceof URLClassLoader)) {
+				_log.error(
+					"Unable to install jar, portal ClassLoader is not " +
+						"URLClassLoader");
+
+				return;
 			}
 
-			if (FileUtil.getFile() == null) {
-				FileUtil fileUtil = new FileUtil();
-
-				fileUtil.setFile(new FileImpl());
-			}
-
-			JarUtil.downloadAndInstallJar(false, url, name, null);
+			JarUtil.downloadAndInstallJar(
+				new URL(url), PropsValues.LIFERAY_LIB_PORTAL_DIR, name,
+				(URLClassLoader)portalClassLoader);
 		}
 	}
 

@@ -20,18 +20,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.OSDetector;
-import com.liferay.portal.kernel.util.ProgressStatusConstants;
-import com.liferay.portal.kernel.util.ProgressTracker;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.Xuggler;
-import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.xuggler.XugglerImpl;
 
@@ -79,29 +74,21 @@ public class XugglerAutoInstallHelper {
 			return;
 		}
 
-		FileUtil fileUtil = new FileUtil();
+		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
-		fileUtil.setFile(new FileImpl());
-
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(new HttpImpl());
+		PortalClassLoaderUtil.setClassLoader(
+			ClassLoader.getSystemClassLoader());
 
 		Xuggler xuggler = new XugglerImpl();
 
 		try {
-			ProgressTracker progressTracker = new ProgressTracker(
-				"XugglerInstaller");
-
-			progressTracker.addProgress(
-				ProgressStatusConstants.DOWNLOADING, 15, "downloading-xuggler");
-			progressTracker.addProgress(
-				ProgressStatusConstants.COPYING, 70, "copying-xuggler-files");
-
-			xuggler.installNativeLibraries(xugglerJarFile, progressTracker);
+			xuggler.installNativeLibraries(xugglerJarFile, null);
 		}
 		catch (Exception e) {
 			throw new ProcessException(e);
+		}
+		finally {
+			PortalClassLoaderUtil.setClassLoader(portalClassLoader);
 		}
 
 		if (xuggler.isNativeLibraryInstalled()) {

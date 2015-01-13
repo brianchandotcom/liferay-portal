@@ -265,7 +265,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			// Test 5, execute unicast request
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
-				null, new AddressImpl(new MockAddress()));
+				null, clusterExecutorImpl.getLocalClusterNodeAddress());
 
 			try {
 				clusterExecutorImpl.execute(clusterRequest);
@@ -292,7 +292,20 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 	@Test
 	public void testExecuteByFireAndForget() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl1 = getClusterExecutorImpl();
+
+		MockClusterEventListener mockClusterEventListener =
+			new MockClusterEventListener();
+
+		clusterExecutorImpl1.addClusterEventListener(mockClusterEventListener);
+
 		ClusterExecutorImpl clusterExecutorImpl2 = getClusterExecutorImpl();
+
+		ClusterNode clusterNode2 = clusterExecutorImpl2.getLocalClusterNode();
+
+		ClusterEvent clusterEvent = mockClusterEventListener.waitJoinMessage();
+
+		assertClusterEvent(clusterEvent, ClusterEventType.JOIN, clusterNode2);
+
 		String timestamp = null;
 
 		try {

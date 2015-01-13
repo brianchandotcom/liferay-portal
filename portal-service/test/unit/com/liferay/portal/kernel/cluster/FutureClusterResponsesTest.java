@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -29,29 +29,29 @@ public class FutureClusterResponsesTest {
 
 	@Test
 	public void testMultipleResponseFailure() {
-		List<Address> addresses = new ArrayList<>();
+		Set<String> clusterNodeIds = new HashSet<>();
 
-		addresses.add(new MockAddress("1.2.3.4"));
-		addresses.add(new MockAddress("1.2.3.5"));
-		addresses.add(new MockAddress("1.2.3.6"));
+		clusterNodeIds.add("1.2.3.4");
+		clusterNodeIds.add("1.2.3.5");
+		clusterNodeIds.add("1.2.3.6");
 
-		FutureClusterResponses clusterNodeResponses =
-			new FutureClusterResponses(addresses);
+		FutureClusterResponses futureClusterResponses =
+			new FutureClusterResponses(clusterNodeIds);
 
 		ClusterNodeResponse clusterNodeResponse1 = new ClusterNodeResponse();
 
 		clusterNodeResponse1.setClusterNode(new ClusterNode("1.2.3.4"));
 
-		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse1);
+		futureClusterResponses.addClusterNodeResponse(clusterNodeResponse1);
 
 		ClusterNodeResponse clusterNodeResponse2 = new ClusterNodeResponse();
 
 		clusterNodeResponse2.setClusterNode(new ClusterNode("1.2.3.5"));
 
-		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse2);
+		futureClusterResponses.addClusterNodeResponse(clusterNodeResponse2);
 
 		try {
-			clusterNodeResponses.get(500, TimeUnit.MILLISECONDS);
+			futureClusterResponses.get(500, TimeUnit.MILLISECONDS);
 
 			Assert.fail("Should have failed");
 		}
@@ -64,35 +64,35 @@ public class FutureClusterResponsesTest {
 
 	@Test
 	public void testMultipleResponseSuccess() {
-		List<Address> addresses = new ArrayList<>();
+		Set<String> clusterNodeIds = new HashSet<>();
 
-		addresses.add(new MockAddress("1.2.3.4"));
-		addresses.add(new MockAddress("1.2.3.5"));
-		addresses.add(new MockAddress("1.2.3.6"));
+		clusterNodeIds.add("1.2.3.4");
+		clusterNodeIds.add("1.2.3.5");
+		clusterNodeIds.add("1.2.3.6");
 
-		FutureClusterResponses clusterNodeResponses =
-			new FutureClusterResponses(addresses);
+		FutureClusterResponses futureClusterResponses =
+			new FutureClusterResponses(clusterNodeIds);
 
 		ClusterNodeResponse clusterNodeResponse1 = new ClusterNodeResponse();
 
 		clusterNodeResponse1.setClusterNode(new ClusterNode("1.2.3.4"));
 
-		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse1);
+		futureClusterResponses.addClusterNodeResponse(clusterNodeResponse1);
 
 		ClusterNodeResponse clusterNodeResponse2 = new ClusterNodeResponse();
 
 		clusterNodeResponse2.setClusterNode(new ClusterNode("1.2.3.5"));
 
-		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse2);
+		futureClusterResponses.addClusterNodeResponse(clusterNodeResponse2);
 
 		ClusterNodeResponse clusterNodeResponse3 = new ClusterNodeResponse();
 
 		clusterNodeResponse3.setClusterNode(new ClusterNode("1.2.3.6"));
 
-		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse3);
+		futureClusterResponses.addClusterNodeResponse(clusterNodeResponse3);
 
 		try {
-			clusterNodeResponses.get(500, TimeUnit.MILLISECONDS);
+			futureClusterResponses.get(500, TimeUnit.MILLISECONDS);
 		}
 		catch (InterruptedException ie) {
 			Assert.fail("Interrupted");
@@ -104,12 +104,12 @@ public class FutureClusterResponsesTest {
 
 	@Test
 	public void testSingleResponseFailure() {
-		List<Address> addresses = new ArrayList<>();
+		Set<String> clusterNodeIds = new HashSet<>();
 
-		addresses.add(new MockAddress("1.2.3.4"));
+		clusterNodeIds.add("1.2.3.4");
 
 		FutureClusterResponses futureClusterResponses =
-			new FutureClusterResponses(addresses);
+			new FutureClusterResponses(clusterNodeIds);
 
 		try {
 			futureClusterResponses.get(500, TimeUnit.MILLISECONDS);
@@ -125,12 +125,12 @@ public class FutureClusterResponsesTest {
 
 	@Test
 	public void testSingleResponseSuccess() {
-		List<Address> addresses = new ArrayList<>();
+		Set<String> clusterNodeIds = new HashSet<>();
 
-		addresses.add(new MockAddress("1.2.3.4"));
+		clusterNodeIds.add("test");
 
 		FutureClusterResponses futureClusterResponses =
-			new FutureClusterResponses(addresses);
+			new FutureClusterResponses(clusterNodeIds);
 
 		ClusterNodeResponse clusterNodeResponse = new ClusterNodeResponse();
 
@@ -147,26 +147,6 @@ public class FutureClusterResponsesTest {
 		catch (TimeoutException te) {
 			Assert.fail("Timed out");
 		}
-	}
-
-	private class MockAddress implements Address {
-
-		public MockAddress(String address) {
-			_address = address;
-		}
-
-		@Override
-		public String getDescription() {
-			return _address;
-		}
-
-		@Override
-		public Object getRealAddress() {
-			return _address;
-		}
-
-		private final String _address;
-
 	}
 
 }

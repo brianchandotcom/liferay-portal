@@ -49,6 +49,7 @@ import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -733,8 +734,16 @@ public class ClusterMasterExecutorImplTest {
 				addresses.addAll(clusterNodeAddresses);
 			}
 
+			Set<String> clusterNodeIds = new HashSet<>();
+
+			for (Address address : addresses) {
+				MockAddress mockAddress = (MockAddress)address.getRealAddress();
+
+				clusterNodeIds.add(mockAddress.getName());
+			}
+
 			FutureClusterResponses futureClusterResponses =
-				new FutureClusterResponses(addresses);
+				new FutureClusterResponses(clusterNodeIds);
 
 			for (Address address : addresses) {
 				ClusterNodeResponse clusterNodeResponse =

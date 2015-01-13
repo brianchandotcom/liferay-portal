@@ -271,9 +271,11 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 			<div class="asset-details body-row">
 				<c:if test="<%= dlViewFileVersionDisplayContext.isAssetMetadataVisible() %>">
 					<div class="asset-details-content">
-						<h3 class="version <%= fileEntry.isCheckedOut() ? "icon-lock" : StringPool.BLANK %>">
-							<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>
-						</h3>
+						<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
+							<h3 class="version <%= fileEntry.isCheckedOut() ? "icon-lock" : StringPool.BLANK %>">
+								<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>
+							</h3>
+						</c:if>
 
 						<c:if test="<%= !portletId.equals(PortletKeys.TRASH) %>">
 							<div>
@@ -457,7 +459,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 						}
 						%>
 
-						<c:if test="<%= dlViewFileVersionDisplayContext.isAssetMetadataVisible() %>">
+						<c:if test="<%= dlViewFileVersionDisplayContext.isAssetMetadataVisible() && dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
 							<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" id="documentLibraryVersionHistoryPanel" persistState="<%= true %>" title="version-history">
 
 								<%

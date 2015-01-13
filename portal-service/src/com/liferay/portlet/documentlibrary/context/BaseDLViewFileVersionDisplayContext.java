@@ -130,6 +130,11 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean isVersionInfoVisible() throws PortalException {
+		return parentDLDisplayContext.isVersionInfoVisible();
+	}
+
+	@Override
 	public boolean isViewButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isViewButtonVisible();
 	}

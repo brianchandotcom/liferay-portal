@@ -110,7 +110,29 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean isCancelCheckoutDocumentButtonVisible()
+		throws PortalException {
+
+		return false;
+	}
+
+	@Override
+	public boolean isCheckinButtonVisible() throws PortalException {
+		return false;
+	}
+
+	@Override
+	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
+		return false;
+	}
+
+	@Override
 	public boolean isDownloadLinkVisible() throws PortalException {
+		return false;
+	}
+
+	@Override
+	public boolean isVersionInfoVisible() throws PortalException {
 		return false;
 	}
 
@@ -197,6 +219,9 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	}
 
 	private void _removeUnsupportedUIItems(List<? extends UIItem> uiItems) {
+		_removeUIItem(uiItems, DLUIItemKeys.CANCEL_CHECKOUT);
+		_removeUIItem(uiItems, DLUIItemKeys.CHECKIN);
+		_removeUIItem(uiItems, DLUIItemKeys.CHECKOUT);
 		_removeUIItem(uiItems, DLUIItemKeys.DOWNLOAD);
 		_removeUIItem(uiItems, DLUIItemKeys.OPEN_IN_MS_OFFICE);
 	}

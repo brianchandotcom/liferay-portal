@@ -64,6 +64,8 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public boolean isPermissionsButtonVisible() throws PortalException;
 
+	public boolean isVersionInfoVisible() throws PortalException;
+
 	public boolean isViewButtonVisible() throws PortalException;
 
 	public boolean isViewOriginalFileButtonVisible() throws PortalException;

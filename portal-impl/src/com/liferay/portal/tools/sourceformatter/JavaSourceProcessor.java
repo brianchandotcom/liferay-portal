@@ -1146,7 +1146,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"upgrade.service.util.excludes.files");
 
 		for (String fileName : fileNames) {
-			format(fileName);
+			try {
+				format(fileName);
+			}
+			catch (Exception e) {
+				throw new Exception("Failed to parse " + fileName, e);
+			}
 		}
 	}
 

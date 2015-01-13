@@ -126,7 +126,7 @@ public class JspServlet extends HttpServlet {
 
 		_jspBundleClassloader = new JspBundleClassloader(_bundle, _jspBundle);
 
-		final Map<String, String> defaults = new HashMap<String, String>();
+		final Map<String, String> defaults = new HashMap<>();
 
 		defaults.put(
 			"compilerClassName",
@@ -137,7 +137,7 @@ public class JspServlet extends HttpServlet {
 		defaults.put("logVerbosityLevel", "DEBUG");
 
 		Enumeration<String> names = servletConfig.getInitParameterNames();
-		Set<String> nameSet = new HashSet<String>(Collections.list(names));
+		Set<String> nameSet = new HashSet<>(Collections.list(names));
 
 		nameSet.addAll(defaults.keySet());
 
@@ -177,19 +177,19 @@ public class JspServlet extends HttpServlet {
 	}
 
 	@Override
-	public void log(String message, Throwable t) {
-		_jspServlet.log(message, t);
-	}
-
-	@Override
 	public void log(String msg) {
 		_jspServlet.log(msg);
 	}
 
 	@Override
+	public void log(String message, Throwable t) {
+		_jspServlet.log(message, t);
+	}
+
+	@Override
 	public void service(
 			HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
+		throws IOException, ServletException {
 
 		Thread currentThread = Thread.currentThread();
 
@@ -207,7 +207,7 @@ public class JspServlet extends HttpServlet {
 
 	@Override
 	public void service(ServletRequest request, ServletResponse response)
-		throws ServletException, IOException {
+		throws IOException, ServletException {
 
 		service((HttpServletRequest)request, (HttpServletResponse)response);
 	}
@@ -240,7 +240,7 @@ public class JspServlet extends HttpServlet {
 	private Bundle _bundle;
 	private final Bundle _jspBundle;
 	private URLClassLoader _jspBundleClassloader;
-	private HttpServlet _jspServlet =
+	private final HttpServlet _jspServlet =
 		new org.apache.jasper.servlet.JspServlet();
 	private volatile ServletContext _jspServletContext;
 
@@ -322,7 +322,9 @@ public class JspServlet extends HttpServlet {
 				return _jspBundle.getEntry(path);
 			}
 			catch (MalformedURLException e) {
+
 				// Ignore
+
 			}
 
 			return null;
@@ -364,7 +366,7 @@ public class JspServlet extends HttpServlet {
 			return paths;
 		}
 
-		private ServletContext _servletContext;
+		private final ServletContext _servletContext;
 
 	}
 

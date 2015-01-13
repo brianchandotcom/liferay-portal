@@ -198,6 +198,10 @@ public class FileEntryDisplayContextHelper {
 		return isUpdatable();
 	}
 
+	public boolean isPermissionsButtonVisible() throws PortalException {
+		return hasPermissionsPermission();
+	}
+
 	public boolean isSupportsLocking() {
 		if (_supportsLocking == null) {
 			_supportsLocking = _fileEntry.isSupportsLocking();

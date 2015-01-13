@@ -75,11 +75,6 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isPermissionsButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isPermissionsButtonVisible();
-	}
-
-	@Override
 	public boolean isVersionInfoVisible() throws PortalException {
 		return parentDLDisplayContext.isVersionInfoVisible();
 	}

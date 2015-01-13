@@ -186,12 +186,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isPermissionsButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.hasPermissionsPermission();
-	}
-
-	@Override
-	public boolean isVersionInfoVisible() {
+	public boolean isVersionInfoVisible() throws PortalException {
 		return true;
 	}
 
@@ -403,7 +398,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	protected void addPermissionsMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!isPermissionsButtonVisible()) {
+		if (!_fileEntryDisplayContextHelper.isPermissionsButtonVisible()) {
 			return;
 		}
 
@@ -690,7 +685,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	private void _addPermissionsToolbarItem(List<ToolbarItem> toolbarItems)
 		throws PortalException {
 
-		if (!isPermissionsButtonVisible()) {
+		if (!_fileEntryDisplayContextHelper.isPermissionsButtonVisible()) {
 			return;
 		}
 

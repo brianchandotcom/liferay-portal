@@ -2,11 +2,11 @@
 
 .input-localized {
 	.palette-item-inner img {
-		@include opacity(0.5);
+		opacity: 0.5;
 	}
 
 	&.input-localized-focused .palette-item-inner img {
-		@include opacity(1);
+		opacity: 1;
 	}
 
 	.input-localized-content {

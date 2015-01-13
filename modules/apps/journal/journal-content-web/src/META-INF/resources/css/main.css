@@ -61,11 +61,11 @@
 		}
 
 		.lfr-icon-actions {
-			@include opacity(0.2);
+			opacity: 0.2;
 		}
 
 		&:hover .lfr-icon-actions {
-			@include opacity(1);
+			opacity: 1;
 		}
 	}
 }
@@ -77,7 +77,7 @@
 		}
 
 		.lfr-icon-actions {
-			@include opacity(0.9);
+			opacity: 0.9;
 		}
 	}
 }

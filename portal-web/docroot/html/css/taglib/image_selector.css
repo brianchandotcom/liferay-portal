@@ -158,13 +158,13 @@
 	.drop-here-info {
 		font-size: 25px;
 
-		@include opacity(0);
+		opacity: 0;
 	}
 
 	.glyphicon-ok {
 		background: #FFF;
 
-		@include opacity(0);
+		opacity: 0;
 	}
 
 	.progress-wrapper {
@@ -179,51 +179,51 @@
 		.progressbar {
 			background: #B0B4BB;
 
-			@include opacity(0.7);
+			opacity: 0.7;
 		}
 	}
 
 	&.check-active .glyphicon-ok{
-		@include opacity(1);
+		opacity: 1;
 	}
 
 	&.drop-active {
 		.browse-image-controls {
-			@include opacity(0);
+			opacity: 0;
 		}
 
 		.drop-here-info {
-			@include opacity(1);
+			opacity: 1;
 		}
 
 		.glyphicon-ok {
-			@include opacity(0);
+			opacity: 0;
 		}
 
 		.image-wrapper {
-			@include opacity(0.15);
+			opacity: 0.15;
 		}
 
 		.error-wrapper {
-			@include opacity(0);
+			opacity: 0;
 		}
 	}
 
 	&.progress-active {
 		.image-wrapper {
-			@include opacity(0.15);
+			opacity: 0.15;
 		}
 
 		.browse-image-controls {
-			@include opacity(0);
+			opacity: 0;
 		}
 
 		.drop-here-info {
-			@include opacity(0);
+			opacity: 0;
 		}
 
 		.glyphicon-ok {
-			@include opacity(0);
+			opacity: 0;
 		}
 	}
 

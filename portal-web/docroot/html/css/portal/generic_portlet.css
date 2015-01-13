@@ -103,7 +103,7 @@
 }
 
 .lfr-checkbox-preselected, .lfr-configurator-visibility {
-	@include opacity(0.5);
+	opacity: 0.5;
 }
 
 .ie {

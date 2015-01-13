@@ -104,7 +104,7 @@ body.portlet {
 	background: #333;
 	color: #FFF;
 
-	@include text-shadow(-1px -1px #000);
+	text-shadow: -1px -1px #000;
 
 	a {
 		color: #3AF;
@@ -112,7 +112,7 @@ body.portlet {
 }
 
 %portlet-action-bar-hover {
-	@include opacity(1);
+	opacity: 1;
 }
 
 %portlet-action-bar-hover-text {
@@ -140,7 +140,7 @@ body.portlet {
 		float: left;
 		margin: 1px 10px 1px 1px;
 
-		@include opacity(0.5);
+		opacity: 0.5;
 
 		padding: 2px 7px;
 
@@ -188,7 +188,7 @@ body.portlet {
 	font-size: 10px;
 	height: auto;
 
-	@include opacity(0.3);
+	opacity: 0.3;
 
 	overflow: auto;
 	padding: 0;
@@ -260,12 +260,12 @@ body.portlet {
 
 .lfr-configurator-visibility {
 	.portlet-borderless-bar {
-		@include opacity(0.6);
+		opacity: 0.6;
 	}
 
 	.portlet-content {
 		.lfr-icon-actions {
-			@include opacity(1);
+			opacity: 1;
 		}
 	}
 }
@@ -671,7 +671,7 @@ body.portlet {
 		background: url(@theme_image_path@/arrows/07_down.png) no-repeat 50% 100%;
 		display: block;
 
-		@include hide-text(right);
+		@include hide-text();
 
 		height: 10px;
 	}
@@ -737,17 +737,17 @@ body.portlet {
 
 .ie {
 	.portlet-borderless-bar {
-		@include opacity(0.5);
+		opacity: 0.5;
 	}
 
 	.portlet-content {
 		.lfr-icon-actions {
-			@include opacity(0.5);
+			opacity: 0.5;
 		}
 	}
 
 	.portlet-borderless-container:hover .portlet-borderless-bar, .portlet-journal-content .lfr-icon-actions:hover {
-		@include opacity(1);
+		opacity: 1;
 	}
 
 	.taglib-calendar tr td.first a {

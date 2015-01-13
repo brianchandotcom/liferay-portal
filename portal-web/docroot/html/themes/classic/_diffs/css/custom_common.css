@@ -128,7 +128,7 @@ select:focus {
 }
 
 .btn.disabled, .btn[disabled] {
-	@include opacity(0.4);
+	opacity: 0.4;
 }
 
 .btn-link {
@@ -225,12 +225,12 @@ select:focus {
 
 .taglib-icon-help {
 	img {
-		@include opacity(0.5);
+		opacity: 0.5;
 
 		vertical-align: top;
 
 		&:hover {
-			@include opacity(1);
+			opacity: 1;
 		}
 	}
 }
@@ -435,7 +435,7 @@ select:focus {
 	}
 
 	.dropdown-menu {
-		@include border-radius(0);
+		border-radius: 0;
 
 		> li > a {
 			padding: 9px 15px;
@@ -568,7 +568,7 @@ select:focus {
 	z-index: 300;
 
 	&:hover {
-		@include box-shadow(0 1px 1px -1px #000)
+		box-shadow: 0 1px 1px -1px #000;
 	}
 }
 
@@ -729,7 +729,7 @@ select:focus {
 			.panel-toggle:before {
 				@extend %toggler-header-icon-base;
 
-				@include opacity(0.5);
+				opacity: 0.5;
 			}
 		}
 
@@ -900,7 +900,7 @@ body.yui3-skin-sam .yui3-widget-mask {
 
 .lfr-add-panel, .lfr-edit-layout-panel, .portal-add-content {
 	.panel {
-		@include border-radius(0);
+		border-radius: 0;
 	}
 
 	.panel.panel-default {
@@ -1124,14 +1124,14 @@ $prefixes: ("-webkit-", "-moz-", "-o-", "");
 		background: #2AAAE6 !important;
 		color: #FFF;
 
-		@include text-shadow(-1px -1px rgba(0, 0, 0, 0.3));
+		text-shadow: -1px -1px rgba(0, 0, 0, 0.3);
 	}
 
 	.alloy-editor ::#{$prefix}selection {
 		background: #E6F1FA !important;
 		color: #555;
 
-		@include text-shadow(none);
+		text-shadow: none;
 	}
 
 	.alloyeditor-add-toolbar ::#{$prefix}selection {
@@ -1140,51 +1140,51 @@ $prefixes: ("-webkit-", "-moz-", "-o-", "");
 }
 
 @mixin user-avatar-circle() {
-	@include border-radius(50%);
-	@include box-shadow(0 0 0 2px #5594E0);
+	border-radius: 50%;
+	box-shadow: 0 0 0 2px #5594E0;
 }
 
 @include respond-to(phone, tablet) {
 	#navigation.open .navbar-inner .navbar-collapse li a {
-		@include border-radius(0);
+		border-radius: 0;
 	}
 }
 
 .breadcrumb > li {
-	@include text-shadow(none);
+	text-shadow: none;
 }
 
 .modify-pages .delete-tab {
-	@include border-radius(50%);
-	@include text-shadow(none);
+	border-radius: 50%;
+	text-shadow: none;
 }
 
 .panel.panel-default {
-	@include box-shadow(none);
+	box-shadow: none;
 }
 
 .table {
-	@include border-radius(5px);
+	border-radius: 5px;
 }
 
 #{$form_text_fields} {
-	@include border-radius(0);
-	@include box-shadow(none);
+	border-radius: 0;
+	box-shadow: none;
 
 	&:focus {
-		@include box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6));
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 	}
 }
 
 .tagselector-focused .tagselector-content .textboxlistentry-holder {
-	@include box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6));
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 }
 
 .dockbar {
 	.nav {
 		> li {
 			> a {
-				@include text-shadow(none);
+				text-shadow: none;
 			}
 		}
 	}
@@ -1202,28 +1202,28 @@ $prefixes: ("-webkit-", "-moz-", "-o-", "");
 	.container, .container-fluid {
 		.btn {
 			.icon-bar {
-				@include box-shadow(0 1px 0 #FFF);
+				box-shadow: 0 1px 0 #FFF;
 			}
 		}
 	}
 
 	.icon-caret-down {
-		@include border-radius(50%);
+		border-radius: 50%;
 	}
 }
 
 .dockbar {
 	.container, .container-fluid {
 		.btn {
-			@include box-shadow(none);
+			box-shadow: none;
 		}
 	}
 }
 
 .alloy-editor-toolbar.alloy-editor-toolbar-styles .link-wrapper .input-container input:focus {
-	@include box-shadow(none);
+	box-shadow: none;
 }
 
 body.yui3-skin-sam .yui3-widget-mask {
-	@include opacity(0.8);
+	opacity: 0.8;
 }

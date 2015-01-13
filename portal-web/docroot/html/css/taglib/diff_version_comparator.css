@@ -224,7 +224,7 @@
 			.search-panels-bar {
 				.form-group {
 					.search-panels-input {
-						@include border-radius(0);
+						border-radius: 0;
 					}
 				}
 

@@ -2,7 +2,7 @@
 
 .portlet-polls-display {
 	.no-progress {
-		@include opacity(0.4);
+		opacity: 0.4;
 
 		.progress-bar-status {
 			display: none;

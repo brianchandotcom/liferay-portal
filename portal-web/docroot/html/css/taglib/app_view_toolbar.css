@@ -72,7 +72,7 @@
 						background-color: transparent;
 						border-width: 0;
 
-						@include box-shadow(none);
+						box-shadow: none;
 
 						display: block;
 						float: none;

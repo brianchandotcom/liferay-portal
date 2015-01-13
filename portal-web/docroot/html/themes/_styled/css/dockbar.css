@@ -951,7 +951,7 @@ $editLayoutPanelWidth: 460px;
 			margin: 0 0 0 6px;
 			padding: 0;
 
-			@include text-shadow(none);
+			text-shadow: none;
 		}
 	}
 
@@ -1082,7 +1082,7 @@ $editLayoutPanelWidth: 460px;
 				padding: 0;
 				text-decoration: underline;
 
-				@include text-shadow(none);
+				text-shadow: none;
 
 				&:hover {
 					text-decoration: none;
@@ -1402,7 +1402,7 @@ $editLayoutPanelWidth: 460px;
 
 	.nav-navigation {
 		.dropdown-menu {
-			@include box-shadow(none);
+			box-shadow: none;
 		}
 	}
 }

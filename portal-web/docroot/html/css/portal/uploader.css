@@ -108,7 +108,7 @@
 	}
 
 	.upload-error {
-		@include opacity(1);
+		opacity: 1;
 
 		padding-left: 25px;
 	}
@@ -281,7 +281,7 @@
 			background-color: #B4DDAD;
 			font-weight: bold;
 
-			@include opacity(0.6);
+			opacity: 0.6;
 		}
 	}
 

@@ -45,11 +45,11 @@
 
 .lfr-preview-file-toolbar {
 	display: block;
-	@include opacity(0.5);
+	opacity: 0.5;
 }
 
 .lfr-preview-file-image-current-column:hover .lfr-preview-file-toolbar {
-	@include opacity(1);
+	opacity: 1;
 }
 
 .lfr-preview-file-actions .toolbar {
@@ -61,11 +61,11 @@
 .lfr-preview-file-info {
 	display: inline-block;
 	margin-top: 0.5em;
-	@include opacity(0.5);
+	opacity: 0.5;
 	padding: 3px 15px;
 
 	&:hover {
-		@include opacity(1);
+		opacity: 1;
 	}
 }
 

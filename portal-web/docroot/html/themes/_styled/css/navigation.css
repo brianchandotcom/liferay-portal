@@ -9,7 +9,7 @@
 
 		&.lfr-nav-hover {
 			.delete-tab {
-				@include opacity(1);
+				opacity: 1;
 			}
 		}
 	}
@@ -25,7 +25,7 @@
 		margin-top: -8px;
 		overflow: hidden;
 
-		@include opacity(0);
+		opacity: 0;
 
 		padding: 3px 0;
 		position: absolute;
@@ -41,7 +41,7 @@
 	.drag-handle {
 		background-color: #555;
 
-		@include border-radius(50%);
+		border-radius: 50%;
 
 		color: #FFF;
 		cursor: pointer;

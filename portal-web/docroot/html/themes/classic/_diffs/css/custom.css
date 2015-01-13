@@ -682,27 +682,27 @@ html {
 
 #navigation {
 	&.navbar {
-		@include border-radius(0);
+		border-radius: 0;
 	}
 
 	.nav {
 		li {
 			&.open {
 				> a {
-					@include box-shadow(none);
+					box-shadow: none;
 				}
 			}
 		}
 
 		.dropdown-menu {
-			@include border-radius(0);
+			border-radius: 0;
 		}
 
 		> .active > a {
 			background-color: $dockbarGradientStart;
 
 			@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
-			@include box-shadow(none);
+			box-shadow: none;
 			@include linear-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
 		}
 	}
@@ -715,7 +715,7 @@ html {
 				background-color: $dockbarOpenGradientStart;
 
 				@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
-				@include box-shadow(none);
+				box-shadow: none;
 			}
 		}
 
@@ -746,27 +746,27 @@ html {
 }
 
 .dockbar .staging-bar .staging-toggle > a {
-	@include border-radius(3px);
+	border-radius: 3px;
 }
 
 .modify-pages .delete-tab {
-	@include border-radius(50%);
-	@include text-shadow(none);
+	border-radius: 50%;
+	text-shadow: none;
 	@include transition(opacity 0.3s ease);
 
 	&:hover {
-		@include box-shadow(0 1px 1px -1px #000);
+		box-shadow: 0 1px 1px -1px #000;
 	}
 }
 
 %portlet-action-bar-custom {
-	@include border-radius(3px);
+	border-radius: 3px;
 
 	@include respond-to(desktop) {
-		@include border-radius(20px);
+		border-radius: 20px;
 	}
 
-	@include box-shadow(inset 0 1px 3px #000);
+	box-shadow: inset 0 1px 3px #000;
 }
 
 .portlet-borderless-bar {
@@ -779,24 +779,24 @@ html {
 	}
 
 	.portlet-actions {
-		@include box-shadow(none);
+		box-shadow: none;
 
 		@include respond-to(desktop) {
-			@include box-shadow(inset 2px 1px 2px #000);
+			box-shadow: inset 2px 1px 2px #000;
 		}
 	}
 
 	.portlet-title-default {
-		@include box-shadow(none);
+		box-shadow: none;
 
 		@include respond-to(desktop) {
-			@include box-shadow(inset -2px 1px 2px #000);
+			box-shadow: inset -2px 1px 2px #000;
 		}
 	}
 }
 
 .portlet-content, .portlet-minimized .portlet-content-container {
-	@include border-radius(0 0 3px 3px);
+	border-radius: 0 0 3px 3px;
 }
 
 .portlet-borderless-container, .portlet-content {
@@ -811,24 +811,24 @@ html {
 	}
 
 	.portlet-topper {
-		@include border-radius(3px);
+		border-radius: 3px;
 	}
 }
 
 .portlet-nested-portlets .portlet-body {
 	.portlet, .portlet-borderless-container {
-		@include box-shadow(none);
+		box-shadow: none;
 	}
 }
 
 .portlet-topper {
-	@include border-radius(3px 3px 0 0);
+	border-radius: 3px 3px 0 0;
 }
 
 .dockbar-split .dockbar {
 	.container, .container-fluid {
-		@include box-shadow(none);
-		@include text-shadow(none);
+		box-shadow: none;
+		text-shadow: none;
 
 		@include respond-to(phone, tablet) {
 			background-color: $dockbarGradientStart;
@@ -843,7 +843,7 @@ html {
 				background-color: $dockbarOpenGradientStart;
 
 				@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
-				@include box-shadow(none);
+				box-shadow: none;
 			}
 		}
 
@@ -858,13 +858,13 @@ html {
 
 .lfr-hudcrumbs {
 	ul {
-		@include border-top-left-radius(0);
-		@include border-top-right-radius(0);
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
 	}
 
 	.breadcrumb li {
 		a, span {
-			@include text-shadow(-1px -1px #000);
+			text-shadow: -1px -1px #000;
 		}
 	}
 }

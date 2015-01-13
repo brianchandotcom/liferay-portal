@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetcategoryadmin;
+package com.liferay.asset.categories.admin.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;

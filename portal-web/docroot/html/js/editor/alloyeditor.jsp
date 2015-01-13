@@ -27,7 +27,7 @@ if (Validator.isNull(doAsUserId)) {
 
 String alloyEditorMode = ParamUtil.getString(request, "alloyEditorMode");
 
-boolean autoCreate =  GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
+boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
 String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
@@ -133,7 +133,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 				</button>
 			</div>
 
-			<div class="alloy-editor-container" id="<%= name %>Container">
+			<div class="alloy-editor-wrapper" id="<%= name %>Wrapper">
 				<div class="wrapper">
 					<%= alloyEditor %>
 
@@ -149,13 +149,14 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	</c:choose>
 </liferay-util:buffer>
 
-<div id="<%= name %>_container">
+<div id="<%= name %>Container">
 	<c:if test="<%= autoCreate %>">
 		<%= editor %>
 	</c:if>
 </div>
 
 <aui:script use="aui-base,alloy-editor,liferay-editor-image-uploader">
+
 	<%
 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 
@@ -329,15 +330,15 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			var CSS_SHOW_SOURCE = 'show-source';
 			var STR_VALUE = 'value';
 
-			var editorContainer = A.one('#<%= name %>Container');
+			var editorWrapper = A.one('#<%= name %>Wrapper');
 			var editorSwitch = A.one('#<%= name %>Switch');
 			var editorSwitchContainer = editorSwitch.ancestor();
 
 			var toggleEditorModeUI = function() {
-				editorContainer.toggleClass(CSS_SHOW_SOURCE);
+				editorWrapper.toggleClass(CSS_SHOW_SOURCE);
 				editorSwitchContainer.toggleClass(CSS_SHOW_SOURCE);
 
-				editorSwitch.setHTML(editorContainer.hasClass(CSS_SHOW_SOURCE) ? 'abc' : '&lt;/&gt;');
+				editorSwitch.setHTML(editorWrapper.hasClass(CSS_SHOW_SOURCE) ? 'abc' : '&lt;/&gt;');
 			};
 
 			var createSourceEditor = function() {
@@ -361,7 +362,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 				function(event) {
 					var editor = Liferay.component('<%= name %>Source');
 
-					if (editorContainer.hasClass(CSS_SHOW_SOURCE)) {
+					if (editorWrapper.hasClass(CSS_SHOW_SOURCE)) {
 						if (editor) {
 							window['<%= name %>'].setHTML(editor.get(STR_VALUE));
 						}
@@ -385,15 +386,15 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 				}
 			);
 		</c:if>
-	}
+	};
 
 	window['<%= name %>'] = {
 		create: function() {
-			var editorEl = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
+			var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
 
-			var editorContainer = A.one('#<%= name %>_container');
+			var editorContainer = A.one('#<%= name %>Container');
 
-			editorContainer.appendChild(editorEl);
+			editorContainer.appendChild(editorNode);
 
 			window['<%= name %>'].initEditor();
 		},
@@ -415,14 +416,14 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		dispose: function() {
 			var editor = window['<%= name %>'].editor;
 
-			var editorEl = document.getElementById('<%= name %>');
-
 			if (editor) {
 				editor.destroy();
 			}
 
-			if (editorEl) {
-				editorEl.parentNode.removeChild(editorEl);
+			var editorNode = document.getElementById('<%= name %>');
+
+			if (editorNode) {
+				editorNode.parentNode.removeChild(editorNode);
 			}
 		},
 

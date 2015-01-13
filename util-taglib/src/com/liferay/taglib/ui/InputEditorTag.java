@@ -188,8 +188,7 @@ public class InputEditorTag extends IncludeTag {
 			"liferay-ui:input-editor:allowBrowseDocuments",
 			String.valueOf(_allowBrowseDocuments));
 		request.setAttribute(
-			"liferay-ui:input-editor:autoCreate",
-			String.valueOf(_autoCreate));
+			"liferay-ui:input-editor:autoCreate", String.valueOf(_autoCreate));
 		request.setAttribute(
 			"liferay-ui:input-editor:configParams", _configParams);
 		request.setAttribute("liferay-ui:input-editor:contents", _contents);

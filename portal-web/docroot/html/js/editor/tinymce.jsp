@@ -19,7 +19,7 @@
 <%
 String portletId = portletDisplay.getRootPortletId();
 
-boolean autoCreate =  GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
+boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
 String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
@@ -62,7 +62,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	</liferay-util:html-top>
 </c:if>
 
-<div class="<%= cssClass %>" id="<%= name %>_container">
+<div class="<%= cssClass %>" id="<%= name %>Container">
 	<c:if test="<%= autoCreate %>">
 		<%= editor %>
 	</c:if>
@@ -81,11 +81,11 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		},
 
 		create: function() {
-			var editorEl = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
+			var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
 
-			var editorContainer = A.one('#<%= name %>_container');
+			var editorContainer = A.one('#<%= name %>Container');
 
-			editorContainer.appendChild(editorEl);
+			editorContainer.appendChild(editorNode);
 
 			window['<%= name %>'].initEditor();
 		},
@@ -97,10 +97,10 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		},
 
 		dispose: function() {
-			var editorEl= A.one('textarea#<%= name %>');
+			var editorNode= A.one('textarea#<%= name %>');
 
-			if (editorEl) {
-				editorEl.remove();
+			if (editorNode) {
+				editorNode.remove();
 			}
 
 			var tinyMCEEditor = tinyMCE.editors['<%= name %>'];

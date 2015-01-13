@@ -41,10 +41,10 @@ int messagesCount = messages.size();
 SearchContainer searchContainer = null;
 %>
 
-<div class="hide lfr-message-response" id="<portlet:namespace />discussion-status-messages"></div>
+<div class="hide lfr-message-response" id="<portlet:namespace />discussionStatusMessages"></div>
 
 <c:if test="<%= (messagesCount > 1) || MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW) %>">
-	<div class="taglib-discussion" id="<portlet:namespace />discussion-container">
+	<div class="taglib-discussion" id="<portlet:namespace />discussionContainer">
 		<aui:form action="<%= formAction %>" method="post" name="<%= formName %>">
 			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
 			<aui:input id="<%= randomNamespace + Constants.CMD %>" name="<%= Constants.CMD %>" type="hidden" />
@@ -259,14 +259,16 @@ SearchContainer searchContainer = null;
 		}
 
 		function <%= randomNamespace %>hideEditor(editorName, formId) {
-			if (window[editorName+'Editor'].dispose) {
-				window[editorName+'Editor'].dispose();
+			if (window[editorName + 'Editor']) {
+				window[editorName + 'Editor'].dispose();
 			}
+
 			<%= randomNamespace %>hideForm(formId);
 		}
 
 		function <%= randomNamespace %>showEditor(editorName, formId) {
-			window[editorName+'Editor'].create();
+			window[editorName + 'Editor'].create();
+
 			<%= randomNamespace %>showForm(formId);
 		}
 
@@ -336,7 +338,7 @@ SearchContainer searchContainer = null;
 
 				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-				var editorInstance = window['<%= namespace %>postReplyBody' + i+'Editor'];
+				var editorInstance = window['<%= namespace %>postReplyBody' + i + 'Editor'];
 				var body = editorInstance.getHTML();
 				var parentMessageId = form.one('#<%= namespace %>parentMessageId' + i).val();
 
@@ -444,7 +446,7 @@ SearchContainer searchContainer = null;
 			function(type, message) {
 				var A = AUI();
 
-				var messageContainer = A.one('#<portlet:namespace />discussion-status-messages');
+				var messageContainer = A.one('#<portlet:namespace />discussionStatusMessages');
 
 				messageContainer.removeClass('alert-danger').removeClass('alert-success');
 
@@ -488,7 +490,7 @@ SearchContainer searchContainer = null;
 
 				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-				var editorInstance = window['<%= namespace %>editReplyBody' + i+'Editor'];
+				var editorInstance = window['<%= namespace %>editReplyBody' + i + 'Editor'];
 				var body = editorInstance.getHTML();
 				var messageId = form.one('#<%= namespace %>messageId' + i).val();
 
@@ -508,7 +510,7 @@ SearchContainer searchContainer = null;
 	</aui:script>
 
 	<aui:script use="aui-popover,event-outside">
-		var discussionContainer = A.one('#<portlet:namespace />discussion-container');
+		var discussionContainer = A.one('#<portlet:namespace />discussionContainer');
 
 		var popover = new A.Popover(
 			{

@@ -48,7 +48,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 %>
 
 <c:if test="<%= !(!message.isApproved() && ((message.getUserId() != user.getUserId()) || user.isDefaultUser()) && !permissionChecker.isGroupAdmin(scopeGroupId)) && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW) %>">
-	<div class="lfr-discussion depth-<%= depth %>">
+	<div class="depth-<%= depth %> lfr-discussion">
 		<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
 			<a name="<%= randomNamespace %>message_<%= message.getMessageId() %>"></a>
 
@@ -76,6 +76,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 
 			<div class="lfr-discussion-message">
 				<div class="lfr-discussion-message-author">
+
 					<%
 					User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 					%>
@@ -108,7 +109,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 								String userUuid = (parentMessageUser == null) ? null : parentMessageUser.getUserUuid();
 								%>
 
-								<span id="lfr-discussion-reply-user-info">
+								<span>
 									<div class="lfr-discussion-reply-user-avatar">
 										<img alt="<%= HtmlUtil.escapeAttribute(parentMessage.getUserName()) %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), male, portraitId, userUuid) %>" width="30" />
 									</div>

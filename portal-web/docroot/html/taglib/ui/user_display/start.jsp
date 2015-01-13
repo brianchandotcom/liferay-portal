@@ -22,7 +22,7 @@ if (Validator.isNull(url) && (userDisplay != null)) {
 }
 %>
 
-<div class="taglib-user-display display-style-<%= displayStyle %>">
+<div class="display-style-<%= displayStyle %> taglib-user-display">
 
 	<%
 	String taglibSrc = null;

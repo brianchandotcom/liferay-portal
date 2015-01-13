@@ -354,6 +354,14 @@ public class JspServlet extends HttpServlet {
 					return url;
 				}
 
+				for (int i = 2; i < _allParticipatingBundles.length; i++) {
+					url = _allParticipatingBundles[i].getEntry(path);
+
+					if (url != null) {
+						return url;
+					}
+				}
+
 				return _jspBundle.getEntry(path);
 			}
 			catch (MalformedURLException murle) {

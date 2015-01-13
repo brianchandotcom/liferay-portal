@@ -2343,6 +2343,10 @@ public interface PropsKeys {
 
 	public static final String SETUP_DATABASE_URL = "setup.database.url";
 
+	public static final String SETUP_LIFERAY_POOL_PROVIDER_JAR_NAME = "setup.liferay.pool.provider.jar.name";
+
+	public static final String SETUP_LIFERAY_POOL_PROVIDER_JAR_URL = "setup.liferay.pool.provider.jar.url";
+
 	public static final String SETUP_WIZARD_ENABLED = "setup.wizard.enabled";
 
 	public static final String SHARD_DEFAULT_NAME = "shard.default.name";
@@ -2904,9 +2908,5 @@ public interface PropsKeys {
 	public static final String YUI_COMPRESSOR_JS_PRESERVE_ALL_SEMICOLONS = "yui.compressor.js.preserve.all.semicolons";
 
 	public static final String YUI_COMPRESSOR_JS_VERBOSE = "yui.compressor.js.verbose";
-
-	public static final String SETUP_LIFERAY_POOL_PROVIDER_JAR_URL = "setup.liferay.pool.provider.jar.url";
-
-	public static final String SETUP_LIFERAY_POOL_PROVIDER_JAR_NAME = "setup.liferay.pool.provider.jar.name";
 
 }

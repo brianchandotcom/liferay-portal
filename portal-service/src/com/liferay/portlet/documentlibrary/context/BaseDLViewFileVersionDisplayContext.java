@@ -70,13 +70,6 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isCancelCheckoutDocumentButtonVisible()
-		throws PortalException {
-
-		return parentDLDisplayContext.isCancelCheckoutDocumentButtonVisible();
-	}
-
-	@Override
 	public boolean isCheckinButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isCheckinButtonVisible();
 	}

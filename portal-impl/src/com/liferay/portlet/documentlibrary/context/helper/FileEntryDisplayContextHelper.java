@@ -105,7 +105,7 @@ public class FileEntryDisplayContextHelper {
 		return _hasViewPermission;
 	}
 
-	public boolean isCancelCheckoutDocumentButtonVisible()
+	public boolean isCancelCheckoutDocumentActionAvailable()
 		throws PortalException {
 
 		if (isCheckinButtonVisible() ||

@@ -120,7 +120,7 @@ public class DefaultDLEditFileEntryDisplayContext
 		throws PortalException {
 
 		return _fileEntryDisplayContextHelper.
-			isCancelCheckoutDocumentButtonVisible();
+			isCancelCheckoutDocumentActionAvailable();
 	}
 
 	@Override

@@ -186,11 +186,6 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isEditButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.isUpdatable();
-	}
-
-	@Override
 	public boolean isMoveButtonVisible() throws PortalException {
 		return _fileEntryDisplayContextHelper.isUpdatable();
 	}
@@ -353,7 +348,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	protected void addEditMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!isEditButtonVisible()) {
+		if (!_fileEntryDisplayContextHelper.isEditActionAvailable()) {
 			return;
 		}
 
@@ -606,7 +601,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	private void _addEditToolbarItem(List<ToolbarItem> toolbarItems)
 		throws PortalException {
 
-		if (!isEditButtonVisible()) {
+		if (!_fileEntryDisplayContextHelper.isEditActionAvailable()) {
 			return;
 		}
 

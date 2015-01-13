@@ -42,8 +42,6 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public List<ToolbarItem> getToolbarItems() throws PortalException;
 
-	public boolean isEditButtonVisible() throws PortalException;
-
 	public boolean isMoveButtonVisible() throws PortalException;
 
 	public boolean isMoveToTheRecycleBinButtonVisible() throws PortalException;

@@ -75,11 +75,6 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isEditButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isEditButtonVisible();
-	}
-
-	@Override
 	public boolean isMoveButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isMoveButtonVisible();
 	}

@@ -174,6 +174,10 @@ public class FileEntryDisplayContextHelper {
 		return hasViewPermission();
 	}
 
+	public boolean isEditActionAvailable() throws PortalException {
+		return isUpdatable();
+	}
+
 	public boolean isFileEntryDeletable() throws PortalException {
 		if (hasDeletePermission() && !isCheckedOutByOther()) {
 			return true;

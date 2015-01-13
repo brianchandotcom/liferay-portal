@@ -192,6 +192,9 @@ public class PropsUtil {
 
 			_configurations = new HashMap<>();
 		}
+		else {
+			_configurations = null;
+		}
 	}
 
 	private void _addProperties(Properties properties) {

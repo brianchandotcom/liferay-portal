@@ -126,7 +126,7 @@ public class ServiceTestUtil {
 			setUser(TestPropsValues.getUser());
 		}
 		catch (Exception e) {
-			_log.warn(e.getMessage(), e);
+			_log.error(e.getMessage(), e);
 		}
 	}
 
@@ -138,7 +138,7 @@ public class ServiceTestUtil {
 			JCRFactoryUtil.prepare();
 		}
 		catch (Exception e) {
-			_log.warn(e.getMessage(), e);
+			_log.error(e.getMessage(), e);
 		}
 
 		// Template manager
@@ -147,7 +147,7 @@ public class ServiceTestUtil {
 			TemplateManagerUtil.init();
 		}
 		catch (Exception e) {
-			_log.warn(e.getMessage(), e);
+			_log.error(e.getMessage(), e);
 		}
 
 		// Indexers
@@ -160,10 +160,10 @@ public class ServiceTestUtil {
 			DBUpgrader.upgrade();
 		}
 		catch (AssertionError ae) {
-			_log.warn(ae.getMessage(), ae);
+			_log.error(ae.getMessage(), ae);
 		}
 		catch (Exception e) {
-			_log.warn(e.getMessage(), e);
+			_log.error(e.getMessage(), e);
 		}
 
 		// Messaging
@@ -201,7 +201,7 @@ public class ServiceTestUtil {
 			SchedulerEngineHelperUtil.start();
 		}
 		catch (Exception e) {
-			_log.warn(e.getMessage(), e);
+			_log.error(e.getMessage(), e);
 		}
 
 		// Verify
@@ -210,7 +210,7 @@ public class ServiceTestUtil {
 			DBUpgrader.verify();
 		}
 		catch (Exception e) {
-			_log.warn(e.getMessage(), e);
+			_log.error(e.getMessage(), e);
 		}
 
 		// Class names
@@ -223,7 +223,7 @@ public class ServiceTestUtil {
 			_checkResourceActions();
 		}
 		catch (Exception e) {
-			_log.warn(e.getMessage(), e);
+			_log.error(e.getMessage(), e);
 		}
 
 		// Trash
@@ -249,7 +249,7 @@ public class ServiceTestUtil {
 				TestPropsValues.COMPANY_WEB_ID);
 		}
 		catch (Exception e) {
-			_log.warn(e.getMessage(), e);
+			_log.error(e.getMessage(), e);
 		}
 
 		// Directories
@@ -265,7 +265,7 @@ public class ServiceTestUtil {
 			SearchEngineUtil.initialize(TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
-			_log.warn(e.getMessage(), e);
+			_log.error(e.getMessage(), e);
 		}
 	}
 
@@ -339,7 +339,7 @@ public class ServiceTestUtil {
 				PropsValues.LUCENE_DIR + TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
-			_log.warn(e.getMessage(), e);
+			_log.error(e.getMessage(), e);
 		}
 	}
 

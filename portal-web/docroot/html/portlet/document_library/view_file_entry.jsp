@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.portlet.documentlibrary.context.DLDisplayContextFactoryProviderUtil" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -85,7 +87,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryC
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
-DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLViewFileVersionDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileVersion);
+DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayContextFactoryProviderUtil.getDLViewFileVersionActionsDisplayContext(request, response, fileVersion);
 %>
 
 <portlet:actionURL var="editFileEntry">

@@ -15,11 +15,16 @@
 package com.liferay.document.library.google.docs.context;
 
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portlet.documentlibrary.context.DLDisplayContextFactory;
+import com.liferay.portlet.documentlibrary.context.DLEditFileEntryDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContext;
-import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContextFactory;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,19 +34,57 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Iván Zaera
+ * @author Ivan Zaera
  */
 @Component(
-	immediate = true, service = DLViewFileVersionDisplayContextFactory.class
+	immediate = true, service = DLDisplayContextFactory.class
 )
-public class GoogleDocsDLViewFileVersionDisplayContextFactory
-	implements DLViewFileVersionDisplayContextFactory {
+public class GoogleDocsDLDisplayContextFactory
+	implements DLDisplayContextFactory {
+
+	@Override
+	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
+		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		DLFileEntryType dlFileEntryType) {
+
+		DDMStructure googleDocsDDMStructure =
+			GoogleDocsMetadataHelper.getGoogleDocsDDMStructure(dlFileEntryType);
+
+		if (googleDocsDDMStructure != null) {
+			return new GoogleDocsDLEditFileEntryDisplayContext(
+				parentDLEditFileEntryDisplayContext, request, response,
+				dlFileEntryType);
+		}
+
+		return parentDLEditFileEntryDisplayContext;
+	}
+
+	@Override
+	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
+		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		FileEntry fileEntry) {
+
+		GoogleDocsMetadataHelper googleDocsMetadataHelper =
+			new GoogleDocsMetadataHelper(
+				(DLFileEntry)fileEntry.getModel(),
+				_dlFileEntryMetadataLocalService, _storageEngine);
+
+		if (googleDocsMetadataHelper.isGoogleDocs()) {
+			return new GoogleDocsDLEditFileEntryDisplayContext(
+				parentDLEditFileEntryDisplayContext, request, response,
+				fileEntry);
+		}
+
+		return parentDLEditFileEntryDisplayContext;
+	}
 
 	@Override
 	public DLViewFileVersionDisplayContext
 		getDLFileVersionActionsDisplayContext(
 			DLViewFileVersionDisplayContext
-				parentDLFileEntryActionsDisplayContext,
+				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
 
@@ -52,11 +95,11 @@ public class GoogleDocsDLViewFileVersionDisplayContextFactory
 
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
 			return new GoogleDocsDLViewFileVersionDisplayContext(
-				parentDLFileEntryActionsDisplayContext, request, response,
+				parentDLViewFileVersionDisplayContext, request, response,
 				fileVersion, googleDocsMetadataHelper);
 		}
 
-		return parentDLFileEntryActionsDisplayContext;
+		return parentDLViewFileVersionDisplayContext;
 	}
 
 	@Override

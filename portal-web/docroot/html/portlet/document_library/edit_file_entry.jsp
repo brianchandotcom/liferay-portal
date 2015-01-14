@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.portlet.documentlibrary.context.DLDisplayContextFactoryProviderUtil" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -115,10 +117,10 @@ if ((checkedOut || pending) && !dlPortletInstanceSettings.isEnableFileEntryDraft
 DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext = null;
 
 if (fileEntry == null) {
-	dlEditFileEntryDisplayContext = DLEditFileEntryDisplayContextUtil.getDLEditFileEntryDisplayContext(request, response, dlFileEntryType);
+	dlEditFileEntryDisplayContext = DLDisplayContextFactoryProviderUtil.getDLEditFileEntryDisplayContext(request, response, dlFileEntryType);
 }
 else {
-	dlEditFileEntryDisplayContext = DLEditFileEntryDisplayContextUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
+	dlEditFileEntryDisplayContext = DLDisplayContextFactoryProviderUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
 }
 %>
 

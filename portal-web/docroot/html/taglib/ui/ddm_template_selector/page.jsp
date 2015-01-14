@@ -35,10 +35,10 @@ DDMTemplate ddmTemplate = null;
 
 if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 	ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(displayStyleGroupId, displayStyle);
-}
 
-if (ddmTemplate == null) {
-	displayStyle = defaultDisplayStyle;
+	if (ddmTemplate == null) {
+		displayStyle = defaultDisplayStyle;
+	}
 }
 %>
 

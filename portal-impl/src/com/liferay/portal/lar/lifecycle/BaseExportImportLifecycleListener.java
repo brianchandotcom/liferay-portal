@@ -242,10 +242,28 @@ public abstract class BaseExportImportLifecycleListener
 		}
 	}
 
+	protected <T> T getAttributeByType(
+		List<Serializable> attributes, Class<T> clazz) {
+
+		for (Serializable attribute : attributes) {
+			if (clazz.isInstance(attribute)) {
+				return clazz.cast(attribute);
+			}
+		}
+
+		return null;
+	}
+
 	protected ExportImportConfiguration getExportImportConfigurationAttribute(
 		List<Serializable> attributes) {
 
 		return getAttributeByType(attributes, ExportImportConfiguration.class);
+	}
+
+	protected PortletDataContext getPortletDataContextAttribute(
+		List<Serializable> attributes) {
+
+		return getAttributeByType(attributes, PortletDataContext.class);
 	}
 
 	protected StagedModel getStagedModelAttribute(
@@ -273,26 +291,12 @@ public abstract class BaseExportImportLifecycleListener
 		return getAttributeByType(attributes, Throwable.class);
 	}
 
-	protected PortletDataContext getPortletDataContextAttribute(
-		List<Serializable> attributes) {
-
-		return getAttributeByType(attributes, PortletDataContext.class);
-	}
-
-	protected<T> T getAttributeByType(
-		List<Serializable> attributes, Class<T> clazz) {
-
-		for (Serializable attribute : attributes) {
-			if (clazz.isInstance(attribute)) {
-				return clazz.cast(attribute);
-			}
-		}
-
-		return null;
-	}
-
 	protected void onLayoutExportFailed(
 			PortletDataContext portletDataContext, Throwable throwable)
+		throws Exception {
+	}
+
+	protected void onLayoutExportStarted(PortletDataContext portletDataContext)
 		throws Exception {
 	}
 
@@ -301,21 +305,17 @@ public abstract class BaseExportImportLifecycleListener
 		throws Exception {
 	}
 
-	protected void onLayoutExportStarted(PortletDataContext portletDataContext)
-		throws Exception {
-	}
-
 	protected void onLayoutImportFailed(
 			PortletDataContext portletDataContext, Throwable throwable)
 		throws Exception {
 	}
 
-	protected void onLayoutImportSucceeded(
-			PortletDataContext portletDataContext)
+	protected void onLayoutImportStarted(PortletDataContext portletDataContext)
 		throws Exception {
 	}
 
-	protected void onLayoutImportStarted(PortletDataContext portletDataContext)
+	protected void onLayoutImportSucceeded(
+			PortletDataContext portletDataContext)
 		throws Exception {
 	}
 
@@ -325,12 +325,12 @@ public abstract class BaseExportImportLifecycleListener
 		throws Exception {
 	}
 
-	protected void onLayoutLocalPublicationSucceeded(
+	protected void onLayoutLocalPublicationStarted(
 			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
 	}
 
-	protected void onLayoutLocalPublicationStarted(
+	protected void onLayoutLocalPublicationSucceeded(
 			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
 	}
@@ -341,12 +341,12 @@ public abstract class BaseExportImportLifecycleListener
 		throws Exception {
 	}
 
-	protected void onLayoutRemotePublicationSucceeded(
+	protected void onLayoutRemotePublicationStarted(
 			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
 	}
 
-	protected void onLayoutRemotePublicationStarted(
+	protected void onLayoutRemotePublicationSucceeded(
 			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
 	}
@@ -356,12 +356,12 @@ public abstract class BaseExportImportLifecycleListener
 		throws Exception {
 	}
 
-	protected void onPortletExportSucceeded(
-			PortletDataContext portletDataContext)
+	protected void onPortletExportStarted(PortletDataContext portletDataContext)
 		throws Exception {
 	}
 
-	protected void onPortletExportStarted(PortletDataContext portletDataContext)
+	protected void onPortletExportSucceeded(
+			PortletDataContext portletDataContext)
 		throws Exception {
 	}
 
@@ -370,12 +370,12 @@ public abstract class BaseExportImportLifecycleListener
 		throws Exception {
 	}
 
-	protected void onPortletImportSucceeded(
-			PortletDataContext portletDataContext)
+	protected void onPortletImportStarted(PortletDataContext portletDataContext)
 		throws Exception {
 	}
 
-	protected void onPortletImportStarted(PortletDataContext portletDataContext)
+	protected void onPortletImportSucceeded(
+			PortletDataContext portletDataContext)
 		throws Exception {
 	}
 
@@ -384,12 +384,12 @@ public abstract class BaseExportImportLifecycleListener
 		throws Exception {
 	}
 
-	protected void onPortletPublicationSucceeded(
+	protected void onPortletPublicationStarted(
 			Map<String, Serializable> taskContextMap)
 		throws Exception {
 	}
 
-	protected void onPortletPublicationStarted(
+	protected void onPortletPublicationSucceeded(
 			Map<String, Serializable> taskContextMap)
 		throws Exception {
 	}
@@ -400,12 +400,12 @@ public abstract class BaseExportImportLifecycleListener
 		throws Exception {
 	}
 
-	protected void onStagedModelExportSucceeded(
+	protected void onStagedModelExportStarted(
 			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
 	}
 
-	protected void onStagedModelExportStarted(
+	protected void onStagedModelExportSucceeded(
 			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
 	}
@@ -416,12 +416,12 @@ public abstract class BaseExportImportLifecycleListener
 		throws Exception {
 	}
 
-	protected void onStagedModelImportSucceeded(
+	protected void onStagedModelImportStarted(
 			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
 	}
 
-	protected void onStagedModelImportStarted(
+	protected void onStagedModelImportSucceeded(
 			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
 	}

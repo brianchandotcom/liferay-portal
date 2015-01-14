@@ -950,9 +950,9 @@ public class LiferaySeleniumHelper {
 
 		// LPS-50936
 
-		if (line.matches(
-				".*Liferay does not have the Xuggler native libraries " +
-					"installed.*")) {
+		if (line.contains(
+				"Liferay does not have the Xuggler native libraries " +
+					"installed.")) {
 
 			return true;
 		}

@@ -16,5 +16,6 @@
 	<bean id="com.liferay.portal.model.UserModelListener" class="com.liferay.portal.model.UserModelListener" />
 	<bean id="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutModelListener" class="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutModelListener" />
 	<bean id="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutSetModelListener" class="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutSetModelListener" />
+	<bean id="com.liferay.portlet.asset.model.AssetEntryModelListener" class="com.liferay.portlet.asset.model.AssetEntryModelListener" />
 	<bean id="com.liferay.portlet.journal.model.JournalArticleModelListener" class="com.liferay.portlet.journal.model.JournalArticleModelListener" />
 </beans>

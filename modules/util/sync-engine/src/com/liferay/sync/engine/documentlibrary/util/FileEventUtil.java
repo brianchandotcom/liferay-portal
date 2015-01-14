@@ -395,7 +395,7 @@ public class FileEventUtil {
 
 		parameters.put("description", syncFile.getDescription());
 		parameters.put("folderId", syncFile.getTypePK());
-		parameters.put("name", filePath.getFileName());
+		parameters.put("name", String.valueOf(filePath.getFileName()));
 		parameters.put("syncFile", syncFile);
 
 		UpdateFolderEvent updateFolderEvent = new UpdateFolderEvent(

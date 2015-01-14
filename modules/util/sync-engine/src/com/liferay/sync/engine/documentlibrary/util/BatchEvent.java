@@ -66,7 +66,7 @@ public class BatchEvent {
 			String zipFileId =
 				syncFile.getSyncFileId() + "_" + System.currentTimeMillis();
 
-			Path deltaFilePath = (Path)parameters.get("filePath");
+			Path deltaFilePath = (Path)parameters.get("deltaFilePath");
 			Path filePath = (Path)parameters.get("filePath");
 
 			if (deltaFilePath != null) {
@@ -85,6 +85,7 @@ public class BatchEvent {
 
 			parameters = new HashMap<String, Object>(parameters);
 
+			parameters.remove("deltaFilePath");
 			parameters.remove("filePath");
 			parameters.remove("syncFile");
 

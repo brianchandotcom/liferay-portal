@@ -8,7 +8,11 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
 	@../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
-	@../../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ReflectionUtil.class,\
-	@../../../../util-taglib/util-taglib.jar
+	@../../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ReflectionUtil.class
+Require-Capability:\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/theme))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"
 
 -metatype: *

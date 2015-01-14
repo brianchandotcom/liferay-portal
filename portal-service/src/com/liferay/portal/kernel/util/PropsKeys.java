@@ -2165,6 +2165,8 @@ public interface PropsKeys {
 
 	public static final String PREFERENCE_VALIDATE_ON_STARTUP = "preference.validate.on.startup";
 
+	public static final String RATINGS_DATA_TRANSFORMER = "ratings.data.transformer";
+
 	public static final String RATINGS_DEFAULT_NUMBER_OF_STARS = "ratings.default.number.of.stars";
 
 	public static final String RATINGS_UPGRADE_STARS_NORMALIZATION_FACTOR = "ratings.upgrade.stars.normalization.factor";

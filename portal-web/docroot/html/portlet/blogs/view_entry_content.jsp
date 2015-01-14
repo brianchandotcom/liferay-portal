@@ -27,7 +27,15 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 <c:choose>
 	<c:when test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.VIEW) && (entry.isVisible() || (entry.getUserId() == user.getUserId()) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE)) %>">
 		<div class="entry <%= WorkflowConstants.getStatusLabel(entry.getStatus()) %>" id="<portlet:namespace /><%= entry.getEntryId() %>">
-			<div class="entry-content">
+			<div class="entry-body">
+
+				<%
+				String coverImageURL = entry.getCoverImageURL(themeDisplay);
+				%>
+
+				<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
+					<div class="cover-image-container" style="background-image: url(<%= coverImageURL %>)"></div>
+				</c:if>
 
 				<%
 				String strutsAction = ParamUtil.getString(request, "struts_action");
@@ -45,11 +53,9 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
 				</portlet:renderURL>
 
-				<c:if test='<%= !strutsAction.equals("/blogs/view_entry") %>'>
-					<div class="entry-title">
-						<h2><aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></h2>
-					</div>
-				</c:if>
+				<div class="entry-title">
+					<h2><aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></h2>
+				</div>
 
 				<%
 				String subtitle = entry.getSubtitle();
@@ -165,11 +171,11 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						}
 						%>
 
-						<%= StringUtil.shorten(HtmlUtil.stripHtml(summary), pageAbstractLength) %>
+						<p><%= StringUtil.shorten(HtmlUtil.stripHtml(summary), pageAbstractLength) %></p>
 
-						<br />
-
-						<aui:a href="<%= viewEntryURL %>"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(entry.getTitle())} %>' key="read-more-x-about-x" translateArguments="<%= false %>" /> &raquo;</aui:a>
+						<div class="read-more">
+							<aui:a href="<%= viewEntryURL %>"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(entry.getTitle())} %>' key="read-more-x-about-x" translateArguments="<%= false %>" /> &raquo;</aui:a>
+						</div>
 					</c:when>
 					<c:when test='<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) || strutsAction.equals("/blogs/view_entry") %>'>
 
@@ -208,7 +214,9 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</c:if>
 					</c:when>
 					<c:when test='<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_TITLE) && !strutsAction.equals("/blogs/view_entry") %>'>
-						<aui:a href="<%= viewEntryURL %>"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(entry.getTitle())} %>' key="read-more-x-about-x" translateArguments="<%= false %>" /> &raquo;</aui:a>
+						<div class="read-more">
+							<aui:a href="<%= viewEntryURL %>"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(entry.getTitle())} %>' key="read-more-x-about-x" translateArguments="<%= false %>" /> &raquo;</aui:a>
+						</div>
 					</c:when>
 				</c:choose>
 			</div>

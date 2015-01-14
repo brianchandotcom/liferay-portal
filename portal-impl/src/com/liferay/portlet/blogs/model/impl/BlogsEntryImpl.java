@@ -15,11 +15,15 @@
 package com.liferay.portlet.blogs.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.util.Date;
 
@@ -28,6 +32,24 @@ import java.util.Date;
  * @author Juan Fernández
  */
 public class BlogsEntryImpl extends BlogsEntryBaseImpl {
+
+	@Override
+	public String getCoverImageURL(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		long coverImageFileEntryId = getCoverImageFileEntryId();
+
+		if (coverImageFileEntryId == 0) {
+			return null;
+		}
+
+		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			coverImageFileEntryId);
+
+		return DLUtil.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), themeDisplay,
+			StringPool.BLANK);
+	}
 
 	@Override
 	public String getEntryImageURL(ThemeDisplay themeDisplay) {

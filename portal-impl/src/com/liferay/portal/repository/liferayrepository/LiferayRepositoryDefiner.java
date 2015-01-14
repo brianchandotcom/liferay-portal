@@ -39,9 +39,11 @@ import com.liferay.portal.repository.capabilities.LiferayWorkflowCapability;
  */
 public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
+	public static final String CLASS_NAME = LiferayRepository.class.getName();
+
 	@Override
 	public String getClassName() {
-		return LiferayRepository.class.getName();
+		return CLASS_NAME;
 	}
 
 	@Override

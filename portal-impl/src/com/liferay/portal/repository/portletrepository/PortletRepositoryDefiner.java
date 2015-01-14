@@ -29,9 +29,11 @@ import com.liferay.portal.repository.capabilities.MinimalWorkflowCapability;
  */
 public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 
+	public static final String CLASS_NAME = PortletRepository.class.getName();
+
 	@Override
 	public String getClassName() {
-		return PortletRepository.class.getName();
+		return CLASS_NAME;
 	}
 
 	@Override

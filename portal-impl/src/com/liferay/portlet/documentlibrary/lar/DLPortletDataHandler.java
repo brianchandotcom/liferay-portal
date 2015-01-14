@@ -46,13 +46,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.impl.RepositoryEntryImpl;
 import com.liferay.portal.model.impl.RepositoryImpl;
-import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.repository.liferayrepository.LiferayRepositoryDefiner;
+import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepositoryDefiner;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -666,13 +666,15 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 						"classNameId");
 
 					long liferayRepositoryClassNameId =
-						PortalUtil.getClassNameId(LiferayRepository.class);
+						PortalUtil.getClassNameId(
+							LiferayRepositoryDefiner.CLASS_NAME);
 
 					conjunction.add(
 						classNameIdProperty.ne(liferayRepositoryClassNameId));
 
 					long tempFileRepositoryClassNameId =
-						PortalUtil.getClassNameId(TempFileEntryUtil.class);
+						PortalUtil.getClassNameId(
+							TemporaryFileEntryRepositoryDefiner.CLASS_NAME);
 
 					conjunction.add(
 						classNameIdProperty.ne(tempFileRepositoryClassNameId));

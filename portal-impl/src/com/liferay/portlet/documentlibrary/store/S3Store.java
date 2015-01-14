@@ -633,10 +633,8 @@ public class S3Store extends BaseStore {
 
 		Jets3tProperties jets3tProperties = getJets3tProperties();
 
-		String serverInfo = ReleaseInfo.getServerInfo();
-
 		return new RestS3Service(
-			credentials, serverInfo, null, jets3tProperties);
+			credentials, ReleaseInfo.getServerInfo(), null, jets3tProperties);
 	}
 
 	protected File getTempFile(S3Object s3Object, String fileName)

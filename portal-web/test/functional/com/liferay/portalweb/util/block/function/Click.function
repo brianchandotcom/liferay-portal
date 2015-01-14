@@ -232,16 +232,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="tap">
-		<execute selenium="waitForVisible" />
-
-		<execute selenium="tap" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="textClick">
 		<execute function="AssertTextEquals#assertText" />
 
@@ -349,7 +339,7 @@
 	<command name="waitForNavigationInteractionTouchScriptTap">
 		<execute argument1="//script[contains(@src,'html/js/liferay/navigation_interaction_touch.js')]" selenium="waitForElementPresent" />
 
-		<execute function="Click#tap" />
+		<execute function="Click#clickAt" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

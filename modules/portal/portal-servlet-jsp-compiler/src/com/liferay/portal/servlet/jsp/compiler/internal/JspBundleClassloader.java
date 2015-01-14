@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.jsp.compiler.compiler.internal;
+package com.liferay.portal.servlet.jsp.compiler.internal;
 
 import java.io.IOException;
 
@@ -68,6 +68,10 @@ public class JspBundleClassloader extends URLClassLoader {
 		}
 
 		return Collections.enumeration(Collections.<URL>emptyList());
+	}
+
+	public Bundle[] getBundles() {
+		return _bundles;
 	}
 
 	@Override

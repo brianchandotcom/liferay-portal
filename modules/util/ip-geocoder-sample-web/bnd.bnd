@@ -16,7 +16,6 @@ Import-Package:\
 	com.liferay.portal.service,\
 	com.liferay.portal.servlet.filters.aggregate,\
 	com.liferay.portal.servlet.filters.dynamiccss,\
-	com.liferay.portal.servlet.jsp.compiler.jsp,\
 	com.liferay.portal.webserver,\
 	com.liferay.portlet,\
 	com.liferay.util.bridges.freemarker,\

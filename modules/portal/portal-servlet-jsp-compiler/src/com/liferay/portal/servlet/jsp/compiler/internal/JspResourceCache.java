@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.jsp.compiler.compiler.internal;
+package com.liferay.portal.servlet.jsp.compiler.internal;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -1,12 +1,8 @@
-Bundle-Activator: com.liferay.portal.servlet.jsp.compiler.compiler.internal.JspResolverFactory
+Bundle-Activator: com.liferay.portal.servlet.jsp.compiler.internal.JspResolverFactory
 Bundle-Name: Liferay Portal Servlet JSP Compiler
 Bundle-SymbolicName: com.liferay.portal.servlet.jsp.compiler
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.portal.servlet.jsp,\
-	com.liferay.portal.servlet.jsp.compiler.compiler,\
-	com.liferay.portal.servlet.jsp.compiler.el,\
-	com.liferay.portal.servlet.jsp.compiler.jsp
+Export-Package: com.liferay.portal.servlet.jsp.compiler
 Import-Package:\
 	com.sun.el;version='[3.0.0,4.0)',\
 	com.sun.el.lang;version='[3.0.0,4.0)',\

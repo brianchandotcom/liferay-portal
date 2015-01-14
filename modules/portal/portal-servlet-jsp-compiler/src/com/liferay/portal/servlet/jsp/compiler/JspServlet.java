@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.servlet.jsp;
+package com.liferay.portal.servlet.jsp.compiler;
 
-import com.liferay.portal.servlet.jsp.compiler.compiler.internal.JspBundleClassloader;
+import com.liferay.portal.servlet.jsp.compiler.internal.JspBundleClassloader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,12 +31,16 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -47,15 +51,61 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Raymond Augé
  */
-public class JspServlet
-	extends org.apache.jasper.servlet.JspServlet {
-
-	public static final String JSP_CLASS_LOADER =
-		JspServlet.class.getName() + "#JSP_CLASS_LOADER";
+public class JspServlet extends HttpServlet {
 
 	public JspServlet() {
 		_jspBundle = FrameworkUtil.getBundle(
-			com.liferay.portal.servlet.jsp.JspServlet.class);
+			com.liferay.portal.servlet.jsp.compiler.JspServlet.class);
+	}
+
+	@Override
+	public void destroy() {
+		_jspServlet.destroy();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return _jspServlet.equals(obj);
+	}
+
+	@Override
+	public String getInitParameter(String name) {
+		return _jspServlet.getInitParameter(name);
+	}
+
+	@Override
+	public Enumeration<String> getInitParameterNames() {
+		return _jspServlet.getInitParameterNames();
+	}
+
+	@Override
+	public ServletConfig getServletConfig() {
+		return _jspServlet.getServletConfig();
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _jspServlet.getServletContext();
+	}
+
+	@Override
+	public String getServletInfo() {
+		return _jspServlet.getServletInfo();
+	}
+
+	@Override
+	public String getServletName() {
+		return _jspServlet.getServletName();
+	}
+
+	@Override
+	public int hashCode() {
+		return _jspServlet.hashCode();
+	}
+
+	@Override
+	public void init() throws ServletException {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -72,30 +122,29 @@ public class JspServlet
 
 		BundleReference bundleReference = (BundleReference)classLoader;
 
-		_jspBundleClassloader = new JspBundleClassloader(
-			bundleReference.getBundle(), _jspBundle);
+		_bundle = bundleReference.getBundle();
 
-		servletContext.setAttribute(JSP_CLASS_LOADER, _jspBundleClassloader);
+		_jspBundleClassloader = new JspBundleClassloader(_bundle, _jspBundle);
 
-		final Map<String, String> defaults = new HashMap<String, String>();
+		final Map<String, String> defaults = new HashMap<>();
 
 		defaults.put(
 			"compilerClassName",
-			"com.liferay.portal.servlet.jsp.compiler.compiler.JspCompiler");
+			"com.liferay.portal.servlet.jsp.compiler.internal.JspCompiler");
 		defaults.put("development", "false");
 		defaults.put("httpMethods", "GET,POST,HEAD");
 		defaults.put("keepgenerated", "false");
 		defaults.put("logVerbosityLevel", "DEBUG");
 
 		Enumeration<String> names = servletConfig.getInitParameterNames();
-		Set<String> nameSet = new HashSet<String>(Collections.list(names));
+		Set<String> nameSet = new HashSet<>(Collections.list(names));
 
 		nameSet.addAll(defaults.keySet());
 
-		final Enumeration<String> initParameterNames =
-				Collections.enumeration(nameSet);
+		final Enumeration<String> initParameterNames = Collections.enumeration(
+			nameSet);
 
-		super.init(
+		_jspServlet.init(
 			new ServletConfig() {
 
 				@Override
@@ -128,9 +177,19 @@ public class JspServlet
 	}
 
 	@Override
+	public void log(String msg) {
+		_jspServlet.log(msg);
+	}
+
+	@Override
+	public void log(String message, Throwable t) {
+		_jspServlet.log(message, t);
+	}
+
+	@Override
 	public void service(
 			HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
+		throws IOException, ServletException {
 
 		Thread currentThread = Thread.currentThread();
 
@@ -139,11 +198,23 @@ public class JspServlet
 		try {
 			currentThread.setContextClassLoader(_jspBundleClassloader);
 
-			super.service(request, response);
+			_jspServlet.service(request, response);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
+	}
+
+	@Override
+	public void service(ServletRequest request, ServletResponse response)
+		throws IOException, ServletException {
+
+		service((HttpServletRequest)request, (HttpServletResponse)response);
+	}
+
+	@Override
+	public String toString() {
+		return _jspServlet.toString();
 	}
 
 	private ServletContext getServletContextWrapper(
@@ -153,7 +224,7 @@ public class JspServlet
 			synchronized (this) {
 				if (_jspServletContext == null) {
 					_jspServletContext = (ServletContext)Proxy.newProxyInstance(
-						getClass().getClassLoader(), _INTERFACES,
+						_jspBundleClassloader, _INTERFACES,
 						new JspServletContextInvocationHandler(servletContext));
 				}
 			}
@@ -166,8 +237,11 @@ public class JspServlet
 		ServletContext.class
 	};
 
+	private Bundle _bundle;
 	private final Bundle _jspBundle;
 	private URLClassLoader _jspBundleClassloader;
+	private final HttpServlet _jspServlet =
+		new org.apache.jasper.servlet.JspServlet();
 	private volatile ServletContext _jspServletContext;
 
 	private class JspServletContextInvocationHandler
@@ -199,33 +273,58 @@ public class JspServlet
 			return method.invoke(_servletContext, args);
 		}
 
+		private URL getExtension(String path) {
+			Enumeration<URL> enumeration = _bundle.findEntries(
+				"META-INF/resources", path.substring(1), false);
+
+			if (enumeration == null) {
+				return null;
+			}
+
+			List<URL> entries = Collections.list(enumeration);
+
+			return entries.get(entries.size() - 1);
+		}
+
 		private URL getResource(String path) {
 			try {
-				URL url = _servletContext.getResource(path);
-
-				if (url == null) {
-					url = _servletContext.getClassLoader().getResource(path);
-
-					if (url == null) {
-						if (path.startsWith("/")) {
-							path = path.substring(1);
-						}
-
-						if (!path.startsWith("META-INF/")) {
-							url = _servletContext.getResource(
-								"/META-INF/resources/".concat(path));
-						}
-
-						if (url == null) {
-							url = _jspBundle.getEntry(path);
-						}
-					}
+				if (path.charAt(0) != '/') {
+					path = '/' + path;
 				}
 
-				return url;
+				URL url = getExtension(path);
+
+				if (url != null) {
+					return url;
+				}
+
+				url = _servletContext.getResource(path);
+
+				if (url != null) {
+					return url;
+				}
+
+				url = _servletContext.getClassLoader().getResource(path);
+
+				if (url != null) {
+					return url;
+				}
+
+				if (!path.startsWith("/META-INF/")) {
+					url = _servletContext.getResource(
+						"/META-INF/resources".concat(path));
+				}
+
+				if (url != null) {
+					return url;
+				}
+
+				return _jspBundle.getEntry(path);
 			}
 			catch (MalformedURLException e) {
+
 				// Ignore
+
 			}
 
 			return null;
@@ -267,7 +366,7 @@ public class JspServlet
 			return paths;
 		}
 
-		private ServletContext _servletContext;
+		private final ServletContext _servletContext;
 
 	}
 

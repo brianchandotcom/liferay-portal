@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.jsp.compiler.el;
+package com.liferay.portal.servlet.jsp.compiler.internal.el;
 
 import java.beans.FeatureDescriptor;
 

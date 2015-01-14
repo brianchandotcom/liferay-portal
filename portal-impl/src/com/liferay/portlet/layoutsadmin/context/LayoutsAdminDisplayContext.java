@@ -370,8 +370,6 @@ public class LayoutsAdminDisplayContext {
 			return _tabs1Names;
 		}
 
-		_tabs1Names = "public-pages,private-pages";
-
 		Group liveGroup = getLiveGroup();
 
 		if (liveGroup.isUser()) {
@@ -384,6 +382,9 @@ public class LayoutsAdminDisplayContext {
 			else if (isPublicLayoutsModifiable()) {
 				_tabs1Names = "my-profile";
 			}
+		}
+		else {
+			_tabs1Names = "public-pages,private-pages";
 		}
 
 		return _tabs1Names;

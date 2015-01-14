@@ -946,7 +946,7 @@
 
 		<execute macro="MessageboardsCategory#addSubcategoryPG">
 			<var name="categoryName" value="MB Category Name" />
-			<var name="subCategoryDescription" value="subCategoryDescription" />
+			<var name="subCategoryDescription" value="MB Subcategory Description" />
 			<var name="subCategoryName" value="MB Subcategory Name" />
 		</execute>
 
@@ -956,7 +956,7 @@
 
 		<execute macro="MessageboardsCategory#addSubcategoryToSubcategoryPG">
 			<var name="categoryName" value="MB Subcategory Name" />
-			<var name="subCategoryDescription" value="subCategoryDescription" />
+			<var name="subCategoryDescription" value="MB Subcategory Description" />
 			<var name="subCategoryName" value="MB Subcategory Name 2" />
 		</execute>
 
@@ -966,24 +966,37 @@
 
 		<execute macro="MessageboardsCategory#viewSubcategoryPG">
 			<var name="categoryName" value="MB Category Name" />
-			<var name="containsSubcategory" value="true" />
-			<var name="subCategoryDescription" value="subCategoryDescription" />
+			<var name="subCategoryDescription" value="MB Subcategory Description" />
 			<var name="subCategoryName" value="MB Subcategory Name" />
 		</execute>
 
-		<execute macro="MessageboardsCategory#viewSubcategoryPG">
+		<execute macro="MessageboardsCategory#viewSubcategoryFromSubcategoryPG">
 			<var name="categoryName" value="MB Subcategory Name" />
-			<var name="subCategoryDescription" value="subCategoryDescription" />
+			<var name="subCategoryDescription" value="MB Subcategory Description" />
 			<var name="subCategoryName" value="MB Subcategory Name 2" />
-			<var name="subscribe" value="true" />
-			<var name="viewSubcategoryFromSubcategory" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<execute macro="MessageboardsCategory#viewMysubscriptionsPG">
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="MB Subcategory Name" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#subscribePG">
+			<var name="categoryName" value="MB Subcategory Name 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#viewMySubscriptionsPG">
 			<var name="parentcategory1" value="MB Category Name" />
 			<var name="parentcategory2" value="MB Subcategory Name" />
 			<var name="subscribedThread" value="MB Subcategory Name 2" />

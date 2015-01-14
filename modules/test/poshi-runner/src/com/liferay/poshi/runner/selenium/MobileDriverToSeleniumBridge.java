@@ -132,17 +132,15 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void click(String locator) {
-		WebElement webElement = getWebElement(locator);
-
 		try {
-			webElement.click();
+			tap(locator);
 		}
 		catch (Exception e) {
 			if (!isInViewport(locator)) {
 				swipeWebElementIntoView(locator);
 			}
 
-			webElement.click();
+			tap(locator);
 		}
 	}
 

@@ -22,6 +22,12 @@ import com.liferay.portlet.asset.model.AssetTag;
  */
 public class AssetTagNameComparator extends OrderByComparator<AssetTag> {
 
+	public static final String ORDER_BY_ASC = "AssetTag.name ASC";
+
+	public static final String ORDER_BY_DESC = "AssetTag.name DESC";
+
+	public static final String[] ORDER_BY_FIELDS = {"name"};
+
 	public AssetTagNameComparator() {
 		this(true, false);
 	}
@@ -51,6 +57,26 @@ public class AssetTagNameComparator extends OrderByComparator<AssetTag> {
 		else {
 			return -value;
 		}
+	}
+
+	@Override
+	public String getOrderBy() {
+		if (_ascending) {
+			return ORDER_BY_ASC;
+		}
+		else {
+			return ORDER_BY_DESC;
+		}
+	}
+
+	@Override
+	public String[] getOrderByFields() {
+		return ORDER_BY_FIELDS;
+	}
+
+	@Override
+	public boolean isAscending() {
+		return _ascending;
 	}
 
 	private final boolean _ascending;

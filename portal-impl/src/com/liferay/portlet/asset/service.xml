@@ -336,7 +336,7 @@
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="groupId" arrayable-operator="or" />
 		</finder>
 		<finder name="G_N" return-type="AssetTag">
 			<finder-column name="groupId" />

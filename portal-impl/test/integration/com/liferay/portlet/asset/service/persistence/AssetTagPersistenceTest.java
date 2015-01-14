@@ -159,6 +159,16 @@ public class AssetTagPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupIdArrayable() {
+		try {
+			_persistence.countByGroupId(new long[] { RandomTestUtil.nextLong(), 0L });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByG_N() {
 		try {
 			_persistence.countByG_N(RandomTestUtil.nextLong(), StringPool.BLANK);

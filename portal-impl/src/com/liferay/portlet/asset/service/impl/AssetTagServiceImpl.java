@@ -210,6 +210,10 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	public List<AssetTag> getTags(
 		long[] groupIds, String name, int start, int end) {
 
+		if (Validator.isNull(name)) {
+			return assetTagPersistence.filterFindByGroupId(groupIds);
+		}
+
 		return assetTagPersistence.filterFindByG_LikeN(
 			groupIds, name, start, end, new AssetTagNameComparator());
 	}
@@ -223,6 +227,10 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 	@Override
 	public int getTagsCount(long groupId, String name) {
+		if (Validator.isNull(name)) {
+			return assetTagPersistence.filterCountByGroupId(groupId);
+		}
+
 		return assetTagPersistence.filterCountByG_LikeN(groupId, name);
 	}
 

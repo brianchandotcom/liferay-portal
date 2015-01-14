@@ -56,6 +56,10 @@ body.portlet {
 			color: transparent;
 			font-size: 0;
 		}
+
+		&.add-content {
+			right: 30px;
+		}
 	}
 }
 

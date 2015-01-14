@@ -36,6 +36,7 @@ if (Validator.isNotNull(onInitMethod)) {
 }
 
 boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
+boolean showSource = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:showSource"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 %>
 
@@ -188,7 +189,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			theme_advanced_buttons1_add_before: 'fontselect,fontsizeselect,forecolor,backcolor,separator',
 			theme_advanced_buttons2_add_before: 'cut,copy,paste,search,replace',
 			theme_advanced_buttons3_add_before: 'tablecontrols,separator',
-			theme_advanced_disable: 'formatselect,styleselect,help',
+			theme_advanced_disable: 'formatselect,styleselect,help<c:if test="<%= !showSource %>">,code</c:if>',
 			theme_advanced_resize_horizontal: '<%= resizable %>',
 			theme_advanced_toolbar_align: 'left',
 			theme_advanced_toolbar_location: 'top'

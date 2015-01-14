@@ -2082,6 +2082,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets whether to enable editing the html source code of the content. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>showSource</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Sets whether to skip loading resources necessary for the CKEditor. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>skipEditorLoading</name>
 			<required>false</required>

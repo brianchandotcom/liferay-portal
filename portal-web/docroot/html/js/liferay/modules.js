@@ -805,6 +805,12 @@
 							'aui-node'
 						]
 					},
+					'liferay-source-editor': {
+						path: 'source_editor.js',
+						requires: [
+							'aui-ace-editor'
+						]
+					},
 					'liferay-storage-formatter': {
 						path: 'storage_formatter.js',
 						requires: [

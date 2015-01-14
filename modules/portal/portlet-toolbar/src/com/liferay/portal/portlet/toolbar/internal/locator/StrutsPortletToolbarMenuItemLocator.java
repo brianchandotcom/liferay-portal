@@ -15,7 +15,7 @@
 package com.liferay.portal.portlet.toolbar.internal.locator;
 
 import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
-import com.liferay.portal.kernel.portlet.toolbar.item.locator.PortletToolbarItemLocator;
+import com.liferay.portal.kernel.portlet.toolbar.item.locator.PortletToolbarMenuItemLocator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,11 +39,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(immediate = true)
-public class StrutsPortletToolbarItemLocator
-	implements PortletToolbarItemLocator {
+public class StrutsPortletToolbarMenuItemLocator
+	implements PortletToolbarMenuItemLocator {
 
 	@Override
-	public List<PortletToolbarMenuItem> getPortletToolbarItems(
+	public List<PortletToolbarMenuItem> getPortletToolbarMenuItems(
 		String portletId, PortletRequest portletRequest) {
 
 		String strutsAction = ParamUtil.getString(

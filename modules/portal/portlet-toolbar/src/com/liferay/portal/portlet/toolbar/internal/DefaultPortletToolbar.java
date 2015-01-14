@@ -16,7 +16,7 @@ package com.liferay.portal.portlet.toolbar.internal;
 
 import com.liferay.portal.kernel.portlet.toolbar.PortletToolbar;
 import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
-import com.liferay.portal.kernel.portlet.toolbar.item.locator.PortletToolbarItemLocator;
+import com.liferay.portal.kernel.portlet.toolbar.item.locator.PortletToolbarMenuItemLocator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +43,12 @@ public class DefaultPortletToolbar implements PortletToolbar {
 		List<PortletToolbarMenuItem> portletToolbarMenuItems =
 			new ArrayList<>();
 
-		for (PortletToolbarItemLocator portletToolbarItemLocator :
-				_portletToolbarItemLocators) {
+		for (PortletToolbarMenuItemLocator portletToolbarMenuItemLocator :
+				_portletToolbarMenuItemLocators) {
 
 			List<PortletToolbarMenuItem>
 				curPortletToolbarMenuItems =
-					portletToolbarItemLocator.getPortletToolbarItems(
+					portletToolbarMenuItemLocator.getPortletToolbarMenuItems(
 						portletId, portletRequest);
 
 			if (curPortletToolbarMenuItems != null) {
@@ -63,20 +63,20 @@ public class DefaultPortletToolbar implements PortletToolbar {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removePortletToolbarItemLocator")
-	protected void addPortletToolbarItemLocator(
-		PortletToolbarItemLocator portletToolbarItemLocator) {
+		unbind = "removePortletToolbarMenuItemLocator")
+	protected void addPortletToolbarMenuItemLocator(
+		PortletToolbarMenuItemLocator portletToolbarMenuItemLocator) {
 
-		_portletToolbarItemLocators.add(portletToolbarItemLocator);
+		_portletToolbarMenuItemLocators.add(portletToolbarMenuItemLocator);
 	}
 
-	protected void removePortletToolbarItemLocator(
-		PortletToolbarItemLocator portletToolbarItemLocator) {
+	protected void removePortletToolbarMenuItemLocator(
+		PortletToolbarMenuItemLocator portletToolbarMenuItemLocator) {
 
-		_portletToolbarItemLocators.remove(portletToolbarItemLocator);
+		_portletToolbarMenuItemLocators.remove(portletToolbarMenuItemLocator);
 	}
 
-	private final List<PortletToolbarItemLocator> _portletToolbarItemLocators =
-		new CopyOnWriteArrayList<>();
+	private final List<PortletToolbarMenuItemLocator>
+		_portletToolbarMenuItemLocators = new CopyOnWriteArrayList<>();
 
 }

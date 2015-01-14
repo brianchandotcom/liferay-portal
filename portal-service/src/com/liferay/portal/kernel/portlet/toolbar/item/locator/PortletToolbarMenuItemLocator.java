@@ -23,9 +23,9 @@ import javax.portlet.PortletRequest;
 /**
  * @author Sergio González
  */
-public interface PortletToolbarItemLocator {
+public interface PortletToolbarMenuItemLocator {
 
-	public List<PortletToolbarMenuItem> getPortletToolbarItems(
+	public List<PortletToolbarMenuItem> getPortletToolbarMenuItems(
 		String portletId, PortletRequest portletRequest);
 
 }

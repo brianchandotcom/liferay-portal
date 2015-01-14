@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import com.thoughtworks.selenium.Selenium;
 
 import io.appium.java_client.MobileDriver;
@@ -970,6 +972,37 @@ public class MobileDriverToSeleniumBridge
 			}
 			catch (Exception e) {
 			}
+		}
+	}
+
+	protected void tap(String locator) {
+		int elementPositionCenterX = WebDriverHelper.getElementPositionCenterX(
+			this, locator);
+
+		int elementPositionCenterY = WebDriverHelper.getElementPositionCenterY(
+			this, locator);
+
+		int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
+
+		int screenPositionX = elementPositionCenterX * 3 / 2;
+
+		int screenPositionY =
+			(elementPositionCenterY - viewportPositionTop) * 3 / 2 + 116;
+
+		try {
+			Runtime runtime = Runtime.getRuntime();
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("adb -s emulator-5554 shell /data/local/tap.sh ");
+			sb.append(screenPositionX);
+			sb.append(" ");
+			sb.append(screenPositionY);
+
+			runtime.exec(sb.toString());
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
 		}
 	}
 

@@ -1017,25 +1017,25 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user with the email address receives a
-	 * notification email containing a new password. Returns <code>false</code>
-	 * if the notification email contains a link to reset the password. This
-	 * method sends the email asynchronously and returns before the email is
-	 * sent, so an error in the delivery does not affect its return value.
+	 * Sends a password notification email to the user matching the email
+	 * address. The portal's settings determine whether a password is sent
+	 * explicitly or whether a link for resetting the user's password is sent.
+	 * The method sends the email asynchronously and returns before the email is
+	 * sent.
 	 *
 	 * <p>
-	 * The content of the notification email can be specified in
-	 * <code>portal.properties</code> with the <code>admin.email.password</code>
-	 * keys and overridden through the Portal Settings UI.
+	 * The content of the notification email is specified with the
+	 * <code>admin.email.password</code> portal property keys. They can be
+	 * overridden via a <code>portal-ext.properties</code> file or modified
+	 * through the Portal Settings UI.
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the user's company
 	 * @param  emailAddress the user's email address
-	 * @param  serviceContext the service context to be applied
-	 * @return <code>true</code> if the user receives a notification email with
-	 *         a new password; <code>false</code> if the notification email only
+	 * @return <code>true</code> if the notification email includes a new
+	 *         password; <code>false</code> if the notification email only
 	 *         contains a reset link
-	 * @throws PortalException if the user with the email address could not be
+	 * @throws PortalException if a user with the email address could not be
 	 *         found
 	 */
 	@Override
@@ -1048,23 +1048,22 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user with the screen name receives a
-	 * notification email containing a new password. Returns <code>false</code>
-	 * if the notification email contains a link to reset the password. This
-	 * method sends the email asynchronously and returns before the email is
-	 * sent, so an error in the delivery does not affect its return value.
+	 * Sends a password notification email to the user matching the screen name.
+	 * The portal's settings determine whether a password is sent explicitly or
+	 * whether a link for resetting the user's password is sent. The method
+	 * sends the email asynchronously and returns before the email is sent.
 	 *
 	 * <p>
-	 * The content of the notification email can be specified in
-	 * <code>portal.properties</code> with the <code>admin.email.password</code>
-	 * keys and overridden through the Portal Settings UI.
+	 * The content of the notification email is specified with the
+	 * <code>admin.email.password</code> portal property keys. They can be
+	 * overridden via a <code>portal-ext.properties</code> file or modified
+	 * through the Portal Settings UI.
 	 * </p>
 	 *
 	 * @param  companyId the primary key of the user's company
 	 * @param  screenName the user's screen name
-	 * @param  serviceContext the service context to be applied
-	 * @return <code>true</code> if the user receives a notification email with
-	 *         a new password; <code>false</code> if the notification email only
+	 * @return <code>true</code> if the notification email includes a new
+	 *         password; <code>false</code> if the notification email only
 	 *         contains a reset link
 	 * @throws PortalException if a user with the screen name could not be found
 	 */
@@ -1076,23 +1075,21 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user with the user ID receives a
-	 * notification email containing a new password. Returns <code>false</code>
-	 * if the notification email contains a link to reset the password. This
-	 * method sends the email asynchronously and returns before the email is
-	 * sent, so an error in the delivery does not affect its return value.
+	 * Sends a password notification email to the user matching the ID. The
+	 * portal's settings determine whether a password is sent explicitly or
+	 * whether a link for resetting the user's password is sent. The method
+	 * sends the email asynchronously and returns before the email is sent.
 	 *
 	 * <p>
-	 * The content of the notification email can be specified in
-	 * <code>portal.properties</code> with the <code>admin.email.password</code>
-	 * keys and overridden through the Portal Settings UI.
+	 * The content of the notification email is specified with the
+	 * <code>admin.email.password</code> portal property keys. They can be
+	 * overridden via a <code>portal-ext.properties</code> file or modified
+	 * through the Portal Settings UI.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the user's company
 	 * @param  userId the user's primary key
-	 * @param  serviceContext the service context to be applied
-	 * @return <code>true</code> if the user receives a notification email with
-	 *         a new password; <code>false</code> if the notification email only
+	 * @return <code>true</code> if the notification email includes a new
+	 *         password; <code>false</code> if the notification email only
 	 *         contains a reset link
 	 * @throws PortalException if a user with the user ID could not be found
 	 */

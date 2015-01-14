@@ -110,7 +110,7 @@ if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name
 		<liferay-ui:icon iconCssClass="icon-search" message="view-users" method="get" url="<%= viewUsersURL %>" />
 	</c:if>
 
-	<c:if test="<%= !PortalUtil.isSystemRole(name) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">
+	<c:if test="<%= !role.isSystem() && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/roles_admin/edit_role" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

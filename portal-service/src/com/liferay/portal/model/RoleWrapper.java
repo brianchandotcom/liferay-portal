@@ -541,6 +541,11 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
+	public boolean isSystem() {
+		return _role.isSystem();
+	}
+
+	@Override
 	public boolean isTeam() {
 		return _role.isTeam();
 	}

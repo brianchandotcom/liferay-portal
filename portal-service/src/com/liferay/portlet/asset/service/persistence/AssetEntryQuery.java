@@ -60,7 +60,8 @@ public class AssetEntryQuery {
 		if (ArrayUtil.contains(ORDER_BY_COLUMNS, orderByCol) ||
 			((orderByCol != null) &&
 			 orderByCol.startsWith(
-				DDMIndexer.DDM_FIELD_NAMESPACE + StringPool.FORWARD_SLASH))) {
+				DDMIndexer.DDM_FIELD_NAMESPACE +
+					StringPool.DOUBLE_UNDERLINE))) {
 
 			return orderByCol;
 		}

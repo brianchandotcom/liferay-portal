@@ -839,9 +839,9 @@ public class AssetUtil {
 
 		if (sortField.startsWith(
 				DDMIndexerImpl.DDM_FIELD_NAMESPACE +
-					StringPool.FORWARD_SLASH)) {
+					StringPool.DOUBLE_UNDERLINE)) {
 
-			String[] sortFields = sortField.split(StringPool.FORWARD_SLASH);
+			String[] sortFields = sortField.split(StringPool.DOUBLE_UNDERLINE);
 
 			long ddmStructureId = GetterUtil.getLong(sortFields[1]);
 			String fieldName = sortFields[2];

@@ -50,7 +50,7 @@
 		<pathelement location="${project.dir}/lib/portal/velocity.jar" />
 	</path>
 
-	<extension-point name="build-portal-web-dependencies" depends="build-alloy,build-alloy-editor,build-ckeditor,build-css,build-dtd,build-tinymce,build-vaadin" />
+	<extension-point name="build-portal-web-dependencies" depends="build-alloy,build-alloy-editor,build-bourbon,build-ckeditor,build-css,build-dtd,build-tinymce,build-vaadin" />
 
 	<target name="build-alloy" depends="build-alloy-bootstrap,build-alloy-font-awesome">
 		<path id="alloy.zip.path">
@@ -305,6 +305,45 @@
 		</if>
 	</target>
 
+	<target name="build-bourbon">
+		<property name="portal.common.dir" value="docroot/html/css/common" />
+
+		<property name="bourbon.version" value="3.2.3" />
+
+		<property name="bourbon.deploy" value="${portal.common.dir}/bourbon" />
+
+		<property name="bourbon.file" value="bourbon-${bourbon.version}.zip" />
+
+		<property name="bourbon.tmp.dir" value="docroot/html/BOURBON_ZIP" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="third-party/${bourbon.file}"
+					targetfile="${bourbon.deploy}"
+				/>
+			</not>
+			<then>
+				<delete dir="${bourbon.tmp.dir}" />
+				<delete dir="${bourbon.deploy}" />
+
+				<unzip src="third-party/${bourbon.file}" dest="${bourbon.tmp.dir}" />
+
+				<property name="bourbon.lib.dir" value="${bourbon.tmp.dir}/bourbon-${bourbon.version}/app/assets/stylesheets" />
+
+				<copy todir="${bourbon.deploy}" overwrite="true" preservelastmodified="true">
+					<fileset dir="${bourbon.lib.dir}/"/>
+				</copy>
+
+				<copy todir="${app.server.dir}/webapps/ROOT/html/css/common/" overwrite="true" preservelastmodified="true">
+					<fileset dir="${portal.common.dir}" />
+				</copy>
+
+				<delete dir="${bourbon.tmp.dir}" />
+			</then>
+		</if>
+	</target>
+
 	<target name="build-ckeditor">
 		<if>
 			<not>
@@ -482,7 +521,7 @@
 		/>
 	</target>
 
-	<target name="build-css" depends="build-themes">
+	<target name="build-css" depends="build-bourbon,build-themes">
 		<property name="sass.tmp.dir" value="${basedir}/sass_tmp_dir" />
 
 		<mkdir dir="${sass.tmp.dir}" />

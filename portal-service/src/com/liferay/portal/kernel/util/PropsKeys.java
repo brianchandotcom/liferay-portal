@@ -817,6 +817,8 @@ public interface PropsKeys {
 
 	public static final String DL_STORE_S3_BUCKET_NAME = "dl.store.s3.bucket.name";
 
+	public static final String DL_STORE_S3_JETS3T = "dl.store.s3.jets3t";
+
 	public static final String DL_STORE_S3_SECRET_KEY = "dl.store.s3.secret.key";
 
 	public static final String DL_STORE_S3_TEMP_DIR_CLEAN_UP_EXPUNGE = "dl.store.s3.temp.dir.clean.up.expunge";

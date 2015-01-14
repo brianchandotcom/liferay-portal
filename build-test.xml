@@ -4321,6 +4321,7 @@ if (ppstate.equals("normal")) {
 			adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_down.sh /data/local
 			adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_up.sh /data/local
 			adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/tap.sh /data/local
+
 			adb -s emulator-5554 shell chmod 0777 /data/local/swipe_down.sh
 			adb -s emulator-5554 shell chmod 0777 /data/local/swipe_up.sh
 			adb -s emulator-5554 shell chmod 0777 /data/local/tap.sh

@@ -20,6 +20,48 @@
 		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
+	<command name="configureGeneralCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+
+		<if>
+			<equals arg1="${threadAsQuestionByDefaultEnabled}" arg2="true" />
+			<then>
+				<execute action="CPMessageboardsConfiguration#check" locator-key1="GENERAL_THREAD_AS_QUESTION_BY_DEFAULT_CHECKBOX" />
+			</then>
+		</if>
+
+		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="configureGeneralPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+
+		<if>
+			<equals arg1="${messageFormatBBCodeEnabled}" arg2="true" />
+			<then>
+				<var name="key_messageFormat" value="${messageFormat}" />
+
+				<execute action="PGMessageboardsConfiguration#select" locator-key1="MESSAGE_FORMAT_DROPDOWN_OPTION" value1="${key_messageFormat}" />
+			</then>
+		</if>
+
+		<execute action="PGMessageboardsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="configureMessageAddedEmailCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />

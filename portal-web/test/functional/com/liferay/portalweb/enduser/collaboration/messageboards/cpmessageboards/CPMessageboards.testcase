@@ -243,4 +243,112 @@
 
 		<execute macro="MessageboardsThread#viewNoAnonymousPostingCheckboxCP" />
 	</command>
+
+	<command name="ViewBBCodeNoXSS" priority="5">
+		<var name="font" value="5" />
+		<var name="portletName" value="Message Boards" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#configureGeneralCP">
+			<var name="messageFormat" value="BBCode" />
+			<var name="messageFormatBBCodeEnabled" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="source" value="true" />
+			<var name="threadBody" value="[img]Not An Image[font= onerror=alert(/XSS/.source)//]FF[/font][/img]" />
+			<var name="threadSubject" value="New Thread Subject" />
+		</execute>
+
+		<execute macro="MessageboardsThread#assertAlertNotPresent" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewCP">
+			<var name="postsNumber" value="1" />
+			<var name="threadBody" value="" />
+			<var name="threadSubject" value="New Thread Subject" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="fontSize" value="24" />
+			<var name="source" value="true" />
+			<var name="threadBody" value="[size=${font}]Thread Body[/size]" />
+			<var name="threadSubject" value="New Thread Subject 2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewCP">
+			<var name="fontSize" value="24" />
+			<var name="postsNumber" value="1" />
+			<var name="threadBody" value="Thread Body" />
+			<var name="threadSubject" value="New Thread Subject 2" />
+		</execute>
+	</command>
+
+	<command name="ViewThreadDefaultQuestion" priority="3">
+		<var name="portletName" value="Message Boards" />
+		<var name="threadReplyBody" value="Thread Reply Body" />
+		<var name="threadSubject" value="New Thread Subject" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewMarkAsQuestionConfiguredCP">
+			<var name="markAsQuestion" value="false" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#configureGeneralCP">
+			<var name="threadAsQuestionByDefaultEnabled" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewMarkAsQuestionConfiguredCP">
+			<var name="markAsQuestion" value="true" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="threadBody" value="Thread Body" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#replyCP">
+			<var name="markAsAnswer" value="true" />
+			<var name="markAsQuestion" value="true" />
+			<var name="threadReplyBody" value="${threadReplyBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewAnswerCP">
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+	</command>
 </definition>

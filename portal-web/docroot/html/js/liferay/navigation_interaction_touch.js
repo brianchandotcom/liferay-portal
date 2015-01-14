@@ -100,6 +100,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['event-tap', 'event-touch', 'liferay-navigation-interaction']
+		requires: ['event-outside', 'event-tap', 'event-touch', 'liferay-navigation-interaction']
 	}
 );

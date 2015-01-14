@@ -268,7 +268,9 @@ public class JspServlet extends HttpServlet {
 	private static final Class<?>[] _INTERFACES = {
 		ServletContext.class
 	};
+
 	private static final String _JSP_TAGLIB = "jsp.taglib";
+
 	private static final String _OSGI_EXTENDER = "osgi.extender";
 
 	private Bundle[] _allParticipatingBundles;

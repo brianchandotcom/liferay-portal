@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `87f85c5`.*
+*This document has been reviewed through commit `d774a2f`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -698,26 +698,23 @@ its overall lack of functionality.
 
 #### What changed?
 
-The *Asset Tag Properties* have been removed. The service doesn't exist anymore
-and the API in Asset Tag Service doesn't have this parameter anymore.
-
-The behavior associated to tags properties in Asset Publisher Portlet and XSL
-Portlet has been removed.
+The *Asset Tag Properties* have been removed. The service no longer exists and
+the Asset Tag Service API no longer has this parameter. The behavior associated
+with tag properties in the Asset Publisher and XSL portlets has also been
+removed.
 
 #### Who is affected?
 
-This affects any plugin using the Asset Tag Properties service.
+This affects any plugin that uses the Asset Tag Properties service.
 
 #### How should I update my code?
 
-If you are using this functionality, you can achieve the same behaviour with
-*Asset Category Properties*.
-
-If you are using the Asset Tag Service, update your method calls just removing
-the properties[] parameter.
+If you are using this functionality, you can achieve the same behavior with
+*Asset Category Properties*. If you are using the Asset Tag Service, remove the
+`String[]` tag properties parameter from your calls to the service's methods.
 
 #### Why was this change made?
 
-The Asset Tag Properties were deprecated on 6.2 version.
+The Asset Tag Properties were deprecated for the 6.2 version of Liferay Portal.
 
 ---------------------------------------

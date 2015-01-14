@@ -15,6 +15,7 @@
 package com.liferay.document.library.google.docs.context;
 
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.context.DLDisplayContextFactory;
@@ -22,7 +23,9 @@ import com.liferay.portlet.documentlibrary.context.DLEditFileEntryDisplayContext
 import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
@@ -86,6 +89,26 @@ public class GoogleDocsDLDisplayContextFactory
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
+			DLFileShortcut dlFileShortcut)
+		throws PortalException {
+
+		long fileEntryId = dlFileShortcut.getToFileEntryId();
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		return getDLFileVersionActionsDisplayContext(
+			parentDLViewFileVersionDisplayContext, request, response,
+			fileVersion);
+	}
+
+	@Override
+	public DLViewFileVersionDisplayContext
+		getDLFileVersionActionsDisplayContext(
+			DLViewFileVersionDisplayContext
+				parentDLViewFileVersionDisplayContext,
+			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
 
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
@@ -116,6 +139,11 @@ public class GoogleDocsDLDisplayContextFactory
 	}
 
 	@Reference
+	public void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
+	@Reference
 	public void setDLFileEntryMetadataLocalService(
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
 
@@ -127,6 +155,7 @@ public class GoogleDocsDLDisplayContextFactory
 		_storageEngine = storageEngine;
 	}
 
+	private DLAppService _dlAppService;
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 	private StorageEngine _storageEngine;
 

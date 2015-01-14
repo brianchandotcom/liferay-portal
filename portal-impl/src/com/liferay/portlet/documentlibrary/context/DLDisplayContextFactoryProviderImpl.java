@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -104,6 +105,36 @@ public class DLDisplayContextFactoryProviderImpl
 	@Override
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			DLFileShortcut dlFileShortcut)
+		throws PortalException {
+
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			new DefaultDLViewFileVersionDisplayContext(
+				request, response, dlFileShortcut);
+
+		if (dlFileShortcut == null) {
+			return dlViewFileVersionDisplayContext;
+		}
+
+		for (
+			DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
+			_dlDisplayContextFactoryReferences) {
+
+			DLDisplayContextFactory dlDisplayContextFactory =
+				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
+
+			dlViewFileVersionDisplayContext =
+				dlDisplayContextFactory.getDLFileVersionActionsDisplayContext(
+					dlViewFileVersionDisplayContext, request, response,
+					dlFileShortcut);
+		}
+
+		return dlViewFileVersionDisplayContext;
+	}
+
+	public DLViewFileVersionDisplayContext
+		getDLViewFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion)
 		throws PortalException {

@@ -43,6 +43,8 @@ public class DefaultIGViewFileVersionDisplayContext
 
 		addDownloadMenuItem(menuItems);
 
+		addViewOriginalFileMenuItem(menuItems);
+
 		addEditMenuItem(menuItems);
 
 		addPermissionsMenuItem(menuItems);

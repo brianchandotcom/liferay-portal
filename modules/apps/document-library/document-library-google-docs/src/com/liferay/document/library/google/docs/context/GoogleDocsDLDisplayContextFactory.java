@@ -131,6 +131,20 @@ public class GoogleDocsDLDisplayContextFactory
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
+			DLFileShortcut dlFileShortcut)
+		throws PortalException {
+
+		return getDLFileVersionActionsDisplayContext(
+			parentDLViewFileVersionDisplayContext, request, response,
+			dlFileShortcut);
+	}
+
+	@Override
+	public DLViewFileVersionDisplayContext
+		getIGFileVersionActionsDisplayContext(
+			DLViewFileVersionDisplayContext
+				parentDLViewFileVersionDisplayContext,
+			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
 
 		return getDLFileVersionActionsDisplayContext(

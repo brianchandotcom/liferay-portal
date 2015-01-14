@@ -53,6 +53,12 @@ public interface DLDisplayContextFactoryProvider {
 	public DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
+			DLFileShortcut dlFileShortcut)
+		throws PortalException;
+
+	public DLViewFileVersionDisplayContext
+		getIGFileVersionActionsDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion)
 		throws PortalException;
 

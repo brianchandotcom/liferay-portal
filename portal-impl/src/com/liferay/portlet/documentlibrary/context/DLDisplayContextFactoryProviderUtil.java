@@ -80,6 +80,17 @@ public class DLDisplayContextFactoryProviderUtil {
 	public static DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
+			DLFileShortcut dlFileShortcut)
+		throws PortalException {
+
+		return getDLDisplayContextFactoryProvider().
+			getIGFileVersionActionsDisplayContext(
+				request, response, dlFileShortcut);
+	}
+
+	public static DLViewFileVersionDisplayContext
+		getIGFileVersionActionsDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion)
 		throws PortalException {
 

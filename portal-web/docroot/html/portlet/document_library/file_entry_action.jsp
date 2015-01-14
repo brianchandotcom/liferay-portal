@@ -97,6 +97,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 
 <liferay-util:buffer var="iconMenu">
 	<liferay-ui:icon-menu direction='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? "down" : "left" %>' extended="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? false : true %>" icon="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" message='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' showExpanded="<%= false %>" showWhenSingleIcon="<%= dlActionsDisplayContext.isShowWhenSingleIconActionButton() %>" triggerCssClass="btn btn-default">
+
 		<%
 		for (MenuItem menuItem : dlViewFileVersionDisplayContext.getMenuItems()) {
 		%>
@@ -106,6 +107,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 		<%
 		}
 		%>
+
 	</liferay-ui:icon-menu>
 </liferay-util:buffer>
 

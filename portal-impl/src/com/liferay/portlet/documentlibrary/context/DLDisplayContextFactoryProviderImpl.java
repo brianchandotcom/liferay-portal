@@ -167,6 +167,37 @@ public class DLDisplayContextFactoryProviderImpl
 	public DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
+			DLFileShortcut dlFileShortcut)
+		throws PortalException {
+
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			new DefaultIGViewFileVersionDisplayContext(
+				request, response, dlFileShortcut);
+
+		if (dlFileShortcut == null) {
+			return dlViewFileVersionDisplayContext;
+		}
+
+		for (
+			DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
+			_dlDisplayContextFactoryReferences) {
+
+			DLDisplayContextFactory dlDisplayContextFactory =
+				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
+
+			dlViewFileVersionDisplayContext =
+				dlDisplayContextFactory.getIGFileVersionActionsDisplayContext(
+					dlViewFileVersionDisplayContext, request, response,
+					dlFileShortcut);
+		}
+
+		return dlViewFileVersionDisplayContext;
+	}
+
+	@Override
+	public DLViewFileVersionDisplayContext
+		getIGFileVersionActionsDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion)
 		throws PortalException {
 

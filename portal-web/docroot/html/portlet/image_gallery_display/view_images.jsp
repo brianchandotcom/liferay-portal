@@ -63,7 +63,14 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 					thumbnailId = "entry_" + fileEntry.getFileEntryId();
 				}
 
-				DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayContextFactoryProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
+				DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = null;
+
+				if (fileShortcut == null) {
+					dlViewFileVersionDisplayContext = DLDisplayContextFactoryProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
+				}
+				else {
+					dlViewFileVersionDisplayContext = DLDisplayContextFactoryProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileShortcut);
+				}
 				%>
 
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">

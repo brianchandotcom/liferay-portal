@@ -548,10 +548,10 @@ public class OrganizationServiceSoap {
 	}
 
 	/**
-	* Returns all the organizations associated with the user.
+	* Returns all the organizations directly associated with the user.
 	*
 	* @param userId the primary key of the user
-	* @return the organizations associated with the user
+	* @return the organizations directly associated with the user
 	* @throws PortalException if a user with the primary key could not be found
 	*/
 	public static com.liferay.portal.model.OrganizationSoap[] getUserOrganizations(

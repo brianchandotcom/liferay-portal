@@ -1202,11 +1202,11 @@ public class GroupLocalServiceUtil {
 	}
 
 	/**
-	* Returns the group associated with the user.
+	* Returns the group directly associated with the user.
 	*
 	* @param companyId the primary key of the company
 	* @param userId the primary key of the user
-	* @return the group associated with the user
+	* @return the group directly associated with the user
 	* @throws PortalException if a matching group could not be found
 	*/
 	public static com.liferay.portal.model.Group getUserGroup(long companyId,

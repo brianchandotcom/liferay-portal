@@ -365,10 +365,10 @@ public interface OrganizationService extends BaseService {
 	public int getOrganizationsCount(long companyId, long parentOrganizationId);
 
 	/**
-	* Returns all the organizations associated with the user.
+	* Returns all the organizations directly associated with the user.
 	*
 	* @param userId the primary key of the user
-	* @return the organizations associated with the user
+	* @return the organizations directly associated with the user
 	* @throws PortalException if a user with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

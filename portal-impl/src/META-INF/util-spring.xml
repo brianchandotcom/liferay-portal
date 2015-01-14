@@ -909,6 +909,11 @@
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.context.DLDisplayContextFactoryProviderUtil" class="com.liferay.portlet.documentlibrary.context.DLDisplayContextFactoryProviderUtil">
+		<property name="DLDisplayContextFactoryProvider">
+			<bean class="com.liferay.portlet.documentlibrary.context.DLDisplayContextFactoryProviderImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" />
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" />
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLPermission" />

@@ -36,12 +36,22 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ivan Zaera
  */
-public class DLDisplayContextFactoryUtil {
+public class DLDisplayContextFactoryProviderImpl
+	implements DLDisplayContextFactoryProvider {
 
-	public static DLDisplayContextFactoryUtil getInstance() {
-		return _instance;
+	public DLDisplayContextFactoryProviderImpl() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(objectClass=" + DLDisplayContextFactory.class.getName() + ")");
+
+		_serviceTracker = registry.trackServices(
+			filter, new DLDisplayContextFactoryServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
+	@Override
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			DLFileEntryType dlFileEntryType)
@@ -53,7 +63,7 @@ public class DLDisplayContextFactoryUtil {
 
 		for (
 			DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
-				_dlDisplayContextFactoryReferences) {
+			_dlDisplayContextFactoryReferences) {
 
 			DLDisplayContextFactory dlDisplayContextFactory =
 				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
@@ -67,6 +77,7 @@ public class DLDisplayContextFactoryUtil {
 		return dlEditFileEntryDisplayContext;
 	}
 
+	@Override
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileEntry fileEntry)
@@ -78,7 +89,7 @@ public class DLDisplayContextFactoryUtil {
 
 		for (
 			DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
-				_dlDisplayContextFactoryReferences) {
+			_dlDisplayContextFactoryReferences) {
 
 			DLDisplayContextFactory dlDisplayContextFactory =
 				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
@@ -92,8 +103,9 @@ public class DLDisplayContextFactoryUtil {
 		return dlEditFileEntryDisplayContext;
 	}
 
+	@Override
 	public DLViewFileVersionDisplayContext
-		getDLViewFileVersionActionsDisplayContext(
+		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion)
 		throws PortalException {
@@ -106,6 +118,7 @@ public class DLDisplayContextFactoryUtil {
 			dlViewFileVersionDisplayContext, request, response, fileVersion);
 	}
 
+	@Override
 	public DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
@@ -120,18 +133,6 @@ public class DLDisplayContextFactoryUtil {
 			dlViewFileVersionDisplayContext, request, response, fileVersion);
 	}
 
-	private DLDisplayContextFactoryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
-			"(objectClass=" + DLDisplayContextFactory.class.getName() + ")");
-
-		_serviceTracker = registry.trackServices(
-			filter, new DLDisplayContextFactoryServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
 	private DLViewFileVersionDisplayContext
 		_getDLViewFileVersionDisplayContext(
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext,
@@ -144,7 +145,7 @@ public class DLDisplayContextFactoryUtil {
 
 		for (
 			DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
-				_dlDisplayContextFactoryReferences) {
+			_dlDisplayContextFactoryReferences) {
 
 			DLDisplayContextFactory dlDisplayContextFactory =
 				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
@@ -158,21 +159,18 @@ public class DLDisplayContextFactoryUtil {
 		return dlViewFileVersionDisplayContext;
 	}
 
-	private static final DLDisplayContextFactoryUtil _instance =
-		new DLDisplayContextFactoryUtil();
-
 	private final SortedSet<DLDisplayContextFactoryReference>
 		_dlDisplayContextFactoryReferences = new ConcurrentSkipListSet<>();
 	private final ConcurrentMap<
 		DLDisplayContextFactory, DLDisplayContextFactoryReference>
-			_dlDisplayContextFactoryReferencesMap = new ConcurrentHashMap<>();
+		_dlDisplayContextFactoryReferencesMap = new ConcurrentHashMap<>();
 	private final
 		ServiceTracker<DLDisplayContextFactory, DLDisplayContextFactory>
 			_serviceTracker;
 
 	private class DLDisplayContextFactoryServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<
-			DLDisplayContextFactory, DLDisplayContextFactory> {
+		DLDisplayContextFactory, DLDisplayContextFactory> {
 
 		@Override
 		public DLDisplayContextFactory addingService(

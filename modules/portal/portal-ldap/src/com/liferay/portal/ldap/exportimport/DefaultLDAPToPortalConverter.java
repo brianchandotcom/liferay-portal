@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.ldap.exportimport;
 
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserScreenNameException;
@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,11 +35,16 @@ import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.security.ldap.ContactConverterKeys;
+import com.liferay.portal.security.ldap.GroupConverterKeys;
+import com.liferay.portal.security.ldap.LDAPGroup;
+import com.liferay.portal.security.ldap.LDAPToPortalConverter;
+import com.liferay.portal.security.ldap.LDAPUser;
+import com.liferay.portal.security.ldap.UserConverterKeys;
 import com.liferay.portal.service.ListTypeServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.ContactUtil;
 import com.liferay.portal.service.persistence.UserUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.text.ParseException;
 
@@ -53,10 +59,13 @@ import java.util.Properties;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Edward Han
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = LDAPToPortalConverter.class)
 public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 	@Override

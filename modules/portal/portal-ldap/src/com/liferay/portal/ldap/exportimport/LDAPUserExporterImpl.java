@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.ldap.exportimport;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Contact;
@@ -24,9 +24,14 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.exportimport.UserExporter;
 import com.liferay.portal.security.exportimport.UserOperation;
+import com.liferay.portal.security.ldap.GroupConverterKeys;
+import com.liferay.portal.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.security.ldap.Modifications;
+import com.liferay.portal.security.ldap.PortalLDAPContext;
+import com.liferay.portal.security.ldap.PortalLDAPUtil;
+import com.liferay.portal.security.ldap.PortalToLDAPConverter;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
@@ -45,6 +50,9 @@ import javax.naming.directory.ModificationItem;
 import javax.naming.directory.SchemaViolationException;
 import javax.naming.ldap.LdapContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
@@ -52,7 +60,7 @@ import javax.naming.ldap.LdapContext;
  * @author Wesley Gong
  * @author Vilmos Papp
  */
-@DoPrivileged
+@Component(immediate = true, service = UserExporter.class)
 public class LDAPUserExporterImpl implements UserExporter {
 
 	@Override
@@ -326,6 +334,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 		}
 	}
 
+	@Reference
 	public void setPortalToLDAPConverter(
 		PortalToLDAPConverter portalToLDAPConverter) {
 

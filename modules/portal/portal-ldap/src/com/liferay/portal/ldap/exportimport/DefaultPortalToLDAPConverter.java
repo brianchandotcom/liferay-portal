@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.ldap.exportimport;
 
 import com.liferay.portal.PwdEncryptorException;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -28,9 +30,14 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.exportimport.UserOperation;
+import com.liferay.portal.security.ldap.GroupConverterKeys;
+import com.liferay.portal.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.security.ldap.Modifications;
+import com.liferay.portal.security.ldap.PortalLDAPUtil;
+import com.liferay.portal.security.ldap.PortalToLDAPConverter;
+import com.liferay.portal.security.ldap.UserConverterKeys;
 import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoConverterUtil;
 
@@ -48,7 +55,7 @@ import javax.naming.directory.BasicAttribute;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
@@ -56,6 +63,7 @@ import org.apache.commons.beanutils.PropertyUtils;
  * @author Marcellus Tavares
  * @author Wesley Gong
  */
+@Component(immediate = true, service = PortalToLDAPConverter.class)
 public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	public DefaultPortalToLDAPConverter() {
@@ -86,7 +94,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		sb.append(
 			GetterUtil.getString(
-				groupMappings.getProperty(_groupDNFieldName), _DEFAULT_DN));
+				groupMappings.getProperty(GroupConverterKeys.GROUP_NAME),
+				_DEFAULT_DN));
 		sb.append(StringPool.EQUAL);
 		sb.append(userGroup.getName());
 		sb.append(StringPool.COMMA);
@@ -133,8 +142,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			PropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES + postfix,
 			StringPool.COMMA);
 
-		for (int i = 0; i < defaultObjectClasses.length; i++) {
-			objectClass.add(defaultObjectClasses[i]);
+		for (String defaultObjectClass : defaultObjectClasses) {
+			objectClass.add(defaultObjectClass);
 		}
 
 		attributes.put(objectClass);
@@ -199,8 +208,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			PropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES + postfix,
 			StringPool.COMMA);
 
-		for (int i = 0; i < defaultObjectClasses.length; i++) {
-			objectClass.add(defaultObjectClasses[i]);
+		for (String defaultObjectClass : defaultObjectClasses) {
+			objectClass.add(defaultObjectClass);
 		}
 
 		attributes.put(objectClass);
@@ -348,7 +357,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			GetterUtil.getString(
 				userMappings.getProperty(_userDNFieldName), _DEFAULT_DN));
 		sb.append(StringPool.EQUAL);
-		sb.append(PropertyUtils.getProperty(user, _userDNFieldName));
+		sb.append(BeanPropertiesUtil.getStringSilent(user, _userDNFieldName));
 		sb.append(StringPool.COMMA);
 		sb.append(PortalLDAPUtil.getUsersDN(ldapServerId, user.getCompanyId()));
 
@@ -459,7 +468,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			String ldapAttributeName = (String)entry.getValue();
 
 			try {
-				Object attributeValue = PropertyUtils.getProperty(
+				Object attributeValue = BeanPropertiesUtil.getObjectSilent(
 					object, fieldName);
 
 				if (attributeValue != null) {
@@ -550,12 +559,12 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	private static final String _OBJECT_CLASS = "objectclass";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultPortalToLDAPConverter.class);
 
-	private String _groupDNFieldName = GroupConverterKeys.GROUP_NAME;
-	private Map<String, String> _reservedContactFieldNames = new HashMap<>();
-	private Map<String, String> _reservedUserFieldNames = new HashMap<>();
+	private final Map<String, String> _reservedContactFieldNames =
+		new HashMap<>();
+	private final Map<String, String> _reservedUserFieldNames = new HashMap<>();
 	private String _userDNFieldName = UserConverterKeys.SCREEN_NAME;
 
 }

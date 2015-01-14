@@ -49,6 +49,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FONT_SIZE_DROPDOWN</td>
+	<td>//a/span[contains(.,'Size')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FONT_SIZE_DROPDOWN_SELECT</td>
+	<td>//span[contains(@class,'fontsize')]//span[contains(.,'${key_fontSize}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOURCE_BUTTON</td>
 	<td>//a[contains(@class,'cke_button__source')]</td>
 	<td></td>

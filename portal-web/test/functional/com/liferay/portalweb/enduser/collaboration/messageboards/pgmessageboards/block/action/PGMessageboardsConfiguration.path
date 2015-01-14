@@ -38,6 +38,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--GENERAL-->
+<tr>
+	<td>MESSAGE_FORMAT_DROPDOWN_OPTION</td>
+	<td>//select[contains(.,'${key_messageFormat}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_AS_QUESTION_BY_DEFAULT_CHECKBOX</td>
+	<td>//input[contains(@id,'threadAsQuestionByDefaultCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_SETUP</td>

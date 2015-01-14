@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//a[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[@id='_162_publishButton' and contains(.,'Publish')]</td>
 	<td></td>
@@ -36,6 +41,11 @@
 <tr>
 	<td>ANONYMOUS_CHECKBOX</td>
 	<td>//input[@id='_162_anonymous']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARK_AS_A_QUESTION_CHECKBOX</td>
+	<td>//input[@id='_162_question']</td>
 	<td></td>
 </tr>
 <tr>

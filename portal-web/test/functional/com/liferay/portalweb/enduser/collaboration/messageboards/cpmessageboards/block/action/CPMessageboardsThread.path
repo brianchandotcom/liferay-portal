@@ -40,6 +40,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_CONTROLS_BACK</td>
+	<td>//span[contains(.,'Back')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -138,6 +143,16 @@
 <tr>
 	<td>MESSAGE_BODY_ATTACHMENT_1</td>
 	<td>//div[@class='thread-body']/div/ul/li[@class='message-attachment']/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_MARK_AS_AN_ANSWER_1</td>
+	<td>xpath=(//div[@class='message-container']//tbody//li/span/a/span)[8]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_ANSWER_1</td>
+	<td>xpath=(//div[@class='message-container']//div[contains(@class,'answer')]/span/span[contains(.,'Answer')])[2]</td>
 	<td></td>
 </tr>
 </tbody>

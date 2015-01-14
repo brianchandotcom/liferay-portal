@@ -173,6 +173,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_BODY_STYLE_1</td>
+	<td>//div[@class='thread-body']/span[contains(@style,'${key_fontSize}px')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_BODY_1_BLOCK_QUOTE</td>
 	<td>xpath=(//div[@class='thread-body'])[1]//div[@class='quote-content']</td>
 	<td></td>
@@ -215,6 +220,11 @@
 <tr>
 	<td>MESSAGE_USERNAME_2</td>
 	<td>xpath=(//span[@class='user-name'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_USERNAME_2_GUEST</td>
+	<td>xpath=(//td[contains(.,'Anonymous')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -310,6 +320,11 @@
 <tr>
 	<td>MESSAGE_REPLY_WITH_QUOTE_3</td>
 	<td>xpath=(//span[.='Reply with Quote'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_RATING_GUEST</td>
+	<td>xpath=(//div[@class='taglib-ratings thumbs']//span[contains(@class,'rating-off')])</td>
 	<td></td>
 </tr>
 <tr>

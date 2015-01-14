@@ -134,7 +134,7 @@ public class DLDisplayContextFactoryProviderImpl
 	}
 
 	public DLViewFileVersionDisplayContext
-		getDLViewFileVersionActionsDisplayContext(
+		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion)
 		throws PortalException {

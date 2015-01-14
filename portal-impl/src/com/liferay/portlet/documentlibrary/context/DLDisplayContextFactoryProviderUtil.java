@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,6 +54,17 @@ public class DLDisplayContextFactoryProviderUtil {
 
 		return getDLDisplayContextFactoryProvider().
 			getDLEditFileEntryDisplayContext(request, response, fileEntry);
+	}
+
+	public static DLViewFileVersionDisplayContext
+		getDLViewFileVersionDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			DLFileShortcut dlFileShortcut)
+		throws PortalException {
+
+		return getDLDisplayContextFactoryProvider().
+			getDLViewFileVersionDisplayContext(
+				request, response, dlFileShortcut);
 	}
 
 	public static DLViewFileVersionDisplayContext

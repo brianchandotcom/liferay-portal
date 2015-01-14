@@ -720,11 +720,6 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void tap(String locator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void typeAceEditor(String locator, String value) {
 		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
 	}

@@ -18,11 +18,6 @@ import com.liferay.poshi.runner.util.PropsValues;
 
 import io.appium.java_client.MobileDriver;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.WrapsDriver;
-
 /**
  * @author Kenji Heigel
  */
@@ -648,40 +643,6 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void stopLogger() {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void tap(String locator) {
-		WebElement webElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("YUI().use('node-event-simulate', function(Y) {");
-		sb.append("var node = Y.one('");
-
-		String cssLocator = locator;
-
-		cssLocator = cssLocator.replaceAll("\\/\\/", " ");
-		cssLocator = cssLocator.replaceAll(
-			"contains\\(@([^,]*),([^)]*)\\)", "$1*=$2");
-		cssLocator = cssLocator.replaceAll("'", "\"");
-		cssLocator = cssLocator.replaceAll("\\/", " > ");
-		cssLocator = cssLocator.replaceAll("^ ", "");
-		cssLocator = cssLocator.replaceAll(" and ", "][");
-
-		sb.append(cssLocator);
-
-		sb.append("');");
-		sb.append("node.simulateGesture('tap');});");
-
-		javascriptExecutor.executeScript(sb.toString());
 	}
 
 	@Override

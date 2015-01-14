@@ -202,6 +202,7 @@ AUI.add(
 							Liferay.Util.openWindow(
 								{
 									id: A.guid(),
+									refreshWindow: WIN,
 									title: strings.templates,
 									uri: urls.editTemplate
 								}

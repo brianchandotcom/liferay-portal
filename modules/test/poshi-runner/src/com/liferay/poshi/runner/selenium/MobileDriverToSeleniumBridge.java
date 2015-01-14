@@ -132,17 +132,15 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void click(String locator) {
-		WebElement webElement = getWebElement(locator);
-
 		try {
-			webElement.click();
+			tap(locator);
 		}
 		catch (Exception e) {
 			if (!isInViewport(locator)) {
 				swipeWebElementIntoView(locator);
 			}
 
-			webElement.click();
+			tap(locator);
 		}
 	}
 
@@ -970,6 +968,37 @@ public class MobileDriverToSeleniumBridge
 			}
 			catch (Exception e) {
 			}
+		}
+	}
+
+	protected void tap(String locator) {
+		int elementPositionCenterX = WebDriverHelper.getElementPositionCenterX(
+			this, locator);
+
+		int elementPositionCenterY = WebDriverHelper.getElementPositionCenterY(
+			this, locator);
+
+		int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
+
+		int screenPositionX = elementPositionCenterX * 3 / 2;
+
+		int screenPositionY =
+			(elementPositionCenterY - viewportPositionTop) * 3 / 2 + 116;
+
+		try {
+			Runtime runtime = Runtime.getRuntime();
+
+			StringBuilder sb = new StringBuilder(4);
+
+			sb.append("adb -s emulator-5554 shell /data/local/tap.sh ");
+			sb.append(screenPositionX);
+			sb.append(" ");
+			sb.append(screenPositionY);
+
+			runtime.exec(sb.toString());
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
 		}
 	}
 

@@ -21,6 +21,7 @@ import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.cluster.Address;
@@ -70,7 +71,6 @@ import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
@@ -94,6 +94,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.MaintenanceUtil;
+import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -255,7 +256,7 @@ public class EditServerAction extends PortletAction {
 	}
 
 	protected void cacheSingle() throws Exception {
-		WebCachePoolUtil.clear();
+		SingleVMPoolUtil.clear();
 	}
 
 	protected String convertProcess(
@@ -866,16 +867,24 @@ public class EditServerAction extends PortletAction {
 			advancedProperties);
 		portletPreferences.setValue(
 			PropsKeys.MAIL_SESSION_MAIL_POP3_HOST, pop3Host);
-		portletPreferences.setValue(
-			PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD, pop3Password);
+
+		if (!pop3Password.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
+			portletPreferences.setValue(
+				PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD, pop3Password);
+		}
+
 		portletPreferences.setValue(
 			PropsKeys.MAIL_SESSION_MAIL_POP3_PORT, String.valueOf(pop3Port));
 		portletPreferences.setValue(
 			PropsKeys.MAIL_SESSION_MAIL_POP3_USER, pop3User);
 		portletPreferences.setValue(
 			PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST, smtpHost);
-		portletPreferences.setValue(
-			PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD, smtpPassword);
+
+		if (!smtpPassword.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
+			portletPreferences.setValue(
+				PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD, smtpPassword);
+		}
+
 		portletPreferences.setValue(
 			PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT, String.valueOf(smtpPort));
 		portletPreferences.setValue(

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.User addUser(
 		com.liferay.portal.model.User user)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -72,6 +74,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.User deleteUser(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -84,6 +87,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.User deleteUser(
 		com.liferay.portal.model.User user)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -251,6 +255,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.User updateUser(
 		com.liferay.portal.model.User user)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -1178,6 +1183,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long authenticateForBasic(long companyId, java.lang.String authType,
 		java.lang.String login, java.lang.String password)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1201,6 +1207,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long authenticateForDigest(long companyId,
 		java.lang.String username, java.lang.String realm,
 		java.lang.String nonce, java.lang.String method, java.lang.String uri,
@@ -1217,6 +1224,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return <code>true</code> if authentication is successful;
 	<code>false</code> otherwise
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean authenticateForJAAS(long userId, java.lang.String encPassword);
 
 	/**
@@ -1301,11 +1309,13 @@ public interface UserLocalService extends BaseLocalService,
 	* the confirmation email.
 	*
 	* @param user the user
-	* @param serviceContext the service context to be applied. Can set whether
-	a password should be generated (with the
-	<code>autoPassword</code> attribute) and whether the confirmation
-	email should be sent (with the <code>sendEmail</code> attribute)
-	for the user.
+	* @param serviceContext the service context to be applied. You can specify
+	an unencrypted custom password for the user via attribute
+	<code>passwordUnencrypted</code>. You automatically generate a
+	password for the user by setting attribute
+	<code>autoPassword</code> to <code>true</code>. You can send a
+	confirmation email to the user by setting attribute
+	<code>sendEmail</code> to <code>true</code>.
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
@@ -1353,6 +1363,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String encryptUserId(java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -1469,6 +1480,7 @@ public interface UserLocalService extends BaseLocalService,
 	found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.User getDefaultUser(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1483,6 +1495,7 @@ public interface UserLocalService extends BaseLocalService,
 	found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getDefaultUserId(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -2866,10 +2879,31 @@ public interface UserLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @param status the user's new workflow status
 	* @return the user
+	* @throws PortalException if a user with the primary key could not be
+	found
+	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, int,
+	ServiceContext)}
+	*/
+	@java.lang.Deprecated
+	public com.liferay.portal.model.User updateStatus(long userId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Updates the user's workflow status.
+	*
+	* @param userId the primary key of the user
+	* @param status the user's new workflow status
+	* @param serviceContext the service context to be applied. You can specify
+	an unencrypted custom password (used by an LDAP listener) for the
+	user via attribute <code>passwordUnencrypted</code>.
+	* @return the user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.User updateStatus(long userId, int status)
+	public com.liferay.portal.model.User updateStatus(long userId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

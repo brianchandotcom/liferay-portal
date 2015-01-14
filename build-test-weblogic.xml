@@ -43,9 +43,9 @@
 			<param name="simple.server.deploy.dir" value="${app.server.weblogic.deploy.dir}" />
 			<param name="simple.server.lib.global.dir" value="${app.server.weblogic.lib.global.dir}" />
 			<param name="simple.server.portal.dir" value="${app.server.weblogic.portal.dir}" />
-			<param name="simple.server.start.executable" value="../startWebLogic${file.suffix.cmd}" />
+			<param name="simple.server.start.executable" value="../startWebLogic.${file.suffix.cmd}" />
 			<param name="simple.server.start.executable.arg.line" value="" />
-			<param name="simple.server.stop.executable" value="../stopWebLogic${file.suffix.cmd}" />
+			<param name="simple.server.stop.executable" value="../stopWebLogic.${file.suffix.cmd}" />
 			<param name="simple.server.stop.executable.arg.line" value="" />
 		</antcall>
 

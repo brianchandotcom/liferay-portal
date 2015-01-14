@@ -53,6 +53,14 @@ public class PortletDataContextFactoryUtil {
 	}
 
 	public static PortletDataContext createPreparePortletDataContext(
+			long companyId, long groupId, Date startDate, Date endDate)
+		throws PortletDataException {
+
+		return getPortletDataContextFactory().createPreparePortletDataContext(
+			companyId, groupId, startDate, endDate);
+	}
+
+	public static PortletDataContext createPreparePortletDataContext(
 			ThemeDisplay themeDisplay, Date startDate, Date endDate)
 		throws PortletDataException {
 

@@ -91,7 +91,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 
 <%!
 private String _getCssClass(String result) {
-	String cssClass = "alert alert-";
+	String cssClass = "lfr-status-";
 
 	if (result.equals("pass")) {
 		cssClass += "success";

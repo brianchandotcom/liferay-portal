@@ -2,8 +2,7 @@
 	<command name="gotoBlogsPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURLTemp}" />
+			<var name="pageType" value="${pageTypeSite}" />
 		</execute>
 
 		<execute action="PGBlogs#assertClick" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
@@ -14,9 +13,8 @@
 	<command name="gotoBlogsEntryCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="${pageTypeSite}" />
 			<var name="portletName" value="${portletName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURLTemp}" />
 		</execute>
 
 		<var name="key_entryTitle" value="${entryTitle}" />
@@ -30,8 +28,7 @@
 	<command name="gotoBlogsEntryPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURLTemp}" />
+			<var name="pageType" value="${pageTypeSite}" />
 		</execute>
 
 		<var name="key_entryTitle" value="${entryTitle}" />
@@ -44,8 +41,7 @@
 	<command name="gotoPagePG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURLTemp}" />
+			<var name="pageType" value="${pageTypeSite}" />
 		</execute>
 
 		<execute action="Dockbar#click" locator-key1="EDIT" />
@@ -57,8 +53,7 @@
 	<command name="gotoDMFolderPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURLTemp}" />
+			<var name="pageType" value="${pageTypeSite}" />
 		</execute>
 
 		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER_ACTIONS" />
@@ -70,8 +65,7 @@
 	<command name="gotoDocumentsAndMediaPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="${siteURLTemp}" />
+			<var name="pageType" value="${pageTypeSite}" />
 		</execute>
 
 		<execute action="PGDocumentsandmedia#click" locator-key1="FILTER_HOME_ACTIONS" />

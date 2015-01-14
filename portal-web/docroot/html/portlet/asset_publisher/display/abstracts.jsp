@@ -118,6 +118,11 @@ viewURL = _checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDis
 		</div>
 
 		<div class="asset-metadata">
+
+			<%
+			request.setAttribute("asset_metadata.jspf-filterByMetadata", true);
+			%>
+
 			<%@ include file="/html/portlet/asset_publisher/asset_metadata.jspf" %>
 		</div>
 	</div>

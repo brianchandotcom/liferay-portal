@@ -51,6 +51,13 @@ public class HtmlImpl implements Html {
 
 	public static final int ESCAPE_MODE_URL = 5;
 
+	/**
+	 * Escapes the text so that it is safe to use in an HTML context.
+	 *
+	 * @param  text the text to escape
+	 * @return the escaped HTML text, or <code>null</code> if the text is
+	 *         <code>null</code>
+	 */
 	@Override
 	public String escape(String text) {
 		if (text == null) {
@@ -316,6 +323,58 @@ public class HtmlImpl implements Html {
 	}
 
 	@Override
+	public String getAUICompatibleId(String text) {
+		if (Validator.isNull(text)) {
+			return text;
+		}
+
+		StringBundler sb = null;
+
+		int lastReplacementIndex = 0;
+
+		for (int i = 0; i < text.length(); i++) {
+			char c = text.charAt(i);
+
+			if (((c <= 127) && (Validator.isChar(c) || Validator.isDigit(c))) ||
+				((c > 127) && (c != CharPool.FIGURE_SPACE) &&
+				 (c != CharPool.NARROW_NO_BREAK_SPACE) &&
+				 (c != CharPool.NO_BREAK_SPACE))) {
+
+				continue;
+			}
+
+			if (sb == null) {
+				sb = new StringBundler();
+			}
+
+			if (i > lastReplacementIndex) {
+				sb.append(text.substring(lastReplacementIndex, i));
+			}
+
+			sb.append(CharPool.UNDERLINE);
+
+			if (c != CharPool.UNDERLINE) {
+				sb.append(StringUtil.toHexString(c));
+			}
+
+			sb.append(CharPool.UNDERLINE);
+
+			lastReplacementIndex = i + 1;
+		}
+
+		if (sb == null) {
+			return text;
+		}
+
+		if (lastReplacementIndex < text.length()) {
+			sb.append(text.substring(lastReplacementIndex));
+		}
+
+		return sb.toString();
+	}
+
+	@Deprecated
+	@Override
 	public String render(String html) {
 		if (html == null) {
 			return null;
@@ -426,6 +485,7 @@ public class HtmlImpl implements Html {
 		text = StringUtil.replace(text, "&lt;", "<");
 		text = StringUtil.replace(text, "&gt;", ">");
 		text = StringUtil.replace(text, "&amp;", "&");
+		text = StringUtil.replace(text, "&rsquo;", "\u2019");
 		text = StringUtil.replace(text, "&#034;", "\"");
 		text = StringUtil.replace(text, "&#039;", "'");
 		text = StringUtil.replace(text, "&#040;", "(");

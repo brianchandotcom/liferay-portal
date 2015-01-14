@@ -16,6 +16,10 @@
 
 <@aui["field-wrapper"] label=escape(label)>
 	<a href="${fileEntryURL}">${escape(fileEntryTitle)}</a>
+
+	${fieldStructure.children}
 </@>
 
-<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
+<#if !disabled>
+	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
+</#if>

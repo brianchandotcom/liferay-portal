@@ -155,8 +155,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		Indexer messageIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBMessage.class);
 
-		messageIndexer.delete(thread);
-
 		// Attachments
 
 		long folderId = thread.getAttachmentsFolderId();
@@ -203,6 +201,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			// Message
 
 			mbMessagePersistence.remove(message);
+
+			// Indexer
+
+			messageIndexer.delete(message);
 
 			// Statistics
 
@@ -286,7 +288,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			groupId, categoryId);
 
 		for (MBThread thread : threads) {
-			if (includeTrashedEntries || !thread.isInTrash()) {
+			if (includeTrashedEntries || !thread.isInTrashExplicitly()) {
 				mbThreadLocalService.deleteThread(thread);
 			}
 		}
@@ -811,14 +813,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
-		TrashEntry trashEntry = thread.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(MBThread.class, threadId)) {
+		if (thread.isInTrashExplicitly()) {
 			restoreThreadFromTrash(userId, threadId);
 		}
 		else {
 
 			// Thread
+
+			TrashEntry trashEntry = thread.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(

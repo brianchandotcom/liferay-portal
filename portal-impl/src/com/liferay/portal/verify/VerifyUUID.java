@@ -14,6 +14,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -23,12 +24,38 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class VerifyUUID extends VerifyProcess {
 
 	public static void verifyModel(String modelName, String pkColumnName)
+		throws Exception {
+
+		VerifyUUID verifyUUID = new VerifyUUID();
+
+		verifyUUID.doVerify(modelName, pkColumnName);
+	}
+
+	@Override
+	protected void doVerify() throws Exception {
+		List<VerifyUUIDRunnable> verifyUUIDRunnables =
+			new ArrayList<VerifyUUIDRunnable>(_MODELS.length);
+
+		for (String[] model : _MODELS) {
+			VerifyUUIDRunnable verifyUUIDRunnable = new VerifyUUIDRunnable(
+				model[0], model[1]);
+
+			verifyUUIDRunnables.add(verifyUUIDRunnable);
+		}
+
+		doVerify(verifyUUIDRunnables);
+	}
+
+	protected void doVerify(String modelName, String pkColumnName)
 		throws Exception {
 
 		Connection con = null;
@@ -47,7 +74,7 @@ public class VerifyUUID extends VerifyProcess {
 			while (rs.next()) {
 				long pk = rs.getLong(pkColumnName);
 
-				verifyModel(modelName, pkColumnName, pk);
+				doVerify(modelName, pkColumnName, pk);
 			}
 		}
 		finally {
@@ -55,8 +82,7 @@ public class VerifyUUID extends VerifyProcess {
 		}
 	}
 
-	protected static void verifyModel(
-			String modelName, String pkColumnName, long pk)
+	protected void doVerify(String modelName, String pkColumnName, long pk)
 		throws Exception {
 
 		String uuid = PortalUUIDUtil.generate();
@@ -66,13 +92,6 @@ public class VerifyUUID extends VerifyProcess {
 		db.runSQL(
 			"update " + modelName + " set uuid_ = '" + uuid + "' where " +
 				pkColumnName + " = " + pk);
-	}
-
-	@Override
-	protected void doVerify() throws Exception {
-		for (String[] model : _MODELS) {
-			verifyModel(model[0], model[1]);
-		}
 	}
 
 	private static final String[][] _MODELS = new String[][] {
@@ -140,5 +159,22 @@ public class VerifyUUID extends VerifyProcess {
 			"WikiPageResource", "resourcePrimKey"
 		}
 	};
+
+	private class VerifyUUIDRunnable extends ThrowableAwareRunnable {
+
+		public VerifyUUIDRunnable(String modelName, String pkColumn) {
+			_modelName = modelName;
+			_pkColumn = pkColumn;
+		}
+
+		@Override
+		protected void doRun() throws Exception {
+			doVerify(_modelName, _pkColumn);
+		}
+
+		private final String _pkColumn;
+		private final String _modelName;
+
+	}
 
 }

@@ -584,6 +584,11 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<name>localized</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
 				<name>max</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Number</outputType>

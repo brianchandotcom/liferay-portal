@@ -26,7 +26,7 @@ JournalArticle latestApprovedArticleVersion = null;
 Date createDate = article.getCreateDate();
 
 if (article.getVersion() > JournalArticleConstants.VERSION_DEFAULT) {
-	JournalArticle firstArticleVersion = JournalArticleLocalServiceUtil.getArticle(article.getGroupId(), article.getArticleId(), JournalArticleConstants.VERSION_DEFAULT);
+	JournalArticle firstArticleVersion = JournalArticleLocalServiceUtil.getOldestArticle(article.getGroupId(), article.getArticleId());
 
 	createDate = firstArticleVersion.getCreateDate();
 
@@ -46,7 +46,7 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	assetTagClassPK="<%= article.getResourcePrimKey() %>"
 	author="<%= article.getUserName() %>"
 	createDate="<%= createDate %>"
-	description="<%= article.getDescription(locale) %>"
+	description="<%= HtmlUtil.escape(article.getDescription(locale)) %>"
 	displayDate="<%= article.getDisplayDate() %>"
 	displayStyle="descriptive"
 	expirationDate="<%= article.getExpirationDate() %>"
@@ -55,14 +55,14 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	latestApprovedVersionAuthor="<%= (latestApprovedArticleVersion != null) ? String.valueOf(latestApprovedArticleVersion.getUserName()) : null %>"
 	modifiedDate="<%= article.getModifiedDate() %>"
 	reviewDate="<%= article.getReviewDate() %>"
-	rowCheckerId="<%= String.valueOf(article.getArticleId()) %>"
+	rowCheckerId="<%= HtmlUtil.escape(article.getArticleId()) %>"
 	rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
 	showCheckbox="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>"
 	status="<%= article.getStatus() %>"
 	thumbnailDivStyle="height: 136px; width: 136px;"
 	thumbnailSrc='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
-	title="<%= article.getTitle(locale) %>"
+	title="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
 	url="<%= tempRowURL.toString() %>"
 	version="<%= String.valueOf(article.getVersion()) %>"
 />

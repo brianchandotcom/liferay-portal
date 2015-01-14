@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @return the lock that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Lock addLock(
 		com.liferay.portal.model.Lock lock)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -72,6 +74,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @throws PortalException if a lock with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Lock deleteLock(long lockId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -83,6 +86,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @return the lock that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Lock deleteLock(
 		com.liferay.portal.model.Lock lock)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -249,6 +253,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @return the lock that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Lock updateLock(
 		com.liferay.portal.model.Lock lock)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -311,6 +316,8 @@ public interface LockLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String owner)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -319,10 +326,14 @@ public interface LockLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
 	String)}
 	*/
+	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String owner, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String expectedOwner,
 		java.lang.String updatedOwner)
@@ -332,6 +343,8 @@ public interface LockLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String, String,
 	String)}
 	*/
+	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String expectedOwner,
 		java.lang.String updatedOwner, boolean retrieveFromCache)
@@ -348,6 +361,8 @@ public interface LockLocalService extends BaseLocalService,
 	public void unlock(java.lang.String className, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void unlock(java.lang.String className, java.lang.String key,
 		java.lang.String owner)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -356,6 +371,8 @@ public interface LockLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
 	String)}
 	*/
+	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void unlock(java.lang.String className, java.lang.String key,
 		java.lang.String owner, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException;

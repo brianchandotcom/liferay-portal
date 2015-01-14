@@ -48,6 +48,11 @@ import java.util.Map;
 public class LayoutRemoteStagingBackgroundTaskExecutor
 	extends BaseStagingBackgroundTaskExecutor {
 
+	public LayoutRemoteStagingBackgroundTaskExecutor() {
+		setBackgroundTaskStatusMessageTranslator(
+			new LayoutStagingBackgroundTaskStatusMessageTranslator());
+	}
+
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
@@ -92,20 +97,28 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
 
 			int i = 0;
+			int j = 0;
+
+			String numberFormat = String.format(
+				"%%0%dd",
+				String.valueOf(
+					(int)(file.length() / bytes.length)).length() + 1);
 
 			while ((i = fileInputStream.read(bytes)) >= 0) {
+				String fileName =
+					file.getName() + String.format(numberFormat, j++);
+
 				if (i < PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE) {
 					byte[] tempBytes = new byte[i];
 
 					System.arraycopy(bytes, 0, tempBytes, 0, i);
 
 					StagingServiceHttp.updateStagingRequest(
-						httpPrincipal, stagingRequestId, file.getName(),
-						tempBytes);
+						httpPrincipal, stagingRequestId, fileName, tempBytes);
 				}
 				else {
 					StagingServiceHttp.updateStagingRequest(
-						httpPrincipal, stagingRequestId, file.getName(), bytes);
+						httpPrincipal, stagingRequestId, fileName, bytes);
 				}
 
 				bytes =

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,6 +46,9 @@ public class VerifyAuditedModel extends VerifyProcess {
 			pendingModels.add(model[0]);
 		}
 
+		List<VerifyAuditedModelRunnable> verifyAuditedModelRunnables =
+			new ArrayList<VerifyAuditedModelRunnable>(_MODELS.length);
+
 		while (!pendingModels.isEmpty()) {
 			int count = pendingModels.size();
 
@@ -55,9 +59,12 @@ public class VerifyAuditedModel extends VerifyProcess {
 					continue;
 				}
 
-				verifyModel(
-					model[0], model[1], model[2], model[3], model[4],
-					GetterUtil.getBoolean(model[5]));
+				VerifyAuditedModelRunnable verifyAuditedModelRunnable =
+					new VerifyAuditedModelRunnable(
+						model[0], model[1], model[2], model[3], model[4],
+						GetterUtil.getBoolean(model[5]));
+
+				verifyAuditedModelRunnables.add(verifyAuditedModelRunnable);
 
 				pendingModels.remove(model[0]);
 			}
@@ -67,6 +74,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 					"Circular dependency detected " + pendingModels);
 			}
 		}
+
+		doVerify(verifyAuditedModelRunnables);
 	}
 
 	protected Object[] getDefaultUserArray(Connection con, long companyId)
@@ -368,5 +377,36 @@ public class VerifyAuditedModel extends VerifyProcess {
 	};
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyAuditedModel.class);
+
+	private class VerifyAuditedModelRunnable extends ThrowableAwareRunnable {
+
+		private VerifyAuditedModelRunnable(
+			String modelName, String pkColumnName, String joinByColumnName,
+			String relatedModelName, String relatedPKColumnName,
+			boolean updateDates) {
+
+			_modelName = modelName;
+			_pkColumnName = pkColumnName;
+			_joinByColumnName = joinByColumnName;
+			_relatedModelName = relatedModelName;
+			_relatedPKColumnName = relatedPKColumnName;
+			_updateDates = updateDates;
+		}
+
+		@Override
+		protected void doRun() throws Exception {
+			verifyModel(
+				_modelName, _pkColumnName, _joinByColumnName, _relatedModelName,
+				_relatedPKColumnName, _updateDates);
+		}
+
+		private final String _joinByColumnName;
+		private final String _modelName;
+		private final String _pkColumnName;
+		private final String _relatedModelName;
+		private final String _relatedPKColumnName;
+		private final boolean _updateDates;
+
+	}
 
 }

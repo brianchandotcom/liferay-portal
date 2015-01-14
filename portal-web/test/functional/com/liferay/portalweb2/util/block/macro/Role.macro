@@ -155,12 +155,4 @@
 		<execute action="CPRolesEdit#assertTextEquals" locator-key1="HEADER" value1="${roleName}" />
 		<execute action="CPRolesEdit#assertTextEquals" locator-key1="NAME_FIELD" value1="${roleName}" />
 	</command>
-
-	<command name="viewPermissionCP">
-		<var name="key_permissionNavigationValue" value="${permissionNavigationValue}" />
-		<var name="key_permissionDefinitionValue" value="${permissionDefinitionValue}" />
-
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
-	</command>
 </definition>

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	* @return the portlet preferences that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.PortletPreferences addPortletPreferences(
 		com.liferay.portal.model.PortletPreferences portletPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	* @throws PortalException if a portlet preferences with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.PortletPreferences deletePortletPreferences(
 		long portletPreferencesId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	* @return the portlet preferences that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.PortletPreferences deletePortletPreferences(
 		com.liferay.portal.model.PortletPreferences portletPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	* @return the portlet preferences that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.PortletPreferences updatePortletPreferences(
 		com.liferay.portal.model.PortletPreferences portletPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -271,6 +276,7 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 		com.liferay.portal.model.PortletPreferencesIds portletPreferencesIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getDefaultPreferences(
 		long companyId, java.lang.String portletId)

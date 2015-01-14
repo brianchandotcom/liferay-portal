@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -54,6 +55,7 @@ public interface DLContentLocalService extends BaseLocalService,
 	* @return the document library content that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.documentlibrary.model.DLContent addDLContent(
 		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -75,6 +77,7 @@ public interface DLContentLocalService extends BaseLocalService,
 	* @throws PortalException if a document library content with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLContent deleteDLContent(
 		long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -87,6 +90,7 @@ public interface DLContentLocalService extends BaseLocalService,
 	* @return the document library content that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLContent deleteDLContent(
 		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -228,6 +232,7 @@ public interface DLContentLocalService extends BaseLocalService,
 	* @return the document library content that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.documentlibrary.model.DLContent updateDLContent(
 		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
 		throws com.liferay.portal.kernel.exception.SystemException;

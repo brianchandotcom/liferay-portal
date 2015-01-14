@@ -46,6 +46,10 @@ public interface Document extends Cloneable, Serializable {
 	public void addFile(String name, InputStream is, String fileExt)
 		throws IOException;
 
+	public void addFile(
+			String name, InputStream is, String fileExt, int maxStringLength)
+		throws IOException;
+
 	public void addKeyword(String name, boolean value);
 
 	public void addKeyword(String name, Boolean value);
@@ -104,6 +108,10 @@ public interface Document extends Cloneable, Serializable {
 
 	public void addLocalizedKeyword(
 		String name, Map<Locale, String> values, boolean lowerCase);
+
+	public void addLocalizedKeyword(
+		String name, Map<Locale, String> values, boolean lowerCase,
+		boolean sortable);
 
 	public void addLocalizedText(String name, Map<Locale, String> values);
 

@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -78,12 +79,14 @@ public interface CompanyService extends BaseService {
 	administrator
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.jsonwebservice.JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public com.liferay.portal.model.Company addCompany(java.lang.String webId,
 		java.lang.String virtualHost, java.lang.String mx,
 		java.lang.String shardName, boolean system, int maxUsers, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.jsonwebservice.JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public com.liferay.portal.model.Company deleteCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -185,6 +188,7 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException if the user was not an administrator
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.jsonwebservice.JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public void removePreferences(long companyId, java.lang.String[] keys)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -283,6 +287,7 @@ public interface CompanyService extends BaseService {
 	not an administrator
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.jsonwebservice.JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public com.liferay.portal.model.Company updateCompany(long companyId,
 		java.lang.String virtualHost, java.lang.String mx,
 		java.lang.String homeURL, java.lang.String name,
@@ -341,6 +346,7 @@ public interface CompanyService extends BaseService {
 	administrator
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.jsonwebservice.JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public com.liferay.portal.model.Company updateLogo(long companyId,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -356,6 +362,7 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException if the user was not an administrator
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.jsonwebservice.JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public void updatePreferences(long companyId,
 		com.liferay.portal.kernel.util.UnicodeProperties properties)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -381,6 +388,7 @@ public interface CompanyService extends BaseService {
 	* @throws PortalException if the user was not an administrator
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.jsonwebservice.JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public void updateSecurity(long companyId, java.lang.String authType,
 		boolean autoLogin, boolean sendPassword, boolean strangers,
 		boolean strangersWithMx, boolean strangersVerify, boolean siteLogo)

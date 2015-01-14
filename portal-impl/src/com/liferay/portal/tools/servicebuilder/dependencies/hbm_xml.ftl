@@ -113,7 +113,7 @@
 				<class name="${packagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}" lazy="true">
 					<#assign column = entity.getPKList()?first>
 
-					<id name="${column.name}" column="${column.name}">
+					<id name="${column.name}" column="${column.DBName}">
 						<generator class="foreign">
 							<param name="property">${packagePath}.model.impl.${entity.name}Impl</param>
 						</generator>

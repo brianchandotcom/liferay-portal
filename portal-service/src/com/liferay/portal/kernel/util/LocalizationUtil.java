@@ -72,8 +72,20 @@ public class LocalizationUtil {
 		return getLocalization().getDefaultLanguageId(document);
 	}
 
+	public static String getDefaultLanguageId(
+		Document document, Locale defaultLocale) {
+
+		return getLocalization().getDefaultLanguageId(document, defaultLocale);
+	}
+
 	public static String getDefaultLanguageId(String xml) {
 		return getLocalization().getDefaultLanguageId(xml);
+	}
+
+	public static String getDefaultLanguageId(
+		String xml, Locale defaultLocale) {
+
+		return getLocalization().getDefaultLanguageId(xml, defaultLocale);
 	}
 
 	/**

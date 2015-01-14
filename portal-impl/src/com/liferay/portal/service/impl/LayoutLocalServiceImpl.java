@@ -332,6 +332,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				Sites.LAYOUT_UPDATEABLE, String.valueOf(layoutUpdateable));
 		}
 
+		if (privateLayout) {
+			typeSettingsProperties.put(
+				"privateLayout", String.valueOf(privateLayout));
+		}
+
 		validateTypeSettingsProperties(typeSettingsProperties);
 
 		layout.setTypeSettingsProperties(typeSettingsProperties);
@@ -351,8 +356,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			layoutTypePortlet.setLayoutTemplateId(
-				0, PropsValues.LAYOUT_DEFAULT_TEMPLATE_ID, false);
+			if (Validator.isNull(layoutTypePortlet.getLayoutTemplateId())) {
+				layoutTypePortlet.setLayoutTemplateId(
+					0, PropsValues.LAYOUT_DEFAULT_TEMPLATE_ID, false);
+			}
 		}
 
 		layout.setExpandoBridgeAttributes(serviceContext);
@@ -2019,7 +2026,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, plid, groupId, portletId, parameterMap,
-				Constants.EXPORT, null, null, file.getName());
+				Constants.IMPORT, null, null, file.getName());
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(
@@ -2342,6 +2349,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		typeSettingsProperties.put(
 			Sites.LAYOUT_UPDATEABLE, String.valueOf(layoutUpdateable));
 
+		if (privateLayout) {
+			typeSettingsProperties.put(
+				"privateLayout", String.valueOf(privateLayout));
+		}
+
 		layout.setTypeSettingsProperties(typeSettingsProperties);
 
 		String layoutPrototypeUuid = ParamUtil.getString(
@@ -2559,6 +2571,20 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layoutPersistence.update(layout);
 
+		Group group = layout.getGroup();
+
+		if (group.isLayoutPrototype()) {
+			LayoutPrototype layoutPrototype =
+				layoutPrototypeLocalService.getLayoutPrototype(
+					group.getClassPK());
+
+			layoutPrototype.setModifiedDate(now);
+			layoutPrototype.setName(
+				name, LocaleUtil.fromLanguageId(languageId));
+
+			layoutPrototypePersistence.update(layoutPrototype);
+		}
+
 		return layout;
 	}
 
@@ -2711,6 +2737,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layoutPersistence.update(layout);
 
 		return layout;
+	}
+
+	@Override
+	public Layout updateParentLayoutIdAndPriority(
+			long plid, long parentPlid, int priority)
+		throws PortalException, SystemException {
+
+		Layout layout = updateParentLayoutId(plid, parentPlid);
+
+		return updatePriority(layout, priority);
 	}
 
 	/**

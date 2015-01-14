@@ -231,7 +231,7 @@ public class DLFileShortcutLocalServiceImpl
 			dlFileShortcutPersistence.findByG_F(groupId, folderId);
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
-			if (includeTrashedEntries || !fileShortcut.isInTrash()) {
+			if (includeTrashedEntries || !fileShortcut.isInTrashExplicitly()) {
 				deleteFileShortcut(fileShortcut);
 			}
 		}
@@ -442,7 +442,8 @@ public class DLFileShortcutLocalServiceImpl
 		FileEntry fileEntry = dlAppLocalService.getFileEntry(toFileEntryId);
 
 		if (user.getCompanyId() != fileEntry.getCompanyId()) {
-			throw new NoSuchFileEntryException();
+			throw new NoSuchFileEntryException(
+				"{fileEntryId=" + toFileEntryId + "}");
 		}
 	}
 

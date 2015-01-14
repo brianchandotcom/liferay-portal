@@ -1297,15 +1297,6 @@ public class SeleniumBuilderFileUtil {
 			throwValidationException(1000, fileName, rootElement);
 		}
 
-		String extendedTestCase = rootElement.attributeValue("extends");
-
-		if (extendedTestCase != null) {
-			if (Validator.isNull(extendedTestCase)) {
-				throwValidationException(
-					1006, fileName, rootElement, "extends");
-			}
-		}
-
 		List<Element> elements = rootElement.elements();
 
 		if (elements.isEmpty()) {
@@ -1344,8 +1335,8 @@ public class SeleniumBuilderFileUtil {
 
 				validateBlockElement(
 					fileName, element, new String[] {"execute", "var"},
-					new String[] {"action", "macro", "test-case"},
-					new String[] {"var"}, new String[0]);
+					new String[] {"action", "macro"}, new String[] {"var"},
+					new String[0]);
 			}
 			else if (elementName.equals("set-up") ||
 					 elementName.equals("tear-down")) {
@@ -1363,8 +1354,8 @@ public class SeleniumBuilderFileUtil {
 
 				validateBlockElement(
 					fileName, element, new String[] {"execute", "var"},
-					new String[] {"action", "macro", "test-case"},
-					new String[] {"var"}, new String[0]);
+					new String[] {"action", "macro"}, new String[] {"var"},
+					new String[0]);
 			}
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);

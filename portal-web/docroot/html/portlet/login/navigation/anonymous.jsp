@@ -21,7 +21,7 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 
 boolean showAnonymousIcon = false;
 
-if (!strutsAction.startsWith("/login/create_anonymous_account") && portletName.equals(PortletKeys.FAST_LOGIN)) {
+if (!strutsAction.startsWith("/login/create_anonymous_account") && company.isStrangers() && portletName.equals(PortletKeys.FAST_LOGIN)) {
 	showAnonymousIcon = true;
 }
 %>

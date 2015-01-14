@@ -28,7 +28,7 @@ Layout targetLayout = LayoutLocalServiceUtil.getLayout(layoutRevision.getPlid())
 String layoutFriendlyURL = PortalUtil.getLayoutFriendlyURL(targetLayout, themeDisplay);
 %>
 
-<strong><liferay-ui:message key="page" />:</strong> <a href="<%= layoutFriendlyURL + "?layoutSetBranchId=" + layoutRevision.getLayoutSetBranchId() + "&layoutRevisionId=" + layoutRevision.getLayoutRevisionId() %>"><%= targetLayout.getHTMLTitle(locale) %></a><br />
+<strong><liferay-ui:message key="page" />:</strong> <a href="<%= HtmlUtil.escapeHREF(layoutFriendlyURL) + "?layoutSetBranchId=" + layoutRevision.getLayoutSetBranchId() + "&layoutRevisionId=" + layoutRevision.getLayoutRevisionId() %>"><%= HtmlUtil.escape(targetLayout.getHTMLTitle(locale)) %></a><br />
 
 <strong><liferay-ui:message key="site-pages-variation" />:</strong> <%= LanguageUtil.get(locale, HtmlUtil.escape(layoutSetBranch.getName())) %><br />
 

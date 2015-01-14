@@ -462,12 +462,11 @@ public class PasswordPolicyLocalServiceImpl
 		PasswordPolicy passwordPolicy = passwordPolicyPersistence.fetchByC_N(
 			companyId, name);
 
-		if (passwordPolicy != null) {
-			if ((passwordPolicyId <= 0) ||
-				(passwordPolicy.getPasswordPolicyId() != passwordPolicyId)) {
+		if ((passwordPolicy != null) &&
+			(passwordPolicy.getPasswordPolicyId() != passwordPolicyId)) {
 
-				throw new DuplicatePasswordPolicyException();
-			}
+			throw new DuplicatePasswordPolicyException(
+				"{passwordPolicyId=" + passwordPolicyId + "}");
 		}
 	}
 

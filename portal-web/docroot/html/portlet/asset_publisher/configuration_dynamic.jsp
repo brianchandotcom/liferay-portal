@@ -108,7 +108,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 					<%
 					for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId())) {
-						Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
+						Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId()), themeDisplay.getLocale());
 
 						if (assetAvailableClassTypes.isEmpty()) {
 							continue;
@@ -172,7 +172,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 							<span class="asset-subtypefields-message" id="<portlet:namespace /><%= className %>ddmStructureFieldMessage">
 								<c:if test="<%= (Validator.isNotNull(ddmStructureFieldLabel) && (classNameIds[0] == PortalUtil.getClassNameId(assetRendererFactory.getClassName()))) %>">
-									<%= ddmStructureFieldLabel + ": " + ddmStructureDisplayFieldValue %>
+									<%= HtmlUtil.escape(ddmStructureFieldLabel) + ": " + HtmlUtil.escape(ddmStructureDisplayFieldValue) %>
 								</c:if>
 							</span>
 
@@ -364,6 +364,10 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					<aui:fieldset>
 						<span class="field-row">
 							<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="preferences--orderByColumn1--">
+								<c:if test="<%= PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && !rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+									<aui:option label="title" />
+								</c:if>
+
 								<aui:option label="title" selected='<%= orderByColumn1.equals("title") %>' />
 								<aui:option label="create-date" selected='<%= orderByColumn1.equals("createDate") %>' value="createDate" />
 								<aui:option label="modified-date" selected='<%= orderByColumn1.equals("modifiedDate") %>' value="modifiedDate" />
@@ -545,11 +549,13 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				}
 			}
 
-			<%= className %>toggleSubclassesFields(true);
+			<c:if test="<%= PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && !rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+				<%= className %>toggleSubclassesFields(true);
+			</c:if>
 		}
 
 		<%
-		Map<Long, String> assetAvailableClassTypes = curRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
+		Map<Long, String> assetAvailableClassTypes = curRendererFactory.getClassTypes(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId()), themeDisplay.getLocale());
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;
@@ -586,8 +592,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				}
 			%>
 
-				columnBuffer1.push('<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>');
-				columnBuffer2.push('<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>');
+				columnBuffer1.push('<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= HtmlUtil.escapeJS((String)classTypeFieldName.getObject(0)) %></option>');
+				columnBuffer2.push('<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= HtmlUtil.escapeJS((String)classTypeFieldName.getObject(0)) %></option>');
 
 			<%
 			}
@@ -605,69 +611,71 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		var <%= className %>SubtypeSelector = A.one('#<portlet:namespace />anyClassType<%= className %>');
 
-		function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
-			var subtypeFieldsWrapper = A.one('#<portlet:namespace /><%= className %>subtypeFieldsWrapper');
-			var subtypeFieldsFilterEnableWrapper = A.one('#<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
+		<c:if test="<%= PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && !rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+			function <%= className %>toggleSubclassesFields(hideSubtypeFilterEnableWrapper) {
+				var subtypeFieldsWrapper = A.one('#<portlet:namespace /><%= className %>subtypeFieldsWrapper');
+				var subtypeFieldsFilterEnableWrapper = A.one('#<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper');
 
-			var selectedSubtype = <%= className %>SubtypeSelector.val();
+				var selectedSubtype = <%= className %>SubtypeSelector.val();
 
-			var structureOptions = A.one('#<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
-
-			if (structureOptions) {
-				structureOptions.show();
-			}
-
-			if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
-				var orderByColumn1Subtype = orderByColumn1.one('.order-by-subtype');
-
-				if (orderByColumn1Subtype) {
-					orderByColumn1Subtype.remove();
-				}
-
-				var orderByColumn2Subtype = orderByColumn2.one('.order-by-subtype');
-
-				if (orderByColumn2Subtype) {
-					orderByColumn2Subtype.remove();
-				}
-
-				orderByColumn1.appendChild(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn1']);
-				orderByColumn2.appendChild(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn2']);
+				var structureOptions = A.one('#<portlet:namespace />' + selectedSubtype + '_<%= className %>Options');
 
 				if (structureOptions) {
-					subtypeFieldsWrapper.show();
-					subtypeFieldsFilterEnableWrapper.show();
+					structureOptions.show();
+				}
+
+				if ((selectedSubtype != 'false') && (selectedSubtype != 'true')) {
+					var orderByColumn1Subtype = orderByColumn1.one('.order-by-subtype');
+
+					if (orderByColumn1Subtype) {
+						orderByColumn1Subtype.remove();
+					}
+
+					var orderByColumn2Subtype = orderByColumn2.one('.order-by-subtype');
+
+					if (orderByColumn2Subtype) {
+						orderByColumn2Subtype.remove();
+					}
+
+					orderByColumn1.appendChild(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn1']);
+					orderByColumn2.appendChild(MAP_DDM_STRUCTURES['<%= className %>_' + selectedSubtype + '_optTextOrderByColumn2']);
+
+					if (structureOptions) {
+						subtypeFieldsWrapper.show();
+						subtypeFieldsFilterEnableWrapper.show();
+					}
+					else if (hideSubtypeFilterEnableWrapper) {
+						subtypeFieldsWrapper.hide();
+						subtypeFieldsFilterEnableWrapper.hide();
+					}
 				}
 				else if (hideSubtypeFilterEnableWrapper) {
 					subtypeFieldsWrapper.hide();
 					subtypeFieldsFilterEnableWrapper.hide();
 				}
 			}
-			else if (hideSubtypeFilterEnableWrapper) {
-				subtypeFieldsWrapper.hide();
-				subtypeFieldsFilterEnableWrapper.hide();
-			}
-		}
 
-		<%= className %>toggleSubclassesFields(false);
+			<%= className %>toggleSubclassesFields(false);
 
-		<%= className %>SubtypeSelector.on(
-			'change',
-			function(event) {
-				setDDMFields('<%= className %>', '', '', '', '');
+			<%= className %>SubtypeSelector.on(
+				'change',
+				function(event) {
+					setDDMFields('<%= className %>', '', '', '', '');
 
-				var subtypeFieldsFilterEnabled = A.one('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
+					var subtypeFieldsFilterEnabled = A.one('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
 
-				subtypeFieldsFilterEnabled.val(false);
+					subtypeFieldsFilterEnabled.val(false);
 
-				var subtypeFieldsFilterEnabledCheckbox = A.one('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>Checkbox');
+					var subtypeFieldsFilterEnabledCheckbox = A.one('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
 
-				subtypeFieldsFilterEnabledCheckbox.attr('checked', false);
+					subtypeFieldsFilterEnabledCheckbox.attr('checked', false);
 
-				sourcePanel.all('.asset-subtypefields').hide();
+					sourcePanel.all('.asset-subtypefields').hide();
 
-				<%= className %>toggleSubclassesFields(true);
-			}
-		);
+					<%= className %>toggleSubclassesFields(true);
+				}
+			);
+		</c:if>
 
 	<%
 	}
@@ -759,7 +767,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		var ddmStructureFieldMessage = A.one('#<portlet:namespace />' + className + 'ddmStructureFieldMessage');
 
-		ddmStructureFieldMessage.html(message);
+		ddmStructureFieldMessage.html(Liferay.Util.escapeHTML(message));
 	}
 </aui:script>
 

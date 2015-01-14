@@ -665,7 +665,16 @@ public class ServicePreAction extends Action {
 			scopeGroupId = doAsGroupId;
 		}
 
-		long siteGroupId = PortalUtil.getSiteGroupId(scopeGroupId);
+		long siteGroupId = 0;
+
+		if (layout != null) {
+			if (layout.isTypeControlPanel()) {
+				siteGroupId = PortalUtil.getSiteGroupId(scopeGroupId);
+			}
+			else {
+				siteGroupId = PortalUtil.getSiteGroupId(layout.getGroupId());
+			}
+		}
 
 		// Theme and color scheme
 
@@ -736,13 +745,16 @@ public class ServicePreAction extends Action {
 
 		themeDisplay.setRequest(request);
 
-		// Set the CDN host, portal URL, and Facebook application ID first
-		// because other methods (setLookAndFeel) depend on them being set
+		// Set attributes first that other methods (getCDNBaseURL and
+		// setLookAndFeel) depend on
 
 		themeDisplay.setCDNHost(cdnHost);
 		themeDisplay.setCDNDynamicResourcesHost(dynamicResourcesCDNHost);
-		themeDisplay.setPortalURL(portalURL);
 		themeDisplay.setFacebookCanvasPageURL(facebookCanvasPageURL);
+		themeDisplay.setPortalURL(portalURL);
+		themeDisplay.setSecure(request.isSecure());
+		themeDisplay.setServerName(request.getServerName());
+		themeDisplay.setServerPort(request.getServerPort());
 		themeDisplay.setWidget(widget);
 
 		themeDisplay.setCompany(company);
@@ -791,9 +803,6 @@ public class ServicePreAction extends Action {
 		themeDisplay.setRefererGroupId(refererGroupId);
 		themeDisplay.setRefererPlid(refererPlid);
 		themeDisplay.setScopeGroupId(scopeGroupId);
-		themeDisplay.setSecure(request.isSecure());
-		themeDisplay.setServerName(request.getServerName());
-		themeDisplay.setServerPort(request.getServerPort());
 		themeDisplay.setSignedIn(signedIn);
 		themeDisplay.setSiteDefaultLocale(
 			PortalUtil.getSiteDefaultLocale(siteGroupId));
@@ -964,12 +973,12 @@ public class ServicePreAction extends Action {
 				themeDisplay.setShowPageSettingsIcon(true);
 
 				LiferayPortletURL pageSettingsURL = new PortletURLImpl(
-					request, PortletKeys.LAYOUTS_ADMIN, controlPanelPlid,
+					request, PortletKeys.GROUP_PAGES, controlPanelPlid,
 					PortletRequest.RENDER_PHASE);
 
 				pageSettingsURL.setDoAsGroupId(scopeGroupId);
 				pageSettingsURL.setParameter(
-					"struts_action", "/layouts_admin/edit_layouts");
+					"struts_action", "/group_pages/edit_layouts");
 
 				if (layout.isPrivateLayout()) {
 					pageSettingsURL.setParameter("tabs1", "private-pages");
@@ -1113,12 +1122,12 @@ public class ServicePreAction extends Action {
 				themeDisplay.setShowSiteMapSettingsIcon(true);
 
 				LiferayPortletURL siteMapSettingsURL = new PortletURLImpl(
-					request, PortletKeys.LAYOUTS_ADMIN, controlPanelPlid,
+					request, PortletKeys.GROUP_PAGES, controlPanelPlid,
 					PortletRequest.RENDER_PHASE);
 
 				siteMapSettingsURL.setDoAsGroupId(scopeGroupId);
 				siteMapSettingsURL.setParameter(
-					"struts_action", "/layouts_admin/edit_layouts");
+					"struts_action", "/group_pages/edit_layouts");
 
 				if (layout.isPrivateLayout()) {
 					siteMapSettingsURL.setParameter("tabs1", "private-pages");
@@ -1203,8 +1212,8 @@ public class ServicePreAction extends Action {
 
 			if (myAccountPortlet != null) {
 				PortletURLImpl myAccountURL = new PortletURLImpl(
-					request, myAccountPortlet.getPortletName(),
-					controlPanelPlid, PortletRequest.RENDER_PHASE);
+					request, myAccountPortlet.getPortletId(), controlPanelPlid,
+					PortletRequest.RENDER_PHASE);
 
 				if (scopeGroupId > 0) {
 					myAccountURL.setDoAsGroupId(scopeGroupId);
@@ -1293,84 +1302,6 @@ public class ServicePreAction extends Action {
 
 		themeDisplay.setURLUpdateManager(updateManagerURL);
 
-		// Control Panel redirects
-
-		if (group.isControlPanel() && Validator.isNotNull(ppid)) {
-			boolean switchGroup = ParamUtil.getBoolean(request, "switchGroup");
-
-			if (switchGroup &&
-				!PortletPermissionUtil.hasControlPanelAccessPermission(
-					permissionChecker, scopeGroupId, ppid)) {
-
-				String redirect = HttpUtil.removeParameter(
-					currentURL, "p_p_id");
-
-				response.sendRedirect(redirect);
-			}
-		}
-		else if (group.isControlPanel() && Validator.isNull(ppid)) {
-			if (controlPanelCategory.startsWith(
-					PortletCategoryKeys.CURRENT_SITE)) {
-
-				if (controlPanelCategory.indexOf(StringPool.PERIOD) == -1) {
-					controlPanelCategory = StringUtil.replace(
-						controlPanelCategory, PortletCategoryKeys.CURRENT_SITE,
-						PortletCategoryKeys.SITE_ADMINISTRATION);
-				}
-				else {
-					controlPanelCategory = StringUtil.replace(
-						controlPanelCategory,
-						PortletCategoryKeys.CURRENT_SITE + StringPool.PERIOD,
-						PortletCategoryKeys.SITE_ADMINISTRATION);
-				}
-			}
-
-			if (controlPanelCategory.equals(
-					PortletCategoryKeys.SITE_ADMINISTRATION)) {
-
-				Portlet firstPortlet =
-					PortalUtil.getFirstSiteAdministrationPortlet(themeDisplay);
-
-				String redirect = HttpUtil.setParameter(
-					currentURL, "p_p_id", firstPortlet.getPortletId());
-
-				response.sendRedirect(
-					PortalUtil.getAbsoluteURL(request, redirect));
-			}
-			else {
-				List<Portlet> portlets = PortalUtil.getControlPanelPortlets(
-					controlPanelCategory, themeDisplay);
-
-				Portlet firstPortlet = null;
-
-				for (Portlet portlet : portlets) {
-					if (PortletPermissionUtil.hasControlPanelAccessPermission(
-							permissionChecker, scopeGroupId, portlet)) {
-
-						firstPortlet = portlet;
-
-						break;
-					}
-				}
-
-				if ((firstPortlet == null) &&
-					controlPanelCategory.startsWith(
-						PortletCategoryKeys.SITE_ADMINISTRATION)) {
-
-					firstPortlet = PortalUtil.getFirstSiteAdministrationPortlet(
-						themeDisplay);
-				}
-
-				if (firstPortlet != null) {
-					String redirect = HttpUtil.setParameter(
-						currentURL, "p_p_id", firstPortlet.getPortletId());
-
-					response.sendRedirect(
-						PortalUtil.getAbsoluteURL(request, redirect));
-				}
-			}
-		}
-
 		return themeDisplay;
 	}
 
@@ -1378,13 +1309,9 @@ public class ServicePreAction extends Action {
 	public void run(HttpServletRequest request, HttpServletResponse response)
 		throws ActionException {
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-		}
+		stopWatch.start();
 
 		try {
 			servicePre(request, response);
@@ -1408,13 +1335,28 @@ public class ServicePreAction extends Action {
 			PortletDataHandlerKeys.PERMISSIONS,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.THEME_REFERENCE,
@@ -1648,7 +1590,55 @@ public class ServicePreAction extends Action {
 		Layout layout = null;
 		List<Layout> layouts = null;
 
-		if (signedIn) {
+		// Check the virtual host
+
+		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
+			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
+
+		if (layoutSet != null) {
+			layouts = LayoutLocalServiceUtil.getLayouts(
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			Group group = null;
+
+			if (!layouts.isEmpty()) {
+				layout = layouts.get(0);
+
+				group = layout.getGroup();
+			}
+
+			if ((layout != null) && layout.isPrivateLayout()) {
+				layouts = LayoutLocalServiceUtil.getLayouts(
+					group.getGroupId(), false,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				if (!layouts.isEmpty()) {
+					layout = layouts.get(0);
+				}
+				else {
+					group = null;
+					layout = null;
+				}
+			}
+
+			if ((group != null) && group.isStagingGroup()) {
+				Group liveGroup = group.getLiveGroup();
+
+				layouts = LayoutLocalServiceUtil.getLayouts(
+					liveGroup.getGroupId(), false,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				if (!layouts.isEmpty()) {
+					layout = layouts.get(0);
+				}
+				else {
+					layout = null;
+				}
+			}
+		}
+
+		if ((layout == null) && signedIn) {
 
 			// Check the user's personal layouts
 
@@ -1695,56 +1685,6 @@ public class ServicePreAction extends Action {
 						layout = layouts.get(0);
 
 						break;
-					}
-				}
-			}
-		}
-		else {
-
-			// Check the virtual host
-
-			LayoutSet layoutSet = (LayoutSet)request.getAttribute(
-				WebKeys.VIRTUAL_HOST_LAYOUT_SET);
-
-			if (layoutSet != null) {
-				layouts = LayoutLocalServiceUtil.getLayouts(
-					layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-				Group group = null;
-
-				if (!layouts.isEmpty()) {
-					layout = layouts.get(0);
-
-					group = layout.getGroup();
-				}
-
-				if ((layout != null) && layout.isPrivateLayout()) {
-					layouts = LayoutLocalServiceUtil.getLayouts(
-						group.getGroupId(), false,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-					if (!layouts.isEmpty()) {
-						layout = layouts.get(0);
-					}
-					else {
-						group = null;
-						layout = null;
-					}
-				}
-
-				if ((group != null) && group.isStagingGroup()) {
-					Group liveGroup = group.getLiveGroup();
-
-					layouts = LayoutLocalServiceUtil.getLayouts(
-						liveGroup.getGroupId(), false,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-					if (!layouts.isEmpty()) {
-						layout = layouts.get(0);
-					}
-					else {
-						layout = null;
 					}
 				}
 			}
@@ -2077,6 +2017,127 @@ public class ServicePreAction extends Action {
 		return layouts;
 	}
 
+	protected void processControlPanelRedirects(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if ((layout == null) || !layout.isTypeControlPanel()) {
+			return;
+		}
+
+		String controlPanelCategory = themeDisplay.getControlPanelCategory();
+		String currentURL = themeDisplay.getURLCurrent();
+		String ppid = themeDisplay.getPpid();
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		if (Validator.isNotNull(ppid)) {
+			boolean switchGroup = ParamUtil.getBoolean(request, "switchGroup");
+
+			if (switchGroup &&
+				!PortletPermissionUtil.hasControlPanelAccessPermission(
+					permissionChecker, scopeGroupId, ppid)) {
+
+				String redirect = HttpUtil.removeParameter(
+					currentURL, "p_p_id");
+
+				response.sendRedirect(redirect);
+			}
+		}
+		else {
+			if (Validator.isNull(controlPanelCategory)) {
+				Map<String, List<Portlet>> categoriesMap =
+					PortalUtil.getControlPanelCategoriesMap(request);
+
+				if (categoriesMap.size() == 1) {
+					for (String curCategory : categoriesMap.keySet()) {
+						List<Portlet> categoryPortlets = categoriesMap.get(
+							curCategory);
+
+						if (categoryPortlets.size() == 1) {
+							Portlet firstPortlet = categoryPortlets.get(0);
+
+							PortletURL redirectURL =
+								PortalUtil.getSiteAdministrationURL(
+									request, themeDisplay,
+									firstPortlet.getPortletId());
+
+							response.sendRedirect(redirectURL.toString());
+						}
+					}
+				}
+			}
+
+			if (controlPanelCategory.startsWith(
+					PortletCategoryKeys.CURRENT_SITE)) {
+
+				if (controlPanelCategory.indexOf(StringPool.PERIOD) == -1) {
+					controlPanelCategory = StringUtil.replace(
+						controlPanelCategory, PortletCategoryKeys.CURRENT_SITE,
+						PortletCategoryKeys.SITE_ADMINISTRATION);
+				}
+				else {
+					controlPanelCategory = StringUtil.replace(
+						controlPanelCategory,
+						PortletCategoryKeys.CURRENT_SITE + StringPool.PERIOD,
+						PortletCategoryKeys.SITE_ADMINISTRATION);
+				}
+			}
+
+			if (controlPanelCategory.equals(
+					PortletCategoryKeys.SITE_ADMINISTRATION)) {
+
+				Portlet firstPortlet =
+					PortalUtil.getFirstSiteAdministrationPortlet(themeDisplay);
+
+				String redirect = HttpUtil.setParameter(
+					currentURL, "p_p_id", firstPortlet.getPortletId());
+
+				response.sendRedirect(
+					PortalUtil.getAbsoluteURL(request, redirect));
+			}
+			else {
+				List<Portlet> portlets = PortalUtil.getControlPanelPortlets(
+					controlPanelCategory, themeDisplay);
+
+				Portlet firstPortlet = null;
+
+				for (Portlet portlet : portlets) {
+					if (PortletPermissionUtil.hasControlPanelAccessPermission(
+							permissionChecker, scopeGroupId, portlet)) {
+
+						firstPortlet = portlet;
+
+						break;
+					}
+				}
+
+				if ((firstPortlet == null) &&
+					controlPanelCategory.startsWith(
+						PortletCategoryKeys.SITE_ADMINISTRATION)) {
+
+					firstPortlet = PortalUtil.getFirstSiteAdministrationPortlet(
+						themeDisplay);
+				}
+
+				if (firstPortlet != null) {
+					String redirect = HttpUtil.setParameter(
+						currentURL, "p_p_id", firstPortlet.getPortletId());
+
+					response.sendRedirect(
+						PortalUtil.getAbsoluteURL(request, redirect));
+				}
+			}
+		}
+	}
+
 	protected void rememberVisitedGroupIds(
 		HttpServletRequest request, long currentGroupId) {
 
@@ -2130,6 +2191,10 @@ public class ServicePreAction extends Action {
 		}
 
 		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		// Control panel redirects
+
+		processControlPanelRedirects(request, response);
 
 		// Service context
 

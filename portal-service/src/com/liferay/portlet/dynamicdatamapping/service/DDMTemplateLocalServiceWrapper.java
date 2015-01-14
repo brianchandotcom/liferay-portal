@@ -592,6 +592,13 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		_ddmTemplateLocalService.deleteTemplates(groupId);
 	}
 
+	@Override
+	public void deleteTemplates(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ddmTemplateLocalService.deleteTemplates(groupId, classNameId);
+	}
+
 	/**
 	* Returns the template matching the group and template key.
 	*

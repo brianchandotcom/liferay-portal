@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -97,15 +100,9 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		String redirect = mainPath;
 
-		String pathInfo = request.getPathInfo();
+		String pathInfo = getPathInfo(request);
 
-		String friendlyURL = _friendlyURLPathPrefix;
-
-		if (Validator.isNotNull(pathInfo)) {
-			friendlyURL = friendlyURL.concat(pathInfo);
-		}
-
-		request.setAttribute(WebKeys.FRIENDLY_URL, friendlyURL);
+		request.setAttribute(WebKeys.FRIENDLY_URL, getFriendlyURL(pathInfo));
 
 		Object[] redirectArray = null;
 
@@ -126,19 +123,18 @@ public class FriendlyURLServlet extends HttpServlet {
 				request.setAttribute(WebKeys.LAST_PATH, lastPath);
 			}
 		}
-		catch (NoSuchLayoutException nsle) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsle);
-			}
-
-			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nsle, request, response);
-
-			return;
-		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(e);
+			}
+
+			if ((e instanceof NoSuchGroupException) ||
+				(e instanceof NoSuchLayoutException)) {
+
+				PortalUtil.sendError(
+					HttpServletResponse.SC_NOT_FOUND, e, request, response);
+
+				return;
 			}
 		}
 
@@ -169,6 +165,28 @@ public class FriendlyURLServlet extends HttpServlet {
 				response.sendRedirect(redirect);
 			}
 		}
+	}
+
+	protected String getFriendlyURL(String pathInfo) {
+		String friendlyURL = _friendlyURLPathPrefix;
+
+		if (Validator.isNotNull(pathInfo)) {
+			friendlyURL = friendlyURL.concat(pathInfo);
+		}
+
+		return friendlyURL;
+	}
+
+	protected String getPathInfo(HttpServletRequest request) {
+		String requestURI = request.getRequestURI();
+
+		int pos = requestURI.indexOf(Portal.JSESSIONID);
+
+		if (pos != -1) {
+			requestURI = requestURI.substring(0, pos);
+		}
+
+		return requestURI.substring(_friendlyURLPathPrefix.length());
 	}
 
 	protected Object[] getRedirect(
@@ -244,7 +262,15 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		if (group == null) {
-			return new Object[] {mainPath, Boolean.FALSE};
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("{companyId=");
+			sb.append(companyId);
+			sb.append(", friendlyURL=");
+			sb.append(friendlyURL);
+			sb.append("}");
+
+			throw new NoSuchGroupException(sb.toString());
 		}
 
 		// Layout friendly URL
@@ -295,7 +321,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 				Locale locale = PortalUtil.getLocale(request);
 
-				if (!layoutFriendlyURLCompositeFriendlyURL.equals(
+				if (!StringUtil.equalsIgnoreCase(
+						layoutFriendlyURLCompositeFriendlyURL,
 						layout.getFriendlyURL(locale))) {
 
 					Locale originalLocale = setAlternativeLayoutFriendlyURL(

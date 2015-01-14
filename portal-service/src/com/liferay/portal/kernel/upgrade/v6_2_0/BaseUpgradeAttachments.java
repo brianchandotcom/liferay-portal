@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
@@ -378,7 +379,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			long resourcePermissionId = increment();
+			long resourcePermissionId = increment(
+				ResourcePermission.class.getName());
 
 			con = DataAccess.getUpgradeOptimizedConnection();
 

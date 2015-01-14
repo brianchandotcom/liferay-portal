@@ -565,6 +565,12 @@ public class DDMTemplateLocalServiceUtil {
 		getService().deleteTemplates(groupId);
 	}
 
+	public static void deleteTemplates(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTemplates(groupId, classNameId);
+	}
+
 	/**
 	* Returns the template matching the group and template key.
 	*

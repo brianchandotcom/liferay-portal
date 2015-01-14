@@ -38,7 +38,7 @@ for (WorkflowLog workflowLog : workflowLogs) {
 		<c:choose>
 			<c:when test="<%= workflowLog.getType() == WorkflowLog.TASK_COMPLETION %>">
 				<div>
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(actorName), workflowLog.getState()} %>" key="x-completed-the-task-x" />
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(actorName), HtmlUtil.escape(workflowLog.getState())} %>" key="x-completed-the-task-x" />
 				</div>
 			</c:when>
 			<c:when test="<%= workflowLog.getType() == WorkflowLog.TASK_UPDATE %>">
@@ -48,7 +48,7 @@ for (WorkflowLog workflowLog : workflowLogs) {
 			</c:when>
 			<c:when test="<%= workflowLog.getType() == WorkflowLog.TRANSITION %>">
 				<div>
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(actorName), workflowLog.getPreviousState(), workflowLog.getState()} %>" key="x-changed-the-state-from-x-to-x" />
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(actorName), HtmlUtil.escape(workflowLog.getPreviousState()), HtmlUtil.escape(workflowLog.getState())} %>" key="x-changed-the-state-from-x-to-x" />
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -69,7 +69,7 @@ for (WorkflowLog workflowLog : workflowLogs) {
 								<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(assignerName), HtmlUtil.escape(actorName)} %>" key="x-assigned-the-task-to-x" />
 
 								<c:if test="<%= workflowLog.getPreviousUserId() != 0 %>">
-									<liferay-ui:message arguments="<%= PortalUtil.getUserName(workflowLog.getPreviousUserId(), StringPool.BLANK) %>" key="previous-assignee-was-x" />
+									<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(workflowLog.getPreviousUserId(), StringPool.BLANK)) %>" key="previous-assignee-was-x" />
 								</c:if>
 							</div>
 

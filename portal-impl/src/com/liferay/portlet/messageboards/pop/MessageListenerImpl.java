@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.pop.MessageListenerException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -124,13 +125,11 @@ public class MessageListenerImpl implements MessageListener {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs = null;
 
 		try {
-			StopWatch stopWatch = null;
+			StopWatch stopWatch = new StopWatch();
+
+			stopWatch.start();
 
 			if (_log.isDebugEnabled()) {
-				stopWatch = new StopWatch();
-
-				stopWatch.start();
-
 				_log.debug("Deliver message from " + from + " to " + recipient);
 			}
 
@@ -200,7 +199,7 @@ public class MessageListenerImpl implements MessageListener {
 				_log.debug("Parent message " + parentMessage);
 			}
 
-			String subject = MBUtil.getSubjectWithoutMessageId(message);
+			String subject = MBUtil.getSubjectForEmail(message);
 
 			MBMailMessage mbMailMessage = new MBMailMessage();
 
@@ -212,11 +211,12 @@ public class MessageListenerImpl implements MessageListener {
 
 			ServiceContext serviceContext = new ServiceContext();
 
-			serviceContext.setAddGroupPermissions(true);
-			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setAttribute("propagatePermissions", Boolean.TRUE);
 			serviceContext.setLayoutFullURL(
 				PortalUtil.getLayoutFullURL(
-					groupId, PortletKeys.MESSAGE_BOARDS));
+					groupId, PortletKeys.MESSAGE_BOARDS,
+					StringUtil.equalsIgnoreCase(
+						Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)));
 			serviceContext.setScopeGroupId(groupId);
 
 			if (parentMessage == null) {

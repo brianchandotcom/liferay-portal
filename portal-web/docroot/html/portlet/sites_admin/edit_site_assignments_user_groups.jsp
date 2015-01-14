@@ -140,38 +140,40 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 	</liferay-ui:search-container-row>
 
 	<liferay-util:buffer var="formButton">
-		<c:choose>
-			<c:when test='<%= tabs2.equals("current") %>'>
+		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
+			<c:choose>
+				<c:when test='<%= tabs2.equals("current") %>'>
 
-				<%
-				viewUserGroupsURL.setParameter("tabs2", "available");
-				%>
+					<%
+					viewUserGroupsURL.setParameter("tabs2", "available");
+					%>
 
-				<liferay-ui:icon
-					image="../aui/globe"
-					label="<%= true %>"
-					message="assign-user-groups"
-					url="<%= viewUserGroupsURL.toString() %>"
-				/>
+					<liferay-ui:icon
+						image="../aui/globe"
+						label="<%= true %>"
+						message="assign-user-groups"
+						url="<%= viewUserGroupsURL.toString() %>"
+					/>
 
-				<%
-				viewUserGroupsURL.setParameter("tabs2", "current");
-				%>
+					<%
+					viewUserGroupsURL.setParameter("tabs2", "current");
+					%>
 
-			</c:when>
-			<c:otherwise>
+				</c:when>
+				<c:otherwise>
 
-				<%
-				portletURL.setParameter("tabs2", "current");
+					<%
+					portletURL.setParameter("tabs2", "current");
 
-				String taglibOnClick = renderResponse.getNamespace() + "updateGroupUserGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
-				%>
+					String taglibOnClick = renderResponse.getNamespace() + "updateGroupUserGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+					%>
 
-				<aui:button-row>
-					<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
-				</aui:button-row>
-			</c:otherwise>
-		</c:choose>
+					<aui:button-row>
+						<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
+					</aui:button-row>
+				</c:otherwise>
+			</c:choose>
+		</c:if>
 	</liferay-util:buffer>
 
 	<c:choose>

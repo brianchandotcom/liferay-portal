@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Writer;
 
 import java.util.Date;
@@ -311,6 +314,16 @@ public class JSONObjectImpl implements JSONObject {
 	}
 
 	@Override
+	public void readExternal(ObjectInput objectInput) throws IOException {
+		try {
+			_jsonObject = new org.json.JSONObject(objectInput.readUTF());
+		}
+		catch (Exception e) {
+			throw new IOException(e);
+		}
+	}
+
+	@Override
 	public Object remove(String key) {
 		return _jsonObject.remove(key);
 	}
@@ -338,6 +351,11 @@ public class JSONObjectImpl implements JSONObject {
 		catch (Exception e) {
 			throw new JSONException(e);
 		}
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeUTF(toString());
 	}
 
 	private static final String _NULL_JSON = "{}";

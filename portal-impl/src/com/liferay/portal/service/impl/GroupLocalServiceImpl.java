@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeModelFinder;
@@ -1147,7 +1148,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(friendlyURL)) {
-			throw new NoSuchGroupException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("{companyId=");
+			sb.append(companyId);
+			sb.append(", friendlyURL=");
+			sb.append(friendlyURL);
+			sb.append("}");
+
+			throw new NoSuchGroupException(sb.toString());
 		}
 
 		friendlyURL = getFriendlyURL(friendlyURL);
@@ -4513,7 +4522,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			Group group = groupFinder.findByC_N(companyId, name);
 
 			if ((groupId <= 0) || (group.getGroupId() != groupId)) {
-				throw new DuplicateGroupException();
+				throw new DuplicateGroupException("{groupId=" + groupId + "}");
 			}
 		}
 		catch (NoSuchGroupException nsge) {

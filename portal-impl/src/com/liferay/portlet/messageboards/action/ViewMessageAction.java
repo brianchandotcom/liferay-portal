@@ -93,7 +93,8 @@ public class ViewMessageAction extends PortletAction {
 				MBMessage message = messageDisplay.getMessage();
 
 				if ((message != null) && message.isInTrash()) {
-					throw new NoSuchMessageException();
+					throw new NoSuchMessageException(
+						"{messageId=" + messageId + "}");
 				}
 			}
 

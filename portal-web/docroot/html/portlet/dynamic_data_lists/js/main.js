@@ -7,11 +7,15 @@ AUI.add(
 
 		var Lang = A.Lang;
 
-		var JSON = A.JSON;
-
 		var EMPTY_FN = A.Lang.emptyFn;
 
+		var JSON = A.JSON;
+
+		var STR_DASH = '-';
+
 		var STR_EMPTY = '';
+
+		var STR_SPACE = ' ';
 
 		var DLFileEntryCellEditor = A.Component.create(
 			{
@@ -104,7 +108,7 @@ AUI.add(
 						}
 
 						linkNode.setAttribute('href', url);
-						linkNode.setContent(title);
+						linkNode.setContent(Liferay.Util.escapeHTML(title));
 					},
 
 					_uiSetValue: function(val) {
@@ -135,6 +139,155 @@ AUI.add(
 						}
 
 						instance.elements.val(val);
+					}
+				}
+			}
+		);
+
+		var LinkToPageCellEditor = A.Component.create(
+			{
+				NAME: 'link-to-page-cell-editor',
+
+				EXTENDS: A.DropDownCellEditor,
+
+				prototype: {
+					OPT_GROUP_TEMPLATE: '<optgroup label="{label}">{options}</optgroup>',
+
+					renderUI: function(val) {
+						var instance = this;
+
+						var options = {};
+
+						LinkToPageCellEditor.superclass.renderUI.apply(instance, arguments);
+
+						A.io.request(
+							themeDisplay.getPathMain() + '/layouts_admin/get_layouts',
+							{
+								after: {
+									success: function() {
+										var	response = A.JSON.parse(this.get('responseData'));
+
+										if (response && response.layouts) {
+											instance._createOptionElements(response.layouts, options, STR_EMPTY);
+
+											instance.set('options', options);
+										}
+									}
+								},
+								data: {
+									cmd: 'getAll',
+									expandParentLayouts: true,
+									groupId: themeDisplay.getScopeGroupId(),
+									p_auth: Liferay.authToken,
+									paginate: false
+								}
+							}
+						);
+					},
+
+					_createOptions: function(val) {
+						var instance = this;
+
+						var privateOptions = [];
+						var publicOptions = [];
+
+						A.each(
+							val,
+							function(item, index, collection) {
+								var values = {
+									id: A.guid(),
+									label: index,
+									value: Liferay.Util.escapeHTML(JSON.stringify(item))
+								};
+
+								var optionsArray = publicOptions;
+
+								if (item.privateLayout) {
+									optionsArray = privateOptions;
+								}
+
+								optionsArray.push(
+									Lang.sub(instance.OPTION_TEMPLATE, values)
+								);
+							}
+						);
+
+						var optGroupTemplate = instance.OPT_GROUP_TEMPLATE;
+
+						var publicOptGroup = Lang.sub(
+							optGroupTemplate,
+							{
+								label: Liferay.Language.get('public-pages'),
+								options: publicOptions.join(STR_EMPTY)
+							}
+						);
+
+						var privateOptGroup = Lang.sub(
+							optGroupTemplate,
+							{
+								label: Liferay.Language.get('private-pages'),
+								options: privateOptions.join(STR_EMPTY)
+							}
+						);
+
+						var elements = instance.elements;
+
+						elements.setContent(publicOptGroup + privateOptGroup);
+
+						instance.options = elements.all('option');
+					},
+
+					_createOptionElements: function(layouts, options, prefix) {
+						var instance = this;
+
+						AArray.each(
+							layouts,
+							function(item, index, collection) {
+								options[prefix + item.name] = {
+									groupId: item.groupId,
+									layoutId: item.layoutId,
+									name: item.name,
+									privateLayout: item.privateLayout
+								};
+
+								if (item.hasChildren) {
+									instance._createOptionElements(
+										item.children.layouts,
+										options,
+										prefix + STR_DASH + STR_SPACE
+									);
+								}
+							}
+						);
+					},
+
+					_uiSetValue: function(val) {
+						var instance = this;
+
+						var options = instance.options;
+
+						if (options && options.size()) {
+							options.set('selected', false);
+
+							if (Lang.isValue(val)) {
+								var selLayout = SpreadSheet.Util.parseJSON(val);
+
+								options.each(
+									function(item, index, collection) {
+										var curLayout = SpreadSheet.Util.parseJSON(item.attr('value'));
+
+										if ((curLayout.groupId === selLayout.groupId) &&
+											(curLayout.layoutId === selLayout.layoutId) &&
+											(curLayout.privateLayout === selLayout.privateLayout)) {
+
+											item.set('selected', true);
+										}
+									}
+								);
+							}
+						}
+
+						return val;
 					}
 				}
 			}
@@ -190,6 +343,8 @@ AUI.add(
 
 						instance._setDataStableSort(instance.get('data'));
 
+						instance.set('scrollable', true);
+
 						instance.on('dataChange', instance._onDataChange);
 						instance.on('model:change', instance._onRecordUpdate);
 					},
@@ -233,6 +388,36 @@ AUI.add(
 						);
 					},
 
+					_afterActiveCellIndexChange: function(event) {
+						var instance = this;
+
+						var activeCell = instance.get('activeCell');
+						var boundingBox = instance.get('boundingBox');
+
+						var scrollableElement = boundingBox.one('.table-x-scroller');
+
+						var tableHighlightBorder = instance.highlight.get('activeBorderWidth')[0];
+
+						var activeCellWidth = activeCell.outerWidth() + tableHighlightBorder;
+						var scrollableWidth = scrollableElement.outerWidth();
+
+						var activeCellOffsetLeft = activeCell.get('offsetLeft');
+						var scrollLeft = scrollableElement.get('scrollLeft');
+
+						var activeCellOffsetRight = activeCellOffsetLeft + activeCellWidth;
+
+						var scrollTo = scrollLeft;
+
+						if ((scrollLeft + scrollableWidth) < activeCellOffsetRight) {
+							scrollTo = activeCellOffsetRight - scrollableWidth;
+						}
+						else if (activeCellOffsetLeft < scrollLeft) {
+							scrollTo = activeCellOffsetLeft;
+						}
+
+						scrollableElement.set('scrollLeft', scrollTo);
+					},
+
 					_normalizeRecordData: function(record) {
 						var instance = this;
 
@@ -246,7 +431,14 @@ AUI.add(
 								var type = item.type;
 								var value = record.get(item.name);
 
-								if ((type === 'radio') || (type === 'select')) {
+								if (type === 'ddm-link-to-page') {
+									value = SpreadSheet.Util.parseJSON(value);
+
+									delete value.name;
+
+									value = JSON.stringify(value);
+								}
+								else if ((type === 'radio') || (type === 'select')) {
 									if (!Lang.isArray(value)) {
 										value = AArray(value);
 									}
@@ -537,6 +729,24 @@ AUI.add(
 									return label;
 								};
 							}
+							else if (type === 'ddm-link-to-page') {
+								item.formatter = function(obj) {
+									var data = obj.data;
+
+									var label = STR_EMPTY;
+									var value = data[name];
+
+									if (value !== STR_EMPTY) {
+										var linkToPageData = SpreadSheet.Util.parseJSON(value);
+
+										if (linkToPageData.name) {
+											label = linkToPageData.name;
+										}
+									}
+
+									return label;
+								};
+							}
 							else if ((type === 'radio') || (type === 'select')) {
 								structureField = instance.findStructureFieldByAttribute(structure, 'name', name);
 
@@ -715,6 +925,7 @@ AUI.add(
 		};
 
 		SpreadSheet.TYPE_EDITOR['ddm-documentlibrary'] = DLFileEntryCellEditor;
+		SpreadSheet.TYPE_EDITOR['ddm-link-to-page'] = LinkToPageCellEditor;
 
 		Liferay.SpreadSheet = SpreadSheet;
 

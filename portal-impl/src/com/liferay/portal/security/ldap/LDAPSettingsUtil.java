@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.ldap;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -119,10 +118,14 @@ public class LDAPSettingsUtil {
 
 	public static long getPreferredLDAPServerId(
 			long companyId, String screenName)
-		throws PortalException, SystemException {
+		throws SystemException {
 
-		User user = UserLocalServiceUtil.getUserByScreenName(
+		User user = UserLocalServiceUtil.fetchUserByScreenName(
 			companyId, screenName);
+
+		if (user == null) {
+			return -1;
+		}
 
 		return user.getLdapServerId();
 	}

@@ -338,8 +338,7 @@
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${parentSite}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -358,8 +357,7 @@
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="Child SiteName" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Child" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -372,8 +370,7 @@
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${parentSite}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
@@ -382,8 +379,7 @@
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${parentSite}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewConfigureSiteScopeContentSharingPG">
@@ -395,29 +391,24 @@
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${parentSite}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#viewContentSharingPG">
+		<execute macro="AssetPublisher#viewContentSharingPG">
 			<var name="assetContent" value="${webContentContent}" />
 			<var name="assetTitle" value="${webContentTitle}" />
-			<var name="siteScope1" value="${parentSite}" />
-			<var name="siteScope2" value="${childSiteName}" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${parentSite}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPGViaAP">
-			<var name="siteScope" value="${parentSite}" />
+			<var name="scopeSiteType" value="Add New in Site Name" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="Child SiteName" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Child" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -430,8 +421,7 @@
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${parentSite}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewConfigureSiteScopeContentSharingPG">
@@ -443,15 +433,12 @@
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="Child SiteName" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Child" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#viewContentSharingPG">
+		<execute macro="AssetPublisher#viewContentSharingPG">
 			<var name="assetContent" value="${entryContent}" />
 			<var name="assetTitle" value="${entryTitle}" />
-			<var name="siteScope1" value="${parentSite}" />
-			<var name="siteScope2" value="${childSiteName}" />
 		</execute>
 	</command>
 </definition>

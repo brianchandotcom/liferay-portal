@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
@@ -111,7 +112,9 @@ public class URLTemplateResource implements TemplateResource {
 		finally {
 			if (urlConnection != null) {
 				try {
-					urlConnection.getInputStream().close();
+					InputStream inputStream = urlConnection.getInputStream();
+
+					inputStream.close();
 				}
 				catch (IOException ioe) {
 				}

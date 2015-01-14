@@ -17,7 +17,6 @@ package com.liferay.portal.image;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageMagick;
 import com.liferay.portal.kernel.image.ImageTool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,34 +30,35 @@ import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsUtil;
 
-import com.sun.media.jai.codec.ImageCodec;
-import com.sun.media.jai.codec.ImageDecoder;
-import com.sun.media.jai.codec.ImageEncoder;
-
+import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.IndexColorModel;
 import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
 import java.awt.image.WritableRaster;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.Arrays;
-import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import javax.imageio.ImageIO;
-
-import javax.media.jai.RenderedImageAdapter;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 import net.jmge.gif.Gif89Encoder;
 
@@ -298,9 +298,29 @@ public class ImageToolImpl implements ImageTool {
 			return (BufferedImage)renderedImage;
 		}
 
-		RenderedImageAdapter adapter = new RenderedImageAdapter(renderedImage);
+		ColorModel colorModel = renderedImage.getColorModel();
 
-		return adapter.getAsBufferedImage();
+		WritableRaster writableRaster =
+			colorModel.createCompatibleWritableRaster(
+				renderedImage.getWidth(), renderedImage.getHeight());
+
+		Hashtable<String, Object> properties = new Hashtable<String, Object>();
+
+		String[] keys = renderedImage.getPropertyNames();
+
+		if (!ArrayUtil.isEmpty(keys)) {
+			for (String key : keys) {
+				properties.put(key, renderedImage.getProperty(key));
+			}
+		}
+
+		BufferedImage bufferedImage = new BufferedImage(
+			colorModel, writableRaster, colorModel.isAlphaPremultiplied(),
+			properties);
+
+		renderedImage.copyData(writableRaster);
+
+		return bufferedImage;
 	}
 
 	@Override
@@ -406,29 +426,51 @@ public class ImageToolImpl implements ImageTool {
 	}
 
 	@Override
-	public ImageBag read(byte[] bytes) {
-		RenderedImage renderedImage = null;
-		String type = TYPE_NOT_AVAILABLE;
+	public ImageBag read(byte[] bytes) throws IOException {
+		BufferedImage bufferedImage = null;
+		String formatName = null;
 
-		Enumeration<ImageCodec> enu = ImageCodec.getCodecs();
+		InputStream inputStream = new ByteArrayInputStream(bytes);
 
-		while (enu.hasMoreElements()) {
-			ImageCodec codec = enu.nextElement();
+		ImageInputStream imageInputStream = ImageIO.createImageInputStream(
+			inputStream);
 
-			if (codec.isFormatRecognized(bytes)) {
-				type = codec.getFormatName();
+		Iterator<ImageReader> iterator = ImageIO.getImageReaders(
+			imageInputStream);
 
-				renderedImage = read(bytes, type);
+		if (iterator.hasNext()) {
+			ImageReader imageReader = iterator.next();
 
-				break;
-			}
+			imageReader.setInput(imageInputStream);
+
+			bufferedImage = imageReader.read(0);
+			formatName = imageReader.getFormatName();
 		}
 
-		if (type.equals("jpeg")) {
+		formatName = StringUtil.toLowerCase(formatName);
+
+		String type = TYPE_JPEG;
+
+		if (formatName.contains(TYPE_BMP)) {
+			type = TYPE_BMP;
+		}
+		else if (formatName.contains(TYPE_GIF)) {
+			type = TYPE_GIF;
+		}
+		else if (formatName.contains("jpeg") || type.equals("jpeg")) {
 			type = TYPE_JPEG;
 		}
+		else if (formatName.contains(TYPE_PNG)) {
+			type = TYPE_PNG;
+		}
+		else if (formatName.contains(TYPE_TIFF)) {
+			type = TYPE_TIFF;
+		}
+		else {
+			throw new IllegalArgumentException(type + " is not supported");
+		}
 
-		return new ImageBag(renderedImage, type);
+		return new ImageBag(bufferedImage, type);
 	}
 
 	@Override
@@ -455,25 +497,7 @@ public class ImageToolImpl implements ImageTool {
 		int scaledHeight = (int)(factor * imageHeight);
 		int scaledWidth = width;
 
-		BufferedImage bufferedImage = getBufferedImage(renderedImage);
-
-		int type = bufferedImage.getType();
-
-		if (type == 0) {
-			type = BufferedImage.TYPE_INT_ARGB;
-		}
-
-		BufferedImage scaledBufferedImage = new BufferedImage(
-			scaledWidth, scaledHeight, type);
-
-		Graphics graphics = scaledBufferedImage.getGraphics();
-
-		java.awt.Image scaledImage = bufferedImage.getScaledInstance(
-			scaledWidth, scaledHeight, java.awt.Image.SCALE_SMOOTH);
-
-		graphics.drawImage(scaledImage, 0, 0, null);
-
-		return scaledBufferedImage;
+		return doScale(renderedImage, scaledHeight, scaledWidth);
 	}
 
 	@Override
@@ -501,63 +525,7 @@ public class ImageToolImpl implements ImageTool {
 		int scaledHeight = Math.max(1, (int)(factor * imageHeight));
 		int scaledWidth = Math.max(1, (int)(factor * imageWidth));
 
-		BufferedImage bufferedImage = getBufferedImage(renderedImage);
-
-		int type = bufferedImage.getType();
-
-		if (type == 0) {
-			type = BufferedImage.TYPE_INT_ARGB;
-		}
-
-		BufferedImage scaledBufferedImage = null;
-
-		if ((type == BufferedImage.TYPE_BYTE_BINARY) ||
-			(type == BufferedImage.TYPE_BYTE_INDEXED)) {
-
-			IndexColorModel indexColorModel =
-				(IndexColorModel)bufferedImage.getColorModel();
-
-			BufferedImage tempBufferedImage = new BufferedImage(
-				1, 1, type, indexColorModel);
-
-			int bits = indexColorModel.getPixelSize();
-			int size = indexColorModel.getMapSize();
-
-			byte[] reds = new byte[size];
-
-			indexColorModel.getReds(reds);
-
-			byte[] greens = new byte[size];
-
-			indexColorModel.getGreens(greens);
-
-			byte[] blues = new byte[size];
-
-			indexColorModel.getBlues(blues);
-
-			WritableRaster writableRaster = tempBufferedImage.getRaster();
-
-			int pixel = writableRaster.getSample(0, 0, 0);
-
-			IndexColorModel scaledIndexColorModel = new IndexColorModel(
-				bits, size, reds, greens, blues, pixel);
-
-			scaledBufferedImage = new BufferedImage(
-				scaledWidth, scaledHeight, type, scaledIndexColorModel);
-		}
-		else {
-			scaledBufferedImage = new BufferedImage(
-				scaledWidth, scaledHeight, type);
-		}
-
-		Graphics graphics = scaledBufferedImage.getGraphics();
-
-		java.awt.Image scaledImage = bufferedImage.getScaledInstance(
-			scaledWidth, scaledHeight, java.awt.Image.SCALE_SMOOTH);
-
-		graphics.drawImage(scaledImage, 0, 0, null);
-
-		return scaledBufferedImage;
+		return doScale(renderedImage, scaledHeight, scaledWidth);
 	}
 
 	@Override
@@ -566,10 +534,7 @@ public class ImageToolImpl implements ImageTool {
 		throws IOException {
 
 		if (contentType.contains(TYPE_BMP)) {
-			ImageEncoder imageEncoder = ImageCodec.createImageEncoder(
-				TYPE_BMP, os, null);
-
-			imageEncoder.encode(renderedImage);
+			ImageIO.write(renderedImage, "bmp", os);
 		}
 		else if (contentType.contains(TYPE_GIF)) {
 			encodeGIF(renderedImage, os);
@@ -585,11 +550,43 @@ public class ImageToolImpl implements ImageTool {
 		else if (contentType.contains(TYPE_TIFF) ||
 				 contentType.contains("tif")) {
 
-			ImageEncoder imageEncoder = ImageCodec.createImageEncoder(
-				TYPE_TIFF, os, null);
-
-			imageEncoder.encode(renderedImage);
+			ImageIO.write(renderedImage, "tiff", os);
 		}
+	}
+
+	protected RenderedImage doScale(
+		RenderedImage renderedImage, int scaledHeight, int scaledWidth) {
+
+		// See http://www.oracle.com/technetwork/java/index-137037.html
+
+		BufferedImage originalBufferedImage = getBufferedImage(renderedImage);
+
+		ColorModel originalColorModel = originalBufferedImage.getColorModel();
+
+		Graphics2D originalGraphics2D = originalBufferedImage.createGraphics();
+
+		if (originalColorModel.hasAlpha()) {
+			originalGraphics2D.setComposite(AlphaComposite.Src);
+		}
+
+		GraphicsConfiguration originalGraphicsConfiguration =
+			originalGraphics2D.getDeviceConfiguration();
+
+		BufferedImage scaledBufferedImage =
+			originalGraphicsConfiguration.createCompatibleImage(
+				scaledWidth, scaledHeight,
+				originalBufferedImage.getTransparency());
+
+		Graphics scaledGraphics = scaledBufferedImage.getGraphics();
+
+		scaledGraphics.drawImage(
+			originalBufferedImage.getScaledInstance(
+				scaledWidth, scaledHeight, java.awt.Image.SCALE_SMOOTH),
+			0, 0, null);
+
+		originalGraphics2D.dispose();
+
+		return scaledBufferedImage;
 	}
 
 	protected ImageMagick getImageMagick() {
@@ -610,10 +607,21 @@ public class ImageToolImpl implements ImageTool {
 				type = "jpeg";
 			}
 
-			ImageDecoder imageDecoder = ImageCodec.createImageDecoder(
-				type, new UnsyncByteArrayInputStream(bytes), null);
+			InputStream inputStream = new ByteArrayInputStream(bytes);
 
-			renderedImage = imageDecoder.decodeAsRenderedImage();
+			ImageInputStream imageInputStream = ImageIO.createImageInputStream(
+				inputStream);
+
+			Iterator<ImageReader> iterator = ImageIO.getImageReaders(
+				imageInputStream);
+
+			if (iterator.hasNext()) {
+				ImageReader imageReader = iterator.next();
+
+				imageReader.setInput(imageInputStream);
+
+				renderedImage = imageReader.read(0);
+			}
 		}
 		catch (IOException ioe) {
 			if (_log.isDebugEnabled()) {

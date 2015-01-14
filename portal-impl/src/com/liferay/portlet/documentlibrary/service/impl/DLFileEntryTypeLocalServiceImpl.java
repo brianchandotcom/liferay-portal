@@ -157,8 +157,11 @@ public class DLFileEntryTypeLocalServiceImpl
 	public void cascadeFileEntryTypes(long userId, DLFolder dlFolder)
 		throws PortalException, SystemException {
 
+		long[] groupIds = PortalUtil.getSiteAndCompanyGroupIds(
+			dlFolder.getGroupId());
+
 		List<DLFileEntryType> dlFileEntryTypes = getFolderFileEntryTypes(
-			new long[] {dlFolder.getGroupId()}, dlFolder.getFolderId(), true);
+			groupIds, dlFolder.getFolderId(), true);
 
 		List<Long> fileEntryTypeIds = getFileEntryTypeIds(dlFileEntryTypes);
 
@@ -417,6 +420,10 @@ public class DLFileEntryTypeLocalServiceImpl
 			ddmStructureIds = ArrayUtil.append(ddmStructureIds, ddmStructureId);
 		}
 
+		validate(
+			fileEntryTypeId, dlFileEntryType.getGroupId(),
+			dlFileEntryType.getFileEntryTypeKey(), ddmStructureIds);
+
 		dlFileEntryType.setModifiedDate(serviceContext.getModifiedDate(null));
 		dlFileEntryType.setNameMap(nameMap);
 		dlFileEntryType.setDescriptionMap(descriptionMap);
@@ -667,7 +674,8 @@ public class DLFileEntryTypeLocalServiceImpl
 				ddmStructurePersistence.fetchByPrimaryKey(ddmStructureId);
 
 			if (ddmStructure == null) {
-				throw new NoSuchMetadataSetException();
+				throw new NoSuchMetadataSetException(
+					"{ddmStructureId=" + ddmStructureId);
 			}
 		}
 	}

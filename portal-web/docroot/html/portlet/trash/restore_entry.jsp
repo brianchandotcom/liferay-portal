@@ -48,7 +48,7 @@ String renameMessage = ParamUtil.getString(request, "renameMessage");
 %>
 
 <div class="alert alert-block" id="<portlet:namespace />messageContainer">
-	<liferay-ui:message arguments="<%= new String[] {oldName} %>" key="an-entry-with-name-x-already-exists" />
+	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(oldName)} %>" key="an-entry-with-name-x-already-exists" />
 </div>
 
 <portlet:actionURL var="restoreActionURL">
@@ -62,11 +62,11 @@ String renameMessage = ParamUtil.getString(request, "renameMessage");
 	<aui:input name="oldName" type="hidden" value="<%= oldName %>" />
 
 	<aui:fieldset>
-		<aui:input checked="<%= true %>" id="override" label="<%= overrideMessage %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
+		<aui:input checked="<%= true %>" id="override" label="<%= HtmlUtil.escape(overrideMessage) %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
 
-		<aui:input id="rename" label="<%= renameMessage %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
+		<aui:input id="rename" label="<%= HtmlUtil.escape(renameMessage) %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
 
-		<aui:input cssClass="new-file-name" label="" name="newName" title="<%= renameMessage %>" value="<%= TrashUtil.getNewName(themeDisplay, className, classPK, oldName) %>" />
+		<aui:input cssClass="new-file-name" label="" name="newName" title="<%= HtmlUtil.escapeAttribute(renameMessage) %>" value="<%= TrashUtil.getNewName(themeDisplay, className, classPK, oldName) %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

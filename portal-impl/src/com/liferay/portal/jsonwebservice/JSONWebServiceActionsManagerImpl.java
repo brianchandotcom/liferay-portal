@@ -287,7 +287,14 @@ public class JSONWebServiceActionsManagerImpl
 	public int registerServletContext(ServletContext servletContext) {
 		String contextPath = ContextPathUtil.getContextPath(servletContext);
 
-		return registerServletContext(contextPath);
+		int count = registerServletContext(contextPath);
+
+		if (count < 0) {
+			count = registerServletContext(
+				servletContext.getServletContextName());
+		}
+
+		return count;
 	}
 
 	@Override

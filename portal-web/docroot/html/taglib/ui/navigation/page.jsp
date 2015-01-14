@@ -64,7 +64,7 @@
 				</h2>
 			</c:when>
 			<c:when test='<%= headerType.equals("portlet-title") %>'>
-				<h2><%= portletDisplay.getTitle() %></h2>
+				<h2><%= HtmlUtil.escape(portletDisplay.getTitle()) %></h2>
 			</c:when>
 			<c:when test='<%= headerType.equals("breadcrumb") %>'>
 				<liferay-ui:breadcrumb />

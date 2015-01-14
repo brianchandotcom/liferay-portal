@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	* @return the user notification event that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.UserNotificationEvent addUserNotificationEvent(
 		com.liferay.portal.model.UserNotificationEvent userNotificationEvent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	* @throws PortalException if a user notification event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.UserNotificationEvent deleteUserNotificationEvent(
 		long userNotificationEventId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	* @return the user notification event that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.UserNotificationEvent deleteUserNotificationEvent(
 		com.liferay.portal.model.UserNotificationEvent userNotificationEvent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -254,6 +258,7 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	* @return the user notification event that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.UserNotificationEvent updateUserNotificationEvent(
 		com.liferay.portal.model.UserNotificationEvent userNotificationEvent)
 		throws com.liferay.portal.kernel.exception.SystemException;

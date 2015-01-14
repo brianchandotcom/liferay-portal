@@ -40,6 +40,7 @@ import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
+import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.io.InputStream;
 
@@ -155,6 +156,10 @@ public class SplitThreadAction extends PortletAction {
 			String format = GetterUtil.getString(
 				portletPreferences.getValue("messageFormat", null),
 				MBMessageConstants.DEFAULT_FORMAT);
+
+			if (!MBUtil.isValidMessageFormat(format)) {
+				format = "html";
+			}
 
 			String layoutFullURL = PortalUtil.getLayoutFullURL(themeDisplay);
 

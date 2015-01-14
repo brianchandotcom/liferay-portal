@@ -27,6 +27,7 @@ import ${packagePath}.model.${entity.name}Soap;
 import ${packagePath}.service.${entity.name}LocalServiceUtil;
 
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -754,7 +755,14 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			TrashHandler trashHandler = getTrashHandler();
 
 			if (!Validator.isNull(trashHandler.getContainerModelClassName())) {
-				ContainerModel containerModel = trashHandler.getParentContainerModel(this);
+				ContainerModel containerModel = null;
+
+				try {
+					containerModel = trashHandler.getParentContainerModel(this);
+				}
+				catch (NoSuchModelException nsme) {
+					return null;
+				}
 
 				while (containerModel != null) {
 					if (containerModel instanceof TrashedModel) {
@@ -973,7 +981,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 						return StringPool.BLANK;
 					}
 
-					return LocalizationUtil.getDefaultLanguageId(xml);
+					<#if entity.isGroupedModel()>
+						Locale defaultLocale = LocaleUtil.getSiteDefault();
+					<#else>
+						Locale defaultLocale = LocaleUtil.getDefault();
+					</#if>
+
+					return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
 					<#break>
 				</#if>
 			</#list>
@@ -987,7 +1001,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		@Override
 		@SuppressWarnings("unused")
 		public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) throws LocaleException {
-			Locale defaultLocale = LocaleUtil.getDefault();
+			<#if entity.isGroupedModel()>
+				Locale defaultLocale = LocaleUtil.getSiteDefault();
+			<#else>
+				Locale defaultLocale = LocaleUtil.getDefault();
+			</#if>
 
 			String modelDefaultLanguageId = getDefaultLanguageId();
 
@@ -1165,6 +1183,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			<#if (column.type == "Blob") && column.lazy>
 				${entity.varName}ModelImpl._${column.name}BlobModel = null;
 			</#if>
+		</#list>
+
+		<#list cacheFields as cacheField>
+			<#assign variableName = serviceBuilder.getVariableName(cacheField)>
+			<#assign methodName = textFormatter.format(variableName, 6)>
+
+			set${methodName}(null);
 		</#list>
 
 		<#if columnBitmaskEnabled>

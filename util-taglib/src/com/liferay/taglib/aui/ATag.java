@@ -94,7 +94,7 @@ public class ATag extends BaseATag {
 			jspWriter.write("<a ");
 
 			jspWriter.write("href=\"");
-			jspWriter.write(HtmlUtil.escape(href));
+			jspWriter.write(HtmlUtil.escapeAttribute(href));
 			jspWriter.write("\" ");
 
 			if (Validator.isNotNull(target)) {

@@ -214,9 +214,9 @@
 	<command name="viewPGViaAP">
 		<var name="key_assetTitle" value="${threadSubject}" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${threadSubject}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${threadBody}" />
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_TITLE" value1="${threadSubject}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_TITLE" value1="${threadSubject}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_SUMMARY" value1="${threadBody}" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_TITLE" value1="${threadSubject}" />
 
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${threadSubject}" />
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_MESSAGE_BOARDS_THREAD_SUBJECT" value1="${threadSubject}" />
@@ -269,6 +269,6 @@
 	<command name="viewWithWorkflowPGViaAP">
 		<var name="key_assetTitle" value="${threadSubject}" />
 
-		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${threadSubject}" />
+		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_TITLE" value1="${threadSubject}" />
 	</command>
 </definition>

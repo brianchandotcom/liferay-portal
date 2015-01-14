@@ -64,7 +64,7 @@ public class SassToCssBuilder {
 		return new File(cacheFileName);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		List<String> dirNames = new ArrayList<String>();
@@ -90,12 +90,7 @@ public class SassToCssBuilder {
 		String docrootDirName = arguments.get("sass.docroot.dir");
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
 
-		try {
-			new SassToCssBuilder(dirNames, docrootDirName, portalCommonDirName);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		new SassToCssBuilder(dirNames, docrootDirName, portalCommonDirName);
 	}
 
 	public static String parseStaticTokens(String content) {
@@ -188,6 +183,10 @@ public class SassToCssBuilder {
 		throws Exception {
 
 		for (String fileName : fileNames) {
+			if (fileName.contains("_rtl")) {
+				continue;
+			}
+
 			fileName = _normalizeFileName(dirName, fileName);
 
 			File file = new File(fileName);
@@ -256,7 +255,7 @@ public class SassToCssBuilder {
 			catch (Exception e) {
 				System.out.println("Unable to parse " + fileName);
 
-				e.printStackTrace();
+				throw e;
 			}
 		}
 	}

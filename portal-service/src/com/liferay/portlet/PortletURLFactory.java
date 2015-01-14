@@ -26,11 +26,11 @@ import javax.servlet.http.HttpServletRequest;
 public interface PortletURLFactory {
 
 	public LiferayPortletURL create(
-		HttpServletRequest request, String portletName, long plid,
+		HttpServletRequest request, String portletId, long plid,
 		String lifecycle);
 
 	public LiferayPortletURL create(
-		PortletRequest portletRequest, String portletName, long plid,
+		PortletRequest portletRequest, String portletId, long plid,
 		String lifecycle);
 
 }

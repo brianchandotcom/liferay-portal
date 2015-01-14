@@ -1,0 +1,27 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="SetUpSamladminSP" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="SAML Admin" />
+		</execute>
+
+		<execute macro="SAMLRole#addCP">
+			<var name="samlEntityName" value="samlsp" />
+			<var name="samlRoleType" value="Service Provider" />
+		</execute>
+	</command>
+
+	<command name="SetUpSamladminIdP" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="SAML Admin" />
+		</execute>
+
+		<execute macro="SAMLRole#addCP">
+			<var name="samlEntityName" value="samlip" />
+			<var name="samlRoleType" value="Identity Provider" />
+		</execute>
+	</command>
+</definition>

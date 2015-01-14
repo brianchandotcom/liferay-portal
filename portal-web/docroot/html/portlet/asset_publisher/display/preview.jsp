@@ -29,12 +29,12 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp
 
 	<c:if test="<%= Validator.isNotNull(imagePreviewURL) %>">
 		<div class="asset-image-preview">
-			<img alt="<%= assetRenderer.getTitle(themeDisplay.getLocale()) %>" src="<%= imagePreviewURL %>" />
+			<img alt="<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(themeDisplay.getLocale())) %>" src="<%= HtmlUtil.escapeAttribute(imagePreviewURL) %>" />
 		</div>
 	</c:if>
 
 	<div class="asset-title">
-		<%= assetRenderer.getTitle(themeDisplay.getLocale()) %>
+		<%= HtmlUtil.escape(assetRenderer.getTitle(themeDisplay.getLocale())) %>
 	</div>
 
 	<%
@@ -48,11 +48,11 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp
 	%>
 
 	<div class="asset-information">
-		<span class="user-name"><%= assetRenderer.getUserName() %></span>&nbsp; <span class="display-date"><%= displayDateString %></span>
+		<span class="user-name"><%= HtmlUtil.escape(assetRenderer.getUserName()) %></span>&nbsp; <span class="display-date"><%= displayDateString %></span>
 	</div>
 
 	<div class="asset-summary">
-		<%= StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 320) %>
+		<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 320)) %>
 	</div>
 
 	<div class="asset-metadata">

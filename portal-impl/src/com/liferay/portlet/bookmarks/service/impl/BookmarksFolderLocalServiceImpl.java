@@ -129,7 +129,7 @@ public class BookmarksFolderLocalServiceImpl
 			folder.getGroupId(), folder.getFolderId());
 
 		for (BookmarksFolder curFolder : folders) {
-			if (includeTrashedEntries || !curFolder.isInTrash()) {
+			if (includeTrashedEntries || !curFolder.isInTrashExplicitly()) {
 				deleteFolder(curFolder);
 			}
 		}
@@ -364,14 +364,14 @@ public class BookmarksFolderLocalServiceImpl
 		BookmarksFolder folder = bookmarksFolderPersistence.findByPrimaryKey(
 			folderId);
 
-		TrashEntry trashEntry = folder.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(BookmarksFolder.class, folderId)) {
+		if (folder.isInTrashExplicitly()) {
 			restoreFolderFromTrash(userId, folderId);
 		}
 		else {
 
 			// Folder
+
+			TrashEntry trashEntry = folder.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(

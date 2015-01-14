@@ -154,13 +154,13 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 						<%
 						double version = extraDataJSONObject.getDouble("version");
 
-						WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.getPage(node.getNodeId(), wikiPage.getTitle(), version);
+						WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(node.getNodeId(), wikiPage.getTitle(), version);
 						%>
 
 						<portlet:renderURL var="viewPageURL">
 							<portlet:param name="struts_action" value="/wiki/view" />
 							<portlet:param name="nodeName" value="<%= node.getName() %>" />
-							<portlet:param name="title" value="<%= socialActivityWikiPage.getTitle() %>" />
+							<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
 							<portlet:param name="version" value="<%= String.valueOf(version) %>" />
 						</portlet:renderURL>
 
@@ -169,12 +169,19 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 								<liferay-ui:icon
 									image="trash"
 									label="<%= true %>"
-									message='<%= LanguageUtil.format(pageContext, "activity-wiki-page-move-to-trash", new Object[] {StringPool.BLANK, HtmlUtil.escape(socialActivityUser.getFullName()), socialActivityWikiPage.getTitle()}) %>'
+									message='<%= LanguageUtil.format(pageContext, "activity-wiki-page-move-to-trash", new Object[] {StringPool.BLANK, HtmlUtil.escape(socialActivityUser.getFullName()), wikiPage.getTitle()}) %>'
 								/>
 							</c:when>
 							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_FROM_TRASH %>">
 								<liferay-util:buffer var="pageTitleLink">
-									<aui:a href="<%= viewPageURL.toString() %>"><%= socialActivityWikiPage.getTitle() %></aui:a>
+									<c:choose>
+										<c:when test="<%= socialActivityWikiPage != null %>">
+											<aui:a href="<%= viewPageURL.toString() %>"><%= wikiPage.getTitle() %></aui:a>
+										</c:when>
+										<c:otherwise>
+											<%= wikiPage.getTitle() %>
+										</c:otherwise>
+									</c:choose>
 								</liferay-util:buffer>
 
 								<liferay-ui:icon
@@ -185,7 +192,14 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 							</c:when>
 							<c:when test="<%= socialActivity.getType() == WikiActivityKeys.ADD_PAGE %>">
 								<liferay-util:buffer var="pageTitleLink">
-									<aui:a href="<%= viewPageURL.toString() %>"><%= socialActivityWikiPage.getTitle() %></aui:a>
+									<c:choose>
+										<c:when test="<%= socialActivityWikiPage != null %>">
+											<aui:a href="<%= viewPageURL.toString() %>"><%= wikiPage.getTitle() %></aui:a>
+										</c:when>
+										<c:otherwise>
+											<%= wikiPage.getTitle() %>
+										</c:otherwise>
+									</c:choose>
 								</liferay-util:buffer>
 
 								<liferay-ui:icon
@@ -196,13 +210,20 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 							</c:when>
 							<c:when test="<%= socialActivity.getType() == WikiActivityKeys.UPDATE_PAGE %>">
 								<liferay-util:buffer var="pageTitleLink">
-									<aui:a href="<%= viewPageURL.toString() %>">
-										<%= version %>
+									<c:choose>
+										<c:when test="<%= socialActivityWikiPage != null %>">
+											<aui:a href="<%= viewPageURL.toString() %>">
+												<%= version %>
 
-										<c:if test="<%= socialActivityWikiPage.isMinorEdit() %>">
-											(<liferay-ui:message key="minor-edit" />)
-										</c:if>
-									</aui:a>
+												<c:if test="<%= socialActivityWikiPage.isMinorEdit() %>">
+													(<liferay-ui:message key="minor-edit" />)
+												</c:if>
+											</aui:a>
+										</c:when>
+										<c:otherwise>
+											<%= version %>
+										</c:otherwise>
+									</c:choose>
 								</liferay-util:buffer>
 
 								<liferay-ui:icon
@@ -211,12 +232,12 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 									message='<%= LanguageUtil.format(pageContext, "x-updated-the-page-to-version-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}) %>'
 								/>
 
-								<c:if test="<%= socialActivityWikiPage.getStatus() != WorkflowConstants.STATUS_APPROVED %>">
+								<c:if test="<%= (socialActivityWikiPage != null) && socialActivityWikiPage.getStatus() != WorkflowConstants.STATUS_APPROVED %>">
 									<span class="activity-status"><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(socialActivityWikiPage.getStatus()) %>" /></span>
 								</c:if>
 
-								<c:if test="<%= Validator.isNotNull(socialActivityWikiPage.getSummary()) %>">
-									<em class="activity-summary"><%= StringPool.QUOTE + socialActivityWikiPage.getSummary() + StringPool.QUOTE %></em>
+								<c:if test="<%= (socialActivityWikiPage != null) && Validator.isNotNull(socialActivityWikiPage.getSummary()) %>">
+									<em class="activity-summary"><%= StringPool.QUOTE + HtmlUtil.escape(socialActivityWikiPage.getSummary()) + StringPool.QUOTE %></em>
 								</c:if>
 							</c:when>
 						</c:choose>

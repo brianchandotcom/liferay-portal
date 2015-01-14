@@ -47,6 +47,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.RoleTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
@@ -803,7 +804,7 @@ public class GroupServiceTest {
 	protected void givePermissionToManageSubsites(User user, Group group)
 		throws Exception {
 
-		Role role = ServiceTestUtil.addRole(
+		Role role = RoleTestUtil.addRole(
 			"Subsites Admin", RoleConstants.TYPE_SITE, Group.class.getName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),

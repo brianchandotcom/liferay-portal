@@ -74,7 +74,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 				}
 
 				buffer.append("<img align=\"left\" border=\"0\" src=\"");
-				buffer.append(themeDisplay.getPathThemeImages());
+				buffer.append(HtmlUtil.escapeHREF(themeDisplay.getPathThemeImages()));
 
 				if (curFolder.isMountPoint()) {
 					buffer.append(repositoryAccess ? "/common/drive.png\">" : "/common/drive_error.png\">");
@@ -95,7 +95,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 				}
 
 				buffer.append("<strong>");
-				buffer.append(curFolder.getName());
+				buffer.append(HtmlUtil.escape(curFolder.getName()));
 				buffer.append("</strong>");
 
 				if (!repositoryAccess) {
@@ -104,7 +104,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 
 				if (Validator.isNotNull(curFolder.getDescription())) {
 					buffer.append("<br />");
-					buffer.append(curFolder.getDescription());
+					buffer.append(HtmlUtil.escape(curFolder.getDescription()));
 				}
 
 				if (repositoryAccess) {
@@ -133,7 +133,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 							buffer.append("<a href=\"");
 							buffer.append(rowURL);
 							buffer.append("\">");
-							buffer.append(subfolder.getName());
+							buffer.append(HtmlUtil.escape(subfolder.getName()));
 							buffer.append("</a>");
 
 							if ((k + 1) < subfolders.size()) {

@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -115,11 +118,21 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 		String layoutType = getLayoutType();
 
+		if (Validator.isNull(layoutType)) {
+			return StringPool.BLANK;
+		}
+
+		long groupId = getLayoutGroupId();
+
+		if (groupId == 0) {
+			groupId = _themeDisplay.getScopeGroupId();
+		}
+
 		boolean privateLayout = layoutType.startsWith("private");
 
 		try {
 			Layout layout = LayoutLocalServiceUtil.getLayout(
-				_themeDisplay.getScopeGroupId(), privateLayout, getLayoutId());
+				groupId, privateLayout, getLayoutId());
 
 			return PortalUtil.getLayoutFriendlyURL(layout, _themeDisplay);
 		}
@@ -162,6 +175,10 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 		String layoutType = getLayoutType();
 
+		if (Validator.isNull(layoutType)) {
+			return StringPool.BLANK;
+		}
+
 		if (layoutType.equals(_LAYOUT_TYPE_PRIVATE_GROUP)) {
 			sb.append(PortalUtil.getPathFriendlyURLPrivateGroup());
 		}
@@ -176,11 +193,36 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		}
 
 		sb.append(StringPool.SLASH);
-		sb.append("@group_id@");
+
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(getLayoutGroupId());
+
+			String name = group.getFriendlyURL();
+
+			name = name.substring(1);
+
+			sb.append(name);
+		}
+		catch (Exception e) {
+			sb.append("@group_id@");
+		}
+
 		sb.append(StringPool.SLASH);
 		sb.append(getLayoutId());
 
 		return sb.toString();
+	}
+
+	protected long getLayoutGroupId() {
+		String data = (String)get("data");
+
+		int pos = data.lastIndexOf(CharPool.AT);
+
+		if (pos != -1) {
+			data = data.substring(pos + 1);
+		}
+
+		return GetterUtil.getLong(data);
 	}
 
 	protected long getLayoutId() {
@@ -198,10 +240,16 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	protected String getLayoutType() {
 		String data = (String)get("data");
 
-		int pos = data.indexOf(CharPool.AT);
+		int x = data.indexOf(CharPool.AT);
+		int y = data.lastIndexOf(CharPool.AT);
 
-		if (pos != -1) {
-			data = data.substring(pos + 1);
+		if ((x != -1) && (y != -1)) {
+			if (x == y) {
+				data = data.substring(x + 1);
+			}
+			else {
+				data = data.substring(x + 1, y);
+			}
 		}
 
 		return data;

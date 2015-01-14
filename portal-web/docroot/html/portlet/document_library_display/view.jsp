@@ -50,7 +50,7 @@ if (folder != null) {
 
 int status = WorkflowConstants.STATUS_APPROVED;
 
-if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 	status = WorkflowConstants.STATUS_ANY;
 }
 
@@ -101,15 +101,15 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 	</c:when>
 	<c:when test='<%= topLink.equals("home") %>'>
-		<aui:row>
-			<c:if test="<%= (folder != null) %>">
-				<liferay-ui:header
-					backURL="<%= redirect %>"
-					localizeTitle="<%= false %>"
-					title="<%= folder.getName() %>"
-				/>
-			</c:if>
+		<c:if test="<%= (folder != null) %>">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				localizeTitle="<%= false %>"
+				title="<%= folder.getName() %>"
+			/>
+		</c:if>
 
+		<aui:row>
 			<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= showFolderMenu ? 75 : 100 %>">
 				<liferay-ui:panel-container extended="<%= false %>" id='<%= renderResponse.getNamespace() + "documentLibraryDisplayInfoPanelContainer" %>' persistState="<%= true %>">
 					<c:if test="<%= folder != null %>">
@@ -159,7 +159,6 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 								<liferay-ui:search-container-row
 									className="com.liferay.portal.kernel.repository.model.Folder"
-									escapedModel="<%= true %>"
 									keyProperty="folderId"
 									modelVar="curFolder"
 									rowVar="row"
@@ -194,7 +193,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 						/>
 
 						<div class="lfr-asset-name">
-							<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(pageContext, "home") %></h4>
+							<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(pageContext, "home") %></h4>
 						</div>
 					</div>
 
@@ -231,6 +230,8 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 			if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
 				groupFileEntriesUserId = user.getUserId();
+
+				status = WorkflowConstants.STATUS_ANY;
 			}
 			%>
 

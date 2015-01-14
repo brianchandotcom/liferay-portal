@@ -203,6 +203,16 @@ public class DLFileEntryFinderImpl
 	}
 
 	@Override
+	public int filterCountByG_U_F_M(
+			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doCountByG_U_F_M(
+			groupId, userId, folderIds, mimeTypes, queryDefinition, true);
+	}
+
+	@Override
 	public DLFileEntry fetchByAnyImageId(long imageId) throws SystemException {
 		Session session = null;
 
@@ -254,6 +264,16 @@ public class DLFileEntryFinderImpl
 
 		return doFindByG_U_F_M(
 			groupId, 0, folderIds, null, queryDefinition, true);
+	}
+
+	@Override
+	public List<DLFileEntry> filterFindByG_U_F_M(
+			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doFindByG_U_F_M(
+			groupId, userId, folderIds, mimeTypes, queryDefinition, true);
 	}
 
 	@Override

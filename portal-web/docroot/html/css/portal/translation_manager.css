@@ -1,20 +1,26 @@
 .lfr-translation-manager {
 	border: 1px solid transparent;
 	display: block;
-	margin: 0 auto;
+	margin: 10px auto;
 	min-height: 1.8em;
 	padding: 0.5em;
 
-	.lfr-translation-manager-content .lfr-translation-manager-icon-menu {
-		display: inline;
-		float: none;
-		margin-left: 2em;
-		padding: 0.4em 0;
+	.lfr-translation-manager-content {
+		.lfr-translation-manager-icon-menu {
+			display: inline;
+			float: none;
+			margin-left: 2em;
+			padding: 0.4em 0;
 
-		li {
-			&, strong {
-				display: inline;
+			li {
+				&, strong {
+					display: inline;
+				}
 			}
+		}
+
+		.lfr-translation-manager-translations-message {
+			margin: 10px 0;
 		}
 	}
 
@@ -40,13 +46,8 @@
 
 	.lfr-translation-manager-delete-translation {
 		display: inline-block;
+		padding: 0 2px;
 	}
-}
-
-.lfr-translation-manager-selector, .lfr-translation-manager-add-menu {
-	display: inline-block;
-	margin: 0.5em 0;
-	white-space: nowrap;
 }
 
 /* Skin */

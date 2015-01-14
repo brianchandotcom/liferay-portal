@@ -341,7 +341,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		QueryDefinition queryDefinition = new QueryDefinition(
 			WorkflowConstants.STATUS_IN_TRASH, true, start, end, obc);
 
-		return dlFileEntryFinder.findByG_U_F_M(
+		return dlFileEntryFinder.filterFindByG_U_F_M(
 			groupId, 0, folderIds, mimeTypes, queryDefinition);
 	}
 
@@ -383,7 +383,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		folderIds.add(folderId);
 
-		return dlFileEntryFinder.countByG_U_F_M(
+		return dlFileEntryFinder.filterCountByG_U_F_M(
 			groupId, 0, folderIds, mimeTypes,
 			new QueryDefinition(WorkflowConstants.STATUS_ANY));
 	}
@@ -495,7 +495,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			status, start, end, obc);
 
 		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return dlFileEntryFinder.findByG_U_F_M(
+			return dlFileEntryFinder.filterFindByG_U_F_M(
 				groupId, userId, new ArrayList<Long>(), mimeTypes,
 				queryDefinition);
 		}
@@ -507,7 +507,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		return dlFileEntryFinder.findByG_U_F_M(
+		return dlFileEntryFinder.filterFindByG_U_F_M(
 			groupId, userId, folderIds, mimeTypes, queryDefinition);
 	}
 
@@ -539,7 +539,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return dlFileEntryFinder.countByG_U_F_M(
+			return dlFileEntryFinder.filterCountByG_U_F_M(
 				groupId, userId, new ArrayList<Long>(), mimeTypes,
 				new QueryDefinition(status));
 		}
@@ -551,7 +551,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			return 0;
 		}
 
-		return dlFileEntryFinder.countByG_U_F_M(
+		return dlFileEntryFinder.filterCountByG_U_F_M(
 			groupId, userId, folderIds, mimeTypes, new QueryDefinition(status));
 	}
 

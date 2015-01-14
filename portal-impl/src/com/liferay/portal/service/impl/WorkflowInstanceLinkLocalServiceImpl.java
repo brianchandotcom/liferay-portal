@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchWorkflowInstanceLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -175,7 +176,19 @@ public class WorkflowInstanceLinkLocalServiceImpl
 			getWorkflowInstanceLinks(companyId, groupId, className, classPK);
 
 		if (workflowInstanceLinks.isEmpty()) {
-			throw new NoSuchWorkflowInstanceLinkException();
+			StringBundler sb = new StringBundler(9);
+
+			sb.append("{companyId=");
+			sb.append(companyId);
+			sb.append(", groupId=");
+			sb.append(groupId);
+			sb.append(", className=");
+			sb.append(className);
+			sb.append(", classPK=");
+			sb.append(classPK);
+			sb.append("}");
+
+			throw new NoSuchWorkflowInstanceLinkException(sb.toString());
 		}
 		else {
 			return workflowInstanceLinks.get(0);

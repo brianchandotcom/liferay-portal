@@ -15,7 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,6 +51,7 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.RoleTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 
 import java.util.Calendar;
@@ -74,53 +74,47 @@ public class ServiceTestUtil {
 
 	public static final int THREAD_COUNT = 25;
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	public static void addResourcePermission(
 			Role role, String resourceName, int scope, String primKey,
 			String actionId)
 		throws Exception {
 
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
-			role.getCompanyId(), resourceName, scope, primKey, role.getRoleId(),
-			actionId);
+		RoleTestUtil.addResourcePermission(
+			role, resourceName, scope, primKey, actionId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	public static void addResourcePermission(
 			String roleName, String resourceName, int scope, String primKey,
 			String actionId)
 		throws Exception {
 
-		Role role = RoleLocalServiceUtil.getRole(
-			TestPropsValues.getCompanyId(), roleName);
-
-		addResourcePermission(role, resourceName, scope, primKey, actionId);
+		RoleTestUtil.addResourcePermission(
+			roleName, resourceName, scope, primKey, actionId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	public static Role addRole(String roleName, int roleType) throws Exception {
-		Role role = null;
-
-		try {
-			role = RoleLocalServiceUtil.getRole(
-				TestPropsValues.getCompanyId(), roleName);
-		}
-		catch (NoSuchRoleException nsre) {
-			role = RoleLocalServiceUtil.addRole(
-				TestPropsValues.getUserId(), null, 0, roleName, null, null,
-				roleType, null, null);
-		}
-
-		return role;
+		return RoleTestUtil.addRole(roleName, roleType);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	public static Role addRole(
 			String roleName, int roleType, String resourceName, int scope,
 			String primKey, String actionId)
 		throws Exception {
 
-		Role role = addRole(roleName, roleType);
-
-		addResourcePermission(role, resourceName, scope, primKey, actionId);
-
-		return role;
+		return RoleTestUtil.addRole(
+			roleName, roleType, resourceName, scope, primKey, actionId);
 	}
 
 	public static void destroyServices() {

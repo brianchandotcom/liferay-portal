@@ -4,13 +4,13 @@
 .lfr-search-container {
 	margin-top: 1.5em;
 	overflow: auto;
+}
 
-	@include respond-to(phone, tablet) {
-		@include experimental(overflow-scrolling, touch);
+.touch .lfr-search-container {
+	@include experimental(overflow-scrolling, touch);
 
-		.searchcontainer-content .table {
-			max-width: none;
-		}
+	.searchcontainer-content .table {
+		max-width: none;
 	}
 }
 
@@ -62,14 +62,11 @@
 		margin: 0;
 
 		@include respond-to(phone, tablet) {
+			width: 100%;
+
 			@include respond-to(phone) {
 				float: none;
 				margin-top: 20px;
-				width: 100%;
-			}
-
-			@include respond-to(tablet) {
-				width: 50%;
 			}
 
 			> li {
@@ -84,7 +81,7 @@
 				> a {
 					line-height: 20px;
 					padding: 11px 19px;
-					width: 65%;
+					width: 50%;
 				}
 			}
 		}

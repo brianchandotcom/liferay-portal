@@ -148,7 +148,8 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 		if (Validator.isNotNull(redirect)) {
 			request.setAttribute(
-				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE, redirect);
+				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE,
+				PortalUtil.escapeRedirect(redirect));
 		}
 
 		String[] credentials = new String[3];

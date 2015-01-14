@@ -760,6 +760,12 @@ public class DDMStructureLocalServiceUtil {
 		getService().deleteStructures(groupId);
 	}
 
+	public static void deleteStructures(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteStructures(groupId, classNameId);
+	}
+
 	/**
 	* Returns the structure with the ID.
 	*

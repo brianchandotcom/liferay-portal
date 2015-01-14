@@ -17,10 +17,6 @@ package com.liferay.portal.kernel.lar;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -71,6 +67,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				manifestSummary.incrementModelAdditionCount(
 					stagedModel.getStagedModelType());
 			}
+
+			portletDataContext.cleanUpMissingReferences(stagedModel);
 		}
 		catch (PortletDataException pde) {
 			throw pde;
@@ -256,33 +254,16 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			}
 		}
 
-		StagedModelType stagedModelType = stagedModel.getStagedModelType();
+		if (stagedModel instanceof TrashedModel) {
+			TrashedModel trashedModel = (TrashedModel)stagedModel;
 
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			stagedModelType.getClassName());
+			if (trashedModel.isInTrash()) {
+				PortletDataException pde = new PortletDataException(
+					PortletDataException.STATUS_IN_TRASH);
 
-		if (trashHandler != null) {
-			try {
-				long classPK = (Long)stagedModel.getPrimaryKeyObj();
+				pde.setStagedModel(stagedModel);
 
-				if (trashHandler.isInTrash(classPK)) {
-					PortletDataException pde = new PortletDataException(
-						PortletDataException.STATUS_IN_TRASH);
-
-					pde.setStagedModel(stagedModel);
-
-					throw pde;
-				}
-			}
-			catch (PortletDataException pde) {
 				throw pde;
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to check trash status for " +
-							stagedModel.getModelClassName());
-				}
 			}
 		}
 	}
@@ -293,8 +274,5 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		return true;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		BaseStagedModelDataHandler.class);
 
 }

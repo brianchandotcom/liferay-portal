@@ -20,7 +20,7 @@
 String copyLayoutIdPrefix = ParamUtil.getString(request, "copyLayoutIdPrefix");
 %>
 
-<aui:select id='<%= copyLayoutIdPrefix + "copyLayoutId" %>' label="copy-from-page" name="copyLayoutId" showEmptyOption="<%= true %>">
+<aui:select id='<%= HtmlUtil.escapeAttribute(copyLayoutIdPrefix) + "copyLayoutId" %>' label="copy-from-page" name="copyLayoutId" showEmptyOption="<%= true %>">
 
 	<%
 	List layoutList = (List)request.getAttribute(WebKeys.LAYOUT_LISTER_LIST);

@@ -107,7 +107,7 @@ else {
 		<aui:nav cssClass="nav-list well">
 			<c:if test="<%= Validator.isNotNull(parentTitle) %>">
 				<li class="nav-header">
-					<%= parentTitle %>
+					<%= HtmlUtil.escape(parentTitle) %>
 				</li>
 			</c:if>
 
@@ -269,7 +269,7 @@ else {
 						<%
 						}
 						catch (Exception e) {
-							if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+							if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 								String errorMessage = null;
 
 								if (e instanceof PrincipalException) {
@@ -292,7 +292,7 @@ else {
 										<liferay-ui:icon alt="drive-error" image="drive_error" />
 
 										<span class="entry-title">
-											<%= mountFolder.getName() %>
+											<%= HtmlUtil.escape(mountFolder.getName()) %>
 										</span>
 									</span>
 								</li>
@@ -387,7 +387,7 @@ else {
 							<liferay-ui:app-view-navigation-entry
 								cssClass="folder file-entry-type"
 								dataView="<%= dataView %>"
-								entryTitle="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>"
+								entryTitle="<%= fileEntryType.getName(locale) %>"
 								iconImage="icon-file"
 								selected="<%= (fileEntryTypeId == fileEntryType.getFileEntryTypeId()) %>"
 								viewURL="<%= viewFileEntryTypeURL.toString() %>"

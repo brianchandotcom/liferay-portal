@@ -51,6 +51,7 @@ import com.liferay.portal.security.permission.ResourceBlockIdsBag;
 import com.liferay.portal.service.PersistedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Connection;
@@ -870,7 +871,9 @@ public class ResourceBlockLocalServiceImpl
 
 					// On success, manually flush to enforce database row lock
 
-					resourceBlockPersistence.flush();
+					if (PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
+						resourceBlockPersistence.flush();
+					}
 				}
 				catch (SystemException se) {
 					if (_log.isWarnEnabled()) {

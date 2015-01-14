@@ -18,9 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
 
@@ -54,6 +56,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 	* @return the m d r action that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction addMDRAction(
 		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -75,6 +78,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 	* @throws PortalException if a m d r action with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction deleteMDRAction(
 		long actionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -87,6 +91,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 	* @return the m d r action that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction deleteMDRAction(
 		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -284,6 +289,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 	* @return the m d r action that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction updateMDRAction(
 		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -324,6 +330,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 	public void deleteAction(long actionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteAction(
 		com.liferay.portlet.mobiledevicerules.model.MDRAction action)
 		throws com.liferay.portal.kernel.exception.SystemException;

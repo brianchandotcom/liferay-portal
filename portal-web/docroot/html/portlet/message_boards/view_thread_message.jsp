@@ -22,7 +22,9 @@ String className = (String)request.getAttribute("edit_message.jsp-className");
 Integer depth = (Integer)request.getAttribute("edit_message.jsp-depth");
 Boolean editable = (Boolean)request.getAttribute("edit_message.jsp-editable");
 MBMessage message = (MBMessage)request.getAttribute("edit_message.jsp-message");
+Boolean showDeletedAttachmentsFileEntries = (Boolean)request.getAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries");
 Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-showPermanentLink");
+Boolean showRecentPosts = (Boolean)request.getAttribute("edit-message.jsp-showRecentPosts");
 MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 %>
 
@@ -68,19 +70,21 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<span><liferay-ui:message key="join-date" />:</span> <%= dateFormatDate.format(userDisplay.getCreateDate()) %>
 						</div>
 
-						<portlet:renderURL var="recentPostsURL">
-							<portlet:param name="struts_action" value="/message_boards/view" />
-							<portlet:param name="topLink" value="recent-posts" />
-							<portlet:param name="groupThreadsUserId" value="<%= String.valueOf(userDisplay.getUserId()) %>" />
-						</portlet:renderURL>
+						<c:if test="<%= showRecentPosts %>">
+							<portlet:renderURL var="recentPostsURL">
+								<portlet:param name="struts_action" value="/message_boards/view" />
+								<portlet:param name="topLink" value="recent-posts" />
+								<portlet:param name="groupThreadsUserId" value="<%= String.valueOf(userDisplay.getUserId()) %>" />
+							</portlet:renderURL>
 
-						<liferay-ui:icon
-							image="view"
-							label="<%= true %>"
-							message="recent-posts"
-							method="get"
-							url="<%= recentPostsURL.toString() %>"
-						/>
+							<liferay-ui:icon
+								image="view"
+								label="<%= true %>"
+								message="recent-posts"
+								method="get"
+								url="<%= recentPostsURL.toString() %>"
+							/>
+						</c:if>
 
 						<c:if test="<%= (userDisplay != null) && (user.getUserId() != userDisplay.getUserId()) && !PortalUtil.isGroupAdmin(userDisplay, scopeGroupId) && MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
 							<br />
@@ -316,7 +320,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							%>
 
 									<div>
-										<img alt="<liferay-ui:message key="attachment" />" src="<%= themeDisplay.getPathMain() %>/message_boards/get_message_attachment?messageId=<%= message.getMessageId() %>&attachment=<%= HttpUtil.encodeURL(fileEntry.getTitle()) %>" />
+										<img alt="<liferay-ui:message key="attachment" />" src="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>" />
 									</div>
 
 									<br />
@@ -355,7 +359,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								}
 								%>
 
-								<c:if test="<%= (deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
+								<c:if test="<%= showDeletedAttachmentsFileEntries && (deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
 									<li class="message-attachment">
 										<portlet:renderURL var="viewTrashAttachmentsURL">
 											<portlet:param name="struts_action" value="/message_boards/view_deleted_message_attachments" />

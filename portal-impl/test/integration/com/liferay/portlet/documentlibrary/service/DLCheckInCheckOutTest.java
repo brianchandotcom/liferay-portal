@@ -36,6 +36,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.portal.util.RoleTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -64,7 +65,7 @@ public class DLCheckInCheckOutTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		ServiceTestUtil.addResourcePermission(
+		RoleTestUtil.addResourcePermission(
 			RoleConstants.POWER_USER, DLFolderConstants.getClassName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
@@ -247,7 +248,7 @@ public class DLCheckInCheckOutTest {
 
 	@Test
 	public void testWithPermissionOverrideCheckout() throws Exception {
-		Role role = ServiceTestUtil.addRole(
+		Role role = RoleTestUtil.addRole(
 			"Overrider", RoleConstants.TYPE_REGULAR,
 			DLFileEntryConstants.getClassName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,

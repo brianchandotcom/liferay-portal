@@ -16,6 +16,7 @@ package com.liferay.portal.repository.util;
 
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.RepositoryException;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Set;
@@ -67,9 +68,11 @@ public class RepositoryFactoryUtil {
 			new ConcurrentHashMap<String, RepositoryFactory>();
 
 	static {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
 		for (String className : PropsValues.DL_REPOSITORY_IMPL) {
 			RepositoryFactory repositoryFactory = new RepositoryFactoryImpl(
-				className);
+				className, classLoader);
 
 			_repositoryFactories.put(className, repositoryFactory);
 		}

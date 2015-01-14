@@ -108,6 +108,9 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 
 	public boolean isInHiddenFolder();
 
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void setExtraSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties extraSettingsProperties);
 }

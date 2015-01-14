@@ -33,13 +33,11 @@ public class SubscriptionSenderMessageListener extends BaseMessageListener {
 		SubscriptionSender subscriptionSender =
 			(SubscriptionSender)message.getPayload();
 
-		StopWatch stopWatch = null;
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
 
 		if (_log.isInfoEnabled()) {
-			stopWatch = new StopWatch();
-
-			stopWatch.start();
-
 			_log.info(
 				"Sending notifications for {mailId=" +
 					subscriptionSender.getMailId() + "}");

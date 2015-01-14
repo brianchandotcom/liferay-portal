@@ -52,7 +52,7 @@ else {
 		for (Layout publicLayout : publicLayouts) {
 		%>
 
-			<aui:option label="<%= publicLayout.getName(locale) %>" selected="<%= publicLayout.getPlid() == actionPlid %>" value="<%= publicLayout.getPlid() %>" />
+			<aui:option label="<%= HtmlUtil.escape(publicLayout.getName(locale)) %>" selected="<%= publicLayout.getPlid() == actionPlid %>" value="<%= publicLayout.getPlid() %>" />
 
 		<%
 		}
@@ -71,7 +71,7 @@ else {
 		for (Layout privateLayout : privateLayouts) {
 		%>
 
-			<aui:option label="<%= privateLayout.getName(locale) %>" selected="<%= privateLayout.getPlid() == actionPlid %>" value="<%= privateLayout.getPlid() %>" />
+			<aui:option label="<%= HtmlUtil.escape(privateLayout.getName(locale)) %>" selected="<%= privateLayout.getPlid() == actionPlid %>" value="<%= privateLayout.getPlid() %>" />
 
 		<%
 		}

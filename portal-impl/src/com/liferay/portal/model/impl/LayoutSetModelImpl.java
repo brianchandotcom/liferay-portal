@@ -596,6 +596,14 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
 	}
 
+	public java.lang.String getCompanyFallbackVirtualHostname() {
+		return null;
+	}
+
+	public void setCompanyFallbackVirtualHostname(
+		java.lang.String companyFallbackVirtualHostname) {
+	}
+
 	public java.lang.String getVirtualHostname() {
 		return null;
 	}
@@ -713,6 +721,10 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 		layoutSetModelImpl._originalLayoutSetPrototypeUuid = layoutSetModelImpl._layoutSetPrototypeUuid;
 
+		setCompanyFallbackVirtualHostname(null);
+
+		setVirtualHostname(null);
+
 		layoutSetModelImpl._columnBitmask = 0;
 	}
 
@@ -810,6 +822,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		}
 
 		layoutSetCacheModel.layoutSetPrototypeLinkEnabled = getLayoutSetPrototypeLinkEnabled();
+
+		layoutSetCacheModel._companyFallbackVirtualHostname = getCompanyFallbackVirtualHostname();
 
 		layoutSetCacheModel._virtualHostname = getVirtualHostname();
 

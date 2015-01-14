@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -27,8 +28,10 @@ import java.io.InputStream;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.servlet.ServletContext;
 
@@ -52,6 +55,18 @@ public class HotDeployEvent {
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
 		}
+	}
+
+	public void addPortalLifecycle(PortalLifecycle portalLifecycle) {
+		_portalLifecycles.add(portalLifecycle);
+	}
+
+	public void flushInits() {
+		for (PortalLifecycle portalLifecycle : _portalLifecycles) {
+			portalLifecycle.portalInit();
+		}
+
+		_portalLifecycles.clear();
 	}
 
 	public ClassLoader getContextClassLoader() {
@@ -138,6 +153,8 @@ public class HotDeployEvent {
 	private ClassLoader _contextClassLoader;
 	private Set<String> _dependentServletContextNames = new TreeSet<String>();
 	private PluginPackage _pluginPackage;
+	private Queue<PortalLifecycle> _portalLifecycles =
+		new ConcurrentLinkedQueue<PortalLifecycle>();
 	private ServletContext _servletContext;
 
 }

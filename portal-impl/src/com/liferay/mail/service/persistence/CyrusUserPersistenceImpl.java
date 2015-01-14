@@ -41,7 +41,7 @@ public class CyrusUserPersistenceImpl
 				CyrusUser.class, String.valueOf(userId));
 		}
 		catch (ObjectNotFoundException onfe) {
-			throw new NoSuchCyrusUserException();
+			throw new NoSuchCyrusUserException("{userId=" + userId + "}");
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -68,7 +68,7 @@ public class CyrusUserPersistenceImpl
 			session.flush();
 		}
 		catch (ObjectNotFoundException onfe) {
-			throw new NoSuchCyrusUserException();
+			throw new NoSuchCyrusUserException("{userId=" + userId + "}");
 		}
 		catch (Exception e) {
 			throw processException(e);

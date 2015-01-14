@@ -670,12 +670,15 @@ public class StringUtil {
 	public static String highlight(
 		String s, String[] queryTerms, String highlight1, String highlight2) {
 
-		if (Validator.isNull(s) || ArrayUtil.isEmpty(queryTerms)) {
-			return s;
+		if (_highlightEnabled == null) {
+			_highlightEnabled = GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED));
 		}
 
-		if (queryTerms.length == 0) {
-			return StringPool.BLANK;
+		if (Validator.isNull(s) || ArrayUtil.isEmpty(queryTerms) ||
+			!_highlightEnabled) {
+
+			return s;
 		}
 
 		StringBundler sb = new StringBundler(2 * queryTerms.length - 1);
@@ -692,7 +695,12 @@ public class StringUtil {
 
 		Pattern pattern = Pattern.compile(sb.toString(), flags);
 
-		return _highlight(s, pattern, highlight1, highlight2);
+		s = _highlight(
+			HtmlUtil.unescape(s), pattern, _ESCAPE_SAFE_HIGHLIGHTS[0],
+			_ESCAPE_SAFE_HIGHLIGHTS[1]);
+
+		return StringUtil.replace(
+			HtmlUtil.escape(s), _ESCAPE_SAFE_HIGHLIGHTS, _HIGHLIGHTS);
 	}
 
 	/**
@@ -1445,12 +1453,7 @@ public class StringUtil {
 	 * @see    String#toLowerCase()
 	 */
 	public static String lowerCase(String s) {
-		if (s == null) {
-			return null;
-		}
-		else {
-			return toLowerCase(s);
-		}
+		return toLowerCase(s);
 	}
 
 	public static void lowerCase(String... array) {
@@ -2658,8 +2661,8 @@ public class StringUtil {
 	public static StringBundler replaceToStringBundler(
 		String s, String begin, String end, Map<String, String> values) {
 
-		if ((s == null) || (begin == null) || (end == null) ||
-			(values == null) || (values.size() == 0)) {
+		if (Validator.isBlank(s) || Validator.isBlank(begin) ||
+			Validator.isBlank(end) || (values == null) || values.isEmpty()) {
 
 			return new StringBundler(s);
 		}
@@ -2700,8 +2703,8 @@ public class StringUtil {
 	public static StringBundler replaceWithStringBundler(
 		String s, String begin, String end, Map<String, StringBundler> values) {
 
-		if ((s == null) || (begin == null) || (end == null) ||
-			(values == null) || (values.size() == 0)) {
+		if (Validator.isBlank(s) || Validator.isBlank(begin) ||
+			Validator.isBlank(end) || (values == null) || values.isEmpty()) {
 
 			return new StringBundler(s);
 		}
@@ -3603,7 +3606,9 @@ public class StringUtil {
 	 *         <code>null</code>
 	 */
 	public static String stripBetween(String s, String begin, String end) {
-		if ((s == null) || (begin == null) || (end == null)) {
+		if (Validator.isBlank(s) || Validator.isBlank(begin) ||
+			Validator.isBlank(end)) {
+
 			return s;
 		}
 
@@ -3710,6 +3715,10 @@ public class StringUtil {
 	}
 
 	public static String toLowerCase(String s, Locale locale) {
+		if (s == null) {
+			return null;
+		}
+
 		StringBuilder sb = null;
 
 		for (int i = 0; i < s.length(); i++) {
@@ -3747,6 +3756,10 @@ public class StringUtil {
 	}
 
 	public static String toUpperCase(String s, Locale locale) {
+		if (s == null) {
+			return null;
+		}
+
 		StringBuilder sb = null;
 
 		for (int i = 0; i < s.length(); i++) {
@@ -4159,12 +4172,7 @@ public class StringUtil {
 	 * @see    String#toUpperCase()
 	 */
 	public static String upperCase(String s) {
-		if (s == null) {
-			return null;
-		}
-		else {
-			return toUpperCase(s);
-		}
+		return toUpperCase(s);
 	}
 
 	/**
@@ -4352,12 +4360,15 @@ public class StringUtil {
 			if (matcher.find()) {
 				StringBuffer hightlighted = new StringBuffer();
 
-				do {
+				while (true) {
 					matcher.appendReplacement(
-						hightlighted, highlight1 + matcher.group() +
-						highlight2);
+						hightlighted,
+						highlight1 + matcher.group() + highlight2);
+
+					if (!matcher.find()) {
+						break;
+					}
 				}
-				while (matcher.find());
 
 				matcher.appendTail(hightlighted);
 
@@ -4469,10 +4480,16 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	private static final String[] _ESCAPE_SAFE_HIGHLIGHTS = {
+		"[@HIGHLIGHT1@]", "[@HIGHLIGHT2@]"};
+
 	private static final char[] _HEX_DIGITS = {
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
 		'e', 'f'
 	};
+
+	private static final String[] _HIGHLIGHTS = {
+		"<span class=\"highlight\">", "</span>"};
 
 	private static final char[] _RANDOM_STRING_CHAR_TABLE = {
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
@@ -4485,5 +4502,6 @@ public class StringUtil {
 	private static Log _log = LogFactoryUtil.getLog(StringUtil.class);
 
 	private static String[] _emptyStringArray = new String[0];
+	private static Boolean _highlightEnabled;
 
 }

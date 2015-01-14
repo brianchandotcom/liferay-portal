@@ -2,7 +2,9 @@
 
 <#if fieldValue?? && fieldValue != "">
 	<div class="lfr-forms-field-wrapper field-wrapper-content">
-		<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
+		<#if !disabled>
+			<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
+		</#if>
 
 		<label>
 			<@liferay_ui.message key=escape(label) />

@@ -45,9 +45,4 @@ engine = Sass::Engine.new(
 	}
 )
 
-begin
-	$out.println engine.render
-rescue Sass::SyntaxError => e
-	puts e.message
-	puts e.backtrace
-end
+$out.println engine.render

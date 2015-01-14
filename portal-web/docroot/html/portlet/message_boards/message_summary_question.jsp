@@ -36,7 +36,7 @@ MBMessage message = (MBMessage)objArray[0];
 <div class="summary">
 
 	<%
-	String msgBody = message.getBody();
+	String msgBody = StringUtil.shorten(message.getBody(), 250);
 
 	if (message.isFormatBBCode()) {
 		msgBody = BBCodeTranslatorUtil.getHTML(msgBody);
@@ -44,7 +44,7 @@ MBMessage message = (MBMessage)objArray[0];
 	}
 	%>
 
-	<%= StringUtil.shorten(msgBody, 250) %>
+	<%= msgBody %>
 </div>
 
 <div class="tags">

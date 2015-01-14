@@ -9,6 +9,34 @@
 	margin: 20px 0;
 }
 
+.form-search .input-append {
+	position: relative;
+
+	.advanced-search {
+		.search-query {
+			padding-left: 40px;
+			z-index: 0;
+		}
+
+		.toggle-advanced {
+			cursor: pointer;
+			left: 0;
+			line-height: 1;
+			padding: 8px 10px;
+			position: absolute;
+			top: 0;
+
+			.caret {
+				margin-top: 7px;
+			}
+
+			.icon-search {
+				font-size: 14px;
+			}
+		}
+	}
+}
+
 .input-flex-add-on {
 	width: 100%;
 
@@ -104,12 +132,12 @@
 	width: @model_hints_constants_text_display_width@px;
 }
 
-.lfr-input-text, .form .fieldset .field.lfr-input-text-container input {
+.lfr-input-text, .form .fieldset .lfr-input-text-container input {
 	max-width: @model_hints_constants_text_display_width@px;
 	width: 100%;
 }
 
-.lfr-textarea, .form .fieldset .field.lfr-textarea-container textarea {
+.lfr-textarea, .form .fieldset .lfr-textarea-container textarea {
 	height: @model_hints_constants_textarea_display_height@px;
 	max-width: @model_hints_constants_textarea_display_width@px;
 	width: 100%;
@@ -139,6 +167,69 @@
 			font-size: 18px;
 			height: auto;
 			line-height: normal;
+		}
+
+		fieldset {
+			min-width: 0;
+			width: 100%;
+		}
+
+		input, input.input-large, textarea, .uneditable-input {
+			max-width: 100%;
+			width: auto;
+		}
+
+		select {
+			max-width: 100%;
+		}
+
+		@include respond-to(phone) {
+			input.input-large {
+				width: 100%;
+			}
+		}
+
+		&.firefox {
+			fieldset {
+				display: table-cell;
+			}
+		}
+
+		&.ios {
+			input, input.input-large, textarea, .uneditable-input {
+				max-width: 90% !important;
+			}
+		}
+
+		&.ie {
+			input[type="color"],
+			input[type="date"],
+			input[type="datetime"],
+			input[type="datetime-local"],
+			input[type="email"],
+			input[type="month"],
+			input[type="number"],
+			input[type="password"],
+			input[type="search"],
+			input[type="tel"],
+			input[type="text"],
+			input[type="time"],
+			input[type="url"],
+			input[type="week"],
+			select,
+			textarea,
+			.uneditable-input {
+				max-width: 90%;
+				width: 180px;
+
+				&.input-medium {
+					width: 150px;
+				}
+
+				&.input-small {
+					width: 90px;
+				}
+			}
 		}
 	}
 }

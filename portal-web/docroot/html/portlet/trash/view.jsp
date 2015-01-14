@@ -208,7 +208,7 @@ if (Validator.isNotNull(keywords)) {
 				<liferay-util:buffer var="rootEntryIcon">
 					<liferay-ui:icon
 						label="<%= true %>"
-						message="<%= rootTrashRenderer.getTitle(locale) %>"
+						message="<%= HtmlUtil.escape(rootTrashRenderer.getTitle(locale)) %>"
 						method="get"
 						src="<%= rootTrashRenderer.getIconPath(renderRequest) %>"
 						url="<%= viewRootContentURLString %>"

@@ -91,6 +91,10 @@ import org.apache.oro.io.GlobFilenameFilter;
  */
 public class BaseDeployer implements AutoDeployer, Deployer {
 
+	public static final boolean SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE));
+
 	public static final String DEPLOY_TO_PREFIX = "DEPLOY_TO__";
 
 	public static void main(String[] args) {
@@ -771,7 +775,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				SystemProperties.get(SystemProperties.TMP_DIR) +
 					File.separator + Time.getTimestamp());
 
-			excludes += "**/WEB-INF/web.xml";
+			excludes += "/WEB-INF/web.xml";
 
 			WarTask.war(srcFile, tempDir, excludes, webXml);
 
@@ -1188,11 +1192,13 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			sb.append("</context-param>");
 		}
 
-		sb.append("<listener>");
-		sb.append("<listener-class>");
-		sb.append(SerializableSessionAttributeListener.class.getName());
-		sb.append("</listener-class>");
-		sb.append("</listener>");
+		if (SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE) {
+			sb.append("<listener>");
+			sb.append("<listener-class>");
+			sb.append(SerializableSessionAttributeListener.class.getName());
+			sb.append("</listener-class>");
+			sb.append("</listener>");
+		}
 
 		sb.append(getDynamicResourceServletContent());
 

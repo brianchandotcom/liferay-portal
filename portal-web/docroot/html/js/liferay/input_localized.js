@@ -92,12 +92,12 @@ AUI.add(
 
 					INPUT_HIDDEN_TEMPLATE: '<input id="{namespace}{value}" name="{name}{value}" type="hidden" value="" />',
 
-					ITEM_TEMPLATE: '<td class="palette-item {selectedClassName}" data-column={column} data-index={index} data-row={row} data-value="{value}">' +
+					ITEM_TEMPLATE: '<li class="palette-item {selectedClassName}" data-column={column} data-index={index} data-row={row} data-value="{value}">' +
 						'<a href="" class="palette-item-inner" onclick="return false;">' +
 							'<img class="lfr-input-localized-flag" data-languageId="{value}" src="' + themeDisplay.getPathThemeImages() + '/language/{value}.png" />' +
 							'<div class="lfr-input-localized-state"></div>' +
 						'</a>' +
-					'</td>',
+					'</li>',
 
 					initializer: function() {
 						var instance = this;
@@ -143,19 +143,26 @@ AUI.add(
 						return items[selected];
 					},
 
+					getValue: function(languageId) {
+						var instance = this;
+
+						if (!Lang.isValue(languageId)) {
+							languageId = defaultLanguageId;
+						}
+
+						return instance._getInputLanguage(languageId).val();
+					},
+
 					selectFlag: function(languageId) {
 						var instance = this;
 
 						var inputPlaceholder = instance.get(STR_INPUT_PLACEHOLDER);
 
-						var inputLanguage = instance._getInputLanguage(languageId);
-						var defaultInputLanguage = instance._getInputLanguage(defaultLanguageId);
-
-						var defaultLanguageValue = defaultInputLanguage.val();
+						var defaultLanguageValue = instance.getValue(defaultLanguageId);
 
 						var editor = instance.get('editor');
 
-						inputPlaceholder.val(inputLanguage.val());
+						inputPlaceholder.val(instance.getValue(languageId));
 
 						inputPlaceholder.attr('dir', Liferay.Language.direction[languageId]);
 						inputPlaceholder.attr('placeholder', defaultLanguageValue);

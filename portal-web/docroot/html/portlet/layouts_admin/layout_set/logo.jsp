@@ -16,6 +16,10 @@
 
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
+<%!
+static final boolean LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO = GetterUtil.getBoolean(PropsUtil.get("layout.set.prototype.propagate.logo"));
+%>
+
 <%
 Group liveGroup = (Group)request.getAttribute("edit_pages.jsp-liveGroup");
 boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLayout")).booleanValue();
@@ -50,6 +54,12 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 
 	<p><%= LanguageUtil.get(pageContext, "upload-a-logo-for-the-" + (privateLayout ? "private" : "public") + "-pages-that-will-be-used-instead-of-the-default-enterprise-logo") %></p>
 
+	<c:if test="<%= liveGroup.isLayoutSetPrototype() && !LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO %>">
+		<div class="alert alert-block">
+			<liferay-ui:message key="modifying-the-site-template-logo-will-only-affect-sites-that-are-not-yet-created" />
+		</div>
+	</c:if>
+
 	<aui:input inlineField="<%= true %>" label="" name="logoFileName" type="file" />
 
 	<c:if test="<%= selLayoutSet.getLogo() %>">
@@ -75,21 +85,14 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 	</c:if>
 
 	<%
-	Group guestGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.GUEST);
+	boolean showSiteNameSupported = GetterUtil.getBoolean(selLayoutSet.getTheme().getSetting("show-site-name-supported"), true);
+
+	boolean showSiteNameDefault = GetterUtil.getBoolean(selLayoutSet.getTheme().getSetting("show-site-name-default"), showSiteNameSupported);
+
+	boolean showSiteName = GetterUtil.getBoolean(selLayoutSet.getSettingsProperty("showSiteName"), showSiteNameDefault);
 	%>
 
-	<c:if test="<%= liveGroup.getGroupId() != guestGroup.getGroupId() %>">
-
-		<%
-		boolean showSiteNameSupported = GetterUtil.getBoolean(selLayoutSet.getTheme().getSetting("show-site-name-supported"), true);
-
-		boolean showSiteNameDefault = GetterUtil.getBoolean(selLayoutSet.getTheme().getSetting("show-site-name-default"), showSiteNameSupported);
-
-		boolean showSiteName = GetterUtil.getBoolean(selLayoutSet.getSettingsProperty("showSiteName"), showSiteNameDefault);
-		%>
-
-		<aui:input checked="<%= showSiteName %>" disabled="<%= !showSiteNameSupported %>" helpMessage='<%= showSiteNameSupported ? StringPool.BLANK : "the-theme-selected-for-the-site-does-not-support-displaying-the-title" %>' label="show-site-name" name="TypeSettingsProperties--showSiteName--" type="checkbox" />
-	</c:if>
+	<aui:input checked="<%= showSiteName %>" disabled="<%= !showSiteNameSupported %>" helpMessage='<%= showSiteNameSupported ? StringPool.BLANK : "the-theme-selected-for-the-site-does-not-support-displaying-the-title" %>' label="show-site-name" name="TypeSettingsProperties--showSiteName--" type="checkbox" />
 </aui:fieldset>
 
 <aui:script use="aui-base">

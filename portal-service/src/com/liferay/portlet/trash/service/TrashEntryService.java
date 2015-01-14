@@ -70,6 +70,9 @@ public interface TrashEntryService extends BaseService {
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(noRollbackFor =  {
+		com.liferay.portal.TrashPermissionException.class}
+	)
 	public void deleteEntries(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -83,6 +86,9 @@ public interface TrashEntryService extends BaseService {
 	of the trash entries
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(noRollbackFor =  {
+		com.liferay.portal.TrashPermissionException.class}
+	)
 	public void deleteEntries(long[] entryIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

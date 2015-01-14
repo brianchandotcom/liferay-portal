@@ -60,7 +60,6 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 					editorImpl="<%= EDITOR_SIMPLE_IMPL_KEY %>"
 					fileBrowserParams="<%= fileBrowserParams %>"
 					name="content"
-					resizable="<%= false %>"
 					width="100%"
 				/>
 			</c:otherwise>

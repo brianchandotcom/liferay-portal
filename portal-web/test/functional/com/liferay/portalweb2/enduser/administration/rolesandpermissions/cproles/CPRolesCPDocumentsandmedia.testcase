@@ -118,8 +118,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />
@@ -135,8 +134,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="DMPortlet#viewNoPermissionCP" />
@@ -163,8 +161,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />

@@ -19,6 +19,8 @@
 <%
 User selUser = (User)request.getAttribute("user.selUser");
 List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGroups");
+
+currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGroups");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="user-groups" />
@@ -36,11 +38,13 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 <h3><liferay-ui:message key="user-groups" /></h3>
 
 <liferay-ui:search-container
+	curParam="userGroupsCur"
 	headerNames="name,null"
+	iteratorURL="<%= currentURLObj %>"
+	total="<%= userGroups.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= userGroups %>"
-		total="<%= userGroups.size() %>"
+		results="<%= userGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -61,7 +65,7 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" />
+	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">

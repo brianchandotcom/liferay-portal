@@ -139,10 +139,10 @@ for (SearchResult searchResult : searchResults) {
 			<%= counter %>
 		</td>
 		<td>
-			<%= name %>
+			<%= HtmlUtil.escape(name) %>
 		</td>
 		<td>
-			<%= description %>
+			<%= HtmlUtil.escape(description) %>
 		</td>
 		<td>
 			<%= (attribute == null) ? "0" : String.valueOf(attribute.size()) %>

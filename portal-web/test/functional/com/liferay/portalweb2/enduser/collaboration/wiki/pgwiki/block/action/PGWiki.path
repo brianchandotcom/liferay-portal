@@ -19,16 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>BasePortlet</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
@@ -43,45 +33,11 @@
 	<td>//div[@class='article-actions']/span[contains(.,'Add Child Page')]/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td>SEARCH_FIELD</td>
-	<td>//div[@class='form-search']//div/input[contains(@id, 'keywords1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_BUTTON</td>
-	<td>//div[@class='form-search']//div/button[@type='submit']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OPTIONS_ICON</td>
-	<td>//div[contains(@class,'portlet-options')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
+<!---->
 <!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_FRONTPAGE</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'FrontPage')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_RECENT_CHANGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Recent Changes')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>NAVIGATION_ALL_PAGES</td>
 	<td>//div[@class='navbar ']//li/a[contains(.,'All Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_ORPHAN_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Orphan Pages')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -111,29 +67,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WIKI_PAGE_ADD_ATTACHMENTS</td>
-	<td>//div[@class='article-actions']/span[contains(.,'Attachments')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--WIKI_PAGE_CHILD_PAGE-->
-<tr>
-	<td>WIKI_PAGE_CHILD_PAGE_HEADER</td>
-	<td>//div[@class='child-pages']/h2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WIKI_PAGE_CHILD_PAGE_TITLE</td>
-	<td>//div[@class='child-pages']/ul/li/a[contains(.,'${key_wikiChildPageTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WIKI_PAGE_CHILD_PAGE_GENERIC</td>
-	<td>//div[@class='child-pages']/ul/li/a</td>
+	<td>WIKI_PAGE_CHILD_PAGE_1</td>
+	<td>//div[@class='child-pages']/ul/li[1]/a</td>
 	<td></td>
 </tr>
 </tbody>

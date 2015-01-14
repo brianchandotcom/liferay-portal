@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -54,6 +55,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @return the social activity counter that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.social.model.SocialActivityCounter addSocialActivityCounter(
 		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -75,6 +77,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @throws PortalException if a social activity counter with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.social.model.SocialActivityCounter deleteSocialActivityCounter(
 		long activityCounterId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -87,6 +90,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @return the social activity counter that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.social.model.SocialActivityCounter deleteSocialActivityCounter(
 		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -228,6 +232,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @return the social activity counter that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.social.model.SocialActivityCounter updateSocialActivityCounter(
 		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -366,6 +371,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portlet.social.model.SocialActivityCounter addActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
 		int ownerType, int totalValue, long previousActivityCounterId,
@@ -427,6 +433,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	long, long, String, int, int, long, int)}
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portlet.social.model.SocialActivityCounter createActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
 		int ownerType, int currentValue, int totalValue, int startPeriod,
@@ -474,6 +481,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	long, long, String, int, int, long, int)}
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portlet.social.model.SocialActivityCounter createActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
 		int ownerType, int currentValue, int totalValue, int startPeriod,

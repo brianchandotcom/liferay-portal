@@ -71,7 +71,7 @@ public class ActionUtil {
 		}
 
 		if ((entry != null) && entry.isInTrash()) {
-			throw new NoSuchEntryException();
+			throw new NoSuchEntryException("{entryId=" + entryId + "}");
 		}
 
 		request.setAttribute(WebKeys.BLOGS_ENTRY, entry);

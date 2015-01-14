@@ -32,6 +32,11 @@ import java.util.Map;
 public class PortletStagingBackgroundTaskExecutor
 	extends BaseStagingBackgroundTaskExecutor {
 
+	public PortletStagingBackgroundTaskExecutor() {
+		setBackgroundTaskStatusMessageTranslator(
+			new PortletStagingBackgroundTaskStatusMessageTranslator());
+	}
+
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {

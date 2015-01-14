@@ -96,7 +96,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 
 				if (advancedSearch) {
 					if (folder != null) {
-						message = LanguageUtil.format(pageContext, "advanced-search-in-x", new Object[] {folder.getName()});
+						message = LanguageUtil.format(pageContext, "advanced-search-in-x", new Object[] {HtmlUtil.escape(folder.getName())});
 					}
 					else {
 						message = LanguageUtil.get(pageContext, "advanced-search-everywhere");
@@ -104,7 +104,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 				}
 				else {
 					if (folder != null) {
-						message = LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), folder.getName()});
+						message = LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())});
 					}
 					else {
 						message = LanguageUtil.format(pageContext, "searched-for-x-everywhere", HtmlUtil.escape(keywords));
@@ -160,7 +160,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 	</liferay-portlet:renderURL>
 
 	<div class="journal-container" id="<portlet:namespace />entriesContainer">
-		<aui:form action="<%= searchURL %>" method="get" name="fm">
+		<aui:form action="<%= searchURL %>" method="get" name="fm2">
 			<liferay-portlet:renderURLParams varImpl="searchURL" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= breadcrumbsFolderId %>" />
@@ -297,12 +297,12 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 										description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : article.getDescription(locale) %>"
 										mbMessages="<%= searchResult.getMBMessages() %>"
 										queryTerms="<%= hits.getQueryTerms() %>"
-										rowCheckerId="<%= String.valueOf(article.getArticleId()) %>"
+										rowCheckerId="<%= HtmlUtil.escape(article.getArticleId()) %>"
 										rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
 										showCheckbox="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>"
 										status="<%= article.getStatus() %>"
 										thumbnailSrc='<%= Validator.isNotNull(article.getArticleImageURL(themeDisplay)) ? article.getArticleImageURL(themeDisplay) : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
-										title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : article.getTitle(locale) %>"
+										title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : HtmlUtil.escape(article.getTitle(locale)) %>"
 										url="<%= rowURL.toString() %>"
 										versions="<%= versions %>"
 									/>
@@ -331,13 +331,13 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 										actionJsp="/html/portlet/journal/folder_action.jsp"
 										containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
 										cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-										description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : curFolder.getDescription() %>"
+										description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : HtmlUtil.escape(curFolder.getDescription()) %>"
 										queryTerms="<%= hits.getQueryTerms() %>"
 										rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 										rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
 										showCheckbox="<%= JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
 										thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
-										title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : curFolder.getName() %>"
+										title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : HtmlUtil.escape(curFolder.getName()) %>"
 										url="<%= rowURL.toString() %>"
 									/>
 								</c:when>
@@ -396,12 +396,12 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 										cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 										description="<%= curArticle.getDescription(locale) %>"
 										queryTerms="<%= queryTerms %>"
-										rowCheckerId="<%= String.valueOf(curArticle.getArticleId()) %>"
+										rowCheckerId="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
 										rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
 										showCheckbox="<%= JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE) %>"
 										status="<%= curArticle.getStatus() %>"
 										thumbnailSrc='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
-										title="<%= curArticle.getTitle(locale) %>"
+										title="<%= HtmlUtil.escape(curArticle.getTitle(locale)) %>"
 										url="<%= rowURL.toString() %>"
 									/>
 								</c:when>

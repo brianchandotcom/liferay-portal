@@ -54,6 +54,8 @@ AUI.add(
 
 						if (defaultLayoutOptions) {
 							portletItemOptions.on = defaultLayoutOptions.on;
+
+							portletItemOptions.delegateConfig.dragConfig.plugins = defaultLayoutOptions.delegateConfig.dragConfig.plugins;
 						}
 
 						var portletItemClass = 'PortletItem';

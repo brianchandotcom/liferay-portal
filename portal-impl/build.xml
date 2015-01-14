@@ -693,6 +693,13 @@ public class Creole10Parser]]></replacevalue>
 				includes="org/hamcrest/**"
 			/>
 
+			<!-- http*.jar -->
+
+			<fileset
+				dir="${tstamp.value}"
+				includes="org/apache/http/**"
+			/>
+
 			<!-- junit.jar -->
 
 			<fileset

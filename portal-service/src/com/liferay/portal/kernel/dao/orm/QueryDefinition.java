@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.TableNameOrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -41,17 +42,18 @@ public class QueryDefinition {
 
 	public QueryDefinition(
 		int status, boolean excludeStatus, int start, int end,
-		OrderByComparator obc) {
+		OrderByComparator orderByComparator) {
 
 		_status = status;
 		_excludeStatus = excludeStatus;
 		_start = start;
 		_end = end;
-		_orderByComparator = obc;
+
+		setOrderByComparator(orderByComparator);
 	}
 
 	public QueryDefinition(
-		int status, int start, int end, OrderByComparator obc) {
+		int status, int start, int end, OrderByComparator orderByComparator) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
@@ -62,7 +64,8 @@ public class QueryDefinition {
 
 		_start = start;
 		_end = end;
-		_orderByComparator = obc;
+
+		setOrderByComparator(orderByComparator);
 	}
 
 	public Serializable getAttribute(String name) {
@@ -83,6 +86,14 @@ public class QueryDefinition {
 
 	public OrderByComparator getOrderByComparator() {
 		return _orderByComparator;
+	}
+
+	public OrderByComparator getOrderByComparator(String tableName) {
+		if (_orderByComparator == null) {
+			return null;
+		}
+
+		return new TableNameOrderByComparator(_orderByComparator, tableName);
 	}
 
 	public int getStart() {

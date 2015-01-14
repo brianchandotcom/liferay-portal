@@ -73,6 +73,9 @@ public interface AssetPublisher {
 
 	public void checkAssetEntries() throws Exception;
 
+	public long[] getAssetCategoryIds(PortletPreferences portletPreferences)
+		throws Exception;
+
 	public List<AssetEntry> getAssetEntries(
 			PortletPreferences portletPreferences, Layout layout,
 			long scopeGroupId, int max, boolean checkPermission)

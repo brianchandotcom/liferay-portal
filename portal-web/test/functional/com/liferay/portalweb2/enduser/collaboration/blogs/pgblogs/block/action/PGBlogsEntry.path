@@ -34,7 +34,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_CONTENT</td>
+	<td>ENTRY_BODY</td>
 	<td>//div[@class='entry-body']</td>
 	<td></td>
 </tr>
@@ -186,39 +186,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_AVERAGE_RATING</td>
-	<td>//div[contains(@id, 'ratingScore')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIOUS</td>
-	<td>//div[@class='entry-navigation' and contains(.,'Previous')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NEXT</td>
-	<td>//div[@class='entry-navigation' and contains(.,'Next')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--COMMENTS-->
 <tr>
-	<td>COMMENTS</td>
-	<td>//div[@id='blogsCommentsPanel']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_TRACKBACK_URL</td>
-	<td>//div[@class='accordion-inner' and contains(.,'Trackback URL')]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COMMENTS_SUCCESS</td>
-	<td>//div[@class='lfr-message-response alert alert-success']</td>
+	<td>//div[contains(@id,'_discussion-status-messages')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -228,12 +203,7 @@
 </tr>
 <tr>
 	<td>COMMENTS_ADD</td>
-	<td>//span[@class='taglib-text' and contains(.,'Add Comment')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_UNSUBSCRIBE_COMMENTS</td>
-	<td>//span[@class='taglib-text' and contains(.,'Unsubscribe from Comments')]</td>
+	<td>//fieldset[contains(@class,'fieldset') and contains(@class,'add-comment')]/div/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -243,12 +213,7 @@
 </tr>
 <tr>
 	<td>COMMENTS_REPLY_BUTTON</td>
-	<td>//button[@type='button' and contains(.,'Reply')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_CANCEL_BUTTON</td>
-	<td>//button[@type='button' and contains(.,'Cancel')]</td>
+	<td>//button[contains(@id,'postReplyButton0')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -275,21 +240,6 @@
 <tr>
 	<td>COMMENT_3</td>
 	<td>xpath=(//div[@class='lfr-discussion-message'])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_READ_MORE_1</td>
-	<td>xpath=(//div[@class='lfr-discussion-message']/a[contains(.,'Read More')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_READ_MORE_2</td>
-	<td>xpath=(//div[@class='lfr-discussion-message']/a[contains(.,'Read More')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_READ_MORE_3</td>
-	<td>xpath=(//div[@class='lfr-discussion-message']/a[contains(.,'Read More')])[3]</td>
 	<td></td>
 </tr>
 <tr>

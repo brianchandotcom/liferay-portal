@@ -20,6 +20,8 @@ AUI.add(
 
 			OVER_NESTED_PORTLET: false,
 
+			PORTLET_TOPPER: A.Node.create('<div class="portlet-topper"></div>'),
+
 			PROXY_NODE: A.Node.create('<div class="lfr-portlet-proxy sortable-layout-proxy"></div>'),
 
 			PROXY_NODE_ITEM: A.Node.create(
@@ -29,8 +31,6 @@ AUI.add(
 					'</div>' +
 				'</div>'
 			),
-
-			PORTLET_TOPPER: A.Node.create('<div class="portlet-topper"></div>'),
 
 			options: LAYOUT_CONFIG,
 
@@ -49,28 +49,6 @@ AUI.add(
 						Liferay.Portlet.close(portlet, true);
 					}
 				);
-			},
-
-			getActiveDropContainer: function() {
-				var options = Layout.options;
-
-				return A.all(options.dropContainer + ':not(.' + options.disabledDropContainerClass + ')').item(0);
-			},
-
-			getActiveDropNodes: function() {
-				var options = Layout.options;
-
-				var dropNodes = [];
-
-				A.all(options.dropContainer).each(
-					function(dropContainer) {
-						if (!dropContainer.hasClass(options.disabledDropContainerClass)) {
-							dropNodes.push(dropContainer.get('parentNode'));
-						}
-					}
-				);
-
-				return A.all(dropNodes);
 			},
 
 			findIndex: function(node) {
@@ -118,6 +96,28 @@ AUI.add(
 				if (layoutHandler) {
 					return layoutHandler.fire.apply(layoutHandler, arguments);
 				}
+			},
+
+			getActiveDropContainer: function() {
+				var options = Layout.options;
+
+				return A.all(options.dropContainer + ':not(.' + options.disabledDropContainerClass + ')').item(0);
+			},
+
+			getActiveDropNodes: function() {
+				var options = Layout.options;
+
+				var dropNodes = [];
+
+				A.all(options.dropContainer).each(
+					function(dropContainer) {
+						if (!dropContainer.hasClass(options.disabledDropContainerClass)) {
+							dropNodes.push(dropContainer.get('parentNode'));
+						}
+					}
+				);
+
+				return A.all(dropNodes);
 			},
 
 			getLayoutHandler: function() {
@@ -350,6 +350,8 @@ AUI.add(
 			'init',
 			function(options) {
 				options = options || Layout.options;
+
+				options.handles = A.Array(options.handles);
 
 				Layout.PROXY_NODE.append(Layout.PORTLET_TOPPER);
 

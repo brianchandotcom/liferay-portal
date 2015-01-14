@@ -1,3 +1,5 @@
+@import "compass";
+
 .portlet-asset-category-admin {
 	.form-search {
 		float: left;
@@ -41,6 +43,10 @@
 		li.vocabulary-category, li.vocabulary-item {
 			font-weight: bold;
 			list-style: none;
+
+			a {
+				@include ellipsis;
+			}
 		}
 	}
 
@@ -232,6 +238,8 @@
 		}
 
 		.tree-node-content {
+			@include ellipsis;
+
 			height: 33px;
 
 			.tree-hitarea {
@@ -240,8 +248,6 @@
 			}
 
 			.tree-node-checkbox-container, .tree-label {
-				display: inline-block;
-				position: relative;
 				top: 8px;
 				vertical-align: middle;
 			}

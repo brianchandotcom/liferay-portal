@@ -534,6 +534,7 @@
 			</basic>
 			<basic name="layoutSetPrototypeUuid" />
 			<basic name="layoutSetPrototypeLinkEnabled" />
+			<transient name="companyFallbackVirtualHostname" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -2438,6 +2439,7 @@
 			<transient name="descriptionMap" />
 			<transient name="document" />
 			<transient name="localizedFieldsMap" />
+			<transient name="localizedPersistentFieldsMap" />
 			<transient name="localizedTransientFieldsMap" />
 			<transient name="modelAttributes" />
 			<transient name="nameCurrentLanguageId" />
@@ -3993,6 +3995,7 @@
 	<entity class="com.liferay.portal.model.impl.LayoutSetImpl" name="LayoutSet">
 		<table name="LayoutSet" />
 		<attributes>
+			<transient name="companyFallbackVirtualHostname" />
 			<transient name="settingsProperties" />
 			<transient name="virtualHostname" />
 		</attributes>

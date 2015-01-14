@@ -56,7 +56,10 @@ portletURL.setParameter("tabs3", "current-and-previous");
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EXPORT %>" />
 
 			<div class="export-dialog-tree">
-				<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), " ", "_") + "-" + Time.getShortTimestamp() + ".portlet.lar" %>' />
+				<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" showRequiredLabel="<%= false %>" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), " ", "_") + "-" + Time.getShortTimestamp() + ".portlet.lar" %>'>
+					<aui:validator name="maxLength">75</aui:validator>
+					<aui:validator name="required" />
+				</aui:input>
 
 				<%
 				PortletDataHandler portletDataHandler = selPortlet.getPortletDataHandlerInstance();
@@ -260,6 +263,8 @@ portletURL.setParameter("tabs3", "current-and-previous");
 										<ul class="portlet-list">
 											<li class="tree-item">
 												<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= false %>" />
+
+												<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= true %>" />
 
 												<liferay-util:buffer var="badgeHTML">
 													<span class="badge badge-info"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>

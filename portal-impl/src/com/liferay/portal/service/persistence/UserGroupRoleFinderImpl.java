@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.UserGroupGroupRole;
 import com.liferay.portal.model.UserGroupRole;
+import com.liferay.portal.model.impl.UserGroupGroupRoleImpl;
 import com.liferay.portal.model.impl.UserGroupRoleImpl;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -31,8 +33,40 @@ import java.util.List;
 public class UserGroupRoleFinderImpl
 	extends BasePersistenceImpl<UserGroupRole> implements UserGroupRoleFinder {
 
+	public static final String FIND_BY_USER_GROUPS_USERS =
+		UserGroupRoleFinder.class.getName() + ".findByUserGroupsUsers";
+
 	public static final String FIND_BY_USER_USER_GROUP_GROUP_ROLE =
 		UserGroupRoleFinder.class.getName() + ".findByUserUserGroupGroupRole";
+
+	@Override
+	public List<UserGroupGroupRole> findByUserGroupsUsers(long userId)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_USER_GROUPS_USERS);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("UserGroupGroupRole", UserGroupGroupRoleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	@Override
 	public List<UserGroupRole> findByUserUserGroupGroupRole(

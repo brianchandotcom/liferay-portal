@@ -64,6 +64,10 @@ public class MissingReference implements Serializable {
 		return _displayName;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
 	public String getReferrerClassName() {
 		return _referrerClassName;
 	}
@@ -80,9 +84,14 @@ public class MissingReference implements Serializable {
 		return _type;
 	}
 
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	private String _className;
 	private String _classPK;
 	private String _displayName;
+	private long _groupId;
 	private String _referrerClassName;
 	private Map<String, String> _referrers = new HashMap<String, String>();
 	private String _type;

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @return the resource permission that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.ResourcePermission addResourcePermission(
 		com.liferay.portal.model.ResourcePermission resourcePermission)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @throws PortalException if a resource permission with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.ResourcePermission deleteResourcePermission(
 		long resourcePermissionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @return the resource permission that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.ResourcePermission deleteResourcePermission(
 		com.liferay.portal.model.ResourcePermission resourcePermission)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @return the resource permission that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.ResourcePermission updateResourcePermission(
 		com.liferay.portal.model.ResourcePermission resourcePermission)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -366,6 +371,12 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		java.lang.String name, int scope, java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.ResourcePermission fetchResourcePermission(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, long roleId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the intersection of action IDs the role has permission at the

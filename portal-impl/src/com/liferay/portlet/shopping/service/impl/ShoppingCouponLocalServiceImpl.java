@@ -266,7 +266,7 @@ public class ShoppingCouponLocalServiceImpl
 			}
 
 			if (shoppingCouponPersistence.fetchByCode(code) != null) {
-				throw new DuplicateCouponCodeException();
+				throw new DuplicateCouponCodeException("{code=" + code + "}");
 			}
 		}
 

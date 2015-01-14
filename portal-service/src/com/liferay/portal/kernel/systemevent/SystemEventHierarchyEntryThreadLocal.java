@@ -79,6 +79,10 @@ public class SystemEventHierarchyEntryThreadLocal {
 		return null;
 	}
 
+	public static SystemEventHierarchyEntry pop(String className) {
+		return pop(PortalUtil.getClassNameId(className), 0);
+	}
+
 	public static SystemEventHierarchyEntry pop(
 		String className, long classPK) {
 
@@ -156,6 +160,12 @@ public class SystemEventHierarchyEntryThreadLocal {
 				parentSystemEventId, systemEventSetKey, action);
 
 		return systemEventHierarchyEntries.push(systemEventHierarchyEntry);
+	}
+
+	public static SystemEventHierarchyEntry push(String className)
+		throws SystemException {
+
+		return push(className, 0, SystemEventConstants.ACTION_SKIP);
 	}
 
 	public static SystemEventHierarchyEntry push(

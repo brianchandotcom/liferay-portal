@@ -136,21 +136,15 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 		Date passwordModfiedDate = user.getPasswordModifiedDate();
 
 		if (passwordModfiedDate != null) {
-
-			// LEP-2961
-
 			Date now = new Date();
 
 			long passwordModificationElapsedTime =
 				now.getTime() - passwordModfiedDate.getTime();
 
-			long userCreationElapsedTime =
-				now.getTime() - user.getCreateDate().getTime();
-
 			long minAge = passwordPolicy.getMinAge() * 1000;
 
 			if ((passwordModificationElapsedTime < minAge) &&
-				(userCreationElapsedTime > minAge)) {
+				!user.getPasswordReset()) {
 
 				throw new UserPasswordException(
 					UserPasswordException.PASSWORD_TOO_YOUNG);

@@ -32,9 +32,13 @@
 	</c:if>
 </liferay-util:buffer>
 
-<c:if test='<%= !choiceField && !type.equals("hidden") && !wrappedField %>'>
+<c:if test='<%= !type.equals("hidden") && !wrappedField %>'>
 	<div class="<%= controlGroupCssClass %>">
 </c:if>
+
+<%
+boolean choiceField = checkboxField || radioField;
+%>
 
 <c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
 	<label <%= labelTag %>>
@@ -168,7 +172,7 @@
 		if (type.equals("hidden") && (value == null)) {
 			valueString = BeanPropertiesUtil.getStringSilent(bean, name);
 		}
-		else if (!ignoreRequestValue && (Validator.isNull(type) || type.equals("text") || type.equals("textarea"))) {
+		else if (!ignoreRequestValue && (Validator.isNull(type) || type.equals("email") || type.equals("text") || type.equals("textarea"))) {
 			valueString = BeanParamUtil.getStringSilent(bean, request, name, valueString);
 
 			if (Validator.isNotNull(fieldParam)) {
@@ -178,6 +182,25 @@
 		%>
 
 		<c:choose>
+			<c:when test='<%= localized && (type.equals("editor") || type.equals("text") || type.equals("textarea")) %>'>
+				<liferay-ui:input-localized
+					autoFocus="<%= autoFocus %>"
+					availableLocales="<%= LanguageUtil.getAvailableLocales() %>"
+					cssClass="<%= fieldCssClass %>"
+					defaultLanguageId="<%= defaultLanguageId %>"
+					disabled="<%= disabled %>"
+					formName="<%= formName %>"
+					id="<%= id %>"
+					ignoreRequestValue="<%= ignoreRequestValue %>"
+					languageId="<%= languageId %>"
+					name="<%= name %>"
+					onChange="<%= onChange %>"
+					onClick="<%= onClick %>"
+					placeholder="<%= placeholder %>"
+					type='<%= type.equals("text") ? "input" : type %>'
+					xml="<%= valueString %>"
+				/>
+			</c:when>
 			<c:when test='<%= type.equals("textarea") %>'>
 
 				<%
@@ -246,7 +269,7 @@
 	</label>
 </c:if>
 
-<c:if test='<%= !choiceField && !type.equals("hidden") && !wrappedField %>'>
+<c:if test='<%= !type.equals("hidden") && !wrappedField %>'>
 	</div>
 </c:if>
 

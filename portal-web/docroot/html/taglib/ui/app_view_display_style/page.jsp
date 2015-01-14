@@ -26,7 +26,7 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 
 <c:if test="<%= displayStyles.length > 1 %>">
 	<div id="<portlet:namespace />displayStyleButtons">
-		<liferay-ui:icon-menu direction="down" icon='<%= "../aui/" + _getIcon(displayStyle) %>' message="" select="<%= true %>">
+		<liferay-ui:icon-menu direction="down" icon='<%= "../aui/" + HtmlUtil.escapeAttribute(_getIcon(displayStyle)) %>' message="" select="<%= true %>">
 
 			<%
 			for (int i = 0; i < displayStyles.length; i++) {
@@ -37,7 +37,7 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 				data.put("displayStyle", dataStyle);
 			%>
 
-				<liferay-ui:icon data="<%= data %>" image='<%= "../aui/" + _getIcon(dataStyle) %>' message="<%= dataStyle %>" onClick='<%= randomNamespace + "onClickDisplayStyle(this);" %>' url="javascript:;" />
+				<liferay-ui:icon data="<%= data %>" image='<%= "../aui/" + HtmlUtil.escapeAttribute(_getIcon(dataStyle)) %>' message="<%= dataStyle %>" onClick='<%= randomNamespace + "onClickDisplayStyle(this);" %>' url="javascript:;" />
 
 			<%
 			}

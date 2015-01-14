@@ -185,8 +185,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 		try {
 			List<IndexReader> indexReaders = new ArrayList<IndexReader>();
 
-			indexSearcher = LuceneHelperUtil.getSearcher(
-				indexAccessor.getCompanyId(), true);
+			indexSearcher = LuceneHelperUtil.getIndexSearcher(companyId);
 
 			if (indexSearcher.maxDoc() > 0) {
 				ReaderUtil.gatherSubReaders(
@@ -216,7 +215,12 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			indexAccessor.addDocument(document);
 		}
 		finally {
-			LuceneHelperUtil.cleanUp(indexSearcher);
+			try {
+				LuceneHelperUtil.releaseIndexSearcher(companyId, indexSearcher);
+			}
+			catch (IOException ioe) {
+				_log.error("Unable to release searcher", ioe);
+			}
 		}
 	}
 
@@ -236,8 +240,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			String localizedFieldName = DocumentImpl.getLocalizedName(
 				languageId, keywordFieldName);
 
-			indexSearcher = LuceneHelperUtil.getSearcher(
-				indexAccessor.getCompanyId(), true);
+			indexSearcher = LuceneHelperUtil.getIndexSearcher(companyId);
 
 			List<IndexReader> indexReaders = new ArrayList<IndexReader>();
 
@@ -283,7 +286,12 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			indexAccessor.addDocuments(documents);
 		}
 		finally {
-			LuceneHelperUtil.cleanUp(indexSearcher);
+			try {
+				LuceneHelperUtil.releaseIndexSearcher(companyId, indexSearcher);
+			}
+			catch (IOException ioe) {
+				_log.error("Unable to release searcher", ioe);
+			}
 		}
 	}
 

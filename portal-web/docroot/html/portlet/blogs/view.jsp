@@ -39,7 +39,6 @@ portletURL.setParameter("struts_action", "/blogs/view");
 <aui:form action="<%= searchURL %>" method="get" name="fm1">
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(scopeGroupId) %>" />
 
 	<%
 	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, pageDelta, portletURL, null, null);

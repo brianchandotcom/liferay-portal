@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
@@ -83,7 +84,11 @@ public abstract class FindAction extends Action {
 
 			if (primaryKey > 0) {
 				try {
-					groupId = getGroupId(primaryKey);
+					long overrideGroupId = getGroupId(primaryKey);
+
+					if (overrideGroupId > 0) {
+						groupId = overrideGroupId;
+					}
 				}
 				catch (Exception e) {
 					if (_log.isDebugEnabled()) {
@@ -143,6 +148,9 @@ public abstract class FindAction extends Action {
 		catch (Exception e) {
 			String noSuchEntryRedirect = ParamUtil.getString(
 				request, "noSuchEntryRedirect");
+
+			noSuchEntryRedirect = PortalUtil.escapeRedirect(
+				noSuchEntryRedirect);
 
 			if (Validator.isNotNull(noSuchEntryRedirect) &&
 				(e instanceof NoSuchLayoutException)) {
@@ -237,7 +245,21 @@ public abstract class FindAction extends Action {
 			return plidAndPortletId;
 		}
 
-		throw new NoSuchLayoutException();
+		StringBundler sb = new StringBundler(portletIds.length * 2 + 5);
+
+		sb.append("{groupId=");
+		sb.append(groupId);
+		sb.append(", plid=");
+		sb.append(plid);
+
+		for (String portletId : portletIds) {
+			sb.append(", portletId=");
+			sb.append(portletId);
+		}
+
+		sb.append("}");
+
+		throw new NoSuchLayoutException(sb.toString());
 	}
 
 	protected static String getPortletId(
@@ -289,9 +311,11 @@ public abstract class FindAction extends Action {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 		if ((groupId == layout.getGroupId()) ||
+			(group.getParentGroupId() == layout.getGroupId()) ||
 			(layout.isPrivateLayout() &&
 			 !SitesUtil.isUserGroupLayoutSetViewable(
 				permissionChecker, layout.getGroup()))) {
@@ -299,9 +323,7 @@ public abstract class FindAction extends Action {
 			return;
 		}
 
-		Group targetGroup = GroupLocalServiceUtil.getGroup(groupId);
-
-		layout = new VirtualLayout(layout, targetGroup);
+		layout = new VirtualLayout(layout, group);
 
 		request.setAttribute(WebKeys.LAYOUT, layout);
 	}

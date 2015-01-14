@@ -48,6 +48,7 @@ import javax.naming.ldap.LdapContext;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  * @author Wesley Gong
+ * @author Vilmos Papp
  */
 @DoPrivileged
 public class PortalLDAPExporterImpl implements PortalLDAPExporter {
@@ -251,7 +252,7 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 
 			Binding binding = PortalLDAPUtil.getUser(
 				ldapServerId, user.getCompanyId(), user.getScreenName(),
-				user.getEmailAddress());
+				user.getEmailAddress(), true);
 
 			if (binding == null) {
 				binding = addUser(

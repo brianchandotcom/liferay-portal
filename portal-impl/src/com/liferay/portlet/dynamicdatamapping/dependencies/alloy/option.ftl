@@ -11,7 +11,7 @@
 
 	<#assign field = fields.get(parentName)>
 
-	<#assign parentFieldRawValue = field.getValue(requestedLocale, parentValueIndex)>
+	<#assign parentFieldRawValue = field.getValue(requestedLocale, parentValueIndex)!"[]">
 </#if>
 
 <#assign selected = jsonFactoryUtil.looseDeserialize(parentFieldRawValue)?seq_contains(fieldStructure.value)>

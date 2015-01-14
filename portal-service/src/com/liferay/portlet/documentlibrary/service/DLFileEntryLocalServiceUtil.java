@@ -844,6 +844,14 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().verifyFileEntryLock(fileEntryId, lockUuid);
 	}
 
+	public static void validateFile(long groupId, long folderId,
+		long fileEntryId, java.lang.String title, java.lang.String extension)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.validateFile(groupId, folderId, fileEntryId, title, extension);
+	}
+
 	public static DLFileEntryLocalService getService() {
 		if (_service == null) {
 			_service = (DLFileEntryLocalService)PortalBeanLocatorUtil.locate(DLFileEntryLocalService.class.getName());

@@ -68,12 +68,13 @@ public class VerifyLayout extends VerifyProcess {
 	}
 
 	protected void verifyUuid(String tableName) throws Exception {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(12);
 
 		sb.append("update ");
 		sb.append(tableName);
-		sb.append(" set layoutUuid = (select sourcePrototypeLayoutUuid from ");
-		sb.append("Layout where Layout.uuid_ = ");
+		sb.append(" set layoutUuid = (select distinct ");
+		sb.append("sourcePrototypeLayoutUuid from Layout where ");
+		sb.append("Layout.uuid_ = ");
 		sb.append(tableName);
 		sb.append(".layoutUuid) where exists (select 1 from Layout where ");
 		sb.append("Layout.uuid_ = ");

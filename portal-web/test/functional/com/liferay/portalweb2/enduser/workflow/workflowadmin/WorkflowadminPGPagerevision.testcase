@@ -53,16 +53,14 @@
 		<execute macro="Page#addWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Page#viewWithWorkflowPG">
@@ -83,8 +81,7 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Page#viewWithWorkflowPG">
@@ -105,8 +102,7 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Page#viewWithWorkflowPG">
@@ -117,22 +113,19 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Staging#publishToLiveNowPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Page#viewPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 	</command>
 
@@ -142,16 +135,14 @@
 		<execute macro="Page#addWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Page#viewWithWorkflowPG">
@@ -172,8 +163,7 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Page#viewWithWorkflowPG">
@@ -203,8 +193,7 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Page#viewWithWorkflowPG">
@@ -215,8 +204,7 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Staging#publishToLiveNowPG" />
@@ -224,8 +212,7 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Page#viewWithWorkflowPG">

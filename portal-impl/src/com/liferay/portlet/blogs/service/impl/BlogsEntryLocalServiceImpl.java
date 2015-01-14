@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -99,6 +101,7 @@ import net.htmlparser.jericho.StartTag;
  */
 public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry addEntry(
 			long userId, String title, String description, String content,
@@ -212,7 +215,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			user.getCompanyId(), groupId, userId, BlogsEntry.class.getName(),
 			entry.getEntryId(), entry, serviceContext);
 
-		return entry;
+		return getEntry(entry.getEntryId());
 	}
 
 	@Override
@@ -290,7 +293,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			serviceContext.setScopeGroupId(entry.getGroupId());
 
-			updateStatus(
+			blogsEntryLocalService.updateStatus(
 				entry.getStatusByUserId(), entry.getEntryId(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 		}
@@ -301,7 +304,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		for (BlogsEntry entry : blogsEntryPersistence.findByGroupId(groupId)) {
-			deleteEntry(entry);
+			blogsEntryLocalService.deleteEntry(entry);
 		}
 	}
 
@@ -378,7 +381,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		deleteEntry(entry);
+		blogsEntryLocalService.deleteEntry(entry);
 	}
 
 	/**
@@ -834,7 +837,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		List<BlogsEntry> entries = blogsEntryPersistence.findByGroupId(groupId);
 
 		for (BlogsEntry entry : entries) {
-			moveEntryToTrash(userId, entry);
+			blogsEntryLocalService.moveEntryToTrash(userId, entry);
 		}
 	}
 
@@ -850,6 +853,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 *         be updated
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry moveEntryToTrash(long userId, BlogsEntry entry)
 		throws PortalException, SystemException {
@@ -864,7 +868,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			blogsEntryPersistence.update(entry);
 		}
 
-		updateStatus(
+		entry = blogsEntryLocalService.updateStatus(
 			userId, entry.getEntryId(), WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());
 
@@ -907,7 +911,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		return moveEntryToTrash(userId, entry);
+		return blogsEntryLocalService.moveEntryToTrash(userId, entry);
 	}
 
 	/**
@@ -930,7 +934,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			BlogsEntry.class.getName(), entryId);
 
-		BlogsEntry entry = updateStatus(
+		BlogsEntry entry = blogsEntryLocalService.updateStatus(
 			userId, entryId, trashEntry.getStatus(), new ServiceContext());
 
 		// Social
@@ -943,6 +947,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, trashEntry.getGroupId(), BlogsEntry.class.getName(),
 			entryId, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			BlogsEntry.class);
+
+		indexer.reindex(entry);
 	}
 
 	@Override
@@ -989,6 +1000,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry updateEntry(
 			long userId, long entryId, String title, String description,
@@ -1098,7 +1110,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry.class.getName(), entry.getEntryId(), entry,
 			serviceContext);
 
-		return entry;
+		return getEntry(entry.getEntryId());
 	}
 
 	@Override
@@ -1113,6 +1125,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			guestPermissions);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry updateStatus(
 			long userId, long entryId, int status,
@@ -1146,9 +1159,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		blogsStatsUserLocalService.updateStatsUser(
 			entry.getGroupId(), entry.getUserId(), entry.getDisplayDate());
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			BlogsEntry.class);
 
 		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 			BlogsEntry.class.getName(), entryId);
@@ -1196,10 +1206,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				trashEntryLocalService.deleteEntry(
 					BlogsEntry.class.getName(), entryId);
 			}
-
-			// Indexer
-
-			indexer.reindex(entry);
 
 			if (oldStatus != WorkflowConstants.STATUS_IN_TRASH) {
 
@@ -1259,15 +1265,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			else if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
 				trashEntryLocalService.deleteEntry(
 					BlogsEntry.class.getName(), entryId);
-			}
-
-			// Indexer
-
-			if (status == WorkflowConstants.STATUS_IN_TRASH) {
-				indexer.reindex(entry);
-			}
-			else {
-				indexer.delete(entry);
 			}
 		}
 
@@ -1420,6 +1417,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		subscriptionSender.addPersistedSubscribers(
 			BlogsEntry.class.getName(), entry.getGroupId());
+
+		subscriptionSender.addPersistedSubscribers(
+			BlogsEntry.class.getName(), entry.getEntryId());
 
 		subscriptionSender.flushNotificationsAsync();
 	}

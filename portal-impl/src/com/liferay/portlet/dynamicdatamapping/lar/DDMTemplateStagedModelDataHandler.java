@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -45,6 +47,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 import java.io.File;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -270,16 +273,12 @@ public class DDMTemplateStagedModelDataHandler
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(
-				DDMPortletDataHandler.NAMESPACE, "referenced-content")) {
+		String script = ExportImportHelperUtil.replaceExportContentReferences(
+			portletDataContext, template, templateElement, template.getScript(),
+			portletDataContext.getBooleanParameter(
+				DDMPortletDataHandler.NAMESPACE, "referenced-content"));
 
-			String content =
-				ExportImportHelperUtil.replaceExportContentReferences(
-					portletDataContext, template, templateElement,
-					template.getScript(), true);
-
-			template.setScript(content);
-		}
+		template.setScript(script);
 
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
 			template.getCompanyId());
@@ -297,6 +296,8 @@ public class DDMTemplateStagedModelDataHandler
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, DDMTemplate template)
 		throws Exception {
+
+		prepareLanguagesForImport(template);
 
 		long userId = portletDataContext.getUserId(template.getUserUuid());
 
@@ -316,18 +317,17 @@ public class DDMTemplateStagedModelDataHandler
 		File smallFile = null;
 
 		try {
-			if (template.isSmallImage()) {
-				Element element =
-					portletDataContext.getImportDataStagedModelElement(
-						template);
+			Element templateElement =
+				portletDataContext.getImportDataStagedModelElement(template);
 
-				String smallImagePath = element.attributeValue(
+			if (template.isSmallImage()) {
+				String smallImagePath = templateElement.attributeValue(
 					"small-image-path");
 
 				if (Validator.isNotNull(template.getSmallImageURL())) {
 					String smallImageURL =
 						ExportImportHelperUtil.replaceImportContentReferences(
-							portletDataContext, element,
+							portletDataContext, templateElement,
 							template.getSmallImageURL(), true);
 
 					template.setSmallImageURL(smallImageURL);
@@ -345,18 +345,21 @@ public class DDMTemplateStagedModelDataHandler
 				}
 			}
 
+			String script =
+				ExportImportHelperUtil.replaceImportContentReferences(
+					portletDataContext, templateElement, template.getScript(),
+					true);
+
+			template.setScript(script);
+
 			ServiceContext serviceContext =
 				portletDataContext.createServiceContext(template);
 
 			DDMTemplate importedTemplate = null;
 
 			if (portletDataContext.isDataStrategyMirror()) {
-				Element element =
-					portletDataContext.getImportDataStagedModelElement(
-						template);
-
 				boolean preloaded = GetterUtil.getBoolean(
-					element.attributeValue("preloaded"));
+					templateElement.attributeValue("preloaded"));
 
 				DDMTemplate existingTemplate = getExistingTemplate(
 					template.getUuid(), portletDataContext.getScopeGroupId(),
@@ -423,6 +426,22 @@ public class DDMTemplateStagedModelDataHandler
 		}
 
 		return existingTemplate;
+	}
+
+	protected void prepareLanguagesForImport(DDMTemplate template)
+		throws PortalException {
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			template.getDefaultLanguageId());
+
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
+			template.getAvailableLanguageIds());
+
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+			DDMTemplate.class.getName(), template.getPrimaryKey(),
+			defaultLocale, availableLocales);
+
+		template.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

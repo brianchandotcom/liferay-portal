@@ -11,7 +11,8 @@
 
 		#heading {
 			bottom: 100%;
-			position: absolute;
+			margin-top: -2em;
+			position: relative;
 
 			.site-title {
 				font-size: 26px;

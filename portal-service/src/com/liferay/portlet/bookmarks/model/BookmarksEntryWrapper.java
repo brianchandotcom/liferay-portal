@@ -933,6 +933,12 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksEntry.isInTrashExplicitly();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

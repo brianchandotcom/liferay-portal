@@ -31,6 +31,7 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.model.AssetTagConstants;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
 import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
@@ -273,11 +274,9 @@ public class AssetTagFinderImpl
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			q.addSynchronizedQuerySpace(AssetEntryModelImpl.TABLE_NAME);
-			q.addSynchronizedQuerySpace(
-				AssetEntryModelImpl.MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_NAME);
-			q.addSynchronizedQuerySpace(AssetTagModelImpl.TABLE_NAME);
+			q.addSynchronizedQuerySpaces(
+				AssetEntryModelImpl.MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_NAME,
+				AssetEntryModelImpl.TABLE_NAME, AssetTagModelImpl.TABLE_NAME);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -541,7 +540,12 @@ public class AssetTagFinderImpl
 	protected void setJoin(QueryPos qPos, String[] tagProperties) {
 		for (String tagProperty : tagProperties) {
 			String[] tagPropertyParts = StringUtil.split(
-				tagProperty, CharPool.COLON);
+				tagProperty, AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR);
+
+			if (tagPropertyParts.length <= 1) {
+				tagPropertyParts = StringUtil.split(
+					tagProperty, CharPool.COLON);
+			}
 
 			String key = StringPool.BLANK;
 

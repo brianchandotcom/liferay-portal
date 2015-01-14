@@ -25,40 +25,46 @@
 
 			<aui:script use="aui-base,event-outside">
 				A.one('#<%= id %>').delegate(
-					'click',
+					['click', 'keypress'],
 					function(event) {
-						var btnNavbar = event.currentTarget;
+						if ((event.type === 'click') || event.isKeyInSet('ENTER', 'SPACE')) {
+							var STR_OPEN = 'open';
 
-						var navId = btnNavbar.attr('data-navId');
+							var btnNavbar = event.currentTarget;
 
-						var navbarCollapse = A.one('#' + navId + 'NavbarCollapse');
+							var navId = btnNavbar.attr('data-navId');
 
-						if (navbarCollapse) {
-							var handle = Liferay.Data['<%= id %>Handle'];
+							var navbarCollapse = A.one('#' + navId + 'NavbarCollapse');
 
-							if (navbarCollapse.hasClass('open') && handle) {
-								handle.detach();
+							if (navbarCollapse) {
+								var handle = Liferay.Data['<%= id %>Handle'];
 
-								handle = null;
-							}
-							else {
-								handle = navbarCollapse.on(
-									'mousedownoutside',
-									function(event) {
-										if (!btnNavbar.contains(event.target)) {
-											Liferay.Data['<%= id %>Handle'] = null;
+								if (navbarCollapse.hasClass(STR_OPEN) && handle) {
+									handle.detach();
 
-											handle.detach();
+									handle = null;
+								}
+								else {
+									handle = navbarCollapse.on(
+										'mousedownoutside',
+										function(event) {
+											if (!btnNavbar.contains(event.target)) {
+												Liferay.Data['<%= id %>Handle'] = null;
 
-											navbarCollapse.removeClass('open');
+												handle.detach();
+
+												btnNavbar.removeClass(STR_OPEN);
+												navbarCollapse.removeClass(STR_OPEN);
+											}
 										}
-									}
-								);
+									);
+								}
+
+								btnNavbar.toggleClass(STR_OPEN);
+								navbarCollapse.toggleClass(STR_OPEN);
+
+								Liferay.Data['<%= id %>Handle'] = handle;
 							}
-
-							navbarCollapse.toggleClass('open');
-
-							Liferay.Data['<%= id %>Handle'] = handle;
 						}
 					},
 					'.btn-navbar'

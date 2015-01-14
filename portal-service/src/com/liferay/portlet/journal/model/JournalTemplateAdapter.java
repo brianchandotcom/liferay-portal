@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -147,6 +148,16 @@ public class JournalTemplateAdapter implements JournalTemplate {
 	}
 
 	@Override
+	public String getDescriptionCurrentLanguageId() {
+		return _ddmTemplate.getDescriptionCurrentLanguageId();
+	}
+
+	@Override
+	public String getDescriptionCurrentValue() {
+		return _ddmTemplate.getDescriptionCurrentValue();
+	}
+
+	@Override
 	public Map<Locale, String> getDescriptionMap() {
 		return _ddmTemplate.getDescriptionMap();
 	}
@@ -235,6 +246,16 @@ public class JournalTemplateAdapter implements JournalTemplate {
 	@Override
 	public String getName(String languageId, boolean useDefault) {
 		return _ddmTemplate.getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getNameCurrentLanguageId() {
+		return _ddmTemplate.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public String getNameCurrentValue() {
+		return _ddmTemplate.getNameCurrentValue();
 	}
 
 	@Override
@@ -364,6 +385,13 @@ public class JournalTemplateAdapter implements JournalTemplate {
 	}
 
 	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+
+		_ddmTemplate.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
 	public void setCacheable(boolean cacheable) {
 		_ddmTemplate.setCacheable(cacheable);
 	}
@@ -393,6 +421,11 @@ public class JournalTemplateAdapter implements JournalTemplate {
 		String description, Locale locale, Locale defaultLocale) {
 
 		_ddmTemplate.setDescription(description, locale, defaultLocale);
+	}
+
+	@Override
+	public void setDescriptionCurrentLanguageId(String languageId) {
+		_ddmTemplate.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	@Override
@@ -572,6 +605,11 @@ public class JournalTemplateAdapter implements JournalTemplate {
 	@Override
 	public void setName(String name, Locale locale, Locale defaultLocale) {
 		_ddmTemplate.setName(name, locale, defaultLocale);
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(String languageId) {
+		_ddmTemplate.setNameCurrentLanguageId(languageId);
 	}
 
 	@Override

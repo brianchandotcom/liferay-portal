@@ -191,7 +191,6 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 
 			portletDataContext.addReferenceElement(
 				portlet, portletDataContext.getExportDataRootElement(), folder,
-				BookmarksFolder.class,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
 				!portletDataContext.getBooleanParameter(NAMESPACE, "entries"));
 		}

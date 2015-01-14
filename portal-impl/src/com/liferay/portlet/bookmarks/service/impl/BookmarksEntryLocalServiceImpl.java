@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -65,6 +66,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import javax.portlet.PortletPreferences;
 
@@ -159,7 +161,7 @@ public class BookmarksEntryLocalServiceImpl
 			groupId, folderId);
 
 		for (BookmarksEntry entry : entries) {
-			if (includeTrashedEntries || !entry.isInTrash()) {
+			if (includeTrashedEntries || !entry.isInTrashExplicitly()) {
 				bookmarksEntryLocalService.deleteEntry(entry);
 			}
 		}
@@ -227,7 +229,17 @@ public class BookmarksEntryLocalServiceImpl
 			long groupId, long folderId, int status, int start, int end)
 		throws SystemException {
 
-		return getEntries(groupId, folderId, start, end, null);
+		return getEntries(groupId, folderId, status, start, end, null);
+	}
+
+	@Override
+	public List<BookmarksEntry> getEntries(
+			long groupId, long folderId, int status, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return bookmarksEntryPersistence.findByG_F_S(
+			groupId, folderId, status, start, end, orderByComparator);
 	}
 
 	@Override
@@ -236,7 +248,7 @@ public class BookmarksEntryLocalServiceImpl
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		return bookmarksEntryPersistence.findByG_F_S(
+		return getEntries(
 			groupId, folderId, WorkflowConstants.STATUS_APPROVED, start, end,
 			orderByComparator);
 	}
@@ -349,14 +361,14 @@ public class BookmarksEntryLocalServiceImpl
 
 		BookmarksEntry entry = getBookmarksEntry(entryId);
 
-		TrashEntry trashEntry = entry.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(BookmarksEntry.class, entryId)) {
+		if (entry.isInTrashExplicitly()) {
 			restoreEntryFromTrash(userId, entryId);
 		}
 		else {
 
 			// Entry
+
+			TrashEntry trashEntry = entry.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(
@@ -665,6 +677,21 @@ public class BookmarksEntryLocalServiceImpl
 		return folderId;
 	}
 
+	protected void notify(final SubscriptionSender subscriptionSender) {
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					subscriptionSender.flushNotificationsAsync();
+
+					return null;
+				}
+
+			}
+		);
+	}
+
 	protected void notifySubscribers(
 			BookmarksEntry entry, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -774,7 +801,7 @@ public class BookmarksEntryLocalServiceImpl
 		subscriptionSender.addPersistedSubscribers(
 			BookmarksEntry.class.getName(), entry.getEntryId());
 
-		subscriptionSender.flushNotificationsAsync();
+		notify(subscriptionSender);
 	}
 
 	protected void validate(String url) throws PortalException {

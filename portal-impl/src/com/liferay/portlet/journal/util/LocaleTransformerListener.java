@@ -52,10 +52,16 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			_log.debug("onXml");
 		}
 
-		return replace(xml, languageId);
+		return filterByLanguage(xml, languageId);
 	}
 
-	protected void replace(Element root, String languageId) {
+	protected void filterByLanguage(
+		Element root, String languageId, String defaultLanguageId) {
+
+		Element defaultLanguageElement = null;
+
+		boolean hasLanguageIdElement = false;
+
 		List<Element> elements = root.elements();
 
 		int listIndex = elements.size() - 1;
@@ -66,18 +72,33 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			String tempLanguageId = element.attributeValue(
 				"language-id", languageId);
 
-			if (!StringUtil.equalsIgnoreCase(tempLanguageId, languageId)) {
-				root.remove(element);
+			if (StringUtil.equalsIgnoreCase(tempLanguageId, languageId)) {
+				hasLanguageIdElement = true;
+
+				filterByLanguage(element, languageId, defaultLanguageId);
 			}
 			else {
-				replace(element, languageId);
+				if (StringUtil.equalsIgnoreCase(
+						tempLanguageId, defaultLanguageId)) {
+
+					defaultLanguageElement = element;
+				}
+
+				root.remove(element);
 			}
 
 			listIndex--;
 		}
+
+		if (!hasLanguageIdElement && (defaultLanguageElement != null)) {
+			root.add(defaultLanguageElement);
+
+			filterByLanguage(
+				defaultLanguageElement, languageId, defaultLanguageId);
+		}
 	}
 
-	protected String replace(String xml, String languageId) {
+	protected String filterByLanguage(String xml, String languageId) {
 		if (xml == null) {
 			return xml;
 		}
@@ -108,10 +129,10 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			}
 
 			if (!supportedLocale) {
-				replace(rootElement, defaultLocale);
+				filterByLanguage(rootElement, defaultLocale, defaultLanguageId);
 			}
 			else {
-				replace(rootElement, languageId);
+				filterByLanguage(rootElement, languageId, defaultLanguageId);
 			}
 
 			xml = DDMXMLUtil.formatXML(document);

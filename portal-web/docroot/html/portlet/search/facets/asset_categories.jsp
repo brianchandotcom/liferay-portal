@@ -27,12 +27,12 @@ int maxTerms = dataJSONObject.getInt("maxTerms", 10);
 boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 %>
 
-<div class="asset-tags <%= cssClass %>" data-facetFieldName="<%= facet.getFieldId() %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= facet.getFieldId() %>" type="hidden" value="<%= fieldParam %>" />
+<div class="asset-tags <%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
+	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
 	<ul class="<%= (showAssetCount && displayStyle.equals("cloud")) ? "tag-cloud" : "tag-list" %> nav nav-pills nav-stacked">
 		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
-			<a data-value="" href="javascript:;"><aui:icon image="tags" /> <liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
+			<a data-value="" href="javascript:;"><aui:icon image="tags" /> <liferay-ui:message key="any" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 		</li>
 
 		<%
@@ -85,40 +85,43 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			}
 
 			AssetCategory curAssetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
+
+			if (AssetCategoryPermission.contains(permissionChecker, curAssetCategory, ActionKeys.VIEW)) {
 		%>
 
 				<c:if test="<%= fieldParam.equals(termCollector.getTerm()) %>">
 					<aui:script use="liferay-token-list">
 						Liferay.Search.tokenList.add(
 							{
-								clearFields: '<%= renderResponse.getNamespace() + facet.getFieldId() %>',
+								clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
 								text: '<%= HtmlUtil.escapeJS(curAssetCategory.getTitle(locale)) %>'
 							}
 						);
 					</aui:script>
 				</c:if>
 
+				<%
+				int popularity = (int)(1 + ((maxCount - (maxCount - (termCollector.getFrequency() - minCount))) * multiplier));
+
+				if (frequencyThreshold > termCollector.getFrequency()) {
+					j--;
+
+					continue;
+				}
+				%>
+
+				<li class="facet-value tag-popularity-<%= popularity %> <%= fieldParam.equals(termCollector.getTerm()) ? "active" : StringPool.BLANK %>">
+					<a data-value="<%= HtmlUtil.escapeAttribute(String.valueOf(assetCategoryId)) %>" href="javascript:;">
+						<%= HtmlUtil.escape(curAssetCategory.getTitle(locale)) %>
+
+						<c:if test="<%= showAssetCount %>">
+							<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
+						</c:if>
+					</a>
+				</li>
+
 		<%
-			int popularity = (int)(1 + ((maxCount - (maxCount - (termCollector.getFrequency() - minCount))) * multiplier));
-
-			if (frequencyThreshold > termCollector.getFrequency()) {
-				j--;
-
-				continue;
 			}
-		%>
-
-			<li class="facet-value tag-popularity-<%= popularity %> <%= fieldParam.equals(termCollector.getTerm()) ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= HtmlUtil.escapeAttribute(String.valueOf(assetCategoryId)) %>" href="javascript:;">
-					<%= HtmlUtil.escape(curAssetCategory.getTitle(locale)) %>
-
-					<c:if test="<%= showAssetCount %>">
-						<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
-					</c:if>
-				</a>
-			</li>
-
-		<%
 		}
 		%>
 

@@ -100,7 +100,7 @@ for (int i = 0; i < results.size(); i++) {
 		sb.append(LanguageUtil.get(pageContext, "unknown"));
 	}
 	else {
-		sb.append(pluginPackage.getName());
+		sb.append(HtmlUtil.escape(pluginPackage.getName()));
 
 		if (pluginPackage.getContext() != null) {
 			sb.append(" (");
@@ -131,7 +131,7 @@ for (int i = 0; i < results.size(); i++) {
 			sb.append("<input onclick=\"");
 			sb.append(renderResponse.getNamespace());
 			sb.append("reindexPortlet('");
-			sb.append(portlet.getPortletId());
+			sb.append(HtmlUtil.escapeJS(portlet.getPortletId()));
 			sb.append("');\" type=\"button\" value=\"");
 			sb.append(LanguageUtil.get(pageContext, "reindex"));
 			sb.append("\" />");

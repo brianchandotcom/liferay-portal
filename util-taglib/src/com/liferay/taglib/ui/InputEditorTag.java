@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.editor.EditorUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Map;
@@ -146,6 +147,17 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:editorImpl", editorImpl);
 		request.setAttribute(
 			"liferay-ui:input-editor:fileBrowserParams", _fileBrowserParams);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = themeDisplay.getDoAsGroupId();
+
+		if (groupId == 0) {
+			groupId = themeDisplay.getScopeGroupId();
+		}
+
+		request.setAttribute("liferay-ui:input-editor:groupId", groupId);
 		request.setAttribute("liferay-ui:input-editor:height", _height);
 		request.setAttribute("liferay-ui:input-editor:initMethod", _initMethod);
 		request.setAttribute(

@@ -406,6 +406,8 @@ public class AnnouncementsEntryLocalServiceImpl
 		String toName = PropsValues.ANNOUNCEMENTS_EMAIL_TO_NAME;
 		String toAddress = PropsValues.ANNOUNCEMENTS_EMAIL_TO_ADDRESS;
 
+		long teamId = 0;
+
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
 
@@ -439,6 +441,9 @@ public class AnnouncementsEntryLocalServiceImpl
 					params.put("inherit", Boolean.TRUE);
 					params.put("usersRoles", classPK);
 				}
+				else if (role.isTeam()) {
+					teamId = role.getClassPK();
+				}
 				else {
 					params.put(
 						"userGroupRole", new Long[] {Long.valueOf(0), classPK});
@@ -467,9 +472,16 @@ public class AnnouncementsEntryLocalServiceImpl
 				user.getFullName());
 		}
 		else {
-			int count = userLocalService.searchCount(
-				company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-				params);
+			int count = 0;
+
+			if (teamId > 0) {
+				count = userLocalService.getTeamUsersCount(teamId);
+			}
+			else {
+				count = userLocalService.searchCount(
+					company.getCompanyId(), null,
+					WorkflowConstants.STATUS_APPROVED, params);
+			}
 
 			int pages = count / Indexer.DEFAULT_INTERVAL;
 
@@ -477,10 +489,17 @@ public class AnnouncementsEntryLocalServiceImpl
 				int start = (i * Indexer.DEFAULT_INTERVAL);
 				int end = start + Indexer.DEFAULT_INTERVAL;
 
-				List<User> users = userLocalService.search(
-					company.getCompanyId(), null,
-					WorkflowConstants.STATUS_APPROVED, params, start, end,
-					(OrderByComparator)null);
+				List<User> users = null;
+
+				if (teamId > 0) {
+					users = userLocalService.getTeamUsers(teamId, start, end);
+				}
+				else {
+					users = userLocalService.search(
+						company.getCompanyId(), null,
+						WorkflowConstants.STATUS_APPROVED, params, start, end,
+						(OrderByComparator)null);
+				}
 
 				notifyUsers(
 					users, entry, company.getLocale(), toAddress, toName);

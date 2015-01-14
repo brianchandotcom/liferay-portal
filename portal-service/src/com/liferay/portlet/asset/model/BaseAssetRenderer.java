@@ -363,7 +363,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		sb.append(StringPool.EQUAL);
 		sb.append(primaryKeyParameterValue);
 
-		return sb.toString();
+		return PortalUtil.addPreservedParameters(themeDisplay, sb.toString());
 	}
 
 	private static final String[] _AVAILABLE_LANGUAGE_IDS = new String[0];

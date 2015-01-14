@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface ContactLocalService extends BaseLocalService,
 	* @return the contact that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Contact addContact(
 		com.liferay.portal.model.Contact contact)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -72,6 +74,7 @@ public interface ContactLocalService extends BaseLocalService,
 	* @throws PortalException if a contact with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Contact deleteContact(long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -83,6 +86,7 @@ public interface ContactLocalService extends BaseLocalService,
 	* @return the contact that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Contact deleteContact(
 		com.liferay.portal.model.Contact contact)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -222,6 +226,7 @@ public interface ContactLocalService extends BaseLocalService,
 	* @return the contact that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Contact updateContact(
 		com.liferay.portal.model.Contact contact)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -240,6 +245,7 @@ public interface ContactLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Contact addContact(long userId,
 		java.lang.String className, long classPK,
 		java.lang.String emailAddress, java.lang.String firstName,
@@ -264,6 +270,7 @@ public interface ContactLocalService extends BaseLocalService,
 	public int getContactsCount(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Contact updateContact(long contactId,
 		java.lang.String emailAddress, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName, int prefixId,

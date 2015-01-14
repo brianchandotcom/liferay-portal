@@ -1070,17 +1070,16 @@ public class UserFinderImpl
 
 				StringBundler sb = new StringBundler(groupIds.length * 2 + 1);
 
-				sb.append("WHERE (");
+				sb.append("WHERE (Users_Groups.groupId IN (");
 
-				for (int i = 0; i < groupIds.length; i++) {
-					sb.append("(Users_Groups.groupId = ?) ");
-
-					if ((i + 1) < groupIds.length) {
-						sb.append("OR ");
-					}
+				for (long groupId : groupIds) {
+					sb.append(groupId);
+					sb.append(StringPool.COMMA);
 				}
 
-				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.setIndex(sb.index() - 1);
+
+				sb.append("))");
 
 				join = sb.toString();
 			}
@@ -1095,17 +1094,16 @@ public class UserFinderImpl
 				StringBundler sb = new StringBundler(
 					organizationIds.length * 2 + 1);
 
-				sb.append("WHERE (");
+				sb.append("WHERE (Users_Orgs.organizationId IN (");
 
-				for (int i = 0; i < organizationIds.length; i++) {
-					sb.append("(Users_Orgs.organizationId = ?) ");
-
-					if ((i + 1) < organizationIds.length) {
-						sb.append("OR ");
-					}
+				for (long organizationId : organizationIds) {
+					sb.append(organizationId);
+					sb.append(StringPool.COMMA);
 				}
 
-				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.setIndex(sb.index() - 1);
+
+				sb.append("))");
 
 				join = sb.toString();
 			}
@@ -1116,24 +1114,25 @@ public class UserFinderImpl
 			int size = organizationsTree.size();
 
 			if (size > 0) {
-				StringBundler sb = new StringBundler(size * 2 + 1);
+				StringBundler sb = new StringBundler(size * 4 + 1);
 
 				sb.append("WHERE (");
 
-				for (int i = 0; i < size; i++) {
-					sb.append("(Organization_.treePath LIKE ?) ");
-
-					if ((i + 1) < size) {
-						sb.append("OR ");
-					}
+				for (Organization organization : organizationsTree) {
+					sb.append("(Organization_.treePath LIKE '%/");
+					sb.append(organization.getOrganizationId());
+					sb.append("/%')");
+					sb.append(" OR ");
 				}
+
+				sb.setIndex(sb.index() - 1);
 
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 
 				join = sb.toString();
 			}
 			else {
-				join = "WHERE (Organization_.treePath LIKE ?)";
+				join = "WHERE (Organization_.treePath LIKE '%/ /%')";
 			}
 		}
 		else if (key.equals("usersPasswordPolicies")) {
@@ -1155,17 +1154,16 @@ public class UserFinderImpl
 				StringBundler sb = new StringBundler(
 					userGroupIds.length * 2 + 1);
 
-				sb.append("WHERE (");
+				sb.append("WHERE (Users_UserGroups.userGroupId IN (");
 
-				for (int i = 0; i < userGroupIds.length; i++) {
-					sb.append("(Users_UserGroups.userGroupId = ?) ");
-
-					if ((i + 1) < userGroupIds.length) {
-						sb.append("OR ");
-					}
+				for (long userGroupId : userGroupIds) {
+					sb.append(userGroupId);
+					sb.append(StringPool.COMMA);
 				}
 
-				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.setIndex(sb.index() - 1);
+
+				sb.append("))");
 
 				join = sb.toString();
 			}
@@ -1231,28 +1229,7 @@ public class UserFinderImpl
 
 			Object value = entry.getValue();
 
-			if (key.equals("usersOrgsTree")) {
-				List<Organization> organizationsTree =
-					(List<Organization>)value;
-
-				if (!organizationsTree.isEmpty()) {
-					for (Organization organization : organizationsTree) {
-						StringBundler treePath = new StringBundler(5);
-
-						treePath.append(StringPool.PERCENT);
-						treePath.append(StringPool.SLASH);
-						treePath.append(organization.getOrganizationId());
-						treePath.append(StringPool.SLASH);
-						treePath.append(StringPool.PERCENT);
-
-						qPos.add(treePath.toString());
-					}
-				}
-				else {
-					qPos.add("%/ /%");
-				}
-			}
-			else if (value instanceof Long) {
+			if (value instanceof Long) {
 				Long valueLong = (Long)value;
 
 				if (Validator.isNotNull(valueLong)) {
@@ -1260,6 +1237,12 @@ public class UserFinderImpl
 				}
 			}
 			else if (value instanceof Long[]) {
+				if (key.equals("usersGroups") || key.equals("usersOrgs") ||
+					key.equals("usersUserGroups")) {
+
+					continue;
+				}
+
 				Long[] valueArray = (Long[])value;
 
 				for (Long element : valueArray) {

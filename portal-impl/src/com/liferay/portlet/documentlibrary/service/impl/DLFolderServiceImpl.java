@@ -531,7 +531,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 				DLFolder.class.getName(), folderId);
 
 			if (!lock.isInheritable()) {
-				throw new NoSuchLockException();
+				throw new NoSuchLockException("{folderId=" + folderId + "}");
 			}
 
 			if (lock.getUuid().equals(lockUuid)) {

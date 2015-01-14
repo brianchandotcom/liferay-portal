@@ -314,7 +314,7 @@ public class LayoutTypePortletImpl
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				getCompanyId(), portletId);
 
-			if (portlet != null) {
+			if ((portlet != null) && !portlet.isUndeployedPortlet()) {
 				portlets.add(portlet);
 			}
 		}
@@ -591,6 +591,15 @@ public class LayoutTypePortletImpl
 			return false;
 		}
 
+		if (isCustomizable() && isCustomizedView()) {
+			LayoutTypePortletImpl defaultLayoutTypePortletImpl =
+				getDefaultLayoutTypePortletImpl();
+
+			if (defaultLayoutTypePortletImpl.hasNonstaticPortletId(portletId)) {
+				return false;
+			}
+		}
+
 		if (!strict &&
 			((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
@@ -775,6 +784,10 @@ public class LayoutTypePortletImpl
 	public void movePortletId(
 			long userId, String portletId, String columnId, int columnPos)
 		throws PortalException, SystemException {
+
+		if (!hasPortletId(portletId)) {
+			return;
+		}
 
 		_enablePortletLayoutListener = false;
 
@@ -1080,26 +1093,9 @@ public class LayoutTypePortletImpl
 			return;
 		}
 
-		String oldLayoutTemplateId = getLayoutTemplateId();
-
-		if (Validator.isNull(oldLayoutTemplateId)) {
-			oldLayoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
-		}
+		LayoutTemplate oldLayoutTemplate = getLayoutTemplate();
 
 		String themeId = getThemeId();
-
-		LayoutTemplate oldLayoutTemplate =
-			LayoutTemplateLocalServiceUtil.getLayoutTemplate(
-				oldLayoutTemplateId, false, themeId);
-
-		if (oldLayoutTemplate == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to find layout template " + oldLayoutTemplateId);
-			}
-
-			return;
-		}
 
 		LayoutTemplate newLayoutTemplate =
 			LayoutTemplateLocalServiceUtil.getLayoutTemplate(
@@ -1422,6 +1418,22 @@ public class LayoutTypePortletImpl
 		Layout layout = getLayout();
 
 		return layout.getCompanyId();
+	}
+
+	protected LayoutTypePortletImpl getDefaultLayoutTypePortletImpl() {
+		if (!isCustomizedView()) {
+			return this;
+		}
+
+		LayoutTypePortletImpl defaultLayoutTypePortletImpl =
+			new LayoutTypePortletImpl(getLayout());
+
+		defaultLayoutTypePortletImpl._embeddedPortlets = _embeddedPortlets;
+		defaultLayoutTypePortletImpl._layoutSetPrototypeLayout =
+			_layoutSetPrototypeLayout;
+		defaultLayoutTypePortletImpl._updatePermission = _updatePermission;
+
+		return defaultLayoutTypePortletImpl;
 	}
 
 	protected List<Portlet> getEmbeddedPortlets(

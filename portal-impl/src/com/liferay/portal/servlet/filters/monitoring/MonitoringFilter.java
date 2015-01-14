@@ -82,6 +82,8 @@ public class MonitoringFilter extends BasePortalFilter {
 			portalRequestDataSample = new PortalRequestDataSample(
 				companyId, request.getRemoteUser(), request.getRequestURI(),
 				GetterUtil.getString(request.getRequestURL()));
+
+			DataSampleThreadLocal.initialize();
 		}
 
 		try {

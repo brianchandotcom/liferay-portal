@@ -200,6 +200,20 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 	}
 
 	@Override
+	public String getTypeSettingsProperty(String key) {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		return typeSettingsProperties.getProperty(key);
+	}
+
+	@Override
+	public String getTypeSettingsProperty(String key, String defaultValue) {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		return typeSettingsProperties.getProperty(key, defaultValue);
+	}
+
+	@Override
 	public ColorScheme getWapColorScheme()
 		throws PortalException, SystemException {
 

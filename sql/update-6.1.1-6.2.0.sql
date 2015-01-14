@@ -323,6 +323,12 @@ alter table DLFileEntry add classPK LONG;
 alter table DLFileEntry add treePath STRING null;
 alter table DLFileEntry add manualCheckInRequired BOOLEAN;
 
+COMMIT_TRANSACTION;
+
+update DLFileEntry set classNameId = 0;
+update DLFileEntry set classPK = 0;
+update DLFileEntry set manualCheckInRequired = FALSE;
+
 alter table DLFileRank add active_ BOOLEAN;
 
 COMMIT_TRANSACTION;
@@ -417,6 +423,8 @@ create table JournalFolder (
 
 alter table Layout add userId LONG;
 alter table Layout add userName VARCHAR(75) null;
+
+drop index IX_CED31606 on Layout;
 
 create table LayoutFriendlyURL (
 	uuid_ VARCHAR(75) null,

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.util.ArrayList;
@@ -126,6 +127,24 @@ public class HotDeployImpl implements HotDeploy {
 		TemplateManagerUtil.destroy(classLoader);
 
 		_pacl.unregister(classLoader);
+	}
+
+	@Override
+	public synchronized boolean registerDependentPortalLifecycle(
+		String servletContextName, PortalLifecycle portalLifecycle) {
+
+		for (HotDeployEvent hotDeployEvent : _dependentHotDeployEvents) {
+			if (Validator.equals(
+					servletContextName,
+					hotDeployEvent.getServletContextName())) {
+
+				hotDeployEvent.addPortalLifecycle(portalLifecycle);
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -233,6 +252,8 @@ public class HotDeployImpl implements HotDeploy {
 						dependentEvent.getContextClassLoader());
 
 					doFireDeployEvent(dependentEvent);
+
+					dependentEvent.flushInits();
 				}
 			}
 			finally {

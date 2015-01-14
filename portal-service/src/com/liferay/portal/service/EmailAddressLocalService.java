@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	* @return the email address that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.EmailAddress addEmailAddress(
 		com.liferay.portal.model.EmailAddress emailAddress)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	* @throws PortalException if a email address with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.EmailAddress deleteEmailAddress(
 		long emailAddressId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	* @return the email address that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.EmailAddress deleteEmailAddress(
 		com.liferay.portal.model.EmailAddress emailAddress)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -254,6 +258,7 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	* @return the email address that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.EmailAddress updateEmailAddress(
 		com.liferay.portal.model.EmailAddress emailAddress)
 		throws com.liferay.portal.kernel.exception.SystemException;

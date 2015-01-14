@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -426,7 +427,7 @@ public class DLAppHelperLocalServiceImpl
 
 				DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-				if (dlFileEntry.isInTrash()) {
+				if (dlFileEntry.isInTrashExplicitly()) {
 					continue;
 				}
 
@@ -491,13 +492,37 @@ public class DLAppHelperLocalServiceImpl
 
 				indexer.reindex(dlFileEntry);
 			}
+			else if (object instanceof DLFileShortcut) {
+
+				// File shortcut
+
+				DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
+
+				if (dlFileShortcut.isInTrash()) {
+					continue;
+				}
+
+				int oldStatus = dlFileShortcut.getStatus();
+
+				dlFileShortcut.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+				dlFileShortcutPersistence.update(dlFileShortcut);
+
+				// Trash
+
+				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+					trashVersionLocalService.addTrashVersion(
+						trashEntryId, DLFileShortcut.class.getName(),
+						dlFileShortcut.getFileShortcutId(), oldStatus, null);
+				}
+			}
 			else if (object instanceof DLFolder) {
 
 				// Folder
 
 				DLFolder dlFolder = (DLFolder)object;
 
-				if (dlFolder.isInTrash()) {
+				if (dlFolder.isInTrashExplicitly()) {
 					continue;
 				}
 
@@ -616,8 +641,48 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (dlFileShortcut.isInTrash()) {
+		if (dlFileShortcut.isInTrashExplicitly()) {
 			restoreFileShortcutFromTrash(userId, dlFileShortcut);
+		}
+		else {
+
+			// File shortcut
+
+			TrashEntry trashEntry = dlFileShortcut.getTrashEntry();
+
+			TrashVersion trashVersion =
+				trashVersionLocalService.fetchVersion(
+					trashEntry.getEntryId(), DLFileShortcut.class.getName(),
+					dlFileShortcut.getFileShortcutId());
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (trashVersion != null) {
+				status = trashVersion.getStatus();
+			}
+
+			dlFileShortcutLocalService.updateStatus(
+				userId, dlFileShortcut.getFileShortcutId(), status,
+				new ServiceContext());
+
+			// Trash
+
+			if (trashVersion != null) {
+				trashVersionLocalService.deleteTrashVersion(trashVersion);
+			}
+
+			// Social
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put("title", dlFileShortcut.getToTitle());
+
+			socialActivityLocalService.addActivity(
+				userId, dlFileShortcut.getGroupId(),
+				DLFileShortcut.class.getName(),
+				dlFileShortcut.getFileShortcutId(),
+				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+				extraDataJSONObject.toString(), 0);
 		}
 
 		return dlAppService.updateFileShortcut(
@@ -745,16 +810,6 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		if (!event.equals(DLSyncConstants.EVENT_DELETE) &&
-			!event.equals(DLSyncConstants.EVENT_MOVE_TO_TRASH)) {
-
-			FileVersion fileVersion = fileEntry.getFileVersion();
-
-			if (!fileVersion.isApproved()) {
-				return;
-			}
-		}
-
 		registerDLSyncEventCallback(
 			event, DLSyncConstants.TYPE_FILE, fileEntry.getFileEntryId());
 	}
@@ -847,6 +902,39 @@ public class DLAppHelperLocalServiceImpl
 
 				indexer.reindex(dlFileEntry);
 			}
+			else if (object instanceof DLFileShortcut) {
+
+				// Folder
+
+				DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
+
+				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
+					DLFileShortcut.class.getName(),
+					dlFileShortcut.getFileShortcutId());
+
+				if (trashEntry != null) {
+					continue;
+				}
+
+				TrashVersion trashVersion =
+					trashVersionLocalService.fetchVersion(
+						trashEntryId, DLFileShortcut.class.getName(),
+						dlFileShortcut.getFileShortcutId());
+
+				int oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+				if (trashVersion != null) {
+					oldStatus = trashVersion.getStatus();
+				}
+
+				dlFileShortcut.setStatus(oldStatus);
+
+				dlFileShortcutPersistence.update(dlFileShortcut);
+
+				if (trashVersion != null) {
+					trashVersionLocalService.deleteTrashVersion(trashVersion);
+				}
+			}
 			else if (object instanceof DLFolder) {
 
 				// Folder
@@ -924,8 +1012,7 @@ public class DLAppHelperLocalServiceImpl
 
 		dlFileEntryPersistence.update(dlFileEntry);
 
-		FileVersion fileVersion = new LiferayFileVersion(
-			dlFileEntry.getLatestFileVersion(true));
+		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
@@ -1368,7 +1455,16 @@ public class DLAppHelperLocalServiceImpl
 							userId, assetEntry.getEntryId(), assetLinkEntryIds,
 							AssetLinkConstants.TYPE_RELATED);
 
-						assetEntryLocalService.deleteEntry(draftAssetEntry);
+						SystemEventHierarchyEntryThreadLocal.push(
+							DLFileEntryConstants.getClassName());
+
+						try {
+							assetEntryLocalService.deleteEntry(draftAssetEntry);
+						}
+						finally {
+							SystemEventHierarchyEntryThreadLocal.pop(
+								DLFileEntryConstants.getClassName());
+						}
 					}
 				}
 
@@ -1447,11 +1543,7 @@ public class DLAppHelperLocalServiceImpl
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		TrashEntry trashEntry = dlFileEntry.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(
-				DLFileEntry.class, dlFileEntry.getFileEntryId())) {
-
+		if (dlFileEntry.isInTrashExplicitly()) {
 			restoreFileEntryFromTrash(userId, fileEntry);
 
 			fileEntry = dlAppLocalService.moveFileEntry(
@@ -1465,6 +1557,8 @@ public class DLAppHelperLocalServiceImpl
 
 			return fileEntry;
 		}
+
+		TrashEntry trashEntry = dlFileEntry.getTrashEntry();
 
 		List<DLFileVersion> dlFileVersions =
 			dlFileVersionLocalService.getFileVersions(
@@ -1565,7 +1659,7 @@ public class DLAppHelperLocalServiceImpl
 		dlFileVersions = ListUtil.sort(
 			dlFileVersions, new FileVersionVersionComparator());
 
-		FileVersion fileVersion = new LiferayFileVersion(dlFileVersions.get(0));
+		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		int oldStatus = fileVersion.getStatus();
 
@@ -1598,11 +1692,11 @@ public class DLAppHelperLocalServiceImpl
 		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
 			new ArrayList<ObjectValuePair<Long, Integer>>();
 
+		DLFileVersion oldDLFileVersion = (DLFileVersion)fileVersion.getModel();
+
+		oldDLFileVersionStatus = oldDLFileVersion.getStatus();
+
 		if ((dlFileVersions != null) && !dlFileVersions.isEmpty()) {
-			DLFileVersion oldDLFileVersion = dlFileVersions.get(0);
-
-			oldDLFileVersionStatus = oldDLFileVersion.getStatus();
-
 			dlFileVersionStatusOVPs = getDlFileVersionStatuses(dlFileVersions);
 		}
 
@@ -1667,14 +1761,14 @@ public class DLAppHelperLocalServiceImpl
 
 		DLFolder dlFolder = (DLFolder)folder.getModel();
 
-		TrashEntry trashEntry = dlFolder.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(DLFolder.class, dlFolder.getFolderId())) {
+		if (dlFolder.isInTrashExplicitly()) {
 			restoreFolderFromTrash(userId, folder);
 		}
 		else {
 
 			// Folder
+
+			TrashEntry trashEntry = dlFolder.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(
@@ -1843,6 +1937,21 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	protected void notify(final SubscriptionSender subscriptionSender) {
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					subscriptionSender.flushNotificationsAsync();
+
+					return null;
+				}
+
+			}
+		);
+	}
+
 	protected void notifySubscribers(
 			FileVersion fileVersion, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -1973,7 +2082,7 @@ public class DLAppHelperLocalServiceImpl
 		subscriptionSender.addPersistedSubscribers(
 			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 
-		subscriptionSender.flushNotificationsAsync();
+		notify(subscriptionSender);
 	}
 
 	protected void registerDLProcessorCallback(

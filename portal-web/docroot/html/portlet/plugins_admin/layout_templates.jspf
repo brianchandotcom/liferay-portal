@@ -65,7 +65,12 @@ for (int i = 0; i < results.size(); i++) {
 
 	rowURL.setParameter("pluginId", layoutTemplate.getLayoutTemplateId());
 	rowURL.setParameter("pluginType", Plugin.TYPE_LAYOUT_TEMPLATE);
-	rowURL.setParameter("title", layoutTemplate.getName());
+
+	String layoutTemplateName = layoutTemplate.getName();
+
+	layoutTemplateName = LanguageUtil.get(locale, "layout-template-" + layoutTemplateName, layoutTemplateName);
+
+	rowURL.setParameter("title", layoutTemplateName);
 
 	// Name and thumbnail
 
@@ -79,9 +84,9 @@ for (int i = 0; i < results.size(); i++) {
 
 	sb.append("<img align=\"left\" src=\"");
 	sb.append(layoutTemplate.getStaticResourcePath());
-	sb.append(layoutTemplate.getThumbnailPath());
+	sb.append(HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()));
 	sb.append("\" style=\"margin-right: 10px\" />");
-	sb.append(layoutTemplate.getName());
+	sb.append(HtmlUtil.escape(layoutTemplateName));
 
 	if (showEditPluginHREF) {
 		sb.append("</a>");
@@ -95,7 +100,7 @@ for (int i = 0; i < results.size(); i++) {
 		sb.append(LanguageUtil.get(pageContext, "unknown"));
 	}
 	else {
-		sb.append(pluginPackage.getName());
+		sb.append(HtmlUtil.escape(pluginPackage.getName()));
 
 		if (pluginPackage.getContext() != null) {
 			sb.append(" (");
@@ -112,7 +117,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Roles
 
-	row.addText(StringUtil.merge(pluginSetting.getRolesArray(), ", "));
+	row.addText(HtmlUtil.escape(StringUtil.merge(pluginSetting.getRolesArray(), ", ")));
 
 	// Add result row
 

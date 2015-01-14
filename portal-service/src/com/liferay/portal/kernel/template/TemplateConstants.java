@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public interface TemplateConstants {
 
+	public static final String CLASS_NAME_ID = "class_name_id";
+
 	public static final String DEFAUT_ENCODING = StringPool.UTF8;
 
 	/**

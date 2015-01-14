@@ -35,6 +35,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	public com.liferay.portal.model.ColorScheme getColorScheme()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.lang.String getCompanyFallbackVirtualHostname();
+
 	public com.liferay.portal.model.Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -65,6 +67,9 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean isLayoutSetPrototypeLinkActive();
+
+	public void setCompanyFallbackVirtualHostname(
+		java.lang.String companyFallbackVirtualHostname);
 
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);

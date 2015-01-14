@@ -285,7 +285,7 @@ public class MediaWikiImporter implements WikiImporter {
 		description = description.replaceAll(
 			_categoriesPattern.pattern(), StringPool.BLANK);
 
-		return normalize(description, 300);
+		return normalize(description, 255);
 	}
 
 	protected String normalizeTitle(String title) {
@@ -433,6 +433,10 @@ public class MediaWikiImporter implements WikiImporter {
 
 			String title = pageElement.elementText("title");
 
+			if (isSpecialMediaWikiPage(title, specialNamespaces)) {
+				continue;
+			}
+
 			title = normalizeTitle(title);
 
 			percentage = Math.min(
@@ -440,10 +444,6 @@ public class MediaWikiImporter implements WikiImporter {
 				maxPercentage);
 
 			progressTracker.setPercent(percentage);
-
-			if (isSpecialMediaWikiPage(title, specialNamespaces)) {
-				continue;
-			}
 
 			List<Element> revisionElements = pageElement.elements("revision");
 
@@ -526,7 +526,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 				try {
 					assetTag = AssetTagLocalServiceUtil.getTag(
-						node.getCompanyId(), categoryName);
+						node.getGroupId(), categoryName);
 				}
 				catch (NoSuchTagException nste) {
 					ServiceContext serviceContext = new ServiceContext();
@@ -537,12 +537,14 @@ public class MediaWikiImporter implements WikiImporter {
 
 					assetTag = AssetTagLocalServiceUtil.addTag(
 						userId, categoryName, null, serviceContext);
-				}
 
-				if (Validator.isNotNull(description)) {
-					AssetTagPropertyLocalServiceUtil.addTagProperty(
-						userId, assetTag.getTagId(), "description",
-						description);
+					if (PropsValues.ASSET_TAG_PROPERTIES_ENABLED &&
+						Validator.isNotNull(description)) {
+
+						AssetTagPropertyLocalServiceUtil.addTagProperty(
+							userId, assetTag.getTagId(), "description",
+							description);
+					}
 				}
 			}
 			catch (SystemException se) {

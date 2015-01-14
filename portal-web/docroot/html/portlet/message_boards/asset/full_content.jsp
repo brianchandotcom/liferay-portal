@@ -24,7 +24,9 @@ request.setAttribute("edit_message.jsp-className", message.getClassName());
 request.setAttribute("edit_message.jsp-depth", 0);
 request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);
 request.setAttribute("edit_message.jsp-message", message);
+request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.FALSE);
 request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.FALSE);
+request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.FALSE);
 request.setAttribute("edit_message.jsp-thread", message.getThread());
 %>
 

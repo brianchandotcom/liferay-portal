@@ -34,7 +34,7 @@ for (int i = 0; i < results.size(); i++) {
 	sb.append("\" style=\"");
 	sb.append(DLUtil.getThumbnailStyle());
 	sb.append("\">");
-	sb.append(fileEntry.getTitle());
+	sb.append(HtmlUtil.escape(fileEntry.getTitle()));
 
 	row.addText(sb.toString(), rowHREF);
 

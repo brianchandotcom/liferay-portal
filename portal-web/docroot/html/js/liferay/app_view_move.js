@@ -122,15 +122,12 @@ AUI.add(
 						instance._eventEditEntry = instance.ns('editEntry');
 
 						var eventHandles = [
-							Liferay.on(instance._eventEditEntry, instance._editEntry, instance),
-							Liferay.after(instance.ns('dataRetrieveSuccess'), instance._initDropTargets, instance)
+							Liferay.on(instance._eventEditEntry, instance._editEntry, instance)
 						];
 
 						instance._eventHandles = eventHandles;
 
-						if (themeDisplay.isSignedIn() && this.get('updateable')) {
-							instance._initDragDrop();
-						}
+						instance._registerDragDrop();
 					},
 
 					destructor: function() {
@@ -325,7 +322,7 @@ AUI.add(
 
 							var itemTitle = Lang.trim(dropTarget.attr('data-title'));
 
-							proxyNode.html(Lang.sub(moveText, [selectedItemsCount, itemTitle]));
+							proxyNode.html(Lang.sub(moveText, [selectedItemsCount, Liferay.Util.escapeHTML(itemTitle)]));
 						}
 					},
 
@@ -424,6 +421,16 @@ AUI.add(
 						}
 
 						submitForm(form, url);
+					},
+
+					_registerDragDrop: function() {
+						var instance = this;
+
+						instance._eventHandles.push(Liferay.after(instance.ns('dataRetrieveSuccess'), instance._initDropTargets, instance));
+
+						if (themeDisplay.isSignedIn() && this.get('updateable')) {
+							instance._initDragDrop();
+						}
 					},
 
 					_updateFolderIdRedirectUrl: function(redirectUrl) {

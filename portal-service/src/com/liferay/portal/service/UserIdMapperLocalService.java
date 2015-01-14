@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	* @return the user ID mapper that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.UserIdMapper addUserIdMapper(
 		com.liferay.portal.model.UserIdMapper userIdMapper)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	* @throws PortalException if a user ID mapper with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.UserIdMapper deleteUserIdMapper(
 		long userIdMapperId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	* @return the user ID mapper that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.UserIdMapper deleteUserIdMapper(
 		com.liferay.portal.model.UserIdMapper userIdMapper)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	* @return the user ID mapper that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.UserIdMapper updateUserIdMapper(
 		com.liferay.portal.model.UserIdMapper userIdMapper)
 		throws com.liferay.portal.kernel.exception.SystemException;

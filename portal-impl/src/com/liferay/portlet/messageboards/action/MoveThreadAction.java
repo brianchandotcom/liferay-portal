@@ -35,6 +35,7 @@ import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
+import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.io.InputStream;
 
@@ -138,6 +139,10 @@ public class MoveThreadAction extends PortletAction {
 			String format = GetterUtil.getString(
 				portletPreferences.getValue("messageFormat", null),
 				MBMessageConstants.DEFAULT_FORMAT);
+
+			if (!MBUtil.isValidMessageFormat(format)) {
+				format = "html";
+			}
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				MBMessage.class.getName(), actionRequest);

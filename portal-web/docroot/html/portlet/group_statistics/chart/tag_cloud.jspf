@@ -63,7 +63,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				}
 				%>
 
-					<strong><%= assetTag.getName() %></strong>
+					<strong><%= HtmlUtil.escape(assetTag.getName()) %></strong>
 				</a>
 			</span>
 		</li>

@@ -16,6 +16,7 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingUtil;
@@ -40,7 +41,7 @@ public class LayoutExportBackgroundTaskExecutor
 
 	public LayoutExportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
-			new ExportBackgroundTaskStatusMessageTranslator());
+			new LayoutExportImportBackgroundTaskStatusMessageTranslator());
 		setSerial(true);
 	}
 
@@ -82,7 +83,9 @@ public class LayoutExportBackgroundTaskExecutor
 	}
 
 	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
+	public String handleException(BackgroundTask backgroundTask, Exception e)
+		throws SystemException {
+
 		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
 			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
 

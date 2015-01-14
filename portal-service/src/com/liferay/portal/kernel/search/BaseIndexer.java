@@ -47,6 +47,7 @@ import com.liferay.portal.model.Address;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupedModel;
@@ -84,6 +85,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -108,10 +110,6 @@ public abstract class BaseIndexer implements Indexer {
 
 	public static final int INDEX_FILTER_SEARCH_LIMIT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.INDEX_FILTER_SEARCH_LIMIT));
-
-	public BaseIndexer() {
-		_document = new DocumentImpl();
-	}
 
 	@Override
 	public void addRelatedEntryFields(Document document, Object obj)
@@ -428,7 +426,9 @@ public abstract class BaseIndexer implements Indexer {
 	@Override
 	public void reindex(String className, long classPK) throws SearchException {
 		try {
-			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled() ||
+				(classPK <= 0)) {
+
 				return;
 			}
 
@@ -436,7 +436,7 @@ public abstract class BaseIndexer implements Indexer {
 		}
 		catch (NoSuchModelException nsme) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to index " + className + " " + classPK);
+				_log.warn("Unable to index " + className + " " + classPK, nsme);
 			}
 		}
 		catch (SearchException se) {
@@ -591,7 +591,8 @@ public abstract class BaseIndexer implements Indexer {
 		document.addNumber(Field.VIEW_COUNT, assetEntry.getViewCount());
 
 		document.addLocalizedKeyword(
-			"localized_title", assetEntry.getTitleMap(), true);
+			"localized_title", assetEntry.getTitleMap(), true, true);
+		document.addKeyword("visible", assetEntry.isVisible());
 	}
 
 	/**
@@ -1135,7 +1136,7 @@ public abstract class BaseIndexer implements Indexer {
 				Field.REMOVED_BY_USER_NAME, trashEntry.getUserName(), true);
 
 			if (trashedModel.isInTrash() &&
-				!trashEntry.isTrashEntry(trashedModel)) {
+				!_isInTrashExplicitly(trashedModel)) {
 
 				document.addKeyword(
 					Field.ROOT_ENTRY_CLASS_NAME, trashEntry.getClassName());
@@ -1388,6 +1389,10 @@ public abstract class BaseIndexer implements Indexer {
 		if ((start != QueryUtil.ALL_POS) && (end != QueryUtil.ALL_POS)) {
 			if (end > length) {
 				end = length;
+			}
+
+			if (start > end) {
+				start = length;
 			}
 
 			docs = docs.subList(start, end);
@@ -1690,9 +1695,29 @@ public abstract class BaseIndexer implements Indexer {
 		_stagingAware = stagingAware;
 	}
 
+	private boolean _isInTrashExplicitly(TrashedModel trashedModel)
+		throws SystemException {
+
+		if (!trashedModel.isInTrash()) {
+			return false;
+		}
+
+		ClassedModel classedModel = (ClassedModel)trashedModel;
+
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(
+			classedModel.getModelClassName(),
+			trashedModel.getTrashEntryClassPK());
+
+		if (trashEntry != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 
-	private Document _document;
+	private Document _document = new DocumentImpl();
 	private boolean _filterSearch;
 	private boolean _indexerEnabled = true;
 	private IndexerPostProcessor[] _indexerPostProcessors =

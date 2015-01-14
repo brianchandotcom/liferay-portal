@@ -187,6 +187,35 @@ public class UserImpl extends UserBaseImpl {
 		return emailAddress;
 	}
 
+	/**
+	 * Returns the user's display URL, discounting the URL of the user's default
+	 * intranet site home page.
+	 *
+	 * <p>
+	 * The logic for the display URL to return is as follows:
+	 * </p>
+	 *
+	 * <ol>
+	 * <li>
+	 * If the user is the guest user, return an empty string.
+	 * </li>
+	 * <li>
+	 * Else, if a friendly URL is available for the user's profile, return that
+	 * friendly URL.
+	 * </li>
+	 * <li>
+	 * Otherwise, return the URL of the user's default extranet site home page.
+	 * </li>
+	 * </ol>
+	 *
+	 * @param      portalURL the portal's URL
+	 * @param      mainPath the main path
+	 * @return     the user's display URL
+	 * @throws     PortalException if a portal exception occurred
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
+	 */
+	@Deprecated
 	@Override
 	public String getDisplayURL(String portalURL, String mainPath)
 		throws PortalException, SystemException {
@@ -194,6 +223,41 @@ public class UserImpl extends UserBaseImpl {
 		return getDisplayURL(portalURL, mainPath, false);
 	}
 
+	/**
+	 * Returns the user's display URL.
+	 *
+	 * <p>
+	 * The logic for the display URL to return is as follows:
+	 * </p>
+	 *
+	 * <ol>
+	 * <li>
+	 * If the user is the guest user, return an empty string.
+	 * </li>
+	 * <li>
+	 * Else, if a friendly URL is available for the user's profile, return that
+	 * friendly URL.
+	 * </li>
+	 * <li>
+	 * Else, if <code>privateLayout</code> is <code>true</code>, return the URL
+	 * of the user's default intranet site home page.
+	 * </li>
+	 * <li>
+	 * Otherwise, return the URL of the user's default extranet site home page.
+	 * </li>
+	 * </ol>
+	 *
+	 * @param      portalURL the portal's URL
+	 * @param      mainPath the main path
+	 * @param      privateLayout whether to use the URL of the user's default
+	 *             intranet(versus extranet)  site home page, if no friendly URL
+	 *             is available for the user's profile
+	 * @return     the user's display URL
+	 * @throws     PortalException if a portal exception occurred
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
+	 */
+	@Deprecated
 	@Override
 	public String getDisplayURL(
 			String portalURL, String mainPath, boolean privateLayout)
@@ -235,35 +299,126 @@ public class UserImpl extends UserBaseImpl {
 		return StringPool.BLANK;
 	}
 
+	/**
+	 * Returns the user's display URL based on the theme display, discounting
+	 * the URL of the user's default intranet site home page.
+	 *
+	 * <p>
+	 * The logic for the display URL to return is as follows:
+	 * </p>
+	 *
+	 * <ol>
+	 * <li>
+	 * If the user is the guest user, return an empty string.
+	 * </li>
+	 * <li>
+	 * Else, if a friendly URL is available for the user's profile, return that
+	 * friendly URL.
+	 * </li>
+	 * <li>
+	 * Otherwise, return the URL of the user's default extranet site home page.
+	 * </li>
+	 * </ol>
+	 *
+	 * @param  themeDisplay the theme display
+	 * @return the user's display URL
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public String getDisplayURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
-		return getDisplayURL(
-			themeDisplay.getPortalURL(), themeDisplay.getPathMain(), false);
+		return getDisplayURL(themeDisplay, false);
 	}
 
+	/**
+	 * Returns the user's display URL based on the theme display.
+	 *
+	 * <p>
+	 * The logic for the display URL to return is as follows:
+	 * </p>
+	 *
+	 * <ol>
+	 * <li>
+	 * If the user is the guest user, return an empty string.
+	 * </li>
+	 * <li>
+	 * Else, if a friendly URL is available for the user's profile, return that
+	 * friendly URL.
+	 * </li>
+	 * <li>
+	 * Else, if <code>privateLayout</code> is <code>true</code>, return the URL
+	 * of the user's default intranet site home page.
+	 * </li>
+	 * <li>
+	 * Otherwise, return the URL of the user's default extranet site home page.
+	 * </li>
+	 * </ol>
+	 *
+	 * @param  themeDisplay the theme display
+	 * @param  privateLayout whether to use the URL of the user's default
+	 *         intranet (versus extranet) site home page, if no friendly URL is
+	 *         available for the user's profile
+	 * @return the user's display URL
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public String getDisplayURL(
 			ThemeDisplay themeDisplay, boolean privateLayout)
 		throws PortalException, SystemException {
 
-		return getDisplayURL(
-			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-			privateLayout);
+		if (isDefaultUser()) {
+			return StringPool.BLANK;
+		}
+
+		String portalURL = themeDisplay.getPortalURL();
+
+		String profileFriendlyURL = getProfileFriendlyURL();
+
+		if (Validator.isNotNull(profileFriendlyURL)) {
+			return PortalUtil.addPreservedParameters(
+				themeDisplay,
+				portalURL.concat(
+					PortalUtil.getPathContext()).concat(profileFriendlyURL));
+		}
+
+		Group group = getGroup();
+
+		return PortalUtil.getDisplayURL(group, themeDisplay, privateLayout);
 	}
 
+	/**
+	 * Returns the user's email addresses.
+	 *
+	 * @return the user's email addresses
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public List<EmailAddress> getEmailAddresses() throws SystemException {
 		return EmailAddressLocalServiceUtil.getEmailAddresses(
 			getCompanyId(), Contact.class.getName(), getContactId());
 	}
 
+	/**
+	 * Returns <code>true</code> if the user is female.
+	 *
+	 * @return <code>true</code> if the user is female; <code>false</code>
+	 *         otherwise
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public boolean getFemale() throws PortalException, SystemException {
 		return !getMale();
 	}
 
+	/**
+	 * Returns the user's full name.
+	 *
+	 * @return the user's full name
+	 */
 	@AutoEscape
 	@Override
 	public String getFullName() {
@@ -331,6 +486,14 @@ public class UserImpl extends UserBaseImpl {
 		return login;
 	}
 
+	/**
+	 * Returns <code>true</code> if the user is male.
+	 *
+	 * @return <code>true</code> if the user is male; <code>false</code>
+	 *         otherwise
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public boolean getMale() throws PortalException, SystemException {
 		return getContact().getMale();
@@ -497,7 +660,8 @@ public class UserImpl extends UserBaseImpl {
 		throws PortalException, SystemException {
 
 		return UserConstants.getPortraitURL(
-			themeDisplay.getPathImage(), isMale(), getPortraitId());
+			themeDisplay.getPathImage(), isMale(), getPortraitId(),
+			getUserUuid());
 	}
 
 	@Override

@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Writer;
 
 /**
@@ -177,6 +180,16 @@ public class JSONArrayImpl implements JSONArray {
 	}
 
 	@Override
+	public void readExternal(ObjectInput objectInput) throws IOException {
+		try {
+			_jsonArray = new org.json.JSONArray(objectInput.readUTF());
+		}
+		catch (Exception e) {
+			throw new IOException(e);
+		}
+	}
+
+	@Override
 	public String toString() {
 		return _jsonArray.toString();
 	}
@@ -199,6 +212,11 @@ public class JSONArrayImpl implements JSONArray {
 		catch (Exception e) {
 			throw new JSONException(e);
 		}
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeUTF(toString());
 	}
 
 	private static final String _NULL_JSON = "[]";

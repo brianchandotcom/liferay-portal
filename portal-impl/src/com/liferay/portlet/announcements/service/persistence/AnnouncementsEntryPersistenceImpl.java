@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -38,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -4995,6 +5000,31 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			String uuid = PortalUUIDUtil.generate();
 
 			announcementsEntry.setUuid(uuid);
+		}
+
+		long userId = GetterUtil.getLong(PrincipalThreadLocal.getName());
+
+		if (userId > 0) {
+			long companyId = announcementsEntry.getCompanyId();
+
+			long groupId = 0;
+
+			long entryId = 0;
+
+			if (!isNew) {
+				entryId = announcementsEntry.getPrimaryKey();
+			}
+
+			try {
+				announcementsEntry.setContent(SanitizerUtil.sanitize(
+						companyId, groupId, userId,
+						com.liferay.portlet.announcements.model.AnnouncementsEntry.class.getName(),
+						entryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+						announcementsEntry.getContent(), null));
+			}
+			catch (SanitizerException se) {
+				throw new SystemException(se);
+			}
 		}
 
 		Session session = null;

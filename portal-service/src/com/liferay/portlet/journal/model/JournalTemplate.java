@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
@@ -33,6 +34,8 @@ import java.util.Map;
 public interface JournalTemplate
 	extends Cloneable, Comparable<JournalTemplate>, Serializable {
 
+	public Object clone();
+
 	@Override
 	public boolean equals(Object obj);
 
@@ -51,6 +54,10 @@ public interface JournalTemplate
 	public String getDescription(String languageId);
 
 	public String getDescription(String languageId, boolean useDefault);
+
+	public String getDescriptionCurrentLanguageId();
+
+	public String getDescriptionCurrentValue();
 
 	public Map<Locale, String> getDescriptionMap();
 
@@ -79,6 +86,10 @@ public interface JournalTemplate
 	public String getName(String languageId);
 
 	public String getName(String languageId, boolean useDefault);
+
+	public String getNameCurrentLanguageId();
+
+	public String getNameCurrentValue();
 
 	public Map<Locale, String> getNameMap();
 
@@ -119,6 +130,9 @@ public interface JournalTemplate
 
 	public boolean isSmallImage();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
+
 	public void setCacheable(boolean cacheable);
 
 	public void setCompanyId(long companyId);
@@ -131,6 +145,8 @@ public interface JournalTemplate
 
 	public void setDescription(
 		String description, Locale locale, Locale defaultLocale);
+
+	public void setDescriptionCurrentLanguageId(String languageId);
 
 	public void setDescriptionMap(Map<Locale, String> descriptionMap);
 
@@ -158,6 +174,8 @@ public interface JournalTemplate
 	public void setName(String name, Locale locale);
 
 	public void setName(String name, Locale locale, Locale defaultLocale);
+
+	public void setNameCurrentLanguageId(String languageId);
 
 	public void setNameMap(Map<Locale, String> nameMap);
 

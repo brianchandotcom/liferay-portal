@@ -2,16 +2,7 @@
 	<command name="addCP">
 		<execute action="CPBookmarks#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
 
-		<if>
-			<isset var="bookmarkName" />
-			<then>
-				<execute action="CPBookmarksAddbookmark#type" locator-key1="NAME_FIELD" value1="${bookmarkName}" />
-			</then>
-			<else>
-				<var name="bookmarkName" value="${bookmarkURL}" />
-			</else>
-		</if>
-
+		<execute action="CPBookmarksAddbookmark#type" locator-key1="NAME_FIELD" value1="${bookmarkName}" />
 		<execute action="CPBookmarksAddbookmark#type" locator-key1="URL_FIELD" value1="${bookmarkURL}" />
 
 		<if>
@@ -29,41 +20,6 @@
 
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
-	</command>
-
-	<command name="addIncorrectURLCP">
-		<execute action="CPBookmarks#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
-
-		<execute action="CPBookmarksAddbookmark#type" locator-key1="NAME_FIELD" value1="${bookmarkName}" />
-		<execute action="CPBookmarksAddbookmark#type" locator-key1="URL_FIELD" value1="${bookmarkURL}" />
-		<execute action="CPBookmarksAddbookmark#type" locator-key1="DESCRIPTION_FIELD" value1="${bookmarkDescription}" />
-		<execute action="CPBookmarksAddbookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="URL" />
-		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="(Required)" />
-		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="Please enter a valid URL." />
-	</command>
-
-	<command name="addNullCP">
-		<execute action="CPBookmarks#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
-
-		<if>
-			<isset var="bookmarkName" />
-			<then>
-				<execute action="CPBookmarksAddbookmark#type" locator-key1="NAME_FIELD" value1="${bookmarkName}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="bookmarkDescription" />
-			<then>
-				<execute action="CPBookmarksAddbookmark#type" locator-key1="DESCRIPTION_FIELD" value1="${bookmarkDescription}" />
-			</then>
-		</if>
-
-		<execute action="CPBookmarksAddbookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="URL" />
-		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="(Required)" />
-		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 
 	<command name="addToSubfolderCP">
@@ -88,32 +44,6 @@
 
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
-	</command>
-
-	<command name="editCP">
-		<var name="key_bookmarkName" value="${bookmarkName}" />
-
-		<execute action="CPBookmarks#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
-		<execute action="CPBookmarks#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_EDIT" value1="Edit" />
-
-		<execute action="CPBookmarksEditbookmark#type" locator-key1="NAME_FIELD" value1="${editBookmarkName}" />
-		<execute action="CPBookmarksEditbookmark#type" locator-key1="URL_FIELD" value1="${editBookmarkURL}" />
-
-		<if>
-			<isset var="bookmarkDescription" />
-			<then>
-				<execute action="CPBookmarksEditbookmark#type" locator-key1="DESCRIPTION_FIELD" value1="${editBookmarkDescription}" />
-			</then>
-		</if>
-
-		<execute action="CPBookmarksEditbookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="CPBookmarks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<var name="key_bookmarkName" value="${editBookmarkName}" />
-
-		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${editBookmarkName}" />
-		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${editBookmarkURL}" />
 	</command>
 
 	<command name="moveToHomeCP">
@@ -166,20 +96,6 @@
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 	</command>
 
-	<command name="moveToRecycleBinCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
-
-		<var name="key_bookmarkName" value="${bookmarkName}" />
-
-		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
-		<execute action="CPBookmarks#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
-		<execute action="CPBookmarks#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="CPBookmarks#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
-		<execute action="CPBookmarks#assertTextNotPresent" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
-	</command>
-
 	<command name="searchCP">
 		<execute action="CPBookmarks#type" locator-key1="SEARCH_FIELD" value1="${bookmarkName}" />
 		<execute action="CPBookmarks#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
@@ -187,16 +103,6 @@
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
 		<execute action="CPBookmarksSearch#assertTextEquals" locator-key1="ENTRY_TABLE_BOOKMARK_ENTRY" value1="${bookmarkName}" />
-	</command>
-
-	<command name="searchNullCP">
-		<execute action="CPBookmarks#type" locator-key1="SEARCH_FIELD" value1="${nullBookmarkName}" />
-		<execute action="CPBookmarks#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-
-		<var name="key_bookmarkName" value="${nullBookmarkName}" />
-
-		<execute action="CPBookmarksSearch#assertTextNotPresent" locator-key1="ENTRY_TABLE_BOOKMARK_ENTRY" value1="${bookmarkName}" />
-		<execute action="CPBookmarksSearch#assertTextNotPresent" locator-key1="ENTRY_TABLE_BOOKMARK_ENTRY" value1="${bookmar2Name}" />
 	</command>
 
 	<command name="tearDownCP">

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -121,7 +122,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Provides the local service for accessing, adding, checking in/out, deleting,
@@ -154,7 +154,7 @@ public class DLFileEntryLocalServiceImpl
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(title)) {
-			if (size == 0) {
+			if (Validator.isNull(sourceFileName)) {
 				throw new FileNameException();
 			}
 			else {
@@ -207,19 +207,17 @@ public class DLFileEntryLocalServiceImpl
 				repository.getDlFolderId());
 		}
 
+		long classNameId = 0;
+		long classPK = 0;
+
 		if ((repositoryDLFolder != null) && repositoryDLFolder.isHidden()) {
-			long classNameId = PortalUtil.getClassNameId(
+			classNameId = PortalUtil.getClassNameId(
 				(String)serviceContext.getAttribute("className"));
-			long classPK = ParamUtil.getLong(serviceContext, "classPK");
-
-			if (Validator.isNotNull(classNameId) &&
-				Validator.isNotNull(classPK)) {
-
-				dlFileEntry.setClassNameId(classNameId);
-				dlFileEntry.setClassPK(classPK);
-			}
+			classPK = ParamUtil.getLong(serviceContext, "classPK");
 		}
 
+		dlFileEntry.setClassNameId(classNameId);
+		dlFileEntry.setClassPK(classPK);
 		dlFileEntry.setRepositoryId(repositoryId);
 		dlFileEntry.setFolderId(folderId);
 		dlFileEntry.setTreePath(dlFileEntry.buildTreePath());
@@ -692,7 +690,9 @@ public class DLFileEntryLocalServiceImpl
 				groupId, folderId, start, end);
 
 			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				if (includeTrashedEntries || !dlFileEntry.isInTrash()) {
+				if (includeTrashedEntries ||
+					!dlFileEntry.isInTrashExplicitly()) {
+
 					dlAppHelperLocalService.deleteFileEntry(
 						new LiferayFileEntry(dlFileEntry));
 
@@ -884,6 +884,10 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		if (latestVersion) {
+			dlAppHelperLocalService.registerDLSyncEventCallback(
+				DLSyncConstants.EVENT_UPDATE,
+				new LiferayFileEntry(dlFileEntry));
+
 			return dlFileEntry;
 		}
 
@@ -1939,12 +1943,6 @@ public class DLFileEntryLocalServiceImpl
 			return false;
 		}
 
-		if (lastDLFileVersion.getFolderId() !=
-				latestDLFileVersion.getFolderId()) {
-
-			return false;
-		}
-
 		if (!Validator.equals(
 				lastDLFileVersion.getTitle(), latestDLFileVersion.getTitle())) {
 
@@ -1999,67 +1997,24 @@ public class DLFileEntryLocalServiceImpl
 			Fields latestFields = StorageEngineUtil.getFields(
 				latestFileEntryMetadata.getDDMStorageId());
 
-			Set<String> lastFieldNames = lastFields.getNames();
-			Set<String> latestFieldNames = latestFields.getNames();
-
-			if (lastFieldNames.size() != latestFieldNames.size()) {
+			if (!Validator.equals(lastFields, latestFields)) {
 				return false;
-			}
-
-			for (String fieldName : lastFieldNames) {
-				com.liferay.portlet.dynamicdatamapping.storage.Field
-					lastField = lastFields.get(fieldName);
-				com.liferay.portlet.dynamicdatamapping.storage.Field
-					latestField = latestFields.get(fieldName);
-
-				if ((latestFieldNames == null) ||
-					(!lastField.equals(latestField) &&
-					 !lastField.isPrivate())) {
-
-					return false;
-				}
 			}
 		}
 
 		// Expando
 
-		ExpandoTable expandoTable = null;
+		ExpandoBridge lastExpandoBridge = lastDLFileVersion.getExpandoBridge();
+		ExpandoBridge latestExpandoBridge =
+			latestDLFileVersion.getExpandoBridge();
 
-		try {
-			expandoTable = expandoTableLocalService.getDefaultTable(
-				lastDLFileVersion.getCompanyId(), DLFileEntry.class.getName());
-		}
-		catch (NoSuchTableException nste) {
-		}
+		Map<String, Serializable> lastAttributes =
+			lastExpandoBridge.getAttributes();
+		Map<String, Serializable> latestAttributes =
+			latestExpandoBridge.getAttributes();
 
-		if (expandoTable != null) {
-			Date lastModifiedDate = null;
-
-			try {
-				ExpandoRow lastExpandoRow = expandoRowLocalService.getRow(
-					expandoTable.getTableId(),
-					lastDLFileVersion.getPrimaryKey());
-
-				lastModifiedDate = lastExpandoRow.getModifiedDate();
-			}
-			catch (NoSuchRowException nsre) {
-			}
-
-			Date latestModifiedDate = null;
-
-			try {
-				ExpandoRow latestExpandoRow = expandoRowLocalService.getRow(
-					expandoTable.getTableId(),
-					latestDLFileVersion.getPrimaryKey());
-
-				latestModifiedDate = latestExpandoRow.getModifiedDate();
-			}
-			catch (NoSuchRowException nsre) {
-			}
-
-			if (!Validator.equals(lastModifiedDate, latestModifiedDate)) {
-				return false;
-			}
+		if (!Validator.equals(lastAttributes, latestAttributes)) {
+			return false;
 		}
 
 		// Size
@@ -2468,7 +2423,8 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileVersion;
 	}
 
-	protected void validateFile(
+	@Override
+	public void validateFile(
 			long groupId, long folderId, long fileEntryId, String title,
 			String extension)
 		throws PortalException, SystemException {
@@ -2489,19 +2445,27 @@ public class DLFileEntryLocalServiceImpl
 			throw new DuplicateFileException(title);
 		}
 
+		if (Validator.isNull(extension)) {
+			return;
+		}
+
 		String periodAndExtension = StringPool.PERIOD.concat(extension);
 
-		if (!title.endsWith(periodAndExtension)) {
+		if (title.endsWith(periodAndExtension)) {
+			title = FileUtil.stripExtension(title);
+		}
+		else {
 			title += periodAndExtension;
+		}
 
-			dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
-				groupId, folderId, title);
+		dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
+			groupId, folderId, title);
 
-			if ((dlFileEntry != null) &&
-				(dlFileEntry.getFileEntryId() != fileEntryId)) {
+		if ((dlFileEntry != null) &&
+			(dlFileEntry.getFileEntryId() != fileEntryId) &&
+			extension.equals(dlFileEntry.getExtension())) {
 
-				throw new DuplicateFileException(title);
-			}
+			throw new DuplicateFileException(title);
 		}
 	}
 

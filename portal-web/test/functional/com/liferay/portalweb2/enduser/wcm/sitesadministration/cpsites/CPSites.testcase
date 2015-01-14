@@ -181,6 +181,7 @@
 	<command name="EditSite" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="siteNameEdit" value="Site Name Edit" />
+		<var name="siteScopeName" value="Site Name" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -191,7 +192,7 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="siteScopeName" value="${siteName}" />
+			<var name="siteName" value="${siteScopeName}" />
 			<var name="portletName" value="Site Settings" />
 		</execute>
 
@@ -309,8 +310,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${childSiteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Child" />
+			<var name="pageTypeURL" value="${childSiteName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -323,8 +324,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${childSiteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Child" />
+			<var name="pageTypeURL" value="${childSiteName}" />
 		</execute>
 
 		<execute macro="SitesDirectory#viewDescriptivePG">
@@ -437,8 +438,8 @@
 
 	    <execute macro="Page#gotoPG">
 	      	<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${childSiteName1}" />
-			<var name="siteURL" value="true" />
+	      	<var name="pageType" value="Child1" />
+	      	<var name="pageTypeURL" value="${childSiteName1}" />
 	    </execute>
 
 	    <execute macro="Portlet#addPG">
@@ -451,8 +452,8 @@
 
 		<execute macro="Page#gotoPG">
 	      	<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${childSiteName1}" />
-			<var name="siteURL" value="true" />
+	      	<var name="pageType" value="Child1" />
+	      	<var name="pageTypeURL" value="${childSiteName1}" />
 	    </execute>
 
 	    <execute macro="SitesDirectory#viewDescriptivePG">
@@ -465,8 +466,8 @@
 
 		<execute macro="Page#gotoPG">
 	      	<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${childSiteName1}" />
-			<var name="siteURL" value="true" />
+	      	<var name="pageType" value="Child1" />
+	      	<var name="pageTypeURL" value="${childSiteName1}" />
 	    </execute>
 
 	    <execute macro="SitesDirectory#viewDescriptivePG">
@@ -479,8 +480,8 @@
 
 		<execute macro="Page#gotoPG">
 	      	<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${childSiteName1}" />
-			<var name="siteURL" value="true" />
+	      	<var name="pageType" value="Child1" />
+	      	<var name="pageTypeURL" value="${childSiteName1}" />
 	    </execute>
 
 	    <execute macro="SitesDirectory#viewDescriptivePG">
@@ -497,8 +498,8 @@
 
 		<execute macro="Page#gotoPG">
 	      	<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${childSiteName1}" />
-			<var name="siteURL" value="true" />
+	      	<var name="pageType" value="Child1" />
+	      	<var name="pageTypeURL" value="${childSiteName1}" />
 	    </execute>
 
 	    <execute macro="SitesDirectory#viewDescriptivePG">
@@ -513,8 +514,8 @@
 
 		<execute macro="Page#gotoPG">
 	      	<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${childChildSiteName1}" />
-			<var name="siteURL" value="true" />
+	      	<var name="pageType" value="Child Child" />
+	      	<var name="pageTypeURL" value="${childChildSiteName1}" />
 	    </execute>
 
 	    <execute macro="Portlet#addPG">
@@ -527,8 +528,8 @@
 
 		<execute macro="Page#gotoPG">
 	      	<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${childChildSiteName1}" />
-			<var name="siteURL" value="true" />
+	      	<var name="pageType" value="Child Child" />
+	      	<var name="pageTypeURL" value="${childChildSiteName1}" />
 	    </execute>
 
 	    <execute macro="SitesDirectory#viewDescriptivePG">
@@ -541,8 +542,8 @@
 
 		<execute macro="Page#gotoPG">
 	      	<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${childChildSiteName1}" />
-			<var name="siteURL" value="true" />
+	      	<var name="pageType" value="Child Child" />
+	      	<var name="pageTypeURL" value="${childChildSiteName1}" />
 	    </execute>
 
 	    <execute macro="SitesDirectory#viewDescriptivePG">
@@ -559,8 +560,8 @@
 
 		<execute macro="Page#gotoPG">
 	      	<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${childChildSiteName1}" />
-			<var name="siteURL" value="true" />
+	      	<var name="pageType" value="Child Child" />
+	      	<var name="pageTypeURL" value="${childChildSiteName1}" />
 	    </execute>
 
 	    <execute macro="SitesDirectory#viewDescriptivePG">
@@ -577,8 +578,8 @@
 
 		<execute macro="Page#gotoPG">
 	      	<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${childChildSiteName1}" />
-			<var name="siteURL" value="true" />
+	      	<var name="pageType" value="Child Child" />
+	      	<var name="pageTypeURL" value="${childChildSiteName1}" />
 	    </execute>
 
 	    <execute action="PGSitesdirectory#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />

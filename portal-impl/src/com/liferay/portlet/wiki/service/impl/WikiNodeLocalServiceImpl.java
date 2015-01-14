@@ -240,18 +240,11 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 			// Indexer
 
-			Indexer wikiNodeIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				WikiNode.class);
 
-			wikiNodeIndexer.delete(node);
+			indexer.delete(node);
 		}
-
-		// Indexer
-
-		Indexer wikiPageIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			WikiPage.class);
-
-		wikiPageIndexer.delete(node);
 	}
 
 	@Override
@@ -655,7 +648,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	protected void restoreDependentFromTrash(long nodeId, long trashEntryId)
 		throws PortalException, SystemException {
 
-		List<WikiPage> pages = wikiPagePersistence.findByNodeId(nodeId);
+		List<WikiPage> pages = wikiPagePersistence.findByN_H(nodeId, true);
 
 		for (WikiPage page : pages) {
 
@@ -737,7 +730,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		WikiNode node = wikiNodePersistence.fetchByG_N(groupId, name);
 
 		if ((node != null) && (node.getNodeId() != nodeId)) {
-			throw new DuplicateNodeNameException();
+			throw new DuplicateNodeNameException("{nodeId=" + nodeId + "}");
 		}
 	}
 

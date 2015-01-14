@@ -18,7 +18,7 @@
 
 // Article id
 
-row.addText(curArticle.getArticleId());
+row.addText(HtmlUtil.escape(curArticle.getArticleId()));
 
 // Title
 

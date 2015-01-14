@@ -1,9 +1,0 @@
-<definition>
-	<command name="name">
-		<if>
-			<then>
-				<var name="key_siteScopeName" value="\\$\\{siteScopeName\\}" />
-			</then>
-		</if>
-	</command>
-</definition>

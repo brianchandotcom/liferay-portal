@@ -40,6 +40,10 @@ public interface PortletDataContextFactory {
 		throws PortletDataException;
 
 	public PortletDataContext createPreparePortletDataContext(
+			long companyId, long groupId, Date startDate, Date endDate)
+		throws PortletDataException;
+
+	public PortletDataContext createPreparePortletDataContext(
 			ThemeDisplay themeDisplay, Date startDate, Date endDate)
 		throws PortletDataException;
 

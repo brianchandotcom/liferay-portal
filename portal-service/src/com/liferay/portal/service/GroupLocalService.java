@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Group addGroup(
 		com.liferay.portal.model.Group group)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -72,6 +74,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a group with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Group deleteGroup(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -84,6 +87,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Group deleteGroup(
 		com.liferay.portal.model.Group group)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -251,6 +255,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Group updateGroup(
 		com.liferay.portal.model.Group group)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -861,6 +866,7 @@ public interface GroupLocalService extends BaseLocalService,
 	the group
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkCompanyGroup(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -874,6 +880,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a new system group could not be created
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkSystemGroups(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -910,6 +917,7 @@ public interface GroupLocalService extends BaseLocalService,
 	<code>null</code> if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group fetchGroup(long companyId,
 		java.lang.String name)
@@ -989,6 +997,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group getGroup(long companyId,
 		java.lang.String name)
@@ -2133,6 +2142,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by name
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> search(
 		long companyId, java.lang.String keywords,
@@ -2282,6 +2292,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the number of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long parentGroupId,
 		java.lang.String keywords,
@@ -2310,6 +2321,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the number of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long parentGroupId,
 		java.lang.String name, java.lang.String description,
@@ -2338,6 +2350,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the number of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		long parentGroupId, java.lang.String keywords,
@@ -2368,6 +2381,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the number of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		long parentGroupId, java.lang.String name,
@@ -2395,6 +2409,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the number of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		java.lang.String keywords,
@@ -2423,6 +2438,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the number of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		java.lang.String name, java.lang.String description,
@@ -2447,6 +2463,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the number of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params)
@@ -2473,6 +2490,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the number of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String name,
 		java.lang.String description,

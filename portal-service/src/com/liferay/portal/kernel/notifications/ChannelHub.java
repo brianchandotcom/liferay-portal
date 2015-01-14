@@ -110,6 +110,10 @@ public interface ChannelHub {
 			long userId, Collection<NotificationEvent> notificationEvents)
 		throws ChannelException;
 
+	public void storeNotificationEvent(
+			long userId, NotificationEvent notificationEvent)
+		throws ChannelException;
+
 	public void unregisterChannelListener(
 			long userId, ChannelListener channelListener)
 		throws ChannelException;

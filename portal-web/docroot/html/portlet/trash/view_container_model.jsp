@@ -45,7 +45,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerM
 %>
 
 <div class="alert alert-block">
-	<liferay-ui:message arguments="<%= new Object[] {trashHandler.getContainerModelName(), trashRenderer.getTitle(locale)} %>" key="the-original-x-does-not-exist-anymore" />
+	<liferay-ui:message arguments="<%= new Object[] {trashHandler.getContainerModelName(), HtmlUtil.escape(trashRenderer.getTitle(locale))} %>" key="the-original-x-does-not-exist-anymore" />
 </div>
 
 <aui:form method="post" name="selectFolderFm">

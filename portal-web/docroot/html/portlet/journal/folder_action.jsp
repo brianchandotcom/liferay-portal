@@ -45,7 +45,7 @@ if (folder != null) {
 }
 else {
 	modelResource= "com.liferay.portlet.journal";
-	modelResourceDescription = HtmlUtil.escape(themeDisplay.getScopeGroupName());
+	modelResourceDescription = themeDisplay.getScopeGroupName();
 	resourcePrimKey= String.valueOf(scopeGroupId);
 
 	hasPermissionsPermission = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
@@ -153,7 +153,7 @@ else {
 		<c:if test="<%= hasPermissionsPermission %>">
 			<liferay-security:permissionsURL
 				modelResource="<%= modelResource %>"
-				modelResourceDescription="<%= modelResourceDescription %>"
+				modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
 				resourcePrimKey="<%= resourcePrimKey %>"
 				var="permissionsURL"
 				windowState="<%= LiferayWindowState.POP_UP.toString() %>"

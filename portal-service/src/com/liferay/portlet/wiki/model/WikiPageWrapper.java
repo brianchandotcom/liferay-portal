@@ -1114,6 +1114,12 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPage.isInTrashExplicitly();
+	}
+
+	@Override
 	public void setAttachmentsFolderId(long attachmentsFolderId) {
 		_wikiPage.setAttachmentsFolderId(attachmentsFolderId);
 	}

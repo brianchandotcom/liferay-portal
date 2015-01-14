@@ -219,8 +219,7 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 				{
 					dialog: {
 						constrain: true,
-						modal: true,
-						width: 900
+						modal: true
 					},
 					eventName: '<%= eventName %>',
 					id: '<%= eventName %>' + event.currentTarget.attr('id'),

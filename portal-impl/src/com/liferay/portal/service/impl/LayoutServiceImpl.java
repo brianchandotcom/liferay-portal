@@ -848,12 +848,19 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public List<Layout> getLayouts(
 			long groupId, boolean privateLayout, long parentLayoutId,
 			boolean incomplete, int start, int end)
-		throws PortalException, SystemException {
+		throws SystemException {
 
-		List<Layout> layouts = layoutLocalService.getLayouts(
-			groupId, privateLayout, parentLayoutId, incomplete, start, end);
+		return layoutPersistence.filterFindByG_P_P(
+			groupId, privateLayout, parentLayoutId, start, end);
+	}
 
-		return filterLayouts(layouts);
+	@Override
+	public int getLayoutsCount(
+			long groupId, boolean privateLayout, long parentLayoutId)
+		throws SystemException {
+
+		return layoutPersistence.filterCountByG_P_P(
+			groupId, privateLayout, parentLayoutId);
 	}
 
 	@Override
@@ -1632,6 +1639,15 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getPermissionChecker(), plid, ActionKeys.UPDATE);
 
 		return layoutLocalService.updateParentLayoutId(plid, parentPlid);
+	}
+
+	@Override
+	public Layout updateParentLayoutIdAndPriority(
+			long plid, long parentPlid, int priority)
+		throws PortalException, SystemException {
+
+		return layoutLocalService.updateParentLayoutIdAndPriority(
+			plid, parentPlid, priority);
 	}
 
 	/**

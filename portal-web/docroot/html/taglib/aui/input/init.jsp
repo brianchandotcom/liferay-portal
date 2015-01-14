@@ -56,6 +56,7 @@ java.lang.String inlineLabel = GetterUtil.getString((java.lang.String)request.ge
 java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:label"));
 java.lang.String languageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:languageId"));
 boolean last = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:last")));
+boolean localized = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:localized")));
 java.lang.Number max = GetterUtil.getNumber(String.valueOf(request.getAttribute("aui:input:max")), null);
 java.lang.Class<?> model = (java.lang.Class<?>)request.getAttribute("aui:input:model");
 java.lang.Number min = GetterUtil.getNumber(String.valueOf(request.getAttribute("aui:input:min")), null);

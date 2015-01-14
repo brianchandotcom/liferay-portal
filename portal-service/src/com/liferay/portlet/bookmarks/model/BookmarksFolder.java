@@ -48,5 +48,8 @@ public interface BookmarksFolder extends BookmarksFolderModel, PermissionedModel
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public boolean isRoot();
 }

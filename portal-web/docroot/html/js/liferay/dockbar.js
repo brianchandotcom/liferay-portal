@@ -178,11 +178,15 @@ AUI.add(
 
 					var navAccountControls = A.one('#' + namespace + 'navAccountControls');
 
-					navAccountControls.toggleClass('nav-account-controls-notice', force);
+					if (navAccountControls) {
+						navAccountControls.toggleClass('nav-account-controls-notice', force);
+					}
 
 					var navAddControls = A.one('#' + namespace + 'navAddControls');
 
-					navAddControls.toggleClass('nav-add-controls-notice', force);
+					if (navAddControls) {
+						navAddControls.toggleClass('nav-add-controls-notice', force);
+					}
 				}
 			},
 

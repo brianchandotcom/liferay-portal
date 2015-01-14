@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.model.Group;
@@ -891,6 +892,33 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		return groupLocalService.hasUserGroup(userId, groupId);
+	}
+
+	@Override
+	public List<Group> search(
+			long companyId, long[] classNameIds, String keywords,
+			LinkedHashMap<String, Object> params, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		List<Group> groups = groupLocalService.search(
+			companyId, classNameIds, keywords, params, start, end, obc);
+
+		return filterGroups(groups);
+	}
+
+	@Override
+	public List<Group> search(
+			long companyId, long[] classNameIds, String name,
+			String description, LinkedHashMap<String, Object> params,
+			boolean andOperator, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		List<Group> groups = groupLocalService.search(
+			companyId, classNameIds, name, description, params, andOperator,
+			start, end, obc);
+
+		return filterGroups(groups);
 	}
 
 	/**

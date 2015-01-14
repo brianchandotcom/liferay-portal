@@ -155,7 +155,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 				layout, referringPortletResource);
 
 		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
-			throw new PrincipalException();
+			return;
 		}
 
 		String selectionStyle = portletPreferences.getValue(
@@ -266,8 +266,14 @@ public class AssetPublisherImpl implements AssetPublisher {
 		for (String customUserAttributeName : customUserAttributeNames) {
 			ExpandoBridge userCustomAttributes = user.getExpandoBridge();
 
-			Serializable userCustomFieldValue =
-				userCustomAttributes.getAttribute(customUserAttributeName);
+			Serializable userCustomFieldValue = null;
+
+			try {
+				userCustomFieldValue = userCustomAttributes.getAttribute(
+					customUserAttributeName);
+			}
+			catch (Exception e) {
+			}
 
 			if (userCustomFieldValue == null) {
 				continue;
@@ -319,13 +325,50 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	@Override
+	public long[] getAssetCategoryIds(PortletPreferences portletPreferences)
+		throws Exception {
+
+		long[] assetCategoryIds = new long[0];
+
+		for (int i = 0; true; i++) {
+			String[] queryValues = portletPreferences.getValues(
+				"queryValues" + i, null);
+
+			if (ArrayUtil.isEmpty(queryValues)) {
+				break;
+			}
+
+			boolean queryContains = GetterUtil.getBoolean(
+				portletPreferences.getValue(
+					"queryContains" + i, StringPool.BLANK));
+			boolean queryAndOperator = GetterUtil.getBoolean(
+				portletPreferences.getValue(
+					"queryAndOperator" + i, StringPool.BLANK));
+			String queryName = portletPreferences.getValue(
+				"queryName" + i, StringPool.BLANK);
+
+			if (Validator.equals(queryName, "assetCategories") &&
+				queryContains && queryAndOperator) {
+
+				assetCategoryIds = GetterUtil.getLongValues(queryValues);
+			}
+		}
+
+		return assetCategoryIds;
+	}
+
+	@Override
 	public List<AssetEntry> getAssetEntries(
 			PortletPreferences portletPreferences, Layout layout,
 			long scopeGroupId, int max, boolean checkPermission)
 		throws PortalException, SystemException {
 
+		long[] groupIds = getGroupIds(portletPreferences, scopeGroupId, layout);
+
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			portletPreferences, new long[] {scopeGroupId});
+			portletPreferences, groupIds);
+
+		assetEntryQuery.setGroupIds(groupIds);
 
 		boolean anyAssetType = GetterUtil.getBoolean(
 			portletPreferences.getValue("anyAssetType", null), true);
@@ -357,10 +400,6 @@ public class AssetPublisherImpl implements AssetPublisher {
 			portletPreferences.getValue("excludeZeroViewCount", null));
 
 		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
-
-		long[] groupIds = getGroupIds(portletPreferences, scopeGroupId, layout);
-
-		assetEntryQuery.setGroupIds(groupIds);
 
 		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
 			portletPreferences.getValue("showOnlyLayoutAssets", null));
@@ -840,7 +879,15 @@ public class AssetPublisherImpl implements AssetPublisher {
 				return siteGroupId;
 			}
 
-			return GetterUtil.getLong(scopeIdSuffix);
+			long scopeGroupId = GetterUtil.getLong(scopeIdSuffix);
+
+			Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
+
+			if (scopeGroup == null) {
+				throw new PrincipalException();
+			}
+
+			return scopeGroupId;
 		}
 		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_UUID_PREFIX)) {
 			String layoutUuid = scopeId.substring(

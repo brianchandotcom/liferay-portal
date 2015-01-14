@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.bookmarks.util.comparator.EntryNameComparator;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -118,7 +118,7 @@ public class FolderAtomCollectionAdapter
 			AtomRequestContext atomRequestContext)
 		throws Exception {
 
-		long repositoryId = 0;
+		long repositoryId;
 
 		long parentFolderId = atomRequestContext.getLongParameter(
 			"parentFolderId");
@@ -141,7 +141,7 @@ public class FolderAtomCollectionAdapter
 
 		return DLAppServiceUtil.getFolders(
 			repositoryId, parentFolderId, atomPager.getStart(),
-			atomPager.getEnd() + 1, new EntryNameComparator());
+			atomPager.getEnd() + 1, new RepositoryModelNameComparator());
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class FolderAtomCollectionAdapter
 			AtomRequestContext atomRequestContext)
 		throws Exception {
 
-		long repositoryId = 0;
+		long repositoryId;
 
 		long parentFolderId = atomRequestContext.getLongParameter(
 			"parentFolderId");

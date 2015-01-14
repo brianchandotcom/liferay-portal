@@ -571,6 +571,21 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	public static int getLayoutsCount(long groupId, boolean privateLayout,
+		long parentLayoutId) throws RemoteException {
+		try {
+			int returnValue = LayoutServiceUtil.getLayoutsCount(groupId,
+					privateLayout, parentLayoutId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static java.lang.String[] getTempFileEntryNames(long groupId,
 		java.lang.String tempFolderName) throws RemoteException {
 		try {
@@ -1007,6 +1022,21 @@ public class LayoutServiceSoap {
 		try {
 			com.liferay.portal.model.Layout returnValue = LayoutServiceUtil.updateParentLayoutId(plid,
 					parentPlid);
+
+			return com.liferay.portal.model.LayoutSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.model.LayoutSoap updateParentLayoutIdAndPriority(
+		long plid, long parentPlid, int priority) throws RemoteException {
+		try {
+			com.liferay.portal.model.Layout returnValue = LayoutServiceUtil.updateParentLayoutIdAndPriority(plid,
+					parentPlid, priority);
 
 			return com.liferay.portal.model.LayoutSoap.toSoapModel(returnValue);
 		}

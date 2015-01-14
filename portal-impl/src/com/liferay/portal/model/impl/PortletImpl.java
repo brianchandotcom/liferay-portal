@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -299,6 +300,94 @@ public class PortletImpl extends PortletBaseImpl {
 		_portletApp = portletApp;
 	}
 
+	public PortletImpl(
+		String portletId, Portlet rootPortlet, PluginPackage pluginPackage,
+		PluginSetting pluginSetting, long companyId, String icon,
+		String virtualPath, String strutsPath, String parentStrutsPath,
+		String portletName, String displayName, String portletClass,
+		String configurationActionClass, List<String> indexerClasses,
+		String openSearchClass, List<SchedulerEntry> schedulerEntries,
+		String portletURLClass, String friendlyURLMapperClass,
+		String friendlyURLMapping, String friendlyURLRoutes,
+		String urlEncoderClass, String portletDataHandlerClass,
+		List<String> stagedModelDataHandlerClasses, String templateHandlerClass,
+		String portletLayoutListenerClass, String pollerProcessorClass,
+		String popMessageListenerClass,
+		List<String> socialActivityInterpreterClasses,
+		String socialRequestInterpreterClass,
+		String userNotificationDefinitions,
+		List<String> userNotificationHandlerClasses, String webDAVStorageToken,
+		String webDAVStorageClass, String xmlRpcMethodClass,
+		String controlPanelEntryCategory, double controlPanelEntryWeight,
+		String controlPanelClass, List<String> assetRendererFactoryClasses,
+		List<String> atomCollectionAdapterClasses,
+		List<String> customAttributesDisplayClasses, String ddmDisplayClass,
+		String permissionPropagatorClass, List<String> trashHandlerClasses,
+		List<String> workflowHandlerClasses, String defaultPreferences,
+		String preferencesValidator, boolean preferencesCompanyWide,
+		boolean preferencesUniquePerLayout, boolean preferencesOwnedByGroup,
+		boolean useDefaultTemplate, boolean showPortletAccessDenied,
+		boolean showPortletInactive, boolean actionURLRedirect,
+		boolean restoreCurrentView, boolean maximizeEdit, boolean maximizeHelp,
+		boolean popUpPrint, boolean layoutCacheable, boolean instanceable,
+		boolean remoteable, boolean scopeable, String userPrincipalStrategy,
+		boolean privateRequestAttributes, boolean privateSessionAttributes,
+		Set<String> autopropagatedParameters,
+		boolean requiresNamespacedParameters, int actionTimeout,
+		int renderTimeout, int renderWeight, boolean ajaxable,
+		List<String> headerPortalCss, List<String> headerPortletCss,
+		List<String> headerPortalJavaScript,
+		List<String> headerPortletJavaScript, List<String> footerPortalCss,
+		List<String> footerPortletCss, List<String> footerPortalJavaScript,
+		List<String> footerPortletJavaScript, String cssClassWrapper,
+		String facebookIntegration, boolean addDefaultResource, String roles,
+		Set<String> unlinkedRoles, Map<String, String> roleMappers,
+		boolean system, boolean active, boolean include,
+		Map<String, String> initParams, Integer expCache,
+		Map<String, Set<String>> portletModes,
+		Map<String, Set<String>> windowStates, Set<String> supportedLocales,
+		String resourceBundle, PortletInfo portletInfo,
+		Map<String, PortletFilter> portletFilters, Set<QName> processingEvents,
+		Set<QName> publishingEvents,
+		Set<PublicRenderParameter> publicRenderParameters,
+		PortletApp portletApp) {
+
+		this(
+			portletId, rootPortlet, pluginPackage, pluginSetting, companyId,
+			-1L, icon, virtualPath, strutsPath, parentStrutsPath, portletName,
+			displayName, portletClass, configurationActionClass, indexerClasses,
+			openSearchClass, schedulerEntries, portletURLClass,
+			friendlyURLMapperClass, friendlyURLMapping, friendlyURLRoutes,
+			urlEncoderClass, portletDataHandlerClass,
+			stagedModelDataHandlerClasses, templateHandlerClass,
+			portletLayoutListenerClass, pollerProcessorClass,
+			popMessageListenerClass, socialActivityInterpreterClasses,
+			socialRequestInterpreterClass, userNotificationDefinitions,
+			userNotificationHandlerClasses, webDAVStorageToken,
+			webDAVStorageClass, xmlRpcMethodClass, controlPanelEntryCategory,
+			controlPanelEntryWeight, controlPanelClass,
+			assetRendererFactoryClasses, atomCollectionAdapterClasses,
+			customAttributesDisplayClasses, ddmDisplayClass,
+			permissionPropagatorClass, trashHandlerClasses,
+			workflowHandlerClasses, defaultPreferences, preferencesValidator,
+			preferencesCompanyWide, preferencesUniquePerLayout,
+			preferencesOwnedByGroup, useDefaultTemplate,
+			showPortletAccessDenied, showPortletInactive, actionURLRedirect,
+			restoreCurrentView, maximizeEdit, maximizeHelp, popUpPrint,
+			layoutCacheable, instanceable, remoteable, scopeable,
+			userPrincipalStrategy, privateRequestAttributes,
+			privateSessionAttributes, autopropagatedParameters,
+			requiresNamespacedParameters, actionTimeout, renderTimeout,
+			renderWeight, ajaxable, headerPortalCss, headerPortletCss,
+			headerPortalJavaScript, headerPortletJavaScript, footerPortalCss,
+			footerPortletCss, footerPortalJavaScript, footerPortletJavaScript,
+			cssClassWrapper, facebookIntegration, addDefaultResource, roles,
+			unlinkedRoles, roleMappers, system, active, include, initParams,
+			expCache, portletModes, windowStates, supportedLocales,
+			resourceBundle, portletInfo, portletFilters, processingEvents,
+			publishingEvents, publicRenderParameters, portletApp);
+	}
+
 	/**
 	 * Adds a supported processing event.
 	 */
@@ -362,8 +451,8 @@ public class PortletImpl extends PortletBaseImpl {
 	public Object clone() {
 		Portlet portlet = new PortletImpl(
 			getPortletId(), getRootPortlet(), getPluginPackage(),
-			getDefaultPluginSetting(), getCompanyId(), getTimestamp(),
-			getIcon(), getVirtualPath(), getStrutsPath(), getParentStrutsPath(),
+			getDefaultPluginSetting(), getCompanyId(), getIcon(),
+			getVirtualPath(), getStrutsPath(), getParentStrutsPath(),
 			getPortletName(), getDisplayName(), getPortletClass(),
 			getConfigurationActionClass(), getIndexerClasses(),
 			getOpenSearchClass(), getSchedulerEntries(), getPortletURLClass(),
@@ -1883,6 +1972,14 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public long getTimestamp() {
+		if ((_timestamp == null) || _timestamp.equals(-1L)) {
+			ServletContext servletContext = ServletContextPool.get(
+				getContextName());
+
+			_timestamp = ServletContextUtil.getLastModified(
+				servletContext, StringPool.SLASH, true);
+		}
+
 		return _timestamp;
 	}
 
@@ -4322,7 +4419,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * The timestamp of the portlet.
 	 */
-	private long _timestamp;
+	private Long _timestamp;
 
 	/**
 	 * The names of the classes that represents trash handlers associated with

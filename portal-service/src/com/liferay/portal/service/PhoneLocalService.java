@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	* @return the phone that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Phone addPhone(
 		com.liferay.portal.model.Phone phone)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -72,6 +74,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	* @throws PortalException if a phone with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Phone deletePhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -83,6 +86,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	* @return the phone that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Phone deletePhone(
 		com.liferay.portal.model.Phone phone)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -249,6 +253,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	* @return the phone that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Phone updatePhone(
 		com.liferay.portal.model.Phone phone)
 		throws com.liferay.portal.kernel.exception.SystemException;

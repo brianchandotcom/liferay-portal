@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	* @return the layout friendly u r l that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.LayoutFriendlyURL addLayoutFriendlyURL(
 		com.liferay.portal.model.LayoutFriendlyURL layoutFriendlyURL)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	* @throws PortalException if a layout friendly u r l with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.LayoutFriendlyURL deleteLayoutFriendlyURL(
 		long layoutFriendlyURLId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	* @return the layout friendly u r l that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.LayoutFriendlyURL deleteLayoutFriendlyURL(
 		com.liferay.portal.model.LayoutFriendlyURL layoutFriendlyURL)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -282,6 +286,7 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	* @return the layout friendly u r l that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.LayoutFriendlyURL updateLayoutFriendlyURL(
 		com.liferay.portal.model.LayoutFriendlyURL layoutFriendlyURL)
 		throws com.liferay.portal.kernel.exception.SystemException;

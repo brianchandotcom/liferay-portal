@@ -135,10 +135,14 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 					entryClassName);
 
 				if (indexer != null) {
-					String snippet = results.snippet(i);
+					String snippet = result.get(Field.SNIPPET);
 
 					Summary summary = indexer.getSummary(
 						result, themeDisplay.getLocale(), snippet, portletURL);
+
+					if (summary == null) {
+						continue;
+					}
 
 					title = summary.getTitle();
 					url = portletURL.toString();
@@ -174,7 +178,7 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 			ThemeDisplay themeDisplay, long groupId, Document result)
 		throws Exception {
 
-		String articleId = result.get(Field.ENTRY_CLASS_PK);
+		String articleId = result.get("articleId");
 
 		JournalArticle article = JournalArticleServiceUtil.getArticle(
 			groupId, articleId);

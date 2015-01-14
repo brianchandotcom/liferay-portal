@@ -52,4 +52,7 @@ public interface DLFileShortcut extends DLFileShortcutModel, PersistedModel,
 	public java.lang.String getToTitle();
 
 	public boolean isInHiddenFolder();
+
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

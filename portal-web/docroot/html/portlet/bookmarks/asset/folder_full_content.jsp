@@ -25,7 +25,7 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(WebKeys.BOOKMARKS
 	<%
 	int status = WorkflowConstants.STATUS_APPROVED;
 
-	if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+	if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 		status = WorkflowConstants.STATUS_ANY;
 	}
 

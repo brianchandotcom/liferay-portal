@@ -115,7 +115,7 @@ if (Validator.isNotNull(script)) {
 
 	<aui:fieldset>
 		<aui:field-wrapper>
-			<c:if test="<%= (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(classPK) > 0) || (JournalArticleLocalServiceUtil.getStructureArticlesCount(groupId, structureKey) > 0) %>">
+			<c:if test="<%= (structure != null) && ((DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(classPK) > 0) || (JournalArticleLocalServiceUtil.getStructureArticlesCount(groupId, structureKey) > 0)) %>">
 				<div class="alert alert-warning">
 					<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
 				</div>
@@ -173,6 +173,10 @@ if (Validator.isNotNull(script)) {
 						</c:otherwise>
 					</c:choose>
 				</aui:row>
+
+				<c:if test="<%= !PropsValues.DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY %>">
+					<aui:input disabled="<%= (structure != null) ? true : false %>" label='<%= LanguageUtil.format(pageContext, "x-key", ddmDisplay.getStructureName(locale), false) %>' name="structureKey" />
+				</c:if>
 
 				<aui:input name="description" />
 

@@ -47,10 +47,12 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyUtil;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.AddressServiceUtil;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
@@ -73,6 +75,7 @@ import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
+import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -1083,47 +1086,70 @@ public class UsersAdminImpl implements UsersAdmin {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, String)}
+	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
+	 *             String)}
 	 */
 	@Override
 	public boolean hasUpdateEmailAddress(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
 
-		return hasUpdateFieldPermission(user, "emailAddress");
+		return hasUpdateFieldPermission(
+			permissionChecker, null, user, "emailAddress");
 	}
 
 	@Override
-	public boolean hasUpdateFieldPermission(User user, String field)
+	public boolean hasUpdateFieldPermission(
+			PermissionChecker permissionChecker, User updatingUser,
+			User updatedUser, String field)
 		throws PortalException, SystemException {
 
-		if (user == null) {
+		if (updatedUser == null) {
+			return true;
+		}
+
+		if (updatingUser == null) {
+			long updatingUserId = PrincipalThreadLocal.getUserId();
+
+			if (updatingUserId > 0) {
+				updatingUser = UserLocalServiceUtil.fetchUserById(
+					updatingUserId);
+			}
+		}
+
+		if ((updatingUser != null) && !updatingUser.equals(updatedUser) &&
+			UserPermissionUtil.contains(
+				permissionChecker, updatingUser.getUserId(),
+				ActionKeys.UPDATE_USER)) {
+
 			return true;
 		}
 
 		for (String userType : PropsValues.FIELD_EDITABLE_USER_TYPES) {
-			if (userType.equals("user-with-mx") && user.hasCompanyMx()) {
+			if (userType.equals("user-with-mx") && updatedUser.hasCompanyMx()) {
 				return true;
 			}
 
-			if (userType.equals("user-without-mx") && !user.hasCompanyMx()) {
+			if (userType.equals("user-without-mx") &&
+				!updatedUser.hasCompanyMx()) {
+
 				return true;
 			}
 		}
 
 		for (String roleName : PropsValues.FIELD_EDITABLE_ROLES) {
 			Role role = RoleLocalServiceUtil.fetchRole(
-				user.getCompanyId(), roleName);
+				updatedUser.getCompanyId(), roleName);
 
 			if ((role != null) &&
 				RoleLocalServiceUtil.hasUserRole(
-					user.getUserId(), role.getRoleId())) {
+					updatedUser.getUserId(), role.getRoleId())) {
 
 				return true;
 			}
 		}
 
-		String emailAddress = user.getEmailAddress();
+		String emailAddress = updatedUser.getEmailAddress();
 
 		for (String domainName : PropsValues.FIELD_EDITABLE_DOMAINS) {
 			if (emailAddress.endsWith(domainName)) {
@@ -1145,14 +1171,32 @@ public class UsersAdminImpl implements UsersAdmin {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(User, String)}
+	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
+	 *             String)}
 	 */
+	@Override
+	public boolean hasUpdateFieldPermission(User user, String field)
+		throws PortalException, SystemException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return hasUpdateFieldPermission(permissionChecker, null, user, field);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
+	 *             String)}
+	 */
+	@Deprecated
 	@Override
 	public boolean hasUpdateScreenName(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
 
-		return hasUpdateFieldPermission(user, "screenName");
+		return hasUpdateFieldPermission(
+			permissionChecker, null, user, "screenName");
 	}
 
 	@Override

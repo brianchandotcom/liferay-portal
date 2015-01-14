@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -108,6 +110,85 @@ public class VerifyOracle extends VerifyProcess {
 		}
 	}
 
+	protected void convertColumnToClob(String tableName, String columnName)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("select data_type from user_tab_columns where ");
+			sb.append("table_name = '");
+			sb.append(StringUtil.toUpperCase(tableName));
+			sb.append("' and column_name = '");
+			sb.append(StringUtil.toUpperCase(columnName));
+			sb.append(StringPool.APOSTROPHE);
+
+			ps = con.prepareStatement(sb.toString());
+
+			rs = ps.executeQuery();
+
+			if (!rs.next()) {
+				if (_log.isWarnEnabled()) {
+					sb = new StringBundler(5);
+
+					sb.append("Column ");
+					sb.append(columnName);
+					sb.append(" in table ");
+					sb.append(tableName);
+					sb.append(" could not be found.");
+
+					_log.warn(sb.toString());
+				}
+
+				return;
+			}
+
+			String dataType = rs.getString(1);
+
+			if (dataType.equals("CLOB")) {
+				return;
+			}
+
+			runSQL("alter table " + tableName + " add temp CLOB");
+
+			sb = new StringBundler(4);
+
+			sb.append("update ");
+			sb.append(tableName);
+			sb.append(" set temp = ");
+			sb.append(columnName);
+
+			runSQL(sb.toString());
+
+			sb = new StringBundler(4);
+
+			sb.append("alter table ");
+			sb.append(tableName);
+			sb.append(" drop column ");
+			sb.append(columnName);
+
+			runSQL(sb.toString());
+
+			sb = new StringBundler(4);
+
+			sb.append("alter table ");
+			sb.append(tableName);
+			sb.append(" rename column temp to ");
+			sb.append(columnName);
+
+			runSQL(sb.toString());
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	@Override
 	protected void doVerify() throws Exception {
 		DB db = DBFactoryUtil.getDB();
@@ -119,6 +200,12 @@ public class VerifyOracle extends VerifyProcess {
 		}
 
 		alterVarchar2Columns();
+
+		convertColumnToClob("AssetEntry", "description");
+		convertColumnToClob("AssetEntry", "summary");
+		convertColumnToClob("JournalArticle", "description");
+		convertColumnToClob("ShoppingCart", "itemIds");
+		convertColumnToClob("ShoppingOrder", "comments");
 	}
 
 	protected boolean isBetweenBuildNumbers(

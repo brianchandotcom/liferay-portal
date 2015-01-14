@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.Date;
@@ -47,7 +46,7 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 				0, SchedulerEngine.JOB_NAME_MAX_LENGTH);
 		}
 
-		_key = _jobName.concat(StringPool.PERIOD).concat(_groupName);
+		_receiverKey = new ReceiverKey(_jobName, _groupName);
 
 		if (_messageListenerUUID == null) {
 			_messageListenerUUID = PortalUUIDUtil.generate();
@@ -64,10 +63,10 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 			message.getString(SchedulerEngine.DESTINATION_NAME));
 
 		if (destinationName.equals(DestinationNames.SCHEDULER_DISPATCH)) {
-			String receiverKey = GetterUtil.getString(
-				message.getString(SchedulerEngine.RECEIVER_KEY));
+			ReceiverKey receiverKey = (ReceiverKey)message.get(
+				SchedulerEngine.RECEIVER_KEY);
 
-			if (!receiverKey.equals(_key)) {
+			if (!_receiverKey.equals(receiverKey)) {
 				return;
 			}
 		}
@@ -151,8 +150,8 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 
 	private String _groupName;
 	private String _jobName;
-	private String _key;
 	private MessageListener _messageListener;
 	private String _messageListenerUUID;
+	private ReceiverKey _receiverKey;
 
 }

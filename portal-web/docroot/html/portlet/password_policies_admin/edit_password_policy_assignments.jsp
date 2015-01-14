@@ -112,12 +112,12 @@ portletURL.setParameter("tabs3", tabs3);
 				>
 					<liferay-ui:search-container-column-text
 						name="name"
-						value="<%= HtmlUtil.escape(user2.getFullName()) %>"
+						value="<%= user2.getFullName() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						name="screen-name"
-						value="<%= HtmlUtil.escape(user2.getScreenName()) %>"
+						value="<%= user2.getScreenName() %>"
 					/>
 				</liferay-ui:search-container-row>
 

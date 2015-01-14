@@ -47,34 +47,13 @@
 
 	var TAG_UNORDERED_LIST_ITEM = '*';
 
-	CKEDITOR.plugins.add(
-		'creole_data_processor',
-		{
-			requires: ['htmlwriter'],
+	var attachmentURLPrefix;
 
-			init: function(editor) {
-				editor.dataProcessor = new CKEDITOR.htmlDataProcessor(editor);
+	var CreoleDataProcessor = function() {};
 
-				editor.on(
-					'paste',
-					function(event) {
-						var data = event.data;
+	CreoleDataProcessor.prototype = {
+		constructor: CreoleDataProcessor,
 
-						var htmlData = data.dataValue;
-
-						htmlData = CKEDITOR.htmlDataProcessor.prototype.toDataFormat(htmlData);
-
-						data.dataValue = htmlData;
-					},
-					editor.element.$
-				);
-
-				editor.fire('customDataProcessorLoaded');
-			}
-		}
-	);
-
-	CKEDITOR.htmlDataProcessor.prototype = {
 		toDataFormat: function(html, fixForBody ) {
 			var instance = this;
 
@@ -91,7 +70,7 @@
 			if (!instance._creoleParser) {
 				instance._creoleParser = new CKEDITOR.CreoleParser(
 					{
-						imagePrefix: CKEDITOR.config.attachmentURLPrefix
+						imagePrefix: attachmentURLPrefix
 					}
 				);
 			}
@@ -187,9 +166,12 @@
 
 			if (instance._skipParse) {
 				newLineCharacter = NEW_LINE;
-			}
 
-			listTagsIn.push(newLineCharacter);
+				listTagsIn.push(newLineCharacter);
+			}
+			else if (element.previousSibling && element.nextSibling && (element.nextSibling !== NEW_LINE)) {
+				listTagsIn.push(newLineCharacter);
+			}
 		},
 
 		_handleData: function(data, element) {
@@ -340,7 +322,7 @@
 			var attrAlt = element.getAttribute('alt');
 			var attrSrc = element.getAttribute('src');
 
-			attrSrc = attrSrc.replace(CKEDITOR.config.attachmentURLPrefix, STR_BLANK);
+			attrSrc = attrSrc.replace(attachmentURLPrefix, STR_BLANK);
 
 			listTagsIn.push('{{', attrSrc);
 
@@ -580,4 +562,33 @@
 
 		_skipParse: false
 	};
+
+	CKEDITOR.plugins.add(
+		'creole_data_processor',
+		{
+			requires: ['htmlwriter'],
+
+			init: function(editor) {
+				attachmentURLPrefix = editor.config.attachmentURLPrefix;
+
+				editor.dataProcessor = new CreoleDataProcessor(editor);
+
+				editor.on(
+					'paste',
+					function(event) {
+						var data = event.data;
+
+						var htmlData = data.dataValue;
+
+						htmlData = editor.dataProcessor.toDataFormat(htmlData);
+
+						data.dataValue = htmlData;
+					},
+					editor.element.$
+				);
+
+				editor.fire('customDataProcessorLoaded');
+			}
+		}
+	);
 })();

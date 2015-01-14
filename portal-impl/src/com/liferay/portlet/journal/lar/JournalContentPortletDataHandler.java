@@ -76,7 +76,7 @@ public class JournalContentPortletDataHandler
 		setDataPortletPreferences("articleId", "ddmTemplateKey", "groupId");
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "selected-web-content", true, true, null,
+				null, "selected-web-content", true, true, null,
 				JournalArticle.class.getName()));
 		setPublishToLiveByDefault(
 			PropsValues.JOURNAL_CONTENT_PUBLISH_TO_LIVE_BY_DEFAULT);
@@ -149,6 +149,12 @@ public class JournalContentPortletDataHandler
 		}
 
 		if (article == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Portlet " + portletId +
+						" refers to an invalid article ID " + articleId);
+			}
+
 			portletDataContext.setScopeGroupId(previousScopeGroupId);
 
 			return portletPreferences;

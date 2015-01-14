@@ -61,7 +61,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 <div class="hide lfr-message-response" id="<portlet:namespace />discussion-status-messages"></div>
 
 <c:if test="<%= (messagesCount > 1) || MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW) %>">
-	<div class="taglib-discussion">
+	<div class="taglib-discussion" id="<portlet:namespace />discussion-container">
 		<aui:form action="<%= formAction %>" method="post" name="<%= formName %>">
 			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
 			<aui:input id="<%= randomNamespace + Constants.CMD %>" name="<%= Constants.CMD %>" type="hidden" />
@@ -152,7 +152,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					<aui:input name="emailAddress" type="hidden" />
 
 					<div id="<%= randomNamespace %>postReplyForm<%= i %>" style="display: none;">
-						<aui:input id='<%= randomNamespace + "postReplyBody" + i %>' label="comment" name='<%= "postReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>' type="textarea" wrap="soft" />
+						<aui:input id='<%= randomNamespace + "postReplyBody" + i %>' label="comment" name='<%= "postReplyBody" + i %>' type="textarea" wrap="soft" wrapperCssClass="lfr-textarea-container" />
 
 						<%
 						String postReplyButtonLabel = LanguageUtil.get(pageContext, "reply");
@@ -469,13 +469,38 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 										<%
 										MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(message.getParentMessageId());
+										%>
 
+										<liferay-util:buffer var="buffer">
+
+											<%
+											User parentMessageUser = UserLocalServiceUtil.fetchUser(parentMessage.getUserId());
+
+											long imageId = (parentMessageUser == null) ? 0 : parentMessageUser.getPortraitId();
+											%>
+
+											<span id="lfr-discussion-reply-user-info">
+												<div class="lfr-discussion-reply-user-avatar">
+													<img alt="<%= parentMessage.getUserName() %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, imageId) %>" width="30" />
+												</div>
+
+												<div class="lfr-discussion-reply-user-name">
+														<%= parentMessage.getUserName() %>
+												</div>
+
+												<div class="lfr-discussion-reply-creation-date">
+													<%= dateFormatDateTime.format(parentMessage.getCreateDate()) %>
+												</div>
+											</span>
+										</liferay-util:buffer>
+
+										<%
 										StringBundler sb = new StringBundler(7);
 
-										sb.append("<a href=\"#");
-										sb.append(randomNamespace);
-										sb.append("message_");
-										sb.append(parentMessage.getMessageId());
+										sb.append("<a class=\"lfr-discussion-parent-link\" data-title=\"");
+										sb.append(HtmlUtil.escape(buffer));
+										sb.append("\"data-metaData=\"");
+										sb.append(HtmlUtil.escape(parentMessage.getBody()));
 										sb.append("\">");
 										sb.append(HtmlUtil.escape(parentMessage.getUserName()));
 										sb.append("</a>");
@@ -755,6 +780,52 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			},
 			['aui-base']
 		);
+	</aui:script>
+
+	<aui:script use="aui-popover,event-outside">
+		var discussionContainer = A.one('#<portlet:namespace />discussion-container');
+
+		var popover = new A.Popover(
+			{
+				cssClass: 'lfr-discussion-reply',
+				constrain: true,
+				position: 'top',
+				visible: false,
+				width: 400,
+				zIndex: Liferay.zIndex.TOOLTIP
+			}
+		).render(discussionContainer);
+
+		var handle;
+
+		var boundingBox = popover.get('boundingBox');
+
+		discussionContainer.delegate(
+			'click',
+			function(event) {
+				event.stopPropagation();
+
+				if (handle) {
+					handle.detach();
+
+					handle = null;
+				}
+
+				handle = boundingBox.once('clickoutside', popover.hide, popover);
+
+				popover.hide();
+
+				var currentTarget = event.currentTarget;
+
+				popover.set('align.node', currentTarget);
+				popover.set('bodyContent', currentTarget.attr('data-metaData'));
+				popover.set('headerContent', currentTarget.attr('data-title'));
+
+				popover.show();
+			},
+			'.lfr-discussion-parent-link'
+		);
+
 	</aui:script>
 </c:if>
 

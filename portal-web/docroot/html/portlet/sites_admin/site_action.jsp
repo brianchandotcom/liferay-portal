@@ -115,7 +115,7 @@ if (row == null) {
 		</liferay-portlet:renderURL>
 
 		<%
-		String taglibExportURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "exportDialog', title: '" + UnicodeLanguageUtil.get(pageContext, "export") + "', uri: '" + HtmlUtil.escapeURL(exportURL.toString()) + "'});";
+		String taglibExportURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "exportDialog', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(pageContext, "export")) + "', uri: '" + HtmlUtil.escapeJS(exportURL.toString()) + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -132,7 +132,7 @@ if (row == null) {
 		</liferay-portlet:renderURL>
 
 		<%
-		String taglibImportURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "importDialog', title: '" + UnicodeLanguageUtil.get(pageContext, "import") + "', uri: '" + HtmlUtil.escapeURL(importURL.toString()) + "'});";
+		String taglibImportURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "importDialog', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(pageContext, "import")) + "', uri: '" + HtmlUtil.escapeJS(importURL.toString()) + "'});";
 		%>
 
 		<liferay-ui:icon

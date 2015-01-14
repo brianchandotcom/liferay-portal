@@ -34,9 +34,9 @@ import com.liferay.portal.util.PropsValues;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -389,6 +389,40 @@ public class ChannelImpl extends BaseChannelImpl {
 	}
 
 	@Override
+	public void storeNotificationEvent(
+		NotificationEvent notificationEvent, long currentTime) {
+
+		if (isRemoveNotificationEvent(notificationEvent, currentTime)) {
+			return;
+		}
+
+		if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED &&
+			notificationEvent.isDeliveryRequired()) {
+
+			Map<String, NotificationEvent> unconfirmedNotificationEvents =
+				_getUnconfirmedNotificationEvents();
+
+			unconfirmedNotificationEvents.put(
+				notificationEvent.getUuid(), notificationEvent);
+		}
+		else {
+			TreeSet<NotificationEvent> notificationEvents =
+				_getNotificationEvents();
+
+			notificationEvents.add(notificationEvent);
+
+			if (notificationEvents.size() >
+					PropsValues.NOTIFICATIONS_MAX_EVENTS) {
+
+				NotificationEvent firstNotificationEvent =
+					notificationEvents.first();
+
+				notificationEvents.remove(firstNotificationEvent);
+			}
+		}
+	}
+
+	@Override
 	protected void doCleanUp() throws Exception {
 		_reentrantLock.lock();
 
@@ -590,39 +624,6 @@ public class ChannelImpl extends BaseChannelImpl {
 		}
 	}
 
-	protected void storeNotificationEvent(
-		NotificationEvent notificationEvent, long currentTime) {
-
-		if (isRemoveNotificationEvent(notificationEvent, currentTime)) {
-			return;
-		}
-
-		if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED &&
-			notificationEvent.isDeliveryRequired()) {
-
-			Map<String, NotificationEvent> unconfirmedNotificationEvents =
-				_getUnconfirmedNotificationEvents();
-
-			unconfirmedNotificationEvents.put(
-				notificationEvent.getUuid(), notificationEvent);
-		}
-		else {
-			TreeSet<NotificationEvent> notificationEvents =
-				_getNotificationEvents();
-
-			notificationEvents.add(notificationEvent);
-
-			if (notificationEvents.size() >
-					PropsValues.NOTIFICATIONS_MAX_EVENTS) {
-
-				NotificationEvent firstNotificationEvent =
-					notificationEvents.first();
-
-				notificationEvents.remove(firstNotificationEvent);
-			}
-		}
-	}
-
 	private TreeSet<NotificationEvent> _getNotificationEvents() {
 		if (_notificationEvents == null) {
 			_notificationEvents = new TreeSet<NotificationEvent>(_comparator);
@@ -634,7 +635,7 @@ public class ChannelImpl extends BaseChannelImpl {
 	private Map<String, NotificationEvent> _getUnconfirmedNotificationEvents() {
 		if (_unconfirmedNotificationEvents == null) {
 			_unconfirmedNotificationEvents =
-				new HashMap<String, NotificationEvent>();
+				new LinkedHashMap<String, NotificationEvent>();
 		}
 
 		return _unconfirmedNotificationEvents;

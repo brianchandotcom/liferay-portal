@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 	* @return the web d a v props that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.WebDAVProps addWebDAVProps(
 		com.liferay.portal.model.WebDAVProps webDAVProps)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 	* @throws PortalException if a web d a v props with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.WebDAVProps deleteWebDAVProps(
 		long webDavPropsId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 	* @return the web d a v props that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.WebDAVProps deleteWebDAVProps(
 		com.liferay.portal.model.WebDAVProps webDAVProps)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 	* @return the web d a v props that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.WebDAVProps updateWebDAVProps(
 		com.liferay.portal.model.WebDAVProps webDAVProps)
 		throws com.liferay.portal.kernel.exception.SystemException;

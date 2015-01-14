@@ -15,7 +15,9 @@
 package com.liferay.portal.cache.ehcache;
 
 import com.liferay.portal.cache.cluster.EhcachePortalCacheClusterReplicatorFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.net.URL;
@@ -33,6 +35,10 @@ import net.sf.ehcache.config.ConfigurationFactory;
  * @author Edward Han
  */
 public class EhcacheConfigurationUtil {
+
+	public static final boolean EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get("ehcache.bootstrap.cache.loader.enabled"));
 
 	public static Configuration getConfiguration(String configurationPath) {
 		return getConfiguration(configurationPath, false);
@@ -139,6 +145,10 @@ public class EhcacheConfigurationUtil {
 			return;
 		}
 
+		if (!EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED) {
+			cacheConfiguration.addBootstrapCacheLoaderFactory(null);
+		}
+
 		List<CacheEventListenerFactoryConfiguration>
 			cacheEventListenerFactoryConfigurations =
 				cacheConfiguration.getCacheEventListenerConfigurations();
@@ -198,7 +208,7 @@ public class EhcacheConfigurationUtil {
 
 		boolean clearCachePeerProviderConfigurations = false;
 
-		if ((usingDefault && enableClusterLinkReplication) ||
+		if ((enableClusterLinkReplication) ||
 			(usingDefault && !PropsValues.CLUSTER_LINK_ENABLED)) {
 
 			clearCachePeerProviderConfigurations = true;

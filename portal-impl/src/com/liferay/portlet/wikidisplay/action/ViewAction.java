@@ -69,7 +69,7 @@ public class ViewAction extends PortletAction {
 			WikiNode node = WikiNodeServiceUtil.getNode(nodeId);
 
 			if (node.getGroupId() != themeDisplay.getScopeGroupId()) {
-				throw new NoSuchNodeException();
+				throw new NoSuchNodeException("{nodeId=" + nodeId + "}");
 			}
 
 			WikiPage page = null;

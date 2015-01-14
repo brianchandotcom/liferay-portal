@@ -62,7 +62,7 @@
 					<aui:nav-item
 						href="<%= _getURL(groupId, plid, entry.getValue(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
 						iconCssClass="icon-file"
-						label='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(message)) %>'
+						label='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-x" : "add-x-in-x", new Object[] {HtmlUtil.escape(message), HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}) %>'
 					/>
 				</c:when>
 				<c:otherwise>

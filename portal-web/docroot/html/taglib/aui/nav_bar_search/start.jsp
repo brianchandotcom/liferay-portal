@@ -27,47 +27,69 @@
 
 		<aui:script use="aui-base,event-outside">
 			A.one('#<%= id %>NavbarBtn').on(
-				'click',
+				['click', 'keypress'],
 				function(event) {
-					var btnNavbar = event.currentTarget;
+					if ((event.type === 'click') || event.isKeyInSet('ENTER', 'SPACE')) {
+						var btnNavbar = event.currentTarget;
 
-					var navbar = btnNavbar.ancestor('.navbar');
+						var navbar = btnNavbar.ancestor('.navbar');
 
-					var navbarCollapse = A.one('#<%= id %>NavbarSearchCollapse');
+						var navbarCollapse = A.one('#<%= id %>NavbarSearchCollapse');
 
-					var handle = Liferay.Data['<%= id %>Handle'];
+						var handles = Liferay.Data['<%= id %>Handle'];
 
-					if (navbarCollapse.hasClass('open') && handle) {
-						handle.detach();
+						var navbarWillOpen = !navbarCollapse.hasClass('open');
 
-						handle = null;
-					}
-					else {
-						handle = navbarCollapse.on(
-							'mousedownoutside',
-							function(event) {
-								if (!btnNavbar.contains(event.target)) {
-									Liferay.Data['<%= id %>Handle'] = null;
+						if (!navbarWillOpen && handles && handles.length) {
+							(new A.EventHandle(handles)).detach();
 
-									handle.detach();
+							handles = null;
+						}
+						else {
+							handles = handles || [];
 
-									navbarCollapse.removeClass('open');
+							var closeNavBar = function() {
+								var handles = Liferay.Data['<%= id %>Handle'];
 
-									if (navbar) {
-										navbar.all('.btn-navbar, .nav').show();
+								(new A.EventHandle(handles)).detach();
+
+								Liferay.Data['<%= id %>Handle'] = null;
+
+								navbarCollapse.removeClass('open');
+
+								if (navbar) {
+									navbar.all('.btn-navbar, .nav').show();
+								}
+
+								btnNavbar.focus();
+							};
+
+							var handleMouseOutside = navbarCollapse.on(
+								'mousedownoutside',
+								function(event) {
+									if (!btnNavbar.contains(event.target)) {
+										closeNavBar();
 									}
 								}
-							}
-						);
+							);
+
+							var handleEscape = A.getDoc().on('key', closeNavBar, 'down:27');
+
+							handles.push(handleEscape, handleMouseOutside);
+						}
+
+						navbarCollapse.toggleClass('open', navbarWillOpen);
+
+						if (navbar) {
+							navbar.all('.btn-navbar, .nav').hide();
+						}
+
+						if (navbarWillOpen) {
+							Liferay.Util.focusFormField(navbarCollapse.one('input.search-query'));
+						}
+
+						Liferay.Data['<%= id %>Handle'] = handles;
 					}
-
-					navbarCollapse.toggleClass('open');
-
-					if (navbar) {
-						navbar.all('.btn-navbar, .nav').hide();
-					}
-
-					Liferay.Data['<%= id %>Handle'] = handle;
 				}
 			);
 		</aui:script>

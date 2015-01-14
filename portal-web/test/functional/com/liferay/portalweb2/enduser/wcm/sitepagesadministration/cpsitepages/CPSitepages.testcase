@@ -46,8 +46,7 @@
 		<execute macro="SitePage#viewChildPG">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteChildPageName" value="${siteChildPageName}" />
 			<var name="sitePageName" value="${sitePageName}" />
@@ -82,8 +81,7 @@
 		<execute macro="SitePage#viewPG">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${sitePageName}" />
 			<var name="sitePageURL" value="${sitePageURL}" />
@@ -119,15 +117,13 @@
 		<execute macro="Page#addPG">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
 	</command>
@@ -170,8 +166,7 @@
 
 		<execute macro="SitePage#viewChildPG">
 			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteChildPageName" value="${siteChildPageName}" />
 			<var name="sitePageName" value="${sitePageName}" />
@@ -205,8 +200,7 @@
 
 		<execute macro="SitePage#viewPG">
 			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${sitePageName}" />
 			<var name="sitePageURL" value="${sitePageURL}" />
@@ -240,14 +234,12 @@
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

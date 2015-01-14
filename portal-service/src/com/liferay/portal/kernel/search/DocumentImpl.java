@@ -69,6 +69,36 @@ public class DocumentImpl implements Document {
 		return name.concat(StringPool.UNDERLINE).concat(_SORTABLE_FIELD_SUFFIX);
 	}
 
+	public static String getSortFieldName(Sort sort, String scoreFieldName) {
+		if (sort.getType() == Sort.SCORE_TYPE) {
+			return scoreFieldName;
+		}
+
+		String fieldName = sort.getFieldName();
+
+		if (fieldName.endsWith(_SORTABLE_FIELD_SUFFIX)) {
+			return fieldName;
+		}
+
+		String sortFieldName = null;
+
+		if (DocumentImpl.isSortableTextField(fieldName) ||
+			(sort.getType() != Sort.STRING_TYPE)) {
+
+			sortFieldName = DocumentImpl.getSortableFieldName(fieldName);
+		}
+
+		if (Validator.isNull(sortFieldName)) {
+			sortFieldName = scoreFieldName;
+		}
+
+		return sortFieldName;
+	}
+
+	public static boolean isSortableFieldName(String name) {
+		return name.endsWith(_SORTABLE_FIELD_SUFFIX);
+	}
+
 	public static boolean isSortableTextField(String name) {
 		return _defaultSortableTextFields.contains(name);
 	}
@@ -84,7 +114,7 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		addKeyword(name, _dateFormat.format(value));
+		addDate(name, new Date[] {value});
 	}
 
 	@Override
@@ -94,10 +124,21 @@ public class DocumentImpl implements Document {
 		}
 
 		String[] dates = new String[values.length];
+		String[] datesTime = new String[values.length];
 
 		for (int i = 0; i < values.length; i++) {
 			dates[i] = _dateFormat.format(values[i]);
+			datesTime[i] = String.valueOf(values[i].getTime());
 		}
+
+		String sortableFieldName = getSortableFieldName(name);
+
+		Field field = new Field(sortableFieldName, datesTime);
+
+		field.setNumeric(true);
+		field.setNumericClass(Long.class);
+
+		_fields.put(sortableFieldName, field);
 
 		addKeyword(name, dates);
 	}
@@ -121,6 +162,13 @@ public class DocumentImpl implements Document {
 	@Override
 	public void addFile(String name, InputStream is, String fileExt) {
 		addText(name, FileUtil.extractText(is, fileExt));
+	}
+
+	@Override
+	public void addFile(
+		String name, InputStream is, String fileExt, int maxStringLength) {
+
+		addText(name, FileUtil.extractText(is, fileExt, maxStringLength));
 	}
 
 	@Override
@@ -352,6 +400,36 @@ public class DocumentImpl implements Document {
 		}
 
 		Field field = new Field(name, values);
+
+		_fields.put(name, field);
+	}
+
+	@Override
+	public void addLocalizedKeyword(
+		String name, Map<Locale, String> values, boolean lowerCase,
+		boolean sortable) {
+
+		if ((values == null) || values.isEmpty()) {
+			return;
+		}
+
+		if (lowerCase) {
+			Map<Locale, String> lowerCaseValues = new HashMap<Locale, String>(
+				values.size());
+
+			for (Map.Entry<Locale, String> entry : values.entrySet()) {
+				String value = GetterUtil.getString(entry.getValue());
+
+				lowerCaseValues.put(
+					entry.getKey(), StringUtil.toLowerCase(value));
+			}
+
+			values = lowerCaseValues;
+		}
+
+		Field field = new Field(name, values);
+
+		field.setSortable(sortable);
 
 		_fields.put(name, field);
 	}

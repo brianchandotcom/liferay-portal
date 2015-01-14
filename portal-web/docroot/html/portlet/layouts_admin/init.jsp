@@ -22,6 +22,7 @@ page import="com.liferay.portal.LARFileException" %><%@
 page import="com.liferay.portal.LARFileSizeException" %><%@
 page import="com.liferay.portal.LARTypeException" %><%@
 page import="com.liferay.portal.LayoutFriendlyURLException" %><%@
+page import="com.liferay.portal.LayoutFriendlyURLsException" %><%@
 page import="com.liferay.portal.LayoutImportException" %><%@
 page import="com.liferay.portal.LayoutNameException" %><%@
 page import="com.liferay.portal.LayoutPrototypeException" %><%@

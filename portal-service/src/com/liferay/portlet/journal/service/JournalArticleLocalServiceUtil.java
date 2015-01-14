@@ -889,6 +889,12 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey, int[] statuses)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchLatestArticle(resourcePrimKey, statuses);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
 		long resourcePrimKey, int status, boolean preferApproved)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
@@ -1973,6 +1979,20 @@ public class JournalArticleLocalServiceUtil {
 	public static int getNotInTrashArticlesCount(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getNotInTrashArticlesCount(groupId, folderId);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle getOldestArticle(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getOldestArticle(groupId, articleId);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle getOldestArticle(
+		long groupId, java.lang.String articleId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getOldestArticle(groupId, articleId, status);
 	}
 
 	/**

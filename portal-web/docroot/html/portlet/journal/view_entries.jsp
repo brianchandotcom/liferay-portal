@@ -131,11 +131,11 @@ if (displayTerms.isNavigationRecent()) {
 	searchContainer.setOrderByType(orderByType);
 }
 
-boolean advancedSearch = ParamUtil.getBoolean(request, displayTerms.ADVANCED_SEARCH);
+int status = WorkflowConstants.STATUS_APPROVED;
 
-String keywords = ParamUtil.getString(request, "keywords");
-
-int status = WorkflowConstants.STATUS_ANY;
+if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
+	status = WorkflowConstants.STATUS_ANY;
+}
 
 List results = null;
 int total = 0;
@@ -149,9 +149,8 @@ int total = 0;
 
 		if (displayTerms.getNavigation().equals("mine")) {
 			userId = themeDisplay.getUserId();
-		}
-		else if (!permissionChecker.isCompanyAdmin() || !permissionChecker.isGroupAdmin(scopeGroupId)) {
-			status = WorkflowConstants.STATUS_APPROVED;
+
+			status = WorkflowConstants.STATUS_ANY;
 		}
 
 		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId, status);
@@ -187,10 +186,6 @@ int total = 0;
 	<c:otherwise>
 
 		<%
-		if (!permissionChecker.isCompanyAdmin() || !permissionChecker.isGroupAdmin(scopeGroupId)) {
-			status = WorkflowConstants.STATUS_APPROVED;
-		}
-
 		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, status);
 
 		searchContainer.setTotal(total);
@@ -248,6 +243,8 @@ for (int i = 0; i < results.size(); i++) {
 					tempRowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 					tempRowURL.setParameter("articleId", curArticle.getArticleId());
 
+					tempRowURL.setParameter("status", String.valueOf(status));
+
 					request.setAttribute("view_entries.jsp-article", curArticle);
 
 					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
@@ -273,10 +270,6 @@ for (int i = 0; i < results.size(); i++) {
 						rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
 						rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 						rowURL.setParameter("articleId", curArticle.getArticleId());
-
-						if (!permissionChecker.isCompanyAdmin() || !permissionChecker.isGroupAdmin(scopeGroupId)) {
-							status = WorkflowConstants.STATUS_APPROVED;
-						}
 
 						rowURL.setParameter("status", String.valueOf(status));
 						%>
@@ -328,7 +321,7 @@ for (int i = 0; i < results.size(); i++) {
 										</dt>
 
 										<dd>
-											<%= group.getDescriptiveName(locale) %>
+											<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 										</dd>
 									</c:if>
 								</dl>
@@ -346,7 +339,7 @@ for (int i = 0; i < results.size(); i++) {
 					Map<String, Object> data = new HashMap<String, Object>();
 
 					data.put("draggable", JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE));
-					data.put("title", curArticle.getTitle(locale));
+					data.put("title", HtmlUtil.escape(curArticle.getTitle(locale)));
 
 					row.setData(data);
 					%>
@@ -442,7 +435,7 @@ for (int i = 0; i < results.size(); i++) {
 					data.put("draggable", JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE));
 					data.put("folder", true);
 					data.put("folder-id", curFolder.getFolderId());
-					data.put("title", curFolder.getName());
+					data.put("title", HtmlUtil.escape(curFolder.getName()));
 
 					row.setData(data);
 					%>

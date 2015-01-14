@@ -269,7 +269,8 @@ public class SCProductVersionLocalServiceImpl
 			if ((productVersion != null) &&
 				(productVersion.getProductVersionId() != productVersionId)) {
 
-				throw new DuplicateProductVersionDirectDownloadURLException();
+				throw new DuplicateProductVersionDirectDownloadURLException(
+					"{productVersionId=" + productVersionId + "}");
 			}
 
 			if (testDirectDownloadURL) {

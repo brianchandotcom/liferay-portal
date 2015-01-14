@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.LockLocalServiceUtil;
 
@@ -128,6 +129,11 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	@Override
+	public boolean isEnabled() {
+		return _enabled;
+	}
+
+	@Override
 	public boolean isMaster() {
 		return _master;
 	}
@@ -191,10 +197,17 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to obtain the cluster master token. Trying " +
-							"again.",
-						e);
+						"Unable to acquire memory scheduler cluster lock", e);
 				}
+			}
+
+			if (_log.isInfoEnabled()) {
+				if (Validator.isNotNull(owner)) {
+					_log.info("Lock currently held by " + owner);
+				}
+
+				_log.info(
+					"Reattempting to acquire memory scheduler cluster lock");
 			}
 		}
 

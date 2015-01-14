@@ -956,6 +956,12 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategory.isInTrashExplicitly();
+	}
+
+	@Override
 	public boolean isRoot() {
 		return _mbCategory.isRoot();
 	}

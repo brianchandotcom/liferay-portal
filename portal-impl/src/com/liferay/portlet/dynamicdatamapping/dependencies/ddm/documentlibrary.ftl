@@ -25,7 +25,7 @@
 </#if>
 
 <@aui["field-wrapper"] data=data>
-	<@aui.input inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" type="text" value=fileEntryTitle>
+	<@aui.input helpMessage=escape(fieldStructure.tip) inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" type="text" value=fileEntryTitle>
 		<#if required>
 			<@aui.validator name="required" />
 		</#if>
@@ -38,6 +38,8 @@
 	</@>
 
 	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
+
+	${fieldStructure.children}
 </@>
 
 <@aui.script>

@@ -648,6 +648,7 @@
 		<exception>NoSuchFile</exception>
 		<exception>NoSuchMetadataSet</exception>
 		<exception>RepositoryName</exception>
+		<exception>RequiredFileEntryType</exception>
 		<exception>SourceFileName</exception>
 	</exceptions>
 </service-builder>

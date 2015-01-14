@@ -31,6 +31,11 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 		return _dataHandlerStatusMessageSender;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #sendStatusMessage(String, String[], ManifestSummary)}
+	 */
+	@Deprecated
 	public static void sendStatusMessage(
 		String messageType, ManifestSummary manifestSummary) {
 
@@ -43,6 +48,14 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 
 		getPortletDataHandlerStatusMessageSender().sendStatusMessage(
 			messageType, portletId, manifestSummary);
+	}
+
+	public static void sendStatusMessage(
+		String messageType, String[] portletIds,
+		ManifestSummary manifestSummary) {
+
+		getPortletDataHandlerStatusMessageSender().sendStatusMessage(
+			messageType, portletIds, manifestSummary);
 	}
 
 	public static <T extends StagedModel> void sendStatusMessage(

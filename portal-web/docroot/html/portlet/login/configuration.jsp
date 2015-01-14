@@ -178,13 +178,6 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 							</dd>
 
 							<dt>
-								[$USER_AGENT$]
-							</dt>
-							<dd>
-								<liferay-ui:message key="the-browser's-user-agent" />
-							</dd>
-
-							<dt>
 								[$USER_ID$]
 							</dt>
 							<dd>

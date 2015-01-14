@@ -50,16 +50,14 @@ if (!selectableTree) {
 	var STR_CHILDREN = 'children';
 
 	var TREE_CSS_CLASSES = {
-		pages: {
-			iconCheck: 'tree-icon icon-check',
-			iconCollapsed: 'icon-file',
-			iconExpanded: 'icon-file',
-			iconHitAreaCollapsed: 'tree-hitarea icon-plus',
-			iconHitAreaExpanded: 'tree-hitarea icon-minus',
-			iconLeaf: 'icon-leaf',
-			iconLoading: 'icon-refresh',
-			iconUncheck: 'icon-check'
-		}
+		iconCheck: 'tree-icon icon-check',
+		iconCollapsed: 'icon-file',
+		iconExpanded: 'icon-file',
+		iconHitAreaCollapsed: 'tree-hitarea icon-plus',
+		iconHitAreaExpanded: 'tree-hitarea icon-minus',
+		iconLeaf: 'icon-leaf',
+		iconLoading: 'icon-refresh',
+		iconUncheck: 'icon-check'
 	};
 
 	<%
@@ -129,6 +127,14 @@ if (!selectableTree) {
 				className += ' ' + data.cssClass;
 			}
 
+			if (!data.uuid) {
+				data.uuid = "";
+			}
+
+			if (!data.id) {
+				data.id = "";
+			}
+
 			if (<%= checkContentDisplayPage %> && !data.contentDisplayPage) {
 				className += ' layout-page-invalid';
 			}
@@ -141,7 +147,21 @@ if (!selectableTree) {
 				}
 			);
 
-			return '<a class="' + className + '" data-uuid="' + data.uuid + '" href="' + href + '" id="' + data.id + '" title="' + data.title + '">' + data.label + '</a>';
+			return '<a class="' + className + '" data-uuid="' + Util.escapeHTML(data.uuid) + '" href="' + href + '" id="' + Util.escapeHTML(data.id) + '" title="' + data.title + '">' + data.label + '</a>';
+		},
+
+		displayNotice: function(message, type, timeout, useAnimation) {
+			new Liferay.Notice(
+				{
+					closeText: false,
+					content: message + '<button type="button" class="close">&times;</button>',
+					noticeClass: 'hide',
+					timeout: timeout || 10000,
+					toggleText: false,
+					type: type || 'warning',
+					useAnimation: Lang.isValue(useAnimation) ? useAnimation : true
+				}
+			).show();
 		},
 
 		extractGroupId: function(node) {
@@ -176,7 +196,7 @@ if (!selectableTree) {
 						(nodeType === 'link_to_layout') ||
 						(nodeType === 'url')) {
 
-						cssIcons.pages = {
+						cssIcons = {
 							iconCollapsed: iconCssClassName,
 							iconExpanded: iconCssClassName,
 							iconLeaf: iconCssClassName
@@ -188,12 +208,12 @@ if (!selectableTree) {
 						total = nodeChildren.total;
 					}
 
-					var expanded = (total > 0);
+					var expanded = (childLayouts.length > 0);
 
 					var type = 'task';
 
 					<c:if test="<%= !selectableTree %>">
-						type = (nodeChildren && expanded) ? 'node' : 'io';
+						type = (total > 0) ? 'io' : 'node';
 					</c:if>
 
 					var newNode = {
@@ -240,11 +260,18 @@ if (!selectableTree) {
 
 						alwaysShowHitArea: hasChildren,
 
-						<c:if test="<%= !saveState && defaultStateChecked %>">
-							checked: true,
-						</c:if>
+						<c:choose>
+							<c:when test="<%= !saveState && defaultStateChecked %>">
+								checked: true,
+							</c:when>
+							<c:when test="<%= saveState && selectableTree %>">
+								checked: (AArray.indexOf(TreeUtil.CHECKED_NODES, String(node.plid)) > -1) ? true : false,
+							</c:when>
+						</c:choose>
 
-						cssClasses: A.merge(TREE_CSS_CLASSES, cssIcons),
+						cssClasses: {
+							pages: A.merge(TREE_CSS_CLASSES, cssIcons)
+						},
 						draggable: node.sortable,
 						expanded: expanded,
 						id: TreeUtil.createListItemId(node.groupId, node.layoutId, node.plid),
@@ -252,9 +279,14 @@ if (!selectableTree) {
 							cfg: {
 								data: function(node) {
 									return {
+										cmd: 'get',
+										controlPanelCategory: 'current_site.pages',
+										doAsGroupId: themeDisplay.getScopeGroupId(),
 										groupId: TreeUtil.extractGroupId(node),
 										incomplete: <%= incomplete %>,
 										p_auth: Liferay.authToken,
+										p_l_id: themeDisplay.getPlid(),
+										p_p_id: '88',
 										parentLayoutId: TreeUtil.extractLayoutId(node),
 										privateLayout: <%= privateLayout %>,
 										selPlid: '<%= selPlid %>',
@@ -378,6 +410,46 @@ if (!selectableTree) {
 			AArray.each(node.get(STR_CHILDREN), TreeUtil.restoreCheckedNode);
 		},
 
+		restoreNodePosition: function(response) {
+			TreeUtil.displayNotice(response.message, 'warning', 10000, true);
+
+			var nodeId = TreeUtil.createListItemId(response.groupId, response.layoutId, response.plid);
+			var parentNodeId = TreeUtil.createListItemId(response.groupId, response.originalParentLayoutId, response.originalParentPlid);
+
+			var action = 'append';
+
+			var index = response.originalPriority;
+
+			var node = treeview.getNodeById(nodeId);
+			var parentNode = treeview.getNodeById(parentNodeId);
+
+			var sibling;
+
+			if (index > 0) {
+				if (index === parentNode.childrenLength) {
+					action = 'append';
+				}
+				else {
+					var siblingIndex = index;
+
+					if (node.get('parentNode').get('id') !== parentNodeId) {
+						siblingIndex -= 1;
+					}
+
+					sibling = parentNode.item(siblingIndex);
+
+					action = 'after';
+				}
+			}
+
+			if (sibling) {
+				treeview.insert(node, sibling, action);
+			}
+			else {
+				parentNode.appendChild(node);
+			}
+		},
+
 		restoreSelectedNode: function(node) {
 			var plid = TreeUtil.extractPlid(node);
 
@@ -396,9 +468,29 @@ if (!selectableTree) {
 					data: A.mix(
 						data,
 						{
-							p_auth: Liferay.authToken
+							controlPanelCategory: 'current_site.pages',
+							doAsGroupId: themeDisplay.getScopeGroupId(),
+							p_auth: Liferay.authToken,
+							p_l_id: themeDisplay.getPlid(),
+							p_p_id: '88'
 						}
-					)
+					),
+					dataType: 'JSON',
+					on: {
+						success: function(event, id, xhr) {
+							var response;
+
+							try {
+								response = A.JSON.parse(xhr.responseText);
+
+								if (response.status === Liferay.STATUS_CODE.BAD_REQUEST) {
+									TreeUtil.restoreNodePosition(response);
+								}
+							}
+							catch (e) {
+							}
+						}
+					}
 				}
 			);
 		},
@@ -419,6 +511,7 @@ if (!selectableTree) {
 				A.mix(
 					data,
 					{
+						p_auth: Liferay.authToken,
 						useHttpSession: true
 					}
 				);
@@ -592,11 +685,13 @@ if (!selectableTree) {
 			<%
 			long[] openNodes = StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId), 0L);
 
-			JSONObject layoutsJSON = JSONFactoryUtil.createJSONObject(LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true));
+			JSONObject layoutsJSON = JSONFactoryUtil.createJSONObject(LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId));
 			%>
 
 			children: TreeUtil.formatJSONResults(<%= layoutsJSON %>),
-			cssClasses: TREE_CSS_CLASSES,
+			cssClasses: {
+				pages: TREE_CSS_CLASSES
+			},
 			draggable: false,
 
 			<c:choose>
@@ -638,9 +733,14 @@ if (!selectableTree) {
 				cfg: {
 					data: function(node) {
 						return {
+							cmd: 'get',
+							controlPanelCategory: 'current_site.pages',
+							doAsGroupId: themeDisplay.getScopeGroupId(),
 							groupId: TreeUtil.extractGroupId(node),
 							incomplete: <%= incomplete %>,
 							p_auth: Liferay.authToken,
+							p_l_id: themeDisplay.getPlid(),
+							p_p_id: '88',
 							parentLayoutId: TreeUtil.extractLayoutId(node),
 							privateLayout: <%= privateLayout %>,
 							selPlid: '<%= selPlid %>',

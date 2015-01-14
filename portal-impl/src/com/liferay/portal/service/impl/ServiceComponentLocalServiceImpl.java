@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableListener;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,6 +40,7 @@ import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.service.base.ServiceComponentLocalServiceBaseImpl;
 import com.liferay.portal.tools.servicebuilder.Entity;
+import com.liferay.portal.util.PropsUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,6 +59,10 @@ import javax.servlet.ServletContext;
  */
 public class ServiceComponentLocalServiceImpl
 	extends ServiceComponentLocalServiceBaseImpl {
+
+	public static final boolean CACHE_CLEAR_ON_PLUGIN_UNDEPLOY =
+			GetterUtil.getBoolean(
+				PropsUtil.get("cache.clear.on.plugin.undeploy"));
 
 	@Override
 	public void destroyServiceComponent(
@@ -296,8 +302,10 @@ public class ServiceComponentLocalServiceImpl
 
 		CacheRegistryUtil.clear();
 
-		EntityCacheUtil.clearCache();
-		FinderCacheUtil.clearCache();
+		if (CACHE_CLEAR_ON_PLUGIN_UNDEPLOY) {
+			EntityCacheUtil.clearCache();
+			FinderCacheUtil.clearCache();
+		}
 	}
 
 	protected void doUpgradeDB(

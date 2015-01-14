@@ -14,18 +14,18 @@
 
 package com.liferay.portlet.dynamicdatamapping.action;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -47,8 +47,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.Locale;
 import java.util.Map;
@@ -236,26 +234,37 @@ public class EditTemplateAction extends PortletAction {
 		return portletURL.toString();
 	}
 
-	protected String getScript(UploadPortletRequest uploadPortletRequest) {
-		InputStream inputStream = null;
+	protected String getScript(UploadPortletRequest uploadPortletRequest)
+		throws Exception {
 
-		try {
-			inputStream = uploadPortletRequest.getFileAsStream("script");
+		String scriptContent = ParamUtil.getString(
+			uploadPortletRequest, "scriptContent");
 
-			if (inputStream != null) {
-				return new String(FileUtil.getBytes(inputStream));
-			}
-		}
-		catch (IOException ioe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
-			}
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
+		File file = uploadPortletRequest.getFile("script");
+
+		if (file == null) {
+			return scriptContent;
 		}
 
-		return null;
+		String script = FileUtil.read(file);
+
+		if (Validator.isNotNull(script) && !isValidFile(file)) {
+			throw new TemplateScriptException();
+		}
+
+		return GetterUtil.getString(script, scriptContent);
+	}
+
+	protected boolean isValidFile(File file) {
+		String contentType = MimeTypesUtil.getContentType(file);
+
+		if (contentType.equals(ContentTypes.APPLICATION_XSLT_XML) ||
+			contentType.startsWith(ContentTypes.TEXT)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected DDMTemplate updateTemplate(ActionRequest actionRequest)
@@ -270,6 +279,8 @@ public class EditTemplateAction extends PortletAction {
 		long classNameId = ParamUtil.getLong(
 			uploadPortletRequest, "classNameId");
 		long classPK = ParamUtil.getLong(uploadPortletRequest, "classPK");
+		String templateKey = ParamUtil.getString(
+			uploadPortletRequest, "templateKey");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			uploadPortletRequest, "name");
 		Map<Locale, String> descriptionMap =
@@ -281,12 +292,6 @@ public class EditTemplateAction extends PortletAction {
 			uploadPortletRequest, "language", TemplateConstants.LANG_TYPE_VM);
 
 		String script = getScript(uploadPortletRequest);
-		String scriptContent = ParamUtil.getString(
-			uploadPortletRequest, "scriptContent");
-
-		if (Validator.isNull(script)) {
-			script = scriptContent;
-		}
 
 		boolean cacheable = ParamUtil.getBoolean(
 			uploadPortletRequest, "cacheable");
@@ -303,9 +308,9 @@ public class EditTemplateAction extends PortletAction {
 
 		if (templateId <= 0) {
 			template = DDMTemplateServiceUtil.addTemplate(
-				groupId, classNameId, classPK, null, nameMap, descriptionMap,
-				type, mode, language, script, cacheable, smallImage,
-				smallImageURL, smallImageFile, serviceContext);
+				groupId, classNameId, classPK, templateKey, nameMap,
+				descriptionMap, type, mode, language, script, cacheable,
+				smallImage, smallImageURL, smallImageFile, serviceContext);
 		}
 		else {
 			template = DDMTemplateServiceUtil.updateTemplate(
@@ -334,7 +339,5 @@ public class EditTemplateAction extends PortletAction {
 
 		return template;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(EditTemplateAction.class);
 
 }

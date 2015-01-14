@@ -59,6 +59,17 @@ public class StagingLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static void checkDefaultLayoutSetBranches(long userId,
+		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
+		boolean branchingPrivate, boolean remote,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.checkDefaultLayoutSetBranches(userId, liveGroup, branchingPublic,
+			branchingPrivate, remote, serviceContext);
+	}
+
 	public static void cleanUpStagingRequest(long stagingRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

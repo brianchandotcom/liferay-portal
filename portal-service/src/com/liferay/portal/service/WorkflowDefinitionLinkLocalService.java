@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	* @return the workflow definition link that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.WorkflowDefinitionLink addWorkflowDefinitionLink(
 		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	* @throws PortalException if a workflow definition link with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.WorkflowDefinitionLink deleteWorkflowDefinitionLink(
 		long workflowDefinitionLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	* @return the workflow definition link that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.WorkflowDefinitionLink deleteWorkflowDefinitionLink(
 		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	* @return the workflow definition link that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.WorkflowDefinitionLink updateWorkflowDefinitionLink(
 		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -300,18 +305,21 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 		java.lang.String workflowDefinitionName, int workflowDefinitionVersion)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasWorkflowDefinitionLink(long companyId, long groupId,
 		java.lang.String className)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasWorkflowDefinitionLink(long companyId, long groupId,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasWorkflowDefinitionLink(long companyId, long groupId,
 		java.lang.String className, long classPK, long typePK)

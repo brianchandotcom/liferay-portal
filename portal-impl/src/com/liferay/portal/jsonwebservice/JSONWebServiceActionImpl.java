@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
 import jodd.typeconverter.TypeConverterManager;
@@ -113,17 +114,17 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				list = (List<?>)value;
 			}
 			else {
-				String stringValue = value.toString();
+				String valueString = value.toString();
 
-				stringValue = stringValue.trim();
+				valueString = valueString.trim();
 
-				if (!stringValue.startsWith(StringPool.OPEN_BRACKET)) {
-					stringValue = StringPool.OPEN_BRACKET.concat(
-						stringValue).concat(StringPool.CLOSE_BRACKET);
+				if (!valueString.startsWith(StringPool.OPEN_BRACKET)) {
+					valueString = StringPool.OPEN_BRACKET.concat(
+						valueString).concat(StringPool.CLOSE_BRACKET);
 				}
 
 				list = JSONFactoryUtil.looseDeserializeSafe(
-					stringValue, ArrayList.class);
+					valueString, ArrayList.class);
 			}
 
 			return _convertListToArray(list, parameterType.getComponentType());
@@ -133,11 +134,11 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 			calendar.setLenient(false);
 
-			String stringValue = value.toString();
+			String valueString = value.toString();
 
-			stringValue = stringValue.trim();
+			valueString = valueString.trim();
 
-			long timeInMillis = GetterUtil.getLong(stringValue);
+			long timeInMillis = GetterUtil.getLong(valueString);
 
 			calendar.setTimeInMillis(timeInMillis);
 
@@ -150,35 +151,42 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				list = (List<?>)value;
 			}
 			else {
-				String stringValue = value.toString();
+				String valueString = value.toString();
 
-				stringValue = stringValue.trim();
+				valueString = valueString.trim();
 
-				if (!stringValue.startsWith(StringPool.OPEN_BRACKET)) {
-					stringValue = StringPool.OPEN_BRACKET.concat(
-						stringValue).concat(StringPool.CLOSE_BRACKET);
+				if (!valueString.startsWith(StringPool.OPEN_BRACKET)) {
+					valueString = StringPool.OPEN_BRACKET.concat(
+						valueString).concat(StringPool.CLOSE_BRACKET);
 				}
 
 				list = JSONFactoryUtil.looseDeserializeSafe(
-					stringValue, ArrayList.class);
+					valueString, ArrayList.class);
 			}
 
 			return _generifyList(list, genericParameterTypes);
 		}
 		else if (parameterType.equals(Locale.class)) {
-			String stringValue = value.toString();
+			String valueString = value.toString();
 
-			stringValue = stringValue.trim();
+			valueString = valueString.trim();
 
-			return LocaleUtil.fromLanguageId(stringValue);
+			return LocaleUtil.fromLanguageId(valueString);
 		}
 		else if (parameterType.equals(Map.class)) {
-			String stringValue = value.toString();
+			Map<?, ?> map = null;
 
-			stringValue = stringValue.trim();
+			if (value instanceof Map) {
+				map = (Map<Object, Object>)value;
+			}
+			else {
+				String valueString = value.toString();
 
-			Map<?, ?> map = JSONFactoryUtil.looseDeserializeSafe(
-				stringValue, HashMap.class);
+				valueString = valueString.trim();
+
+				map = JSONFactoryUtil.looseDeserializeSafe(
+					valueString, HashMap.class);
+			}
 
 			return _generifyMap(map, genericParameterTypes);
 		}
@@ -189,17 +197,32 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 				parameterValue = TypeConverterManager.convertType(
 					value, parameterType);
 			}
-			catch (Exception e) {
-				String stringValue = value.toString();
+			catch (Exception e1) {
+				if (value instanceof Map) {
+					try {
+						parameterValue = _createDefaultParameterValue(
+							null, parameterType);
+					}
+					catch (Exception e2) {
+						throw new ClassCastException(e1.getMessage());
+					}
 
-				stringValue = stringValue.trim();
+					BeanCopy beanCopy = BeanCopy.beans(value, parameterValue);
 
-				if (!stringValue.startsWith(StringPool.OPEN_CURLY_BRACE)) {
-					throw new ClassCastException(e.getMessage());
+					beanCopy.copy();
 				}
+				else {
+					String valueString = value.toString();
 
-				parameterValue = JSONFactoryUtil.looseDeserializeSafe(
-					stringValue, parameterType);
+					valueString = valueString.trim();
+
+					if (!valueString.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+						throw new ClassCastException(e1.getMessage());
+					}
+
+					parameterValue = JSONFactoryUtil.looseDeserializeSafe(
+						valueString, parameterType);
+				}
 			}
 
 			return parameterValue;
@@ -210,7 +233,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			String parameterName, Class<?> parameterType)
 		throws Exception {
 
-		if (parameterName.equals("serviceContext") &&
+		if ((parameterName != null) && parameterName.equals("serviceContext") &&
 			parameterType.equals(ServiceContext.class)) {
 
 			return new ServiceContext();
@@ -337,17 +360,14 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			if (value != null) {
 				Class<?> parameterType = methodParameters[i].getType();
 
-				if (value.equals(Void.TYPE)) {
-					String parameterTypeName =
-						_jsonWebServiceActionParameters.getParameterTypeName(
-							parameterName);
+				String parameterTypeName =
+					_jsonWebServiceActionParameters.getParameterTypeName(
+						parameterName);
 
-					if (parameterTypeName != null) {
-						ClassLoader classLoader = actionClass.getClassLoader();
+				if (parameterTypeName != null) {
+					ClassLoader classLoader = actionClass.getClassLoader();
 
-						parameterType = classLoader.loadClass(
-							parameterTypeName);
-					}
+					parameterType = classLoader.loadClass(parameterTypeName);
 
 					if (!ReflectUtil.isSubclass(
 							parameterType, methodParameters[i].getType())) {
@@ -357,7 +377,9 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 								parameterType.getName() +
 									" for method argument " + i);
 					}
+				}
 
+				if (value.equals(Void.TYPE)) {
 					parameterValue = _createDefaultParameterValue(
 						parameterName, parameterType);
 				}

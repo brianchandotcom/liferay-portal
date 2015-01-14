@@ -568,6 +568,10 @@
 		<put name="portlet_content" value="/portlet/dynamic_data_lists/select_dynamic_data_mapping_structure.jsp" />
 	</definition>
 
+	<definition name="portlet.dynamic_data_lists.update_translation_redirect" extends="portlet.dynamic_data_lists">
+		<put name="portlet_content" value="/portlet/dynamic_data_lists/update_translation_redirect.jsp" />
+	</definition>
+
 	<definition name="portlet.dynamic_data_lists.view" extends="portlet.dynamic_data_lists">
 		<put name="portlet_content" value="/portlet/dynamic_data_lists/view.jsp" />
 	</definition>
@@ -855,6 +859,10 @@
 	<!-- Layouts Admin -->
 
 	<definition name="portlet.layouts_admin" extends="portlet" />
+
+	<definition name="portlet.layouts_admin.add_layout" extends="portlet.layouts_admin">
+		<put name="portlet_content" value="/portlet/layouts_admin/add_layout.jsp" />
+	</definition>
 
 	<definition name="portlet.layouts_admin.edit_layouts" extends="portlet.layouts_admin">
 		<put name="portlet_content" value="/portlet/layouts_admin/view.jsp" />

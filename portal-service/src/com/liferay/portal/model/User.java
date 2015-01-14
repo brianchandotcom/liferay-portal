@@ -54,34 +54,175 @@ public interface User extends UserModel, PersistedModel {
 
 	public java.lang.String getDisplayEmailAddress();
 
+	/**
+	* Returns the user's display URL, discounting the URL of the user's default
+	* intranet site home page.
+	*
+	* <p>
+	* The logic for the display URL to return is as follows:
+	* </p>
+	*
+	* <ol>
+	* <li>
+	* If the user is the guest user, return an empty string.
+	* </li>
+	* <li>
+	* Else, if a friendly URL is available for the user's profile, return that
+	* friendly URL.
+	* </li>
+	* <li>
+	* Otherwise, return the URL of the user's default extranet site home page.
+	* </li>
+	* </ol>
+	*
+	* @param portalURL the portal's URL
+	* @param mainPath the main path
+	* @return the user's display URL
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
+	*/
+	@java.lang.Deprecated()
 	public java.lang.String getDisplayURL(java.lang.String portalURL,
 		java.lang.String mainPath)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the user's display URL.
+	*
+	* <p>
+	* The logic for the display URL to return is as follows:
+	* </p>
+	*
+	* <ol>
+	* <li>
+	* If the user is the guest user, return an empty string.
+	* </li>
+	* <li>
+	* Else, if a friendly URL is available for the user's profile, return that
+	* friendly URL.
+	* </li>
+	* <li>
+	* Else, if <code>privateLayout</code> is <code>true</code>, return the URL
+	* of the user's default intranet site home page.
+	* </li>
+	* <li>
+	* Otherwise, return the URL of the user's default extranet site home page.
+	* </li>
+	* </ol>
+	*
+	* @param portalURL the portal's URL
+	* @param mainPath the main path
+	* @param privateLayout whether to use the URL of the user's default
+	intranet(versus extranet)  site home page, if no friendly URL
+	is available for the user's profile
+	* @return the user's display URL
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
+	*/
+	@java.lang.Deprecated()
 	public java.lang.String getDisplayURL(java.lang.String portalURL,
 		java.lang.String mainPath, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the user's display URL based on the theme display, discounting
+	* the URL of the user's default intranet site home page.
+	*
+	* <p>
+	* The logic for the display URL to return is as follows:
+	* </p>
+	*
+	* <ol>
+	* <li>
+	* If the user is the guest user, return an empty string.
+	* </li>
+	* <li>
+	* Else, if a friendly URL is available for the user's profile, return that
+	* friendly URL.
+	* </li>
+	* <li>
+	* Otherwise, return the URL of the user's default extranet site home page.
+	* </li>
+	* </ol>
+	*
+	* @param themeDisplay the theme display
+	* @return the user's display URL
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public java.lang.String getDisplayURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the user's display URL based on the theme display.
+	*
+	* <p>
+	* The logic for the display URL to return is as follows:
+	* </p>
+	*
+	* <ol>
+	* <li>
+	* If the user is the guest user, return an empty string.
+	* </li>
+	* <li>
+	* Else, if a friendly URL is available for the user's profile, return that
+	* friendly URL.
+	* </li>
+	* <li>
+	* Else, if <code>privateLayout</code> is <code>true</code>, return the URL
+	* of the user's default intranet site home page.
+	* </li>
+	* <li>
+	* Otherwise, return the URL of the user's default extranet site home page.
+	* </li>
+	* </ol>
+	*
+	* @param themeDisplay the theme display
+	* @param privateLayout whether to use the URL of the user's default
+	intranet (versus extranet) site home page, if no friendly URL is
+	available for the user's profile
+	* @return the user's display URL
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public java.lang.String getDisplayURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the user's email addresses.
+	*
+	* @return the user's email addresses
+	* @throws SystemException if a system exception occurred
+	*/
 	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns <code>true</code> if the user is female.
+	*
+	* @return <code>true</code> if the user is female; <code>false</code>
+	otherwise
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public boolean getFemale()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the user's full name.
+	*
+	* @return the user's full name
+	*/
 	@com.liferay.portal.kernel.bean.AutoEscape()
 	public java.lang.String getFullName();
 
@@ -105,6 +246,14 @@ public interface User extends UserModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns <code>true</code> if the user is male.
+	*
+	* @return <code>true</code> if the user is male; <code>false</code>
+	otherwise
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public boolean getMale()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

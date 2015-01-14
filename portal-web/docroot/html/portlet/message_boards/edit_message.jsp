@@ -18,6 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+String uploadExceptionRedirect = ParamUtil.getString(request, "uploadExceptionRedirect", currentURL);
 
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
@@ -139,7 +140,9 @@ else {
 	request.setAttribute("edit_message.jsp-depth", depth);
 	request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);
 	request.setAttribute("edit_message.jsp-message", previewMessage);
+	request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.TRUE);
 	request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
+	request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
 	request.setAttribute("edit_message.jsp-thread", thread);
 	%>
 
@@ -154,6 +157,7 @@ else {
 
 <portlet:actionURL var="editMessageURL">
 	<portlet:param name="struts_action" value="/message_boards/edit_message" />
+	<liferay-portlet:param name="uploadExceptionRedirect" value="<%= uploadExceptionRedirect %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editMessageURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveMessage(false);" %>'>
@@ -168,9 +172,11 @@ else {
 
 	<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
 	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
-	<liferay-ui:error exception="<%= LockedThreadException.class %>" message="thread-is-locked" />
-	<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
-	<liferay-ui:error exception="<%= MessageSubjectException.class %>" message="please-enter-a-valid-subject" />
+	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-document-name" />
+
+	<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
+		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
+	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= FileExtensionException.class %>">
 		<liferay-ui:message key="document-names-must-end-with-one-of-the-following-extensions" /><%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA), StringPool.COMMA_AND_SPACE) %>.
@@ -192,6 +198,10 @@ else {
 
 		<liferay-ui:message arguments="<%= fileMaxSize %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
 	</liferay-ui:error>
+
+	<liferay-ui:error exception="<%= LockedThreadException.class %>" message="thread-is-locked" />
+	<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
+	<liferay-ui:error exception="<%= MessageSubjectException.class %>" message="please-enter-a-valid-subject" />
 
 	<liferay-ui:asset-categories-error />
 
@@ -475,7 +485,9 @@ else {
 		request.setAttribute("edit_message.jsp-depth", depth);
 		request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);
 		request.setAttribute("edit_message.jsp-message", message);
+		request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.TRUE);
 		request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
+		request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
 		request.setAttribute("edit_message.jsp-thread", thread);
 		%>
 
@@ -489,6 +501,12 @@ else {
 	}
 
 	function <portlet:namespace />previewMessage() {
+		<c:if test="<%= ((message != null) && !message.isDraft()) %>">
+			if (!confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-message-will-be-saved-as-a-draft-and-other-users-may-not-be-able-to-see-it" />')) {
+				return false;
+			}
+		</c:if>
+
 		document.<portlet:namespace />fm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
 		document.<portlet:namespace />fm.<portlet:namespace />preview.value = 'true';
 

@@ -21,7 +21,7 @@ int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTR
 
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
-String summary = StringUtil.shorten(message.getBody(), abstractLength);
+String summary = message.getBody();
 
 if (message.isFormatBBCode()) {
 	summary = BBCodeTranslatorUtil.getHTML(summary);
@@ -29,4 +29,4 @@ if (message.isFormatBBCode()) {
 }
 %>
 
-<%= summary %>
+<%= StringUtil.shorten(HtmlUtil.stripHtml(summary), abstractLength) %>

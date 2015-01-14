@@ -18,9 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
 
@@ -54,6 +56,7 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	* @return the d d l record set that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet addDDLRecordSet(
 		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -75,6 +78,7 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	* @throws PortalException if a d d l record set with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet deleteDDLRecordSet(
 		long recordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -87,6 +91,7 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	* @return the d d l record set that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet deleteDDLRecordSet(
 		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -284,6 +289,7 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	* @return the d d l record set that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateDDLRecordSet(
 		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -324,6 +330,7 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteRecordSet(
 		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet recordSet)
 		throws com.liferay.portal.kernel.exception.PortalException,

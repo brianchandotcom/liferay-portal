@@ -845,6 +845,12 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _wikiNode.isInTrashExplicitly();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

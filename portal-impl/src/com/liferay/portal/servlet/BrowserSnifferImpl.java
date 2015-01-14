@@ -513,7 +513,9 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	}
 
 	protected boolean isIe(String userAgent) {
-		if (userAgent.contains("msie") && !userAgent.contains("opera")) {
+		if ((userAgent.contains("msie") || userAgent.contains("trident")) &&
+			!userAgent.contains("opera")) {
+
 			return true;
 		}
 

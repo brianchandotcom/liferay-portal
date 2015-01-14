@@ -72,7 +72,14 @@ public class BookmarksEntryPermission {
 
 			long folderId = entry.getFolderId();
 
-			if (folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			if (folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				if (!BookmarksPermission.contains(
+						permissionChecker, entry.getGroupId(), actionId)) {
+
+					return false;
+				}
+			}
+			else {
 				try {
 					BookmarksFolder folder =
 						BookmarksFolderLocalServiceUtil.getFolder(folderId);

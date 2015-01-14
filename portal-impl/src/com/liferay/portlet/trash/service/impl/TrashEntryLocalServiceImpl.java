@@ -32,11 +32,11 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
+import com.liferay.portlet.trash.service.persistence.TrashEntryActionableDynamicQuery;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Calendar;
@@ -127,25 +127,29 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	@Override
 	public void checkEntries() throws PortalException, SystemException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			new GroupActionableDynamicQuery() {
+			new TrashEntryActionableDynamicQuery() {
 
 			@Override
 			protected void performAction(Object object)
 				throws PortalException, SystemException {
 
-				Group group = (Group)object;
+				TrashEntry trashEntry = (TrashEntry)object;
+
+				Date createDate = trashEntry.getCreateDate();
+
+				Group group = groupPersistence.fetchByPrimaryKey(
+					trashEntry.getGroupId());
 
 				Date date = getMaxAge(group);
 
-				List<TrashEntry> entries = trashEntryPersistence.findByG_LtCD(
-					group.getGroupId(), date);
+				if (createDate.before(date) ||
+					!TrashUtil.isTrashEnabled(group.getGroupId())) {
 
-				for (TrashEntry entry : entries) {
 					TrashHandler trashHandler =
 						TrashHandlerRegistryUtil.getTrashHandler(
-							entry.getClassName());
+							trashEntry.getClassName());
 
-					trashHandler.deleteTrashEntry(entry.getClassPK());
+					trashHandler.deleteTrashEntry(trashEntry.getClassPK());
 				}
 			}
 

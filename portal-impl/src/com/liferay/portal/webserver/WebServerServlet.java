@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -514,7 +515,8 @@ public class WebServerServlet extends HttpServlet {
 		return image.getTextObj();
 	}
 
-	protected long getImageId(HttpServletRequest request) {
+	protected long getImageId(HttpServletRequest request)
+		throws PortalException, SystemException {
 
 		// The image id may be passed in as image_id, img_id, or i_id
 
@@ -528,19 +530,40 @@ public class WebServerServlet extends HttpServlet {
 			imageId = ParamUtil.getLong(request, "i_id");
 		}
 
+		User user = null;
+
 		if (imageId <= 0) {
 			long companyId = ParamUtil.getLong(request, "companyId");
 			String screenName = ParamUtil.getString(request, "screenName");
 
-			try {
-				if ((companyId > 0) && Validator.isNotNull(screenName)) {
-					User user = UserLocalServiceUtil.getUserByScreenName(
-						companyId, screenName);
+			if ((companyId > 0) && Validator.isNotNull(screenName)) {
+				user = UserLocalServiceUtil.fetchUserByScreenName(
+					companyId, screenName);
 
+				if (user != null) {
 					imageId = user.getPortraitId();
 				}
 			}
-			catch (Exception e) {
+		}
+
+		if (PropsValues.USERS_IMAGE_CHECK_TOKEN && (imageId > 0)) {
+			String imageIdToken = ParamUtil.getString(request, "img_id_token");
+
+			if (user == null) {
+				try {
+					user = UserLocalServiceUtil.getUserByPortraitId(imageId);
+				}
+				catch (Exception e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(e);
+					}
+				}
+			}
+
+			if ((user != null) &&
+				!imageIdToken.equals(DigesterUtil.digest(user.getUserUuid()))) {
+
+				return 0;
 			}
 		}
 
@@ -833,26 +856,22 @@ public class WebServerServlet extends HttpServlet {
 		String tempFileId = DLUtil.getTempFileId(
 			fileEntry.getFileEntryId(), version);
 
-		if (fileEntry.getModel() instanceof DLFileEntry) {
-			LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
+		if (fileEntry.isInTrash()) {
+			int status = ParamUtil.getInteger(
+				request, "status", WorkflowConstants.STATUS_APPROVED);
 
-			if (liferayFileEntry.isInTrash()) {
-				int status = ParamUtil.getInteger(
-					request, "status", WorkflowConstants.STATUS_APPROVED);
+			if (status != WorkflowConstants.STATUS_IN_TRASH) {
+				throw new NoSuchFileEntryException();
+			}
 
-				if (status != WorkflowConstants.STATUS_IN_TRASH) {
-					throw new NoSuchFileEntryException();
-				}
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
 
-				PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker();
+			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+					permissionChecker, fileEntry.getGroupId(),
+					PortletKeys.TRASH)) {
 
-				if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-						permissionChecker, fileEntry.getGroupId(),
-						PortletKeys.TRASH)) {
-
-					throw new PrincipalException();
-				}
+				throw new PrincipalException();
 			}
 		}
 

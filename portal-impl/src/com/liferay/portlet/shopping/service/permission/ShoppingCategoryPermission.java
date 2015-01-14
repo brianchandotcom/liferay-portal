@@ -95,7 +95,8 @@ public class ShoppingCategoryPermission {
 				categoryId = category.getParentCategoryId();
 			}
 
-			return true;
+			return ShoppingPermission.contains(
+				permissionChecker, category.getGroupId(), actionId);
 		}
 
 		return _hasPermission(permissionChecker, category, actionId);

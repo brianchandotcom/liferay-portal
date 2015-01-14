@@ -117,7 +117,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 <aui:nav-bar>
 	<aui:nav id="layoutsNav">
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && showAddAction %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && showAddAction && PortalUtil.isLayoutParentable(selLayout) %>">
 			<aui:nav-item data-value="add-child-page" iconCssClass="icon-plus" label="add-child-page" />
 		</c:if>
 		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.PERMISSIONS) %>">
@@ -233,6 +233,10 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 						var dataValue = target.ancestor('li').attr('data-value') || target.attr('data-value');
 
+						processDataValue(dataValue);
+					};
+
+					var processDataValue = function(dataValue) {
 						if (dataValue === 'add-child-page') {
 							content = A.one('#<portlet:namespace />addLayout');
 
@@ -276,7 +280,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 							Liferay.Util.openWindow(
 								{
 									cache: false,
-									id: '<portlet:namespace /><%= selLayout.getFriendlyURL().substring(1) %>_permissions',
+									id: '<portlet:namespace /><%= HtmlUtil.escapeJS(selLayout.getFriendlyURL().substring(1)) %>_permissions',
 									title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
 									uri: '<%= permissionURL %>'
 								}
@@ -321,6 +325,10 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					};
 
 					A.one('#<portlet:namespace />layoutsNav').delegate('click', clickHandler, 'li a');
+
+					<c:if test='<%= layout.isTypeControlPanel() && (SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "addError") != null) %>'>
+						processDataValue('add-page');
+					</c:if>
 				</aui:script>
 			</c:if>
 

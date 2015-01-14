@@ -25,7 +25,7 @@
 		}
 	}
 
-	.alert {
+	.alert, .portlet-msg-alert, .portlet-msg-error, .portlet-msg-help, .portlet-msg-info, .portlet-msg-progress, .portlet-msg-success {
 		word-wrap: break-word;
 	}
 
@@ -139,8 +139,20 @@
 		}
 	}
 
-	.input-append {
-		padding-right: 12px;
+	@include respond-to(phone) {
+		.form-search .input-append {
+			.btn {
+				font-size: 0;
+				padding: 4px 19px 0;
+
+				&:after {
+					content: $search;
+					font-size: 18px;
+
+					@include icon-FontAwesome();
+				}
+			}
+		}
 	}
 
 	.navbar .nav > li > a {
@@ -350,8 +362,8 @@
 
 			li.dropdown.user-avatar {
 				.dropdown-menu {
-					right: 0;
 					left: auto;
+					right: 0;
 				}
 			}
 		}
@@ -437,9 +449,13 @@
 	/* ---------- Breadcrumbs ---------- */
 
 	.breadcrumb {
+		@include ellipsis;
+
 		padding: 3px 15px 2px;
 
 		li {
+			display: inline;
+
 			span.divider {
 				color: #999;
 				font-weight: bold;
@@ -460,31 +476,33 @@
 			display: none;
 		}
 
-		@include respond-to(phone) {
-			padding-left: 5px;
-			padding-right: 5px;
+		&.breadcrumb-horizontal {
+			@include respond-to(phone) {
+				padding-left: 5px;
+				padding-right: 5px;
 
-			li {
-				display: none;
+				li {
+					display: none;
 
-				&.only, &.first, &.last, &.current-parent {
-					display: inline-block;
-				}
-
-				&.breadcrumb-truncate {
-					&.only, &.first a, &.last a, &.active, &.current-parent a {
+					&.only, &.first, &.last, &.current-parent {
 						display: inline-block;
-						max-width: 65px;
-						overflow: hidden;
-						text-overflow: ellipsis;
-						vertical-align: bottom;
-						white-space: nowrap;
 					}
 
-					&.current-parent:before {
-						color: #999;
-						content: " ... / ";
-						font-weight: bold;
+					&.breadcrumb-truncate {
+						&.only, &.first a, &.last a, &.active, &.current-parent a {
+							display: inline-block;
+							max-width: 65px;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							vertical-align: bottom;
+							white-space: nowrap;
+						}
+
+						&.current-parent:before {
+							color: #999;
+							content: ' ... / ';
+							font-weight: bold;
+						}
 					}
 				}
 			}
@@ -492,6 +510,39 @@
 	}
 
 	/* ---------- Form navigator ---------- */
+
+	.taglib-form-navigator > .form-steps > ul.form-navigator.well .tab {
+		&.active {
+			.tab-label {
+				.message {
+					color: #000;
+				}
+
+				.number {
+					background: #60BFEF;
+				}
+
+				.tab-icon {
+					color: #60BFEF;
+				}
+			}
+		}
+
+		&.section-error .tab-label .message {
+			color: #B50303;
+		}
+
+		.tab-label {
+			.message {
+				color: #000;
+			}
+
+			.number {
+				background: #CCC;
+				color: #FFF;
+			}
+		}
+	}
 
 	@include respond-to(phone, tablet) {
 		.taglib-form-navigator {
@@ -551,6 +602,8 @@
 		background-color: #E5E5E5;
 		border: solid #DDD;
 		border-width: 1px 0;
+
+		@include ellipsis;
 	}
 
 	.accordion .accordion-group {
@@ -684,8 +737,8 @@
 	.add-content-menu, .lfr-edit-layout-panel, .panel-page-menu .portlet-borderless-container {
 		.accordion {
 			background: #FFF;
-			border: 1px solid #D3D3D3;
-			border-top-width: 0;
+			border: solid #D3D3D3;
+			border-width: 0 1px;
 
 			.accordion-group {
 				border-width: 0;
@@ -703,7 +756,8 @@
 
 				.accordion-inner {
 					background: #FCFCFC;
-					border-width: 0;
+					border: solid #D3D3D3;
+					border-width: 0 0 1px 0;
 					padding: 6px 0 15px;
 				}
 
@@ -711,6 +765,7 @@
 					background: #F2F2F2;
 					border: solid #D3D3D3;
 					border-width: 1px 0;
+					margin-top: -1px;
 					padding: 6px 10px;
 
 					@include user-select(none);
@@ -720,15 +775,11 @@
 					}
 				}
 
-				.toggler-header-collapsed {
-					border-bottom-width: 0;
+				.toggler-header-collapsed .accordion-toggle {
+					background-position: 100% 0;
 
-					.accordion-toggle {
-						background-position: 100% 0;
-
-						&:before {
-							display: none;
-						}
+					&:before {
+						display: none;
 					}
 				}
 
@@ -808,6 +859,32 @@
 
 	.breadcrumb > li {
 		@include text-shadow(none);
+	}
+
+	.taglib-form-navigator > .form-steps > ul.form-navigator.well .tab {
+		&.section-error, &.section-success {
+			.tab-label .number {
+				@include transition-duration(0.25s);
+				@include transition-property(box-shadow);
+				@include transition-timing-function(ease-out);
+			}
+		}
+
+		&.section-error .tab-label .number {
+			@include box-shadow(0 0 5px 0 #B50303);
+		}
+
+		&.section-success .tab-label .number {
+			@include box-shadow(0 0 5px 0 #488F06);
+		}
+
+		.tab-label {
+			&:hover, &:focus {
+				.number {
+					@include box-shadow(0 0 5px 0 #60BFEF);
+				}
+			}
+		}
 	}
 
 	.modify-pages .delete-tab {

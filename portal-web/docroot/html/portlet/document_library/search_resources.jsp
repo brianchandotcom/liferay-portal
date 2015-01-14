@@ -112,17 +112,26 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 	<liferay-util:buffer var="searchInfo">
 		<div class="search-info">
 			<span class="keywords">
-				<%= (folder != null) ? LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), folder.getName()}) : LanguageUtil.format(pageContext, "searched-for-x-everywhere", HtmlUtil.escape(keywords)) %>
+
+				<%
+				boolean searchEverywhere = false;
+
+				if ((folder == null) || (folder.getFolderId() == rootFolderId)) {
+					searchEverywhere = true;
+				}
+				%>
+
+				<%= !searchEverywhere ? LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}) : LanguageUtil.format(pageContext, "searched-for-x-everywhere", HtmlUtil.escape(keywords)) %>
 			</span>
 
-			<c:if test="<%= folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
+			<c:if test="<%= folderId != rootFolderId %>">
 				<span class="change-search-folder">
 
 					<%
-					String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "changeSearchFolder', {searchEverywhere: " + (folder != null) + "});";
+					String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "changeSearchFolder', {searchEverywhere: " + !searchEverywhere + "});";
 					%>
 
-					<aui:button onClick="<%= taglibOnClick %>" value='<%= (folder != null) ? "search-everywhere" : "search-in-the-current-folder" %>' />
+					<aui:button onClick="<%= taglibOnClick %>" value='<%= !searchEverywhere ? "search-everywhere" : "search-in-the-current-folder" %>' />
 				</span>
 			</c:if>
 
@@ -241,7 +250,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 
 							FileVersion latestFileVersion = fileEntry.getFileVersion();
 
-							if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+							if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 								latestFileVersion = fileEntry.getLatestFileVersion();
 							}
 
@@ -271,7 +280,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 							<%
 							int status = WorkflowConstants.STATUS_APPROVED;
 
-							if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(curFolder.getGroupId())) {
+							if (permissionChecker.isContentReviewer(user.getCompanyId(), curFolder.getGroupId())) {
 								status = WorkflowConstants.STATUS_ANY;
 							}
 
@@ -363,14 +372,14 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 
 			for (Folder mountFolder : mountFolders) {
 				if (mountFolder.getRepositoryId() == searchRepositoryId) {
-					selectedTab = mountFolder.getName();
+					selectedTab = HtmlUtil.escape(mountFolder.getName());
 				}
 			}
 			%>
 
 				<div class="search-results-container" id="<portlet:namespace />searchResultsContainer">
 					<liferay-ui:tabs
-						names='<%= LanguageUtil.get(pageContext, "local") + "," + ListUtil.toString(mountFolders, "name") %>'
+						names='<%= LanguageUtil.get(pageContext, "local") + "," + HtmlUtil.escape(ListUtil.toString(mountFolders, "name")) %>'
 						refresh="<%= false %>"
 						value="<%= selectedTab %>"
 					>

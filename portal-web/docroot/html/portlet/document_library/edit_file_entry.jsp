@@ -168,41 +168,27 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 	/>
 </c:if>
 
-<%
-PortletURL editFileEntryURL = renderResponse.createActionURL();
-
-editFileEntryURL.setParameter("struts_action", "/document_library/edit_file_entry");
-
-if (Validator.isNotNull(redirect)) {
-	editFileEntryURL.setParameter("redirect", redirect);
-}
-
-if (Validator.isNotNull(referringPortletResource)) {
-	editFileEntryURL.setParameter("referringPortletResource", referringPortletResource);
-}
-
-if (repositoryId > 0) {
-	editFileEntryURL.setParameter("repositoryId", String.valueOf(repositoryId));
-}
-
-if (folderId > 0) {
-	editFileEntryURL.setParameter("folderId", String.valueOf(folderId));
-}
-
-if (fileEntryId > 0) {
-	editFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
-}
-
-editFileEntryURL.setParameter("workflowAction", String.valueOf(WorkflowConstants.ACTION_PUBLISH));
-%>
+<liferay-portlet:actionURL varImpl="editFileEntryURL">
+	<liferay-portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+	<liferay-portlet:param name="uploadExceptionRedirect" value="<%= currentURL %>" />
+</liferay-portlet:actionURL>
 
 <aui:form action="<%= editFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(" + saveAsDraft + ");" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
 	<aui:input name="uploadProgressId" type="hidden" value="<%= uploadProgressId %>" />
+	<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
+	<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-document-name" />
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-document-name" />
+
+	<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
+		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
+	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= FileExtensionException.class %>">
 		<liferay-ui:message key="document-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA), StringPool.COMMA_AND_SPACE) %>.
@@ -539,19 +525,11 @@ editFileEntryURL.setParameter("workflowAction", String.valueOf(WorkflowConstants
 	function <portlet:namespace />saveFileEntry(draft) {
 		<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
 
-		if (!draft) {
-			document.<portlet:namespace />fm.action = "<%= editFileEntryURL.toString() %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>';
+
+		if (draft) {
+			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
 		}
-		else {
-
-			<%
-			editFileEntryURL.setParameter("workflowAction", String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT));
-			%>
-
-			document.<portlet:namespace />fm.action = "<%= editFileEntryURL.toString() %>";
-		}
-
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>";
 
 		submitForm(document.<portlet:namespace />fm);
 	}

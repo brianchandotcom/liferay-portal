@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.deploy.hot;
 
+import com.liferay.portal.kernel.util.PortalLifecycle;
+
 /**
  * @author Raymond Augé
  */
@@ -22,6 +24,9 @@ public interface HotDeploy {
 	public void fireDeployEvent(HotDeployEvent hotDeployEvent);
 
 	public void fireUndeployEvent(HotDeployEvent hotDeployEvent);
+
+	public boolean registerDependentPortalLifecycle(
+		String servletContextName, PortalLifecycle portalLifecycle);
 
 	public void registerListener(HotDeployListener hotDeployListener);
 

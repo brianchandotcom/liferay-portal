@@ -66,8 +66,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="CPWebcontent#assertElementNotPresent" locator-key1="TOOLBAR_ADD" />
@@ -83,8 +82,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="WebContentFolder#addCP">
@@ -114,8 +112,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="CPWebcontent#assertElementNotPresent" locator-key1="TOOLBAR_ADD" />
@@ -170,8 +167,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="CPWebcontent#assertElementNotPresent" locator-key1="TOOLBAR_MANAGE" />
@@ -187,8 +183,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="WebContentStructures#addCP">
@@ -220,8 +215,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="CPWebcontent#assertElementNotPresent" locator-key1="TOOLBAR_MANAGE" />
@@ -274,8 +268,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="CPWebcontent#assertElementNotPresent" locator-key1="TOOLBAR_MANAGE" />
@@ -291,8 +284,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
@@ -322,8 +314,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="CPWebcontent#assertElementNotPresent" locator-key1="TOOLBAR_MANAGE" />
@@ -376,8 +367,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="CPWebcontent#assertElementNotPresent" locator-key1="TOOLBAR_ADD" />
@@ -393,8 +383,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -424,8 +413,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="CPWebcontent#assertElementNotPresent" locator-key1="TOOLBAR_ADD" />
@@ -530,8 +518,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />
@@ -547,8 +534,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="WebContentPortlet#viewNoPermissionCP" />
@@ -575,8 +561,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />

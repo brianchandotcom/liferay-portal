@@ -23,6 +23,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LogoSelectorTag extends IncludeTag {
 
+	public void setCurrentLogoURL(String currentLogoURL) {
+		_currentLogoURL = currentLogoURL;
+	}
+
 	public void setDefaultLogoURL(String defaultLogoURL) {
 		_defaultLogoURL = defaultLogoURL;
 	}
@@ -45,6 +49,7 @@ public class LogoSelectorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_currentLogoURL = null;
 		_defaultLogoURL = null;
 		_editLogoURL = null;
 		_imageId = 0;
@@ -59,6 +64,8 @@ public class LogoSelectorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-ui:logo-selector:currentLogoURL", _currentLogoURL);
 		request.setAttribute(
 			"liferay-ui:logo-selector:defaultLogoURL", _defaultLogoURL);
 		request.setAttribute(
@@ -76,6 +83,7 @@ public class LogoSelectorTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/logo_selector/page.jsp";
 
+	private String _currentLogoURL;
 	private String _defaultLogoURL;
 	private String _editLogoURL;
 	private long _imageId;

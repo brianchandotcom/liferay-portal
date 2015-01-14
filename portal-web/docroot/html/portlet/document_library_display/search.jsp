@@ -95,7 +95,7 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 			sb.append("<a href=\"");
 			sb.append(searchExternalRepositoryURL.toString());
 			sb.append("\">");
-			sb.append(mountFolder.getName());
+			sb.append(HtmlUtil.escape(mountFolder.getName()));
 			sb.append("</a>");
 
 			if ((i + 1) < mountFoldersCount) {

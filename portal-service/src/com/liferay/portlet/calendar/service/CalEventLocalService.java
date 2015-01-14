@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -54,6 +55,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @return the cal event that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.calendar.model.CalEvent addCalEvent(
 		com.liferay.portlet.calendar.model.CalEvent calEvent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -75,6 +77,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @throws PortalException if a cal event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.calendar.model.CalEvent deleteCalEvent(
 		long eventId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -87,6 +90,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @return the cal event that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.calendar.model.CalEvent deleteCalEvent(
 		com.liferay.portlet.calendar.model.CalEvent calEvent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -283,6 +287,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @return the cal event that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.calendar.model.CalEvent updateCalEvent(
 		com.liferay.portlet.calendar.model.CalEvent calEvent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -301,6 +306,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.calendar.model.CalEvent addEvent(long userId,
 		java.lang.String title, java.lang.String description,
 		java.lang.String location, int startDateMonth, int startDateDay,
@@ -319,6 +325,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	boolean, String, boolean, TZSRecurrence, int, int, int,
 	ServiceContext)}
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.calendar.model.CalEvent addEvent(long userId,
 		java.lang.String title, java.lang.String description,
 		java.lang.String location, int startDateMonth, int startDateDay,
@@ -357,11 +364,13 @@ public interface CalEventLocalService extends BaseLocalService,
 	public void checkEvents()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.calendar.model.CalEvent deleteEvent(
 		com.liferay.portlet.calendar.model.CalEvent event)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.calendar.model.CalEvent deleteEvent(long eventId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -472,6 +481,7 @@ public interface CalEventLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.calendar.model.CalEvent updateEvent(
 		long userId, long eventId, java.lang.String title,
 		java.lang.String description, java.lang.String location,
@@ -491,6 +501,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	boolean, boolean, String, boolean, TZSRecurrence, int, int,
 	int, ServiceContext)}
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.calendar.model.CalEvent updateEvent(
 		long userId, long eventId, java.lang.String title,
 		java.lang.String description, java.lang.String location,

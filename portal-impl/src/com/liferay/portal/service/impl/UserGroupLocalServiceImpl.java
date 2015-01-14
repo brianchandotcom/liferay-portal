@@ -694,7 +694,9 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	public void setUserUserGroups(long userId, long[] userGroupIds)
 		throws PortalException, SystemException {
 
-		copyUserGroupLayouts(userGroupIds, userId);
+		if (PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
+			copyUserGroupLayouts(userGroupIds, userId);
+		}
 
 		userPersistence.setUserGroups(userId, userGroupIds);
 
@@ -938,7 +940,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			UserGroup userGroup = userGroupFinder.findByC_N(companyId, name);
 
 			if (userGroup.getUserGroupId() != userGroupId) {
-				throw new DuplicateUserGroupException();
+				throw new DuplicateUserGroupException(
+					"{userGroupId=" + userGroupId + "}");
 			}
 		}
 		catch (NoSuchUserGroupException nsuge) {

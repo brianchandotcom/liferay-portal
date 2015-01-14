@@ -66,9 +66,8 @@ boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 	<aui:input name="threadId" type="hidden" value="<%= threadId %>" />
 	<aui:input name="parentMessageId" type="hidden" value="<%= parentMessageId %>" />
 	<aui:input name="subject" type="hidden" value="<%= subject %>" />
+	<aui:input name="propagatePermissions" type="hidden" value="<%= true %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
-	<aui:input name="addGuestPermissions" type="hidden" value="true" />
-	<aui:input name="addGroupPermissions" type="hidden" value="true" />
 
 	<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 

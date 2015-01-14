@@ -41,28 +41,30 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class PermissionsURLTag extends TagSupport {
 
 	/**
-	 * Returns the URL used to open the permissions configuration dialog and
-	 * configure the permissions of a resource.
+	 * Returns the URL for opening the resource's permissions configuration
+	 * dialog and for configuring the resource's permissions.
 	 *
 	 * @param  redirect the redirect. If the redirect is <code>null</code> or
 	 *         the dialog does not open as a pop-up, the current URL is obtained
-	 *         by {@link PortalUtil#getCurrentURL(HttpServletRequest)} and used.
+	 *         via {@link PortalUtil#getCurrentURL(HttpServletRequest)} and
+	 *         used.
 	 * @param  modelResource the resource's class for which to configure
 	 *         permissions
 	 * @param  modelResourceDescription the human-friendly description of the
 	 *         resource
-	 * @param  resourceGroupId the group ID to which the resource belongs, which
-	 *         can be a number, string containing a number, or substitution
+	 * @param  resourceGroupId the group ID to which the resource belongs. The
+	 *         ID can be a number, string containing a number, or substitution
 	 *         string. If the resource group ID is <code>null</code>, it is
-	 *         obtained from {@link ThemeDisplay#getScopeGroupId()}.
+	 *         obtained via {@link ThemeDisplay#getScopeGroupId()}.
 	 * @param  resourcePrimKey the primary key of the resource
 	 * @param  windowState the window state to use when opening the permissions
 	 *         configuration dialog. For more information, see {@link
 	 *         LiferayWindowState}.
 	 * @param  roleTypes the role types
 	 * @param  request the current request
-	 * @return the URL used to open the permissions configuration dialog and
-	 *         configure the permissions of a resource
+	 * @return the URL for opening the resource's permissions configuration
+	 *         dialog and for configuring the resource's permissions
+	 * @throws Exception if an exception occurred
 	 */
 	public static String doTag(
 			String redirect, String modelResource,

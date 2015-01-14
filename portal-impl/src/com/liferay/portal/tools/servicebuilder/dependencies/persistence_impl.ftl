@@ -108,7 +108,7 @@ import java.util.Set;
  *
  * @author ${author}
  * @see ${entity.name}Persistence
- * @see ${entity.name}Util
+ * @see ${packagePath}.service.persistence.${entity.name}Util
  * @generated
  */
 @ProviderType

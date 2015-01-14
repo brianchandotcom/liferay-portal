@@ -3447,8 +3447,7 @@ cluster.link.autodetect.address=
 
 cluster.link.bind.addr["cluster-link-control"]=127.0.0.1
 
-cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1
-		</echo>
+cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 	</target>
 
 	<target name="print-scm-revision">

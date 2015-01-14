@@ -12,14 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.portlet.toolbar.item;
+
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+
+import javax.portlet.PortletRequest;
 
 /**
- * @author Miguel Pastor
+ * @author Sergio González
  */
-public interface ResourcePermissionChecker {
+public interface PortletToolbarMenuItem {
 
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId);
+	public MenuItem getMenuItem(PortletRequest portletRequest);
 
 }

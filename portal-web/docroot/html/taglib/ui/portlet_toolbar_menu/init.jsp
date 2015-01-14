@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,15 +12,10 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portal.security.permission;
+<%@ include file="/html/taglib/init.jsp" %>
 
-/**
- * @author Miguel Pastor
- */
-public interface ResourcePermissionChecker {
+<%@ page import="com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem" %>
 
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId);
-
-}
+<portlet:defineObjects />

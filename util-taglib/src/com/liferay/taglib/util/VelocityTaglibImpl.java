@@ -15,6 +15,7 @@
 package com.liferay.taglib.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.template.Template;
@@ -62,6 +63,7 @@ import com.liferay.taglib.ui.JournalContentSearchTag;
 import com.liferay.taglib.ui.LanguageTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
+import com.liferay.taglib.ui.PortletToolbarMenuTag;
 import com.liferay.taglib.ui.QuickAccessTag;
 import com.liferay.taglib.ui.RatingsTag;
 import com.liferay.taglib.ui.SearchTag;
@@ -71,6 +73,7 @@ import com.liferay.taglib.ui.ToggleTag;
 
 import java.io.Writer;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -462,6 +465,16 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		setUp(pngImageTag);
 
 		return pngImageTag;
+	}
+
+	@Override
+	public PortletToolbarMenuTag getPortletToolbarMenuTag() throws Exception {
+		PortletToolbarMenuTag portletToolbarMenuTag =
+			new PortletToolbarMenuTag();
+
+		setUp(portletToolbarMenuTag);
+
+		return portletToolbarMenuTag;
 	}
 
 	@Override
@@ -974,6 +987,22 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		setUp(iconRefreshTag);
 
 		iconRefreshTag.runTag();
+	}
+
+	@Override
+	public void portletToolbarMenu(
+			List<PortletToolbarMenuItem> portletToolbarMenuItems)
+		throws Exception {
+
+		PortletToolbarMenuTag portletToolbarMenuTag =
+			new PortletToolbarMenuTag();
+
+		setUp(portletToolbarMenuTag);
+
+		portletToolbarMenuTag.setPortletToolbarMenuItems(
+			portletToolbarMenuItems);
+
+		portletToolbarMenuTag.runTag();
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -33,6 +34,7 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -350,6 +352,25 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 
 		return roleLocalService.hasUserRoles(
 			userId, companyId, names, inherited);
+	}
+
+	@Override
+	public List<Role> search(
+		long companyId, String keywords, Integer[] types,
+		LinkedHashMap<String, Object> params, int start, int end,
+		OrderByComparator<Role> obc) {
+
+		return roleFinder.filterFindByKeywords(
+			companyId, keywords, types, params, start, end, obc);
+	}
+
+	@Override
+	public int searchCount(
+		long companyId, String keywords, Integer[] types,
+		LinkedHashMap<String, Object> params) {
+
+		return roleFinder.filterCountByKeywords(
+			companyId, keywords, types, params);
 	}
 
 	/**

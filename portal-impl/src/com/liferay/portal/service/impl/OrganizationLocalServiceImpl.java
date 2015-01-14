@@ -879,7 +879,7 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns all the organizations associated with the user. If
+	 * Returns all the organizations explicitly associated with the user. If
 	 * <code>includeAdministrative</code> is <code>true</code>, the result
 	 * includes those organizations that are indirectly associated to the user
 	 * because he is an administrator or owner of the organization.

@@ -14,29 +14,12 @@
  */
 --%>
 
-<c:choose>
-	<c:when test="<%= (fileShortcut == null) %>">
+<%
+for (MenuItem menuItem : dlViewFileVersionDisplayContext.getMenuItems()) {
+%>
 
-		<%
-		for (MenuItem menuItem : dlViewFileVersionDisplayContext.getMenuItems()) {
-		%>
+	<liferay-ui:menu-item menuItem="<%= menuItem %>" />
 
-			<liferay-ui:menu-item menuItem="<%= menuItem %>" />
-
-		<%
-		}
-		%>
-
-	</c:when>
-	<c:otherwise>
-		<%@ include file="/html/portlet/image_gallery_display/action/download.jspf" %>
-
-		<%@ include file="/html/portlet/image_gallery_display/action/view_original.jspf" %>
-
-		<%@ include file="/html/portlet/image_gallery_display/action/edit.jspf" %>
-
-		<%@ include file="/html/portlet/image_gallery_display/action/permissions.jspf" %>
-
-		<%@ include file="/html/portlet/image_gallery_display/action/delete.jspf" %>
-	</c:otherwise>
-</c:choose>
+<%
+}
+%>

@@ -1192,6 +1192,171 @@ Please set the property "jdk.6.home" in build.properties.
 		<ant dir=".." target="deploy-properties" inheritAll="false" />
 	</target>
 
+	<target name="download-nodejs">
+		<if>
+			<contains casesensitive="false" string="${os.name}" substring="windows" />
+			<then>
+				<property name="nodejs.exec.dir" value="${nodejs.setup.dir}" />
+				<property name="nodejs.exec.file" value="node.exe" />
+				<property name="npm.exec.file" value="npm.cmd" />
+			</then>
+			<else>
+				<property name="nodejs.exec.dir" value="${nodejs.setup.dir}/bin" />
+				<property name="nodejs.exec.file" value="node" />
+				<property name="npm.exec.file" value="npm" />
+			</else>
+		</if>
+
+		<if>
+
+			<!-- Windows 32 -->
+
+			<and>
+				<contains casesensitive="false" string="${os.name}" substring="windows" />
+				<equals arg1="${os.arch}" arg2="x86" />
+			</and>
+			<then>
+				<property name="nodejs.url" value="${nodejs.dist}/node.exe" />
+				<property name="npm.url" value="${npm.dist}.zip" />
+				<property name="nodejs.filename" value="${nodejs.win32.filename}" />
+				<property name="nodejs.file.ext" value="${nodejs.win32.file.ext}" />
+				<property name="nodejs.decompress" value="none" />
+			</then>
+
+			<!-- Windows 64 -->
+
+			<elseif>
+				<and>
+					<contains casesensitive="false" string="${os.name}" substring="windows"  />
+					<equals arg1="${os.arch}" arg2="amd64" />
+				</and>
+				<then>
+					<property name="nodejs.url" value="${nodejs.dist}/x64/node.exe" />
+					<property name="npm.url" value="${npm.dist}.zip" />
+					<property name="nodejs.filename" value="${nodejs.win64.filename}" />
+					<property name="nodejs.file.ext" value="${nodejs.win64.file.ext}" />
+					<property name="nodejs.decompress" value="none" />
+				</then>
+			</elseif>
+
+			<!-- Mac OSX 32 -->
+
+			<elseif>
+				<and>
+					<equals arg1="${os.name}" arg2="Mac OS X" />
+					<equals arg1="${os.arch}" arg2="x86_32" />
+				</and>
+				<then>
+					<property name="nodejs.url" value="${nodejs.dist}/node-v${nodejs.version}-darwin-x86.tar.gz" />
+					<property name="nodejs.filename" value="${nodejs.osx32.filename}" />
+					<property name="nodejs.file.ext" value="${nodejs.osx32.file.ext}" />
+					<property name="nodejs.decompress" value="untar" />
+				</then>
+			</elseif>
+
+			<!-- Mac OSX 64 -->
+
+			<elseif>
+				<and>
+					<equals arg1="${os.name}" arg2="Mac OS X" />
+					<equals arg1="${os.arch}" arg2="x86_64" />
+				</and>
+				<then>
+					<property name="nodejs.url" value="${nodejs.dist}/node-v${nodejs.version}-darwin-x64.tar.gz" />
+					<property name="nodejs.filename" value="${nodejs.osx64.filename}" />
+					<property name="nodejs.file.ext" value="${nodejs.osx64.file.ext}" />
+					<property name="nodejs.decompress" value="untar" />
+				</then>
+			</elseif>
+
+			<!-- GNU/Linux 32 -->
+
+			<elseif>
+				<and>
+					<equals arg1="${os.name}" arg2="Linux" />
+					<equals arg1="${os.arch}" arg2="amd" />
+				</and>
+				<then>
+					<property name="nodejs.url" value="${nodejs.dist}/node-v${nodejs.version}-linux-x86.tar.gz" />
+					<property name="nodejs.filename" value="${nodejs.gnu32.filename}" />
+					<property name="nodejs.file.ext" value="${nodejs.gnu32.file.ext}" />
+					<property name="nodejs.decompress" value="untar" />
+				</then>
+			</elseif>
+
+			<!-- GNU/Linux 64 -->
+
+			<elseif>
+				<and>
+					<equals arg1="${os.name}" arg2="Linux" />
+					<equals arg1="${os.arch}" arg2="amd64" />
+				</and>
+				<then>
+					<fail />
+					<property name="nodejs.url" value="${nodejs.dist}/node-v${nodejs.version}-linux-x64.tar.gz" />
+					<property name="nodejs.filename" value="${nodejs.gnu64.filename}" />
+					<property name="nodejs.file.ext" value="${nodejs.gnu64.file.ext}" />
+					<property name="nodejs.decompress" value="untar" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<not>
+				<available file="${nodejs.exec.dir}/${nodejs.exec.file}" />
+			</not>
+			<then>
+				<get src="${nodejs.url}"
+					dest="third-party/${nodejs.file.ext}"
+					verbose="true" />
+
+				<if>
+					<equals arg1="${nodejs.decompress}" arg2="untar" />
+
+					<then>
+						<exec dir="third-party" executable="tar">
+							<arg line="zxf ${nodejs.file.ext}" />
+						</exec>
+
+						<move file="third-party/${nodejs.filename}" tofile="${nodejs.setup.dir}" />
+
+						<delete file="third-party/${nodejs.file.ext}" />
+					</then>
+
+					<else>
+						<mkdir dir="${nodejs.exec.dir}" />
+
+						<move file="third-party/${nodejs.file.ext}" todir="${nodejs.exec.dir}" />
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<contains casesensitive="false" string="${os.name}" substring="windows" />
+			<then>
+				<antcall target="download-npm" />
+			</then>
+		</if>
+	</target>
+
+	<target name="download-npm">
+		<if>
+			<not>
+				<available file="${nodejs.setup.dir}/${npm.exec.file}" />
+			</not>
+			<then>
+				<get src="${npm.url}"
+					dest="third-party/${npm.file.ext}"
+					verbose="true" />
+
+				<unzip src="third-party/${npm.file.ext}" dest="${nodejs.exec.dir}" />
+
+				<delete file="third-party/${npm.file.ext}" />
+			</then>
+		</if>
+	</target>
+
 	<target name="format-js">
 		<taskdef classname="com.philmander.jshint.JsHintAntTask" classpath="${project.dir}/tools/ant-jshint-2.0.5.jar" name="jshint" />
 

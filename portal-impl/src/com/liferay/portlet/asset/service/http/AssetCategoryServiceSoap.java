@@ -159,6 +159,20 @@ public class AssetCategoryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.asset.model.AssetCategorySoap fetchCategory(
+		long categoryId) throws RemoteException {
+		try {
+			com.liferay.portlet.asset.model.AssetCategory returnValue = AssetCategoryServiceUtil.fetchCategory(categoryId);
+
+			return com.liferay.portlet.asset.model.AssetCategorySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.asset.model.AssetCategorySoap[] getCategories(
 		java.lang.String className, long classPK) throws RemoteException {
 		try {

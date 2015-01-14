@@ -144,6 +144,14 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	@Override
+	public AssetCategory fetchCategory(long categoryId) throws PortalException {
+		AssetCategoryPermission.check(
+			getPermissionChecker(), categoryId, ActionKeys.VIEW);
+
+		return assetCategoryLocalService.fetchCategory(categoryId);
+	}
+
+	@Override
 	public List<AssetCategory> getCategories(String className, long classPK)
 		throws PortalException {
 

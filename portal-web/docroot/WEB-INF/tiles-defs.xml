@@ -152,34 +152,6 @@
 		<put name="portlet_content" value="/portlet/asset_browser/view.jsp" />
 	</definition>
 
-	<!-- Asset Category Admin -->
-
-	<definition name="portlet.asset_category_admin" extends="portlet" />
-
-	<definition name="portlet.asset_category_admin.edit_category" extends="portlet.asset_category_admin">
-		<put name="portlet_content" value="/portlet/asset_category_admin/edit_category.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_category_admin.edit_vocabulary" extends="portlet.asset_category_admin">
-		<put name="portlet_content" value="/portlet/asset_category_admin/edit_vocabulary.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_category_admin.error" extends="portlet.asset_category_admin">
-		<put name="portlet_content" value="/portlet/asset_category_admin/error.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_category_admin.move_category" extends="portlet.asset_category_admin">
-		<put name="portlet_content" value="/portlet/asset_category_admin/move_category.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_category_admin.view" extends="portlet.asset_category_admin">
-		<put name="portlet_content" value="/portlet/asset_category_admin/view.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_category_admin.view_categories" extends="portlet.asset_category_admin">
-		<put name="portlet_content" value="/portlet/asset_category_admin/view_categories.jsp" />
-	</definition>
-
 	<!-- Asset Publisher -->
 
 	<definition name="portlet.asset_publisher" extends="portlet" />

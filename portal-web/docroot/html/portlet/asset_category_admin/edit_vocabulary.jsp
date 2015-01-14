@@ -19,22 +19,20 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-AssetVocabulary vocabulary = (AssetVocabulary)request.getAttribute(WebKeys.ASSET_VOCABULARY);
+long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
-long vocabularyId = BeanParamUtil.getLong(vocabulary, request, "vocabularyId");
+AssetVocabulary vocabulary = AssetVocabularyServiceUtil.fetchVocabulary(vocabularyId);
 %>
 
 <liferay-ui:header
 	title='<%= (vocabulary != null) ? vocabulary.getTitle(locale) : "add-new-vocabulary" %>'
 />
 
-<portlet:actionURL var="editVocabularyURL">
-	<portlet:param name="struts_action" value="/asset_category_admin/edit_vocabulary" />
+<portlet:actionURL name="editVocabulary" var="editVocabularyURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editVocabularyURL %>" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= vocabulary == null ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId %>" />
 
 	<liferay-ui:error exception="<%= DuplicateVocabularyException.class %>" message="please-enter-a-unique-name" />

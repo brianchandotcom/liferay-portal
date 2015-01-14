@@ -75,6 +75,11 @@ public interface AssetCategoryService extends BaseService {
 	public void deleteCategory(long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.asset.model.AssetCategory fetchCategory(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

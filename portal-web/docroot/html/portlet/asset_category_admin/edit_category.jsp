@@ -19,13 +19,11 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-AssetCategory category = (AssetCategory)request.getAttribute(WebKeys.ASSET_CATEGORY);
+long categoryId = ParamUtil.getLong(request, "categoryId");
 
-long categoryId = BeanParamUtil.getLong(category, request, "categoryId");
+AssetCategory category = AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
 
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId");
-
-List<AssetVocabulary> vocabularies = (List<AssetVocabulary>)request.getAttribute(WebKeys.ASSET_VOCABULARIES);
 
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
@@ -73,13 +71,11 @@ else {
 	title='<%= (category != null) ? category.getTitle(locale) : "add-new-category" %>'
 />
 
-<portlet:actionURL var="editCategoryURL">
-	<portlet:param name="struts_action" value="/asset_category_admin/edit_category" />
+<portlet:actionURL name="editCategory" var="editCategoryURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editCategoryURL %>" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= category == null ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
 	<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId %>" />

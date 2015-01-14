@@ -219,24 +219,6 @@
 
 		<action path="/asset_browser/view" forward="portlet.asset_browser.view" />
 
-		<!-- Asset Category Admin -->
-
-		<action path="/asset_category_admin/edit_category" type="com.liferay.portlet.assetcategoryadmin.action.EditCategoryAction">
-			<forward name="portlet.asset_category_admin.edit_category" path="portlet.asset_category_admin.edit_category" />
-			<forward name="portlet.asset_category_admin.error" path="portlet.asset_category_admin.error" />
-		</action>
-
-		<action path="/asset_category_admin/edit_vocabulary" type="com.liferay.portlet.assetcategoryadmin.action.EditVocabularyAction">
-			<forward name="portlet.asset_category_admin.edit_vocabulary" path="portlet.asset_category_admin.edit_vocabulary" />
-			<forward name="portlet.asset_category_admin.error" path="portlet.asset_category_admin.error" />
-		</action>
-
-		<action path="/asset_category_admin/move_category" forward="portlet.asset_category_admin.move_category" />
-
-		<action path="/asset_category_admin/view" forward="portlet.asset_category_admin.view" />
-
-		<action path="/asset_category_admin/view_categories" forward="portlet.asset_category_admin.view_categories" />
-
 		<!-- Asset Publisher -->
 
 		<action path="/asset_publisher/add_asset_redirect" forward="portlet.asset_publisher.add_asset_redirect" />

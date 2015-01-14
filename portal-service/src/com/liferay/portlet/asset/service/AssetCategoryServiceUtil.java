@@ -80,6 +80,12 @@ public class AssetCategoryServiceUtil {
 		getService().deleteCategory(categoryId);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetCategory fetchCategory(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchCategory(categoryId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

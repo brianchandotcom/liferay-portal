@@ -29,7 +29,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		<aui:nav cssClass="navbar-nav">
 			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY) %>">
 				<portlet:renderURL var="addVocabularyURL">
-					<portlet:param name="struts_action" value="/asset_category_admin/edit_vocabulary" />
+					<portlet:param name="mvcPath" value="/html/portlet/asset_category_admin/edit_vocabulary.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
@@ -95,7 +95,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			modelVar="vocabulary"
 		>
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="struts_action" value="/asset_category_admin/view_categories" />
+				<portlet:param name="mvcPath" value="/html/portlet/asset_category_admin/view_categories.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 			</portlet:renderURL>
@@ -200,15 +200,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				<portlet:actionURL var="deleteURL">
-					<portlet:param name="struts_action" value="/asset_category_admin/edit_vocabulary" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+				<portlet:actionURL name="deleteVocabulary" var="deleteVocabularyURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:actionURL>
 
 				form.fm('deleteVocabularyIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-				submitForm(form, '<%= deleteURL %>');
+				submitForm(form, '<%= deleteVocabularyURL %>');
 			}
 		}
 	);

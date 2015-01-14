@@ -1121,7 +1121,6 @@
 	<portlet>
 		<portlet-name>147</portlet-name>
 		<icon>/html/icons/asset_category_admin.png</icon>
-		<struts-path>asset_category_admin</struts-path>
 		<indexer-class>com.liferay.portlet.asset.util.AssetCategoryIndexer</indexer-class>
 		<indexer-class>com.liferay.portlet.asset.util.AssetVocabularyIndexer</indexer-class>
 		<portlet-data-handler-class>com.liferay.portlet.asset.lar.AssetCategoryPortletDataHandler</portlet-data-handler-class>
@@ -1130,7 +1129,7 @@
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>21.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>

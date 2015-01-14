@@ -25,7 +25,7 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editVocabularyURL">
-			<portlet:param name="struts_action" value="/asset_category_admin/edit_vocabulary" />
+			<portlet:param name="mvcPath" value="/html/portlet/asset_category_admin/edit_vocabulary.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 		</portlet:renderURL>
@@ -39,7 +39,7 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 
 	<c:if test="<%= AssetPermission.contains(permissionChecker, vocabulary.getGroupId(), ActionKeys.ADD_CATEGORY) %>">
 		<portlet:renderURL var="addCategoryURL">
-			<portlet:param name="struts_action" value="/asset_category_admin/edit_category" />
+			<portlet:param name="mvcPath" value="/html/portlet/asset_category_admin/edit_category.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 		</portlet:renderURL>
@@ -70,9 +70,7 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 	</c:if>
 
 	<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteVocabularyURL">
-			<portlet:param name="struts_action" value="/asset_category_admin/edit_vocabulary" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:actionURL name="deleteVocabulary" var="deleteVocabularyURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 		</portlet:actionURL>

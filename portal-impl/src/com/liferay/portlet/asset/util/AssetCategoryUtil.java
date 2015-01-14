@@ -53,7 +53,8 @@ public class AssetCategoryUtil {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/asset_category_admin/view");
+		portletURL.setParameter(
+			"mvcPath", "/html/portlet/asset_category_admin/view.jsp");
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, LanguageUtil.get(request, "vocabularies"),
@@ -67,7 +68,8 @@ public class AssetCategoryUtil {
 		}
 
 		portletURL.setParameter(
-			"struts_action", "/asset_category_admin/view_categories");
+			"mvcPath",
+			"/html/portlet/asset_category_admin/view_categories.jsp");
 
 		portletURL.setParameter(
 			"vocabularyId", String.valueOf(vocabulary.getVocabularyId()));

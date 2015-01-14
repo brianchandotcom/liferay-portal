@@ -279,6 +279,21 @@ public class RoleServiceUtil {
 		return getService().hasUserRoles(userId, companyId, names, inherited);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Role> search(
+		long companyId, java.lang.String keywords, java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> obc) {
+		return getService()
+				   .search(companyId, keywords, types, params, start, end, obc);
+	}
+
+	public static int searchCount(long companyId, java.lang.String keywords,
+		java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+		return getService().searchCount(companyId, keywords, types, params);
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

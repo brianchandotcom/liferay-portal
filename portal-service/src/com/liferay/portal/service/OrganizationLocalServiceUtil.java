@@ -756,7 +756,6 @@ public class OrganizationLocalServiceUtil {
 	* @return the organization IDs of organizations associated with the user
 	* @throws PortalException if a user with the primary key could not be found
 	or if a portal exception occurred
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long[] getUserOrganizationIds(long userId,
 		boolean includeAdministrative)

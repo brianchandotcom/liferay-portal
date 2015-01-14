@@ -19,6 +19,7 @@ import com.liferay.portal.security.exportimport.UserExporterUtil;
 import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -53,6 +54,12 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 
 	protected void exportToLDAP(Contact contact) throws Exception {
 		if (UserImportTransactionThreadLocal.isOriginatesFromImport()) {
+			return;
+		}
+
+		User user = UserLocalServiceUtil.fetchUser(contact.getUserId());
+
+		if ((user == null) || user.isDefaultUser()) {
 			return;
 		}
 

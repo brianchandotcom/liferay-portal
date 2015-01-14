@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 @import "mixins";
 @import "aui/bootstrap/variables";
 @import "aui_variables";

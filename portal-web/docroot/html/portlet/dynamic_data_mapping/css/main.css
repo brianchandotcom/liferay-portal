@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 @import "mixins";
 
 .portlet-document-library, .portlet-dynamic-data-mapping {

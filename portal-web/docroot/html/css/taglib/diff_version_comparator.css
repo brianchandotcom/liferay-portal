@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 
 .diff-version-comparator {
 	.taglib-diff-html {

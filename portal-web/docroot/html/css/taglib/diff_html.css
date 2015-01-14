@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 
 .taglib-diff-html span {
 	&.diff-html-added img, &.diff-html-removed img {

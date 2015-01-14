@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 
 .test-custom-rtl {
 	border-left: 2px;

@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 
 .lfr-input-date {
 	&.form-group {

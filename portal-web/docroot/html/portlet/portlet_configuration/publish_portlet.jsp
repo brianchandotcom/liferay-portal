@@ -454,11 +454,12 @@ portletURL.setParameter("tabs3", "current-and-previous");
 								</aui:fieldset>
 							</c:if>
 
-							<%
-							Map<String, String[]> parameterMap = Collections.emptyMap();
-							%>
-
 							<aui:fieldset cssClass="options-group" label="permissions">
+
+								<%
+								Map<String, String[]> parameterMap = Collections.emptyMap();
+								%>
+
 								<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>
 							</aui:fieldset>
 						</c:if>

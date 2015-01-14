@@ -573,8 +573,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	public void portletToolbarMenu(
 			List<PortletToolbarMenuItem> portletToolbarMenuItems)
 		throws Exception {
-
-		return;
 	}
 
 	@Override

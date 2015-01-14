@@ -28,6 +28,8 @@ public abstract class BaseMobileDriverImpl
 		String projectDirName, String browserURL, MobileDriver mobileDriver) {
 
 		super(mobileDriver);
+
+		_projectDirName = projectDirName;
 	}
 
 	@Override

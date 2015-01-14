@@ -666,6 +666,10 @@ public interface PortletDataContext extends Serializable {
 
 	public void setPlid(long plid);
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setPortetDataContextListener(
 		PortletDataContextListener portletDataContextListener);
 

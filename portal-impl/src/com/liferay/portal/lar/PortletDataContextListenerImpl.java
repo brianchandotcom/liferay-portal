@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of 7.0.0, see {@link com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent}
  */
+@Deprecated
 public class PortletDataContextListenerImpl
 	implements PortletDataContextListener {
 

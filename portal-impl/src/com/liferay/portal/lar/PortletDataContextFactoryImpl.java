@@ -123,8 +123,6 @@ public class PortletDataContextFactoryImpl
 
 		portletDataContext.setNewLayouts(new ArrayList<Layout>());
 		portletDataContext.setParameterMap(parameterMap);
-		portletDataContext.setPortetDataContextListener(
-			new PortletDataContextListenerImpl(portletDataContext));
 		portletDataContext.setUserIdStrategy(userIdStrategy);
 		portletDataContext.setZipReader(zipReader);
 

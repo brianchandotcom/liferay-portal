@@ -281,6 +281,23 @@ public class RoleServiceWrapper implements RoleService,
 		return _roleService.hasUserRoles(userId, companyId, names, inherited);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.Role> search(
+		long companyId, java.lang.String keywords, java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> obc) {
+		return _roleService.search(companyId, keywords, types, params, start,
+			end, obc);
+	}
+
+	@Override
+	public int searchCount(long companyId, java.lang.String keywords,
+		java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+		return _roleService.searchCount(companyId, keywords, types, params);
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

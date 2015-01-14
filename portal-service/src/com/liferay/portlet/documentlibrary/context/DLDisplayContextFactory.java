@@ -14,7 +14,9 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +24,17 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public interface DLViewFileVersionDisplayContextFactory {
+public interface DLDisplayContextFactory {
+
+	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
+		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		DLFileEntryType dlFileEntryType);
+
+	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
+		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		FileEntry fileEntry);
 
 	public DLViewFileVersionDisplayContext
 		getDLFileVersionActionsDisplayContext(

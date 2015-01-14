@@ -14,25 +14,39 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Iván Zaera
+ * @author Ivan Zaera
  */
-public interface DLEditFileEntryDisplayContextFactory {
+public interface DLDisplayContextFactoryProvider {
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		DLFileEntryType dlFileEntryType);
+			HttpServletRequest request, HttpServletResponse response,
+			DLFileEntryType dlFileEntryType)
+		throws PortalException;
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry);
+			HttpServletRequest request, HttpServletResponse response,
+			FileEntry fileEntry)
+		throws PortalException;
+
+	public DLViewFileVersionDisplayContext
+		getDLViewFileVersionDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion)
+		throws PortalException;
+
+	public DLViewFileVersionDisplayContext
+		getIGFileVersionActionsDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion)
+		throws PortalException;
 
 }

@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.portlet.documentlibrary.context.DLDisplayContextFactoryProviderUtil" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -105,7 +107,7 @@ if (fileShortcut != null) {
 }
 
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
-DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLViewFileVersionDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
+DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayContextFactoryProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
 %>
 
 <liferay-util:buffer var="iconMenu">

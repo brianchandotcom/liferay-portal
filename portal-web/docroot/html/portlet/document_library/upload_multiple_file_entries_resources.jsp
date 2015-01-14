@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.portlet.documentlibrary.context.DLDisplayContextFactoryProviderUtil" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -85,10 +87,10 @@ long assetClassPK = 0;
 DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext = null;
 
 if (fileEntry == null) {
-	dlEditFileEntryDisplayContext = DLEditFileEntryDisplayContextUtil.getDLEditFileEntryDisplayContext(request, response, fileEntryType);
+	dlEditFileEntryDisplayContext = DLDisplayContextFactoryProviderUtil.getDLEditFileEntryDisplayContext(request, response, fileEntryType);
 }
 else {
-	dlEditFileEntryDisplayContext = DLEditFileEntryDisplayContextUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
+	dlEditFileEntryDisplayContext = DLDisplayContextFactoryProviderUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
 }
 %>
 

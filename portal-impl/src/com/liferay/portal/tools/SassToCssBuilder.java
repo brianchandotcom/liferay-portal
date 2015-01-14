@@ -26,8 +26,6 @@ import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
 import com.liferay.portal.tools.sass.SassExecutorUtil;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.PortalImpl;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsImpl;
 
 import java.io.File;
@@ -191,10 +189,6 @@ public class SassToCssBuilder {
 		fileUtil.setFile(new FileImpl());
 
 		PortalClassLoaderUtil.setClassLoader(classLoader);
-
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(new PortalImpl());
 
 		PropsUtil.setProps(new PropsImpl());
 

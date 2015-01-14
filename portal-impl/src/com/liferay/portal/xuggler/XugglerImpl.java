@@ -16,10 +16,12 @@ package com.liferay.portal.xuggler;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ProgressStatusConstants;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xuggler.Xuggler;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.JarUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -27,6 +29,9 @@ import com.liferay.util.log4j.Log4JUtil;
 
 import com.xuggle.ferry.JNILibraryLoader;
 import com.xuggle.xuggler.IContainer;
+
+import java.net.URL;
+import java.net.URLClassLoader;
 
 /**
  * @author Alexander Chow
@@ -38,10 +43,25 @@ public class XugglerImpl implements Xuggler {
 			String name, ProgressTracker progressTracker)
 		throws Exception {
 
-		try {
-			String url = PropsValues.XUGGLER_JAR_URL + name;
+		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 
-			JarUtil.downloadAndInstallJar(false, url, name, progressTracker);
+		if (!(portalClassLoader instanceof URLClassLoader)) {
+			_log.error(
+				"Unable to install jar, portal ClassLoader is not " +
+					"URLClassLoader");
+
+			return;
+		}
+
+		try {
+			if (progressTracker != null) {
+				progressTracker.setStatus(ProgressStatusConstants.DOWNLOADING);
+			}
+
+			JarUtil.downloadAndInstallJar(
+				new URL(PropsValues.XUGGLER_JAR_URL + name),
+				PropsValues.LIFERAY_LIB_PORTAL_DIR, name,
+				(URLClassLoader)portalClassLoader);
 		}
 		catch (Exception e) {
 			_log.error("Unable to install jar " + name, e);

@@ -15,17 +15,31 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
+import com.liferay.portlet.ratings.transformer.RatingsDataTransformerHelperUtil;
 import com.liferay.taglib.util.IncludeTag;
+
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Roberto Díaz
  */
 public class RatingsTag extends IncludeTag {
 
@@ -75,13 +89,65 @@ public class RatingsTag extends IncludeTag {
 		_round = true;
 		_setRatingsEntry = false;
 		_setRatingsStats = false;
-		_type = "stars";
+		_type = null;
 		_url = null;
 	}
 
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	protected String getType(HttpServletRequest request) {
+		if (Validator.isNull(_type)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			long companyId = themeDisplay.getCompanyId();
+
+			PortletPreferences companyPortletPreferences =
+				PrefsPropsUtil.getPreferences(companyId);
+
+			Group group = themeDisplay.getSiteGroup();
+
+			if (group.isStagingGroup()) {
+				group = group.getLiveGroup();
+			}
+
+			UnicodeProperties groupTypeSettings = new UnicodeProperties();
+
+			if (group != null) {
+				groupTypeSettings = group.getTypeSettingsProperties();
+			}
+
+			Portlet portlet = (Portlet)request.getAttribute(
+				WebKeys.RENDER_PORTLET);
+
+			if (portlet != null) {
+				String propertyName =
+					_className + StringPool.UNDERLINE + "RatingsType";
+
+				String defaultType =
+					RatingsDataTransformerHelperUtil.getDefaultType(
+						portlet.getPortletId(), _className);
+
+				if (Validator.isNotNull(defaultType)) {
+					String companyRatingsType = PrefsParamUtil.getString(
+						companyPortletPreferences, request, propertyName,
+						defaultType);
+
+					_type = PropertiesParamUtil.getString(
+						groupTypeSettings, request, propertyName,
+						companyRatingsType);
+				}
+			}
+
+			if (Validator.isNull(_type)) {
+				_type = _DEFAULT_TYPE;
+			}
+		}
+
+		return _type;
 	}
 
 	@Override
@@ -106,7 +172,9 @@ public class RatingsTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:ratings:setRatingsStats",
 			String.valueOf(_setRatingsStats));
-		request.setAttribute("liferay-ui:ratings:type", _type);
+
+		request.setAttribute("liferay-ui:ratings:type", getType(request));
+
 		request.setAttribute("liferay-ui:ratings:url", _url);
 	}
 
@@ -114,6 +182,8 @@ public class RatingsTag extends IncludeTag {
 
 	private static final int _DEFAULT_NUMBER_OF_STARS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.RATINGS_DEFAULT_NUMBER_OF_STARS));
+
+	private static final String _DEFAULT_TYPE = "stars";
 
 	private static final String _PAGE = "/html/taglib/ui/ratings/page.jsp";
 
@@ -125,7 +195,7 @@ public class RatingsTag extends IncludeTag {
 	private boolean _round;
 	private boolean _setRatingsEntry;
 	private boolean _setRatingsStats;
-	private String _type = "stars";
+	private String _type;
 	private String _url;
 
 }

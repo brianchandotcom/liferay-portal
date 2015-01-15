@@ -12,8 +12,8 @@
 
 .portlet-msg-progress {
 	background-image: url(../images/aui/loading_indicator.gif);
-	background-repeat: no-repeat;
 	background-position: 6px 50%;
+	background-repeat: no-repeat;
 	padding-left: 30px;
 }
 
@@ -34,7 +34,6 @@
 .navbar .nav li > a {
 	@include word-break(break-all);
 }
-
 
 /* ---------- Status ---------- */
 

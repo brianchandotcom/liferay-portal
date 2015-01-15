@@ -38,8 +38,7 @@ public class DLDisplayContextFactoryProviderUtil {
 	public static DLEditFileEntryDisplayContext
 		getDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileEntryType dlFileEntryType)
-		throws PortalException {
+			DLFileEntryType dlFileEntryType) {
 
 		return getDLDisplayContextFactoryProvider().
 			getDLEditFileEntryDisplayContext(
@@ -49,8 +48,7 @@ public class DLDisplayContextFactoryProviderUtil {
 	public static DLEditFileEntryDisplayContext
 		getDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileEntry fileEntry)
-		throws PortalException {
+			FileEntry fileEntry) {
 
 		return getDLDisplayContextFactoryProvider().
 			getDLEditFileEntryDisplayContext(request, response, fileEntry);
@@ -59,8 +57,7 @@ public class DLDisplayContextFactoryProviderUtil {
 	public static DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
-		throws PortalException {
+			DLFileShortcut dlFileShortcut) {
 
 		return getDLDisplayContextFactoryProvider().
 			getDLViewFileVersionDisplayContext(
@@ -70,8 +67,7 @@ public class DLDisplayContextFactoryProviderUtil {
 	public static DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
+			FileVersion fileVersion) {
 
 		return getDLDisplayContextFactoryProvider().
 			getDLViewFileVersionDisplayContext(request, response, fileVersion);
@@ -80,8 +76,7 @@ public class DLDisplayContextFactoryProviderUtil {
 	public static DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
-		throws PortalException {
+			DLFileShortcut dlFileShortcut) {
 
 		return getDLDisplayContextFactoryProvider().
 			getIGFileVersionActionsDisplayContext(
@@ -91,8 +86,7 @@ public class DLDisplayContextFactoryProviderUtil {
 	public static DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
+			FileVersion fileVersion) {
 
 		return getDLDisplayContextFactoryProvider().
 			getIGFileVersionActionsDisplayContext(

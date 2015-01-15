@@ -32,16 +32,14 @@ public class DefaultIGViewFileVersionDisplayContext
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
-		throws PortalException {
+			DLFileShortcut dlFileShortcut) {
 
 		super(request, response, dlFileShortcut);
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
+			FileVersion fileVersion) {
 
 		super(request, response, fileVersion);
 	}

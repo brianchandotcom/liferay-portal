@@ -55,8 +55,7 @@ public class DLDisplayContextFactoryProviderImpl
 	@Override
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileEntryType dlFileEntryType)
-		throws PortalException {
+			DLFileEntryType dlFileEntryType) {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
@@ -80,8 +79,7 @@ public class DLDisplayContextFactoryProviderImpl
 	@Override
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileEntry fileEntry)
-		throws PortalException {
+			FileEntry fileEntry) {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
@@ -106,8 +104,7 @@ public class DLDisplayContextFactoryProviderImpl
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
-		throws PortalException {
+			DLFileShortcut dlFileShortcut) {
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
@@ -136,8 +133,7 @@ public class DLDisplayContextFactoryProviderImpl
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
+			FileVersion fileVersion) {
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
@@ -167,8 +163,7 @@ public class DLDisplayContextFactoryProviderImpl
 	public DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
-		throws PortalException {
+			DLFileShortcut dlFileShortcut) {
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultIGViewFileVersionDisplayContext(
@@ -198,8 +193,7 @@ public class DLDisplayContextFactoryProviderImpl
 	public DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
+			FileVersion fileVersion) {
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultIGViewFileVersionDisplayContext(

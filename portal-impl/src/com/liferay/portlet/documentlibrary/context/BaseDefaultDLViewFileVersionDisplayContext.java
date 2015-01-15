@@ -91,8 +91,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 
 	public BaseDefaultDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
-		throws PortalException {
+			DLFileShortcut dlFileShortcut) {
 
 		this(
 			request, response, _getFileVersion(dlFileShortcut), dlFileShortcut);
@@ -100,8 +99,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 
 	public BaseDefaultDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
+			FileVersion fileVersion) {
 
 		this(request, response, fileVersion, null);
 	}
@@ -500,42 +498,56 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	protected final FileVersion fileVersion;
 	protected final HttpServletRequest request;
 
-	private static FileVersion _getFileVersion(DLFileShortcut dlFileShortcut)
-		throws PortalException {
+	private static FileVersion _getFileVersion(DLFileShortcut dlFileShortcut) {
+		try {
+			long fileEntryId = dlFileShortcut.getToFileEntryId();
 
-		long fileEntryId = dlFileShortcut.getToFileEntryId();
+			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
 
-		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
-
-		return fileEntry.getFileVersion();
+			return fileEntry.getFileVersion();
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to get file version from shortcut " +
+					dlFileShortcut.getToTitle(),
+				pe);
+		}
 	}
 
 	private BaseDefaultDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion, DLFileShortcut dlFileShortcut)
-		throws PortalException {
+			FileVersion fileVersion, DLFileShortcut dlFileShortcut) {
 
-		this.request = request;
-		this.fileVersion = fileVersion;
-		this.dlFileShortcut = dlFileShortcut;
+		try {
+			this.request = request;
+			this.fileVersion = fileVersion;
+			this.dlFileShortcut = dlFileShortcut;
 
-		FileEntry fileEntry = null;
+			FileEntry fileEntry = null;
 
-		if (fileVersion != null) {
-			fileEntry = fileVersion.getFileEntry();
+			if (fileVersion != null) {
+				fileEntry = fileVersion.getFileEntry();
+			}
+
+			this.fileEntry = fileEntry;
+
+			_folderId = BeanParamUtil.getLong(
+				this.fileEntry, request, "folderId");
+
+			_themeDisplay = (ThemeDisplay) request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
+				_themeDisplay.getPermissionChecker(), this.fileEntry);
+			_fileVersionDisplayContextHelper =
+				new FileVersionDisplayContextHelper(fileVersion);
 		}
-
-		this.fileEntry = fileEntry;
-
-		_folderId = BeanParamUtil.getLong(this.fileEntry, request, "folderId");
-
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
-			_themeDisplay.getPermissionChecker(), this.fileEntry);
-		_fileVersionDisplayContextHelper = new FileVersionDisplayContextHelper(
-			fileVersion);
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to build BaseDefaultDLViewFileVersionDisplayContext " +
+					"for " + fileVersion,
+				pe);
+		}
 	}
 
 	private void _addCancelCheckoutToolbarItem(List<ToolbarItem> toolbarItems)

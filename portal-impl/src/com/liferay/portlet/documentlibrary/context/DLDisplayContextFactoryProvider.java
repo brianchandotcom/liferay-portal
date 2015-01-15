@@ -30,36 +30,30 @@ public interface DLDisplayContextFactoryProvider {
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileEntryType dlFileEntryType)
-		throws PortalException;
+			DLFileEntryType dlFileEntryType);
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileEntry fileEntry)
-		throws PortalException;
+			FileEntry fileEntry);
 
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
-		throws PortalException;
+			DLFileShortcut dlFileShortcut);
 
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException;
+			FileVersion fileVersion);
 
 	public DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
-		throws PortalException;
+			DLFileShortcut dlFileShortcut);
 
 	public DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException;
+			FileVersion fileVersion);
 
 }

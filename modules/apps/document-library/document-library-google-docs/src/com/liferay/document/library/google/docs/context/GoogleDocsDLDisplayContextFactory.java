@@ -16,6 +16,7 @@ package com.liferay.document.library.google.docs.context;
 
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.context.DLDisplayContextFactory;
@@ -89,18 +90,24 @@ public class GoogleDocsDLDisplayContextFactory
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
-		throws PortalException {
+			DLFileShortcut dlFileShortcut) {
 
-		long fileEntryId = dlFileShortcut.getToFileEntryId();
+		try {
+			long fileEntryId = dlFileShortcut.getToFileEntryId();
 
-		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
-		FileVersion fileVersion = fileEntry.getFileVersion();
+			FileVersion fileVersion = fileEntry.getFileVersion();
 
-		return getDLFileVersionActionsDisplayContext(
-			parentDLViewFileVersionDisplayContext, request, response,
-			fileVersion);
+			return getDLFileVersionActionsDisplayContext(
+				parentDLViewFileVersionDisplayContext, request, response,
+				fileVersion);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to build GoogleDocsDLViewFileVersionDisplayContext " +
+					"for shortcut " + dlFileShortcut.getToTitle(), pe);
+		}
 	}
 
 	@Override
@@ -131,8 +138,7 @@ public class GoogleDocsDLDisplayContextFactory
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
-		throws PortalException {
+			DLFileShortcut dlFileShortcut) {
 
 		return getDLFileVersionActionsDisplayContext(
 			parentDLViewFileVersionDisplayContext, request, response,

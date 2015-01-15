@@ -45,16 +45,14 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	public DefaultDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileEntryType dlFileEntryType)
-		throws PortalException {
+			DLFileEntryType dlFileEntryType) {
 
 		_init(request, dlFileEntryType, null);
 	}
 
 	public DefaultDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileEntry fileEntry)
-		throws PortalException {
+			FileEntry fileEntry) {
 
 		_init(request, null, fileEntry);
 	}
@@ -214,36 +212,44 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	private void _init(
 			HttpServletRequest request, DLFileEntryType dlFileEntryType,
-			FileEntry fileEntry)
-		throws PortalException {
+			FileEntry fileEntry) {
 
-		_request = request;
-		_dlFileEntryType = dlFileEntryType;
-		_fileEntry = fileEntry;
+		try {
+			_request = request;
+			_dlFileEntryType = dlFileEntryType;
+			_fileEntry = fileEntry;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		_dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(
-			themeDisplay.getLayout(), portletDisplay.getId());
-		_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
-			themeDisplay.getPermissionChecker(), _fileEntry);
+			_dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(
+				themeDisplay.getLayout(), portletDisplay.getId());
+			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
+				themeDisplay.getPermissionChecker(), _fileEntry);
 
-		if ((_dlFileEntryType == null) && (_fileEntry != null)) {
-			_dlFileEntryType =
-				_fileEntryDisplayContextHelper.getDLFileEntryType();
+			if ((_dlFileEntryType == null) && (_fileEntry != null)) {
+				_dlFileEntryType =
+					_fileEntryDisplayContextHelper.getDLFileEntryType();
+			}
+
+			if (fileEntry != null) {
+				_fileVersion = fileEntry.getFileVersion();
+			}
+
+			_fileVersionDisplayContextHelper =
+				new FileVersionDisplayContextHelper(_fileVersion);
+
+			_showSelectFolder = ParamUtil.getBoolean(
+				request, "showSelectFolder");
 		}
-
-		if (fileEntry != null) {
-			_fileVersion = fileEntry.getFileVersion();
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to build DefaultDLEditFileEntryDisplayContext for " +
+					fileEntry,
+				pe);
 		}
-
-		_fileVersionDisplayContextHelper = new FileVersionDisplayContextHelper(
-			_fileVersion);
-
-		_showSelectFolder = ParamUtil.getBoolean(request, "showSelectFolder");
 	}
 
 	private static final UUID _UUID = UUID.fromString(

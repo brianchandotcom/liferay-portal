@@ -1151,6 +1151,11 @@
 	<bean id="com.liferay.portlet.journal.util.JournalConverterUtil" class="com.liferay.portlet.journal.util.JournalConverterUtil">
 		<property name="journalConverter" ref="com.liferay.portlet.journal.util.JournalConverter" />
 	</bean>
+	<bean id="com.liferay.portlet.journal.util.JournalValidatorUtil" class="com.liferay.portlet.journal.util.JournalValidatorUtil">
+		<property name="JournalValidator">
+			<bean class="com.liferay.portlet.journal.util.JournalValidatorImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">
 		<property name="sitemap">
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />

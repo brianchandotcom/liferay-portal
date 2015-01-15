@@ -1183,6 +1183,10 @@ public interface PropsKeys {
 
 	public static final String JOURNAL_ARTICLES_SEARCH_WITH_INDEX = "journal.articles.search.with.index";
 
+	public static final String JOURNAL_CHAR_BLACKLIST = "journal.char.blacklist";
+
+	public static final String JOURNAL_CHAR_LAST_BLACKLIST = "journal.char.last.blacklist";
+
 	public static final String JOURNAL_CONTENT_SEARCH_SHOW_LISTED = "journal.content.search.show.listed";
 
 	public static final String JOURNAL_DEFAULT_DISPLAY_VIEW = "journal.default.display.view";

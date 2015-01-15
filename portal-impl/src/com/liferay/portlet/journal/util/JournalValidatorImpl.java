@@ -1,0 +1,66 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.journal.util;
+
+import com.liferay.portal.kernel.util.UnicodeFormatter;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.journal.FolderNameException;
+
+/**
+ * @author David Zhang
+ */
+public final class JournalValidatorImpl implements JournalValidator {
+
+	@Override
+	public boolean isValidName(String name) {
+		if (Validator.isNull(name)) {
+			return false;
+		}
+
+		for (String blacklistChar : PropsValues.JOURNAL_CHAR_BLACKLIST) {
+			if (name.contains(blacklistChar)) {
+				return false;
+			}
+		}
+
+		for (String blacklistLastChar :
+				PropsValues.JOURNAL_CHAR_LAST_BLACKLIST) {
+
+			if (blacklistLastChar.startsWith(_UNICODE_PREFIX)) {
+				blacklistLastChar = UnicodeFormatter.parseString(
+					blacklistLastChar);
+			}
+
+			if (name.endsWith(blacklistLastChar)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	@Override
+	public void validateFolderName(String folderName)
+		throws FolderNameException {
+
+		if (!isValidName(folderName)) {
+			throw new FolderNameException(folderName);
+		}
+	}
+
+	private static final String _UNICODE_PREFIX = "\\u";
+
+}

@@ -589,7 +589,7 @@ public class Transformer {
 					getTemplateNodes(themeDisplay, dynamicElementElement));
 			}
 			else if ((dynamicContentElement != null) &&
-					 (dynamicContentElement.element("option") != null)) {
+					(dynamicContentElement.element("option") != null)) {
 
 				List<Element> optionElements = dynamicContentElement.elements(
 					"option");

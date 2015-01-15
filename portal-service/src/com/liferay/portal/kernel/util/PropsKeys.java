@@ -2269,6 +2269,8 @@ public interface PropsKeys {
 
 	public static final String SEARCH_FACET_CONFIGURATION = "search.facet.configuration";
 
+	public static final String SECURE_FORGOT_PASSWORD = "secure.forgot.password";
+
 	public static final String SERVICE_BUILDER_SERVICE_READ_ONLY_PREFIXES = "service.builder.service.read.only.prefixes";
 
 	public static final String SERVLET_SERVICE_EVENTS_POST = "servlet.service.events.post";

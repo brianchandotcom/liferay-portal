@@ -112,13 +112,11 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 			</div>
 		</div>
 
-		<div class="asset-metadata">
-
-			<%
-			boolean filterByMetadata = true;
-			%>
-
-			<%@ include file="/html/portlet/asset_publisher/asset_metadata.jspf" %>
-		</div>
+		<liferay-ui:asset-metadata
+			className="<%= assetEntry.getClassName() %>"
+			classPK="<%= assetEntry.getClassPK() %>"
+			filterByMetadata="<%= true %>"
+			metadataFields="<%= metadataFields %>"
+		/>
 	</div>
 </c:if>

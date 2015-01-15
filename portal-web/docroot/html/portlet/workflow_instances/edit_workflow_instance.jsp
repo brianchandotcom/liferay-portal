@@ -119,14 +119,14 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 					</c:choose>
 
 					<%
-					boolean filterByMetadata = false;
-
 					String[] metadataFields = new String[] {"author", "categories", "tags"};
 					%>
 
-					<div class="asset-metadata">
-						<%@ include file="/html/portlet/asset_publisher/asset_metadata.jspf" %>
-					</div>
+					<liferay-ui:asset-metadata
+						className="<%= className %>"
+						classPK="<%= classPK %>"
+						metadataFields="<%= metadataFields %>"
+					/>
 				</liferay-ui:panel>
 			</c:if>
 

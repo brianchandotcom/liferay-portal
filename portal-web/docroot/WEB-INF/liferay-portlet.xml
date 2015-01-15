@@ -1164,7 +1164,6 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/asset_publisher/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/workflow_definitions/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-workflow-tasks</css-class-wrapper>
@@ -1182,7 +1181,6 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/asset_publisher/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/workflow_definitions/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-workflow-definitions</css-class-wrapper>
 	</portlet>
@@ -1219,7 +1217,6 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/asset_publisher/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/workflow_definitions/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>/html/portlet/workflow_tasks/js/main.js</footer-portlet-javascript>
@@ -1292,7 +1289,6 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/asset_publisher/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/workflow_definitions/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-workflow-instances</css-class-wrapper>

@@ -1,0 +1,25 @@
+.taglib-asset-metadata {
+	clear: both;
+	overflow: hidden;
+	padding: 10px;
+
+	span {
+		display: inline-block;
+	}
+
+	.metadata-author {
+		display: none;
+		font-weight: bold;
+		margin-right: 10px;
+	}
+
+	.metadata-entry {
+		color: #999;
+		margin-right: 2em;
+	}
+
+	.metadata-categories span {
+		float: none;
+	}
+
+}

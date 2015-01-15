@@ -45,24 +45,6 @@
 		margin-left: 1em;
 	}
 
-	.asset-metadata {
-		clear: both;
-		overflow: hidden;
-		padding: 10px;
-
-		span {
-			display: inline-block;
-		}
-
-		.metadata-author {
-			display: none;
-		}
-
-		.metadata-categories span {
-			float: none;
-		}
-	}
-
 	.asset-more {
 		clear: left;
 	}
@@ -164,16 +146,6 @@
 
 	.add-asset-selector {
 		margin-right: 0;
-	}
-
-	.metadata-author {
-		font-weight: bold;
-		margin-right: 10px;
-	}
-
-	.metadata-entry {
-		color: #999;
-		margin-right: 2em;
 	}
 
 	.single-item-button {

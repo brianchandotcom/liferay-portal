@@ -241,16 +241,12 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	</div>
 
 	<c:if test="<%= show %>">
-		<div class="asset-metadata">
-
-			<%
-			boolean filterByMetadata = true;
-
-			String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
-			%>
-
-			<%@ include file="/html/portlet/asset_publisher/asset_metadata.jspf" %>
-		</div>
+		<liferay-ui:asset-metadata
+			className="<%= assetEntry.getClassName() %>"
+			classPK="<%= assetEntry.getClassPK() %>"
+			filterByMetadata="<%= true %>"
+			metadataFields="<%= assetPublisherDisplayContext.getMetadataFields() %>"
+		/>
 	</c:if>
 </div>
 

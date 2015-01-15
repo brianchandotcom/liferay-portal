@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.ldap;
 
 /**
  * @author Norbert Kocsis
  */
-public class ContactConverterKeys {
+public interface ContactConverterKeys {
 
 	public static final String AIM_SN = "aimSn";
 

@@ -41,6 +41,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -144,12 +145,10 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 			ServiceContext serviceContext, long fileEntryTypeId)
 		throws PortalException {
 
-//		HashMap<String, Fields> fieldsMap = new HashMap<String, Fields>();
 		HashMap<String, DDMFormValues> ddmFormValuesMap = 
 			new HashMap<String, DDMFormValues>();
 
 		if (fileEntryTypeId <= 0) {
-//			return fieldsMap;
 			return ddmFormValuesMap;
 		}
 
@@ -161,27 +160,22 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 		for (DDMStructure ddmStructure : ddmStructures) {
 			String namespace = String.valueOf(ddmStructure.getStructureId());
 
-//			Fields fields = (Fields)serviceContext.getAttribute(
-//				Fields.class.getName() + ddmStructure.getStructureId());
-
 			DDMFormValues ddmFormValues = 
 				(DDMFormValues)serviceContext.getAttribute(
 					DDMFormValues.class.getName() + 
 						ddmStructure.getStructureId());
 
 			if (ddmFormValues == null) {
-//				fields = DDMUtil.getFields(
-//					ddmStructure.getStructureId(), namespace, serviceContext);
-				ddmFormValues = DDMUtil.getDDMFormValues(
-						ddmStructure.getStructureId(), namespace,
-						serviceContext);
+				Fields fields = DDMUtil.getFields(
+					ddmStructure.getStructureId(), namespace, serviceContext);
+
+				ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(
+						ddmStructure, fields);
 			}
 
-//			fieldsMap.put(ddmStructure.getStructureKey(), fields);
 			ddmFormValuesMap.put(ddmStructure.getStructureKey(), ddmFormValues);
 		}
 
-//		return fieldsMap;
 		return ddmFormValuesMap;
 	}
 

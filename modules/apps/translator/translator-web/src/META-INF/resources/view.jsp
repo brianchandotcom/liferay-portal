@@ -22,7 +22,7 @@ Translation translation = (Translation)request.getAttribute(TranslatorConfigurat
 Map<String, String> languageIdsMap = TranslatorUtil.getLanguageIdsMap(locale, translatorConfiguration);
 
 if (translation == null) {
-	String translationId = translatorConfiguration.getTranslationId();
+	String translationId = translatorConfiguration.translationId();
 
 	String[] fromAndTolanguageIds = TranslatorUtil.getFromAndToLanguageIds(translationId, languageIdsMap);
 

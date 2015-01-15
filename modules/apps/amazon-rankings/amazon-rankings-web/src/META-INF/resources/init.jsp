@@ -1,4 +1,5 @@
 <%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -53,7 +54,7 @@ WindowState windowState = liferayPortletRequest.getWindowState();
 
 AmazonRankingsConfiguration amazonRankingsConfiguration = (AmazonRankingsConfiguration)renderRequest.getAttribute(AmazonRankingsConfiguration.class.getName());
 
-String[] isbns = portletPreferences.getValues("isbns", amazonRankingsConfiguration.getIsbns());
+String[] isbns = portletPreferences.getValues("isbns", amazonRankingsConfiguration.isbns());
 
 NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 %>

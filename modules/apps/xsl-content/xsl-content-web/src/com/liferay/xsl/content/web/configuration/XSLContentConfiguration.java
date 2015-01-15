@@ -23,15 +23,15 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface XSLContentConfiguration {
 
 	@Meta.AD(deflt = "false", id = "xml.doctype.declaration.allowed")
-	public boolean isXmlDoctypeDeclarationAllowed();
+	public boolean xmlDoctypeDeclarationAllowed();
 
 	@Meta.AD(deflt = "false", id = "xml.external.general.entities.allowed")
-	public boolean isXmlExternalGeneralEntitiesAllowed();
+	public boolean xmlExternalGeneralEntitiesAllowed();
 
 	@Meta.AD(deflt = "false", id = "xml.external.parameter.entities.allowed")
-	public boolean isXmlExternalParameterEntitiesAllowed();
+	public boolean xmlExternalParameterEntitiesAllowed();
 
 	@Meta.AD(deflt = "true", id = "xsl.secure.processing.enabled")
-	public boolean isXslSecureProcessingEnabled();
+	public boolean xslSecureProcessingEnabled();
 
 }

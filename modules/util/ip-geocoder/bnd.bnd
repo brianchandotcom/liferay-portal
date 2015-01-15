@@ -3,3 +3,9 @@ Bundle-SymbolicName: com.liferay.ip.geocoder
 Bundle-Version: 1.0.2
 Export-Package: com.liferay.ip.geocoder
 Private-Package: com.liferay.ip.geocoder.internal
+
+Include-Resource:\
+	classes,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+
+-metatype: *

@@ -12,31 +12,28 @@
  * details.
  */
 
-package com.liferay.translator.web.configuration;
+package com.liferay.ip.geocoder.internal;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Raymond Augé
- * @author Peter Fellwock
+ * @author Julio Camarero
  */
-@Meta.OCD(
-	id = "com.liferay.translator.web", localization = "content.Language"
-)
-public interface TranslatorConfiguration {
-
-	public static final String TRANSLATOR_TRANSLATION =
-		"TRANSLATOR_TRANSLATION";
+@Meta.OCD(id = "com.liferay.ip.geocoder")
+public interface IPGeocoderConfiguration {
 
 	@Meta.AD(
-		deflt = "ar,bg,ca,cs,da,de,el,en,es,et,fi,fr,hi_IN,ht,hu,in,it,iw,ja,ko,lt,lv,mww,nb,nl,pl,pt_PT,ro,ru,sk,sl,sv,th,tr,uk,vi,zh_CN,zh_TW",
-		id = "language.ids", required = false
-	)
-	public String languageIds();
+		description =
+			"The path where the database will be stored. By default it will " +
+				"be stored in java.io.tmpdir/liferay/geoip/GeoIPCity.dat",
+		name = "File Path", required = false)
+	public String filePath();
 
 	@Meta.AD(
-		deflt = "en_es", id = "translation.id", required = false
-	)
-	public String translationId();
+		description = "The URL to download the Geo IP City Database",
+		name = "File URL", deflt =
+			"http://cdn.mirrors.liferay.com/geolite.maxmind.com/download/" +
+				"geoip/database/GeoLiteCity.dat.xz", required = true)
+	public String fileURL();
 
 }

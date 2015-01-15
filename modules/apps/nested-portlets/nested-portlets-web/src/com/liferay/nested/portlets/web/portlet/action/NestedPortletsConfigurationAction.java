@@ -85,7 +85,7 @@ public class NestedPortletsConfigurationAction
 
 		String oldLayoutTemplateId = portletPreferences.getValue(
 			"layoutTemplateId",
-			_nestedPortletsConfiguration.getLayoutTemplateDefault());
+			_nestedPortletsConfiguration.layoutTemplateDefault());
 
 		if (!oldLayoutTemplateId.equals(layoutTemplateId)) {
 			reorganizeNestedColumns(

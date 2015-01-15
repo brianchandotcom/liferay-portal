@@ -83,13 +83,13 @@ public class AmazonSignedRequestsUtil {
 		throws Exception {
 
 		if (Validator.isNull(
-				amazonRankingsConfiguration.getAmazonSecretAccessKey())) {
+				amazonRankingsConfiguration.amazonSecretAccessKey())) {
 
 			return StringPool.BLANK;
 		}
 
 		String amazonSecretAccessKey =
-			amazonRankingsConfiguration.getAmazonSecretAccessKey();
+			amazonRankingsConfiguration.amazonSecretAccessKey();
 
 		SecretKeySpec secretKeySpec = new SecretKeySpec(
 			amazonSecretAccessKey.getBytes(), _HMAC_SHA256_ALGORITHM);

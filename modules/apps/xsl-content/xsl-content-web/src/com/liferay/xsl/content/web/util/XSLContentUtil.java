@@ -76,13 +76,13 @@ public class XSLContentUtil {
 
 		documentBuilderFactory.setFeature(
 			"http://apache.org/xml/features/disallow-doctype-decl",
-			!xslContentConfiguration.isXmlDoctypeDeclarationAllowed());
+			!xslContentConfiguration.xmlDoctypeDeclarationAllowed());
 		documentBuilderFactory.setFeature(
 			"http://xml.org/sax/features/external-general-entities",
-			xslContentConfiguration.isXmlExternalGeneralEntitiesAllowed());
+			xslContentConfiguration.xmlExternalGeneralEntitiesAllowed());
 		documentBuilderFactory.setFeature(
 			"http://xml.org/sax/features/external-parameter-entities",
-			xslContentConfiguration.isXmlExternalGeneralEntitiesAllowed());
+			xslContentConfiguration.xmlExternalGeneralEntitiesAllowed());
 
 		documentBuilderFactory.setNamespaceAware(true);
 
@@ -98,7 +98,7 @@ public class XSLContentUtil {
 
 		transformerFactory.setFeature(
 			XMLConstants.FEATURE_SECURE_PROCESSING,
-			xslContentConfiguration.isXslSecureProcessingEnabled());
+			xslContentConfiguration.xslSecureProcessingEnabled());
 
 		return transformerFactory;
 	}

@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.freemarker;
+package com.liferay.portal.template.freemarker;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
+import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 
 import freemarker.cache.TemplateCache;
 
@@ -41,10 +40,16 @@ import java.util.Locale;
 /**
  * @author Tina Tian
  */
+
 public class LiferayTemplateCache extends TemplateCache {
 
-	public LiferayTemplateCache(Configuration configuration) {
+	public LiferayTemplateCache(
+		Configuration configuration,
+		FreemarkerEngineConfiguration freemarkerEngineConfiguration) {
+
 		_configuration = configuration;
+
+		_freemarkerEngineConfiguration = freemarkerEngineConfiguration;
 
 		String cacheName = TemplateResource.class.getName();
 
@@ -59,8 +64,10 @@ public class LiferayTemplateCache extends TemplateCache {
 			String templateId, Locale locale, String encoding, boolean parse)
 		throws IOException {
 
+		// WEIRD STATEMENT NOT SURE WHAT COMES BACK
+
 		String[] macroTemplateIds = PropsUtil.getArray(
-			PropsKeys.FREEMARKER_ENGINE_MACRO_LIBRARY);
+			_freemarkerEngineConfiguration.getMacroLibrary());
 
 		for (String macroTemplateId : macroTemplateIds) {
 			int pos = macroTemplateId.indexOf(" as ");
@@ -138,8 +145,8 @@ public class LiferayTemplateCache extends TemplateCache {
 			templateResource.getTemplateId(), templateResource.getReader(),
 			_configuration, TemplateConstants.DEFAUT_ENCODING);
 
-		if (PropsValues.
-				FREEMARKER_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL != 0) {
+		if (_freemarkerEngineConfiguration.getResourceModificationCheck()
+				!= 0) {
 
 			_portalCache.put(templateResource, template);
 		}
@@ -148,6 +155,7 @@ public class LiferayTemplateCache extends TemplateCache {
 	}
 
 	private final Configuration _configuration;
+	private final FreemarkerEngineConfiguration _freemarkerEngineConfiguration;
 	private final PortalCache<TemplateResource, Object> _portalCache;
 
 	private class TemplatePrivilegedExceptionAction

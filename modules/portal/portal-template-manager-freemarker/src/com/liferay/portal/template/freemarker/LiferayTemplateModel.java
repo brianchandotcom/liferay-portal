@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.freemarker;
+package com.liferay.portal.template.freemarker;
 
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 

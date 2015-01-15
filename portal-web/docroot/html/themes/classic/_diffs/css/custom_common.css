@@ -12,13 +12,6 @@ $dockbarGradientStart: #118ADE;
 $dockbarOpenGradientEnd: #0993DD;
 $dockbarOpenGradientStart: #0EA6F9;
 
-$statusApproved: #26C0BE;
-$statusDenied: #FF387A;
-$statusDraft: #577ED2;
-$statusExpired: #9CA4AC;
-$statusPending: #FF6C58;
-$statusScheduled: #D437EF;
-
 body {
 	color: #555;
 	font-weight: 200;
@@ -240,60 +233,6 @@ select:focus {
 		&:hover {
 			@include opacity(1);
 		}
-	}
-}
-
-/* ---------- Status ---------- */
-
-.border-status {
-	&.approved {
-		border-color: $statusApproved !important;
-	}
-
-	&.scheduled {
-		border-color: $statusScheduled !important;
-	}
-
-	&.pending {
-		border-color: $statusPending !important;
-	}
-
-	&.denied {
-		border-color: $statusDenied !important;
-	}
-
-	&.expired {
-		border-color: $statusExpired !important;
-	}
-
-	&.draft {
-		border-color: $statusDraft !important;
-	}
-}
-
-.status {
-	&.approved {
-		color: $statusApproved !important;
-	}
-
-	&.scheduled {
-		color: $statusScheduled !important;
-	}
-
-	&.pending {
-		color: $statusPending !important;
-	}
-
-	&.denied {
-		color: $statusDenied !important;
-	}
-
-	&.expired {
-		color: $statusExpired !important;
-	}
-
-	&.draft {
-		color: $statusDraft !important;
 	}
 }
 

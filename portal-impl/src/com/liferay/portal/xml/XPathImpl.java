@@ -165,6 +165,11 @@ public class XPathImpl implements XPath {
 
 			return new DocumentImpl(document);
 		}
+		else if (context instanceof org.dom4j.Element) {
+			org.dom4j.Element element = (org.dom4j.Element)context;
+
+			return new ElementImpl(element);
+		}
 		else if (context instanceof org.dom4j.Node) {
 			org.dom4j.Node node = (org.dom4j.Node)context;
 

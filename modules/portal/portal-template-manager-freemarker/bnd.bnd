@@ -1,0 +1,17 @@
+Bundle-Name: Liferay Portal Freemarker Template Manager
+Bundle-SymbolicName: com.liferay.portal.freemarker
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.sun.org.apache.xml.internal.utils,\
+	!com.sun.org.apache.xpath.internal,\
+	!com.sun.org.apache.xpath.internal.objects,\
+	!org.apache.log,\
+	!org.slf4j.spi,\
+	!org.zeroturnaround.javarebel,\
+	*
+Include-Resource:\
+	@lib/freemarker.jar,\
+	classes,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+
+-metatype: *

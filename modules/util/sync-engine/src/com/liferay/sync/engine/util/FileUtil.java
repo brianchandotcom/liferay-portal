@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.util;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
 
@@ -193,7 +194,8 @@ public class FileUtil {
 			int x = fileName.lastIndexOf(".");
 
 			if ((x == -1) ||
-				!extension.equalsIgnoreCase(fileName.substring(x + 1))) {
+				!StringUtil.equalsIgnoreCase(
+					extension, fileName.substring(x + 1))) {
 
 				fileName += "." + extension;
 			}
@@ -319,7 +321,9 @@ public class FileUtil {
 		String nameWithoutExtension = FilenameUtils.removeExtension(fileName);
 
 		for (String blacklistName : PropsValues.SYNC_FILE_BLACKLIST_NAMES) {
-			if (nameWithoutExtension.equalsIgnoreCase(blacklistName)) {
+			if (StringUtil.equalsIgnoreCase(
+					nameWithoutExtension, blacklistName)) {
+
 				return false;
 			}
 		}

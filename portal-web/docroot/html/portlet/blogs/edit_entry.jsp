@@ -109,7 +109,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			refresh="<%= false %>"
 			type="pills"
 		>
-			<div class="<%= (entry != null) ? "border-status " + WorkflowConstants.getStatusLabel(entry.getStatus()) : StringPool.BLANK %>">
+			<div class="<%= (entry != null) ? "entry-status " + WorkflowConstants.getStatusLabel(entry.getStatus()) : StringPool.BLANK %>">
 				<liferay-ui:section>
 					<c:if test="<%= entry != null %>">
 						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />

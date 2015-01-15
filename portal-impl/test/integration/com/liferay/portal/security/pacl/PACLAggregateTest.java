@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessConte
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -113,6 +115,10 @@ public class PACLAggregateTest {
 			arguments.add(_JPDA_OPTIONS);
 			arguments.add("-Djunit.debug=true");
 		}
+
+		arguments.add(
+			"-D" + PropsKeys.LIFERAY_LIB_PORTAL_DIR + "=" +
+				PropsValues.LIFERAY_LIB_PORTAL_DIR);
 
 		builder.setArguments(arguments);
 		builder.setBootstrapClassPath(System.getProperty("java.class.path"));

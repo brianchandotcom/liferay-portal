@@ -17,12 +17,14 @@ package com.liferay.portal.ldap.listeners;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.exportimport.UserExporterUtil;
 import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import org.osgi.service.component.annotations.Component;
 
 import java.io.Serializable;
 
@@ -33,6 +35,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
+@Component(immediate = true, service = ModelListener.class)
 public class ContactModelListener extends BaseModelListener<Contact> {
 
 	@Override

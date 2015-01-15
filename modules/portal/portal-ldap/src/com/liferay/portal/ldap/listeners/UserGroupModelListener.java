@@ -16,15 +16,18 @@ package com.liferay.portal.ldap.listeners;
 
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.exportimport.UserExporterUtil;
 import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;
 import com.liferay.portal.security.exportimport.UserOperation;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares
  */
+@Component(immediate = true, service = ModelListener.class)
 public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 
 	@Override

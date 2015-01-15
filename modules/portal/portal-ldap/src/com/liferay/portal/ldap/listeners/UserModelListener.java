@@ -21,6 +21,7 @@ import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.MembershipRequestConstants;
+import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.exportimport.UserExporterUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import org.osgi.service.component.annotations.Component;
 
 import java.io.Serializable;
 
@@ -41,6 +43,7 @@ import java.util.Map;
  * @author Raymond Augé
  * @author Vilmos Papp
  */
+@Component(immediate = true, service = ModelListener.class)
 public class UserModelListener extends BaseModelListener<User> {
 
 	@Override

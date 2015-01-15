@@ -44,7 +44,7 @@ public class DoAsURLTag extends TagSupport {
 		String doAsURL = company.getHomeURL();
 
 		if (Validator.isNull(doAsURL)) {
-			doAsURL = _COMPANY_DEFAULT_HOME_URL;
+			doAsURL = _PORTAL_IMPERSONATION_DEFAULT_URL;
 		}
 
 		doAsURL = themeDisplay.getPathContext() + doAsURL;
@@ -89,8 +89,8 @@ public class DoAsURLTag extends TagSupport {
 		_var = var;
 	}
 
-	private static final String _COMPANY_DEFAULT_HOME_URL = PropsUtil.get(
-		PropsKeys.COMPANY_DEFAULT_HOME_URL);
+	private static final String _PORTAL_IMPERSONATION_DEFAULT_URL =
+		PropsUtil.get(PropsKeys.PORTAL_IMPERSONATION_DEFAULT_URL);
 
 	private long _doAsUserId;
 	private String _var;

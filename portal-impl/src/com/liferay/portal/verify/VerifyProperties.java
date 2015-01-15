@@ -353,6 +353,26 @@ public class VerifyProperties extends VerifyProcess {
 			"bookmarks.subfolders.visible", "subfolders.visible",
 			"com.liferay.bookmarks.service"
 		},
+		
+		// IFrame
+
+		new String[] {
+			"iframe.auth", "auth", "com.liferay.iframe.web"
+		},
+		
+		new String[] {
+			"iframe.auth-type", "auth.type", "com.liferay.iframe.web"
+		},
+		
+		new String[] {
+			"iframe.form-method", "form.method", "com.liferay.iframe.web"
+		},
+		
+		new String[] {
+			"iframe.hidden-variables", "hidden.variables",
+			"com.liferay.iframe.web"
+		},
+		
 
 		// CAS
 

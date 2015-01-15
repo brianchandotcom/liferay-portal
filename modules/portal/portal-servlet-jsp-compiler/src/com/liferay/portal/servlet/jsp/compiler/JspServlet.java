@@ -131,6 +131,7 @@ public class JspServlet extends HttpServlet {
 		_bundle = bundleReference.getBundle();
 
 		bundles.add(_bundle);
+
 		bundles.add(_jspBundle);
 
 		collectTaglibProviderBundles(bundles);
@@ -234,12 +235,18 @@ public class JspServlet extends HttpServlet {
 	private void collectTaglibProviderBundles(List<Bundle> bundles) {
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
-		for (BundleWire wire : bundleWiring.getRequiredWires(_OSGI_EXTENDER)) {
-			BundleCapability bundleCapability = wire.getCapability();
+		for (BundleWire bundleWire :
+				bundleWiring.getRequiredWires("osgi.extender")) {
+
+			BundleCapability bundleCapability = bundleWire.getCapability();
+
 			Map<String, Object> attributes = bundleCapability.getAttributes();
 
-			if (attributes.get(_OSGI_EXTENDER).equals(_JSP_TAGLIB)) {
-				BundleRevision bundleRevision = wire.getProvider();
+			Object value = attributes.get("osgi.extender");
+
+			if (value.equals("jsp.taglib")) {
+				BundleRevision bundleRevision = bundleWire.getProvider();
+
 				Bundle bundle = bundleRevision.getBundle();
 
 				if (!bundles.contains(bundle)) {
@@ -268,10 +275,6 @@ public class JspServlet extends HttpServlet {
 	private static final Class<?>[] _INTERFACES = {
 		ServletContext.class
 	};
-
-	private static final String _JSP_TAGLIB = "jsp.taglib";
-
-	private static final String _OSGI_EXTENDER = "osgi.extender";
 
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;

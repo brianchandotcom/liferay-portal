@@ -224,7 +224,7 @@ public class WikiWebUtil {
 	}
 
 	public static List<String> getNodeNames(List<WikiNode> nodes) {
-		List<String> nodeNames = new ArrayList<String>(nodes.size());
+		List<String> nodeNames = new ArrayList<>(nodes.size());
 
 		for (WikiNode node : nodes) {
 			nodeNames.add(node.getName());
@@ -242,7 +242,7 @@ public class WikiWebUtil {
 
 		nodes = ListUtil.copy(nodes);
 
-		List<WikiNode> orderedNodes = new ArrayList<WikiNode>(nodes.size());
+		List<WikiNode> orderedNodes = new ArrayList<>(nodes.size());
 
 		for (String visibleNodeName : visibleNodeNames) {
 			for (WikiNode node : nodes) {

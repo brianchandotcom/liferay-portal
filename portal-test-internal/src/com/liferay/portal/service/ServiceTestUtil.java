@@ -141,15 +141,6 @@ public class ServiceTestUtil {
 			_log.error(e.getMessage(), e);
 		}
 
-		// Template manager
-
-		try {
-			TemplateManagerUtil.init();
-		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
-		}
-
 		// Indexers
 
 		PortalRegisterTestUtil.registerIndexers();

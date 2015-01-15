@@ -12,12 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.model;
+package com.liferay.portal.ldap.listeners;
 
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.model.impl.UserModelImpl;
+import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.MembershipRequest;
+import com.liferay.portal.model.MembershipRequestConstants;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.exportimport.UserExporterUtil;
 import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;

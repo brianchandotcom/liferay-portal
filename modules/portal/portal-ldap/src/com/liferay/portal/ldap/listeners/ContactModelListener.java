@@ -12,9 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.model;
+package com.liferay.portal.ldap.listeners;
 
 import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.exportimport.UserExporterUtil;
 import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;
 import com.liferay.portal.service.ServiceContext;

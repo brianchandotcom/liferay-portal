@@ -640,7 +640,6 @@
 	<bean id="com.liferay.portal.security.auth.SessionAuthToken" class="com.liferay.portal.security.auth.SessionAuthToken" />
 	<bean id="com.liferay.portal.security.auth.SiteMinderAutoLogin" class="com.liferay.portal.security.auth.SiteMinderAutoLogin" />
 	<bean id="com.liferay.portal.security.auth.TunnelingServletAuthVerifier" class="com.liferay.portal.security.auth.TunnelingServletAuthVerifier" />
-	<bean id="com.liferay.portal.security.ldap.AttributesTransformerFactory" class="com.liferay.portal.security.ldap.AttributesTransformerFactory" />
 	<bean id="com.liferay.portal.security.ldap.DefaultAttributesTransformer" class="com.liferay.portal.security.ldap.DefaultAttributesTransformer" />
 	<bean id="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" />
 	<bean id="com.liferay.portal.security.membershippolicy.DummyOrganizationMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyOrganizationMembershipPolicy" />

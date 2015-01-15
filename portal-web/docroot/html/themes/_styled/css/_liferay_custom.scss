@@ -12,8 +12,8 @@
 
 .portlet-msg-progress {
 	background-image: url(../images/aui/loading_indicator.gif);
-	background-repeat: no-repeat;
 	background-position: 6px 50%;
+	background-repeat: no-repeat;
 	padding-left: 30px;
 }
 
@@ -33,4 +33,58 @@
 
 .navbar .nav li > a {
 	@include word-break(break-all);
+}
+
+/* ---------- Status ---------- */
+
+.entry-status {
+	&.approved {
+		border-color: $status-approved-border !important;
+	}
+
+	&.scheduled {
+		border-color: $status-scheduled-border !important;
+	}
+
+	&.pending {
+		border-color: $status-pending-border !important;
+	}
+
+	&.denied {
+		border-color: $status-denied-border !important;
+	}
+
+	&.expired {
+		border-color: $status-expired-border !important;
+	}
+
+	&.draft {
+		border-color: $status-draft-border !important;
+	}
+}
+
+.status {
+	&.approved {
+		color: $status-approved-text !important;
+	}
+
+	&.scheduled {
+		color: $status-scheduled-text !important;
+	}
+
+	&.pending {
+		color: $status-pending-text !important;
+	}
+
+	&.denied {
+		color: $status-denied-text !important;
+	}
+
+	&.expired {
+		color: $status-expired-text !important;
+	}
+
+	&.draft {
+		color: $status-draft-text !important;
+	}
 }

@@ -65,7 +65,7 @@
 			<span class="workflow-label"><liferay-ui:message key="status" />:</span>
 		</c:if>
 
-		<strong class="label workflow-status-<%= WorkflowConstants.getStatusLabel(status) %> <%= WorkflowConstants.getStatusCssClass(status) %> workflow-value">
+		<strong class="label status workflow-status-<%= WorkflowConstants.getStatusLabel(status) %> <%= WorkflowConstants.getStatusCssClass(status) %> workflow-value">
 			<liferay-ui:message key="<%= statusMessage %>" /><%= additionalText %>
 		</strong>
 	</span>

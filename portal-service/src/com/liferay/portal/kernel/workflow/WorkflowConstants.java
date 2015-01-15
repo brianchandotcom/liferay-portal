@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.workflow;
 
-import com.liferay.portal.kernel.util.StringPool;
-
 /**
  * @author Jorge Ferrer
  * @author Zsolt Berentey
@@ -150,20 +148,39 @@ public class WorkflowConstants {
 	}
 
 	public static String getStatusCssClass(int status) {
-		if (status == STATUS_APPROVED) {
-			return "label-success";
+		if (status == STATUS_ANY) {
+			return LABEL_ANY;
+		}
+		else if (status == STATUS_APPROVED) {
+			return LABEL_APPROVED;
+		}
+		else if (status == STATUS_DENIED) {
+			return LABEL_DENIED;
 		}
 		else if (status == STATUS_DRAFT) {
-			return "label-info";
+			return LABEL_DRAFT;
 		}
 		else if (status == STATUS_EXPIRED) {
-			return "label-danger";
+			return LABEL_EXPIRED;
+		}
+		else if (status == STATUS_IN_TRASH) {
+			return LABEL_IN_TRASH;
+		}
+		else if (status == STATUS_INACTIVE) {
+			return LABEL_INACTIVE;
+		}
+		else if (status == STATUS_INCOMPLETE) {
+			return LABEL_INCOMPLETE;
 		}
 		else if (status == STATUS_PENDING) {
-			return "label-warning";
+			return LABEL_PENDING;
 		}
-
-		return StringPool.BLANK;
+		else if (status == STATUS_SCHEDULED) {
+			return LABEL_SCHEDULED;
+		}
+		else {
+			return LABEL_ANY;
+		}
 	}
 
 	public static String getStatusLabel(int status) {

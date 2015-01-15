@@ -147,6 +147,10 @@
 	visibility: hidden !important;
 }
 
+.entry-status {
+	border-left: 4px solid transparent;
+}
+
 .unselectable, .unselectable * {
 	-khtml-user-select: none;
 	-moz-user-select: none;

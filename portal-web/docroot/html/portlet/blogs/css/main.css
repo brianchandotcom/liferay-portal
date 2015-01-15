@@ -119,6 +119,10 @@
 	}
 
 	.edit-entry {
+		.entry-status {
+			padding-left: 30px;
+		}
+
 		.entry-title, .entry-subtitle, .entry-body {
 			margin-left: 24px;
 		}
@@ -219,7 +223,8 @@
 	}
 
 	.lfr-blogs-cover-image-selector {
-		margin: 20px 0 60px;
+		margin: 0 0 60px;
+		padding-top: 10px;
 	}
 
 	.preview {

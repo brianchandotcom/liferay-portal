@@ -142,12 +142,10 @@ public class ProxyUtil {
 		public LookupKey(Class<?>[] interfaces) {
 			_interfaces = interfaces;
 
-			int hashCode = 1;
+			int hashCode = 0;
 
 			for (Class<?> clazz : interfaces) {
-				String name = clazz.getName();
-
-				hashCode = HashUtil.hash(hashCode, name.hashCode());
+				hashCode = HashUtil.hash(hashCode, clazz.getName());
 			}
 
 			_hashCode = hashCode;

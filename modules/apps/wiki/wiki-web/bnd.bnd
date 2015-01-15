@@ -19,7 +19,6 @@ Import-Package: \
 	com.liferay.portal.lar,\
 	com.liferay.portal.model,\
 	com.liferay.portal.security.permission,\
-	com.liferay.portal.servlet.jsp.compiler.jsp,\
 	com.liferay.portal.service,\
 	com.liferay.portal.service.permission,\
 	com.liferay.portal.struts,\

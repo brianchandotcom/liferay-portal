@@ -39,31 +39,35 @@ public class ThemeIds {
 	}
 
 	private ThemeIds() {
+		String[] themeIds = new String[0];
+
 		try {
 			if (TestPropsValues.THEME_IDS.length > 0) {
-				_themeIds = TestPropsValues.THEME_IDS;
+				themeIds = TestPropsValues.THEME_IDS;
 			}
 			else {
 				HttpPrincipal httpPrincipal = new HttpPrincipal(
 					TestPropsValues.PORTAL_URL);
 
-				List<String> themeIds = new ArrayList<>();
+				List<String> themeIdList = new ArrayList<>();
 
 				List<Theme> themes = ThemeServiceHttp.getThemes(
 					httpPrincipal, TestPropsValues.getCompanyId());
 
 				for (Theme theme : themes) {
 					if (!theme.isWapTheme()) {
-						themeIds.add(theme.getThemeId());
+						themeIdList.add(theme.getThemeId());
 					}
 				}
 
-				_themeIds = themeIds.toArray(new String[themeIds.size()]);
+				themeIds = themeIdList.toArray(new String[themeIdList.size()]);
 			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		_themeIds = themeIds;
 	}
 
 	private int _getCount() {
@@ -81,6 +85,6 @@ public class ThemeIds {
 	private static ThemeIds _instance = new ThemeIds();
 
 	private int _pos;
-	private String[] _themeIds = new String[0];
+	private final String[] _themeIds;
 
 }

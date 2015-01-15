@@ -311,17 +311,22 @@ public class PortalImpl implements Portal {
 
 		// Always allow do as user service tracker
 
+		ServiceTracker<AlwaysAllowDoAsUser, AlwaysAllowDoAsUser>
+			alwaysAllowDoAsUserServiceTracker = null;
+
 		try {
 			Registry registry = RegistryUtil.getRegistry();
 
-			_alwaysAllowDoAsUserServiceTracker = registry.trackServices(
+			alwaysAllowDoAsUserServiceTracker = registry.trackServices(
 				AlwaysAllowDoAsUser.class,
 				new AlwaysAllowDoAsUserServiceTrackerCustomizer());
 
-			_alwaysAllowDoAsUserServiceTracker.open();
+			alwaysAllowDoAsUserServiceTracker.open();
 		}
 		catch (NullPointerException npe) {
 		}
+
+		_alwaysAllowDoAsUserServiceTracker = alwaysAllowDoAsUserServiceTracker;
 
 		// Computer name
 

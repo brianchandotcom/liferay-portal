@@ -220,6 +220,9 @@ public class RuntimeVariables {
 
 			_sourceDir = absolutePath;
 		}
+		else {
+			_sourceDir = null;
+		}
 	}
 
 	private String _getValue(String key) {
@@ -306,6 +309,6 @@ public class RuntimeVariables {
 
 	private ContextReplace _contextReplace;
 	private Map<String, String> _runtimeVariables = new HashMap<>();
-	private String _sourceDir;
+	private final String _sourceDir;
 
 }

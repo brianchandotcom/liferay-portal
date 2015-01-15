@@ -41,16 +41,6 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 
 	public SingletonLiferayEhcacheRegionFactory(Properties properties) {
 		synchronized (this) {
-			boolean useQueryCache = GetterUtil.getBoolean(
-				properties.get(PropsKeys.HIBERNATE_CACHE_USE_QUERY_CACHE));
-			boolean useSecondLevelCache = GetterUtil.getBoolean(
-				properties.get(
-					PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
-
-			if (useQueryCache || useSecondLevelCache) {
-				_enabled = true;
-			}
-
 			_init(properties);
 		}
 	}
@@ -123,6 +113,15 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 	}
 
 	private static void _init(Properties properties) {
+		boolean useQueryCache = GetterUtil.getBoolean(
+			properties.get(PropsKeys.HIBERNATE_CACHE_USE_QUERY_CACHE));
+		boolean useSecondLevelCache = GetterUtil.getBoolean(
+			properties.get(PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
+
+		if (useQueryCache || useSecondLevelCache) {
+			_enabled = true;
+		}
+
 		if (_liferayEhcacheRegionFactory == null) {
 			_liferayEhcacheRegionFactory = new LiferayEhcacheRegionFactory(
 				properties);

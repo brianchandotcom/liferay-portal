@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:select label="locale" name="languageId">
+<aui:select label="language" name="languageId">
 
 	<%
 	Locale[] locales = LanguageUtil.getAvailableLocales();

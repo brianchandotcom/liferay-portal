@@ -14,6 +14,9 @@
 
 package com.liferay.iframe.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.iframe.web.configuration.IFrameConfiguration;
 import com.liferay.iframe.web.constants.IFrameWebKeys;
 import com.liferay.iframe.web.upgrade.IFrameWebUpgrade;
 import com.liferay.iframe.web.util.IFrameUtil;
@@ -31,13 +34,18 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -46,7 +54,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.iframe.web",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-iframe",
 		"com.liferay.portlet.display-category=category.sample",
@@ -62,7 +71,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.config-template=/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},
@@ -74,6 +82,9 @@ public class IFramePortlet extends MVCPortlet {
 	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			IFrameConfiguration.class.getName(), _IFrameConfiguration);
 
 		String src = null;
 
@@ -94,6 +105,13 @@ public class IFramePortlet extends MVCPortlet {
 		else {
 			super.doView(renderRequest, renderResponse);
 		}
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_IFrameConfiguration = Configurable.createConfigurable(
+			IFrameConfiguration.class, properties);
 	}
 
 	protected String getPassword(
@@ -181,5 +199,7 @@ public class IFramePortlet extends MVCPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(IFramePortlet.class);
+
+	private volatile IFrameConfiguration _IFrameConfiguration;
 
 }

@@ -348,6 +348,13 @@ public class ZipWriterImplTest {
 		file.delete();
 	}
 
+	/**
+	 * Tests that {@link ZipWriter#finish()} can execute without error on a ZIP
+	 * writer that's been created by the default constructor and that has no
+	 * entries.
+	 *
+	 * @throws Exception
+	 */
 	@Test
 	public void testFinishIfZipFileIsNotSet() throws Exception {
 		ZipWriter zipWriter = new ZipWriterImpl();
@@ -360,11 +367,9 @@ public class ZipWriterImplTest {
 	}
 
 	/**
-	 * Tests if the zip writer executes when a file is not set. If the file is a
-	 * <code>true</code> archive file, and not a <code>false</code> positive,
-	 * including RAES encrypted ZIP files for which key prompting has been
-	 * cancelled or disabled, an <code>ArchiveFileNotFoundException</code> is
-	 * thrown.
+	 * Tests that {@link ZipWriter#finish()} can execute without error on a ZIP
+	 * writer that's been created for an existing ZIP file and that has no
+	 * entries.
 	 *
 	 * @throws Exception if an exception occurred
 	 */

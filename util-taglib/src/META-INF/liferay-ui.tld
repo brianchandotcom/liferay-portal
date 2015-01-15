@@ -387,6 +387,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>asset-add-button</name>
+		<tag-class>com.liferay.taglib.ui.AssetAddButtonTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<name>asset-categories-error</name>
 		<tag-class>com.liferay.taglib.ui.AssetCategoriesErrorTag</tag-class>
 		<body-content>JSP</body-content>

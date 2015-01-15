@@ -54,7 +54,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		}
 
 		for (String restrictedClassName :
-				_freemarkerEngineConfiguration.getRestrictedClasses()) {
+				_freemarkerEngineConfiguration.restrictedClasses()) {
 
 			if (className.equals(restrictedClassName)) {
 				throw new TemplateException(
@@ -64,7 +64,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		}
 
 		for (String restrictedPackageName :
-				_freemarkerEngineConfiguration.getRestrictedPackages()) {
+				_freemarkerEngineConfiguration.restrictedPackages()) {
 
 			if (className.startsWith(restrictedPackageName)) {
 				throw new TemplateException(

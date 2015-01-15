@@ -26,34 +26,34 @@ public interface FreemarkerEngineConfiguration {
 		"freemarker.engine.template.parsers";
 
 	@Meta.AD(deflt = "false", required = false)
-	public boolean getLocalizedLookup();
+	public boolean localizedLookup();
 
 	@Meta.AD(
 		deflt = "FTL_liferay.ftl as liferay", required = false)
-	public String getMacroLibrary();
+	public String[] macroLibrary();
 
 	@Meta.AD(deflt = "60", required = false)
-	public int getResourceModificationCheck();
+	public int resourceModificationCheck();
 
 	@Meta.AD(
 		deflt = "java.lang.Class|java.lang.ClassLoader|java.lang.Thread",
 		required = false)
-	public String[] getRestrictedClasses();
+	public String[] restrictedClasses();
 
 	@Meta.AD(
 		deflt = "", required = false)
-	public String[] getRestrictedPackages();
+	public String[] restrictedPackages();
 
 	@Meta.AD(
 		deflt = "serviceLocator", required = false)
-	public String[] getRestrictedVariables();
+	public String[] restrictedVariables();
 
 	@Meta.AD(deflt = "rethrow", required = false)
-	public String getTemplateExceptionHandler();
+	public String templateExceptionHandler();
 
 	@Meta.AD(
 		deflt = "com.liferay.portal.template.freemarker.FreeMarkerServletResourceParser|com.liferay.portal.template.ThemeResourceParser|com.liferay.portal.template.DDMTemplateResourceParser|com.liferay.portal.template.ClassLoaderResourceParser",
 		required = false)
-	public String[] getTemplateParsers();
+	public String[] templateParsers();
 
 }

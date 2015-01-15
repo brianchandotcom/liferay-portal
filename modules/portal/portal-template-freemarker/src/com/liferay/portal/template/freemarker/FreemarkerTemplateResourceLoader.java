@@ -50,8 +50,8 @@ public class FreemarkerTemplateResourceLoader implements TemplateResourceLoader{
 
 		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
 			TemplateConstants.LANG_TYPE_FTL,
-			_freemarkerEngineConfiguration.getTemplateParsers(),
-			_freemarkerEngineConfiguration.getResourceModificationCheck());
+			_freemarkerEngineConfiguration.templateParsers(),
+			_freemarkerEngineConfiguration.resourceModificationCheck());
 	}
 
 	@Override

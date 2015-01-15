@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
@@ -227,7 +228,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 	@Override
 	public String[] getRestrictedVariables() {
-		return _freemarkerEngineConfiguration.getRestrictedVariables();
+		return _freemarkerEngineConfiguration.restrictedVariables();
 	}
 
 	@Override
@@ -254,7 +255,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		_configuration.setDefaultEncoding(StringPool.UTF8);
 		_configuration.setLocalizedLookup(
-			_freemarkerEngineConfiguration.getLocalizedLookup());
+			_freemarkerEngineConfiguration.localizedLookup());
 		_configuration.setNewBuiltinClassResolver(
 			new LiferayTemplateClassResolver());
 		_configuration.setObjectWrapper(new LiferayObjectWrapper());
@@ -262,10 +263,11 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		try {
 			_configuration.setSetting(
 				"auto_import",
-				_freemarkerEngineConfiguration.getMacroLibrary());
+				StringUtil.merge(
+					_freemarkerEngineConfiguration.macroLibrary()));
 			_configuration.setSetting(
 				"template_exception_handler",
-				_freemarkerEngineConfiguration.getTemplateExceptionHandler());
+				_freemarkerEngineConfiguration.templateExceptionHandler());
 		}
 		catch (Exception e) {
 			throw new TemplateException("Unable to init freemarker manager", e);
@@ -299,7 +301,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		Template template = new FreeMarkerTemplate(
 			templateResource, errorTemplateResource, helperUtilities,
 			_configuration, templateContextHelper, privileged,
-			_freemarkerEngineConfiguration.getResourceModificationCheck());
+			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		if (restricted) {
 			template = new RestrictedTemplate(

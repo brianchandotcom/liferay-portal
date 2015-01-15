@@ -55,7 +55,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 	@Override
 	public Set<String> getRestrictedVariables() {
 		return SetUtil.fromArray(
-			_freemarkerEngineConfiguration.getRestrictedVariables());
+			_freemarkerEngineConfiguration.restrictedVariables());
 	}
 
 	@Override

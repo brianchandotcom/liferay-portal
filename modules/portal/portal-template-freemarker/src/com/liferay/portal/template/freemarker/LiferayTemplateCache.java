@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
 import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
-import com.liferay.portal.util.PropsUtil;
 
 import freemarker.cache.TemplateCache;
 
@@ -66,10 +65,9 @@ public class LiferayTemplateCache extends TemplateCache {
 
 		// WEIRD STATEMENT NOT SURE WHAT COMES BACK
 
-		String[] macroTemplateIds = PropsUtil.getArray(
-			_freemarkerEngineConfiguration.getMacroLibrary());
+		for (String macroTemplateId :
+				_freemarkerEngineConfiguration.macroLibrary()) {
 
-		for (String macroTemplateId : macroTemplateIds) {
 			int pos = macroTemplateId.indexOf(" as ");
 
 			if (pos != -1) {
@@ -145,7 +143,7 @@ public class LiferayTemplateCache extends TemplateCache {
 			templateResource.getTemplateId(), templateResource.getReader(),
 			_configuration, TemplateConstants.DEFAUT_ENCODING);
 
-		if (_freemarkerEngineConfiguration.getResourceModificationCheck()
+		if (_freemarkerEngineConfiguration.resourceModificationCheck()
 				!= 0) {
 
 			_portalCache.put(templateResource, template);

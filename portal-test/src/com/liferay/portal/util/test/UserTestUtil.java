@@ -134,56 +134,32 @@ public class UserTestUtil {
 	}
 
 	public static User addUser(boolean secure) throws Exception {
-		boolean autoPassword = true;
-		String password1 = StringPool.BLANK;
-		String password2 = StringPool.BLANK;
-		boolean autoScreenName = true;
-		String screenName = StringPool.BLANK;
-		long facebookId = 0;
-		String openId = StringPool.BLANK;
-		Locale locale = LocaleUtil.getDefault();
-		String firstName = "UserServiceTest";
-		String middleName = StringPool.BLANK;
-		String lastName = "UserServiceTest";
-		int prefixId = 0;
-		int suffixId = 0;
-		boolean male = true;
-		int birthdayMonth = Calendar.JANUARY;
-		int birthdayDay = 1;
-		int birthdayYear = 1970;
-		String jobTitle = StringPool.BLANK;
-		long[] groupIds = null;
-		long[] organizationIds = null;
-		long[] roleIds = null;
-		long[] userGroupIds = null;
-		boolean sendMail = false;
-
-		ServiceContext serviceContext = new ServiceContext();
+		BaseAddUserCommand addUserCommand;
+		String domain;
 
 		if (secure) {
-			String emailAddress =
-				"UserServiceTest." + RandomTestUtil.nextLong() + "@liferay.com";
-
-			return UserServiceUtil.addUser(
-				TestPropsValues.getCompanyId(), autoPassword, password1,
-				password2, autoScreenName, screenName, emailAddress, facebookId,
-				openId, locale, firstName, middleName, lastName, prefixId,
-				suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-				jobTitle, groupIds, organizationIds, roleIds, userGroupIds,
-				sendMail, serviceContext);
+			addUserCommand = new AddUserCommand();
+			domain = "liferay.com";
 		}
 		else {
-			String emailAddress =
-				"UserServiceTest." + RandomTestUtil.nextLong() + "@test.com";
-
-			return UserLocalServiceUtil.addUser(
-				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-				autoPassword, password1, password2, autoScreenName, screenName,
-				emailAddress, facebookId, openId, locale, firstName, middleName,
-				lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-				birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
-				userGroupIds, sendMail, serviceContext);
+			addUserCommand = new AddUserAsCreatorCommand(
+				TestPropsValues.getUserId());
+			domain = "test.com";
 		}
+
+		addUserCommand.autoScreenName = true;
+		addUserCommand.locale = LocaleUtil.getDefault();
+
+		User user = createUser();
+
+		user.setCompanyId(TestPropsValues.getCompanyId());
+		user.setEmailAddress(
+			"UserServiceTest." + RandomTestUtil.nextLong() + "@" + domain);
+		user.setScreenName(StringPool.BLANK);
+		user.setFirstName("UserServiceTest");
+		user.setLastName("UserServiceTest");
+
+		return addUserCommand.copy(user, new ServiceContext());
 	}
 
 	public static User addUser(long groupId, Locale locale) throws Exception {
@@ -206,33 +182,20 @@ public class UserTestUtil {
 			return user;
 		}
 
-		boolean autoPassword = true;
-		String password1 = StringPool.BLANK;
-		String password2 = StringPool.BLANK;
-		String emailAddress =
-			RandomTestUtil.randomString() + RandomTestUtil.nextLong() +
-				"@liferay.com";
-		long facebookId = 0;
-		String openId = StringPool.BLANK;
-		String middleName = StringPool.BLANK;
-		int prefixId = 0;
-		int suffixId = 0;
-		boolean male = true;
-		int birthdayMonth = Calendar.JANUARY;
-		int birthdayDay = 1;
-		int birthdayYear = 1970;
-		String jobTitle = StringPool.BLANK;
-		long[] organizationIds = null;
-		long[] roleIds = null;
-		long[] userGroupIds = null;
-		boolean sendMail = false;
+		user = createUser();
 
-		return UserLocalServiceUtil.addUser(
-			userId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
+		user.setCompanyId(companyId);
+		user.setScreenName(screenName);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+
+		BaseAddUserCommand addUserCommand = new AddUserAsCreatorCommand(userId);
+
+		addUserCommand.autoScreenName = autoScreenName;
+		addUserCommand.groupIds = groupIds;
+		addUserCommand.locale = locale;
+
+		return addUserCommand.copy(user, serviceContext);
 	}
 
 	public static User addUser(
@@ -274,6 +237,21 @@ public class UserTestUtil {
 		else {
 			return addUser(screenName, false, new long[] {groupId});
 		}
+	}
+
+	public static User createUser() throws Exception {
+		User user = UserLocalServiceUtil.createUser(0);
+
+		user.setPasswordUnencrypted(StringPool.BLANK);
+		user.setEmailAddress(
+			RandomTestUtil.randomString() + RandomTestUtil.nextLong() +
+				"@liferay.com");
+		user.setFacebookId(0);
+		user.setOpenId(StringPool.BLANK);
+		user.setMiddleName(StringPool.BLANK);
+		user.setJobTitle(StringPool.BLANK);
+
+		return user;
 	}
 
 	public static User getAdminUser(long companyId) throws PortalException {
@@ -343,6 +321,72 @@ public class UserTestUtil {
 			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
 			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
 			roleIds, userGroupRoles, userGroupIds, serviceContext);
+	}
+
+	public static class AddUserAsCreatorCommand extends BaseAddUserCommand {
+
+		public AddUserAsCreatorCommand(long creatorUserId) {
+			_creatorUserId = creatorUserId;
+		}
+
+		@Override
+		public User copy(User user, ServiceContext serviceContext)
+			throws PortalException {
+
+			return UserLocalServiceUtil.addUser(
+				_creatorUserId, user.getCompanyId(), autoPassword,
+				user.getPasswordUnencrypted(), user.getPasswordUnencrypted(),
+				autoScreenName, user.getScreenName(), user.getEmailAddress(),
+				user.getFacebookId(), user.getOpenId(), locale,
+				user.getFirstName(), user.getMiddleName(), user.getLastName(),
+				prefixId, suffixId, male, birthdayMonth, birthdayDay,
+				birthdayYear, user.getJobTitle(), groupIds, organizationIds,
+				roleIds, userGroupIds, sendMail, serviceContext);
+		}
+
+		private final long _creatorUserId;
+
+	}
+
+	public static class AddUserCommand extends BaseAddUserCommand {
+
+		@Override
+		public User copy(User user, ServiceContext serviceContext)
+			throws PortalException {
+
+			return UserServiceUtil.addUser(
+				user.getCompanyId(), autoPassword,
+				user.getPasswordUnencrypted(), user.getPasswordUnencrypted(),
+				autoScreenName, user.getScreenName(), user.getEmailAddress(),
+				user.getFacebookId(), user.getOpenId(), locale,
+				user.getFirstName(), user.getMiddleName(), user.getLastName(),
+				prefixId, suffixId, male, birthdayMonth, birthdayDay,
+				birthdayYear, user.getJobTitle(), groupIds, organizationIds,
+				roleIds, userGroupIds, sendMail, serviceContext);
+		}
+
+	}
+
+	protected abstract static class BaseAddUserCommand {
+
+		public abstract User copy(User user, ServiceContext serviceContext)
+			throws PortalException;
+
+		public boolean autoPassword = true;
+		public boolean autoScreenName;
+		public int birthdayDay = 1;
+		public int birthdayMonth = Calendar.JANUARY;
+		public int birthdayYear = 1970;
+		public long[] groupIds;
+		public Locale locale;
+		public boolean male = true;
+		public long[] organizationIds;
+		public int prefixId;
+		public long[] roleIds;
+		public boolean sendMail;
+		public int suffixId;
+		public long[] userGroupIds;
+
 	}
 
 }

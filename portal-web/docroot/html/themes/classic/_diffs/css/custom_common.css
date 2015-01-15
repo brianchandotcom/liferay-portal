@@ -677,6 +677,38 @@ select:focus {
 	}
 }
 
+/* ---------- Switches ---------- */
+
+input.switch {
+	&:empty ~ label {
+		&:before {
+			background-color: #868B96;
+		}
+
+		.label-on, .label-off {
+			font-weight: 500;
+		}
+
+		.label-on {
+			color: #34ADAB;
+		}
+
+		.button-icon {
+			color: #868B96;
+		}
+	}
+
+	&:checked ~ label {
+		&:before {
+			background-color: #34ADAB;
+		}
+
+		.button-icon {
+			color: #34ADAB;
+		}
+	}
+}
+
 /* ---------- Hidden accessible ---------- */
 
 #banner h2, #banner h3, .site-breadcrumbs h1 {

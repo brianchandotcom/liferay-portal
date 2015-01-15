@@ -112,8 +112,13 @@
 </tr>
 <!--ASSIGNED_TO_ME_TABLE-->
 <tr>
-	<td>ASSIGNED_TO_ME_TABLE_TASK</td>
-	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[1]/a</td>
+	<td>ASSIGNED_TO_ME_TABLE_TASK_1</td>
+	<td>xpath=(//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_TASK_2</td>
+	<td>xpath=(//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[1]/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -127,8 +132,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE</td>
-	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[3]/a</td>
+	<td>ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE_1</td>
+	<td>xpath=(//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[3]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE_2</td>
+	<td>xpath=(//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[3]/a)[2]</td>
 	<td></td>
 </tr>
 <tr>

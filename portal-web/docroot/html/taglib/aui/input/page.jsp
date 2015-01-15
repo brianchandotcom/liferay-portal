@@ -213,6 +213,16 @@ boolean choiceField = checkboxField || radioField;
 					xml="<%= valueString %>"
 				/>
 			</c:when>
+			<c:when test='<%= type.equals("editor") %>'>
+				<liferay-ui:input-editor
+					contents="<%= valueString %>"
+					contentsLanguageId="<%= languageId %>"
+					cssClass="<%= cssClass %>"
+					editorImpl="ckeditor"
+					name="<%= fieldParam %>"
+					toolbarSet="simple"
+				/>
+			</c:when>
 			<c:when test='<%= type.equals("textarea") %>'>
 
 				<%

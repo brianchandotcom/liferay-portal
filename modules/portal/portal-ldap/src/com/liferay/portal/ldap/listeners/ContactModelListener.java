@@ -19,16 +19,18 @@ import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.exportimport.UserExporterUtil;
+import com.liferay.portal.security.exportimport.UserExporter;
 import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.service.UserLocalService;
 
 import java.io.Serializable;
 
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Scott Lee
@@ -58,12 +60,22 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 		}
 	}
 
+	@Reference
+	public void setUserExporter(UserExporter userExporter) {
+		_userExporter = userExporter;
+	}
+
+	@Reference
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected void exportToLDAP(Contact contact) throws Exception {
 		if (UserImportTransactionThreadLocal.isOriginatesFromImport()) {
 			return;
 		}
 
-		User user = UserLocalServiceUtil.fetchUser(contact.getUserId());
+		User user = _userLocalService.fetchUser(contact.getUserId());
 
 		if ((user == null) || user.isDefaultUser()) {
 			return;
@@ -79,7 +91,10 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 				serviceContext.getExpandoBridgeAttributes();
 		}
 
-		UserExporterUtil.exportUser(contact, expandoBridgeAttributes);
+		_userExporter.exportUser(contact, expandoBridgeAttributes);
 	}
+
+	private UserExporter _userExporter;
+	private UserLocalService _userLocalService;
 
 }

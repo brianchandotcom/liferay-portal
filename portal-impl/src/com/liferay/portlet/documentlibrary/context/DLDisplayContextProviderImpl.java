@@ -36,10 +36,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ivan Zaera
  */
-public class DLDisplayContextFactoryProviderImpl
-	implements DLDisplayContextFactoryProvider {
+public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
-	public DLDisplayContextFactoryProviderImpl() {
+	public DLDisplayContextProviderImpl() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(

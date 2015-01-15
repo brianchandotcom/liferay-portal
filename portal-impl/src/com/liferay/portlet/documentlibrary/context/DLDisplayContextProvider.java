@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ivan Zaera
  */
-public interface DLDisplayContextFactoryProvider {
+public interface DLDisplayContextProvider {
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,

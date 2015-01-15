@@ -26,12 +26,12 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ivan Zaera
  */
-public class DLDisplayContextFactoryProviderUtil {
+public class DLDisplayContextProviderUtil {
 
-	public static DLDisplayContextFactoryProvider
+	public static DLDisplayContextProvider
 		getDLDisplayContextFactoryProvider() {
 
-		return _dlDisplayContextFactoryProvider;
+		return _dlDisplayContextProvider;
 	}
 
 	public static DLEditFileEntryDisplayContext
@@ -93,15 +93,14 @@ public class DLDisplayContextFactoryProviderUtil {
 	}
 
 	public void setDLDisplayContextFactoryProvider(
-		DLDisplayContextFactoryProvider dlDisplayContextFactoryProvider) {
+		DLDisplayContextProvider dlDisplayContextProvider) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_dlDisplayContextFactoryProvider = dlDisplayContextFactoryProvider;
+		_dlDisplayContextProvider = dlDisplayContextProvider;
 	}
 
-	private static DLDisplayContextFactoryProvider
-		_dlDisplayContextFactoryProvider =
-			new DLDisplayContextFactoryProviderImpl();
+	private static DLDisplayContextProvider
+		_dlDisplayContextProvider = new DLDisplayContextProviderImpl();
 
 }

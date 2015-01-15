@@ -66,10 +66,10 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 				DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = null;
 
 				if (fileShortcut == null) {
-					dlViewFileVersionDisplayContext = DLDisplayContextFactoryProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
+					dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
 				}
 				else {
-					dlViewFileVersionDisplayContext = DLDisplayContextFactoryProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileShortcut);
+					dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileShortcut);
 				}
 				%>
 

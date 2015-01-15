@@ -816,6 +816,28 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			fileName = jarFileURL.getFile();
 		}
+		else if (Validator.equals(url.getProtocol(), "wsjar")) {
+
+			// Websphere use a custom wsjar protocol to represent JAR files
+
+			fileName = url.getFile();
+
+			String protocol = "file:/";
+
+			int index = fileName.indexOf(protocol);
+
+			if (index > 0) {
+				fileName = fileName.substring(protocol.length());
+			}
+
+			index = fileName.indexOf('!');
+
+			if (index > 0) {
+				fileName = fileName.substring(0, index);
+			}
+
+			fileName = _decodePath(fileName);
+		}
 		else if (Validator.equals(url.getProtocol(), "zip")) {
 
 			// Weblogic use a custom zip protocol to represent JAR files

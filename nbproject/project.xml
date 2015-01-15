@@ -272,6 +272,7 @@
 				<classpath mode="compile">lib/development/ecj.jar</classpath>
 				<classpath mode="compile">lib/development/error-prone-ant.jar</classpath>
 				<classpath mode="compile">lib/development/firebird.jar</classpath>
+				<classpath mode="compile">lib/development/freemarker.jar</classpath>
 				<classpath mode="compile">lib/development/gson.jar</classpath>
 				<classpath mode="compile">lib/development/hamcrest-core.jar</classpath>
 				<classpath mode="compile">lib/development/hamcrest-library.jar</classpath>
@@ -398,7 +399,6 @@
 				<classpath mode="compile">lib/portal/fastutil.jar</classpath>
 				<classpath mode="compile">lib/portal/felix-fileinstall.jar</classpath>
 				<classpath mode="compile">lib/portal/fontbox.jar</classpath>
-				<classpath mode="compile">lib/portal/freemarker.jar</classpath>
 				<classpath mode="compile">lib/portal/freshcookies-security.jar</classpath>
 				<classpath mode="compile">lib/portal/gif89.jar</classpath>
 				<classpath mode="compile">lib/portal/groovy.jar</classpath>

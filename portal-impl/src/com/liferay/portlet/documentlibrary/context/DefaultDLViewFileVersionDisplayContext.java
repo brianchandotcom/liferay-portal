@@ -31,15 +31,15 @@ public class DefaultDLViewFileVersionDisplayContext
 	extends BaseDefaultDLViewFileVersionDisplayContext {
 
 	public DefaultDLViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut) {
+		HttpServletRequest request, HttpServletResponse response,
+		DLFileShortcut dlFileShortcut) {
 
 		super(request, response, dlFileShortcut);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion) {
 
 		super(request, response, fileVersion);
 	}

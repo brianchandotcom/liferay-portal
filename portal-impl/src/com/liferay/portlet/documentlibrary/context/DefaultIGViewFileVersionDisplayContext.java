@@ -31,15 +31,15 @@ public class DefaultIGViewFileVersionDisplayContext
 	extends BaseDefaultDLViewFileVersionDisplayContext {
 
 	public DefaultIGViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut) {
+		HttpServletRequest request, HttpServletResponse response,
+		DLFileShortcut dlFileShortcut) {
 
 		super(request, response, dlFileShortcut);
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion) {
 
 		super(request, response, fileVersion);
 	}

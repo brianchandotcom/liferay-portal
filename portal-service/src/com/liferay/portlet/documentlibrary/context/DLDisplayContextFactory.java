@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;

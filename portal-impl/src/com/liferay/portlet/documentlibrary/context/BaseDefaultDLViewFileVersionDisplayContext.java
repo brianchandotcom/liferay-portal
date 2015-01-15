@@ -90,16 +90,16 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	implements DLViewFileVersionDisplayContext {
 
 	public BaseDefaultDLViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut) {
+		HttpServletRequest request, HttpServletResponse response,
+		DLFileShortcut dlFileShortcut) {
 
 		this(
 			request, response, _getFileVersion(dlFileShortcut), dlFileShortcut);
 	}
 
 	public BaseDefaultDLViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion) {
 
 		this(request, response, fileVersion, null);
 	}
@@ -515,8 +515,8 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	}
 
 	private BaseDefaultDLViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion, DLFileShortcut dlFileShortcut) {
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion, DLFileShortcut dlFileShortcut) {
 
 		try {
 			this.request = request;
@@ -534,7 +534,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 			_folderId = BeanParamUtil.getLong(
 				this.fileEntry, request, "folderId");
 
-			_themeDisplay = (ThemeDisplay) request.getAttribute(
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(

@@ -44,15 +44,15 @@ public class DefaultDLEditFileEntryDisplayContext
 	implements DLEditFileEntryDisplayContext {
 
 	public DefaultDLEditFileEntryDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileEntryType dlFileEntryType) {
+		HttpServletRequest request, HttpServletResponse response,
+		DLFileEntryType dlFileEntryType) {
 
 		_init(request, dlFileEntryType, null);
 	}
 
 	public DefaultDLEditFileEntryDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileEntry fileEntry) {
+		HttpServletRequest request, HttpServletResponse response,
+		FileEntry fileEntry) {
 
 		_init(request, null, fileEntry);
 	}
@@ -211,15 +211,15 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	private void _init(
-			HttpServletRequest request, DLFileEntryType dlFileEntryType,
-			FileEntry fileEntry) {
+		HttpServletRequest request, DLFileEntryType dlFileEntryType,
+		FileEntry fileEntry) {
 
 		try {
 			_request = request;
 			_dlFileEntryType = dlFileEntryType;
 			_fileEntry = fileEntry;
 
-			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();

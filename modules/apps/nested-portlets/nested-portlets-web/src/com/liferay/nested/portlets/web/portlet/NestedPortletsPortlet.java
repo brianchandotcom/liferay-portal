@@ -99,7 +99,7 @@ public class NestedPortletsPortlet extends MVCPortlet {
 
 		String layoutTemplateId = portletPreferences.getValue(
 			"layoutTemplateId",
-			_nestedPortletsConfiguration.getLayoutTemplateDefault());
+			_nestedPortletsConfiguration.layoutTemplateDefault());
 
 		String templateId = StringPool.BLANK;
 		String templateContent = StringPool.BLANK;

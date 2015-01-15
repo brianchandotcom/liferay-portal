@@ -89,7 +89,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 		_igGeocoderConfiguration = Configurable.createConfigurable(
 			IPGeocoderConfiguration.class, properties);
 
-		String filePath = _igGeocoderConfiguration.getFilePath();
+		String filePath = _igGeocoderConfiguration.filePath();
 
 		if ((filePath == null) || filePath.equals("")) {
 			filePath =
@@ -99,7 +99,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 		try {
 			File ipGeocoderFile = getIPGeocoderFile(
-				filePath, _igGeocoderConfiguration.getFileURL(), false);
+				filePath, _igGeocoderConfiguration.fileURL(), false);
 
 			_lookupService = new LookupService(
 				ipGeocoderFile, LookupService.GEOIP_MEMORY_CACHE);

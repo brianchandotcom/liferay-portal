@@ -50,12 +50,8 @@ import org.tukaani.xz.XZInputStream;
  * @author Julio Camarero
  */
 @Component(
+	configurationPid = "com.liferay.ip.geocoder",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, name = "IPGeocoder",
-	property = {
-		"ip.geocoder.file.path=",
-		"ip.geocoder.file.url=http://cdn.mirrors.liferay.com" +
-			"/geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.xz"
-	},
 	service = IPGeocoder.class)
 public class IPGeocoderImpl implements IPGeocoder {
 
@@ -84,17 +80,16 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 	@Modified
 	public void modified(Map<String, String> properties) {
-		if (properties.containsKey("ip.geocoder.file.path") ||
-			properties.containsKey("ip.geocoder.file.url")) {
+		_lookupService = null;
 
-			_lookupService = null;
-
-			configure(properties);
-		}
+		configure(properties);
 	}
 
 	protected void configure(Map<String, String> properties) {
-		String filePath = properties.get("ip.geocoder.file.path");
+		_igGeocoderConfiguration = Configurable.createConfigurable(
+			IPGeocoderConfiguration.class, properties);
+
+		String filePath = _igGeocoderConfiguration.getFilePath();
 
 		if ((filePath == null) || filePath.equals("")) {
 			filePath =
@@ -102,10 +97,9 @@ public class IPGeocoderImpl implements IPGeocoder {
 					"/liferay/geoip/GeoIPCity.dat";
 		}
 
-		String fileURL = properties.get("ip.geocoder.file.url");
-
 		try {
-			File ipGeocoderFile = getIPGeocoderFile(filePath, fileURL, false);
+			File ipGeocoderFile = getIPGeocoderFile(
+				filePath, _igGeocoderConfiguration.getFileURL(), false);
 
 			_lookupService = new LookupService(
 				ipGeocoderFile, LookupService.GEOIP_MEMORY_CACHE);
@@ -190,5 +184,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 		IPGeocoderImpl.class);
 
 	private static LookupService _lookupService;
+
+	private volatile IPGeocoderConfiguration _igGeocoderConfiguration;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
+import com.liferay.portal.kernel.util.Tuple;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -35,6 +37,20 @@ public class SourceFormatterTest {
 				sme.getFileName(), sme.getFormattedSource(),
 				sme.getOriginalSource());
 		}
+	}
+
+	@Test
+	public void shouldReturnNullTuple() throws Exception {
+		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
+			false, false, false, false);
+
+		String fullFileName =
+			"portal-impl/test/integration/com/liferay/portal/tools/" +
+				"sourceformatter/dependencies/wrong.foo";
+
+		Tuple tuple = sourceFormatter.format(fullFileName);
+
+		Assert.assertNull(tuple);
 	}
 
 }

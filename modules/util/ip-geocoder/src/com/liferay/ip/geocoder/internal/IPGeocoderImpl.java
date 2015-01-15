@@ -72,6 +72,8 @@ public class IPGeocoderImpl implements IPGeocoder {
 	@Override
 	public IPInfo getIPInfo(String ipAddress) {
 		if (_lookupService == null) {
+			_logger.error("IP Geocoder is not configured properly");
+
 			return null;
 		}
 

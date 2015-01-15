@@ -42,18 +42,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FreemarkerTemplateResourceLoader implements TemplateResourceLoader{
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_freemarkerEngineConfiguration = Configurable.createConfigurable(
-			FreemarkerEngineConfiguration.class, properties);
-
-		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
-			TemplateConstants.LANG_TYPE_FTL,
-			_freemarkerEngineConfiguration.templateParsers(),
-			_freemarkerEngineConfiguration.resourceModificationCheck());
-	}
-
 	@Override
 	public void clearCache() {
 		_defaultTemplateResourceLoader.clearCache();
@@ -84,6 +72,18 @@ public class FreemarkerTemplateResourceLoader implements TemplateResourceLoader{
 		return _defaultTemplateResourceLoader.hasTemplateResource(templateId);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_freemarkerEngineConfiguration = Configurable.createConfigurable(
+			FreemarkerEngineConfiguration.class, properties);
+
+		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
+			TemplateConstants.LANG_TYPE_FTL,
+			_freemarkerEngineConfiguration.templateParsers(),
+			_freemarkerEngineConfiguration.resourceModificationCheck());
+	}
+
 	@Reference(unbind = "-")
 	protected void setMultiVMPoolUtil(MultiVMPoolUtil multiVMPoolUtil) {
 		// This reference ensures that MultipVMPoolUtil is ready for use.
@@ -96,7 +96,7 @@ public class FreemarkerTemplateResourceLoader implements TemplateResourceLoader{
 
 	private static volatile DefaultTemplateResourceLoader
 		_defaultTemplateResourceLoader;
-
 	private static volatile FreemarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
+
 }

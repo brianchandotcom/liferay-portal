@@ -64,8 +64,7 @@ public class VelocityManager extends BaseTemplateManager {
 		Template template, String applicationName, HttpServletRequest request,
 		HttpServletResponse response) {
 
-		template.put(
-			applicationName, getVelocityTaglib(request, response));
+		template.put(applicationName, getVelocityTaglib(request, response));
 	}
 
 	@Override

@@ -561,7 +561,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			fieldStructure.get("readOnly"));
 
 		if ((fieldReadOnly && Validator.isNotNull(mode) &&
-			StringUtil.equalsIgnoreCase(
+			 StringUtil.equalsIgnoreCase(
 				mode, DDMTemplateConstants.TEMPLATE_MODE_EDIT)) ||
 			readOnly) {
 

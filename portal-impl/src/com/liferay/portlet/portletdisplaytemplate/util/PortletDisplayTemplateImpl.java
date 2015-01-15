@@ -392,8 +392,8 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		templateManager.addTaglibRequest(
 			contextObjects,
-			PortletDisplayTemplateConstants.FREEMARKER_SERVLET_REQUEST,
-			request, response);
+			PortletDisplayTemplateConstants.FREEMARKER_SERVLET_REQUEST, request,
+			response);
 
 		// Taglib Liferay hash
 

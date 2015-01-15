@@ -353,12 +353,12 @@ public class VerifyProperties extends VerifyProcess {
 		// FreeMarker Engine
 
 		new String[] {
-			"freemarker.engine.localized.lookup",
-			"localized.lookup", "com.liferay.portal.template.freemarker"
+			"freemarker.engine.localized.lookup", "localized.lookup",
+			"com.liferay.portal.template.freemarker"
 		},
 		new String[] {
-			"freemarker.engine.macro.library",
-			"macro.library", "com.liferay.portal.template.freemarker"
+			"freemarker.engine.macro.library", "macro.library",
+			"com.liferay.portal.template.freemarker"
 		},
 		new String[] {
 			"freemarker.engine.resource.modification.check.interval",
@@ -366,20 +366,20 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.template.freemarker"
 		},
 		new String[] {
-			"freemarker.engine.restricted.classes",
-			"restricted.classes", "com.liferay.portal.template.freemarker"
+			"freemarker.engine.restricted.classes", "restricted.classes",
+			"com.liferay.portal.template.freemarker"
 		},
 		new String[] {
-			"freemarker.engine.restricted.packages",
-			"restricted.packages", "com.liferay.portal.template.freemarker"
+			"freemarker.engine.restricted.packages", "restricted.packages",
+			"com.liferay.portal.template.freemarker"
 		},
 		new String[] {
 			"freemarker.engine.template.exception.handler",
 			"template.exception.handler", "com.liferay.portal.template.freemarker"
 		},
 		new String[] {
-			"freemarker.engine.template.parsers",
-			"template.parsers", "com.liferay.portal.template.freemarker"
+			"freemarker.engine.template.parsers", "template.parsers",
+			"com.liferay.portal.template.freemarker"
 		},
 		new String[] {
 			"journal.template.freemarker.restricted.variables",

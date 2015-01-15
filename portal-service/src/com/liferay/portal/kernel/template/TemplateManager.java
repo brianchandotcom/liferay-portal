@@ -44,11 +44,11 @@ public interface TemplateManager {
 		ServletContext servletContext);
 
 	public void addTaglibFactory(
-		Template template, String taglibLiferayHash,
+		Map<String, Object> contextObjects, String taglibLiferayHash,
 		ServletContext servletContext);
 
 	public void addTaglibFactory(
-		Map<String, Object> contextObjects, String taglibLiferayHash,
+		Template template, String taglibLiferayHash,
 		ServletContext servletContext);
 
 	public void addTaglibRequest(
@@ -56,8 +56,8 @@ public interface TemplateManager {
 		HttpServletRequest request, HttpServletResponse response);
 
 	public void addTaglibRequest(
-		Template template, String applicationName,
-		HttpServletRequest request, HttpServletResponse response);
+		Template template, String applicationName, HttpServletRequest request,
+		HttpServletResponse response);
 
 	public void addTaglibTheme(
 		Template template, String string, HttpServletRequest request,

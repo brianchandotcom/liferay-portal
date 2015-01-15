@@ -36,6 +36,7 @@ import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;
 
 import freemarker.cache.TemplateCache;
+
 import freemarker.debug.impl.DebuggerService;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -143,19 +144,19 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 	@Override
 	public void addTaglibFactory(
-		Template template, String taglibFactoryName,
+		Map<String, Object> contextObjects, String taglibFactoryName,
 		ServletContext servletContext) {
 
-		template.put(
+		contextObjects.put(
 			taglibFactoryName, new TaglibFactoryWrapper(servletContext));
 	}
 
 	@Override
 	public void addTaglibFactory(
-		Map<String, Object> contextObjects, String taglibFactoryName,
+		Template template, String taglibFactoryName,
 		ServletContext servletContext) {
 
-		contextObjects.put(
+		template.put(
 			taglibFactoryName, new TaglibFactoryWrapper(servletContext));
 	}
 

@@ -208,9 +208,10 @@ public class TemplateManagerUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TemplateManagerUtil.class);
 
-	private static TemplateManagerUtil _instance = new TemplateManagerUtil();
+	private static final TemplateManagerUtil _instance =
+		new TemplateManagerUtil();
 
-	private ServiceTracker<TemplateManager, TemplateManager> _serviceTracker;
+	private final ServiceTracker<TemplateManager, TemplateManager> _serviceTracker;
 	private final Map<String, Set<String>> _supportedLanguageTypes =
 		new ConcurrentHashMap<>();
 	private final Map<String, TemplateManager> _templateManagers =
@@ -230,12 +231,12 @@ public class TemplateManagerUtil {
 
 			String name = templateManager.getName();
 
-			try{
+			try {
 				templateManager.init();
 
 				_templateManagers.put(name, templateManager);
 			}
-			catch(TemplateException e){
+			catch (TemplateException e) {
 				_log.warn("unable to init " + name + " Template Manager ", e);
 			}
 

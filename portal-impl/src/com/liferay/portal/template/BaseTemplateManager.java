@@ -62,13 +62,13 @@ public abstract class BaseTemplateManager implements TemplateManager {
 
 	@Override
 	public void addTaglibFactory(
-		Template template, String taglibLiferayHash,
+		Map<String, Object> contextObjects, String taglibLiferayHash,
 		ServletContext servletContext) {
 	}
 
 	@Override
 	public void addTaglibFactory(
-		Map<String, Object> contextObjects, String taglibLiferayHash,
+		Template template, String taglibLiferayHash,
 		ServletContext servletContext) {
 	}
 
@@ -80,8 +80,8 @@ public abstract class BaseTemplateManager implements TemplateManager {
 
 	@Override
 	public void addTaglibRequest(
-		Template template, String applicationName,
-		HttpServletRequest request, HttpServletResponse response) {
+		Template template, String applicationName, HttpServletRequest request,
+		HttpServletResponse response) {
 	}
 
 	@Override
@@ -90,17 +90,17 @@ public abstract class BaseTemplateManager implements TemplateManager {
 		HttpServletResponse response, Writer writer) {
 	}
 
+	@Override
+	public String[] getRestrictedVariables() {
+		return new String[0];
+	}
+
 	@NotPrivileged
 	@Override
 	public Template getTemplate(
 		TemplateResource templateResource, boolean restricted) {
 
 		return getTemplate(templateResource, null, restricted);
-	}
-
-	@Override
-	public String[] getRestrictedVariables() {
-		return new String[0];
 	}
 
 	@NotPrivileged
@@ -146,20 +146,19 @@ public abstract class BaseTemplateManager implements TemplateManager {
 		this.templateContextHelper = templateContextHelper;
 	}
 
+	public void setTemplateResourceLoader(
+		TemplateResourceLoader templateResourceLoader) {
+
+		this.templateResourceLoader = templateResourceLoader;
+	}
+
 	protected abstract Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, boolean restricted,
 		Map<String, Object> helperUtilities, boolean privileged);
 
 	protected TemplateContextHelper templateContextHelper;
-
 	protected TemplateResourceLoader templateResourceLoader;
-
-	public void setTemplateResourceLoader(
-		TemplateResourceLoader templateResourceLoader) {
-
-		this.templateResourceLoader = templateResourceLoader;
-	}
 
 	private class DoGetHelperUtilitiesPrivilegedAction
 		implements PrivilegedAction<Map<String, Object>> {

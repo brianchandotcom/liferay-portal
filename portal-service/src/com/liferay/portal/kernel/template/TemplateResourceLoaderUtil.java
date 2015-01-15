@@ -131,6 +131,22 @@ public class TemplateResourceLoaderUtil {
 		return _templateResourceLoaders.get(templateResourceLoaderName);
 	}
 
+	private TemplateResourceLoader _getTemplateResourceLoaderChecked(
+			String templateResourceLoaderName)
+		throws TemplateException {
+
+		TemplateResourceLoader templateResourceLoader =
+			_templateResourceLoaders.get(templateResourceLoaderName);
+
+		if (templateResourceLoader == null) {
+			throw new TemplateException(
+				"Unsupported template resource loader " +
+					templateResourceLoaderName);
+		}
+
+		return templateResourceLoader;
+	}
+
 	private Set<String> _getTemplateResourceLoaderNames() {
 		return _templateResourceLoaders.keySet();
 	}
@@ -151,29 +167,13 @@ public class TemplateResourceLoaderUtil {
 		return _templateResourceLoaders.containsKey(templateResourceLoaderName);
 	}
 
-	private TemplateResourceLoader _getTemplateResourceLoaderChecked(
-			String templateResourceLoaderName)
-		throws TemplateException {
-
-		TemplateResourceLoader templateResourceLoader =
-			_templateResourceLoaders.get(templateResourceLoaderName);
-
-		if (templateResourceLoader == null) {
-			throw new TemplateException(
-				"Unsupported template resource loader " +
-					templateResourceLoaderName);
-		}
-
-		return templateResourceLoader;
-	}
-
 	private static final TemplateResourceLoaderUtil _instance =
 		new TemplateResourceLoaderUtil();
 
-	private final Map<String, TemplateResourceLoader> _templateResourceLoaders =
-		new ConcurrentHashMap<>();
 	private final ServiceTracker<TemplateResourceLoader, TemplateResourceLoader>
 		_serviceTracker;
+	private final Map<String, TemplateResourceLoader> _templateResourceLoaders =
+		new ConcurrentHashMap<>();
 
 	private class TemplateResourceLoaderTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -212,7 +212,8 @@ public class TemplateResourceLoaderUtil {
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
-
 		}
+
 	}
+
 }

@@ -27,6 +27,7 @@ import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConf
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 
 import freemarker.cache.TemplateCache;
+
 import freemarker.core.ParseException;
 
 import freemarker.template.Configuration;
@@ -311,7 +312,7 @@ public class FreeMarkerTemplateTest {
 	private static final String _WRONG_TEMPLATE_ID = "WRONG_TEMPLATE_ID";
 
 	private Configuration _configuration;
-	private FreemarkerEngineConfiguration _freemarkerEngineConfiguration =
+	private final FreemarkerEngineConfiguration _freemarkerEngineConfiguration =
 		Configurable.createConfigurable(
 			FreemarkerEngineConfiguration.class, Collections.emptyMap());
 	private TemplateContextHelper _templateContextHelper;

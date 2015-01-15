@@ -76,37 +76,26 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 	<liferay-ui:error exception="<%= UserEmailAddressException.MustNotBeDuplicate.class %>" message="the-email-address-you-requested-is-already-taken" />
 	<liferay-ui:error exception="<%= UserIdException.class %>" message="please-enter-a-valid-user-id" />
 
-	<liferay-ui:error exception="<%= UserPasswordException.class %>">
+	<liferay-ui:error exception="<%= UserPasswordException.MustBeLonger.class %>">
 
 		<%
-		UserPasswordException upe = (UserPasswordException)errorException;
+		UserPasswordException.MustBeLonger upe = (UserPasswordException.MustBeLonger)errorException;
 		%>
 
-		<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_CONTAINS_TRIVIAL_WORDS %>">
-			<liferay-ui:message key="that-password-uses-common-words-please-enter-in-a-password-that-is-harder-to-guess-i-e-contains-a-mix-of-numbers-and-letters" />
-		</c:if>
-
-		<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_INVALID %>">
-			<liferay-ui:message key="that-password-is-invalid-please-enter-in-a-different-password" />
-		</c:if>
-
-		<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_LENGTH %>">
-
-			<%
-			PasswordPolicy passwordPolicy = PasswordPolicyLocalServiceUtil.getDefaultPasswordPolicy(company.getCompanyId());
-			%>
-
-			<%= LanguageUtil.format(request, "that-password-is-too-short-or-too-long-please-make-sure-your-password-is-between-x-and-512-characters", String.valueOf(passwordPolicy.getMinLength()), false) %>
-		</c:if>
-
-		<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_TOO_TRIVIAL %>">
-			<liferay-ui:message key="that-password-is-too-trivial" />
-		</c:if>
-
-		<c:if test="<%= upe.getType() == UserPasswordException.PASSWORDS_DO_NOT_MATCH %>">
-			<liferay-ui:message key="the-passwords-you-entered-do-not-match-each-other-please-re-enter-your-password" />
-		</c:if>
+		<%= LanguageUtil.format(request, "that-password-is-too-short-please-make-sure-your-password-is-at-least-x-characters-long", String.valueOf(upe.minLength), false) %>
 	</liferay-ui:error>
+	<liferay-ui:error exception="<%= UserPasswordException.MustComplyWithModelListeners.class %>" message="that-password-is-invalid-please-enter-in-a-different-password" />
+	<liferay-ui:error exception="<%= UserPasswordException.MustComplyWithRegex.class %>">
+
+		<%
+		UserPasswordException.MustComplyWithRegex upe = (UserPasswordException.MustComplyWithRegex)errorException;
+		%>
+
+		<%= LanguageUtil.format(request, "that-password-does-not-comply-with-regex-x-please-enter-in-a-different-password", upe.regex, false) %>
+	</liferay-ui:error>
+	<liferay-ui:error exception="<%= UserPasswordException.MustMatch.class %>" message="the-passwords-you-entered-do-not-match-each-other-please-re-enter-your-password" />
+	<liferay-ui:error exception="<%= UserPasswordException.MustNotBeTrivial.class %>" message="that-password-uses-common-words-please-enter-in-a-password-that-is-harder-to-guess-i-e-contains-a-mix-of-numbers-and-letters" />
+	<liferay-ui:error exception="<%= UserPasswordException.MustNotContainDictionaryWords.class %>" message="that-password-uses-common-dictionary-words-please-enter-in-a-different-password" />
 
 	<liferay-ui:error exception="<%= UserScreenNameException.class %>" message="please-enter-a-valid-screen-name" />
 	<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeDuplicate.class %>" message="the-screen-name-you-requested-is-already-taken" />

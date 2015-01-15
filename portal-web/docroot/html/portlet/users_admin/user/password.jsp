@@ -43,66 +43,38 @@ else {
 
 <h3><liferay-ui:message key="password" /></h3>
 
-<liferay-ui:error exception="<%= UserPasswordException.class %>">
+<liferay-ui:error exception="<%= UserPasswordException.MustBeLonger.class %>">
 
 	<%
-	UserPasswordException upe = (UserPasswordException)errorException;
+	UserPasswordException.MustBeLonger upe = (UserPasswordException.MustBeLonger)errorException;
 	%>
 
-	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_ALREADY_USED %>">
-		<liferay-ui:message key="that-password-has-already-been-used-please-enter-in-a-different-password" />
-	</c:if>
-
-	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_CONTAINS_TRIVIAL_WORDS %>">
-		<liferay-ui:message key="that-password-uses-common-words-please-enter-in-a-password-that-is-harder-to-guess-i-e-contains-a-mix-of-numbers-and-letters" />
-	</c:if>
-
-	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_INVALID %>">
-		<liferay-ui:message key="that-password-is-invalid-please-enter-in-a-different-password" />
-	</c:if>
-
-	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_LENGTH %>">
-
-		<%
-		int passwordPolicyMinLength = PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH;
-
-		if (passwordPolicy != null) {
-			passwordPolicyMinLength = passwordPolicy.getMinLength();
-		}
-		%>
-
-		<%= LanguageUtil.format(request, "that-password-is-too-short-or-too-long-please-make-sure-your-password-is-between-x-and-512-characters", String.valueOf(passwordPolicyMinLength), false) %>
-	</c:if>
-
-	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_NOT_CHANGEABLE %>">
-		<liferay-ui:message key="your-password-cannot-be-changed" />
-	</c:if>
-
-	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_SAME_AS_CURRENT %>">
-		<liferay-ui:message key="your-new-password-cannot-be-the-same-as-your-old-password-please-enter-in-a-different-password" />
-	</c:if>
-
-	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_TOO_TRIVIAL %>">
-		<liferay-ui:message key="that-password-is-too-trivial" />
-	</c:if>
-
-	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_TOO_YOUNG %>">
-
-		<%
-		long passwordPolicyMinAge = PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_AGE;
-
-		if (passwordPolicy != null) {
-			passwordPolicyMinAge = passwordPolicy.getMinAge();
-		}
-		%>
-
-		<%= LanguageUtil.format(request, "you-cannot-change-your-password-yet-please-wait-at-least-x-before-changing-your-password-again", LanguageUtil.getTimeDescription(request, passwordPolicyMinAge * 1000), false) %>
-	</c:if>
-
-	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORDS_DO_NOT_MATCH %>">
-		<liferay-ui:message key="the-passwords-you-entered-do-not-match-each-other-please-re-enter-your-password" />
-	</c:if>
+	<%= LanguageUtil.format(request, "that-password-is-too-short-please-make-sure-your-password-is-at-least-x-characters-long", String.valueOf(upe.minLength), false) %>
 </liferay-ui:error>
+<liferay-ui:error exception="<%= UserPasswordException.MustComplyWithModelListeners.class %>" message="that-password-is-invalid-please-enter-in-a-different-password" />
+<liferay-ui:error exception="<%= UserPasswordException.MustComplyWithRegex.class %>">
+
+	<%
+	UserPasswordException.MustComplyWithRegex upe = (UserPasswordException.MustComplyWithRegex)errorException;
+	%>
+
+	<%= LanguageUtil.format(request, "that-password-does-not-comply-with-regex-x-please-enter-in-a-different-password", upe.regex, false) %>
+</liferay-ui:error>
+<liferay-ui:error exception="<%= UserPasswordException.MustMatch.class %>" message="the-passwords-you-entered-do-not-match-each-other-please-re-enter-your-password" />
+<liferay-ui:error exception="<%= UserPasswordException.MustMatchCurrentPassword.class %>" message="the-password-you-entered-for-current-password-does-not-match-your-current-password" />
+<liferay-ui:error exception="<%= UserPasswordException.MustNotBeChanged.class %>" message="your-password-cannot-be-changed" />
+<liferay-ui:error exception="<%= UserPasswordException.MustNotBeChangedYet.class %>">
+
+	<%
+	UserPasswordException.MustNotBeChangedYet upe = (UserPasswordException.MustNotBeChangedYet)errorException;
+	%>
+
+	<%= LanguageUtil.format(request, "you-cannot-change-your-password-yet-please-wait-until-x-before-changing-your-password-again", String.valueOf(upe.changeableDate), false) %>
+</liferay-ui:error>
+<liferay-ui:error exception="<%= UserPasswordException.MustNotBeEqualToCurrent.class %>" message="your-new-password-cannot-be-the-same-as-your-old-password-please-enter-in-a-different-password" />
+<liferay-ui:error exception="<%= UserPasswordException.MustNotBeRecentlyUsed.class %>" message="that-password-has-already-been-used-please-enter-in-a-different-password" />
+<liferay-ui:error exception="<%= UserPasswordException.MustNotBeTrivial.class %>" message="that-password-uses-common-words-please-enter-in-a-password-that-is-harder-to-guess-i-e-contains-a-mix-of-numbers-and-letters" />
+<liferay-ui:error exception="<%= UserPasswordException.MustNotContainDictionaryWords.class %>" message="that-password-uses-common-dictionary-words-please-enter-in-a-different-password" />
 
 <aui:fieldset>
 

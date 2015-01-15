@@ -392,9 +392,6 @@ public class EditFileEntryAction extends PortletAction {
 				actionRequest, DLFileEntry.class.getName(),
 				fileEntry.getFileEntryId(), -1);
 
-			AssetPublisherUtil.addRecentFolderId(
-				actionRequest, DLFileEntry.class.getName(), folderId);
-
 			validFileNameKVPs.add(
 				new KeyValuePair(selectedFileName, originalSelectedFileName));
 
@@ -1054,9 +1051,6 @@ public class EditFileEntryAction extends PortletAction {
 					description, changeLog, majorVersion, inputStream, size,
 					serviceContext);
 			}
-
-			AssetPublisherUtil.addRecentFolderId(
-				actionRequest, DLFileEntry.class.getName(), folderId);
 
 			return fileEntry;
 		}

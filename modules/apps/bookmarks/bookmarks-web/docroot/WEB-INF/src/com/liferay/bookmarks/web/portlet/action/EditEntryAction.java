@@ -258,9 +258,6 @@ public class EditEntryAction extends PortletAction {
 				serviceContext);
 		}
 
-		AssetPublisherUtil.addRecentFolderId(
-			actionRequest, BookmarksEntry.class.getName(), folderId);
-
 		return entry;
 	}
 

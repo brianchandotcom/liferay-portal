@@ -165,9 +165,6 @@ public class EditFileShortcutAction extends PortletAction {
 
 			DLAppServiceUtil.updateFileShortcut(
 				fileShortcutId, folderId, toFileEntryId, serviceContext);
-
-			AssetPublisherUtil.addRecentFolderId(
-				actionRequest, DLFileShortcut.class.getName(), folderId);
 		}
 	}
 

@@ -55,9 +55,6 @@ public interface AssetPublisher {
 			int assetEntryOrder)
 		throws Exception;
 
-	public void addRecentFolderId(
-		PortletRequest portletRequest, String className, long classPK);
-
 	public void addSelection(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences, String portletId)
@@ -209,9 +206,6 @@ public interface AssetPublisher {
 		PortletPreferences portletPreferences, long scopeGroupId,
 		Layout layout);
 
-	public long getRecentFolderId(
-		PortletRequest portletRequest, String className);
-
 	public String getScopeId(Group group, long scopeGroupId)
 		throws PortalException;
 
@@ -243,9 +237,6 @@ public interface AssetPublisher {
 	public void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception;
-
-	public void removeRecentFolderId(
-		PortletRequest portletRequest, String className, long classPK);
 
 	public void subscribe(
 			PermissionChecker permissionChecker, long groupId, long plid,

@@ -16,7 +16,6 @@ package com.liferay.bookmarks.web.portlet.action;
 
 import com.liferay.bookmarks.exception.FolderNameException;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
-import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -30,7 +29,6 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
@@ -152,9 +150,6 @@ public class EditFolderAction extends PortletAction {
 			else {
 				BookmarksFolderServiceUtil.deleteFolder(deleteFolderId);
 			}
-
-			AssetPublisherUtil.removeRecentFolderId(
-				actionRequest, BookmarksEntry.class.getName(), deleteFolderId);
 		}
 
 		if (moveToTrash && !trashedModels.isEmpty()) {

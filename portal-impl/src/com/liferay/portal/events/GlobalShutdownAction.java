@@ -196,22 +196,6 @@ public class GlobalShutdownAction extends SimpleAction {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		// Template manager
-
-		try {
-			TemplateManagerUtil.destroy();
-		}
-		catch (Exception e) {
-		}
-
-		// Template resource loader
-
-		try {
-			TemplateResourceLoaderUtil.destroy();
-		}
-		catch (Exception e) {
-		}
 	}
 
 	protected void shutdownLevel2() {

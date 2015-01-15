@@ -10,8 +10,8 @@ Import-Package:\
 	!org.zeroturnaround.javarebel,\
 	*
 Include-Resource:\
-	@lib/freemarker.jar,\
 	classes,\
+	@lib/freemarker.jar,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
 
 -metatype: *

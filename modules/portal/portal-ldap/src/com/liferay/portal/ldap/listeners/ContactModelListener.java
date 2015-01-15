@@ -15,12 +15,12 @@
 package com.liferay.portal.ldap.listeners;
 
 import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.ldap.exportimport.UserImportTransactionThreadLocal;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.exportimport.UserExporter;
-import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalService;

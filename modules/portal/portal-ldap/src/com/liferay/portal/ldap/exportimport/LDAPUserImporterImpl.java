@@ -45,7 +45,6 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.exportimport.UserGroupImportTransactionThreadLocal;
-import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;
 import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.security.ldap.AttributesTransformer;

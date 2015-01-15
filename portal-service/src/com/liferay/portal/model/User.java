@@ -342,6 +342,8 @@ public interface User extends UserModel, PersistedModel {
 		boolean includeAdministrative)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.lang.String getOriginalEmailAddress();
+
 	public boolean getPasswordModified();
 
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicy()

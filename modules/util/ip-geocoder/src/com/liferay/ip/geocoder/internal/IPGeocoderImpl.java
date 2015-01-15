@@ -14,6 +14,8 @@
 
 package com.liferay.ip.geocoder.internal;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
 
@@ -59,29 +61,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 	@Activate
 	public void activate(Map<String, String> properties) {
-		if (_lookupService != null) {
-			return;
-		}
-
-		String filePath = properties.get("ip.geocoder.file.path");
-
-		if ((filePath == null) || filePath.equals("")) {
-			filePath =
-				System.getProperty("java.io.tmpdir") +
-					"/liferay/geoip/GeoIPCity.dat";
-		}
-
-		String fileURL = properties.get("ip.geocoder.file.url");
-
-		try {
-			File ipGeocoderFile = getIPGeocoderFile(filePath, fileURL, false);
-
-			_lookupService = new LookupService(
-				ipGeocoderFile, LookupService.GEOIP_MEMORY_CACHE);
-		}
-		catch (IOException ioe) {
-			_logger.error("Unable to activate Liferay IP Geocoder", ioe);
-		}
+		configure(properties);
 	}
 
 	@Deactivate
@@ -107,7 +87,29 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 			_lookupService = null;
 
-			activate(properties);
+			configure(properties);
+		}
+	}
+
+	protected void configure(Map<String, String> properties) {
+		String filePath = properties.get("ip.geocoder.file.path");
+
+		if ((filePath == null) || filePath.equals("")) {
+			filePath =
+				System.getProperty("java.io.tmpdir") +
+					"/liferay/geoip/GeoIPCity.dat";
+		}
+
+		String fileURL = properties.get("ip.geocoder.file.url");
+
+		try {
+			File ipGeocoderFile = getIPGeocoderFile(filePath, fileURL, false);
+
+			_lookupService = new LookupService(
+				ipGeocoderFile, LookupService.GEOIP_MEMORY_CACHE);
+		}
+		catch (IOException ioe) {
+			_logger.error("Unable to activate Liferay IP Geocoder", ioe);
 		}
 	}
 

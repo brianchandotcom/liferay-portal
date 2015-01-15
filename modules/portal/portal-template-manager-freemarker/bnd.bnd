@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Portal Freemarker Template Manager
-Bundle-SymbolicName: com.liferay.portal.freemarker
+Bundle-SymbolicName: com.liferay.portal.template.freemarker
 Bundle-Version: 1.0.0
 Import-Package:\
 	!com.sun.org.apache.xml.internal.utils,\

@@ -1519,6 +1519,8 @@ public interface PropsKeys {
 
 	public static final String LOGIN_FORM_NAVIGATION_PRE = "login.form.navigation.pre";
 
+	public static final String LOGIN_SECURE_FORGOT_PASSWORD = "login.secure.forgot.password";
+
 	public static final String LOGOUT_EVENTS_POST = "logout.events.post";
 
 	public static final String LOGOUT_EVENTS_PRE = "logout.events.pre";

@@ -24,8 +24,6 @@ import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsUtil;
 
-import freemarker.core.ParseException;
-
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
@@ -41,6 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.exception.ParseErrorException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -351,9 +350,8 @@ public class VelocityTemplateTest {
 				return new StringReader(_TEST_TEMPLATE_CONTENT);
 			}
 
-			throw new ParseException(
-				"Unable to get reader for template source " + _templateId, 0,
-				0);
+			throw new ParseErrorException(
+				"Unable to get reader for template source " + _templateId);
 		}
 
 		@Override

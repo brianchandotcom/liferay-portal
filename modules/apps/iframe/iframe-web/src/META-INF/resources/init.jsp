@@ -25,7 +25,8 @@
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ page import="com.liferay.iframe.web.constants.IFrameWebKeys" %><%@
+<%@ page import="com.liferay.iframe.web.configuration.IFrameConfiguration" %><%@
+page import="com.liferay.iframe.web.constants.IFrameWebKeys" %><%@
 page import="com.liferay.iframe.web.util.IFrameUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
@@ -51,13 +52,15 @@ page import="java.util.List" %>
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();
 
+IFrameConfiguration iFrameConfiguration = (IFrameConfiguration)renderRequest.getAttribute(IFrameConfiguration.class.getName());
+
 String src = portletPreferences.getValue("src", StringPool.BLANK);
 
 boolean relative = GetterUtil.getBoolean(portletPreferences.getValue("relative", StringPool.BLANK));
 
-boolean auth = GetterUtil.getBoolean(portletPreferences.getValue("auth", StringPool.BLANK));
-String authType = portletPreferences.getValue("authType", StringPool.BLANK);
-String formMethod = portletPreferences.getValue("formMethod", StringPool.BLANK);
+boolean auth = GetterUtil.getBoolean(portletPreferences.getValue("auth", iFrameConfiguration.auth()));
+String authType = portletPreferences.getValue("authType", iFrameConfiguration.authType());
+String formMethod = portletPreferences.getValue("formMethod", iFrameConfiguration.formMethod());
 String userNameField = portletPreferences.getValue("userNameField", StringPool.BLANK);
 String passwordField = portletPreferences.getValue("passwordField", StringPool.BLANK);
 
@@ -73,7 +76,7 @@ else {
 	password = portletPreferences.getValue("formPassword", StringPool.BLANK);
 }
 
-String hiddenVariables = portletPreferences.getValue("hiddenVariables", StringPool.BLANK);
+String hiddenVariables = portletPreferences.getValue("hiddenVariables", iFrameConfiguration.hiddenVariables());
 boolean resizeAutomatically = GetterUtil.getBoolean(portletPreferences.getValue("resizeAutomatically", StringPool.TRUE));
 String heightMaximized = GetterUtil.getString(portletPreferences.getValue("heightMaximized", "600"));
 String heightNormal = GetterUtil.getString(portletPreferences.getValue("heightNormal", "600"));

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1132,9 +1131,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 				sb.append(type);
 				sb.append(StringPool.AT);
-				sb.append(layout.getUuid());
-				sb.append(StringPool.AT);
-				sb.append(layout.getFriendlyURL());
+				sb.append(layout.getPlid());
 
 				String newLinkToLayout = StringUtil.replace(
 					oldLinkToLayout, type, sb.toString());
@@ -1414,8 +1411,16 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		Matcher matcher = _importLinksToLayoutPattern.matcher(content);
 
+		Map<Long, Long> layoutPlids =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class);
+
 		while (matcher.find()) {
-			long oldGroupId = GetterUtil.getLong(matcher.group(7));
+			long oldPlid = GetterUtil.getLong(matcher.group(4));
+
+			Long newPlid = MapUtil.getLong(layoutPlids, oldPlid);
+
+			long oldGroupId = GetterUtil.getLong(matcher.group(6));
 
 			long newGroupId = oldGroupId;
 
@@ -1423,75 +1428,23 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			long newLayoutId = oldLayoutId;
 
-			String type = matcher.group(2);
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(newPlid);
 
-			boolean privateLayout = type.startsWith("private");
-
-			String layoutUuid = matcher.group(4);
-			String friendlyURL = matcher.group(5);
-
-			try {
-				Layout layout =
-					LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-						layoutUuid, portletDataContext.getScopeGroupId(),
-						privateLayout);
-
-				if (layout == null) {
-					layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-						portletDataContext.getScopeGroupId(), privateLayout,
-						friendlyURL);
-				}
-
-				if (layout == null) {
-					if (_log.isWarnEnabled()) {
-						StringBundler sb = new StringBundler(9);
-
-						sb.append("Unable to get layout with UUID ");
-						sb.append(layoutUuid);
-						sb.append(", friendly URL ");
-						sb.append(friendlyURL);
-						sb.append(", or ");
-						sb.append("layoutId ");
-						sb.append(oldLayoutId);
-						sb.append(" in group ");
-						sb.append(portletDataContext.getScopeGroupId());
-
-						_log.warn(sb.toString());
-					}
-				}
-				else {
-					newGroupId = layout.getGroupId();
-
-					newLayoutId = layout.getLayoutId();
-				}
+			if (layout != null) {
+				newGroupId = layout.getGroupId();
+				newLayoutId = layout.getLayoutId();
 			}
-			catch (SystemException se) {
-				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {
-					String message =
-						"Unable to get layout in group " +
-							portletDataContext.getScopeGroupId();
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(message, se);
-					}
-					else {
-						_log.warn(message);
-					}
-				}
+			else if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get layout with plid " + oldPlid);
 			}
 
 			String oldLinkToLayout = matcher.group(0);
 
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(StringPool.AT);
-			sb.append(layoutUuid);
-			sb.append(StringPool.AT);
-			sb.append(friendlyURL);
+			String plidSub = StringPool.AT + oldPlid;
 
 			String newLinkToLayout = StringUtil.replaceFirst(
 				oldLinkToLayout,
-				new String[] {sb.toString(), String.valueOf(oldLayoutId)},
+				new String[] {plidSub, String.valueOf(oldLayoutId)},
 				new String[] {StringPool.BLANK, String.valueOf(newLayoutId)});
 
 			if ((oldGroupId != 0) && (oldGroupId != newGroupId)) {
@@ -2607,9 +2560,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	private Pattern _exportLinksToLayoutPattern = Pattern.compile(
 		"\\[([\\d]+)@(private(-group|-user)?|public)(@([\\d]+))?\\]");
 	private Pattern _importLinksToLayoutPattern = Pattern.compile(
-		"\\[([\\d]+)@(private(-group|-user)?|public)@(\\p{XDigit}{8}\\-" +
-			"(?:\\p{XDigit}{4}\\-){3}\\p{XDigit}{12})@([a-z0-9./_-]*)" +
-				"(@([\\d]+))?\\]");
+		"\\[([\\d]+)@(private(-group|-user)?|public)@([\\d]+)(@([\\d]+))?\\]");
 
 	private class ManifestSummaryElementProcessor implements ElementProcessor {
 

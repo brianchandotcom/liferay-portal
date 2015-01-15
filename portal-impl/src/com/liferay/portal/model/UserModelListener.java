@@ -80,10 +80,8 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
 	public void onBeforeUpdate(User user) {
-		UserModelImpl userModelImpl = (UserModelImpl)user;
-
 		UserImportTransactionThreadLocal.setOriginalEmailAddress(
-			userModelImpl.getOriginalEmailAddress());
+			user.getOriginalEmailAddress());
 	}
 
 	protected void exportToLDAP(User user) throws Exception {

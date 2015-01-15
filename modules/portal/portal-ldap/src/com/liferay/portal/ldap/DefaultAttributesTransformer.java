@@ -12,13 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.ldap;
+
+import com.liferay.portal.security.ldap.AttributesTransformer;
 
 import javax.naming.directory.Attributes;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = AttributesTransformer.class)
 public class DefaultAttributesTransformer implements AttributesTransformer {
 
 	@Override

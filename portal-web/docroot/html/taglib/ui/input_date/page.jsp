@@ -103,17 +103,17 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 							container.one('#<%= nameId %>').attr('disabled', newVal);
 							container.one('#<%= yearParamId %>').attr('disabled', newVal);
 						},
-						selectionChange: function(event) {
-							var date = event.newSelection[0];
-
-							datePicker.updateValue(date);
-						},
 						enterKey: function(event) {
 							var instance = this;
 
-							var input = instance.get('activeInput');
+							var inputVal = instance.get('activeInput').val();
 
-							var date = instance.getParsedDatesFromInputValue(input._node.value)[0];
+							var date = instance.getParsedDatesFromInputValue(inputVal)[0];
+
+							datePicker.updateValue(date);
+						},
+						selectionChange: function(event) {
+							var date = event.newSelection[0];
 
 							datePicker.updateValue(date);
 						}

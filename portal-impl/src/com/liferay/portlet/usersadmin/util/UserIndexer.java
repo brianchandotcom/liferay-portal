@@ -67,6 +67,10 @@ public class UserIndexer extends BaseIndexer {
 
 	public static final String PORTLET_ID = PortletKeys.USERS_ADMIN;
 
+	public static long getUserId(Document document) {
+		return GetterUtil.getLong(document.get(Field.USER_ID));
+	}
+
 	public UserIndexer() {
 		setCommitImmediately(true);
 		setDefaultSelectedFieldNames(

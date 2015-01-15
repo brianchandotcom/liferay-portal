@@ -27,7 +27,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.wiki.configuration.WikiPropsValues;
-import com.liferay.wiki.configuration.WikiSettings;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -98,9 +97,6 @@ public class ActionUtil {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		WikiSettings wikiSettings = WikiSettings.getInstance(
-			themeDisplay.getScopeGroupId());
 
 		WikiPage page = WikiPageLocalServiceUtil.fetchPage(
 			nodeId, WikiPropsValues.FRONT_PAGE_NAME, 0);
@@ -198,12 +194,6 @@ public class ActionUtil {
 				nodeId = node.getNodeId();
 			}
 		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		WikiSettings wikiSettings = WikiSettings.getInstance(
-			themeDisplay.getScopeGroupId());
 
 		if (Validator.isNull(title)) {
 			title = WikiPropsValues.FRONT_PAGE_NAME;

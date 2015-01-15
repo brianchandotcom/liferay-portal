@@ -36,9 +36,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Spasic
  */
 @Component(
-		configurationPid = "com.liferay.portal.template.freemarker",
-		configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-		service = TemplateResourceLoader.class
+	configurationPid = "com.liferay.portal.template.freemarker",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = TemplateResourceLoader.class
 )
 public class FreemarkerTemplateResourceLoader implements TemplateResourceLoader{
 

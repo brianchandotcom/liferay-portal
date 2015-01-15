@@ -375,7 +375,8 @@ public class VerifyProperties extends VerifyProcess {
 		},
 		new String[] {
 			"freemarker.engine.template.exception.handler",
-			"template.exception.handler", "com.liferay.portal.template.freemarker"
+			"template.exception.handler",
+			"com.liferay.portal.template.freemarker"
 		},
 		new String[] {
 			"freemarker.engine.template.parsers", "template.parsers",

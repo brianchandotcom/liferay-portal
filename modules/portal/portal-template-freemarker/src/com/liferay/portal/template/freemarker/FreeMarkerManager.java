@@ -166,7 +166,8 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		HttpServletRequest request, HttpServletResponse response) {
 
 		contextObjects.put(
-			applicationName, new HttpRequestHashModel(
+			applicationName,
+			new HttpRequestHashModel(
 				request, response, ObjectWrapper.DEFAULT_WRAPPER));
 	}
 
@@ -176,7 +177,8 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		HttpServletResponse response) {
 
 		template.put(
-			applicationName, new HttpRequestHashModel(
+			applicationName,
+			new HttpRequestHashModel(
 				request, response, ObjectWrapper.DEFAULT_WRAPPER));
 	}
 

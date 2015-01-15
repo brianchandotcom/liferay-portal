@@ -211,7 +211,8 @@ public class TemplateManagerUtil {
 	private static final TemplateManagerUtil _instance =
 		new TemplateManagerUtil();
 
-	private final ServiceTracker<TemplateManager, TemplateManager> _serviceTracker;
+	private final ServiceTracker<TemplateManager, TemplateManager>
+		_serviceTracker;
 	private final Map<String, Set<String>> _supportedLanguageTypes =
 		new ConcurrentHashMap<>();
 	private final Map<String, TemplateManager> _templateManagers =
@@ -237,7 +238,10 @@ public class TemplateManagerUtil {
 				_templateManagers.put(name, templateManager);
 			}
 			catch (TemplateException e) {
-				_log.warn("unable to init " + name + " Template Manager ", e);
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"unable to init " + name + " Template Manager ", e);
+				}
 			}
 
 			return templateManager;

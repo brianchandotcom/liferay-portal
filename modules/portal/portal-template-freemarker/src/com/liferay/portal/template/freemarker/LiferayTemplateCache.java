@@ -39,7 +39,6 @@ import java.util.Locale;
 /**
  * @author Tina Tian
  */
-
 public class LiferayTemplateCache extends TemplateCache {
 
 	public LiferayTemplateCache(

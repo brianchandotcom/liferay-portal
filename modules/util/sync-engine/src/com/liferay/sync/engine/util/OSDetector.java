@@ -14,6 +14,8 @@
 
 package com.liferay.sync.engine.util;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.io.File;
 
 /**
@@ -35,7 +37,7 @@ public class OSDetector {
 		if ((_bitMode == null) || _bitMode.equals("null")) {
 			String arch = System.getProperty("os.arch");
 
-			arch = arch.toLowerCase();
+			arch = StringUtil.toLowerCase(arch);
 
 			if (arch.equals("amd64") || arch.equals("x86_64")) {
 				_bitMode = "64";
@@ -57,7 +59,7 @@ public class OSDetector {
 
 		String osName = System.getProperty("os.name");
 
-		osName = osName.toLowerCase();
+		osName = StringUtil.toLowerCase(osName);
 
 		if (osName.equals("aix")) {
 			_aix = Boolean.TRUE;
@@ -76,7 +78,7 @@ public class OSDetector {
 
 		String osName = System.getProperty("os.name");
 
-		osName = osName.toLowerCase();
+		osName = StringUtil.toLowerCase(osName);
 
 		if (osName.contains("darwin") || osName.contains("mac")) {
 			_apple = Boolean.TRUE;
@@ -95,7 +97,7 @@ public class OSDetector {
 
 		String osName = System.getProperty("os.name");
 
-		osName = osName.toLowerCase();
+		osName = StringUtil.toLowerCase(osName);
 
 		if (osName.contains("linux")) {
 			_linux = Boolean.TRUE;

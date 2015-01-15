@@ -177,7 +177,7 @@
 	</command>
 
 	<command name="editFieldNameCmd">
-		<var name="key_fieldFieldLabel" value="${field}" />
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
 

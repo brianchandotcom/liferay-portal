@@ -52,7 +52,7 @@ public interface FreemarkerEngineConfiguration {
 	public String getTemplateExceptionHandler();
 
 	@Meta.AD(
-		deflt = "com.liferay.portal.freemarker.FreeMarkerServletResourceParser|com.liferay.portal.template.ThemeResourceParser|com.liferay.portal.template.DDMTemplateResourceParser|com.liferay.portal.template.ClassLoaderResourceParser",
+		deflt = "com.liferay.portal.template.freemarker.FreeMarkerServletResourceParser|com.liferay.portal.template.ThemeResourceParser|com.liferay.portal.template.DDMTemplateResourceParser|com.liferay.portal.template.ClassLoaderResourceParser",
 		required = false)
 	public String[] getTemplateParsers();
 

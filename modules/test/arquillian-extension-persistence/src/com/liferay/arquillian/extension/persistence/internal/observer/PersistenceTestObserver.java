@@ -17,7 +17,6 @@ package com.liferay.arquillian.extension.persistence.internal.observer;
 import com.liferay.arquillian.extension.internal.event.LiferayContextCreatedEvent;
 import com.liferay.arquillian.extension.persistence.internal.annotation.PersistenceTest;
 import com.liferay.portal.kernel.template.TemplateException;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.tools.DBUpgrader;
 
 import org.jboss.arquillian.core.api.annotation.Observes;

@@ -132,9 +132,6 @@ public class PublishLayoutsAction extends EditLayoutsAction {
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
 
-				redirect = ParamUtil.getString(
-					actionRequest, "pagesRedirect", redirect);
-
 				redirect = StringUtil.replace(
 					redirect, "tabs2=current-and-previous",
 					"tabs2=new-publication-process");

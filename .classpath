@@ -40,6 +40,7 @@
 	<classpathentry kind="lib" path="lib/development/ecj.jar"/>
 	<classpathentry kind="lib" path="lib/development/error-prone-ant.jar"/>
 	<classpathentry kind="lib" path="lib/development/firebird.jar"/>
+	<classpathentry kind="lib" path="lib/development/freemarker.jar"/>
 	<classpathentry kind="lib" path="lib/development/gson.jar"/>
 	<classpathentry kind="lib" path="lib/development/hamcrest-core.jar"/>
 	<classpathentry kind="lib" path="lib/development/hamcrest-library.jar"/>
@@ -165,7 +166,6 @@
 	<classpathentry kind="lib" path="lib/portal/fastutil.jar"/>
 	<classpathentry kind="lib" path="lib/portal/felix-fileinstall.jar"/>
 	<classpathentry kind="lib" path="lib/portal/fontbox.jar"/>
-	<classpathentry kind="lib" path="lib/portal/freemarker.jar"/>
 	<classpathentry kind="lib" path="lib/portal/freshcookies-security.jar"/>
 	<classpathentry kind="lib" path="lib/portal/gif89.jar"/>
 	<classpathentry kind="lib" path="lib/portal/groovy.jar"/>

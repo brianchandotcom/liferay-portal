@@ -41,8 +41,6 @@ public class PersistenceTestObserver {
 			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-
-			TemplateManagerUtil.init();
 		}
 	}
 

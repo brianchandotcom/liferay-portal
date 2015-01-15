@@ -38,14 +38,14 @@ public interface DLDisplayContextFactory {
 		FileEntry fileEntry);
 
 	public DLViewFileVersionDisplayContext
-		getDLFileVersionActionsDisplayContext(
+		getDLViewFileVersionDisplayContext(
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
 			DLFileShortcut dlFileShortcut);
 
 	public DLViewFileVersionDisplayContext
-		getDLFileVersionActionsDisplayContext(
+		getDLViewFileVersionDisplayContext(
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,

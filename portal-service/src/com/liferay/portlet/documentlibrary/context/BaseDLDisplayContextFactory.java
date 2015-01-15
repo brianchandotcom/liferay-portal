@@ -48,7 +48,7 @@ public abstract class BaseDLDisplayContextFactory
 
 	@Override
 	public DLViewFileVersionDisplayContext
-		getDLFileVersionActionsDisplayContext(
+		getDLViewFileVersionDisplayContext(
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,

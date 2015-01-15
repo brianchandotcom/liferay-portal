@@ -86,7 +86,7 @@ public class GoogleDocsDLDisplayContextFactory
 
 	@Override
 	public DLViewFileVersionDisplayContext
-		getDLFileVersionActionsDisplayContext(
+		getDLViewFileVersionDisplayContext(
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
@@ -99,7 +99,7 @@ public class GoogleDocsDLDisplayContextFactory
 
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
-			return getDLFileVersionActionsDisplayContext(
+			return getDLViewFileVersionDisplayContext(
 				parentDLViewFileVersionDisplayContext, request, response,
 				fileVersion);
 		}
@@ -112,7 +112,7 @@ public class GoogleDocsDLDisplayContextFactory
 
 	@Override
 	public DLViewFileVersionDisplayContext
-		getDLFileVersionActionsDisplayContext(
+		getDLViewFileVersionDisplayContext(
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
@@ -140,7 +140,7 @@ public class GoogleDocsDLDisplayContextFactory
 			HttpServletRequest request, HttpServletResponse response,
 			DLFileShortcut dlFileShortcut) {
 
-		return getDLFileVersionActionsDisplayContext(
+		return getDLViewFileVersionDisplayContext(
 			parentDLViewFileVersionDisplayContext, request, response,
 			dlFileShortcut);
 	}
@@ -153,7 +153,7 @@ public class GoogleDocsDLDisplayContextFactory
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
 
-		return getDLFileVersionActionsDisplayContext(
+		return getDLViewFileVersionDisplayContext(
 			parentDLViewFileVersionDisplayContext, request, response,
 			fileVersion);
 	}

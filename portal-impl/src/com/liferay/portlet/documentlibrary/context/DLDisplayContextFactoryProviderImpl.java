@@ -121,7 +121,7 @@ public class DLDisplayContextFactoryProviderImpl
 				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
 
 			dlViewFileVersionDisplayContext =
-				dlDisplayContextFactory.getDLFileVersionActionsDisplayContext(
+				dlDisplayContextFactory.getDLViewFileVersionDisplayContext(
 					dlViewFileVersionDisplayContext, request, response,
 					dlFileShortcut);
 		}
@@ -150,7 +150,7 @@ public class DLDisplayContextFactoryProviderImpl
 				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
 
 			dlViewFileVersionDisplayContext =
-				dlDisplayContextFactory.getDLFileVersionActionsDisplayContext(
+				dlDisplayContextFactory.getDLViewFileVersionDisplayContext(
 					dlViewFileVersionDisplayContext, request, response,
 					fileVersion);
 		}

@@ -56,7 +56,7 @@ else {
 
 	PortletURL articlePageURL = renderResponse.createRenderURL();
 
-	articlePageURL.setParameter("struts_action", "/asset_publisher/view_content");
+	articlePageURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
 	articlePageURL.setParameter("type", assetRendererFactory.getType());
 	articlePageURL.setParameter("redirect", pageRedirect);
 	articlePageURL.setParameter("urlTitle", articleDisplay.getUrlTitle());

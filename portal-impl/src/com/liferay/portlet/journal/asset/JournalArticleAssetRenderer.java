@@ -218,13 +218,15 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public PortletURL getURLExport(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
 
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
+			PortletRequest.ACTION_PHASE);
 
-		portletURL.setParameter(
-			"struts_action", "/asset_publisher/export_journal_article");
+		portletURL.setParameter("struts_action", "/journal/export_article");
 		portletURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));
 		portletURL.setParameter("articleId", _article.getArticleId());

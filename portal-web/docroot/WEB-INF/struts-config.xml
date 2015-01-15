@@ -219,48 +219,6 @@
 
 		<action path="/asset_browser/view" forward="portlet.asset_browser.view" />
 
-		<!-- Asset Publisher -->
-
-		<action path="/asset_publisher/add_asset_redirect" forward="portlet.asset_publisher.add_asset_redirect" />
-
-		<action path="/asset_publisher/edit_article_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.journal.error" />
-		</action>
-
-		<action path="/asset_publisher/edit_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />
-		</action>
-
-		<action path="/asset_publisher/edit_file_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.document_library.error" />
-		</action>
-
-		<action path="/asset_publisher/edit_page_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.page_comments.error" />
-		</action>
-
-		<action path="/asset_publisher/edit_query_rule" forward="portlet.asset_publisher.edit_query_rule" />
-
-		<action path="/asset_publisher/edit_subscription" type="com.liferay.portlet.assetpublisher.action.EditSubscriptionAction" />
-
-		<action path="/asset_publisher/export_journal_article" type="com.liferay.portlet.journal.action.ExportArticleAction" />
-
-		<action path="/asset_publisher/export_wiki_page" type="com.liferay.portlet.wiki.action.ExportPageAction" />
-
-		<action path="/asset_publisher/get_file" type="com.liferay.portlet.documentlibrary.action.GetFileAction" />
-
-		<action path="/asset_publisher/rss" type="com.liferay.portlet.assetpublisher.action.RSSAction" />
-
-		<action path="/asset_publisher/select_structure_field" forward="portlet.asset_publisher.select_structure_field" />
-
-		<action path="/asset_publisher/view" type="com.liferay.portlet.assetpublisher.action.ViewAction">
-			<forward name="portlet.asset_publisher.view" path="portlet.asset_publisher.view" />
-		</action>
-
-		<action path="/asset_publisher/view_content" type="com.liferay.portlet.assetpublisher.action.ViewContentAction">
-			<forward name="portlet.asset_publisher.view_content" path="portlet.asset_publisher.view_content" />
-		</action>
-
 		<!-- Blogs -->
 
 		<action path="/blogs/cover_image_selector" type="com.liferay.portlet.blogs.action.CoverImageSelectorAction" />
@@ -798,6 +756,8 @@
 			<forward name="portlet.journal.edit_folder" path="portlet.journal.edit_folder" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
+
+		<action path="/journal/export_article" type="com.liferay.portlet.journal.action.ExportArticleAction" />
 
 		<action path="/journal/find_folder" type="com.liferay.portlet.journal.action.FindFolderAction" />
 
@@ -1514,16 +1474,6 @@
 		<action path="/recent_documents/get_file" type="com.liferay.portlet.documentlibrary.action.GetFileAction" />
 
 		<action path="/recent_documents/view" forward="portlet.recent_documents.view" />
-
-		<!-- Related Assets -->
-
-		<action path="/related_assets/view" type="com.liferay.portlet.assetpublisher.action.ViewAction">
-			<forward name="portlet.asset_publisher.view" path="portlet.asset_publisher.view" />
-		</action>
-
-		<action path="/related_assets/view_content" type="com.liferay.portlet.assetpublisher.action.ViewContentAction">
-			<forward name="portlet.asset_publisher.view_content" path="portlet.asset_publisher.view_content" />
-		</action>
 
 		<!-- Requests -->
 

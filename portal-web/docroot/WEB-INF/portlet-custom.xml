@@ -803,7 +803,7 @@
 	<portlet>
 		<portlet-name>101</portlet-name>
 		<display-name>Asset Publisher</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.assetpublisher.AssetPublisherPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/asset_publisher/configuration.jsp</value>
@@ -813,8 +813,8 @@
 			<value>/html/portlet/asset_publisher/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/asset_publisher/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/asset_publisher/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -1913,7 +1913,7 @@
 	<portlet>
 		<portlet-name>173</portlet-name>
 		<display-name>Summary</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.assetpublisher.AssetPublisherPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/asset_publisher/configuration.jsp</value>
@@ -1923,8 +1923,8 @@
 			<value>/html/portlet/asset_publisher/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/asset_publisher/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/asset_publisher/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -1978,7 +1978,7 @@
 	<portlet>
 		<portlet-name>175</portlet-name>
 		<display-name>Related Assets</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.assetpublisher.AssetPublisherPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/asset_publisher/configuration.jsp</value>
@@ -1988,8 +1988,8 @@
 			<value>/html/portlet/asset_publisher/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/related_assets/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/asset_publisher/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -2415,7 +2415,7 @@
 	<portlet>
 		<portlet-name>193</portlet-name>
 		<display-name>Most Viewed Assets</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.assetpublisher.AssetPublisherPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/asset_publisher/configuration.jsp</value>
@@ -2425,8 +2425,8 @@
 			<value>/html/portlet/asset_publisher/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/asset_publisher/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/asset_publisher/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -2460,7 +2460,7 @@
 	<portlet>
 		<portlet-name>194</portlet-name>
 		<display-name>Highest Rated Assets</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.assetpublisher.AssetPublisherPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/asset_publisher/configuration.jsp</value>
@@ -2470,8 +2470,8 @@
 			<value>/html/portlet/asset_publisher/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/asset_publisher/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/asset_publisher/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

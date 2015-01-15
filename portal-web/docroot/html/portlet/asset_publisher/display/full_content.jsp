@@ -28,7 +28,7 @@ List results = (List)request.getAttribute("view.jsp-results");
 if (Validator.isNull(redirect) && results.isEmpty()) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/asset_publisher/view");
+	portletURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view.jsp");
 
 	redirect = portletURL.toString();
 }
@@ -124,7 +124,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 	PortletURL viewFullContentURL = renderResponse.createRenderURL();
 
-	viewFullContentURL.setParameter("struts_action", "/asset_publisher/view_content");
+	viewFullContentURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
 	viewFullContentURL.setParameter("type", assetRendererFactory.getType());
 	viewFullContentURL.setParameter("viewMode", print ? Constants.PRINT : Constants.VIEW);
 
@@ -224,9 +224,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		<c:if test="<%= Validator.isNotNull(assetRenderer.getDiscussionPath()) && assetPublisherDisplayContext.isEnableComments() %>">
 			<br />
 
-			<portlet:actionURL var="discussionURL">
-				<portlet:param name="struts_action" value='<%= "/asset_publisher/" + assetRenderer.getDiscussionPath() %>' />
-			</portlet:actionURL>
+			<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
 
 			<liferay-ui:discussion
 				className="<%= assetEntry.getClassName() %>"

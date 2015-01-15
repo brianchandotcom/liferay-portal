@@ -152,34 +152,6 @@
 		<put name="portlet_content" value="/portlet/asset_browser/view.jsp" />
 	</definition>
 
-	<!-- Asset Publisher -->
-
-	<definition name="portlet.asset_publisher" extends="portlet" />
-
-	<definition name="portlet.asset_publisher.add_asset_redirect" extends="portlet.asset_publisher">
-		<put name="portlet_content" value="/portlet/asset_publisher/add_asset_redirect.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_publisher.edit_query_rule" extends="portlet.asset_publisher">
-		<put name="portlet_content" value="/portlet/asset_publisher/edit_query_rule.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_publisher.error" extends="portlet.asset_publisher">
-		<put name="portlet_content" value="/portlet/asset_publisher/error.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_publisher.select_structure_field" extends="portlet.asset_publisher">
-		<put name="portlet_content" value="/portlet/asset_publisher/select_structure_field.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_publisher.view" extends="portlet.asset_publisher">
-		<put name="portlet_content" value="/portlet/asset_publisher/view.jsp" />
-	</definition>
-
-	<definition name="portlet.asset_publisher.view_content" extends="portlet.asset_publisher">
-		<put name="portlet_content" value="/portlet/asset_publisher/view_content.jsp" />
-	</definition>
-
 	<!-- Background Task-->
 
 	<definition name="portlet.background_task" extends="portlet" />

@@ -70,7 +70,7 @@ if (assetEntryId > 0) {
 
 					LiferayPortletURL assetPublisherURL = new PortletURLImpl(request, PortletKeys.ASSET_PUBLISHER, plid, PortletRequest.RENDER_PHASE);
 
-					assetPublisherURL.setParameter("struts_action", "/asset_publisher/view_content");
+					assetPublisherURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
 					assetPublisherURL.setParameter("redirect", currentURL);
 					assetPublisherURL.setParameter("assetEntryId", String.valueOf(assetLinkEntry.getEntryId()));
 					assetPublisherURL.setParameter("type", assetRendererFactory.getType());

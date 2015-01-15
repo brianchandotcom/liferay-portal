@@ -29,7 +29,7 @@ ClassType classType = classTypeReader.getClassType(classTypeId, locale);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/asset_publisher/select_structure_field");
+portletURL.setParameter("mvcPath", "/html/portlet/asset_publisher/select_structure_field.jsp");
 portletURL.setParameter("portletResource", assetPublisherDisplayContext.getPortletResource());
 portletURL.setParameter("className", className);
 portletURL.setParameter("classTypeId", String.valueOf(classTypeId));

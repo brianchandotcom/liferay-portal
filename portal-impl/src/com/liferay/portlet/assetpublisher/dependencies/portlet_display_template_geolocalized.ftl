@@ -164,7 +164,7 @@
 		<#if showEditURL && assetRenderer.hasEditPermission(permissionChecker)>
 			<#assign redirectURL = renderResponse.createLiferayPortletURL(themeDisplay.getPlid(), themeDisplay.getPortletDisplay().getId(), "RENDER_PHASE", false) />
 
-			${redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect")}
+			${redirectURL.setParameter("mvcPath", "/html/portlet/asset_publisher/add_asset_redirect.jsp")}
 
 			<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("POP_UP"), redirectURL) />
 

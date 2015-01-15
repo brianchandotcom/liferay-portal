@@ -28,7 +28,7 @@ PortletURL editPortletURL = null;
 if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 	PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(plid, portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
 
-	redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect");
+	redirectURL.setParameter("mvcPath", "/html/portlet/asset_publisher/add_asset_redirect.jsp");
 
 	String fullContentRedirect = (String)request.getAttribute("view.jsp-fullContentRedirect");
 

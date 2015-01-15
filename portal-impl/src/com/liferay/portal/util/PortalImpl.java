@@ -2789,8 +2789,8 @@ public class PortalImpl implements Portal {
 		String namespace = getPortletNamespace(defaultAssetPublisherPortletId);
 
 		actualParams.put(
-			namespace + "struts_action",
-			new String[] {"/asset_publisher/view_content"});
+			namespace + "mvcPath",
+			new String[] {"/html/portlet/asset_publisher/view_content.jsp"});
 		actualParams.put(
 			namespace + "type",
 			new String[] {JournalArticleAssetRendererFactory.TYPE});

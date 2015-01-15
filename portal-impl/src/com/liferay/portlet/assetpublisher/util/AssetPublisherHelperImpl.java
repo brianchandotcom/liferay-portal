@@ -53,7 +53,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			liferayPortletResponse.createRenderURL();
 
 		viewFullContentURL.setParameter(
-			"struts_action", "/asset_publisher/view_content");
+			"mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
 
 		viewFullContentURL.setParameter(
 			"assetEntryId", String.valueOf(assetEntry.getEntryId()));

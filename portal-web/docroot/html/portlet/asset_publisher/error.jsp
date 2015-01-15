@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <portlet:renderURL var="portletURL">
-	<portlet:param name="struts_action" value="/asset_publisher/view" />
+	<portlet:param name="mvcPath" value="/html/portlet/asset_publisher/view.jsp" />
 </portlet:renderURL>
 
 <liferay-ui:header

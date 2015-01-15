@@ -163,18 +163,19 @@ public class WikiPageAssetRenderer
 
 	@Override
 	public PortletURL getURLExport(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
 
-		PortletURL exportPortletURL = liferayPortletResponse.createActionURL();
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			getControlPanelPlid(liferayPortletRequest), PortletKeys.WIKI,
+			PortletRequest.RENDER_PHASE);
 
-		exportPortletURL.setParameter(
-			"struts_action", "/asset_publisher/export_wiki_page");
-		exportPortletURL.setParameter(
-			"nodeId", String.valueOf(_page.getNodeId()));
-		exportPortletURL.setParameter("title", _page.getTitle());
+		portletURL.setParameter("struts_action", "/wiki/export_page");
+		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
+		portletURL.setParameter("title", _page.getTitle());
 
-		return exportPortletURL;
+		return portletURL;
 	}
 
 	@Override

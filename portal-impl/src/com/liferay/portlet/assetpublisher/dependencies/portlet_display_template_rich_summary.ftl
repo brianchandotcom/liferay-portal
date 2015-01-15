@@ -75,7 +75,7 @@
 
 		<#assign discussionURL = renderResponse.createActionURL() />
 
-		${discussionURL.setParameter("struts_action", "/asset_publisher/" + assetRenderer.getDiscussionPath())}
+		${discussionURL.setParameter("javax.portlet.action", "invokeTaglibDiscussion")}
 
 		<@liferay_ui["discussion"]
 			className=entry.getClassName()
@@ -93,7 +93,7 @@
 	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
 		<#assign redirectURL = renderResponse.createRenderURL() />
 
-		${redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect")}
+		${redirectURL.setParameter("mvcPath", "/html/portlet/asset_publisher/add_asset_redirect.jsp")}
 		${redirectURL.setWindowState("pop_up")}
 
 		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("pop_up"), redirectURL)!"" />
@@ -164,7 +164,7 @@
 	<#if getterUtil.getBoolean(enablePrint)>
 		<#assign printURL = renderResponse.createRenderURL() />
 
-		${printURL.setParameter("struts_action", "/asset_publisher/view_content")}
+		${printURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp")}
 		${printURL.setParameter("assetEntryId", entry.getEntryId()?string)}
 		${printURL.setParameter("viewMode", "print")}
 		${printURL.setParameter("type", entry.getAssetRendererFactory().getType())}

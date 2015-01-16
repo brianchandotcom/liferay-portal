@@ -17,11 +17,14 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/asm.jar" />
 	<classpathentry kind="lib" path="lib/cglib-nodep.jar" />
+	<classpathentry kind="lib" path="lib/cglib.jar" />
 	<classpathentry kind="lib" path="lib/commons-codec.jar" />
 	<classpathentry kind="lib" path="lib/commons-collections.jar" />
 	<classpathentry kind="lib" path="lib/commons-exec.jar" />
 	<classpathentry kind="lib" path="lib/commons-io.jar" />
+	<classpathentry kind="lib" path="lib/commons-lang.jar" />
 	<classpathentry kind="lib" path="lib/commons-lang3.jar" />
 	<classpathentry kind="lib" path="lib/cssparser.jar" />
 	<classpathentry kind="lib" path="lib/dom4j.jar" />
@@ -33,6 +36,7 @@
 	<classpathentry kind="lib" path="lib/httpclient.jar" />
 	<classpathentry kind="lib" path="lib/httpcore.jar" />
 	<classpathentry kind="lib" path="lib/httpmime.jar" />
+	<classpathentry kind="lib" path="lib/java-client.jar" />
 	<classpathentry kind="lib" path="lib/jetty-http.jar" />
 	<classpathentry kind="lib" path="lib/jetty-io.jar" />
 	<classpathentry kind="lib" path="lib/jetty-util.jar" />
@@ -40,6 +44,7 @@
 	<classpathentry kind="lib" path="lib/jna.jar" />
 	<classpathentry kind="lib" path="lib/junit.jar" />
 	<classpathentry kind="lib" path="lib/nekohtml.jar" />
+	<classpathentry kind="lib" path="lib/net.jsourcerer.webdriver.JSErrorCollector.jar" />
 	<classpathentry kind="lib" path="lib/netty.jar" />
 	<classpathentry kind="lib" path="lib/platform.jar" />
 	<classpathentry kind="lib" path="lib/sac.jar" />

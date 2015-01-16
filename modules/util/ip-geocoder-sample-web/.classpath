@@ -10,6 +10,7 @@
 	<classpathentry kind="lib" path="/portal-master/lib/development/mail.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/servlet-api.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/global/portlet.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/bnd.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-logging.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/log4j.jar" />
 	<classpathentry kind="lib" path="/portal-master/portal-service/portal-service.jar" />
@@ -18,8 +19,6 @@
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.ip.geocoder.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/geoip-api.jar" />
-	<classpathentry kind="lib" path="docroot/WEB-INF/lib/jstl-api.jar" />
-	<classpathentry kind="lib" path="docroot/WEB-INF/lib/jstl-impl.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.osgi.compendium.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.osgi.core.jar" />
 	<classpathentry kind="output" path="bin" />

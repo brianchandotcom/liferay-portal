@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.freemarker;
+package com.liferay.portal.template.freemarker;
 
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
-import com.liferay.portal.util.PropsValues;
 
 import freemarker.core.ParseException;
 
@@ -46,12 +45,12 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		Configuration configuration,
-		TemplateContextHelper templateContextHelper, boolean privileged) {
+		TemplateContextHelper templateContextHelper, boolean privileged,
+		long interval) {
 
 		super(
 			templateResource, errorTemplateResource, context,
-			templateContextHelper, TemplateConstants.LANG_TYPE_FTL,
-			PropsValues.FREEMARKER_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
+			templateContextHelper, TemplateConstants.LANG_TYPE_FTL, interval);
 
 		_configuration = configuration;
 		_privileged = privileged;

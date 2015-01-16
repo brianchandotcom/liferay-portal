@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.freemarker;
+package com.liferay.portal.template.freemarker;
+
+import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -23,8 +25,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplatePortletPreferences;
+import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -34,16 +36,26 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
+
 /**
  * @author Mika Koivisto
  * @author Raymond Augé
  */
+@Component(
+	configurationPid = "com.liferay.portal.template.freemarker",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = TemplateContextHelper.class
+)
 public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 
 	@Override
 	public Set<String> getRestrictedVariables() {
 		return SetUtil.fromArray(
-			PropsValues.FREEMARKER_ENGINE_RESTRICTED_VARIABLES);
+			_freemarkerEngineConfiguration.restrictedVariables());
 	}
 
 	@Override
@@ -100,6 +112,13 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_freemarkerEngineConfiguration = Configurable.createConfigurable(
+			FreemarkerEngineConfiguration.class, properties);
+	}
+
 	@Override
 	protected void populateExtraHelperUtilities(
 		Map<String, Object> helperUtilities) {
@@ -123,5 +142,8 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		helperUtilities.put(
 			"staticUtil", BeansWrapper.getDefaultInstance().getStaticModels());
 	}
+
+	private volatile FreemarkerEngineConfiguration
+		_freemarkerEngineConfiguration;
 
 }

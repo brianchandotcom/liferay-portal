@@ -4154,6 +4154,10 @@ if (ppstate.equals("normal")) {
 				<equals arg1="${tcat.enabled}" arg2="true" />
 			</not>
 			<then>
+				<waitfor maxwait="150" maxwaitunit="second">
+					<available file="${liferay.home}/logs" type="dir" />
+				</waitfor>
+
 				<for param="log.file">
 					<path>
 						<fileset dir="${liferay.home}/logs">

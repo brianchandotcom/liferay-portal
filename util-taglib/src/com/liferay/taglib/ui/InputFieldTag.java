@@ -173,7 +173,7 @@ public class InputFieldTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/ui/input_field/page.jsp";
 
-	private boolean _autoComplete;
+	private boolean _autoComplete = true;
 	private boolean _autoFocus;
 	private boolean _autoSize;
 	private Object _bean;

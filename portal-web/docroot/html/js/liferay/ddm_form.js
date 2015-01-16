@@ -353,26 +353,6 @@ AUI.add(
 						return localizationMap;
 					},
 
-					formatLocaleValue: function() {
-						var instance = this;
-
-						var parent = instance.get('parent');
-
-						var translationManager = parent.get('translationManager');
-
-						var availableLocales = translationManager.get('availableLocales');
-
-						var localizationMap = instance.get('localizationMap');
-
-						for (var i = 0; i < availableLocales.length; i++) {
-							var value = localizationMap[availableLocales[i]];
-
-							if (Lang.isUndefined(value)) {
-								localizationMap[availableLocales[i]] = instance.getValue();
-							}
-						}
-					},
-
 					getFieldDefinition: function() {
 						var instance = this;
 
@@ -590,7 +570,7 @@ AUI.add(
 						if (dataType) {
 							instance.updateLocalizationMap(instance.get('displayLocale'));
 
-							instance.formatLocaleValue();
+							instance.updateTranslationsDefaultValue();
 
 							fieldJSON.value = instance.get('localizationMap');
 						}
@@ -619,6 +599,27 @@ AUI.add(
 						}
 
 						instance.set('localizationMap', localizationMap);
+					},
+
+					updateTranslationsDefaultValue: function() {
+						var instance = this;
+
+						var parent = instance.get('parent');
+
+						var translationManager = parent.get('translationManager');
+
+						var localizationMap = instance.get('localizationMap');
+
+						AArray.each(
+							translationManager.get('availableLocales'),
+							function(item, index) {
+								var value = localizationMap[item];
+
+								if (Lang.isUndefined(value)) {
+									localizationMap[item] = instance.getValue();
+								}
+							}
+						);
 					}
 				}
 			}

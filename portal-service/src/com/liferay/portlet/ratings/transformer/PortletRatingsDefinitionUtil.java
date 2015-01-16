@@ -20,29 +20,32 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
-public class RatingsDataTransformerHelperUtil {
+public class PortletRatingsDefinitionUtil {
 
 	public static String[] getClassNames(String portletId) {
-		RatingsDataTransformerHelper ratingsDataTransformerHelper =
+		PortletRatingsDefinition portletRatingsDefinition =
 			_serviceTrackerMap.getService(portletId);
 
-		if (ratingsDataTransformerHelper == null) {
+		if (portletRatingsDefinition == null) {
 			return null;
 		}
 
-		return ratingsDataTransformerHelper.getClassNames();
+		return portletRatingsDefinition.getClassNames();
 	}
 
-	public static String getDefaultType(String portletId, String className) {
-		RatingsDataTransformerHelper ratingsDataTransformerHelper =
+	public static PortletRatingsDefinition.RatingsType getDefaultType(
+		String portletId, String className) {
+
+		PortletRatingsDefinition portletRatingsDefinition =
 			_serviceTrackerMap.getService(portletId);
 
-		if (ratingsDataTransformerHelper == null) {
+		if (portletRatingsDefinition == null) {
 			return null;
 		}
 
-		return ratingsDataTransformerHelper.getDefaultType(className);
+		return portletRatingsDefinition.getDefaultType(className);
 	}
 
 	public static String[] getPortletIds() {
@@ -55,9 +58,9 @@ public class RatingsDataTransformerHelperUtil {
 		return portletIds;
 	}
 
-	private static final ServiceTrackerMap<String, RatingsDataTransformerHelper>
+	private static final ServiceTrackerMap<String, PortletRatingsDefinition>
 		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
-			RatingsDataTransformerHelper.class, "portletId");
+			PortletRatingsDefinition.class, "portletId");
 
 	static {
 		_serviceTrackerMap.open();

@@ -23,12 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface RatingsDataTransformer {
 
-	public static final String LIKE = "like";
-
-	public static final String STARS = "stars";
-
-	public static final String THUMBS = "thumbs";
-
 	public ActionableDynamicQuery.PerformActionMethod transformRatingsData(
 			final String fromRatingsType, final String toRatingsType)
 		throws PortalException;

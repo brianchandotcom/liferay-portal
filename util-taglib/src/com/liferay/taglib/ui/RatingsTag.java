@@ -29,7 +29,8 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.ratings.transformer.RatingsDataTransformerHelperUtil;
+import com.liferay.portlet.ratings.transformer.PortletRatingsDefinition;
+import com.liferay.portlet.ratings.transformer.PortletRatingsDefinitionUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.portlet.PortletPreferences;
@@ -124,17 +125,17 @@ public class RatingsTag extends IncludeTag {
 				WebKeys.RENDER_PORTLET);
 
 			if (portlet != null) {
-				String propertyName =
-					_className + StringPool.UNDERLINE + "RatingsType";
-
-				String defaultType =
-					RatingsDataTransformerHelperUtil.getDefaultType(
+				PortletRatingsDefinition.RatingsType defaultRatingsType =
+					PortletRatingsDefinitionUtil.getDefaultType(
 						portlet.getPortletId(), _className);
 
-				if (Validator.isNotNull(defaultType)) {
+				if (defaultRatingsType != null) {
+					String propertyName =
+						_className + StringPool.UNDERLINE + "RatingsType";
+					
 					String companyRatingsType = PrefsParamUtil.getString(
 						companyPortletPreferences, request, propertyName,
-						defaultType);
+						defaultRatingsType.getValue());
 
 					_type = PropertiesParamUtil.getString(
 						groupTypeSettings, request, propertyName,

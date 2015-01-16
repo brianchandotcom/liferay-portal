@@ -18,14 +18,13 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.ratings.transformer.RatingsDataTransformerHelper;
+import com.liferay.portlet.ratings.transformer.PortletRatingsDefinition;
 
 /**
  * @author Roberto Díaz
  */
 @OSGiBeanProperties(property = {"portletId=" + PortletKeys.BLOGS})
-public class BlogsRatingsDataTransformerHelper
-	implements RatingsDataTransformerHelper {
+public class BlogsPortletRatingsDefinition implements PortletRatingsDefinition {
 
 	@Override
 	public String[] getClassNames() {
@@ -33,8 +32,8 @@ public class BlogsRatingsDataTransformerHelper
 	}
 
 	@Override
-	public String getDefaultType(String className) {
-		return PropsValues.BLOGS_RATINGS_TYPE_DEFAULT;
+	public RatingsType getDefaultType(String className) {
+		return RatingsType.valueOf(PropsValues.BLOGS_RATINGS_TYPE_DEFAULT);
 	}
 
 }

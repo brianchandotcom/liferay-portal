@@ -125,9 +125,9 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 	private static final char[] _REPLACE_CHARS;
 
-	private static Pattern _friendlyURLHyphenPattern = Pattern.compile(
+	private static final Pattern _friendlyURLHyphenPattern = Pattern.compile(
 		"(-)\\1+");
-	private static Pattern _friendlyURLPattern = Pattern.compile(
+	private static final Pattern _friendlyURLPattern = Pattern.compile(
 		"[^a-z0-9./_-]");
 
 	static {

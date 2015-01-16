@@ -208,12 +208,12 @@ public class NetlogonValidationSamInfo extends NdrObject {
 	@SuppressWarnings("unused")
 	private short _badPasswordCount;
 
-	private rpc.unicode_string _effectiveName;
-	private rpc.unicode_string _fullName;
+	private final rpc.unicode_string _effectiveName;
+	private final rpc.unicode_string _fullName;
 	private int _groupCount;
 	private GroupMembership[] _groupIds;
-	private rpc.unicode_string _homeDirectory;
-	private rpc.unicode_string _homeDirectoryDrive;
+	private final rpc.unicode_string _homeDirectory;
+	private final rpc.unicode_string _homeDirectoryDrive;
 
 	@SuppressWarnings("unused")
 	private long _kickoffTime;
@@ -224,10 +224,10 @@ public class NetlogonValidationSamInfo extends NdrObject {
 	@SuppressWarnings("unused")
 	private short _logonCount;
 
-	private rpc.sid_t _logonDomain;
-	private rpc.unicode_string _logonDomainName;
-	private rpc.unicode_string _logonScript;
-	private rpc.unicode_string _logonServer;
+	private final rpc.sid_t _logonDomain;
+	private final rpc.unicode_string _logonDomainName;
+	private final rpc.unicode_string _logonScript;
+	private final rpc.unicode_string _logonServer;
 
 	@SuppressWarnings("unused")
 	private long _logonTime;
@@ -244,7 +244,7 @@ public class NetlogonValidationSamInfo extends NdrObject {
 	@SuppressWarnings("unused")
 	private int _primaryGroupId;
 
-	private rpc.unicode_string _profilePath;
+	private final rpc.unicode_string _profilePath;
 
 	@SuppressWarnings("unused")
 	private int _userFlags;
@@ -252,6 +252,6 @@ public class NetlogonValidationSamInfo extends NdrObject {
 	@SuppressWarnings("unused")
 	private int _userId;
 
-	private byte[] _userSessionKey;
+	private final byte[] _userSessionKey;
 
 }

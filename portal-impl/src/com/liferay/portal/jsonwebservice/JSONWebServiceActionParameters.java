@@ -229,8 +229,9 @@ public class JSONWebServiceActionParameters {
 	}
 
 	private JSONRPCRequest _jsonRPCRequest;
-	private JSONWebServiceActionParametersMap _jsonWebServiceActionParameters =
-		new JSONWebServiceActionParametersMap();
+	private final JSONWebServiceActionParametersMap
+		_jsonWebServiceActionParameters =
+			new JSONWebServiceActionParametersMap();
 	private ServiceContext _serviceContext;
 
 }

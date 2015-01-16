@@ -77,6 +77,6 @@ public class DateArrayConverter implements TypeConverter<Date[]> {
 		return results;
 	}
 
-	private ConvertBean _convertBean;
+	private final ConvertBean _convertBean;
 
 }

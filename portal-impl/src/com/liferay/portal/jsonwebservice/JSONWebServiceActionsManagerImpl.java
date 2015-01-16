@@ -646,14 +646,15 @@ public class JSONWebServiceActionsManagerImpl
 		return new String[] {contextName, path};
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceActionsManagerImpl.class);
 
-	private SortedArrayList<JSONWebServiceActionConfig>
+	private final SortedArrayList<JSONWebServiceActionConfig>
 		_jsonWebServiceActionConfigs = new SortedArrayList<>();
-	private JSONWebServiceNaming _jsonWebServiceNaming =
+	private final JSONWebServiceNaming _jsonWebServiceNaming =
 		new JSONWebServiceNaming();
-	private BinarySearch<String> _pathBinarySearch = new PathBinarySearch();
+	private final BinarySearch<String> _pathBinarySearch =
+		new PathBinarySearch();
 
 	private class PathBinarySearch extends BinarySearch<String> {
 

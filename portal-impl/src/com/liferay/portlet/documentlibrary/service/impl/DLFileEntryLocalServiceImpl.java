@@ -2704,7 +2704,7 @@ public class DLFileEntryLocalServiceImpl
 
 	private static final int _DELETE_INTERVAL = 100;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);
 
 }

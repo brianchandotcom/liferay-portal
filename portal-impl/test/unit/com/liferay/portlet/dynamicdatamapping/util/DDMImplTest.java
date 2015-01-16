@@ -419,6 +419,6 @@ public class DDMImplTest extends BaseDDMTestCase {
 		}
 	}
 
-	private DDMImpl _ddmImpl = new DDMImpl();
+	private final DDMImpl _ddmImpl = new DDMImpl();
 
 }

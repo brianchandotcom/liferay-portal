@@ -1077,6 +1077,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		return resource;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DLWebDAVStorageImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLWebDAVStorageImpl.class);
 
 }

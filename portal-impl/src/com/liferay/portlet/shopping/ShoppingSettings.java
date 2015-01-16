@@ -351,6 +351,6 @@ public class ShoppingSettings {
 			_MULTI_VALUED_KEYS, _resourceManager);
 	}
 
-	private TypedSettings _typedSettings;
+	private final TypedSettings _typedSettings;
 
 }

@@ -667,13 +667,13 @@ public class Table {
 	private static final String _SAFE_TABLE_RETURN_CHARACTER =
 		"_SAFE_TABLE_RETURN_CHARACTER_";
 
-	private static Log _log = LogFactoryUtil.getLog(Table.class);
+	private static final Log _log = LogFactoryUtil.getLog(Table.class);
 
 	private Object[][] _columns;
 	private String _createSQL;
 	private int[] _order;
 	private String _selectSQL;
-	private String _tableName;
+	private final String _tableName;
 	private String _tempFileName;
 	private long _totalRows;
 

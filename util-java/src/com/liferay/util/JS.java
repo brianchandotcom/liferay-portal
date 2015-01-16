@@ -151,6 +151,6 @@ public class JS {
 		return decodeURIComponent(s);
 	}
 
-	private static Pattern _pattern = Pattern.compile("%u[0-9a-fA-F]{4}");
+	private static final Pattern _pattern = Pattern.compile("%u[0-9a-fA-F]{4}");
 
 }

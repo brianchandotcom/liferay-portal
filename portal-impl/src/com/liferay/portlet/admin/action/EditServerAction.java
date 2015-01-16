@@ -966,10 +966,12 @@ public class EditServerAction extends PortletAction {
 		ServiceComponentLocalServiceUtil.verifyDB();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(EditServerAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditServerAction.class);
 
-	private static MethodKey _loadIndexesFromClusterMethodKey = new MethodKey(
-		LuceneClusterUtil.class, "loadIndexesFromCluster", long[].class,
+	private static final MethodKey _loadIndexesFromClusterMethodKey =
+		new MethodKey(
+			LuceneClusterUtil.class, "loadIndexesFromCluster", long[].class,
 		Address.class);
 
 	private static class ClusterLoadingSyncJob implements Runnable {
@@ -1068,9 +1070,9 @@ public class EditServerAction extends PortletAction {
 			}
 		}
 
-		private long[] _companyIds;
-		private CountDownLatch _countDownLatch;
-		private boolean _master;
+		private final long[] _companyIds;
+		private final CountDownLatch _countDownLatch;
+		private final boolean _master;
 
 	}
 

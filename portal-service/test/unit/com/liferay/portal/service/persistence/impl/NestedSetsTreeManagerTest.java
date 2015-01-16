@@ -370,9 +370,9 @@ public class NestedSetsTreeManagerTest {
 			_nestedSetsTreeManager.getDescendants(simpleNestedSetsTreeNode));
 	}
 
-	private NestedSetsTreeManager<SimpleNestedSetsTreeNode>
+	private final NestedSetsTreeManager<SimpleNestedSetsTreeNode>
 		_nestedSetsTreeManager = new MemoryNestedSetsTreeManager();
-	private SimpleNestedSetsTreeNode[] _simpleNestedSetsTreeNodes =
+	private final SimpleNestedSetsTreeNode[] _simpleNestedSetsTreeNodes =
 		new SimpleNestedSetsTreeNode[] {
 			new SimpleNestedSetsTreeNode(0), new SimpleNestedSetsTreeNode(1),
 			new SimpleNestedSetsTreeNode(2), new SimpleNestedSetsTreeNode(3),
@@ -830,8 +830,8 @@ public class NestedSetsTreeManagerTest {
 			}
 		}
 
-		private List<SimpleNestedSetsTreeNode> _simpleNestedSetsTreeNodeList =
-			new ArrayList<>();
+		private final List<SimpleNestedSetsTreeNode>
+			_simpleNestedSetsTreeNodeList = new ArrayList<>();
 
 	}
 

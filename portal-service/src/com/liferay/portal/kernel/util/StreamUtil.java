@@ -233,6 +233,6 @@ public class StreamUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(StreamUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(StreamUtil.class);
 
 }

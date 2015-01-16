@@ -128,7 +128,7 @@ public class MethodTargetClassKey {
 	}
 
 	private int _hashCode;
-	private Method _method;
+	private final Method _method;
 	private Class<?> _targetClass;
 	private Method _targetMethod;
 	private String _toString;

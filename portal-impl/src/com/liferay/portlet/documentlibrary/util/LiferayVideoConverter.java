@@ -438,17 +438,17 @@ public class LiferayVideoConverter extends LiferayConverter {
 
 	private static final int _VIDEO_BIT_RATE_MAX = 1200000;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayVideoConverter.class);
 
-	private Properties _ffpresetProperties;
+	private final Properties _ffpresetProperties;
 	private int _height = 0;
 	private IContainer _inputIContainer;
-	private String _inputURL;
+	private final String _inputURL;
 	private IContainer _outputIContainer;
-	private String _outputURL;
+	private final String _outputURL;
 	private int _videoBitRate;
-	private String _videoContainer;
+	private final String _videoContainer;
 	private IRational _videoFrameRate;
 	private int _width = 0;
 

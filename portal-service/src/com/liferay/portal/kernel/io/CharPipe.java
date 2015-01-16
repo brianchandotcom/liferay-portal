@@ -86,8 +86,8 @@ public class CharPipe {
 
 	private static final int _DEFAULT_BUFFER_SIZE = 1024 * 8;
 
-	private PipeReader _pipeReader = new PipeReader();
-	private PipeWriter _pipeWriter = new PipeWriter();
+	private final PipeReader _pipeReader = new PipeReader();
+	private final PipeWriter _pipeWriter = new PipeWriter();
 
 	private class PipeReader extends Reader {
 

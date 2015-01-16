@@ -436,9 +436,9 @@ public class PollerRequestHandlerImpl
 
 	private static final String _PATH_RECEIVE = "/receive";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PollerRequestHandlerImpl.class);
 
-	private Map<String, PollerSession> _pollerSessions = new HashMap<>();
+	private final Map<String, PollerSession> _pollerSessions = new HashMap<>();
 
 }

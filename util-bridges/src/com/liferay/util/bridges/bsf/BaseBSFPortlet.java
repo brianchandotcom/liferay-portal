@@ -267,6 +267,6 @@ public abstract class BaseBSFPortlet extends GenericPortlet {
 	protected String resourceFile;
 	protected String viewFile;
 
-	private static Log _log = LogFactoryUtil.getLog(BaseBSFPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseBSFPortlet.class);
 
 }

@@ -74,6 +74,6 @@ public class Tuple implements Serializable {
 		return hashCode;
 	}
 
-	private Object[] _array;
+	private final Object[] _array;
 
 }

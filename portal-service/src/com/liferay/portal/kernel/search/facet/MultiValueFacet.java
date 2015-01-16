@@ -200,6 +200,7 @@ public class MultiValueFacet extends BaseFacet {
 		dataJSONObject.put("values", valuesJSONArray);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MultiValueFacet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		MultiValueFacet.class);
 
 }

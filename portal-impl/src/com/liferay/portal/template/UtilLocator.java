@@ -67,8 +67,8 @@ public class UtilLocator {
 		return utilName;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UtilLocator.class);
+	private static final Log _log = LogFactoryUtil.getLog(UtilLocator.class);
 
-	private static UtilLocator _instance = new UtilLocator();
+	private static final UtilLocator _instance = new UtilLocator();
 
 }

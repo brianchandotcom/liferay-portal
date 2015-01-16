@@ -182,7 +182,8 @@ public class ScriptPostProcess {
 		_sb = sb;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ScriptPostProcess.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ScriptPostProcess.class);
 
 	private StringBundler _sb;
 

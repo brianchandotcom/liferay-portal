@@ -534,7 +534,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	@Deprecated
 	protected ModelListener<T>[] listeners = new ModelListener[0];
 
-	private static Log _log = LogFactoryUtil.getLog(BasePersistenceImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BasePersistenceImpl.class);
 
 	private DataSource _dataSource;
 	private DB _db;

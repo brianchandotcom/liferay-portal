@@ -1350,7 +1350,7 @@ public class UserFinderImpl
 
 	private static final String _STATUS_SQL = "AND (User_.status = ?)";
 
-	private LinkedHashMap<String, Object> _emptyLinkedHashMap =
+	private final LinkedHashMap<String, Object> _emptyLinkedHashMap =
 		new LinkedHashMap<String, Object>(0);
 
 }

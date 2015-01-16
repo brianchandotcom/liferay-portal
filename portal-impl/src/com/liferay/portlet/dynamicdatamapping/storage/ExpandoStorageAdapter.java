@@ -621,7 +621,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 
 	private static final String _NUMERIC_NULL_VALUE = "NUMERIC_NULL_VALUE";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ExpandoStorageAdapter.class);
 
 }

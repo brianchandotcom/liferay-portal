@@ -592,10 +592,11 @@ public class VideoProcessorImpl
 	private static final String[] _PREVIEW_TYPES =
 		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS;
 
-	private static Log _log = LogFactoryUtil.getLog(VideoProcessorImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		VideoProcessorImpl.class);
 
-	private List<Long> _fileVersionIds = new Vector<Long>();
-	private Set<String> _videoMimeTypes = SetUtil.fromArray(
+	private final List<Long> _fileVersionIds = new Vector<Long>();
+	private final Set<String> _videoMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);
 
 	private static class LiferayVideoProcessCallable
@@ -651,7 +652,7 @@ public class VideoProcessorImpl
 		private static final long serialVersionUID = 1L;
 
 		private Map<String, String> _customLogSettings;
-		private Properties _ffpresetProperties;
+		private final Properties _ffpresetProperties;
 
 		@InputResource
 		private File _inputFile;
@@ -662,8 +663,8 @@ public class VideoProcessorImpl
 		private File _outputFile;
 
 		private String _serverId;
-		private String _videoContainer;
-		private Properties _videoProperties;
+		private final String _videoContainer;
+		private final Properties _videoProperties;
 
 	}
 
@@ -720,8 +721,8 @@ public class VideoProcessorImpl
 		private static final long serialVersionUID = 1L;
 
 		private Map<String, String> _customLogSettings;
-		private String _extension;
-		private int _height;
+		private final String _extension;
+		private final int _height;
 
 		@InputResource
 		private File _inputFile;
@@ -731,9 +732,9 @@ public class VideoProcessorImpl
 		@OutputResource
 		private File _outputFile;
 
-		private int _percentage;
+		private final int _percentage;
 		private String _serverId;
-		private int _width;
+		private final int _width;
 
 	}
 

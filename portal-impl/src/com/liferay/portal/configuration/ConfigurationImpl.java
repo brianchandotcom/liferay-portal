@@ -459,14 +459,15 @@ public class ConfigurationImpl
 
 	private static final boolean _PRINT_DUPLICATE_CALLS_TO_GET = false;
 
-	private static Log _log = LogFactoryUtil.getLog(ConfigurationImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConfigurationImpl.class);
 
-	private static String[] _emptyArray = new String[0];
-	private static Object _nullValue = new Object();
+	private static final String[] _emptyArray = new String[0];
+	private static final Object _nullValue = new Object();
 
-	private ComponentConfiguration _componentConfiguration;
-	private Set<String> _printedSources = new HashSet<>();
+	private final ComponentConfiguration _componentConfiguration;
+	private final Set<String> _printedSources = new HashSet<>();
 	private Properties _properties;
-	private Map<String, Object> _values = new ConcurrentHashMap<>();
+	private final Map<String, Object> _values = new ConcurrentHashMap<>();
 
 }

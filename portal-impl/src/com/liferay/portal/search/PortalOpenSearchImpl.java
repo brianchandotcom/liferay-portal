@@ -226,6 +226,7 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortalOpenSearchImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalOpenSearchImpl.class);
 
 }

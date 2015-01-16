@@ -675,14 +675,14 @@ public class Logger {
 	private int _actionCount;
 	private int _actionStepCount = 1;
 	private int _errorCount;
-	private JavascriptExecutor _javascriptExecutor;
-	private LiferaySelenium _liferaySelenium;
+	private final JavascriptExecutor _javascriptExecutor;
+	private final LiferaySelenium _liferaySelenium;
 	private boolean _loggerStarted;
 	private int _macroStepCount = 1;
 	private int _screenshotCount;
 	private int _screenshotErrorCount;
 	private int _seleniumCount = 1;
-	private WebDriver _webDriver = new FirefoxDriver();
+	private final WebDriver _webDriver = new FirefoxDriver();
 	private Stack<String> _xPathIdStack = new Stack<String>();
 
 }

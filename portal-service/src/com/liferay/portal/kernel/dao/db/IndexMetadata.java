@@ -170,8 +170,8 @@ public class IndexMetadata extends Index implements Comparable<IndexMetadata> {
 		return _createSQL;
 	}
 
-	private String[] _columnNames;
-	private String _createSQL;
-	private String _dropSQL;
+	private final String[] _columnNames;
+	private final String _createSQL;
+	private final String _dropSQL;
 
 }

@@ -270,6 +270,6 @@ public class DateUtil {
 		return dateFormat.parse(dateString);
 	}
 
-	private static Map<Locale, Boolean> _formatAmPmMap = new HashMap<>();
+	private static final Map<Locale, Boolean> _formatAmPmMap = new HashMap<>();
 
 }

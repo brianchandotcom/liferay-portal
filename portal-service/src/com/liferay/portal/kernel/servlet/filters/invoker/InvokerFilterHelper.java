@@ -373,12 +373,14 @@ public class InvokerFilterHelper {
 		registerFilterMapping(filterMapping, positionFilterName, after);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(InvokerFilterHelper.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		InvokerFilterHelper.class);
 
-	private Map<String, FilterConfig> _filterConfigs = new HashMap<>();
-	private List<FilterMapping> _filterMappings = new CopyOnWriteArrayList<>();
-	private Map<String, Filter> _filters = new HashMap<>();
-	private List<InvokerFilter> _invokerFilters = new ArrayList<>();
+	private final Map<String, FilterConfig> _filterConfigs = new HashMap<>();
+	private final List<FilterMapping> _filterMappings =
+		new CopyOnWriteArrayList<>();
+	private final Map<String, Filter> _filters = new HashMap<>();
+	private final List<InvokerFilter> _invokerFilters = new ArrayList<>();
 	private ServiceTracker<Filter, FilterMapping> _serviceTracker;
 
 	private class FilterServiceTrackerCustomizer

@@ -45,7 +45,7 @@ public class ActionURLLogic extends RuntimeLogic {
 	}
 
 	public String getLifecycle() {
-		return _lifecycle;
+		return _LIFECYCLE;
 	}
 
 	@Override
@@ -84,7 +84,8 @@ public class ActionURLLogic extends RuntimeLogic {
 		return liferayPortletURL.toString();
 	}
 
-	private String _lifecycle = PortletRequest.ACTION_PHASE;
-	private RenderResponseImpl _renderResponseImpl;
+	private static final String _LIFECYCLE = PortletRequest.ACTION_PHASE;
+
+	private final RenderResponseImpl _renderResponseImpl;
 
 }

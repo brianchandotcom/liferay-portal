@@ -187,11 +187,11 @@ public class WriterOutputStream extends OutputStream {
 
 	private static final int _DEFAULT_OUTPUT_BUFFER_SIZE = 8192;
 
-	private boolean _autoFlush;
-	private CharsetDecoder _charsetDecoder;
-	private String _charsetName;
-	private ByteBuffer _inputByteBuffer;
-	private CharBuffer _outputCharBuffer;
-	private Writer _writer;
+	private final boolean _autoFlush;
+	private final CharsetDecoder _charsetDecoder;
+	private final String _charsetName;
+	private final ByteBuffer _inputByteBuffer;
+	private final CharBuffer _outputCharBuffer;
+	private final Writer _writer;
 
 }

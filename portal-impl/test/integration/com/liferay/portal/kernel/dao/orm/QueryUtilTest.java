@@ -353,7 +353,7 @@ public class QueryUtilTest {
 
 	private static DB _db;
 
-	private SessionFactory _sessionFactory =
+	private final SessionFactory _sessionFactory =
 		(SessionFactory)PortalBeanLocatorUtil.locate("liferaySessionFactory");
 
 }

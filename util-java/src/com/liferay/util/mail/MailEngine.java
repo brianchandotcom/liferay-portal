@@ -616,6 +616,6 @@ public class MailEngine {
 
 	private static final String _TEXT_PLAIN = "text/plain;charset=\"UTF-8\"";
 
-	private static Log _log = LogFactoryUtil.getLog(MailEngine.class);
+	private static final Log _log = LogFactoryUtil.getLog(MailEngine.class);
 
 }

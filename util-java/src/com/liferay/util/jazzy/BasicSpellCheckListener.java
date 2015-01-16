@@ -95,8 +95,8 @@ public class BasicSpellCheckListener implements SpellCheckListener {
 		return insideHtmlTag;
 	}
 
-	private List<InvalidWord> _invalidWords;
-	private String _text;
-	private char[] _textCharArray;
+	private final List<InvalidWord> _invalidWords;
+	private final String _text;
+	private final char[] _textCharArray;
 
 }

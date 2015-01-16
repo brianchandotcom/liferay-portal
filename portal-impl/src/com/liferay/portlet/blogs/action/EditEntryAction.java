@@ -700,9 +700,10 @@ public class EditEntryAction extends PortletAction {
 		};
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(EditEntryAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditEntryAction.class);
 
-	private TransactionAttribute _transactionAttribute =
+	private final TransactionAttribute _transactionAttribute =
 		TransactionAttributeBuilder.build(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
@@ -717,7 +718,7 @@ public class EditEntryAction extends PortletAction {
 			_actionRequest = actionRequest;
 		}
 
-		private ActionRequest _actionRequest;
+		private final ActionRequest _actionRequest;
 
 	}
 

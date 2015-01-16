@@ -253,6 +253,6 @@ public class SendmailHook implements Hook {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SendmailHook.class);
+	private static final Log _log = LogFactoryUtil.getLog(SendmailHook.class);
 
 }

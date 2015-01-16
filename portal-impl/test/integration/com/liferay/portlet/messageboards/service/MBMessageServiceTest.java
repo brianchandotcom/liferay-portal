@@ -178,7 +178,7 @@ public class MBMessageServiceTest {
 			MBMessageLocalServiceUtil.deleteMessage(mbMessage);
 		}
 
-		private String _subject;
+		private final String _subject;
 
 	}
 

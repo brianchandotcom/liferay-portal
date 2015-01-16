@@ -188,7 +188,7 @@ public class POPNotificationsMessageListener
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		POPNotificationsMessageListener.class);
 
 	private Folder _inboxFolder;

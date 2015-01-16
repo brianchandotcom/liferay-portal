@@ -737,9 +737,10 @@ public class PDFProcessorImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PDFProcessorImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PDFProcessorImpl.class);
 
-	private List<Long> _fileVersionIds = new Vector<Long>();
+	private final List<Long> _fileVersionIds = new Vector<Long>();
 	private boolean _ghostscriptInitialized;
 
 	private static class LiferayPDFBoxProcessCallable
@@ -799,28 +800,28 @@ public class PDFProcessorImpl
 
 		private static final long serialVersionUID = 1L;
 
-		private Map<String, String> _customLogSettings;
-		private int _dpi;
-		private String _extension;
-		private boolean _generatePreview;
-		private boolean _generateThumbnail;
-		private int _height;
+		private final Map<String, String> _customLogSettings;
+		private final int _dpi;
+		private final String _extension;
+		private final boolean _generatePreview;
+		private final boolean _generateThumbnail;
+		private final int _height;
 
 		@InputResource
-		private File _inputFile;
+		private final File _inputFile;
 
-		private String _liferayHome;
-
-		@OutputResource
-		private File[] _previewFiles;
-
-		private String _serverId;
-		private String _thumbnailExtension;
+		private final String _liferayHome;
 
 		@OutputResource
-		private File _thumbnailFile;
+		private final File[] _previewFiles;
 
-		private int _width;
+		private final String _serverId;
+		private final String _thumbnailExtension;
+
+		@OutputResource
+		private final File _thumbnailFile;
+
+		private final int _width;
 
 	}
 

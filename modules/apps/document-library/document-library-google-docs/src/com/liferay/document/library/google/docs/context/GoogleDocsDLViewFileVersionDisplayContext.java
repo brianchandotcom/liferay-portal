@@ -199,6 +199,6 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"7B61EA79-83AE-4FFD-A77A-1D47E06EBBE9");
 
-	private GoogleDocsMetadataHelper _googleDocsMetadataHelper;
+	private final GoogleDocsMetadataHelper _googleDocsMetadataHelper;
 
 }

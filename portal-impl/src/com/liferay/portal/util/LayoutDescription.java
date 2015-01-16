@@ -69,8 +69,8 @@ public class LayoutDescription implements Serializable {
 		return sb.toString();
 	}
 
-	private int _depth;
-	private String _name;
-	private long _plid;
+	private final int _depth;
+	private final String _name;
+	private final long _plid;
 
 }

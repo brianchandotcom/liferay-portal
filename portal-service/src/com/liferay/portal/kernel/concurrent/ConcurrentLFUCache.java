@@ -199,7 +199,7 @@ public class ConcurrentLFUCache<K, V> {
 		}
 	}
 
-	private Map<K, ValueWrapper> _cache = new HashMap<>();
+	private final Map<K, ValueWrapper> _cache = new HashMap<>();
 	private final EntryComparator _entryComparator = new EntryComparator();
 	private final AtomicLong _evictCount = new AtomicLong();
 	private final int _expectedSize;

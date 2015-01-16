@@ -101,7 +101,7 @@ public class RandomUtilTest {
 		}
 
 		private int _index;
-		private int[] _values;
+		private final int[] _values;
 
 	}
 

@@ -8360,7 +8360,7 @@ public class PortalImpl implements Portal {
 		themeDisplay.setLocale(locale);
 	}
 
-	private static Log _logWebServerServlet = LogFactoryUtil.getLog(
+	private static final Log _logWebServerServlet = LogFactoryUtil.getLog(
 		WebServerServlet.class);
 
 	private static final String _J_SECURITY_CHECK = "j_security_check";
@@ -8376,41 +8376,42 @@ public class PortalImpl implements Portal {
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING;
 
-	private static Log _log = LogFactoryUtil.getLog(PortalImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortalImpl.class);
 
-	private static Map<Long, String> _cdnHostHttpMap =
+	private static final Map<Long, String> _cdnHostHttpMap =
 		new ConcurrentHashMap<>();
-	private static Map<Long, String> _cdnHostHttpsMap =
+	private static final Map<Long, String> _cdnHostHttpsMap =
 		new ConcurrentHashMap<>();
-	private static MethodHandler _resetCDNHostsMethodHandler =
+	private static final MethodHandler _resetCDNHostsMethodHandler =
 		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
-	private static Date _upTime = new Date();
+	private static final Date _upTime = new Date();
 
-	private String[] _allSystemGroups;
-	private String[] _allSystemOrganizationRoles;
-	private String[] _allSystemRoles;
-	private String[] _allSystemSiteRoles;
+	private final String[] _allSystemGroups;
+	private final String[] _allSystemOrganizationRoles;
+	private final String[] _allSystemRoles;
+	private final String[] _allSystemSiteRoles;
 	private final List<AlwaysAllowDoAsUser> _alwaysAllowDoAsUsers =
 		new ArrayList<>();
-	private Pattern _bannedResourceIdPattern = Pattern.compile(
+	private final Pattern _bannedResourceIdPattern = Pattern.compile(
 		PropsValues.PORTLET_RESOURCE_ID_BANNED_PATHS_REGEXP,
 		Pattern.CASE_INSENSITIVE);
 	private final String _computerAddress;
 	private final String _computerName;
 	private String[] _customSqlKeys;
 	private String[] _customSqlValues;
-	private EditDiscussionAction _editDiscussionAction =
+	private final EditDiscussionAction _editDiscussionAction =
 		new EditDiscussionAction();
 	private final String _pathContext;
-	private String _pathFriendlyURLPrivateGroup;
-	private String _pathFriendlyURLPrivateUser;
-	private String _pathFriendlyURLPublic;
-	private String _pathImage;
-	private String _pathMain;
-	private String _pathModule;
-	private String _pathProxy;
-	private Map<String, Long> _plidToPortletIdMap = new ConcurrentHashMap<>();
-	private Set<PortalInetSocketAddressEventListener>
+	private final String _pathFriendlyURLPrivateGroup;
+	private final String _pathFriendlyURLPrivateUser;
+	private final String _pathFriendlyURLPublic;
+	private final String _pathImage;
+	private final String _pathMain;
+	private final String _pathModule;
+	private final String _pathProxy;
+	private final Map<String, Long> _plidToPortletIdMap =
+		new ConcurrentHashMap<>();
+	private final Set<PortalInetSocketAddressEventListener>
 		_portalInetSocketAddressEventListeners = new CopyOnWriteArraySet<>();
 	private final AtomicReference<InetSocketAddress>
 		_portalLocalInetSocketAddress =
@@ -8428,13 +8429,13 @@ public class PortalImpl implements Portal {
 	 *             #_portalInetSocketAddressEventListeners}
 	 */
 	@Deprecated
-	private List<PortalPortEventListener> _portalPortEventListeners =
+	private final List<PortalPortEventListener> _portalPortEventListeners =
 		new ArrayList<>();
 
 	private final AtomicReference<InetSocketAddress>
 		_portalServerInetSocketAddress =
 			new AtomicReference<InetSocketAddress>();
-	private Set<String> _reservedParams;
+	private final Set<String> _reservedParams;
 	private final AtomicReference<InetSocketAddress>
 		_securePortalLocalInetSocketAddress =
 			new AtomicReference<InetSocketAddress>();
@@ -8450,10 +8451,10 @@ public class PortalImpl implements Portal {
 		_securePortalServerInetSocketAddress =
 			new AtomicReference<InetSocketAddress>();
 	private final String _servletContextName;
-	private String[] _sortedSystemGroups;
-	private String[] _sortedSystemOrganizationRoles;
-	private String[] _sortedSystemRoles;
-	private String[] _sortedSystemSiteRoles;
+	private final String[] _sortedSystemGroups;
+	private final String[] _sortedSystemOrganizationRoles;
+	private final String[] _sortedSystemRoles;
+	private final String[] _sortedSystemSiteRoles;
 	private final boolean _validPortalDomainCheckDisabled;
 
 	private class AlwaysAllowDoAsUserServiceTrackerCustomizer

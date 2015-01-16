@@ -244,6 +244,6 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 		upgradeTable.updateTable();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeProcess.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeProcess.class);
 
 }

@@ -58,6 +58,6 @@ public class PrimitiveLongSet {
 		return _elements.size();
 	}
 
-	private Set<Long> _elements;
+	private final Set<Long> _elements;
 
 }

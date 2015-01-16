@@ -121,6 +121,7 @@ public class PortletSetupUtil {
 		return cssJSONObject;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortletSetupUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletSetupUtil.class);
 
 }

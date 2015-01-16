@@ -238,6 +238,6 @@ public class UpgradeAsset extends UpgradeProcess {
 		return vocabularySettingsHelper.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeAsset.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeAsset.class);
 
 }

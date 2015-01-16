@@ -168,12 +168,13 @@ public class ProgressInputStream extends InputStream {
 
 	private static final int _DEFAULT_INITIAL_BUFFER_SIZE = 4 * 1024;
 
-	private static Log _log = LogFactoryUtil.getLog(ProgressInputStream.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ProgressInputStream.class);
 
-	private InputStream _inputStream;
-	private PortletSession _portletSession;
-	private String _progressId;
+	private final InputStream _inputStream;
+	private final PortletSession _portletSession;
+	private final String _progressId;
 	private long _totalRead;
-	private long _totalSize;
+	private final long _totalSize;
 
 }

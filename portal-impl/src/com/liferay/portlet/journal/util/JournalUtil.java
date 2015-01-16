@@ -1976,11 +1976,12 @@ public class JournalUtil {
 		path.pop();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JournalUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(JournalUtil.class);
 
 	private static Map<String, String> _customTokens;
-	private static Pattern _friendlyURLPattern = Pattern.compile("[^a-z0-9_-]");
-	private static Transformer _transformer = new Transformer(
+	private static final Pattern _friendlyURLPattern = Pattern.compile(
+		"[^a-z0-9_-]");
+	private static final Transformer _transformer = new Transformer(
 		PropsKeys.JOURNAL_TRANSFORMER_LISTENER,
 		PropsKeys.JOURNAL_ERROR_TEMPLATE, true);
 

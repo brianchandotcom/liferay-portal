@@ -1112,9 +1112,10 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	private static final String _IG_IMAGE_CLASS_NAME =
 		"com.liferay.portlet.imagegallery.model.IGImage";
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeImageGallery.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeImageGallery.class);
 
-	private Hook _sourceHook;
+	private final Hook _sourceHook;
 	private final String _sourceHookClassName;
 
 }

@@ -674,7 +674,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 	private static final String _TPL_PATH =
 		"com/liferay/portlet/dynamicdatamapping/dependencies/";
 
-	private TemplateResource _defaultReadOnlyTemplateResource;
-	private TemplateResource _defaultTemplateResource;
+	private final TemplateResource _defaultReadOnlyTemplateResource;
+	private final TemplateResource _defaultTemplateResource;
 
 }

@@ -325,9 +325,9 @@ public class URLCodec {
 		return CharBuffer.wrap(rawString, start, start + count);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(URLCodec.class);
+	private static final Log _log = LogFactoryUtil.getLog(URLCodec.class);
 
-	private static BitSet _validChars = new BitSet(256);
+	private static final BitSet _validChars = new BitSet(256);
 
 	static {
 		for (int i = 'a'; i <= 'z'; i++) {

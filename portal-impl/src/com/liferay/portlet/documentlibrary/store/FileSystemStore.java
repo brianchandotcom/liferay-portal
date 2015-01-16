@@ -515,9 +515,9 @@ public class FileSystemStore extends BaseStore {
 		return PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR;
 	}
 
-	private Map<RepositoryDirKey, File> _repositoryDirs =
+	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();
-	private File _rootDir;
+	private final File _rootDir;
 
 	private class RepositoryDirKey {
 

@@ -128,8 +128,8 @@ public class IndexCommitMetaInfo implements Serializable {
 			return sb.toString();
 		}
 
-		private String _fileName;
-		private long _fileSize;
+		private final String _fileName;
+		private final long _fileSize;
 
 	}
 

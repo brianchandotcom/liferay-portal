@@ -762,16 +762,17 @@ public class LayoutExporter {
 		XStreamAliasRegistryUtil.register(LayoutImpl.class, "Layout");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LayoutExporter.class);
+	private static final Log _log = LogFactoryUtil.getLog(LayoutExporter.class);
 
-	private static LayoutExporter _instance = new LayoutExporter();
+	private static final LayoutExporter _instance = new LayoutExporter();
 
-	private DeletionSystemEventExporter _deletionSystemEventExporter =
+	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();
-	private PermissionExporter _permissionExporter =
+	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
-	private PortletExporter _portletExporter = PortletExporter.getInstance();
-	private ThemeExporter _themeExporter = ThemeExporter.getInstance();
+	private final PortletExporter _portletExporter =
+		PortletExporter.getInstance();
+	private final ThemeExporter _themeExporter = ThemeExporter.getInstance();
 
 	private class UpdateLayoutSetLastPublishDateCallable
 		implements Callable<Void> {

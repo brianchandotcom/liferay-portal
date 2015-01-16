@@ -298,6 +298,6 @@ public class SearchPaginationTest {
 	private String _randomLastName;
 
 	@DeleteAfterTestRun
-	private List<User> _users = new ArrayList<>();
+	private final List<User> _users = new ArrayList<>();
 
 }

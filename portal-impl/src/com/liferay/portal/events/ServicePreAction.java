@@ -2401,6 +2401,7 @@ public class ServicePreAction extends Action {
 
 	private static final String _PATH_PORTAL_LOGOUT = "/portal/logout";
 
-	private static Log _log = LogFactoryUtil.getLog(ServicePreAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServicePreAction.class);
 
 }

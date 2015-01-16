@@ -605,12 +605,12 @@ public class DynamicCSSUtil {
 	private static final String _SASS_DIR_KEY =
 		DynamicCSSUtil.class.getName() + "#sass";
 
-	private static Log _log = LogFactoryUtil.getLog(DynamicCSSUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(DynamicCSSUtil.class);
 
 	private static boolean _initialized;
-	private static Pattern _pluginThemePattern = Pattern.compile(
+	private static final Pattern _pluginThemePattern = Pattern.compile(
 		"\\/([^\\/]+)-theme\\/", Pattern.CASE_INSENSITIVE);
-	private static Pattern _portalThemePattern = Pattern.compile(
+	private static final Pattern _portalThemePattern = Pattern.compile(
 		"themes\\/([^\\/]+)\\/css", Pattern.CASE_INSENSITIVE);
 	private static ScriptingContainer _scriptingContainer;
 	private static Object _scriptObject;

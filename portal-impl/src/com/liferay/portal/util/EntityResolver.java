@@ -792,6 +792,6 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		)
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(EntityResolver.class);
+	private static final Log _log = LogFactoryUtil.getLog(EntityResolver.class);
 
 }

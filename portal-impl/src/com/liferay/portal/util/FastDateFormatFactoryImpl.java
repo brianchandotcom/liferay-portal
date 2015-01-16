@@ -177,9 +177,11 @@ public class FastDateFormatFactoryImpl implements FastDateFormatFactory {
 		return sb.toString();
 	}
 
-	private Map<String, Format> _dateFormats = new ConcurrentHashMap<>();
-	private Map<String, Format> _dateTimeFormats = new ConcurrentHashMap<>();
-	private Map<String, Format> _simpleDateFormats = new ConcurrentHashMap<>();
-	private Map<String, Format> _timeFormats = new ConcurrentHashMap<>();
+	private final Map<String, Format> _dateFormats = new ConcurrentHashMap<>();
+	private final Map<String, Format> _dateTimeFormats =
+		new ConcurrentHashMap<>();
+	private final Map<String, Format> _simpleDateFormats =
+		new ConcurrentHashMap<>();
+	private final Map<String, Format> _timeFormats = new ConcurrentHashMap<>();
 
 }

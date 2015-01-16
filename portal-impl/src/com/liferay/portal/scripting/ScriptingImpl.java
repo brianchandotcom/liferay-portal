@@ -191,9 +191,9 @@ public class ScriptingImpl implements Scripting {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ScriptingImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(ScriptingImpl.class);
 
-	private Map<String, ScriptingExecutor> _scriptingExecutors =
+	private final Map<String, ScriptingExecutor> _scriptingExecutors =
 		new ConcurrentHashMap<>();
 
 }

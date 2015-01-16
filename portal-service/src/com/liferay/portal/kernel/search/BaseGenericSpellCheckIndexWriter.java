@@ -164,7 +164,7 @@ public abstract class BaseGenericSpellCheckIndexWriter
 
 	private static final int _DEFAULT_BATCH_SIZE = 1000;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseGenericSpellCheckIndexWriter.class);
 
 	private int _batchSize = _DEFAULT_BATCH_SIZE;

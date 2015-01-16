@@ -307,21 +307,24 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 		"<var>", "</var>"
 	};
 
-	private Pattern[] _htmlTagPatterns = {
+	private final Pattern[] _htmlTagPatterns = {
 		Pattern.compile("<div[^>]*>"), Pattern.compile("<font[^>]*>")};
-	private Pattern _imagePattern = Pattern.compile(
+	private final Pattern _imagePattern = Pattern.compile(
 		"(\\[{2})(Image|File)(:)", Pattern.DOTALL);
-	private Pattern _linkPattern = Pattern.compile(
+	private final Pattern _linkPattern = Pattern.compile(
 		"\\[{2}([^\\]]*)\\]{2}", Pattern.DOTALL);
-	private Pattern _mediaWikiTablePattern1 = Pattern.compile(
+	private final Pattern _mediaWikiTablePattern1 = Pattern.compile(
 		"class=(.*?)[|\n\r]");
-	private Pattern _mediaWikiTablePattern2 = Pattern.compile("(\\|\\-)(.*)");
-	private Pattern _mediaWikiTablePattern3 = Pattern.compile("\\|\\+(.*)");
-	private Pattern _mediaWikiTablePattern4 = Pattern.compile("(?m)^!(.+)");
+	private final Pattern _mediaWikiTablePattern2 = Pattern.compile(
+		"(\\|\\-)(.*)");
+	private final Pattern _mediaWikiTablePattern3 = Pattern.compile(
+		"\\|\\+(.*)");
+	private final Pattern _mediaWikiTablePattern4 = Pattern.compile(
+		"(?m)^!(.+)");
 	private boolean _strictImportMode;
-	private Pattern _tablePattern = Pattern.compile(
+	private final Pattern _tablePattern = Pattern.compile(
 		"\\{\\|(.*?)\\|\\}", Pattern.DOTALL);
-	private Pattern _titlePattern = Pattern.compile(
+	private final Pattern _titlePattern = Pattern.compile(
 		"^=([^=]+)=", Pattern.MULTILINE);
 
 }

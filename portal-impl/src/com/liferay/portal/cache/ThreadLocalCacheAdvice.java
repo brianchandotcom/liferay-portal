@@ -121,7 +121,7 @@ public class ThreadLocalCacheAdvice
 		}
 	}
 
-	private static ThreadLocalCachable _nullThreadLocalCacheable =
+	private static final ThreadLocalCachable _nullThreadLocalCacheable =
 		new ThreadLocalCachable() {
 
 			@Override

@@ -178,7 +178,7 @@ public class UpdateLookAndFeelAction extends JSONAction {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateLookAndFeelAction.class);
 
 }

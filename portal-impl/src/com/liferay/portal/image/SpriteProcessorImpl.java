@@ -402,6 +402,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 	private static final int _NUM_OF_BANDS = 4;
 
-	private static Log _log = LogFactoryUtil.getLog(SpriteProcessorImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SpriteProcessorImpl.class);
 
 }

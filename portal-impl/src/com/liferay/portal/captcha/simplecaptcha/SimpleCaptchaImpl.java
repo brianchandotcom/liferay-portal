@@ -465,7 +465,8 @@ public class SimpleCaptchaImpl implements Captcha {
 	private static final String _TAGLIB_PATH =
 		"/html/taglib/ui/captcha/simplecaptcha.jsp";
 
-	private static Log _log = LogFactoryUtil.getLog(SimpleCaptchaImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SimpleCaptchaImpl.class);
 
 	private BackgroundProducer[] _backgroundProducers;
 	private GimpyRenderer[] _gimpyRenderers;

@@ -243,6 +243,6 @@ public class Base64 {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(Base64.class);
+	private static final Log _log = LogFactoryUtil.getLog(Base64.class);
 
 }

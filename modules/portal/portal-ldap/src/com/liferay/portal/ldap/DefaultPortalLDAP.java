@@ -995,6 +995,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DefaultPortalLDAP.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultPortalLDAP.class);
 
 }

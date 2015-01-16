@@ -463,6 +463,7 @@ public class UpgradePortletId extends UpgradeProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradePortletId.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradePortletId.class);
 
 }

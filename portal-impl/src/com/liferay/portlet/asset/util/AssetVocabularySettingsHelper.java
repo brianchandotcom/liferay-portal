@@ -275,6 +275,6 @@ public class AssetVocabularySettingsHelper {
 		_KEY_SELECTED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS =
 			"selectedClassNameIds";
 
-	private UnicodeProperties _properties;
+	private final UnicodeProperties _properties;
 
 }

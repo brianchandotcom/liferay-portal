@@ -1409,7 +1409,7 @@ public class PortletURLImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortletURLImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortletURLImpl.class);
 
 	private boolean _anchor = true;
 	private String _cacheability = ResourceURL.PAGE;
@@ -1424,25 +1424,25 @@ public class PortletURLImpl
 	private String _layoutFriendlyURL;
 	private String _lifecycle;
 	private String _namespace;
-	private Set<String> _parametersIncludedInPath;
+	private final Set<String> _parametersIncludedInPath;
 	private Map<String, String[]> _params;
 	private long _plid;
 	private Portlet _portlet;
 	private String _portletId;
 	private String _portletModeString;
-	private PortletRequest _portletRequest;
+	private final PortletRequest _portletRequest;
 	private long _refererGroupId;
 	private long _refererPlid;
 	private Set<String> _removedParameterNames;
-	private Map<String, String[]> _removePublicRenderParameters;
-	private HttpServletRequest _request;
+	private final Map<String, String[]> _removePublicRenderParameters;
+	private final HttpServletRequest _request;
 	private Map<String, String> _reservedParameters;
 	private String _resourceID;
 	private boolean _secure;
 	private String _toString;
 	private boolean _windowStateRestoreCurrentView;
 	private String _windowStateString;
-	private boolean _wsrp;
+	private final boolean _wsrp;
 
 	private class ToStringPrivilegedAction implements PrivilegedAction<String> {
 

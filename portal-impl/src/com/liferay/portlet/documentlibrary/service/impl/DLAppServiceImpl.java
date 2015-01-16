@@ -3543,6 +3543,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return newFolder;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DLAppServiceImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLAppServiceImpl.class);
 
 }

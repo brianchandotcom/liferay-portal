@@ -45,6 +45,7 @@ public class PwdGeneratorTest {
 		Assert.assertTrue(delta < 2000);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PwdGeneratorTest.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PwdGeneratorTest.class);
 
 }

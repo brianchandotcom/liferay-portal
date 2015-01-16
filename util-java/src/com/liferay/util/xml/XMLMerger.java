@@ -169,6 +169,6 @@ public class XMLMerger {
 		}
 	}
 
-	private XMLDescriptor _descriptor;
+	private final XMLDescriptor _descriptor;
 
 }

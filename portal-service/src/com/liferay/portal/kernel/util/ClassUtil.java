@@ -371,6 +371,6 @@ public class ClassUtil {
 
 	private static final String _CLASS_EXTENSION = ".class";
 
-	private static Log _log = LogFactoryUtil.getLog(ClassUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(ClassUtil.class);
 
 }

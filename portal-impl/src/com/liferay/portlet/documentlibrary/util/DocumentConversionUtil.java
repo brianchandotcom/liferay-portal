@@ -389,13 +389,13 @@ public class DocumentConversionUtil {
 
 	private static final String _LOCALHOST_IP = "127.0.0.1";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentConversionUtil.class);
 
-	private static DocumentConversionUtil _instance =
+	private static final DocumentConversionUtil _instance =
 		new DocumentConversionUtil();
 
-	private Map<String, String[]> _conversionsMap = new HashMap<>();
+	private final Map<String, String[]> _conversionsMap = new HashMap<>();
 	private DocumentConverter _documentConverter;
 	private OpenOfficeConnection _openOfficeConnection;
 

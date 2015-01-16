@@ -2499,28 +2499,29 @@ public class HookHotDeployListener
 		"theme.shortcut.icon"
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		HookHotDeployListener.class);
 
-	private Map<String, CustomJspBag> _customJspBagsMap = new HashMap<>();
-	private Map<String, DLFileEntryProcessorContainer>
+	private final Map<String, CustomJspBag> _customJspBagsMap = new HashMap<>();
+	private final Map<String, DLFileEntryProcessorContainer>
 		_dlFileEntryProcessorContainerMap = new HashMap<>();
-	private Map<String, DLRepositoryContainer> _dlRepositoryContainerMap =
+	private final Map<String, DLRepositoryContainer> _dlRepositoryContainerMap =
 		new HashMap<>();
-	private Map<String, HotDeployListenersContainer>
+	private final Map<String, HotDeployListenersContainer>
 		_hotDeployListenersContainerMap = new HashMap<>();
-	private Map<String, StringArraysContainer> _mergeStringArraysContainerMap =
-		new HashMap<>();
-	private Map<String, StringArraysContainer>
+	private final Map<String, StringArraysContainer>
+		_mergeStringArraysContainerMap = new HashMap<>();
+	private final Map<String, StringArraysContainer>
 		_overrideStringArraysContainerMap = new HashMap<>();
-	private Map<String, Properties> _portalPropertiesMap = new HashMap<>();
-	private Set<String> _propsKeysEvents = SetUtil.fromArray(
+	private final Map<String, Properties> _portalPropertiesMap =
+		new HashMap<>();
+	private final Set<String> _propsKeysEvents = SetUtil.fromArray(
 		_PROPS_KEYS_EVENTS);
-	private Set<String> _propsKeysSessionEvents = SetUtil.fromArray(
+	private final Set<String> _propsKeysSessionEvents = SetUtil.fromArray(
 		_PROPS_KEYS_SESSION_EVENTS);
-	private Map<String, Map<Object, ServiceRegistration<?>>>
+	private final Map<String, Map<Object, ServiceRegistration<?>>>
 		_serviceRegistrations = newMap();
-	private Set<String> _servletContextNames = new HashSet<>();
+	private final Set<String> _servletContextNames = new HashSet<>();
 
 	private class CustomJspBag {
 
@@ -2545,9 +2546,9 @@ public class HookHotDeployListener
 			return _customJspGlobal;
 		}
 
-		private String _customJspDir;
-		private boolean _customJspGlobal;
-		private List<String> _customJsps;
+		private final String _customJspDir;
+		private final boolean _customJspGlobal;
+		private final List<String> _customJsps;
 
 	}
 
@@ -2567,7 +2568,7 @@ public class HookHotDeployListener
 			_dlProcessors.clear();
 		}
 
-		private List<DLProcessor> _dlProcessors = new ArrayList<>();
+		private final List<DLProcessor> _dlProcessors = new ArrayList<>();
 
 	}
 
@@ -2593,7 +2594,7 @@ public class HookHotDeployListener
 			_classNames.clear();
 		}
 
-		private List<String> _classNames = new ArrayList<>();
+		private final List<String> _classNames = new ArrayList<>();
 
 	}
 
@@ -2613,7 +2614,8 @@ public class HookHotDeployListener
 			}
 		}
 
-		private List<HotDeployListener> _hotDeployListeners = new ArrayList<>();
+		private final List<HotDeployListener> _hotDeployListeners =
+			new ArrayList<>();
 
 	}
 
@@ -2651,7 +2653,8 @@ public class HookHotDeployListener
 			_portalStringArray = PropsUtil.getArray(key);
 		}
 
-		private Map<String, String[]> _pluginStringArrayMap = new HashMap<>();
+		private final Map<String, String[]> _pluginStringArrayMap =
+			new HashMap<>();
 		private String[] _portalStringArray;
 
 	}

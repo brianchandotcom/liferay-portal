@@ -246,11 +246,11 @@ public class ReaderInputStream extends InputStream {
 
 	private static final int _DEFAULT_OUTPUT_BUFFER_SIZE = 1024;
 
-	private CharsetEncoder _charsetEncoder;
-	private String _charsetName;
+	private final CharsetEncoder _charsetEncoder;
+	private final String _charsetName;
 	private CharBuffer _inputBuffer;
-	private int _maxBytesPerChar;
+	private final int _maxBytesPerChar;
 	private ByteBuffer _outputBuffer;
-	private Reader _reader;
+	private final Reader _reader;
 
 }

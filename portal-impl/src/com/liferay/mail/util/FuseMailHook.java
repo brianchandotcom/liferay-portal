@@ -237,8 +237,8 @@ public class FuseMailHook implements Hook {
 	private static final String _USERNAME = PropsUtil.get(
 		PropsKeys.MAIL_HOOK_FUSEMAIL_USERNAME);
 
-	private static Log _log = LogFactoryUtil.getLog(FuseMailHook.class);
+	private static final Log _log = LogFactoryUtil.getLog(FuseMailHook.class);
 
-	private HttpClient _client;
+	private final HttpClient _client;
 
 }

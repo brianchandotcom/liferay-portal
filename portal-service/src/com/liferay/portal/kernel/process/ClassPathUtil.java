@@ -303,7 +303,7 @@ public class ClassPathUtil {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ClassPathUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(ClassPathUtil.class);
 
 	private static String _globalClassPath;
 	private static String _portalClassPath;

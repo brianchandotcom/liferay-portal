@@ -156,7 +156,7 @@ public class LegacyAlgorithmAwarePasswordEncryptor
 		return algorithm;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LegacyAlgorithmAwarePasswordEncryptor.class);
 
 	private PasswordEncryptor _parentPasswordEncryptor;

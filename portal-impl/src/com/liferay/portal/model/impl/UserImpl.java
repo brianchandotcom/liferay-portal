@@ -1005,13 +1005,13 @@ public class UserImpl extends UserBaseImpl {
 			});
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(UserImpl.class);
 
 	private Locale _locale;
 	private boolean _passwordModified;
 	private PasswordPolicy _passwordPolicy;
 	private String _passwordUnencrypted;
-	private transient Map<String, RemotePreference> _remotePreferences =
+	private final transient Map<String, RemotePreference> _remotePreferences =
 		new HashMap<>();
 	private TimeZone _timeZone;
 

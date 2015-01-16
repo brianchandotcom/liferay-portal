@@ -606,9 +606,9 @@ public class LDAPAuth implements Authenticator {
 		failedLDAPAuthResults.put(cacheKey, ldapAuthResult);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LDAPAuth.class);
+	private static final Log _log = LogFactoryUtil.getLog(LDAPAuth.class);
 
-	private ThreadLocal<Map<String, LDAPAuthResult>>
+	private final ThreadLocal<Map<String, LDAPAuthResult>>
 		_failedLDAPAuthResults =
 			new AutoResetThreadLocal<Map<String, LDAPAuthResult>>(
 				LDAPAuth.class + "._failedLDAPAuthResultCache",

@@ -67,8 +67,8 @@ public class ServiceLocator {
 		return serviceName;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ServiceLocator.class);
+	private static final Log _log = LogFactoryUtil.getLog(ServiceLocator.class);
 
-	private static ServiceLocator _instance = new ServiceLocator();
+	private static final ServiceLocator _instance = new ServiceLocator();
 
 }

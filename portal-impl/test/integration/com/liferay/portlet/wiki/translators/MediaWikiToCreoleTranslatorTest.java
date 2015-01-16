@@ -443,7 +443,7 @@ public class MediaWikiToCreoleTranslatorTest {
 		return _mediaWikiToCreoleTranslator.runRegexps(content);
 	}
 
-	private MediaWikiToCreoleTranslator _mediaWikiToCreoleTranslator =
+	private final MediaWikiToCreoleTranslator _mediaWikiToCreoleTranslator =
 		new MediaWikiToCreoleTranslator();
 
 }

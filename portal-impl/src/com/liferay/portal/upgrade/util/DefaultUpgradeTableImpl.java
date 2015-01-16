@@ -160,6 +160,6 @@ public class DefaultUpgradeTableImpl
 		}
 	}
 
-	private UpgradeColumn[] _upgradeColumns;
+	private final UpgradeColumn[] _upgradeColumns;
 
 }

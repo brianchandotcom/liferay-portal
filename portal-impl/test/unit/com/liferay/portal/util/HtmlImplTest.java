@@ -304,6 +304,6 @@ public class HtmlImplTest {
 		Assert.assertEquals(input, _htmlImpl.escape(input));
 	}
 
-	private HtmlImpl _htmlImpl = new HtmlImpl();
+	private final HtmlImpl _htmlImpl = new HtmlImpl();
 
 }

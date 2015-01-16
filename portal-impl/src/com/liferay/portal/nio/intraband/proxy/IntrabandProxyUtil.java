@@ -366,7 +366,7 @@ public class IntrabandProxyUtil {
 		classNode.access |= Opcodes.ACC_PUBLIC;
 
 		FieldNode proxyMethodsMappingFieldNode = ASMUtil.findFieldNode(
-			classNode.fields, "_proxyMethodsMapping");
+			classNode.fields, "_PROXY_METHODS_MAPPING");
 
 		proxyMethodsMappingFieldNode.access |= Opcodes.ACC_FINAL;
 
@@ -900,13 +900,14 @@ public class IntrabandProxyUtil {
 		private void _unknownMethodIndex(int methodIndex) {
 			throw new IllegalArgumentException(
 				"Unknow method index " + methodIndex +
-					" for proxy methods mappings " + _proxyMethodsMapping);
+					" for proxy methods mappings " + _PROXY_METHODS_MAPPING);
 		}
 
-		private static Log _log = LogFactoryUtil.getLog(TemplateSkeleton.class);
+		private static final String _PROXY_METHODS_MAPPING =
+			_getProxyMethodsMapping(PROXY_METHOD_SIGNATURES);
 
-		private static String _proxyMethodsMapping = _getProxyMethodsMapping(
-			PROXY_METHOD_SIGNATURES);
+		private static final Log _log = LogFactoryUtil.getLog(
+			TemplateSkeleton.class);
 
 		@SuppressWarnings("unused")
 		private TargetLocator _targetLocator;
@@ -987,8 +988,8 @@ public class IntrabandProxyUtil {
 		@SuppressWarnings("unused")
 		private String _id;
 
-		private Intraband _intraband;
-		private RegistrationReference _registrationReference;
+		private final Intraband _intraband;
+		private final RegistrationReference _registrationReference;
 
 	}
 
@@ -1010,7 +1011,7 @@ public class IntrabandProxyUtil {
 		"PROXY_METHOD_SIGNATURES";
 
 	private static final String _PROXY_METHODS_MAPPING_FIELD_NAME =
-		"_proxyMethodsMapping";
+		"_PROXY_METHODS_MAPPING";
 
 	private static final Type _REGISTRATION_REFERENCE_TYPE = Type.getType(
 		RegistrationReference.class);
@@ -1030,13 +1031,15 @@ public class IntrabandProxyUtil {
 	private static final Type _TARGET_LOCATOR_TYPE = Type.getType(
 		TargetLocator.class);
 
-	private static Log _log = LogFactoryUtil.getLog(IntrabandProxyUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		IntrabandProxyUtil.class);
 
-	private static Set<String> _annotationDescriptors = new HashSet<String>(
-		Arrays.asList(
-			Type.getDescriptor(Id.class), Type.getDescriptor(Proxy.class)));
-	private static Method _defineClassMethod;
-	private static Comparator<Method> _methodComparator =
+	private static final Set<String> _annotationDescriptors =
+		new HashSet<String>(
+			Arrays.asList(
+				Type.getDescriptor(Id.class), Type.getDescriptor(Proxy.class)));
+	private static final Method _defineClassMethod;
+	private static final Comparator<Method> _methodComparator =
 		new MethodComparator();
 
 	static {
@@ -1140,11 +1143,11 @@ public class IntrabandProxyUtil {
 				_owner, "_unknownMethodIndex", Type.VOID_TYPE, Type.INT_TYPE);
 		}
 
-		private int _indexIndex;
-		private MethodNodeGenerator _methodNodeGenerator;
-		private String _owner;
-		private List<Method> _proxyMethods;
-		private int _typedTargetIndex;
+		private final int _indexIndex;
+		private final MethodNodeGenerator _methodNodeGenerator;
+		private final String _owner;
+		private final List<Method> _proxyMethods;
+		private final int _typedTargetIndex;
 
 	}
 

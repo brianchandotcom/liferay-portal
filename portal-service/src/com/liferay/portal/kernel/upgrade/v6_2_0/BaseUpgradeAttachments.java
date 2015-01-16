@@ -729,10 +729,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 	private static final String _LIFERAY_REPOSITORY_CLASS_NAME =
 		"com.liferay.portal.repository.liferayrepository.LiferayRepository";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUpgradeAttachments.class);
 
-	private Map<String, Map<String, Long>> _bitwiseValues = new HashMap<>();
-	private Map<String, Long> _roleIds = new HashMap<>();
+	private final Map<String, Map<String, Long>> _bitwiseValues =
+		new HashMap<>();
+	private final Map<String, Long> _roleIds = new HashMap<>();
 
 }

@@ -1203,6 +1203,6 @@ public class MBUtil {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MBUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(MBUtil.class);
 
 }

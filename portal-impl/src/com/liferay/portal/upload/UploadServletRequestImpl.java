@@ -528,13 +528,13 @@ public class UploadServletRequestImpl
 		return inputStream;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UploadServletRequestImpl.class);
 
 	private static File _tempDir;
 
-	private Map<String, FileItem[]> _fileParameters;
+	private final Map<String, FileItem[]> _fileParameters;
 	private final LiferayServletRequest _liferayServletRequest;
-	private Map<String, List<String>> _regularParameters;
+	private final Map<String, List<String>> _regularParameters;
 
 }

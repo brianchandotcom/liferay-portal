@@ -150,8 +150,8 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 	}
 
 	private final boolean _customizationEnabled;
-	private UnicodeProperties _layoutTypeSettings;
-	private PageContext _pageContext;
-	private Writer _writer;
+	private final UnicodeProperties _layoutTypeSettings;
+	private final PageContext _pageContext;
+	private final Writer _writer;
 
 }

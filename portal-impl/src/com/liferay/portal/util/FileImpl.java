@@ -1045,9 +1045,9 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		"_AMP_", "_CP_", "_OP_", "_SEM_"
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(FileImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(FileImpl.class);
 
-	private static FileImpl _instance = new FileImpl();
+	private static final FileImpl _instance = new FileImpl();
 
 	private static class ExtractTextProcessCallable
 		implements ProcessCallable<String> {
@@ -1071,7 +1071,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 		private static final long serialVersionUID = 1L;
 
-		private byte[] _data;
+		private final byte[] _data;
 
 	}
 

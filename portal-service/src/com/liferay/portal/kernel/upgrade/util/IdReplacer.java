@@ -153,6 +153,6 @@ public class IdReplacer {
 		return pos;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(IdReplacer.class);
+	private static final Log _log = LogFactoryUtil.getLog(IdReplacer.class);
 
 }

@@ -397,14 +397,14 @@ public class WebDAVUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WebDAVUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(WebDAVUtil.class);
 
-	private static WebDAVUtil _instance = new WebDAVUtil();
+	private static final WebDAVUtil _instance = new WebDAVUtil();
 
-	private ServiceRegistrationMap<WebDAVStorage> _serviceRegistrations =
+	private final ServiceRegistrationMap<WebDAVStorage> _serviceRegistrations =
 		new ServiceRegistrationMap<>();
-	private ServiceTracker<WebDAVStorage, WebDAVStorage> _serviceTracker;
-	private Map<String, WebDAVStorage> _storageMap =
+	private final ServiceTracker<WebDAVStorage, WebDAVStorage> _serviceTracker;
+	private final Map<String, WebDAVStorage> _storageMap =
 		new ConcurrentSkipListMap<>();
 
 	private class WebDAVStorageServiceTrackerCustomizer

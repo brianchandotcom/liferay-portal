@@ -311,7 +311,7 @@ public class InstrumentationAgent {
 	private static String[] _excludes;
 	private static String[] _includes;
 	private static Instrumentation _instrumentation;
-	private static File _lockFile;
+	private static final File _lockFile;
 	private static List<OriginalClassDefinition> _originalClassDefinitions;
 
 	static {

@@ -563,9 +563,9 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	private static final String _PORTLET_ID_JOURNAL_CONTENT_LIST = "62";
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
 
-	private Map<String, Long> _ddmStructureIds = new HashMap<>();
-	private Map<Long, Long> _ddmStructurePKs = new HashMap<>();
+	private final Map<String, Long> _ddmStructureIds = new HashMap<>();
+	private final Map<Long, Long> _ddmStructurePKs = new HashMap<>();
 
 }

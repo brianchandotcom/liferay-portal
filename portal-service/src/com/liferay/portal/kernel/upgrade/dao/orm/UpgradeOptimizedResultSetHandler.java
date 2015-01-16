@@ -297,10 +297,10 @@ public class UpgradeOptimizedResultSetHandler implements InvocationHandler {
 		return value;
 	}
 
-	private List<String> _columnNames = new ArrayList<>();
-	private Map<Object, Integer> _columnTypes = new HashMap<>();
-	private Map<Object, Object> _columnValues = new HashMap<>();
+	private final List<String> _columnNames = new ArrayList<>();
+	private final Map<Object, Integer> _columnTypes = new HashMap<>();
+	private final Map<Object, Object> _columnValues = new HashMap<>();
 	private boolean _next;
-	private ResultSet _resultSet;
+	private final ResultSet _resultSet;
 
 }

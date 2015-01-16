@@ -291,6 +291,6 @@ public class ClassicToCreoleTranslatorTest {
 		return _classicToCreoleTranslator.translate(content);
 	}
 
-	private ClassicToCreoleTranslator _classicToCreoleTranslator;
+	private final ClassicToCreoleTranslator _classicToCreoleTranslator;
 
 }

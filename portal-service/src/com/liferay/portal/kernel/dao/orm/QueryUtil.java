@@ -179,6 +179,6 @@ public class QueryUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(QueryUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(QueryUtil.class);
 
 }

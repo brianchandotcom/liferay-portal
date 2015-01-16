@@ -197,7 +197,8 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 	private static final String _LIFERAY_TRANSPORT_CHANNEL =
 		"LIFERAY-TRANSPORT-CHANNEL-";
 
-	private static Log _log = LogFactoryUtil.getLog(ClusterLinkImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClusterLinkImpl.class);
 
 	private int _channelCount;
 	private List<org.jgroups.Address> _localTransportAddresses;

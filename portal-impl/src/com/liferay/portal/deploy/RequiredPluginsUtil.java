@@ -169,7 +169,8 @@ public class RequiredPluginsUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RequiredPluginsUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		RequiredPluginsUtil.class);
 
 	private static ScheduledExecutorService _scheduledExecutorService;
 

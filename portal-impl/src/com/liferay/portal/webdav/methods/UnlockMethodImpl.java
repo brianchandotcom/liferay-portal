@@ -76,6 +76,7 @@ public class UnlockMethodImpl implements Method {
 		return token;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UnlockMethodImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UnlockMethodImpl.class);
 
 }

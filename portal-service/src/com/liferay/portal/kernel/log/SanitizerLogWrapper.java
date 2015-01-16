@@ -298,7 +298,7 @@ public class SanitizerLogWrapper extends LogWrapper {
 
 	private static final String _LESS_THAN_ESCAPED = "&lt;";
 
-	private static boolean _LOG_SANITIZER_ENABLED = GetterUtil.getBoolean(
+	private static final boolean _LOG_SANITIZER_ENABLED = GetterUtil.getBoolean(
 		SystemProperties.get(PropsKeys.LOG_SANITIZER_ENABLED));
 
 	private static boolean _LOG_SANITIZER_ESCAPE_HTML_ENABLED = false;
@@ -308,7 +308,7 @@ public class SanitizerLogWrapper extends LogWrapper {
 
 	private static final String _SANITIZED = " [Sanitized]";
 
-	private static int[] _whitelistCharacters = new int[128];
+	private static final int[] _whitelistCharacters = new int[128];
 
 	private boolean _allowCRLF;
 

@@ -57,6 +57,6 @@ public class GetAttributesAction extends BaseJMXManageAction<AttributeList> {
 		}
 	}
 
-	private MBean _mBean;
+	private final MBean _mBean;
 
 }

@@ -750,33 +750,34 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		{"wub.gif", ":wub:", "wub"}
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		HtmlBBCodeTranslatorImpl.class);
 
-	private Pattern _attributesPattern = Pattern.compile(
+	private final Pattern _attributesPattern = Pattern.compile(
 		"\\s*([^=]+)\\s*=\\s*\"([^\"]+)\"\\s*");
-	private Map<String, String> _bbCodeCharacters;
-	private BBCodeParser _bbCodeParser = new BBCodeParser();
-	private Pattern _bbCodePattern = Pattern.compile("[]&<>'\"`\\[()]");
-	private Pattern _colorPattern = Pattern.compile(
+	private final Map<String, String> _bbCodeCharacters;
+	private final BBCodeParser _bbCodeParser = new BBCodeParser();
+	private final Pattern _bbCodePattern = Pattern.compile("[]&<>'\"`\\[()]");
+	private final Pattern _colorPattern = Pattern.compile(
 		"^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple" +
 			"|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$",
 		Pattern.CASE_INSENSITIVE);
-	private String[] _emoticonDescriptions = new String[_EMOTICONS.length];
-	private String[] _emoticonFiles = new String[_EMOTICONS.length];
-	private String[] _emoticonSymbols = new String[_EMOTICONS.length];
-	private Map<String, Integer> _excludeNewLineTypes;
-	private int[] _fontSizes = {10, 12, 16, 18, 24, 32, 48};
-	private Set<String> _imageAttributes;
-	private Pattern _imagePattern = Pattern.compile(
+	private final String[] _emoticonDescriptions =
+		new String[_EMOTICONS.length];
+	private final String[] _emoticonFiles = new String[_EMOTICONS.length];
+	private final String[] _emoticonSymbols = new String[_EMOTICONS.length];
+	private final Map<String, Integer> _excludeNewLineTypes;
+	private final int[] _fontSizes = {10, 12, 16, 18, 24, 32, 48};
+	private final Set<String> _imageAttributes;
+	private final Pattern _imagePattern = Pattern.compile(
 		"^(?:https?://|/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,512}$",
 		Pattern.CASE_INSENSITIVE);
-	private Map<String, String> _listStyles;
-	private Pattern _tagPattern = Pattern.compile(
+	private final Map<String, String> _listStyles;
+	private final Pattern _tagPattern = Pattern.compile(
 		"^/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|" +
 			"right|\\*|s|size|table|tr|th|td|li|list|font|u|url)$",
 		Pattern.CASE_INSENSITIVE);
-	private Pattern _urlPattern = Pattern.compile(
+	private final Pattern _urlPattern = Pattern.compile(
 		"^[-;/?:@&=+$,_.!~*'()%0-9a-z#]{1,512}$", Pattern.CASE_INSENSITIVE);
 
 }

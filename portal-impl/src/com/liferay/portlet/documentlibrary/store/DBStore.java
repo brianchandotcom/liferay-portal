@@ -403,6 +403,6 @@ public class DBStore extends BaseStore {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DBStore.class);
+	private static final Log _log = LogFactoryUtil.getLog(DBStore.class);
 
 }

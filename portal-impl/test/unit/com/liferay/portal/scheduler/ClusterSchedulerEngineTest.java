@@ -1647,7 +1647,7 @@ public class ClusterSchedulerEngineTest {
 			_threadLocals.put(key, value);
 		}
 
-		private static Map<String, Serializable> _threadLocals =
+		private static final Map<String, Serializable> _threadLocals =
 			new HashMap<>();
 
 	}
@@ -1790,7 +1790,7 @@ public class ClusterSchedulerEngineTest {
 
 	private static final String _TEST_JOB_NAME_PREFIX = "test.job.";
 
-	private static MethodKey _getScheduledJobsMethodKey = new MethodKey(
+	private static final MethodKey _getScheduledJobsMethodKey = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
 
 	private ClusterInvokeAcceptor _clusterInvokeAcceptor;

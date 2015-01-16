@@ -110,7 +110,7 @@ public class TableNameOrderByComparator<T> extends OrderByComparator<T> {
 		return _orderByComparator.toString();
 	}
 
-	private OrderByComparator<T> _orderByComparator;
+	private final OrderByComparator<T> _orderByComparator;
 	private String _tableName;
 
 }

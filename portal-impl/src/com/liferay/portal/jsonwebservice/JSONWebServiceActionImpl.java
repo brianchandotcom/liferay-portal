@@ -477,11 +477,12 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		return parameters;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceActionImpl.class);
 
-	private JSONWebServiceActionConfig _jsonWebServiceActionConfig;
-	private JSONWebServiceActionParameters _jsonWebServiceActionParameters;
-	private JSONWebServiceNaming _jsonWebServiceNaming;
+	private final JSONWebServiceActionConfig _jsonWebServiceActionConfig;
+	private final JSONWebServiceActionParameters
+		_jsonWebServiceActionParameters;
+	private final JSONWebServiceNaming _jsonWebServiceNaming;
 
 }

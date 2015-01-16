@@ -339,9 +339,6 @@ public class JavaClass {
 			}
 		}
 
-		// Temporarily disable
-
-		/*
 		StringBundler sb = new StringBundler(8);
 
 		sb.append("(((\\+\\+( ?))|(--( ?)))");
@@ -352,14 +349,6 @@ public class JavaClass {
 		sb.append("((( )((=)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)))");
 		sb.append("|(\\+\\+)|(--)");
 		sb.append("|(( )((\\|=)|(&=)|(^=)))))");
-		*/
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("(\\b|\\.)");
-		sb.append(javaTerm.getName());
-		sb.append(" (=)|(\\+\\+)|(--)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)");
-		sb.append("|(\\|=)|(&=)|(^=) ");
 
 		Pattern pattern = Pattern.compile(sb.toString());
 
@@ -1218,8 +1207,7 @@ public class JavaClass {
 
 			Matcher matcher = pattern.matcher(content);
 
-			//if (content.contains(javaTerm.getName()) && matcher.find()) {
-			if (matcher.find()) {
+			if (content.contains(javaTerm.getName()) && matcher.find()) {
 				return false;
 			}
 		}

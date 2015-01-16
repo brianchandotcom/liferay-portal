@@ -134,8 +134,8 @@ public class PoshiRunnerUtil {
 		return document.getRootElement();
 	}
 
-	private static Pattern _pattern = Pattern.compile("<[a-z\\-]+");
-	private static List<String> _reservedTags = Arrays.asList(
+	private static final Pattern _pattern = Pattern.compile("<[a-z\\-]+");
+	private static final List<String> _reservedTags = Arrays.asList(
 		new String[] {
 			"and", "case", "command", "condition", "contains", "default",
 			"definition", "delimiter", "description", "echo", "else", "elseif",

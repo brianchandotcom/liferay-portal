@@ -99,10 +99,10 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyBlogsTrackbacks.class);
 
-	private LinkbackConsumer _linkbackConsumer =
+	private final LinkbackConsumer _linkbackConsumer =
 		LinkbackConsumerUtil.getLinkbackConsumer();
 
 }

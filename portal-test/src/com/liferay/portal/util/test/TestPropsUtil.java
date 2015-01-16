@@ -95,8 +95,8 @@ public class TestPropsUtil {
 		_props.setProperty(key, value);
 	}
 
-	private static TestPropsUtil _instance = new TestPropsUtil();
+	private static final TestPropsUtil _instance = new TestPropsUtil();
 
-	private Properties _props = new Properties();
+	private final Properties _props = new Properties();
 
 }

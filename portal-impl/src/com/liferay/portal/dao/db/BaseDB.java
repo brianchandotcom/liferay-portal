@@ -1073,10 +1073,10 @@ public abstract class BaseDB implements DB {
 
 	private static final boolean _SUPPORTS_UPDATE_WITH_INNER_JOIN = true;
 
-	private static Log _log = LogFactoryUtil.getLog(BaseDB.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseDB.class);
 
-	private static Pattern _templatePattern;
-	private static Pattern _timestampPattern = Pattern.compile(
+	private static final Pattern _templatePattern;
+	private static final Pattern _timestampPattern = Pattern.compile(
 		"SPECIFIC_TIMESTAMP_\\d+");
 
 	static {
@@ -1105,7 +1105,7 @@ public abstract class BaseDB implements DB {
 	}
 
 	private boolean _supportsStringCaseSensitiveQuery;
-	private Map<String, String> _templateMap = new HashMap<>();
-	private String _type;
+	private final Map<String, String> _templateMap = new HashMap<>();
+	private final String _type;
 
 }

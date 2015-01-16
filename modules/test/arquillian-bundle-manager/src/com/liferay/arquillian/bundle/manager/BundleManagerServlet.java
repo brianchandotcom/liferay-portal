@@ -241,7 +241,8 @@ public class BundleManagerServlet extends HttpServlet {
 
 	private static final long _TIMEOUT = 10000;
 
-	private static Log _log = LogFactoryUtil.getLog(BundleManagerServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BundleManagerServlet.class);
 
 	private Bundle _bundle;
 	private String _contextPathHeader;

@@ -382,6 +382,6 @@ public class FileMultiValueMap<K extends Serializable, V extends Serializable>
 
 	private static final String _VALUE = "value_";
 
-	private String _fileName;
+	private final String _fileName;
 
 }

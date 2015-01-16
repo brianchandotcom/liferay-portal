@@ -162,8 +162,8 @@ public class IngresDB extends BaseDB {
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_NAME = false;
 
-	private static Log _log = LogFactoryUtil.getLog(IngresDB.class);
+	private static final Log _log = LogFactoryUtil.getLog(IngresDB.class);
 
-	private static IngresDB _instance = new IngresDB();
+	private static final IngresDB _instance = new IngresDB();
 
 }

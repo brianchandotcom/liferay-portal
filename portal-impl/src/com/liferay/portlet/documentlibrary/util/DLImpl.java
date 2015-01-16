@@ -1466,11 +1466,12 @@ public class DLImpl implements DL {
 
 	private static final String _STRUCTURE_KEY_PREFIX = "AUTO_";
 
-	private static Log _log = LogFactoryUtil.getLog(DLImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(DLImpl.class);
 
-	private static Set<String> _allMediaGalleryMimeTypes = new TreeSet<>();
-	private static Set<String> _fileIcons = new HashSet<>();
-	private static Map<String, String> _genericNames = new HashMap<>();
+	private static final Set<String> _allMediaGalleryMimeTypes =
+		new TreeSet<>();
+	private static final Set<String> _fileIcons = new HashSet<>();
+	private static final Map<String, String> _genericNames = new HashMap<>();
 
 	static {
 		_allMediaGalleryMimeTypes.addAll(

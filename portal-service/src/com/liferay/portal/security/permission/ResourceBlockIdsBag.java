@@ -68,6 +68,6 @@ public class ResourceBlockIdsBag implements Serializable {
 		}
 	}
 
-	private Map<Long, Long> _permissions = new HashMap<>();
+	private final Map<Long, Long> _permissions = new HashMap<>();
 
 }

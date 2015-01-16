@@ -126,7 +126,7 @@ public class WordsImpl implements Words {
 		return _spellDictionaryHashMap;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WordsImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(WordsImpl.class);
 
 	private List<String> _dictionaryList;
 	private Set<String> _dictionarySet;

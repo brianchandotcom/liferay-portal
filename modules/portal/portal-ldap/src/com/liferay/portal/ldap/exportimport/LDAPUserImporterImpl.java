@@ -1358,11 +1358,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		"languageId", "lastName", "middleName", "openId", "timeZoneId"
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(LDAPUserImporterImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LDAPUserImporterImpl.class);
 
 	private AttributesTransformer _attributesTransformer;
 	private LDAPToPortalConverter _ldapToPortalConverter;
-	private Set<String> _ldapUserIgnoreAttributes = SetUtil.fromArray(
+	private final Set<String> _ldapUserIgnoreAttributes = SetUtil.fromArray(
 		PropsValues.LDAP_USER_IGNORE_ATTRIBUTES);
 	private PortalCache<String, Long> _portalCache;
 

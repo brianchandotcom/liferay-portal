@@ -180,7 +180,7 @@ public class OrderByComparatorFactoryUtil {
 
 		private static final String _ORDER_BY_DESC = " DESC";
 
-		private static Map<Class<?>, Object> _primitiveObjects =
+		private static final Map<Class<?>, Object> _primitiveObjects =
 			new HashMap<>();
 
 		static {
@@ -194,8 +194,8 @@ public class OrderByComparatorFactoryUtil {
 			_primitiveObjects.put(short.class, new Short("0"));
 		}
 
-		private Object[] _columns;
-		private String _tableName;
+		private final Object[] _columns;
+		private final String _tableName;
 
 	}
 

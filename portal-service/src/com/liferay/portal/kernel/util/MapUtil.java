@@ -413,6 +413,6 @@ public class MapUtil {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MapUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(MapUtil.class);
 
 }

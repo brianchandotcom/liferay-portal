@@ -1096,19 +1096,20 @@ public class SearchEngineUtil {
 		_serviceTracker.open();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SearchEngineUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SearchEngineUtil.class);
 
-	private static Set<Long> _companyIds = new HashSet<>();
+	private static final Set<Long> _companyIds = new HashSet<>();
 	private static String _defaultSearchEngineId;
-	private static Set<String> _excludedEntryClassNames = new HashSet<>();
+	private static final Set<String> _excludedEntryClassNames = new HashSet<>();
 	private static boolean _indexReadOnly = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.INDEX_READ_ONLY));
-	private static Map<String, SearchEngine> _searchEngines =
+	private static final Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<>();
 	private static SearchPermissionChecker _searchPermissionChecker;
 
-	private ServiceTracker<SearchEngineConfigurator, SearchEngineConfigurator>
-		_serviceTracker;
+	private final ServiceTracker<
+		SearchEngineConfigurator, SearchEngineConfigurator> _serviceTracker;
 
 	private class SearchEngineConfiguratorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

@@ -73,8 +73,8 @@ public class SequentialUUID {
 
 	private static final String _UUID_PREFIX = "00000000-0000-0000-";
 
-	private static SequentialUUID _instance = new SequentialUUID();
+	private static final SequentialUUID _instance = new SequentialUUID();
 
-	private static AtomicLong _counter = new AtomicLong();
+	private static final AtomicLong _counter = new AtomicLong();
 
 }

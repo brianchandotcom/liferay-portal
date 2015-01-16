@@ -269,12 +269,12 @@ public class SocialRequestInterpreterLocalServiceImpl
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SocialRequestInterpreterLocalServiceImpl.class);
 
-	private List<SocialRequestInterpreter> _requestInterpreters =
+	private final List<SocialRequestInterpreter> _requestInterpreters =
 		new CopyOnWriteArrayList<>();
-	private ServiceRegistrationMap<SocialRequestInterpreter>
+	private final ServiceRegistrationMap<SocialRequestInterpreter>
 		_serviceRegistrations = new ServiceRegistrationMap<>();
 	private ServiceTracker<SocialRequestInterpreter, SocialRequestInterpreter>
 		_serviceTracker;

@@ -1775,7 +1775,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	private static final long _CALENDAR_EVENT_CHECK_INTERVAL =
 		PropsValues.CALENDAR_EVENT_CHECK_INTERVAL * Time.MINUTE;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CalEventLocalServiceImpl.class);
 
 }

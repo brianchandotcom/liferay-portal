@@ -299,8 +299,8 @@ public class ReaderInputStreamTest {
 
 	private static final String _TEST_STRING_ENGLISH = "This is a test string";
 
-	private static byte[] _expectedBytesForChinese;
-	private static byte[] _expectedBytesForEnglish;
+	private static final byte[] _expectedBytesForChinese;
+	private static final byte[] _expectedBytesForEnglish;
 
 	static {
 		try {

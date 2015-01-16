@@ -65,7 +65,7 @@ public class NetlogonAuthenticator extends NdrObject {
 		}
 	}
 
-	private byte[] _credential;
+	private final byte[] _credential;
 	private int _timestamp;
 
 }

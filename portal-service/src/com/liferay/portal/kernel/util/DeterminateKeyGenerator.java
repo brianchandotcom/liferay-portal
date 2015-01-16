@@ -97,7 +97,7 @@ public class DeterminateKeyGenerator {
 
 	private static final int _DEFAULT_LENGTH = 4;
 
-	private static ThreadLocal<Map<String, Integer>> _seedMap =
+	private static final ThreadLocal<Map<String, Integer>> _seedMap =
 		new AutoResetThreadLocal<Map<String, Integer>>(
 			DeterminateKeyGenerator.class + "._seedMap",
 			new HashMap<String, Integer>());

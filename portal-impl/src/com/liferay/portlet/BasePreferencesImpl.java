@@ -339,9 +339,9 @@ public abstract class BasePreferencesImpl implements Serializable {
 	private static final String _NULL_VALUE = "NULL_VALUE";
 
 	private Map<String, Preference> _modifiedPreferences;
-	private Map<String, Preference> _originalPreferences;
-	private String _originalXML;
-	private long _ownerId;
-	private int _ownerType;
+	private final Map<String, Preference> _originalPreferences;
+	private final String _originalXML;
+	private final long _ownerId;
+	private final int _ownerType;
 
 }

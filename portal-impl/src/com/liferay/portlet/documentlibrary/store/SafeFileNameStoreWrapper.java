@@ -476,6 +476,6 @@ public class SafeFileNameStoreWrapper implements Store {
 		}
 	}
 
-	private Store _store;
+	private final Store _store;
 
 }

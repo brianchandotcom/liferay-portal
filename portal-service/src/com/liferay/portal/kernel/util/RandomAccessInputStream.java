@@ -164,12 +164,12 @@ public class RandomAccessInputStream extends InputStream {
 		return position;
 	}
 
-	private File _file;
+	private final File _file;
 	private boolean _foundEOF;
-	private InputStream _inputStream;
+	private final InputStream _inputStream;
 	private long _length;
 	private long _markPosition = -1;
 	private long _pointer;
-	private RandomAccessFile _randomAccessFileCache;
+	private final RandomAccessFile _randomAccessFileCache;
 
 }

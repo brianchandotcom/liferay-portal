@@ -471,15 +471,15 @@ public class ComboServlet extends HttpServlet {
 
 	private static final String _JAVASCRIPT_MINIFIED_SUFFIX = "-min.js";
 
-	private static Log _log = LogFactoryUtil.getLog(ComboServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(ComboServlet.class);
 
-	private static PortalCache<String, byte[][]> _bytesArrayPortalCache =
+	private static final PortalCache<String, byte[][]> _bytesArrayPortalCache =
 		SingleVMPoolUtil.getCache(ComboServlet.class.getName());
-	private static PortalCache<String, FileContentBag>
+	private static final PortalCache<String, FileContentBag>
 		_fileContentBagPortalCache = SingleVMPoolUtil.getCache(
 			FileContentBag.class.getName());
 
-	private Set<String> _protectedParameters = SetUtil.fromArray(
+	private final Set<String> _protectedParameters = SetUtil.fromArray(
 		new String[] {
 			"b", "browserId", "minifierType", "languageId", "t", "themeId"
 		});
@@ -491,8 +491,8 @@ public class ComboServlet extends HttpServlet {
 			_lastModified = lastModifiedTime;
 		}
 
-		private byte[] _fileContent;
-		private long _lastModified;
+		private final byte[] _fileContent;
+		private final long _lastModified;
 
 	}
 

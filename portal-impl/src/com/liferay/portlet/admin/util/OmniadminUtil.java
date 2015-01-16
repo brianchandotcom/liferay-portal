@@ -93,6 +93,6 @@ public class OmniadminUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(OmniadminUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(OmniadminUtil.class);
 
 }

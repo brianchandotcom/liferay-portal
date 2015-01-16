@@ -112,6 +112,6 @@ public class FragmentFilter extends BasePortalFilter {
 		ServletResponseUtil.write(response, content);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(FragmentFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(FragmentFilter.class);
 
 }

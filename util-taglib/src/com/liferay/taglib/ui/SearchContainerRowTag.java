@@ -311,7 +311,8 @@ public class SearchContainerRowTag<R>
 		pageContext.setAttribute(_rowVar, _resultRow);
 	}
 
-	private static Pattern _friendlyURLPattern = Pattern.compile("[^a-z0-9_-]");
+	private static final Pattern _friendlyURLPattern = Pattern.compile(
+		"[^a-z0-9_-]");
 
 	private boolean _bold;
 	private String _className;

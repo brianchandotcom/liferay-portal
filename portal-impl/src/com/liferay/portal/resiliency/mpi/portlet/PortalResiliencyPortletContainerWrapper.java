@@ -279,9 +279,9 @@ public class PortalResiliencyPortletContainerWrapper
 	private static final String[] _RESOURCE_REQUEST_ATTRIBUTE_NAMES =
 		_ACTION_REQUEST_ATTRIBUTE_NAMES;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalResiliencyPortletContainerWrapper.class);
 
-	private PortletContainer _portletContainer;
+	private final PortletContainer _portletContainer;
 
 }

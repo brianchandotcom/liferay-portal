@@ -95,6 +95,6 @@ public class BeanToXMLUtil {
 		return classNameWithoutPackage;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BeanToXMLUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(BeanToXMLUtil.class);
 
 }

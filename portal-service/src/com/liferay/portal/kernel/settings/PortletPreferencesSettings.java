@@ -165,9 +165,9 @@ public class PortletPreferencesSettings extends BaseModifiableSettings {
 
 	private static final String _NULL_VALUE = "NULL_VALUE";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesSettings.class);
 
-	private PortletPreferences _portletPreferences;
+	private final PortletPreferences _portletPreferences;
 
 }

@@ -57,7 +57,7 @@ public class MethodParametersResolverImpl implements MethodParametersResolver {
 		return methodParameters;
 	}
 
-	private Map<AccessibleObject, MethodParameter[]> _methodParameters =
+	private final Map<AccessibleObject, MethodParameter[]> _methodParameters =
 		new HashMap<>();
 
 }

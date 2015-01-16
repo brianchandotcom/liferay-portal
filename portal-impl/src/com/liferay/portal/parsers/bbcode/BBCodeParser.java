@@ -194,8 +194,8 @@ public class BBCodeParser {
 		bbCodeItems.add(bbCodeItem);
 	}
 
-	private Set<String> _blockElements;
-	private Set<String> _inlineElements;
-	private Set<String> _selfCloseElements;
+	private final Set<String> _blockElements;
+	private final Set<String> _inlineElements;
+	private final Set<String> _selfCloseElements;
 
 }

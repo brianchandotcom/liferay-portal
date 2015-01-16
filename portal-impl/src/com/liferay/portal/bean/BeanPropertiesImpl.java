@@ -643,6 +643,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BeanPropertiesImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BeanPropertiesImpl.class);
 
 }

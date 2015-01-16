@@ -212,11 +212,12 @@ public class BatchEvent {
 	private static final Logger _logger = LoggerFactory.getLogger(
 		BatchEvent.class);
 
-	private List<Map<String, Object>> _batchParameters = new ArrayList<>();
+	private final List<Map<String, Object>> _batchParameters =
+		new ArrayList<>();
 	private boolean _closed;
 	private int _eventCount;
-	private Map<String, Handler<Void>> _handlers = new HashMap<>();
-	private long _syncAccountId;
+	private final Map<String, Handler<Void>> _handlers = new HashMap<>();
+	private final long _syncAccountId;
 	private long _totalFileSize;
 	private Path _zipFilePath;
 	private ZipOutputStream _zipOutputStream;

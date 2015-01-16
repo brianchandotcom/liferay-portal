@@ -301,12 +301,12 @@ public class SassFile implements Callable<Void>, SassFragment {
 
 	private static final String _CSS_IMPORT_END = ");";
 
-	private String _baseDir;
-	private String _docrootDirName;
+	private final String _baseDir;
+	private final String _docrootDirName;
 	private long _elapsedTime;
-	private String _fileName;
+	private final String _fileName;
 	private String _ltrContent;
 	private String _rtlContent;
-	private List<SassFragment> _sassFragments = new ArrayList<>();
+	private final List<SassFragment> _sassFragments = new ArrayList<>();
 
 }

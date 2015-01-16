@@ -549,7 +549,7 @@ public class DBStoreTest {
 
 	private static final byte[] _DATA_VERSION_2 = new byte[_DATA_SIZE];
 
-	private static Store _store = new DBStore();
+	private static final Store _store = new DBStore();
 
 	static {
 		for (int i = 0; i < _DATA_SIZE; i++) {

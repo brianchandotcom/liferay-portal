@@ -308,6 +308,6 @@ public class DDLIndexer extends BaseIndexer {
 			getSearchEngineId(), companyId, documents, isCommitImmediately());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DDLIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(DDLIndexer.class);
 
 }

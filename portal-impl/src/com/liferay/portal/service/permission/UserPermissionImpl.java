@@ -221,6 +221,7 @@ public class UserPermissionImpl
 		return contains(permissionChecker, userId, null, actionId);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserPermissionImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserPermissionImpl.class);
 
 }

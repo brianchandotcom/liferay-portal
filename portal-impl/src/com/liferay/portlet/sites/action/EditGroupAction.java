@@ -833,9 +833,10 @@ public class EditGroupAction extends PortletAction {
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
 
-	private static Log _log = LogFactoryUtil.getLog(EditGroupAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditGroupAction.class);
 
-	private TransactionAttribute _transactionAttribute =
+	private final TransactionAttribute _transactionAttribute =
 		TransactionAttributeBuilder.build(
 			Propagation.REQUIRED, new Class<?>[]{Exception.class});
 
@@ -850,7 +851,7 @@ public class EditGroupAction extends PortletAction {
 			_actionRequest = actionRequest;
 		}
 
-		private ActionRequest _actionRequest;
+		private final ActionRequest _actionRequest;
 
 	}
 

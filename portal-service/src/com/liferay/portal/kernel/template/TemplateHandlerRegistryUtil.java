@@ -108,13 +108,14 @@ public class TemplateHandlerRegistryUtil {
 		}
 	}
 
-	private static TemplateHandlerRegistryUtil _instance =
+	private static final TemplateHandlerRegistryUtil _instance =
 		new TemplateHandlerRegistryUtil();
 
-	private StringServiceRegistrationMap<TemplateHandler>
+	private final StringServiceRegistrationMap<TemplateHandler>
 		_serviceRegistrations = new StringServiceRegistrationMap<>();
-	private ServiceTracker<TemplateHandler, TemplateHandler> _serviceTracker;
-	private Map<String, TemplateHandler> _templateHandlers =
+	private final ServiceTracker<TemplateHandler, TemplateHandler>
+		_serviceTracker;
+	private final Map<String, TemplateHandler> _templateHandlers =
 		new ConcurrentHashMap<>();
 
 	private class TemplateHandlerServiceTrackerCustomizer

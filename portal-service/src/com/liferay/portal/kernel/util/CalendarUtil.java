@@ -468,7 +468,7 @@ public class CalendarUtil {
 		return millis;
 	}
 
-	private static Map<String, String[]> _calendarPool =
+	private static final Map<String, String[]> _calendarPool =
 		new ConcurrentHashMap<>();
 
 }

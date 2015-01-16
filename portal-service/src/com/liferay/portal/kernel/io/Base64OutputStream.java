@@ -191,9 +191,9 @@ public class Base64OutputStream extends OutputStream {
 		}
 	}
 
-	private byte[] _outputBuffer;
-	private OutputStream _outputStream;
-	private byte[] _unitBuffer;
+	private final byte[] _outputBuffer;
+	private final OutputStream _outputStream;
+	private final byte[] _unitBuffer;
 	private int _unitBufferIndex;
 
 }

@@ -137,7 +137,7 @@ public class FileChecker extends BaseChecker {
 			System.getProperty("java.io.tmpdir"),
 			System.getProperty("jboss.home.dir"),
 			System.getProperty("jetty.home"), System.getProperty("jonas.base"),
-			_portalDir, PropsValues.LIFERAY_HOME,
+			_PORTAL_DIR, PropsValues.LIFERAY_HOME,
 			System.getProperty("line.separator"),
 			System.getProperty("org.apache.geronimo.home.dir"),
 			System.getProperty("path.separator"), getServletContextName(),
@@ -454,8 +454,8 @@ public class FileChecker extends BaseChecker {
 
 		// Shared libs
 
-		if (Validator.isNotNull(_globalSharedLibDir)) {
-			paths.add(_globalSharedLibDir + "-");
+		if (Validator.isNotNull(_GLOBAL_SHARED_LIB_DIR)) {
+			paths.add(_GLOBAL_SHARED_LIB_DIR + "-");
 		}
 
 		// Plugin
@@ -487,14 +487,17 @@ public class FileChecker extends BaseChecker {
 
 	private static final String _ENV_PREFIX = "${env:";
 
-	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
+	private static final String _GLOBAL_SHARED_LIB_DIR =
+		PropsValues.LIFERAY_LIB_GLOBAL_SHARED_DIR;
+
+	private static final String _PORTAL_DIR =
+		PropsValues.LIFERAY_WEB_PORTAL_DIR;
+
+	private static final Log _log = LogFactoryUtil.getLog(FileChecker.class);
 
 	private String[] _defaultReadPathsFromArray;
 	private String[] _defaultReadPathsToArray;
-	private String _globalSharedLibDir =
-		PropsValues.LIFERAY_LIB_GLOBAL_SHARED_DIR;
-	private Permissions _permissions = new Permissions();
-	private String _portalDir = PropsValues.LIFERAY_WEB_PORTAL_DIR;
+	private final Permissions _permissions = new Permissions();
 	private String _rootDir;
 	private String _workDir;
 

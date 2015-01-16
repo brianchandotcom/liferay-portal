@@ -2364,24 +2364,25 @@ public class CMISRepository extends BaseCmisRepository {
 
 	private static final int _DELETE_NONE = 0;
 
-	private static Log _log = LogFactoryUtil.getLog(CMISRepository.class);
+	private static final Log _log = LogFactoryUtil.getLog(CMISRepository.class);
 
-	private static ThreadLocal<Map<Long, List<FileEntry>>> _fileEntriesCache =
-		new AutoResetThreadLocal<Map<Long, List<FileEntry>>>(
-			CMISRepository.class + "._fileEntriesCache",
-			new HashMap<Long, List<FileEntry>>());
-	private static ThreadLocal<Map<Long, List<Object>>>
+	private static final ThreadLocal<Map<Long, List<FileEntry>>>
+		_fileEntriesCache =
+			new AutoResetThreadLocal<Map<Long, List<FileEntry>>>(
+				CMISRepository.class + "._fileEntriesCache",
+				new HashMap<Long, List<FileEntry>>());
+	private static final ThreadLocal<Map<Long, List<Object>>>
 		_foldersAndFileEntriesCache =
 			new AutoResetThreadLocal<Map<Long, List<Object>>>(
 				CMISRepository.class + "._foldersAndFileEntriesCache",
 				new HashMap<Long, List<Object>>());
-	private static ThreadLocal<Map<Long, List<Folder>>> _foldersCache =
+	private static final ThreadLocal<Map<Long, List<Folder>>> _foldersCache =
 		new AutoResetThreadLocal<Map<Long, List<Folder>>>(
 			CMISRepository.class + "._foldersCache",
 			new HashMap<Long, List<Folder>>());
 
 	private CMISRepositoryDetector _cmisRepositoryDetector;
-	private CMISRepositoryHandler _cmisRepositoryHandler;
+	private final CMISRepositoryHandler _cmisRepositoryHandler;
 	private String _sessionKey;
 
 }

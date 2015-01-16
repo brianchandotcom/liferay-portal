@@ -169,9 +169,9 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private ConcurrentMap<String, PortletData> _portletDataMap =
+	private final ConcurrentMap<String, PortletData> _portletDataMap =
 		new ConcurrentHashMap<>();
-	private List<ObjectValuePair<StringBundler, Integer>> _sbIndexList =
+	private final List<ObjectValuePair<StringBundler, Integer>> _sbIndexList =
 		new ArrayList<>();
 
 	private class PortletData implements Serializable {
@@ -212,9 +212,9 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 		private static final long serialVersionUID = 1L;
 
-		private StringBundler _callbackSB = new StringBundler();
-		private StringBundler _rawSB = new StringBundler();
-		private Set<String> _useSet = new TreeSet<>();
+		private final StringBundler _callbackSB = new StringBundler();
+		private final StringBundler _rawSB = new StringBundler();
+		private final Set<String> _useSet = new TreeSet<>();
 
 	}
 

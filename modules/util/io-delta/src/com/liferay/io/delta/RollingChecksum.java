@@ -139,8 +139,8 @@ public class RollingChecksum {
 
 	private int _a;
 	private int _b;
-	private int _blockLength;
-	private ByteChannelReader _byteChannelReader;
+	private final int _blockLength;
+	private final ByteChannelReader _byteChannelReader;
 	private int _filePosition;
 
 }

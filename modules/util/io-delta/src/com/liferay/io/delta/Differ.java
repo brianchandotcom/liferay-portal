@@ -238,8 +238,8 @@ public class Differ {
 			return _strongChecksum;
 		}
 
-		private int _blockNumber;
-		private byte[] _strongChecksum;
+		private final int _blockNumber;
+		private final byte[] _strongChecksum;
 
 	}
 

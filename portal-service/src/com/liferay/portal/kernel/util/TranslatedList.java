@@ -121,6 +121,6 @@ public abstract class TranslatedList<E, F> extends ListWrapper<E> {
 
 	protected abstract F toOldObject(E o);
 
-	private List<F> _oldList;
+	private final List<F> _oldList;
 
 }

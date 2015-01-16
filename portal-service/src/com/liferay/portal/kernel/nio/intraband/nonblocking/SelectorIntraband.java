@@ -362,7 +362,8 @@ public class SelectorIntraband extends BaseIntraband {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SelectorIntraband.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SelectorIntraband.class);
 
 	private class PollingJob implements Runnable {
 

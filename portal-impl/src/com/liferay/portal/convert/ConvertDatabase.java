@@ -288,6 +288,7 @@ public class ConvertDatabase extends BaseConvertProcess {
 			CyrusVirtual.TABLE_SQL_CREATE)
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(ConvertDatabase.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConvertDatabase.class);
 
 }

@@ -120,6 +120,6 @@ public class FileSystemHook extends BaseHook {
 				imageId + StringPool.PERIOD + type);
 	}
 
-	private File _rootDir;
+	private final File _rootDir;
 
 }

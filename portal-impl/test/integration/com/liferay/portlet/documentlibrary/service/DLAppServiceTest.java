@@ -1535,6 +1535,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	private static final String _STRIPPED_FILE_NAME = "Title";
 
-	private static Log _log = LogFactoryUtil.getLog(DLAppServiceTest.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLAppServiceTest.class);
 
 }

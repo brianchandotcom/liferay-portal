@@ -187,7 +187,7 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		MBCategoryDisplayImpl.class);
 
 	private List<MBCategory> _allCategories;

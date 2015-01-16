@@ -200,10 +200,11 @@ public class LayoutListUtilTest extends PowerMockito {
 
 	private static final int _NODES = 10;
 
-	private static Log _log = LogFactoryUtil.getLog(LayoutListUtilTest.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutListUtilTest.class);
 
 	private String[] _layoutListUtilStrings;
-	private List<Layout> _layouts = new ArrayList<>();
+	private final List<Layout> _layouts = new ArrayList<>();
 	private long _plid;
 
 	private static class MockLayoutImpl extends LayoutImpl {

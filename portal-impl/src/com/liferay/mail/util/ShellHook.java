@@ -145,6 +145,6 @@ public class ShellHook implements Hook {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ShellHook.class);
+	private static final Log _log = LogFactoryUtil.getLog(ShellHook.class);
 
 }

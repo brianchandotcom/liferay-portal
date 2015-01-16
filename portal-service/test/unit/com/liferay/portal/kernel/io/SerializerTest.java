@@ -904,6 +904,6 @@ public class SerializerTest {
 
 	private static final int _COUNT = 1024;
 
-	private Random _random = new Random();
+	private final Random _random = new Random();
 
 }

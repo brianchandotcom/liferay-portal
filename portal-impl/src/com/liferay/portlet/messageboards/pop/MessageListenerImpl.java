@@ -384,6 +384,7 @@ public class MessageListenerImpl implements MessageListener {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MessageListenerImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		MessageListenerImpl.class);
 
 }

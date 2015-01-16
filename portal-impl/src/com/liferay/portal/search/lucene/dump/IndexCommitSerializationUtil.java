@@ -203,7 +203,7 @@ public class IndexCommitSerializationUtil {
 
 	private static final String _SEGMENTS_GEN_FILE_NAME = "segments.gen";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		IndexCommitSerializationUtil.class);
 
 }

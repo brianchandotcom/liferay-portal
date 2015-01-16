@@ -245,8 +245,8 @@ public class MethodParameter {
 	private ClassLoader _contextClassLoader;
 	private Class<?>[] _genericTypes;
 	private boolean _initialized;
-	private String _name;
-	private String _signatures;
-	private Class<?> _type;
+	private final String _name;
+	private final String _signatures;
+	private final Class<?> _type;
 
 }

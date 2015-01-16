@@ -699,7 +699,7 @@ public class S3Store extends BaseStore {
 
 	private static final String _TEMP_DIR_PATTERN = "/yyyy/MM/dd/HH/";
 
-	private static Log _log = LogFactoryUtil.getLog(S3Store.class);
+	private static final Log _log = LogFactoryUtil.getLog(S3Store.class);
 
 	private static final Properties _jets3tProperties = PropsUtil.getProperties(
 		PropsKeys.DL_STORE_S3_JETS3T, true);

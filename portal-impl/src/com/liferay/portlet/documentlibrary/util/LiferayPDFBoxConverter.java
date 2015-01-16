@@ -97,15 +97,15 @@ public class LiferayPDFBoxConverter {
 		ImageIO.write(renderedImage, extension, outputFile);
 	}
 
-	private int _dpi;
-	private String _extension;
-	private boolean _generatePreview;
-	private boolean _generateThumbnail;
-	private int _height;
-	private File _inputFile;
-	private File[] _previewFiles;
-	private String _thumbnailExtension;
-	private File _thumbnailFile;
-	private int _width;
+	private final int _dpi;
+	private final String _extension;
+	private final boolean _generatePreview;
+	private final boolean _generateThumbnail;
+	private final int _height;
+	private final File _inputFile;
+	private final File[] _previewFiles;
+	private final String _thumbnailExtension;
+	private final File _thumbnailFile;
+	private final int _width;
 
 }

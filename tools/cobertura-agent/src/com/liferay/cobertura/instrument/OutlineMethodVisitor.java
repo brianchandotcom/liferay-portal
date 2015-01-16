@@ -126,15 +126,15 @@ public class OutlineMethodVisitor extends MethodVisitor {
 		}
 	}
 
-	private ClassData _classData;
+	private final ClassData _classData;
 	private int _currentJump;
 	private int _currentLine;
 	private int _currentSwitch;
-	private Map<Label, JumpHolder> _jumpLabels = new HashMap<>();
-	private Map<Label, Integer> _lineLabels = new HashMap<>();
-	private MethodNode _methodNode;
-	private MethodVisitor _methodVisitor;
-	private String _owner;
-	private Map<Label, SwitchHolder> _switchLabels = new HashMap<>();
+	private final Map<Label, JumpHolder> _jumpLabels = new HashMap<>();
+	private final Map<Label, Integer> _lineLabels = new HashMap<>();
+	private final MethodNode _methodNode;
+	private final MethodVisitor _methodVisitor;
+	private final String _owner;
+	private final Map<Label, SwitchHolder> _switchLabels = new HashMap<>();
 
 }

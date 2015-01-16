@@ -441,6 +441,7 @@ public class ExportImportDateUtil {
 
 	private static final String _LAST_PUBLISH_DATE = "last-publish-date";
 
-	private static Log _log = LogFactoryUtil.getLog(ExportImportDateUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportImportDateUtil.class);
 
 }

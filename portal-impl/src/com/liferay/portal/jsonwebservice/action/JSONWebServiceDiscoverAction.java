@@ -113,7 +113,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 			return jsonSerializer.serializeDeep(_resultsMap);
 		}
 
-		private Map<String, Object> _resultsMap;
+		private final Map<String, Object> _resultsMap;
 
 	}
 
@@ -435,10 +435,10 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		return className.concat(StringPool.POUND).concat(method.getName());
 	}
 
-	private String _basePath;
-	private String _baseURL;
-	private String _contextName;
-	private JSONWebServiceNaming _jsonWebServiceNaming;
-	private List<Class<?>> _types = new ArrayList<>();
+	private final String _basePath;
+	private final String _baseURL;
+	private final String _contextName;
+	private final JSONWebServiceNaming _jsonWebServiceNaming;
+	private final List<Class<?>> _types = new ArrayList<>();
 
 }

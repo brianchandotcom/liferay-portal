@@ -136,12 +136,12 @@ public class JavaMD5CacheKeyGenerator extends BaseCacheKeyGenerator {
 		'e', 'f'
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JavaMD5CacheKeyGenerator.class);
 
-	private CharsetEncoder _charsetEncoder;
-	private char[] _encodeBuffer = new char[32];
+	private final CharsetEncoder _charsetEncoder;
+	private final char[] _encodeBuffer = new char[32];
 	private int _maxLength = -1;
-	private MessageDigest _messageDigest;
+	private final MessageDigest _messageDigest;
 
 }

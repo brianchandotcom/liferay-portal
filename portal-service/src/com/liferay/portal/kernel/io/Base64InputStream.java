@@ -275,8 +275,8 @@ public class Base64InputStream extends InputStream {
 	}
 
 	private int _avaiableBytes;
-	private InputStream _inputStream;
-	private byte[] _unitBuffer;
+	private final InputStream _inputStream;
+	private final byte[] _unitBuffer;
 	private int _unitBufferIndex;
 
 }

@@ -537,11 +537,11 @@ public class LocaleUtil {
 
 	private static final String _BETA_SUFFIX = " [Beta]";
 
-	private static Log _log = LogFactoryUtil.getLog(LocaleUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(LocaleUtil.class);
 
-	private static LocaleUtil _instance = new LocaleUtil();
+	private static final LocaleUtil _instance = new LocaleUtil();
 
 	private Locale _locale;
-	private Map<String, Locale> _locales = new HashMap<>();
+	private final Map<String, Locale> _locales = new HashMap<>();
 
 }

@@ -130,7 +130,8 @@ public class ClearThreadLocalUtil {
 
 	private static final boolean _INITIALIZED;
 
-	private static Log _log = LogFactoryUtil.getLog(ClearThreadLocalUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClearThreadLocalUtil.class);
 
 	private static final Method _expungeStaleEntriesMethod;
 	private static final Field _inheritableThreadLocalsField;

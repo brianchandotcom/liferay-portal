@@ -137,6 +137,6 @@ public class PwdGenerator {
 
 	private static final String[] KEYS = {KEY1, KEY2, KEY3};
 
-	private static Log _log = LogFactoryUtil.getLog(PwdGenerator.class);
+	private static final Log _log = LogFactoryUtil.getLog(PwdGenerator.class);
 
 }

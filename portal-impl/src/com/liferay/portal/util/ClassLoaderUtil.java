@@ -130,6 +130,6 @@ public class ClassLoaderUtil {
 
 	}
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
 }

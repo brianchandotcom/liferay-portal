@@ -253,14 +253,15 @@ public class StringParser {
 		_stringEncoder = stringEncoder;
 	}
 
-	private static Pattern _escapeRegexPattern = Pattern.compile(
+	private static final Pattern _escapeRegexPattern = Pattern.compile(
 		"[\\{\\}\\(\\)\\[\\]\\*\\+\\?\\$\\^\\.\\#\\\\]");
-	private static Pattern _fragmentPattern = Pattern.compile("\\{.+?\\}");
+	private static final Pattern _fragmentPattern = Pattern.compile(
+		"\\{.+?\\}");
 
 	private final String _builder;
-	private Pattern _pattern;
+	private final Pattern _pattern;
 	private StringEncoder _stringEncoder;
-	private List<StringParserFragment> _stringParserFragments =
+	private final List<StringParserFragment> _stringParserFragments =
 		new ArrayList<>();
 
 }

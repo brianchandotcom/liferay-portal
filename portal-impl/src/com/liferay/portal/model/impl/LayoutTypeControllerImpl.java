@@ -192,15 +192,15 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 		}
 	}
 
-	private String[] _configurationActionDelete;
-	private String[] _configurationActionUpdate;
-	private String _editPage;
-	private boolean _firstPageable;
-	private boolean _parentable;
-	private boolean _sitemapable;
-	private String _type;
-	private String _url;
-	private boolean _urlFriendliable;
-	private String _viewPage;
+	private final String[] _configurationActionDelete;
+	private final String[] _configurationActionUpdate;
+	private final String _editPage;
+	private final boolean _firstPageable;
+	private final boolean _parentable;
+	private final boolean _sitemapable;
+	private final String _type;
+	private final String _url;
+	private final boolean _urlFriendliable;
+	private final String _viewPage;
 
 }

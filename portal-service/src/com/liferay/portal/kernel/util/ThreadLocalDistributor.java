@@ -135,7 +135,7 @@ public class ThreadLocalDistributor implements Externalizable {
 		objectOutput.writeObject(_threadLocalValues);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ThreadLocalDistributor.class);
 
 	private ClassLoader _classLoader;

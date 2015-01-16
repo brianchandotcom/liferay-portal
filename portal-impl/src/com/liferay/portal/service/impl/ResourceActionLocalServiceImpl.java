@@ -209,7 +209,7 @@ public class ResourceActionLocalServiceImpl
 		return name.concat(StringPool.POUND).concat(actionId);
 	}
 
-	private static Map<String, ResourceAction> _resourceActions =
+	private static final Map<String, ResourceAction> _resourceActions =
 		new ConcurrentHashMap<>();
 
 }

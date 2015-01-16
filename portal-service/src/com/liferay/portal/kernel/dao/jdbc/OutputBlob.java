@@ -155,6 +155,6 @@ public class OutputBlob implements Blob {
 	}
 
 	private InputStream _inputStream;
-	private long _length;
+	private final long _length;
 
 }

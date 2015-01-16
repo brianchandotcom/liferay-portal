@@ -295,7 +295,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		return missingRemoteParentLayouts;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutRemoteStagingBackgroundTaskExecutor.class);
 
 }

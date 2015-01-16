@@ -418,7 +418,7 @@ public class SecureRandomUtilTest {
 			}
 		}
 
-		private AtomicInteger _counter = new AtomicInteger();
+		private final AtomicInteger _counter = new AtomicInteger();
 
 	}
 

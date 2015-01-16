@@ -607,10 +607,11 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 		return hits;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LuceneIndexSearcher.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LuceneIndexSearcher.class);
 
-	private static java.lang.reflect.Field _runtimeFacetDataMapField;
-	private static java.lang.reflect.Field _runtimeFacetHandlerMapField;
+	private static final java.lang.reflect.Field _runtimeFacetDataMapField;
+	private static final java.lang.reflect.Field _runtimeFacetHandlerMapField;
 
 	static {
 		try {
@@ -641,7 +642,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 			return originalText;
 		}
 
-		private Set<String> _terms = new HashSet<>();
+		private final Set<String> _terms = new HashSet<>();
 
 	}
 

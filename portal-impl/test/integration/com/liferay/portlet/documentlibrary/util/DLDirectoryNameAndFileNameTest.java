@@ -182,7 +182,7 @@ public class DLDirectoryNameAndFileNameTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
-	private String[] _DL_CHAR_LAST_BLACKLIST =
+	private final String[] _DL_CHAR_LAST_BLACKLIST =
 		{StringPool.SPACE, StringPool.PERIOD};
 
 	@DeleteAfterTestRun

@@ -74,8 +74,8 @@ public class BlogsEntryUrlTitleUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		return newUrlTitle;
 	}
 
-	private UpgradeColumn _entryIdColumn;
-	private UpgradeColumn _titleColumn;
-	private Set<String> _urlTitles;
+	private final UpgradeColumn _entryIdColumn;
+	private final UpgradeColumn _titleColumn;
+	private final Set<String> _urlTitles;
 
 }

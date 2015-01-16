@@ -143,6 +143,7 @@ public class SharepointServlet extends HttpServlet {
 		ServletResponseUtil.write(response, sb.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SharepointServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SharepointServlet.class);
 
 }

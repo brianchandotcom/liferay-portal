@@ -321,6 +321,6 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		return _booleanQuery.toString();
 	}
 
-	private org.apache.lucene.search.BooleanQuery _booleanQuery;
+	private final org.apache.lucene.search.BooleanQuery _booleanQuery;
 
 }

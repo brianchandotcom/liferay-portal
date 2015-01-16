@@ -138,7 +138,7 @@ public class BufferedIncrementAdvice
 		return _nullBufferedIncrement;
 	}
 
-	private static BufferedIncrement _nullBufferedIncrement =
+	private static final BufferedIncrement _nullBufferedIncrement =
 		new BufferedIncrement() {
 
 			@Override
@@ -158,9 +158,9 @@ public class BufferedIncrementAdvice
 
 		};
 
-	private Map<String, BufferedIncrementConfiguration>
+	private final Map<String, BufferedIncrementConfiguration>
 		_bufferedIncrementConfigurations = new ConcurrentHashMap<>();
-	private ConcurrentMap<Method, BufferedIncrementProcessor>
+	private final ConcurrentMap<Method, BufferedIncrementProcessor>
 		_bufferedIncrementProcessors = new ConcurrentHashMap<>();
 
 }

@@ -91,11 +91,11 @@ public class NetlogonIdentityInfo extends NdrObject {
 		}
 	}
 
-	private rpc.unicode_string _logonDomainName;
-	private int _parameterControl;
-	private int _reservedHigh;
-	private int _reservedLow;
-	private rpc.unicode_string _userName;
-	private rpc.unicode_string _workstation;
+	private final rpc.unicode_string _logonDomainName;
+	private final int _parameterControl;
+	private final int _reservedHigh;
+	private final int _reservedLow;
+	private final rpc.unicode_string _userName;
+	private final rpc.unicode_string _workstation;
 
 }

@@ -1283,9 +1283,10 @@ public class LocalizationImpl implements Localization {
 
 	private static final String _ROOT = "root";
 
-	private static Log _log = LogFactoryUtil.getLog(LocalizationImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LocalizationImpl.class);
 
-	private Map<String, Map<Tuple, String>> _cache = new ReferenceMap(
+	private final Map<String, Map<Tuple, String>> _cache = new ReferenceMap(
 		ReferenceMap.SOFT, ReferenceMap.HARD);
 
 }

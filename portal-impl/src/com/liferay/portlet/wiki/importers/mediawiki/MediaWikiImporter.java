@@ -678,20 +678,21 @@ public class MediaWikiImporter implements WikiImporter {
 
 	private static final String _WORK_IN_PROGRESS_TAG = "work in progress";
 
-	private static Log _log = LogFactoryUtil.getLog(MediaWikiImporter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		MediaWikiImporter.class);
 
-	private static Pattern _categoriesPattern = Pattern.compile(
+	private static final Pattern _categoriesPattern = Pattern.compile(
 		"\\[\\[[Cc]ategory:([^\\]]*)\\]\\][\\n]*");
-	private static Pattern _parentPattern = Pattern.compile(
+	private static final Pattern _parentPattern = Pattern.compile(
 		"\\{{2}OtherTopics\\|([^\\}]*)\\}{2}");
-	private static Pattern _redirectPattern = Pattern.compile(
+	private static final Pattern _redirectPattern = Pattern.compile(
 		"#REDIRECT \\[\\[([^\\]]*)\\]\\]");
-	private static Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
+	private static final Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
 		new String[] {"archive", "temp", "thumb"});
-	private static Pattern _wikiPageTitlesRemovePattern = Pattern.compile(
+	private static final Pattern _wikiPageTitlesRemovePattern = Pattern.compile(
 		PropsValues.WIKI_PAGE_TITLES_REMOVE_REGEXP);
 
-	private MediaWikiToCreoleTranslator _translator =
+	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();
 
 }

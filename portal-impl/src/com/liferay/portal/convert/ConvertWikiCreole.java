@@ -78,6 +78,7 @@ public class ConvertWikiCreole extends BaseConvertProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ConvertWikiCreole.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConvertWikiCreole.class);
 
 }

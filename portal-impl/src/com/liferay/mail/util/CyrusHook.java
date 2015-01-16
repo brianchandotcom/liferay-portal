@@ -273,6 +273,6 @@ public class CyrusHook implements Hook {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CyrusHook.class);
+	private static final Log _log = LogFactoryUtil.getLog(CyrusHook.class);
 
 }

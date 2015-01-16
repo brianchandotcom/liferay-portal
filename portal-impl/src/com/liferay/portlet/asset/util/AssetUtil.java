@@ -910,6 +910,6 @@ public class AssetUtil {
 		return sortType;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AssetUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(AssetUtil.class);
 
 }

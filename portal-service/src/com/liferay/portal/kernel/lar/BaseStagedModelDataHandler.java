@@ -695,7 +695,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		return true;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseStagedModelDataHandler.class);
 
 }

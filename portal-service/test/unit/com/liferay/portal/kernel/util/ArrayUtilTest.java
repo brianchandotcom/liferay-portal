@@ -850,7 +850,7 @@ public class ArrayUtilTest {
 		}
 	}
 
-	private PredicateFilter<Double> _doublePredicateFilter =
+	private final PredicateFilter<Double> _doublePredicateFilter =
 		new PredicateFilter<Double>() {
 
 			@Override
@@ -860,7 +860,7 @@ public class ArrayUtilTest {
 
 		};
 
-	private PredicateFilter<Integer> _integerPredicateFilter =
+	private final PredicateFilter<Integer> _integerPredicateFilter =
 		new PredicateFilter<Integer>() {
 
 			@Override
@@ -870,7 +870,7 @@ public class ArrayUtilTest {
 
 		};
 
-	private PredicateFilter<User> _userPredicateFilter =
+	private final PredicateFilter<User> _userPredicateFilter =
 		new PredicateFilter<User>() {
 
 			@Override
@@ -895,8 +895,8 @@ public class ArrayUtilTest {
 			return _name;
 		}
 
-		private int _age;
-		private String _name;
+		private final int _age;
+		private final String _name;
 
 	}
 

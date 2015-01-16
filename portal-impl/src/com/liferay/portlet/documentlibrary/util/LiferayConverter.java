@@ -889,7 +889,8 @@ public abstract class LiferayConverter {
 
 	protected static final int DECODE_VIDEO_THUMBNAIL = 2;
 
-	private static Log _log = LogFactoryUtil.getLog(LiferayConverter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferayConverter.class);
 
 	private ConverterFactory.Type _converterFactoryType;
 	private IConverter _videoIConverter;

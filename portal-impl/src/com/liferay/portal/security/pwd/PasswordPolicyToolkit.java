@@ -261,11 +261,11 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 		return count;
 	}
 
-	private char[] _alphanumericCharsetArray;
-	private String _completeCharset;
-	private char[] _lowerCaseCharsetArray;
-	private char[] _numbersCharsetArray;
-	private char[] _symbolsCharsetArray;
-	private char[] _upperCaseCharsetArray;
+	private final char[] _alphanumericCharsetArray;
+	private final String _completeCharset;
+	private final char[] _lowerCaseCharsetArray;
+	private final char[] _numbersCharsetArray;
+	private final char[] _symbolsCharsetArray;
+	private final char[] _upperCaseCharsetArray;
 
 }

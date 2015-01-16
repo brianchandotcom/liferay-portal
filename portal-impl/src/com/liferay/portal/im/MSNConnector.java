@@ -105,12 +105,12 @@ public class MSNConnector {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MSNConnector.class);
+	private static final Log _log = LogFactoryUtil.getLog(MSNConnector.class);
 
-	private static MSNConnector _instance = new MSNConnector();
+	private static final MSNConnector _instance = new MSNConnector();
 
-	private String _login;
-	private MSNMessenger _msn;
-	private String _password;
+	private final String _login;
+	private final MSNMessenger _msn;
+	private final String _password;
 
 }

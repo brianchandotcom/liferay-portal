@@ -121,7 +121,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultFullNameGenerator.class);
 
 }

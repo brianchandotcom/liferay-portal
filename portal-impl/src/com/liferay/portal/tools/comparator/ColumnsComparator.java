@@ -80,6 +80,6 @@ public class ColumnsComparator implements Comparator<Object> {
 		return 0;
 	}
 
-	private String[] _columnNames;
+	private final String[] _columnNames;
 
 }

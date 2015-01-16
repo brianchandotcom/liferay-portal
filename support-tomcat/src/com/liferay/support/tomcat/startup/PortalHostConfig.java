@@ -80,6 +80,7 @@ public class PortalHostConfig extends HostConfig {
 		return files;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortalHostConfig.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalHostConfig.class);
 
 }

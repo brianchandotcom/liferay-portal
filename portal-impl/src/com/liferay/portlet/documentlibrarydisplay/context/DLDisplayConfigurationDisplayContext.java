@@ -185,8 +185,8 @@ public class DLDisplayConfigurationDisplayContext {
 	private List<KeyValuePair> _availableFolderColumns;
 	private List<KeyValuePair> _currentFileEntryColumns;
 	private List<KeyValuePair> _currentFolderColumns;
-	private DLActionsDisplayContext _dlActionsDisplayContext;
-	private DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private ThemeDisplay _themeDisplay;
+	private final DLActionsDisplayContext _dlActionsDisplayContext;
+	private final DLPortletInstanceSettings _dlPortletInstanceSettings;
+	private final ThemeDisplay _themeDisplay;
 
 }

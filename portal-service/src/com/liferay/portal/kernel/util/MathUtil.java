@@ -195,9 +195,9 @@ public class MathUtil {
 		return sum;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MathUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(MathUtil.class);
 
-	private static Map<Long, Integer> _base2LogValues = new HashMap<>();
+	private static final Map<Long, Integer> _base2LogValues = new HashMap<>();
 
 	static {
 		_base2LogValues.put(0L, Integer.MIN_VALUE);

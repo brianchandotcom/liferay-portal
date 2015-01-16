@@ -65,7 +65,7 @@ public class CustomSQLParam {
 		}
 	}
 
-	private String _sql;
-	private Object _value;
+	private final String _sql;
+	private final Object _value;
 
 }

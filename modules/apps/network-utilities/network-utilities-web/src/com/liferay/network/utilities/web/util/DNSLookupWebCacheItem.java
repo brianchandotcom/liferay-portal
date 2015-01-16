@@ -88,6 +88,6 @@ public class DNSLookupWebCacheItem implements WebCacheItem {
 
 	private static final long _REFRESH_TIME = Time.DAY;
 
-	private String _domain;
+	private final String _domain;
 
 }

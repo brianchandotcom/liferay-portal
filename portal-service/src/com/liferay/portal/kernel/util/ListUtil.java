@@ -602,7 +602,7 @@ public class ListUtil {
 		return new ArrayList<>(set);
 	}
 
-	private static Class<? extends List<?>> _unmodifiableListClass;
+	private static final Class<? extends List<?>> _unmodifiableListClass;
 
 	static {
 		List<Object> unmodifiableList = Collections.<Object>unmodifiableList(

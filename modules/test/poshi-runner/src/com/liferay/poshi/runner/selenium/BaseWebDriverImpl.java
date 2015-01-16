@@ -942,7 +942,7 @@ public abstract class BaseWebDriverImpl
 	private final String _dependenciesDirName;
 	private final String _outputDirName;
 	private String _primaryTestSuiteName;
-	private String _projectDirName;
+	private final String _projectDirName;
 	private final String _sikuliImagesDirName;
 
 }

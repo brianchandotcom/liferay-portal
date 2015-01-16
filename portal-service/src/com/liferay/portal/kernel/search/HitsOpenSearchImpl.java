@@ -221,6 +221,7 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 		return portletURL.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(HitsOpenSearchImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		HitsOpenSearchImpl.class);
 
 }

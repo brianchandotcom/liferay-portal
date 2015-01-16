@@ -980,13 +980,13 @@ public class LanguageImpl implements Language, Serializable {
 		_portalCache.remove(companyId);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
 
-	private static Map<Long, LanguageImpl> _instances =
+	private static final Map<Long, LanguageImpl> _instances =
 		new ConcurrentHashMap<>();
-	private static Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"Liferay\\.Language\\.get\\([\"']([^)]+)[\"']\\)");
-	private static PortalCache<Long, Serializable> _portalCache =
+	private static final PortalCache<Long, Serializable> _portalCache =
 		MultiVMPoolUtil.getCache(LanguageImpl.class.getName());
 
 	static {
@@ -1005,13 +1005,13 @@ public class LanguageImpl implements Language, Serializable {
 			});
 	}
 
-	private Map<String, String> _charEncodings;
-	private Set<String> _duplicateLanguageCodes;
-	private Map<Long, Locale[]> _groupLocalesMap = new HashMap<>();
-	private Map<Long, Set<Locale>> _groupLocalesSet = new HashMap<>();
-	private Locale[] _locales;
-	private Set<Locale> _localesBetaSet;
-	private Map<String, Locale> _localesMap;
-	private Set<Locale> _localesSet;
+	private final Map<String, String> _charEncodings;
+	private final Set<String> _duplicateLanguageCodes;
+	private final Map<Long, Locale[]> _groupLocalesMap = new HashMap<>();
+	private final Map<Long, Set<Locale>> _groupLocalesSet = new HashMap<>();
+	private final Locale[] _locales;
+	private final Set<Locale> _localesBetaSet;
+	private final Map<String, Locale> _localesMap;
+	private final Set<Locale> _localesSet;
 
 }

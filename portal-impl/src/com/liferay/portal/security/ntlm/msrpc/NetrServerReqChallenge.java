@@ -80,10 +80,10 @@ public class NetrServerReqChallenge extends DcerpcMessage {
 		return _status;
 	}
 
-	private byte[] _clientChallenge;
-	private String _computerName;
-	private String _primaryName;
-	private byte[] _serverChallenge;
+	private final byte[] _clientChallenge;
+	private final String _computerName;
+	private final String _primaryName;
+	private final byte[] _serverChallenge;
 	private int _status;
 
 }

@@ -769,8 +769,9 @@ public class VerifyJournal extends VerifyProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyJournal.class);
+	private static final Log _log = LogFactoryUtil.getLog(VerifyJournal.class);
 
-	private static Pattern _friendlyURLPattern = Pattern.compile("[^a-z0-9_-]");
+	private static final Pattern _friendlyURLPattern = Pattern.compile(
+		"[^a-z0-9_-]");
 
 }

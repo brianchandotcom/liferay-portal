@@ -52,7 +52,9 @@ public class Normalizer {
 		"\u0142", "\u02B9", "\u02BA"
 	};
 
-	private static Transliterator _transliterator = Transliterator.getInstance(
-		"Greek-Latin; Cyrillic-Latin; NFD; [:Nonspacing Mark:] Remove; NFC");
+	private static final Transliterator _transliterator =
+		Transliterator.getInstance(
+			"Greek-Latin; Cyrillic-Latin; NFD; [:Nonspacing Mark:] " +
+				"Remove; NFC");
 
 }

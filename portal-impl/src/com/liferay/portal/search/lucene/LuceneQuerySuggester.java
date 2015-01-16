@@ -375,12 +375,14 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 
 	private static final float _SCORES_THRESHOLD_DEFAULT = 0.5f;
 
-	private static Log _log = LogFactoryUtil.getLog(LuceneQuerySuggester.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LuceneQuerySuggester.class);
 
 	private float _boostEnd = 1.0f;
 	private float _boostStart = 2.0f;
 	private int _querySuggestionMaxNGramLength = 50;
-	private RelevancyChecker _relevancyChecker = new DefaultRelevancyChecker();
+	private final RelevancyChecker _relevancyChecker =
+		new DefaultRelevancyChecker();
 	private StringDistance _stringDistance;
 	private Comparator<SuggestWord> _suggestWordComparator =
 		SuggestWordQueue.DEFAULT_COMPARATOR;

@@ -191,6 +191,6 @@ public class ScopeFacet extends MultiValueFacet {
 			searchContext, facetQuery, BooleanClauseOccur.MUST.getName());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ScopeFacet.class);
+	private static final Log _log = LogFactoryUtil.getLog(ScopeFacet.class);
 
 }

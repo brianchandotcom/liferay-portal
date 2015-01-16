@@ -74,7 +74,7 @@ public class StrutsActionPortletURL extends PortletURLImplWrapper {
 		super.setParameters(params);
 	}
 
-	private Portlet _portlet;
-	private String _strutsPath;
+	private final Portlet _portlet;
+	private final String _strutsPath;
 
 }

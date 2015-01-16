@@ -598,6 +598,6 @@ public abstract class BaseIntraband implements Intraband {
 
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseIntraband.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseIntraband.class);
 
 }

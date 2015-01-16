@@ -543,17 +543,18 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 	private static final String _LUCENE_STORE_TYPE_RAM = "ram";
 
-	private static Log _log = LogFactoryUtil.getLog(IndexAccessorImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		IndexAccessorImpl.class);
 
 	private volatile int _batchCount;
-	private Lock _commitLock = new ReentrantLock();
+	private final Lock _commitLock = new ReentrantLock();
 	private long _companyId;
 	private Directory _directory;
-	private DumpIndexDeletionPolicy _dumpIndexDeletionPolicy =
+	private final DumpIndexDeletionPolicy _dumpIndexDeletionPolicy =
 		new DumpIndexDeletionPolicy();
 	private final IndexSearcherManager _indexSearcherManager;
 	private IndexWriter _indexWriter;
-	private String _path;
+	private final String _path;
 	private ScheduledExecutorService _scheduledExecutorService;
 
 	private static class InvalidateProcessCallable

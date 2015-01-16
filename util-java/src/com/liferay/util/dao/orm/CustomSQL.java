@@ -860,7 +860,7 @@ public class CustomSQL {
 
 	private static final String _STATUS_KEYWORD = "[$STATUS$]";
 
-	private static Log _log = LogFactoryUtil.getLog(CustomSQL.class);
+	private static final Log _log = LogFactoryUtil.getLog(CustomSQL.class);
 
 	private String _functionIsNotNull;
 	private String _functionIsNull;

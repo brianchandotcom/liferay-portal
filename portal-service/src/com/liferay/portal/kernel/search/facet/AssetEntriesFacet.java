@@ -180,6 +180,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 		searchContext.setEntryClassNames(entryClassNames);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AssetEntriesFacet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetEntriesFacet.class);
 
 }

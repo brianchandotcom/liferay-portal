@@ -577,15 +577,16 @@ public class PortalInstances {
 		"select companyId from Company, Shard where Company.companyId = " +
 			"Shard.classPK and Shard.name = ?";
 
-	private static Log _log = LogFactoryUtil.getLog(PortalInstances.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalInstances.class);
 
-	private static PortalInstances _instance = new PortalInstances();
+	private static final PortalInstances _instance = new PortalInstances();
 
-	private Set<String> _autoLoginIgnoreHosts;
-	private Set<String> _autoLoginIgnorePaths;
+	private final Set<String> _autoLoginIgnoreHosts;
+	private final Set<String> _autoLoginIgnorePaths;
 	private long[] _companyIds;
-	private Set<String> _virtualHostsIgnoreHosts;
-	private Set<String> _virtualHostsIgnorePaths;
+	private final Set<String> _virtualHostsIgnoreHosts;
+	private final Set<String> _virtualHostsIgnorePaths;
 	private String[] _webIds;
 
 }

@@ -1486,10 +1486,10 @@ public class LocalProcessExecutorTest {
 	private static final String _JPDA_OPTIONS2 =
 		"-agentlib:jdwp=transport=dt_socket,address=8002,server=y,suspend=y";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LocalProcessExecutorTest.class);
 
-	private static ServerSocketConfigurator _serverSocketConfigurator =
+	private static final ServerSocketConfigurator _serverSocketConfigurator =
 		new ServerSocketConfigurator() {
 
 		@Override
@@ -1501,7 +1501,7 @@ public class LocalProcessExecutorTest {
 
 	};
 
-	private LocalProcessExecutor _localProcessExecutor =
+	private final LocalProcessExecutor _localProcessExecutor =
 		new LocalProcessExecutor();
 
 	private static class AttachChildProcessCallable1
@@ -1831,7 +1831,7 @@ public class LocalProcessExecutorTest {
 
 		private static final long serialVersionUID = 1L;
 
-		private Class<ProcessCallable<?>> _processCallableClass;
+		private final Class<ProcessCallable<?>> _processCallableClass;
 		private int _serverPort;
 
 	}
@@ -1928,7 +1928,7 @@ public class LocalProcessExecutorTest {
 			_countDownLatch.await();
 		}
 
-		private CountDownLatch _countDownLatch;
+		private final CountDownLatch _countDownLatch;
 
 	}
 
@@ -1963,7 +1963,7 @@ public class LocalProcessExecutorTest {
 			return _payload;
 		}
 
-		private byte[] _payload;
+		private final byte[] _payload;
 
 	}
 
@@ -2078,7 +2078,7 @@ public class LocalProcessExecutorTest {
 
 		private static final long serialVersionUID = 1L;
 
-		private int _exitCode;
+		private final int _exitCode;
 
 	}
 
@@ -2139,8 +2139,8 @@ public class LocalProcessExecutorTest {
 
 		private static final long serialVersionUID = 1L;
 
-		private String _bodyLog;
-		private String _leadingLog;
+		private final String _bodyLog;
+		private final String _leadingLog;
 
 	}
 
@@ -2195,8 +2195,8 @@ public class LocalProcessExecutorTest {
 
 		private static final long serialVersionUID = 1L;
 
-		private String _logMessage;
-		private File _signalFile;
+		private final String _logMessage;
+		private final File _signalFile;
 
 	}
 
@@ -2231,7 +2231,7 @@ public class LocalProcessExecutorTest {
 			return true;
 		}
 
-		private ObjectOutputStream _oldObjectOutputStream;
+		private final ObjectOutputStream _oldObjectOutputStream;
 		private Thread _thread;
 
 	}
@@ -2266,7 +2266,7 @@ public class LocalProcessExecutorTest {
 
 		private static final long serialVersionUID = 1L;
 
-		private String _propertyKey;
+		private final String _propertyKey;
 
 	}
 
@@ -2318,7 +2318,7 @@ public class LocalProcessExecutorTest {
 		private static volatile Thread _thread;
 		private static final long serialVersionUID = 1L;
 
-		private String _returnValue;
+		private final String _returnValue;
 
 	}
 
@@ -2487,8 +2487,8 @@ public class LocalProcessExecutorTest {
 
 		private static final int _CODE_NULL_OUT_OOS = 4;
 
-		private Thread _mainThread;
-		private Socket _socket;
+		private final Thread _mainThread;
+		private final Socket _socket;
 
 	}
 
@@ -2514,7 +2514,7 @@ public class LocalProcessExecutorTest {
 			return true;
 		}
 
-		private boolean _failToShutdown;
+		private final boolean _failToShutdown;
 		private Thread _thread;
 
 	}

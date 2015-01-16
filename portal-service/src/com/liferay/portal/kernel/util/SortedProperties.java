@@ -153,6 +153,6 @@ public class SortedProperties extends Properties {
 	}
 
 	private Comparator<String> _comparator;
-	private Set<String> _names;
+	private final Set<String> _names;
 
 }

@@ -464,11 +464,11 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 
 	private static final String _STAR_PATTERN = Pattern.quote(StringPool.STAR);
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCmisSearchQueryBuilder.class);
 
-	private static Map<String, String> _cmisFields;
-	private static Set<String> _supportedFields;
+	private static final Map<String, String> _cmisFields;
+	private static final Set<String> _supportedFields;
 
 	static {
 		_cmisFields = new HashMap<>();

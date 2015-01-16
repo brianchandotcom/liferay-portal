@@ -449,11 +449,12 @@ public class AudioProcessorImpl
 	private static final String[] _PREVIEW_TYPES =
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS;
 
-	private static Log _log = LogFactoryUtil.getLog(AudioProcessorImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		AudioProcessorImpl.class);
 
-	private Set<String> _audioMimeTypes = SetUtil.fromArray(
+	private final Set<String> _audioMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES);
-	private List<Long> _fileVersionIds = new Vector<Long>();
+	private final List<Long> _fileVersionIds = new Vector<Long>();
 
 	private static class LiferayAudioProcessCallable
 		implements ProcessCallable<String> {
@@ -506,19 +507,19 @@ public class AudioProcessorImpl
 
 		private static final long serialVersionUID = 1L;
 
-		private String _audioContainer;
-		private Properties _audioProperties;
-		private Map<String, String> _customLogSettings;
+		private final String _audioContainer;
+		private final Properties _audioProperties;
+		private final Map<String, String> _customLogSettings;
 
 		@InputResource
-		private File _inputFile;
+		private final File _inputFile;
 
-		private String _liferayHome;
+		private final String _liferayHome;
 
 		@OutputResource
-		private File _outputFile;
+		private final File _outputFile;
 
-		private String _serverId;
+		private final String _serverId;
 
 	}
 

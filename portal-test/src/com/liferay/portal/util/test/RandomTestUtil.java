@@ -166,6 +166,6 @@ public class RandomTestUtil {
 
 	private static final int _RANDOMIZER_BUMPER_TRIES_MAX = 100;
 
-	private static Random _random = new Random();
+	private static final Random _random = new Random();
 
 }

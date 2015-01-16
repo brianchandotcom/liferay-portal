@@ -58,6 +58,6 @@ public class PrimitiveIntSet {
 		return _elements.size();
 	}
 
-	private Set<Integer> _elements;
+	private final Set<Integer> _elements;
 
 }

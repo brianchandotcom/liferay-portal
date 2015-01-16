@@ -1743,9 +1743,9 @@ public class WebDriverToSeleniumBridge
 		select.selectByIndex(index);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		WebDriverToSeleniumBridge.class);
 
-	private Map<String, String> _keysSpecialChars = new HashMap<>();
+	private final Map<String, String> _keysSpecialChars = new HashMap<>();
 
 }

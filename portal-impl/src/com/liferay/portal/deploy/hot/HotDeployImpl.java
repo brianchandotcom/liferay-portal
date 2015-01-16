@@ -323,9 +323,9 @@ public class HotDeployImpl implements HotDeploy {
 		ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(HotDeployImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(HotDeployImpl.class);
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
 	private boolean _capturePrematureEvents = true;
 	private final List<HotDeployEvent> _dependentHotDeployEvents;
@@ -380,8 +380,8 @@ public class HotDeployImpl implements HotDeploy {
 				properties);
 		}
 
-		private ClassLoader _classLoader;
-		private ServletContext _servletContext;
+		private final ClassLoader _classLoader;
+		private final ServletContext _servletContext;
 
 	}
 

@@ -173,7 +173,7 @@ public class DefaultLicenseManagerImpl
 		LicenseUtil.writeServerProperties(bytes);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultLicenseManagerImpl.class);
 
 }

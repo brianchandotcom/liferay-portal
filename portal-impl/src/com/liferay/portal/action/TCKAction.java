@@ -179,6 +179,6 @@ public class TCKAction extends Action {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(TCKAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(TCKAction.class);
 
 }

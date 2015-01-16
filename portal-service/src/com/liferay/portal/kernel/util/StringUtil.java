@@ -4819,8 +4819,8 @@ public class StringUtil {
 		'u', 'v', 'w', 'x', 'y', 'z'
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(StringUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(StringUtil.class);
 
-	private static String[] _emptyStringArray = new String[0];
+	private static final String[] _emptyStringArray = new String[0];
 
 }

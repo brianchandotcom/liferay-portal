@@ -45,7 +45,7 @@ public class PortalCallbackHandler implements CallbackHandler, Serializable {
 		}
 	}
 
-	private String _name;
-	private String _password;
+	private final String _name;
+	private final String _password;
 
 }

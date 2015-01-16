@@ -69,7 +69,7 @@ public class LiferayStrutsPortletURLImpl extends PortletURLImplWrapper {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayStrutsPortletURLImpl.class);
 
 }

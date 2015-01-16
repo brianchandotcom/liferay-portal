@@ -139,7 +139,8 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	/**
 	 * Log instance for this class.
 	 */
-	private static Log _log = LogFactoryUtil.getLog(PluginSettingImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PluginSettingImpl.class);
 
 	/**
 	 * An array of required roles of the plugin.

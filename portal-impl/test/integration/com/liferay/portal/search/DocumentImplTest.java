@@ -513,19 +513,19 @@ public class DocumentImplTest {
 	private static final String[] _SCREEN_NAMES_ODD_MIXED =
 		new String[] {"firstuser", "fifthuser", "thirduser"};
 
-	private Map<String, Double[]> _doubleArrays = new HashMap<>();
-	private Map<String, Double> _doubles = new HashMap<>();
-	private Map<String, Float[]> _floatArrays = new HashMap<>();
-	private Map<String, Float> _floats = new HashMap<>();
+	private final Map<String, Double[]> _doubleArrays = new HashMap<>();
+	private final Map<String, Double> _doubles = new HashMap<>();
+	private final Map<String, Float[]> _floatArrays = new HashMap<>();
+	private final Map<String, Float> _floats = new HashMap<>();
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private Indexer _indexer;
 	private IndexerPostProcessor _indexerPostProcessor;
-	private Map<String, Integer[]> _integerArrays = new HashMap<>();
-	private Map<String, Integer> _integers = new HashMap<>();
-	private Map<String, Long[]> _longArrays = new HashMap<>();
-	private Map<String, Long> _longs = new HashMap<>();
+	private final Map<String, Integer[]> _integerArrays = new HashMap<>();
+	private final Map<String, Integer> _integers = new HashMap<>();
+	private final Map<String, Long[]> _longArrays = new HashMap<>();
+	private final Map<String, Long> _longs = new HashMap<>();
 
 }

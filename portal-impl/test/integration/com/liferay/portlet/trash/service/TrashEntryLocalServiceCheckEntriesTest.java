@@ -339,20 +339,20 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 		return GroupLocalServiceUtil.updateGroup(group);
 	}
 
-	private static int _COMPANIES_COUNT = 2;
+	private static final int _COMPANIES_COUNT = 2;
 
-	private static int _EXPIRED_TRASH_ENTRIES_COUNT = 3;
+	private static final int _EXPIRED_TRASH_ENTRIES_COUNT = 3;
 
-	private static int _GROUPS_COUNT = 2;
+	private static final int _GROUPS_COUNT = 2;
 
-	private static int _MAX_AGE = 5;
+	private static final int _MAX_AGE = 5;
 
-	private static int _NOT_EXPIRED_TRASH_ENTRIES_COUNT = 4;
-
-	@DeleteAfterTestRun
-	private List<Company> _companies = new ArrayList<>();
+	private static final int _NOT_EXPIRED_TRASH_ENTRIES_COUNT = 4;
 
 	@DeleteAfterTestRun
-	private List<Group> _groups = new ArrayList<>();
+	private final List<Company> _companies = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private final List<Group> _groups = new ArrayList<>();
 
 }

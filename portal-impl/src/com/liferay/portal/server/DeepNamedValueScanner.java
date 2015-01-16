@@ -532,7 +532,7 @@ public class DeepNamedValueScanner {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DeepNamedValueScanner.class);
 
 	private long _elapsedTime;

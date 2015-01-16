@@ -197,15 +197,15 @@ public class LiferayAudioConverter extends LiferayConverter {
 			AUDIO_SAMPLE_RATE_MAX);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayAudioConverter.class);
 
 	private int _audioBitRate;
-	private String _audioContainer;
+	private final String _audioContainer;
 	private int _audioSampleRate;
 	private IContainer _inputIContainer;
-	private String _inputURL;
+	private final String _inputURL;
 	private IContainer _outputIContainer;
-	private String _outputURL;
+	private final String _outputURL;
 
 }

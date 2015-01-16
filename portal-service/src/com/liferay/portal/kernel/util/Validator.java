@@ -1365,17 +1365,17 @@ public class Validator {
 
 	private static final String _XML_EMPTY = "<root />";
 
-	private static Pattern _emailAddressPattern = Pattern.compile(
+	private static final Pattern _emailAddressPattern = Pattern.compile(
 		"[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +
 		"(?:[a-zA-Z0-9](?:-*[a-zA-Z0-9])?\\.*)+");
-	private static Pattern _ipv4AddressPattern = Pattern.compile(
+	private static final Pattern _ipv4AddressPattern = Pattern.compile(
 		"^" +
 		"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
 		"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
 		"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
 		"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" +
 		"$");
-	private static Pattern _ipv6AddressPattern = Pattern.compile(
+	private static final Pattern _ipv6AddressPattern = Pattern.compile(
 		"^" +
 		"\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|" +
 		"(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|" +
@@ -1400,7 +1400,7 @@ public class Validator {
 		"((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\." +
 		"(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?\\s*" +
 		"$");
-	private static Pattern _variableNamePattern = Pattern.compile(
+	private static final Pattern _variableNamePattern = Pattern.compile(
 		"[_a-zA-Z]+[_a-zA-Z0-9]*");
 
 }

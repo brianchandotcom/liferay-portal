@@ -1363,14 +1363,15 @@ public class PluginPackageUtil {
 			pluginPackage);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PluginPackageUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PluginPackageUtil.class);
 
-	private static PluginPackageUtil _instance = new PluginPackageUtil();
+	private static final PluginPackageUtil _instance = new PluginPackageUtil();
 
-	private Set<String> _availableTagsCache;
-	private LocalPluginPackageRepository _installedPluginPackages;
+	private final Set<String> _availableTagsCache;
+	private final LocalPluginPackageRepository _installedPluginPackages;
 	private Date _lastUpdateDate;
-	private Map<String, RemotePluginPackageRepository> _repositoryCache;
+	private final Map<String, RemotePluginPackageRepository> _repositoryCache;
 	private boolean _settingUpdateAvailable;
 	private Boolean _updateAvailable;
 

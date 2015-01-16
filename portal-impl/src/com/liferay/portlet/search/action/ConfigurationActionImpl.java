@@ -115,7 +115,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			actionRequest, "searchConfiguration", searchConfiguration);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationActionImpl.class);
 
 }

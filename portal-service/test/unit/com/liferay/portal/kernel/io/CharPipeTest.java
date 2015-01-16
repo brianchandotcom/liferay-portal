@@ -848,11 +848,11 @@ public class CharPipeTest {
 			}
 		}
 
-		private char[] _buffer;
-		private boolean _close;
+		private final char[] _buffer;
+		private final boolean _close;
 		private boolean _failed;
-		private boolean _force;
-		private Reader _reader;
+		private final boolean _force;
+		private final Reader _reader;
 		private final BlockingQueue<Long> _timestampsBeforeRead =
 			new LinkedBlockingQueue<Long>();
 
@@ -898,12 +898,12 @@ public class CharPipeTest {
 			}
 		}
 
-		private int _dataSize;
-		private boolean _expectException;
+		private final int _dataSize;
+		private final boolean _expectException;
 		private boolean _failed;
 		private final BlockingQueue<Long> _timestampsBeforeWrite =
 			new LinkedBlockingQueue<Long>();
-		private Writer _writer;
+		private final Writer _writer;
 
 	}
 

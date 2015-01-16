@@ -488,15 +488,15 @@ public class InputAssetLinksDisplayContext {
 		return _stagedReferrerPortlet;
 	}
 
-	private long _assetEntryId;
+	private final long _assetEntryId;
 	private List<AssetLink> _assetLinks;
 	private String _eventName;
-	private PageContext _pageContext;
-	private PortletRequest _portletRequest;
+	private final PageContext _pageContext;
+	private final PortletRequest _portletRequest;
 	private String _randomNamespace;
-	private HttpServletRequest _request;
+	private final HttpServletRequest _request;
 	private Boolean _stagedLocally;
 	private Boolean _stagedReferrerPortlet;
-	private ThemeDisplay _themeDisplay;
+	private final ThemeDisplay _themeDisplay;
 
 }

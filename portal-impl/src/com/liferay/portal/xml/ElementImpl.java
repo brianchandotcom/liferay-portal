@@ -698,6 +698,6 @@ public class ElementImpl extends BranchImpl implements Element {
 		return _element.toString();
 	}
 
-	private org.dom4j.Element _element;
+	private final org.dom4j.Element _element;
 
 }

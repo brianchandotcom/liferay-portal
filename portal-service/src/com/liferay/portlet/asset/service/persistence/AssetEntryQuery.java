@@ -687,7 +687,8 @@ public class AssetEntryQuery {
 		return leftRightIds;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AssetEntryQuery.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetEntryQuery.class);
 
 	private long[] _allCategoryIds = new long[0];
 	private long[] _allTagIds = new long[0];

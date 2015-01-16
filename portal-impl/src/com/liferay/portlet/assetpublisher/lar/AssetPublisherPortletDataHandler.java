@@ -417,7 +417,7 @@ public class AssetPublisherPortletDataHandler
 			key, newValues.toArray(new String[newValues.size()]));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherPortletDataHandler.class);
 
 }

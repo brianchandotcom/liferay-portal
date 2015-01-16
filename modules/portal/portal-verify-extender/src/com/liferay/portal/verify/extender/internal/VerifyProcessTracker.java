@@ -140,9 +140,10 @@ public class VerifyProcessTracker {
 		_verifyProcesses.remove(verifyProcessName, verifyProcess);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyProcessTracker.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		VerifyProcessTracker.class);
 
-	private ConcurrentMap<String, VerifyProcess> _verifyProcesses =
+	private final ConcurrentMap<String, VerifyProcess> _verifyProcesses =
 		new ConcurrentSkipListMap<>();
 
 }

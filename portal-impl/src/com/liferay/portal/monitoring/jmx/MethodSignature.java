@@ -103,8 +103,8 @@ public class MethodSignature {
 		return hashCode;
 	}
 
-	private String _className;
-	private String _methodName;
-	private String[] _parameterTypeNames;
+	private final String _className;
+	private final String _methodName;
+	private final String[] _parameterTypeNames;
 
 }

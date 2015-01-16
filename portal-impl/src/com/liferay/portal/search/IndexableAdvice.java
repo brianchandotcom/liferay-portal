@@ -99,9 +99,10 @@ public class IndexableAdvice
 		return _nullIndexable;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(IndexableAdvice.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		IndexableAdvice.class);
 
-	private static Indexable _nullIndexable = new Indexable() {
+	private static final Indexable _nullIndexable = new Indexable() {
 
 		@Override
 		public Class<? extends Annotation> annotationType() {

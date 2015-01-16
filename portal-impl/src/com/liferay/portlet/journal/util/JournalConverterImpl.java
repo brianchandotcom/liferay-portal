@@ -993,11 +993,12 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JournalConverterImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalConverterImpl.class);
 
-	private Map<String, String> _ddmDataTypes;
-	private Map<String, String> _ddmMetadataAttributes;
-	private Map<String, String> _ddmTypesToJournalTypes;
-	private Map<String, String> _journalTypesToDDMTypes;
+	private final Map<String, String> _ddmDataTypes;
+	private final Map<String, String> _ddmMetadataAttributes;
+	private final Map<String, String> _ddmTypesToJournalTypes;
+	private final Map<String, String> _journalTypesToDDMTypes;
 
 }

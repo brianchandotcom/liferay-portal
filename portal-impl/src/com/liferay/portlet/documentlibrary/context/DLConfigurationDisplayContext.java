@@ -170,8 +170,8 @@ public class DLConfigurationDisplayContext {
 	private List<KeyValuePair> _availableEntryColumns;
 	private List<KeyValuePair> _currentDisplayViews;
 	private List<KeyValuePair> _currentEntryColumns;
-	private DLActionsDisplayContext _dlActionsDisplayContext;
-	private DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private ThemeDisplay _themeDisplay;
+	private final DLActionsDisplayContext _dlActionsDisplayContext;
+	private final DLPortletInstanceSettings _dlPortletInstanceSettings;
+	private final ThemeDisplay _themeDisplay;
 
 }

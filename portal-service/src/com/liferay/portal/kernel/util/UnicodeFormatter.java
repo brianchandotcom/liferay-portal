@@ -178,6 +178,7 @@ public class UnicodeFormatter {
 
 	private static final String _UNICODE_PREFIX = "\\u";
 
-	private static Log _log = LogFactoryUtil.getLog(UnicodeFormatter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UnicodeFormatter.class);
 
 }

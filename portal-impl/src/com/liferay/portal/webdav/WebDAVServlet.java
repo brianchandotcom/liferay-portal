@@ -235,6 +235,6 @@ public class WebDAVServlet extends HttpServlet {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WebDAVServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(WebDAVServlet.class);
 
 }

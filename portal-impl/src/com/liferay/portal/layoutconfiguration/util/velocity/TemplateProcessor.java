@@ -257,14 +257,14 @@ public class TemplateProcessor implements ColumnProcessor {
 		return processPortlet(portletId);
 	}
 
-	private static RenderWeightComparator _renderWeightComparator =
+	private static final RenderWeightComparator _renderWeightComparator =
 		new RenderWeightComparator();
 
 	private final Portlet _portlet;
-	private boolean _portletAjaxRender;
-	private Map<Integer, List<PortletRenderer>> _portletRenderers;
-	private HttpServletRequest _request;
-	private HttpServletResponse _response;
+	private final boolean _portletAjaxRender;
+	private final Map<Integer, List<PortletRenderer>> _portletRenderers;
+	private final HttpServletRequest _request;
+	private final HttpServletResponse _response;
 
 	private static class RenderWeightComparator implements Comparator<Integer> {
 

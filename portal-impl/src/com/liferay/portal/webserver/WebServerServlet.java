@@ -1344,11 +1344,12 @@ public class WebServerServlet extends HttpServlet {
 		StringUtil.equalsIgnoreCase(
 			PropsValues.WEB_SERVER_SERVLET_VERSION_VERBOSITY, "partial");
 
-	private static Log _log = LogFactoryUtil.getLog(WebServerServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebServerServlet.class);
 
-	private static Set<String> _acceptRangesMimeTypes = SetUtil.fromArray(
+	private static final Set<String> _acceptRangesMimeTypes = SetUtil.fromArray(
 		PropsValues.WEB_SERVER_SERVLET_ACCEPT_RANGES_MIME_TYPES);
-	private static Format _dateFormat =
+	private static final Format _dateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("d MMM yyyy HH:mm z");
 
 	private boolean _lastModified = true;

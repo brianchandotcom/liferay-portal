@@ -670,6 +670,7 @@ public class EditArticleAction extends PortletAction {
 			portletResource, articleId, true);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(EditArticleAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditArticleAction.class);
 
 }

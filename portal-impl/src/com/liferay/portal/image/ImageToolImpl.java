@@ -734,11 +734,11 @@ public class ImageToolImpl implements ImageTool {
 		orderImageReaderSpis();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ImageToolImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(ImageToolImpl.class);
 
-	private static ImageTool _instance = new ImageToolImpl();
+	private static final ImageTool _instance = new ImageToolImpl();
 
-	private static FileImpl _fileUtil = FileImpl.getInstance();
+	private static final FileImpl _fileUtil = FileImpl.getInstance();
 	private static ImageMagick _imageMagick;
 
 	private Image _defaultCompanyLogo;

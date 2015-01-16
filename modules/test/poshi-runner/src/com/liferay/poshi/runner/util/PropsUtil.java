@@ -96,8 +96,8 @@ public class PropsUtil {
 		_props.setProperty(key, value);
 	}
 
-	private static PropsUtil _instance = new PropsUtil();
+	private static final PropsUtil _instance = new PropsUtil();
 
-	private Properties _props = new Properties();
+	private final Properties _props = new Properties();
 
 }

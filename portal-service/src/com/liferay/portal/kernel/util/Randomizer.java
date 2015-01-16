@@ -137,6 +137,6 @@ public class Randomizer extends Random {
 		return new String(array);
 	}
 
-	private static Randomizer _instance = new Randomizer();
+	private static final Randomizer _instance = new Randomizer();
 
 }

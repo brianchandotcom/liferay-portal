@@ -253,14 +253,14 @@ public class ServiceComponentLocalServiceImpl
 			return null;
 		}
 
-		private boolean _buildAutoUpgrade;
-		private String _buildNamespace;
-		private long _buildNumber;
-		private ClassLoader _classLoader;
-		private String _indexesSQL;
-		private ServiceComponent _previousServiceComponent;
-		private String _sequencesSQL;
-		private String _tablesSQL;
+		private final boolean _buildAutoUpgrade;
+		private final String _buildNamespace;
+		private final long _buildNumber;
+		private final ClassLoader _classLoader;
+		private final String _indexesSQL;
+		private final ServiceComponent _previousServiceComponent;
+		private final String _sequencesSQL;
+		private final String _tablesSQL;
 
 	}
 
@@ -511,10 +511,10 @@ public class ServiceComponentLocalServiceImpl
 
 	private static final int _MAX_SERVICE_COMPONENTS = 10;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceComponentLocalServiceImpl.class);
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
 	private static class NoPACL implements PACL {
 

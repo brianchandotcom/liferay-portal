@@ -512,17 +512,18 @@ public class Watcher implements Runnable {
 		return filePathNames.remove(filePathName);
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(Watcher.class);
+	private static final Logger _logger = LoggerFactory.getLogger(
+		Watcher.class);
 
-	private ConcurrentNavigableMap<Long, String> _createdFilePathNames =
+	private final ConcurrentNavigableMap<Long, String> _createdFilePathNames =
 		new ConcurrentSkipListMap<>();
-	private Path _dataFilePath;
-	private List<String> _downloadedFilePathNames = new ArrayList<>();
-	private List<Path> _failedFilePaths = new CopyOnWriteArrayList<>();
-	private BidirectionalMap<WatchKey, Path> _filePaths =
+	private final Path _dataFilePath;
+	private final List<String> _downloadedFilePathNames = new ArrayList<>();
+	private final List<Path> _failedFilePaths = new CopyOnWriteArrayList<>();
+	private final BidirectionalMap<WatchKey, Path> _filePaths =
 		new BidirectionalMap<>();
-	private boolean _recursive;
-	private WatchEventListener _watchEventListener;
+	private final boolean _recursive;
+	private final WatchEventListener _watchEventListener;
 	private WatchService _watchService;
 
 }

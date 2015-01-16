@@ -124,8 +124,8 @@ public class FilterChainImpl implements FilterChain {
 		}
 	}
 
-	private Portlet _portlet;
-	private List<? extends PortletFilter> _portletFilters;
+	private final Portlet _portlet;
+	private final List<? extends PortletFilter> _portletFilters;
 	private int _pos;
 
 }

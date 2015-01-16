@@ -337,6 +337,7 @@ public class GlobalShutdownAction extends SimpleAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(GlobalShutdownAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		GlobalShutdownAction.class);
 
 }

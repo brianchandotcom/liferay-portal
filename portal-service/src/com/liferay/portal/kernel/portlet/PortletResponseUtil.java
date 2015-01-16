@@ -399,6 +399,7 @@ public class PortletResponseUtil {
 			HttpHeaders.CONTENT_DISPOSITION, sb.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortletResponseUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletResponseUtil.class);
 
 }

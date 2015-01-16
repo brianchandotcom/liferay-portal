@@ -252,7 +252,7 @@ public class I18nFilter extends BasePortalFilter {
 		response.sendRedirect(redirect);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(I18nFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(I18nFilter.class);
 
 	private static Set<String> _languageIds;
 

@@ -321,11 +321,11 @@ public abstract class StateAwareResponseImpl
 		return true;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		StateAwareResponseImpl.class);
 
 	private boolean _calledSetRenderParameter;
-	private List<Event> _events = new ArrayList<>();
+	private final List<Event> _events = new ArrayList<>();
 	private Layout _layout;
 	private Map<String, String[]> _params = new LinkedHashMap<>();
 	private PortletMode _portletMode;

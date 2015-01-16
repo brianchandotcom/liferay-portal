@@ -371,6 +371,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(OrganizationImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		OrganizationImpl.class);
 
 }

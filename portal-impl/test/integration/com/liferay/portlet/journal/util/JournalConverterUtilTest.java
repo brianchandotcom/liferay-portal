@@ -962,7 +962,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 	private static final String _PUBLIC_USER_LAYOUT = "publicUserLayout";
 
 	private DDMStructure _ddmStructure;
-	private Locale _enLocale = LocaleUtil.fromLanguageId("en_US");
-	private Locale _ptLocale = LocaleUtil.fromLanguageId("pt_BR");
+	private final Locale _enLocale = LocaleUtil.fromLanguageId("en_US");
+	private final Locale _ptLocale = LocaleUtil.fromLanguageId("pt_BR");
 
 }

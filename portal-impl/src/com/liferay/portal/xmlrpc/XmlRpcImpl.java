@@ -115,6 +115,6 @@ public class XmlRpcImpl implements XmlRpc {
 		StringUtil.equalsIgnoreCase(
 			PropsValues.HTTP_HEADER_VERSION_VERBOSITY, "partial");
 
-	private static Log _log = LogFactoryUtil.getLog(XmlRpcImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(XmlRpcImpl.class);
 
 }

@@ -162,8 +162,8 @@ public class LimitedInputStream extends InputStream {
 
 	private static final int _SKIP_RETRY_COUNT = 3;
 
-	private InputStream _inputStream;
-	private long _length;
+	private final InputStream _inputStream;
+	private final long _length;
 	private long _read;
 
 }

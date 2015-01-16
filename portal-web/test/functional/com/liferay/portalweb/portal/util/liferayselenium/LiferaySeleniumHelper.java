@@ -1739,9 +1739,10 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
-	private static List<Exception> _javaScriptExceptions = new ArrayList<>();
-	private static List<Exception> _liferayExceptions = new ArrayList<>();
-	private static Screen _screen = new Screen();
+	private static final List<Exception> _javaScriptExceptions =
+		new ArrayList<>();
+	private static final List<Exception> _liferayExceptions = new ArrayList<>();
+	private static final Screen _screen = new Screen();
 	private static int _screenshotCount = 0;
 	private static int _screenshotErrorCount = 0;
 

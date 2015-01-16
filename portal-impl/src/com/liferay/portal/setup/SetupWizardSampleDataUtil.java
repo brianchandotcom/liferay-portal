@@ -205,7 +205,7 @@ public class SetupWizardSampleDataUtil {
 		}
 	}
 
-	private static Object[][] _ORGANIZATION_ARRAYS = {
+	private static final Object[][] _ORGANIZATION_ARRAYS = {
 		{
 			"Chicago", 19014L, 19L, OrganizationConstants.TYPE_LOCATION, "ORD"
 		},
@@ -260,7 +260,7 @@ public class SetupWizardSampleDataUtil {
 		}
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SetupWizardSampleDataUtil.class);
 
 }

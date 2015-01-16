@@ -224,6 +224,6 @@ public class ServiceTrackerWrapper<S, T> implements ServiceTracker<S, T> {
 		return _serviceTracker.waitForService(timeout);
 	}
 
-	private org.osgi.util.tracker.ServiceTracker<S, T> _serviceTracker;
+	private final org.osgi.util.tracker.ServiceTracker<S, T> _serviceTracker;
 
 }

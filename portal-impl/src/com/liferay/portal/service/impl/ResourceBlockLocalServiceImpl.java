@@ -1051,7 +1051,7 @@ public class ResourceBlockLocalServiceImpl
 	private static final String _RETAIN_RESOURCE_BLOCK =
 		ResourceBlockLocalServiceImpl.class.getName() + ".retainResourceBlock";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ResourceBlockLocalServiceImpl.class);
 
 }

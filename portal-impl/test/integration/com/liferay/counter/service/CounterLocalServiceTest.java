@@ -186,9 +186,9 @@ public class CounterLocalServiceTest {
 
 		private static final long serialVersionUID = 1L;
 
-		private String _counterName;
-		private int _incrementCount;
-		private String _processName;
+		private final String _counterName;
+		private final int _incrementCount;
+		private final String _processName;
 
 	}
 

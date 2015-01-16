@@ -74,6 +74,23 @@ public class GoogleDocsDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public boolean isCancelCheckoutDocumentButtonVisible()
+		throws PortalException {
+
+		return false;
+	}
+
+	@Override
+	public boolean isCheckinButtonVisible() throws PortalException {
+		return false;
+	}
+
+	@Override
+	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
+		return false;
+	}
+
+	@Override
 	public boolean isDDMStructureVisible(DDMStructure ddmStructure)
 		throws PortalException {
 
@@ -86,6 +103,11 @@ public class GoogleDocsDLEditFileEntryDisplayContext
 		}
 
 		return super.isDDMStructureVisible(ddmStructure);
+	}
+
+	@Override
+	public boolean isVersionInfoVisible() {
+		return false;
 	}
 
 	private static final UUID _UUID = UUID.fromString(

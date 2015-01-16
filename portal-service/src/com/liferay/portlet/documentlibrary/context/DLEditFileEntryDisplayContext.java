@@ -56,4 +56,6 @@ public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
 
 	public boolean isSaveButtonVisible() throws PortalException;
 
+	public boolean isVersionInfoVisible() throws PortalException;
+
 }

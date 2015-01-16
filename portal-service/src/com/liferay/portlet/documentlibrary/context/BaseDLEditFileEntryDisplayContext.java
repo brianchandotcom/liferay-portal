@@ -149,6 +149,11 @@ public class BaseDLEditFileEntryDisplayContext
 		return parentDLDisplayContext.isSaveButtonVisible();
 	}
 
+	@Override
+	public boolean isVersionInfoVisible() throws PortalException {
+		return parentDLDisplayContext.isVersionInfoVisible();
+	}
+
 	protected DLFileEntryType dlFileEntryType;
 	protected FileEntry fileEntry;
 

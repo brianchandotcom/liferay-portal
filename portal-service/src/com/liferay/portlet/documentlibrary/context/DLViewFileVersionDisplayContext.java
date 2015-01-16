@@ -41,8 +41,6 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public List<ToolbarItem> getToolbarItems() throws PortalException;
 
-	public boolean isAssetMetadataVisible() throws PortalException;
-
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException;
 
@@ -64,6 +62,8 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public boolean isPermissionsButtonVisible() throws PortalException;
 
+	public boolean isVersionInfoVisible() throws PortalException;
+
 	public boolean isViewButtonVisible() throws PortalException;
 
 	public boolean isViewOriginalFileButtonVisible() throws PortalException;
@@ -72,4 +72,5 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException;
 
+	boolean isDownloadLinkVisible() throws PortalException;
 }

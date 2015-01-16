@@ -79,7 +79,7 @@ public class ProxyUsage implements Closeable {
 	}
 
 	protected List<Method> getInjectionPointMethods(Object target) {
-		List<Method> injectionPointMethods = new ArrayList<Method>();
+		List<Method> injectionPointMethods = new ArrayList<>();
 
 		Class<?> targetClass = target.getClass();
 
@@ -106,7 +106,7 @@ public class ProxyUsage implements Closeable {
 
 		ClassLoader classLoader = targetClass.getClassLoader();
 
-		List<Class<?>> interfaceClasses = new ArrayList<Class<?>>();
+		List<Class<?>> interfaceClasses = new ArrayList<>();
 
 		List<Method> injectionPointMethods = getInjectionPointMethods(target);
 
@@ -123,7 +123,7 @@ public class ProxyUsage implements Closeable {
 			classLoader, interfaceClasses.toArray(new Class[0]),
 			_invocationHandler);
 
-		List<InjectionPoint> injectionPoints = new ArrayList<InjectionPoint>();
+		List<InjectionPoint> injectionPoints = new ArrayList<>();
 
 		for (Method injectionPointMethod : injectionPointMethods) {
 			InjectionPoint injectionPoint = createInjectionPoint(
@@ -146,8 +146,7 @@ public class ProxyUsage implements Closeable {
 		}
 		catch (Exception e) {
 			throw new RuntimeException(
-				"Unable to unset " +
-					injectionPoint.getName() + " on "+ target,
+				"Unable to unset " + injectionPoint.getName() + " on " + target,
 				e);
 		}
 
@@ -175,8 +174,7 @@ public class ProxyUsage implements Closeable {
 						catch (Exception e) {
 							throw new RuntimeException(
 								"Unable to set service reference using " +
-									injectionPoint.getName() + " on "+
-										target,
+									injectionPoint.getName() + " on " + target,
 								e);
 						}
 					}
@@ -201,8 +199,7 @@ public class ProxyUsage implements Closeable {
 					catch (Exception e) {
 						throw new RuntimeException(
 							"Unable to set injection point " +
-								injectionPoint.getName() + " on " +
-									target,
+								injectionPoint.getName() + " on " + target,
 							e);
 					}
 				}
@@ -232,8 +229,7 @@ public class ProxyUsage implements Closeable {
 					catch (Exception e) {
 						throw new RuntimeException(
 							"Unable to set injection point " +
-								injectionPoint.getName() + " on " +
-									target,
+								injectionPoint.getName() + " on " + target,
 							e);
 					}
 				}
@@ -260,7 +256,7 @@ public class ProxyUsage implements Closeable {
 		};
 
 	private final List<ServiceTracker<?, ?>> _serviceTrackers =
-		new ArrayList<ServiceTracker<?, ?>>();
+		new ArrayList<>();
 	private Object _unavailableServiceProxy;
 
 	private static class InjectionPoint {

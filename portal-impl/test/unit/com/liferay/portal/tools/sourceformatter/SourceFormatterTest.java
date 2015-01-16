@@ -40,15 +40,15 @@ public class SourceFormatterTest {
 	}
 
 	@Test
-	public void shouldReturnNullTuple() throws Exception {
+	public void testFileNameWithIncorrectExtension() throws Exception {
 		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
 			false, false, false, false);
 
-		String fullFileName =
+		String fileName =
 			"portal-impl/test/integration/com/liferay/portal/tools/" +
 				"sourceformatter/dependencies/wrong.foo";
 
-		Tuple tuple = sourceFormatter.format(fullFileName);
+		Tuple tuple = sourceFormatter.format(fileName);
 
 		Assert.assertNull(tuple);
 	}

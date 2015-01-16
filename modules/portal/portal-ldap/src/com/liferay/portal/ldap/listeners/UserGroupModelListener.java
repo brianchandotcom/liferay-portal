@@ -12,16 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.model;
+package com.liferay.portal.ldap.listeners;
 
 import com.liferay.portal.ModelListenerException;
-import com.liferay.portal.security.exportimport.UserExporterUtil;
-import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;
+import com.liferay.portal.ldap.exportimport.UserImportTransactionThreadLocal;
+import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.security.exportimport.UserExporter;
 import com.liferay.portal.security.exportimport.UserOperation;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
  */
+@Component(immediate = true, service = ModelListener.class)
 public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 
 	@Override
@@ -60,6 +68,11 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 		}
 	}
 
+	@Reference
+	public void setUserExporter(UserExporter userExporter) {
+		_userExporter = userExporter;
+	}
+
 	protected void exportToLDAP(
 			long userId, long userGroupId, UserOperation userOperation)
 		throws Exception {
@@ -68,7 +81,9 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 			return;
 		}
 
-		UserExporterUtil.exportUser(userId, userGroupId, userOperation);
+		_userExporter.exportUser(userId, userGroupId, userOperation);
 	}
+
+	private UserExporter _userExporter;
 
 }

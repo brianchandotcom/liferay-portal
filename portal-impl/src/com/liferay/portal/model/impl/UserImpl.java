@@ -641,6 +641,11 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public String getOriginalEmailAddress() {
+		return super.getOriginalEmailAddress();
+	}
+
+	@Override
 	public boolean getPasswordModified() {
 		return _passwordModified;
 	}

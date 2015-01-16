@@ -12,24 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.model;
+package com.liferay.portal.ldap.listeners;
 
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.model.impl.UserModelImpl;
+import com.liferay.portal.ldap.exportimport.UserImportTransactionThreadLocal;
+import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.MembershipRequest;
+import com.liferay.portal.model.MembershipRequestConstants;
+import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.security.exportimport.UserExporterUtil;
-import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;
+import com.liferay.portal.security.exportimport.UserExporter;
+import com.liferay.portal.service.MembershipRequestLocalService;
 import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Scott Lee
@@ -37,6 +46,7 @@ import java.util.Map;
  * @author Raymond Augé
  * @author Vilmos Papp
  */
+@Component(immediate = true, service = ModelListener.class)
 public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
@@ -80,10 +90,25 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
 	public void onBeforeUpdate(User user) {
-		UserModelImpl userModelImpl = (UserModelImpl)user;
-
 		UserImportTransactionThreadLocal.setOriginalEmailAddress(
-			userModelImpl.getOriginalEmailAddress());
+			user.getOriginalEmailAddress());
+	}
+
+	@Reference
+	public void setMembershipRequestLocalService(
+		MembershipRequestLocalService membershipRequestLocalService) {
+
+		_membershipRequestLocalService = membershipRequestLocalService;
+	}
+
+	@Reference
+	public void setUserExporter(UserExporter userExporter) {
+		_userExporter = userExporter;
+	}
+
+	@Reference
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 	}
 
 	protected void exportToLDAP(User user) throws Exception {
@@ -103,7 +128,7 @@ public class UserModelListener extends BaseModelListener<User> {
 				serviceContext.getExpandoBridgeAttributes();
 		}
 
-		UserExporterUtil.exportUser(user, expandoBridgeAttributes);
+		_userExporter.exportUser(user, expandoBridgeAttributes);
 	}
 
 	protected void updateMembershipRequestStatus(long userId, long groupId)
@@ -112,7 +137,7 @@ public class UserModelListener extends BaseModelListener<User> {
 		long principalUserId = GetterUtil.getLong(
 			PrincipalThreadLocal.getName());
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		List<MembershipRequest> membershipRequests =
 			MembershipRequestLocalServiceUtil.getMembershipRequests(
@@ -127,5 +152,9 @@ public class UserModelListener extends BaseModelListener<User> {
 				new ServiceContext());
 		}
 	}
+
+	private MembershipRequestLocalService _membershipRequestLocalService;
+	private UserExporter _userExporter;
+	private UserLocalService _userLocalService;
 
 }

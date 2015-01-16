@@ -1070,6 +1070,11 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getOrganizations(includeAdministrative);
 	}
 
+	@Override
+	public java.lang.String getOriginalEmailAddress() {
+		return _user.getOriginalEmailAddress();
+	}
+
 	/**
 	* Returns the password of this user.
 	*

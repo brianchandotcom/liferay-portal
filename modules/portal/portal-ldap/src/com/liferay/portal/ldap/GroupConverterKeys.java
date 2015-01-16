@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.ldap;
 
 /**
  * @author Brian Wing Shun Chan

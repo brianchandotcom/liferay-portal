@@ -45,11 +45,9 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.exportimport.UserGroupImportTransactionThreadLocal;
-import com.liferay.portal.security.exportimport.UserImportTransactionThreadLocal;
 import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.security.ldap.AttributesTransformer;
-import com.liferay.portal.security.ldap.AttributesTransformerFactory;
 import com.liferay.portal.security.ldap.LDAPGroup;
 import com.liferay.portal.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.security.ldap.LDAPToPortalConverter;
@@ -450,6 +448,13 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				ldapContext.close();
 			}
 		}
+	}
+
+	@Reference
+	public void setAttributesTransformer(
+		AttributesTransformer attributesTransformer) {
+
+		_attributesTransformer = attributesTransformer;
 	}
 
 	@Reference
@@ -943,10 +948,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		UserImportTransactionThreadLocal.setOriginatesFromImport(true);
 
 		try {
-			AttributesTransformer attributesTransformer =
-				AttributesTransformerFactory.getInstance();
-
-			attributes = attributesTransformer.transformUser(attributes);
+			attributes = _attributesTransformer.transformUser(attributes);
 
 			LDAPUser ldapUser = _ldapToPortalConverter.importLDAPUser(
 				companyId, attributes, userMappings, userExpandoMappings,
@@ -991,10 +993,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			long companyId, Attributes attributes, Properties groupMappings)
 		throws Exception {
 
-		AttributesTransformer attributesTransformer =
-			AttributesTransformerFactory.getInstance();
-
-		attributes = attributesTransformer.transformGroup(attributes);
+		attributes = _attributesTransformer.transformGroup(attributes);
 
 		LDAPGroup ldapGroup = _ldapToPortalConverter.importLDAPGroup(
 			companyId, attributes, groupMappings);
@@ -1361,6 +1360,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	private static Log _log = LogFactoryUtil.getLog(LDAPUserImporterImpl.class);
 
+	private AttributesTransformer _attributesTransformer;
 	private LDAPToPortalConverter _ldapToPortalConverter;
 	private Set<String> _ldapUserIgnoreAttributes = SetUtil.fromArray(
 		PropsValues.LDAP_USER_IGNORE_ATTRIBUTES);

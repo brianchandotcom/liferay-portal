@@ -39,7 +39,7 @@ public interface LDAPImportConfiguration {
 	@Meta.AD(deflt = "test", id = "ldap.import.user.password.default")
 	public String getLDAPImportUserPasswordDefault();
 
-	@Meta.AD(id = "ldap.user.ignore.attributes")
+	@Meta.AD(id = "ldap.user.ignore.attributes", required = false)
 	public String[] getLDAPUserIgnoreAttributes();
 
 	@Meta.AD(deflt = "false", id = "ldap.import.create.role.per.group")

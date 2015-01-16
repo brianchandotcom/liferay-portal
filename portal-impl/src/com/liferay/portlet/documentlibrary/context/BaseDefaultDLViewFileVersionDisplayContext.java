@@ -179,27 +179,6 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isAssetMetadataVisible() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		String portletName = portletDisplay.getPortletName();
-
-		if (portletName.equals(PortletKeys.ASSET_PUBLISHER) ||
-			portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
-			portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ||
-			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
-			portletName.equals(PortletKeys.MY_WORKFLOW_INSTANCES) ||
-			portletName.equals(PortletKeys.MY_WORKFLOW_TASKS) ||
-			portletName.equals(PortletKeys.TRASH)) {
-
-			return true;
-		}
-
-		return ParamUtil.getBoolean(_request, "showAssetMetadata");
-	}
-
-	@Override
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException {
 
@@ -231,6 +210,11 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	@Override
 	public boolean isDownloadButtonVisible() throws PortalException {
 		return _fileEntryDisplayContextHelper.hasViewPermission();
+	}
+
+	@Override
+	public boolean isDownloadLinkVisible() throws PortalException {
+		return isDownloadButtonVisible();
 	}
 
 	@Override
@@ -269,6 +253,11 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	@Override
 	public boolean isPermissionsButtonVisible() throws PortalException {
 		return _fileEntryDisplayContextHelper.hasPermissionsPermission();
+	}
+
+	@Override
+	public boolean isVersionInfoVisible() throws PortalException {
+		return true;
 	}
 
 	@Override

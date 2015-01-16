@@ -178,6 +178,11 @@ public class DefaultDLEditFileEntryDisplayContext
 		return _dlPortletInstanceSettings.isEnableFileEntryDrafts();
 	}
 
+	@Override
+	public boolean isVersionInfoVisible() throws PortalException {
+		return true;
+	}
+
 	private boolean _hasFolderWorkflowDefinitionLink() {
 		try {
 			if (_dlFileEntryType == null) {

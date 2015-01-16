@@ -26,8 +26,6 @@ import aQute.bnd.service.diff.Delta;
 import aQute.bnd.service.diff.Diff;
 import aQute.bnd.version.Version;
 
-import com.liferay.portal.kernel.util.StringUtil;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -273,7 +271,7 @@ public class BaselineJarTask extends BaseBndTask {
 
 		String output = String.format(
 			"%s%-3s %-10s %s", sb, getShortDelta(diff.getDelta()),
-			StringUtil.toLowerCase(type), diff.getName());
+			type.toLowerCase(), diff.getName());
 
 		project.log(output, Project.MSG_WARN);
 

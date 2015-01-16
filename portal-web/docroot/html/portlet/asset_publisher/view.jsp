@@ -62,9 +62,12 @@ boolean hasAddPortletURLs = false;
 				}
 			%>
 
-				<c:if test="<%= !addPortletURLs.isEmpty() %>">
-					<%@ include file="/html/portlet/asset_publisher/add_asset.jspf" %>
-				</c:if>
+				<liferay-ui:asset-add-button
+					addPortletURLs="<%= addPortletURLs %>"
+					defaultAssetPublisher="<%= defaultAssetPublisher %>"
+					groupCount="<%= groupIds.length %>"
+					groupId="<%= groupId %>"
+				/>
 
 			<%
 			}

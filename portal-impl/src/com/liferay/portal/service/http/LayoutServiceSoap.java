@@ -261,9 +261,9 @@ public class LayoutServiceSoap {
 	* @param parentLayoutId the primary key of the parent layout (optionally
 	{@link
 	com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
-	* @param name Map the layout's locales and localized names
-	* @param title Map the layout's locales and localized titles
-	* @param description Map the layout's locales and localized descriptions
+	* @param name the layout's locales and localized names
+	* @param title the layout's locales and localized titles
+	* @param description the layout's locales and localized descriptions
 	* @param type the layout's type (optionally {@link
 	com.liferay.portal.model.LayoutConstants#TYPE_PORTLET}). The
 	possible types can be found in {@link

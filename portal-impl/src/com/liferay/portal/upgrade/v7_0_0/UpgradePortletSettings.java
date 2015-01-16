@@ -33,9 +33,6 @@ import com.liferay.portlet.messageboards.MBSettings;
 import com.liferay.portlet.messageboards.util.MBConstants;
 import com.liferay.portlet.shopping.ShoppingSettings;
 import com.liferay.portlet.shopping.util.ShoppingConstants;
-import com.liferay.portlet.wiki.WikiPortletInstanceSettings;
-import com.liferay.portlet.wiki.WikiSettings;
-import com.liferay.portlet.wiki.util.WikiConstants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -154,10 +151,6 @@ public class UpgradePortletSettings extends UpgradeProcess {
 			PortletKeys.SHOPPING, ShoppingConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, StringPool.EMPTY_ARRAY,
 			ShoppingSettings.ALL_KEYS);
-		upgradeMainPortlet(
-			PortletKeys.WIKI, WikiConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			WikiPortletInstanceSettings.ALL_KEYS, WikiSettings.ALL_KEYS);
 
 		// Display portlets
 
@@ -167,9 +160,6 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		upgradeDisplayPortlet(
 			PortletKeys.MEDIA_GALLERY_DISPLAY,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, DLSettings.ALL_KEYS);
-		upgradeDisplayPortlet(
-			PortletKeys.WIKI_DISPLAY, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			WikiSettings.ALL_KEYS);
 	}
 
 	protected long getGroupId(long plid) throws Exception {

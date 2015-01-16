@@ -45,17 +45,21 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.ByteArrayInputStream;
-
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -298,16 +302,8 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 
 		DDMStructure ddmStructure = ddmStructures.get(0);
 
-		Map<String, Fields> fieldsMap = new HashMap<>();
-
-		Fields fields = new Fields();
-
-		Field nameField = new Field(
-			ddmStructure.getStructureId(), "date_an", new Date());
-
-		fields.put(nameField);
-
-		fieldsMap.put(ddmStructure.getStructureKey(), fields);
+		Map<String, DDMFormValues> ddmFormValuesMap = getDDMFormValuesMap(
+				ddmStructure.getStructureKey(), user.getLocale());
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			RandomTestUtil.randomBytes());
@@ -316,11 +312,43 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			null, null, dlFileEntryType.getFileEntryTypeId(), fieldsMap, null,
-			byteArrayInputStream, byteArrayInputStream.available(),
+			null, null, dlFileEntryType.getFileEntryTypeId(), ddmFormValuesMap,
+			null, byteArrayInputStream, byteArrayInputStream.available(),
 			serviceContext);
 	}
 
+	protected Map<String, DDMFormValues> getDDMFormValuesMap(
+			String ddmStructureKey, Locale currentLocale) {
+		
+		Set<Locale> availableLocales =
+				DDLRecordTestUtil.createAvailableLocales(currentLocale);
+		
+		DDMForm ddmForm = DDLRecordTestUtil.createDDMForm(
+				availableLocales, currentLocale);
+
+		DDMFormValues ddmFormValues = DDLRecordTestUtil.createDDMFormValues(
+				ddmForm, availableLocales, currentLocale);
+		
+		DDMFormField ddmFormField = new DDMFormField("date_an", "ddm-date");
+		
+		ddmFormField.setDataType("date");
+		
+		ddmForm.addDDMFormField(ddmFormField);
+		
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+		
+		ddmFormFieldValue.setName("date_an");
+		ddmFormFieldValue.setValue(new UnlocalizedValue(""));
+		
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+		
+		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
+		
+		ddmFormValuesMap.put(ddmStructureKey, ddmFormValues);
+		
+		return ddmFormValuesMap;
+	}
+	
 	@Override
 	protected VerifyProcess getVerifyProcess() {
 		return new VerifyDocumentLibrary();

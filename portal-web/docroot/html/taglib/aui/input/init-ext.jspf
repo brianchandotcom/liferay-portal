@@ -37,7 +37,7 @@ else if (Validator.isNotNull(title)) {
 	title = LanguageUtil.get(request, title);
 }
 
-boolean checkboxField = baseType.equals("checkbox") || baseType.equals("boolean");
+boolean checkboxField = baseType.equals("checkbox") || baseType.equals("boolean") || type.equals("switch");
 boolean radioField = baseType.equals("radio");
 
 boolean showForLabel = true;
@@ -63,6 +63,10 @@ String fieldCssClass = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, disabled, first, l
 
 if (baseType.equals("email") || baseType.equals("password") || baseType.equals("text") || baseType.equals("textarea")) {
 	fieldCssClass += " form-control";
+}
+
+if (type.equals("switch")) {
+	fieldCssClass += " switch";
 }
 
 boolean useInputWrapper = true;

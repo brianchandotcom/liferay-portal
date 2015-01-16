@@ -15,9 +15,8 @@
 package com.liferay.portlet.blogs.ratings;
 
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.ratings.transformer.RatingsDataTransformerHelper;
 
@@ -35,7 +34,7 @@ public class BlogsRatingsDataTransformerHelper
 
 	@Override
 	public String getDefaultType(String className) {
-		return PropsUtil.get(PropsKeys.BLOGS_RATINGS_DEFAULT_TYPE);
+		return PropsValues.BLOGS_RATINGS_TYPE_DEFAULT;
 	}
 
 }

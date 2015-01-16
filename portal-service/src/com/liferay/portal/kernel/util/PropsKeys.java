@@ -289,9 +289,9 @@ public interface PropsKeys {
 
 	public static final String BLOGS_PUBLISH_TO_LIVE_BY_DEFAULT = "blogs.publish.to.live.by.default";
 
-	public static final String BLOGS_RATINGS_DEFAULT_TYPE = "blogs.ratings.default.type";
-
 	public static final String BLOGS_RATINGS_ENABLED = "blogs.ratings.enabled";
+
+	public static final String BLOGS_RATINGS_TYPE_DEFAULT = "blogs.ratings.type.default";
 
 	public static final String BLOGS_RELATED_ASSETS_ENABLED = "blogs.related.assets.enabled";
 

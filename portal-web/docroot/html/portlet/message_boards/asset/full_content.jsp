@@ -44,7 +44,6 @@ request.setAttribute("edit_message.jsp-thread", message.getThread());
 	viewContentURL.setParameter("className", MBThread.class.getName());
 	viewContentURL.setParameter("classPK", String.valueOf(thread.getPrimaryKey()));
 	viewContentURL.setParameter("showActions", Boolean.FALSE.toString());
-	viewContentURL.setParameter("showAssetMetadata", Boolean.TRUE.toString());
 	viewContentURL.setParameter("showEditURL", Boolean.FALSE.toString());
 	%>
 

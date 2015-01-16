@@ -68,11 +68,6 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isAssetMetadataVisible() throws PortalException {
-		return parentDLDisplayContext.isAssetMetadataVisible();
-	}
-
-	@Override
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException {
 

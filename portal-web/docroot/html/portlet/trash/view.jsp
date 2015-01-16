@@ -173,7 +173,6 @@ if (Validator.isNotNull(keywords)) {
 
 			viewContentURL.setParameter("type", trashRenderer.getType());
 			viewContentURL.setParameter("showActions", Boolean.FALSE.toString());
-			viewContentURL.setParameter("showAssetMetadata", Boolean.TRUE.toString());
 			viewContentURL.setParameter("showEditURL", Boolean.FALSE.toString());
 
 			viewContentURLString = viewContentURL.toString();
@@ -210,7 +209,6 @@ if (Validator.isNotNull(keywords)) {
 					viewContentURL.setParameter("trashEntryId", String.valueOf(rootEntry.getEntryId()));
 					viewContentURL.setParameter("type", rootTrashRenderer.getType());
 					viewContentURL.setParameter("showActions", Boolean.FALSE.toString());
-					viewContentURL.setParameter("showAssetMetadata", Boolean.TRUE.toString());
 					viewContentURL.setParameter("showEditURL", Boolean.FALSE.toString());
 
 					viewRootContentURLString = viewContentURL.toString();

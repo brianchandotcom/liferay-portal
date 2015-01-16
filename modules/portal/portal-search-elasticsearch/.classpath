@@ -10,6 +10,7 @@
 	<classpathentry kind="lib" path="/portal-master/lib/development/mail.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/servlet-api.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/global/portlet.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/bnd.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-lang.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-logging.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/log4j.jar" />
@@ -20,17 +21,8 @@
 	<classpathentry kind="lib" path="lib/antlr-runtime.jar" />
 	<classpathentry kind="lib" path="lib/asm-commons.jar" />
 	<classpathentry kind="lib" path="lib/asm.jar" />
-	<classpathentry kind="lib" path="lib/elasticsearch-analysis-icu.jar" />
-	<classpathentry kind="lib" path="lib/elasticsearch-analysis-kuromoji.jar" />
-	<classpathentry kind="lib" path="lib/elasticsearch-analysis-smartcn.jar" />
 	<classpathentry kind="lib" path="lib/elasticsearch.jar" />
-	<classpathentry kind="lib" path="lib/icu4j.jar" />
-	<classpathentry kind="lib" path="lib/jakarta-regexp.jar" />
-	<classpathentry kind="lib" path="lib/log4j-over-slf4j.jar" />
 	<classpathentry kind="lib" path="lib/lucene-analyzers-common.jar" />
-	<classpathentry kind="lib" path="lib/lucene-analyzers-icu.jar" />
-	<classpathentry kind="lib" path="lib/lucene-analyzers-kuromoji.jar" />
-	<classpathentry kind="lib" path="lib/lucene-analyzers-smartcn.jar" />
 	<classpathentry kind="lib" path="lib/lucene-codecs.jar" />
 	<classpathentry kind="lib" path="lib/lucene-core.jar" />
 	<classpathentry kind="lib" path="lib/lucene-grouping.jar" />
@@ -43,9 +35,6 @@
 	<classpathentry kind="lib" path="lib/lucene-sandbox.jar" />
 	<classpathentry kind="lib" path="lib/lucene-spatial.jar" />
 	<classpathentry kind="lib" path="lib/lucene-suggest.jar" />
-	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
-	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
-	<classpathentry kind="lib" path="lib/slf4j-api.jar" />
 	<classpathentry kind="lib" path="lib/spatial4j.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

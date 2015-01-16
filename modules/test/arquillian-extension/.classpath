@@ -27,6 +27,8 @@
 	<classpathentry kind="lib" path="lib/arquillian-core-spi.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-test-api.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-test-spi.jar" />
+	<classpathentry kind="lib" path="lib/fest-assert.jar" />
+	<classpathentry kind="lib" path="lib/fest-util.jar" />
 	<classpathentry kind="lib" path="lib/shrinkwrap-api.jar" />
 	<classpathentry kind="lib" path="lib/shrinkwrap-descriptors-api-base.jar" />
 	<classpathentry kind="lib" path="lib/shrinkwrap-descriptors-spi.jar" />

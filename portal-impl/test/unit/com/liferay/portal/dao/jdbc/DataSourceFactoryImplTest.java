@@ -31,7 +31,6 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 
 import java.lang.management.ManagementFactory;
@@ -61,7 +60,7 @@ import org.junit.Test;
 public class DataSourceFactoryImplTest {
 
 	@BeforeClass
-	public static void setUpClass() throws IOException {
+	public static void setUpClass() {
 		ProcessExecutorUtil processExecutorUtil = new ProcessExecutorUtil();
 
 		processExecutorUtil.setProcessExecutor(new LocalProcessExecutor());
@@ -69,19 +68,14 @@ public class DataSourceFactoryImplTest {
 		FileUtil fileUtil = new FileUtil();
 
 		fileUtil.setFile(new FileImpl());
-
-		FileUtil.write(
-			_portalExt, "jdbc.default.liferay.pool.provider=hikaricp", false,
-			false);
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws IOException {
+	public static void tearDownClass() {
 		String jarName = PropsUtil.get(
 			PropsKeys.SETUP_LIFERAY_POOL_PROVIDER_JAR_NAME,
 			new Filter("hikaricp"));
 
-		FileUtil.delete(_portalExt);
 		FileUtil.delete(new File(PropsValues.LIFERAY_LIB_PORTAL_DIR, jarName));
 		FileUtil.deltree(new File(_WORKING_DIRECTORY, "liferay"));
 	}
@@ -96,6 +90,7 @@ public class DataSourceFactoryImplTest {
 		arguments.add(
 			"-D" + PropsKeys.LIFERAY_LIB_PORTAL_DIR + "=" +
 				PropsValues.LIFERAY_LIB_PORTAL_DIR);
+		arguments.add("-Dportal:jdbc.default.liferay.pool.provider=hikaricp");
 
 		processConfigBuilder.setArguments(arguments);
 		processConfigBuilder.setBootstrapClassPath(
@@ -127,9 +122,6 @@ public class DataSourceFactoryImplTest {
 
 	private static final String _WORKING_DIRECTORY = System.getProperty(
 		"user.dir");
-
-	private static final File _portalExt = new File(
-		_WORKING_DIRECTORY, "portal-ext.properties");
 
 	private static class TestProcessCallable
 		implements ProcessCallable<TestResult> {

@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
@@ -29,7 +31,9 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -80,7 +84,20 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 	protected DDMFormValues createDDMFormValues(
 		Metadata metadata, Field[] fields) {
 
-		DDMFormValues ddmFormValues = new DDMFormValues(new DDMForm());
+		DDMForm ddmForm = new DDMForm();
+		
+		Set<Locale> availableLocales = new LinkedHashSet<>();
+		Locale defaultLocale = LocaleUtil.getDefault();
+		
+		availableLocales.add(defaultLocale);
+		
+		ddmForm.setAvailableLocales(availableLocales);
+		ddmForm.setDefaultLocale(defaultLocale);
+		
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.setAvailableLocales(availableLocales);
+		ddmFormValues.setDefaultLocale(defaultLocale);
 		
 		for (Field field : fields) {
 			Class<?> fieldClass = field.getDeclaringClass();
@@ -96,6 +113,12 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 				continue;
 			}
 
+			DDMFormField ddmFormField = new DDMFormField(name, "text");
+			
+			ddmFormField.setDataType("string");
+			
+			ddmForm.addDDMFormField(ddmFormField);
+			
 			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 			
 			ddmFormFieldValue.setName(name);

@@ -14,12 +14,30 @@
 
 package com.liferay.currency.converter.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration;
 import com.liferay.currency.converter.web.upgrade.CurrencyConverterWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.IOException;
+
+import java.util.Map;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.ReadOnlyException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -27,7 +45,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true,
+		configurationPid = "com.liferay.currency.converter.web",
+		configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-currency-converter",
 		"com.liferay.portlet.display-category=category.finance",
@@ -47,16 +66,57 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.portlet-mode=text/html;edit,edit-guest",
-		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language"
 	},
 	service = Portlet.class
 )
 public class CurrencyConverterPortlet extends MVCPortlet {
 
+	@Override
+	public void doView(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		_defaultSymbols(renderRequest);
+
+		renderRequest.setAttribute(
+			CurrencyConverterConfiguration.class.getName(),
+			_CurrencyConverterConfiguration);
+
+		super.doView(renderRequest, renderResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_CurrencyConverterConfiguration = Configurable.createConfigurable(
+			CurrencyConverterConfiguration.class, properties);
+	}
+
 	@Reference(unbind = "-")
 	protected void setCurrencyConverterWebUpgrade(
 		CurrencyConverterWebUpgrade currencyConverterWebUpgrade) {
 	}
+
+	private void _defaultSymbols(PortletRequest portletRequest)
+		throws ReadOnlyException {
+
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
+
+		String[] symbols = StringUtil.split(
+			StringUtil.toUpperCase(
+				ParamUtil.getString(portletRequest, "symbols")));
+
+		if (symbols.length > 1) {
+			portletPreferences.setValues("symbols", symbols);
+		}
+		else {
+			portletPreferences.setValues(
+				"symbols", _CurrencyConverterConfiguration.symbols());
+		}
+	}
+
+	private volatile CurrencyConverterConfiguration
+		_CurrencyConverterConfiguration;
 
 }

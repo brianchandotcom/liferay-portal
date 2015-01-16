@@ -34,7 +34,7 @@ Map<String,String> fileBrowserParams = new HashMap();
 
 fileBrowserParams.put("attachmentURLPrefix", attachmentURLPrefix);
 
-if (wikiPage.isNew()) {
+if ((wikiPage == null) || wikiPage.isNew()) {
 	if (format.equals("html")) {
 		fileBrowserParams.put("tabs1Names", "documents,pages");
 	}

@@ -25,6 +25,20 @@ import org.junit.Test;
 public class SourceFormatterTest {
 
 	@Test
+	public void testFileNameWithIncorrectExtension() throws Exception {
+		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
+			false, false, false, false);
+
+		String fileName =
+			"portal-impl/test/integration/com/liferay/portal/tools/" +
+				"sourceformatter/dependencies/wrong.foo";
+
+		Tuple tuple = sourceFormatter.format(fileName);
+
+		Assert.assertNull(tuple);
+	}
+
+	@Test
 	public void testSourceFormatter() throws Throwable {
 		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
 			false, true, false, false);
@@ -37,20 +51,6 @@ public class SourceFormatterTest {
 				sme.getFileName(), sme.getFormattedSource(),
 				sme.getOriginalSource());
 		}
-	}
-
-	@Test
-	public void testFileNameWithIncorrectExtension() throws Exception {
-		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
-			false, false, false, false);
-
-		String fileName =
-			"portal-impl/test/integration/com/liferay/portal/tools/" +
-				"sourceformatter/dependencies/wrong.foo";
-
-		Tuple tuple = sourceFormatter.format(fileName);
-
-		Assert.assertNull(tuple);
 	}
 
 }

@@ -60,7 +60,7 @@ public class PortletRatingsDefinitionUtil {
 
 	private static final ServiceTrackerMap<String, PortletRatingsDefinition>
 		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
-			PortletRatingsDefinition.class, "portletId");
+			PortletRatingsDefinition.class, "javax.portlet.name");
 
 	static {
 		_serviceTrackerMap.open();

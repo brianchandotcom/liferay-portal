@@ -15,7 +15,6 @@
 package com.liferay.portlet.blogs.ratings;
 
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.ratings.transformer.PortletRatingsDefinition;
@@ -23,7 +22,7 @@ import com.liferay.portlet.ratings.transformer.PortletRatingsDefinition;
 /**
  * @author Roberto Díaz
  */
-@OSGiBeanProperties(property = {"portletId=" + PortletKeys.BLOGS})
+@OSGiBeanProperties(property = {"javax.portlet.name=33"})
 public class BlogsPortletRatingsDefinition implements PortletRatingsDefinition {
 
 	@Override

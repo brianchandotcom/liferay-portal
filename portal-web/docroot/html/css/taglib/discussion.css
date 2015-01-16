@@ -41,7 +41,7 @@
 	}
 
 	.lfr-discussion {
-		border-bottom: 1px solid transparent;
+		border-top: 1px solid transparent;
 		padding: 24px 0 24px 0;
 		position: relative;
 		width: auto;
@@ -55,7 +55,7 @@
 		}
 
 		&.last {
-			border-bottom-width: 0;
+			border-top-width: 0;
 		}
 	}
 
@@ -236,7 +236,11 @@
 	}
 
 	.lfr-discussion {
-		border-bottom-color: #B0B4BB;
+		border-top-color: rgba(176, 180, 187, 0.5);
+
+		&.depth-0 {
+			border-top-color: rgba(176, 180, 187, 1);
+		}
 	}
 
 	.lfr-discussion-details {

@@ -186,13 +186,15 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 <aui:script use="<%= modules %>">
 	window['<%= name %>'] = {
 		create: function() {
-			var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
+			if (! window['<%= name %>'].instanceReady) {
+				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
 
-			var editorContainer = A.one('#<%= name %>Container');
+				var editorContainer = A.one('#<%= name %>Container');
 
-			editorContainer.appendChild(editorNode);
+				editorContainer.appendChild(editorNode);
 
-			createEditor();
+				createEditor();
+			}
 		},
 
 		destroy: function() {
@@ -206,6 +208,8 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 			if (editor) {
 				editor.destroy();
+
+				window['<%= name %>'].instanceReady = false;
 			}
 
 			var editorEl = document.getElementById('<%= name %>');

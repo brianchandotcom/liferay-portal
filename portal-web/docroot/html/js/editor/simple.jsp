@@ -53,13 +53,15 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 <aui:script use='<%= resizable ? "resize" : "aui-base" %>'>
 	window['<%= name %>'] = {
 		create: function() {
-			var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
+			if (! window['<%= name %>'].instanceReady) {
+				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
 
-			var editorContainer = A.one('#<%= name %>Container');
+				var editorContainer = A.one('#<%= name %>Container');
 
-			editorContainer.appendChild(editorNode);
+				editorContainer.appendChild(editorNode);
 
-			window['<%= name %>'].initEditor();
+				window['<%= name %>'].initEditor();
+			}
 		},
 
 		destroy: function() {
@@ -73,6 +75,8 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 
 			if (editorEl) {
 				editorEl.parentNode.removeChild(editorEl);
+
+				window['<%= name %>'].instanceReady = false;
 			}
 		},
 

@@ -390,13 +390,15 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 	window['<%= name %>'] = {
 		create: function() {
-			var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
+			if (! window['<%= name %>'].instanceReady) {
+				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
 
-			var editorContainer = A.one('#<%= name %>Container');
+				var editorContainer = A.one('#<%= name %>Container');
 
-			editorContainer.appendChild(editorNode);
+				editorContainer.appendChild(editorNode);
 
-			window['<%= name %>'].initEditor();
+				window['<%= name %>'].initEditor();
+			}
 		},
 
 		destroy: function() {
@@ -418,6 +420,8 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 			if (editor) {
 				editor.destroy();
+
+				window['<%= name %>'].instanceReady = false;
 			}
 
 			var editorNode = document.getElementById('<%= name %>');

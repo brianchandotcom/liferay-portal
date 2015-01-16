@@ -132,15 +132,15 @@ SearchContainer searchContainer = null;
 					<c:choose>
 						<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
 							<aui:row fluid="<%= true %>">
-								<aui:col cssClass="lfr-discussion-details" width="<%= 25 %>">
+								<div class="lfr-discussion-details">
 									<liferay-ui:user-display
 										displayStyle="2"
 										showUserName="<%= false %>"
 										userId="<%= user.getUserId() %>"
 									/>
-								</aui:col>
+								</div>
 
-								<aui:col cssClass="lfr-discussion-body" width="<%= 75 %>">
+								<div class="lfr-discussion-body">
 									<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="postReplyBody0" placeholder="type-your-comment-here" />
 
 									<aui:input name="postReplyBody0" type="hidden" />
@@ -148,7 +148,7 @@ SearchContainer searchContainer = null;
 									<aui:button-row>
 										<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
 									</aui:button-row>
-								</aui:col>
+								</div>
 							</aui:row>
 						</c:when>
 						<c:otherwise>

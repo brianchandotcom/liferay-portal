@@ -56,16 +56,16 @@ request.setAttribute("page.jsp-i", new Integer(i));
 			<aui:input name='<%= "parentMessageId" + i %>' type="hidden" value="<%= message.getMessageId() %>" />
 		</div>
 
-		<aui:col cssClass="lfr-discussion-details" width="<%= 25 %>">
+		<div class="lfr-discussion-details">
 			<liferay-ui:user-display
 				displayStyle="2"
 				showImageOverlay="<%= userId == message.getUserId() %>"
 				showUserName="<%= false %>"
 				userId="<%= message.getUserId() %>"
 			/>
-		</aui:col>
+		</div>
 
-		<aui:col cssClass="lfr-discussion-body" width="<%= 75 %>">
+		<div class="lfr-discussion-body">
 			<c:if test="<%= (message != null) && !message.isApproved() %>">
 				<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 
@@ -172,51 +172,34 @@ request.setAttribute("page.jsp-i", new Integer(i));
 				</c:if>
 
 				<c:if test="<%= !hideControls && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
-					<ul class="lfr-discussion-actions">
-						<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
-							<li class="lfr-discussion-reply-to">
+					<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
 
-								<%
-								String taglibPostReplyURL = "javascript:"
-									+ randomNamespace + "showEditor('" + namespace + "postReplyBody" + i + "','" + namespace + randomNamespace + "postReplyForm" + i + "'); "
-									+ randomNamespace + "hideEditor('" + namespace + "editReplyBody" + i + "','" + namespace + randomNamespace + "editForm" + i + "');";
-								%>
+						<%
+						String taglibPostReplyURL = "javascript:"
+							+ randomNamespace + "showEditor('" + namespace + "postReplyBody" + i + "','" + namespace + randomNamespace + "postReplyForm" + i + "'); "
+							+ randomNamespace + "hideEditor('" + namespace + "editReplyBody" + i + "','" + namespace + randomNamespace + "editForm" + i + "');";
+						%>
 
-								<c:choose>
-									<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-										<liferay-ui:icon
-											iconCssClass="icon-reply"
-											label="<%= true %>"
-											message="post-reply"
-											url="<%= taglibPostReplyURL %>"
-										/>
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:icon
-											iconCssClass="icon-reply"
-											label="<%= true %>"
-											message="please-sign-in-to-reply"
-											url="<%= themeDisplay.getURLSignIn() %>"
-										/>
-									</c:otherwise>
-								</c:choose>
-							</li>
-						</c:if>
-
-						<c:if test="<%= i > 0 %>">
-
-							<%
-							String taglibTopURL = "#" + randomNamespace + "messages_top";
-							%>
-
-							<li class="lfr-discussion-top-link">
+						<c:choose>
+							<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
 								<liferay-ui:icon
-									iconCssClass="icon-long-arrow-up"
 									label="<%= true %>"
-									message="top"
-									url="<%= taglibTopURL %>"
+									message="reply"
+									url="<%= taglibPostReplyURL %>"
 								/>
-							</li>
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:icon
+									label="<%= true %>"
+									message="please-sign-in-to-reply"
+									url="<%= themeDisplay.getURLSignIn() %>"
+								/>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+
+					<ul class="lfr-discussion-actions">
+						<c:if test="<%= i > 0 %>">
 
 							<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
 
@@ -253,19 +236,19 @@ request.setAttribute("page.jsp-i", new Integer(i));
 					</ul>
 				</c:if>
 			</div>
-		</aui:col>
+		</div>
 
-		<aui:row cssClass="lfr-discussion-form-container" fluid="<%= true %>">
-			<aui:row fluid="<%= true %>" id='<%= randomNamespace + "postReplyForm" + i %>' style="display: none;">
-				<aui:col cssClass="lfr-discussion-details" width="<%= 25 %>">
+		<div class="lfr-discussion-form-container reply-container">
+			<div class="<%= depth < 2 ? "depth-1 reply" : "reply" %>" id='<portlet:namespace /><%= randomNamespace + "postReplyForm" + i %>' style="display: none;">
+				<div class="lfr-discussion-details">
 					<liferay-ui:user-display
 						displayStyle="2"
 						showUserName="<%= false %>"
 						userId="<%= user.getUserId() %>"
 					/>
-				</aui:col>
+				</div>
 
-				<aui:col cssClass="lfr-discussion-body" width="<%= 75 %>">
+				<div class="lfr-discussion-body">
 					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "postReplyBody" + i %>' placeholder="type-your-comment-here" />
 
 					<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
@@ -279,8 +262,8 @@ request.setAttribute("page.jsp-i", new Integer(i));
 
 						<aui:button cssClass="btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
 					</aui:button-row>
-				</aui:col>
-			</aui:row>
+				</div>
+			</div>
 
 			<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
 				<div class="col-md-12 lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
@@ -314,7 +297,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 					</aui:button-row>
 				</div>
 			</c:if>
-		</aui:row>
+		</div>
 	</div>
 </c:if>
 

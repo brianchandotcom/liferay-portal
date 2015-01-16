@@ -24,9 +24,24 @@
 		}
 	}
 
+	.depth-1 {
+		margin-left: 75px;
+	}
+
+	.depth-2 {
+		margin-left: 150px;
+	}
+
+	.reply-container {
+		overflow: hidden;
+
+		.reply {
+			margin-top: 30px;
+		}
+	}
+
 	.lfr-discussion {
 		border-bottom: 1px solid transparent;
-		margin: 0;
 		padding: 24px 0 24px 0;
 		position: relative;
 		width: auto;
@@ -39,14 +54,6 @@
 			visibility: hidden;
 		}
 
-		&.depth-1 {
-			margin-left: 10%;
-		}
-
-		&.depth-2 {
-			margin-left: 20%;
-		}
-
 		&.last {
 			border-bottom-width: 0;
 		}
@@ -55,7 +62,8 @@
 	.lfr-discussion-details {
 		padding-left: 0;
 		padding-right: 0;
-		width: 10%;
+		width: 100px;
+		float: left;
 
 		.column-content {
 			padding: 0;
@@ -85,7 +93,7 @@
 
 	.lfr-discussion-body {
 		padding-left: 0;
-		width: 90%;
+		overflow: hidden;
 
 		.lfr-discussion-controls .taglib-ratings .rating-label-element {
 			padding-left: 0;

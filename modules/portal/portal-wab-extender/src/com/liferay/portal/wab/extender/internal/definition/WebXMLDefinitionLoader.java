@@ -15,7 +15,6 @@
 package com.liferay.portal.wab.extender.internal.definition;
 
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 
@@ -93,7 +92,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		else if (qName.equals("dispatcher")) {
 			String dispatcher = String.valueOf(_stack.pop());
 
-			dispatcher = StringUtil.toUpperCase(dispatcher);
+			dispatcher = dispatcher.toUpperCase();
 			dispatcher = dispatcher.trim();
 
 			_filterMapping.dispatchers.add(dispatcher);

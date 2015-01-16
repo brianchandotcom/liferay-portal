@@ -135,6 +135,15 @@ public class DataSourceFactoryImplTest {
 
 				Properties properties = new Properties();
 
+				properties.setProperty(
+					"driverClassName", "org.hsqldb.jdbcDriver");
+				properties.setProperty(
+					"url", "jdbc:hsqldb:mem:testDB;shutdown=true");
+				properties.setProperty("username", "sa");
+				properties.setProperty("password", "");
+				properties.setProperty("maximumPoolSize", "10");
+				properties.setProperty("poolName", "TestJDBCPool");
+
 				DataSource dataSource = DataSourceFactoryUtil.initDataSource(
 					properties);
 
@@ -147,7 +156,7 @@ public class DataSourceFactoryImplTest {
 
 					try {
 						PreparedStatement preparedStatement =
-							connection.prepareStatement(_getTestQuery());
+							connection.prepareStatement(_CONNECTION_TEST_QUERY);
 
 						preparedStatement.execute();
 					}
@@ -160,7 +169,7 @@ public class DataSourceFactoryImplTest {
 					ManagementFactory.getPlatformMBeanServer();
 
 				ObjectName poolName = new ObjectName(
-					"com.zaxxer.hikari:type=Pool (HikariPool-0)");
+					"com.zaxxer.hikari:type=Pool (TestJDBCPool)");
 
 				Integer idleConnections = (Integer)mBeanServer.getAttribute(
 					poolName, "IdleConnections");
@@ -180,21 +189,7 @@ public class DataSourceFactoryImplTest {
 			}
 		}
 
-		private String _getTestQuery() {
-			if (PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME.equals(
-					"org.hsqldb.jdbcDriver")) {
-
-				return _HSQL_CONNECTION_TEST_QUERY;
-			}
-
-			// Working for MySQL, Microsoft SQL Server and PostgreSQL
-
-			return _COMMON_CONNECTION_TEST_QUERY;
-		}
-
-		private static final String _COMMON_CONNECTION_TEST_QUERY = "SELECT 1";
-
-		private static final String _HSQL_CONNECTION_TEST_QUERY =
+		private static final String _CONNECTION_TEST_QUERY =
 			"SELECT 1 FROM INFORMATION_SCHEMA.SYSTEM_USERS";
 
 		private static final long serialVersionUID = 1L;

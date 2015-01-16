@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.ratings.transformer;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 public interface RatingsDataTransformer {
 
@@ -27,14 +29,8 @@ public interface RatingsDataTransformer {
 
 	public static final String THUMBS = "thumbs";
 
-	public void transformCompanyRatingsData(
-			long companyId, String fromRatingsType, String toRatingsType,
-			String[] classNames)
-		throws PortalException;
-
-	public void transformGroupRatingsData(
-			long groupId, String fromRatingsType, String toRatingsType,
-			String[] classNames)
+	public ActionableDynamicQuery.PerformActionMethod transformRatingsData(
+			final String fromRatingsType, final String toRatingsType)
 		throws PortalException;
 
 }

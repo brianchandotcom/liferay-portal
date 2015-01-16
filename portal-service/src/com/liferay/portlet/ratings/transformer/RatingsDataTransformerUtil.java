@@ -14,22 +14,28 @@
 
 package com.liferay.portlet.ratings.transformer;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 
 import javax.portlet.PortletPreferences;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 public class RatingsDataTransformerUtil {
 
 	public static void transformCompanyRatingsData(
-			long companyId, PortletPreferences oldPortletPreferences,
+			final long companyId, PortletPreferences oldPortletPreferences,
 			UnicodeProperties properties)
 		throws Exception {
 
@@ -43,31 +49,20 @@ public class RatingsDataTransformerUtil {
 			String[] classNames =
 				RatingsDataTransformerHelperUtil.getClassNames(portletId);
 
-			for (String className : classNames) {
-				String propertyName =
-					className + StringPool.UNDERLINE + "RatingsType";
+			for (final String className : classNames) {
+				String propertyName = _getPropertyName(className);
 
-				String fromRatingsType = oldPortletPreferences.getValue(
-					propertyName, StringPool.BLANK);
-				String toRatingsType = properties.getProperty(propertyName);
-
-				if (Validator.isNotNull(fromRatingsType) &&
-					Validator.isNotNull(toRatingsType) &&
-					!fromRatingsType.equals(toRatingsType)) {
-
-					classNames = ArrayUtil.append(classNames, className);
-				}
-
-				if (ArrayUtil.isNotEmpty(classNames)) {
-					_ratingsDataTransformer.transformCompanyRatingsData(
-						companyId, fromRatingsType, toRatingsType, classNames);
-				}
+				transformRatingsData(
+					"companyId", companyId, className,
+					oldPortletPreferences.getValue(
+						propertyName, StringPool.BLANK),
+					properties.getProperty(propertyName));
 			}
 		}
 	}
 
 	public static void transformGroupRatingsData(
-			long groupId, UnicodeProperties oldProperties,
+			final long groupId, UnicodeProperties oldProperties,
 			UnicodeProperties properties)
 		throws Exception {
 
@@ -81,27 +76,66 @@ public class RatingsDataTransformerUtil {
 			String[] classNames =
 				RatingsDataTransformerHelperUtil.getClassNames(portletId);
 
-			for (String className : classNames) {
-				String propertyName =
-					className + StringPool.UNDERLINE + "RatingsType";
+			for (final String className : classNames) {
+				String propertyName = _getPropertyName(className);
 
-				String fromRatingsType = oldProperties.getProperty(
-					propertyName);
-				String toRatingsType = properties.getProperty(propertyName);
-
-				if (Validator.isNotNull(fromRatingsType) &&
-					Validator.isNotNull(toRatingsType) &&
-					!fromRatingsType.equals(toRatingsType)) {
-
-					classNames = ArrayUtil.append(classNames, className);
-				}
-
-				if (ArrayUtil.isNotEmpty(classNames)) {
-					_ratingsDataTransformer.transformGroupRatingsData(
-						groupId, fromRatingsType, toRatingsType, classNames);
-				}
+				transformRatingsData(
+					"groupId", groupId, className,
+					oldProperties.getProperty(propertyName),
+					properties.getProperty(propertyName));
 			}
 		}
+	}
+
+	protected static void transformRatingsData(
+			final String classPKFieldName, final long classPKFieldValue,
+			final String className, String fromRatingsType,
+			String toRatingsType)
+		throws PortalException {
+
+		if (Validator.isNull(fromRatingsType) ||
+			Validator.isNull(toRatingsType) ||
+			fromRatingsType.equals(toRatingsType)) {
+
+			return;
+		}
+
+		ActionableDynamicQuery.PerformActionMethod performActionMethod =
+			_ratingsDataTransformer.transformRatingsData(
+				fromRatingsType, toRatingsType);
+
+		if (performActionMethod == null) {
+			return;
+		}
+
+		ActionableDynamicQuery ratingsEntryActionableDynamicQuery =
+			RatingsEntryLocalServiceUtil.getActionableDynamicQuery();
+
+		ratingsEntryActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property property = PropertyFactoryUtil.forName(
+						classPKFieldName);
+
+					dynamicQuery.add(property.eq(classPKFieldValue));
+
+					property = PropertyFactoryUtil.forName("className");
+
+					dynamicQuery.add(property.eq(className));
+				}
+
+			});
+
+		ratingsEntryActionableDynamicQuery.setPerformActionMethod(
+			performActionMethod);
+
+		ratingsEntryActionableDynamicQuery.performActions();
+	}
+
+	private static String _getPropertyName(String className) {
+		return className + StringPool.UNDERLINE + "RatingsType";
 	}
 
 	private static RatingsDataTransformer _ratingsDataTransformer;

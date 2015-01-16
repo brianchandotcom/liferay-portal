@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.ratings.transformer;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -22,21 +23,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DummyRatingsDataTransformer implements RatingsDataTransformer {
 
 	@Override
-	public void transformCompanyRatingsData(
-			long companyId, String fromRatingsType, String toRatingsType,
-			String[] classNames)
+	public ActionableDynamicQuery.PerformActionMethod transformRatingsData(
+			final String fromRatingsType, final String toRatingsType)
 		throws PortalException {
 
-		return;
-	}
-
-	@Override
-	public void transformGroupRatingsData(
-			long groupId, String fromRatingsType, String toRatingsType,
-			String[] classNames)
-		throws PortalException {
-
-		return;
+		return null;
 	}
 
 }

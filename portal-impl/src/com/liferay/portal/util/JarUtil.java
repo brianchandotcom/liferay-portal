@@ -16,7 +16,9 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 
@@ -39,6 +41,20 @@ public class JarUtil {
 	public static void downloadAndInstallJar(
 			URL url, String libPath, String name, URLClassLoader urlClassLoader)
 		throws Exception {
+
+		if (PortalRunMode.isTestMode()) {
+			String urlString = url.toExternalForm();
+
+			String newURLString = StringUtil.replace(
+				urlString, "://", "://mirrors/");
+
+			url = new URL(newURLString);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Mapping url from :" + urlString + ", to :" + newURLString);
+			}
+		}
 
 		Path path = Paths.get(libPath, name);
 

@@ -151,6 +151,8 @@ public class NewEnvTestRule implements TestRule {
 			arguments.add("-Djunit.debug=true");
 		}
 
+		arguments.add("-Dliferay.mode=test");
+
 		String agentLine = System.getProperty("junit.cobertura.agent");
 
 		if (Validator.isNotNull(agentLine)) {

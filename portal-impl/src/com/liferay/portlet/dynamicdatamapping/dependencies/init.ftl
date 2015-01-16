@@ -109,6 +109,8 @@
 
 <#-- Util -->
 
+<#assign contextPath = themeDisplay.getPathContext()>
+
 <#function escape value="">
 	<#if value?is_string>
 		<#return htmlUtil.escape(value)>

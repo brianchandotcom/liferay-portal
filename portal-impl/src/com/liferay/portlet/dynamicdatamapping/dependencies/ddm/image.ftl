@@ -22,8 +22,8 @@
 	<div class="hide" id="${portletNamespace}${namespacedFieldName}UploadContainer"></div>
 
 	<div class="hide" id="${portletNamespace}${namespacedFieldName}PreviewContainer">
-		<a href="${imageData}">
-			<img src="${imageData}" />
+		<a href="${contextPath}${imageData}">
+			<img src="${contextPath}${imageData}" />
 		</a>
 	</div>
 

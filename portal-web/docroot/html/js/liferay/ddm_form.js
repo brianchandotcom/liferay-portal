@@ -997,10 +997,11 @@ AUI.add(
 						var value = instance.getParsedValue(instance.getValue());
 
 						if (value.data) {
-							imagePreviewURL = value.data;
+							imagePreviewURL = themeDisplay.getPathContext() + value.data;
 						}
 						else if (value.uuid) {
 							imagePreviewURL = [
+							    themeDisplay.getPathContext(),
 								'/documents',
 								value.groupId,
 								value.uuid

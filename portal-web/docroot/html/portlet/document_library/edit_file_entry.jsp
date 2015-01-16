@@ -238,11 +238,11 @@ else {
 	<c:if test="<%= fileVersion != null %>">
 
 		<%
-			String version = null;
+		String version = null;
 
-			if (dlEditFileEntryDisplayContext.isVersionInfoVisible()) {
-				version = fileVersion.getVersion();
-			}
+		if (dlEditFileEntryDisplayContext.isVersionInfoVisible()) {
+			version = fileVersion.getVersion();
+		}
 		%>
 
 		<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" version="<%= version %>" />

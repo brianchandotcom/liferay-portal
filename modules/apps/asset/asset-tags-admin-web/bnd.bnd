@@ -2,7 +2,6 @@ Bundle-Name: Liferay Asset Tag Admin Web
 Bundle-SymbolicName: com.liferay.asset.tag.admin.web
 Bundle-Version: 1.0.0
 Import-Package: \
-	com.liferay.portlet.asset.model.impl,\
 	com.liferay.portlet.asset.service.permission,\
 	*
 Include-Resource:\

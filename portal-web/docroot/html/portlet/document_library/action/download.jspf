@@ -18,6 +18,7 @@
 	<liferay-ui:icon
 		iconCssClass="icon-download"
 		message='<%= LanguageUtil.get(request, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
+		method="get"
 		url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + fileShortcut.getFileShortcutId() %>'
 	/>
 </c:if>

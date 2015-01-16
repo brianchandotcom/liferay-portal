@@ -131,6 +131,7 @@ String iconMenuId = null;
 				<liferay-ui:icon
 					iconCssClass="icon-download"
 					message="download"
+					method="get"
 					url="<%= downloadURL %>"
 				/>
 			</c:if>

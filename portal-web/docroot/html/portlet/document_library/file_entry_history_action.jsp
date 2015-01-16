@@ -30,6 +30,7 @@ FileEntry fileEntry = fileVersion.getFileEntry();
 	<liferay-ui:icon
 		iconCssClass="icon-download"
 		message="download"
+		method="get"
 		url="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 	/>
 

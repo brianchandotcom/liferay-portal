@@ -148,6 +148,7 @@ if (summary != null) {
 					iconCssClass="icon-download-alt"
 					label="<%= false %>"
 					message='<%= LanguageUtil.format(request, "download-x", HtmlUtil.escape(summary.getTitle()), false) %>'
+					method="get"
 					url="<%= downloadURL %>"
 				/>
 			</c:if>

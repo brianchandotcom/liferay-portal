@@ -75,6 +75,7 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 					iconCssClass="icon-download"
 					label="<%= true %>"
 					message='<%= LanguageUtil.format(request, "download-x", taglibFileEntryTitle, false) + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+					method="get"
 					url="<%= assetRenderer.getURLDownload(themeDisplay) %>"
 				/>
 			</c:otherwise>

@@ -177,6 +177,7 @@ viewProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 					<liferay-ui:icon
 						iconCssClass="icon-download"
 						message="download-page"
+						method="get"
 						url="<%= latestProductVersion.getDownloadPageURL() %>"
 					/>
 				</c:if>
@@ -185,6 +186,7 @@ viewProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 					<liferay-ui:icon
 						iconCssClass="icon-download"
 						message="direct-download"
+						method="get"
 						url="<%= latestProductVersion.getDirectDownloadURL() %>"
 					/>
 				</c:if>

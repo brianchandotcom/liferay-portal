@@ -385,6 +385,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 			new URLMenuItem(), menuItems, "icon-download",
 			DLUIItemKeys.DOWNLOAD, label, url);
 
+		urlMenuItem.setMethod("get");
 		urlMenuItem.setTarget("_blank");
 	}
 

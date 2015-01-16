@@ -115,6 +115,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 							iconCssClass="icon-download"
 							label="<%= true %>"
 							message="<%= sb.toString() %>"
+							method="get"
 							url="<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
 						/>
 

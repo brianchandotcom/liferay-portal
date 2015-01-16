@@ -24,7 +24,7 @@ SCProductVersion productVersion = (SCProductVersion)row.getObject();
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= Validator.isNotNull(productVersion.getDownloadPageURL()) %>">
-		<liferay-ui:icon iconCssClass="icon-download" message="download-page" url="<%= productVersion.getDownloadPageURL() %>" />
+		<liferay-ui:icon iconCssClass="icon-download" message="download-page" method="get" url="<%= productVersion.getDownloadPageURL() %>" />
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(productVersion.getDirectDownloadURL()) %>">
@@ -33,7 +33,7 @@ SCProductVersion productVersion = (SCProductVersion)row.getObject();
 		String taglibDirectDownloadURL = "javascript:location.href = '" + productVersion.getDirectDownloadURL() + "';";
 		%>
 
-		<liferay-ui:icon iconCssClass="icon-download" message="direct-download" url="<%= taglibDirectDownloadURL %>" />
+		<liferay-ui:icon iconCssClass="icon-download" message="direct-download" method="get" url="<%= taglibDirectDownloadURL %>" />
 	</c:if>
 
 	<c:if test="<%= SCProductEntryPermission.contains(permissionChecker, productVersion.getProductEntryId(), ActionKeys.UPDATE) %>">

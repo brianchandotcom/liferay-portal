@@ -67,8 +67,7 @@ Import-Package:\
 	org.springframework.transaction.config,\
 	org.springframework.web.servlet.config
 Include-Resource:\
-	classes,\
-	@${app.server.lib.portal.dir}/util-java.jar
+	classes
 Provide-Capability: liferay.extender;\
 	liferay.extender="spring.extender";\
 	version:Version="${plugin.full.version}"

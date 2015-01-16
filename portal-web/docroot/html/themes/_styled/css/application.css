@@ -272,12 +272,12 @@
 /* ---------- Switches ---------- */
 
 input.switch {
+	float: left;
 	font-size: 62.5%;
 	margin-left: -999em;
 
 	&:empty ~ label {
 		cursor: pointer;
-		float: left;
 		font-size: 1.2rem;
 		line-height: 2.6rem;
 		position: relative;

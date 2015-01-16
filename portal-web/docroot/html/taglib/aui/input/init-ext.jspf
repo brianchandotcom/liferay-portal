@@ -37,7 +37,7 @@ else if (Validator.isNotNull(title)) {
 	title = LanguageUtil.get(request, title);
 }
 
-boolean checkboxField = baseType.equals("checkbox") || baseType.equals("boolean") || type.equals("switch");
+boolean checkboxField = baseType.equals("checkbox") || baseType.equals("boolean");
 boolean radioField = baseType.equals("radio");
 
 boolean showForLabel = true;

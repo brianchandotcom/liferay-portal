@@ -40,7 +40,7 @@
 boolean choiceField = checkboxField || radioField;
 %>
 
-<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && !type.equals("switch") && Validator.isNotNull(label) %>'>
+<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
 	<label <%= labelTag %>>
 		<c:if test='<%= !choiceField && !inlineLabel.equals("right") %>'>
 				<%= labelContent %>
@@ -124,16 +124,17 @@ boolean choiceField = checkboxField || radioField;
 		<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= fieldCssClass %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> onClick="<%= onClick %>" <%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(locale, title) + "\"" : StringPool.BLANK %> type="checkbox" <%= Validator.isNotNull(valueString) ? ("value=\"" + HtmlUtil.escapeAttribute(valueString)) + "\"" : StringPool.BLANK %> <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
 
 		<c:if test='<%= type.equals("switch") %>'>
+
 			<%
-			String iconOn = (String)dynamicAttributes.get("iconOn");
-			String iconOff = (String)dynamicAttributes.get("iconOff");
-			String labelOn = (String)dynamicAttributes.get("labelOn");
-			String labelOff = (String)dynamicAttributes.get("labelOff");
-			String buttonIconOn = (String)dynamicAttributes.get("buttonIconOn");
 			String buttonIconOff = (String)dynamicAttributes.get("buttonIconOff");
+			String buttonIconOn = (String)dynamicAttributes.get("buttonIconOn");
+			String iconOff = (String)dynamicAttributes.get("iconOff");
+			String iconOn = (String)dynamicAttributes.get("iconOn");
+			String labelOff = (String)dynamicAttributes.get("labelOff");
+			String labelOn = (String)dynamicAttributes.get("labelOn");
 			%>
 
-			<label <%= labelTag %>>
+			<label aria-hidden="true" <%= labelTag %>>
 				<span class="label-on"><%= (Validator.isNotNull(labelOn) ? labelOn : "&nbsp") %></span>
 
 				<c:if test="<%= Validator.isNotNull(labelOff) %>">
@@ -314,7 +315,7 @@ boolean choiceField = checkboxField || radioField;
 	</div>
 </c:if>
 
-<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && !type.equals("switch") && Validator.isNotNull(label) %>'>
+<c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
 	<c:if test='<%= choiceField || inlineLabel.equals("right") %>'>
 			<%= labelContent %>
 		</label>

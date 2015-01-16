@@ -353,6 +353,14 @@ public class VerifyProperties extends VerifyProcess {
 			"bookmarks.subfolders.visible", "subfolders.visible",
 			"com.liferay.bookmarks.service"
 		},
+
+		// Currency Converter
+
+		new String[] {
+			"currency.converter.symbols", "symbols",
+			"com.liferay.currency.converter.web"
+		},
+
 		
 		// IFrame
 

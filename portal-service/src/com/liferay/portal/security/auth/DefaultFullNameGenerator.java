@@ -146,7 +146,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 		StringBundler sb = new StringBundler(5);
 
-		Map<String, String> namesMap = new HashMap<String, String>();
+		Map<String, String> namesMap = new HashMap<>();
 
 		FullNameDefinition fullNameDefinition =
 			LocalizationUtil.getFullNameDefinition(locale);

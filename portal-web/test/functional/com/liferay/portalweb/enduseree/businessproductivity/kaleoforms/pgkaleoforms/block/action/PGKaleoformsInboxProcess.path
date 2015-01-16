@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMPLETE_FORM</td>
+	<td>//a/span[contains(.,'Complete Form')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UPDATE_DUE_DATE</td>
 	<td>//a/span[contains(.,'Update Due Date')]</td>
 	<td></td>
@@ -105,6 +110,17 @@
 <tr>
 	<td>DUE_DATE_DATE</td>
 	<td>//div[@class='lfr-asset-due-date']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CURRENT_ENTRY-->
+<tr>
+	<td>CURRENT_ENTRY_FIELD</td>
+	<td>//label[contains(.,'${key_fieldName}')]/../../div[contains(.,'${key_fieldName}') and contains(.,'${key_kfProcessFieldData}')] | //span[contains(.,'${key_fieldName}')]/../../div[contains(.,'${key_fieldName}') and contains(.,'${key_kfProcessFieldData}')]</td>
 	<td></td>
 </tr>
 <tr>

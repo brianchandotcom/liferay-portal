@@ -56,7 +56,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- *
  * @author Dante Wang
  */
 public class DataSourceFactoryImplTest {

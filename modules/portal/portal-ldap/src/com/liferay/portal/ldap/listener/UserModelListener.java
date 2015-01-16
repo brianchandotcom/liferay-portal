@@ -26,7 +26,7 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.exportimport.UserExporter;
-import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
+import com.liferay.portal.service.MembershipRequestLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalService;
@@ -94,6 +94,13 @@ public class UserModelListener extends BaseModelListener<User> {
 	}
 
 	@Reference
+	public void setMembershipRequestLocalService(
+		MembershipRequestLocalService membershipRequestLocalService) {
+
+		_membershipRequestLocalService = membershipRequestLocalService;
+	}
+
+	@Reference
 	public void setUserExporter(UserExporter userExporter) {
 		_userExporter = userExporter;
 	}
@@ -132,11 +139,11 @@ public class UserModelListener extends BaseModelListener<User> {
 		User user = _userLocalService.getUser(userId);
 
 		List<MembershipRequest> membershipRequests =
-			MembershipRequestLocalServiceUtil.getMembershipRequests(
+			_membershipRequestLocalService.getMembershipRequests(
 				userId, groupId, MembershipRequestConstants.STATUS_PENDING);
 
 		for (MembershipRequest membershipRequest : membershipRequests) {
-			MembershipRequestLocalServiceUtil.updateStatus(
+			_membershipRequestLocalService.updateStatus(
 				principalUserId, membershipRequest.getMembershipRequestId(),
 				LanguageUtil.get(
 					user.getLocale(), "your-membership-has-been-approved"),
@@ -145,6 +152,7 @@ public class UserModelListener extends BaseModelListener<User> {
 		}
 	}
 
+	private MembershipRequestLocalService _membershipRequestLocalService;
 	private UserExporter _userExporter;
 	private UserLocalService _userLocalService;
 

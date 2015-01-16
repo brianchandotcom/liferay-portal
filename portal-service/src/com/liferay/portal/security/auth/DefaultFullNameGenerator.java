@@ -146,7 +146,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 		StringBundler sb = new StringBundler(5);
 
-		Map<String, String> namesMap = new HashMap<String, String>();
+		Map<String, String> namesMap = new HashMap<>();
 
 		FullNameDefinition fullNameDefinition =
 			LocalizationUtil.getFullNameDefinition(locale);
@@ -243,7 +243,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		return fullName.substring(0, UserConstants.FULL_NAME_MAX_LENGTH);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultFullNameGenerator.class);
 
 }

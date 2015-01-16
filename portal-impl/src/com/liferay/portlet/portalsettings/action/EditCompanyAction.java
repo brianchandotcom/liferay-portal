@@ -45,10 +45,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.CompanyServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.List;
@@ -56,7 +54,6 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -188,17 +185,11 @@ public class EditCompanyAction extends PortletAction {
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
-		PortletPreferences oldPortletPreferences =
-			PrefsPropsUtil.getPreferences(companyId);
-
 		CompanyServiceUtil.updateCompany(
 			companyId, virtualHostname, mx, homeURL, !deleteLogo, logoBytes,
 			name, legalName, legalId, legalType, sicCode, tickerSymbol,
 			industry, type, size, languageId, timeZoneId, addresses,
 			emailAddresses, phones, websites, properties);
-
-		RatingsDataTransformerUtil.transformCompanyRatingsData(
-			companyId, oldPortletPreferences, properties);
 
 		PortalUtil.resetCDNHosts();
 	}

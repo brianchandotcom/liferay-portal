@@ -28,11 +28,15 @@ import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.base.CompanyServiceBaseImpl;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.io.InputStream;
 
 import java.util.List;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * Provides the local service for accessing, adding, checking, and updating
@@ -328,6 +332,9 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			List<Website> websites, UnicodeProperties properties)
 		throws PortalException {
 
+		PortletPreferences oldPortletPreferences =
+			PrefsPropsUtil.getPreferences(companyId);
+
 		Company company = updateCompany(
 			companyId, virtualHost, mx, homeURL, logo, logoBytes, name,
 			legalName, legalId, legalType, sicCode, tickerSymbol, industry,
@@ -336,6 +343,9 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		updateDisplay(company.getCompanyId(), languageId, timeZoneId);
 
 		updatePreferences(company.getCompanyId(), properties);
+
+		RatingsDataTransformerUtil.transformCompanyRatingsData(
+			companyId, oldPortletPreferences, properties);
 
 		UsersAdminUtil.updateAddresses(
 			Account.class.getName(), company.getAccountId(), addresses);

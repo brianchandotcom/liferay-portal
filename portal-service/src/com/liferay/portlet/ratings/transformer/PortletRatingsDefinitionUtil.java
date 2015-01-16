@@ -14,9 +14,11 @@
 
 package com.liferay.portlet.ratings.transformer;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Roberto Díaz
@@ -49,13 +51,13 @@ public class PortletRatingsDefinitionUtil {
 	}
 
 	public static String[] getPortletIds() {
-		String[] portletIds = {};
+		List<String> portletIds = new ArrayList<>();
 
 		for (String portletId :_serviceTrackerMap.keySet()) {
-			portletIds = ArrayUtil.append(portletIds, portletId);
+			portletIds.add(portletId);
 		}
 
-		return portletIds;
+		return portletIds.toArray(new String[portletIds.size()]);
 	}
 
 	private static final ServiceTrackerMap<String, PortletRatingsDefinition>

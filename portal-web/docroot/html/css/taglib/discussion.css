@@ -32,14 +32,6 @@
 		margin-left: 150px;
 	}
 
-	.reply-container {
-		overflow: hidden;
-
-		.reply {
-			margin-top: 30px;
-		}
-	}
-
 	.lfr-discussion {
 		border-top: 1px solid transparent;
 		padding: 24px 0 24px 0;
@@ -57,13 +49,18 @@
 		&.last {
 			border-top-width: 0;
 		}
+
+		&:hover .lfr-discussion-actions li a, .lfr-discussion-actions li a:focus {
+			clip: rect(auto auto auto auto);
+			position: static;
+		}
 	}
 
 	.lfr-discussion-details {
+		float: left;
 		padding-left: 0;
 		padding-right: 0;
 		width: 100px;
-		float: left;
 
 		.column-content {
 			padding: 0;
@@ -92,11 +89,47 @@
 	}
 
 	.lfr-discussion-body {
-		padding-left: 0;
 		overflow: hidden;
+		padding-left: 0;
+
+		.lfr-discussion-actions {
+			float: right;
+			margin: -10px 10px 0;
+
+			li {
+				&, a {
+					display: inline-block;
+					list-style: none;
+					vertical-align: top;
+				}
+
+				a {
+					clip: rect(0 0 0 0);
+					position: absolute;
+
+					@include respond-to(phone, tablet) {
+						position: static;
+					}
+				}
+			}
+
+			a.rating-element {
+				margin: 0 1px;
+			}
+		}
 
 		.lfr-discussion-controls .taglib-ratings .rating-label-element {
 			padding-left: 0;
+		}
+
+		.lfr-discussion-message {
+			padding-bottom: 1em;
+
+			@include word-break(break-all);
+
+			.lfr-discussion-message-author {
+				margin-bottom: 12px;
+			}
 		}
 	}
 
@@ -104,56 +137,18 @@
 		padding: 5px 0 0 0.5em;
 	}
 
-	.lfr-discussion-message {
-		padding-bottom: 1em;
-
-		@include word-wrap(break-all);
-
-		.lfr-discussion-message-author {
-			margin-bottom: 12px;
-		}
-	}
-
 	.taglib-ratings {
 		display: inline-block;
 		margin-right: 1em;
 	}
 
-	.lfr-discussion-actions {
-		float: right;
-		margin: -10px 10px 0;
-
-		li {
-			&, a {
-				display: inline-block;
-				list-style: none;
-				vertical-align: top;
-			}
-
-			a {
-				clip: rect(0 0 0 0);
-				position: absolute;
-
-				@include respond-to(phone, tablet) {
-					position: static;
-				}
-			}
-		}
-
-		a.rating-element {
-			margin: 0 1px;
-		}
-	}
-
-	.lfr-discussion {
-		&:hover .lfr-discussion-actions li a, .lfr-discussion-actions li a:focus {
-			clip: rect(auto auto auto auto);
-			position: static;
-		}
-	}
-
 	.lfr-discussion-form-container {
 		clear: both;
+		overflow: hidden;
+
+		.lfr-discussion-form-reply, .lfr-discussion-form-edit {
+			margin-top: 30px;
+		}
 
 		.lfr-discussion-form {
 			display: inline-block;

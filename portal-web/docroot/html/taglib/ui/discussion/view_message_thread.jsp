@@ -238,8 +238,8 @@ request.setAttribute("page.jsp-i", new Integer(i));
 			</div>
 		</div>
 
-		<div class="lfr-discussion-form-container reply-container">
-			<div class="<%= depth < 2 ? "depth-1 reply" : "reply" %>" id='<portlet:namespace /><%= randomNamespace + "postReplyForm" + i %>' style="display: none;">
+		<div class="lfr-discussion-form-container">
+			<div class="<c:if test="<%= depth < 2 %>">depth-1 </c:if>lfr-discussion-form-reply" id='<portlet:namespace /><%= randomNamespace + "postReplyForm" + i %>' style="display: none;">
 				<div class="lfr-discussion-details">
 					<liferay-ui:user-display
 						displayStyle="2"

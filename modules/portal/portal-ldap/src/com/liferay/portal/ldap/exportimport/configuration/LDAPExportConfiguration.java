@@ -24,10 +24,10 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface LDAPExportConfiguration {
 
-	@Meta.AD(deflt = "false", id = "ldap.export.enabled")
+	@Meta.AD(deflt = "false", id = "ldap.export.enabled", required = false)
 	public boolean isLDAPExportEnabled();
 
-	@Meta.AD(deflt = "true", id = "ldap.export.group.enabled")
+	@Meta.AD(deflt = "true", id = "ldap.export.group.enabled", required = false)
 	public boolean isLDAPExportGroupEnabled();
 
 }

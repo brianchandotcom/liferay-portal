@@ -23,22 +23,24 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface LDAPConfiguration {
 
 	@Meta.AD(
-		deflt = "com.sun.jndi.ldap.LdapCtxFactory", id = "ldap.factory.initial")
+		deflt = "com.sun.jndi.ldap.LdapCtxFactory", id = "ldap.factory.initial",
+		required = false)
 	public String getLDAPFactoryInitial();
 
-	@Meta.AD(deflt = "1000", id = "ldap.page.size")
+	@Meta.AD(deflt = "1000", id = "ldap.page.size", required = false)
 	public int getLDAPPageSize();
 
-	@Meta.AD(deflt = "1000", id = "ldap.range.size")
+	@Meta.AD(deflt = "1000", id = "ldap.range.size", required = false)
 	public int getLDAPRangeSize();
 
 	@Meta.AD(
 		deflt = "follow", id = "ldap.referral",
-		optionValues = {"follow", "ingore", "throws"}
+		optionValues = {"follow", "ingore", "throws"}, required = false
 	)
 	public String getLDAPReferral();
 
-	@Meta.AD(deflt = "false", id = "ldap.password.policy.enabled")
+	@Meta.AD(
+		deflt = "false", id = "ldap.password.policy.enabled", required = false)
 	public boolean isLDAPPasswordPolicyEnabled();
 
 }

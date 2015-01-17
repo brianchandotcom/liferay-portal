@@ -264,8 +264,12 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			// Test 5, execute unicast request
 
-			clusterRequest = ClusterRequest.createUnicastRequest(
-				null, clusterExecutorImpl.getLocalClusterNodeAddress());
+			Address address = new AddressImpl(new MockAddress());
+
+			clusterRequest = ClusterRequest.createUnicastRequest(null, address);
+
+			clusterExecutorImpl.memberJoined(
+				address, new ClusterNode(PortalUUIDUtil.generate()));
 
 			try {
 				clusterExecutorImpl.execute(clusterRequest);
@@ -453,44 +457,13 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 				ClusterMessageType.NOTIFY,
 				clusterRequest.getClusterMessageType());
 
-			// Test 2, execute with shortcut local method disabled
-
-			BaseReceiverAdvice.reset(1);
+			// Test 2, execute
 
 			String timestamp = String.valueOf(System.currentTimeMillis());
-
-			MethodHandler methodHandler = new MethodHandler(
-				testMethod1MethodKey, timestamp);
-
-			clusterRequest = ClusterRequest.createUnicastRequest(
-				methodHandler,
-				clusterExecutorImpl.getLocalClusterNodeAddress());
-
-			clusterExecutorImpl.setShortcutLocalMethod(false);
-
-			clusterExecutorImpl.execute(clusterRequest);
-
-			object = BaseReceiverAdvice.getJGroupsMessagePayload(
-				channel.getReceiver(), channel.getAddress());
-
-			clusterRequest = (ClusterRequest)object;
-			MethodHandler newMethodHandler = clusterRequest.getMethodHandler();
-
-			Assert.assertEquals(
-				ClusterMessageType.EXECUTE,
-				clusterRequest.getClusterMessageType());
-			Assert.assertEquals(
-				methodHandler.toString(), newMethodHandler.toString());
-
-			// Test 3, execute with shortcut local method enabled
-
-			timestamp = String.valueOf(System.currentTimeMillis());
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
 				new MethodHandler(testMethod1MethodKey, timestamp),
 				clusterExecutorImpl.getLocalClusterNodeAddress());
-
-			clusterExecutorImpl.setShortcutLocalMethod(true);
 
 			FutureClusterResponses futureClusterResponses =
 				clusterExecutorImpl.execute(clusterRequest);

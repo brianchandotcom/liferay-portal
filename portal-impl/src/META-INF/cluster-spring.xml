@@ -26,9 +26,7 @@
 		</property>
 		<property name="parentChainableMethodAdvice" ref="serviceAdvice" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.cluster.ClusterExecutor" class="com.liferay.portal.cluster.ClusterExecutorImpl">
-		<property name="shortcutLocalMethod" value="true" />
-	</bean>
+	<bean id="com.liferay.portal.kernel.cluster.ClusterExecutor" class="com.liferay.portal.cluster.ClusterExecutorImpl" />
 	<bean id="com.liferay.portal.kernel.cluster.ClusterExecutorUtil" class="com.liferay.portal.kernel.cluster.ClusterExecutorUtil">
 		<property name="clusterExecutor" ref="com.liferay.portal.kernel.cluster.ClusterExecutor" />
 	</bean>

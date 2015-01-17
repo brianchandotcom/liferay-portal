@@ -135,9 +135,7 @@ public class ClusterExecutorImpl
 			_futureClusterResponses.put(uuid, futureClusterResponses);
 		}
 
-		if (_shortcutLocalMethod &&
-			addresses.remove(getLocalClusterNodeAddress())) {
-
+		if (addresses.remove(getLocalClusterNodeAddress())) {
 			runLocalMethod(clusterRequest, futureClusterResponses);
 		}
 
@@ -349,14 +347,6 @@ public class ClusterExecutorImpl
 		_clusterEventListeners.addAllAbsent(clusterEventListeners);
 	}
 
-	public void setShortcutLocalMethod(boolean shortcutLocalMethod) {
-		if (!isEnabled()) {
-			return;
-		}
-
-		_shortcutLocalMethod = shortcutLocalMethod;
-	}
-
 	protected void fireClusterEvent(ClusterEvent clusterEvent) {
 		for (ClusterEventListener listener : _clusterEventListeners) {
 			listener.processClusterEvent(clusterEvent);
@@ -466,10 +456,6 @@ public class ClusterExecutorImpl
 		clusterNode.setPortalProtocol(PropsValues.PORTAL_INSTANCE_PROTOCOL);
 
 		_localClusterNode = clusterNode;
-	}
-
-	protected boolean isShortcutLocalMethod() {
-		return _shortcutLocalMethod;
 	}
 
 	protected void memberJoined(Address joinAddress, ClusterNode clusterNode) {
@@ -611,7 +597,6 @@ public class ClusterExecutorImpl
 		new ConcurrentHashMap<>();
 	private Address _localAddress;
 	private ClusterNode _localClusterNode;
-	private boolean _shortcutLocalMethod;
 
 	private class ClusterResponseCallbackJob implements Runnable {
 

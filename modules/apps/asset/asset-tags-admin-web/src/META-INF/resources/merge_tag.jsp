@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_tag_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(renderRequest, "redirect");
@@ -29,7 +29,7 @@ long[] mergeTagIds = StringUtil.split(ParamUtil.getString(renderRequest, "mergeT
 <portlet:actionURL name="mergeTag" var="mergeURL" />
 
 <aui:form action="<%= mergeURL %>" method="post" name="fm" onSubmit="event.preventDefault();">
-	<aui:input name="mvcPath" type="hidden" value="/html/portlet/asset_tag_admin/merge_tag.jsp" />
+	<aui:input name="mvcPath" type="hidden" value="/merge_tag.jsp" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="mergeTagIds" type="hidden" />
 

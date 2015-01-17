@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,11 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/asset_tag_admin/init.jsp" %>
+package com.liferay.asset.tags.admin.web.constants;
 
-<liferay-ui:error-header />
+/**
+ * @author Eudaldo Alonso
+ */
+public class AssetTagsAdminPortletKeys {
 
-<liferay-ui:error exception="<%= NoSuchTagException.class %>" message="the-tag-could-not-be-found" />
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+	public static final String ASSET_TAGS_ADMIN =
+		"com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet";
+
+}

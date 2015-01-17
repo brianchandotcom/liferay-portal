@@ -1384,6 +1384,14 @@ rerun your task.
 		<echoproperties />
 	</target>
 
+	<target name="resolve-dynamic-jars">
+		<get
+			dest="${app.server.lib.portal.dir}"
+			skipexisting="true"
+			src="http://mirrors/repo1.maven.org/maven2/com/zaxxer/HikariCP-java6/2.2.5/HikariCP-java6-2.2.5.jar"
+		/>
+	</target>
+
 	<target name="run-pmd">
 		<ant antfile="build-common.xml" dir="${project.dir}/tools/sdk" inheritRefs="true" target="run-pmd">
 			<property name="pmd.basedir" value="${basedir}" />

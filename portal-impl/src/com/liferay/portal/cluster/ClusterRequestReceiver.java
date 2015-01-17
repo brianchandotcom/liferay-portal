@@ -64,11 +64,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		if (sourceAddress.equals(
 				_clusterExecutorImpl.getLocalClusterNodeAddress())) {
 
-			boolean isProcessed = processLocalMessage(obj);
-
-			if (isProcessed) {
-				return;
-			}
+			return;
 		}
 
 		try {
@@ -279,22 +275,6 @@ public class ClusterRequestReceiver extends BaseReceiver {
 							" for response container with UUID " + uuid);
 			}
 		}
-	}
-
-	protected boolean processLocalMessage(Object message) {
-		if (message instanceof ClusterRequest) {
-			ClusterRequest clusterRequest = (ClusterRequest)message;
-
-			if (clusterRequest.isSkipLocal()) {
-				return true;
-			}
-		}
-
-		if (_clusterExecutorImpl.isShortcutLocalMethod()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

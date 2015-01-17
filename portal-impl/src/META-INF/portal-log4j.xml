@@ -1096,14 +1096,6 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portlet.wiki.action.ExportPageAction">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portlet.wiki.importers">
-		<priority value="WARN" />
-	</category>
-
 	<category name="com.liferay.resourcesimporter">
 		<priority value="INFO" />
 	</category>

@@ -92,7 +92,8 @@ public class ConvertWikiCreole extends BaseConvertProcess {
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ConvertWikiCreole.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConvertWikiCreole.class);
 
 	private WikiPageLocalService _wikiPageLocalService;
 

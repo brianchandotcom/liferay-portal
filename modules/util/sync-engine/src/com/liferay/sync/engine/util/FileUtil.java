@@ -389,15 +389,17 @@ public class FileUtil {
 	}
 
 	protected static boolean isOfficeTempFile(String fileName, Path filePath) {
-		if ((!Files.isDirectory(filePath) && fileName.startsWith("~$")) ||
-			(!Files.isDirectory(filePath) && fileName.startsWith("~") &&
-			 fileName.endsWith(".tmp"))) {
+		if (Files.isDirectory(filePath)) {
+			return false;
+		}
+
+		if (fileName.startsWith("~$") ||
+			(fileName.startsWith("~") && fileName.endsWith(".tmp"))) {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	private static final Charset _CHARSET = Charset.forName("UTF-8");

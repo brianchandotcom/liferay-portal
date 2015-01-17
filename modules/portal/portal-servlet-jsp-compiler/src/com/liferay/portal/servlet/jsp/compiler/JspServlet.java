@@ -25,8 +25,8 @@ import java.lang.reflect.Proxy;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -47,6 +47,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleReference;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.wiring.BundleCapability;
+import org.osgi.framework.wiring.BundleRevision;
+import org.osgi.framework.wiring.BundleWire;
+import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Raymond Augé
@@ -120,11 +124,22 @@ public class JspServlet extends HttpServlet {
 			throw new IllegalStateException();
 		}
 
+		List<Bundle> bundles = new ArrayList<>();
+
 		BundleReference bundleReference = (BundleReference)classLoader;
 
 		_bundle = bundleReference.getBundle();
 
-		_jspBundleClassloader = new JspBundleClassloader(_bundle, _jspBundle);
+		bundles.add(_bundle);
+
+		bundles.add(_jspBundle);
+
+		collectTaglibProviderBundles(bundles);
+
+		_allParticipatingBundles = bundles.toArray(new Bundle[bundles.size()]);
+
+		_jspBundleClassloader = new JspBundleClassloader(
+			_allParticipatingBundles);
 
 		final Map<String, String> defaults = new HashMap<>();
 
@@ -217,6 +232,30 @@ public class JspServlet extends HttpServlet {
 		return _jspServlet.toString();
 	}
 
+	private void collectTaglibProviderBundles(List<Bundle> bundles) {
+		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
+		for (BundleWire bundleWire :
+				bundleWiring.getRequiredWires("osgi.extender")) {
+
+			BundleCapability bundleCapability = bundleWire.getCapability();
+
+			Map<String, Object> attributes = bundleCapability.getAttributes();
+
+			Object value = attributes.get("osgi.extender");
+
+			if (value.equals("jsp.taglib")) {
+				BundleRevision bundleRevision = bundleWire.getProvider();
+
+				Bundle bundle = bundleRevision.getBundle();
+
+				if (!bundles.contains(bundle)) {
+					bundles.add(bundle);
+				}
+			}
+		}
+	}
+
 	private ServletContext getServletContextWrapper(
 		ServletContext servletContext) {
 
@@ -237,9 +276,10 @@ public class JspServlet extends HttpServlet {
 		ServletContext.class
 	};
 
+	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
 	private final Bundle _jspBundle;
-	private URLClassLoader _jspBundleClassloader;
+	private JspBundleClassloader _jspBundleClassloader;
 	private final HttpServlet _jspServlet =
 		new org.apache.jasper.servlet.JspServlet();
 	private volatile ServletContext _jspServletContext;
@@ -317,6 +357,14 @@ public class JspServlet extends HttpServlet {
 
 				if (url != null) {
 					return url;
+				}
+
+				for (int i = 2; i < _allParticipatingBundles.length; i++) {
+					url = _allParticipatingBundles[i].getEntry(path);
+
+					if (url != null) {
+						return url;
+					}
 				}
 
 				return _jspBundle.getEntry(path);

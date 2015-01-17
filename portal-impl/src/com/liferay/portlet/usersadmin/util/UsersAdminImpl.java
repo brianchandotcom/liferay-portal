@@ -1062,7 +1062,7 @@ public class UsersAdminImpl implements UsersAdmin {
 		List<User> users = new ArrayList<>(documents.size());
 
 		for (Document document : documents) {
-			long userId = GetterUtil.getLong(document.get(Field.USER_ID));
+			long userId = UserIndexer.getUserId(document);
 
 			User user = UserLocalServiceUtil.fetchUser(userId);
 

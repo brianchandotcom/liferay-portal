@@ -1944,6 +1944,18 @@
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="FOLDER_VIEW_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
+	<command name="viewOlderVersionPG">
+		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="key_dmDocumentDescription" value="${dmDocumentDescription}" />
+		<var name="key_dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
+
+		<execute action="PGDocumentsandmediaDocument#click" locator-key1="VERSION_HISTORY_TABLE_DROPDOWN" value1="${dmDocumentVersionNumber}" />
+		<execute action="PGDocumentsandmediaDocument#click" locator-key1="VERSION_HISTORY_MENULIST_VIEW" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_VERSION" value1="Version ${dmDocumentVersionNumber}" />
+	</command>
+
 	<command name="viewPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 

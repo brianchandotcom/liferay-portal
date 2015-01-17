@@ -765,6 +765,34 @@
 		</execute>
 	</command>
 
+	<command name="CancelCheckout" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#checkoutPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#cancelCheckoutPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+	</command>
+
 	<command name="DeleteDocument" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1720,35 +1748,52 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoShortcutCheckoutOption" priority="5">
+	<command name="ViewOlderVersion" priority="5">
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Documents and Media Page" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="Test Document" />
+			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Documents and Media Page" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMDocument#addShortcutPG">
-			<var name="dmDocumentDescription" value="Test Document" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-			<var name="siteName" value="Liferay" />
+		<execute macro="DMDocument#editPG">
+			<var name="dmDocumentDescriptionEdit" value="DM Document Description Edited" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Documents and Media Page" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMDocument#viewDocumentCheckoutOption">
-			<var name="dmDocumentShortcut" value="true" />
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-			<var name="viewCheckoutOption" value="false" />
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description Edited" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewOlderVersionPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title (Version 1.0)" />
+			<var name="dmDocumentVersionNumber" value="1.0" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description Edited" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG">
+			<var name="dmDocumentVersionNumber" value="1.1" />
 		</execute>
 	</command>
 </definition>

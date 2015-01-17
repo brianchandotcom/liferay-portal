@@ -342,9 +342,16 @@
 					dataType: dataType,
 					on: {
 						failure: function(event, id, obj) {
-							placeHolder.hide();
+							if (obj.statusText == 'timeout') {
+								placeHolder.hide();
 
-							placeHolder.placeAfter('<div class="alert alert-danger">' + Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page') + '</div>');
+								placeHolder.placeAfter('<div class="alert alert-danger">' + Liferay.Language.get('request-timeout') + '</div>');
+							}
+							else if (obj.statusText != '') {
+								placeHolder.hide();
+
+								placeHolder.placeAfter('<div class="alert alert-danger">' + Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page') + '</div>');
+							}
 						},
 						success: function(event, id, obj) {
 							var instance = this;

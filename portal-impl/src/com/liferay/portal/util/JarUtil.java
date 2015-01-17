@@ -24,9 +24,11 @@ import java.io.InputStream;
 
 import java.lang.reflect.Method;
 
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.UnknownHostException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,16 +45,28 @@ public class JarUtil {
 		throws Exception {
 
 		if (PortalRunMode.isTestMode()) {
-			String urlString = url.toExternalForm();
+			try {
+				InetAddress.getAllByName("mirrors");
 
-			String newURLString = StringUtil.replace(
-				urlString, "://", "://mirrors/");
+				String urlString = url.toExternalForm();
 
-			url = new URL(newURLString);
+				String newURLString = StringUtil.replace(
+					urlString, "://", "://mirrors/");
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Swapping URL from " + urlString + " to " + newURLString);
+				url = new URL(newURLString);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Swapping URL from " + urlString + " to " +
+							newURLString);
+				}
+			}
+			catch (UnknownHostException uhe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Host \"mirrors\" is not resolvable, give up url " +
+							"swapping");
+				}
 			}
 		}
 

@@ -295,8 +295,6 @@ public abstract class BaseClusterExecutorImplTestCase
 
 		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
 
-		clusterExecutorImpl.setShortcutLocalMethod(true);
-
 		clusterExecutorImpl.afterPropertiesSet();
 
 		clusterExecutorImpl.initialize();

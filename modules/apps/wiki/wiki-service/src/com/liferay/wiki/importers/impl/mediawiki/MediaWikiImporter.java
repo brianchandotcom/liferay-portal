@@ -664,7 +664,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 			if ((array.length == 2) && Validator.isNotNull(array[0]) &&
 				Validator.isNotNull(array[1])) {
-:
+
 				usersMap.put(array[0], array[1]);
 			}
 			else {

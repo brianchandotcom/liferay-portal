@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
@@ -665,7 +664,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 			if ((array.length == 2) && Validator.isNotNull(array[0]) &&
 				Validator.isNotNull(array[1])) {
-
+:
 				usersMap.put(array[0], array[1]);
 			}
 			else {
@@ -698,7 +697,7 @@ public class MediaWikiImporter implements WikiImporter {
 	private static final Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
 		new String[] {"archive", "temp", "thumb"});
 	private static final Pattern _wikiPageTitlesRemovePattern = Pattern.compile(
-		PropsValues.WIKI_PAGE_TITLES_REMOVE_REGEXP);
+		WikiPropsValues.PAGE_TITLES_REMOVE_REGEXP);
 
 	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();

@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.nio.intraband.test.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.io.IOException;
@@ -34,7 +36,6 @@ import java.nio.channels.Pipe.SourceChannel;
 import java.nio.channels.ScatteringByteChannel;
 import java.nio.charset.Charset;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -43,10 +44,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicLong;
@@ -115,7 +114,7 @@ public class BaseIntrabandTest {
 
 		// Second register
 
-		DatagramReceiveHandler datagramReceiveHandler2 =
+		final DatagramReceiveHandler datagramReceiveHandler2 =
 			new RecordDatagramReceiveHandler();
 
 		Assert.assertSame(
@@ -135,85 +134,77 @@ public class BaseIntrabandTest {
 
 		// Concurrent registering
 
-		final int inputDatagramReceiveHandlersCount = 10240;
-		final int threadCount = 10;
+		final AtomicReference<DatagramReceiveHandler[]> atomicReference =
+			_mockIntraband.datagramReceiveHandlersReference;
 
-		final DatagramReceiveHandler[] inputDatagramReceiveHandlers =
-			new DatagramReceiveHandler[inputDatagramReceiveHandlersCount];
+		long valueOffset = ReflectionTestUtil.getFieldValue(
+			AtomicReference.class, "valueOffset");
 
-		for (int i = 0; i < inputDatagramReceiveHandlersCount; i++) {
-			inputDatagramReceiveHandlers[i] =
-				new RecordDatagramReceiveHandler();
-		}
+		try {
+			ReflectionTestUtil.setFieldValue(
+				AtomicReference.class, "valueOffset", valueOffset + 1);
 
-		final Queue<DatagramReceiveHandler> outputDatagramReceiveHandlers =
-			new ConcurrentLinkedQueue<DatagramReceiveHandler>();
+			FutureTask<Void> registerFutureTask =
+				new FutureTask<>(
+					new Callable<Void>() {
 
-		class RegisterJob implements Callable<Void> {
+						@Override
+						public Void call() {
+							_mockIntraband.registerDatagramReceiveHandler(
+								_TYPE, datagramReceiveHandler2);
 
-			public RegisterJob(int cur) {
-				int delta = inputDatagramReceiveHandlersCount / threadCount;
+							Assert.fail();
 
-				_start = cur * delta;
+							return null;
+						}
 
-				if ((_start + delta) > inputDatagramReceiveHandlersCount) {
-					_end = inputDatagramReceiveHandlersCount;
-				}
-				else {
-					_end = _start + delta;
-				}
-			}
+					});
 
-			@Override
-			public Void call() {
-				for (int i = _start; i < _end; i++) {
-					DatagramReceiveHandler outputDatagramReceiveHandler =
-						_mockIntraband.registerDatagramReceiveHandler(
-							_TYPE, inputDatagramReceiveHandlers[i]);
+			Thread registerThread = new Thread(
+				registerFutureTask, "Register Thread");
 
-					if (outputDatagramReceiveHandler != null) {
-						outputDatagramReceiveHandlers.offer(
-							outputDatagramReceiveHandler);
+			registerThread.start();
+
+			FutureTask<Void> monitorFutureTask = new FutureTask<>(
+				new Callable<Void>() {
+
+					@Override
+					public Void call() throws InterruptedException {
+						for (int i = 0; i < 10; i++) {
+							GCUtil.gc(false, false);
+						}
+
+						atomicReference.set(null);
+
+						return null;
 					}
-				}
 
-				return null;
+				});
+
+			Thread monitorThread = new Thread(
+				monitorFutureTask, "Monitor Thread");
+
+			monitorThread.start();
+
+			monitorFutureTask.get(10, TimeUnit.MINUTES);
+
+			try {
+				Assert.assertSame(
+					datagramReceiveHandler1,
+					registerFutureTask.get(10, TimeUnit.MINUTES));
+
+				Assert.fail();
 			}
+			catch (ExecutionException ee) {
+				Throwable throwable = ee.getCause();
 
-			private final int _end;
-			private final int _start;
+				Assert.assertSame(
+					NullPointerException.class, throwable.getClass());
+			}
 		}
-
-		List<RegisterJob> registerJobs = new ArrayList<>(threadCount);
-
-		for (int i = 0; i < threadCount; i++) {
-			registerJobs.add(new RegisterJob(i));
-		}
-
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			threadCount);
-
-		List<Future<Void>> futures = executorService.invokeAll(registerJobs);
-
-		for (Future<Void> future : futures) {
-			future.get();
-		}
-
-		executorService.shutdownNow();
-
-		outputDatagramReceiveHandlers.offer(
-			_mockIntraband.getDatagramReceiveHandlers()[_TYPE]);
-
-		Assert.assertEquals(
-			inputDatagramReceiveHandlersCount,
-			outputDatagramReceiveHandlers.size());
-
-		for (DatagramReceiveHandler inputDatagramReceiveHandler :
-				inputDatagramReceiveHandlers) {
-
-			Assert.assertTrue(
-				outputDatagramReceiveHandlers.contains(
-					inputDatagramReceiveHandler));
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				AtomicReference.class, "valueOffset", valueOffset);
 		}
 
 		_mockIntraband.close();

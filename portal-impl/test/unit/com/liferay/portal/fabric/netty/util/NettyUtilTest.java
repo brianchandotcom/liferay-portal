@@ -60,10 +60,10 @@ public class NettyUtilTest {
 		MockEventLoopGroup masterEventLoopGroup = new MockEventLoopGroup();
 		MockEventLoopGroup salveEventLoopGroup = new MockEventLoopGroup();
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyUtil.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyUtil.class.getName(), Level.WARNING)) {
 
-		try {
 			NettyUtil.bindShutdown(
 				masterEventLoopGroup, salveEventLoopGroup, 0, 10);
 
@@ -85,9 +85,6 @@ public class NettyUtilTest {
 
 			Assert.assertTrue(logRecords.isEmpty());
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@Test
@@ -102,10 +99,10 @@ public class NettyUtilTest {
 
 		};
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyUtil.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyUtil.class.getName(), Level.WARNING)) {
 
-		try {
 			NettyUtil.bindShutdown(
 				masterEventLoopGroup, salveEventLoopGroup, 0, 10);
 
@@ -132,9 +129,6 @@ public class NettyUtilTest {
 			Assert.assertEquals(
 				"Bind shutdown timeout " + salveEventLoopGroup,
 				logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -172,10 +166,10 @@ public class NettyUtilTest {
 		DefaultNoticeableFuture<Object> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<Object>();
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyUtil.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyUtil.class.getName(), Level.OFF)) {
 
-		try {
 			NettyUtil.scheduleCancellation(
 				_embeddedChannel, defaultNoticeableFuture, Time.HOUR);
 
@@ -194,18 +188,15 @@ public class NettyUtilTest {
 
 			Assert.assertTrue(logRecords.isEmpty());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Normal finish with log
 
 		defaultNoticeableFuture = new DefaultNoticeableFuture<Object>();
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyUtil.class.getName(), Level.FINEST);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyUtil.class.getName(), Level.FINEST)) {
 
-		try {
 			NettyUtil.scheduleCancellation(
 				_embeddedChannel, defaultNoticeableFuture, Time.HOUR);
 
@@ -231,18 +222,15 @@ public class NettyUtilTest {
 					defaultNoticeableFuture,
 				logRecord.getMessage());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Timeout cancel without log
 
 		defaultNoticeableFuture = new DefaultNoticeableFuture<Object>();
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyUtil.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyUtil.class.getName(), Level.OFF)) {
 
-		try {
 			NettyUtil.scheduleCancellation(
 				_embeddedChannel, defaultNoticeableFuture, 0);
 
@@ -260,18 +248,15 @@ public class NettyUtilTest {
 
 			Assert.assertTrue(logRecords.isEmpty());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Timeout cancel with log
 
 		defaultNoticeableFuture = new DefaultNoticeableFuture<Object>();
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyUtil.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyUtil.class.getName(), Level.WARNING)) {
 
-		try {
 			NettyUtil.scheduleCancellation(
 				_embeddedChannel, defaultNoticeableFuture, 0);
 
@@ -294,9 +279,6 @@ public class NettyUtilTest {
 			Assert.assertEquals(
 				"Cancelled timeout " + defaultNoticeableFuture,
 				logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 
 		mockEventLoopGroup.shutdownGracefully();

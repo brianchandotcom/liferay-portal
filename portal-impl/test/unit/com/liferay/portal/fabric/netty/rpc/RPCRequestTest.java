@@ -114,10 +114,10 @@ public class RPCRequestTest {
 		RPCResponse<String> rpcResponse = new RPCResponse<String>(
 			_ID, true, null, null);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			RPCRequest.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					RPCRequest.class.getName(), Level.SEVERE)) {
 
-		try {
 			rpcRequest.sendRPCResponse(_embeddedChannel, rpcResponse);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -127,9 +127,6 @@ public class RPCRequestTest {
 			Assert.assertEquals(
 				"Cancelled on sending RPC response: " + rpcResponse,
 				logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -143,10 +140,10 @@ public class RPCRequestTest {
 		RPCResponse<String> rpcResponse = new RPCResponse<String>(
 			_ID, true, null, null);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			RPCRequest.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					RPCRequest.class.getName(), Level.SEVERE)) {
 
-		try {
 			rpcRequest.sendRPCResponse(_embeddedChannel, rpcResponse);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -160,9 +157,6 @@ public class RPCRequestTest {
 			Throwable throwable = logRecord.getThrown();
 
 			Assert.assertTrue(throwable instanceof ClosedChannelException);
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

@@ -159,10 +159,10 @@ public class RPCUtilTest {
 
 			});
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			RPCUtil.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					RPCUtil.class.getName(), Level.SEVERE)) {
 
-		try {
 			RPCUtil.execute(
 				_embeddedChannel, new ResultRPCCallable(StringPool.BLANK));
 
@@ -181,9 +181,6 @@ public class RPCUtilTest {
 
 			Assert.assertSame(
 				ClosedChannelException.class, throwable.getClass());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

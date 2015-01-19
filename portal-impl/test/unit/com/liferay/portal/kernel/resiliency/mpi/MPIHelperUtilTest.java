@@ -108,16 +108,13 @@ public class MPIHelperUtilTest {
 
 	@After
 	public void tearDown() {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			MPIHelperUtil.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					MPIHelperUtil.class.getName(), Level.OFF)) {
 
-		try {
 			MPIHelperUtil.shutdown();
 		}
 		catch (Throwable t) {
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -239,10 +236,10 @@ public class MPIHelperUtilTest {
 
 			});
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			MPIHelperUtil.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					MPIHelperUtil.class.getName(), Level.WARNING)) {
 
-		try {
 			MPIHelperUtil.shutdown();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -267,9 +264,6 @@ public class MPIHelperUtilTest {
 				"Unable to close intraband", logRecord.getMessage());
 			Assert.assertSame(ioException, logRecord.getThrown());
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
@@ -290,36 +284,30 @@ public class MPIHelperUtilTest {
 
 			});
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			MPIHelperUtil.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					MPIHelperUtil.class.getName(), Level.OFF)) {
 
-		try {
 			MPIHelperUtil.shutdown();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
 	@Test
 	public void testShutdownSuccess() {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			MPIHelperUtil.class.getName(), Level.ALL);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					MPIHelperUtil.class.getName(), Level.ALL)) {
 
-		try {
 			MPIHelperUtil.shutdown();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -339,10 +327,9 @@ public class MPIHelperUtilTest {
 		catch (NullPointerException npe) {
 		}
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			MPIHelperUtil.class.getName(), Level.INFO);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					MPIHelperUtil.class.getName(), Level.INFO)) {
 
 			// Register SPI provider, with log
 
@@ -734,18 +721,14 @@ public class MPIHelperUtilTest {
 			Assert.assertTrue(mockSPI2.stopped);
 			Assert.assertTrue(logRecords.isEmpty());
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
 	@Test
 	public void testSPIRegistration() {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			MPIHelperUtil.class.getName(), Level.WARNING);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					MPIHelperUtil.class.getName(), Level.WARNING)) {
 
 			// Mismatch MPI, with log
 
@@ -1130,9 +1113,6 @@ public class MPIHelperUtilTest {
 
 				Assert.assertSame(RemoteException.class, throwable.getClass());
 			}
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

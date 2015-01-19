@@ -117,10 +117,10 @@ public class AsyncBrokerTest {
 		AsyncBroker<String, String> asyncBroker =
 			new AsyncBroker<String, String>();
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			AsyncBroker.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					AsyncBroker.class.getName(), Level.OFF)) {
 
-		try {
 			asyncBroker.post(_KEY);
 
 			GCUtil.gc(true);
@@ -132,16 +132,13 @@ public class AsyncBrokerTest {
 
 			Assert.assertTrue(logRecords.isEmpty());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// With log
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			AsyncBroker.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					AsyncBroker.class.getName(), Level.WARNING)) {
 
-		try {
 			NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
 			String toString = noticeableFuture.toString();
@@ -164,9 +161,6 @@ public class AsyncBrokerTest {
 					" with key " + _KEY,
 				logRecord.getMessage());
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
@@ -174,10 +168,10 @@ public class AsyncBrokerTest {
 	public void testOrphanCancellationNotSupported() throws Exception {
 		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			AsyncBroker.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					AsyncBroker.class.getName(), Level.SEVERE)) {
 
-		try {
 			AsyncBroker<String, String> asyncBroker =
 				new AsyncBroker<String, String>();
 
@@ -209,9 +203,6 @@ public class AsyncBrokerTest {
 			Assert.assertSame(
 				IllegalAccessException.class, throwable.getClass());
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@AdviseWith(adviceClasses = ReflectionUtilAdvice.class)
@@ -224,10 +215,10 @@ public class AsyncBrokerTest {
 
 		ReflectionUtilAdvice.setDeclaredFieldThrowable(throwable);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			AsyncBroker.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					AsyncBroker.class.getName(), Level.WARNING)) {
 
-		try {
 			Class.forName(
 				AsyncBroker.class.getName(), true,
 				AsyncBroker.class.getClassLoader());
@@ -244,9 +235,6 @@ public class AsyncBrokerTest {
 						"resurrection",
 				logRecord.getMessage());
 			Assert.assertSame(throwable, logRecord.getThrown());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -279,10 +267,10 @@ public class AsyncBrokerTest {
 	public void testPostPhantomReferenceResurrectionNotSupported()
 		throws Exception {
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			AsyncBroker.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					AsyncBroker.class.getName(), Level.WARNING)) {
 
-		try {
 			testPost();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -300,9 +288,6 @@ public class AsyncBrokerTest {
 			Throwable throwable = logRecord.getThrown();
 
 			Assert.assertSame(Throwable.class, throwable.getClass());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

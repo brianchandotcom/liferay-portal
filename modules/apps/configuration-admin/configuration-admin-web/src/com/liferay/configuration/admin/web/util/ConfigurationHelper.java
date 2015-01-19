@@ -95,7 +95,7 @@ public class ConfigurationHelper {
 			String languageId, String factoryPid)
 		throws IOException {
 
-		List<ConfigurationModel> models = new ArrayList<ConfigurationModel>();
+		List<ConfigurationModel> models = new ArrayList<>();
 
 		StringBundler filter = new StringBundler(5);
 
@@ -222,8 +222,7 @@ public class ConfigurationHelper {
 	private Map<String, ConfigurationModel> _getConfigurationModels(
 		String locale) {
 
-		Map<String, ConfigurationModel> configurationModelMap =
-			new HashMap<String, ConfigurationModel>();
+		Map<String, ConfigurationModel> configurationModelMap = new HashMap<>();
 
 		Bundle[] bundles = _bundleContext.getBundles();
 

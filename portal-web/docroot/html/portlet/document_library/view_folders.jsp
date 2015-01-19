@@ -344,6 +344,12 @@ else {
 						request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
 						request.setAttribute("view_entries.jsp-folderSelected", String.valueOf(folderId == curFolder.getFolderId()));
 						request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(curFolder.getRepositoryId()));
+
+						String iconCssClass = "icon-folder-close";
+
+						if (PropsValues.DL_FOLDER_VISIBLE_CONTENT_ICON_ENABLED && (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0)) {
+							iconCssClass = "icon-folder-open";
+						}
 					%>
 
 						<portlet:renderURL var="viewURL">
@@ -354,7 +360,7 @@ else {
 						<aui:nav-item
 							cssClass="folder list-group-item navigation-entry"
 							href="<%= viewURL %>"
-							iconCssClass='<%= (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0) ? "icon-folder-open" : "icon-folder-close" %>'
+							iconCssClass="<%= iconCssClass %>"
 							label="<%= curFolder.getName() %>"
 							localizeLabel="<%= false %>"
 							selected="<%= (curFolder.getFolderId() == folderId) %>"

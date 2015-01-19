@@ -223,7 +223,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 							String folderImage = "folder_empty_document";
 
-							if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0) {
+							if (PropsValues.DL_FOLDER_VISIBLE_CONTENT_ICON_ENABLED && (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0)) {
 								folderImage = "folder_full_document";
 							}
 

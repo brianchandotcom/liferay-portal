@@ -54,4 +54,6 @@
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.LayoutSetLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.PortletPreferencesLocalService)" />
 	</aop:config>
+	<bean id="com.liferay.portal.model.adapter.StagedGroupModelAdapterBuilder" class="com.liferay.portal.model.adapter.StagedGroupModelAdapterBuilder" />
+	<bean id="com.liferay.portal.model.adapter.StagedThemeModelAdapterBuilder" class="com.liferay.portal.model.adapter.StagedThemeModelAdapterBuilder" />
 </beans>

@@ -46,26 +46,25 @@ public class ConfigurationProperties {
 				ObjectClassDefinition.ALL);
 
 		for (AttributeDefinition attributeDefinition : attributeDefinitions) {
-			String id = attributeDefinition.getID();
-			int type = attributeDefinition.getType();
-			int cardinality = attributeDefinition.getCardinality();
-
 			Object paramValue = null;
 
-			if (cardinality == 0) {
+			if (attributeDefinition.getCardinality() == 0) {
 				paramValue = typedParamValue(
-					ddmFormFieldValuesMap, id, type, locale);
+					ddmFormFieldValuesMap, attributeDefinition.getID(),
+					attributeDefinition.getType(), locale);
 			}
-			else if (cardinality > 0) {
+			else if (attributeDefinition.getCardinality() > 0) {
 				paramValue = typedParamArray(
-					ddmFormFieldValuesMap, id, type, locale);
+					ddmFormFieldValuesMap, attributeDefinition.getID(),
+					attributeDefinition.getType(), locale);
 			}
-			else if (cardinality < 0) {
+			else if (attributeDefinition.getCardinality() < 0) {
 				paramValue = typedParamVector(
-					ddmFormFieldValuesMap, id, type, locale);
+					ddmFormFieldValuesMap, attributeDefinition.getID(),
+					attributeDefinition.getType(), locale);
 			}
 
-			properties.put(id, paramValue);
+			properties.put(attributeDefinition.getID(), paramValue);
 		}
 
 		return properties;
@@ -75,14 +74,15 @@ public class ConfigurationProperties {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap, String id,
 		int type, Locale locale) {
 
-		List<DDMFormFieldValue> list = ddmFormFieldValuesMap.get(id);
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			id);
 
 		switch(type) {
 			case AttributeDefinition.BOOLEAN: {
-				boolean[] values = new boolean[list.size()];
+				boolean[] values = new boolean[ddmFormFieldValues.size()];
 
 				for (int i = 0; i < values.length; i++) {
-					DDMFormFieldValue ddmFormFieldValue = list.get(i);
+					DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
 
 					Value value = ddmFormFieldValue.getValue();
 
@@ -93,10 +93,10 @@ public class ConfigurationProperties {
 			}
 
 			case AttributeDefinition.LONG: {
-				long[] values = new long[list.size()];
+				long[] values = new long[ddmFormFieldValues.size()];
 
 				for (int i = 0; i < values.length; i++) {
-					DDMFormFieldValue ddmFormFieldValue = list.get(i);
+					DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
 
 					Value value = ddmFormFieldValue.getValue();
 
@@ -107,10 +107,10 @@ public class ConfigurationProperties {
 			}
 
 			case AttributeDefinition.DOUBLE: {
-				double[] values = new double[list.size()];
+				double[] values = new double[ddmFormFieldValues.size()];
 
 				for (int i = 0; i < values.length; i++) {
-					DDMFormFieldValue ddmFormFieldValue = list.get(i);
+					DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
 
 					Value value = ddmFormFieldValue.getValue();
 
@@ -121,10 +121,10 @@ public class ConfigurationProperties {
 			}
 
 			case AttributeDefinition.FLOAT: {
-				float[] values = new float[list.size()];
+				float[] values = new float[ddmFormFieldValues.size()];
 
 				for (int i = 0; i < values.length; i++) {
-					DDMFormFieldValue ddmFormFieldValue = list.get(i);
+					DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
 
 					Value value = ddmFormFieldValue.getValue();
 
@@ -135,10 +135,10 @@ public class ConfigurationProperties {
 			}
 
 			case AttributeDefinition.INTEGER: {
-				int[] values = new int[list.size()];
+				int[] values = new int[ddmFormFieldValues.size()];
 
 				for (int i = 0; i < values.length; i++) {
-					DDMFormFieldValue ddmFormFieldValue = list.get(i);
+					DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
 
 					Value value = ddmFormFieldValue.getValue();
 
@@ -149,10 +149,10 @@ public class ConfigurationProperties {
 			}
 
 			default: {
-				String[] values = new String[list.size()];
+				String[] values = new String[ddmFormFieldValues.size()];
 
 				for (int i = 0; i < values.length; i++) {
-					DDMFormFieldValue ddmFormFieldValue = list.get(i);
+					DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
 
 					Value value = ddmFormFieldValue.getValue();
 

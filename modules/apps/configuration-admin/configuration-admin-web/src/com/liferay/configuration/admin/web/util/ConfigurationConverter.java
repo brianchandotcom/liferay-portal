@@ -232,35 +232,26 @@ public class ConfigurationConverter {
 
 		int type = attributeDefinition.getType();
 
-		switch (type) {
-			case AttributeDefinition.DOUBLE: {
-				return FieldConstants.DOUBLE;
-			}
-
-			case AttributeDefinition.FLOAT: {
-				return FieldConstants.FLOAT;
-			}
-
-			case AttributeDefinition.INTEGER: {
-				return FieldConstants.INTEGER;
-			}
-
-			case AttributeDefinition.LONG: {
-				return FieldConstants.LONG;
-			}
-
-			case AttributeDefinition.SHORT: {
-				return FieldConstants.SHORT;
-			}
-
-			case AttributeDefinition.BOOLEAN: {
-				return FieldConstants.BOOLEAN;
-			}
-
-			default: {
-				return FieldConstants.STRING;
-			}
+		if (type == AttributeDefinition.DOUBLE) {
+			return FieldConstants.DOUBLE;
 		}
+		else if (type == AttributeDefinition.FLOAT) {
+			return FieldConstants.FLOAT;
+		}
+		else if (type == AttributeDefinition.INTEGER) {
+			return FieldConstants.INTEGER;
+		}
+		else if (type == AttributeDefinition.LONG) {
+			return FieldConstants.LONG;
+		}
+		else if (type == AttributeDefinition.SHORT) {
+			return FieldConstants.SHORT;
+		}
+		else if (type == AttributeDefinition.BOOLEAN) {
+			return FieldConstants.BOOLEAN;
+		}
+
+		return FieldConstants.STRING;
 	}
 
 	private static String attributeToDDMType(

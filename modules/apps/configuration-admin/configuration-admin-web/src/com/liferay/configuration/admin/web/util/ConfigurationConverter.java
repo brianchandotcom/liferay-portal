@@ -45,25 +45,26 @@ public class ConfigurationConverter {
 		ObjectClassDefinition objectClassDefinition,
 		Configuration configuration, Locale locale) {
 
-		AttributeDefinition[] requiredDefinitions =
-			objectClassDefinition.getAttributeDefinitions(
-				ObjectClassDefinition.REQUIRED);
-
-		AttributeDefinition[] optionalDefinitions =
-			objectClassDefinition.getAttributeDefinitions(
-				ObjectClassDefinition.OPTIONAL);
-
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setAvailableLocales(
 			SetUtil.fromArray(LanguageUtil.getAvailableLocales()));
 		ddmForm.setDefaultLocale(locale);
 
-		addFieldToForm(
-			configuration, ddmForm, requiredDefinitions, locale, true);
+		AttributeDefinition[] requiredAttributeDefinitions =
+			objectClassDefinition.getAttributeDefinitions(
+				ObjectClassDefinition.REQUIRED);
 
 		addFieldToForm(
-			configuration, ddmForm, optionalDefinitions, locale, false);
+			configuration, ddmForm, requiredAttributeDefinitions, locale, true);
+
+		AttributeDefinition[] optionalAttributeDefinitions =
+			objectClassDefinition.getAttributeDefinitions(
+				ObjectClassDefinition.OPTIONAL);
+
+		addFieldToForm(
+			configuration, ddmForm, optionalAttributeDefinitions, locale,
+			false);
 
 		return ddmForm;
 	}

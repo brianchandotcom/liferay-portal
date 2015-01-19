@@ -18,7 +18,7 @@
 
 <%
 Map<String, PortletURL> addPortletURLs = (Map<String, PortletURL>)request.getAttribute("liferay-ui:asset-add-button:addPortletURLs");
-boolean defaultAssetPublisher = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-add-button:defaultAssetPublisher"));
+boolean addDisplayPageParameter = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-add-button:addDisplayPageParameter"));
 long groupCount = GetterUtil.getLong(request.getAttribute("liferay-ui:asset-add-button:groupCount"));
 long groupId = GetterUtil.getLong(request.getAttribute("liferay-ui:asset-add-button:groupId"));
 %>
@@ -41,7 +41,7 @@ long groupId = GetterUtil.getLong(request.getAttribute("liferay-ui:asset-add-but
 				%>
 
 				<aui:nav-item
-					href="<%= _getURL(groupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), message, defaultAssetPublisher, layout, pageContext, portletResponse) %>"
+					href="<%= _getURL(groupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), message, addDisplayPageParameter, layout, pageContext, portletResponse) %>"
 					iconCssClass="<%= assetRendererFactory.getIconCssClass() %>"
 					iconSrc="<%= assetRendererFactory.getIconPath(portletRequest) %>"
 					label='<%= LanguageUtil.format(request, (groupCount == 1) ? "add-x" : "add-x-in-x", new Object [] {HtmlUtil.escape(message), HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}, false) %>'
@@ -62,7 +62,7 @@ long groupId = GetterUtil.getLong(request.getAttribute("liferay-ui:asset-add-but
 					%>
 
 						<aui:nav-item
-							href="<%= _getURL(groupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), message, defaultAssetPublisher, layout, pageContext, portletResponse) %>"
+							href="<%= _getURL(groupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), message, addDisplayPageParameter, layout, pageContext, portletResponse) %>"
 							iconCssClass="<%= assetRendererFactory.getIconCssClass() %>"
 							iconSrc="<%= assetRendererFactory.getIconPath(portletRequest) %>"
 							label="<%= HtmlUtil.escape(message) %>"
@@ -109,7 +109,7 @@ private String _getMessage(String className, Map<String, PortletURL> addPortletU
 	return message;
 }
 
-private String _getURL(long groupId, long plid, PortletURL addPortletURL, String portletId, String message, boolean defaultAssetPublisher, Layout layout, PageContext pageContext, PortletResponse portletResponse) {
+private String _getURL(long groupId, long plid, PortletURL addPortletURL, String portletId, String message, boolean addDisplayPageParameter, Layout layout, PageContext pageContext, PortletResponse portletResponse) {
 	addPortletURL.setParameter("groupId", String.valueOf(groupId));
 	addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
 
@@ -120,7 +120,7 @@ private String _getURL(long groupId, long plid, PortletURL addPortletURL, String
 
 	String namespace = PortalUtil.getPortletNamespace(portletId);
 
-	if (defaultAssetPublisher) {
+	if (addDisplayPageParameter) {
 		addPortletURLString = HttpUtil.addParameter(addPortletURLString, namespace + "layoutUuid", layout.getUuid());
 	}
 

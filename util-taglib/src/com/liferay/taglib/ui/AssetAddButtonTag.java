@@ -39,16 +39,16 @@ public class AssetAddButtonTag extends IncludeTag {
 		return _groupId;
 	}
 
-	public boolean isDefaultAssetPublisher() {
-		return _defaultAssetPublisher;
+	public boolean isAddDisplayPageParameter() {
+		return _addDisplayPageParameter;
+	}
+
+	public void setAddDisplayPageParameter(boolean addDisplayPageParameter) {
+		_addDisplayPageParameter = addDisplayPageParameter;
 	}
 
 	public void setAddPortletURLs(Map<String, PortletURL> addPortletURLs) {
 		_addPortletURLs = addPortletURLs;
-	}
-
-	public void setDefaultAssetPublisher(boolean defaultAssetPublisher) {
-		_defaultAssetPublisher = defaultAssetPublisher;
 	}
 
 	public void setGroupCount(long groupCount) {
@@ -61,8 +61,8 @@ public class AssetAddButtonTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_addDisplayPageParameter = false;
 		_addPortletURLs = null;
-		_defaultAssetPublisher = false;
 		_groupCount = 1;
 		_groupId = 0;
 	}
@@ -75,10 +75,10 @@ public class AssetAddButtonTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:asset-add-button:addPortletURLs", _addPortletURLs);
+			"liferay-ui:asset-add-button:addDisplayPageParameter",
+			_addDisplayPageParameter);
 		request.setAttribute(
-			"liferay-ui:asset-add-button:defaultAssetPublisher",
-			_defaultAssetPublisher);
+			"liferay-ui:asset-add-button:addPortletURLs", _addPortletURLs);
 		request.setAttribute(
 			"liferay-ui:asset-add-button:groupCount", _groupCount);
 		request.setAttribute("liferay-ui:asset-add-button:groupId", _groupId);
@@ -87,8 +87,8 @@ public class AssetAddButtonTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/asset_add_button/page.jsp";
 
+	private boolean _addDisplayPageParameter;
 	private Map<String, PortletURL> _addPortletURLs;
-	private boolean _defaultAssetPublisher;
 	private long _groupCount = 1;
 	private long _groupId = 0;
 

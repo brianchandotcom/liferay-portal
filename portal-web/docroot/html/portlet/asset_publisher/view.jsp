@@ -63,8 +63,8 @@ boolean hasAddPortletURLs = false;
 			%>
 
 				<liferay-ui:asset-add-button
+					addDisplayPageParameter="<%= defaultAssetPublisher %>"
 					addPortletURLs="<%= addPortletURLs %>"
-					defaultAssetPublisher="<%= defaultAssetPublisher %>"
 					groupCount="<%= groupIds.length %>"
 					groupId="<%= groupId %>"
 				/>

@@ -396,7 +396,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>defaultAssetPublisher</name>
+			<name>addDisplayPageParameter</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

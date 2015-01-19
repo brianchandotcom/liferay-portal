@@ -767,6 +767,8 @@ public interface PropsKeys {
 
 	public static final String DL_FOLDER_MENU_VISIBLE = "dl.folder.menu.visible";
 
+	public static final String DL_FOLDER_VISIBLE_CONTENT_ICON_ENABLED = "dl.folders.visible.content.icon.enabled";
+
 	public static final String DL_FOLDERS_SEARCH_VISIBLE = "dl.folders.search.visible";
 
 	public static final String DL_NAME_BLACKLIST = "dl.name.blacklist";
@@ -1234,6 +1236,8 @@ public interface PropsKeys {
 	public static final String JOURNAL_ERROR_TEMPLATE = "journal.error.template";
 
 	public static final String JOURNAL_FEED_FORCE_AUTOGENERATE_ID = "journal.feed.force.autogenerate.id";
+
+	public static final String JOURNAL_FOLDER_VISIBLE_CONTENT_ICON_ENABLED = "journal.folders.visible.content.icon.enabled";
 
 	public static final String JOURNAL_IMAGE_EXTENSIONS = "journal.image.extensions";
 

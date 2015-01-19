@@ -46,25 +46,25 @@ public class ConfigurationProperties {
 				ObjectClassDefinition.ALL);
 
 		for (AttributeDefinition attributeDefinition : attributeDefinitions) {
-			Object paramValue = null;
+			Object value = null;
 
 			if (attributeDefinition.getCardinality() == 0) {
-				paramValue = _toSimpleValue(
+				value = _toSimpleValue(
 					ddmFormFieldValuesMap, attributeDefinition.getID(),
 					attributeDefinition.getType(), locale);
 			}
 			else if (attributeDefinition.getCardinality() > 0) {
-				paramValue = _toArrayValue(
+				value = _toArrayValue(
 					ddmFormFieldValuesMap, attributeDefinition.getID(),
 					attributeDefinition.getType(), locale);
 			}
 			else if (attributeDefinition.getCardinality() < 0) {
-				paramValue = _toVectorValue(
+				value = _toVectorValue(
 					ddmFormFieldValuesMap, attributeDefinition.getID(),
 					attributeDefinition.getType(), locale);
 			}
 
-			properties.put(attributeDefinition.getID(), paramValue);
+			properties.put(attributeDefinition.getID(), value);
 		}
 
 		return properties;

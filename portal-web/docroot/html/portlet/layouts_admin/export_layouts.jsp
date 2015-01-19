@@ -79,7 +79,7 @@ if (!cmd.equals(Constants.UPDATE)) {
 	String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
 
 	if (openNodes == null) {
-		List<Layout> liveGroupLayouts = LayoutLocalServiceUtil.getLayouts(liveGroupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		List<Layout> liveGroupLayouts = LayoutLocalServiceUtil.getLayouts(liveGroupId, privateLayout);
 
 		selectedLayoutIds = new long[liveGroupLayouts.size()];
 

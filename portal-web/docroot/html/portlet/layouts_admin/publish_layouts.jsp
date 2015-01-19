@@ -111,7 +111,7 @@ long[] selectedLayoutIds = null;
 String openNodes = SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode");
 
 if (openNodes == null) {
-	List<Layout> stagingGroupLayouts = LayoutLocalServiceUtil.getLayouts(stagingGroupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+	List<Layout> stagingGroupLayouts = LayoutLocalServiceUtil.getLayouts(stagingGroupId, privateLayout);
 
 	selectedLayoutIds = new long[stagingGroupLayouts.size()];
 

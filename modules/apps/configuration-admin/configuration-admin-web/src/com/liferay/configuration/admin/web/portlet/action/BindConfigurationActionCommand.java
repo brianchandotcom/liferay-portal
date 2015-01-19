@@ -78,9 +78,6 @@ public class BindConfigurationActionCommand implements ActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String languageId = themeDisplay.getLanguageId();
-		Locale locale = themeDisplay.getLocale();
-
 		String factoryPid = ParamUtil.getString(portletRequest, "factoryPid");
 		String pid = ParamUtil.getString(portletRequest, "pid", factoryPid);
 
@@ -89,7 +86,8 @@ public class BindConfigurationActionCommand implements ActionCommand {
 		}
 
 		ConfigurationHelper configurationHelper = new ConfigurationHelper(
-			_bundleContext, _configurationAdmin, _metaTypeService, languageId);
+			_bundleContext, _configurationAdmin, _metaTypeService,
+			themeDisplay.getLanguageId());
 
 		ConfigurationModel configurationModel =
 			configurationHelper.getConfigurationModel(pid);
@@ -97,13 +95,15 @@ public class BindConfigurationActionCommand implements ActionCommand {
 		Configuration configuration = configurationHelper.getConfiguration(pid);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
-			portletRequest, configurationModel, configuration, pid, locale);
+			portletRequest, configurationModel, configuration, pid,
+			themeDisplay.getLocale());
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
 
 		Dictionary<String, Object> properties = ConfigurationProperties.load(
-			configurationModel, ddmFormFieldValuesMap, locale);
+			configurationModel, ddmFormFieldValuesMap,
+			themeDisplay.getLocale());
 
 		properties.put(Constants.SERVICE_PID, pid);
 

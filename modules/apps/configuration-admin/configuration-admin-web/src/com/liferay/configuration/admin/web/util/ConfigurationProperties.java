@@ -90,19 +90,6 @@ public class ConfigurationProperties {
 
 			return values;
 		}
-		else if (type == AttributeDefinition.LONG) {
-			long[] values = new long[ddmFormFieldValues.size()];
-
-			for (int i = 0; i < values.length; i++) {
-				DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
-
-				Value value = ddmFormFieldValue.getValue();
-
-				values[i] = GetterUtil.getLong(value.getString(locale));
-			}
-
-			return values;
-		}
 		else if (type == AttributeDefinition.DOUBLE) {
 			double[] values = new double[ddmFormFieldValues.size()];
 
@@ -142,6 +129,19 @@ public class ConfigurationProperties {
 
 			return values;
 		}
+		else if (type == AttributeDefinition.LONG) {
+			long[] values = new long[ddmFormFieldValues.size()];
+
+			for (int i = 0; i < values.length; i++) {
+				DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
+
+				Value value = ddmFormFieldValue.getValue();
+
+				values[i] = GetterUtil.getLong(value.getString(locale));
+			}
+
+			return values;
+		}
 
 		String[] values = new String[ddmFormFieldValues.size()];
 
@@ -170,9 +170,6 @@ public class ConfigurationProperties {
 		if (type == AttributeDefinition.BOOLEAN) {
 			return GetterUtil.getBoolean(value.getString(locale));
 		}
-		else if (type == AttributeDefinition.LONG) {
-			return GetterUtil.getLong(value.getString(locale));
-		}
 		else if (type == AttributeDefinition.DOUBLE) {
 			return GetterUtil.getDouble(value.getString(locale));
 		}
@@ -181,6 +178,9 @@ public class ConfigurationProperties {
 		}
 		else if (type == AttributeDefinition.INTEGER) {
 			return GetterUtil.getBoolean(value.getString(locale));
+		}
+		else if (type == AttributeDefinition.LONG) {
+			return GetterUtil.getLong(value.getString(locale));
 		}
 
 		return GetterUtil.getString(value.getString(locale));
@@ -200,17 +200,6 @@ public class ConfigurationProperties {
 				Value value = ddmFormFieldValue.getValue();
 
 				values.add(GetterUtil.getBoolean(value.getString(locale)));
-			}
-
-			return values;
-		}
-		else if (type == AttributeDefinition.LONG) {
-			Vector<Long> values = new Vector<>();
-
-			for (DDMFormFieldValue ddmFormFieldValue : ddFormFieldValues) {
-				Value value = ddmFormFieldValue.getValue();
-
-				values.add(GetterUtil.getLong(value.getString(locale)));
 			}
 
 			return values;
@@ -244,6 +233,17 @@ public class ConfigurationProperties {
 				Value value = ddmFormFieldValue.getValue();
 
 				values.add(GetterUtil.getInteger(value.getString(locale)));
+			}
+
+			return values;
+		}
+		else if (type == AttributeDefinition.LONG) {
+			Vector<Long> values = new Vector<>();
+
+			for (DDMFormFieldValue ddmFormFieldValue : ddFormFieldValues) {
+				Value value = ddmFormFieldValue.getValue();
+
+				values.add(GetterUtil.getLong(value.getString(locale)));
 			}
 
 			return values;

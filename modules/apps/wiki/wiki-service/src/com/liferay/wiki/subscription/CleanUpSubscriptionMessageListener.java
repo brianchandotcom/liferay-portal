@@ -152,7 +152,7 @@ public class CleanUpSubscriptionMessageListener extends BaseMessageListener {
 		_wiWikiNodeLocalService = wiWikiNodeLocalService;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CleanUpSubscriptionMessageListener.class);
 
 	private MessageBus _messageBus;

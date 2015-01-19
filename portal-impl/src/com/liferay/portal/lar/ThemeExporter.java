@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.modeladapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.LayoutSet;
@@ -50,7 +51,8 @@ public class ThemeExporter {
 			return;
 		}
 
-		StagedTheme stagedTheme = new StagedThemeImpl(layoutSet.getTheme());
+		StagedTheme stagedTheme = ModelAdapterUtil.adapt(
+			layoutSet.getTheme(), StagedTheme.class);
 
 		if (!portletDataContext.isPerformDirectBinaryImport()) {
 			Element layoutSetElement = portletDataContext.getExportDataElement(

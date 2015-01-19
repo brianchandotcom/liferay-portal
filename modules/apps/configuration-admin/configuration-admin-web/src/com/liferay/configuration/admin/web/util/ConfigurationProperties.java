@@ -77,91 +77,83 @@ public class ConfigurationProperties {
 		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
 			id);
 
-		switch(type) {
-			case AttributeDefinition.BOOLEAN: {
-				boolean[] values = new boolean[ddmFormFieldValues.size()];
+		if (type == AttributeDefinition.BOOLEAN) {
+			boolean[] values = new boolean[ddmFormFieldValues.size()];
 
-				for (int i = 0; i < values.length; i++) {
-					DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
+			for (int i = 0; i < values.length; i++) {
+				DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
 
-					Value value = ddmFormFieldValue.getValue();
+				Value value = ddmFormFieldValue.getValue();
 
-					values[i] = GetterUtil.getBoolean(value.getString(locale));
-				}
-
-				return values;
+				values[i] = GetterUtil.getBoolean(value.getString(locale));
 			}
 
-			case AttributeDefinition.LONG: {
-				long[] values = new long[ddmFormFieldValues.size()];
-
-				for (int i = 0; i < values.length; i++) {
-					DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
-
-					Value value = ddmFormFieldValue.getValue();
-
-					values[i] = GetterUtil.getLong(value.getString(locale));
-				}
-
-				return values;
-			}
-
-			case AttributeDefinition.DOUBLE: {
-				double[] values = new double[ddmFormFieldValues.size()];
-
-				for (int i = 0; i < values.length; i++) {
-					DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
-
-					Value value = ddmFormFieldValue.getValue();
-
-					values[i] = GetterUtil.getDouble(value.getString(locale));
-				}
-
-				return values;
-			}
-
-			case AttributeDefinition.FLOAT: {
-				float[] values = new float[ddmFormFieldValues.size()];
-
-				for (int i = 0; i < values.length; i++) {
-					DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
-
-					Value value = ddmFormFieldValue.getValue();
-
-					values[i] = GetterUtil.getFloat(value.getString(locale));
-				}
-
-				return values;
-			}
-
-			case AttributeDefinition.INTEGER: {
-				int[] values = new int[ddmFormFieldValues.size()];
-
-				for (int i = 0; i < values.length; i++) {
-					DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
-
-					Value value = ddmFormFieldValue.getValue();
-
-					values[i] = GetterUtil.getInteger(value.getString(locale));
-				}
-
-				return values;
-			}
-
-			default: {
-				String[] values = new String[ddmFormFieldValues.size()];
-
-				for (int i = 0; i < values.length; i++) {
-					DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
-
-					Value value = ddmFormFieldValue.getValue();
-
-					values[i] = GetterUtil.getString(value.getString(locale));
-				}
-
-				return values;
-			}
+			return values;
 		}
+		else if (type == AttributeDefinition.LONG) {
+			long[] values = new long[ddmFormFieldValues.size()];
+
+			for (int i = 0; i < values.length; i++) {
+				DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
+
+				Value value = ddmFormFieldValue.getValue();
+
+				values[i] = GetterUtil.getLong(value.getString(locale));
+			}
+
+			return values;
+		}
+		else if (type == AttributeDefinition.DOUBLE) {
+			double[] values = new double[ddmFormFieldValues.size()];
+
+			for (int i = 0; i < values.length; i++) {
+				DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
+
+				Value value = ddmFormFieldValue.getValue();
+
+				values[i] = GetterUtil.getDouble(value.getString(locale));
+			}
+
+			return values;
+		}
+		else if (type == AttributeDefinition.FLOAT) {
+			float[] values = new float[ddmFormFieldValues.size()];
+
+			for (int i = 0; i < values.length; i++) {
+				DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
+
+				Value value = ddmFormFieldValue.getValue();
+
+				values[i] = GetterUtil.getFloat(value.getString(locale));
+			}
+
+			return values;
+		}
+		else if (type == AttributeDefinition.INTEGER) {
+			int[] values = new int[ddmFormFieldValues.size()];
+
+			for (int i = 0; i < values.length; i++) {
+				DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
+
+				Value value = ddmFormFieldValue.getValue();
+
+				values[i] = GetterUtil.getInteger(value.getString(locale));
+			}
+
+			return values;
+		}
+
+		String[] values = new String[ddmFormFieldValues.size()];
+
+		for (int i = 0; i < values.length; i++) {
+			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
+
+			Value value = ddmFormFieldValue.getValue();
+
+			values[i] = GetterUtil.getString(value.getString(locale));
+		}
+
+		return values;
 	}
 
 	private static Object typedParamValue(
@@ -174,31 +166,23 @@ public class ConfigurationProperties {
 
 		Value value = ddmFormFieldValue.getValue();
 
-		switch(type) {
-			case AttributeDefinition.BOOLEAN: {
-				return GetterUtil.getBoolean(value.getString(locale));
-			}
-
-			case AttributeDefinition.LONG: {
-				return GetterUtil.getLong(value.getString(locale));
-			}
-
-			case AttributeDefinition.DOUBLE: {
-				return GetterUtil.getDouble(value.getString(locale));
-			}
-
-			case AttributeDefinition.FLOAT: {
-				return GetterUtil.getFloat(value.getString(locale));
-			}
-
-			case AttributeDefinition.INTEGER: {
-				return GetterUtil.getBoolean(value.getString(locale));
-			}
-
-			default: {
-				return GetterUtil.getString(value.getString(locale));
-			}
+		if (type == AttributeDefinition.BOOLEAN) {
+			return GetterUtil.getBoolean(value.getString(locale));
 		}
+		else if (type == AttributeDefinition.LONG) {
+			return GetterUtil.getLong(value.getString(locale));
+		}
+		else if (type == AttributeDefinition.DOUBLE) {
+			return GetterUtil.getDouble(value.getString(locale));
+		}
+		else if (type == AttributeDefinition.FLOAT) {
+			return GetterUtil.getFloat(value.getString(locale));
+		}
+		else if (type == AttributeDefinition.INTEGER) {
+			return GetterUtil.getBoolean(value.getString(locale));
+		}
+
+		return GetterUtil.getString(value.getString(locale));
 	}
 
 	private static Object typedParamVector(
@@ -207,20 +191,18 @@ public class ConfigurationProperties {
 
 		List<DDMFormFieldValue> list = ddmFormFieldValuesMap.get(id);
 
-		switch(type) {
-			case AttributeDefinition.BOOLEAN: {
-				Vector<Boolean> values = new Vector<>();
+		if (type == AttributeDefinition.BOOLEAN) {
+			Vector<Boolean> values = new Vector<>();
 
-				for (DDMFormFieldValue ddmFormFieldValue : list) {
-					Value value = ddmFormFieldValue.getValue();
+			for (DDMFormFieldValue ddmFormFieldValue : list) {
+				Value value = ddmFormFieldValue.getValue();
 
-					values.add(GetterUtil.getBoolean(value.getString(locale)));
-				}
-
-				return values;
+				values.add(GetterUtil.getBoolean(value.getString(locale)));
 			}
 
-			case AttributeDefinition.LONG: {
+			return values;
+		}
+		else if (type == AttributeDefinition.LONG) {
 				Vector<Long> values = new Vector<>();
 
 				for (DDMFormFieldValue ddmFormFieldValue : list) {
@@ -231,55 +213,50 @@ public class ConfigurationProperties {
 
 				return values;
 			}
+		else if (type == AttributeDefinition.DOUBLE) {
+			Vector<Double> values = new Vector<>();
 
-			case AttributeDefinition.DOUBLE: {
-				Vector<Double> values = new Vector<>();
+			for (DDMFormFieldValue ddmFormFieldValue : list) {
+				Value value = ddmFormFieldValue.getValue();
 
-				for (DDMFormFieldValue ddmFormFieldValue : list) {
-					Value value = ddmFormFieldValue.getValue();
-
-					values.add(GetterUtil.getDouble(value.getString(locale)));
-				}
-
-				return values;
+				values.add(GetterUtil.getDouble(value.getString(locale)));
 			}
 
-			case AttributeDefinition.FLOAT: {
-				Vector<Float> values = new Vector<>();
-
-				for (DDMFormFieldValue ddmFormFieldValue : list) {
-					Value value = ddmFormFieldValue.getValue();
-
-					values.add(GetterUtil.getFloat(value.getString(locale)));
-				}
-
-				return values;
-			}
-
-			case AttributeDefinition.INTEGER: {
-				Vector<Integer> values = new Vector<>();
-
-				for (DDMFormFieldValue ddmFormFieldValue : list) {
-					Value value = ddmFormFieldValue.getValue();
-
-					values.add(GetterUtil.getInteger(value.getString(locale)));
-				}
-
-				return values;
-			}
-
-			default: {
-				Vector<String> values = new Vector<>();
-
-				for (DDMFormFieldValue ddmFormFieldValue : list) {
-					Value value = ddmFormFieldValue.getValue();
-
-					values.add(GetterUtil.getString(value.getString(locale)));
-				}
-
-				return values;
-			}
+			return values;
 		}
+		else if (type == AttributeDefinition.FLOAT) {
+			Vector<Float> values = new Vector<>();
+
+			for (DDMFormFieldValue ddmFormFieldValue : list) {
+				Value value = ddmFormFieldValue.getValue();
+
+				values.add(GetterUtil.getFloat(value.getString(locale)));
+			}
+
+			return values;
+		}
+		else if (type == AttributeDefinition.INTEGER) {
+			Vector<Integer> values = new Vector<>();
+
+			for (DDMFormFieldValue ddmFormFieldValue : list) {
+				Value value = ddmFormFieldValue.getValue();
+
+				values.add(GetterUtil.getInteger(value.getString(locale)));
+			}
+
+			return values;
+		}
+
+
+		Vector<String> values = new Vector<>();
+
+		for (DDMFormFieldValue ddmFormFieldValue : list) {
+			Value value = ddmFormFieldValue.getValue();
+
+			values.add(GetterUtil.getString(value.getString(locale)));
+		}
+
+		return values;
 	}
 
 }

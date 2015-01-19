@@ -335,10 +335,6 @@
 					<fileset dir="${bourbon.lib.dir}/"/>
 				</copy>
 
-				<copy todir="${app.server.dir}/webapps/ROOT/html/css/common/" overwrite="true" preservelastmodified="true">
-					<fileset dir="${portal.common.dir}" />
-				</copy>
-
 				<delete dir="${bourbon.tmp.dir}" />
 			</then>
 		</if>
@@ -521,7 +517,7 @@
 		/>
 	</target>
 
-	<target name="build-css" depends="build-bourbon,build-themes">
+	<target name="build-css" depends="build-themes">
 		<property name="sass.tmp.dir" value="${basedir}/sass_tmp_dir" />
 
 		<mkdir dir="${sass.tmp.dir}" />
@@ -670,7 +666,7 @@
 		<echo file="${project.dir}/tools/selenium/extensions/ide.${user.name}.js">${ide.js.content}</echo>
 	</target>
 
-	<target name="build-themes" depends="build-alloy">
+	<target name="build-themes" depends="build-alloy,build-bourbon">
 		<for param="module.name">
 			<path>
 				<dirset dir="docroot/html/themes" excludes="_styled,_unstyled" includes="*" />

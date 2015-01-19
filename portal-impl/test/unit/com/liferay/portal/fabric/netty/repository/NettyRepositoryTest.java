@@ -149,10 +149,10 @@ public class NettyRepositoryTest {
 
 		FileServerTestUtil.createFileWithData(tempFilePath);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyRepository.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyRepository.class.getName(), Level.OFF)) {
 
-		try {
 			NoticeableFuture<Path> noticeableFuture = _nettyRepository.getFile(
 				_embeddedChannel, remoteFilePath, null, false);
 
@@ -185,9 +185,6 @@ public class NettyRepositoryTest {
 
 			Assert.assertTrue(logRecords.isEmpty());
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@AdviseWith(adviceClasses = NettyUtilAdvice.class)
@@ -203,10 +200,10 @@ public class NettyRepositoryTest {
 
 		Map<Path, Path> pathMap =  _nettyRepository.pathMap;
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyRepository.class.getName(), Level.FINEST);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyRepository.class.getName(), Level.FINEST)) {
 
-		try {
 			NoticeableFuture<Path> noticeableFuture1 = _nettyRepository.getFile(
 				_embeddedChannel, remoteFilePath, null, false);
 
@@ -266,8 +263,6 @@ public class NettyRepositoryTest {
 				logRecord.getMessage());
 		}
 		finally {
-			captureHandler.close();
-
 			pathMap.clear();
 		}
 
@@ -280,10 +275,10 @@ public class NettyRepositoryTest {
 		Path localFilePath2 = FileServerTestUtil.registerForCleanUp(
 			_repositoryPath.resolve("localFile2"));
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyRepository.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyRepository.class.getName(), Level.OFF)) {
 
-		try {
 			NoticeableFuture<Path> noticeableFuture1 = _nettyRepository.getFile(
 				_embeddedChannel, remoteFilePath, localFilePath1, false);
 
@@ -310,9 +305,6 @@ public class NettyRepositoryTest {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -362,10 +354,10 @@ public class NettyRepositoryTest {
 
 		Path remoteFilePath = Paths.get("remoteFile");
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyRepository.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyRepository.class.getName(), Level.WARNING)) {
 
-		try {
 			NoticeableFuture<Path> noticeableFuture = _nettyRepository.getFile(
 				_embeddedChannel, remoteFilePath, Paths.get("localFile"), false,
 				false);
@@ -387,16 +379,13 @@ public class NettyRepositoryTest {
 				"Remote file " + remoteFilePath + " is not found",
 				logRecord.getMessage());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Without log
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyRepository.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyRepository.class.getName(), Level.OFF)) {
 
-		try {
 			NoticeableFuture<Path> noticeableFuture = _nettyRepository.getFile(
 				_embeddedChannel, remoteFilePath, Paths.get("localFile"), false,
 				false);
@@ -411,9 +400,6 @@ public class NettyRepositoryTest {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -430,10 +416,10 @@ public class NettyRepositoryTest {
 
 		pathMap.put(remoteFilePath, cachedLocalFilePath);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyRepository.class.getName(), Level.FINEST);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyRepository.class.getName(), Level.FINEST)) {
 
-		try {
 			NoticeableFuture<Path> noticeableFuture = _nettyRepository.getFile(
 				_embeddedChannel, remoteFilePath, Paths.get("localFile"), false,
 				false);
@@ -463,16 +449,13 @@ public class NettyRepositoryTest {
 						cachedLocalFilePath,
 				logRecord.getMessage());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Without log
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyRepository.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyRepository.class.getName(), Level.OFF)) {
 
-		try {
 			NoticeableFuture<Path> noticeableFuture = _nettyRepository.getFile(
 				_embeddedChannel, remoteFilePath, Paths.get("localFile"), false,
 				false);
@@ -487,9 +470,6 @@ public class NettyRepositoryTest {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -520,10 +500,10 @@ public class NettyRepositoryTest {
 		Assert.assertTrue(
 			_asyncBroker.takeWithResult(remoteFilePath1, fileResponse1));
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyRepository.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyRepository.class.getName(), Level.WARNING)) {
 
-		try {
 			Assert.assertTrue(
 				_asyncBroker.takeWithResult(
 					remoteFilePath2,
@@ -539,9 +519,6 @@ public class NettyRepositoryTest {
 
 			Assert.assertEquals(
 				"Remote file remoteFile2 is not found", logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 
 		Map<Path, Path> resultPathMap = noticeableFuture.get();
@@ -595,10 +572,10 @@ public class NettyRepositoryTest {
 
 		DefaultNoticeableFutureAdvice.setConvertThrowable(exception);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyRepository.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyRepository.class.getName(), Level.WARNING)) {
 
-		try {
 			Assert.assertTrue(
 				_asyncBroker.takeWithResult(
 					remoteFilePath,
@@ -614,9 +591,6 @@ public class NettyRepositoryTest {
 
 			Assert.assertEquals(
 				"Remote file remoteFile is not found", logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 
 		try {
@@ -755,18 +729,12 @@ public class NettyRepositoryTest {
 
 			});
 
-		CaptureHandler captureHandler = null;
+		Level level = logging ? Level.ALL : Level.OFF;
 
-		if (logging) {
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				NettyRepository.class.getName(), Level.ALL);
-		}
-		else {
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				NettyRepository.class.getName(), Level.OFF);
-		}
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyRepository.class.getName(), level)) {
 
-		try {
 			NoticeableFuture<Path> noticeableFuture = _nettyRepository.getFile(
 				_embeddedChannel, remoteFilePath, Paths.get("localFile"), false,
 				false);
@@ -815,9 +783,6 @@ public class NettyRepositoryTest {
 
 				Assert.assertTrue(logRecords.isEmpty());
 			}
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

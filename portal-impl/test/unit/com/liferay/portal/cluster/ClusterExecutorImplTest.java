@@ -192,12 +192,11 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		portalExecutorManagerUtil.setPortalExecutorManager(
 			new MockPortalExecutorManager());
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterExecutorImpl.class.getName(), Level.SEVERE);
-
 		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
 
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterExecutorImpl.class.getName(), Level.SEVERE)) {
 
 			// Test 1, connect channel with log enabled
 
@@ -282,8 +281,6 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			}
 		}
 		finally {
-			captureHandler.close();
-
 			clusterExecutorImpl.destroy();
 		}
 	}

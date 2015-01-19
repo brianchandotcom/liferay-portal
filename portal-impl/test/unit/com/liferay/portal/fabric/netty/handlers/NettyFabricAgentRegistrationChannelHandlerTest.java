@@ -116,11 +116,11 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 				fabricAgentRegistry, repositoryParentPath,
 				new DefaultEventExecutorGroup(1), 0, 0, 0));
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricAgentRegistrationChannelHandler.class.getName(),
-			Level.INFO);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricAgentRegistrationChannelHandler.class.getName(),
+					Level.INFO)) {
 
-		try {
 			String embeddedChannelToString = embeddedChannel.toString();
 
 			embeddedChannel.writeInbound(
@@ -147,9 +147,6 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 			Assert.assertEquals(
 				embeddedChannel + " is closed", logRecord.getMessage());
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@Test
@@ -168,11 +165,11 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 				fabricAgentRegistry, repositoryParentPath,
 				new DefaultEventExecutorGroup(1), 0, 0, 0));
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricAgentRegistrationChannelHandler.class.getName(),
-			Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricAgentRegistrationChannelHandler.class.getName(),
+					Level.OFF)) {
 
-		try {
 			embeddedChannel.writeInbound(
 				new NettyFabricAgentConfig(new File("RepositoryFolder")));
 
@@ -191,9 +188,6 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			Assert.assertTrue(fabricAgents.isEmpty());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// With log
 
@@ -202,11 +196,11 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 				fabricAgentRegistry, repositoryParentPath,
 				new DefaultEventExecutorGroup(1), 0, 0, 0));
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricAgentRegistrationChannelHandler.class.getName(),
-			Level.INFO);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricAgentRegistrationChannelHandler.class.getName(),
+					Level.INFO)) {
 
-		try {
 			embeddedChannel.writeInbound(
 				new NettyFabricAgentConfig(new File("RepositoryFolder")));
 
@@ -243,9 +237,6 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			Assert.assertTrue(fabricAgents.isEmpty());
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@Test
@@ -274,11 +265,11 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 			fabricAgents.get(0),
 			NettyChannelAttributes.getNettyFabricAgentStub(embeddedChannel));
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricAgentRegistrationChannelHandler.class.getName(),
-			Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricAgentRegistrationChannelHandler.class.getName(),
+					Level.OFF)) {
 
-		try {
 			embeddedChannel.writeInbound(
 				new NettyFabricAgentConfig(new File("RepositoryFolder")));
 
@@ -290,17 +281,14 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 				NettyChannelAttributes.getNettyFabricAgentStub(
 					embeddedChannel));
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// With log
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricAgentRegistrationChannelHandler.class.getName(),
-			Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricAgentRegistrationChannelHandler.class.getName(),
+					Level.WARNING)) {
 
-		try {
 			embeddedChannel.writeInbound(
 				new NettyFabricAgentConfig(new File("RepositoryFolder")));
 
@@ -322,9 +310,6 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 				NettyChannelAttributes.getNettyFabricAgentStub(
 					embeddedChannel));
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@Test
@@ -343,11 +328,11 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 				fabricAgentRegistry, repositoryParentPath,
 				new DefaultEventExecutorGroup(1), 0, 0, 0));
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricAgentRegistrationChannelHandler.class.getName(),
-			Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricAgentRegistrationChannelHandler.class.getName(),
+					Level.OFF)) {
 
-		try {
 			embeddedChannel.writeInbound(
 				new NettyFabricAgentConfig(new File("RepositoryFolder")));
 
@@ -369,9 +354,6 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			Assert.assertTrue(fabricAgents.isEmpty());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// With log
 
@@ -380,11 +362,11 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 				fabricAgentRegistry, repositoryParentPath,
 				new DefaultEventExecutorGroup(1), 0, 0, 0));
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricAgentRegistrationChannelHandler.class.getName(),
-			Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricAgentRegistrationChannelHandler.class.getName(),
+					Level.WARNING)) {
 
-		try {
 			embeddedChannel.writeInbound(
 				new NettyFabricAgentConfig(new File("RepositoryFolder")));
 
@@ -415,9 +397,6 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 			fabricAgents = fabricAgentRegistry.getFabricAgents();
 
 			Assert.assertTrue(fabricAgents.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

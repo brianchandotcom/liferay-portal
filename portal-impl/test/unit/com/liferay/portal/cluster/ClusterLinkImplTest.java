@@ -102,12 +102,12 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testGetChannel() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterLinkImpl.class.getName(), Level.FINE);
-
 		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterLinkImpl.class.getName(), Level.FINE)) {
+
 			List<JChannel> jChannels = getJChannels(clusterLinkImpl);
 
 			Assert.assertEquals(2, jChannels.size());
@@ -133,8 +133,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				jChannels.get(1), clusterLinkImpl.getChannel(Priority.LEVEL10));
 		}
 		finally {
-			captureHandler.close();
-
 			clusterLinkImpl.destroy();
 		}
 	}
@@ -215,10 +213,9 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	)
 	@Test
 	public void testInitChannel() throws Exception {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterLinkImpl.class.getName(), Level.OFF);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterLinkImpl.class.getName(), Level.OFF)) {
 
 			// Test 1, create ClusterLinkImpl#MAX_CHANNEL_COUNT channels
 
@@ -263,9 +260,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 						"be between 1 and " + ClusterLinkImpl.MAX_CHANNEL_COUNT,
 					ise.getMessage());
 			}
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -342,12 +336,11 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testSendMulticastMessageWithError() {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterLinkImpl.class.getName(), Level.WARNING);
-
 		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterLinkImpl.class.getName(), Level.WARNING)) {
 
 			// Test 1, send message when cluster link is destroyed
 
@@ -382,8 +375,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				IllegalStateException.class);
 		}
 		finally {
-			captureHandler.close();
-
 			clusterLinkImpl.destroy();
 		}
 	}
@@ -452,12 +443,11 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testSendUnicastMessageWithError() {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterLinkImpl.class.getName(), Level.WARNING);
-
 		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterLinkImpl.class.getName(), Level.WARNING)) {
 
 			// Test 1, send message when cluster link is destroyed
 
@@ -494,8 +484,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				IllegalStateException.class);
 		}
 		finally {
-			captureHandler.close();
-
 			clusterLinkImpl.destroy();
 		}
 	}

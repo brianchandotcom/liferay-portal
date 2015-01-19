@@ -645,10 +645,10 @@ public class FileHelperUtilTest {
 
 		String folderName = "TestFolder";
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			FileHelperUtil.class.getName(), Level.FINEST);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					FileHelperUtil.class.getName(), Level.FINEST)) {
 
-		try {
 			Path folderPath = FileServerTestUtil.createFolderWithFiles(
 				Paths.get(folderName));
 
@@ -690,16 +690,13 @@ public class FileHelperUtilTest {
 
 			FileServerTestUtil.assertFileEquals(folderPath, unzipFolderPath);
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Without log
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			FileHelperUtil.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					FileHelperUtil.class.getName(), Level.OFF)) {
 
-		try {
 			Path folderPath = FileServerTestUtil.createFolderWithFiles(
 				Paths.get(folderName));
 
@@ -728,9 +725,6 @@ public class FileHelperUtilTest {
 			Assert.assertTrue(logRecords.isEmpty());
 
 			FileServerTestUtil.assertFileEquals(folderPath, unzipFolderPath);
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

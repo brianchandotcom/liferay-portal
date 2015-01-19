@@ -50,9 +50,6 @@ public class ClusterRequestReceiverTest
 		})
 	@Test
 	public void testInvoke() throws Exception {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterRequestReceiver.class.getName(), Level.OFF);
-
 		ClusterExecutorImpl clusterExecutorImpl1 = getClusterExecutorImpl();
 
 		MockClusterEventListener mockClusterEventListener =
@@ -66,7 +63,9 @@ public class ClusterRequestReceiverTest
 			mockClusterEventListener.waitJoinMessage(), ClusterEventType.JOIN,
 			clusterExecutorImpl2.getLocalClusterNode());
 
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterRequestReceiver.class.getName(), Level.OFF)) {
 
 			// Test 1, return value is null
 
@@ -139,8 +138,6 @@ public class ClusterRequestReceiverTest
 				"Payload is not of type " + MethodHandler.class.getName());
 		}
 		finally {
-			captureHandler.close();
-
 			clusterExecutorImpl1.destroy();
 			clusterExecutorImpl2.destroy();
 		}

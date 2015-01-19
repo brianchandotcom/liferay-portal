@@ -1,4 +1,3 @@
-@import "bourbon";
 @import "mixins";
 
 @include respond-to(phone, tablet) {

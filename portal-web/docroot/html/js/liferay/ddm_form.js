@@ -1024,7 +1024,7 @@ AUI.add(
 						}
 						else if (value.uuid) {
 							imagePreviewURL = [
-							    themeDisplay.getPathContext(),
+								themeDisplay.getPathContext(),
 								'/documents',
 								value.groupId,
 								value.uuid

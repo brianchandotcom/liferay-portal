@@ -22,5 +22,5 @@
 <#assign liferay_util = PortletJspTagLibs["/META-INF/liferay-util.tld"] />
 <#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
 
-<@portlet["defineObjects"] />
 <@liferay_theme["defineObjects"] />
+<@portlet["defineObjects"] />

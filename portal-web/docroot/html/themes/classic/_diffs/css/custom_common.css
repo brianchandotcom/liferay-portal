@@ -396,7 +396,7 @@ select:focus {
 							background: #2FA4F5;
 							color: #FFF;
 
-							@include linear-gradient(#2FA4F5, #2FA4F5, vertical);
+							@include filter-gradient(#2FA4F5, #2FA4F5, vertical);
 						}
 
 						[class^="icon-"], [class*=" icon-"] {

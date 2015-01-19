@@ -702,8 +702,10 @@ html {
 			background-color: $dockbarGradientStart;
 
 			@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
+
 			box-shadow: none;
-			@include linear-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
+
+			@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
 		}
 	}
 }

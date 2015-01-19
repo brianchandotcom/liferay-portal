@@ -1018,8 +1018,10 @@ button {
 			background-color: $dockbarGradientStart;
 
 			@include background-image(linear-gradient(top, $dockbarOpenGradientStart, $dockbarOpenGradientEnd));
+
 			box-shadow: none;
-			@include linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd, vertical);
+
+			@include filter-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd, vertical);
 		}
 	}
 

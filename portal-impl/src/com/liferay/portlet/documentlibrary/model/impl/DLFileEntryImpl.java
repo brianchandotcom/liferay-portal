@@ -92,8 +92,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	public Map<String, DDMFormValues> getDDMFormValuesMap(long fileVersionId)
 		throws PortalException {
 
-		Map<String, DDMFormValues> ddmFormValuesMap =
-			new HashMap<String, DDMFormValues>();
+		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
 
 		DLFileVersion dlFileVersion =
 			DLFileVersionLocalServiceUtil.getFileVersion(fileVersionId);

@@ -53,6 +53,7 @@ import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
@@ -260,9 +261,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 		DDMFormValues ddmFormValues = null;
 
 		try {
+			Fields fields = JournalConverterUtil.getDDMFields(
+				ddmStructure, article.getDocument());
+
 			ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(
-				ddmStructure, JournalConverterUtil.getDDMFields(
-					ddmStructure, article.getDocument()));
+				ddmStructure, fields);
 		}
 		catch (Exception e) {
 			return;
@@ -582,9 +585,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 		DDMFormValues ddmFormValues = null;
 
 		try {
+			Fields fields = JournalConverterUtil.getDDMFields(
+				ddmStructure, article.getDocument());
+
 			ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(
-					ddmStructure, JournalConverterUtil.getDDMFields(
-						ddmStructure, article.getDocument()));
+				ddmStructure, fields);
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;

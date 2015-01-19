@@ -141,7 +141,7 @@ SearchContainer searchContainer = null;
 								</div>
 
 								<div class="lfr-discussion-body">
-									<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="postReplyBody0" placeholder="type-your-comment-here" />
+									<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="postReplyBody0" onChangeMethod='<%= randomNamespace + "0toggleReplyButton" %>' onInitMethod='<%= randomNamespace + "0OnInitEditor" %>' placeholder="type-your-comment-here"/>
 
 									<aui:input name="postReplyBody0" type="hidden" />
 
@@ -246,6 +246,24 @@ SearchContainer searchContainer = null;
 	%>
 
 	<aui:script>
+		var <%= namespace + randomNamespace %>0OnInitEditor = function() {
+			var editorName = '<%= namespace %>postReplyBody0Editor';
+
+			var editorContent = window[editorName].getHTML();
+
+			<%= namespace + randomNamespace %>0toggleReplyButton(editorContent);
+		}
+
+		var <%= namespace + randomNamespace %>0toggleReplyButton = function(html) {
+			var A = AUI();
+
+			var button = A.one('#<%= namespace + namespace + randomNamespace %>postReplyButton0');
+
+			var disabled = !html.trim || html.trim() === '';
+
+			Liferay.Util.toggleDisabled(button, disabled);
+		}
+
 		function <%= randomNamespace %>hideForm(rowId, textAreaId, textAreaValue) {
 			document.getElementById(rowId).style.display = 'none';
 		}

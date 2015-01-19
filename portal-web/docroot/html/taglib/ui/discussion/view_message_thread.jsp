@@ -249,7 +249,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 				</div>
 
 				<div class="lfr-discussion-body">
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "postReplyBody" + i %>' placeholder="type-your-comment-here" />
+					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "postReplyBody" + i %>'  onChangeMethod='<%= randomNamespace + i + "toggleReplyButton" %>' onInitMethod='<%= randomNamespace + i + "OnInitEditor" %>' placeholder="type-your-comment-here"/>
 
 					<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
 
@@ -262,6 +262,26 @@ request.setAttribute("page.jsp-i", new Integer(i));
 
 						<aui:button cssClass="btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
 					</aui:button-row>
+
+					<aui:script>
+						var <%= namespace + randomNamespace + i %>OnInitEditor = function() {
+							var editorName = '<%= namespace %>postReplyBody<%= i %>Editor';
+
+							var editorContent = window[editorName].getHTML();
+
+							<%= namespace + randomNamespace + i %>toggleReplyButton(editorContent);
+						}
+
+						var <%= namespace + randomNamespace + i %>toggleReplyButton = function(html) {
+							var A = AUI();
+
+							var button = A.one('#<%= namespace + namespace + randomNamespace %>postReplyButton<%= i %>');
+
+							var disabled = !html.trim || html.trim() === '';
+
+							Liferay.Util.toggleDisabled(button, disabled);
+						}
+					</aui:script>
 				</div>
 			</div>
 

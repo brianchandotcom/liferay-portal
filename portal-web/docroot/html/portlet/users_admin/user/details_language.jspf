@@ -49,9 +49,9 @@
 		function(event) {
 			_.forEach(
 				$('#<portlet:namespace />fm').formToArray(),
-				function(field) {
-					if (userNameFields.find('#' + field.name).length) {
-						formData[field.name] = field.value;
+				function(item, index) {
+					if (userNameFields.find('#' + item.name).length) {
+						formData[item.name] = item.value;
 					}
 				}
 			);
@@ -71,10 +71,10 @@
 
 						userNameFields.show();
 
-						_.forIn(
+						_.forEach(
 							formData,
-							function(value, key) {
-								userNameFields.find('#' + key).val(value);
+							function(item, index) {
+								userNameFields.find('#' + index).val(item);
 							}
 						);
 					},

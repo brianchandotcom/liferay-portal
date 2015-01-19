@@ -44,13 +44,13 @@
 	>
 		<@portlet["renderURL"] varImpl="editURL">
 			<@portlet["param"] name="mvcPath" value="/edit_configuration.ftl" />
-			<@portlet["param"] name="pid" value="${configurationModel.getID()}" />
 			<@portlet["param"] name="factoryPid" value="${configurationModel.getFactoryPid()}" />
+			<@portlet["param"] name="pid" value="${configurationModel.getID()}" />
 		</@>
 
 		<@portlet["renderURL"] varImpl="viewFactoryInstancesURL">
-			<@portlet["param"] name="pid" value="${configurationModel.getID()}" />
 			<@portlet["param"] name="factoryPid" value="${configurationModel.getFactoryPid()}" />
+			<@portlet["param"] name="pid" value="${configurationModel.getID()}" />
 			<@portlet["param"] name="viewType" value="factoryInstances" />
 		</@>
 

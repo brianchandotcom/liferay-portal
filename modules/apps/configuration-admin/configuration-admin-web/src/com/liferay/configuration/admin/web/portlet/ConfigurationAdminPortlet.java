@@ -149,12 +149,6 @@ public class ConfigurationAdminPortlet extends FreeMarkerPortlet {
 			String viewType = ParamUtil.getString(renderRequest, "viewType");
 
 			if (viewType.equals("factoryInstances")) {
-				ConfigurationModel factoryConfigurationModel =
-					configurationHelper.getConfigurationModel(factoryPid);
-
-				renderRequest.setAttribute(
-					"factoryConfigurationModel", factoryConfigurationModel);
-
 				List<ConfigurationModel> configurationModels =
 					configurationHelper.getFactoryInstances(
 						themeDisplay.getLanguageId(), factoryPid);
@@ -162,6 +156,12 @@ public class ConfigurationAdminPortlet extends FreeMarkerPortlet {
 				renderRequest.setAttribute(
 					"configurationModelIterator",
 					new ConfigurationModelIterator(configurationModels));
+
+				ConfigurationModel factoryConfigurationModel =
+					configurationHelper.getConfigurationModel(factoryPid);
+
+				renderRequest.setAttribute(
+					"factoryConfigurationModel", factoryConfigurationModel);
 			}
 			else {
 				List<ConfigurationModel> configurationModels =

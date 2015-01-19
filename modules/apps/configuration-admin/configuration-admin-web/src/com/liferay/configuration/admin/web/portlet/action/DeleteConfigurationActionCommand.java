@@ -46,7 +46,7 @@ import org.osgi.service.metatype.MetaTypeService;
 			"ConfigurationAdminPortlet"
 	}
 )
-public class DeleteConfigurationAction implements ActionCommand {
+public class DeleteConfigurationActionCommand implements ActionCommand {
 
 	@Override
 	public boolean processCommand(
@@ -97,6 +97,6 @@ public class DeleteConfigurationAction implements ActionCommand {
 	protected MetaTypeService _metaTypeService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteConfigurationAction.class);
+		DeleteConfigurationActionCommand.class);
 
 }

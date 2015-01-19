@@ -67,7 +67,7 @@ import org.osgi.service.metatype.ObjectClassDefinition;
 			"ConfigurationAdminPortlet"
 	}
 )
-public class BindConfigurationAction implements ActionCommand {
+public class BindConfigurationActionCommand implements ActionCommand {
 
 	@Override
 	public boolean processCommand(
@@ -213,7 +213,7 @@ public class BindConfigurationAction implements ActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BindConfigurationAction.class);
+		BindConfigurationActionCommand.class);
 
 	private BundleContext _bundleContext;
 	private ConfigurationAdmin _configurationAdmin;

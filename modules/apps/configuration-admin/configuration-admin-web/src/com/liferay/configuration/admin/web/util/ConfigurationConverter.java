@@ -232,7 +232,10 @@ public class ConfigurationConverter {
 
 		int type = attributeDefinition.getType();
 
-		if (type == AttributeDefinition.DOUBLE) {
+		if (type == AttributeDefinition.BOOLEAN) {
+			return FieldConstants.BOOLEAN;
+		}
+		else if (type == AttributeDefinition.DOUBLE) {
 			return FieldConstants.DOUBLE;
 		}
 		else if (type == AttributeDefinition.FLOAT) {
@@ -247,9 +250,6 @@ public class ConfigurationConverter {
 		else if (type == AttributeDefinition.SHORT) {
 			return FieldConstants.SHORT;
 		}
-		else if (type == AttributeDefinition.BOOLEAN) {
-			return FieldConstants.BOOLEAN;
-		}
 
 		return FieldConstants.STRING;
 	}
@@ -259,28 +259,24 @@ public class ConfigurationConverter {
 
 		int type = attributeDefinition.getType();
 
-		switch (type) {
-			case AttributeDefinition.BOOLEAN: {
-				String[] optionLabels = attributeDefinition.getOptionLabels();
+		if (type == AttributeDefinition.BOOLEAN) {
+			String[] optionLabels = attributeDefinition.getOptionLabels();
 
-				if ((optionLabels == null) || (optionLabels.length == 0)) {
-					return "checkbox";
-				}
-
-				return "radio";
+			if ((optionLabels == null) || (optionLabels.length == 0)) {
+				return "checkbox";
 			}
 
-			default: {
-				DDMFormFieldOptions ddmFormFieldOptions = _getDDMFieldOptions(
-					attributeDefinition, locale);
-
-				if (_hasDDMFormFieldOptionsAvailable(ddmFormFieldOptions)) {
-					return "select";
-				}
-
-				return "text";
-			}
+			return "radio";
 		}
+
+		DDMFormFieldOptions ddmFormFieldOptions = _getDDMFieldOptions(
+			attributeDefinition, locale);
+
+		if (_hasDDMFormFieldOptionsAvailable(ddmFormFieldOptions)) {
+			return "select";
+		}
+
+		return "text";
 	}
 
 	private static LocalizedValue attributeToLabel(

@@ -77,17 +77,6 @@ public class BookmarksFolderAssetRenderer
 	}
 
 	@Override
-	public String getIconCssClass() throws PortalException {
-		if (BookmarksFolderServiceUtil.getFoldersAndEntriesCount(
-				_folder.getGroupId(), _folder.getFolderId()) > 0) {
-
-			return "icon-folder-close";
-		}
-
-		return super.getIconCssClass();
-	}
-
-	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		try {
 			if (BookmarksFolderServiceUtil.getFoldersAndEntriesCount(

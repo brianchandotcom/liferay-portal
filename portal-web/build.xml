@@ -332,7 +332,7 @@
 				<property name="bourbon.lib.dir" value="${bourbon.tmp.dir}/bourbon-${bourbon.version}/app/assets/stylesheets" />
 
 				<copy todir="${bourbon.deploy}" overwrite="true" preservelastmodified="true">
-					<fileset dir="${bourbon.lib.dir}/"/>
+					<fileset dir="${bourbon.lib.dir}/" />
 				</copy>
 
 				<delete dir="${bourbon.tmp.dir}" />

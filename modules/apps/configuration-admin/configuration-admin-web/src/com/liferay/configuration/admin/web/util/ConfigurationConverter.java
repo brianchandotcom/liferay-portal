@@ -140,9 +140,9 @@ public class ConfigurationConverter {
 				attributeDefinition, locale);
 
 			if ((type.equals("radio") || type.equals("select")) &&
-				hasDDMFormFieldOptionsAvailable(ddmFormFieldOptions)) {
+				_hasDDMFormFieldOptionsAvailable(ddmFormFieldOptions)) {
 
-				setDDMFormFieldOptions(type, ddmFormField, ddmFormFieldOptions);
+				_setDDMFormFieldOptions(type, ddmFormField, ddmFormFieldOptions);
 
 				if (predefinedValue!= null) {
 					String value = predefinedValue.getValues().get(locale);
@@ -283,7 +283,7 @@ public class ConfigurationConverter {
 				DDMFormFieldOptions ddmFormFieldOptions = _getDDMFieldOptions(
 					attributeDefinition, locale);
 
-				if (hasDDMFormFieldOptionsAvailable(ddmFormFieldOptions)) {
+				if (_hasDDMFormFieldOptionsAvailable(ddmFormFieldOptions)) {
 					return "select";
 				}
 
@@ -312,7 +312,7 @@ public class ConfigurationConverter {
 		return localizedValue;
 	}
 
-	private static boolean hasDDMFormFieldOptionsAvailable(
+	private static boolean _hasDDMFormFieldOptionsAvailable(
 		DDMFormFieldOptions ddmFormFieldOptions) {
 
 		Set<String> optionValues = ddmFormFieldOptions.getOptionsValues();
@@ -324,7 +324,7 @@ public class ConfigurationConverter {
 		return true;
 	}
 
-	private static void setDDMFormFieldOptions(
+	private static void _setDDMFormFieldOptions(
 		String type, DDMFormField ddmFormField,
 		DDMFormFieldOptions ddmFormFieldOptions) {
 

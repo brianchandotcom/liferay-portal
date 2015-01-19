@@ -49,17 +49,17 @@ public class ConfigurationProperties {
 			Object paramValue = null;
 
 			if (attributeDefinition.getCardinality() == 0) {
-				paramValue = typedParamValue(
+				paramValue = _toSimpleValue(
 					ddmFormFieldValuesMap, attributeDefinition.getID(),
 					attributeDefinition.getType(), locale);
 			}
 			else if (attributeDefinition.getCardinality() > 0) {
-				paramValue = typedParamArray(
+				paramValue = _toArrayValue(
 					ddmFormFieldValuesMap, attributeDefinition.getID(),
 					attributeDefinition.getType(), locale);
 			}
 			else if (attributeDefinition.getCardinality() < 0) {
-				paramValue = typedParamVector(
+				paramValue = _toVectorValue(
 					ddmFormFieldValuesMap, attributeDefinition.getID(),
 					attributeDefinition.getType(), locale);
 			}
@@ -70,7 +70,7 @@ public class ConfigurationProperties {
 		return properties;
 	}
 
-	private static Object typedParamArray(
+	private static Object _toArrayValue(
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap, String id,
 		int type, Locale locale) {
 
@@ -156,13 +156,14 @@ public class ConfigurationProperties {
 		return values;
 	}
 
-	private static Object typedParamValue(
+	private static Object _toSimpleValue(
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap, String id,
 		int type, Locale locale) {
 
-		List<DDMFormFieldValue> list = ddmFormFieldValuesMap.get(id);
+		List<DDMFormFieldValue> ddFormFieldValues = ddmFormFieldValuesMap.get(
+			id);
 
-		DDMFormFieldValue ddmFormFieldValue = list.get(0);
+		DDMFormFieldValue ddmFormFieldValue = ddFormFieldValues.get(0);
 
 		Value value = ddmFormFieldValue.getValue();
 
@@ -185,16 +186,17 @@ public class ConfigurationProperties {
 		return GetterUtil.getString(value.getString(locale));
 	}
 
-	private static Object typedParamVector(
+	private static Object _toVectorValue(
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap, String id,
 		int type, Locale locale) {
 
-		List<DDMFormFieldValue> list = ddmFormFieldValuesMap.get(id);
+		List<DDMFormFieldValue> ddFormFieldValues = ddmFormFieldValuesMap.get(
+			id);
 
 		if (type == AttributeDefinition.BOOLEAN) {
 			Vector<Boolean> values = new Vector<>();
 
-			for (DDMFormFieldValue ddmFormFieldValue : list) {
+			for (DDMFormFieldValue ddmFormFieldValue : ddFormFieldValues) {
 				Value value = ddmFormFieldValue.getValue();
 
 				values.add(GetterUtil.getBoolean(value.getString(locale)));
@@ -203,20 +205,20 @@ public class ConfigurationProperties {
 			return values;
 		}
 		else if (type == AttributeDefinition.LONG) {
-				Vector<Long> values = new Vector<>();
+			Vector<Long> values = new Vector<>();
 
-				for (DDMFormFieldValue ddmFormFieldValue : list) {
-					Value value = ddmFormFieldValue.getValue();
+			for (DDMFormFieldValue ddmFormFieldValue : ddFormFieldValues) {
+				Value value = ddmFormFieldValue.getValue();
 
-					values.add(GetterUtil.getLong(value.getString(locale)));
-				}
-
-				return values;
+				values.add(GetterUtil.getLong(value.getString(locale)));
 			}
+
+			return values;
+		}
 		else if (type == AttributeDefinition.DOUBLE) {
 			Vector<Double> values = new Vector<>();
 
-			for (DDMFormFieldValue ddmFormFieldValue : list) {
+			for (DDMFormFieldValue ddmFormFieldValue : ddFormFieldValues) {
 				Value value = ddmFormFieldValue.getValue();
 
 				values.add(GetterUtil.getDouble(value.getString(locale)));
@@ -227,7 +229,7 @@ public class ConfigurationProperties {
 		else if (type == AttributeDefinition.FLOAT) {
 			Vector<Float> values = new Vector<>();
 
-			for (DDMFormFieldValue ddmFormFieldValue : list) {
+			for (DDMFormFieldValue ddmFormFieldValue : ddFormFieldValues) {
 				Value value = ddmFormFieldValue.getValue();
 
 				values.add(GetterUtil.getFloat(value.getString(locale)));
@@ -238,7 +240,7 @@ public class ConfigurationProperties {
 		else if (type == AttributeDefinition.INTEGER) {
 			Vector<Integer> values = new Vector<>();
 
-			for (DDMFormFieldValue ddmFormFieldValue : list) {
+			for (DDMFormFieldValue ddmFormFieldValue : ddFormFieldValues) {
 				Value value = ddmFormFieldValue.getValue();
 
 				values.add(GetterUtil.getInteger(value.getString(locale)));
@@ -247,10 +249,9 @@ public class ConfigurationProperties {
 			return values;
 		}
 
-
 		Vector<String> values = new Vector<>();
 
-		for (DDMFormFieldValue ddmFormFieldValue : list) {
+		for (DDMFormFieldValue ddmFormFieldValue : ddFormFieldValues) {
 			Value value = ddmFormFieldValue.getValue();
 
 			values.add(GetterUtil.getString(value.getString(locale)));

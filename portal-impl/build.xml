@@ -473,7 +473,7 @@ public class Creole10Parser]]></replacevalue>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 		</tstamp>
 
-		<property name="r2.version" value="liferay-0.2" />
+		<property name="r2.version" value="liferay-0.3" />
 
 		<property name="r2.dir" value="${tstamp.value}/R2-${r2.version}" />
 

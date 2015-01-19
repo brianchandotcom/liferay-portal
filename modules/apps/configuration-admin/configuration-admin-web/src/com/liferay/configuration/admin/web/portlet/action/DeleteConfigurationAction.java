@@ -56,7 +56,7 @@ public class DeleteConfigurationAction implements ActionCommand {
 		String pid = ParamUtil.getString(portletRequest, "pid");
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Deleting configuration for service: " + pid);
+			_log.debug("Deleting configuration for service " + pid);
 		}
 
 		try {
@@ -68,8 +68,8 @@ public class DeleteConfigurationAction implements ActionCommand {
 
 			configuration.delete();
 		}
-		catch (IOException e) {
-			throw new PortletException(e);
+		catch (IOException ioe) {
+			throw new PortletException(ioe);
 		}
 
 		return true;

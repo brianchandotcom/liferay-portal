@@ -19,12 +19,12 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import javax.portlet.PortletPreferences;
 
@@ -38,10 +38,6 @@ public class RatingsDataTransformerUtil {
 			final long companyId, PortletPreferences oldPortletPreferences,
 			UnicodeProperties properties)
 		throws PortalException {
-
-		if (_ratingsDataTransformer == null) {
-			return;
-		}
 
 		for (String portletId : PortletRatingsDefinitionUtil.getPortletIds()) {
 			String[] classNames = PortletRatingsDefinitionUtil.getClassNames(
@@ -63,10 +59,6 @@ public class RatingsDataTransformerUtil {
 			final long groupId, UnicodeProperties oldProperties,
 			UnicodeProperties properties)
 		throws PortalException {
-
-		if (_ratingsDataTransformer == null) {
-			return;
-		}
 
 		for (String portletId : PortletRatingsDefinitionUtil.getPortletIds()) {
 			String[] classNames = PortletRatingsDefinitionUtil.getClassNames(
@@ -96,8 +88,15 @@ public class RatingsDataTransformerUtil {
 			return;
 		}
 
+		RatingsDataTransformer ratingsDataTransformer =
+			_serviceTracker.getService();
+
+		if (ratingsDataTransformer == null) {
+			return;
+		}
+
 		ActionableDynamicQuery.PerformActionMethod performActionMethod =
-			_ratingsDataTransformer.transformRatingsData(
+			ratingsDataTransformer.transformRatingsData(
 				fromRatingsType, toRatingsType);
 
 		if (performActionMethod == null) {
@@ -134,18 +133,13 @@ public class RatingsDataTransformerUtil {
 		return className + StringPool.UNDERLINE + "RatingsType";
 	}
 
-	private static RatingsDataTransformer _ratingsDataTransformer;
+	private static final ServiceTracker<
+		RatingsDataTransformer, RatingsDataTransformer> _serviceTracker =
+			RegistryUtil.getRegistry().trackServices(
+				RatingsDataTransformer.class);
 
 	static {
-		try {
-			Class<?> ratingsDataTransformerClassname = Class.forName(
-				PropsUtil.get(PropsKeys.RATINGS_DATA_TRANSFORMER));
-
-			_ratingsDataTransformer = (RatingsDataTransformer)
-				ratingsDataTransformerClassname.newInstance();
-		}
-		catch (Exception e) {
-		}
+		_serviceTracker.open();
 	}
 
 }

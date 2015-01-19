@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMContentTable;
@@ -46,8 +47,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFieldsCounter;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 
-import java.io.Serializable;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,7 +54,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -377,20 +375,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected void updateStructureStorageType(long structureId)
-		throws Exception {
-
+	protected void updateStructureStorageType() throws Exception {
 		runSQL(
-			"update DDMStructure set storageType='json' where structureId = " +
-				structureId);
+			"update DDMStructure set storageType='json' where " +
+				"storageType = 'xml'");
 	}
 
-	protected void updateStructureVersionStorageType(long structureId)
-		throws Exception {
-
+	protected void updateStructureVersionStorageType() throws Exception {
 		runSQL(
 			"update DDMStructureVersion set storageType='json' where " +
-				"structureId = " + structureId);
+				"storageType = 'xml'");
 	}
 
 	protected void upgradeXMLStorageAdapter() throws Exception {
@@ -431,11 +425,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				}
 
 				updateContent(ddmForm, classPK);
-
-				updateStructureStorageType(structureId);
-
-				updateStructureVersionStorageType(structureId);
 			}
+
+			updateStructureStorageType();
+			updateStructureVersionStorageType();
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
@@ -457,25 +450,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				Element rootElement = document.getRootElement();
 
-				String[] fieldsDisplayValues = getFieldsDisplayValues(
-					rootElement);
+				setDDMFormValuesAvailableLocales(ddmFormValues, rootElement);
+				setDDMFormValuesDefaultLocale(ddmFormValues, rootElement);
 
 				DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
 
 				for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 					String fieldName = ddmFormField.getName();
 
-					int repetitions = 0;
-
-					if (fieldsDisplayValues != null) {
-						repetitions = countDDMFieldRepetitions(
-							fieldsDisplayValues, fieldName, null, -1);
-					}
-					else if (getDynamicElementByName(rootElement, fieldName) !=
-								null) {
-
-						repetitions = 1;
-					}
+					int repetitions = countDDMFieldRepetitions(
+						rootElement, fieldName, null, -1);
 
 					for (int i = 0; i < repetitions; i++) {
 						DDMFormFieldValue ddmFormFieldValue =
@@ -489,20 +473,35 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					}
 				}
 
-				List<Element> dynamicElements = rootElement.elements(
-					"dynamic-element");
-
-				ddmFormValues.setAvailableLocales(
-					getAvailableLocales(dynamicElements));
-
-				ddmFormValues.setDefaultLocale(
-					getDefaultLocale(dynamicElements));
-
 				return ddmFormValues;
 			}
 			catch (DocumentException de) {
 				throw new UpgradeException(de);
 			}
+		}
+
+		protected int countDDMFieldRepetitions(
+				Element rootElement, String fieldName, String parentFieldName,
+				int parentOffset)
+			throws PortalException {
+
+			String[] ddmFieldsDisplayValues = getDDMFieldsDisplayValues(
+				rootElement, true);
+
+			if (ddmFieldsDisplayValues.length != 0) {
+				return countDDMFieldRepetitions(
+					ddmFieldsDisplayValues, fieldName, parentFieldName,
+					parentOffset);
+			}
+
+			Element dynamicElementElement = getDynamicElementElementByName(
+				rootElement, fieldName);
+
+			if (dynamicElementElement != null) {
+				return 1;
+			}
+
+			return 0;
 		}
 
 		protected int countDDMFieldRepetitions(
@@ -515,19 +514,17 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			int repetitions = 0;
 
 			for (int i = 0; i < fieldsDisplayValues.length; i++) {
+				String fieldDisplayName = fieldsDisplayValues[i];
+
 				if (offset > parentOffset) {
 					break;
 				}
 
-				String fieldDisplayName = fieldsDisplayValues[i];
-
-				if ((parentFieldName != null) &&
-					fieldDisplayName.startsWith(parentFieldName)) {
-
+				if (fieldDisplayName.equals(parentFieldName)) {
 					offset++;
 				}
 
-				if (fieldDisplayName.startsWith(fieldName) &&
+				if (fieldDisplayName.equals(fieldName) &&
 					(offset == parentOffset)) {
 
 					repetitions++;
@@ -545,9 +542,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			return ddmFormFieldValue;
 		}
 
-		protected Set<Locale> getAvailableLocales(Element dynamicElement) {
-			List<Element> dynamicContentElements = dynamicElement.elements(
-				"dynamic-content");
+		protected Set<Locale> getAvailableLocales(
+			Element dynamicElementElement) {
+
+			List<Element> dynamicContentElements =
+				dynamicElementElement.elements("dynamic-content");
 
 			Set<Locale> availableLocales = new LinkedHashSet<>();
 
@@ -562,12 +561,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 
 		protected Set<Locale> getAvailableLocales(
-			List<Element> dynamicElements) {
+			List<Element> dynamicElementElements) {
 
 			Set<Locale> availableLocales = new LinkedHashSet<>();
 
-			for (Element dynamicElement : dynamicElements) {
-				availableLocales.addAll(getAvailableLocales(dynamicElement));
+			for (Element dynamicElementElement : dynamicElementElements) {
+				availableLocales.addAll(
+					getAvailableLocales(dynamicElementElement));
 			}
 
 			return availableLocales;
@@ -576,10 +576,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		protected String getDDMFieldInstanceId(
 			Element rootElement, String fieldName, int index) {
 
-			String[] ddmFieldsDisplayValues = getFieldsDisplayValues(
-				rootElement);
+			String[] ddmFieldsDisplayValues = getDDMFieldsDisplayValues(
+				rootElement, false);
 
-			if (ddmFieldsDisplayValues == null) {
+			if (ddmFieldsDisplayValues.length == 0) {
 				return StringUtil.randomString();
 			}
 
@@ -599,67 +599,93 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			return null;
 		}
 
-		protected String getDDMFieldValueString(
-			Element dynamicElement, Locale locale, int index) {
+		protected String[] getDDMFieldsDisplayValues(
+			Element rootElement, boolean extractFieldName) {
 
-			Element dynamicContentElement = getDynamicContentElement(
-				dynamicElement, locale, index);
+			Element fieldsDisplayElement = getDynamicElementElementByName(
+				rootElement, "_fieldsDisplay");
 
-			Serializable fieldValue = dynamicContentElement.getText();
+			List<String> ddmFieldsDisplayValues = new ArrayList<>();
 
-			if (fieldValue instanceof Date) {
-				Date valueDate = (Date)fieldValue;
+			if (fieldsDisplayElement != null) {
+				Element fieldsDisplayDynamicContent =
+					fieldsDisplayElement.element("dynamic-content");
 
-				fieldValue = valueDate.getTime();
+				String fieldsDisplayText =
+					fieldsDisplayDynamicContent.getText();
+
+				for (String fieldDisplayValue :
+						StringUtil.split(fieldsDisplayText)) {
+
+					if (extractFieldName) {
+						fieldDisplayValue = StringUtil.extractFirst(
+							fieldDisplayValue, DDMImpl.INSTANCE_SEPARATOR);
+					}
+
+					ddmFieldsDisplayValues.add(fieldDisplayValue);
+				}
 			}
 
-			return String.valueOf(fieldValue);
+			return ddmFieldsDisplayValues.toArray(
+				new String[ddmFieldsDisplayValues.size()]);
 		}
 
 		protected DDMFormFieldValue getDDMFormFieldValue(
-			Element dynamicElement) {
+			Element dynamicElementElement) {
 
 			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
-			ddmFormFieldValue.setName(dynamicElement.attributeValue("name"));
+			ddmFormFieldValue.setName(
+				dynamicElementElement.attributeValue("name"));
 
-			List<Element> dynamicContentElements = dynamicElement.elements(
-				"dynamic-content");
+			List<Element> dynamicContentElements =
+				dynamicElementElement.elements("dynamic-content");
 
 			ddmFormFieldValue.setValue(getValue(dynamicContentElements));
 
 			ddmFormFieldValue.setNestedDDMFormFields(
 				getDDMFormFieldValues(
-					dynamicElement.elements("dynamic-element")));
+					dynamicElementElement.elements("dynamic-element")));
 
 			return ddmFormFieldValue;
 		}
 
 		protected List<DDMFormFieldValue> getDDMFormFieldValues(
-			List<Element> dynamicElements) {
+			List<Element> dynamicElementElements) {
 
-			if (dynamicElements == null) {
+			if (dynamicElementElements == null) {
 				return null;
 			}
 
 			List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
-			for (Element dynamicElement : dynamicElements) {
+			for (Element dynamicElement : dynamicElementElements) {
 				ddmFormFieldValues.add(getDDMFormFieldValue(dynamicElement));
 			}
 
 			return ddmFormFieldValues;
 		}
 
-		protected Locale getDefaultLocale(Element dynamicElement) {
-			String defaultLanguageId = dynamicElement.attributeValue(
+		protected String getDDMFormFieldValueValueString(
+			Element dynamicElementElement, Locale locale, int index) {
+
+			Element dynamicContentElement = getDynamicContentElement(
+				dynamicElementElement, locale, index);
+
+			return dynamicContentElement.getTextTrim();
+		}
+
+		protected Locale getDefaultLocale(Element dynamicElementElement) {
+			String defaultLanguageId = dynamicElementElement.attributeValue(
 				"default-language-id");
 
 			return LocaleUtil.fromLanguageId(defaultLanguageId);
 		}
 
-		protected Locale getDefaultLocale(List<Element> dynamicElements) {
-			for (Element dynamicElement : dynamicElements) {
+		protected Locale getDefaultLocale(
+			List<Element> dynamicElementElements) {
+
+			for (Element dynamicElement : dynamicElementElements) {
 				String defaultLanguageId = dynamicElement.attributeValue(
 					"default-language-id");
 
@@ -672,49 +698,30 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 
 		protected Element getDynamicContentElement(
-			Element dynamicElement, Locale locale, int index) {
+			Element dynamicElementElement, Locale locale, int index) {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			XPath dynamicContentXPath = SAXReaderUtil.createXPath(
-				"//dynamic-content(@language-id=" + languageId + ")");
+				"dynamic-content[(@language-id='" + languageId + "')]");
 
-			List<Element> elements =
-				(List<Element>)dynamicContentXPath.evaluate(dynamicElement);
+			List<Node> nodes = (List<Node>)dynamicContentXPath.selectNodes(
+				dynamicElementElement);
 
-			return elements.get(index);
+			return (Element)nodes.get(index);
 		}
 
-		protected Element getDynamicElementByName(
+		protected Element getDynamicElementElementByName(
 			Element rootElement, String fieldName) {
 
 			XPath dynamicElementXPath = SAXReaderUtil.createXPath(
-				"//dynamic-element[(@name=\"" +fieldName + "\")]");
+				"//dynamic-element[(@name=\"" + fieldName + "\")]");
 
 			if (dynamicElementXPath.booleanValueOf(rootElement)) {
 				return (Element)dynamicElementXPath.evaluate(rootElement);
 			}
 
 			return null;
-		}
-
-		protected String[] getFieldsDisplayValues(Element rootElement) {
-			Element fieldsDisplayElement = getDynamicElementByName(
-				rootElement, "_fieldsDisplay");
-
-			String[] fieldsDisplayValues = null;
-
-			if (fieldsDisplayElement != null) {
-				Element fieldsDisplayDynamicContent =
-					fieldsDisplayElement.element("dynamic-content");
-
-				String fieldsDisplayText =
-					fieldsDisplayDynamicContent.getText();
-
-				fieldsDisplayValues = fieldsDisplayText.split(",");
-			}
-
-			return fieldsDisplayValues;
 		}
 
 		protected Value getValue(List<Element> dynamicContentElements) {
@@ -747,14 +754,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 
 		protected void setDDMFormFieldValueLocalizedValue(
-			DDMFormFieldValue ddmFormFieldValue, Element dynamicElement,
+			DDMFormFieldValue ddmFormFieldValue, Element dynamicElementElement,
 			int index) {
 
-			Value value = new LocalizedValue(getDefaultLocale(dynamicElement));
+			Value value = new LocalizedValue(
+				getDefaultLocale(dynamicElementElement));
 
 			Map<String, Integer> dynamicContentValuesMap = new HashMap<>();
 
-			for (Element dynamicContentElement : dynamicElement.elements(
+			for (Element dynamicContentElement : dynamicElementElement.elements(
 				"dynamic-content")) {
 
 				String languageId = dynamicContentElement.attributeValue(
@@ -801,7 +809,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			DDMFormFieldValue ddmFormFieldValue, Element dynamicElement,
 			int index) {
 
-			String valueString = getDDMFieldValueString(
+			String valueString = getDDMFormFieldValueValueString(
 				dynamicElement, getDefaultLocale(dynamicElement), index);
 
 			Value value = new UnlocalizedValue(valueString);
@@ -816,7 +824,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			String fieldName = ddmFormFieldValue.getName();
 
-			Element dynamicElement = getDynamicElementByName(
+			Element dynamicElement = getDynamicElementElementByName(
 				rootElement, fieldName);
 
 			if (Validator.isNotNull(ddmFormField.getDataType())) {
@@ -835,6 +843,24 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ddmFieldsCounter.incrementKey(fieldName);
 		}
 
+		protected void setDDMFormValuesAvailableLocales(
+			DDMFormValues ddmFormValues, Element rootElement) {
+
+			Set<Locale> availableLocales = getAvailableLocales(
+				rootElement.elements("dynamic-element"));
+
+			ddmFormValues.setAvailableLocales(availableLocales);
+		}
+
+		protected void setDDMFormValuesDefaultLocale(
+			DDMFormValues ddmFormValues, Element rootElement) {
+
+			Locale defaultLocale = getDefaultLocale(
+				rootElement.elements("dynamic-element"));
+
+			ddmFormValues.setDefaultLocale(defaultLocale);
+		}
+
 		protected void setNestedDDMFormFieldValues(
 				DDMFormFieldValue ddmFormFieldValue, DDMFormField ddmFormField,
 				Element rootElement, DDMFieldsCounter ddmFieldsCounter)
@@ -847,8 +873,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			Map<String, DDMFormField> nestedDDMFormFieldsMap =
 				ddmFormField.getNestedDDMFormFieldsMap();
 
-			String[] ddmFieldsDisplayValues = getFieldsDisplayValues(
-				rootElement);
+			String[] ddmFieldsDisplayValues = getDDMFieldsDisplayValues(
+				rootElement, true);
 
 			for (Map.Entry<String, DDMFormField> nestedDDMFormFieldEntry :
 					nestedDDMFormFieldsMap.entrySet()) {

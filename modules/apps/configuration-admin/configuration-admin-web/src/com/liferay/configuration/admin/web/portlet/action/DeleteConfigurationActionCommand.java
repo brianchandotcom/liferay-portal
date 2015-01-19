@@ -39,12 +39,13 @@ import org.osgi.service.metatype.MetaTypeService;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true, service = ActionCommand.class,
+	immediate = true,
 	property = {
 		"action.command.name=deleteConfiguration",
 		"javax.portlet.name=com_liferay_configuration_admin_web_portlet_" +
 			"ConfigurationAdminPortlet"
-	}
+	},
+	service = ActionCommand.class
 )
 public class DeleteConfigurationActionCommand implements ActionCommand {
 

@@ -60,12 +60,13 @@ import org.osgi.service.metatype.ObjectClassDefinition;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true, service = ActionCommand.class,
+	immediate = true,
 	property = {
 		"action.command.name=bindConfiguration",
 		"javax.portlet.name=com_liferay_configuration_admin_web_portlet_" +
 			"ConfigurationAdminPortlet"
-	}
+	},
+	service = ActionCommand.class
 )
 public class BindConfigurationActionCommand implements ActionCommand {
 

@@ -38,40 +38,25 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && assetPublisherD
 }
 
 Group scopeGroup = themeDisplay.getScopeGroup();
-
-boolean hasAddPortletURLs = false;
 %>
 
 <c:if test="<%= assetPublisherDisplayContext.isShowAddContentButton() && (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
 
 	<%
-	boolean defaultAssetPublisher = AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource());
-
 	long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 	%>
 
 	<c:if test="<%= groupIds.length > 0 %>">
 		<aui:nav-bar cssClass='<%= "add-asset-selector lfr-meta-actions" + ((groupIds.length == 1) ? " single-item-button" : StringPool.BLANK) %>'>
 
-			<%
-			for (long groupId : groupIds) {
-				Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, groupId, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), null);
-
-				if ((addPortletURLs != null) && !addPortletURLs.isEmpty()) {
-					hasAddPortletURLs = true;
-				}
-			%>
-
-				<liferay-ui:asset-add-button
-					addDisplayPageParameter="<%= defaultAssetPublisher %>"
-					addPortletURLs="<%= addPortletURLs %>"
-					groupCount="<%= groupIds.length %>"
-					groupId="<%= groupId %>"
-				/>
-
-			<%
-			}
-			%>
+			<liferay-ui:asset-add-button
+				addDisplayPageParameter="<%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) %>"
+				allAssetCategoryIds="<%= assetPublisherDisplayContext.getAllAssetCategoryIds() %>"
+				allAssetTagNames="<%= assetPublisherDisplayContext.getAllAssetTagNames() %>"
+				classNameIds="<%= assetPublisherDisplayContext.getClassNameIds() %>"
+				classTypeIds="<%= assetPublisherDisplayContext.getClassTypeIds() %>"
+				groupIds="<%= groupIds %>"
+			/>
 
 		</aui:nav-bar>
 	</c:if>

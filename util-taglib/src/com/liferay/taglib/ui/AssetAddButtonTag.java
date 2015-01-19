@@ -14,11 +14,10 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.taglib.util.IncludeTag;
-
-import java.util.Map;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,16 +26,28 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetAddButtonTag extends IncludeTag {
 
-	public Map<String, PortletURL> getAddPortletURLs() {
-		return _addPortletURLs;
+	public long[] getAllAssetCategoryIds() {
+		return _allAssetCategoryIds;
 	}
 
-	public long getGroupCount() {
-		return _groupCount;
+	public String[] getAllAssetTagNames() {
+		return _allAssetTagNames;
 	}
 
-	public long getGroupId() {
-		return _groupId;
+	public long[] getClassNameIds() {
+		return _classNameIds;
+	}
+
+	public long[] getClassTypeIds() {
+		return _classTypeIds;
+	}
+
+	public long[] getGroupIds() {
+		return _groupIds;
+	}
+
+	public String getRedirect() {
+		return _redirect;
 	}
 
 	public boolean isAddDisplayPageParameter() {
@@ -47,24 +58,39 @@ public class AssetAddButtonTag extends IncludeTag {
 		_addDisplayPageParameter = addDisplayPageParameter;
 	}
 
-	public void setAddPortletURLs(Map<String, PortletURL> addPortletURLs) {
-		_addPortletURLs = addPortletURLs;
+	public void setAllAssetCategoryIds(long[] allAssetCategoryIds) {
+		_allAssetCategoryIds = allAssetCategoryIds;
 	}
 
-	public void setGroupCount(long groupCount) {
-		_groupCount = groupCount;
+	public void setAllAssetTagNames(String[] allAssetTagNames) {
+		_allAssetTagNames = allAssetTagNames;
 	}
 
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
+	public void setClassNameIds(long[] classNameIds) {
+		_classNameIds = classNameIds;
+	}
+
+	public void setClassTypeIds(long[] classTypeIds) {
+		_classTypeIds = classTypeIds;
+	}
+
+	public void setGroupIds(long[] groupIds) {
+		_groupIds = groupIds;
+	}
+
+	public void setRedirect(String redirect) {
+		_redirect = redirect;
 	}
 
 	@Override
 	protected void cleanUp() {
 		_addDisplayPageParameter = false;
-		_addPortletURLs = null;
-		_groupCount = 1;
-		_groupId = 0;
+		_allAssetCategoryIds = null;
+		_allAssetTagNames = null;
+		_classNameIds = null;
+		_classTypeIds = null;
+		_groupIds = null;
+		_redirect = null;
 	}
 
 	@Override
@@ -74,22 +100,49 @@ public class AssetAddButtonTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		request.setAttribute(
 			"liferay-ui:asset-add-button:addDisplayPageParameter",
 			_addDisplayPageParameter);
 		request.setAttribute(
-			"liferay-ui:asset-add-button:addPortletURLs", _addPortletURLs);
+			"liferay-ui:asset-add-button:allAssetCategoryIds",
+			_allAssetCategoryIds);
 		request.setAttribute(
-			"liferay-ui:asset-add-button:groupCount", _groupCount);
-		request.setAttribute("liferay-ui:asset-add-button:groupId", _groupId);
+			"liferay-ui:asset-add-button:allAssetTagNames", _allAssetTagNames);
+
+		long[] classNameIds = _classNameIds;
+
+		if (classNameIds == null) {
+			classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
+				themeDisplay.getCompanyId());
+		}
+
+		request.setAttribute(
+			"liferay-ui:asset-add-button:classNameIds", classNameIds);
+		request.setAttribute(
+			"liferay-ui:asset-add-button:classTypeIds", _classTypeIds);
+
+		long[] groupIds = _groupIds;
+
+		if (groupIds == null) {
+			groupIds = new long[] {themeDisplay.getScopeGroupId()};
+		}
+
+		request.setAttribute("liferay-ui:asset-add-button:groupIds", groupIds);
+		request.setAttribute("liferay-ui:asset-add-button:redirect", _redirect);
 	}
 
 	private static final String _PAGE =
 		"/html/taglib/ui/asset_add_button/page.jsp";
 
 	private boolean _addDisplayPageParameter;
-	private Map<String, PortletURL> _addPortletURLs;
-	private long _groupCount = 1;
-	private long _groupId = 0;
+	private long[] _allAssetCategoryIds;
+	private String[] _allAssetTagNames;
+	private long[] _classNameIds;
+	private long[] _classTypeIds;
+	private long[] _groupIds;
+	private String _redirect;
 
 }

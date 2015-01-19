@@ -72,8 +72,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 			%>
 
 			<liferay-ui:asset-add-button
-				addPortletURLs="<%= AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, scopeGroupId, AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId()), new long[0], new long[0], new String[0], redirectURL.toString()) %>"
-				groupId="<%= scopeGroupId %>"
+				redirect="<%= redirectURL.toString() %>"
 			/>
 		</span>
 	</aui:nav-bar>

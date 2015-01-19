@@ -22,8 +22,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
+import com.liferay.portal.model.Theme;
+import com.liferay.portal.model.adapter.ModelAdapterUtil;
 import com.liferay.portlet.layoutsadmin.lar.StagedTheme;
-import com.liferay.portlet.layoutsadmin.lar.StagedThemeImpl;
 
 /**
  * @author Mate Thurzo
@@ -50,7 +51,8 @@ public class ThemeExporter {
 			return;
 		}
 
-		StagedTheme stagedTheme = new StagedThemeImpl(layoutSet.getTheme());
+		StagedTheme stagedTheme = ModelAdapterUtil.adapt(
+			layoutSet.getTheme(), Theme.class, StagedTheme.class);
 
 		if (!portletDataContext.isPerformDirectBinaryImport()) {
 			Element layoutSetElement = portletDataContext.getExportDataElement(
@@ -83,8 +85,8 @@ public class ThemeExporter {
 			return;
 		}
 
-		StagedTheme stagedTheme = new StagedThemeImpl(
-			layoutSetBranch.getTheme());
+		StagedTheme stagedTheme = ModelAdapterUtil.adapt(
+			layoutSetBranch.getTheme(), Theme.class, StagedTheme.class);
 
 		if (!portletDataContext.isPerformDirectBinaryImport()) {
 			Element layoutSetBranchElement =

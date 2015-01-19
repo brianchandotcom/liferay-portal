@@ -209,11 +209,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	}
 
 	@Override
-	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE)
 	public void deleteCategory(MBCategory category) throws PortalException {
-		deleteCategory(category, true);
+		mbCategoryLocalService.deleteCategory(category, true);
 	}
 
 	@Override
@@ -231,7 +228,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		for (MBCategory curCategory : categories) {
 			if (includeTrashedEntries || !curCategory.isInTrashExplicitly()) {
-				deleteCategory(curCategory, includeTrashedEntries);
+				mbCategoryLocalService.deleteCategory(
+					curCategory, includeTrashedEntries);
 			}
 		}
 

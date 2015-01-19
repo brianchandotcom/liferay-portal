@@ -21,7 +21,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
-AssetVocabulary vocabulary = AssetVocabularyServiceUtil.fetchVocabulary(vocabularyId);
+AssetVocabulary vocabulary = null;
+
+if (vocabularyId > 0) {
+	vocabulary = AssetVocabularyServiceUtil.fetchVocabulary(vocabularyId);
+}
 %>
 
 <liferay-ui:header

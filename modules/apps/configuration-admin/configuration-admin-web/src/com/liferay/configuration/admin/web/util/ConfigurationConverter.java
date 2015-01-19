@@ -83,6 +83,34 @@ public class ConfigurationConverter {
 		return ddmFormFieldOptions;
 	}
 
+	private static boolean _hasDDMFormFieldOptionsAvailable(
+		DDMFormFieldOptions ddmFormFieldOptions) {
+
+		Set<String> optionValues = ddmFormFieldOptions.getOptionsValues();
+
+		if (optionValues.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static void _setDDMFormFieldOptions(
+		String type, DDMFormField ddmFormField,
+		DDMFormFieldOptions ddmFormFieldOptions) {
+
+		ddmFormField.setType(type);
+
+		if ("radio".equals(type)) {
+			ddmFormField.setDataType(FieldConstants.BOOLEAN);
+		}
+		else {
+			ddmFormField.setDataType(FieldConstants.STRING);
+		}
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+	}
+
 	private static void _setOptionFieldLabelsAndValues(
 		DDMFormFieldOptions ddmFormFieldOptions, String[] labels,
 		String[] values, Locale locale) {
@@ -142,7 +170,8 @@ public class ConfigurationConverter {
 			if ((type.equals("radio") || type.equals("select")) &&
 				_hasDDMFormFieldOptionsAvailable(ddmFormFieldOptions)) {
 
-				_setDDMFormFieldOptions(type, ddmFormField, ddmFormFieldOptions);
+				_setDDMFormFieldOptions(
+					type, ddmFormField, ddmFormFieldOptions);
 
 				if (predefinedValue!= null) {
 					String value = predefinedValue.getValues().get(locale);
@@ -297,34 +326,6 @@ public class ConfigurationConverter {
 		localizedValue.addString(locale, attributeDefinition.getDescription());
 
 		return localizedValue;
-	}
-
-	private static boolean _hasDDMFormFieldOptionsAvailable(
-		DDMFormFieldOptions ddmFormFieldOptions) {
-
-		Set<String> optionValues = ddmFormFieldOptions.getOptionsValues();
-
-		if (optionValues.isEmpty()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private static void _setDDMFormFieldOptions(
-		String type, DDMFormField ddmFormField,
-		DDMFormFieldOptions ddmFormFieldOptions) {
-
-		ddmFormField.setType(type);
-
-		if ("radio".equals(type)) {
-			ddmFormField.setDataType(FieldConstants.BOOLEAN);
-		}
-		else {
-			ddmFormField.setDataType(FieldConstants.STRING);
-		}
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 	}
 
 }

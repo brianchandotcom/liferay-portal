@@ -33,7 +33,6 @@
 	emptyResultsMessage="no-configurations-were-found"
 	total=configurationModelIterator.getTotal()
 >
-
 	<@liferay_ui["search-container-results"]
 		results=configurationModelIterator.getResults(searchContainer.getStart(), searchContainer.getEnd())
 	/>
@@ -43,7 +42,6 @@
 		keyProperty="ID"
 		modelVar="configurationModel"
 	>
-
 		<@portlet["renderURL"] varImpl="editURL">
 			<@portlet["param"] name="mvcPath" value="/edit_configuration.ftl" />
 			<@portlet["param"] name="pid" value="${configurationModel.getID()}" />

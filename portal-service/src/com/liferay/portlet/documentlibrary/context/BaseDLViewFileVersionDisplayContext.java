@@ -68,11 +68,6 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isAssetMetadataVisible() throws PortalException {
-		return parentDLDisplayContext.isAssetMetadataVisible();
-	}
-
-	@Override
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException {
 
@@ -100,6 +95,11 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean isDownloadLinkVisible() throws PortalException {
+		return parentDLDisplayContext.isDownloadLinkVisible();
+	}
+
+	@Override
 	public boolean isEditButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isEditButtonVisible();
 	}
@@ -122,6 +122,11 @@ public class BaseDLViewFileVersionDisplayContext
 	@Override
 	public boolean isPermissionsButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isPermissionsButtonVisible();
+	}
+
+	@Override
+	public boolean isVersionInfoVisible() throws PortalException {
+		return parentDLDisplayContext.isVersionInfoVisible();
 	}
 
 	@Override

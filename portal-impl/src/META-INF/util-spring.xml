@@ -1141,6 +1141,11 @@
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.imagegallerydisplay.context.IGDisplayContextProviderUtil" class="com.liferay.portlet.imagegallerydisplay.context.IGDisplayContextProviderUtil">
+		<property name="IGDisplayContextProvider">
+			<bean class="com.liferay.portlet.imagegallerydisplay.context.IGDisplayContextProviderImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.journal.service.permission.JournalArticlePermission" class="com.liferay.portlet.journal.service.permission.JournalArticlePermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFeedPermission" class="com.liferay.portlet.journal.service.permission.JournalFeedPermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFolderPermission" class="com.liferay.portlet.journal.service.permission.JournalFolderPermission" />

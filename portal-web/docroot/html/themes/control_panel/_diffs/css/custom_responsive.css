@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 @import "mixins";
 
 @include respond-to(phone, tablet) {
@@ -16,7 +16,7 @@
 			}
 
 			.navbar-brand {
-				@include display-flex();
+				@include display(flex);
 				@include flex-grow(1);
 				@include flex-shrink(500);
 

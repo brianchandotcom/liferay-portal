@@ -1,5 +1,4 @@
-@import "compass";
-@import "compass/css3/user-interface";
+@import "bourbon";
 @import "mixins";
 
 td {
@@ -45,7 +44,7 @@ td {
 	overflow-x: auto;
 	white-space: pre;
 
-	@include word-break(normal);
+	@include word-wrap(normal);
 
 	table {
 		table-layout: auto;

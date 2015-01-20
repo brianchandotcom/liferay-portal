@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 @import "mixins";
 
 .portlet-wiki {
@@ -276,7 +276,7 @@
 			margin-bottom: 1em;
 			margin-left: 1em;
 
-			@include word-break(normal);
+			@include word-wrap(normal);
 		}
 	}
 

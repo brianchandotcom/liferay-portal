@@ -1,5 +1,3 @@
-@import "compass";
-@import "compass/css3/user-interface";
 @import "mixins";
 
 .taglib-user-display {

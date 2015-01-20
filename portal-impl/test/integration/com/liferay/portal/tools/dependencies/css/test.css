@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 
 .test {
 	-moz-border-radius-bottomleft: 1px;

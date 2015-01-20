@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 
 .breadcrumbs {
 	margin-bottom: 10px;
@@ -48,7 +48,7 @@
 			> td, > th {
 				padding: 0 5px;
 
-				@include word-break(break-all);
+				@include word-wrap(break-all);
 
 				&:first-child, &.first-child {
 					padding-left: 0;
@@ -103,7 +103,7 @@
 }
 
 .lfr-checkbox-preselected, .lfr-configurator-visibility {
-	@include opacity(0.5);
+	opacity: 0.5;
 }
 
 .ie {

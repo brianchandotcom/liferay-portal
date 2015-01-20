@@ -68,26 +68,4 @@ public class BaseDLDisplayContextFactory
 		return parentDLViewFileVersionDisplayContext;
 	}
 
-	@Override
-	public DLViewFileVersionDisplayContext
-		getIGFileVersionActionsDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut) {
-
-		return parentDLViewFileVersionDisplayContext;
-	}
-
-	@Override
-	public DLViewFileVersionDisplayContext
-		getIGFileVersionActionsDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
-
-		return parentDLViewFileVersionDisplayContext;
-	}
-
 }

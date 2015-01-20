@@ -46,14 +46,4 @@ public interface DLDisplayContextProvider extends DisplayContextProvider {
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion);
 
-	public DLViewFileVersionDisplayContext
-		getIGFileVersionActionsDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut);
-
-	public DLViewFileVersionDisplayContext
-		getIGFileVersionActionsDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
-
 }

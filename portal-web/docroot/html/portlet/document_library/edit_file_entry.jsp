@@ -26,8 +26,6 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 String uploadProgressId = "dlFileEntryUploadProgress";
 
-boolean showSelectFolder = ParamUtil.getBoolean(request, "showSelectFolder");
-
 FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 
 long fileEntryId = BeanParamUtil.getLong(fileEntry, request, "fileEntryId");
@@ -276,7 +274,7 @@ else {
 		<div class="form-group">
 			<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
 
-			<c:if test="<%= showSelectFolder %>">
+			<c:if test="<%= dlEditFileEntryDisplayContext.isFolderSelectionVisible() %>">
 				<aui:button name="selectFolderButton" value="select" />
 
 				<%

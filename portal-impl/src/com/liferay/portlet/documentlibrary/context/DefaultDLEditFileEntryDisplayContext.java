@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.theme.PortletDisplay;
@@ -148,6 +149,11 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public boolean isFolderSelectionVisible() throws PortalException {
+		return _showSelectFolder;
+	}
+
+	@Override
 	public boolean isPublishButtonDisabled() {
 		if (_fileEntryDisplayContextHelper.isCheckedOutByOther() ||
 			(_fileVersionDisplayContextHelper.isPending() &&
@@ -235,6 +241,8 @@ public class DefaultDLEditFileEntryDisplayContext
 
 		_fileVersionDisplayContextHelper = new FileVersionDisplayContextHelper(
 			_fileVersion);
+
+		_showSelectFolder = ParamUtil.getBoolean(request, "showSelectFolder");
 	}
 
 	private static final UUID _UUID = UUID.fromString(
@@ -247,5 +255,6 @@ public class DefaultDLEditFileEntryDisplayContext
 	private FileVersion _fileVersion;
 	private FileVersionDisplayContextHelper _fileVersionDisplayContextHelper;
 	private HttpServletRequest _request;
+	private boolean _showSelectFolder;
 
 }

@@ -696,41 +696,6 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle updateArticle(
-			JournalArticle article, String title)
-		throws Exception {
-
-		return updateArticle(
-			article, title, article.getContent(), false, false,
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static JournalArticle updateArticle(
-			JournalArticle article, String title, String content)
-		throws Exception {
-
-		return updateArticle(
-			article, title, content, false, false,
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static JournalArticle updateArticle(
-			JournalArticle article, String title, String content,
-			boolean workflowEnabled, boolean approved,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		for (Locale locale : _locales) {
-			titleMap.put(locale, title);
-		}
-
-		return updateArticle(
-			article, titleMap, content, workflowEnabled, approved,
-			serviceContext);
-	}
-
-	public static JournalArticle updateArticle(
 			JournalArticle article, Map<Locale, String> titleMap,
 			String content, boolean workflowEnabled, boolean approved,
 			ServiceContext serviceContext)
@@ -782,6 +747,41 @@ public class JournalTestUtil {
 			displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,
 			article.getIndexable(), article.isSmallImage(),
 			article.getSmallImageURL(), null, null, null, serviceContext);
+	}
+
+	public static JournalArticle updateArticle(
+			JournalArticle article, String title)
+		throws Exception {
+
+		return updateArticle(
+			article, title, article.getContent(), false, false,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static JournalArticle updateArticle(
+			JournalArticle article, String title, String content)
+		throws Exception {
+
+		return updateArticle(
+			article, title, content, false, false,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static JournalArticle updateArticle(
+			JournalArticle article, String title, String content,
+			boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		for (Locale locale : _locales) {
+			titleMap.put(locale, title);
+		}
+
+		return updateArticle(
+			article, titleMap, content, workflowEnabled, approved,
+			serviceContext);
 	}
 
 	public static JournalArticle updateArticleWithWorkflow(

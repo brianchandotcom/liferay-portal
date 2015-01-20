@@ -85,6 +85,7 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
 		long userId, long groupId, long classNameId, long classPK,
+		long sourceClassNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
@@ -126,7 +127,7 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
 		long userId, long groupId, long classNameId, long classPK,
-		java.lang.String templateKey,
+		long sourceClassNameId, java.lang.String templateKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,

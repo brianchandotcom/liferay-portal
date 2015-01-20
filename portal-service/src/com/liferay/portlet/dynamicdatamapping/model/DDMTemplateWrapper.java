@@ -64,6 +64,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("sourceClassNameId", getSourceClassNameId());
 		attributes.put("templateKey", getTemplateKey());
 		attributes.put("version", getVersion());
 		attributes.put("name", getName());
@@ -140,6 +141,12 @@ public class DDMTemplateWrapper implements DDMTemplate,
 
 		if (classPK != null) {
 			setClassPK(classPK);
+		}
+
+		Long sourceClassNameId = (Long)attributes.get("sourceClassNameId");
+
+		if (sourceClassNameId != null) {
+			setSourceClassNameId(sourceClassNameId);
 		}
 
 		String templateKey = (String)attributes.get("templateKey");
@@ -555,6 +562,16 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	@Override
 	public java.lang.String getSmallImageURL() {
 		return _ddmTemplate.getSmallImageURL();
+	}
+
+	/**
+	* Returns the source class name ID of this d d m template.
+	*
+	* @return the source class name ID of this d d m template
+	*/
+	@Override
+	public long getSourceClassNameId() {
+		return _ddmTemplate.getSourceClassNameId();
 	}
 
 	/**
@@ -1025,6 +1042,16 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	@Override
 	public void setSmallImageURL(java.lang.String smallImageURL) {
 		_ddmTemplate.setSmallImageURL(smallImageURL);
+	}
+
+	/**
+	* Sets the source class name ID of this d d m template.
+	*
+	* @param sourceClassNameId the source class name ID of this d d m template
+	*/
+	@Override
+	public void setSourceClassNameId(long sourceClassNameId) {
+		_ddmTemplate.setSourceClassNameId(sourceClassNameId);
 	}
 
 	/**

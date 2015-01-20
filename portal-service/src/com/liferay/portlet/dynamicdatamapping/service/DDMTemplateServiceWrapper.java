@@ -59,7 +59,7 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
-		long groupId, long classNameId, long classPK,
+		long groupId, long classNameId, long classPK, long sourceClassNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
@@ -67,8 +67,8 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateService.addTemplate(groupId, classNameId, classPK,
-			nameMap, descriptionMap, type, mode, language, script,
-			serviceContext);
+			sourceClassNameId, nameMap, descriptionMap, type, mode, language,
+			script, serviceContext);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
-		long groupId, long classNameId, long classPK,
+		long groupId, long classNameId, long classPK, long sourceClassNameId,
 		java.lang.String templateKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -117,8 +117,9 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateService.addTemplate(groupId, classNameId, classPK,
-			templateKey, nameMap, descriptionMap, type, mode, language, script,
-			cacheable, smallImage, smallImageURL, smallImageFile, serviceContext);
+			sourceClassNameId, templateKey, nameMap, descriptionMap, type,
+			mode, language, script, cacheable, smallImage, smallImageURL,
+			smallImageFile, serviceContext);
 	}
 
 	/**

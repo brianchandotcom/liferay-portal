@@ -100,55 +100,56 @@ public class RatingsTag extends IncludeTag {
 	}
 
 	protected String getType(HttpServletRequest request) {
-		if (Validator.isNull(_type)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		if (Validator.isNotNull(_type)) {
+			return _type;
+		}
 
-			long companyId = themeDisplay.getCompanyId();
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			PortletPreferences companyPortletPreferences =
-				PrefsPropsUtil.getPreferences(companyId);
+		long companyId = themeDisplay.getCompanyId();
 
-			Group group = themeDisplay.getSiteGroup();
+		PortletPreferences companyPortletPreferences =
+			PrefsPropsUtil.getPreferences(companyId);
 
-			if (group.isStagingGroup()) {
-				group = group.getLiveGroup();
-			}
+		Group group = themeDisplay.getSiteGroup();
 
-			UnicodeProperties groupTypeSettings = new UnicodeProperties();
+		if (group.isStagingGroup()) {
+			group = group.getLiveGroup();
+		}
 
-			if (group != null) {
-				groupTypeSettings = group.getTypeSettingsProperties();
-			}
+		UnicodeProperties groupTypeSettings = new UnicodeProperties();
 
-			Portlet portlet = (Portlet)request.getAttribute(
-				WebKeys.RENDER_PORTLET);
+		if (group != null) {
+			groupTypeSettings = group.getTypeSettingsProperties();
+		}
 
-			if (portlet != null) {
-				PortletRatingsDefinition.RatingsType defaultRatingsType =
-					PortletRatingsDefinitionUtil.getDefaultType(
-						portlet.getPortletId(), _className);
+		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
-				if (defaultRatingsType != null) {
-					String propertyName =
-						_className + StringPool.UNDERLINE + "RatingsType";
+		if (portlet != null) {
+			PortletRatingsDefinition.RatingsType defaultRatingsType =
+				PortletRatingsDefinitionUtil.getDefaultType(
+					portlet.getPortletId(), _className);
 
-					String companyRatingsType = PrefsParamUtil.getString(
-						companyPortletPreferences, request, propertyName,
-						defaultRatingsType.getValue());
+			if (defaultRatingsType != null) {
+				String propertyName =
+					_className + StringPool.UNDERLINE + "RatingsType";
 
-					_type = PropertiesParamUtil.getString(
-						groupTypeSettings, request, propertyName,
-						companyRatingsType);
-				}
-			}
+				String companyRatingsType = PrefsParamUtil.getString(
+					companyPortletPreferences, request, propertyName,
+					defaultRatingsType.getValue());
 
-			if (Validator.isNull(_type)) {
-				_type = _DEFAULT_TYPE;
+				_type = PropertiesParamUtil.getString(
+					groupTypeSettings, request, propertyName,
+					companyRatingsType);
 			}
 		}
 
-		return _type;
+		if (Validator.isNotNull(_type)) {
+			return _type;
+		}
+
+		return _DEFAULT_TYPE;
 	}
 
 	@Override
@@ -173,9 +174,7 @@ public class RatingsTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:ratings:setRatingsStats",
 			String.valueOf(_setRatingsStats));
-
 		request.setAttribute("liferay-ui:ratings:type", getType(request));
-
 		request.setAttribute("liferay-ui:ratings:url", _url);
 	}
 

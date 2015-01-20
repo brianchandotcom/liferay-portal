@@ -390,7 +390,6 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 	<c:if test="<%= editable %>">
 		<tr>
 			<td class="thread-bottom">
-
 				<c:if test="<%= enableRatings %>">
 					<liferay-ui:ratings
 						className="<%= MBMessage.class.getName() %>"

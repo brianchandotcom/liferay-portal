@@ -36,7 +36,7 @@ else {
 <h3><liferay-ui:message key="ratings" /></h3>
 
 <div class="alert alert-info">
-	<p><liferay-ui:message key="changing-rating-type-could-produce-inaccurate-info" /></p>
+	<p><liferay-ui:message key="changing-rating-type-could-lead-to-inaccurate-info" /></p>
 </div>
 
 <p><liferay-ui:message key="select-the-rating-type-for-the-portlets" /></p>

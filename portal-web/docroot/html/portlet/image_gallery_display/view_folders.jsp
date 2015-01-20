@@ -95,8 +95,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 				for (int j = 0; j < subfolders.size(); j++) {
 					Folder subfolder = (Folder)subfolders.get(j);
 
-					subfolder = subfolder.toEscapedModel();
-
 					String name = HtmlUtil.escape(subfolder.getName());
 
 					if (((j + 1) < subfolders.size()) || (subfoldersCount > subfolders.size())) {

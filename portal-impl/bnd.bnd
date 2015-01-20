@@ -1,5 +1,6 @@
 Bundle-Version: 6.2.0
 Export-Package:\
+	com.liferay.counter.service,\
 	com.liferay.portal.bean,\
 	com.liferay.portal.cache,\
 	com.liferay.portal.cache.configurator,\
@@ -36,6 +37,7 @@ Export-Package:\
 	com.liferay.portlet,\
 	com.liferay.portlet.asset,\
 	com.liferay.portlet.asset.model,\
+	com.liferay.portlet.asset.model.impl,\
 	com.liferay.portlet.asset.service,\
 	com.liferay.portlet.asset.service.permission,\
 	com.liferay.portlet.asset.service.persistence,\

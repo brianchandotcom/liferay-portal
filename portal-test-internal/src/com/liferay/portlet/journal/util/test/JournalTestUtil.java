@@ -719,6 +719,23 @@ public class JournalTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		for (Locale locale : _locales) {
+			titleMap.put(locale, title);
+		}
+
+		return updateArticle(
+			article, titleMap, content, workflowEnabled, approved,
+			serviceContext);
+	}
+
+	public static JournalArticle updateArticle(
+			JournalArticle article, Map<Locale, String> titleMap,
+			String content, boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		if (workflowEnabled) {
 			serviceContext = (ServiceContext)serviceContext.clone();
 
@@ -730,12 +747,6 @@ public class JournalTestUtil {
 				serviceContext.setWorkflowAction(
 					WorkflowConstants.ACTION_SAVE_DRAFT);
 			}
-		}
-
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		for (Locale locale : _locales) {
-			titleMap.put(locale, title);
 		}
 
 		Date displayDate = article.getDisplayDate();

@@ -332,7 +332,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			List<Website> websites, UnicodeProperties properties)
 		throws PortalException {
 
-		PortletPreferences oldPortletPreferences =
+		PortletPreferences oldCompanyPortletPreferences =
 			PrefsPropsUtil.getPreferences(companyId);
 
 		Company company = updateCompany(
@@ -345,7 +345,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		updatePreferences(company.getCompanyId(), properties);
 
 		RatingsDataTransformerUtil.transformCompanyRatingsData(
-			companyId, oldPortletPreferences, properties);
+			companyId, oldCompanyPortletPreferences, properties);
 
 		UsersAdminUtil.updateAddresses(
 			Account.class.getName(), company.getAccountId(), addresses);

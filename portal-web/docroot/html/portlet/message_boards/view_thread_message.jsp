@@ -391,14 +391,11 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 		<tr>
 			<td class="thread-bottom">
 
-				<%PortletRatingsDefinition.RatingsType ratingsType = PortletRatingsDefinition.RatingsType.valueOf("thumbs");
-				%>
-
 				<c:if test="<%= enableRatings %>">
 					<liferay-ui:ratings
 						className="<%= MBMessage.class.getName() %>"
 						classPK="<%= message.getMessageId() %>"
-						type="<%= ratingsType.getValue() %>"
+						type="<%= PortletRatingsDefinition.RatingsType.THUMBS.getValue() %>"
 					/>
 				</c:if>
 

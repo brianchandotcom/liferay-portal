@@ -59,19 +59,21 @@ else {
 		for (String className : classNames) {
 			String propertyName = className + StringPool.UNDERLINE + "RatingsType";
 
-			String companyRatingsType = PrefsParamUtil.getString(companyPortletPreferences, request, propertyName, PortletRatingsDefinitionUtil.getDefaultType(portletId, className).toString());
+			PortletRatingsDefinition.RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultType(portletId, className);
 
-			String ratingsType = PropertiesParamUtil.getString(groupTypeSettings, request, propertyName, companyRatingsType);
+			String companyRatingsTypeString = PrefsParamUtil.getString(companyPortletPreferences, request, propertyName, defaultRatingsType.toString());
+
+			String ratingsTypeString = PropertiesParamUtil.getString(groupTypeSettings, request, propertyName, companyRatingsTypeString);
 		%>
 
 			<div class="ratings-type-select">
-				<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "TypeSettingsProperties--" + propertyName + "--" %>' value="<%= ratingsType %>">
+				<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "TypeSettingsProperties--" + propertyName + "--" %>'>
 
 					<%
-					for (PortletRatingsDefinition.RatingsType value : PortletRatingsDefinition.RatingsType.values()) {
+					for (PortletRatingsDefinition.RatingsType curRatingsType : PortletRatingsDefinition.RatingsType.values()) {
 					%>
 
-						<aui:option label="<%= LanguageUtil.get(request, value.getValue()) %>" value="<%= value.getValue() %>" />
+						<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= ratingsTypeString.equals(curRatingsType.getValue()) %>" value="<%= curRatingsType.getValue() %>" />
 
 					<%
 					}

@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
@@ -407,6 +408,62 @@ public class DDMImplTest extends BaseDDMTestCase {
 		}
 		catch (NullPointerException npe) {
 		}
+	}
+
+	@Test
+	public void testMergeFieldsWithMatchingFieldNames() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormField textDDMFormField = createTextDDMFormField(
+			"TestName", "", true, true, false);
+
+		List<DDMFormField> nestedDDMFormFields =
+			textDDMFormField.getNestedDDMFormFields();
+
+		nestedDDMFormFields.add(
+			createTextDDMFormField("TestNameNested", "", true, true, false));
+
+		addDDMFormFields(ddmForm, textDDMFormField);
+
+		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
+
+		Field existingField = createField(
+			ddmStructure.getStructureId(), "TestName",
+			createValuesList(
+				StringUtil.randomString(), StringUtil.randomString()),
+			createValuesList(
+				StringUtil.randomString(), StringUtil.randomString()));
+
+		Field existingNestedField = createField(
+			ddmStructure.getStructureId(), "TestNameNested",
+			createValuesList(
+				StringUtil.randomString(), StringUtil.randomString()),
+			createValuesList(
+				StringUtil.randomString(), StringUtil.randomString()));
+
+		Field existingFieldsDisplayField = createFieldsDisplayField(
+			ddmStructure.getStructureId(),
+			"TestName_INSTANCE_rztm,TestNameNested_INSTANCE_ovho," +
+			"TestName_INSTANCE_krvx,TestNameNested_INSTANCE_rght");
+
+		Fields existingFields = createFields(
+			existingField, existingNestedField, existingFieldsDisplayField);
+
+		Field newField = createField(
+			ddmStructure.getStructureId(), "TestName", null, null);
+
+		Field newNestedField = createField(
+			ddmStructure.getStructureId(), "TestNameNested", null, null);
+
+		Field newFieldsDisplayField = createFieldsDisplayField(
+			ddmStructure.getStructureId(),
+			"TestName_INSTANCE_rztm,TestNameNested_INSTANCE_ovho," +
+			"TestName_INSTANCE_krvx,TestNameNested_INSTANCE_rght");
+
+		Fields newFields = createFields(
+			newField, newNestedField, newFieldsDisplayField);
+
+		_ddmImpl.mergeFields(newFields, existingFields);
 	}
 
 	protected void testValues(

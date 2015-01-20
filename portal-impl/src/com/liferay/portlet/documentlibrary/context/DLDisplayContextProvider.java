@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
+import com.liferay.portal.kernel.context.DisplayContextProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ivan Zaera
  */
-public interface DLDisplayContextProvider {
+public interface DLDisplayContextProvider extends DisplayContextProvider {
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,

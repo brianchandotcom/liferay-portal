@@ -63,13 +63,13 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 					thumbnailId = "entry_" + fileEntry.getFileEntryId();
 				}
 
-				DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = null;
+				IGViewFileVersionDisplayContext igViewFileVersionDisplayContext = null;
 
 				if (fileShortcut == null) {
-					dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
+					igViewFileVersionDisplayContext = IGDisplayContextProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
 				}
 				else {
-					dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileShortcut);
+					igViewFileVersionDisplayContext = IGDisplayContextProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileShortcut);
 				}
 				%>
 

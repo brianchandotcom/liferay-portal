@@ -52,12 +52,12 @@ public class BaseDLViewFileVersionDisplayContext
 	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
 		throws PortalException {
 
-		return parentDLDisplayContext.getDDMFormValues(ddmStructure);
+		return parentDisplayContext.getDDMFormValues(ddmStructure);
 	}
 
 	@Override
 	public List<DDMStructure> getDDMStructures() throws PortalException {
-		return parentDLDisplayContext.getDDMStructures();
+		return parentDisplayContext.getDDMStructures();
 	}
 
 	@Override
@@ -67,22 +67,22 @@ public class BaseDLViewFileVersionDisplayContext
 
 	@Override
 	public List<MenuItem> getMenuItems() throws PortalException {
-		return parentDLDisplayContext.getMenuItems();
+		return parentDisplayContext.getMenuItems();
 	}
 
 	@Override
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
-		return parentDLDisplayContext.getToolbarItems();
+		return parentDisplayContext.getToolbarItems();
 	}
 
 	@Override
 	public boolean isDownloadLinkVisible() throws PortalException {
-		return parentDLDisplayContext.isDownloadLinkVisible();
+		return parentDisplayContext.isDownloadLinkVisible();
 	}
 
 	@Override
 	public boolean isVersionInfoVisible() throws PortalException {
-		return parentDLDisplayContext.isVersionInfoVisible();
+		return parentDisplayContext.isVersionInfoVisible();
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class BaseDLViewFileVersionDisplayContext
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		parentDLDisplayContext.renderPreview(request, response);
+		parentDisplayContext.renderPreview(request, response);
 	}
 
 	protected FileVersion fileVersion;

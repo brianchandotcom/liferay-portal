@@ -13,6 +13,9 @@ Export-Package:\
 	com.liferay.wiki.social,\
 	com.liferay.wiki.util,\
 	com.liferay.wiki.util.comparator
+Import-Package:\
+	!com.liferay.portal.tools.sql,\
+	*
 Include-Resource:\
 	classes,\
 	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\

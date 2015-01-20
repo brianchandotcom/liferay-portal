@@ -133,6 +133,11 @@ public interface DB {
 		throws IOException, NamingException, SQLException;
 
 	public void runSQLTemplateString(
+			Connection connection, String template, boolean evaluate,
+			boolean failOnError)
+		throws IOException, NamingException, SQLException;
+
+	public void runSQLTemplateString(
 			String template, boolean evaluate, boolean failOnError)
 		throws IOException, NamingException, SQLException;
 

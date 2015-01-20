@@ -14,20 +14,26 @@
 
 package com.liferay.portal.tools.samplesqlbuilder;
 
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.tools.DBLoader;
 import com.liferay.portal.tools.ToolDependencies;
+import com.liferay.portal.tools.sql.SQLQueryProvider;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
 import java.util.Properties;
+import java.util.ServiceLoader;
 
 import org.junit.Test;
 
@@ -56,6 +62,20 @@ public class SampleSQLBuilderTest {
 		finally {
 			FileUtil.deltree(tempDir);
 		}
+	}
+
+	private void _executeSQLQueryProvider(
+			Connection connection, SQLQueryProvider sqlQueryProvider)
+		throws Exception {
+
+		String sqlIndexes = _readSQL(sqlQueryProvider.getIndexes());
+		String sqlTables = _readSQL(sqlQueryProvider.getTables());
+
+		DB db = DBFactoryUtil.getDB();
+
+		db.runSQLTemplateString(connection, sqlTables, false, true);
+
+		db.runSQLTemplateString(connection, sqlIndexes, false, true);
 	}
 
 	private void _initProperties(Properties properties, String outputDir) {
@@ -122,6 +142,9 @@ public class SampleSQLBuilderTest {
 				connection, sqlDir + "/portal/portal-hypersonic.sql");
 			DBLoader.loadHypersonic(
 				connection, sqlDir + "/indexes/indexes-hypersonic.sql");
+
+			_loadSQLQueryProviderExtensions(connection);
+
 			DBLoader.loadHypersonic(
 				connection, outputDir + "/sample-hypersonic.sql");
 
@@ -131,6 +154,32 @@ public class SampleSQLBuilderTest {
 		}
 		finally {
 			DataAccess.cleanUp(connection, statement);
+		}
+	}
+
+	private void _loadSQLQueryProviderExtensions(Connection connection)
+		throws Exception {
+
+		ServiceLoader<SQLQueryProvider> serviceLoader = ServiceLoader.load(
+			SQLQueryProvider.class);
+
+		DBFactoryUtil.setDB(DB.TYPE_HYPERSONIC);
+
+		for (SQLQueryProvider sqlQueryProvider : serviceLoader) {
+			_executeSQLQueryProvider(connection, sqlQueryProvider);
+		}
+	}
+
+	private String _readSQL(InputStream inputStream) throws IOException {
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile(inputStream);
+
+			return FileUtil.read(file);
+		}
+		finally {
+			file.delete();
 		}
 	}
 

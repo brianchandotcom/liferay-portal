@@ -354,7 +354,8 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public void runSQLTemplateString(
-			String template, boolean evaluate, boolean failOnError)
+			Connection connection, String template, boolean evaluate,
+			boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
 		if (evaluate) {
@@ -420,7 +421,7 @@ public abstract class BaseDB implements DB {
 
 						try {
 							if (!sql.equals("COMMIT_TRANSACTION;")) {
-								runSQL(sql);
+								runSQL(connection, sql);
 							}
 							else {
 								if (_log.isDebugEnabled()) {
@@ -469,6 +470,15 @@ public abstract class BaseDB implements DB {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void runSQLTemplateString(
+			String template, boolean evaluate, boolean failOnError)
+		throws IOException, NamingException, SQLException {
+
+		runSQLTemplateString(
+			DataAccess.getConnection(), template, evaluate, failOnError);
 	}
 
 	@Override

@@ -409,6 +409,75 @@ public class DDMImplTest extends BaseDDMTestCase {
 		}
 	}
 
+	@Test
+	public void testMergeFieldsWithMatchingFieldNames() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormField textDDMFormField = createTextDDMFormField(
+			"Name", "", true, true, false);
+
+		List<DDMFormField> nestedDDMFormFields =
+			textDDMFormField.getNestedDDMFormFields();
+
+		nestedDDMFormFields.add(
+			createTextDDMFormField("NameNested", "", true, true, false));
+
+		addDDMFormFields(ddmForm, textDDMFormField);
+
+		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
+
+		Field existingNameField = createField(
+			ddmStructure.getStructureId(), "Name",
+			createValuesList("Name 1", "Name 2"),
+			createValuesList("Nome 1", "Nome 2"));
+
+		Field existingNameNestedField = createField(
+			ddmStructure.getStructureId(), "NameNested",
+			createValuesList("Name nested 1", "Name nested 2"),
+			createValuesList("Nome nested 1", "Nome nested 2"));
+
+		Field existingFieldsDisplayField = createFieldsDisplayField(
+			ddmStructure.getStructureId(),
+			"Name_INSTANCE_rztm,NameNested_INSTANCE_ovho,Name_INSTANCE_krvx," +
+			"NameNested_INSTANCE_rght");
+
+		Fields existingFields = createFields(
+			existingNameField, existingNameNestedField,
+			existingFieldsDisplayField);
+
+		Field newNameField = createField(
+			ddmStructure.getStructureId(), "Name", null, null);
+
+		Field newNameNestedField = createField(
+			ddmStructure.getStructureId(), "NameNested", null, null);
+
+		Field newFieldsDisplayField = createFieldsDisplayField(
+			ddmStructure.getStructureId(),
+			"Name_INSTANCE_rztm,NameNested_INSTANCE_ovho,Name_INSTANCE_krvx," +
+			"NameNested_INSTANCE_rght");
+
+		Fields newFields = createFields(
+			newNameField, newNameNestedField, newFieldsDisplayField);
+
+		Fields actualFields = _ddmImpl.mergeFields(newFields, existingFields);
+
+		Field actualNameField = actualFields.get("Name");
+
+		testValues(
+			actualNameField.getValues(LocaleUtil.US), "Name 1", "Name 2");
+		testValues(
+			actualNameField.getValues(LocaleUtil.BRAZIL), "Nome 1", "Nome 2");
+
+		Field actualNameNestedField = actualFields.get("NameNested");
+
+		testValues(
+			actualNameNestedField.getValues(LocaleUtil.US), "Name nested 1",
+			"Name nested 2");
+		testValues(
+			actualNameNestedField.getValues(LocaleUtil.BRAZIL), "Nome nested 1",
+			"Nome nested 2");
+	}
+
 	protected void testValues(
 		List<Serializable> actualValues, String... expectedValues) {
 

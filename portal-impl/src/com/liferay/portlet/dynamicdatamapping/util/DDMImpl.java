@@ -580,8 +580,10 @@ public class DDMImpl implements DDM {
 
 		int offset = 0;
 
+		String prefix = fieldName.concat(INSTANCE_SEPARATOR);
+
 		for (String fieldsDisplayValue : fieldsDisplayValues) {
-			if (fieldsDisplayValue.startsWith(fieldName)) {
+			if (fieldsDisplayValue.startsWith(prefix)) {
 				String fieldIstanceId = StringUtil.extractLast(
 					fieldsDisplayValue, DDMImpl.INSTANCE_SEPARATOR);
 

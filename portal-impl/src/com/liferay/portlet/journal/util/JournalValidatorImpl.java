@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.util;
 
-import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.FolderNameException;
@@ -36,19 +35,6 @@ public final class JournalValidatorImpl implements JournalValidator {
 			}
 		}
 
-		for (String blacklistLastChar :
-				PropsValues.JOURNAL_CHAR_LAST_BLACKLIST) {
-
-			if (blacklistLastChar.startsWith(_UNICODE_PREFIX)) {
-				blacklistLastChar = UnicodeFormatter.parseString(
-					blacklistLastChar);
-			}
-
-			if (name.endsWith(blacklistLastChar)) {
-				return false;
-			}
-		}
-
 		return true;
 	}
 
@@ -60,7 +46,5 @@ public final class JournalValidatorImpl implements JournalValidator {
 			throw new FolderNameException(folderName);
 		}
 	}
-
-	private static final String _UNICODE_PREFIX = "\\u";
 
 }

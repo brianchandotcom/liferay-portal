@@ -47,7 +47,6 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.journal.DuplicateFolderNameException;
-import com.liferay.portlet.journal.FolderNameException;
 import com.liferay.portlet.journal.InvalidDDMStructureException;
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -1404,19 +1403,13 @@ public class JournalFolderLocalServiceImpl
 			long folderId, long groupId, long parentFolderId, String name)
 		throws PortalException {
 
-		validateFolderName(name);
+		JournalValidatorUtil.validateFolderName(name);
 
 		JournalFolder folder = journalFolderPersistence.fetchByG_P_N(
 			groupId, parentFolderId, name);
 
 		if ((folder != null) && (folder.getFolderId() != folderId)) {
 			throw new DuplicateFolderNameException(name);
-		}
-	}
-
-	protected void validateFolderName(String name) throws PortalException {
-		if (!JournalValidatorUtil.isValidName(name)) {
-			throw new FolderNameException();
 		}
 	}
 

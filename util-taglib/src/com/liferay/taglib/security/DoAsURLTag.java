@@ -24,7 +24,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.Encryptor;
 
 import java.util.List;
@@ -59,7 +58,7 @@ public class DoAsURLTag extends TagSupport {
 			if (!layouts.isEmpty()) {
 				layout = layouts.get(0);
 
-				doAsURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
+				doAsURL = layout.getFriendlyURL();
 			}
 
 			if (Validator.isNull(doAsURL)) {

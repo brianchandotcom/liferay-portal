@@ -649,7 +649,7 @@ public class ClusterSchedulerEngine
 
 		@Override
 		public boolean accept(Map<String, Serializable> context) {
-			if (!ClusterInvokeThreadLocal.isEnabled()) {
+			if (ClusterInvokeThreadLocal.isEnabled()) {
 				return false;
 			}
 

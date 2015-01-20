@@ -28,6 +28,20 @@ public interface PortletRatingsDefinition {
 
 		LIKE("like"), STARS("stars"), THUMBS("thumbs");
 
+		public static RatingsType parse(String value) {
+			if (LIKE.getValue().equals(value)) {
+				return LIKE;
+			}
+			else if (STARS.getValue().equals(value)) {
+				return STARS;
+			}
+			else if (THUMBS.getValue().equals(value)) {
+				return THUMBS;
+			}
+
+			throw new IllegalArgumentException("Invalid value " + value);
+		}
+
 		public String getValue() {
 			return _value;
 		}

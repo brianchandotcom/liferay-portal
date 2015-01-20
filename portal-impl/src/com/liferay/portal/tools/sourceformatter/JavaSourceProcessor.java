@@ -180,10 +180,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _diamondOperatorPattern.matcher(content);
 
 		while (matcher.find()) {
-			String parameterType = matcher.group(5);
+			String parameterType = matcher.group(4);
 
 			if (parameterType.contains("Object")) {
-				String constructorParameter = matcher.group(6);
+				String constructorParameter = matcher.group(5);
 
 				if (Validator.isNotNull(constructorParameter)) {
 					continue;
@@ -2727,7 +2727,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _diamondOperatorExclusionFiles;
 	private List<String> _diamondOperatorExclusionPaths;
 	private Pattern _diamondOperatorPattern = Pattern.compile(
-		"(return|=)\n?(\t+| )new ([A-Za-z]+)(Map|Set|List)<(.+)>" +
+		"(return|=)\n?(\t+| )new ([A-Za-z]+)<(.+)>" +
 			"\\(\n*\t*(.*)\\);\n");
 	private Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");

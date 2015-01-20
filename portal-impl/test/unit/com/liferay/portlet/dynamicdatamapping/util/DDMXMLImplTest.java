@@ -46,10 +46,10 @@ public class DDMXMLImplTest extends BaseDDMTestCase {
 
 	@Test
 	public void testUpdateContentDefaultLocale() throws Exception {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LocaleUtil.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocaleUtil.class.getName(), Level.WARNING)) {
 
-		try {
 			updateContentDefaultLocale(
 				"dynamic-data-mapping-structures.xml", true);
 
@@ -66,9 +66,6 @@ public class DDMXMLImplTest extends BaseDDMTestCase {
 
 			Assert.assertEquals(
 				"es_ES is not a valid language id", logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

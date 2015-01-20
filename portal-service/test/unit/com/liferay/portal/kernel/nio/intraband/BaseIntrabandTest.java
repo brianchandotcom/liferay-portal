@@ -262,10 +262,9 @@ public class BaseIntrabandTest {
 
 	@Test
 	public void testHandleReading() throws Exception {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			BaseIntraband.class.getName(), Level.FINE);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					BaseIntraband.class.getName(), Level.FINE)) {
 
 			// IOException, new receive datagram, debug log
 
@@ -816,21 +815,17 @@ public class BaseIntrabandTest {
 				Assert.assertTrue(logRecords.isEmpty());
 			}
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@Test
 	public void testHandleWriting() throws Exception {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			BaseIntraband.class.getName(), Level.FINE);
-
 		ChannelContext channelContext = null;
 		Datagram requestDatagram = null;
 		RecordCompletionHandler<Object> recordCompletionHandler = null;
 
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					BaseIntraband.class.getName(), Level.FINE)) {
 
 			// IOException, new send datagram, debug log
 
@@ -915,9 +910,6 @@ public class BaseIntrabandTest {
 
 			Assert.assertNotNull(recordCompletionHandler.getIOException());
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 
 		// Huge datagram write
@@ -1058,10 +1050,9 @@ public class BaseIntrabandTest {
 		Assert.assertTrue(responseWaitingMap.isEmpty());
 		Assert.assertTrue(timeoutSequenceIds.isEmpty());
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			BaseIntraband.class.getName(), Level.WARNING);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					BaseIntraband.class.getName(), Level.WARNING)) {
 
 			// Clean up timeout, hit, with log
 
@@ -1173,9 +1164,6 @@ public class BaseIntrabandTest {
 			// Clean up timeout, miss
 
 			_mockIntraband.cleanUpTimeoutResponseWaitingDatagrams();
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

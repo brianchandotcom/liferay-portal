@@ -59,10 +59,10 @@ public class ClassLoaderResourceParserTest {
 
 		Assert.assertNull(classLoaderResourceParser.getURL(templateId));
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClassLoaderResourceParser.class.getName(), Level.FINEST);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClassLoaderResourceParser.class.getName(), Level.FINEST)) {
 
-		try {
 			Assert.assertNull(classLoaderResourceParser.getURL(templateId));
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -73,9 +73,6 @@ public class ClassLoaderResourceParserTest {
 
 			Assert.assertEquals(
 				"Loading " + templateId, logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

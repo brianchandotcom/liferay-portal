@@ -21,18 +21,16 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 
 FileVersion fileVersion = fileEntry.getFileVersion();
 
-boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
-boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
-boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
-boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
-
-boolean showImageContainer = false;
+DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayContextFactoryProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileVersion);
 %>
 
 <div class="view">
 	<div class="body-row">
 		<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
-		<%@ include file="/html/portlet/document_library/view_file_entry_preview.jspf" %>
+		<%
+		dlViewFileVersionDisplayContext.renderPreview(request, response);
+		%>
+
 	</div>
 </div>

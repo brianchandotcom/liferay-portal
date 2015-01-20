@@ -319,7 +319,7 @@ dlSearchContainer.setResults(results);
 						<%
 						String folderImage = "folder_empty_document";
 
-						if (PropsValues.DL_FOLDER_VISIBLE_CONTENT_ICON_ENABLED && (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0)) {
+						if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT && (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0)) {
 							folderImage = "folder_full_document";
 						}
 

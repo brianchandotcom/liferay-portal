@@ -765,9 +765,9 @@ public interface PropsKeys {
 
 	public static final String DL_FOLDER_COLUMNS = "dl.folder.columns";
 
-	public static final String DL_FOLDER_MENU_VISIBLE = "dl.folder.menu.visible";
+	public static final String DL_FOLDER_ICON_CHECK_COUNT = "dl.folder.icon.check.count";
 
-	public static final String DL_FOLDER_VISIBLE_CONTENT_ICON_ENABLED = "dl.folders.visible.content.icon.enabled";
+	public static final String DL_FOLDER_MENU_VISIBLE = "dl.folder.menu.visible";
 
 	public static final String DL_FOLDERS_SEARCH_VISIBLE = "dl.folders.search.visible";
 
@@ -1237,7 +1237,7 @@ public interface PropsKeys {
 
 	public static final String JOURNAL_FEED_FORCE_AUTOGENERATE_ID = "journal.feed.force.autogenerate.id";
 
-	public static final String JOURNAL_FOLDER_VISIBLE_CONTENT_ICON_ENABLED = "journal.folders.visible.content.icon.enabled";
+	public static final String JOURNAL_FOLDER_ICON_CHECK_COUNT = "journal.folder.icon.check.count";
 
 	public static final String JOURNAL_IMAGE_EXTENSIONS = "journal.image.extensions";
 

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +29,7 @@ import java.util.Map;
  * @author Marcellus Tavares
  * @author Pablo Carvalho
  */
-public class DDMFormFieldValue {
+public class DDMFormFieldValue implements Serializable {
 
 	public void addNestedDDMFormFieldValue(
 		DDMFormFieldValue nestedDDMFormFieldValue) {

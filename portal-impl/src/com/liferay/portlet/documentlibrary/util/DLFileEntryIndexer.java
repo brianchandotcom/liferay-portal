@@ -70,7 +70,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
@@ -300,21 +300,22 @@ public class DLFileEntryIndexer extends BaseIndexer {
 					dlFileVersion.getFileVersionId());
 
 		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
-			Fields fields = null;
+			DDMFormValues ddmFormValues = null;
 
 			try {
-				fields = StorageEngineUtil.getFields(
+				ddmFormValues = StorageEngineUtil.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId());
 			}
 			catch (Exception e) {
 			}
 
-			if (fields != null) {
+			if (ddmFormValues != null) {
 				DDMStructure ddmStructure =
 					DDMStructureLocalServiceUtil.getStructure(
 						dlFileEntryMetadata.getDDMStructureId());
 
-				DDMIndexerUtil.addAttributes(document, ddmStructure, fields);
+				DDMIndexerUtil.addAttributes(
+					document, ddmStructure, ddmFormValues);
 			}
 		}
 	}
@@ -557,23 +558,23 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		StringBundler sb = new StringBundler(dlFileEntryMetadatas.size());
 
 		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
-			Fields fields = null;
+			DDMFormValues ddmFormValues = null;
 
 			try {
-				fields = StorageEngineUtil.getFields(
+				ddmFormValues = StorageEngineUtil.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId());
 			}
 			catch (Exception e) {
 			}
 
-			if (fields != null) {
+			if (ddmFormValues != null) {
 				DDMStructure ddmStructure =
 					DDMStructureLocalServiceUtil.getStructure(
 						dlFileEntryMetadata.getDDMStructureId());
 
 				sb.append(
 					DDMIndexerUtil.extractAttributes(
-						ddmStructure, fields, locale));
+						ddmStructure, ddmFormValues, locale));
 			}
 		}
 

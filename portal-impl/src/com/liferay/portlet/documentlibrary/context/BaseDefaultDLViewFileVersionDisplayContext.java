@@ -58,7 +58,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -114,6 +114,18 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
+		throws PortalException {
+
+		DLFileEntryMetadata dlFileEntryMetadata =
+			DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+				ddmStructure.getStructureId(), _fileVersion.getFileVersionId());
+
+		return StorageEngineUtil.getDDMFormValues(
+			dlFileEntryMetadata.getDDMStorageId());
+	}
+
+	@Override
 	public List<DDMStructure> getDDMStructures() throws PortalException {
 		if (_fileVersionDisplayContextHelper.isDLFileVersion()) {
 			DLFileVersion dlFileVersion =
@@ -123,16 +135,6 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 		}
 
 		return Collections.emptyList();
-	}
-
-	@Override
-	public Fields getFields(DDMStructure ddmStructure) throws PortalException {
-		DLFileEntryMetadata dlFileEntryMetadata =
-			DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
-				ddmStructure.getStructureId(), _fileVersion.getFileVersionId());
-
-		return StorageEngineUtil.getFields(
-			dlFileEntryMetadata.getDDMStorageId());
 	}
 
 	@Override

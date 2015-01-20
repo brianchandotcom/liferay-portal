@@ -54,11 +54,11 @@ public class MemoryPortalCacheTest {
 
 		_memoryPortalCache.put(_KEY_1, _VALUE_1);
 
-		_defaultCacheListener = new TestCacheListener<String, String>();
+		_defaultCacheListener = new TestCacheListener<>();
 
 		_memoryPortalCache.registerCacheListener(_defaultCacheListener);
 
-		_defaultCacheReplicator = new TestCacheReplicator<String, String>();
+		_defaultCacheReplicator = new TestCacheReplicator<>();
 
 		_memoryPortalCache.registerCacheListener(_defaultCacheReplicator);
 	}
@@ -69,7 +69,7 @@ public class MemoryPortalCacheTest {
 		// Register
 
 		TestCacheListener<String, String> cacheListener =
-			new TestCacheListener<String, String>();
+			new TestCacheListener<>();
 
 		_memoryPortalCache.registerCacheListener(
 			cacheListener, CacheListenerScope.ALL);

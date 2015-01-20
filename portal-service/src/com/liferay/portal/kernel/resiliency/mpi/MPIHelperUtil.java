@@ -420,7 +420,7 @@ public class MPIHelperUtil {
 	private static final ConcurrentMap<String, SPIProviderContainer>
 		_spiProviderContainers = new ConcurrentHashMap<>();
 	private static final ThreadLocal<SPI> _unregisteringSPIThreadLocal =
-		new CentralizedThreadLocal<SPI>(true);
+		new CentralizedThreadLocal<>(true);
 
 	static {
 

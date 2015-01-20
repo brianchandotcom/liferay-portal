@@ -30,7 +30,7 @@ public class DLAppHelperThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _enabled =
-		new AutoResetThreadLocal<Boolean>(
+		new AutoResetThreadLocal<>(
 			DLAppHelperThreadLocal.class + "._enabled", true);
 
 }

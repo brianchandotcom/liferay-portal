@@ -349,7 +349,7 @@ public class ImageToolImpl implements ImageTool {
 			colorModel.createCompatibleWritableRaster(
 				renderedImage.getWidth(), renderedImage.getHeight());
 
-		Hashtable<String, Object> properties = new Hashtable<String, Object>();
+		Hashtable<String, Object> properties = new Hashtable<>();
 
 		String[] keys = renderedImage.getPropertyNames();
 

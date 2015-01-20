@@ -1810,8 +1810,7 @@ public class DLAppHelperLocalServiceImpl
 			}
 
 			ObjectValuePair<Long, Integer> dlFileVersionStatusOVP =
-				new ObjectValuePair<Long, Integer>(
-					dlFileVersion.getFileVersionId(), status);
+				new ObjectValuePair<>(dlFileVersion.getFileVersionId(), status);
 
 			dlFileVersionStatusOVPs.add(dlFileVersionStatusOVP);
 		}

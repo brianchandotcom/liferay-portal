@@ -389,7 +389,7 @@ public class Logger {
 			_xPathIdStack.push(id);
 		}
 		else if (status.equals("start")) {
-			_xPathIdStack = new Stack<String>();
+			_xPathIdStack = new Stack<>();
 
 			return;
 		}
@@ -683,6 +683,6 @@ public class Logger {
 	private int _screenshotErrorCount;
 	private int _seleniumCount = 1;
 	private final WebDriver _webDriver = new FirefoxDriver();
-	private Stack<String> _xPathIdStack = new Stack<String>();
+	private Stack<String> _xPathIdStack = new Stack<>();
 
 }

@@ -180,7 +180,7 @@ public class BasicRegistryImpl implements Registry {
 
 		_addingService(basicServiceReference, service);
 
-		return new BasicServiceRegistration<T>(basicServiceReference);
+		return new BasicServiceRegistration<>(basicServiceReference);
 	}
 
 	@Override
@@ -200,7 +200,7 @@ public class BasicRegistryImpl implements Registry {
 
 		_addingService(basicServiceReference, service);
 
-		return new BasicServiceRegistration<T>(basicServiceReference);
+		return new BasicServiceRegistration<>(basicServiceReference);
 	}
 
 	@Override
@@ -214,7 +214,7 @@ public class BasicRegistryImpl implements Registry {
 
 		_addingService(basicServiceReference, service);
 
-		return new BasicServiceRegistration<T>(basicServiceReference);
+		return new BasicServiceRegistration<>(basicServiceReference);
 	}
 
 	@Override
@@ -234,7 +234,7 @@ public class BasicRegistryImpl implements Registry {
 
 		_addingService(basicServiceReference, service);
 
-		return new BasicServiceRegistration<T>(basicServiceReference);
+		return new BasicServiceRegistration<>(basicServiceReference);
 	}
 
 	@Override
@@ -256,7 +256,7 @@ public class BasicRegistryImpl implements Registry {
 
 		_addingService(basicServiceReference, service);
 
-		return new BasicServiceRegistration<T>(basicServiceReference);
+		return new BasicServiceRegistration<>(basicServiceReference);
 	}
 
 	@Override
@@ -282,7 +282,7 @@ public class BasicRegistryImpl implements Registry {
 
 		_addingService(basicServiceReference, service);
 
-		return new BasicServiceRegistration<T>(basicServiceReference);
+		return new BasicServiceRegistration<>(basicServiceReference);
 	}
 
 	@Override
@@ -295,7 +295,7 @@ public class BasicRegistryImpl implements Registry {
 		Filter filter = new BasicFilter(
 			"(objectClass=" + clazz.getName() + ")");
 
-		return new BasicServiceTracker<S, T>(filter);
+		return new BasicServiceTracker<>(filter);
 	}
 
 	@Override
@@ -306,12 +306,12 @@ public class BasicRegistryImpl implements Registry {
 		Filter filter = new BasicFilter(
 			"(objectClass=" + clazz.getName() + ")");
 
-		return new BasicServiceTracker<S, T>(filter, serviceTrackerCustomizer);
+		return new BasicServiceTracker<>(filter, serviceTrackerCustomizer);
 	}
 
 	@Override
 	public <S, T> ServiceTracker<S, T> trackServices(Filter filter) {
-		return new BasicServiceTracker<S, T>(filter);
+		return new BasicServiceTracker<>(filter);
 	}
 
 	@Override
@@ -319,12 +319,12 @@ public class BasicRegistryImpl implements Registry {
 		Filter filter,
 		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
 
-		return new BasicServiceTracker<S, T>(filter, serviceTrackerCustomizer);
+		return new BasicServiceTracker<>(filter, serviceTrackerCustomizer);
 	}
 
 	@Override
 	public <S, T> ServiceTracker<S, T> trackServices(String className) {
-		return new BasicServiceTracker<S, T>(
+		return new BasicServiceTracker<>(
 			new BasicFilter("(objectClass=" + className + ")"));
 	}
 
@@ -335,7 +335,7 @@ public class BasicRegistryImpl implements Registry {
 
 		Filter filter = new BasicFilter("(objectClass=" + className + ")");
 
-		return new BasicServiceTracker<S, T>(filter, serviceTrackerCustomizer);
+		return new BasicServiceTracker<>(filter, serviceTrackerCustomizer);
 	}
 
 	@Override

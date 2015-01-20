@@ -119,7 +119,7 @@ public class IntrabandBridgeDestinationTest {
 		final AtomicBoolean throwRuntimeException = new AtomicBoolean();
 
 		final AtomicReference<Message> messageReference =
-			new AtomicReference<Message>();
+			new AtomicReference<>();
 
 		MessageListener messageListener = new MessageListener() {
 

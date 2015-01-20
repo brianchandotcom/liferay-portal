@@ -154,7 +154,7 @@ public class RPCUtilTest {
 				public NoticeableFuture<String> post(Long key) {
 					keyRef.set(key);
 
-					return new DefaultNoticeableFuture<String>();
+					return new DefaultNoticeableFuture<>();
 				}
 
 			});
@@ -210,7 +210,7 @@ public class RPCUtilTest {
 		@Override
 		public NoticeableFuture<Serializable> call() {
 			DefaultNoticeableFuture<Serializable> defaultNoticeableFuture =
-				new DefaultNoticeableFuture<Serializable>();
+				new DefaultNoticeableFuture<>();
 
 			defaultNoticeableFuture.setException(_throwable);
 
@@ -232,7 +232,7 @@ public class RPCUtilTest {
 		@Override
 		public NoticeableFuture<String> call() {
 			DefaultNoticeableFuture<String> defaultNoticeableFuture =
-				new DefaultNoticeableFuture<String>();
+				new DefaultNoticeableFuture<>();
 
 			defaultNoticeableFuture.set(_result);
 

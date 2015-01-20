@@ -55,7 +55,7 @@ public class ICQConnector implements Observer {
 	}
 
 	private ICQConnector() {
-		_messages = new Vector<KeyValuePair>();
+		_messages = new Vector<>();
 	}
 
 	private void _connect() {

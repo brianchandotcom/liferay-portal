@@ -24,7 +24,7 @@ import java.util.Vector;
 public class OrderedProperties extends Properties {
 
 	public OrderedProperties() {
-		_names = new Vector<String>();
+		_names = new Vector<>();
 	}
 
 	@Override

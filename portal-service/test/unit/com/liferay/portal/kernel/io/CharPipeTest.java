@@ -854,7 +854,7 @@ public class CharPipeTest {
 		private final boolean _force;
 		private final Reader _reader;
 		private final BlockingQueue<Long> _timestampsBeforeRead =
-			new LinkedBlockingQueue<Long>();
+			new LinkedBlockingQueue<>();
 
 	}
 
@@ -902,7 +902,7 @@ public class CharPipeTest {
 		private final boolean _expectException;
 		private boolean _failed;
 		private final BlockingQueue<Long> _timestampsBeforeWrite =
-			new LinkedBlockingQueue<Long>();
+			new LinkedBlockingQueue<>();
 		private final Writer _writer;
 
 	}

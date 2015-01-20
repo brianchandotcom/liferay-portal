@@ -86,9 +86,8 @@ public class UnsyncPrintWriterPool {
 			UnsyncPrintWriterPool.class.getName() + "._enabledThreadLocal",
 			false);
 	private static final SoftReferencePool<UnsyncPrintWriter, Writer>
-		_unsyncPrintWriterSoftReferencePool =
-			new SoftReferencePool<UnsyncPrintWriter, Writer>(
-				new UnsyncPrintWriterPoolAction(), 8192);
+		_unsyncPrintWriterSoftReferencePool = new SoftReferencePool<>(
+			new UnsyncPrintWriterPoolAction(), 8192);
 
 	private static class UnsyncPrintWriterPoolAction
 		implements PoolAction<UnsyncPrintWriter, Writer> {

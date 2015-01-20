@@ -634,7 +634,7 @@ public class LuceneHelperImplTest {
 			"execution(* com.liferay.portal.search.lucene.LuceneHelperImpl." +
 				"_getBootupClusterNodeObjectValuePair(..))")
 		public Object _getBootupClusterNodeObjectValuePair() {
-			return new ObjectValuePair<String, URL>(StringPool.BLANK, _url);
+			return new ObjectValuePair<>(StringPool.BLANK, _url);
 		}
 
 		private static URL _url;
@@ -865,7 +865,7 @@ public class LuceneHelperImplTest {
 					futureClusterResponses.get().getClusterResponses();
 
 				MockBlockingQueue<ClusterNodeResponse> mockBlockingQueue =
-					new MockBlockingQueue<ClusterNodeResponse>(blockingQueue);
+					new MockBlockingQueue<>(blockingQueue);
 
 				clusterResponseCallback.callback(mockBlockingQueue);
 			}

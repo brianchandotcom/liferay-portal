@@ -792,7 +792,7 @@ public class AssetCategoryLocalServiceImpl
 				hits);
 
 			if (categories != null) {
-				return new BaseModelSearchResult<AssetCategory>(
+				return new BaseModelSearchResult<>(
 					categories, hits.getLength());
 			}
 		}

@@ -46,7 +46,7 @@ public class NettyChannelAttributes {
 		AsyncBroker<Long, Serializable> asyncBroker = attribute.get();
 
 		if (asyncBroker == null) {
-			asyncBroker = new AsyncBroker<Long, Serializable>();
+			asyncBroker = new AsyncBroker<>();
 
 			AsyncBroker<Long, Serializable> previousAsyncBroker =
 				attribute.setIfAbsent(asyncBroker);

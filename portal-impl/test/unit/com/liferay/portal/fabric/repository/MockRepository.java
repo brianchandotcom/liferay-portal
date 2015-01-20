@@ -50,7 +50,7 @@ public class MockRepository<T> implements Repository<T> {
 		T t, Map<Path, Path> pathMap, boolean deleteAfterFetch) {
 
 		DefaultNoticeableFuture<Map<Path, Path>> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<Map<Path, Path>>();
+			new DefaultNoticeableFuture<>();
 
 		defaultNoticeableFuture.set(pathMap);
 
@@ -63,6 +63,6 @@ public class MockRepository<T> implements Repository<T> {
 	}
 
 	private final AsyncBroker<Path, FileResponse> _asyncBroker =
-		new AsyncBroker<Path, FileResponse>();
+		new AsyncBroker<>();
 
 }

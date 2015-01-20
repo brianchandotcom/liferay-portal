@@ -31,7 +31,7 @@ public class MVCCPortalCacheFactory {
 			PortalCache<K, ?> portalCache) {
 
 		if (portalCache instanceof LowLevelCache) {
-			return new MVCCPortalCache<K, MVCCModel>(
+			return new MVCCPortalCache<>(
 				(LowLevelCache<K, MVCCModel>)portalCache);
 		}
 
@@ -45,7 +45,7 @@ public class MVCCPortalCacheFactory {
 				portalCacheWrapper.getWrappedPortalCache();
 
 			if (nextPortalCache instanceof LowLevelCache) {
-				nextPortalCache = new MVCCPortalCache<K, MVCCModel>(
+				nextPortalCache = new MVCCPortalCache<>(
 					(LowLevelCache<K, MVCCModel>)nextPortalCache);
 
 				portalCacheWrapper.setPortalCache(nextPortalCache);

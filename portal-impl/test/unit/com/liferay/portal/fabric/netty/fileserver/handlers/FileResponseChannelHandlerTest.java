@@ -193,7 +193,7 @@ public class FileResponseChannelHandlerTest {
 	private static final Path _path = Paths.get("testFile");
 
 	private final AsyncBroker<Path, FileResponse> _asyncBroker =
-		new AsyncBroker<Path, FileResponse>();
+		new AsyncBroker<>();
 	private ChannelHandlerContext _channelHandlerContext;
 	private final ChannelPipeline _channelPipeline =
 		NettyUtil.createEmptyChannelPipeline();

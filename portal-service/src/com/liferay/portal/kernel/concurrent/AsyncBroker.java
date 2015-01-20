@@ -40,7 +40,7 @@ public class AsyncBroker<K, V> {
 
 	public NoticeableFuture<V> post(K key) {
 		DefaultNoticeableFuture<V> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<V>();
+			new DefaultNoticeableFuture<>();
 
 		NoticeableFuture<V> previousNoticeableFuture = post(
 			key, defaultNoticeableFuture);

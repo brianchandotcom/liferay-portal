@@ -328,8 +328,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Map<String, List<URL>> extraPackageMap = getExtraPackageMap();
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("jsp.compiler.resource.map", "portal.extra.packages");
 
@@ -1292,7 +1291,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		HashMapDictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+			new HashMapDictionary<>();
 
 		Map<String, Object> osgiBeanProperties =
 			OSGiBeanProperties.Convert.fromObject(bean);
@@ -1312,8 +1311,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private void _registerServletContext(ServletContext servletContext) {
 		BundleContext bundleContext = _framework.getBundleContext();
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			ServicePropsKeys.BEAN_ID, ServletContext.class.getName());

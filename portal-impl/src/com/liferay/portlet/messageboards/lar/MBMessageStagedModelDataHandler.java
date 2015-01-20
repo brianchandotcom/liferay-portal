@@ -448,8 +448,7 @@ public class MBMessageStagedModelDataHandler
 			}
 
 			ObjectValuePair<String, InputStream> inputStreamOVP =
-				new ObjectValuePair<String, InputStream>(
-					fileEntry.getTitle(), inputStream);
+				new ObjectValuePair<>(fileEntry.getTitle(), inputStream);
 
 			inputStreamOVPs.add(inputStreamOVP);
 		}

@@ -59,8 +59,7 @@ public class AsyncBrokerTest {
 
 	@Test
 	public void testGetOpenBids() {
-		AsyncBroker<String, String> asyncBroker =
-			new AsyncBroker<String, String>();
+		AsyncBroker<String, String> asyncBroker = new AsyncBroker<>();
 
 		Map<String, NoticeableFuture<String>> map = asyncBroker.getOpenBids();
 
@@ -91,8 +90,7 @@ public class AsyncBrokerTest {
 
 		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
 
-		AsyncBroker<String, String> asyncBroker =
-			new AsyncBroker<String, String>();
+		AsyncBroker<String, String> asyncBroker = new AsyncBroker<>();
 
 		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
 
@@ -114,8 +112,7 @@ public class AsyncBrokerTest {
 
 		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
 
-		AsyncBroker<String, String> asyncBroker =
-			new AsyncBroker<String, String>();
+		AsyncBroker<String, String> asyncBroker = new AsyncBroker<>();
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -172,8 +169,7 @@ public class AsyncBrokerTest {
 				JDKLoggerTestUtil.configureJDKLogger(
 					AsyncBroker.class.getName(), Level.SEVERE)) {
 
-			AsyncBroker<String, String> asyncBroker =
-				new AsyncBroker<String, String>();
+			AsyncBroker<String, String> asyncBroker = new AsyncBroker<>();
 
 			asyncBroker.post(_KEY);
 
@@ -242,8 +238,7 @@ public class AsyncBrokerTest {
 	public void testPost() throws Exception {
 		ReflectionUtilAdvice.setDeclaredFieldThrowable(new Throwable());
 
-		AsyncBroker<String, String> asyncBroker =
-			new AsyncBroker<String, String>();
+		AsyncBroker<String, String> asyncBroker = new AsyncBroker<>();
 
 		ReflectionUtilAdvice.setDeclaredFieldThrowable(null);
 
@@ -293,8 +288,7 @@ public class AsyncBrokerTest {
 
 	@Test
 	public void testTake() {
-		AsyncBroker<String, String> asyncBroker =
-			new AsyncBroker<String, String>();
+		AsyncBroker<String, String> asyncBroker = new AsyncBroker<>();
 
 		Map<String, DefaultNoticeableFuture<String>> defaultNoticeableFutures =
 			ReflectionTestUtil.getFieldValue(
@@ -315,8 +309,7 @@ public class AsyncBrokerTest {
 
 	@Test
 	public void testTakeWithException() throws Exception {
-		AsyncBroker<String, String> asyncBroker =
-			new AsyncBroker<String, String>();
+		AsyncBroker<String, String> asyncBroker = new AsyncBroker<>();
 
 		Map<String, DefaultNoticeableFuture<String>> defaultNoticeableFutures =
 			ReflectionTestUtil.getFieldValue(
@@ -349,8 +342,7 @@ public class AsyncBrokerTest {
 
 	@Test
 	public void testTakeWithResult() throws Exception {
-		AsyncBroker<String, String> asyncBroker =
-			new AsyncBroker<String, String>();
+		AsyncBroker<String, String> asyncBroker = new AsyncBroker<>();
 
 		Map<String, DefaultNoticeableFuture<String>> defaultNoticeableFutures =
 			ReflectionTestUtil.getFieldValue(

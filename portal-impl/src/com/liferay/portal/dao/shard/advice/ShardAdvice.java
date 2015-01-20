@@ -166,7 +166,7 @@ public class ShardAdvice {
 		Stack<String> companyServiceStack = _companyServiceStack.get();
 
 		if (companyServiceStack == null) {
-			companyServiceStack = new Stack<String>();
+			companyServiceStack = new Stack<>();
 
 			_companyServiceStack.set(companyServiceStack);
 		}
@@ -198,11 +198,10 @@ public class ShardAdvice {
 	private static final Log _log = LogFactoryUtil.getLog(ShardAdvice.class);
 
 	private static final ThreadLocal<Stack<String>> _companyServiceStack =
-		new ThreadLocal<Stack<String>>();
-	private static final ThreadLocal<Object> _globalCall =
-		new ThreadLocal<Object>();
+		new ThreadLocal<>();
+	private static final ThreadLocal<Object> _globalCall = new ThreadLocal<>();
 	private static final ThreadLocal<String> _shardName =
-		new InitialThreadLocal<String>(
+		new InitialThreadLocal<>(
 			ShardAdvice.class + "._shardName", PropsValues.SHARD_DEFAULT_NAME);
 	private static final ShardSelector _shardSelector;
 

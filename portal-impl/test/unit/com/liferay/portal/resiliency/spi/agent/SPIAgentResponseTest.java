@@ -510,8 +510,7 @@ public class SPIAgentResponseTest {
 
 	private static final String _SESSION_ATTRIBUTE_3 = "SESSION_ATTRIBUTE_3";
 
-	private static final ThreadLocal<String> _threadLocal =
-		new ThreadLocal<String>();
+	private static final ThreadLocal<String> _threadLocal = new ThreadLocal<>();
 
 	private MockHttpServletRequest _mockHttpServletRequest;
 

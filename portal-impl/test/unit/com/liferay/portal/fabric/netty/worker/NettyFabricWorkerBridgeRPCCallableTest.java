@@ -106,7 +106,7 @@ public class NettyFabricWorkerBridgeRPCCallableTest {
 						public <V extends Serializable> NoticeableFuture<V>
 							write(ProcessCallable<V> processCallable) {
 
-							return new DefaultNoticeableFuture<V>();
+							return new DefaultNoticeableFuture<>();
 						}
 
 					});

@@ -354,7 +354,7 @@ public class FinalizeManagerTest {
 		FinalizeManager.class.getName() + ".thread.enabled";
 
 	private final BlockingQueue<String> _finalizedIds =
-		new LinkedBlockingDeque<String>();
+		new LinkedBlockingDeque<>();
 
 	private static enum ReferenceType {
 

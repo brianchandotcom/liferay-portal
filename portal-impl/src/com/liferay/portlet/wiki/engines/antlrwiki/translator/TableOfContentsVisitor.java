@@ -28,8 +28,7 @@ import java.util.List;
 public class TableOfContentsVisitor extends BaseASTVisitor {
 
 	public TreeNode<HeadingNode> compose(WikiPageNode wikiPageNode) {
-		_headingNode = new TreeNode<HeadingNode>(
-			new HeadingNode(Integer.MIN_VALUE));
+		_headingNode = new TreeNode<>(new HeadingNode(Integer.MIN_VALUE));
 
 		visit(wikiPageNode);
 

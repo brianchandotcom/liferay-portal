@@ -94,7 +94,7 @@ public class QueryDefinition<T> {
 			return null;
 		}
 
-		return new TableNameOrderByComparator<T>(_orderByComparator, tableName);
+		return new TableNameOrderByComparator<>(_orderByComparator, tableName);
 	}
 
 	public int getStart() {

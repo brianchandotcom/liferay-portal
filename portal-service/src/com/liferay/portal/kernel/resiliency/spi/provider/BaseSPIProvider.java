@@ -62,8 +62,7 @@ public abstract class BaseSPIProvider implements SPIProvider {
 			SPISynchronousQueueUtil.createSynchronousQueue(spiUUID);
 
 		FutureTask<RegistrationReference> weldServerFutureTask =
-			new FutureTask<RegistrationReference>(
-				new WeldServerCallable(remoteSPI.getWelder()));
+			new FutureTask<>(new WeldServerCallable(remoteSPI.getWelder()));
 
 		Thread weldServerThread = new Thread(
 			weldServerFutureTask,

@@ -30,7 +30,7 @@ public class ClusterInvokeThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _enabled =
-		new AutoResetThreadLocal<Boolean>(
+		new AutoResetThreadLocal<>(
 			ClusterInvokeThreadLocal.class + "._enabled", true);
 
 }

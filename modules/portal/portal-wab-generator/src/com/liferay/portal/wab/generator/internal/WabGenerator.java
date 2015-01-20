@@ -72,8 +72,7 @@ public class WabGenerator {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			URLConstants.URL_HANDLER_PROTOCOL, new String[] {"webbundle"});

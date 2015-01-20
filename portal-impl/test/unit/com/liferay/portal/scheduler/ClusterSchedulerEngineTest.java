@@ -1935,7 +1935,7 @@ public class ClusterSchedulerEngineTest {
 			}
 
 			DefaultNoticeableFuture<T> defaultNoticeableFuture =
-				new DefaultNoticeableFuture<T>();
+				new DefaultNoticeableFuture<>();
 
 			defaultNoticeableFuture.set(result);
 

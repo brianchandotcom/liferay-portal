@@ -237,7 +237,7 @@ public class SelectorIntrabandTest {
 			DatagramHelper.setAttachment(requestDatagram, new Object());
 
 			RecordCompletionHandler<Object> recordCompletionHandler =
-				new RecordCompletionHandler<Object>();
+				new RecordCompletionHandler<>();
 
 			DatagramHelper.setCompletionHandler(
 				requestDatagram, recordCompletionHandler);
@@ -305,7 +305,7 @@ public class SelectorIntrabandTest {
 
 			DatagramHelper.setAttachment(requestDatagram, new Object());
 
-			recordCompletionHandler = new RecordCompletionHandler<Object>();
+			recordCompletionHandler = new RecordCompletionHandler<>();
 
 			DatagramHelper.setCompletionHandler(
 				requestDatagram, recordCompletionHandler);
@@ -338,7 +338,7 @@ public class SelectorIntrabandTest {
 			DatagramHelper.setCompletionTypes(
 				requestDatagram, EnumSet.noneOf(CompletionType.class));
 
-			recordCompletionHandler = new RecordCompletionHandler<Object>();
+			recordCompletionHandler = new RecordCompletionHandler<>();
 
 			DatagramHelper.setCompletionHandler(
 				requestDatagram, recordCompletionHandler);
@@ -375,7 +375,7 @@ public class SelectorIntrabandTest {
 			DatagramHelper.setCompletionTypes(
 				requestDatagram, EnumSet.noneOf(CompletionType.class));
 
-			recordCompletionHandler = new RecordCompletionHandler<Object>();
+			recordCompletionHandler = new RecordCompletionHandler<>();
 
 			DatagramHelper.setCompletionHandler(
 				requestDatagram, recordCompletionHandler);
@@ -921,7 +921,7 @@ public class SelectorIntrabandTest {
 		Object attachment = new Object();
 
 		RecordCompletionHandler<Object> recordCompletionHandler =
-			new RecordCompletionHandler<Object>();
+			new RecordCompletionHandler<>();
 
 		_selectorIntraband.sendDatagram(
 			registrationReference, Datagram.createRequestDatagram(_TYPE, _data),
@@ -948,7 +948,7 @@ public class SelectorIntrabandTest {
 
 			List<LogRecord> logRecords = captureHandler1.getLogRecords();
 
-			recordCompletionHandler = new RecordCompletionHandler<Object>();
+			recordCompletionHandler = new RecordCompletionHandler<>();
 
 			_selectorIntraband.sendDatagram(
 				registrationReference,
@@ -971,7 +971,7 @@ public class SelectorIntrabandTest {
 
 			logRecords = captureHandler1.resetLogLevel(Level.OFF);
 
-			recordCompletionHandler = new RecordCompletionHandler<Object>();
+			recordCompletionHandler = new RecordCompletionHandler<>();
 
 			_selectorIntraband.sendDatagram(
 				registrationReference,

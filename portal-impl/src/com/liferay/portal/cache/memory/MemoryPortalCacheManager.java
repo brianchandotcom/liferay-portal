@@ -44,7 +44,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 		createMemoryPortalCacheManager(String name) {
 
 		MemoryPortalCacheManager<K, V> memoryPortalCacheManager =
-			new MemoryPortalCacheManager<K, V>();
+			new MemoryPortalCacheManager<>();
 
 		memoryPortalCacheManager.setName(name);
 
@@ -86,7 +86,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 			return portalCache;
 		}
 
-		portalCache = new MemoryPortalCache<K, V>(
+		portalCache = new MemoryPortalCache<>(
 			this, cacheName, _cacheInitialCapacity);
 
 		MemoryPortalCache<K, V> previousPortalCache =

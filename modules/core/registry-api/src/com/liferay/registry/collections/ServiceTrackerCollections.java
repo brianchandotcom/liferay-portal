@@ -36,21 +36,21 @@ import java.util.Map;
 public class ServiceTrackerCollections {
 
 	public static <S> ServiceTrackerList<S> list(Class<S> clazz) {
-		return new ServiceTrackerCollectionImpl<S>(
+		return new ServiceTrackerCollectionImpl<>(
 			clazz, (Filter)null, null, new HashMap<String, Object>());
 	}
 
 	public static <S> ServiceTrackerList<S> list(
 		Class<S> clazz, Filter filter) {
 
-		return new ServiceTrackerCollectionImpl<S>(
+		return new ServiceTrackerCollectionImpl<>(
 			clazz, filter, null, new HashMap<String, Object>());
 	}
 
 	public static <S> ServiceTrackerList<S> list(
 		Class<S> clazz, Filter filter, Map<String, Object> properties) {
 
-		return new ServiceTrackerCollectionImpl<S>(
+		return new ServiceTrackerCollectionImpl<>(
 			clazz, filter, null, properties);
 	}
 
@@ -68,14 +68,14 @@ public class ServiceTrackerCollections {
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
 		Map<String, Object> properties) {
 
-		return new ServiceTrackerCollectionImpl<S>(
+		return new ServiceTrackerCollectionImpl<>(
 			clazz, filter, serviceTrackerCustomizer, properties);
 	}
 
 	public static <S> ServiceTrackerList<S> list(
 		Class<S> clazz, Map<String, Object> properties) {
 
-		return new ServiceTrackerCollectionImpl<S>(
+		return new ServiceTrackerCollectionImpl<>(
 			clazz, (Filter)null, null, properties);
 	}
 
@@ -92,7 +92,7 @@ public class ServiceTrackerCollections {
 		Class<S> clazz, ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
 		Map<String, Object> properties) {
 
-		return new ServiceTrackerCollectionImpl<S>(
+		return new ServiceTrackerCollectionImpl<>(
 			clazz, (Filter)null, serviceTrackerCustomizer, properties);
 	}
 
@@ -107,7 +107,7 @@ public class ServiceTrackerCollections {
 	public static <S> ServiceTrackerList<S> list(
 		Class<S> clazz, String filterString, Map<String, Object> properties) {
 
-		return new ServiceTrackerCollectionImpl<S>(
+		return new ServiceTrackerCollectionImpl<>(
 			clazz, _getFilter(filterString), null, properties);
 	}
 

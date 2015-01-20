@@ -71,8 +71,7 @@ public class AggregateClassLoader extends ClassLoader {
 	}
 
 	public AggregateClassLoader(ClassLoader classLoader) {
-		_parentClassLoaderReference = new WeakReference<ClassLoader>(
-			classLoader);
+		_parentClassLoaderReference = new WeakReference<>(classLoader);
 	}
 
 	public void addClassLoader(ClassLoader classLoader) {

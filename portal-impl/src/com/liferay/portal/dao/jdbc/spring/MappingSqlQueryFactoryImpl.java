@@ -32,7 +32,7 @@ public class MappingSqlQueryFactoryImpl implements MappingSqlQueryFactory {
 		DataSource dataSource, String sql, int[] types,
 		RowMapper<T> rowMapper) {
 
-		return new MappingSqlQueryImpl<T>(dataSource, sql, types, rowMapper);
+		return new MappingSqlQueryImpl<>(dataSource, sql, types, rowMapper);
 	}
 
 }

@@ -36,7 +36,7 @@ public class TaskQueue<E> {
 
 		_capacity = capacity;
 
-		_headNode = new Node<E>(null);
+		_headNode = new Node<>(null);
 		_tailNode = _headNode;
 
 		_notEmptyCondition = _takeLock.newCondition();
@@ -289,7 +289,7 @@ public class TaskQueue<E> {
 	}
 
 	private void _enqueue(E element) {
-		_tailNode._nextNode = new Node<E>(element);
+		_tailNode._nextNode = new Node<>(element);
 
 		_tailNode = _tailNode._nextNode;
 	}

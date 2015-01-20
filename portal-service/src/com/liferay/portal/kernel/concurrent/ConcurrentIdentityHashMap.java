@@ -54,12 +54,12 @@ public class ConcurrentIdentityHashMap<K, V>
 
 	@Override
 	protected IdentityKey<K> mapKey(K key) {
-		return new IdentityKey<K>(key);
+		return new IdentityKey<>(key);
 	}
 
 	@Override
 	protected IdentityKey<K> mapKeyForQuery(K key) {
-		return new IdentityKey<K>(key);
+		return new IdentityKey<>(key);
 	}
 
 	@Override

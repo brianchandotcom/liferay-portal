@@ -130,7 +130,7 @@ public class NettyFabricServer implements FabricServer {
 		EventLoopGroup bossEventLoopGroup = eventLoop.parent();
 
 		DefaultNoticeableFuture<?> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<Object>();
+			new DefaultNoticeableFuture<>();
 
 		try {
 			ChannelFuture channelFuture = _serverChannel.close();

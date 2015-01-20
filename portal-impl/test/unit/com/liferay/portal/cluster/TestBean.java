@@ -74,6 +74,6 @@ public class TestBean {
 		"thread_local_cache_key";
 
 	private static final ThreadLocal<String> _testThreadLocal =
-		new CentralizedThreadLocal<String>(true);
+		new CentralizedThreadLocal<>(true);
 
 }

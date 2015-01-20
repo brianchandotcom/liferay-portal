@@ -95,8 +95,7 @@ public class HttpAdapter {
 			return;
 		}
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("bean.id", HttpServlet.class.getName());
 		properties.put("original.bean", Boolean.TRUE.toString());

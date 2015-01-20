@@ -78,11 +78,11 @@ public class EhcachePortalCacheTest {
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
 
-		_defaultCacheListener = new TestCacheListener<String, String>();
+		_defaultCacheListener = new TestCacheListener<>();
 
 		_ehcachePortalCache.registerCacheListener(_defaultCacheListener);
 
-		_defaultCacheReplicator = new TestCacheReplicator<String, String>();
+		_defaultCacheReplicator = new TestCacheReplicator<>();
 
 		_ehcachePortalCache.registerCacheListener(_defaultCacheReplicator);
 	}
@@ -98,7 +98,7 @@ public class EhcachePortalCacheTest {
 		// Register 1
 
 		TestCacheListener<String, String> localCacheListener =
-			new TestCacheListener<String, String>();
+			new TestCacheListener<>();
 
 		_ehcachePortalCache.registerCacheListener(
 			localCacheListener, CacheListenerScope.LOCAL);
@@ -123,7 +123,7 @@ public class EhcachePortalCacheTest {
 		// Register 2
 
 		TestCacheListener<String, String> remoteCacheListener =
-			new TestCacheListener<String, String>();
+			new TestCacheListener<>();
 
 		_ehcachePortalCache.registerCacheListener(
 			remoteCacheListener, CacheListenerScope.REMOTE);

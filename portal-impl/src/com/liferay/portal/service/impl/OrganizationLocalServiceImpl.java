@@ -1643,7 +1643,7 @@ public class OrganizationLocalServiceImpl
 				hits);
 
 			if (organizations != null) {
-				return new BaseModelSearchResult<Organization>(
+				return new BaseModelSearchResult<>(
 					organizations, hits.getLength());
 			}
 		}

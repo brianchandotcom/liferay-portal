@@ -66,9 +66,9 @@ public class SoftReferenceThreadLocal<T> extends CentralizedThreadLocal<T> {
 	}
 
 	private static final SoftReference<Object> _nullSoftReference =
-		new SoftReference<Object>(null);
+		new SoftReference<>(null);
 
 	private final ThreadLocal<SoftReference<T>> _softReferenceThreadLocal =
-		new CentralizedThreadLocal<SoftReference<T>>(false);
+		new CentralizedThreadLocal<>(false);
 
 }

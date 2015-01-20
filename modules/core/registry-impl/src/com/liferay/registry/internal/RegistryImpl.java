@@ -101,7 +101,7 @@ public class RegistryImpl implements Registry {
 			return null;
 		}
 
-		return new ServiceReferenceWrapper<T>(serviceReference);
+		return new ServiceReferenceWrapper<>(serviceReference);
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class RegistryImpl implements Registry {
 			return null;
 		}
 
-		return new ServiceReferenceWrapper<T>(serviceReference);
+		return new ServiceReferenceWrapper<>(serviceReference);
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class RegistryImpl implements Registry {
 				iterator.next();
 
 			ServiceReference<T> serviceReference =
-				new ServiceReferenceWrapper<T>(osgiServiceReference);
+				new ServiceReferenceWrapper<>(osgiServiceReference);
 
 			serviceReferences.add(serviceReference);
 		}
@@ -169,7 +169,7 @@ public class RegistryImpl implements Registry {
 			org.osgi.framework.ServiceReference<T> osgiServiceReference =
 				osgiServiceReferences[i];
 
-			serviceReferences[i] = new ServiceReferenceWrapper<T>(
+			serviceReferences[i] = new ServiceReferenceWrapper<>(
 				osgiServiceReference);
 		}
 
@@ -255,7 +255,7 @@ public class RegistryImpl implements Registry {
 			_bundleContext.registerService(
 				clazz, service, new MapWrapper(properties));
 
-		return new ServiceRegistrationWrapper<T>(serviceRegistration);
+		return new ServiceRegistrationWrapper<>(serviceRegistration);
 	}
 
 	@Override
@@ -311,7 +311,7 @@ public class RegistryImpl implements Registry {
 			new org.osgi.util.tracker.ServiceTracker<S, T>(
 				_bundleContext, clazz, null);
 
-		return new ServiceTrackerWrapper<S, T>(serviceTracker);
+		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
 
 	@Override
@@ -325,7 +325,7 @@ public class RegistryImpl implements Registry {
 				new ServiceTrackerCustomizerAdapter<S, T>(
 					serviceTrackerCustomizer));
 
-		return new ServiceTrackerWrapper<S, T>(serviceTracker);
+		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
 
 	@Override
@@ -340,7 +340,7 @@ public class RegistryImpl implements Registry {
 			new org.osgi.util.tracker.ServiceTracker<S, T>(
 				_bundleContext, filterWrapper.getFilter(), null);
 
-		return new ServiceTrackerWrapper<S, T>(serviceTracker);
+		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
 
 	@Override
@@ -360,7 +360,7 @@ public class RegistryImpl implements Registry {
 				new ServiceTrackerCustomizerAdapter<S, T>(
 					serviceTrackerCustomizer));
 
-		return new ServiceTrackerWrapper<S, T>(serviceTracker);
+		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
 
 	@Override
@@ -369,7 +369,7 @@ public class RegistryImpl implements Registry {
 			new org.osgi.util.tracker.ServiceTracker<S, T>(
 				_bundleContext, className, null);
 
-		return new ServiceTrackerWrapper<S, T>(serviceTracker);
+		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
 
 	@Override
@@ -383,7 +383,7 @@ public class RegistryImpl implements Registry {
 				new ServiceTrackerCustomizerAdapter<S, T>(
 					serviceTrackerCustomizer));
 
-		return new ServiceTrackerWrapper<S, T>(serviceTracker);
+		return new ServiceTrackerWrapper<>(serviceTracker);
 	}
 
 	@Override

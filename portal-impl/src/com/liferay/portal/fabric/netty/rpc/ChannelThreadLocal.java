@@ -42,6 +42,6 @@ public class ChannelThreadLocal {
 	}
 
 	private static final ThreadLocal<Channel> _channelThreadLocal =
-		new CentralizedThreadLocal<Channel>(false);
+		new CentralizedThreadLocal<>(false);
 
 }

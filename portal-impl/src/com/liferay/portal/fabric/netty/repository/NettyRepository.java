@@ -103,7 +103,7 @@ public class NettyRepository implements Repository<Channel> {
 		Channel channel, Map<Path, Path> pathMap, boolean deleteAfterFetch) {
 
 		final DefaultNoticeableFuture<Map<Path, Path>> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<Map<Path, Path>>();
+			new DefaultNoticeableFuture<>();
 
 		if (pathMap.isEmpty()) {
 			defaultNoticeableFuture.set(pathMap);
@@ -186,7 +186,7 @@ public class NettyRepository implements Repository<Channel> {
 		final Path cachedLocalFilePath = pathMap.get(remoteFilePath);
 
 		final DefaultNoticeableFuture<FileResponse> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<FileResponse>();
+			new DefaultNoticeableFuture<>();
 
 		NoticeableFuture<FileResponse> noticeableFuture = asyncBroker.post(
 			remoteFilePath, defaultNoticeableFuture);
@@ -307,7 +307,7 @@ public class NettyRepository implements Repository<Channel> {
 	}
 
 	protected final AsyncBroker<Path, FileResponse> asyncBroker =
-		new AsyncBroker<Path, FileResponse>();
+		new AsyncBroker<>();
 	protected final long getFileTimeout;
 	protected final Map<Path, Path> pathMap = new ConcurrentHashMap<>();
 	protected final Path repositoryPath;

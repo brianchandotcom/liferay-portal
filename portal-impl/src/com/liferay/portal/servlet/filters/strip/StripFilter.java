@@ -67,7 +67,7 @@ public class StripFilter extends BasePortalFilter {
 
 	public StripFilter() {
 		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_SIZE > 0) {
-			_minifierCache = new ConcurrentLFUCache<String, String>(
+			_minifierCache = new ConcurrentLFUCache<>(
 				PropsValues.MINIFIER_INLINE_CONTENT_CACHE_SIZE);
 		}
 		else {

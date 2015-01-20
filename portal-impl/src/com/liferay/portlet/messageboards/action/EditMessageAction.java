@@ -383,8 +383,7 @@ public class EditMessageAction extends PortletAction {
 				}
 
 				ObjectValuePair<String, InputStream> inputStreamOVP =
-					new ObjectValuePair<String, InputStream>(
-						fileName, inputStream);
+					new ObjectValuePair<>(fileName, inputStream);
 
 				inputStreamOVPs.add(inputStreamOVP);
 			}

@@ -95,7 +95,7 @@ public class BufferedIncrementProcessor {
 	}
 
 	private final BatchablePipe<Serializable, Increment<?>> _batchablePipe =
-		new BatchablePipe<Serializable, Increment<?>>();
+		new BatchablePipe<>();
 	private final BufferedIncrementConfiguration
 		_bufferedIncrementConfiguration;
 	private final ExecutorService _executorService;

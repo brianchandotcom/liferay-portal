@@ -138,8 +138,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 			ThreadPoolExecutor threadPoolExecutor = _getThreadPoolExecutor();
 
-			AsyncBroker<Long, Serializable> asyncBroker =
-				new AsyncBroker<Long, Serializable>();
+			AsyncBroker<Long, Serializable> asyncBroker = new AsyncBroker<>();
 
 			SubprocessReactor subprocessReactor = new SubprocessReactor(
 				process, processConfig.getReactClassLoader(), asyncBroker);
@@ -197,7 +196,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 						};
 
-				return new LocalProcessChannel<T>(
+				return new LocalProcessChannel<>(
 					noticeableFuture, objectOutputStream, asyncBroker);
 			}
 			catch (RejectedExecutionException ree) {

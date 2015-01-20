@@ -55,7 +55,7 @@ public class BBCodeParser {
 		List<BBCodeItem> bbCodeItems = new ArrayList<>();
 
 		BBCodeLexer bbCodeLexer = new BBCodeLexer(text);
-		Stack<String> tags = new Stack<String>();
+		Stack<String> tags = new Stack<>();
 		IntegerWrapper marker = new IntegerWrapper();
 
 		BBCodeToken bbCodeToken = null;

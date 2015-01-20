@@ -474,7 +474,7 @@ public class ExecutorIntrabandTest {
 		Object attachment = new Object();
 
 		RecordCompletionHandler<Object> recordCompletionHandler =
-			new RecordCompletionHandler<Object>();
+			new RecordCompletionHandler<>();
 
 		_executorIntraband.sendDatagram(
 			futureRegistrationReference,
@@ -502,7 +502,7 @@ public class ExecutorIntrabandTest {
 		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			recordCompletionHandler = new RecordCompletionHandler<Object>();
+			recordCompletionHandler = new RecordCompletionHandler<>();
 
 			_executorIntraband.sendDatagram(
 				futureRegistrationReference,
@@ -541,7 +541,7 @@ public class ExecutorIntrabandTest {
 		SourceChannel sourceChannel = pipe.source();
 		SinkChannel sinkChannel = pipe.sink();
 
-		BlockingQueue<Datagram> sendingQueue = new SynchronousQueue<Datagram>();
+		BlockingQueue<Datagram> sendingQueue = new SynchronousQueue<>();
 
 		ChannelContext channelContext = new ChannelContext(sendingQueue);
 
@@ -553,7 +553,7 @@ public class ExecutorIntrabandTest {
 
 		writingCallable.openLatch();
 
-		FutureTask<Void> futureTask = new FutureTask<Void>(writingCallable);
+		FutureTask<Void> futureTask = new FutureTask<>(writingCallable);
 
 		Thread writingThread = new Thread(futureTask);
 
@@ -602,7 +602,7 @@ public class ExecutorIntrabandTest {
 
 		writingCallable.openLatch();
 
-		futureTask = new FutureTask<Void>(writingCallable);
+		futureTask = new FutureTask<>(writingCallable);
 
 		writingThread = new Thread(futureTask);
 
@@ -642,7 +642,7 @@ public class ExecutorIntrabandTest {
 
 		writingCallable.openLatch();
 
-		futureTask = new FutureTask<Void>(writingCallable);
+		futureTask = new FutureTask<>(writingCallable);
 
 		writingThread = new Thread(futureTask);
 
@@ -684,7 +684,7 @@ public class ExecutorIntrabandTest {
 
 		writingCallable.openLatch();
 
-		futureTask = new FutureTask<Void>(writingCallable);
+		futureTask = new FutureTask<>(writingCallable);
 
 		writingThread = new Thread(futureTask);
 

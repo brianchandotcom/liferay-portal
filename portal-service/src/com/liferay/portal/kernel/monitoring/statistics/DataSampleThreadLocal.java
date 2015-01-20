@@ -85,7 +85,7 @@ public class DataSampleThreadLocal {
 				};
 
 	private final Queue<DataSample> _dataSamples =
-		new ConcurrentLinkedQueue<DataSample>();
+		new ConcurrentLinkedQueue<>();
 	private final long _monitorTime;
 
 }

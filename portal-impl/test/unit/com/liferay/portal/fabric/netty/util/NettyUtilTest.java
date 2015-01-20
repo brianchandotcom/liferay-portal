@@ -164,7 +164,7 @@ public class NettyUtilTest {
 			_embeddedChannel, "eventLoop", mockEventLoopGroup.next());
 
 		DefaultNoticeableFuture<Object> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<Object>();
+			new DefaultNoticeableFuture<>();
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -191,7 +191,7 @@ public class NettyUtilTest {
 
 		// Normal finish with log
 
-		defaultNoticeableFuture = new DefaultNoticeableFuture<Object>();
+		defaultNoticeableFuture = new DefaultNoticeableFuture<>();
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -225,7 +225,7 @@ public class NettyUtilTest {
 
 		// Timeout cancel without log
 
-		defaultNoticeableFuture = new DefaultNoticeableFuture<Object>();
+		defaultNoticeableFuture = new DefaultNoticeableFuture<>();
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -251,7 +251,7 @@ public class NettyUtilTest {
 
 		// Timeout cancel with log
 
-		defaultNoticeableFuture = new DefaultNoticeableFuture<Object>();
+		defaultNoticeableFuture = new DefaultNoticeableFuture<>();
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -347,7 +347,7 @@ public class NettyUtilTest {
 		}
 
 		private final AtomicReference<ScheduledFuture<?>> _reference =
-			new AtomicReference<ScheduledFuture<?>>();
+			new AtomicReference<>();
 
 	}
 

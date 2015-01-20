@@ -454,7 +454,7 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		}
 	}
 
-	private final Stack<Integer> _currentNodeLevel = new Stack<Integer>();
+	private final Stack<Integer> _currentNodeLevel = new Stack<>();
 	private final StringBundler _sb = new StringBundler();
 
 }

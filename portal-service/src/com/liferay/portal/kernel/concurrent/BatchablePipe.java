@@ -75,7 +75,7 @@ public class BatchablePipe<K, V> {
 	protected final ConcurrentMap<K, IncreasableEntryWrapper<K, V>>
 		concurrentMap = new ConcurrentHashMap<>();
 	protected final Queue<IncreasableEntry<K, V>> queue =
-		new ConcurrentLinkedQueue<IncreasableEntry<K, V>>();
+		new ConcurrentLinkedQueue<>();
 
 	protected static class IncreasableEntryWrapper<K, V> {
 

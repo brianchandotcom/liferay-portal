@@ -63,8 +63,7 @@ public class NettyChannelAttributesTest {
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testConcurrentGetAsyncBroker() {
-		AsyncBroker<Long, Serializable> asyncBroker =
-			new AsyncBroker<Long, Serializable>();
+		AsyncBroker<Long, Serializable> asyncBroker = new AsyncBroker<>();
 
 		AttributeAdvice.setConcurrentValue(asyncBroker);
 
@@ -96,7 +95,7 @@ public class NettyChannelAttributesTest {
 			new ConcurrentHashMap<Long, FabricWorker<?>>());
 
 		DefaultNoticeableFuture<Serializable> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<Serializable>();
+			new DefaultNoticeableFuture<>();
 
 		FabricWorker<Serializable> fabricWorker =
 			new LocalFabricWorker<Serializable>(
@@ -137,7 +136,7 @@ public class NettyChannelAttributesTest {
 			NettyChannelAttributes.getFabricWorker(_embeddedChannel, 0));
 
 		DefaultNoticeableFuture<Serializable> defaultNoticeableFuture1 =
-			new DefaultNoticeableFuture<Serializable>();
+			new DefaultNoticeableFuture<>();
 
 		FabricWorker<Serializable> fabricWorker1 =
 			new LocalFabricWorker<Serializable>(
@@ -157,7 +156,7 @@ public class NettyChannelAttributesTest {
 			NettyChannelAttributes.getFabricWorker(_embeddedChannel, 0));
 
 		DefaultNoticeableFuture<Serializable> defaultNoticeableFuture2 =
-			new DefaultNoticeableFuture<Serializable>();
+			new DefaultNoticeableFuture<>();
 
 		FabricWorker<Serializable> fabricWorker2 =
 			new LocalFabricWorker<Serializable>(

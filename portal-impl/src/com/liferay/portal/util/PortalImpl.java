@@ -552,7 +552,7 @@ public class PortalImpl implements Portal {
 				WebKeys.PAGE_DESCRIPTION);
 
 		if (descriptionListMergeable == null) {
-			descriptionListMergeable = new ListMergeable<String>();
+			descriptionListMergeable = new ListMergeable<>();
 
 			request.setAttribute(
 				WebKeys.PAGE_DESCRIPTION, descriptionListMergeable);
@@ -567,7 +567,7 @@ public class PortalImpl implements Portal {
 			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_KEYWORDS);
 
 		if (keywordsListMergeable == null) {
-			keywordsListMergeable = new ListMergeable<String>();
+			keywordsListMergeable = new ListMergeable<>();
 
 			request.setAttribute(WebKeys.PAGE_KEYWORDS, keywordsListMergeable);
 		}
@@ -589,7 +589,7 @@ public class PortalImpl implements Portal {
 			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_SUBTITLE);
 
 		if (subtitleListMergeable == null) {
-			subtitleListMergeable = new ListMergeable<String>();
+			subtitleListMergeable = new ListMergeable<>();
 
 			request.setAttribute(WebKeys.PAGE_SUBTITLE, subtitleListMergeable);
 		}
@@ -603,7 +603,7 @@ public class PortalImpl implements Portal {
 			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_TITLE);
 
 		if (titleListMergeable == null) {
-			titleListMergeable = new ListMergeable<String>();
+			titleListMergeable = new ListMergeable<>();
 
 			request.setAttribute(WebKeys.PAGE_TITLE, titleListMergeable);
 		}
@@ -6953,8 +6953,7 @@ public class PortalImpl implements Portal {
 	public void setPageDescription(
 		String description, HttpServletRequest request) {
 
-		ListMergeable<String> descriptionListMergeable =
-			new ListMergeable<String>();
+		ListMergeable<String> descriptionListMergeable = new ListMergeable<>();
 
 		descriptionListMergeable.add(description);
 
@@ -6971,8 +6970,7 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public void setPageSubtitle(String subtitle, HttpServletRequest request) {
-		ListMergeable<String> subtitleListMergeable =
-			new ListMergeable<String>();
+		ListMergeable<String> subtitleListMergeable = new ListMergeable<>();
 
 		subtitleListMergeable.add(subtitle);
 
@@ -6981,7 +6979,7 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public void setPageTitle(String title, HttpServletRequest request) {
-		ListMergeable<String> titleListMergeable = new ListMergeable<String>();
+		ListMergeable<String> titleListMergeable = new ListMergeable<>();
 
 		titleListMergeable.add(title);
 
@@ -8414,8 +8412,7 @@ public class PortalImpl implements Portal {
 	private final Set<PortalInetSocketAddressEventListener>
 		_portalInetSocketAddressEventListeners = new CopyOnWriteArraySet<>();
 	private final AtomicReference<InetSocketAddress>
-		_portalLocalInetSocketAddress =
-			new AtomicReference<InetSocketAddress>();
+		_portalLocalInetSocketAddress = new AtomicReference<>();
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
@@ -8433,12 +8430,10 @@ public class PortalImpl implements Portal {
 		new ArrayList<>();
 
 	private final AtomicReference<InetSocketAddress>
-		_portalServerInetSocketAddress =
-			new AtomicReference<InetSocketAddress>();
+		_portalServerInetSocketAddress = new AtomicReference<>();
 	private final Set<String> _reservedParams;
 	private final AtomicReference<InetSocketAddress>
-		_securePortalLocalInetSocketAddress =
-			new AtomicReference<InetSocketAddress>();
+		_securePortalLocalInetSocketAddress = new AtomicReference<>();
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
@@ -8448,8 +8443,7 @@ public class PortalImpl implements Portal {
 	private final AtomicInteger _securePortalPort = new AtomicInteger(-1);
 
 	private final AtomicReference<InetSocketAddress>
-		_securePortalServerInetSocketAddress =
-			new AtomicReference<InetSocketAddress>();
+		_securePortalServerInetSocketAddress = new AtomicReference<>();
 	private final String _servletContextName;
 	private final String[] _sortedSystemGroups;
 	private final String[] _sortedSystemOrganizationRoles;

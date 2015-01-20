@@ -188,8 +188,7 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 
 				if (inputStream != null) {
 					ObjectValuePair<String, InputStream> inputStreamOVP =
-						new ObjectValuePair<String, InputStream>(
-							fileName, inputStream);
+						new ObjectValuePair<>(fileName, inputStream);
 
 					inputStreamOVPs.add(inputStreamOVP);
 				}
@@ -206,8 +205,7 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 					}
 
 					ObjectValuePair<String, InputStream> inputStreamOVP =
-						new ObjectValuePair<String, InputStream>(
-							fileName, inputStream);
+						new ObjectValuePair<>(fileName, inputStream);
 
 					inputStreamOVPs.add(inputStreamOVP);
 				}

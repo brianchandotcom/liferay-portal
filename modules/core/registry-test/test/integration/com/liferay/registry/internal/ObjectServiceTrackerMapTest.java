@@ -266,8 +266,7 @@ public class ObjectServiceTrackerMapTest {
 
 			serviceTrackerMap.open();
 
-			Dictionary<String, String> properties =
-				new HashMapDictionary<String, String>();
+			Dictionary<String, String> properties = new HashMapDictionary<>();
 
 			properties.put("other", "aProperty");
 			properties.put("target", "aTarget");
@@ -628,8 +627,7 @@ public class ObjectServiceTrackerMapTest {
 	protected ServiceRegistration<TrackedOne> registerService(
 		TrackedOne trackedOne, int ranking, String target) {
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("service.ranking", ranking);
 		properties.put("target", target);
@@ -641,8 +639,7 @@ public class ObjectServiceTrackerMapTest {
 	protected ServiceRegistration<TrackedOne> registerService(
 		TrackedOne trackedOne, String target) {
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("target", target);
 

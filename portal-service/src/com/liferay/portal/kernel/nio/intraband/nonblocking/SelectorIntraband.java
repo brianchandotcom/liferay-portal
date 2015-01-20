@@ -102,9 +102,8 @@ public class SelectorIntraband extends BaseIntraband {
 
 		selectableChannel.configureBlocking(false);
 
-		FutureTask<RegistrationReference> registerFutureTask =
-			new FutureTask<RegistrationReference>(
-				new RegisterCallable(selectableChannel, selectableChannel));
+		FutureTask<RegistrationReference> registerFutureTask = new FutureTask<>(
+			new RegisterCallable(selectableChannel, selectableChannel));
 
 		registerQueue.offer(registerFutureTask);
 
@@ -225,7 +224,7 @@ public class SelectorIntraband extends BaseIntraband {
 	protected final Thread pollingThread = threadFactory.newThread(
 		new PollingJob());
 	protected final Queue<FutureTask<RegistrationReference>> registerQueue =
-		new ConcurrentLinkedQueue<FutureTask<RegistrationReference>>();
+		new ConcurrentLinkedQueue<>();
 	protected final Selector selector = Selector.open();
 
 	protected class RegisterCallable

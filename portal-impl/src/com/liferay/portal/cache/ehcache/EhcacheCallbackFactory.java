@@ -96,7 +96,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 						cacheEventListener);
 			}
 
-			return new EhcacheCacheListenerAdapter<K, V>(cacheEventListener);
+			return new EhcacheCacheListenerAdapter<>(cacheEventListener);
 		}
 		catch (Exception e) {
 			_log.error(

@@ -33,7 +33,7 @@ public class SyncProcessRPCCallable<T extends Serializable>
 	@Override
 	public NoticeableFuture<T> call() {
 		DefaultNoticeableFuture<T> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<T>();
+			new DefaultNoticeableFuture<>();
 
 		try {
 			defaultNoticeableFuture.set(_processCallable.call());

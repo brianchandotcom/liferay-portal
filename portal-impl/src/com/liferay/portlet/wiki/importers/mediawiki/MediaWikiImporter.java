@@ -360,8 +360,7 @@ public class MediaWikiImporter implements WikiImporter {
 					paths[paths.length - 1]);
 
 				ObjectValuePair<String, InputStream> inputStreamOVP =
-					new ObjectValuePair<String, InputStream>(
-						fileName, inputStream);
+					new ObjectValuePair<>(fileName, inputStream);
 
 				inputStreamOVPs.add(inputStreamOVP);
 

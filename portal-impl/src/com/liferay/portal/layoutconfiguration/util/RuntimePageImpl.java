@@ -546,7 +546,7 @@ public class RuntimePageImpl implements RuntimePage {
 				// setting, but to be more robust, we take care of this by
 				// converting the rejection to a fallback action.
 
-				future = new FutureTask<StringBundler>(renderCallable);
+				future = new FutureTask<>(renderCallable);
 
 				// Cancel immediately
 

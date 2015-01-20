@@ -2528,7 +2528,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 
 			ObjectValuePair<Long, Integer> pageVersionStatusOVP =
-				new ObjectValuePair<Long, Integer>(page.getPageId(), status);
+				new ObjectValuePair<>(page.getPageId(), status);
 
 			pageVersionStatusOVPs.add(pageVersionStatusOVP);
 		}

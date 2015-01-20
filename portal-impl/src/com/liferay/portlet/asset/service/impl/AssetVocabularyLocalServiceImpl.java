@@ -462,7 +462,7 @@ public class AssetVocabularyLocalServiceImpl
 				AssetVocabularyUtil.getVocabularies(hits);
 
 			if (vocabularies != null) {
-				return new BaseModelSearchResult<AssetVocabulary>(
+				return new BaseModelSearchResult<>(
 					vocabularies, hits.getLength());
 			}
 		}

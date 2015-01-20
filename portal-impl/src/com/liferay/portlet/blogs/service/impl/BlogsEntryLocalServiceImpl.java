@@ -487,8 +487,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public List<BlogsEntry> getCompanyEntries(
 		long companyId, Date displayDate, int status, int start, int end) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status, start, end, null);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status, start, end, null);
 
 		return getCompanyEntries(companyId, displayDate, queryDefinition);
 	}
@@ -503,8 +503,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long companyId, Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status, start, end, obc);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status, start, end, obc);
 
 		return getCompanyEntries(companyId, displayDate, queryDefinition);
 	}
@@ -537,8 +537,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public int getCompanyEntriesCount(
 		long companyId, Date displayDate, int status) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status);
 
 		return getCompanyEntriesCount(companyId, displayDate, queryDefinition);
 	}
@@ -591,8 +591,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public List<BlogsEntry> getGroupEntries(
 		long groupId, Date displayDate, int status, int start, int end) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status, start, end, null);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status, start, end, null);
 
 		return getGroupEntries(groupId, displayDate, queryDefinition);
 	}
@@ -607,8 +607,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long groupId, Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status, start, end, obc);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status, start, end, obc);
 
 		return getGroupEntries(groupId, displayDate, queryDefinition);
 	}
@@ -641,8 +641,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public List<BlogsEntry> getGroupEntries(
 		long groupId, int status, int start, int end) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status, start, end, null);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status, start, end, null);
 
 		return getGroupEntries(groupId, queryDefinition);
 	}
@@ -657,8 +657,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long groupId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status, start, end, obc);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status, start, end, obc);
 
 		return getGroupEntries(groupId, queryDefinition);
 	}
@@ -690,8 +690,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public int getGroupEntriesCount(
 		long groupId, Date displayDate, int status) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status);
 
 		return getGroupEntriesCount(groupId, displayDate, queryDefinition);
 	}
@@ -718,8 +718,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public int getGroupEntriesCount(long groupId, int status) {
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status);
 
 		return getGroupEntriesCount(groupId, queryDefinition);
 	}
@@ -748,8 +748,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long companyId, long groupId, Date displayDate, int status, int start,
 		int end) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status, start, end, null);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status, start, end, null);
 
 		return getGroupsEntries(
 			companyId, groupId, displayDate, queryDefinition);
@@ -774,8 +774,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long groupId, long userId, Date displayDate, int status, int start,
 		int end) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status, start, end, null);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status, start, end, null);
 
 		return getGroupUserEntries(
 			groupId, userId, displayDate, queryDefinition);
@@ -791,8 +791,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long groupId, long userId, Date displayDate, int status, int start,
 		int end, OrderByComparator<BlogsEntry> obc) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status, start, end, obc);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status, start, end, obc);
 
 		return getGroupUserEntries(
 			groupId, userId, displayDate, queryDefinition);
@@ -826,8 +826,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public int getGroupUserEntriesCount(
 		long groupId, long userId, Date displayDate, int status) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status);
 
 		return getGroupUserEntriesCount(
 			groupId, userId, displayDate, queryDefinition);
@@ -862,8 +862,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public List<BlogsEntry> getOrganizationEntries(
 		long organizationId, Date displayDate, int status, int start, int end) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status, start, end, null);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status, start, end, null);
 
 		return getOrganizationEntries(
 			organizationId, displayDate, queryDefinition);
@@ -879,8 +879,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long organizationId, Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status, start, end, obc);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status, start, end, obc);
 
 		return getOrganizationEntries(
 			organizationId, displayDate, queryDefinition);
@@ -904,8 +904,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public int getOrganizationEntriesCount(
 		long organizationId, Date displayDate, int status) {
 
-		QueryDefinition<BlogsEntry> queryDefinition =
-			new QueryDefinition<BlogsEntry>(status);
+		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
+			status);
 
 		return getOrganizationEntriesCount(
 			organizationId, displayDate, queryDefinition);

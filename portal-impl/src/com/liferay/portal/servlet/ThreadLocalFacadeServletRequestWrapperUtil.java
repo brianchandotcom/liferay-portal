@@ -78,7 +78,7 @@ public class ThreadLocalFacadeServletRequestWrapperUtil {
 
 		Closeable closeable = (Closeable)servletRequestWrapper;
 
-		return new ObjectValuePair<T, Closeable>(servletRequest, closeable);
+		return new ObjectValuePair<>(servletRequest, closeable);
 	}
 
 	public void setStopperClassNames(Set<String> stopperClassNames) {

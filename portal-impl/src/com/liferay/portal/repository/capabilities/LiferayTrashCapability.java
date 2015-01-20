@@ -197,7 +197,7 @@ public class LiferayTrashCapability
 	protected void deleteTrashEntries(long groupId, long dlFolderId)
 		throws PortalException {
 
-		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>();
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 

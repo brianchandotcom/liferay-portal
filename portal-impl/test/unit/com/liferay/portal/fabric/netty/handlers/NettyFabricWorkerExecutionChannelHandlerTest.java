@@ -225,7 +225,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 				nettyFabricAgentStub, "_startupNoticeableFutures");
 
 		DefaultNoticeableFuture<?> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<Object>();
+			new DefaultNoticeableFuture<>();
 
 		startupNoticeableFutures.put(0L, defaultNoticeableFuture);
 
@@ -590,7 +590,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		ProcessConfig processConfig = builder.build();
 
 		ProcessCallable<Serializable> processCallable =
-			new ReturnProcessCallable<Serializable>(null);
+			new ReturnProcessCallable<>(null);
 
 		FabricPathMappingVisitor fabricPathMappingVisitor =
 			new FabricPathMappingVisitor(
@@ -801,7 +801,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		ProcessConfig processConfig = builder.build();
 
 		ProcessCallable<Serializable> processCallable =
-			new ReturnProcessCallable<Serializable>(null);
+			new ReturnProcessCallable<>(null);
 
 		FabricPathMappingVisitor fabricPathMappingVisitor =
 			new FabricPathMappingVisitor(
@@ -906,8 +906,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 						createNettyFabricWorkerConfig());
 
 		DefaultPromise<FabricWorker<Serializable>> defaultPromise =
-			new DefaultPromise<FabricWorker<Serializable>>(
-				_embeddedChannel.eventLoop());
+			new DefaultPromise<>(_embeddedChannel.eventLoop());
 
 		Throwable throwable = new Throwable();
 
@@ -943,11 +942,10 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 				new PostFabricWorkerExecutionFutureListener(
 					_embeddedChannel, null, createNettyFabricWorkerConfig());
 
-		defaultPromise = new DefaultPromise<FabricWorker<Serializable>>(
-			_embeddedChannel.eventLoop());
+		defaultPromise = new DefaultPromise<>(_embeddedChannel.eventLoop());
 
 		DefaultNoticeableFuture<Serializable> processNoticeableFuture =
-			new DefaultNoticeableFuture<Serializable>();
+			new DefaultNoticeableFuture<>();
 
 		FabricWorker<Serializable> fabricWorker =
 			new LocalFabricWorker<Serializable>(
@@ -1035,7 +1033,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 						new LoadedPaths(inputPaths, null, null));
 
 		DefaultNoticeableFuture<Serializable> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<Serializable>();
+			new DefaultNoticeableFuture<>();
 
 		Throwable throwable = new Throwable();
 
@@ -1105,7 +1103,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 					_embeddedChannel, createNettyFabricWorkerConfig(),
 					new LoadedPaths(inputPaths, null, null));
 
-		defaultNoticeableFuture = new DefaultNoticeableFuture<Serializable>();
+		defaultNoticeableFuture = new DefaultNoticeableFuture<>();
 
 		defaultNoticeableFuture.set(StringPool.BLANK);
 
@@ -1151,7 +1149,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 					channelHandlerContext, createNettyFabricWorkerConfig());
 
 		DefaultNoticeableFuture<LoadedPaths> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<LoadedPaths>();
+			new DefaultNoticeableFuture<>();
 
 		Throwable throwable = new Throwable();
 
@@ -1180,7 +1178,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		// Loaded paths
 
-		defaultNoticeableFuture = new DefaultNoticeableFuture<LoadedPaths>();
+		defaultNoticeableFuture = new DefaultNoticeableFuture<>();
 
 		defaultNoticeableFuture.set(
 			new LoadedPaths(Collections.<Path, Path>emptyMap(), null, null));

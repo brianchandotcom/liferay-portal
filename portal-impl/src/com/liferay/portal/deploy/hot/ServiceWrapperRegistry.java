@@ -154,7 +154,7 @@ public class ServiceWrapperRegistry {
 
 			serviceWrapper.setWrappedService((T)targetSource.getTarget());
 
-			return new ServiceBag<T>(
+			return new ServiceBag<>(
 				classLoader, advisedSupport, serviceTypeClass, serviceWrapper);
 		}
 

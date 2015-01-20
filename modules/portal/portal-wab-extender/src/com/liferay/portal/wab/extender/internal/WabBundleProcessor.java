@@ -96,8 +96,7 @@ public class WabBundleProcessor implements ServletContextListener {
 		servletContext.setAttribute("osgi-bundlecontext", _bundleContext);
 		servletContext.setAttribute("osgi-runtime-vendor", _VENDOR);
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("osgi.web.symbolicname", _bundle.getSymbolicName());
 		properties.put("osgi.web.version", _bundle.getVersion());
@@ -172,8 +171,7 @@ public class WabBundleProcessor implements ServletContextListener {
 	}
 
 	protected ServiceRegistration<Servlet> createDefaultServlet() {
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
@@ -205,8 +203,7 @@ public class WabBundleProcessor implements ServletContextListener {
 			return null;
 		}
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
@@ -292,8 +289,7 @@ public class WabBundleProcessor implements ServletContextListener {
 
 		_wabServletContextHelper = new WabServletContextHelper(_bundle);
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, _contextName);
@@ -384,8 +380,7 @@ public class WabBundleProcessor implements ServletContextListener {
 	}
 
 	protected void registerThisAsEventListener() {
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,

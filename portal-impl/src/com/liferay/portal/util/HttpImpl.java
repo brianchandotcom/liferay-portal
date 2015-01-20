@@ -1720,8 +1720,7 @@ public class HttpImpl implements Http {
 
 	private static final Log _log = LogFactoryUtil.getLog(HttpImpl.class);
 
-	private static final ThreadLocal<Cookie[]> _cookies =
-		new ThreadLocal<Cookie[]>();
+	private static final ThreadLocal<Cookie[]> _cookies = new ThreadLocal<>();
 
 	private final HttpClient _httpClient = new HttpClient();
 	private final Pattern _nonProxyHostsPattern;

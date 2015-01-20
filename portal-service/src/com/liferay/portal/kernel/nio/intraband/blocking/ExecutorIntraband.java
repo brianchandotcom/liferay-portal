@@ -132,8 +132,7 @@ public class ExecutorIntraband extends BaseIntraband {
 		ScatteringByteChannel scatteringByteChannel,
 		GatheringByteChannel gatheringByteChannel) {
 
-		BlockingQueue<Datagram> sendingQueue =
-			new LinkedBlockingQueue<Datagram>();
+		BlockingQueue<Datagram> sendingQueue = new LinkedBlockingQueue<>();
 
 		ChannelContext channelContext = new ChannelContext(sendingQueue);
 

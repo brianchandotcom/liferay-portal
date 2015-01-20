@@ -474,7 +474,7 @@ public class BaseIntrabandTest {
 				requestDatagram.setSequenceId(sequenceId);
 
 				RecordCompletionHandler<Object> recordCompletionHandler =
-					new RecordCompletionHandler<Object>();
+					new RecordCompletionHandler<>();
 
 				requestDatagram.completionHandler = recordCompletionHandler;
 
@@ -554,7 +554,7 @@ public class BaseIntrabandTest {
 
 				requestDatagram.setSequenceId(sequenceId);
 
-				recordCompletionHandler = new RecordCompletionHandler<Object>();
+				recordCompletionHandler = new RecordCompletionHandler<>();
 
 				requestDatagram.completionHandler = recordCompletionHandler;
 
@@ -592,7 +592,7 @@ public class BaseIntrabandTest {
 
 				requestDatagram.setSequenceId(sequenceId);
 
-				recordCompletionHandler = new RecordCompletionHandler<Object>();
+				recordCompletionHandler = new RecordCompletionHandler<>();
 
 				requestDatagram.completionHandler = recordCompletionHandler;
 
@@ -634,7 +634,7 @@ public class BaseIntrabandTest {
 
 				requestDatagram.setSequenceId(sequenceId);
 
-				recordCompletionHandler = new RecordCompletionHandler<Object>();
+				recordCompletionHandler = new RecordCompletionHandler<>();
 
 				requestDatagram.completionHandler = recordCompletionHandler;
 
@@ -725,7 +725,7 @@ public class BaseIntrabandTest {
 				requestDatagram.setAckRequest(true);
 				requestDatagram.setSequenceId(sequenceId);
 
-				recordCompletionHandler = new RecordCompletionHandler<Object>();
+				recordCompletionHandler = new RecordCompletionHandler<>();
 
 				requestDatagram.completionHandler = recordCompletionHandler;
 
@@ -781,7 +781,7 @@ public class BaseIntrabandTest {
 				requestDatagram.setAckRequest(true);
 				requestDatagram.setSequenceId(sequenceId);
 
-				recordCompletionHandler = new RecordCompletionHandler<Object>();
+				recordCompletionHandler = new RecordCompletionHandler<>();
 
 				requestDatagram.completionHandler = recordCompletionHandler;
 
@@ -900,7 +900,7 @@ public class BaseIntrabandTest {
 
 			requestDatagram = Datagram.createRequestDatagram(_TYPE, _data);
 
-			recordCompletionHandler = new RecordCompletionHandler<Object>();
+			recordCompletionHandler = new RecordCompletionHandler<>();
 
 			requestDatagram.completionHandler = recordCompletionHandler;
 
@@ -971,7 +971,7 @@ public class BaseIntrabandTest {
 
 			requestDatagram.attachment = attachment;
 
-			recordCompletionHandler = new RecordCompletionHandler<Object>();
+			recordCompletionHandler = new RecordCompletionHandler<>();
 
 			requestDatagram.completionHandler = recordCompletionHandler;
 
@@ -1073,7 +1073,7 @@ public class BaseIntrabandTest {
 			requestDatagram1.setSequenceId(sequenceId);
 
 			RecordCompletionHandler<Object> recordCompletionHandler1 =
-				new RecordCompletionHandler<Object>();
+				new RecordCompletionHandler<>();
 
 			requestDatagram1.completionHandler = recordCompletionHandler1;
 
@@ -1089,7 +1089,7 @@ public class BaseIntrabandTest {
 			requestDatagram2.setSequenceId(sequenceId + 1);
 
 			RecordCompletionHandler<Object> recordCompletionHandler2 =
-				new RecordCompletionHandler<Object>();
+				new RecordCompletionHandler<>();
 
 			requestDatagram2.completionHandler = recordCompletionHandler2;
 
@@ -1130,7 +1130,7 @@ public class BaseIntrabandTest {
 
 			requestDatagram1.setSequenceId(sequenceId);
 
-			recordCompletionHandler1 = new RecordCompletionHandler<Object>();
+			recordCompletionHandler1 = new RecordCompletionHandler<>();
 
 			requestDatagram1.completionHandler = recordCompletionHandler1;
 
@@ -1144,7 +1144,7 @@ public class BaseIntrabandTest {
 
 			requestDatagram2.setSequenceId(sequenceId + 1);
 
-			recordCompletionHandler2 = new RecordCompletionHandler<Object>();
+			recordCompletionHandler2 = new RecordCompletionHandler<>();
 
 			requestDatagram2.completionHandler = recordCompletionHandler2;
 

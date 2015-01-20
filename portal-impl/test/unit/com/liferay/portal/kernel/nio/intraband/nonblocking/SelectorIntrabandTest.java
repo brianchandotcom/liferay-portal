@@ -101,10 +101,9 @@ public class SelectorIntrabandTest {
 
 	@Test
 	public void testCreateAndDestroy() throws Exception {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			SelectorIntraband.class.getName(), Level.INFO);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					SelectorIntraband.class.getName(), Level.INFO)) {
 
 			// Close selector, with log
 
@@ -170,9 +169,6 @@ public class SelectorIntrabandTest {
 
 			Assert.assertTrue(logRecords.isEmpty());
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@AdviseWith(adviceClasses = {Jdk14LogImplAdvice.class})
@@ -192,10 +188,9 @@ public class SelectorIntrabandTest {
 
 		long sequenceId = 100;
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			BaseIntraband.class.getName(), Level.WARNING);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					BaseIntraband.class.getName(), Level.WARNING)) {
 
 			// Receive ACK response, no ACK request, with log
 
@@ -501,9 +496,6 @@ public class SelectorIntrabandTest {
 
 			gatheringByteChannel.close();
 			scatteringByteChannel.close();
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -948,10 +940,9 @@ public class SelectorIntrabandTest {
 
 		Assert.assertArrayEquals(_data, dataByteBuffer.array());
 
-		CaptureHandler captureHandler1 = JDKLoggerTestUtil.configureJDKLogger(
-			BaseIntraband.class.getName(), Level.WARNING);
-
-		try {
+		try (CaptureHandler captureHandler1 =
+				JDKLoggerTestUtil.configureJDKLogger(
+					BaseIntraband.class.getName(), Level.WARNING)) {
 
 			// Callback timeout, with log
 
@@ -994,16 +985,13 @@ public class SelectorIntrabandTest {
 				attachment, recordCompletionHandler.getAttachment());
 			Assert.assertTrue(logRecords.isEmpty());
 		}
-		finally {
-			captureHandler1.close();
-		}
 
 		// Callback timeout, completion handler causes NPE
 
-		captureHandler1 = JDKLoggerTestUtil.configureJDKLogger(
-			SelectorIntraband.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler1 =
+				JDKLoggerTestUtil.configureJDKLogger(
+					SelectorIntraband.class.getName(), Level.SEVERE)) {
 
-		try {
 			List<LogRecord> logRecords1 = captureHandler1.getLogRecords();
 
 			recordCompletionHandler = new RecordCompletionHandler<Object>() {
@@ -1030,11 +1018,10 @@ public class SelectorIntrabandTest {
 					recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
 			}
 			finally {
-				CaptureHandler captureHandler2 =
-					JDKLoggerTestUtil.configureJDKLogger(
-						BaseIntraband.class.getName(), Level.WARNING);
+				try (CaptureHandler captureHandler2 =
+						JDKLoggerTestUtil.configureJDKLogger(
+							BaseIntraband.class.getName(), Level.WARNING)) {
 
-				try {
 					recordCompletionHandler.waitUntilTimeouted(selector);
 
 					List<LogRecord> logRecords2 =
@@ -1047,9 +1034,6 @@ public class SelectorIntrabandTest {
 					Assert.assertEquals(
 						"Removed timeout response waiting datagram " + datagram,
 						logRecord.getMessage());
-				}
-				finally {
-					captureHandler2.close();
 				}
 
 				Jdk14LogImplAdvice.waitUntilErrorCalled();
@@ -1065,9 +1049,6 @@ public class SelectorIntrabandTest {
 
 			gatheringByteChannel.close();
 			scatteringByteChannel.close();
-		}
-		finally {
-			captureHandler1.close();
 		}
 	}
 

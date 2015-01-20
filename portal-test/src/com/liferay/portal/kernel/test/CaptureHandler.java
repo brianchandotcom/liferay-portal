@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.test;
 
+import java.io.Closeable;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Handler;
@@ -24,7 +26,7 @@ import java.util.logging.Logger;
 /**
  * @author Shuyang Zhou
  */
-public class CaptureHandler extends Handler {
+public class CaptureHandler extends Handler implements Closeable {
 
 	public CaptureHandler(Logger logger, Level level) {
 		_logger = logger;

@@ -130,10 +130,10 @@ public class FileResponseChannelHandlerTest {
 		FileResponse fileResponse = new FileResponse(
 			_path, FileResponse.FILE_NOT_FOUND, -1, false);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			FileResponseChannelHandler.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					FileResponseChannelHandler.class.getName(), Level.SEVERE)) {
 
-		try {
 			_fileResponseChannelHandler.channelRead(
 				_channelHandlerContext, fileResponse, null);
 
@@ -148,9 +148,6 @@ public class FileResponseChannelHandlerTest {
 					" because no future exists with ID " +
 						fileResponse.getPath(),
 				logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -172,10 +169,10 @@ public class FileResponseChannelHandlerTest {
 		FileResponse fileResponse = new FileResponse(
 			_path, FileResponse.FILE_NOT_MODIFIED, -1, false);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			FileResponseChannelHandler.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					FileResponseChannelHandler.class.getName(), Level.SEVERE)) {
 
-		try {
 			_fileResponseChannelHandler.channelRead(
 				_channelHandlerContext, fileResponse, null);
 
@@ -190,9 +187,6 @@ public class FileResponseChannelHandlerTest {
 					" because no future exists with ID " +
 						fileResponse.getPath(),
 				logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

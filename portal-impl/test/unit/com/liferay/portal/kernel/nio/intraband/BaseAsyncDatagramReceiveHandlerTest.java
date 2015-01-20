@@ -46,10 +46,11 @@ public class BaseAsyncDatagramReceiveHandlerTest {
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
 	@Test
 	public void testErrorDispatch() {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			BaseAsyncDatagramReceiveHandler.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					BaseAsyncDatagramReceiveHandler.class.getName(),
+					Level.SEVERE)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			ErrorAsyncDatagramReceiveHandler errorAsyncDatagramReceiveHandler =
@@ -66,9 +67,6 @@ public class BaseAsyncDatagramReceiveHandlerTest {
 			Throwable throwable = logRecord.getThrown();
 
 			Assert.assertEquals(Exception.class, throwable.getClass());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

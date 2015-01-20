@@ -166,11 +166,11 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		ReflectionTestUtil.setFieldValue(
 			nettyFabricWorkerConfig, "_processConfig", null);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricWorkerExecutionChannelHandler.class.getName(),
-			Level.INFO);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricWorkerExecutionChannelHandler.class.getName(),
+					Level.INFO)) {
 
-		try {
 			String embeddedChannelToString = _embeddedChannel.toString();
 
 			_embeddedChannel.writeInbound(nettyFabricWorkerConfig);
@@ -195,9 +195,6 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.assertEquals(
 				_embeddedChannel + " is closed", logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -602,11 +599,11 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		ObjectGraphUtil.walkObjectGraph(
 			processCallable, fabricPathMappingVisitor);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricWorkerExecutionChannelHandler.class.getName(),
-			Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricWorkerExecutionChannelHandler.class.getName(),
+					Level.WARNING)) {
 
-		try {
 			NoticeableFuture<LoadedPaths> noticeableFuture =
 				nettyFabricWorkerExecutionChannelHandler.loadPaths(
 					_embeddedChannel, new NettyFabricWorkerConfig<Serializable>(
@@ -639,17 +636,14 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 			Assert.assertEquals(
 				StringPool.BLANK, loadedProcessConfig.getRuntimeClassPath());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Without log
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricWorkerExecutionChannelHandler.class.getName(),
-			Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricWorkerExecutionChannelHandler.class.getName(),
+					Level.OFF)) {
 
-		try {
 			NoticeableFuture<LoadedPaths> noticeableFuture =
 				nettyFabricWorkerExecutionChannelHandler.loadPaths(
 					_embeddedChannel, new NettyFabricWorkerConfig<Serializable>(
@@ -674,9 +668,6 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 				loadedProcessConfig.getBootstrapClassPath());
 			Assert.assertEquals(
 				StringPool.BLANK, loadedProcessConfig.getRuntimeClassPath());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -819,11 +810,11 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		ObjectGraphUtil.walkObjectGraph(
 			processCallable, fabricPathMappingVisitor);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricWorkerExecutionChannelHandler.class.getName(),
-			Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricWorkerExecutionChannelHandler.class.getName(),
+					Level.WARNING)) {
 
-		try {
 			NoticeableFuture<LoadedPaths> noticeableFuture =
 				nettyFabricWorkerExecutionChannelHandler.loadPaths(
 					_embeddedChannel, new NettyFabricWorkerConfig<Serializable>(
@@ -857,17 +848,14 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 					mappedRuntimePath3,
 				loadedProcessConfig.getRuntimeClassPath());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Without log
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricWorkerExecutionChannelHandler.class.getName(),
-			Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricWorkerExecutionChannelHandler.class.getName(),
+					Level.OFF)) {
 
-		try {
 			NoticeableFuture<LoadedPaths> noticeableFuture =
 				nettyFabricWorkerExecutionChannelHandler.loadPaths(
 					_embeddedChannel, new NettyFabricWorkerConfig<Serializable>(
@@ -893,9 +881,6 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 				mappedRuntimePath1 + File.pathSeparator +
 					mappedRuntimePath3,
 				loadedProcessConfig.getRuntimeClassPath());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -975,11 +960,11 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		noticeableFuture = nettyFabricWorkerStub.getProcessNoticeableFuture();
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricWorkerExecutionChannelHandler.class.getName(),
-			Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricWorkerExecutionChannelHandler.class.getName(),
+					Level.SEVERE)) {
 
-		try {
 			defaultPromise.addListener(postFabricWorkerExecutionFutureListener);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -991,9 +976,6 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 			Assert.assertEquals(
 				"Unable to finish fabric worker startup",
 				logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 
 		Assert.assertSame(
@@ -1239,11 +1221,11 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		channel.close();
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			NettyFabricWorkerExecutionChannelHandler.class.getName(),
-			Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					NettyFabricWorkerExecutionChannelHandler.class.getName(),
+					Level.SEVERE)) {
 
-		try {
 			nettyFabricWorkerExecutionChannelHandler.sendResult(
 				channel, 0, StringPool.BLANK, null);
 
@@ -1257,9 +1239,6 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 				"Unable to send back fabric worker result " +
 					"{id=0, result=, throwable=null}",
 				logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 
 		// Send back result

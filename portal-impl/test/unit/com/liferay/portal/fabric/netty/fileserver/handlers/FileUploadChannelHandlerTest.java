@@ -364,91 +364,75 @@ public class FileUploadChannelHandlerTest {
 				});
 		}
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			FileUploadChannelHandler.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					FileUploadChannelHandler.class.getName(), Level.SEVERE)) {
 
-		try {
-			if (inEventloop) {
-				_embeddedChannel.writeInbound(
-					FileServerTestUtil.wrapFirstHalf(data),
-					Unpooled.copiedBuffer(
-						FileServerTestUtil.wrapSecondHalf(data),
-						Unpooled.wrappedBuffer(data)));
+			try {
+				if (inEventloop) {
+					_embeddedChannel.writeInbound(
+						FileServerTestUtil.wrapFirstHalf(data),
+						Unpooled.copiedBuffer(
+							FileServerTestUtil.wrapSecondHalf(data),
+							Unpooled.wrappedBuffer(data)));
 
-				if (!fail) {
-					Queue<Object> queue = _embeddedChannel.inboundMessages();
+					if (!fail) {
+						Queue<Object> queue =
+							_embeddedChannel.inboundMessages();
 
-					Assert.assertEquals(1, queue.size());
-					Assert.assertEquals(
-						Unpooled.wrappedBuffer(data), queue.poll());
-				}
-			}
-			else {
-				fileUploadChannelHandler.channelRead(
-					channelPipeline.firstContext(),
-					FileServerTestUtil.wrapFirstHalf(data));
-				fileUploadChannelHandler.channelRead(
-					channelPipeline.firstContext(),
-					FileServerTestUtil.wrapSecondHalf(data));
-			}
-		}
-		catch (Exception e) {
-			fileUploadChannelHandler.exceptionCaught(
-				channelPipeline.firstContext(), e);
-		}
-
-		if (postAsyncBroker) {
-			if (fail) {
-				try {
-					noticeableFuture.get();
-
-					Assert.fail();
-				}
-				catch (ExecutionException ee) {
-					Throwable throwable = ee.getCause();
-
-					if (folder) {
+						Assert.assertEquals(1, queue.size());
 						Assert.assertEquals(
-							"Forced Exception", throwable.getMessage());
-					}
-					else {
-						Assert.assertTrue(
-							throwable instanceof ClosedChannelException);
+							Unpooled.wrappedBuffer(data), queue.poll());
 					}
 				}
+				else {
+					fileUploadChannelHandler.channelRead(
+						channelPipeline.firstContext(),
+						FileServerTestUtil.wrapFirstHalf(data));
+					fileUploadChannelHandler.channelRead(
+						channelPipeline.firstContext(),
+						FileServerTestUtil.wrapSecondHalf(data));
+				}
 			}
-			else {
-				Assert.assertSame(fileResponse, noticeableFuture.get());
+			catch (Exception e) {
+				fileUploadChannelHandler.exceptionCaught(
+					channelPipeline.firstContext(), e);
 			}
-		}
 
-		shutdown(inEventloop, fileUploadChannelHandler.eventExecutor);
+			if (postAsyncBroker) {
+				if (fail) {
+					try {
+						noticeableFuture.get();
 
-		List<LogRecord> logRecords = captureHandler.getLogRecords();
+						Assert.fail();
+					}
+					catch (ExecutionException ee) {
+						Throwable throwable = ee.getCause();
 
-		if (fail) {
-			LogRecord logRecord = logRecords.remove(0);
-
-			Assert.assertEquals("File upload failure", logRecord.getMessage());
-
-			Throwable throwable = logRecord.getThrown();
-
-			if (folder) {
-				Assert.assertEquals("Forced Exception", throwable.getMessage());
+						if (folder) {
+							Assert.assertEquals(
+								"Forced Exception", throwable.getMessage());
+						}
+						else {
+							Assert.assertTrue(
+								throwable instanceof ClosedChannelException);
+						}
+					}
+				}
+				else {
+					Assert.assertSame(fileResponse, noticeableFuture.get());
+				}
 			}
-			else {
-				Assert.assertTrue(throwable instanceof ClosedChannelException);
-			}
-		}
 
-		if (!postAsyncBroker) {
-			LogRecord logRecord = logRecords.remove(0);
+			shutdown(inEventloop, fileUploadChannelHandler.eventExecutor);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			if (fail) {
+				LogRecord logRecord = logRecords.remove(0);
+
 				Assert.assertEquals(
-					"Unable to place exception because no future exists with " +
-						"ID " + fileResponse.getPath(),
-					logRecord.getMessage());
+					"File upload failure", logRecord.getMessage());
 
 				Throwable throwable = logRecord.getThrown();
 
@@ -461,17 +445,39 @@ public class FileUploadChannelHandlerTest {
 						throwable instanceof ClosedChannelException);
 				}
 			}
-			else {
-				Assert.assertEquals(
-					"Unable to place result " + fileResponse +
-						" because no future exists with ID " +
-							fileResponse.getPath(),
-					logRecord.getMessage());
-			}
-		}
 
-		Assert.assertTrue(logRecords.isEmpty());
-		Assert.assertSame(channelPipeline.first(), channelPipeline.last());
+			if (!postAsyncBroker) {
+				LogRecord logRecord = logRecords.remove(0);
+
+				if (fail) {
+					Assert.assertEquals(
+						"Unable to place exception because no future exists " +
+							"with ID " + fileResponse.getPath(),
+						logRecord.getMessage());
+
+					Throwable throwable = logRecord.getThrown();
+
+					if (folder) {
+						Assert.assertEquals(
+							"Forced Exception", throwable.getMessage());
+					}
+					else {
+						Assert.assertTrue(
+							throwable instanceof ClosedChannelException);
+					}
+				}
+				else {
+					Assert.assertEquals(
+						"Unable to place result " + fileResponse +
+							" because no future exists with ID " +
+								fileResponse.getPath(),
+						logRecord.getMessage());
+				}
+			}
+
+			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertSame(channelPipeline.first(), channelPipeline.last());
+		}
 
 		Path file = FileServerTestUtil.registerForCleanUp(
 			fileResponse.getLocalFile());

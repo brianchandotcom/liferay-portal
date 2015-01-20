@@ -201,10 +201,10 @@ public class ClusterMasterExecutorImplTest {
 
 		_mockLockLocalService.setUnlockError(true);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterMasterExecutorImpl.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterMasterExecutorImpl.class.getName(), Level.WARNING)) {
 
-		try {
 			clusterMasterExecutorImpl.destroy();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -217,24 +217,18 @@ public class ClusterMasterExecutorImplTest {
 				"Unable to destroy the cluster master executor",
 				logRecord.getMessage());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Test 4, destory with exception when log is disabled
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterMasterExecutorImpl.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterMasterExecutorImpl.class.getName(), Level.OFF)) {
 
-		try {
 			clusterMasterExecutorImpl.destroy();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -258,10 +252,10 @@ public class ClusterMasterExecutorImplTest {
 		MethodHandler methodHandler = new MethodHandler(
 			testMethodMethodKey, timeString);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterMasterExecutorImpl.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterMasterExecutorImpl.class.getName(), Level.WARNING)) {
 
-		try {
 			NoticeableFuture<String> noticeableFuture =
 				clusterMasterExecutorImpl.executeOnMaster(methodHandler);
 
@@ -278,16 +272,13 @@ public class ClusterMasterExecutorImplTest {
 					"executor is disabled",
 				logRecord.getMessage());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Test 2, execute without exception when log is disabled
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterMasterExecutorImpl.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterMasterExecutorImpl.class.getName(), Level.OFF)) {
 
-		try {
 			NoticeableFuture<String> noticeableFuture =
 				clusterMasterExecutorImpl.executeOnMaster(methodHandler);
 
@@ -297,35 +288,35 @@ public class ClusterMasterExecutorImplTest {
 
 			Assert.assertTrue(logRecords.isEmpty());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Test 3, execute with exception
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterMasterExecutorImpl.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterMasterExecutorImpl.class.getName(), Level.WARNING)) {
 
-		try {
-			clusterMasterExecutorImpl.executeOnMaster(null);
+			try {
+				clusterMasterExecutorImpl.executeOnMaster(null);
 
-			Assert.fail();
-		}
-		catch (SystemException se) {
-			Throwable throwable = se.getCause();
+				Assert.fail();
+			}
+			catch (SystemException se) {
+				Throwable throwable = se.getCause();
 
-			Assert.assertSame(NullPointerException.class, throwable.getClass());
+				Assert.assertSame(
+					NullPointerException.class, throwable.getClass());
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
+				List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertEquals(1, logRecords.size());
+				Assert.assertEquals(1, logRecords.size());
 
-			LogRecord logRecord = logRecords.get(0);
+				LogRecord logRecord = logRecords.get(0);
 
-			Assert.assertEquals(
-				"Executing on the local node because the cluster master " +
-					"executor is disabled",
-				logRecord.getMessage());
+				Assert.assertEquals(
+					"Executing on the local node because the cluster master " +
+						"executor is disabled",
+					logRecord.getMessage());
+			}
 		}
 	}
 
@@ -432,10 +423,10 @@ public class ClusterMasterExecutorImplTest {
 
 		clusterMasterExecutorImpl.initialize();
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterMasterExecutorImpl.class.getName(), Level.INFO);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterMasterExecutorImpl.class.getName(), Level.INFO)) {
 
-		try {
 			String otherOwner = AddressSerializerUtil.serialize(_OTHER_ADDRESS);
 
 			_mockLockLocalService.setLock(otherOwner);
@@ -460,16 +451,13 @@ public class ClusterMasterExecutorImplTest {
 				"Reattempting to acquire the cluster master lock",
 				logRecord.getMessage());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Test 2, current owner is null and log is enabled
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterMasterExecutorImpl.class.getName(), Level.INFO);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterMasterExecutorImpl.class.getName(), Level.INFO)) {
 
-		try {
 			_mockLockLocalService.setLock(null);
 
 			Assert.assertEquals(
@@ -493,16 +481,13 @@ public class ClusterMasterExecutorImplTest {
 				"Reattempting to acquire the cluster master lock",
 				logRecord.getMessage());
 		}
-		finally {
-			captureHandler.close();
-		}
 
 		// Test 3, current owner is null and log is disabled
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterMasterExecutorImpl.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterMasterExecutorImpl.class.getName(), Level.OFF)) {
 
-		try {
 			_mockLockLocalService.setLock(null);
 
 			Assert.assertEquals(
@@ -513,9 +498,6 @@ public class ClusterMasterExecutorImplTest {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

@@ -55,9 +55,9 @@ public class BufferedIncrementConfigurationTest {
 	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testInvalidSettingWithLog() {
-		CaptureHandler captureHandler = _doTestInvalidSetting(Level.WARNING);
+		try (CaptureHandler captureHandler =
+				_doTestInvalidSetting(Level.WARNING)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertEquals(2, logRecords.size());
@@ -76,23 +76,15 @@ public class BufferedIncrementConfigurationTest {
 					"[]=-4. Auto reset to 1.",
 				logRecord2.getMessage());
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testInvalidSettingWithoutLog() {
-		CaptureHandler captureHandler = _doTestInvalidSetting(Level.OFF);
-
-		try {
+		try (CaptureHandler captureHandler = _doTestInvalidSetting(Level.OFF)) {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

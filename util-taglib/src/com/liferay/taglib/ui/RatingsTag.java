@@ -101,7 +101,7 @@ public class RatingsTag extends IncludeTag {
 
 	protected String getType(HttpServletRequest request) {
 		if (Validator.isNull(_type)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			long companyId = themeDisplay.getCompanyId();
@@ -132,7 +132,7 @@ public class RatingsTag extends IncludeTag {
 				if (defaultRatingsType != null) {
 					String propertyName =
 						_className + StringPool.UNDERLINE + "RatingsType";
-					
+
 					String companyRatingsType = PrefsParamUtil.getString(
 						companyPortletPreferences, request, propertyName,
 						defaultRatingsType.getValue());
@@ -184,7 +184,8 @@ public class RatingsTag extends IncludeTag {
 	private static final int _DEFAULT_NUMBER_OF_STARS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.RATINGS_DEFAULT_NUMBER_OF_STARS));
 
-	private static final String _DEFAULT_TYPE = "stars";
+	private static final String _DEFAULT_TYPE =
+		PortletRatingsDefinition.RatingsType.STARS.getValue();
 
 	private static final String _PAGE = "/html/taglib/ui/ratings/page.jsp";
 

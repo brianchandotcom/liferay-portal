@@ -53,16 +53,24 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 			</c:if>
 
 			<%
-				String propertyName = className + StringPool.UNDERLINE + "RatingsType";
+			String propertyName = className + StringPool.UNDERLINE + "RatingsType";
 
-				String ratingsType = PrefsParamUtil.getString(companyPortletPreferences, request, propertyName, PortletRatingsDefinitionUtil.getDefaultType(portletId, className).toString());
+			String ratingsType = PrefsParamUtil.getString(companyPortletPreferences, request, propertyName, PortletRatingsDefinitionUtil.getDefaultType(portletId, className).toString());
 			%>
 
 			<div class="row-fields">
 				<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "settings--" + propertyName + "--" %>' value="<%= ratingsType %>">
-					<aui:option label='<%= LanguageUtil.get(request, "like") %>' value="like" />
-					<aui:option label='<%= LanguageUtil.get(request, "stars") %>' value="stars" />
-					<aui:option label='<%= LanguageUtil.get(request, "thumbs") %>' value="thumbs" />
+
+					<%
+					for (PortletRatingsDefinition.RatingsType value : PortletRatingsDefinition.RatingsType.values()) {
+					%>
+
+						<aui:option label="<%= LanguageUtil.get(request, value.getValue()) %>" value="<%= value.getValue() %>" />
+
+					<%
+					}
+					%>
+
 				</aui:select>
 			</div>
 

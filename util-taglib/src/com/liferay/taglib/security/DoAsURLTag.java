@@ -67,6 +67,8 @@ public class DoAsURLTag extends TagSupport {
 			}
 		}
 
+		doAsURL = themeDisplay.getPathContext() + doAsURL;
+
 		if (doAsUserId <= 0) {
 			doAsUserId = company.getDefaultUser().getUserId();
 		}

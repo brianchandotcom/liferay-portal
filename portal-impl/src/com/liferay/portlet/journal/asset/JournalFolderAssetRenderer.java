@@ -79,7 +79,7 @@ public class JournalFolderAssetRenderer
 		if (JournalFolderServiceUtil.getFoldersAndArticlesCount(
 				_folder.getGroupId(), _folder.getFolderId()) > 0) {
 
-			return "icon-folder-close";
+			return "icon-folder-open";
 		}
 
 		return super.getIconCssClass();

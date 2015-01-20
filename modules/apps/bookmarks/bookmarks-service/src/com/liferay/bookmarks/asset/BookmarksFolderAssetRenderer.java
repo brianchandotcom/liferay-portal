@@ -81,7 +81,7 @@ public class BookmarksFolderAssetRenderer
 		if (BookmarksFolderServiceUtil.getFoldersAndEntriesCount(
 				_folder.getGroupId(), _folder.getFolderId()) > 0) {
 
-			return "icon-folder-close";
+			return "icon-folder-open";
 		}
 
 		return super.getIconCssClass();

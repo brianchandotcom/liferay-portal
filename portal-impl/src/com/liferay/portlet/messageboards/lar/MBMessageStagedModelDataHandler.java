@@ -189,6 +189,7 @@ public class MBMessageStagedModelDataHandler
 
 		messageElement.addAttribute(
 			"question", String.valueOf(thread.isQuestion()));
+		messageElement.addAttribute("threadUuid", thread.getUuid());
 
 		boolean hasAttachmentsFileEntries =
 			message.getAttachmentsFileEntriesCount() > 0;
@@ -230,16 +231,31 @@ public class MBMessageStagedModelDataHandler
 		long parentCategoryId = MapUtil.getLong(
 			categoryIds, message.getCategoryId(), message.getCategoryId());
 
+		if (!message.isRoot()) {
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, message, MBMessage.class,
+				message.getParentMessageId());
+		}
+
 		Map<Long, Long> threadIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				MBThread.class);
 
 		long threadId = MapUtil.getLong(threadIds, message.getThreadId(), 0);
 
-		if (!message.isRoot()) {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, message, MBMessage.class,
-				message.getParentMessageId());
+		Element element = portletDataContext.getImportDataStagedModelElement(
+			message);
+
+		if (threadId == 0) {
+			String threadUuid = element.attributeValue("threadUuid");
+
+			MBThread thread =
+				MBThreadLocalServiceUtil.fetchMBThreadByUuidAndGroupId(
+					threadUuid, portletDataContext.getScopeGroupId());
+
+			if (thread != null) {
+				threadId = thread.getThreadId();
+			}
 		}
 
 		Map<Long, Long> messageIds =
@@ -249,9 +265,6 @@ public class MBMessageStagedModelDataHandler
 		long parentMessageId = MapUtil.getLong(
 			messageIds, message.getParentMessageId(),
 			message.getParentMessageId());
-
-		Element element = portletDataContext.getImportDataStagedModelElement(
-			message);
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			getAttachments(portletDataContext, element, message);
@@ -345,6 +358,14 @@ public class MBMessageStagedModelDataHandler
 			}
 
 			threadIds.put(message.getThreadId(), importedMessage.getThreadId());
+
+			// keep thread UUID
+
+			MBThread thread = importedMessage.getThread();
+
+			thread.setUuid(element.attributeValue("threadUuid"));
+
+			MBThreadLocalServiceUtil.updateMBThread(thread);
 
 			portletDataContext.importClassedModel(message, importedMessage);
 		}

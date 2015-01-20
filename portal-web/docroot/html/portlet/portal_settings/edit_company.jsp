@@ -22,6 +22,12 @@ String[] identificationSections = PropsValues.COMPANY_SETTINGS_FORM_IDENTIFICATI
 String[] miscellaneousSections = PropsValues.COMPANY_SETTINGS_FORM_MISCELLANEOUS;
 String[] socialSections = PropsValues.COMPANY_SETTINGS_FORM_SOCIAL;
 
+String[] portletRatingsPortletIds = PortletRatingsDefinitionUtil.getPortletIds();
+
+if (ArrayUtil.isEmpty(portletRatingsPortletIds) && ArrayUtil.contains(miscellaneousSections, "ratings")) {
+	miscellaneousSections = ArrayUtil.remove(miscellaneousSections, "ratings");
+}
+
 String[][] categorySections = {configurationSections, identificationSections, miscellaneousSections, socialSections};
 
 PortletURL portletURL = renderResponse.createRenderURL();

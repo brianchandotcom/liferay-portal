@@ -86,22 +86,24 @@ public class DLFolderAssetRenderer
 				return "icon-drive";
 			}
 
-			if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT) {
-				List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(
-					_folder.getRepositoryId(), _folder.getFolderId(), false);
+			if (!PropsValues.DL_FOLDER_ICON_CHECK_COUNT) {
+				return "icon-folder-open";
+			}
 
-				if (!subfolderIds.isEmpty()) {
-					return "icon-folder-open";
-				}
+			List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(
+				_folder.getRepositoryId(), _folder.getFolderId(), false);
 
-				int count = DLAppServiceUtil.getFoldersFileEntriesCount(
-					_folder.getRepositoryId(),
-					ListUtil.fromArray(new Long[]{_folder.getFolderId()}),
-					WorkflowConstants.STATUS_APPROVED);
+			if (!subfolderIds.isEmpty()) {
+				return "icon-folder-open";
+			}
 
-				if (count > 0) {
-					return "icon-folder-open";
-				}
+			int count = DLAppServiceUtil.getFoldersFileEntriesCount(
+				_folder.getRepositoryId(),
+				ListUtil.fromArray(new Long[]{_folder.getFolderId()}),
+				WorkflowConstants.STATUS_APPROVED);
+
+			if (count > 0) {
+				return "icon-folder-open";
 			}
 		}
 		catch (PrincipalException pe) {
@@ -117,7 +119,8 @@ public class DLFolderAssetRenderer
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		try {
-			if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
+			if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT &&
+				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
 					_folder.getRepositoryId(), _folder.getFolderId(),
 					WorkflowConstants.STATUS_APPROVED, true) > 0) {
 
@@ -151,6 +154,11 @@ public class DLFolderAssetRenderer
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (!PropsValues.DL_FOLDER_ICON_CHECK_COUNT) {
+			return themeDisplay.getPathThemeImages() +
+				"/file_system/large/folder_empty_document.png";
+		}
 
 		int foldersCount = DLAppServiceUtil.getFoldersCount(
 			_folder.getRepositoryId(), _folder.getFolderId());

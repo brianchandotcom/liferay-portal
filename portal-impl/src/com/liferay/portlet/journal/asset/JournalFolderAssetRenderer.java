@@ -90,7 +90,8 @@ public class JournalFolderAssetRenderer
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		try {
-			if (JournalFolderServiceUtil.getFoldersAndArticlesCount(
+			if (PropsValues.JOURNAL_FOLDER_ICON_CHECK_COUNT &&
+				JournalFolderServiceUtil.getFoldersAndArticlesCount(
 					_folder.getGroupId(), _folder.getFolderId(),
 					WorkflowConstants.STATUS_APPROVED) > 0) {
 
@@ -124,6 +125,11 @@ public class JournalFolderAssetRenderer
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (!PropsValues.JOURNAL_FOLDER_ICON_CHECK_COUNT) {
+			return themeDisplay.getPathThemeImages() +
+				"/file_system/large/folder_empty_article.png";
+		}
 
 		int articlesCount = JournalArticleServiceUtil.getArticlesCount(
 			_folder.getGroupId(), _folder.getFolderId());

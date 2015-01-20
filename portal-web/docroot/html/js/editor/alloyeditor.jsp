@@ -469,7 +469,11 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 					}
 
 					if (childElement) {
-						text = childElement.textContent || childElement.innerText || childElement;
+						text = childElement.textContent;
+
+						if (text === undefined) {
+							text = childElement.innerText;
+						}
 					}
 
 					return text;

@@ -34,7 +34,7 @@
 
 	.lfr-discussion {
 		border-top: 1px solid transparent;
-		padding: 24px 0 24px 0;
+		padding: 24px 0;
 		position: relative;
 		width: auto;
 
@@ -125,7 +125,7 @@
 		.lfr-discussion-message {
 			padding-bottom: 1em;
 
-			@include word-break(break-all);
+			@include word-wrap(break-all);
 
 			.lfr-discussion-message-author {
 				margin-bottom: 12px;

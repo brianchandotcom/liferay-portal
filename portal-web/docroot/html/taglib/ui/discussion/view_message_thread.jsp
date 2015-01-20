@@ -176,8 +176,8 @@ request.setAttribute("page.jsp-i", new Integer(i));
 
 						<%
 						String taglibPostReplyURL = "javascript:"
-							+ randomNamespace + "showEditor('" + namespace + "postReplyBody" + i + "','" + namespace + randomNamespace + "postReplyForm" + i + "'); "
-							+ randomNamespace + "hideEditor('" + namespace + "editReplyBody" + i + "','" + namespace + randomNamespace + "editForm" + i + "');";
+							+ randomNamespace + "showEditor('" + namespace + randomNamespace + "postReplyBody" + i + "','" + namespace + randomNamespace + "postReplyForm" + i + "'); "
+							+ randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody" + i + "','" + namespace + randomNamespace + "editForm" + i + "');";
 						%>
 
 						<c:choose>
@@ -205,8 +205,8 @@ request.setAttribute("page.jsp-i", new Integer(i));
 
 								<%
 								String taglibEditURL = "javascript:"
-									+ randomNamespace + "showEditor('" + namespace + "editReplyBody" + i + "','" + namespace + randomNamespace + "editForm" + i + "'); "
-									+ randomNamespace + "hideEditor('" + namespace + "postReplyBody" + i + "','" + namespace + randomNamespace + "postReplyForm" + i + "')";
+									+ randomNamespace + "showEditor('" + namespace + randomNamespace + "editReplyBody" + i + "','" + namespace + randomNamespace + "editForm" + i + "'); "
+									+ randomNamespace + "hideEditor('" + namespace + randomNamespace + "postReplyBody" + i + "','" + namespace + randomNamespace + "postReplyForm" + i + "')";
 								%>
 
 								<li class="lfr-discussion-edit">
@@ -249,37 +249,26 @@ request.setAttribute("page.jsp-i", new Integer(i));
 				</div>
 
 				<div class="lfr-discussion-body">
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "postReplyBody" + i %>'  onChangeMethod='<%= randomNamespace + i + "toggleReplyButton" %>' onInitMethod='<%= randomNamespace + i + "OnInitEditor" %>' placeholder="type-your-comment-here"/>
+					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody" + i %>' onChangeMethod='<%= randomNamespace + i + "OnChange" %>' placeholder="type-your-comment-here"/>
 
 					<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
 
 					<aui:button-row>
-						<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+						<aui:button cssClass="btn-comment btn-primary" disabled="true" id='<%= randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 
 						<%
-						String taglibCancel = randomNamespace + "hideEditor('" + namespace + "postReplyBody" + i + "','" + namespace + randomNamespace + "postReplyForm" + i + "')";
+						String taglibCancel = randomNamespace + "hideEditor('" + namespace + randomNamespace + "postReplyBody" + i + "','" + namespace + randomNamespace + "postReplyForm" + i + "')";
 						%>
 
 						<aui:button cssClass="btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
 					</aui:button-row>
 
 					<aui:script>
-						var <%= namespace + randomNamespace + i %>OnInitEditor = function() {
-							var editorName = '<%= namespace %>postReplyBody<%= i %>Editor';
-
-							var editorContent = window[editorName].getHTML();
-
-							<%= namespace + randomNamespace + i %>toggleReplyButton(editorContent);
-						}
-
-						var <%= namespace + randomNamespace + i %>toggleReplyButton = function(html) {
-							var A = AUI();
-
-							var button = A.one('#<%= namespace + namespace + randomNamespace %>postReplyButton<%= i %>');
-
-							var disabled = !html.trim || html.trim() === '';
-
-							Liferay.Util.toggleDisabled(button, disabled);
+						window['<%= namespace + randomNamespace + i %>OnChange'] = function(html) {
+							Liferay.Util.toggleDisabled(
+								'#<%= namespace + randomNamespace %>postReplyButton<%= i %>',
+								(html === '')
+							);
 						}
 					</aui:script>
 				</div>
@@ -287,7 +276,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 
 			<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
 				<div class="col-md-12 lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= message.getBody() %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= "editReplyBody" + i %>' />
+					<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= message.getBody() %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "editReplyBody" + i %>' />
 
 					<aui:input name='<%= "editReplyBody" + i %>' type="hidden" value="<%= message.getBody() %>" />
 
@@ -310,7 +299,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 						<aui:button name='<%= randomNamespace + "editReplyButton" + i %>' onClick='<%= randomNamespace + "updateMessage(" + i + ");" %>' value="<%= publishButtonLabel %>" />
 
 						<%
-						String taglibCancel = randomNamespace + "hideEditor('" + namespace + "editReplyBody" + i + "','" + namespace + randomNamespace + "editForm" + i + "');";
+						String taglibCancel = randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody" + i + "','" + namespace + randomNamespace + "editForm" + i + "');";
 						%>
 
 						<aui:button onClick="<%= taglibCancel %>" type="cancel" />

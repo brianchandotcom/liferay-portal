@@ -141,12 +141,12 @@ SearchContainer searchContainer = null;
 								</div>
 
 								<div class="lfr-discussion-body">
-									<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="postReplyBody0" onChangeMethod='<%= randomNamespace + "0toggleReplyButton" %>' onInitMethod='<%= randomNamespace + "0OnInitEditor" %>' placeholder="type-your-comment-here"/>
+									<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here"/>
 
 									<aui:input name="postReplyBody0" type="hidden" />
 
 									<aui:button-row>
-										<aui:button cssClass="btn-comment btn-primary" id='<%= namespace + randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
+										<aui:button cssClass="btn-comment btn-primary" disabled="true" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
 									</aui:button-row>
 								</div>
 							</aui:row>
@@ -246,23 +246,9 @@ SearchContainer searchContainer = null;
 	%>
 
 	<aui:script>
-		var <%= namespace + randomNamespace %>0OnInitEditor = function() {
-			var editorName = '<%= namespace %>postReplyBody0Editor';
-
-			var editorContent = window[editorName].getHTML();
-
-			<%= namespace + randomNamespace %>0toggleReplyButton(editorContent);
-		}
-
-		var <%= namespace + randomNamespace %>0toggleReplyButton = function(html) {
-			var A = AUI();
-
-			var button = A.one('#<%= namespace + namespace + randomNamespace %>postReplyButton0');
-
-			var disabled = !html.trim || html.trim() === '';
-
-			Liferay.Util.toggleDisabled(button, disabled);
-		}
+		function <%= namespace + randomNamespace %>0OnChange(html) {
+			Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton0', !html);
+		};
 
 		function <%= randomNamespace %>hideForm(rowId, textAreaId, textAreaValue) {
 			document.getElementById(rowId).style.display = 'none';
@@ -286,6 +272,13 @@ SearchContainer searchContainer = null;
 
 		function <%= randomNamespace %>showEditor(editorName, formId) {
 			window[editorName + 'Editor'].create();
+
+			var html = window[editorName + 'Editor'].getHTML();
+
+			Liferay.Util.toggleDisabled(
+				'#' + editorName.replace('Body', 'Button'),
+				(html === '')
+			);
 
 			<%= randomNamespace %>showForm(formId);
 		}
@@ -356,7 +349,7 @@ SearchContainer searchContainer = null;
 
 				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-				var editorInstance = window['<%= namespace %>postReplyBody' + i + 'Editor'];
+				var editorInstance = window['<%= namespace + randomNamespace %>postReplyBody' + i + 'Editor'];
 				var body = editorInstance.getHTML();
 				var parentMessageId = form.one('#<%= namespace %>parentMessageId' + i).val();
 
@@ -508,7 +501,7 @@ SearchContainer searchContainer = null;
 
 				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-				var editorInstance = window['<%= namespace %>editReplyBody' + i + 'Editor'];
+				var editorInstance = window['<%= namespace + randomNamespace %>editReplyBody' + i + 'Editor'];
 				var body = editorInstance.getHTML();
 				var messageId = form.one('#<%= namespace %>messageId' + i).val();
 

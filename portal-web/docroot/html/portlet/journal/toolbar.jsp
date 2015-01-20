@@ -152,6 +152,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			{
 				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
+				sourceClassNameId: '<%= PortalUtil.getClassNameId(JournalArticle.class) %>',
 				dialog: {
 					destroyOnHide: true
 				},

@@ -831,7 +831,8 @@ public class DataFactory {
 			"BASIC-WEB-CONTENT", _journalDDMStructureContent);
 		_defaultJournalDDMTemplateModel = newDDMTemplateModel(
 			_globalGroupId, _defaultUserId,
-			_defaultJournalDDMStructureModel.getStructureId());
+			_defaultJournalDDMStructureModel.getStructureId(),
+			getJournalArticleClassNameId());
 	}
 
 	public void initGroupModels() throws Exception {
@@ -2571,7 +2572,7 @@ public class DataFactory {
 	}
 
 	protected DDMTemplateModel newDDMTemplateModel(
-		long groupId, long userId, long structureId) {
+		long groupId, long userId, long structureId, long sourceClassNameId) {
 
 		DDMTemplateModel ddmTemplateModel = new DDMTemplateModelImpl();
 
@@ -2585,6 +2586,7 @@ public class DataFactory {
 		ddmTemplateModel.setClassNameId(
 			_classNameModelsMap.get(DDMStructure.class.getName()));
 		ddmTemplateModel.setClassPK(structureId);
+		ddmTemplateModel.setSourceClassNameId(structureId);
 		ddmTemplateModel.setTemplateKey(String.valueOf(_counter.get()));
 		ddmTemplateModel.setVersion(DDMTemplateConstants.VERSION_DEFAULT);
 

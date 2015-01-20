@@ -67,7 +67,7 @@ public class DDMTemplateServiceUtil {
 	template or if a portal exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
-		long groupId, long classNameId, long classPK,
+		long groupId, long classNameId, long classPK, long sourceClassNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
@@ -75,8 +75,9 @@ public class DDMTemplateServiceUtil {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addTemplate(groupId, classNameId, classPK, nameMap,
-			descriptionMap, type, mode, language, script, serviceContext);
+				   .addTemplate(groupId, classNameId, classPK,
+			sourceClassNameId, nameMap, descriptionMap, type, mode, language,
+			script, serviceContext);
 	}
 
 	/**
@@ -113,7 +114,7 @@ public class DDMTemplateServiceUtil {
 	template or if a portal exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
-		long groupId, long classNameId, long classPK,
+		long groupId, long classNameId, long classPK, long sourceClassNameId,
 		java.lang.String templateKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -124,9 +125,10 @@ public class DDMTemplateServiceUtil {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addTemplate(groupId, classNameId, classPK, templateKey,
-			nameMap, descriptionMap, type, mode, language, script, cacheable,
-			smallImage, smallImageURL, smallImageFile, serviceContext);
+				   .addTemplate(groupId, classNameId, classPK,
+			sourceClassNameId, templateKey, nameMap, descriptionMap, type,
+			mode, language, script, cacheable, smallImage, smallImageURL,
+			smallImageFile, serviceContext);
 	}
 
 	/**

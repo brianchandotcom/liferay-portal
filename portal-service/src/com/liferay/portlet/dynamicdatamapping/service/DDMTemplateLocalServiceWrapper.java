@@ -72,6 +72,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
 		long userId, long groupId, long classNameId, long classPK,
+		long sourceClassNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
@@ -79,8 +80,8 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLocalService.addTemplate(userId, groupId,
-			classNameId, classPK, nameMap, descriptionMap, type, mode,
-			language, script, serviceContext);
+			classNameId, classPK, sourceClassNameId, nameMap, descriptionMap,
+			type, mode, language, script, serviceContext);
 	}
 
 	/**
@@ -118,7 +119,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
 		long userId, long groupId, long classNameId, long classPK,
-		java.lang.String templateKey,
+		long sourceClassNameId, java.lang.String templateKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
@@ -128,9 +129,9 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLocalService.addTemplate(userId, groupId,
-			classNameId, classPK, templateKey, nameMap, descriptionMap, type,
-			mode, language, script, cacheable, smallImage, smallImageURL,
-			smallImageFile, serviceContext);
+			classNameId, classPK, sourceClassNameId, templateKey, nameMap,
+			descriptionMap, type, mode, language, script, cacheable,
+			smallImage, smallImageURL, smallImageFile, serviceContext);
 	}
 
 	/**

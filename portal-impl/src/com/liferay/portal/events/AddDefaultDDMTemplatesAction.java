@@ -95,10 +95,10 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 					templateElement.elementText("cacheable"));
 
 				DDMTemplateLocalServiceUtil.addTemplate(
-					userId, groupId, classNameId, 0, templateKey, nameMap,
-					descriptionMap, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
-					null, language, script, cacheable, false, null, null,
-					serviceContext);
+					userId, groupId, classNameId, 0, classNameId, templateKey,
+					nameMap, descriptionMap,
+					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null, language,
+					script, cacheable, false, null, null, serviceContext);
 			}
 		}
 	}

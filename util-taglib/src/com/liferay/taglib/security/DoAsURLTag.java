@@ -20,13 +20,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.Encryptor;
-
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -49,23 +44,7 @@ public class DoAsURLTag extends TagSupport {
 		String doAsURL = company.getHomeURL();
 
 		if (Validator.isNull(doAsURL)) {
-			Layout layout = null;
-
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				themeDisplay.getScopeGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			if (!layouts.isEmpty()) {
-				layout = layouts.get(0);
-			}
-
-			if (layout != null) {
-				doAsURL = layout.getFriendlyURL();
-			}
-
-			if (Validator.isNull(doAsURL)) {
-				doAsURL = _COMPANY_DEFAULT_HOME_URL;
-			}
+			doAsURL = _COMPANY_DEFAULT_HOME_URL;
 		}
 
 		doAsURL = themeDisplay.getPathContext() + doAsURL;

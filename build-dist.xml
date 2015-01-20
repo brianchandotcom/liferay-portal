@@ -13,6 +13,36 @@
 		</else>
 	</if>
 
+	<macrodef name="download-dynamic-jars">
+		<attribute name="app.server.lib.portal.dir" />
+
+		<sequential>
+			<propertyregex
+				input="${portal.setup.liferay.pool.provider.jar.url[hikaricp]}"
+				property="mirrors.hikaricp.url"
+				regexp="http://"
+				replace="http://mirrors/"
+			/>
+
+			<trycatch>
+				<try>
+					<get
+						dest="@{app.server.lib.portal.dir}/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
+						skipexisting="true"
+						src="${mirrors.hikaricp.url}"
+					/>
+				</try>
+				<catch>
+					<get
+						dest="@{app.server.lib.portal.dir}/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
+						skipexisting="true"
+						src="${portal.setup.liferay.pool.provider.jar.url[hikaricp]}"
+					/>
+				</catch>
+			</trycatch>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="update-plugins-includes-plugin">
 		<attribute name="plugins.includes.plugin.bundle" />
 		<attribute name="plugins.includes.plugin.dependent-apps" />
@@ -975,13 +1005,6 @@ release was successful.</echo>
 		<sequential>
 			<property file="${project.dir}/portal-impl/src/portal.properties" prefix="portal" />
 
-			<propertyregex
-				input="${portal.setup.liferay.pool.provider.jar.url[hikaricp]}"
-				property="mirrors.hikaricp.url"
-				regexp="http://"
-				replace="http://mirrors/"
-			/>
-
 			<if>
 				<equals arg1="${app.server.type}" arg2="glassfish" />
 				<then>
@@ -994,22 +1017,9 @@ release was successful.</echo>
 						src="${app.server.glassfish.deploy.dir}/liferay-portal.war"
 					/>
 
-					<trycatch>
-						<try>
-							<get
-								dest="${app.server.glassfish.deploy.dir}/${tstamp.value}/WEB-INF/lib/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
-								skipexisting="true"
-								src="${mirrors.hikaricp.url}"
-							/>
-						</try>
-						<catch>
-							<get
-								dest="${app.server.glassfish.deploy.dir}/${tstamp.value}/WEB-INF/lib/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
-								skipexisting="true"
-								src="${portal.setup.liferay.pool.provider.jar.url[hikaricp]}"
-							/>
-						</catch>
-					</trycatch>
+					<download-dynamic-jars
+						app.server.lib.portal.dir="${app.server.glassfish.deploy.dir}/${tstamp.value}/WEB-INF/lib"
+					/>
 
 					<zip
 						basedir="${app.server.glassfish.deploy.dir}/${tstamp.value}"
@@ -1019,22 +1029,9 @@ release was successful.</echo>
 					<delete dir="${app.server.glassfish.deploy.dir}/${tstamp.value}" />
 				</then>
 				<else>
-					<trycatch>
-						<try>
-							<get
-								dest="${app.server.lib.portal.dir}/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
-								skipexisting="true"
-								src="${mirrors.hikaricp.url}"
-							/>
-						</try>
-						<catch>
-							<get
-								dest="${app.server.lib.portal.dir}/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
-								skipexisting="true"
-								src="${portal.setup.liferay.pool.provider.jar.url[hikaricp]}"
-							/>
-						</catch>
-					</trycatch>
+					<download-dynamic-jars
+						app.server.lib.portal.dir="${app.server.lib.portal.dir}"
+					/>
 				</else>
 			</if>
 		</sequential>

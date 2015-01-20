@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
-import java.util.UUID;
+import com.liferay.portal.kernel.context.DisplayContext;
 
 /**
  * @author Iván Zaera
  */
-public interface DLDisplayContext {
-
-	public UUID getUuid();
-
+public interface DLDisplayContext extends DisplayContext {
 }

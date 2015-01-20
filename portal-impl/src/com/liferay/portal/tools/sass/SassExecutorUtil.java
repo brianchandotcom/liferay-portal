@@ -81,6 +81,8 @@ public class SassExecutorUtil {
 
 		_scriptingContainer = rubyExecutor.getScriptingContainer();
 
+		_scriptingContainer.setCurrentDirectory(System.getProperty("user.dir"));
+
 		String rubyScript = StringUtil.read(
 			SassExecutorUtil.class.getClassLoader(),
 			"com/liferay/portal/servlet/filters/dynamiccss" +

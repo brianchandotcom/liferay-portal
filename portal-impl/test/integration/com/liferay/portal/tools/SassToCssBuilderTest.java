@@ -37,7 +37,7 @@ public class SassToCssBuilderTest {
 	public void testSassToCssBuilder() throws Exception {
 		List<String> dirNames = ListUtil.fromArray(new String[]{ _DIR_NAME});
 		String docrootDirName = _DOCROOT_DIR_NAME;
-		String portalCommonDirName = _DOCROOT_DIR_NAME;
+		String portalCommonDirName = "portal-web/docroot/html/css/common";
 
 		new SassToCssBuilder(dirNames, docrootDirName, portalCommonDirName);
 

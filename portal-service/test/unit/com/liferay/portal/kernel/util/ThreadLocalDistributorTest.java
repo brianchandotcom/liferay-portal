@@ -70,10 +70,9 @@ public class ThreadLocalDistributorTest {
 		threadLocalDistributor.setClassLoader(getClassLoader());
 		threadLocalDistributor.setThreadLocalSources(_keyValuePairs);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ThreadLocalDistributor.class.getName(), Level.WARNING);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ThreadLocalDistributor.class.getName(), Level.WARNING)) {
 
 			// With log
 
@@ -124,9 +123,6 @@ public class ThreadLocalDistributorTest {
 
 			Assert.assertEquals(1, threadLocals.size());
 			Assert.assertSame(TestClass._threadLocal, threadLocals.get(0));
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

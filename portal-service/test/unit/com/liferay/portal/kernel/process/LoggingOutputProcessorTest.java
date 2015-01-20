@@ -52,10 +52,10 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 		byte[] stdErrBytes = stdErrString.getBytes(
 			StringPool.DEFAULT_CHARSET_NAME);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LoggingOutputProcessor.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LoggingOutputProcessor.class.getName(), Level.OFF)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertNull(
@@ -99,9 +99,6 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 			logRecord = logRecords.get(0);
 
 			Assert.assertEquals(stdOutString, logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

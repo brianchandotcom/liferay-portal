@@ -54,10 +54,10 @@ public class LocaleUtilTest extends PowerMockito {
 			true
 		);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LocaleUtil.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocaleUtil.class.getName(), Level.WARNING)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertEquals(Locale.US, LocaleUtil.fromLanguageId("en_US"));
@@ -73,9 +73,6 @@ public class LocaleUtilTest extends PowerMockito {
 
 			Assert.assertEquals(
 				"en is not a valid language id", logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

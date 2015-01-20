@@ -211,6 +211,11 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 <c:if test="<%= total == 0 %>">
 	<liferay-ui:ddm-template-renderer contextObjects="<%= contextObjects %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= results %>">
+
+		<%
+		boolean hasAddPortletURLs = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-add-button:hasAddPortletURLs"));
+		%>
+
 		<c:if test="<%= !hasAddPortletURLs && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName)) %>">
 
 			<%

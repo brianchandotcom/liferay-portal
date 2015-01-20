@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
@@ -39,6 +40,43 @@ public class RatingsDataTransformerUtil {
 			UnicodeProperties properties)
 		throws PortalException {
 
+		_instance._transformCompanyRatingsData(
+			companyId, oldPortletPreferences, properties);
+	}
+
+	public static void transformGroupRatingsData(
+			final long groupId, UnicodeProperties oldProperties,
+			UnicodeProperties properties)
+		throws PortalException {
+
+		_instance._transformGroupRatingsData(
+			groupId, oldProperties, properties);
+	}
+
+	private RatingsDataTransformerUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(RatingsDataTransformer.class);
+
+		_serviceTracker.open();
+	}
+
+	private String _getPropertyName(String className) {
+		return className + StringPool.UNDERLINE + "RatingsType";
+	}
+
+	private void _transformCompanyRatingsData(
+			final long companyId, PortletPreferences oldPortletPreferences,
+			UnicodeProperties properties)
+		throws PortalException {
+
+		RatingsDataTransformer ratingsDataTransformer =
+			_serviceTracker.getService();
+
+		if (ratingsDataTransformer == null) {
+			return;
+		}
+
 		for (String portletId : PortletRatingsDefinitionUtil.getPortletIds()) {
 			String[] classNames = PortletRatingsDefinitionUtil.getClassNames(
 				portletId);
@@ -46,7 +84,7 @@ public class RatingsDataTransformerUtil {
 			for (final String className : classNames) {
 				String propertyName = _getPropertyName(className);
 
-				transformRatingsData(
+				_transformRatingsData(
 					"companyId", companyId, className,
 					oldPortletPreferences.getValue(
 						propertyName, StringPool.BLANK),
@@ -55,10 +93,17 @@ public class RatingsDataTransformerUtil {
 		}
 	}
 
-	public static void transformGroupRatingsData(
+	private void _transformGroupRatingsData(
 			final long groupId, UnicodeProperties oldProperties,
 			UnicodeProperties properties)
 		throws PortalException {
+
+		RatingsDataTransformer ratingsDataTransformer =
+			_serviceTracker.getService();
+
+		if (ratingsDataTransformer == null) {
+			return;
+		}
 
 		for (String portletId : PortletRatingsDefinitionUtil.getPortletIds()) {
 			String[] classNames = PortletRatingsDefinitionUtil.getClassNames(
@@ -67,7 +112,7 @@ public class RatingsDataTransformerUtil {
 			for (final String className : classNames) {
 				String propertyName = _getPropertyName(className);
 
-				transformRatingsData(
+				_transformRatingsData(
 					"groupId", groupId, className,
 					oldProperties.getProperty(propertyName),
 					properties.getProperty(propertyName));
@@ -75,7 +120,7 @@ public class RatingsDataTransformerUtil {
 		}
 	}
 
-	protected static void transformRatingsData(
+	private void _transformRatingsData(
 			final String classPKFieldName, final long classPKFieldValue,
 			final String className, String fromRatingsType,
 			String toRatingsType)
@@ -90,10 +135,6 @@ public class RatingsDataTransformerUtil {
 
 		RatingsDataTransformer ratingsDataTransformer =
 			_serviceTracker.getService();
-
-		if (ratingsDataTransformer == null) {
-			return;
-		}
 
 		ActionableDynamicQuery.PerformActionMethod performActionMethod =
 			ratingsDataTransformer.transformRatingsData(
@@ -129,17 +170,10 @@ public class RatingsDataTransformerUtil {
 		ratingsEntryActionableDynamicQuery.performActions();
 	}
 
-	private static String _getPropertyName(String className) {
-		return className + StringPool.UNDERLINE + "RatingsType";
-	}
+	private static final RatingsDataTransformerUtil _instance =
+		new RatingsDataTransformerUtil();
 
-	private static final ServiceTracker<
-		RatingsDataTransformer, RatingsDataTransformer> _serviceTracker =
-			RegistryUtil.getRegistry().trackServices(
-				RatingsDataTransformer.class);
-
-	static {
-		_serviceTracker.open();
-	}
+	private final ServiceTracker<RatingsDataTransformer, RatingsDataTransformer>
+		_serviceTracker;
 
 }

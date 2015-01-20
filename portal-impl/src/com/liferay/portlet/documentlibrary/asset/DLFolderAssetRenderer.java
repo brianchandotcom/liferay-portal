@@ -89,7 +89,7 @@ public class DLFolderAssetRenderer
 				_folder.getRepositoryId(), _folder.getFolderId(), false);
 
 			if (!subfolderIds.isEmpty()) {
-				return "icon-folder-close";
+				return "icon-folder-open";
 			}
 
 			int count = DLAppServiceUtil.getFoldersFileEntriesCount(
@@ -98,7 +98,7 @@ public class DLFolderAssetRenderer
 				WorkflowConstants.STATUS_APPROVED);
 
 			if (count > 0) {
-				return "icon-folder-close";
+				return "icon-folder-open";
 			}
 		}
 		catch (PrincipalException pe) {

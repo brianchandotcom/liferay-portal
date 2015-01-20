@@ -35,18 +35,6 @@ AUI.add(
 						instance._eventOpenDocument = instance.ns('openDocument');
 						instance._entriesContainer = instance.byId('entriesContainer');
 
-						if (!config.syncMessageDisabled) {
-							instance._syncMessage = new Liferay.Message(
-								{
-									boundingBox: instance.byId('syncNotification'),
-									contentBox: instance.byId('syncNotificationContent'),
-									id: instance.NS + 'show-sync-message',
-									trigger: instance.one('#showSyncMessageIconContainer'),
-									visible: true
-								}
-							).render();
-						}
-
 						var checkBoxesId = [
 							instance.ns(STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX),
 							instance.ns(STR_ROW_IDS_FOLDER_CHECKBOX),

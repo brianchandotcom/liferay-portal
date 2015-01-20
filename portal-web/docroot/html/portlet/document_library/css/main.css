@@ -204,10 +204,6 @@
 	.lfr-app-column-view {
 		border-width: 0;
 
-		.sync-notification {
-			border-top-width: 1px;
-		}
-
 		.lfr-app-column-view-content {
 			background-color: #FAFAFA;
 		}
@@ -239,19 +235,8 @@
 		margin-bottom: 5px;
 	}
 
-	.document-library-breadcrumb  ul {
+	.document-library-breadcrumb ul {
 		margin-bottom: 0;
-	}
-
-	.show-sync-message-icon-container {
-		position: relative;
-	}
-
-	.show-sync-message {
-		position: absolute;
-		right: 5px;
-		top: 5px;
-		z-index: 1;
 	}
 
 	.subscribe-action {
@@ -259,10 +244,6 @@
 		margin-right: 10px;
 		margin-top: 5px;
 		text-align: right;
-	}
-
-	.sync-message-hidden {
-		display: none;
 	}
 
 	.lfr-document-library-comments.lfr-panel.lfr-extended {
@@ -557,15 +538,6 @@
 	.portlet-document-library, .portlet-document-library-display {
 		.entry-display-style.display-descriptive, .document-info {
 			zoom: 1;
-		}
-
-		.show-sync-message-icon-container {
-			background-image: url(@theme_image_path@/application/button_bg_selected.png);
-			height: 21px;
-			position: absolute;
-			right: 0;
-			width: 21px;
-			z-index: 1;
 		}
 	}
 }

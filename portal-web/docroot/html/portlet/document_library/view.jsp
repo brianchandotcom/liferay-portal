@@ -117,32 +117,10 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 				<liferay-util:include page="/html/portlet/document_library/toolbar.jsp" />
 			</liferay-ui:app-view-toolbar>
 
-			<%
-			boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true"));
-
-			String cssClass = "show-sync-message-icon-container";
-
-			if (showSyncMessage || !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE) {
-				cssClass += " hide";
-			}
-			%>
-
-			<div class="<%= cssClass %>" id="<portlet:namespace />showSyncMessageIconContainer">
-				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="show-liferay-sync-tip" />" class="show-sync-message" id="<portlet:namespace />showSyncMessageIcon" src='<%= themeDisplay.getPathThemeImages() + "/common/liferay_sync.png" %>' title='<%= LanguageUtil.get(request, "liferay-sync") %>' />
-			</div>
-
 			<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
 					<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
 				</c:if>
-			</div>
-
-			<div class="hide" id="<portlet:namespace />syncNotification">
-				<div class="alert alert-info sync-notification" id="<portlet:namespace />syncNotificationContent">
-					<a href="http://www.liferay.com/products/liferay-sync" target="_blank">
-						<liferay-ui:message key="access-these-files-offline-using-liferay-sync" />
-					</a>
-				</div>
 			</div>
 
 			<c:if test="<%= portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request) %>">
@@ -277,8 +255,6 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 			select: {
 				displayViews: ['<%= StringUtil.merge(escapedDisplayViews, "','") %>']
 			},
-			syncMessageDisabled: <%= !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE %>,
-			syncMessageSuppressed: <%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true")) %>,
 			trashEnabled: <%= (scopeGroupId == repositoryId) && TrashUtil.isTrashEnabled(scopeGroupId) %>,
 			updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>,
 			uploadURL: '<%= uploadURL %>',

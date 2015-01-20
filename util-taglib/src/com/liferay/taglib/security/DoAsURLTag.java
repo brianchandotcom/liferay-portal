@@ -63,12 +63,8 @@ public class DoAsURLTag extends TagSupport {
 			}
 
 			if (Validator.isNull(doAsURL)) {
-				doAsURL =
-					themeDisplay.getPathContext() + _COMPANY_DEFAULT_HOME_URL;
+				doAsURL = _COMPANY_DEFAULT_HOME_URL;
 			}
-		}
-		else {
-			doAsURL = themeDisplay.getPathContext() + doAsURL;
 		}
 
 		if (doAsUserId <= 0) {

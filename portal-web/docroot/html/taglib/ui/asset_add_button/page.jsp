@@ -28,7 +28,7 @@ String redirect = (String)request.getAttribute("liferay-ui:asset-add-button:redi
 boolean hasAddPortletURLs = false;
 
 for (long groupId : groupIds) {
-	Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, groupId, classNameIds, classTypeIds, allAssetCategoryIds, allAssetTagNames, redirect);
+	Map<String, PortletURL> addPortletURLs = AssetUtil.getAddPortletURLs((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, groupId, classNameIds, classTypeIds, allAssetCategoryIds, allAssetTagNames, redirect);
 
 	if ((addPortletURLs != null) && !addPortletURLs.isEmpty()) {
 		hasAddPortletURLs = true;

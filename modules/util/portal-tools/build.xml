@@ -2,6 +2,8 @@
 <!DOCTYPE project>
 
 <project>
+	<property name="import.shared" value="../apps/wiki/wiki-api,../apps/wiki/wiki-service" />
+
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/tools" />

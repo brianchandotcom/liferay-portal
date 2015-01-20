@@ -58,9 +58,6 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
-import com.liferay.portlet.wiki.model.WikiNode;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.util.test.WikiTestUtil;
 
 import java.io.InputStream;
 
@@ -102,7 +99,7 @@ public class ConvertDocumentLibraryTest {
 			ConvertDocumentLibrary.class.getName());
 
 		_convertProcess.setParameterValues(
-			new String[] {DBStore.class.getName(), Boolean.TRUE.toString()});
+			new String[]{DBStore.class.getName(), Boolean.TRUE.toString()});
 	}
 
 	@After
@@ -184,32 +181,6 @@ public class ConvertDocumentLibraryTest {
 	}
 
 	@Test
-	public void testMigrateWiki() throws Exception {
-		WikiPage wikiPage = addWikiPage();
-
-		addWikiPageAttachment(wikiPage);
-
-		_convertProcess.convert();
-
-		DLFileEntry dlFileEntry = getDLFileEntry(wikiPage);
-
-		String title = dlFileEntry.getTitle();
-
-		Assert.assertTrue(title.endsWith(".docx"));
-
-		try {
-			DLContentLocalServiceUtil.getContent(
-				dlFileEntry.getCompanyId(),
-				DLFolderConstants.getDataRepositoryId(
-					dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
-				dlFileEntry.getName());
-		}
-		catch (NoSuchContentException nsce) {
-			Assert.fail();
-		}
-	}
-
-	@Test
 	public void testStoreUpdatedAfterConversion() throws Exception {
 		_convertProcess.convert();
 
@@ -242,28 +213,11 @@ public class ConvertDocumentLibraryTest {
 			false, serviceContext);
 	}
 
-	protected WikiPage addWikiPage() throws Exception {
-		WikiNode wikiNode = WikiTestUtil.addNode(_group.getGroupId());
-
-		return WikiTestUtil.addPage(
-			wikiNode.getUserId(), _group.getGroupId(), wikiNode.getNodeId(),
-			RandomTestUtil.randomString(), true);
-	}
-
-	protected void addWikiPageAttachment(WikiPage wikiPage) throws Exception {
-		WikiTestUtil.addWikiAttachment(
-			wikiPage.getUserId(), wikiPage.getNodeId(), wikiPage.getTitle(),
-			getClass());
-	}
-
 	protected DLFileEntry getDLFileEntry(Object object) throws Exception {
 		List<FileEntry> fileEntries = new ArrayList<>();
 
 		if (object instanceof MBMessage) {
 			fileEntries = ((MBMessage)object).getAttachmentsFileEntries(0, 1);
-		}
-		else if (object instanceof WikiPage) {
-			fileEntries = ((WikiPage)object).getAttachmentsFileEntries(0, 1);
 		}
 
 		if (fileEntries.isEmpty()) {

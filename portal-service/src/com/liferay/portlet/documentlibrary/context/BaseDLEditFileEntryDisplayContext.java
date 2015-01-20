@@ -130,6 +130,11 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public boolean isFolderSelectionVisible() throws PortalException {
+		return parentDLDisplayContext.isFolderSelectionVisible();
+	}
+
+	@Override
 	public boolean isPublishButtonDisabled() throws PortalException {
 		return parentDLDisplayContext.isPublishButtonDisabled();
 	}

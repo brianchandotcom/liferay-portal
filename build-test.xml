@@ -4459,6 +4459,11 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 			<arg value="killall node" />
 		</exec>
 
+		<exec executable="/bin/bash" os="${os.unix}" >
+			<arg value="-c" />
+			<arg value="fuser -k 9515/tcp" />
+		</exec>
+
 		<exec executable="cmd.exe" os="${os.windows}" >
 			<arg value="/c" />
 			<arg value="tskill node" />

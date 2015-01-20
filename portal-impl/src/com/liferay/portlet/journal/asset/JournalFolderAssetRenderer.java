@@ -23,6 +23,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
@@ -76,7 +77,8 @@ public class JournalFolderAssetRenderer
 
 	@Override
 	public String getIconCssClass() throws PortalException {
-		if (JournalFolderServiceUtil.getFoldersAndArticlesCount(
+		if (PropsValues.JOURNAL_FOLDER_ICON_CHECK_COUNT &&
+			JournalFolderServiceUtil.getFoldersAndArticlesCount(
 				_folder.getGroupId(), _folder.getFolderId()) > 0) {
 
 			return "icon-folder-open";

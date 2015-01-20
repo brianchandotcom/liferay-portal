@@ -13,36 +13,6 @@
 		</else>
 	</if>
 
-	<macrodef name="resolve-dynamic-jars">
-		<sequential>
-			<property file="${project.dir}/portal-impl/src/portal.properties" prefix="portal" />
-
-			<trycatch>
-				<try>
-					<propertyregex
-						input="${portal.setup.liferay.pool.provider.jar.url[hikaricp]}"
-						property="mirrors.hikaricp.url"
-						regexp="http://"
-						replace="http://mirrors/"
-					/>
-
-					<get
-						dest="${app.server.lib.portal.dir}/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
-						skipexisting="true"
-						src="${mirrors.hikaricp.url}"
-					/>
-				</try>
-				<catch>
-					<get
-						dest="${app.server.lib.portal.dir}/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
-						skipexisting="true"
-						src="${portal.setup.liferay.pool.provider.jar.url[hikaricp]}"
-					/>
-				</catch>
-			</trycatch>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="update-plugins-includes-plugin">
 		<attribute name="plugins.includes.plugin.bundle" />
 		<attribute name="plugins.includes.plugin.dependent-apps" />
@@ -87,9 +57,9 @@
 
 		<antcall target="deploy" inheritAll="false" />
 
-		<app-server-properties-reset />
+		<antcall target="resolve-dynamic-jars" inheritAll="false" />
 
-		<resolve-dynamic-jars />
+		<app-server-properties-reset />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.geronimo.deploy.dir}" />
@@ -107,9 +77,9 @@
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-properties-reset />
+		<antcall target="resolve-dynamic-jars" inheritAll="false" />
 
-		<resolve-dynamic-jars />
+		<app-server-properties-reset />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.glassfish.deploy.dir}" />
@@ -129,9 +99,9 @@
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-properties-reset />
+		<antcall target="resolve-dynamic-jars" inheritAll="false" />
 
-		<resolve-dynamic-jars />
+		<app-server-properties-reset />
 
 		<if>
 			<equals arg1="${app.server.jboss.major.version}" arg2="5" />
@@ -167,9 +137,9 @@
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-properties-reset />
+		<antcall target="resolve-dynamic-jars" inheritAll="false" />
 
-		<resolve-dynamic-jars />
+		<app-server-properties-reset />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.jboss.deploy.dir}" />
@@ -193,9 +163,9 @@
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-properties-reset />
+		<antcall target="resolve-dynamic-jars" inheritAll="false" />
 
-		<resolve-dynamic-jars />
+		<app-server-properties-reset />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.jboss.deploy.dir}" />
@@ -215,9 +185,9 @@
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-properties-reset />
+		<antcall target="resolve-dynamic-jars" inheritAll="false" />
 
-		<resolve-dynamic-jars />
+		<app-server-properties-reset />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.jetty.deploy.dir}" />
@@ -237,9 +207,9 @@
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-properties-reset />
+		<antcall target="resolve-dynamic-jars" inheritAll="false" />
 
-		<resolve-dynamic-jars />
+		<app-server-properties-reset />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.jonas.deploy.dir}" />
@@ -340,9 +310,9 @@
 
 		<ant target="deploy" inheritAll="false" />
 
-		<app-server-properties-reset />
+		<antcall target="resolve-dynamic-jars" inheritAll="false" />
 
-		<resolve-dynamic-jars />
+		<app-server-properties-reset />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.resin.deploy.dir}" />
@@ -577,9 +547,9 @@
 
 		<antcall target="all" inheritAll="false" />
 
-		<app-server-properties-reset />
+		<antcall target="resolve-dynamic-jars" inheritAll="false" />
 
-		<resolve-dynamic-jars />
+		<app-server-properties-reset />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.tcserver.deploy.dir}" />
@@ -616,7 +586,7 @@
 			</then>
 		</if>
 
-		<resolve-dynamic-jars />
+		<antcall target="resolve-dynamic-jars" inheritAll="false" />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps" />
@@ -999,6 +969,75 @@ release was successful.</echo>
 		<delete file="prepare-generated-files.txt" />
 
 		<echo file="prepare-generated-files.tstamp">${prepare-generated-files.tstamp}</echo>
+	</target>
+
+	<target name="resolve-dynamic-jars">
+		<sequential>
+			<property file="${project.dir}/portal-impl/src/portal.properties" prefix="portal" />
+
+			<propertyregex
+				input="${portal.setup.liferay.pool.provider.jar.url[hikaricp]}"
+				property="mirrors.hikaricp.url"
+				regexp="http://"
+				replace="http://mirrors/"
+			/>
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="glassfish" />
+				<then>
+					<tstamp>
+						<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+					</tstamp>
+
+					<unzip
+						dest="${app.server.glassfish.deploy.dir}/${tstamp.value}"
+						src="${app.server.glassfish.deploy.dir}/liferay-portal.war"
+					/>
+
+					<trycatch>
+						<try>
+							<get
+								dest="${app.server.glassfish.deploy.dir}/${tstamp.value}/WEB-INF/lib/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
+								skipexisting="true"
+								src="${mirrors.hikaricp.url}"
+							/>
+						</try>
+						<catch>
+							<get
+								dest="${app.server.glassfish.deploy.dir}/${tstamp.value}/WEB-INF/lib/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
+								skipexisting="true"
+								src="${portal.setup.liferay.pool.provider.jar.url[hikaricp]}"
+							/>
+						</catch>
+					</trycatch>
+
+					<zip
+						basedir="${app.server.glassfish.deploy.dir}/${tstamp.value}"
+						destfile="${app.server.glassfish.deploy.dir}/liferay-portal.war"
+					/>
+
+					<delete dir="${app.server.glassfish.deploy.dir}/${tstamp.value}" />
+				</then>
+				<else>
+					<trycatch>
+						<try>
+							<get
+								dest="${app.server.lib.portal.dir}/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
+								skipexisting="true"
+								src="${mirrors.hikaricp.url}"
+							/>
+						</try>
+						<catch>
+							<get
+								dest="${app.server.lib.portal.dir}/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
+								skipexisting="true"
+								src="${portal.setup.liferay.pool.provider.jar.url[hikaricp]}"
+							/>
+						</catch>
+					</trycatch>
+				</else>
+			</if>
+		</sequential>
 	</target>
 
 	<target name="update-java-security-tomcat">

@@ -208,6 +208,9 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 							<a class="image-link" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
 
 								<%
+								String folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_empty.png";
+
+								if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT) {
 									int curFoldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
 
 									int curImagesCount = 0;
@@ -219,11 +222,10 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 										curImagesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED);
 									}
 
-									String folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_empty.png";
-
 									if ((curFoldersCount + curImagesCount) > 0) {
 										folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_full_image.png";
 									}
+								}
 								%>
 
 								<span class="image-thumbnail">

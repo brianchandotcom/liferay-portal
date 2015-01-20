@@ -113,7 +113,7 @@ public class LocalFabricStatus implements FabricStatus {
 				ProcessCallable<V> processCallable) {
 
 				DefaultNoticeableFuture<V> defaultNoticeableFuture =
-					new DefaultNoticeableFuture<V>();
+					new DefaultNoticeableFuture<>();
 
 				try {
 					defaultNoticeableFuture.set(processCallable.call());

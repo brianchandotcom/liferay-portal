@@ -497,7 +497,7 @@ public class LocalProcessExecutorTest {
 	@Test
 	public void testConcurrentCreateExecutorService() throws Exception {
 		final AtomicReference<ExecutorService> atomicReference =
-			new AtomicReference<ExecutorService>();
+			new AtomicReference<>();
 
 		Thread thread = new Thread() {
 
@@ -1075,7 +1075,7 @@ public class LocalProcessExecutorTest {
 				new LoggingProcessCallable(logMessage, signalFile);
 
 			final AtomicReference<Exception> exceptionAtomicReference =
-				new AtomicReference<Exception>();
+				new AtomicReference<>();
 
 			Thread thread = new Thread() {
 

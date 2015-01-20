@@ -103,9 +103,8 @@ public class AuditRequestThreadLocal {
 	}
 
 	private static final ThreadLocal<AuditRequestThreadLocal>
-		_auditRequestThreadLocal =
-			new AutoResetThreadLocal<AuditRequestThreadLocal>(
-				AuditRequestThreadLocal.class + "._auditRequestThreadLocal");
+		_auditRequestThreadLocal = new AutoResetThreadLocal<>(
+			AuditRequestThreadLocal.class + "._auditRequestThreadLocal");
 
 	private String _clientHost;
 	private String _clientIP;

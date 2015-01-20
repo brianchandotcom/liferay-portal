@@ -43,7 +43,6 @@ public class PortalInitableUtil {
 		}
 	}
 
-	private static List<PortalInitable> _portalInitables =
-		new Vector<PortalInitable>();
+	private static List<PortalInitable> _portalInitables = new Vector<>();
 
 }

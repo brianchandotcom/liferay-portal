@@ -41,7 +41,7 @@ public class TreeNode<T extends Comparable<T>> {
 	}
 
 	public TreeNode<T> addChildNode(T value) {
-		TreeNode<T> childNode = new TreeNode<T>(value, this);
+		TreeNode<T> childNode = new TreeNode<>(value, this);
 
 		_childNodes.add(childNode);
 

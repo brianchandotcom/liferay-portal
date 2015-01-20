@@ -134,7 +134,7 @@ public class MessageDatagramReceiveHandlerTest {
 		// Normal destination, synchronized, with listener
 
 		final AtomicReference<Message> messageReference =
-			new AtomicReference<Message>();
+			new AtomicReference<>();
 
 		baseDestination.register(
 			new MessageListener() {
@@ -207,7 +207,7 @@ public class MessageDatagramReceiveHandlerTest {
 			MessageDatagramReceiveHandlerTest.class.getName());
 
 		final AtomicReference<MessageRoutingBag> messageRoutingBagReference =
-			new AtomicReference<MessageRoutingBag>();
+			new AtomicReference<>();
 
 		IntrabandBridgeDestination intrabandBridgeDestination =
 			new IntrabandBridgeDestination(baseDestination) {

@@ -30,7 +30,7 @@ public class ProxyModeThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _forceSync =
-		new AutoResetThreadLocal<Boolean>(
+		new AutoResetThreadLocal<>(
 			ProxyModeThreadLocal.class + "_forceSync", Boolean.FALSE);
 
 }

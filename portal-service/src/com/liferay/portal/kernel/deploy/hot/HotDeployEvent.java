@@ -173,7 +173,7 @@ public class HotDeployEvent {
 	private final Set<String> _dependentServletContextNames = new TreeSet<>();
 	private PluginPackage _pluginPackage;
 	private final Queue<PortalLifecycle> _portalLifecycles =
-		new ConcurrentLinkedQueue<PortalLifecycle>();
+		new ConcurrentLinkedQueue<>();
 	private final ServletContext _servletContext;
 
 }

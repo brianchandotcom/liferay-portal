@@ -100,9 +100,8 @@ public class LogBridge
 	public void start(BundleContext bundleContext) throws Exception {
 		_bundleContext = bundleContext;
 
-		_serviceTracker =
-			new ServiceTracker<LogReaderService, LogReaderService>(
-				bundleContext, LogReaderService.class, this);
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, LogReaderService.class, this);
 
 		_serviceTracker.open();
 	}

@@ -38,10 +38,10 @@ public class TimeZoneThreadLocal {
 	}
 
 	private static final ThreadLocal<TimeZone> _defaultTimeZone =
-		new AutoResetThreadLocal<TimeZone>(
+		new AutoResetThreadLocal<>(
 			TimeZoneThreadLocal.class + "._defaultTimeZone");
 	private static final ThreadLocal<TimeZone> _themeDisplayTimeZone =
-		new AutoResetThreadLocal<TimeZone>(
+		new AutoResetThreadLocal<>(
 			TimeZoneThreadLocal.class + "._themeDisplayTimeZone");
 
 }

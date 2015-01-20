@@ -115,7 +115,7 @@ public class BlockingPortalCache<K extends Serializable, V>
 	}
 
 	private static final ThreadLocal<CompeteLatch> _competeLatch =
-		new ThreadLocal<CompeteLatch>();
+		new ThreadLocal<>();
 
 	private final ConcurrentMap<K, CompeteLatch> _competeLatchMap =
 		new ConcurrentHashMap<>();

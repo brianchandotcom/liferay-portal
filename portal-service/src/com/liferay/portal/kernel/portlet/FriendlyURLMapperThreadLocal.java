@@ -30,6 +30,6 @@ public class FriendlyURLMapperThreadLocal {
 	}
 
 	private static final ThreadLocal<Map<String, String>> _prpIdentifiers =
-		new ThreadLocal<Map<String, String>>();
+		new ThreadLocal<>();
 
 }

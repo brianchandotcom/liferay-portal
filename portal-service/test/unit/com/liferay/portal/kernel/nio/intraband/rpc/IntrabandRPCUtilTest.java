@@ -151,10 +151,10 @@ public class IntrabandRPCUtilTest {
 		// Failed
 
 		DefaultNoticeableFuture<String> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<String>();
+			new DefaultNoticeableFuture<>();
 
 		FutureCompletionHandler<String> futureCompletionHandler =
-			new FutureCompletionHandler<String>(defaultNoticeableFuture);
+			new FutureCompletionHandler<>(defaultNoticeableFuture);
 
 		futureCompletionHandler.delivered(null);
 		futureCompletionHandler.submitted(null);
@@ -174,9 +174,9 @@ public class IntrabandRPCUtilTest {
 
 		// Class not found exception
 
-		defaultNoticeableFuture = new DefaultNoticeableFuture<String>();
+		defaultNoticeableFuture = new DefaultNoticeableFuture<>();
 
-		futureCompletionHandler = new FutureCompletionHandler<String>(
+		futureCompletionHandler = new FutureCompletionHandler<>(
 			defaultNoticeableFuture);
 
 		Serializer serializer = new Serializer();
@@ -205,9 +205,9 @@ public class IntrabandRPCUtilTest {
 
 		// Timed out
 
-		defaultNoticeableFuture = new DefaultNoticeableFuture<String>();
+		defaultNoticeableFuture = new DefaultNoticeableFuture<>();
 
-		futureCompletionHandler = new FutureCompletionHandler<String>(
+		futureCompletionHandler = new FutureCompletionHandler<>(
 			defaultNoticeableFuture);
 
 		futureCompletionHandler.timedOut(null);

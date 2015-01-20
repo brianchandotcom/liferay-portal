@@ -216,7 +216,7 @@ public class ThreadLocalDistributorTest {
 		private static ThreadLocal<?> _nullValue;
 
 		private static final ThreadLocal<String> _threadLocal =
-			new ThreadLocal<String>();
+			new ThreadLocal<>();
 
 		@SuppressWarnings("unused")
 		private ThreadLocal<?> _nonStatic;

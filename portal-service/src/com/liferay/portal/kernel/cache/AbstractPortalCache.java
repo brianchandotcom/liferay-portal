@@ -194,7 +194,7 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 		K key, V oldValue, V newValue, int timeToLive);
 
 	protected final AggregatedCacheListener<K, V> aggregatedCacheListener =
-		new AggregatedCacheListener<K, V>();
+		new AggregatedCacheListener<>();
 
 	private final PortalCacheManager<K, V> _portalCacheManager;
 

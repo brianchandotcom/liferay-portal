@@ -211,7 +211,7 @@ public class SPIClassPathContextListener implements ServletContextListener {
 	}
 
 	protected static final AtomicReference<SPIProvider> spiProviderReference =
-		new AtomicReference<SPIProvider>();
+		new AtomicReference<>();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SPIClassPathContextListener.class);

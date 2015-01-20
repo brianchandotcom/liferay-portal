@@ -105,7 +105,7 @@ public class MailboxUtil {
 	private static final Map<Long, ByteBuffer> _mailMap =
 		new ConcurrentHashMap<>();
 	private static final BlockingQueue<ReceiptStub> _overdueMailQueue =
-		new DelayQueue<ReceiptStub>();
+		new DelayQueue<>();
 	private static final AtomicLong _receiptGenerator = new AtomicLong();
 
 	static {

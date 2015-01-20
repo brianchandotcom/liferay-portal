@@ -454,7 +454,7 @@ public class AudioProcessorImpl
 
 	private final Set<String> _audioMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES);
-	private final List<Long> _fileVersionIds = new Vector<Long>();
+	private final List<Long> _fileVersionIds = new Vector<>();
 
 	private static class LiferayAudioProcessCallable
 		implements ProcessCallable<String> {

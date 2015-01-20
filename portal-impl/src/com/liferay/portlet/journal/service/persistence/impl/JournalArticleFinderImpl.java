@@ -123,8 +123,8 @@ public class JournalArticleFinderImpl
 			andOperator = true;
 		}
 
-		QueryDefinition<JournalArticle> queryDefinition =
-			new QueryDefinition<JournalArticle>(status);
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			status);
 
 		return doCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
@@ -242,8 +242,8 @@ public class JournalArticleFinderImpl
 			andOperator = true;
 		}
 
-		QueryDefinition<JournalArticle> queryDefinition =
-			new QueryDefinition<JournalArticle>(status);
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			status);
 
 		return doCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
@@ -362,9 +362,8 @@ public class JournalArticleFinderImpl
 			andOperator = true;
 		}
 
-		QueryDefinition<JournalArticle> queryDefinition =
-			new QueryDefinition<JournalArticle>(
-				status, start, end, orderByComparator);
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			status, start, end, orderByComparator);
 
 		return doFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,
@@ -520,9 +519,8 @@ public class JournalArticleFinderImpl
 			andOperator = true;
 		}
 
-		QueryDefinition<JournalArticle> queryDefinition =
-			new QueryDefinition<JournalArticle>(
-				status, start, end, orderByComparator);
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			status, start, end, orderByComparator);
 
 		return findByC_G_F_C_A_V_T_D_C_S_T_D_R(
 			companyId, groupId, folderIds, classNameId, articleIds, version,

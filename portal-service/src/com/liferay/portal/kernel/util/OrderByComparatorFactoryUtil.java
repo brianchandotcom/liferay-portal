@@ -34,7 +34,7 @@ public class OrderByComparatorFactoryUtil {
 				"Columns length is not an even number");
 		}
 
-		return new DefaultOrderByComparator<T>(tableName, columns);
+		return new DefaultOrderByComparator<>(tableName, columns);
 	}
 
 	protected static class DefaultOrderByComparator<T extends BaseModel<T>>

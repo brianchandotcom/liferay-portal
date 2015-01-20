@@ -38,7 +38,7 @@ public class PortalSessionThreadLocal {
 	}
 
 	private static final ThreadLocal<String> _sessionId =
-		new AutoResetThreadLocal<String>(
+		new AutoResetThreadLocal<>(
 			PortalSessionThreadLocal.class + "._sessionId");
 
 }

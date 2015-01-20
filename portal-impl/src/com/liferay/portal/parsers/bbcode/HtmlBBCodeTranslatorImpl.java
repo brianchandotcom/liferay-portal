@@ -143,7 +143,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		StringBundler sb = new StringBundler();
 
 		List<BBCodeItem> bbCodeItems = _bbCodeParser.parse(text);
-		Stack<String> tags = new Stack<String>();
+		Stack<String> tags = new Stack<>();
 		IntegerWrapper marker = new IntegerWrapper();
 
 		for (; marker.getValue() < bbCodeItems.size(); marker.increment()) {

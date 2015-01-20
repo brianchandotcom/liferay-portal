@@ -1034,8 +1034,7 @@ public class JournalUtil {
 				WebKeys.JOURNAL_RECENT_ARTICLES);
 
 		if (recentArticles == null) {
-			recentArticles = new FiniteUniqueStack<JournalArticle>(
-				MAX_STACK_SIZE);
+			recentArticles = new FiniteUniqueStack<>(MAX_STACK_SIZE);
 
 			portletSession.setAttribute(
 				WebKeys.JOURNAL_RECENT_ARTICLES, recentArticles);
@@ -1054,8 +1053,7 @@ public class JournalUtil {
 				WebKeys.JOURNAL_RECENT_DYNAMIC_DATA_MAPPING_STRUCTURES);
 
 		if (recentDDMStructures == null) {
-			recentDDMStructures = new FiniteUniqueStack<DDMStructure>(
-				MAX_STACK_SIZE);
+			recentDDMStructures = new FiniteUniqueStack<>(MAX_STACK_SIZE);
 
 			portletSession.setAttribute(
 				WebKeys.JOURNAL_RECENT_DYNAMIC_DATA_MAPPING_STRUCTURES,
@@ -1075,8 +1073,7 @@ public class JournalUtil {
 				WebKeys.JOURNAL_RECENT_DYNAMIC_DATA_MAPPING_TEMPLATES);
 
 		if (recentDDMTemplates == null) {
-			recentDDMTemplates = new FiniteUniqueStack<DDMTemplate>(
-				MAX_STACK_SIZE);
+			recentDDMTemplates = new FiniteUniqueStack<>(MAX_STACK_SIZE);
 
 			portletSession.setAttribute(
 				WebKeys.JOURNAL_RECENT_DYNAMIC_DATA_MAPPING_TEMPLATES,
@@ -1428,7 +1425,7 @@ public class JournalUtil {
 
 			Element contentRoot = contentDoc.getRootElement();
 
-			Stack<String> path = new Stack<String>();
+			Stack<String> path = new Stack<>();
 
 			path.push(contentRoot.getName());
 

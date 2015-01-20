@@ -234,7 +234,7 @@ public class BlogsUtil {
 		List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(
 			assetEntryQuery);
 
-		return new SearchContainerResults<AssetEntry>(assetEntries, total);
+		return new SearchContainerResults<>(assetEntries, total);
 	}
 
 	public static String getUrlTitle(long entryId, String title) {

@@ -149,7 +149,7 @@ public class ExpressionImpl<T> implements Expression<T> {
 			String expressionString, Class<V> expressionType)
 		throws ExpressionEvaluationException {
 
-		Expression<V> expression = new ExpressionImpl<V>(
+		Expression<V> expression = new ExpressionImpl<>(
 			expressionString, expressionType);
 
 		List<String> variableNames = _variableNamesExtractor.extract(

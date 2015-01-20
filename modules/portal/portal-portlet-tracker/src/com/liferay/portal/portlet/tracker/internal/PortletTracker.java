@@ -210,9 +210,8 @@ public class PortletTracker
 
 		BundleContext bundleContext = _componentContext.getBundleContext();
 
-		_serviceTracker =
-			new ServiceTracker<Portlet, com.liferay.portal.model.Portlet>(
-				bundleContext, Portlet.class, this);
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, Portlet.class, this);
 
 		_serviceTracker.open();
 
@@ -932,8 +931,7 @@ public class PortletTracker
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
@@ -955,8 +953,7 @@ public class PortletTracker
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
@@ -974,8 +971,7 @@ public class PortletTracker
 	protected ServiceRegistration<Servlet> createDefaultServlet(
 		BundleContext bundleContext, String contextName) {
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
@@ -1012,8 +1008,7 @@ public class PortletTracker
 			return null;
 		}
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,

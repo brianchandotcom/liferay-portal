@@ -515,7 +515,7 @@ public class FileUploadChannelHandlerTest {
 	}
 
 	private final AsyncBroker<Path, FileResponse> _asyncBroker =
-		new AsyncBroker<Path, FileResponse>();
+		new AsyncBroker<>();
 	private final EmbeddedChannel _embeddedChannel =
 		NettyTestUtil.createEmptyEmbeddedChannel();
 

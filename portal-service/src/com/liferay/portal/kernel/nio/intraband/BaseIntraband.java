@@ -529,9 +529,8 @@ public abstract class BaseIntraband implements Intraband {
 		EnumSet.of(CompletionType.REPLIED);
 
 	protected final AtomicReference<DatagramReceiveHandler[]>
-		datagramReceiveHandlersReference =
-			new AtomicReference<DatagramReceiveHandler[]>(
-				new DatagramReceiveHandler[256]);
+		datagramReceiveHandlersReference = new AtomicReference<>(
+			new DatagramReceiveHandler[256]);
 	protected final long defaultTimeout;
 	protected volatile boolean open = true;
 	protected final Map<Long, Datagram> responseWaitingMap =

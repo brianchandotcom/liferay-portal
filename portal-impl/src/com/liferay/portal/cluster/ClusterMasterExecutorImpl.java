@@ -73,7 +73,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			}
 
 			DefaultNoticeableFuture<T> defaultNoticeableFuture =
-				new DefaultNoticeableFuture<T>();
+				new DefaultNoticeableFuture<>();
 
 			try {
 				defaultNoticeableFuture.set((T)methodHandler.invoke());

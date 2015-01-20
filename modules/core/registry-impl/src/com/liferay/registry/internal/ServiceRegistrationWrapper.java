@@ -49,7 +49,7 @@ public class ServiceRegistrationWrapper<T> implements ServiceRegistration<T> {
 
 	@Override
 	public ServiceReference<T> getServiceReference() {
-		return new ServiceReferenceWrapper<T>(
+		return new ServiceReferenceWrapper<>(
 			_serviceRegistration.getReference());
 	}
 

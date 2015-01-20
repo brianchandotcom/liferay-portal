@@ -85,12 +85,12 @@ public class MockBundle implements Bundle {
 
 	@Override
 	public Dictionary<String, String> getHeaders() {
-		return new HashMapDictionary<String, String>();
+		return new HashMapDictionary<>();
 	}
 
 	@Override
 	public Dictionary<String, String> getHeaders(String locale) {
-		return new HashMapDictionary<String, String>();
+		return new HashMapDictionary<>();
 	}
 
 	@Override

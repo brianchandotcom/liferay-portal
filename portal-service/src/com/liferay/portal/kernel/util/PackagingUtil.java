@@ -29,7 +29,7 @@ public class PackagingUtil {
 
 	public static List<String> getPackagesFromPath(File file) {
 		Set<String> packages = new HashSet<>();
-		Stack<String> packageStack = new Stack<String>();
+		Stack<String> packageStack = new Stack<>();
 
 		subPackages(file, packages, packageStack);
 

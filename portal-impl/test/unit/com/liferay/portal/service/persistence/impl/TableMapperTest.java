@@ -118,11 +118,11 @@ public class TableMapperTest {
 
 			});
 
-		_leftBasePersistence = new MockBasePersistence<Left>(Left.class);
+		_leftBasePersistence = new MockBasePersistence<>(Left.class);
 
 		_leftBasePersistence.setDataSource(_dataSource);
 
-		_rightBasePersistence = new MockBasePersistence<Right>(Right.class);
+		_rightBasePersistence = new MockBasePersistence<>(Right.class);
 
 		_rightBasePersistence.setDataSource(_dataSource);
 
@@ -181,12 +181,12 @@ public class TableMapperTest {
 		_mappingStore.remove(leftPrimaryKey);
 
 		RecorderModelListener<Left> leftModelListener =
-			new RecorderModelListener<Left>();
+			new RecorderModelListener<>();
 
 		_leftBasePersistence.registerListener(leftModelListener);
 
 		RecorderModelListener<Right> rightModelListener =
-			new RecorderModelListener<Right>();
+			new RecorderModelListener<>();
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
@@ -212,11 +212,11 @@ public class TableMapperTest {
 
 		leftToRightPortalCache.put(leftPrimaryKey, new long[0]);
 
-		leftModelListener = new RecorderModelListener<Left>();
+		leftModelListener = new RecorderModelListener<>();
 
 		_leftBasePersistence.registerListener(leftModelListener);
 
-		rightModelListener = new RecorderModelListener<Right>();
+		rightModelListener = new RecorderModelListener<>();
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
@@ -355,7 +355,7 @@ public class TableMapperTest {
 		// Delete 0 entry, with left model listener
 
 		RecorderModelListener<Left> leftModelListener =
-			new RecorderModelListener<Left>();
+			new RecorderModelListener<>();
 
 		_leftBasePersistence.registerListener(leftModelListener);
 
@@ -374,7 +374,7 @@ public class TableMapperTest {
 		// Delete 0 entry, with right model listener
 
 		RecorderModelListener<Right> rightModelListener =
-			new RecorderModelListener<Right>();
+			new RecorderModelListener<>();
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
@@ -392,7 +392,7 @@ public class TableMapperTest {
 
 		// Delete 1 entry, with left model listener
 
-		leftModelListener = new RecorderModelListener<Left>();
+		leftModelListener = new RecorderModelListener<>();
 
 		_leftBasePersistence.registerListener(leftModelListener);
 
@@ -412,7 +412,7 @@ public class TableMapperTest {
 
 		// Delete 1 entry, with right model listener
 
-		rightModelListener = new RecorderModelListener<Right>();
+		rightModelListener = new RecorderModelListener<>();
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
@@ -432,11 +432,11 @@ public class TableMapperTest {
 
 		// Database error, with both left and right model listeners
 
-		leftModelListener = new RecorderModelListener<Left>();
+		leftModelListener = new RecorderModelListener<>();
 
 		_leftBasePersistence.registerListener(leftModelListener);
 
-		rightModelListener = new RecorderModelListener<Right>();
+		rightModelListener = new RecorderModelListener<>();
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
@@ -519,7 +519,7 @@ public class TableMapperTest {
 		// Delete 0 entry, with left model listener
 
 		RecorderModelListener<Left> leftModelListener =
-			new RecorderModelListener<Left>();
+			new RecorderModelListener<>();
 
 		_leftBasePersistence.registerListener(leftModelListener);
 
@@ -539,7 +539,7 @@ public class TableMapperTest {
 		// Delete 0 entry, with right model listener
 
 		RecorderModelListener<Right> rightModelListener =
-			new RecorderModelListener<Right>();
+			new RecorderModelListener<>();
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
@@ -558,7 +558,7 @@ public class TableMapperTest {
 
 		// Delete 1 entry, with left model listener
 
-		leftModelListener = new RecorderModelListener<Left>();
+		leftModelListener = new RecorderModelListener<>();
 
 		_leftBasePersistence.registerListener(leftModelListener);
 
@@ -579,7 +579,7 @@ public class TableMapperTest {
 
 		// Delete 1 entry, with right model listener
 
-		rightModelListener = new RecorderModelListener<Right>();
+		rightModelListener = new RecorderModelListener<>();
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
@@ -600,11 +600,11 @@ public class TableMapperTest {
 
 		// Database error, with both left and right model listeners
 
-		leftModelListener = new RecorderModelListener<Left>();
+		leftModelListener = new RecorderModelListener<>();
 
 		_leftBasePersistence.registerListener(leftModelListener);
 
-		rightModelListener = new RecorderModelListener<Right>();
+		rightModelListener = new RecorderModelListener<>();
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
@@ -674,12 +674,12 @@ public class TableMapperTest {
 		// Success, with model listener
 
 		RecorderModelListener<Left> leftModelListener =
-			new RecorderModelListener<Left>();
+			new RecorderModelListener<>();
 
 		_leftBasePersistence.registerListener(leftModelListener);
 
 		RecorderModelListener<Right> rightModelListener =
-			new RecorderModelListener<Right>();
+			new RecorderModelListener<>();
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
@@ -707,11 +707,11 @@ public class TableMapperTest {
 
 		// Database error, with model listener
 
-		leftModelListener = new RecorderModelListener<Left>();
+		leftModelListener = new RecorderModelListener<>();
 
 		_leftBasePersistence.registerListener(leftModelListener);
 
-		rightModelListener = new RecorderModelListener<Right>();
+		rightModelListener = new RecorderModelListener<>();
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
@@ -759,11 +759,11 @@ public class TableMapperTest {
 
 		// Phantom delete, with model listener
 
-		leftModelListener = new RecorderModelListener<Left>();
+		leftModelListener = new RecorderModelListener<>();
 
 		_leftBasePersistence.registerListener(leftModelListener);
 
-		rightModelListener = new RecorderModelListener<Right>();
+		rightModelListener = new RecorderModelListener<>();
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
@@ -1179,8 +1179,8 @@ public class TableMapperTest {
 
 	@Test
 	public void testGetSetReverseTableMapper() {
-		TableMapper<Right, Left> tableMapper =
-			new ReverseTableMapper<Right, Left>(_tableMapperImpl);
+		TableMapper<Right, Left> tableMapper = new ReverseTableMapper<>(
+			_tableMapperImpl);
 
 		_tableMapperImpl.setReverseTableMapper(tableMapper);
 
@@ -1213,7 +1213,7 @@ public class TableMapperTest {
 				recordInvocationHandler);
 
 		ReverseTableMapper<Right, Left> reverseTableMapper =
-			new ReverseTableMapper<Right, Left>(tableMapper);
+			new ReverseTableMapper<>(tableMapper);
 
 		recordInvocationHandler.setTableMapper(reverseTableMapper);
 
@@ -1812,7 +1812,7 @@ public class TableMapperTest {
 			PortalCache<?, ?> portalCache = _portalCaches.get(name);
 
 			if (portalCache == null) {
-				portalCache = new MemoryPortalCache<Long, long[]>(
+				portalCache = new MemoryPortalCache<>(
 					new MockPortalCacheManager<Long, long[]>(name), name, 16);
 
 				_portalCaches.put(name, portalCache);

@@ -60,7 +60,7 @@ public class DefaultNoticeableFutureTest {
 		Assert.assertEquals(0, futureListeners.hashCode());
 
 		RecordedFutureListener<Object> recordedFutureListener1 =
-			new RecordedFutureListener<Object>();
+			new RecordedFutureListener<>();
 
 		Assert.assertTrue(
 			defaultNoticeableFuture.addFutureListener(recordedFutureListener1));
@@ -68,7 +68,7 @@ public class DefaultNoticeableFutureTest {
 			recordedFutureListener1.hashCode(), futureListeners.hashCode());
 
 		RecordedFutureListener<Object> recordedFutureListener2 =
-			new RecordedFutureListener<Object>();
+			new RecordedFutureListener<>();
 
 		Assert.assertTrue(
 			defaultNoticeableFuture.addFutureListener(recordedFutureListener2));
@@ -97,7 +97,7 @@ public class DefaultNoticeableFutureTest {
 	@Test
 	public void testCompleteWithException() throws InterruptedException {
 		RecordedFutureListener<Object> recordedFutureListener1 =
-			new RecordedFutureListener<Object>();
+			new RecordedFutureListener<>();
 
 		Assert.assertTrue(
 			defaultNoticeableFuture.addFutureListener(recordedFutureListener1));
@@ -119,7 +119,7 @@ public class DefaultNoticeableFutureTest {
 		}
 
 		RecordedFutureListener<Object> recordedFutureListener2 =
-			new RecordedFutureListener<Object>();
+			new RecordedFutureListener<>();
 
 		Assert.assertTrue(
 			defaultNoticeableFuture.addFutureListener(recordedFutureListener2));
@@ -130,7 +130,7 @@ public class DefaultNoticeableFutureTest {
 	@Test
 	public void testCompleteWithRaceCondition() {
 		RecordedFutureListener<Object> recordedFutureListener =
-			new RecordedFutureListener<Object>();
+			new RecordedFutureListener<>();
 
 		Assert.assertTrue(
 			defaultNoticeableFuture.addFutureListener(recordedFutureListener));
@@ -151,7 +151,7 @@ public class DefaultNoticeableFutureTest {
 	@Test
 	public void testCompleteWithResult() throws Exception {
 		RecordedFutureListener<Object> recordedFutureListener1 =
-			new RecordedFutureListener<Object>();
+			new RecordedFutureListener<>();
 
 		Assert.assertTrue(
 			defaultNoticeableFuture.addFutureListener(recordedFutureListener1));
@@ -165,7 +165,7 @@ public class DefaultNoticeableFutureTest {
 		Assert.assertSame(result, defaultNoticeableFuture.get());
 
 		RecordedFutureListener<Object> recordedFutureListener2 =
-			new RecordedFutureListener<Object>();
+			new RecordedFutureListener<>();
 
 		Assert.assertTrue(
 			defaultNoticeableFuture.addFutureListener(recordedFutureListener2));
@@ -213,6 +213,6 @@ public class DefaultNoticeableFutureTest {
 	}
 
 	private final DefaultNoticeableFuture<Object> defaultNoticeableFuture =
-		new DefaultNoticeableFuture<Object>();
+		new DefaultNoticeableFuture<>();
 
 }

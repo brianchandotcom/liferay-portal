@@ -435,7 +435,7 @@ public class WebDriverHelper {
 			}
 		}
 		else if (locator.equals("relative=top")) {
-			_frameWebElements = new Stack<WebElement>();
+			_frameWebElements = new Stack<>();
 
 			targetLocator.window(_defaultWindowHandle);
 		}
@@ -621,8 +621,7 @@ public class WebDriverHelper {
 	}
 
 	private static String _defaultWindowHandle;
-	private static Stack<WebElement> _frameWebElements =
-		new Stack<WebElement>();
+	private static Stack<WebElement> _frameWebElements = new Stack<>();
 	private static int _navigationBarHeight;
 
 }

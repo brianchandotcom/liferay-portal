@@ -155,7 +155,7 @@ public class FinalizeManager {
 	private static final Map<Reference<?>, FinalizeAction> _finalizeActions =
 		new ConcurrentIdentityHashMap<>();
 	private static final ReferenceQueue<Object> _referenceQueue =
-		new ReferenceQueue<Object>();
+		new ReferenceQueue<>();
 
 	private static class FinalizeThread extends Thread {
 

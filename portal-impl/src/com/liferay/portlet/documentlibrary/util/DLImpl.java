@@ -940,24 +940,22 @@ public class DLImpl implements DL {
 		OrderByComparator<T> orderByComparator = null;
 
 		if (orderByCol.equals("creationDate")) {
-			orderByComparator = new RepositoryModelCreateDateComparator<T>(
+			orderByComparator = new RepositoryModelCreateDateComparator<>(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("downloads")) {
-			orderByComparator = new RepositoryModelReadCountComparator<T>(
+			orderByComparator = new RepositoryModelReadCountComparator<>(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("modifiedDate")) {
-			orderByComparator = new RepositoryModelModifiedDateComparator<T>(
+			orderByComparator = new RepositoryModelModifiedDateComparator<>(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("size")) {
-			orderByComparator = new RepositoryModelSizeComparator<T>(
-				orderByAsc);
+			orderByComparator = new RepositoryModelSizeComparator<>(orderByAsc);
 		}
 		else {
-			orderByComparator = new RepositoryModelNameComparator<T>(
-				orderByAsc);
+			orderByComparator = new RepositoryModelNameComparator<>(orderByAsc);
 		}
 
 		return orderByComparator;

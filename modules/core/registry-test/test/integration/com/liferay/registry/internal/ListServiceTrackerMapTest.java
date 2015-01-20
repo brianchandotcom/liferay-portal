@@ -328,8 +328,7 @@ public class ListServiceTrackerMapTest {
 	protected ServiceRegistration<TrackedOne> registerService(
 		TrackedOne trackedOne, int ranking, String target) {
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("service.ranking", ranking);
 		properties.put("target", target);
@@ -341,8 +340,7 @@ public class ListServiceTrackerMapTest {
 	protected ServiceRegistration<TrackedOne> registerService(
 		TrackedOne trackedOne, String target) {
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("target", target);
 

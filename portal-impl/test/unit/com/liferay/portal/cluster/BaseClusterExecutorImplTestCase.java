@@ -390,9 +390,9 @@ public abstract class BaseClusterExecutorImplTestCase
 		}
 
 		private final Exchanger<ClusterEvent> _departMessageExchanger =
-			new Exchanger<ClusterEvent>();
+			new Exchanger<>();
 		private final Exchanger<ClusterEvent> _joinMessageExchanger =
-			new Exchanger<ClusterEvent>();
+			new Exchanger<>();
 
 	}
 
@@ -421,8 +421,7 @@ public abstract class BaseClusterExecutorImplTestCase
 		}
 
 		private final Exchanger<BlockingQueue<ClusterNodeResponse>>
-			_messageExchanger =
-				new Exchanger<BlockingQueue<ClusterNodeResponse>>();
+			_messageExchanger = new Exchanger<>();
 
 	}
 

@@ -38,7 +38,7 @@ public class GCUtil {
 			boolean actively, boolean ensureEnqueuedReferences)
 		throws InterruptedException {
 
-		ReferenceQueue<Object> referenceQueue = new ReferenceQueue<Object>();
+		ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
 
 		SoftReference<Object> softReference = new SoftReference<Object>(
 			new Object(), referenceQueue);
@@ -75,7 +75,7 @@ public class GCUtil {
 	public static void gc(boolean actively, boolean ensureEnqueuedReferences)
 		throws InterruptedException {
 
-		ReferenceQueue<Object> referenceQueue = new ReferenceQueue<Object>();
+		ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
 
 		WeakReference<Object> weakReference = new WeakReference<Object>(
 			new Object(), referenceQueue);

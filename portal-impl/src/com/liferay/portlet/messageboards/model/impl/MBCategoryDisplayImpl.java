@@ -136,7 +136,7 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 
 		_rootCategory.setCategoryId(categoryId);
 
-		_categoryTree = new ListTree<MBCategory>(_rootCategory);
+		_categoryTree = new ListTree<>(_rootCategory);
 
 		_categoryNodesMap = new HashMap<>();
 

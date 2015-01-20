@@ -209,7 +209,7 @@ public class LocalProcessLauncher {
 		private static final ConcurrentMap<String, Object> _attributes =
 			new ConcurrentHashMap<>();
 		private static final AtomicReference<HeartbeatThread>
-			_heartbeatThreadReference = new AtomicReference<HeartbeatThread>();
+			_heartbeatThreadReference = new AtomicReference<>();
 		private static ProcessOutputStream _processOutputStream;
 
 	}

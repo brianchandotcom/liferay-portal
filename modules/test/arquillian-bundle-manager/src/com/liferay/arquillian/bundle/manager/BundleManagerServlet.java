@@ -121,8 +121,7 @@ public class BundleManagerServlet extends HttpServlet {
 				"(&(bundle.id=" + bundle.getBundleId() +
 					")(objectClass=javax.servlet.ServletContext))");
 
-			serviceTracker = new ServiceTracker<ServletContext, ServletContext>(
-				bundleContext, filter, null);
+			serviceTracker = new ServiceTracker<>(bundleContext, filter, null);
 
 			serviceTracker.open();
 

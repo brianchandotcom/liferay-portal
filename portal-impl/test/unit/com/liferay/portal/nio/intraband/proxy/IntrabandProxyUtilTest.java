@@ -867,7 +867,7 @@ public class IntrabandProxyUtilTest {
 		}
 
 		final AtomicReference<RPCResponse> rpcResponseReference =
-			new AtomicReference<RPCResponse>();
+			new AtomicReference<>();
 
 		MockIntraband mockIntraband = new MockIntraband() {
 

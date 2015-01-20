@@ -114,7 +114,7 @@ public class NettyFabricAgentStub implements FabricAgent {
 				fabricPathMappingVisitor.getPathMap(), _rpcRelayTimeout);
 
 		final DefaultNoticeableFuture<Object> startupNoticeableFuture =
-			new DefaultNoticeableFuture<Object>();
+			new DefaultNoticeableFuture<>();
 
 		_startupNoticeableFutures.put(id, startupNoticeableFuture);
 

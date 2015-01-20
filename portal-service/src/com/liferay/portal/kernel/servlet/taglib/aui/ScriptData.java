@@ -131,8 +131,8 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 	}
 
 	private void _addToSBIndexList(StringBundler sb) {
-		ObjectValuePair<StringBundler, Integer> ovp =
-			new ObjectValuePair<StringBundler, Integer>(sb, sb.index());
+		ObjectValuePair<StringBundler, Integer> ovp = new ObjectValuePair<>(
+			sb, sb.index());
 
 		int index = _sbIndexList.indexOf(ovp);
 

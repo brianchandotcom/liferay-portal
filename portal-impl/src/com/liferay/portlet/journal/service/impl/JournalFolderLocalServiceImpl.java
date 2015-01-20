@@ -353,8 +353,8 @@ public class JournalFolderLocalServiceImpl
 	public int getFoldersAndArticlesCount(
 		long groupId, List<Long> folderIds, int status) {
 
-		QueryDefinition<JournalArticle> queryDefinition =
-			new QueryDefinition<JournalArticle>(status);
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			status);
 
 		if (folderIds.size() <= PropsValues.SQL_DATA_MAX_PARAMETERS) {
 			return journalArticleFinder.countByG_F(

@@ -26,7 +26,7 @@ import java.util.concurrent.SynchronousQueue;
 public class SPISynchronousQueueUtil {
 
 	public static SynchronousQueue<SPI> createSynchronousQueue(String spiUUID) {
-		SynchronousQueue<SPI> synchronousQueue = new SynchronousQueue<SPI>();
+		SynchronousQueue<SPI> synchronousQueue = new SynchronousQueue<>();
 
 		_synchronousQueues.put(spiUUID, synchronousQueue);
 

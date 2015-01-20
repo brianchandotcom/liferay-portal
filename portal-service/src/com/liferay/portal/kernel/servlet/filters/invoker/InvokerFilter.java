@@ -176,8 +176,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 			PropsUtil.get(PropsKeys.INVOKER_FILTER_CHAIN_SIZE));
 
 		if (_invokerFilterChainSize > 0) {
-			_filterChains = new ConcurrentLFUCache<String, InvokerFilterChain>(
-				_invokerFilterChainSize);
+			_filterChains = new ConcurrentLFUCache<>(_invokerFilterChainSize);
 		}
 
 		_invokerFilterURIMaxLength = GetterUtil.getInteger(

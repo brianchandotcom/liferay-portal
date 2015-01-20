@@ -282,7 +282,7 @@ public class FileServerTest {
 	private static final long _TIME_OUT = 10;
 
 	private final AsyncBroker<Path, FileResponse> _asyncBroker =
-		new AsyncBroker<Path, FileResponse>();
+		new AsyncBroker<>();
 	private Channel _clientChannel;
 	private Path _destFile;
 	private final EventExecutorGroup _fileServerEventExecutorGroup =

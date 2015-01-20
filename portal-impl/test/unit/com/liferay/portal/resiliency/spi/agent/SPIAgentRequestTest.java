@@ -1067,8 +1067,7 @@ public class SPIAgentRequestTest {
 
 	private static final Cookie _cookie1 = new Cookie("name1", "value1");
 	private static final Cookie _cookie2 = new Cookie("name2", "value2");
-	private static final ThreadLocal<String> _threadLocal =
-		new ThreadLocal<String>();
+	private static final ThreadLocal<String> _threadLocal = new ThreadLocal<>();
 
 	private CaptureHandler _captureHandler;
 	private MockHttpServletRequest _mockHttpServletRequest;

@@ -46,7 +46,7 @@ public class DefaultNoticeableFuture<T>
 			throw new NullPointerException("Future listener is null");
 		}
 
-		futureListener = new OnceFutureListener<T>(futureListener);
+		futureListener = new OnceFutureListener<>(futureListener);
 
 		if (_futureListeners.add(futureListener)) {
 			if (isDone()) {

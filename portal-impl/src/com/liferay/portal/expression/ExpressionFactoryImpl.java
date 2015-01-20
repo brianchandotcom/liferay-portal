@@ -26,41 +26,41 @@ public class ExpressionFactoryImpl implements ExpressionFactory {
 	public Expression<Boolean> createBooleanExpression(
 		String expressionString) {
 
-		return new ExpressionImpl<Boolean>(expressionString, Boolean.class);
+		return new ExpressionImpl<>(expressionString, Boolean.class);
 	}
 
 	@Override
 	public Expression<Double> createDoubleExpression(String expressionString) {
-		return new ExpressionImpl<Double>(expressionString, Double.class);
+		return new ExpressionImpl<>(expressionString, Double.class);
 	}
 
 	@Override
 	public <T> Expression<T> createExpression(
 		String expressionString, Class<T> expressionType) {
 
-		return new ExpressionImpl<T>(expressionString, expressionType);
+		return new ExpressionImpl<>(expressionString, expressionType);
 	}
 
 	@Override
 	public Expression<Float> createFloatExpression(String expressionString) {
-		return new ExpressionImpl<Float>(expressionString, Float.class);
+		return new ExpressionImpl<>(expressionString, Float.class);
 	}
 
 	@Override
 	public Expression<Integer> createIntegerExpression(
 		String expressionString) {
 
-		return new ExpressionImpl<Integer>(expressionString, Integer.class);
+		return new ExpressionImpl<>(expressionString, Integer.class);
 	}
 
 	@Override
 	public Expression<Long> createLongExpression(String expressionString) {
-		return new ExpressionImpl<Long>(expressionString, Long.class);
+		return new ExpressionImpl<>(expressionString, Long.class);
 	}
 
 	@Override
 	public Expression<String> createStringExpression(String expressionString) {
-		return new ExpressionImpl<String>(expressionString, String.class);
+		return new ExpressionImpl<>(expressionString, String.class);
 	}
 
 }

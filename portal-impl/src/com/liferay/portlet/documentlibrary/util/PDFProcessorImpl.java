@@ -740,7 +740,7 @@ public class PDFProcessorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		PDFProcessorImpl.class);
 
-	private final List<Long> _fileVersionIds = new Vector<Long>();
+	private final List<Long> _fileVersionIds = new Vector<>();
 	private boolean _ghostscriptInitialized;
 
 	private static class LiferayPDFBoxProcessCallable

@@ -121,7 +121,7 @@ public class ThreadLocalCacheManager {
 		ThreadLocalCache<?> threadLocalCache = threadLocalCacheMap.get(name);
 
 		if (threadLocalCache == null) {
-			threadLocalCache = new ThreadLocalCache<T>(name, lifecycle);
+			threadLocalCache = new ThreadLocalCache<>(name, lifecycle);
 
 			threadLocalCacheMap.put(name, threadLocalCache);
 		}
@@ -130,7 +130,7 @@ public class ThreadLocalCacheManager {
 	}
 
 	private static final EmptyThreadLocalCahce<?> _emptyThreadLocalCache =
-		new EmptyThreadLocalCahce<Object>();
+		new EmptyThreadLocalCahce<>();
 	private static final ThreadLocal
 		<Map<Lifecycle, Boolean>>
 			_threadLocalCacheDisabledFlags = new InitialThreadLocal

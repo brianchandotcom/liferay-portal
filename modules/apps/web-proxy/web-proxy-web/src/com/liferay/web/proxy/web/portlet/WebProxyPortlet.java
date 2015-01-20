@@ -177,8 +177,7 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 		PortletConfig portletConfig = getPortletConfig();
 		PortletContext portletContext = getPortletContext();
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,

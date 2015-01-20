@@ -867,10 +867,8 @@ public class RegistryTest {
 		public void test(int expectedServicesCount) {
 			InterfaceOne interfaceOneA = getInstance();
 			InterfaceOne interfaceOneB = getInstance();
-			AtomicReference<TrackedOne> referenceA =
-				new AtomicReference<TrackedOne>();
-			AtomicReference<TrackedOne> referenceB =
-				new AtomicReference<TrackedOne>();
+			AtomicReference<TrackedOne> referenceA = new AtomicReference<>();
+			AtomicReference<TrackedOne> referenceB = new AtomicReference<>();
 
 			ServiceTrackerCustomizer<InterfaceOne, TrackedOne>
 				serviceTrackerCustomizer = new MockServiceTrackerCustomizer(

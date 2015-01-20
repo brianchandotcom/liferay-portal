@@ -56,9 +56,8 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 				serviceReferenceServiceTupleComparator =
 					new ServiceReferenceServiceTupleComparator<>(_comparator);
 
-			_serviceReferences =
-				new PriorityQueue<ServiceReferenceServiceTuple<SR, TS>>(
-					1, serviceReferenceServiceTupleComparator);
+			_serviceReferences = new PriorityQueue<>(
+				1, serviceReferenceServiceTupleComparator);
 		}
 
 		@Override

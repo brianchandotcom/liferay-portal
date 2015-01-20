@@ -6162,7 +6162,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			List<User> users = UsersAdminUtil.getUsers(hits);
 
 			if (users != null) {
-				return new BaseModelSearchResult<User>(users, hits.getLength());
+				return new BaseModelSearchResult<>(users, hits.getLength());
 			}
 		}
 

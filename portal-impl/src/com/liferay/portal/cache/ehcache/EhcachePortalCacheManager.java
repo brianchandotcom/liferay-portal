@@ -115,7 +115,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		Cache cache = _cacheManager.getCache(cacheName);
 
-		return new EhcachePortalCache<K, V>(this, cache);
+		return new EhcachePortalCache<>(this, cache);
 	}
 
 	@Override

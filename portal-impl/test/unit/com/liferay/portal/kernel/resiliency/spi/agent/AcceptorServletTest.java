@@ -100,7 +100,7 @@ public class AcceptorServletTest {
 
 		final AtomicBoolean failOnForward = new AtomicBoolean();
 		final AtomicReference<String> forwardPathReference =
-			new AtomicReference<String>();
+			new AtomicReference<>();
 		final IOException ioException = new IOException("Unable to forward");
 
 		MockServletContext mockServletContext = new MockServletContext() {

@@ -830,7 +830,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			List<UserGroup> userGroups = UsersAdminUtil.getUserGroups(hits);
 
 			if (userGroups != null) {
-				return new BaseModelSearchResult<UserGroup>(
+				return new BaseModelSearchResult<>(
 					userGroups, hits.getLength());
 			}
 		}

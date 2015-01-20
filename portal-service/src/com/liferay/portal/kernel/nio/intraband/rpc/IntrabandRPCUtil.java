@@ -52,7 +52,7 @@ public class IntrabandRPCUtil {
 			systemDataType.getValue(), serializer.toByteBuffer());
 
 		DefaultNoticeableFuture<V> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<V>();
+			new DefaultNoticeableFuture<>();
 
 		intraband.sendDatagram(
 			registrationReference, datagram, null, repliedEnumSet,

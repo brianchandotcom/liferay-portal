@@ -30,7 +30,7 @@ public class MailingListThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _sourceMailingList =
-		new InitialThreadLocal<Boolean>(
+		new InitialThreadLocal<>(
 			MailingListThreadLocal.class + "._sourceMailingList", false);
 
 }

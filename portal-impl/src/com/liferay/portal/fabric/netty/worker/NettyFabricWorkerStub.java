@@ -150,7 +150,7 @@ public class NettyFabricWorkerStub<T extends Serializable>
 
 	private final Channel _channel;
 	private final DefaultNoticeableFuture<T> _defaultNoticeableFuture =
-		new DefaultNoticeableFuture<T>();
+		new DefaultNoticeableFuture<>();
 	private final long _id;
 	private final Map<Path, Path> _outputPathMap;
 	private final Repository<Channel> _repository;

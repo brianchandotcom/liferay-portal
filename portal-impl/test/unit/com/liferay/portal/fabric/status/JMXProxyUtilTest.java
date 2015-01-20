@@ -720,7 +720,7 @@ public class JMXProxyUtilTest {
 				ProcessCallable<V> processCallable) {
 
 				DefaultNoticeableFuture<V> defaultNoticeableFuture =
-					new DefaultNoticeableFuture<V>();
+					new DefaultNoticeableFuture<>();
 
 				try {
 					defaultNoticeableFuture.set(processCallable.call());

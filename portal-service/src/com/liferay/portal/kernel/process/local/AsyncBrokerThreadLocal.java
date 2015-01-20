@@ -46,7 +46,6 @@ public class AsyncBrokerThreadLocal {
 	}
 
 	private static final ThreadLocal<AsyncBroker<Long, Serializable>>
-		_asyncBrokerThreadLocal =
-			new CentralizedThreadLocal<AsyncBroker<Long, Serializable>>(false);
+		_asyncBrokerThreadLocal = new CentralizedThreadLocal<>(false);
 
 }

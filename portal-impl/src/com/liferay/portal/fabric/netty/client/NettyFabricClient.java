@@ -136,7 +136,7 @@ public class NettyFabricClient implements FabricClient {
 		Future<?> future = eventExecutorGroup.terminationFuture();
 
 		final DefaultNoticeableFuture<?> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<Object>();
+			new DefaultNoticeableFuture<>();
 
 		future.addListener(
 			new FutureListener<Object>() {

@@ -873,7 +873,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 			String transientToken = (String)clusterNodeResponse.getResult();
 
-			return new ObjectValuePair<String, URL>(transientToken, url);
+			return new ObjectValuePair<>(transientToken, url);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

@@ -71,8 +71,7 @@ public class ServiceBeanPostProcessor
 			return bean;
 		}
 
-		Dictionary<String, Object> properties =
-			new HashMapDictionary<String, Object>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("bean.id", beanName);
 

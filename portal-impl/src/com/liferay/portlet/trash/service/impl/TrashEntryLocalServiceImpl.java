@@ -370,8 +370,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 			List<TrashEntry> trashEntries = TrashUtil.getEntries(hits);
 
-			return new BaseModelSearchResult<TrashEntry>(
-				trashEntries, hits.getLength());
+			return new BaseModelSearchResult<>(trashEntries, hits.getLength());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

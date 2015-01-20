@@ -145,7 +145,7 @@ public class JSONFactoryImpl implements JSONFactory {
 
 	@Override
 	public <T> JSONDeserializer<T> createJSONDeserializer() {
-		return new JSONDeserializerImpl<T>();
+		return new JSONDeserializerImpl<>();
 	}
 
 	@Override

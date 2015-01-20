@@ -123,11 +123,11 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		if (PropsValues.TRANSACTIONAL_CACHE_ENABLED &&
 			isTransactionalPortalCache(name)) {
 
-			portalCache = new TransactionalPortalCache<K, V>(portalCache);
+			portalCache = new TransactionalPortalCache<>(portalCache);
 		}
 
 		if (PropsValues.EHCACHE_BLOCKING_CACHE_ALLOWED && blocking) {
-			portalCache = new BlockingPortalCache<K, V>(portalCache);
+			portalCache = new BlockingPortalCache<>(portalCache);
 		}
 
 		PortalCache<K, V> previousPortalCache = portalCaches.putIfAbsent(

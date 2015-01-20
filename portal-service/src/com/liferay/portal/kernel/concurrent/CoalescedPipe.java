@@ -33,7 +33,7 @@ public class CoalescedPipe<E> {
 		_comparator = comparator;
 		_notEmptyCondition = _takeLock.newCondition();
 
-		_headElementLink = new ElementLink<E>(null);
+		_headElementLink = new ElementLink<>(null);
 		_lastElementLink = _headElementLink;
 	}
 
@@ -59,7 +59,7 @@ public class CoalescedPipe<E> {
 				return;
 			}
 
-			_lastElementLink._nextElementLink = new ElementLink<E>(e);
+			_lastElementLink._nextElementLink = new ElementLink<>(e);
 
 			_lastElementLink = _lastElementLink._nextElementLink;
 

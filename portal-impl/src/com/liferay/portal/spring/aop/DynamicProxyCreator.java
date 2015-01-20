@@ -76,9 +76,8 @@ public class DynamicProxyCreator
 			InvocationHandlerFactory invocationHandlerFactory) {
 
 			ObjectValuePair<BeanMatcher, InvocationHandlerFactory>
-				objectValuePair =
-					new ObjectValuePair<BeanMatcher, InvocationHandlerFactory>(
-						beanMatcher, invocationHandlerFactory);
+				objectValuePair = new ObjectValuePair<>(
+					beanMatcher, invocationHandlerFactory);
 
 			_instance._beanMatcherInvocationHandlerFactories.add(
 				objectValuePair);

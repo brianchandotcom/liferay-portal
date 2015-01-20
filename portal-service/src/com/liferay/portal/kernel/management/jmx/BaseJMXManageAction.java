@@ -40,6 +40,6 @@ public abstract class BaseJMXManageAction<T> implements ManageAction<T> {
 	}
 
 	private static final AtomicReference<MBeanServer> _mBeanServerReference =
-		new AtomicReference<MBeanServer>();
+		new AtomicReference<>();
 
 }

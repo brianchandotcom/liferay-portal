@@ -28,7 +28,7 @@ public abstract class NoticeableFutureConverter<T, V>
 	public NoticeableFutureConverter(NoticeableFuture<V> noticeableFuture) {
 		super(noticeableFuture);
 
-		_defaultNoticeableFuture = new DefaultNoticeableFuture<T>();
+		_defaultNoticeableFuture = new DefaultNoticeableFuture<>();
 
 		noticeableFuture.addFutureListener(
 			new FutureListener<V>() {

@@ -42,7 +42,7 @@ public class BackgroundTaskThreadLocal {
 	}
 
 	private static final ThreadLocal<Long> _backgroundTaskId =
-		new AutoResetThreadLocal<Long>(
+		new AutoResetThreadLocal<>(
 			BackgroundTaskThreadLocal.class + "._backgroundTaskId", 0L);
 
 }

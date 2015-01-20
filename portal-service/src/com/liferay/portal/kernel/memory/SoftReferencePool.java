@@ -72,7 +72,7 @@ public class SoftReferencePool<V, P> {
 
 	public void returnObject(V value) {
 		if (_getCount() < _maxIdleSize) {
-			SoftReference<V> softReference = new SoftReference<V>(
+			SoftReference<V> softReference = new SoftReference<>(
 				value, _referenceQueue);
 
 			_poolAction.onReturn(value);
@@ -117,9 +117,9 @@ public class SoftReferencePool<V, P> {
 
 	private final int _maxIdleSize;
 	private final PoolAction<V, P> _poolAction;
-	private final ReferenceQueue<V> _referenceQueue = new ReferenceQueue<V>();
+	private final ReferenceQueue<V> _referenceQueue = new ReferenceQueue<>();
 	private final Queue<SoftReference<? extends V>> _softReferences =
-		new ConcurrentLinkedQueue<SoftReference<? extends V>>();
+		new ConcurrentLinkedQueue<>();
 	private final boolean _useWeakCounter;
 	private final AtomicInteger _weakCounter;
 

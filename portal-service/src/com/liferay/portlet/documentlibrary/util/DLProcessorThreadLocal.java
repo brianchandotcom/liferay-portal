@@ -30,7 +30,7 @@ public class DLProcessorThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _enabled =
-		new AutoResetThreadLocal<Boolean>(
+		new AutoResetThreadLocal<>(
 			DLProcessorThreadLocal.class + "._enabled", true);
 
 }

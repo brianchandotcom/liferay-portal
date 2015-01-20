@@ -303,8 +303,7 @@ public class StringBundler implements Serializable {
 			Integer.MAX_VALUE);
 
 		if (_THREAD_LOCAL_BUFFER_LIMIT < Integer.MAX_VALUE) {
-			_stringBuilderThreadLocal =
-				new SoftReferenceThreadLocal<StringBuilder>();
+			_stringBuilderThreadLocal = new SoftReferenceThreadLocal<>();
 		}
 		else {
 			_stringBuilderThreadLocal = null;

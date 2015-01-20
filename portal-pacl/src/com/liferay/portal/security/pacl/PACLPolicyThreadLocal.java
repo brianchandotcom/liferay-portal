@@ -28,6 +28,6 @@ public class PACLPolicyThreadLocal {
 	}
 
 	private static final ThreadLocal<PACLPolicy> _paclPolicy =
-		new ThreadLocal<PACLPolicy>();
+		new ThreadLocal<>();
 
 }

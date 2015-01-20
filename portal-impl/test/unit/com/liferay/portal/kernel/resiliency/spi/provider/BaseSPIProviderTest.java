@@ -229,7 +229,7 @@ public class BaseSPIProviderTest {
 			}
 
 			DefaultNoticeableFuture<T> defaultNoticeableFuture =
-				new DefaultNoticeableFuture<T>();
+				new DefaultNoticeableFuture<>();
 
 			defaultNoticeableFuture.set((T)mockSPI);
 

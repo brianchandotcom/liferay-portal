@@ -27,7 +27,7 @@ public class ListTree<T extends Comparable<T>> {
 	}
 
 	public ListTree(T value) {
-		_rootNode = new TreeNode<T>(value);
+		_rootNode = new TreeNode<>(value);
 	}
 
 	public List<TreeNode<T>> getChildNodes(TreeNode<T> node) {

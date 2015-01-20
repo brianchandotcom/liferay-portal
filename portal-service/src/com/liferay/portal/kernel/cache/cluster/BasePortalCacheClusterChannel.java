@@ -32,7 +32,7 @@ public abstract class BasePortalCacheClusterChannel
 			this,
 			"PortalCacheClusterChannel dispatch thread-" +
 				_dispatchThreadCounter.getAndIncrement());
-		_eventQueue = new CoalescedPipe<PortalCacheClusterEvent>(
+		_eventQueue = new CoalescedPipe<>(
 			new PortalCacheClusterEventCoalesceComparator());
 	}
 

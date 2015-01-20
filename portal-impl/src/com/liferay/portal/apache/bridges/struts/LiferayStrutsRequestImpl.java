@@ -75,7 +75,7 @@ public class LiferayStrutsRequestImpl extends HttpServletRequestWrapper {
 
 	@Override
 	public Enumeration<String> getAttributeNames() {
-		List<String> attributeNames = new Vector<String>();
+		List<String> attributeNames = new Vector<>();
 
 		Enumeration<String> enu = super.getAttributeNames();
 

@@ -42,7 +42,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 	@Override
 	public Object clone() {
-		return new PortalCacheCacheEventListener<K, V>(
+		return new PortalCacheCacheEventListener<>(
 			_cacheListener, _portalCache);
 	}
 

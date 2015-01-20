@@ -102,15 +102,15 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	public void addPersistedSubscribers(String className, long classPK) {
-		ObjectValuePair<String, Long> ovp = new ObjectValuePair<String, Long>(
+		ObjectValuePair<String, Long> ovp = new ObjectValuePair<>(
 			className, classPK);
 
 		_persistestedSubscribersOVPs.add(ovp);
 	}
 
 	public void addRuntimeSubscribers(String toAddress, String toName) {
-		ObjectValuePair<String, String> ovp =
-			new ObjectValuePair<String, String>(toAddress, toName);
+		ObjectValuePair<String, String> ovp = new ObjectValuePair<>(
+			toAddress, toName);
 
 		_runtimeSubscribersOVPs.add(ovp);
 	}

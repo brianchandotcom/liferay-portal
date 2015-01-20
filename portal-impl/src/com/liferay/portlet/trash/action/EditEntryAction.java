@@ -256,8 +256,8 @@ public class EditEntryAction extends PortletAction {
 
 		List<ObjectValuePair<String, Long>> entryOVPs = new ArrayList<>();
 
-		ObjectValuePair<String, Long> entryOVP =
-			new ObjectValuePair<String, Long>(className, classPK);
+		ObjectValuePair<String, Long> entryOVP = new ObjectValuePair<>(
+			className, classPK);
 
 		entryOVPs.add(entryOVP);
 

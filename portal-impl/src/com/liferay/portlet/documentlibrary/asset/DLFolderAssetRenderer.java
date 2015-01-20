@@ -27,6 +27,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
@@ -85,20 +86,22 @@ public class DLFolderAssetRenderer
 				return "icon-drive";
 			}
 
-			List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(
-				_folder.getRepositoryId(), _folder.getFolderId(), false);
+			if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT) {
+				List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(
+					_folder.getRepositoryId(), _folder.getFolderId(), false);
 
-			if (!subfolderIds.isEmpty()) {
-				return "icon-folder-open";
-			}
+				if (!subfolderIds.isEmpty()) {
+					return "icon-folder-open";
+				}
 
-			int count = DLAppServiceUtil.getFoldersFileEntriesCount(
-				_folder.getRepositoryId(),
-				ListUtil.fromArray(new Long[] {_folder.getFolderId()}),
-				WorkflowConstants.STATUS_APPROVED);
+				int count = DLAppServiceUtil.getFoldersFileEntriesCount(
+					_folder.getRepositoryId(),
+					ListUtil.fromArray(new Long[]{_folder.getFolderId()}),
+					WorkflowConstants.STATUS_APPROVED);
 
-			if (count > 0) {
-				return "icon-folder-open";
+				if (count > 0) {
+					return "icon-folder-open";
+				}
 			}
 		}
 		catch (PrincipalException pe) {

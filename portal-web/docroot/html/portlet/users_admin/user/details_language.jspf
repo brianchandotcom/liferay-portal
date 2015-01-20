@@ -39,10 +39,11 @@
 	var formData = {};
 
 	var select = $('#<portlet:namespace />languageId');
+	var userNameFields = $('#<portlet:namespace />userNameFields');
+
+	var loadingDiv = $('<div class="loading-animation" id="<portlet:namespace />loadingUserNameFields"></div>');
 
 	var userDetailsURL = Liferay.PortletURL.createURL('<%= userDetailsURL %>');
-
-	var userNameFields =$('#<portlet:namespace />userNameFields');
 
 	select.on(
 		'change',
@@ -50,8 +51,10 @@
 			_.forEach(
 				$('#<portlet:namespace />fm').formToArray(),
 				function(item, index) {
-					if (userNameFields.find('#' + item.name).length) {
-						formData[item.name] = item.value;
+					var name = item.name;
+
+					if (userNameFields.find('#' + name).length) {
+						formData[name] = item.value;
 					}
 				}
 			);
@@ -62,12 +65,12 @@
 				userDetailsURL.toString(),
 				{
 					beforeSend: function() {
-						userNameFields.before('<div class="loading-animation" id="<portlet:namespace />loadingUserNameFields"></div>');
+						userNameFields.before(loadingDiv);
 
 						userNameFields.hide();
 					},
 					complete: function() {
-						$('#<portlet:namespace />loadingUserNameFields').remove();
+						loadingDiv.remove();
 
 						userNameFields.show();
 
@@ -82,10 +85,9 @@
 						var responseUserNameFields = $(responseData).find('#<portlet:namespace />userNameFields').html();
 
 						userNameFields.html(responseUserNameFields);
-					},
-					timeout: 5000
+					}
 				}
-			)
+			);
 		}
 	);
 </aui:script>

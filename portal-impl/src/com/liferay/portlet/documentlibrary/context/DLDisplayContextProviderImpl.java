@@ -14,21 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
+import com.liferay.portal.kernel.context.BaseDisplayContextProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
-
-import java.util.SortedSet;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,18 +26,12 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ivan Zaera
  */
-public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
+public class DLDisplayContextProviderImpl
+	extends BaseDisplayContextProvider<DLDisplayContextFactory>
+	implements DLDisplayContextProvider {
 
 	public DLDisplayContextProviderImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
-			"(objectClass=" + DLDisplayContextFactory.class.getName() + ")");
-
-		_serviceTracker = registry.trackServices(
-			filter, new DLDisplayContextFactoryServiceTrackerCustomizer());
-
-		_serviceTracker.open();
+		super(DLDisplayContextFactory.class);
 	}
 
 	@Override
@@ -59,11 +43,8 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			new DefaultDLEditFileEntryDisplayContext(
 				request, response, dlFileEntryType);
 
-		for (DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
-				_dlDisplayContextFactoryReferences) {
-
-			DLDisplayContextFactory dlDisplayContextFactory =
-				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
+		for (DLDisplayContextFactory dlDisplayContextFactory :
+				getDisplayContextFactories()) {
 
 			dlEditFileEntryDisplayContext =
 				dlDisplayContextFactory.getDLEditFileEntryDisplayContext(
@@ -83,11 +64,8 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			new DefaultDLEditFileEntryDisplayContext(
 				request, response, fileEntry);
 
-		for (DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
-				_dlDisplayContextFactoryReferences) {
-
-			DLDisplayContextFactory dlDisplayContextFactory =
-				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
+		for (DLDisplayContextFactory dlDisplayContextFactory :
+				getDisplayContextFactories()) {
 
 			dlEditFileEntryDisplayContext =
 				dlDisplayContextFactory.getDLEditFileEntryDisplayContext(
@@ -112,12 +90,8 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			return dlViewFileVersionDisplayContext;
 		}
 
-		for (
-			DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
-				_dlDisplayContextFactoryReferences) {
-
-			DLDisplayContextFactory dlDisplayContextFactory =
-				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
+		for (DLDisplayContextFactory dlDisplayContextFactory :
+				getDisplayContextFactories()) {
 
 			dlViewFileVersionDisplayContext =
 				dlDisplayContextFactory.getDLViewFileVersionDisplayContext(
@@ -142,12 +116,8 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			return dlViewFileVersionDisplayContext;
 		}
 
-		for (
-			DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
-				_dlDisplayContextFactoryReferences) {
-
-			DLDisplayContextFactory dlDisplayContextFactory =
-				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
+		for (DLDisplayContextFactory dlDisplayContextFactory :
+				getDisplayContextFactories()) {
 
 			dlViewFileVersionDisplayContext =
 				dlDisplayContextFactory.getDLViewFileVersionDisplayContext(
@@ -172,12 +142,8 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			return dlViewFileVersionDisplayContext;
 		}
 
-		for (
-			DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
-			_dlDisplayContextFactoryReferences) {
-
-			DLDisplayContextFactory dlDisplayContextFactory =
-				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
+		for (DLDisplayContextFactory dlDisplayContextFactory :
+				getDisplayContextFactories()) {
 
 			dlViewFileVersionDisplayContext =
 				dlDisplayContextFactory.getIGFileVersionActionsDisplayContext(
@@ -202,11 +168,8 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			return dlViewFileVersionDisplayContext;
 		}
 
-		for (DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
-				_dlDisplayContextFactoryReferences) {
-
-			DLDisplayContextFactory dlDisplayContextFactory =
-				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
+		for (DLDisplayContextFactory dlDisplayContextFactory :
+				getDisplayContextFactories()) {
 
 			dlViewFileVersionDisplayContext =
 				dlDisplayContextFactory.getIGFileVersionActionsDisplayContext(
@@ -215,72 +178,6 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		}
 
 		return dlViewFileVersionDisplayContext;
-	}
-
-	private final SortedSet<DLDisplayContextFactoryReference>
-		_dlDisplayContextFactoryReferences = new ConcurrentSkipListSet<>();
-	private final ConcurrentMap
-		<DLDisplayContextFactory, DLDisplayContextFactoryReference>
-			_dlDisplayContextFactoryReferencesMap = new ConcurrentHashMap<>();
-	private final
-		ServiceTracker<DLDisplayContextFactory, DLDisplayContextFactory>
-			_serviceTracker;
-
-	private class DLDisplayContextFactoryServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-		<DLDisplayContextFactory, DLDisplayContextFactory> {
-
-		@Override
-		public DLDisplayContextFactory addingService(
-			ServiceReference<DLDisplayContextFactory> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			DLDisplayContextFactory dlDisplayContextFactory =
-				registry.getService(serviceReference);
-
-			DLDisplayContextFactoryReference dlDisplayContextFactoryReference =
-				new DLDisplayContextFactoryReference(
-					dlDisplayContextFactory, serviceReference);
-
-			_dlDisplayContextFactoryReferences.add(
-				dlDisplayContextFactoryReference);
-
-			_dlDisplayContextFactoryReferencesMap.put(
-				dlDisplayContextFactory, dlDisplayContextFactoryReference);
-
-			return dlDisplayContextFactory;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<DLDisplayContextFactory> serviceReference,
-			DLDisplayContextFactory dlDisplayContextFactory) {
-
-			DLDisplayContextFactoryReference dlDisplayContextFactoryReference =
-				_dlDisplayContextFactoryReferencesMap.get(
-					dlDisplayContextFactory);
-
-			removedService(
-				dlDisplayContextFactoryReference.getServiceReference(),
-				dlDisplayContextFactoryReference.getDLDisplayContextFactory());
-
-			addingService(serviceReference);
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<DLDisplayContextFactory> serviceReference,
-			DLDisplayContextFactory dlDisplayContextFactory) {
-
-			DLDisplayContextFactoryReference dlDisplayContextFactoryReference =
-				_dlDisplayContextFactoryReferencesMap.remove(
-					dlDisplayContextFactory);
-
-			_dlDisplayContextFactoryReferences.remove(
-				dlDisplayContextFactoryReference);
-		}
-
 	}
 
 }

@@ -267,10 +267,10 @@ public class QuartzSchedulerEngineTest {
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testGetQuartzTrigger3() throws SchedulerException {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			QuartzSchedulerEngine.class.getName(), Level.FINE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					QuartzSchedulerEngine.class.getName(), Level.FINE)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			IntervalTrigger intervalTrigger = new IntervalTrigger(
@@ -290,9 +290,6 @@ public class QuartzSchedulerEngineTest {
 				"Not scheduling " + _TEST_JOB_NAME_0 + " because interval " +
 					"is less than or equal to 0",
 				logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

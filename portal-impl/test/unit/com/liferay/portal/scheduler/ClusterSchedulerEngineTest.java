@@ -420,71 +420,73 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertEquals(4, schedulerResponses.size());
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterSchedulerEngine.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterSchedulerEngine.class.getName(), Level.OFF)) {
 
-		_mockClusterMasterExecutor.reset(false, 4, 2);
+			_mockClusterMasterExecutor.reset(false, 4, 2);
 
-		ClusterMasterTokenTransitionListener
+			ClusterMasterTokenTransitionListener
+				clusterMasterTokenTransitionListener =
+					_mockClusterMasterExecutor.
+						getClusterMasterTokenTransitionListener();
+
+			clusterMasterTokenTransitionListener.masterTokenReleased();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertFalse(ClusterMasterExecutorUtil.isMaster());
+
+			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
+				StorageType.MEMORY_CLUSTERED);
+
+			Assert.assertTrue(schedulerResponses.isEmpty());
+			Assert.assertEquals(4, _memoryClusteredJobs.size());
+
+			// Test 2, with log enabled
+
+			_mockClusterMasterExecutor.reset(true, 0, 0);
+
+			_mockSchedulerEngine.resetJobs(4, 2);
+
+			_clusterSchedulerEngine.start();
+
+			_memoryClusteredJobs.clear();
+
+			Assert.assertTrue(ClusterMasterExecutorUtil.isMaster());
+
+			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
+				StorageType.MEMORY_CLUSTERED);
+
+			Assert.assertEquals(4, schedulerResponses.size());
+			Assert.assertTrue(_memoryClusteredJobs.isEmpty());
+
+			logRecords = captureHandler.resetLogLevel(Level.ALL);
+
+			_mockClusterMasterExecutor.reset(false, 4, 2);
+
 			clusterMasterTokenTransitionListener =
 				_mockClusterMasterExecutor.
 					getClusterMasterTokenTransitionListener();
 
-		clusterMasterTokenTransitionListener.masterTokenReleased();
+			clusterMasterTokenTransitionListener.masterTokenReleased();
 
-		List<LogRecord> logRecords = captureHandler.getLogRecords();
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertTrue(logRecords.isEmpty());
-		Assert.assertFalse(ClusterMasterExecutorUtil.isMaster());
+			LogRecord logRecord = logRecords.get(0);
 
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			StorageType.MEMORY_CLUSTERED);
+			Assert.assertEquals(
+				"MEMORY_CLUSTERED jobs stopped running on this node",
+				logRecord.getMessage());
+			Assert.assertFalse(ClusterMasterExecutorUtil.isMaster());
 
-		Assert.assertTrue(schedulerResponses.isEmpty());
-		Assert.assertEquals(4, _memoryClusteredJobs.size());
+			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
+				StorageType.MEMORY_CLUSTERED);
 
-		// Test 2, with log enabled
-
-		_mockClusterMasterExecutor.reset(true, 0, 0);
-
-		_mockSchedulerEngine.resetJobs(4, 2);
-
-		_clusterSchedulerEngine.start();
-
-		_memoryClusteredJobs.clear();
-
-		Assert.assertTrue(ClusterMasterExecutorUtil.isMaster());
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			StorageType.MEMORY_CLUSTERED);
-
-		Assert.assertEquals(4, schedulerResponses.size());
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-
-		logRecords = captureHandler.resetLogLevel(Level.ALL);
-
-		_mockClusterMasterExecutor.reset(false, 4, 2);
-
-		clusterMasterTokenTransitionListener =
-			_mockClusterMasterExecutor.
-				getClusterMasterTokenTransitionListener();
-
-		clusterMasterTokenTransitionListener.masterTokenReleased();
-
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals(
-			"MEMORY_CLUSTERED jobs stopped running on this node",
-			logRecord.getMessage());
-		Assert.assertFalse(ClusterMasterExecutorUtil.isMaster());
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			StorageType.MEMORY_CLUSTERED);
-
-		Assert.assertTrue(schedulerResponses.isEmpty());
-		Assert.assertEquals(4, _memoryClusteredJobs.size());
+			Assert.assertTrue(schedulerResponses.isEmpty());
+			Assert.assertEquals(4, _memoryClusteredJobs.size());
+		}
 	}
 
 	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
@@ -1007,77 +1009,79 @@ public class ClusterSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
 			StorageType.MEMORY_CLUSTERED);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClusterSchedulerEngine.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClusterSchedulerEngine.class.getName(), Level.OFF)) {
 
-		_mockClusterMasterExecutor.reset(true, 0, 0);
+			_mockClusterMasterExecutor.reset(true, 0, 0);
 
-		ClusterMasterTokenTransitionListener
+			ClusterMasterTokenTransitionListener
+				clusterMasterTokenTransitionListener =
+					_mockClusterMasterExecutor.
+						getClusterMasterTokenTransitionListener();
+
+			clusterMasterTokenTransitionListener.masterTokenAcquired();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(ClusterMasterExecutorUtil.isMaster());
+
+			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
+				StorageType.MEMORY_CLUSTERED);
+
+			Assert.assertEquals(4, schedulerResponses.size());
+
+			SchedulerResponse schedulerResponse =
+				_clusterSchedulerEngine.getScheduledJob(
+					_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
+					StorageType.MEMORY_CLUSTERED);
+
+			_assertTriggerState(schedulerResponse, TriggerState.PAUSED);
+
+			Assert.assertTrue(_memoryClusteredJobs.isEmpty());
+
+			// Test 2, with log enabled
+
+			_mockClusterMasterExecutor.reset(false, 4, 0);
+
+			_mockSchedulerEngine.resetJobs(0, 0);
+
+			_clusterSchedulerEngine.start();
+
+			Assert.assertFalse(ClusterMasterExecutorUtil.isMaster());
+
+			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
+				StorageType.MEMORY_CLUSTERED);
+
+			Assert.assertTrue(schedulerResponses.isEmpty());
+			Assert.assertEquals(4, _memoryClusteredJobs.size());
+
+			logRecords = captureHandler.resetLogLevel(Level.ALL);
+
+			_mockClusterMasterExecutor.reset(true, 0, 0);
+
 			clusterMasterTokenTransitionListener =
 				_mockClusterMasterExecutor.
 					getClusterMasterTokenTransitionListener();
 
-		clusterMasterTokenTransitionListener.masterTokenAcquired();
+			clusterMasterTokenTransitionListener.masterTokenAcquired();
 
-		List<LogRecord> logRecords = captureHandler.getLogRecords();
+			Assert.assertEquals(1, logRecords.size());
 
-		Assert.assertTrue(logRecords.isEmpty());
-		Assert.assertTrue(ClusterMasterExecutorUtil.isMaster());
+			LogRecord logRecord = logRecords.get(0);
 
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			StorageType.MEMORY_CLUSTERED);
+			Assert.assertEquals(
+				"MEMORY_CLUSTERED jobs are running on this node",
+				logRecord.getMessage());
+			Assert.assertTrue(ClusterMasterExecutorUtil.isMaster());
 
-		Assert.assertEquals(4, schedulerResponses.size());
-
-		SchedulerResponse schedulerResponse =
-			_clusterSchedulerEngine.getScheduledJob(
-				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
+			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
 				StorageType.MEMORY_CLUSTERED);
 
-		_assertTriggerState(schedulerResponse, TriggerState.PAUSED);
-
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-
-		// Test 2, with log enabled
-
-		_mockClusterMasterExecutor.reset(false, 4, 0);
-
-		_mockSchedulerEngine.resetJobs(0, 0);
-
-		_clusterSchedulerEngine.start();
-
-		Assert.assertFalse(ClusterMasterExecutorUtil.isMaster());
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			StorageType.MEMORY_CLUSTERED);
-
-		Assert.assertTrue(schedulerResponses.isEmpty());
-		Assert.assertEquals(4, _memoryClusteredJobs.size());
-
-		logRecords = captureHandler.resetLogLevel(Level.ALL);
-
-		_mockClusterMasterExecutor.reset(true, 0, 0);
-
-		clusterMasterTokenTransitionListener =
-			_mockClusterMasterExecutor.
-				getClusterMasterTokenTransitionListener();
-
-		clusterMasterTokenTransitionListener.masterTokenAcquired();
-
-		Assert.assertEquals(1, logRecords.size());
-
-		LogRecord logRecord = logRecords.get(0);
-
-		Assert.assertEquals(
-			"MEMORY_CLUSTERED jobs are running on this node",
-			logRecord.getMessage());
-		Assert.assertTrue(ClusterMasterExecutorUtil.isMaster());
-
-		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
-			StorageType.MEMORY_CLUSTERED);
-
-		Assert.assertEquals(4, schedulerResponses.size());
-		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
+			Assert.assertEquals(4, schedulerResponses.size());
+			Assert.assertTrue(_memoryClusteredJobs.isEmpty());
+		}
 	}
 
 	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})

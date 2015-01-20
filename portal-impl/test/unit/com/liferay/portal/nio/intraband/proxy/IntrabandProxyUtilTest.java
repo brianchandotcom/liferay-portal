@@ -372,12 +372,12 @@ public class IntrabandProxyUtilTest {
 		RegistrationReference registrationReference =
 			new MockRegistrationReference(autoReplyMockIntraband);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			stubClass.getName(), Level.INFO);
-
 		Object stubObject = null;
 
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					stubClass.getName(), Level.INFO)) {
+
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			stubObject = constructor.newInstance(
@@ -395,9 +395,6 @@ public class IntrabandProxyUtilTest {
 
 			Assert.assertEquals(
 				stubClass.getName() + " in <init>", logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 
 		Assert.assertSame(
@@ -483,10 +480,10 @@ public class IntrabandProxyUtilTest {
 
 		});
 
-		captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			stubClass.getName(), Level.INFO);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					stubClass.getName(), Level.INFO)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			for (Method copiedMethod : copiedMethods) {
@@ -498,9 +495,6 @@ public class IntrabandProxyUtilTest {
 				Assert.assertEquals(
 					copiedMethod.getName(), logRecord.getMessage());
 			}
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -805,10 +799,10 @@ public class IntrabandProxyUtilTest {
 
 		serializer.writeInt(1);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			TemplateSkeleton.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					TemplateSkeleton.class.getName(), Level.SEVERE)) {
 
-		try {
 			testTemplateSkeleton.dispatch(
 				mockRegistrationReference,
 				Datagram.createRequestDatagram(
@@ -832,9 +826,6 @@ public class IntrabandProxyUtilTest {
 			Assert.assertEquals(
 				"Unknow method index 1 for proxy methods mappings {}",
 				throwable.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 
 		Assert.assertEquals(
@@ -940,10 +931,10 @@ public class IntrabandProxyUtilTest {
 				templateStub, "_syncSend", new Class<?>[] {Serializer.class},
 				new Serializer()));
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			WarnLogExceptionHandler.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					WarnLogExceptionHandler.class.getName(), Level.WARNING)) {
 
-		try {
 			String message = "RPC failure";
 
 			rpcResponseReference.set(new RPCResponse(new Exception(message)));
@@ -984,9 +975,6 @@ public class IntrabandProxyUtilTest {
 					templateStub, "_syncSend",
 					new Class<?>[] {Serializer.class}, new Serializer()));
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -1639,11 +1627,10 @@ public class IntrabandProxyUtilTest {
 			serializer.writeInt(i);
 
 			if (i == proxyMethods.size()) {
-				CaptureHandler captureHandler =
-					JDKLoggerTestUtil.configureJDKLogger(
-						skeletonClass.getName(), Level.SEVERE);
+				try (CaptureHandler captureHandler =
+						JDKLoggerTestUtil.configureJDKLogger(
+							skeletonClass.getName(), Level.SEVERE)) {
 
-				try {
 					intrabandProxySkeleton.dispatch(
 						mockRegistrationReference, datagram,
 						new Deserializer(serializer.toByteBuffer()));
@@ -1667,9 +1654,6 @@ public class IntrabandProxyUtilTest {
 								ReflectionTestUtil.getFieldValue(
 									skeletonClass, "_PROXY_METHODS_MAPPING"),
 						throwable.getMessage());
-				}
-				finally {
-					captureHandler.close();
 				}
 
 				break;
@@ -1995,18 +1979,12 @@ public class IntrabandProxyUtilTest {
 
 		ClassLoader classLoader = new URLClassLoader(new URL[0], null);
 
-		CaptureHandler captureHandler = null;
+		Level level = logEnabled ? Level.INFO : Level.WARNING;
 
-		if (logEnabled) {
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				IntrabandProxyUtil.class.getName(), Level.INFO);
-		}
-		else {
-			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				IntrabandProxyUtil.class.getName(), Level.WARNING);
-		}
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					IntrabandProxyUtil.class.getName(), level)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			IntrabandProxyUtil.toClass(classNode, classLoader);
@@ -2053,9 +2031,6 @@ public class IntrabandProxyUtilTest {
 			if (!proxyClassesDumpEnabled || !logEnabled) {
 				Assert.assertTrue(logRecords.isEmpty());
 			}
-		}
-		finally {
-			captureHandler.close();
 		}
 
 		try {

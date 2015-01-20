@@ -52,18 +52,4 @@ public interface DLDisplayContextFactory extends DisplayContextFactory {
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion);
 
-	public DLViewFileVersionDisplayContext
-		getIGFileVersionActionsDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut);
-
-	public DLViewFileVersionDisplayContext
-		getIGFileVersionActionsDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
-
 }

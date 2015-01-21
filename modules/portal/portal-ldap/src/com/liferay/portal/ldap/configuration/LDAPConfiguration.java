@@ -19,28 +19,31 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Michael C. Han
  */
-@Meta.OCD(id = "com.liferay.portal.ldap", localization = "content.Language")
+@Meta.OCD(
+	id = "com.liferay.portal.ldap",
+	localization = "content.Language-LDAPConfiguration"
+)
 public interface LDAPConfiguration {
 
 	@Meta.AD(
 		deflt = "com.sun.jndi.ldap.LdapCtxFactory", id = "ldap.factory.initial",
 		required = false)
-	public String getLDAPFactoryInitial();
+	public String ldapFactoryInitial();
 
 	@Meta.AD(deflt = "1000", id = "ldap.page.size", required = false)
-	public int getLDAPPageSize();
+	public int ldapPageSize();
+
+	@Meta.AD(
+		deflt = "false", id = "ldap.password.policy.enabled", required = false)
+	public boolean ldapPasswordPolicyEnabled();
 
 	@Meta.AD(deflt = "1000", id = "ldap.range.size", required = false)
-	public int getLDAPRangeSize();
+	public int ldapRangeSize();
 
 	@Meta.AD(
 		deflt = "follow", id = "ldap.referral",
 		optionValues = {"follow", "ingore", "throws"}, required = false
 	)
-	public String getLDAPReferral();
-
-	@Meta.AD(
-		deflt = "false", id = "ldap.password.policy.enabled", required = false)
-	public boolean isLDAPPasswordPolicyEnabled();
+	public String ldapReferral();
 
 }

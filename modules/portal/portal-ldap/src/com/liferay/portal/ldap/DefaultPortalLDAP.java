@@ -429,7 +429,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				if (StringUtil.endsWith(
 						curAttribute.getID(), StringPool.STAR) ||
 					(curAttribute.size() <
-						_ldapConfiguration.getLDAPRangeSize())) {
+						_ldapConfiguration.ldapRangeSize())) {
 
 					break;
 				}
@@ -847,7 +847,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 					ldapContext.setRequestControls(
 						new Control[] {
 							new PagedResultsControl(
-								_ldapConfiguration.getLDAPPageSize(),
+								_ldapConfiguration.ldapPageSize(),
 								Control.CRITICAL)
 						});
 				}
@@ -855,7 +855,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 					ldapContext.setRequestControls(
 						new Control[] {
 							new PagedResultsControl(
-								_ldapConfiguration.getLDAPPageSize(), cookie,
+								_ldapConfiguration.ldapPageSize(), cookie,
 								Control.CRITICAL)
 						});
 				}
@@ -984,7 +984,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 		if (x < 0) {
 			originalAttributeId = attributeId;
-			end = _ldapConfiguration.getLDAPRangeSize() - 1;
+			end = _ldapConfiguration.ldapRangeSize() - 1;
 		}
 		else {
 			int y = attributeId.indexOf(CharPool.EQUAL, x);
@@ -994,8 +994,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			start = GetterUtil.getInteger(attributeId.substring(y + 1, z));
 			end = GetterUtil.getInteger(attributeId.substring(z + 1));
 
-			start += _ldapConfiguration.getLDAPRangeSize();
-			end += _ldapConfiguration.getLDAPRangeSize();
+			start += _ldapConfiguration.ldapRangeSize();
+			end += _ldapConfiguration.ldapRangeSize();
 		}
 
 		StringBundler sb = new StringBundler(6);

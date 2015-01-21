@@ -20,14 +20,15 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Michael C. Han
  */
 @Meta.OCD(
-	id = "com.liferay.portal.ldap.export", localization = "content.Language"
+	id = "com.liferay.portal.ldap.export",
+	localization = "content.Language-LDAPExportConfiguration"
 )
 public interface LDAPExportConfiguration {
 
 	@Meta.AD(deflt = "false", id = "ldap.export.enabled", required = false)
-	public boolean isLDAPExportEnabled();
+	public boolean ldapExportEnabled();
 
 	@Meta.AD(deflt = "true", id = "ldap.export.group.enabled", required = false)
-	public boolean isLDAPExportGroupEnabled();
+	public boolean ldapExportGroupEnabled();
 
 }

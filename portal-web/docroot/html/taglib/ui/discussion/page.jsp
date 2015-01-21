@@ -252,7 +252,11 @@ SearchContainer searchContainer = null;
 			};
 
 			function <%= randomNamespace %>hideForm(rowId, textAreaId, textAreaValue) {
-				document.getElementById(rowId).style.display = 'none';
+				var form = document.getElementById(rowId);
+
+				if (form) {
+					form.style.display = 'none';
+				}
 			}
 
 			function <%= randomNamespace %>scrollIntoView(messageId) {

@@ -15,6 +15,8 @@
 package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.context.BaseDisplayContextProvider;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -82,24 +84,29 @@ public class DLDisplayContextProviderImpl
 			HttpServletRequest request, HttpServletResponse response,
 			DLFileShortcut dlFileShortcut) {
 
-		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
-			new DefaultDLViewFileVersionDisplayContext(
-				request, response, dlFileShortcut);
+		try {
+			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+				new DefaultDLViewFileVersionDisplayContext(
+					request, response, dlFileShortcut);
 
-		if (dlFileShortcut == null) {
+			if (dlFileShortcut == null) {
+				return dlViewFileVersionDisplayContext;
+			}
+
+			for (DLDisplayContextFactory dlDisplayContextFactory :
+					getDisplayContextFactories()) {
+
+				dlViewFileVersionDisplayContext =
+					dlDisplayContextFactory.getDLViewFileVersionDisplayContext(
+						dlViewFileVersionDisplayContext, request, response,
+						dlFileShortcut);
+			}
+
 			return dlViewFileVersionDisplayContext;
 		}
-
-		for (DLDisplayContextFactory dlDisplayContextFactory :
-				getDisplayContextFactories()) {
-
-			dlViewFileVersionDisplayContext =
-				dlDisplayContextFactory.getDLViewFileVersionDisplayContext(
-					dlViewFileVersionDisplayContext, request, response,
-					dlFileShortcut);
+		catch (PortalException pe) {
+			throw new SystemException(pe);
 		}
-
-		return dlViewFileVersionDisplayContext;
 	}
 
 	@Override

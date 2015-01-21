@@ -114,12 +114,17 @@ if (resizable) {
 			</c:if>
 
 			<c:if test="<%= resizable && BrowserSnifferUtil.isIe(request) %>">
-				new A.Resize(
-					{
-						handles: 'br',
-						node: '#<%= name %>Container',
-						wrap: true
-					}
+				setTimeout(
+					function() {
+						new A.Resize(
+							{
+								handles: 'br',
+								node: '#<%= name %>Container',
+								wrap: true
+							}
+						);
+					},
+					0
 				);
 			</c:if>
 

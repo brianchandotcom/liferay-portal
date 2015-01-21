@@ -29,7 +29,7 @@ public class IntervalActionTest {
 
 	@Test
 	public void testIndexerIntervalEndCalculation() throws Exception {
-		IntervalAction intervalAction = new IntervalAction(125);
+		final IntervalAction intervalAction = new IntervalAction(125);
 
 		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
@@ -38,16 +38,18 @@ public class IntervalActionTest {
 				public void performAction(int start, int end)
 					throws PortalException {
 
-					for (int i = 0; i < end; i++) {
+					for (int i = start; i < end; i++) {
 						_count.incrementAndGet();
 					}
+
+					intervalAction.incrementStart(end);
 				}
 
 			});
 
 		intervalAction.performActions();
 
-		Assert.assertEquals(200, _count.get());
+		Assert.assertEquals(125, _count.get());
 	}
 
 	@Test

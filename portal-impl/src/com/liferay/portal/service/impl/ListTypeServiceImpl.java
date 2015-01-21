@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.ClassName;
@@ -35,7 +34,7 @@ public class ListTypeServiceImpl extends ListTypeServiceBaseImpl {
 			return listType;
 		}
 
-		int listTypeId = (int)CounterLocalServiceUtil.increment(
+		int listTypeId = (int)counterLocalService.increment(
 			ListType.class.getName());
 
 		listType = listTypePersistence.create(listTypeId);

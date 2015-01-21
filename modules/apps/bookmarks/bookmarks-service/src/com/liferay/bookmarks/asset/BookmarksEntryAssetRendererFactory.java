@@ -16,6 +16,7 @@ package com.liferay.bookmarks.asset;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.permission.BookmarksEntryPermission;
 import com.liferay.bookmarks.service.permission.BookmarksPermission;
@@ -28,7 +29,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -90,9 +90,7 @@ public class BookmarksEntryAssetRendererFactory
 		portletURL.setParameter("struts_action", "/bookmarks/edit_entry");
 		portletURL.setParameter(
 			"folderId",
-			String.valueOf(
-				AssetPublisherUtil.getRecentFolderId(
-					liferayPortletRequest, getClassName())));
+			String.valueOf(BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 
 		return portletURL;
 	}

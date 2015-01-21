@@ -37,7 +37,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
@@ -202,9 +201,6 @@ public class EditFileEntryAction extends PortletAction {
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 				repositoryId, folderId, sourceFileName, contentType, title,
 				description, changeLog, inputStream, size, serviceContext);
-
-			AssetPublisherUtil.addRecentFolderId(
-				actionRequest, DLFileEntry.class.getName(), folderId);
 
 			return fileEntry;
 		}

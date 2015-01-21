@@ -27,9 +27,9 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.asset.model.ClassTypeReader;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
@@ -129,9 +129,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 			"struts_action", "/document_library/edit_file_entry");
 		portletURL.setParameter(
 			"folderId",
-			String.valueOf(
-				AssetPublisherUtil.getRecentFolderId(
-					liferayPortletRequest, getClassName())));
+			String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 		portletURL.setParameter("showSelectFolder", Boolean.TRUE.toString());
 
 		return portletURL;

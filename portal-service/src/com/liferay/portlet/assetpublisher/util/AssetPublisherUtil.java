@@ -50,13 +50,6 @@ public class AssetPublisherUtil {
 			portletRequest, className, classPK, assetEntryOrder);
 	}
 
-	public static void addRecentFolderId(
-		PortletRequest portletRequest, String className, long classPK) {
-
-		getAssetPublisher().addRecentFolderId(
-			portletRequest, className, classPK);
-	}
-
 	public static void addSelection(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences, String portletId)
@@ -335,12 +328,6 @@ public class AssetPublisherUtil {
 			portletPreferences, scopeGroupId, layout);
 	}
 
-	public static long getRecentFolderId(
-		PortletRequest portletRequest, String className) {
-
-		return getAssetPublisher().getRecentFolderId(portletRequest, className);
-	}
-
 	public static String getScopeId(Group group, long scopeGroupId)
 		throws PortalException {
 
@@ -401,13 +388,6 @@ public class AssetPublisherUtil {
 
 		getAssetPublisher().removeAndStoreSelection(
 			assetEntryUuids, portletPreferences);
-	}
-
-	public static void removeRecentFolderId(
-		PortletRequest portletRequest, String className, long classPK) {
-
-		getAssetPublisher().removeRecentFolderId(
-			portletRequest, className, classPK);
 	}
 
 	public static void subscribe(

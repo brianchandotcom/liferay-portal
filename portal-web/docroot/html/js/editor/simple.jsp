@@ -38,19 +38,31 @@ if (Validator.isNotNull(onInitMethod)) {
 }
 
 boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
+
+String modules = "aui-event-input";
+
+if (resizable) {
+	modules += ",resize";
+}
 %>
 
 <liferay-util:buffer var="editor">
 	<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" height="100%" width="100%">
 		<tr>
 			<td bgcolor="#FFFFFF" height="100%">
-				<textarea class="lfr-editor-textarea" id="<%= name %>" name="<%= name %>" <%= Validator.isNotNull(onChangeMethod) ? "onChange=\"" + HtmlUtil.escapeJS(onChangeMethod) + "(this.value)\"" : StringPool.BLANK %> style="resize:<%= resizable ? "vertical" : "none" %>"><%= (contents != null) ? contents : StringPool.BLANK %></textarea>
+				<textarea class="lfr-editor-textarea" id="<%= name %>" name="<%= name %>" style="resize:<%= resizable ? "vertical" : "none" %>"><%= (contents != null) ? contents : StringPool.BLANK %></textarea>
 			</td>
 		</tr>
 	</table>
 </liferay-util:buffer>
 
-<aui:script use='<%= resizable ? "resize" : "aui-base" %>'>
+<aui:script use='<%= modules %>'>
+	var onInputHandle;
+
+	var onInput = function(event) {
+		<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getHTML());
+	};
+
 	window['<%= name %>'] = {
 		create: function() {
 			if (! window['<%= name %>'].instanceReady) {
@@ -78,6 +90,10 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 
 				window['<%= name %>'].instanceReady = false;
 			}
+
+			if (onInputHandle) {
+				onInputHandle.detach();
+			}
 		},
 
 		focus: function() {
@@ -91,6 +107,10 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 		initEditor: function() {
 			<c:if test="<%= (contents == null) && Validator.isNotNull(initMethod) %>">
 				<%= name %>.setHTML(<%= namespace + initMethod %>());
+			</c:if>
+
+			<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
+				onInputHandle = A.one('#<%= name %>').on('input', A.bind(onInput, this));
 			</c:if>
 
 			<c:if test="<%= resizable && BrowserSnifferUtil.isIe(request) %>">

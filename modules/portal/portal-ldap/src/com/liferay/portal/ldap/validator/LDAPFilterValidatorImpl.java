@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.ldap.validator;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.parsers.ldap.parser.LDAPFilterLexer;
-import com.liferay.portal.parsers.ldap.parser.LDAPFilterParser;
+import com.liferay.portal.ldap.validator.parser.LDAPFilterLexer;
+import com.liferay.portal.ldap.validator.parser.LDAPFilterParser;
+import com.liferay.portal.security.ldap.LDAPFilterValidator;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;

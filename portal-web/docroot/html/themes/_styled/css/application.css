@@ -276,8 +276,9 @@ input.switch {
 	font-size: 62.5%;
 	margin-left: -999em;
 
-	&:empty ~ label {
+	&:empty ~ .switch-bar {
 		cursor: pointer;
+		display: block;
 		font-size: 1.2rem;
 		line-height: 2.6rem;
 		position: relative;
@@ -329,10 +330,15 @@ input.switch {
 
 		.switch-icon-on {
 			left: 0.2rem;
+			opacity: 0;
 		}
 
 		.switch-icon-off {
 			left: 2.4rem;
+		}
+
+		.label-on {
+			opacity: 0;
 		}
 
 		.label-off {
@@ -342,7 +348,7 @@ input.switch {
 		}
 	}
 
-	&:checked ~ label {
+	&:checked ~ .switch-bar {
 		&:after {
 			left: 2.2rem;
 		}
@@ -362,10 +368,19 @@ input.switch {
 				display: block;
 			}
 		}
+
+		.label-on, .switch-icon-on {
+			opacity: 1;
+		}
+
+		.label-off, .switch-icon-off {
+			opacity: 0;
+		}
 	}
 
-	&:disabled ~ label {
+	&:disabled ~ .switch-bar {
 		cursor: auto;
+		opacity: 0.4;
 	}
 }
 

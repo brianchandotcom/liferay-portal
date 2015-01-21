@@ -680,7 +680,7 @@ select:focus {
 /* ---------- Switches ---------- */
 
 input.switch {
-	&:empty ~ label {
+	&:empty ~ .switch-bar {
 		&:before {
 			background-color: #868B96;
 		}
@@ -698,7 +698,7 @@ input.switch {
 		}
 	}
 
-	&:checked ~ label {
+	&:checked ~ .switch-bar {
 		&:before {
 			background-color: #34ADAB;
 		}

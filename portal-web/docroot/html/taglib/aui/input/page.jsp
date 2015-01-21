@@ -94,7 +94,7 @@ boolean choiceField = checkboxField || radioField;
 			placeholder="<%= placeholder %>"
 		/>
 	</c:when>
-	<c:when test='<%= type.equals("checkbox") || type.equals("switch") %>'>
+	<c:when test='<%= baseType.equals("checkbox") %>'>
 
 		<%
 		String valueString = null;
@@ -122,42 +122,6 @@ boolean choiceField = checkboxField || radioField;
 		%>
 
 		<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= fieldCssClass %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= namespace + id %>" name="<%= namespace + name %>" <%= Validator.isNotNull(onChange) ? "onChange=\"" + onChange + "\"" : StringPool.BLANK %> onClick="<%= onClick %>" <%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(locale, title) + "\"" : StringPool.BLANK %> type="checkbox" <%= Validator.isNotNull(valueString) ? ("value=\"" + HtmlUtil.escapeAttribute(valueString)) + "\"" : StringPool.BLANK %> <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
-
-		<c:if test='<%= type.equals("switch") %>'>
-
-			<%
-			String buttonIconOff = (String)dynamicAttributes.get("buttonIconOff");
-			String buttonIconOn = (String)dynamicAttributes.get("buttonIconOn");
-			String iconOff = (String)dynamicAttributes.get("iconOff");
-			String iconOn = (String)dynamicAttributes.get("iconOn");
-			String labelOff = (String)dynamicAttributes.get("labelOff");
-			String labelOn = (String)dynamicAttributes.get("labelOn");
-			%>
-
-			<label aria-hidden="true" <%= labelTag %>>
-				<span class="label-on"><%= (Validator.isNotNull(labelOn) ? labelOn : "&nbsp") %></span>
-
-				<c:if test="<%= Validator.isNotNull(labelOff) %>">
-					<span class="label-off"><%= labelOff %></span>
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(buttonIconOn) %>">
-					<span class="button-icon <%= Validator.isNotNull(buttonIconOff) ? "button-icon-on" : StringPool.BLANK %> switch-icon <%= buttonIconOn %>"></span>
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(buttonIconOff) %>">
-					<span class="button-icon button-icon-off switch-icon <%= buttonIconOff %>"></span>
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(iconOn) %>">
-					<span class="switch-icon switch-icon-on <%= iconOn %>"></span>
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(iconOff) %>">
-					<span class="switch-icon switch-icon-off <%= iconOff %>"></span>
-				</c:if>
-			</label>
-		</c:if>
 	</c:when>
 	<c:when test='<%= type.equals("radio") %>'>
 
@@ -318,6 +282,42 @@ boolean choiceField = checkboxField || radioField;
 <c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
 	<c:if test='<%= choiceField || inlineLabel.equals("right") %>'>
 			<%= labelContent %>
+
+			<c:if test='<%= type.equals("switch") %>'>
+
+				<%
+				String buttonIconOff = (String)dynamicAttributes.get("buttonIconOff");
+				String buttonIconOn = (String)dynamicAttributes.get("buttonIconOn");
+				String iconOff = (String)dynamicAttributes.get("iconOff");
+				String iconOn = (String)dynamicAttributes.get("iconOn");
+				String labelOff = (String)dynamicAttributes.get("labelOff");
+				String labelOn = (String)dynamicAttributes.get("labelOn");
+				%>
+
+				<span class="switch-bar" aria-hidden="true" data-label-on="<%= (Validator.isNotNull(labelOn) ? labelOn : "&nbsp") %>">
+					<span class="label-on"><%= (Validator.isNotNull(labelOn) ? labelOn : "&nbsp") %></span>
+
+					<c:if test="<%= Validator.isNotNull(labelOff) %>">
+						<span class="label-off"><%= labelOff %></span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(buttonIconOn) %>">
+						<span class="button-icon <%= Validator.isNotNull(buttonIconOff) ? "button-icon-on" : StringPool.BLANK %> switch-icon <%= buttonIconOn %>"></span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(buttonIconOff) %>">
+						<span class="button-icon button-icon-off switch-icon <%= buttonIconOff %>"></span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(iconOn) %>">
+						<span class="switch-icon switch-icon-on <%= iconOn %>"></span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(iconOff) %>">
+						<span class="switch-icon switch-icon-off <%= iconOff %>"></span>
+					</c:if>
+				</span>
+			</c:if>
 		</label>
 	</c:if>
 </c:if>

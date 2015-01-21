@@ -14,21 +14,61 @@
  */
 --%>
 
-<aui:select bean="<%= selContact %>" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "prefix") %>' label="title[person]" listType="<%= ListTypeConstants.CONTACT_PREFIX %>" listTypeFieldName="prefixId" model="<%= Contact.class %>" name="prefixId" showEmptyOption="<%= true %>" />
+<%
+FullNameDefinition fullNameDefinition = LocalizationUtil.getFullNameDefinition(userLocale);
+%>
 
 <liferay-ui:error exception="<%= ContactFirstNameException.class %>" message="please-enter-a-valid-first-name" />
 <liferay-ui:error exception="<%= ContactFullNameException.class %>" message="please-enter-a-valid-first-middle-and-last-name" />
 
-<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "firstName") %>' name="firstName" />
+<div id="<portlet:namespace />userNameFields">
 
-<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "middleName") %>' name="middleName" />
+<%
+for (FullNameField fullNameField: fullNameDefinition.getFields()) {
+	String fieldName = CamelCaseUtil.toCamelCase(fullNameField.getName());
+	boolean required = fullNameField.isRequired();
+	String[] valueOptions = fullNameField.getValueOptions();
+%>
 
-<liferay-ui:error exception="<%= ContactLastNameException.class %>" message="please-enter-a-valid-last-name" />
+<c:choose>
+	<c:when test="<%= fullNameField.isFreeText() %>">
+		<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" name="<%= fieldName %>">
+			<c:if test="<%= required %>">
+				<aui:validator name="required" />
+			</c:if>
+		</aui:input>
+	</c:when>
+	<c:otherwise>
+		<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("Id") %>' showEmptyOption="<%= true %>">
 
-<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "lastName") %>' name="lastName">
-	<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_LAST_NAME_REQUIRED, PropsValues.USERS_LAST_NAME_REQUIRED) %>">
-		<aui:validator name="required" />
-	</c:if>
-</aui:input>
+		<%
+		String selected = StringPool.BLANK;
 
-<aui:select bean="<%= selContact %>" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "suffix") %>' label="suffix" listType="<%= ListTypeConstants.CONTACT_SUFFIX %>" listTypeFieldName="suffixId" model="<%= Contact.class %>" name="suffixId" showEmptyOption="<%= true %>" />
+		if (Validator.isNotNull(selContact)) {
+			int listTypeId = BeanParamUtil.getInteger(selContact, request, fieldName.concat("Id"));
+
+			try {
+				selected = ListTypeServiceUtil.getListType(listTypeId).getName();
+			}
+			catch (Exception e) {
+			}
+		}
+
+		for (String valueOption: valueOptions) {
+		%>
+
+			<aui:option label="<%= valueOption %>" selected="<%= selected.equals(valueOption) %>" value="<%= valueOption %>" />
+
+		<%
+		}
+		%>
+
+		</aui:select>
+	</c:otherwise>
+</c:choose>
+
+<%
+}
+%>
+
+</div>

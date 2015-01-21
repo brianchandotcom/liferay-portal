@@ -17,9 +17,12 @@ package com.liferay.portlet.imagegallerydisplay.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portlet.documentlibrary.context.BaseDefaultDLViewFileVersionDisplayContext;
+import com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext;
+import com.liferay.portlet.documentlibrary.context.DLActionsDisplayContextUtil;
+import com.liferay.portlet.documentlibrary.context.UIItemsBuilder;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +33,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Adolfo Pérez
  */
 public class DefaultIGViewFileVersionDisplayContext
-	extends BaseDefaultDLViewFileVersionDisplayContext
 	implements IGViewFileVersionDisplayContext {
 
 	public DefaultIGViewFileVersionDisplayContext(
@@ -38,14 +40,52 @@ public class DefaultIGViewFileVersionDisplayContext
 			DLFileShortcut dlFileShortcut)
 		throws PortalException {
 
-		super(request, response, dlFileShortcut);
+		this(
+			request, response, dlFileShortcut.getFileVersion(), dlFileShortcut);
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion)
+		throws PortalException {
 
-		super(request, response, fileVersion);
+		this(request, response, fileVersion, null);
+	}
+
+	public DefaultIGViewFileVersionDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion, DLFileShortcut dlFileShortcut)
+		throws PortalException {
+
+		_request = request;
+
+		if (dlFileShortcut == null) {
+			_uiItemsBuilder = new UIItemsBuilder(
+				request, response, fileVersion);
+		}
+		else {
+			_uiItemsBuilder = new UIItemsBuilder(
+				request, response, dlFileShortcut);
+		}
+	}
+
+	@Override
+	public List<MenuItem> getMenuItems() throws PortalException {
+		List<MenuItem> menuItems = new ArrayList<>();
+
+		if (_isShowActions()) {
+			_uiItemsBuilder.addDownloadMenuItem(menuItems);
+
+			_uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
+
+			_uiItemsBuilder.addEditMenuItem(menuItems);
+
+			_uiItemsBuilder.addPermissionsMenuItem(menuItems);
+
+			_uiItemsBuilder.addDeleteMenuItem(menuItems);
+		}
+
+		return menuItems;
 	}
 
 	@Override
@@ -53,22 +93,30 @@ public class DefaultIGViewFileVersionDisplayContext
 		return _UUID;
 	}
 
-	@Override
-	protected void buildMenuItems(List<MenuItem> menuItems)
+	private DLActionsDisplayContext _getDLActionsDisplayContext()
 		throws PortalException {
 
-		uiItemsBuilder.addDownloadMenuItem(menuItems);
+		if (_dlActionsDisplayContext == null) {
+			_dlActionsDisplayContext =
+				DLActionsDisplayContextUtil.getDLActionsDisplayContext(
+					_request);
+		}
 
-		uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
+		return _dlActionsDisplayContext;
+	}
 
-		uiItemsBuilder.addEditMenuItem(menuItems);
+	private boolean _isShowActions() throws PortalException {
+		DLActionsDisplayContext dlActionsDisplayContext =
+			_getDLActionsDisplayContext();
 
-		uiItemsBuilder.addPermissionsMenuItem(menuItems);
-
-		uiItemsBuilder.addDeleteMenuItem(menuItems);
+		return dlActionsDisplayContext.isShowActions();
 	}
 
 	private static final UUID _UUID = UUID.fromString(
 		"C04528F9-C005-4E21-A926-F068750B99DB");
+
+	private DLActionsDisplayContext _dlActionsDisplayContext;
+	private final HttpServletRequest _request;
+	private final UIItemsBuilder _uiItemsBuilder;
 
 }

@@ -469,14 +469,14 @@ if (Validator.isNull(redirect)) {
 
 	var formatSelect = form.fm('format');
 
-	var currentFormat = $('#<portlet:namespace />format option:selected').text().trim();
+	var currentFormat = $.trim(formatSelect.find('option:selected').text());
 
 	var currentIndex = formatSelect.prop('selectedIndex');
 
 	formatSelect.on(
 		'change',
 		function(event) {
-			var newFormat =  $('#<portlet:namespace />format option:selected').text().trim();
+			var newFormat = $.trim(formatSelect.find('option:selected').text());
 
 			var confirmMessage = '<%= UnicodeLanguageUtil.get(request, "you-may-lose-formatting-when-switching-from-x-to-x") %>';
 

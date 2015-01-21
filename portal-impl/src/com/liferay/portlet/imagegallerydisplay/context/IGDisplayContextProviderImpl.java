@@ -71,24 +71,29 @@ public class IGDisplayContextProviderImpl
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
 
-		IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
-			new DefaultIGViewFileVersionDisplayContext(
-				request, response, fileVersion);
+		try {
+			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
+				new DefaultIGViewFileVersionDisplayContext(
+					request, response, fileVersion);
 
-		if (fileVersion == null) {
+			if (fileVersion == null) {
+				return igViewFileVersionDisplayContext;
+			}
+
+			for (IGDisplayContextFactory igDisplayContextFactory :
+					getDisplayContextFactories()) {
+
+				igViewFileVersionDisplayContext =
+					igDisplayContextFactory.getIGViewFileVersionDisplayContext(
+						igViewFileVersionDisplayContext, request, response,
+						fileVersion);
+			}
+
 			return igViewFileVersionDisplayContext;
 		}
-
-		for (IGDisplayContextFactory igDisplayContextFactory :
-				getDisplayContextFactories()) {
-
-			igViewFileVersionDisplayContext =
-				igDisplayContextFactory.getIGViewFileVersionDisplayContext(
-					igViewFileVersionDisplayContext, request, response,
-					fileVersion);
+		catch (PortalException pe) {
+			throw new SystemException(pe);
 		}
-
-		return igViewFileVersionDisplayContext;
 	}
 
 }

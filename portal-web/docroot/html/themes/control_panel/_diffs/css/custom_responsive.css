@@ -47,7 +47,6 @@
 						display: block;
 						height: 51px;
 						line-height: 16px;
-						margin-top: -5px;
 						max-width: 100%;
 						min-width: 55px;
 						padding: 0 16px 0 33px;
@@ -88,7 +87,7 @@
 						}
 					}
 
-					@include respond-to(tablet) {
+					@include respond-to(phone, tablet) {
 						line-height: 32px;
 					}
 				}

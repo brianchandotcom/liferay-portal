@@ -31,6 +31,7 @@ create table DDMStructureVersion (
 	type_ INTEGER
 );
 
+alter table DDMTemplate add sourceClassNameId LONG;
 alter table DDMTemplate add version VARCHAR(75) null;
 
 update DDMTemplate set version = '1.0';

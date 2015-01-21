@@ -355,6 +355,7 @@ public class DDMTemplateStagedModelDataHandler
 					importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
 						userId, portletDataContext.getScopeGroupId(),
 						template.getClassNameId(), classPK,
+						template.getSourceClassNameId(),
 						template.getTemplateKey(), template.getNameMap(),
 						template.getDescriptionMap(), template.getType(),
 						template.getMode(), template.getLanguage(),
@@ -378,7 +379,8 @@ public class DDMTemplateStagedModelDataHandler
 			else {
 				importedTemplate = DDMTemplateLocalServiceUtil.addTemplate(
 					userId, portletDataContext.getScopeGroupId(),
-					template.getClassNameId(), classPK, null,
+					template.getClassNameId(), classPK,
+					template.getSourceClassNameId(), null,
 					template.getNameMap(), template.getDescriptionMap(),
 					template.getType(), template.getMode(),
 					template.getLanguage(), template.getScript(),

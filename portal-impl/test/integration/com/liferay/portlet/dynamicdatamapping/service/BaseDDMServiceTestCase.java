@@ -137,7 +137,7 @@ public class BaseDDMServiceTestCase {
 
 		return DDMTemplateLocalServiceUtil.addTemplate(
 			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
-			classPK, templateKey, LocaleTestUtil.getDefaultLocaleMap(name),
+			classPK, 0, templateKey, LocaleTestUtil.getDefaultLocaleMap(name),
 			null, type, mode, language, script, cacheable, smallImage,
 			smallImageURL, smallFile,
 			ServiceContextTestUtil.getServiceContext());

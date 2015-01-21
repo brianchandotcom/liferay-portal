@@ -66,7 +66,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,6 +88,8 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", sourceClassNameId=");
+		sb.append(sourceClassNameId);
 		sb.append(", templateKey=");
 		sb.append(templateKey);
 		sb.append(", version=");
@@ -156,6 +158,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 
 		ddmTemplateImpl.setClassNameId(classNameId);
 		ddmTemplateImpl.setClassPK(classPK);
+		ddmTemplateImpl.setSourceClassNameId(sourceClassNameId);
 
 		if (templateKey == null) {
 			ddmTemplateImpl.setTemplateKey(StringPool.BLANK);
@@ -241,6 +244,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		modifiedDate = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
+		sourceClassNameId = objectInput.readLong();
 		templateKey = objectInput.readUTF();
 		version = objectInput.readUTF();
 		name = objectInput.readUTF();
@@ -281,6 +285,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
+		objectOutput.writeLong(sourceClassNameId);
 
 		if (templateKey == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -360,6 +365,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
+	public long sourceClassNameId;
 	public String templateKey;
 	public String version;
 	public String name;

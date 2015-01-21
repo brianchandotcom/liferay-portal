@@ -136,8 +136,8 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 
 			DDMTemplateLocalServiceUtil.addTemplate(
 				userId, groupId, PortalUtil.getClassNameId(DDMStructure.class),
-				ddmStructure.getStructureId(), null, nameMap, null,
-				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+				ddmStructure.getStructureId(), ddmStructure.getClassNameId(),
+				null, nameMap, null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE,
 				TemplateConstants.LANG_TYPE_FTL, getContent(templateFileName),
 				templateCacheable, false, StringPool.BLANK, null,

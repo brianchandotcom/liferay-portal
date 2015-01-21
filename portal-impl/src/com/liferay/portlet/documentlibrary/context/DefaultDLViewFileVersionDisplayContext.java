@@ -31,8 +31,9 @@ public class DefaultDLViewFileVersionDisplayContext
 	extends BaseDefaultDLViewFileVersionDisplayContext {
 
 	public DefaultDLViewFileVersionDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		DLFileShortcut dlFileShortcut) {
+			HttpServletRequest request, HttpServletResponse response,
+			DLFileShortcut dlFileShortcut)
+		throws PortalException {
 
 		super(request, response, dlFileShortcut);
 	}

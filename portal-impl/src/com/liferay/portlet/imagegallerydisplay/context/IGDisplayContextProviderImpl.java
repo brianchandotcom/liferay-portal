@@ -15,6 +15,8 @@
 package com.liferay.portlet.imagegallerydisplay.context;
 
 import com.liferay.portal.kernel.context.BaseDisplayContextProvider;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
@@ -38,24 +40,29 @@ public class IGDisplayContextProviderImpl
 			HttpServletRequest request, HttpServletResponse response,
 			DLFileShortcut dlFileShortcut) {
 
-		IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
-			new DefaultIGViewFileVersionDisplayContext(
-				request, response, dlFileShortcut);
+		try {
+			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
+				new DefaultIGViewFileVersionDisplayContext(
+					request, response, dlFileShortcut);
 
-		if (dlFileShortcut == null) {
+			if (dlFileShortcut == null) {
+				return igViewFileVersionDisplayContext;
+			}
+
+			for (IGDisplayContextFactory igDisplayContextFactory :
+					getDisplayContextFactories()) {
+
+				igViewFileVersionDisplayContext =
+					igDisplayContextFactory.getIGViewFileVersionDisplayContext(
+						igViewFileVersionDisplayContext, request, response,
+						dlFileShortcut);
+			}
+
 			return igViewFileVersionDisplayContext;
 		}
-
-		for (IGDisplayContextFactory igDisplayContextFactory :
-				getDisplayContextFactories()) {
-
-			igViewFileVersionDisplayContext =
-				igDisplayContextFactory.getIGViewFileVersionDisplayContext(
-					igViewFileVersionDisplayContext, request, response,
-					dlFileShortcut);
+		catch (PortalException pe) {
+			throw new SystemException(pe);
 		}
-
-		return igViewFileVersionDisplayContext;
 	}
 
 	@Override

@@ -14,15 +14,12 @@
 
 package com.liferay.portal.security.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
  * @author Miguel Pastor
  */
 public interface ResourcePermissionChecker {
 
 	public Boolean checkResource(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException;
+		PermissionChecker permissionChecker, long classPK, String actionId);
 
 }

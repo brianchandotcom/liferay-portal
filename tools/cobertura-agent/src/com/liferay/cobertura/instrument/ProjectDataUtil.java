@@ -31,6 +31,8 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler;
@@ -56,24 +58,44 @@ public class ProjectDataUtil {
 		synchronized (className.intern()) {
 			FileLock fileLock = _lockFile();
 
+			ProjectData masterProjectData = new ProjectData();
+
+			for (ProjectData projectData : _projectDatas.values()) {
+				masterProjectData.merge(projectData);
+			}
+
 			try {
 				File dataFile = CoverageDataFileHandler.getDefaultDataFile();
 
 				if (dataFile.exists()) {
-					ProjectData projectData = _readProjectData(dataFile);
+					masterProjectData.merge(_readProjectData(dataFile));
 
 					dataFile.delete();
+				}
 
-					return projectData;
-				}
-				else {
-					return new ProjectData();
-				}
+				return masterProjectData;
 			}
 			finally {
 				_unlockFile(fileLock);
 			}
 		}
+	}
+
+	public static ProjectData getOrCreateProjectData(ClassLoader classLoader) {
+		ProjectData projectData = _projectDatas.get(classLoader);
+
+		if (projectData == null) {
+			projectData = new ProjectData();
+
+			ProjectData previousProjectData = _projectDatas.putIfAbsent(
+				classLoader, projectData);
+
+			if (previousProjectData != null) {
+				projectData = previousProjectData;
+			}
+		}
+
+		return projectData;
 	}
 
 	public static void runMergeHooks() {
@@ -267,5 +289,7 @@ public class ProjectDataUtil {
 
 	private static final Set<Runnable> _mergeHooks =
 		new CopyOnWriteArraySet<>();
+	private static final ConcurrentMap<ClassLoader, ProjectData> _projectDatas =
+		new ConcurrentHashMap<>();
 
 }

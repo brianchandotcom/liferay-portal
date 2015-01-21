@@ -26,8 +26,6 @@ import java.lang.management.RuntimeMXBean;
 
 import java.security.ProtectionDomain;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -100,18 +98,8 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 				InstrumentationAgent.recordInstrumentation(
 					classLoader, className, classfileBuffer);
 
-				ProjectData projectData = _projectDatas.get(classLoader);
-
-				if (projectData == null) {
-					projectData = new ProjectData();
-
-					ProjectData previousProjectData = _projectDatas.putIfAbsent(
-						classLoader, projectData);
-
-					if (previousProjectData != null) {
-						projectData = previousProjectData;
-					}
-				}
+				ProjectData projectData =
+					ProjectDataUtil.getOrCreateProjectData(classLoader);
 
 				ClassWriter classWriter = new ContextAwareClassWriter(
 					ClassWriter.COMPUTE_FRAMES);
@@ -230,8 +218,6 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 	private final Pattern[] _excludePatterns;
 	private final Pattern[] _includePatterns;
-	private final ConcurrentMap<ClassLoader, ProjectData> _projectDatas =
-		new ConcurrentHashMap<>();
 
 	private static class TouchCollectorClassVisitor extends ClassVisitor {
 

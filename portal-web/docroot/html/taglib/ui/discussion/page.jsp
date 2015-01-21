@@ -356,7 +356,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 												classPK="<%= message.getMessageId() %>"
 												ratingsEntry="<%= ratingsEntry %>"
 												ratingsStats="<%= ratingStats %>"
-												type="thumbs"
+												type="<%= PortletRatingsDefinition.RatingsType.THUMBS.getValue() %>"
 											/>
 										</c:if>
 

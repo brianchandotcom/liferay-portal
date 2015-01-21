@@ -192,17 +192,17 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				<%
 				String assetEntryClassName = assetEntry.getClassName();
 
-				String ratingsType = "stars";
+				PortletRatingsDefinition.RatingsType ratingsType = PortletRatingsDefinition.RatingsType.STARS;
 
 				if (assetEntryClassName.equals(MBDiscussion.class.getName()) || assetEntryClassName.equals(MBMessage.class.getName())) {
-					ratingsType = "thumbs";
+					ratingsType = PortletRatingsDefinition.RatingsType.THUMBS;
 				}
 				%>
 
 				<liferay-ui:ratings
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"
-					type="<%= ratingsType %>"
+					type="<%= ratingsType.getValue() %>"
 				/>
 			</div>
 		</c:if>

@@ -27,8 +27,9 @@ import java.util.List;
  */
 public class ListTypeServiceImpl extends ListTypeServiceBaseImpl {
 
-	public ListType addListType(String type, String name) {
-		ListType listType = listTypePersistence.fetchByT_N(type, name);
+	@Override
+	public ListType addListType(String name, String type) {
+		ListType listType = listTypePersistence.fetchByN_T(name, type);
 
 		if (listType != null) {
 			return listType;
@@ -39,8 +40,8 @@ public class ListTypeServiceImpl extends ListTypeServiceBaseImpl {
 
 		listType = listTypePersistence.create(listTypeId);
 
-		listType.setType(type);
 		listType.setName(name);
+		listType.setType(type);
 		listType.setNew(true);
 
 		listTypePersistence.update(listType);

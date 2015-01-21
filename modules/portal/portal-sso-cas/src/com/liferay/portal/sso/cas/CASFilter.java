@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +41,7 @@ import org.jasig.cas.client.util.CommonUtils;
 import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
 import org.jasig.cas.client.validation.TicketValidator;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael Young
@@ -48,6 +50,11 @@ import org.jasig.cas.client.validation.TicketValidator;
  * @author Tina Tian
  * @author Zsolt Balogh
  */
+@Component(
+	immediate = true,
+	properties = {},
+	service = Filter.class
+)
 public class CASFilter extends BasePortalFilter {
 
 	public static void reload(long companyId) {

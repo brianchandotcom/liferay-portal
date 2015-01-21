@@ -95,6 +95,13 @@ public class GetterUtilTest {
 		result = GetterUtil.getDouble("4.7", LocaleUtil.US);
 
 		Assert.assertEquals("", 4.7, result, GetterUtil.DEFAULT_DOUBLE);
+
+		// Locale aware respecting the whole input
+
+		result = GetterUtil.getDouble("4.7", LocaleUtil.HUNGARY);
+
+		Assert.assertEquals(
+			"", GetterUtil.DEFAULT_DOUBLE, result, GetterUtil.DEFAULT_DOUBLE);
 	}
 
 	@Test

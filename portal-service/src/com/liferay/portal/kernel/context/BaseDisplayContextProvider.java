@@ -46,7 +46,7 @@ public class BaseDisplayContextProvider<T extends DisplayContextFactory>
 	}
 
 	public Iterable<T> getDisplayContextFactories() {
-		return new DisplayContextFactoriesIterable<T>(
+		return new DisplayContextFactoriesIterable<>(
 			_displayContextFactoryReferences);
 	}
 

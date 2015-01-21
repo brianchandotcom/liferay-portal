@@ -342,16 +342,18 @@
 					dataType: dataType,
 					on: {
 						failure: function(event, id, obj) {
-							var statusText = Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page');
+							var statusText = obj.statusText;
 
-							if (obj.statusText == 'timeout') {
-								statusText = Liferay.Language.get('request-timeout');
-							}
+							if (statusText) {
+								var status = Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page');
 
-							if ((obj.statusText == 'timeout') || (obj.statusText != '')) {
+								if (statusText == 'timeout') {
+									status = Liferay.Language.get('request-timeout');
+								}
+
 								placeHolder.hide();
 
-								placeHolder.placeAfter('<div class="alert alert-danger">' + statusText + '</div>');
+								placeHolder.placeAfter('<div class="alert alert-danger">' + status + '</div>');
 							}
 						},
 						success: function(event, id, obj) {

@@ -23,52 +23,50 @@ FullNameDefinition fullNameDefinition = LocalizationUtil.getFullNameDefinition(u
 
 <div id="<portlet:namespace />userNameFields">
 
-<%
-for (FullNameField fullNameField: fullNameDefinition.getFields()) {
-	String fieldName = CamelCaseUtil.toCamelCase(fullNameField.getName());
-	boolean required = fullNameField.isRequired();
-	String[] valueOptions = fullNameField.getValueOptions();
-%>
+	<%
+	for (FullNameField fullNameField: fullNameDefinition.getFields()) {
+		String fieldName = CamelCaseUtil.toCamelCase(fullNameField.getName());
+	%>
 
-<c:choose>
-	<c:when test="<%= fullNameField.isFreeText() %>">
-		<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" name="<%= fieldName %>">
-			<c:if test="<%= required %>">
-				<aui:validator name="required" />
-			</c:if>
-		</aui:input>
-	</c:when>
-	<c:otherwise>
-		<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("Id") %>' showEmptyOption="<%= true %>">
+		<c:choose>
+			<c:when test="<%= fullNameField.isFreeText() %>">
+				<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" name="<%= fieldName %>">
+					<c:if test="<%= fullNameField.isRequired() %>">
+						<aui:validator name="required" />
+					</c:if>
+				</aui:input>
+			</c:when>
+			<c:otherwise>
+				<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("Type") %>' showEmptyOption="<%= true %>">
 
-		<%
-		String selected = StringPool.BLANK;
+					<%
+					String selected = StringPool.BLANK;
 
-		if (Validator.isNotNull(selContact)) {
-			int listTypeId = BeanParamUtil.getInteger(selContact, request, fieldName.concat("Id"));
+					if (Validator.isNotNull(selContact)) {
+						int listTypeId = BeanParamUtil.getInteger(selContact, request, fieldName.concat("Id"));
 
-			try {
-				selected = ListTypeServiceUtil.getListType(listTypeId).getName();
-			}
-			catch (Exception e) {
-			}
-		}
+						try {
+							selected = ListTypeServiceUtil.getListType(listTypeId).getName();
+						}
+						catch (Exception e) {
+						}
+					}
 
-		for (String valueOption: valueOptions) {
-		%>
+					for (String valueOption : fullNameField.getValueOptions()) {
+					%>
 
-			<aui:option label="<%= valueOption %>" selected="<%= selected.equals(valueOption) %>" value="<%= valueOption %>" />
+						<aui:option label="<%= valueOption %>" selected="<%= selected.equals(valueOption) %>" value="<%= valueOption %>" />
 
-		<%
-		}
-		%>
+					<%
+					}
+					%>
 
-		</aui:select>
-	</c:otherwise>
-</c:choose>
+				</aui:select>
+			</c:otherwise>
+		</c:choose>
 
-<%
-}
-%>
+	<%
+	}
+	%>
 
 </div>

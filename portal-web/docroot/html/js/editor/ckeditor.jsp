@@ -186,7 +186,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 <aui:script use="<%= modules %>">
 	window['<%= name %>'] = {
 		create: function() {
-			if (! window['<%= name %>'].instanceReady) {
+			if (!window['<%= name %>'].instanceReady) {
 				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
 
 				var editorContainer = A.one('#<%= name %>Container');
@@ -661,8 +661,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	String toogleControlsStatus = GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", "visible"));
 	%>
 
-	<c:if test='<%= autoCreate && (
-		(inlineEdit && toogleControlsStatus.equals("visible")) || !inlineEdit ) %>'>;
+	<c:if test='<%= autoCreate && ((inlineEdit && toogleControlsStatus.equals("visible")) || !inlineEdit) %>'>;
 		createEditor();
 	</c:if>
 

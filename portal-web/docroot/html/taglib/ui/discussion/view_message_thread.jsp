@@ -249,12 +249,12 @@ request.setAttribute("page.jsp-i", new Integer(i));
 				</div>
 
 				<div class="lfr-discussion-body">
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody" + i %>' onChangeMethod='<%= randomNamespace + i + "OnChange" %>' placeholder="type-your-comment-here"/>
+					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody" + i %>' onChangeMethod='<%= randomNamespace + i + "OnChange" %>' placeholder="type-your-comment-here" />
 
 					<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
 
 					<aui:button-row>
-						<aui:button cssClass="btn-comment btn-primary" disabled="true" id='<%= randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+						<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 
 						<%
 						String taglibCancel = randomNamespace + "hideEditor('" + namespace + randomNamespace + "postReplyBody" + i + "','" + namespace + randomNamespace + "postReplyForm" + i + "')";
@@ -275,7 +275,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 			</div>
 
 			<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
-				<div class="col-md-12 lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
+				<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
 					<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= message.getBody() %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "editReplyBody" + i %>' />
 
 					<aui:input name='<%= "editReplyBody" + i %>' type="hidden" value="<%= message.getBody() %>" />

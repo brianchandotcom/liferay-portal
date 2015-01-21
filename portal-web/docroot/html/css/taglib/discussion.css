@@ -2,14 +2,6 @@
 @import "mixins";
 
 .taglib-discussion {
-	table.tree-walker {
-		width: 100%;
-
-		td {
-			padding: 4px;
-		}
-	}
-
 	.alloy-editor-placeholder {
 		min-height: 90px;
 
@@ -225,11 +217,6 @@
 /* Skin */
 
 .taglib-discussion {
-	table.tree-walker {
-		border-collapse: collapse;
-		border-width: 0;
-	}
-
 	.lfr-discussion {
 		border-top-color: rgba(176, 180, 187, 0.5);
 

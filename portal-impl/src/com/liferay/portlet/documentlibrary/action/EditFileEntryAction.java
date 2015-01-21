@@ -59,7 +59,6 @@ import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -383,14 +382,10 @@ public class EditFileEntryAction extends PortletAction {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);
 
-			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			DLAppServiceUtil.addFileEntry(
 				repositoryId, folderId, selectedFileName, mimeType,
 				selectedFileName, description, changeLog, inputStream, size,
 				serviceContext);
-
-			AssetPublisherUtil.addAndStoreSelection(
-				actionRequest, DLFileEntry.class.getName(),
-				fileEntry.getFileEntryId(), -1);
 
 			validFileNameKVPs.add(
 				new KeyValuePair(selectedFileName, originalSelectedFileName));
@@ -1020,10 +1015,6 @@ public class EditFileEntryAction extends PortletAction {
 				fileEntry = DLAppServiceUtil.addFileEntry(
 					repositoryId, folderId, sourceFileName, contentType, title,
 					description, changeLog, inputStream, size, serviceContext);
-
-				AssetPublisherUtil.addAndStoreSelection(
-					actionRequest, DLFileEntry.class.getName(),
-					fileEntry.getFileEntryId(), -1);
 
 				if (cmd.equals(Constants.ADD_DYNAMIC)) {
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

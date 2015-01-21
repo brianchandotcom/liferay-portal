@@ -21,7 +21,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.FileShortcutPermissionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
@@ -152,12 +151,8 @@ public class EditFileShortcutAction extends PortletAction {
 
 			// Add file shortcut
 
-			DLFileShortcut fileShortcut = DLAppServiceUtil.addFileShortcut(
+			DLAppServiceUtil.addFileShortcut(
 				repositoryId, folderId, toFileEntryId, serviceContext);
-
-			AssetPublisherUtil.addAndStoreSelection(
-				actionRequest, DLFileShortcut.class.getName(),
-				fileShortcut.getFileShortcutId(), -1);
 		}
 		else {
 

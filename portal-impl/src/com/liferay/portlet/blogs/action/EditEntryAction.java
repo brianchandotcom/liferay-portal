@@ -53,7 +53,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
 import com.liferay.portlet.blogs.EntryContentException;
@@ -628,10 +627,6 @@ public class EditEntryAction extends PortletAction {
 				PortletFileRepositoryUtil.deletePortletFileEntry(
 					tempBlogsEntryAttachment.getFileEntryId());
 			}
-
-			AssetPublisherUtil.addAndStoreSelection(
-				actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
-				-1);
 		}
 		else {
 
@@ -689,10 +684,6 @@ public class EditEntryAction extends PortletAction {
 			if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {
 				oldUrlTitle = tempOldUrlTitle;
 			}
-
-			AssetPublisherUtil.addAndStoreSelection(
-				actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
-				-1);
 		}
 
 		return new Object[] {

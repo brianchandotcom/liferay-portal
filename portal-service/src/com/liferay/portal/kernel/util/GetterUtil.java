@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.ParsePosition;
 
 import java.util.Date;
 import java.util.Locale;
@@ -301,9 +302,13 @@ public class GetterUtil {
 			NumberFormat numberFormat = NumberFormat.getInstance(locale);
 
 			try {
-				Number number = numberFormat.parse(value);
+				ParsePosition parsePosition = new ParsePosition(0);
 
-				return number.doubleValue();
+				Number number = numberFormat.parse(value, parsePosition);
+
+				if (parsePosition.getIndex() == value.length()) {
+					return number.doubleValue();
+				}
 			}
 			catch (Exception e) {
 			}

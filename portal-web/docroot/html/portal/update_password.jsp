@@ -82,6 +82,10 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 							<liferay-ui:message key="your-new-password-cannot-be-the-same-as-your-old-password-please-enter-in-a-different-password" />
 						</c:when>
 
+						<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeNull.class.getName()) %>">
+							<liferay-ui:message key="the-password-cannot-be-blank" />
+						</c:when>
+
 						<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeRecentlyUsed.class.getName()) %>">
 							<liferay-ui:message key="that-password-has-already-been-used-please-enter-in-a-different-password" />
 						</c:when>

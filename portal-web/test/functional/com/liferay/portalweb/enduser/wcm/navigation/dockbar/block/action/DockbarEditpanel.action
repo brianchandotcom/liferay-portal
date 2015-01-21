@@ -1,4 +1,16 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="SAVE_BUTTON">
+			<execute function="AssertClick#pauseAssertTextClickAt" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="DETAILS_FRIENDLY_URL_LOCALIZED">
+			<execute function="Click#pauseClickAt" />
+		</case>
+	</command>
+
 	<command name="isElementNotPresent">
 		<case locator-key1="DETAILS_NAME_FIELD">
 			<execute function="IsElementNotPresent#isNotVisible" />

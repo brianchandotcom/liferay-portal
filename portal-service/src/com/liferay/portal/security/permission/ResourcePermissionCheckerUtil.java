@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -24,9 +23,8 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 public class ResourcePermissionCheckerUtil {
 
 	public static Boolean containsResourcePermission(
-			PermissionChecker permissionChecker, String className, long classPK,
-			String actionId)
-		throws PortalException {
+		PermissionChecker permissionChecker, String className, long classPK,
+		String actionId) {
 
 		ResourcePermissionChecker resourcePermissionChecker =
 			_serviceTrackerMap.getService(className);

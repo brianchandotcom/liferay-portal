@@ -14,8 +14,12 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.Locale;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Shuyang Zhou
@@ -39,6 +43,16 @@ public class GetterUtilTest {
 			Assert.assertTrue(GetterUtil.getBoolean(s, true));
 			Assert.assertTrue(GetterUtil.getBoolean(s, false));
 		}
+	}
+
+	@Test
+	public void testGetDouble() {
+		testWith("4.7", 4.7, LocaleUtil.US);
+		testWith("4,7", 4.7, LocaleUtil.PORTUGAL);
+		testWith("-4,7", -4.7, LocaleUtil.PORTUGAL);
+		testWith("e4.7", _DEFAULT_VALUE, LocaleUtil.US);
+		testWith("e4.7", _DEFAULT_VALUE, LocaleUtil.HUNGARY);
+		testWith("-4.7", -4.7, LocaleUtil.US);
 	}
 
 	@Test
@@ -211,5 +225,18 @@ public class GetterUtilTest {
 			"default", GetterUtil.getString(new Object(), "default"));
 		Assert.assertEquals("test", GetterUtil.getString("test"));
 	}
+
+	private void testWith(String expectedStr, double expected, Locale locale) {
+		String paramName = "value";
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		request.setParameter(paramName, expectedStr);
+		double actual = ParamUtil.getDouble(
+			request, paramName, _DEFAULT_VALUE, locale);
+		Assert.assertEquals(expected, actual, _DEFAULT_DELTA);
+	}
+
+	private static final double _DEFAULT_DELTA = 0.001;
+
+	private static final double _DEFAULT_VALUE = -1.0;
 
 }

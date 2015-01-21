@@ -921,8 +921,7 @@ public class DLFileEntryLocalServiceImpl
 			final boolean includeTrashedEntries)
 		throws PortalException {
 
-		int total = dlFileEntryPersistence.countByR_F(
-			repositoryId, folderId);
+		int total = dlFileEntryPersistence.countByR_F(repositoryId, folderId);
 
 		final IntervalAction intervalAction = new IntervalAction(total);
 

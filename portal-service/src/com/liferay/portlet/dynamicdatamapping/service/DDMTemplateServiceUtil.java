@@ -48,6 +48,8 @@ public class DDMTemplateServiceUtil {
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param classPK the primary key of the template's related entity
+	* @param sourceClassNameId the primary key of the class name for template's
+	source model
 	* @param nameMap the template's locales and localized names
 	* @param descriptionMap the template's locales and localized descriptions
 	* @param type the template's type. For more information, see {@link
@@ -87,6 +89,8 @@ public class DDMTemplateServiceUtil {
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param classPK the primary key of the template's related entity
+	* @param sourceClassNameId the primary key of the class name for template's
+	source model
 	* @param templateKey the unique string identifying the template
 	(optionally <code>null</code>)
 	* @param nameMap the template's locales and localized names

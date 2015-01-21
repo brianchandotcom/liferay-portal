@@ -42,7 +42,6 @@ public class ListTypeServiceImpl extends ListTypeServiceBaseImpl {
 
 		listType.setName(name);
 		listType.setType(type);
-		listType.setNew(true);
 
 		listTypePersistence.update(listType);
 

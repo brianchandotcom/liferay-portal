@@ -49,25 +49,25 @@ public class DefaultDLViewFileVersionDisplayContext
 	protected void buildMenuItems(List<MenuItem> menuItems)
 		throws PortalException {
 
-		addDownloadMenuItem(menuItems);
+		uiItemsBuilder.addDownloadMenuItem(menuItems);
 
-		addOpenInMsOfficeMenuItem(menuItems);
+		uiItemsBuilder.addOpenInMsOfficeMenuItem(menuItems);
 
-		addViewOriginalFileMenuItem(menuItems);
+		uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
 
-		addEditMenuItem(menuItems);
+		uiItemsBuilder.addEditMenuItem(menuItems);
 
-		addMoveMenuItem(menuItems);
+		uiItemsBuilder.addMoveMenuItem(menuItems);
 
-		addCheckoutMenuItem(menuItems);
+		uiItemsBuilder.addCheckoutMenuItem(menuItems);
 
-		addCheckinMenuItem(menuItems);
+		uiItemsBuilder.addCheckinMenuItem(menuItems);
 
-		addCancelCheckoutMenuItem(menuItems);
+		uiItemsBuilder.addCancelCheckoutMenuItem(menuItems);
 
-		addPermissionsMenuItem(menuItems);
+		uiItemsBuilder.addPermissionsMenuItem(menuItems);
 
-		addDeleteMenuItem(menuItems);
+		uiItemsBuilder.addDeleteMenuItem(menuItems);
 	}
 
 }

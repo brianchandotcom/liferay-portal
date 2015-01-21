@@ -20,5 +20,4 @@ import com.liferay.portlet.documentlibrary.context.DLUIItemKeys;
  * @author Iván Zaera
  */
 public class IGUIItemKeys extends DLUIItemKeys {
-
 }

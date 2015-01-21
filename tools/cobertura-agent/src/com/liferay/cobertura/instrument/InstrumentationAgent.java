@@ -51,10 +51,12 @@ public class InstrumentationAgent {
 		try {
 			ProjectData projectData = ProjectDataUtil.captureProjectData();
 
+			List<AssertionError> assertionErrors = new ArrayList<>();
+
 			for (Class<?> clazz : classes) {
 				ClassData classData = projectData.getClassData(clazz.getName());
 
-				_assertClassDataCoverage(clazz, classData);
+				_assertClassDataCoverage(assertionErrors, clazz, classData);
 
 				if (includeInnerClasses) {
 					Class<?>[] declaredClasses = clazz.getDeclaredClasses();
@@ -70,9 +72,20 @@ public class InstrumentationAgent {
 						classData = projectData.getClassData(
 							declaredClass.getName());
 
-						_assertClassDataCoverage(declaredClass, classData);
+						_assertClassDataCoverage(
+							assertionErrors, declaredClass, classData);
 					}
 				}
+			}
+
+			if (!assertionErrors.isEmpty()) {
+				AssertionError assertionError = assertionErrors.get(0);
+
+				for (int i = 1; i < assertionErrors.size(); i++) {
+					assertionError.addSuppressed(assertionErrors.get(i));
+				}
+
+				throw assertionError;
 			}
 		}
 		finally {
@@ -258,15 +271,19 @@ public class InstrumentationAgent {
 	}
 
 	private static void _assertClassDataCoverage(
-		Class<?> clazz, ClassData classData) {
+		List<AssertionError> assertionErrors, Class<?> clazz,
+		ClassData classData) {
 
 		if (clazz.isInterface() || clazz.isSynthetic()) {
 			return;
 		}
 
 		if (classData == null) {
-			throw new RuntimeException(
-				"Class " + clazz.getName() + " has no coverage data");
+			assertionErrors.add(
+				new AssertionError(
+					"Class " + clazz.getName() + " has no coverage data"));
+
+			return;
 		}
 
 		if ((classData.getBranchCoverageRate() != 1.0) ||
@@ -298,8 +315,11 @@ public class InstrumentationAgent {
 					classData.getName(), lineData.getLineNumber());
 			}
 
-			throw new AssertionError(
-				classData.getName() + " is not fully covered");
+			assertionErrors.add(
+				new AssertionError(
+					classData.getName() + " is not fully covered"));
+
+			return;
 		}
 
 		System.out.printf(

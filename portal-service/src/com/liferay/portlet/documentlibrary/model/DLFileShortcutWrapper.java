@@ -258,6 +258,12 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.FileVersion getFileVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileShortcut.getFileVersion();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.repository.model.Folder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcut.getFolder();

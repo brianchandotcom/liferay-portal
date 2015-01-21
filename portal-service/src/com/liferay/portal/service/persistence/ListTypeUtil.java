@@ -247,66 +247,66 @@ public class ListTypeUtil {
 	}
 
 	/**
-	* Returns the list type where type = &#63; and name = &#63; or throws a {@link com.liferay.portal.NoSuchListTypeException} if it could not be found.
+	* Returns the list type where name = &#63; and type = &#63; or throws a {@link com.liferay.portal.NoSuchListTypeException} if it could not be found.
 	*
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @return the matching list type
 	* @throws com.liferay.portal.NoSuchListTypeException if a matching list type could not be found
 	*/
-	public static com.liferay.portal.model.ListType findByT_N(
-		java.lang.String type, java.lang.String name)
+	public static com.liferay.portal.model.ListType findByN_T(
+		java.lang.String name, java.lang.String type)
 		throws com.liferay.portal.NoSuchListTypeException {
-		return getPersistence().findByT_N(type, name);
+		return getPersistence().findByN_T(name, type);
 	}
 
 	/**
-	* Returns the list type where type = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the list type where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @return the matching list type, or <code>null</code> if a matching list type could not be found
 	*/
-	public static com.liferay.portal.model.ListType fetchByT_N(
-		java.lang.String type, java.lang.String name) {
-		return getPersistence().fetchByT_N(type, name);
+	public static com.liferay.portal.model.ListType fetchByN_T(
+		java.lang.String name, java.lang.String type) {
+		return getPersistence().fetchByN_T(name, type);
 	}
 
 	/**
-	* Returns the list type where type = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the list type where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching list type, or <code>null</code> if a matching list type could not be found
 	*/
-	public static com.liferay.portal.model.ListType fetchByT_N(
-		java.lang.String type, java.lang.String name, boolean retrieveFromCache) {
-		return getPersistence().fetchByT_N(type, name, retrieveFromCache);
+	public static com.liferay.portal.model.ListType fetchByN_T(
+		java.lang.String name, java.lang.String type, boolean retrieveFromCache) {
+		return getPersistence().fetchByN_T(name, type, retrieveFromCache);
 	}
 
 	/**
-	* Removes the list type where type = &#63; and name = &#63; from the database.
+	* Removes the list type where name = &#63; and type = &#63; from the database.
 	*
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @return the list type that was removed
 	*/
-	public static com.liferay.portal.model.ListType removeByT_N(
-		java.lang.String type, java.lang.String name)
+	public static com.liferay.portal.model.ListType removeByN_T(
+		java.lang.String name, java.lang.String type)
 		throws com.liferay.portal.NoSuchListTypeException {
-		return getPersistence().removeByT_N(type, name);
+		return getPersistence().removeByN_T(name, type);
 	}
 
 	/**
-	* Returns the number of list types where type = &#63; and name = &#63;.
+	* Returns the number of list types where name = &#63; and type = &#63;.
 	*
-	* @param type the type
 	* @param name the name
+	* @param type the type
 	* @return the number of matching list types
 	*/
-	public static int countByT_N(java.lang.String type, java.lang.String name) {
-		return getPersistence().countByT_N(type, name);
+	public static int countByN_T(java.lang.String name, java.lang.String type) {
+		return getPersistence().countByN_T(name, type);
 	}
 
 	/**

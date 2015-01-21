@@ -57,15 +57,15 @@ public class DefaultIGViewFileVersionDisplayContext
 	protected void buildMenuItems(List<MenuItem> menuItems)
 		throws PortalException {
 
-		addDownloadMenuItem(menuItems);
+		uiItemsBuilder.addDownloadMenuItem(menuItems);
 
-		addViewOriginalFileMenuItem(menuItems);
+		uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
 
-		addEditMenuItem(menuItems);
+		uiItemsBuilder.addEditMenuItem(menuItems);
 
-		addPermissionsMenuItem(menuItems);
+		uiItemsBuilder.addPermissionsMenuItem(menuItems);
 
-		addDeleteMenuItem(menuItems);
+		uiItemsBuilder.addDeleteMenuItem(menuItems);
 	}
 
 	private static final UUID _UUID = UUID.fromString(

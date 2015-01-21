@@ -108,25 +108,25 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
 		List<ToolbarItem> toolbarItems = new ArrayList<>();
 
-		_addDownloadToolbarItem(toolbarItems);
+		uiItemsBuilder.addDownloadToolbarItem(toolbarItems);
 
-		_addOpenInMsOfficeToolbarItem(toolbarItems);
+		uiItemsBuilder.addOpenInMsOfficeToolbarItem(toolbarItems);
 
-		_addEditToolbarItem(toolbarItems);
+		uiItemsBuilder.addEditToolbarItem(toolbarItems);
 
-		_addMoveToolbarItem(toolbarItems);
+		uiItemsBuilder.addMoveToolbarItem(toolbarItems);
 
-		_addCheckoutToolbarItem(toolbarItems);
+		uiItemsBuilder.addCheckoutToolbarItem(toolbarItems);
 
-		_addCancelCheckoutToolbarItem(toolbarItems);
+		uiItemsBuilder.addCancelCheckoutToolbarItem(toolbarItems);
 
-		_addCheckinToolbarItem(toolbarItems);
+		uiItemsBuilder.addCheckinToolbarItem(toolbarItems);
 
-		_addPermissionsToolbarItem(toolbarItems);
+		uiItemsBuilder.addPermissionsToolbarItem(toolbarItems);
 
-		_addMoveToTheRecycleBinToolbarItem(toolbarItems);
+		uiItemsBuilder.addMoveToTheRecycleBinToolbarItem(toolbarItems);
 
-		_addDeleteToolbarItem(toolbarItems);
+		uiItemsBuilder.addDeleteToolbarItem(toolbarItems);
 
 		return toolbarItems;
 	}
@@ -160,70 +160,13 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 		jspRenderer.render(request, response);
 	}
 
-	protected void addCancelCheckoutMenuItem(List<MenuItem> menuItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addCancelCheckoutMenuItem(menuItems);
-	}
-
-	protected void addCheckinMenuItem(List<MenuItem> menuItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addCheckinMenuItem(menuItems);
-	}
-
-	protected void addCheckoutMenuItem(List<MenuItem> menuItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addCheckoutMenuItem(menuItems);
-	}
-
-	protected void addDeleteMenuItem(List<MenuItem> menuItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addDeleteMenuItem(menuItems);
-	}
-
-	protected void addDownloadMenuItem(List<MenuItem> menuItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addDownloadMenuItem(menuItems);
-	}
-
-	protected void addEditMenuItem(List<MenuItem> menuItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addEditMenuItem(menuItems);
-	}
-
-	protected void addMoveMenuItem(List<MenuItem> menuItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addMoveMenuItem(menuItems);
-	}
-
-	protected void addOpenInMsOfficeMenuItem(List<MenuItem> menuItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addOpenInMsOfficeMenuItem(menuItems);
-	}
-
-	protected void addPermissionsMenuItem(List<MenuItem> menuItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addPermissionsMenuItem(menuItems);
-	}
-
-	protected void addViewOriginalFileMenuItem(List<MenuItem> menuItems) {
-		_uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
-	}
-
 	protected abstract void buildMenuItems(List<MenuItem> menuItems)
 		throws PortalException;
 
 	protected final FileEntry fileEntry;
 	protected final FileVersion fileVersion;
 	protected final HttpServletRequest request;
+	protected final UIItemsBuilder uiItemsBuilder;
 
 	private BaseDefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
@@ -250,11 +193,11 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 				new FileVersionDisplayContextHelper(fileVersion);
 
 			if (dlFileShortcut == null) {
-				_uiItemsBuilder = new UIItemsBuilder(
+				uiItemsBuilder = new UIItemsBuilder(
 					request, response, fileVersion);
 			}
 			else {
-				_uiItemsBuilder = new UIItemsBuilder(
+				uiItemsBuilder = new UIItemsBuilder(
 					request, response, dlFileShortcut);
 			}
 		}
@@ -264,67 +207,6 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 					"for " + fileVersion,
 				pe);
 		}
-	}
-
-	private void _addCancelCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addCancelCheckoutToolbarItem(toolbarItems);
-	}
-
-	private void _addCheckinToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addCheckinToolbarItem(toolbarItems);
-	}
-
-	private void _addCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addCheckoutToolbarItem(toolbarItems);
-	}
-
-	private void _addDeleteToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addDeleteToolbarItem(toolbarItems);
-	}
-
-	private void _addDownloadToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addDownloadToolbarItem(toolbarItems);
-	}
-
-	private void _addEditToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addEditToolbarItem(toolbarItems);
-	}
-
-	private void _addMoveToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addMoveToolbarItem(toolbarItems);
-	}
-
-	private void _addMoveToTheRecycleBinToolbarItem(
-			List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addMoveToTheRecycleBinToolbarItem(toolbarItems);
-	}
-
-	private void _addOpenInMsOfficeToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addOpenInMsOfficeToolbarItem(toolbarItems);
-	}
-
-	private void _addPermissionsToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		_uiItemsBuilder.addPermissionsToolbarItem(toolbarItems);
 	}
 
 	private DLActionsDisplayContext _getDLActionsDisplayContext()
@@ -367,6 +249,5 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;
 	private final ThemeDisplay _themeDisplay;
-	private final UIItemsBuilder _uiItemsBuilder;
 
 }

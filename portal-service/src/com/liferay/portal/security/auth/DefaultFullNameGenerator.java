@@ -243,7 +243,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		return fullName.substring(0, UserConstants.FULL_NAME_MAX_LENGTH);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultFullNameGenerator.class);
 
 }

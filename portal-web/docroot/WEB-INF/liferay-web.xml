@@ -409,6 +409,10 @@
 			<param-value>xml-rpc.servlet.</param-value>
 		</init-param>
 	</filter>
+	<filter>
+		<filter-name>Weblogic Include Filter</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.weblogic.WeblogicIncludeFilter</filter-class>
+	</filter>
 	<filter-mapping>
 		<filter-name>Ignore Filter - FTL</filter-name>
 		<url-pattern>*.ftl</url-pattern>
@@ -1030,5 +1034,10 @@
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Weblogic Include Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>
 </web-app>

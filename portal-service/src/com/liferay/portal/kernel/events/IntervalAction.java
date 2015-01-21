@@ -48,6 +48,10 @@ public class IntervalAction {
 		for (int i = 0; i <= pages; i++) {
 			int end = _start + _interval;
 
+			if (end > _total) {
+				end = _total;
+			}
+
 			performActions(_start, end);
 		}
 	}

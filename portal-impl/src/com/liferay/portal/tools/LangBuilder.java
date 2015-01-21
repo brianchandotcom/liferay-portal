@@ -297,13 +297,8 @@ public class LangBuilder {
 						else if (key.equals("lang.line.end")) {
 							translatedText = "right";
 						}
-						else if (key.equals("lang.user.name.fields") ||
-								 key.equals(
-									"lang.user.name.prefix.value.options") ||
-								 key.equals("lang.user.name.required.fields") ||
-								 key.equals(
-									"lang.user.name.suffix.value.options")) {
-										translatedText = "";
+						else if (key.startsWith("lang.user.name.")) {
+							translatedText = "";
 						}
 						else if (languageId.equals("el") &&
 								 (key.equals("enabled") || key.equals("on") ||

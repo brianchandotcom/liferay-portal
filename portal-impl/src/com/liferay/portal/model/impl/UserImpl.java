@@ -468,6 +468,7 @@ public class UserImpl extends UserBaseImpl {
 	 * @return the user's full name
 	 */
 	@AutoEscape
+	@Override
 	public String getFullName(boolean usePrefix, boolean useSuffix) {
 		FullNameGenerator fullNameGenerator =
 			FullNameGeneratorFactory.getInstance();
@@ -477,11 +478,15 @@ public class UserImpl extends UserBaseImpl {
 
 		try {
 			if (usePrefix) {
-				prefixId = getContact().getPrefixId();
+				Contact contact = getContact();
+
+				prefixId = contact.getPrefixId();
 			}
 
 			if (useSuffix) {
-				suffixId = getContact().getSuffixId();
+				Contact contact = getContact();
+
+				suffixId = contact.getSuffixId();
 			}
 		}
 		finally {

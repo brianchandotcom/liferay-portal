@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import java.util.List;
 
@@ -30,9 +31,15 @@ public class DefaultIGViewFileVersionDisplayContext
 	extends BaseDefaultDLViewFileVersionDisplayContext {
 
 	public DefaultIGViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
+		HttpServletRequest request, HttpServletResponse response,
+		DLFileShortcut dlFileShortcut) {
+
+		super(request, response, dlFileShortcut);
+	}
+
+	public DefaultIGViewFileVersionDisplayContext(
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion) {
 
 		super(request, response, fileVersion);
 	}
@@ -42,6 +49,8 @@ public class DefaultIGViewFileVersionDisplayContext
 		throws PortalException {
 
 		addDownloadMenuItem(menuItems);
+
+		addViewOriginalFileMenuItem(menuItems);
 
 		addEditMenuItem(menuItems);
 

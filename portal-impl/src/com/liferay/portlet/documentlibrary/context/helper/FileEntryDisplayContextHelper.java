@@ -105,10 +105,10 @@ public class FileEntryDisplayContextHelper {
 		return _hasViewPermission;
 	}
 
-	public boolean isCancelCheckoutDocumentButtonVisible()
+	public boolean isCancelCheckoutDocumentActionAvailable()
 		throws PortalException {
 
-		if (isCheckinButtonVisible() ||
+		if (isCheckinActionAvailable() ||
 			(isCheckedOut() && hasOverrideCheckoutPermission())) {
 
 			return true;
@@ -141,7 +141,7 @@ public class FileEntryDisplayContextHelper {
 		return false;
 	}
 
-	public boolean isCheckinButtonVisible() throws PortalException {
+	public boolean isCheckinActionAvailable() throws PortalException {
 		if (hasUpdatePermission() && isLockedByMe() && isSupportsLocking()) {
 			return true;
 		}
@@ -149,7 +149,7 @@ public class FileEntryDisplayContextHelper {
 		return false;
 	}
 
-	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
+	public boolean isCheckoutDocumentActionAvailable() throws PortalException {
 		if (hasUpdatePermission() && !isCheckedOut() && isSupportsLocking()) {
 			return true;
 		}
@@ -170,6 +170,14 @@ public class FileEntryDisplayContextHelper {
 		return _dlFileEntry;
 	}
 
+	public boolean isDownloadActionAvailable() throws PortalException {
+		return hasViewPermission();
+	}
+
+	public boolean isEditActionAvailable() throws PortalException {
+		return isUpdatable();
+	}
+
 	public boolean isFileEntryDeletable() throws PortalException {
 		if (hasDeletePermission() && !isCheckedOutByOther()) {
 			return true;
@@ -184,6 +192,14 @@ public class FileEntryDisplayContextHelper {
 		}
 
 		return false;
+	}
+
+	public boolean isMoveActionAvailable() throws PortalException {
+		return isUpdatable();
+	}
+
+	public boolean isPermissionsButtonVisible() throws PortalException {
+		return hasPermissionsPermission();
 	}
 
 	public boolean isSupportsLocking() {

@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,19 +26,18 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ivan Zaera
  */
-public class DLDisplayContextFactoryProviderUtil {
+public class DLDisplayContextProviderUtil {
 
-	public static DLDisplayContextFactoryProvider
+	public static DLDisplayContextProvider
 		getDLDisplayContextFactoryProvider() {
 
-		return _dlDisplayContextFactoryProvider;
+		return _dlDisplayContextProvider;
 	}
 
 	public static DLEditFileEntryDisplayContext
 		getDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileEntryType dlFileEntryType)
-		throws PortalException {
+			DLFileEntryType dlFileEntryType) {
 
 		return getDLDisplayContextFactoryProvider().
 			getDLEditFileEntryDisplayContext(
@@ -48,8 +47,7 @@ public class DLDisplayContextFactoryProviderUtil {
 	public static DLEditFileEntryDisplayContext
 		getDLEditFileEntryDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileEntry fileEntry)
-		throws PortalException {
+			FileEntry fileEntry) {
 
 		return getDLDisplayContextFactoryProvider().
 			getDLEditFileEntryDisplayContext(request, response, fileEntry);
@@ -58,8 +56,17 @@ public class DLDisplayContextFactoryProviderUtil {
 	public static DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
+			DLFileShortcut dlFileShortcut) {
+
+		return getDLDisplayContextFactoryProvider().
+			getDLViewFileVersionDisplayContext(
+				request, response, dlFileShortcut);
+	}
+
+	public static DLViewFileVersionDisplayContext
+		getDLViewFileVersionDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion) {
 
 		return getDLDisplayContextFactoryProvider().
 			getDLViewFileVersionDisplayContext(request, response, fileVersion);
@@ -68,8 +75,17 @@ public class DLDisplayContextFactoryProviderUtil {
 	public static DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
+			DLFileShortcut dlFileShortcut) {
+
+		return getDLDisplayContextFactoryProvider().
+			getIGFileVersionActionsDisplayContext(
+				request, response, dlFileShortcut);
+	}
+
+	public static DLViewFileVersionDisplayContext
+		getIGFileVersionActionsDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion) {
 
 		return getDLDisplayContextFactoryProvider().
 			getIGFileVersionActionsDisplayContext(
@@ -77,15 +93,14 @@ public class DLDisplayContextFactoryProviderUtil {
 	}
 
 	public void setDLDisplayContextFactoryProvider(
-		DLDisplayContextFactoryProvider dlDisplayContextFactoryProvider) {
+		DLDisplayContextProvider dlDisplayContextProvider) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_dlDisplayContextFactoryProvider = dlDisplayContextFactoryProvider;
+		_dlDisplayContextProvider = dlDisplayContextProvider;
 	}
 
-	private static DLDisplayContextFactoryProvider
-		_dlDisplayContextFactoryProvider =
-			new DLDisplayContextFactoryProviderImpl();
+	private static DLDisplayContextProvider
+		_dlDisplayContextProvider = new DLDisplayContextProviderImpl();
 
 }

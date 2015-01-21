@@ -42,32 +42,7 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public List<ToolbarItem> getToolbarItems() throws PortalException;
 
-	public boolean isCancelCheckoutDocumentButtonVisible()
-		throws PortalException;
-
-	public boolean isCheckinButtonVisible() throws PortalException;
-
-	public boolean isCheckoutDocumentButtonVisible() throws PortalException;
-
-	public boolean isDeleteButtonVisible() throws PortalException;
-
-	public boolean isDownloadButtonVisible() throws PortalException;
-
-	public boolean isEditButtonVisible() throws PortalException;
-
-	public boolean isMoveButtonVisible() throws PortalException;
-
-	public boolean isMoveToTheRecycleBinButtonVisible() throws PortalException;
-
-	public boolean isOpenInMsOfficeButtonVisible() throws PortalException;
-
-	public boolean isPermissionsButtonVisible() throws PortalException;
-
 	public boolean isVersionInfoVisible() throws PortalException;
-
-	public boolean isViewButtonVisible() throws PortalException;
-
-	public boolean isViewOriginalFileButtonVisible() throws PortalException;
 
 	public void renderPreview(
 			HttpServletRequest request, HttpServletResponse response)

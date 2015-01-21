@@ -50,6 +50,10 @@ public class IntervalAction {
 
 			if (end > _total) {
 				end = _total;
+
+				if (end == _start) {
+					break;
+				}
 			}
 
 			performActions(_start, end);

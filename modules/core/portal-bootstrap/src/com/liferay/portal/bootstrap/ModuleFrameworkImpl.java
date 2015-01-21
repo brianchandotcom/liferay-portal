@@ -825,13 +825,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			int index = fileName.indexOf(protocol);
 
-			if (index > 0) {
+			if (index > -1) {
 				fileName = fileName.substring(protocol.length());
 			}
 
 			index = fileName.indexOf('!');
 
-			if (index > 0) {
+			if (index > -1) {
 				fileName = fileName.substring(0, index);
 			}
 

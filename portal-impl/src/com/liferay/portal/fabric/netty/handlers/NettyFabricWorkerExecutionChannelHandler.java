@@ -283,7 +283,7 @@ public class NettyFabricWorkerExecutionChannelHandler
 					"Unable to locate fabric agent on channel " + channel);
 			}
 
-			nettyStubFabricAgent.finsihStartup(_id);
+			nettyStubFabricAgent.finishStartup(_id);
 
 			return null;
 		}

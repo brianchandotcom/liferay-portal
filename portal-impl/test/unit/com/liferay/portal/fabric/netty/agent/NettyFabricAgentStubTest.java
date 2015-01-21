@@ -168,7 +168,7 @@ public class NettyFabricAgentStubTest {
 					NettyFabricWorkerConfig<?> nettyFabricWorkerConfig =
 						(NettyFabricWorkerConfig<?>)obj;
 
-					nettyFabricAgentStub.finsihStartup(
+					nettyFabricAgentStub.finishStartup(
 						nettyFabricWorkerConfig.getId());
 				}
 
@@ -242,7 +242,7 @@ public class NettyFabricAgentStubTest {
 
 		// Ensure no side effect to finish an already finished startup
 
-		nettyFabricAgentStub.finsihStartup(id);
+		nettyFabricAgentStub.finishStartup(id);
 	}
 
 	@Test

@@ -202,7 +202,7 @@ public class NettyFabricAgentStub implements FabricAgent {
 		return nettyFabricWorkerStub;
 	}
 
-	public void finsihStartup(long id) {
+	public void finishStartup(long id) {
 		DefaultNoticeableFuture<?> startupNoticeabeFuture =
 			_startupNoticeableFutures.remove(id);
 

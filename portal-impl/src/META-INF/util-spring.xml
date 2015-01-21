@@ -13,7 +13,6 @@
 	<bean class="com.liferay.portal.convert.ConvertDatabase" />
 	<bean class="com.liferay.portal.convert.ConvertDocumentLibrary" />
 	<bean class="com.liferay.portal.convert.ConvertDocumentLibraryExtraSettings" />
-	<bean class="com.liferay.portal.convert.ConvertWikiCreole" />
 	<bean id="com.liferay.portal.events.StartupHelperUtil" class="com.liferay.portal.events.StartupHelperUtil">
 		<property name="startupHelper">
 			<bean class="com.liferay.portal.events.StartupHelper" />
@@ -222,11 +221,6 @@
 	<bean id="com.liferay.portal.kernel.oauth.OAuthFactoryUtil" class="com.liferay.portal.kernel.oauth.OAuthFactoryUtil">
 		<property name="OAuthFactory">
 			<bean class="com.liferay.portal.oauth.OAuthFactoryImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" class="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil">
-		<property name="BBCodeTranslator">
-			<bean class="com.liferay.portal.parsers.bbcode.HtmlBBCodeTranslatorImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil" class="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil">
@@ -879,9 +873,6 @@
 	<bean class="com.liferay.portal.verify.model.UserGroupVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.UserVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.WebSiteVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.WikiPageResourceVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.WikiNodeVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.WikiPageVerifiableModel" />
 	<bean id="com.liferay.portal.webserver.WebServerServletTokenUtil" class="com.liferay.portal.webserver.WebServerServletTokenUtil">
 		<property name="webServerServletToken">
 			<bean class="com.liferay.portal.webserver.WebServerServletTokenImpl">
@@ -1228,7 +1219,4 @@
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />
 	</bean>
-	<bean class="com.liferay.portlet.wiki.convert.WikiDLStoreConvertProcess" />
-	<bean id="com.liferay.portlet.wiki.service.permission.WikiNodePermission" class="com.liferay.portlet.wiki.service.permission.WikiNodePermission" />
-	<bean id="com.liferay.portlet.wiki.service.permission.WikiPagePermission" class="com.liferay.portlet.wiki.service.permission.WikiPagePermission" />
 </beans>

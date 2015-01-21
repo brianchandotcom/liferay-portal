@@ -161,9 +161,6 @@
 	<import class="com.liferay.portlet.softwarecatalog.model.SCProductVersion" />
 	<import class="com.liferay.portlet.trash.model.TrashEntry" />
 	<import class="com.liferay.portlet.trash.model.TrashVersion" />
-	<import class="com.liferay.portlet.wiki.model.WikiNode" />
-	<import class="com.liferay.portlet.wiki.model.WikiPage" />
-	<import class="com.liferay.portlet.wiki.model.WikiPageResource" />
 	<class name="com.liferay.counter.model.impl.CounterImpl" table="Counter">
 		<id name="name" type="java.lang.String">
 			<generator class="assigned" />
@@ -2728,62 +2725,5 @@
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-	</class>
-	<class name="com.liferay.portlet.wiki.model.impl.WikiNodeImpl" table="WikiNode">
-		<cache usage="read-write" />
-		<id name="nodeId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="lastPostDate" type="org.hibernate.type.TimestampType" />
-		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="statusDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.wiki.model.impl.WikiPageImpl" table="WikiPage">
-		<cache usage="read-write" />
-		<id name="pageId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="resourcePrimKey" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="nodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="version" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property name="minorEdit" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="summary" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="format" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="head" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="parentTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="redirectTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="statusDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl" table="WikiPageResource">
-		<cache usage="read-write" />
-		<id name="resourcePrimKey" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="nodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

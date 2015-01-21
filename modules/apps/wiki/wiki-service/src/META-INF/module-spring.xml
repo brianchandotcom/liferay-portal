@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean id="com.liferay.portlet.wiki.service.WikiNodeLocalService" class="com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl" />
+	<bean id="com.liferay.portlet.wiki.service.WikiNodeService" class="com.liferay.wiki.service.impl.WikiNodeServiceImpl" />
+	<bean id="com.liferay.portlet.wiki.service.persistence.WikiNodePersistence" class="com.liferay.wiki.service.persistence.impl.WikiNodePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.wiki.service.WikiPageLocalService" class="com.liferay.wiki.service.impl.WikiPageLocalServiceImpl" />
+	<bean id="com.liferay.portlet.wiki.service.WikiPageService" class="com.liferay.wiki.service.impl.WikiPageServiceImpl" />
+	<bean id="com.liferay.portlet.wiki.service.persistence.WikiPagePersistence" class="com.liferay.wiki.service.persistence.impl.WikiPagePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.wiki.service.persistence.WikiPageFinder" class="com.liferay.wiki.service.persistence.impl.WikiPageFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.wiki.service.WikiPageResourceLocalService" class="com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl" />
+	<bean id="com.liferay.portlet.wiki.service.persistence.WikiPageResourcePersistence" class="com.liferay.wiki.service.persistence.impl.WikiPageResourcePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.wiki.service.permission.WikiNodePermission" class="com.liferay.wiki.service.permission.WikiNodePermission" />
+	<bean id="com.liferay.portlet.wiki.service.permission.WikiPagePermission" class="com.liferay.wiki.service.permission.WikiPagePermission" />
+	<bean id="com.liferay.wiki.service.WikiNodeLocalService" class="com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl" />
+	<osgi:service interface="com.liferay.wiki.service.WikiNodeLocalService" ref="com.liferay.wiki.service.WikiNodeLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="wiki" />
+			<entry key="json.web.service.context.path" value="WikiNode" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.wiki.service.WikiNodeService" class="com.liferay.wiki.service.impl.WikiNodeServiceImpl" />
+	<osgi:service interface="com.liferay.wiki.service.WikiNodeService" ref="com.liferay.wiki.service.WikiNodeService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="wiki" />
+			<entry key="json.web.service.context.path" value="WikiNode" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.wiki.service.persistence.WikiNodePersistence" class="com.liferay.wiki.service.persistence.impl.WikiNodePersistenceImpl" parent="basePersistence" />
+	<osgi:service ref="com.liferay.wiki.service.persistence.WikiNodePersistence" interface="com.liferay.wiki.service.persistence.WikiNodePersistence" />
+	<bean id="com.liferay.wiki.service.WikiPageLocalService" class="com.liferay.wiki.service.impl.WikiPageLocalServiceImpl" />
+	<osgi:service interface="com.liferay.wiki.service.WikiPageLocalService" ref="com.liferay.wiki.service.WikiPageLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="wiki" />
+			<entry key="json.web.service.context.path" value="WikiPage" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.wiki.service.WikiPageService" class="com.liferay.wiki.service.impl.WikiPageServiceImpl" />
+	<osgi:service interface="com.liferay.wiki.service.WikiPageService" ref="com.liferay.wiki.service.WikiPageService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="wiki" />
+			<entry key="json.web.service.context.path" value="WikiPage" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.wiki.service.persistence.WikiPagePersistence" class="com.liferay.wiki.service.persistence.impl.WikiPagePersistenceImpl" parent="basePersistence" />
+	<osgi:service ref="com.liferay.wiki.service.persistence.WikiPagePersistence" interface="com.liferay.wiki.service.persistence.WikiPagePersistence" />
+	<bean id="com.liferay.wiki.service.persistence.WikiPageFinder" class="com.liferay.wiki.service.persistence.impl.WikiPageFinderImpl" parent="basePersistence" />
+	<osgi:service ref="com.liferay.wiki.service.persistence.WikiPageFinder" interface="com.liferay.wiki.service.persistence.WikiPageFinder" />
+	<bean id="com.liferay.wiki.service.WikiPageResourceLocalService" class="com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl" />
+	<osgi:service interface="com.liferay.wiki.service.WikiPageResourceLocalService" ref="com.liferay.wiki.service.WikiPageResourceLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="wiki" />
+			<entry key="json.web.service.context.path" value="WikiPageResource" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.wiki.service.persistence.WikiPageResourcePersistence" class="com.liferay.wiki.service.persistence.impl.WikiPageResourcePersistenceImpl" parent="basePersistence" />
+	<osgi:service ref="com.liferay.wiki.service.persistence.WikiPageResourcePersistence" interface="com.liferay.wiki.service.persistence.WikiPageResourcePersistence" />
+</beans>

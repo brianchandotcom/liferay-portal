@@ -610,7 +610,7 @@ public class DLFileEntryLocalServiceImpl
 
 		int total = dlFileEntryFinder.countByExtraSettings();
 
-		IntervalAction intervalAction = new IntervalAction(total);
+		final IntervalAction intervalAction = new IntervalAction(total);
 
 		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
@@ -625,6 +625,8 @@ public class DLFileEntryLocalServiceImpl
 					for (DLFileEntry dlFileEntry : dlFileEntries) {
 						convertExtraSettings(dlFileEntry, keys);
 					}
+
+					intervalAction.incrementStart(dlFileEntries.size());
 				}
 
 			});

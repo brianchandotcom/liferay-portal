@@ -19,7 +19,7 @@ import java.util.Date;
  * </p>
  *
  * @author ${author}
- * @see ${entity.name}PersistenceImpl
+ * @see ${packagePath}.service.persistence.impl.${entity.name}PersistenceImpl
  * @see ${entity.name}Util
  * @generated
  */

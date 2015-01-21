@@ -19,7 +19,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * The persistence utility for the ${entity.humanName} service. This utility wraps {@link ${entity.name}PersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the ${entity.humanName} service. This utility wraps {@link ${packagePath}.service.persistence.impl.${entity.name}PersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -27,7 +27,7 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author ${author}
  * @see ${entity.name}Persistence
- * @see ${entity.name}PersistenceImpl
+ * @see ${packagePath}.service.persistence.impl.${entity.name}PersistenceImpl
  * @generated
  */
 @ProviderType

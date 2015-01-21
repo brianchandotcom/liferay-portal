@@ -1285,9 +1285,9 @@
 		<finder name="Type" return-type="Collection">
 			<finder-column name="type" />
 		</finder>
-		<finder name="T_N" return-type="ListType">
-			<finder-column name="type" />
+		<finder name="N_T" return-type="ListType">
 			<finder-column name="name" />
+			<finder-column name="type" />
 		</finder>
 
 		<!-- References -->

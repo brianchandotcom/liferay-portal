@@ -3,12 +3,12 @@
 		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_EXTERNAL_SERVICES" value1="External Services" />
 
 		<if>
-			<equals arg1="enableOpenOfficeIntegration" arg2="true" />
+			<equals arg1="${enableOpenOfficeIntegration}" arg2="true" />
 			<then>
 				<execute action="CPServeradministrationExternalservices#check" locator-key1="OPEN_OFFICE_INTEGRATION_ENABLED_CHECKBOX" />
 			</then>
 			<elseif>
-				<equals arg1="enableOpenOfficeIntegration" arg2="false" />
+				<equals arg1="${enableOpenOfficeIntegration}" arg2="false" />
 				<then>
 					<execute action="CPServeradministrationExternalservices#uncheck" locator-key1="OPEN_OFFICE_INTEGRATION_ENABLED_CHECKBOX" />
 				</then>

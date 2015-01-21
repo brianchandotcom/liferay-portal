@@ -19,17 +19,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.context.DLDisplayContextFactory;
-import com.liferay.portlet.documentlibrary.context.DLEditFileEntryDisplayContext;
-import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContext;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
+import com.liferay.portlet.imagegallerydisplay.context.IGDisplayContextFactory;
+import com.liferay.portlet.imagegallerydisplay.context.IGViewFileVersionDisplayContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,56 +37,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivan Zaera
  */
 @Component(
-	immediate = true, service = DLDisplayContextFactory.class
+	immediate = true, service = IGDisplayContextFactory.class
 )
-public class GoogleDocsDLDisplayContextFactory
-	implements DLDisplayContextFactory {
+public class GoogleDocsIGDisplayContextFactory
+	implements IGDisplayContextFactory {
 
 	@Override
-	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
+	public IGViewFileVersionDisplayContext getIGViewFileVersionDisplayContext(
+		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		DLFileEntryType dlFileEntryType) {
-
-		DDMStructure googleDocsDDMStructure =
-			GoogleDocsMetadataHelper.getGoogleDocsDDMStructure(dlFileEntryType);
-
-		if (googleDocsDDMStructure != null) {
-			return new GoogleDocsDLEditFileEntryDisplayContext(
-				parentDLEditFileEntryDisplayContext, request, response,
-				dlFileEntryType);
-		}
-
-		return parentDLEditFileEntryDisplayContext;
-	}
-
-	@Override
-	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-		DLEditFileEntryDisplayContext parentDLEditFileEntryDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry) {
-
-		GoogleDocsMetadataHelper googleDocsMetadataHelper =
-			new GoogleDocsMetadataHelper(
-				(DLFileEntry)fileEntry.getModel(),
-				_dlFileEntryMetadataLocalService, _storageEngine);
-
-		if (googleDocsMetadataHelper.isGoogleDocs()) {
-			return new GoogleDocsDLEditFileEntryDisplayContext(
-				parentDLEditFileEntryDisplayContext, request, response,
-				fileEntry);
-		}
-
-		return parentDLEditFileEntryDisplayContext;
-	}
-
-	@Override
-	public DLViewFileVersionDisplayContext
-		getDLViewFileVersionDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut) {
+		DLFileShortcut dlFileShortcut) {
 
 		try {
 			long fileEntryId = dlFileShortcut.getToFileEntryId();
@@ -99,8 +55,8 @@ public class GoogleDocsDLDisplayContextFactory
 
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
-			return getDLViewFileVersionDisplayContext(
-				parentDLViewFileVersionDisplayContext, request, response,
+			return getIGViewFileVersionDisplayContext(
+				parentIGViewFileVersionDisplayContext, request, response,
 				fileVersion);
 		}
 		catch (PortalException pe) {
@@ -111,12 +67,10 @@ public class GoogleDocsDLDisplayContextFactory
 	}
 
 	@Override
-	public DLViewFileVersionDisplayContext
-		getDLViewFileVersionDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
+	public IGViewFileVersionDisplayContext getIGViewFileVersionDisplayContext(
+		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion) {
 
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
 			new GoogleDocsMetadataHelper(
@@ -124,12 +78,12 @@ public class GoogleDocsDLDisplayContextFactory
 				_dlFileEntryMetadataLocalService, _storageEngine);
 
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
-			return new GoogleDocsDLViewFileVersionDisplayContext(
-				parentDLViewFileVersionDisplayContext, request, response,
+			return new GoogleDocsIGViewFileVersionDisplayContext(
+				parentIGViewFileVersionDisplayContext, request, response,
 				fileVersion, googleDocsMetadataHelper);
 		}
 
-		return parentDLViewFileVersionDisplayContext;
+		return parentIGViewFileVersionDisplayContext;
 	}
 
 	@Reference

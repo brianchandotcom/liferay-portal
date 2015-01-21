@@ -363,7 +363,8 @@ create unique index IX_5FF18552 on LayoutSetBranch (groupId, privateLayout, name
 create index IX_9178FC71 on LayoutSetPrototype (companyId, active_);
 create index IX_D9FFCA84 on LayoutSetPrototype (uuid_, companyId);
 
-create index IX_7EEA27B6 on ListType (type_, name);
+create index IX_77729718 on ListType (name, type_);
+create index IX_2932DD37 on ListType (type_);
 
 create unique index IX_228562AD on Lock_ (className, key_);
 create index IX_E3F1286B on Lock_ (expirationDate);

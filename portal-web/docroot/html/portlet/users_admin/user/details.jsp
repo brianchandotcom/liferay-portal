@@ -18,6 +18,11 @@
 
 <%
 User selUser = (User)request.getAttribute("user.selUser");
+
+if (Validator.isNull(selUser)) {
+	selUser = PortalUtil.getSelectedUser(request);
+}
+
 Contact selContact = (Contact)request.getAttribute("user.selContact");
 
 Calendar birthday = CalendarFactoryUtil.getCalendar();
@@ -28,6 +33,19 @@ birthday.set(Calendar.YEAR, 1970);
 
 if (selContact != null) {
 	birthday.setTime(selContact.getBirthday());
+}
+
+String languageId = request.getParameter("languageId");
+
+Locale userLocale;
+
+if (Validator.isNotNull(languageId)) {
+	userLocale = LocaleUtil.fromLanguageId(languageId);
+}
+else {
+	User defaultUser = company.getDefaultUser();
+
+	userLocale = Validator.isNotNull(selUser) ? selUser.getLocale() : LocaleUtil.fromLanguageId(defaultUser.getLanguageId());
 }
 %>
 
@@ -124,6 +142,8 @@ if (selContact != null) {
 				</aui:input>
 			</c:otherwise>
 		</c:choose>
+
+		<%@ include file="/html/portlet/users_admin/user/details_language.jspf" %>
 
 		<%@ include file="/html/portlet/users_admin/user/details_user_name.jspf" %>
 	</aui:fieldset>

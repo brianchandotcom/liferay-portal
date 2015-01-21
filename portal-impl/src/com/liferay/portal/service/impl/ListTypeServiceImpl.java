@@ -27,6 +27,27 @@ import java.util.List;
  */
 public class ListTypeServiceImpl extends ListTypeServiceBaseImpl {
 
+	public ListType addListType(String type, String name) {
+		ListType listType = listTypePersistence.fetchByT_N(type, name);
+
+		if (listType != null) {
+			return listType;
+		}
+
+		int listTypeId = (int)counterLocalService.increment(
+			ListType.class.getName());
+
+		listType = listTypePersistence.create(listTypeId);
+
+		listType.setType(type);
+		listType.setName(name);
+		listType.setNew(true);
+
+		listTypePersistence.update(listType);
+
+		return listType;
+	}
+
 	@Override
 	public ListType getListType(int listTypeId) throws PortalException {
 		return listTypePersistence.findByPrimaryKey(listTypeId);

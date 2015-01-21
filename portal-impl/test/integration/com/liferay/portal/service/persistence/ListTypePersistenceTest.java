@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ListType;
+import com.liferay.portal.model.impl.ListTypeModelImpl;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.PersistenceTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 
 import org.junit.After;
@@ -338,6 +341,26 @@ public class ListTypePersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+			return;
+		}
+
+		ListType newListType = addListType();
+
+		_persistence.clearCache();
+
+		ListTypeModelImpl existingListTypeModelImpl = (ListTypeModelImpl)_persistence.findByPrimaryKey(newListType.getPrimaryKey());
+
+		Assert.assertTrue(Validator.equals(
+				existingListTypeModelImpl.getType(),
+				existingListTypeModelImpl.getOriginalType()));
+		Assert.assertTrue(Validator.equals(
+				existingListTypeModelImpl.getName(),
+				existingListTypeModelImpl.getOriginalName()));
 	}
 
 	protected ListType addListType() throws Exception {

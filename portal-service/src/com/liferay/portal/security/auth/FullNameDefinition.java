@@ -14,20 +14,22 @@
 
 package com.liferay.portal.security.auth;
 
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author Michael C. Han
+ * @author Jorge Ferrer
  */
-public interface FullNameGenerator {
+public class FullNameDefinition {
 
-	public String getFullName(
-		String firstName, String middleName, String lastName);
+	public void addField(FullNameField field) {
+		_fields.add(field);
+	}
 
-	public String getLocalizedFullName(
-		String firstName, String middleName, String lastName, Locale locale,
-		int prefixId, int suffixId);
+	public List<FullNameField> getFields() {
+		return _fields;
+	}
 
-	public String[] splitFullName(String fullName);
+	private final List<FullNameField> _fields = new ArrayList<>();
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.security.auth.FullNameDefinition;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -97,6 +98,10 @@ public class LocalizationUtil {
 	@Deprecated
 	public static String getDefaultLocale(String xml) {
 		return getDefaultLanguageId(xml);
+	}
+
+	public static FullNameDefinition getFullNameDefinition(Locale locale) {
+		return getLocalization().getFullNameDefinition(locale);
 	}
 
 	public static Localization getLocalization() {

@@ -113,10 +113,10 @@ if ((checkedOut || pending) && !dlPortletInstanceSettings.isEnableFileEntryDraft
 DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext = null;
 
 if (fileEntry == null) {
-	dlEditFileEntryDisplayContext = DLDisplayContextFactoryProviderUtil.getDLEditFileEntryDisplayContext(request, response, dlFileEntryType);
+	dlEditFileEntryDisplayContext = DLDisplayContextProviderUtil.getDLEditFileEntryDisplayContext(request, response, dlFileEntryType);
 }
 else {
-	dlEditFileEntryDisplayContext = DLDisplayContextFactoryProviderUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
+	dlEditFileEntryDisplayContext = DLDisplayContextProviderUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
 }
 %>
 

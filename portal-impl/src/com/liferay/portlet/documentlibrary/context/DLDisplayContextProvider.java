@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,28 +25,34 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ivan Zaera
  */
-public interface DLDisplayContextFactoryProvider {
+public interface DLDisplayContextProvider {
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileEntryType dlFileEntryType)
-		throws PortalException;
+		HttpServletRequest request, HttpServletResponse response,
+		DLFileEntryType dlFileEntryType);
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileEntry fileEntry)
-		throws PortalException;
+		HttpServletRequest request, HttpServletResponse response,
+		FileEntry fileEntry);
 
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException;
+			DLFileShortcut dlFileShortcut);
+
+	public DLViewFileVersionDisplayContext
+		getDLViewFileVersionDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion);
 
 	public DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException;
+			DLFileShortcut dlFileShortcut);
+
+	public DLViewFileVersionDisplayContext
+		getIGFileVersionActionsDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion);
 
 }

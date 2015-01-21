@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import java.util.List;
 
@@ -30,9 +31,15 @@ public class DefaultDLViewFileVersionDisplayContext
 	extends BaseDefaultDLViewFileVersionDisplayContext {
 
 	public DefaultDLViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
+		HttpServletRequest request, HttpServletResponse response,
+		DLFileShortcut dlFileShortcut) {
+
+		super(request, response, dlFileShortcut);
+	}
+
+	public DefaultDLViewFileVersionDisplayContext(
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion) {
 
 		super(request, response, fileVersion);
 	}
@@ -44,6 +51,8 @@ public class DefaultDLViewFileVersionDisplayContext
 		addDownloadMenuItem(menuItems);
 
 		addOpenInMsOfficeMenuItem(menuItems);
+
+		addViewOriginalFileMenuItem(menuItems);
 
 		addEditMenuItem(menuItems);
 

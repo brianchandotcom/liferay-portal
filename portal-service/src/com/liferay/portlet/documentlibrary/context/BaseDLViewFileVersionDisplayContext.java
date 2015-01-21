@@ -70,75 +70,13 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isCancelCheckoutDocumentButtonVisible()
-		throws PortalException {
-
-		return parentDLDisplayContext.isCancelCheckoutDocumentButtonVisible();
-	}
-
-	@Override
-	public boolean isCheckinButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isCheckinButtonVisible();
-	}
-
-	@Override
-	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isCheckoutDocumentButtonVisible();
-	}
-
-	@Override
-	public boolean isDeleteButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isDeleteButtonVisible();
-	}
-
-	@Override
-	public boolean isDownloadButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isDownloadButtonVisible();
-	}
-
-	@Override
 	public boolean isDownloadLinkVisible() throws PortalException {
 		return parentDLDisplayContext.isDownloadLinkVisible();
 	}
 
 	@Override
-	public boolean isEditButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isEditButtonVisible();
-	}
-
-	@Override
-	public boolean isMoveButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isMoveButtonVisible();
-	}
-
-	@Override
-	public boolean isMoveToTheRecycleBinButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isMoveToTheRecycleBinButtonVisible();
-	}
-
-	@Override
-	public boolean isOpenInMsOfficeButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isOpenInMsOfficeButtonVisible();
-	}
-
-	@Override
-	public boolean isPermissionsButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isPermissionsButtonVisible();
-	}
-
-	@Override
 	public boolean isVersionInfoVisible() throws PortalException {
 		return parentDLDisplayContext.isVersionInfoVisible();
-	}
-
-	@Override
-	public boolean isViewButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isViewButtonVisible();
-	}
-
-	@Override
-	public boolean isViewOriginalFileButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isViewOriginalFileButtonVisible();
 	}
 
 	@Override

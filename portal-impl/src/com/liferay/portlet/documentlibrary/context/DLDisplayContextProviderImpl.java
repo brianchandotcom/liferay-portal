@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -36,10 +36,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ivan Zaera
  */
-public class DLDisplayContextFactoryProviderImpl
-	implements DLDisplayContextFactoryProvider {
+public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
-	public DLDisplayContextFactoryProviderImpl() {
+	public DLDisplayContextProviderImpl() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
@@ -53,9 +52,8 @@ public class DLDisplayContextFactoryProviderImpl
 
 	@Override
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileEntryType dlFileEntryType)
-		throws PortalException {
+		HttpServletRequest request, HttpServletResponse response,
+		DLFileEntryType dlFileEntryType) {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
@@ -78,9 +76,8 @@ public class DLDisplayContextFactoryProviderImpl
 
 	@Override
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileEntry fileEntry)
-		throws PortalException {
+		HttpServletRequest request, HttpServletResponse response,
+		FileEntry fileEntry) {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
@@ -105,37 +102,100 @@ public class DLDisplayContextFactoryProviderImpl
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
+			DLFileShortcut dlFileShortcut) {
+
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			new DefaultDLViewFileVersionDisplayContext(
+				request, response, dlFileShortcut);
+
+		if (dlFileShortcut == null) {
+			return dlViewFileVersionDisplayContext;
+		}
+
+		for (
+			DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
+			_dlDisplayContextFactoryReferences) {
+
+			DLDisplayContextFactory dlDisplayContextFactory =
+				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
+
+			dlViewFileVersionDisplayContext =
+				dlDisplayContextFactory.getDLViewFileVersionDisplayContext(
+					dlViewFileVersionDisplayContext, request, response,
+					dlFileShortcut);
+		}
+
+		return dlViewFileVersionDisplayContext;
+	}
+
+	public DLViewFileVersionDisplayContext
+		getDLViewFileVersionDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion) {
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
 				request, response, fileVersion);
 
-		return _getDLViewFileVersionDisplayContext(
-			dlViewFileVersionDisplayContext, request, response, fileVersion);
+		if (fileVersion == null) {
+			return dlViewFileVersionDisplayContext;
+		}
+
+		for (
+			DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
+			_dlDisplayContextFactoryReferences) {
+
+			DLDisplayContextFactory dlDisplayContextFactory =
+				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
+
+			dlViewFileVersionDisplayContext =
+				dlDisplayContextFactory.getDLViewFileVersionDisplayContext(
+					dlViewFileVersionDisplayContext, request, response,
+					fileVersion);
+		}
+
+		return dlViewFileVersionDisplayContext;
 	}
 
 	@Override
 	public DLViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
+			DLFileShortcut dlFileShortcut) {
+
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			new DefaultIGViewFileVersionDisplayContext(
+				request, response, dlFileShortcut);
+
+		if (dlFileShortcut == null) {
+			return dlViewFileVersionDisplayContext;
+		}
+
+		for (
+			DLDisplayContextFactoryReference dlDisplayContextFactoryReference :
+			_dlDisplayContextFactoryReferences) {
+
+			DLDisplayContextFactory dlDisplayContextFactory =
+				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
+
+			dlViewFileVersionDisplayContext =
+				dlDisplayContextFactory.getIGFileVersionActionsDisplayContext(
+					dlViewFileVersionDisplayContext, request, response,
+					dlFileShortcut);
+		}
+
+		return dlViewFileVersionDisplayContext;
+	}
+
+	@Override
+	public DLViewFileVersionDisplayContext
+		getIGFileVersionActionsDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion) {
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultIGViewFileVersionDisplayContext(
 				request, response, fileVersion);
-
-		return _getDLViewFileVersionDisplayContext(
-			dlViewFileVersionDisplayContext, request, response, fileVersion);
-	}
-
-	private DLViewFileVersionDisplayContext
-		_getDLViewFileVersionDisplayContext(
-			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
 
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;
@@ -148,7 +208,7 @@ public class DLDisplayContextFactoryProviderImpl
 				dlDisplayContextFactoryReference.getDLDisplayContextFactory();
 
 			dlViewFileVersionDisplayContext =
-				dlDisplayContextFactory.getDLFileVersionActionsDisplayContext(
+				dlDisplayContextFactory.getIGFileVersionActionsDisplayContext(
 					dlViewFileVersionDisplayContext, request, response,
 					fileVersion);
 		}

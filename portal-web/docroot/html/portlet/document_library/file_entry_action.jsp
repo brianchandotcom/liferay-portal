@@ -81,59 +81,33 @@ else {
 	}
 }
 
-long folderId = 0;
+DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = null;
 
-if (fileShortcut != null) {
-	folderId = fileShortcut.getFolderId();
-
-	fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
+if (fileShortcut == null) {
+	dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
 }
-else if (fileEntry != null) {
-	folderId = fileEntry.getFolderId();
-}
-
-boolean checkedOut = fileEntry.isCheckedOut();
-boolean hasLock = fileEntry.hasLock();
-
-PortletURL viewFolderURL = liferayPortletResponse.createRenderURL();
-
-viewFolderURL.setParameter("struts_action", "/document_library/view");
-viewFolderURL.setParameter("folderId", String.valueOf(folderId));
-
-if (fileShortcut != null) {
+else {
 	fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
+
+	dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
 }
 
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
-DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayContextFactoryProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
 %>
 
 <liferay-util:buffer var="iconMenu">
 	<liferay-ui:icon-menu direction='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? "down" : "left" %>' extended="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? false : true %>" icon="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" message='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' showExpanded="<%= false %>" showWhenSingleIcon="<%= dlActionsDisplayContext.isShowWhenSingleIconActionButton() %>" triggerCssClass="btn btn-default">
-		<c:choose>
-			<c:when test="<%= (fileShortcut == null) %>">
 
-				<%
-				for (MenuItem menuItem : dlViewFileVersionDisplayContext.getMenuItems()) {
-				%>
+		<%
+		for (MenuItem menuItem : dlViewFileVersionDisplayContext.getMenuItems()) {
+		%>
 
-					<liferay-ui:menu-item menuItem="<%= menuItem %>" />
+			<liferay-ui:menu-item menuItem="<%= menuItem %>" />
 
-				<%
-				}
-				%>
+		<%
+		}
+		%>
 
-			</c:when>
-			<c:otherwise>
-				<%@ include file="/html/portlet/document_library/action/download.jspf" %>
-				<%@ include file="/html/portlet/document_library/action/open_document.jspf" %>
-				<%@ include file="/html/portlet/document_library/action/view_original.jspf" %>
-				<%@ include file="/html/portlet/document_library/action/edit.jspf" %>
-				<%@ include file="/html/portlet/document_library/action/move.jspf" %>
-				<%@ include file="/html/portlet/document_library/action/permissions.jspf" %>
-				<%@ include file="/html/portlet/document_library/action/delete.jspf" %>
-			</c:otherwise>
-		</c:choose>
 	</liferay-ui:icon-menu>
 </liferay-util:buffer>
 

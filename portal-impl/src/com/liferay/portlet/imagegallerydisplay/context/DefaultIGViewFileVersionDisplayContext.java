@@ -21,6 +21,7 @@ import com.liferay.portlet.documentlibrary.context.BaseDefaultDLViewFileVersionD
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +48,11 @@ public class DefaultIGViewFileVersionDisplayContext
 	}
 
 	@Override
+	public UUID getUuid() {
+		return _UUID;
+	}
+
+	@Override
 	protected void buildMenuItems(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -60,5 +66,8 @@ public class DefaultIGViewFileVersionDisplayContext
 
 		addDeleteMenuItem(menuItems);
 	}
+
+	private static final UUID _UUID = UUID.fromString(
+		"C04528F9-C005-4E21-A926-F068750B99DB");
 
 }

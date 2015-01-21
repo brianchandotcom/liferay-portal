@@ -65,10 +65,10 @@ import java.rmi.RemoteException;
 @ProviderType
 public class ListTypeServiceSoap {
 	public static com.liferay.portal.model.ListTypeSoap addListType(
-		java.lang.String type, java.lang.String name) throws RemoteException {
+		java.lang.String name, java.lang.String type) throws RemoteException {
 		try {
-			com.liferay.portal.model.ListType returnValue = ListTypeServiceUtil.addListType(type,
-					name);
+			com.liferay.portal.model.ListType returnValue = ListTypeServiceUtil.addListType(name,
+					type);
 
 			return com.liferay.portal.model.ListTypeSoap.toSoapModel(returnValue);
 		}

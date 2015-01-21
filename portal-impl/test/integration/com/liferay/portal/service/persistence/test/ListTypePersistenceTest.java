@@ -150,6 +150,20 @@ public class ListTypePersistenceTest {
 	}
 
 	@Test
+	public void testCountByN_T() {
+		try {
+			_persistence.countByN_T(StringPool.BLANK, StringPool.BLANK);
+
+			_persistence.countByN_T(StringPool.NULL, StringPool.NULL);
+
+			_persistence.countByN_T((String)null, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ListType newListType = addListType();
 
@@ -372,11 +386,11 @@ public class ListTypePersistenceTest {
 		ListTypeModelImpl existingListTypeModelImpl = (ListTypeModelImpl)_persistence.findByPrimaryKey(newListType.getPrimaryKey());
 
 		Assert.assertTrue(Validator.equals(
-				existingListTypeModelImpl.getType(),
-				existingListTypeModelImpl.getOriginalType()));
-		Assert.assertTrue(Validator.equals(
 				existingListTypeModelImpl.getName(),
 				existingListTypeModelImpl.getOriginalName()));
+		Assert.assertTrue(Validator.equals(
+				existingListTypeModelImpl.getType(),
+				existingListTypeModelImpl.getOriginalType()));
 	}
 
 	protected ListType addListType() throws Exception {

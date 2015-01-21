@@ -41,8 +41,8 @@ public class ListTypeServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.ListTypeServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.model.ListType addListType(
-		java.lang.String type, java.lang.String name) {
-		return getService().addListType(type, name);
+		java.lang.String name, java.lang.String type) {
+		return getService().addListType(name, type);
 	}
 
 	/**

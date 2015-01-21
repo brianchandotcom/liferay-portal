@@ -54,14 +54,14 @@ import com.liferay.portal.service.ListTypeServiceUtil;
 @ProviderType
 public class ListTypeServiceHttp {
 	public static com.liferay.portal.model.ListType addListType(
-		HttpPrincipal httpPrincipal, java.lang.String type,
-		java.lang.String name) {
+		HttpPrincipal httpPrincipal, java.lang.String name,
+		java.lang.String type) {
 		try {
 			MethodKey methodKey = new MethodKey(ListTypeServiceUtil.class,
 					"addListType", _addListTypeParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, type,
-					name);
+			MethodHandler methodHandler = new MethodHandler(methodKey, name,
+					type);
 
 			Object returnObj = null;
 

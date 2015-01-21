@@ -1368,7 +1368,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-43693" name="StagingDemoLocalLive3" priority="5">
+	<command name="StagingDemoLocalLive3" priority="5">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />
@@ -1696,7 +1696,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-43693" name="StagingDemoLocalLive4" priority="5">
+	<command name="StagingDemoLocalLive4" priority="5">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />
@@ -3163,7 +3163,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-8936" name="StagingRemoteDMViaGlobalScope" priority="5">
+	<command known-issues="LIFERAYQA-13078" name="StagingRemoteDMViaGlobalScope" priority="5">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<var name="siteID" value="${siteID}" />

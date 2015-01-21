@@ -323,7 +323,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49842,LPS-50660" name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
+	<command known-issues="LPS-50660" name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="siteScopeName" value="Global" />
 		</execute>

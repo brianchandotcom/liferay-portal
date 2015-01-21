@@ -376,7 +376,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-47822" name="SiteTemplateLocalization" priority="5">
+	<command name="SiteTemplateLocalization" priority="5">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<var name="currentSiteLanguages" value="English (United States),German (Germany),Spanish (Spain)" />

@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegi
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.MatchType;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
@@ -132,14 +131,6 @@ public class StartupAction extends SimpleAction {
 		Runtime runtime = Runtime.getRuntime();
 
 		runtime.addShutdownHook(new Thread(new ShutdownHook()));
-
-		// Template manager
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Initialize template manager");
-		}
-
-		TemplateManagerUtil.init();
 
 		// Indexers
 

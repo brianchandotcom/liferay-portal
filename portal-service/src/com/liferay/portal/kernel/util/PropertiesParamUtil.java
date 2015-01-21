@@ -141,13 +141,15 @@ public class PropertiesParamUtil {
 		Properties properties, HttpServletRequest request, String param,
 		Locale locale) {
 
-		return getDouble(properties, request, param, GetterUtil.DEFAULT_DOUBLE,	locale);
+		return getDouble(
+			properties, request, param, GetterUtil.DEFAULT_DOUBLE,	locale);
 	}
 
 	public static double getDouble(
 		Properties properties, PortletRequest portletRequest, String param) {
 
-		return getDouble(properties, portletRequest, param, GetterUtil.DEFAULT_DOUBLE);
+		return getDouble(
+			properties, portletRequest, param, GetterUtil.DEFAULT_DOUBLE);
 	}
 
 	public static double getDouble(

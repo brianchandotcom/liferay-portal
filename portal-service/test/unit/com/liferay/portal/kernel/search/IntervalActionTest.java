@@ -28,7 +28,7 @@ import org.junit.Test;
 public class IntervalActionTest {
 
 	@Test
-	public void testIndexerIntervalEndCalculation() throws Exception {
+	public void testIntervalActionEndCalculation() throws Exception {
 		final IntervalAction intervalAction = new IntervalAction(125);
 
 		intervalAction.setPerformActionMethod(
@@ -53,7 +53,7 @@ public class IntervalActionTest {
 	}
 
 	@Test
-	public void testIndexerIntervalPageCalculation() throws Exception {
+	public void testIntervalActionPageCalculation() throws Exception {
 		IntervalAction intervalAction = new IntervalAction(125);
 
 		intervalAction.setPerformActionMethod(

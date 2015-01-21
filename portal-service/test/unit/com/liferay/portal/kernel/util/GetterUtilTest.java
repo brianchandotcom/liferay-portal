@@ -14,15 +14,13 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.util.Locale;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.springframework.mock.web.MockHttpServletRequest;
-
 /**
  * @author Shuyang Zhou
+ * @author Cleydyr de Albuquerque
+ * @author Tibor Lipusz
  */
 public class GetterUtilTest {
 
@@ -47,12 +45,56 @@ public class GetterUtilTest {
 
 	@Test
 	public void testGetDouble() {
-		testWith("4.7", 4.7, LocaleUtil.US);
-		testWith("4,7", 4.7, LocaleUtil.PORTUGAL);
-		testWith("-4,7", -4.7, LocaleUtil.PORTUGAL);
-		testWith("e4.7", _DEFAULT_VALUE, LocaleUtil.US);
-		testWith("e4.7", _DEFAULT_VALUE, LocaleUtil.HUNGARY);
-		testWith("-4.7", -4.7, LocaleUtil.US);
+
+		// Wrong first char
+
+		double result = GetterUtil.getDouble("e12.3");
+
+		Assert.assertEquals(
+			"", GetterUtil.DEFAULT_DOUBLE, result, GetterUtil.DEFAULT_DOUBLE);
+
+		// Wrong middle char
+
+		result =  GetterUtil.getDouble("12e.3");
+
+		Assert.assertEquals(
+			"", GetterUtil.DEFAULT_DOUBLE, result, GetterUtil.DEFAULT_DOUBLE);
+
+		// Start with '+'
+
+		result = GetterUtil.getDouble("+12.3");
+
+		Assert.assertEquals("", 12.3, result, GetterUtil.DEFAULT_DOUBLE);
+
+		// Start with '-'
+
+		result = GetterUtil.getDouble("-12.3");
+
+		Assert.assertEquals("", -12.3, result, GetterUtil.DEFAULT_DOUBLE);
+
+		// Maximum double
+
+		result = GetterUtil.getDouble(Double.toString(Double.MAX_VALUE));
+
+		Assert.assertEquals(
+			"", Double.MAX_VALUE, result, GetterUtil.DEFAULT_DOUBLE);
+
+		// Minimum double
+
+		result = GetterUtil.getDouble(Double.toString(Double.MIN_VALUE));
+
+		Assert.assertEquals(
+			"", Double.MIN_VALUE, result, GetterUtil.DEFAULT_DOUBLE);
+
+		// Locale aware
+
+		result = GetterUtil.getDouble("4,7", LocaleUtil.PORTUGAL);
+
+		Assert.assertEquals("", 4.7, result, GetterUtil.DEFAULT_DOUBLE);
+
+		result = GetterUtil.getDouble("4.7", LocaleUtil.US);
+
+		Assert.assertEquals("", 4.7, result, GetterUtil.DEFAULT_DOUBLE);
 	}
 
 	@Test
@@ -225,18 +267,5 @@ public class GetterUtilTest {
 			"default", GetterUtil.getString(new Object(), "default"));
 		Assert.assertEquals("test", GetterUtil.getString("test"));
 	}
-
-	private void testWith(String expectedStr, double expected, Locale locale) {
-		String paramName = "value";
-		MockHttpServletRequest request = new MockHttpServletRequest();
-		request.setParameter(paramName, expectedStr);
-		double actual = ParamUtil.getDouble(
-			request, paramName, _DEFAULT_VALUE, locale);
-		Assert.assertEquals(expected, actual, _DEFAULT_DELTA);
-	}
-
-	private static final double _DEFAULT_DELTA = 0.001;
-
-	private static final double _DEFAULT_VALUE = -1.0;
 
 }

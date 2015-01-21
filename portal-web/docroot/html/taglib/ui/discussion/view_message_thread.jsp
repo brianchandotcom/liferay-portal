@@ -30,10 +30,6 @@ MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_TR
 MBThread thread = (MBThread)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD);
 int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH)).intValue();
 
-if (depth > 2) {
-	depth = 2;
-}
-
 String randomNamespace = (String)request.getAttribute("page.jsp-randomNamespace");
 int i = GetterUtil.getInteger(request.getAttribute("page.jsp-i"));
 MBMessage rootMessage = (MBMessage)request.getAttribute("page.jsp-rootMessage");
@@ -48,7 +44,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 %>
 
 <c:if test="<%= !(!message.isApproved() && ((message.getUserId() != user.getUserId()) || user.isDefaultUser()) && !permissionChecker.isGroupAdmin(scopeGroupId)) && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW) %>">
-	<div class="depth-<%= depth %> lfr-discussion">
+	<div class="lfr-discussion">
 		<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
 			<a name="<%= randomNamespace %>message_<%= message.getMessageId() %>"></a>
 
@@ -239,7 +235,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 		</div>
 
 		<div class="lfr-discussion-form-container">
-			<div class="<c:if test="<%= depth < 2 %>">depth-1 </c:if>lfr-discussion-form-reply" id='<portlet:namespace /><%= randomNamespace + "postReplyForm" + i %>' style="display: none;">
+			<div class="lfr-discussion-form-reply" id='<portlet:namespace /><%= randomNamespace + "postReplyForm" + i %>' style="display: none;">
 				<div class="lfr-discussion-details">
 					<liferay-ui:user-display
 						displayStyle="2"
@@ -307,38 +303,39 @@ request.setAttribute("page.jsp-i", new Integer(i));
 				</div>
 			</c:if>
 		</div>
+
+		<%
+		List messages = treeWalker.getMessages();
+		int[] range = treeWalker.getChildrenRange(message);
+
+		depth++;
+
+		for (int j = range[0]; j < range[1]; j++) {
+			MBMessage curMessage = (MBMessage)messages.get(j);
+
+			boolean lastChildNode = false;
+
+			if ((j + 1) == range[1]) {
+				lastChildNode = true;
+			}
+
+			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
+			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, curMessage);
+			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(depth));
+			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
+			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, selMessage);
+			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
+		%>
+
+			<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />
+
+		<%
+		}
+		%>
+
 	</div>
 </c:if>
-
-<%
-List messages = treeWalker.getMessages();
-int[] range = treeWalker.getChildrenRange(message);
-
-depth++;
-
-for (int j = range[0]; j < range[1]; j++) {
-	MBMessage curMessage = (MBMessage)messages.get(j);
-
-	boolean lastChildNode = false;
-
-	if ((j + 1) == range[1]) {
-		lastChildNode = true;
-	}
-
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, curMessage);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(depth));
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, selMessage);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-%>
-
-	<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />
-
-<%
-}
-%>
 
 <%!
 public static final String EDITOR_TEXT_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.text.jsp";

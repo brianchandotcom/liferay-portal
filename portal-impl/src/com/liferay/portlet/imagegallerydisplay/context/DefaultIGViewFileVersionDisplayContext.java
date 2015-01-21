@@ -34,8 +34,9 @@ public class DefaultIGViewFileVersionDisplayContext
 	implements IGViewFileVersionDisplayContext {
 
 	public DefaultIGViewFileVersionDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		DLFileShortcut dlFileShortcut) {
+			HttpServletRequest request, HttpServletResponse response,
+			DLFileShortcut dlFileShortcut)
+		throws PortalException {
 
 		super(request, response, dlFileShortcut);
 	}

@@ -90,11 +90,12 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	implements DLViewFileVersionDisplayContext {
 
 	public BaseDefaultDLViewFileVersionDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		DLFileShortcut dlFileShortcut) {
+			HttpServletRequest request, HttpServletResponse response,
+			DLFileShortcut dlFileShortcut)
+		throws PortalException {
 
 		this(
-			request, response, _getFileVersion(dlFileShortcut), dlFileShortcut);
+			request, response, dlFileShortcut.getFileVersion(), dlFileShortcut);
 	}
 
 	public BaseDefaultDLViewFileVersionDisplayContext(
@@ -545,22 +546,6 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	protected final FileEntry fileEntry;
 	protected final FileVersion fileVersion;
 	protected final HttpServletRequest request;
-
-	private static FileVersion _getFileVersion(DLFileShortcut dlFileShortcut) {
-		try {
-			long fileEntryId = dlFileShortcut.getToFileEntryId();
-
-			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
-
-			return fileEntry.getFileVersion();
-		}
-		catch (PortalException pe) {
-			throw new SystemException(
-				"Unable to get file version from shortcut " +
-					dlFileShortcut.getToTitle(),
-				pe);
-		}
-	}
 
 	private BaseDefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,

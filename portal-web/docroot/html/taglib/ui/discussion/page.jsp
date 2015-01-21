@@ -569,7 +569,7 @@ SearchContainer searchContainer = null;
 </section>
 
 <%!
-public static final String EDITOR_TEXT_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.text.jsp";
+public static final String EDITOR_TEXT_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp";
 
 private RatingsEntry getRatingsEntry(List<RatingsEntry> ratingEntries, long classPK) {
 	for (RatingsEntry ratingsEntry : ratingEntries) {

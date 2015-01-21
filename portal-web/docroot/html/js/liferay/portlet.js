@@ -342,9 +342,19 @@
 					dataType: dataType,
 					on: {
 						failure: function(event, id, obj) {
-							placeHolder.hide();
+							var statusText = obj.statusText;
 
-							placeHolder.placeAfter('<div class="alert alert-danger">' + Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page') + '</div>');
+							if (statusText) {
+								var status = Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page');
+
+								if (statusText == 'timeout') {
+									status = Liferay.Language.get('request-timeout');
+								}
+
+								placeHolder.hide();
+
+								placeHolder.placeAfter('<div class="alert alert-danger">' + status + '</div>');
+							}
 						},
 						success: function(event, id, obj) {
 							var instance = this;
@@ -384,7 +394,7 @@
 					instance.list.splice(portletIndex, 1);
 				}
 
-				var options = Portlet._mergeOptions(portlet, options);
+				options = Portlet._mergeOptions(portlet, options);
 
 				Liferay.fire('destroyPortlet', options);
 

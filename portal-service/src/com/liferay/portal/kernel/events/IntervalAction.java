@@ -38,6 +38,10 @@ public class IntervalAction {
 		_start++;
 	}
 
+	public void incrementStart(int increment) {
+		_start += increment;
+	}
+
 	public void performActions() throws PortalException {
 		int pages = _total / _interval;
 

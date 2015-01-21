@@ -125,7 +125,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 
 							sb.append("<a class=\"lfr-discussion-parent-link\" data-title=\"");
 							sb.append(HtmlUtil.escape(buffer));
-							sb.append("\"data-metaData=\"");
+							sb.append("\" data-metaData=\"");
 							sb.append(HtmlUtil.escape(parentMessage.getBody()));
 							sb.append("\">");
 							sb.append(HtmlUtil.escape(parentMessage.getUserName()));

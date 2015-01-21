@@ -474,7 +474,6 @@ public class UserImpl extends UserBaseImpl {
 			FullNameGeneratorFactory.getInstance();
 
 		int prefixId = 0;
-		int suffixId = 0;
 
 		try {
 			if (usePrefix) {
@@ -482,18 +481,25 @@ public class UserImpl extends UserBaseImpl {
 
 				prefixId = contact.getPrefixId();
 			}
+		}
+		catch (PortalException pe) {
+		}
 
+		int suffixId = 0;
+
+		try {
 			if (useSuffix) {
 				Contact contact = getContact();
 
 				suffixId = contact.getSuffixId();
 			}
 		}
-		finally {
-			return fullNameGenerator.getLocalizedFullName(
-				getFirstName(), getMiddleName(), getLastName(), getLocale(),
-				prefixId, suffixId);
+		catch (PortalException pe) {
 		}
+
+		return fullNameGenerator.getLocalizedFullName(
+			getFirstName(), getMiddleName(), getLastName(), getLocale(),
+			prefixId, suffixId);
 	}
 
 	@Override

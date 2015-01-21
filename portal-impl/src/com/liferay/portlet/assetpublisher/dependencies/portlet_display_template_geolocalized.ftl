@@ -138,6 +138,7 @@
 			map.openDialog(
 				{
 					content: feature.getProperty('abstract'),
+					marker: feature.getMarker(),
 					position: feature.getGeometry().get('location')
 				}
 			);

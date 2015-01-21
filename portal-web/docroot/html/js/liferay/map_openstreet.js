@@ -65,6 +65,8 @@ AUI.add(
 
 						dialog.setLatLng(cfg.position);
 
+						dialog.options.offset = cfg.marker.options.icon.options.popupAnchor || [0, 0];
+
 						dialog.openOn(instance.get('map'));
 					}
 				}
@@ -201,7 +203,9 @@ AUI.add(
 						return style;
 					},
 
-					_wrapNativeFeature: function(feature) {
+					_wrapNativeFeature: function(event) {
+						var feature = (event.geometry) ? event : event.target.feature;
+
 						var geometry = feature.geometry;
 
 						return {
@@ -215,6 +219,10 @@ AUI.add(
 										return geometry.type;
 									}
 								};
+							},
+
+							getMarker: function() {
+								return event.target;
 							},
 
 							getProperty: function(prop) {

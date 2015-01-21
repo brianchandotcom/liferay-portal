@@ -220,7 +220,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 			}
 		}
 
-		return sb.toString();
+		return StringUtil.trim(sb.toString());
 	}
 
 	protected boolean isFullNameTooLong(String fullName) {

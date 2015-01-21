@@ -41,7 +41,6 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Timestamp;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -146,14 +145,9 @@ public class JournalArticleFinderImpl
 		long groupId, long classNameId, String ddmStructureKey,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
-		List<String> ddmStructureKeys = new ArrayList<String>();
-
-		if (Validator.isNotNull(ddmStructureKey)) {
-			ddmStructureKeys.add(ddmStructureKey);
-		}
-
 		return doCountByG_C_S(
-			groupId, classNameId, ddmStructureKeys, queryDefinition, false);
+			groupId, classNameId, new String[] {ddmStructureKey},
+			queryDefinition, false);
 	}
 
 	@Override
@@ -271,14 +265,9 @@ public class JournalArticleFinderImpl
 		long groupId, long classNameId, String ddmStructureKey,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
-		List<String> ddmStructureKeys = new ArrayList<String>();
-
-		if (Validator.isNotNull(ddmStructureKey)) {
-			ddmStructureKeys.add(ddmStructureKey);
-		}
-
 		return doCountByG_C_S(
-			groupId, classNameId, ddmStructureKeys, queryDefinition, true);
+			groupId, classNameId, new String[] {ddmStructureKey},
+			queryDefinition, true);
 	}
 
 	@Override
@@ -397,19 +386,14 @@ public class JournalArticleFinderImpl
 		long groupId, long classNameId, String ddmStructureKey,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
-		List<String> ddmStructureKeys = new ArrayList<String>();
-
-		if (Validator.isNotNull(ddmStructureKey)) {
-			ddmStructureKeys.add(ddmStructureKey);
-		}
-
 		return doFindByG_C_S(
-			groupId, classNameId, ddmStructureKeys, queryDefinition, true);
+			groupId, classNameId, new String[] {ddmStructureKey},
+			queryDefinition, true);
 	}
 
 	@Override
 	public List<JournalArticle> filterFindByG_C_S(
-		long groupId, long classNameId, List<String> ddmStructureKeys,
+		long groupId, long classNameId, String[] ddmStructureKeys,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_C_S(
@@ -702,19 +686,14 @@ public class JournalArticleFinderImpl
 		long groupId, long classNameId, String ddmStructureKey,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
-		List<String> ddmStructureKeys = new ArrayList<String>();
-
-		if (Validator.isNotNull(ddmStructureKey)) {
-			ddmStructureKeys.add(ddmStructureKey);
-		}
-
 		return doFindByG_C_S(
-			groupId, classNameId, ddmStructureKeys, queryDefinition, false);
+			groupId, classNameId, new String[] {ddmStructureKey},
+			queryDefinition, false);
 	}
 
 	@Override
 	public List<JournalArticle> findByG_C_S(
-		long groupId, long classNameId, List<String> ddmStructureKeys,
+		long groupId, long classNameId, String[] ddmStructureKeys,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_C_S(
@@ -851,7 +830,7 @@ public class JournalArticleFinderImpl
 	}
 
 	protected int doCountByG_C_S(
-		long groupId, long classNameId, List<String> ddmStructureKeys,
+		long groupId, long classNameId, String[] ddmStructureKeys,
 		QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {
 
@@ -868,16 +847,16 @@ public class JournalArticleFinderImpl
 					sql, "(groupId = ?) AND", StringPool.BLANK);
 			}
 
+			sql = StringUtil.replace(
+				sql, "[$DDM_STRUCTURE_KEY$]",
+				getDDMStructureKeys(
+					ddmStructureKeys, JournalArticleImpl.TABLE_NAME));
+
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, JournalArticle.class.getName(),
 					"JournalArticle.resourcePrimKey", groupId);
 			}
-
-			sql = StringUtil.replace(
-				sql, "[$DDM_STRUCTURE_KEY$]",
-				getDDMStructureKeys(
-					ddmStructureKeys, JournalArticleImpl.TABLE_NAME));
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -1203,7 +1182,7 @@ public class JournalArticleFinderImpl
 	}
 
 	protected List<JournalArticle> doFindByG_C_S(
-		long groupId, long classNameId, List<String> ddmStructureKeys,
+		long groupId, long classNameId, String[] ddmStructureKeys,
 		QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {
 
@@ -1225,16 +1204,16 @@ public class JournalArticleFinderImpl
 					sql, "(JournalArticle.groupId = ?) AND", StringPool.BLANK);
 			}
 
+			sql = StringUtil.replace(
+				sql, "[$DDM_STRUCTURE_KEY$]",
+				getDDMStructureKeys(
+					ddmStructureKeys, JournalArticleImpl.TABLE_NAME));
+
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, JournalArticle.class.getName(),
 					"JournalArticle.resourcePrimKey", groupId);
 			}
-
-			sql = StringUtil.replace(
-				sql, "[$DDM_STRUCTURE_KEY$]",
-				getDDMStructureKeys(
-					ddmStructureKeys, JournalArticleImpl.TABLE_NAME));
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -1488,24 +1467,23 @@ public class JournalArticleFinderImpl
 	}
 
 	protected String getDDMStructureKeys(
-		List<String> ddmStructureKeys, String tableName) {
+		String[] ddmStructureKeys, String tableName) {
 
-		if (ddmStructureKeys.isEmpty()) {
+		if (ArrayUtil.isEmpty(ddmStructureKeys)) {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(ddmStructureKeys.size() * 3 + 1);
+		StringBundler sb = new StringBundler(ddmStructureKeys.length * 3 + 1);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		for (int i = 0; i < ddmStructureKeys.size(); i++) {
+		for (int i = 0; i < ddmStructureKeys.length; i++) {
 			sb.append(tableName);
 			sb.append(".ddmStructureKey = ? ");
-
-			if ((i + 1) != ddmStructureKeys.size()) {
-				sb.append(WHERE_OR);
-			}
+			sb.append(WHERE_OR);
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 

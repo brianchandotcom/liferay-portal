@@ -2623,12 +2623,12 @@ public class JournalArticleLocalServiceImpl
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, new ArticleVersionComparator());
 
-		List<JournalArticle> articles = new ArrayList<JournalArticle>();
+		List<JournalArticle> articles = new ArrayList<>();
 
 		articles.addAll(
 			journalArticleFinder.findByG_C_S(
 				0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-				ListUtil.toList(ddmStructureKeys), queryDefinitionApproved));
+				ddmStructureKeys, queryDefinitionApproved));
 
 		QueryDefinition<JournalArticle> queryDefinitionTrash =
 			new QueryDefinition<JournalArticle>(
@@ -2638,7 +2638,7 @@ public class JournalArticleLocalServiceImpl
 		articles.addAll(
 			journalArticleFinder.findByG_C_S(
 				0, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-				ListUtil.toList(ddmStructureKeys), queryDefinitionTrash));
+				ddmStructureKeys, queryDefinitionTrash));
 
 		return articles;
 	}

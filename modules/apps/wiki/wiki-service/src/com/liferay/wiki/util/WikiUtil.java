@@ -491,9 +491,9 @@ public class WikiUtil {
 		LiferayPortletURL liferayViewPageURL = (LiferayPortletURL)viewPageURL;
 		LiferayPortletURL liferayEditPageURL = (LiferayPortletURL)editPageURL;
 
-		WikiEngine engine = _getEngine(page.getFormat());
+		WikiEngine wikiEngine = _getWikiEngine(page.getFormat());
 
-		String content = engine.convert(
+		String content = wikiEngine.convert(
 			page, viewPageURL, editPageURL, attachmentURLPrefix);
 
 		String editPageURLString = StringPool.BLANK;
@@ -560,16 +560,16 @@ public class WikiUtil {
 		return wikiEngineTracker.getProperty(format, "edit.page");
 	}
 
-	private WikiEngine _getEngine(String format) throws WikiFormatException {
+	private WikiEngine _getWikiEngine(String format) throws WikiFormatException {
 		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
 
-		WikiEngine engine = wikiEngineTracker.getWikiEngine(format);
+		WikiEngine wikiEngine = wikiEngineTracker.getWikiEngine(format);
 
-		if (engine == null) {
+		if (wikiEngine == null) {
 			throw new WikiFormatException("Unknown wiki format " + format);
 		}
 
-		return engine;
+		return wikiEngine;
 	}
 
 	private String _getHelpPage(String format) {
@@ -588,7 +588,9 @@ public class WikiUtil {
 		throws PageContentException {
 
 		try {
-			return _getEngine(page.getFormat()).getOutgoingLinks(page);
+			WikiEngine wikiEngine = _getWikiEngine(page.getFormat());
+
+			return wikiEngine.getOutgoingLinks(page);
 		}
 		catch (WikiFormatException wfe) {
 			return Collections.emptyMap();
@@ -626,7 +628,7 @@ public class WikiUtil {
 	private boolean _validate(long nodeId, String content, String format)
 		throws WikiFormatException {
 
-		return _getEngine(format).validate(nodeId, content);
+		return _getWikiEngine(format).validate(nodeId, content);
 	}
 
 	private static final String[] _ESCAPED_CHARS = new String[] {

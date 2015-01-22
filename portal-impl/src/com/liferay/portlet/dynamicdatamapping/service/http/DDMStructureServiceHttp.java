@@ -659,14 +659,14 @@ public class DDMStructureServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
 		HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String keywords, int start, int end,
+		long classNameId, java.lang.String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"search", _searchParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupIds, classNameIds, keywords, start, end,
+					companyId, groupIds, classNameId, keywords, start, end,
 					orderByComparator);
 
 			Object returnObj = null;
@@ -689,16 +689,16 @@ public class DDMStructureServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
 		HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String name,
-		java.lang.String description, java.lang.String storageType, int type,
-		boolean andOperator, int start, int end,
+		long classNameId, java.lang.String name, java.lang.String description,
+		java.lang.String storageType, int type, boolean andOperator, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"search", _searchParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupIds, classNameIds, name, description,
+					companyId, groupIds, classNameId, name, description,
 					storageType, type, andOperator, start, end,
 					orderByComparator);
 
@@ -721,13 +721,13 @@ public class DDMStructureServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long[] groupIds, long[] classNameIds, java.lang.String keywords) {
+		long[] groupIds, long classNameId, java.lang.String keywords) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMStructureServiceUtil.class,
 					"searchCount", _searchCountParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupIds, classNameIds, keywords);
+					companyId, groupIds, classNameId, keywords);
 
 			Object returnObj = null;
 
@@ -748,7 +748,7 @@ public class DDMStructureServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
-		long[] groupIds, long[] classNameIds, java.lang.String name,
+		long[] groupIds, long classNameId, java.lang.String name,
 		java.lang.String description, java.lang.String storageType, int type,
 		boolean andOperator) {
 		try {
@@ -756,7 +756,7 @@ public class DDMStructureServiceHttp {
 					"searchCount", _searchCountParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupIds, classNameIds, name, description,
+					companyId, groupIds, classNameId, name, description,
 					storageType, type, andOperator);
 
 			Object returnObj = null;
@@ -1003,21 +1003,21 @@ public class DDMStructureServiceHttp {
 			long[].class, long.class, int.class, int.class
 		};
 	private static final Class<?>[] _searchParameterTypes18 = new Class[] {
-			long.class, long[].class, long[].class, java.lang.String.class,
+			long.class, long[].class, long.class, java.lang.String.class,
 			int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchParameterTypes19 = new Class[] {
-			long.class, long[].class, long[].class, java.lang.String.class,
+			long.class, long[].class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, int.class,
 			boolean.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes20 = new Class[] {
-			long.class, long[].class, long[].class, java.lang.String.class
+			long.class, long[].class, long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes21 = new Class[] {
-			long.class, long[].class, long[].class, java.lang.String.class,
+			long.class, long[].class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, int.class,
 			boolean.class
 		};

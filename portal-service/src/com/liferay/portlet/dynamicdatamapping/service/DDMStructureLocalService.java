@@ -1050,8 +1050,8 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	*
 	* @param companyId the primary key of the structure's company
 	* @param groupIds the primary keys of the groups
-	* @param classNameIds the primary keys of the class names of the models
-	the structures are related to
+	* @param classNameId the primary key of the class name of the model the
+	structure is related to
 	* @param keywords the keywords (space separated), which may occur in the
 	structure's name or description (optionally <code>null</code>)
 	* @param start the lower bound of the range of structures to return
@@ -1063,7 +1063,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
-		long companyId, long[] groupIds, long[] classNameIds,
+		long companyId, long[] groupIds, long classNameId,
 		java.lang.String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
 
@@ -1083,8 +1083,8 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	*
 	* @param companyId the primary key of the structure's company
 	* @param groupIds the primary keys of the groups
-	* @param classNameIds the primary keys of the class names of the models
-	the structures are related to
+	* @param classNameId the primary key of the class name of the model the
+	structure is related to
 	* @param name the name keywords
 	* @param description the description keywords
 	* @param storageType the structure's storage type. It can be "xml" or
@@ -1103,7 +1103,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
-		long companyId, long[] groupIds, long[] classNameIds,
+		long companyId, long[] groupIds, long classNameId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String storageType, int type, boolean andOperator, int start,
 		int end,
@@ -1115,15 +1115,15 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	*
 	* @param companyId the primary key of the structure's company
 	* @param groupIds the primary keys of the groups
-	* @param classNameIds the primary keys of the class names of the models
-	the structures are related to
+	* @param classNameId the primary key of the class name of the model the
+	structure is related to
 	* @param keywords the keywords (space separated), which may occur in the
 	structure's name or description (optionally <code>null</code>)
 	* @return the number of matching structures
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String keywords);
+	public int searchCount(long companyId, long[] groupIds, long classNameId,
+		java.lang.String keywords);
 
 	/**
 	* Returns the number of structures matching the groups, class name IDs,
@@ -1145,10 +1145,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @return the number of matching structures
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String name,
-		java.lang.String description, java.lang.String storageType, int type,
-		boolean andOperator);
+	public int searchCount(long companyId, long[] groupIds, long classNameId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String storageType, int type, boolean andOperator);
 
 	/**
 	* Sets the Spring bean ID for this bean.

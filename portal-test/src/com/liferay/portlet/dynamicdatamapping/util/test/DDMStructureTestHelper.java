@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.util.test;
 
 import com.liferay.portal.kernel.locale.test.LocaleTestUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
@@ -41,7 +42,8 @@ public class DDMStructureTestHelper {
 
 	public DDMStructure addStructure(
 			long parentStructureId, long classNameId, String structureKey,
-			String name, String definition, String storageType, int type)
+			String name, String description, String definition,
+			String storageType, int type)
 		throws Exception {
 
 		DDMXMLUtil.validateXML(definition);
@@ -51,7 +53,8 @@ public class DDMStructureTestHelper {
 		return DDMStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(), parentStructureId,
 			classNameId, structureKey, LocaleTestUtil.getDefaultLocaleMap(name),
-			null, ddmForm, storageType, type,
+			LocaleTestUtil.getDefaultLocaleMap(description), ddmForm,
+			storageType, type,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
@@ -62,7 +65,8 @@ public class DDMStructureTestHelper {
 
 		return addStructure(
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
-			structureKey, name, definition, storageType, type);
+			structureKey, name, StringPool.BLANK, definition, storageType,
+			type);
 	}
 
 	public DDMStructure addStructure(String definition, String storageType)

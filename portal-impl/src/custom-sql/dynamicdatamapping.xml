@@ -10,12 +10,12 @@
 			WHERE
 				(companyId = ?) AND
 				[$GROUP_ID$]
-				(classNameId = ? OR ? IS NULL) AND
+				(classNameId = ?) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(storageType LIKE ? [$AND_OR_NULL_CHECK$])
+					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
+				(storageType = ? OR ? IS NULL) AND
 				(type_ = ?)
 		]]>
 	</sql>
@@ -28,12 +28,12 @@
 			WHERE
 				(companyId = ?) AND
 				[$GROUP_ID$]
-				(classNameId = ? OR ? IS NULL) AND
+				(classNameId = ?) AND
 				(
 					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(storageType LIKE ? [$AND_OR_NULL_CHECK$])
+					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
+				(storageType = ? OR ? IS NULL) AND
 				(type_ = ?)
 			ORDER BY
 				DDMStructure.structureId DESC

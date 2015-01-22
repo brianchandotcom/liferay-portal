@@ -1319,8 +1319,8 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	*
 	* @param companyId the primary key of the structure's company
 	* @param groupIds the primary keys of the groups
-	* @param classNameIds the primary keys of the class names of the models
-	the structures are related to
+	* @param classNameId the primary key of the class name of the model the
+	structure is related to
 	* @param keywords the keywords (space separated), which may occur in the
 	structure's name or description (optionally <code>null</code>)
 	* @param start the lower bound of the range of structures to return
@@ -1332,11 +1332,11 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
-		long companyId, long[] groupIds, long[] classNameIds,
+		long companyId, long[] groupIds, long classNameId,
 		java.lang.String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator) {
 		return _ddmStructureLocalService.search(companyId, groupIds,
-			classNameIds, keywords, start, end, orderByComparator);
+			classNameId, keywords, start, end, orderByComparator);
 	}
 
 	/**
@@ -1355,8 +1355,8 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	*
 	* @param companyId the primary key of the structure's company
 	* @param groupIds the primary keys of the groups
-	* @param classNameIds the primary keys of the class names of the models
-	the structures are related to
+	* @param classNameId the primary key of the class name of the model the
+	structure is related to
 	* @param name the name keywords
 	* @param description the description keywords
 	* @param storageType the structure's storage type. It can be "xml" or
@@ -1375,13 +1375,13 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> search(
-		long companyId, long[] groupIds, long[] classNameIds,
+		long companyId, long[] groupIds, long classNameId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String storageType, int type, boolean andOperator, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator) {
 		return _ddmStructureLocalService.search(companyId, groupIds,
-			classNameIds, name, description, storageType, type, andOperator,
+			classNameId, name, description, storageType, type, andOperator,
 			start, end, orderByComparator);
 	}
 
@@ -1391,17 +1391,17 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	*
 	* @param companyId the primary key of the structure's company
 	* @param groupIds the primary keys of the groups
-	* @param classNameIds the primary keys of the class names of the models
-	the structures are related to
+	* @param classNameId the primary key of the class name of the model the
+	structure is related to
 	* @param keywords the keywords (space separated), which may occur in the
 	structure's name or description (optionally <code>null</code>)
 	* @return the number of matching structures
 	*/
 	@Override
-	public int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String keywords) {
+	public int searchCount(long companyId, long[] groupIds, long classNameId,
+		java.lang.String keywords) {
 		return _ddmStructureLocalService.searchCount(companyId, groupIds,
-			classNameIds, keywords);
+			classNameId, keywords);
 	}
 
 	/**
@@ -1424,12 +1424,11 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	* @return the number of matching structures
 	*/
 	@Override
-	public int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String name,
-		java.lang.String description, java.lang.String storageType, int type,
-		boolean andOperator) {
+	public int searchCount(long companyId, long[] groupIds, long classNameId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String storageType, int type, boolean andOperator) {
 		return _ddmStructureLocalService.searchCount(companyId, groupIds,
-			classNameIds, name, description, storageType, type, andOperator);
+			classNameId, name, description, storageType, type, andOperator);
 	}
 
 	/**

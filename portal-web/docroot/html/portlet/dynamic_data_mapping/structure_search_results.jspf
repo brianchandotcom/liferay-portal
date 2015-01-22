@@ -24,30 +24,18 @@ if (showAncestorScopes) {
 }
 
 if (searchTerms.isAdvancedSearch()) {
-	total = DDMStructureServiceUtil.searchCount(company.getCompanyId(), groupIds, new long[] {searchTerms.getClassNameId()}, searchTerms.getName(), searchTerms.getDescription(), searchTerms.getStorageType(), DDMStructureConstants.TYPE_DEFAULT, searchTerms.isAndOperator());
+	total = DDMStructureServiceUtil.searchCount(company.getCompanyId(), groupIds, searchTerms.getClassNameId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.getStorageType(), DDMStructureConstants.TYPE_DEFAULT, searchTerms.isAndOperator());
 
 	searchContainer.setTotal(total);
 
-	results = DDMStructureServiceUtil.search(company.getCompanyId(), groupIds, new long[] {searchTerms.getClassNameId()}, searchTerms.getName(), searchTerms.getDescription(), searchTerms.getStorageType(), DDMStructureConstants.TYPE_DEFAULT, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	results = DDMStructureServiceUtil.search(company.getCompanyId(), groupIds, searchTerms.getClassNameId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.getStorageType(), DDMStructureConstants.TYPE_DEFAULT, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 else {
-	long[] scopeClassNameIds = null;
-
-	if (scopeClassNameId > 0) {
-		scopeClassNameIds = new long[] {scopeClassNameId};
-	}
-
-	String[] storageTypes = null;
-
-	if (Validator.isNotNull(storageTypeValue)) {
-		storageTypes = new String[] {storageTypeValue};
-	}
-
-	total = DDMStructureServiceUtil.searchCount(company.getCompanyId(), groupIds, scopeClassNameIds, searchTerms.getKeywords());
+	total = DDMStructureServiceUtil.searchCount(company.getCompanyId(), groupIds, scopeClassNameId, searchTerms.getKeywords());
 
 	searchContainer.setTotal(total);
 
-	results = DDMStructureServiceUtil.search(company.getCompanyId(), groupIds, scopeClassNameIds, searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	results = DDMStructureServiceUtil.search(company.getCompanyId(), groupIds, scopeClassNameId, searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 
 searchContainer.setResults(results);

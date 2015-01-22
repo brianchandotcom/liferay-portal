@@ -499,8 +499,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the structure's company
 	 * @param  groupIds the primary keys of the groups
-	 * @param  classNameIds the primary keys of the class names of the models
-	 *         the structures are related to
+	 * @param  classNameId the primary key of the class name of the model the
+	 *         structure is related to
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         structure's name or description (optionally <code>null</code>)
 	 * @param  start the lower bound of the range of structures to return
@@ -512,11 +512,11 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMStructure> search(
-		long companyId, long[] groupIds, long[] classNameIds, String keywords,
+		long companyId, long[] groupIds, long classNameId, String keywords,
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		return ddmStructureFinder.filterFindByKeywords(
-			companyId, groupIds, classNameIds, keywords, start, end,
+			companyId, groupIds, classNameId, keywords, start, end,
 			orderByComparator);
 	}
 
@@ -536,8 +536,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the structure's company
 	 * @param  groupIds the primary keys of the groups
-	 * @param  classNameIds the primary keys of the class names of the models
-	 *         the structures are related to
+	 * @param  classNameId the primary key of the class name of the model the
+	 *         structure is related to
 	 * @param  name the name keywords
 	 * @param  description the description keywords
 	 * @param  storageType the structure's storage type. It can be "xml" or
@@ -556,12 +556,12 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMStructure> search(
-		long companyId, long[] groupIds, long[] classNameIds, String name,
+		long companyId, long[] groupIds, long classNameId, String name,
 		String description, String storageType, int type, boolean andOperator,
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		return ddmStructureFinder.filterFindByC_G_C_N_D_S_T(
-			companyId, groupIds, classNameIds, name, description, storageType,
+			companyId, groupIds, classNameId, name, description, storageType,
 			type, andOperator, start, end, orderByComparator);
 	}
 
@@ -571,18 +571,18 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the structure's company
 	 * @param  groupIds the primary keys of the groups
-	 * @param  classNameIds the primary keys of the class names of the models
-	 *         the structures are related to
+	 * @param  classNameId the primary key of the class name of the model the
+	 *         structure is related to
 	 * @param  keywords the keywords (space separated), which may occur in the
 	 *         structure's name or description (optionally <code>null</code>)
 	 * @return the number of matching structures
 	 */
 	@Override
 	public int searchCount(
-		long companyId, long[] groupIds, long[] classNameIds, String keywords) {
+		long companyId, long[] groupIds, long classNameId, String keywords) {
 
 		return ddmStructureFinder.filterCountByKeywords(
-			companyId, groupIds, classNameIds, keywords);
+			companyId, groupIds, classNameId, keywords);
 	}
 
 	/**
@@ -591,8 +591,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the structure's company
 	 * @param  groupIds the primary keys of the groups
-	 * @param  classNameIds the primary keys of the class names of the models
-	 *         the structure's are related to
+	 * @param  classNameId the primary key of the class name of the model the
+	 *         structure is related to
 	 * @param  name the name keywords
 	 * @param  description the description keywords
 	 * @param  storageType the structure's storage type. It can be "xml" or
@@ -606,11 +606,11 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 */
 	@Override
 	public int searchCount(
-		long companyId, long[] groupIds, long[] classNameIds, String name,
+		long companyId, long[] groupIds, long classNameId, String name,
 		String description, String storageType, int type, boolean andOperator) {
 
 		return ddmStructureFinder.filterCountByC_G_C_N_D_S_T(
-			companyId, groupIds, classNameIds, name, description, storageType,
+			companyId, groupIds, classNameId, name, description, storageType,
 			type, andOperator);
 	}
 

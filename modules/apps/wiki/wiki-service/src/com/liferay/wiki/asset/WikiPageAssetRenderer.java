@@ -68,6 +68,7 @@ public class WikiPageAssetRenderer
 
 	public WikiPageAssetRenderer(WikiPage page) throws PortalException {
 		_page = page;
+
 		_wikiSettings = WikiSettings.getInstance(page.getGroupId());
 	}
 

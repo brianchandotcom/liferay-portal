@@ -51,6 +51,19 @@ public class SassCompilerTest extends BaseTests {
 			"_asset_category_selector.css")), stripNewLines(output));
 	}
 
+	@Test
+	public void testCompile_compass_app_view_entry() throws Exception {
+		SassCompiler compiler = new SassCompiler();
+		assumeNotNull(compiler);
+
+		String output = compiler.compileFile(
+			_BASE_RESOURCES + "/compass/_app_view_entry.scss",
+			_BASE_RESOURCES + "/compass/common", "");
+		assertNotNull(output);
+		assertEquals(stripNewLines(readFileContents(_BASE_RESOURCES
+				+ "/compass/_app_view_entry.css")), stripNewLines(output));
+	}
+
 	private static final String _BASE_RESOURCES =
 		"bin/com/liferay/tools/jsc/testfiles/";
 

@@ -376,7 +376,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static void registerAssetQueryProcessor(
@@ -404,7 +404,7 @@ public class AssetPublisherUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static void unregisterAssetQueryProcessor(

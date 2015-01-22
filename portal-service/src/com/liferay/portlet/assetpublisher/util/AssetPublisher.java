@@ -232,7 +232,7 @@ public interface AssetPublisher {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public void registerAssetQueryProcessor(
@@ -248,7 +248,7 @@ public interface AssetPublisher {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public void unregisterAssetQueryProcessor(

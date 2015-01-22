@@ -1291,7 +1291,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		throws Exception {
 
 		for (AssetEntryQueryProcessor assetEntryQueryProcessor :
-				_assetEntryQueryProcessor) {
+				_assetEntryQueryProcessors) {
 
 			assetEntryQueryProcessor.processAssetEntryQuery(
 				user, portletPreferences, assetEntryQuery);
@@ -1299,7 +1299,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Override
 	public void registerAssetQueryProcessor(
@@ -1360,7 +1360,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1563,8 +1563,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		AssetPublisherImpl.class);
 
 	private final List<AssetEntryQueryProcessor>
-		_assetEntryQueryProcessor =
-			new CopyOnWriteArrayList<AssetEntryQueryProcessor>();
+		_assetEntryQueryProcessors = new CopyOnWriteArrayList<>();
 	private final ServiceTracker<
 		AssetEntryQueryProcessor, AssetEntryQueryProcessor> _serviceTracker;
 
@@ -1601,7 +1600,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			AssetEntryQueryProcessor assetEntryQueryProcessor =
 				registry.getService(serviceReference);
 
-			_assetEntryQueryProcessor.add(assetEntryQueryProcessor);
+			_assetEntryQueryProcessors.add(assetEntryQueryProcessor);
 
 			return assetEntryQueryProcessor;
 		}
@@ -1621,7 +1620,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 			registry.ungetService(serviceReference);
 
-			_assetEntryQueryProcessor.remove(assetEntryQueryProcessor);
+			_assetEntryQueryProcessors.remove(assetEntryQueryProcessor);
 		}
 
 	}

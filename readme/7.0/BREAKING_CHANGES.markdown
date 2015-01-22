@@ -725,7 +725,7 @@ The Asset Tag Properties were deprecated for the 6.2 version of Liferay Portal.
 
 #### What changed?
 
-The *asset.publisher.asset.entry.query.processors* have been removed.
+The *asset.publisher.asset.entry.query.processors* property has been removed.
 
 #### Who is affected?
 
@@ -734,9 +734,11 @@ This affects any hook that uses the
 
 #### How should I update my code?
 
-If you are using this functionality, you should implements the interface
+If you are using this property to register Asset Entry Query Processors, they
+have to be registered in a different way. Your Asset Entery Query Processor
+should implements the interface
 `implements com.liferay.portlet.assetpublisher.util.AssetEntryQueryProcessor`
-and annotate the class with
+and it should have the annotation
 `@Component(service=AssetEntryQueryProcessor.class)`.
 
 #### Why was this change made?

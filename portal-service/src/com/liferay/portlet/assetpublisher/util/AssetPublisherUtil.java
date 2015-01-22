@@ -375,6 +375,10 @@ public class AssetPublisherUtil {
 			user, portletPreferences, assetEntryQuery);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static void registerAssetQueryProcessor(
 		String name, AssetEntryQueryProcessor assetQueryProcessor) {
 
@@ -399,6 +403,10 @@ public class AssetPublisherUtil {
 			permissionChecker, groupId, plid, portletId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static void unregisterAssetQueryProcessor(
 		String assetQueryProcessorClassName) {
 

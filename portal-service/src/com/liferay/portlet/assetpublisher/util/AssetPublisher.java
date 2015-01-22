@@ -231,6 +231,10 @@ public interface AssetPublisher {
 			AssetEntryQuery assetEntryQuery)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void registerAssetQueryProcessor(
 		String name, AssetEntryQueryProcessor assetQueryProcessor);
 
@@ -243,6 +247,10 @@ public interface AssetPublisher {
 			String portletId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void unregisterAssetQueryProcessor(
 		String assetQueryProcessorClassName);
 

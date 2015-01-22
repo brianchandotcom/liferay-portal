@@ -1298,6 +1298,9 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Override
 	public void registerAssetQueryProcessor(
 		String assetQueryProcessorClassName,
@@ -1356,6 +1359,10 @@ public class AssetPublisherImpl implements AssetPublisher {
 			getSubscriptionClassPK(plid, portletId));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public void unregisterAssetQueryProcessor(
 		String assetQueryProcessorClassName) {

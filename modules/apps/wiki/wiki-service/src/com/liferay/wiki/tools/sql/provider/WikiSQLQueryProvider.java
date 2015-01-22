@@ -34,7 +34,9 @@ public class WikiSQLQueryProvider implements SQLQueryProvider {
 	}
 
 	protected InputStream getInputStream(String path) {
-		ClassLoader classLoader = getClass().getClassLoader();
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
 
 		return classLoader.getResourceAsStream(path);
 	}

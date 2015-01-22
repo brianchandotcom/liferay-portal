@@ -727,18 +727,18 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void putEquityToActivityMap(
-		String equityClass, String equityActionId, int activityType) {
+		String equityClassName, String equityActionId, int activityType) {
 
 		putEquityToActivityMap(
-			equityClass, equityActionId, equityClass, activityType);
+			equityClassName, equityActionId, equityClassName, activityType);
 	}
 
 	protected void putEquityToActivityMap(
-		String equityClass, String equityActionId, String activityClass,
+		String equityClassName, String equityActionId, String activityClassName,
 		int activityType) {
 
-		long equityClassNameId = PortalUtil.getClassNameId(equityClass);
-		long activityClassNameId = PortalUtil.getClassNameId(activityClass);
+		long equityClassNameId = PortalUtil.getClassNameId(equityClassName);
+		long activityClassNameId = PortalUtil.getClassNameId(activityClassName);
 
 		_equityToActivityMap.put(
 			encodeEquityToActivityKey(equityClassNameId, equityActionId),

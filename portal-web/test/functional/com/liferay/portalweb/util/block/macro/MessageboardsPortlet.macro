@@ -16,7 +16,6 @@
 		</if>
 
 		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
 		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
@@ -85,28 +84,6 @@
 
 		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-	</command>
-
-	<command name="configureMessageAddedEmailPG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-		<execute action="PGMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
-
-		<if>
-			<equals arg1="${messageAddedEmailEnabled}" arg2="false" />
-			<then>
-				<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#uncheck" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
-			</then>
-			<else>
-				<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertChecked" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
-			</else>
-		</if>
-
-		<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureMessageEmailFromCP">
@@ -227,13 +204,11 @@
 
 		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#check" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
 		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
 		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute action="CPMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
 
 		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#check" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
 		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
 		<execute action="CPMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 

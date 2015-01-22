@@ -453,6 +453,11 @@
 	<td>//button[@type='button' and contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--REPORT_INAPPROPRIATE_CONTENT-->
 <tr>
 	<td>REPORT_INAPPROPRIATE_CONTENT_HEADER</td>

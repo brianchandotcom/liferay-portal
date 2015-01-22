@@ -104,6 +104,28 @@
 		</if>
 
 		<if>
+			<equals arg1="${source}" arg2="true" />
+			<then>
+				<execute action="PGMessageboardsPostthread#click" locator-key1="SOURCE_BUTTON" />
+				<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${threadBody}" />
+				<execute action="PGMessageboardsPostthread#click" locator-key1="SOURCE_BUTTON" />
+
+				<if>
+					<isset var="fontSize" />
+					<then>
+						<var name="key_fontSize" value="${fontSize}" />
+
+						<execute action="PGMessageboardsPostthread#assertClick" locator-key1="FONT_SIZE_DROPDOWN" value1="Size" />
+						<execute action="PGMessageboardsPostthread#assertTextEquals" locator-key1="FONT_SIZE_DROPDOWN_SELECT" value1="${key_fontSize}" />
+					</then>
+				</if>
+			</then>
+			<else>
+				<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBody}" />
+			</else>
+		</if>
+
+		<if>
 			<equals arg1="${viewableBy}" arg2="true" />
 			<then>
 				<execute action="PGMessageboardsPostthread#select" locator-key1="PERMISSIONS_VIEWABLE_BY_DROPDOWN" value1="${viewableBySelection}" />
@@ -844,22 +866,17 @@
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
 
-	<command name="viewMarkAsQuestionConfiguredCP">
+	<command name="viewMarkAsQuestionCheckedCP">
 		<execute action="CPMessageboards#assertClick" locator-key1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<if>
-			<equals arg1="${markAsQuestion}" arg2="false" />
-			<then>
-				<execute action="CPMessageboardsPostthread#assertNotChecked" locator-key1="MARK_AS_A_QUESTION_CHECKBOX" />
-			</then>
-			<elseif>
-				<equals arg1="${markAsQuestion}" arg2="true" />
-				<then>
-					<execute action="CPMessageboardsPostthread#assertChecked" locator-key1="MARK_AS_A_QUESTION_CHECKBOX" />
-				</then>
-			</elseif>
-		</if>
+		<execute action="CPMessageboardsPostthread#assertChecked" locator-key1="MARK_AS_A_QUESTION_CHECKBOX" />
+		<execute action="CPMessageboardsPostthread#assertClick" locator-key1="CANCEL_BUTTON" value1="Cancel" />
+	</command>
 
+	<command name="viewMarkAsQuestionNotCheckedCP">
+		<execute action="CPMessageboards#assertClick" locator-key1="POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+
+		<execute action="CPMessageboardsPostthread#assertNotChecked" locator-key1="MARK_AS_A_QUESTION_CHECKBOX" />
 		<execute action="CPMessageboardsPostthread#assertClick" locator-key1="CANCEL_BUTTON" value1="Cancel" />
 	</command>
 
@@ -1023,6 +1040,13 @@
 				<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_2" value1="${userName}" />
 				<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_2_UPVOTE" value1="0" />
 			</else>
+		</if>
+
+		<if>
+			<equals arg1="${guestReply}" arg2="false" />
+			<then>
+				<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_2" value1="${userName}" />
+			</then>
 		</if>
 
 		<if>

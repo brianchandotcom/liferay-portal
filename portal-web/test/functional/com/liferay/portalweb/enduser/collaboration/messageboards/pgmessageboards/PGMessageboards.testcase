@@ -398,9 +398,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsPermissions#configureGuestPermissions">
-			<var name="replytoMessage" value="${replytoMessage}" />
-		</execute>
+		<execute macro="MessageboardsPermissions#checkReplyToMessageForGuestPG" />
 
 		<execute macro="User#logoutPG" />
 

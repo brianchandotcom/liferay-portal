@@ -311,9 +311,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewMarkAsQuestionConfiguredCP">
-			<var name="markAsQuestion" value="false" />
-		</execute>
+		<execute macro="MessageboardsThread#viewMarkAsQuestionNotCheckedCP" />
 
 		<execute macro="MessageboardsPortlet#configureGeneralCP">
 			<var name="threadAsQuestionByDefaultEnabled" value="true" />
@@ -323,9 +321,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewMarkAsQuestionConfiguredCP">
-			<var name="markAsQuestion" value="true" />
-		</execute>
+		<execute macro="MessageboardsThread#viewMarkAsQuestionCheckedCP" />
 
 		<execute macro="MessageboardsThread#addCP">
 			<var name="threadBody" value="Thread Body" />

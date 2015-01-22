@@ -1,18 +1,11 @@
 <definition>
-	<command name="configureGuestPermissions">
+	<command name="checkReplyToMessageForGuestPG">
 		<execute action="PGMessageboards#assertClick" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
 
 		<execute action="PGMessageboardsPermissionsConfiguration#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
-
-		<if>
-			<equals arg1="${replytoMessage}" arg2="guest" />
-			<then>
-				<execute action="PGMessageboardsPermissionsConfiguration#check" locator-key1="GUEST_REPLY_TO_MESSAGE_CHECKBOX" />
-				<execute action="PGMessageboardsPermissionsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-				<execute action="PGMessageboardsPermissionsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-			</then>
-		</if>
-
+		<execute action="PGMessageboardsPermissionsConfiguration#check" locator-key1="GUEST_REPLY_TO_MESSAGE_CHECKBOX" />
+		<execute action="PGMessageboardsPermissionsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGMessageboardsPermissionsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGMessageboardsPermissionsConfiguration#selectFrame" value1="relative=top" />
 		<execute action="PGMessageboardsPermissionsConfiguration#assertClick" locator-key1="CLOSE_BUTTON" value1="×" />
 	</command>

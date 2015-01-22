@@ -58,7 +58,7 @@
 	}
 
 	.avatar.author:after {
-		background: rgba(50, 168, 230, 0.5);
+		background: transparentize(#32A8E6, 0.5);
 	}
 
 	.user-name {

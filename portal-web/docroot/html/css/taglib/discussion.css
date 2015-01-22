@@ -225,10 +225,10 @@
 
 .taglib-discussion {
 	.lfr-discussion {
-		border-top-color: rgba(176, 180, 187, 0.5);
+		border-top-color: transparentize(#B0B4BB, 0.5);
 
 		&.depth-0 {
-			border-top-color: rgba(176, 180, 187, 1);
+			border-top-color: #B0B4BB;
 		}
 	}
 

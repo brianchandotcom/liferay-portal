@@ -5,9 +5,9 @@ AUI.add(
 
 		var STR_BLANK = '';
 
-		var STR_CLICK = 'click';
-
 		var STR_CHANGE = 'change';
+
+		var STR_CLICK = 'click';
 
 		var STR_SUFFIX = '...';
 

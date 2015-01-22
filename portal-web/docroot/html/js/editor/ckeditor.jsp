@@ -412,15 +412,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		currentToolbarSet = getToolbarSet(initialToolbarSet);
 
-		<c:choose>
-			<c:when test="<%= inlineEdit %>">
-				CKEDITOR.inline(
-			</c:when>
-			<c:otherwise>
-				CKEDITOR.replace(
-			</c:otherwise>
-		</c:choose>
-
+		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>(
 			'<%= name %>',
 			{
 				customConfig: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/<%= HtmlUtil.escapeJS(ckEditorConfigFileName) %>?p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&contentsLanguageId=<%= HttpUtil.encodeURL(contentsLanguageId) %>&colorSchemeCssClass=<%= HttpUtil.encodeURL(themeDisplay.getColorScheme().getCssClass()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&imagesPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeImages()) %>&inlineEdit=<%= inlineEdit %><%= configParams %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %>&name=<%= name %>&resizable=<%= resizable %>&showSource=<%= showSource %>',

@@ -183,24 +183,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 					disallowedContent: 'br',
 				</c:if>
 
-				language: '<%= languageId.replace("iw_", "he_") %>',
-
-				srcNode: '#<%= name %>',
-
-				toolbars:
-					<c:choose>
-						<c:when test='<%= alloyEditorMode.equals("text") %>'>
-							{},
-						</c:when>
-						<c:otherwise>
-							{
-								add: ['imageselector'],
-								image: ['left', 'right'],
-								styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
-							},
-						</c:otherwise>
-					</c:choose>
-
 				<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="struts_action" value="/document_selector/view" />
 					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
@@ -219,7 +201,19 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 				filebrowserBrowseUrl: '<%= documentSelectorURL %>',
 				filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
 				filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
-				filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image'
+				filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image',
+
+				language: '<%= languageId.replace("iw_", "he_") %>',
+
+				srcNode: '#<%= name %>',
+
+				toolbars: {
+					<c:if test="<%= !alloyEditorMode.equals("text") %>">
+						add: ['imageselector'],
+						image: ['left', 'right'],
+						styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
+					</c:if>
+				}
 			}
 		);
 

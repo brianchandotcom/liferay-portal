@@ -718,14 +718,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 				mbMessagePersistence.update(mbMessage);
 			}
-//			else if (className.equals(WikiPage.class.getName())) {
-//				WikiPage wikiPage = wikiPagePersistence.findByPrimaryKey(
-//					classPK);
-//
-//				wikiPage.setTitle(title);
-//
-//				wikiPagePersistence.update(wikiPage);
-//			}
 		}
 
 		// Indexer

@@ -139,6 +139,7 @@ public class PortletDisplay implements Serializable {
 		slave.setPortletName(_portletName);
 		slave.setPortletResource(_portletResource);
 		slave.setPortletSetup(_portletSetup);
+		slave.setPortletToolbar(_portletToolbar);
 		slave.setResourcePK(_resourcePK);
 		slave.setRestoreCurrentView(_restoreCurrentView);
 		slave.setRootPortletId(_rootPortletId);
@@ -514,6 +515,7 @@ public class PortletDisplay implements Serializable {
 		_namespace = StringPool.BLANK;
 		_portletName = StringPool.BLANK;
 		_portletSetup = null;
+		_portletToolbar = null;
 		_resourcePK = StringPool.BLANK;
 		_restoreCurrentView = false;
 		_rootPortletId = StringPool.BLANK;
@@ -660,6 +662,10 @@ public class PortletDisplay implements Serializable {
 
 	public void setPortletSetup(PortletPreferences portletSetup) {
 		_portletSetup = portletSetup;
+	}
+
+	public void setPortletToolbar(PortletToolbar portletToolbar) {
+		_portletToolbar = portletToolbar;
 	}
 
 	public void setResourcePK(String resourcePK) {
@@ -868,7 +874,7 @@ public class PortletDisplay implements Serializable {
 	private String _portletName = StringPool.BLANK;
 	private String _portletResource = StringPool.BLANK;
 	private PortletPreferences _portletSetup;
-	private PortletToolbar _portletToolbar = new PortletToolbar();
+	private PortletToolbar _portletToolbar;
 	private String _resourcePK = StringPool.BLANK;
 	private boolean _restoreCurrentView;
 	private String _rootPortletId = StringPool.BLANK;

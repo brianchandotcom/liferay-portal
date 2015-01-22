@@ -36,6 +36,16 @@ import javax.portlet.PortletRequest;
  */
 public class PortletToolbar {
 
+	public PortletToolbar() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			PortletToolbarContributorLocator.class,
+			new PortletToolbarServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
 	public Menu getContentAdditionMenu(
 		String portletId, PortletRequest portletRequest) {
 
@@ -89,19 +99,10 @@ public class PortletToolbar {
 
 	private static final List<PortletToolbarContributorLocator>
 		_portletToolbarContributorLocators = new CopyOnWriteArrayList<>();
-	private static final ServiceTracker<
+
+	private final ServiceTracker<
 		PortletToolbarContributorLocator, PortletToolbarContributorLocator>
 			_serviceTracker;
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			PortletToolbarContributorLocator.class,
-			new PortletToolbarServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
 
 	private static class PortletToolbarServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<

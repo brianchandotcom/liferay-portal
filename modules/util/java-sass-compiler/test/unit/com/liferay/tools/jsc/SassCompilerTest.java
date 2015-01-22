@@ -31,7 +31,7 @@ public class SassCompilerTest extends BaseTests {
 		assumeNotNull(compiler);
 
 		String output = compiler.compile(
-			".foo { background: white; .bar { margin-top: 10px; } }", "", "" );
+			".foo { background: white; .bar { margin-top: 10px; } }", "", "");
 		assertNotNull(output);
 		assertEquals(
 			".foo { background: white; } .foo .bar { margin-top: 10px; }",
@@ -56,12 +56,13 @@ public class SassCompilerTest extends BaseTests {
 		SassCompiler compiler = new SassCompiler();
 		assumeNotNull(compiler);
 
-		String output = compiler.compileFile(
-			_BASE_RESOURCES + "/compass/_app_view_entry.scss",
-			_BASE_RESOURCES + "/compass/common", "");
+		String output =
+			compiler.compileFile(_BASE_RESOURCES +
+				"/compass/_app_view_entry.scss", _BASE_RESOURCES +
+				"/compass/common", "");
 		assertNotNull(output);
-		assertEquals(stripNewLines(readFileContents(_BASE_RESOURCES
-				+ "/compass/_app_view_entry.css")), stripNewLines(output));
+		assertEquals(stripNewLines(readFileContents(_BASE_RESOURCES +
+			"/compass/_app_view_entry.css")), stripNewLines(output));
 	}
 
 	private static final String _BASE_RESOURCES =

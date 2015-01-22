@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+
 import java.lang.reflect.Method;
 
 import org.junit.Before;
@@ -33,8 +34,8 @@ public class BaseTests {
 
 	@Before
 	public void extendJnaSearchPath() throws Exception {
-		Method prefix = Platform.class
-			.getDeclaredMethod("getNativeLibraryResourcePrefix");
+		Method prefix = Platform.class.getDeclaredMethod(
+			"getNativeLibraryResourcePrefix");
 		prefix.setAccessible(true);
 		String prefixPath = (String)prefix.invoke(null);
 		String path = new File("resources/" + prefixPath).getCanonicalPath();
@@ -42,8 +43,8 @@ public class BaseTests {
 	}
 
 	protected String readFileContents(String filename) throws Exception {
-		return readStreamToString(new FileInputStream(new File(filename)))
-			.replaceAll("\\r", "");
+		return readStreamToString(
+			new FileInputStream(new File(filename))).replaceAll("\\r", "");
 	}
 
 	protected String readStreamToString(InputStream contents) throws Exception {
@@ -64,7 +65,8 @@ public class BaseTests {
 			if (read > 0) {
 				out.append(buffer, 0, read);
 			}
-		} while (read >= 0);
+		}
+		while (read >= 0);
 
 		contents.close();
 

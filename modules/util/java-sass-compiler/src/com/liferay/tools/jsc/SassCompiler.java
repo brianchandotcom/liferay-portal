@@ -81,12 +81,13 @@ public class SassCompiler {
 			sassFileContext.output_path = str("");
 
 			String includePaths = includePath +
-					File.pathSeparator + new File(inputFile).getParent();
+				File.pathSeparator + new File(inputFile).getParent();
 
 			sassFileContext.options.image_path = str(imgPath);
 			sassFileContext.options.include_paths = str(includePaths);
 			sassFileContext.options.output_style = OutputStyle.EXPANDED.value();
-			sassFileContext.options.source_comments = SourceComments.NONE.value();
+			sassFileContext.options.source_comments =
+				SourceComments.NONE.value();
 			sassFileContext.source_map_string = str("");
 
 			_libsass.sass_compile_file(sassFileContext);
@@ -120,5 +121,6 @@ public class SassCompiler {
 		return mem;
 	}
 
-	private static SassLibrary _libsass = SassLibrary.INSTANCE;
+	private static final SassLibrary _libsass = SassLibrary.INSTANCE;
+
 }

@@ -37,7 +37,6 @@
 		width: 65px;
 
 		.avatar-overlay {
-			background: rgba(50, 168, 230, 0.5);
 			display: block;
 			height: 100%;
 			width: 100%;
@@ -54,6 +53,10 @@
 .taglib-user-display {
 	a .user-name {
 		text-decoration: underline;
+	}
+
+	.avatar .avatar-overlay {
+		background: rgba(50, 168, 230, 0.5);
 	}
 
 	.user-name {

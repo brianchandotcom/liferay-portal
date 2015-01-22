@@ -80,7 +80,7 @@ public class JournalArticleIndexVersionsTest {
 		Assert.assertEquals(initialSearchCount + 1, searchCount());
 
 		JournalArticle updateArticle = JournalTestUtil.updateArticle(
-			article, article.getTitle(), article.getContent(), true, true,
+			article, article.getTitleMap(), article.getContent(), true, true,
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(initialSearchCount + 1, searchCount());
@@ -106,7 +106,7 @@ public class JournalArticleIndexVersionsTest {
 			ServiceContextTestUtil.getServiceContext();
 
 		JournalArticle updateArticle = JournalTestUtil.updateArticle(
-			article, article.getTitle(), article.getContent(), true, true,
+			article, article.getTitleMap(), article.getContent(), true, true,
 			serviceContext);
 
 		Assert.assertEquals(initialSearchCount + 1, searchCount());
@@ -134,7 +134,7 @@ public class JournalArticleIndexVersionsTest {
 		Assert.assertEquals(initialSearchCount + 1, searchCount());
 
 		JournalArticle updateArticle = JournalTestUtil.updateArticle(
-			article, article.getTitle(), article.getContent(), true, true,
+			article, article.getTitleMap(), article.getContent(), true, true,
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(initialSearchCount + 1, searchCount());
@@ -155,7 +155,7 @@ public class JournalArticleIndexVersionsTest {
 		Assert.assertEquals(initialSearchCount + 1, searchCount());
 
 		JournalArticle updateArticle = JournalTestUtil.updateArticle(
-			article, article.getTitle(), article.getContent(), true, true,
+			article, article.getTitleMap(), article.getContent(), true, true,
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(initialSearchCount + 1, searchCount());
@@ -185,7 +185,7 @@ public class JournalArticleIndexVersionsTest {
 		article.setIndexable(false);
 
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), article.getContent(), true, true,
+			article, article.getTitleMap(), article.getContent(), true, true,
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(initialSearchCount, searchCount());
@@ -193,7 +193,7 @@ public class JournalArticleIndexVersionsTest {
 		article.setIndexable(true);
 
 		JournalTestUtil.updateArticle(
-			article, article.getTitle(), article.getContent(), true, true,
+			article, article.getTitleMap(), article.getContent(), true, true,
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(initialSearchCount + 1, searchCount());

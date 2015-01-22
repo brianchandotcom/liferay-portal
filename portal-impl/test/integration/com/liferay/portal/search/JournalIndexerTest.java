@@ -151,7 +151,7 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		JournalTestUtil.updateArticle(
-			article1, article1.getTitle(), content, false, true,
+			article1, article1.getTitleMap(), content, false, true,
 			serviceContext);
 
 		JournalArticle article2 = JournalTestUtil.addArticleWithWorkflow(
@@ -166,7 +166,7 @@ public class JournalIndexerTest {
 			"Architectural Tablet");
 
 		JournalTestUtil.updateArticle(
-			article2, article2.getTitle(), content, false, true,
+			article2, article2.getTitleMap(), content, false, true,
 			serviceContext);
 
 		JournalArticleLocalServiceUtil.deleteArticles(_group.getGroupId());
@@ -219,7 +219,7 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), article.getContent(), false, true,
+			article, article.getTitleMap(), article.getContent(), false, true,
 			serviceContext);
 
 		Assert.assertEquals(
@@ -231,7 +231,7 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		JournalTestUtil.updateArticle(
-			article, article.getTitle(), article.getContent(), false, true,
+			article, article.getTitleMap(), article.getContent(), false, true,
 			serviceContext);
 
 		Assert.assertEquals(
@@ -546,7 +546,8 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), content, false, true, serviceContext);
+			article, article.getTitleMap(), content, false, true,
+			serviceContext);
 
 		Assert.assertEquals(
 			initialSearchCount1,
@@ -618,7 +619,7 @@ public class JournalIndexerTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		article = JournalTestUtil.updateArticle(
-			article, article.getTitle(), article.getContent(), false, true,
+			article, article.getTitleMap(), article.getContent(), false, true,
 			serviceContext);
 
 		Assert.assertEquals(
@@ -803,7 +804,8 @@ public class JournalIndexerTest {
 		}
 
 		JournalTestUtil.updateArticle(
-			article, article.getTitle(), content, false, true, serviceContext);
+			article, article.getTitleMap(), content, false, true,
+			serviceContext);
 
 		if (approve) {
 			Assert.assertEquals(

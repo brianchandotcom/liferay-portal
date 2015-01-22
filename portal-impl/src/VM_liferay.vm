@@ -84,6 +84,14 @@ $languageUtil.get($locale, $lang_key)#end
 #macro (language_format $lang_key $arguments)
 $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 
+#macro (menu $menu)
+	#set ($menu_tag = $theme.getMenuTag())
+
+	$menu_tag.setMenu($menu)
+
+	$menu_tag.runTag()
+#end
+
 #macro (quick_access $content_id)
 	#set ($quick_access_tag = $theme.getQuickAccessTag())
 

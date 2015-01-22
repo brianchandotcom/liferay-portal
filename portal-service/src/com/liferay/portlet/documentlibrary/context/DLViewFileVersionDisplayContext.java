@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -37,6 +38,8 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 		throws PortalException;
 
 	public List<DDMStructure> getDDMStructures() throws PortalException;
+
+	public Menu getMenu() throws PortalException;
 
 	public List<MenuItem> getMenuItems() throws PortalException;
 

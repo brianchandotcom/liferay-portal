@@ -1,0 +1,37 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%@ include file="/html/taglib/ui/menu/init.jsp" %>
+
+<%
+Menu menu = (Menu)request.getAttribute("liferay-ui:menu:menu");
+
+List<MenuItem> menuItems = menu.getMenuItems();
+%>
+
+<liferay-ui:icon-menu cssClass="<%= menu.getCssClass() %>" direction="<%= menu.getDirection() %>" extended="<%= menu.isExtended() %>" icon="<%= menu.getIcon() %>" message="<%= menu.getMessage() %>" showArrow="<%= menu.isShowArrow() %>" showExpanded="<%= menu.isShowExpanded() %>" showWhenSingleIcon="<%= menu.isShowWhenSingleIcon() %>" triggerCssClass="<%= menu.getTriggerCssClass() %>">
+
+	<%
+	for (MenuItem menuItem : menuItems) {
+	%>
+
+		<liferay-ui:menu-item menuItem="<%= menuItem %>" />
+
+	<%
+	}
+	%>
+
+</liferay-ui:icon-menu>

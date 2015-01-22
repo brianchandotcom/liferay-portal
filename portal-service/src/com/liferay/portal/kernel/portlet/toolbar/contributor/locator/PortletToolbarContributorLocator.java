@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,21 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+package com.liferay.portal.kernel.portlet.toolbar.contributor.locator;
 
-<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem" %><%@
-page import="com.liferay.portal.kernel.servlet.taglib.ui.JavascriptMenuItem" %><%@
-page import="com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem" %>
+import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
+
+import java.util.List;
+
+import javax.portlet.PortletRequest;
+
+/**
+ * @author Sergio González
+ */
+public interface PortletToolbarContributorLocator {
+
+	public List<PortletToolbarContributor> getPortletToolbarContributors(
+		String portletId, PortletRequest portletRequest);
+
+}

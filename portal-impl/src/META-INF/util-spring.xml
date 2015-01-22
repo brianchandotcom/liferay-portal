@@ -234,6 +234,7 @@
 			<bean class="com.liferay.portal.kernel.poller.comet.CometHandlerPool" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.portlet.toolbar.PortletToolbar" class="com.liferay.portal.kernel.portlet.toolbar.PortletToolbar" />
 	<bean id="com.liferay.portal.kernel.portlet.PortletContainerUtil" class="com.liferay.portal.kernel.portlet.PortletContainerUtil">
 		<property name="portletContainer" ref="com.liferay.portlet.RestrictPortletContainerWrapper" />
 	</bean>
@@ -891,7 +892,9 @@
 	</bean>
 	<bean id="com.liferay.portlet.DefaultControlPanelEntry" class="com.liferay.portlet.DefaultControlPanelEntry" />
 	<bean id="com.liferay.portlet.DefaultControlPanelEntryFactory" class="com.liferay.portlet.DefaultControlPanelEntryFactory" />
-	<bean id="com.liferay.portlet.PortletContainerImpl" class="com.liferay.portlet.PortletContainerImpl" />
+	<bean id="com.liferay.portlet.PortletContainerImpl" class="com.liferay.portlet.PortletContainerImpl">
+		<property name="portletToolbar" ref="com.liferay.portal.kernel.portlet.toolbar.PortletToolbar" />
+	</bean>
 	<bean id="com.liferay.portlet.SecurityPortletContainerWrapper" class="com.liferay.portlet.SecurityPortletContainerWrapper" factory-method="createSecurityPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" />
 	</bean>

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portlet Toolbar Contributor Locator
+Bundle-SymbolicName: com.liferay.portal.portlet.toolbar.contributor.locator
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes

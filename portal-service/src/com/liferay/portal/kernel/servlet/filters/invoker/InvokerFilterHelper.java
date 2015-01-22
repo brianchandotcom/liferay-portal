@@ -172,6 +172,31 @@ public class InvokerFilterHelper {
 		}
 	}
 
+	public void unregisterFilter(String filterName) {
+		Filter filter = _filters.remove(filterName);
+
+		if (filter == null) {
+			return;
+		}
+
+		for (FilterMapping filterMapping : _filterMappings) {
+			if (filterMapping.getFilter() == filter) {
+				unregisterFilterMapping(filterMapping);
+
+				break;
+			}
+		}
+
+		_filterConfigs.remove(filterName);
+
+		try {
+			filter.destroy();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
 	public void unregisterFilterMapping(FilterMapping filterMapping) {
 		_filterMappings.remove(filterMapping);
 
@@ -479,25 +504,9 @@ public class InvokerFilterHelper {
 
 			registry.ungetService(serviceReference);
 
-			String servletFilterName = GetterUtil.getString(
-				serviceReference.getProperty("servlet-filter-name"));
-
-			unregisterFilterMapping(filterMapping);
-
-			_filterConfigs.remove(servletFilterName);
-
-			Filter filter = _filters.remove(servletFilterName);
-
-			if (filter == null) {
-				return;
-			}
-
-			try {
-				filter.destroy();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			unregisterFilter(
+				GetterUtil.getString(
+					serviceReference.getProperty("servlet-filter-name")));
 		}
 
 	}

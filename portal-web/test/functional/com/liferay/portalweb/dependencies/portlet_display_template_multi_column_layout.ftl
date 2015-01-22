@@ -6,7 +6,7 @@
 			<@aui.column columnWidth=25>
 				<div class="results-header">
 					<h3>
-						${entry.getName()}
+						${entry.getUnambiguousTitle(entries, themeDisplay.getSiteGroupId(), themeDisplay.getLocale())}
 					</h3>
 				</div>
 

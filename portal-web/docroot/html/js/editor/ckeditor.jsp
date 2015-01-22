@@ -316,7 +316,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			var ckePanelDelegate = Liferay.Data['<%= name %>Handle'];
 
 			if (!ckePanelDelegate) {
-				var ckePanelDelegate = ckEditor.delegate(
+				ckePanelDelegate = ckEditor.delegate(
 					'click',
 					function(event) {
 						var panelFrame = A.one('.cke_combopanel .cke_panel_frame');
@@ -639,7 +639,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 					containerNode.setData(MODIFIED, true);
 				}
 			}
-		},
+		};
 
 		ckEditor.on('dialogShow', window['<%= name %>creoleDialogHandlers']);
 
@@ -653,7 +653,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	String toogleControlsStatus = GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", "visible"));
 	%>
 
-	<c:if test='<%= autoCreate && ((inlineEdit && toogleControlsStatus.equals("visible")) || !inlineEdit) %>'>;
+	<c:if test='<%= autoCreate && ((inlineEdit && toogleControlsStatus.equals("visible")) || !inlineEdit) %>'>
 		createEditor();
 	</c:if>
 

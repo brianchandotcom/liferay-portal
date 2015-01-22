@@ -99,7 +99,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		},
 
 		dispose: function() {
-			var editorNode= A.one('textarea#<%= name %>');
+			var editorNode = A.one('textarea#<%= name %>');
 
 			if (editorNode) {
 				editorNode.remove();

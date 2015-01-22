@@ -322,10 +322,12 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 		<c:if test="<%= showSource %>">
 			var CSS_SHOW_SOURCE = 'show-source';
+
 			var STR_VALUE = 'value';
 
 			var editorWrapper = A.one('#<%= name %>Wrapper');
 			var editorSwitch = A.one('#<%= name %>Switch');
+
 			var editorSwitchContainer = editorSwitch.ancestor();
 
 			var toggleEditorModeUI = function() {
@@ -336,19 +338,22 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			};
 
 			var createSourceEditor = function() {
-				A.use('liferay-source-editor', function(A) {
-					var sourceEditor = new A.LiferaySourceEditor(
-						{
-							boundingBox: A.one('#<%= name %>Source'),
-							mode: 'html',
-							value: window['<%= name %>'].getHTML()
-						}
-					).render();
+				A.use(
+					'liferay-source-editor',
+					function(A) {
+						var sourceEditor = new A.LiferaySourceEditor(
+							{
+								boundingBox: A.one('#<%= name %>Source'),
+								mode: 'html',
+								value: window['<%= name %>'].getHTML()
+							}
+						).render();
 
-					toggleEditorModeUI();
+						toggleEditorModeUI();
 
-					Liferay.component('<%= name %>Source', sourceEditor);
-				});
+						Liferay.component('<%= name %>Source', sourceEditor);
+					}
+				);
 			};
 
 			editorSwitch.on(
@@ -363,19 +368,17 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 						toggleEditorModeUI();
 					}
+					else if (editor) {
+						var currentContent = window['<%= name %>'].getHTML();
+
+						if (currentContent !== editor.get(STR_VALUE)) {
+							editor.set(STR_VALUE, currentContent);
+						}
+
+						toggleEditorModeUI();
+					}
 					else {
-						if (editor) {
-							var currentContent = window['<%= name %>'].getHTML();
-
-							if (currentContent !== editor.get(STR_VALUE)) {
-								editor.set(STR_VALUE, currentContent);
-							}
-
-							toggleEditorModeUI();
-						}
-						else {
-							createSourceEditor();
-						}
+						createSourceEditor();
 					}
 				}
 			);
@@ -447,11 +450,11 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		},
 
 		getHTML: function() {
+			var text = '';
+
 			<c:choose>
 				<c:when test='<%= alloyEditorMode.equals("text") %>'>
 					var editorElement = CKEDITOR.instances['<%= name %>'].element.$;
-
-					var text = '';
 
 					var childElement;
 
@@ -469,23 +472,21 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 							text = childElement.innerText;
 						}
 					}
-
-					return text;
 				</c:when>
 				<c:otherwise>
-					var content = window['<%= name %>'].getCkData();
+					text = window['<%= name %>'].getCkData();
 
 					<c:if test="<%= showSource %>">
 						var sourceEditor = Liferay.component('<%= name %>Source');
 
 						if (sourceEditor && sourceEditor.get('boundingBox').test(':visible')) {
-							content = sourceEditor.get('value');
+							text = sourceEditor.get('value');
 						}
 					</c:if>
-
-					return content;
 				</c:otherwise>
 			</c:choose>
+
+			return text;
 		},
 
 		getText: function() {

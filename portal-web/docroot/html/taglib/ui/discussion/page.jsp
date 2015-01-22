@@ -249,7 +249,7 @@ SearchContainer searchContainer = null;
 		<aui:script>
 			function <%= namespace + randomNamespace %>0OnChange(html) {
 				Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton0', !html);
-			};
+			}
 
 			function <%= randomNamespace %>hideForm(rowId, textAreaId, textAreaValue) {
 				var form = document.getElementById(rowId);
@@ -280,10 +280,7 @@ SearchContainer searchContainer = null;
 
 				var html = window[editorName + 'Editor'].getHTML();
 
-				Liferay.Util.toggleDisabled(
-					'#' + editorName.replace('Body', 'Button'),
-					(html === '')
-				);
+				Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), (html === ''));
 
 				<%= randomNamespace %>showForm(formId);
 			}
@@ -355,12 +352,12 @@ SearchContainer searchContainer = null;
 					var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
 					var editorInstance = window['<%= namespace + randomNamespace %>postReplyBody' + i + 'Editor'];
-					var body = editorInstance.getHTML();
+
 					var parentMessageId = form.one('#<%= namespace %>parentMessageId' + i).val();
 
 					form.one('#<%= namespace %><%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.ADD %>');
 					form.one('#<%= namespace %>parentMessageId').val(parentMessageId);
-					form.one('#<%= namespace %>body').val(body);
+					form.one('#<%= namespace %>body').val(editorInstance.getHTML());
 
 					if (!themeDisplay.isSignedIn()) {
 						window.namespace = '<%= namespace %>';
@@ -380,6 +377,7 @@ SearchContainer searchContainer = null;
 					}
 					else {
 						<portlet:namespace />sendMessage(form);
+
 						editorInstance.dispose();
 					}
 				},
@@ -507,7 +505,7 @@ SearchContainer searchContainer = null;
 					var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
 					var editorInstance = window['<%= namespace + randomNamespace %>editReplyBody' + i + 'Editor'];
-					var body = editorInstance.getHTML();
+
 					var messageId = form.one('#<%= namespace %>messageId' + i).val();
 
 					if (pending) {
@@ -516,9 +514,10 @@ SearchContainer searchContainer = null;
 
 					form.one('#<%= namespace %><%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
 					form.one('#<%= namespace %>messageId').val(messageId);
-					form.one('#<%= namespace %>body').val(body);
+					form.one('#<%= namespace %>body').val(editorInstance.getHTML());
 
 					<portlet:namespace />sendMessage(form);
+
 					editorInstance.dispose();
 				},
 				['aui-base']

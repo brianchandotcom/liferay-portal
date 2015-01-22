@@ -261,11 +261,8 @@ request.setAttribute("page.jsp-i", new Integer(i));
 
 					<aui:script>
 						window['<%= namespace + randomNamespace + i %>OnChange'] = function(html) {
-							Liferay.Util.toggleDisabled(
-								'#<%= namespace + randomNamespace %>postReplyButton<%= i %>',
-								(html === '')
-							);
-						}
+							Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton<%= i %>', (html === ''));
+						};
 					</aui:script>
 				</div>
 			</div>

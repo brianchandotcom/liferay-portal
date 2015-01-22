@@ -17,6 +17,7 @@ package com.liferay.taglib.util;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.JSPSupportServlet;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -60,6 +61,7 @@ import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
 import com.liferay.taglib.ui.JournalContentSearchTag;
 import com.liferay.taglib.ui.LanguageTag;
+import com.liferay.taglib.ui.MenuTag;
 import com.liferay.taglib.ui.MySitesTag;
 import com.liferay.taglib.ui.PngImageTag;
 import com.liferay.taglib.ui.QuickAccessTag;
@@ -442,6 +444,15 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
+	public MenuTag getMenuTag() throws Exception {
+		MenuTag menuTag = new MenuTag();
+
+		setUp(menuTag);
+
+		return menuTag;
+	}
+
+	@Override
 	public MySitesTag getMySitesTag() throws Exception {
 		MySitesTag mySitesTag = new MySitesTag();
 
@@ -765,6 +776,17 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	@Override
 	public void layoutIcon(Layout layout) throws Exception {
 		LayoutIconTag.doTag(layout, _servletContext, _request, _response);
+	}
+
+	@Override
+	public void menu(Menu menu) throws Exception {
+		MenuTag menuTag = new MenuTag();
+
+		setUp(menuTag);
+
+		menuTag.setMenu(menu);
+
+		menuTag.runTag();
 	}
 
 	@Override

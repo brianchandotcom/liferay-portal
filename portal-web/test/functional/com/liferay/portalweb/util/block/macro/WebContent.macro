@@ -1726,7 +1726,7 @@
 
 	<command name="viewWithWorkflowPGViaWCD">
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="${webContentTitle} is not approved." />
-		<execute action="PGWebcontentdisplay#assertClick" locator-key1="ALERT_MESSAGE" value1="${webContentTitle} is not approved." />
+		<execute action="PGWebcontentdisplay#assertClick" locator-key1="ALERT_MESSAGE_LINK" value1="${webContentTitle} is not approved." />
 
 		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="Pending (${workflowTask})" />
 		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />

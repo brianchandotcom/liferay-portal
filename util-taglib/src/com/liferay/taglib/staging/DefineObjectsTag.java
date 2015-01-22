@@ -61,11 +61,17 @@ public class DefineObjectsTag extends IncludeTag {
 		pageContext.setAttribute("liveGroup", null);
 		pageContext.setAttribute("liveGroupId", 0L);
 
+		String privateLayoutParameter = request.getParameter("privateLayout");
+
+		if (Validator.isNull(privateLayoutParameter)) {
+			privateLayoutParameter = String.valueOf(
+				request.getAttribute("privateLayout"));
+		}
+
 		Layout layout = themeDisplay.getLayout();
 
 		boolean privateLayout = GetterUtil.getBoolean(
-			ParamUtil.getBoolean(
-				request, "privateLayout", layout.isPrivateLayout()));
+			privateLayoutParameter, layout.isPrivateLayout());
 
 		pageContext.setAttribute("privateLayout", privateLayout);
 

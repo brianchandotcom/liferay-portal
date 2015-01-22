@@ -4327,6 +4327,9 @@ if (ppstate.equals("normal")) {
 			adb -s emulator-5554 shell chmod 0777 /data/local/swipe_down.sh
 			adb -s emulator-5554 shell chmod 0777 /data/local/swipe_up.sh
 			adb -s emulator-5554 shell chmod 0777 /data/local/tap.sh
+
+			adb -s emulator-5554 shell settings put system pointer_location 1
+			adb -s emulator-5554 shell settings put system show_touches 1
 		</execute>
 	</target>
 
@@ -4457,6 +4460,11 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<exec executable="/bin/bash" os="${os.unix}" >
 			<arg value="-c" />
 			<arg value="killall node" />
+		</exec>
+
+		<exec executable="/bin/bash" os="${os.unix}" >
+			<arg value="-c" />
+			<arg value="fuser -k 9515/tcp" />
 		</exec>
 
 		<exec executable="cmd.exe" os="${os.windows}" >

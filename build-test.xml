@@ -1912,16 +1912,12 @@ ${marketplace.portlet.properties}</echo>
 			<report format="frames" todir="test-results/html" />
 		</junitreport>
 
-		<loadfile property="test.suites.xml.content" srcfile="test-results/TESTS-TestSuites.xml" />
-
 		<replaceregexp
 			file="test-results/TESTS-TestSuites.xml"
 			flags="g"
 			match="\s*\&lt;/?propert[^\n^\r]*[\n\r]"
 			replace=""
 		/>
-
-		<echo file="test-results/TESTS-TestSuites.xml">${test.suites.xml.content}</echo>
 
 		<echo message="A report with all the test results can be found at test-results/html/index.html." />
 	</target>

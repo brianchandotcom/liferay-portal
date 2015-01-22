@@ -333,7 +333,10 @@ AUI.add(
 
 												if (message) {
 													instance.one('#entryId').val(message.entryId);
-													instance.one('#redirect').val(message.redirect);
+
+													if (message.updateRedirect) {
+														instance.one('#redirect').val(message.redirect);
+													}
 
 													if (message.blogsEntryAttachmentReferences) {
 														instance._updateImages(message.blogsEntryAttachmentReferences);

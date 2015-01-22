@@ -560,18 +560,6 @@ public class WikiUtil {
 		return wikiEngineTracker.getProperty(format, "edit.page");
 	}
 
-	private WikiEngine _getWikiEngine(String format) throws WikiFormatException {
-		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
-
-		WikiEngine wikiEngine = wikiEngineTracker.getWikiEngine(format);
-
-		if (wikiEngine == null) {
-			throw new WikiFormatException("Unknown wiki format " + format);
-		}
-
-		return wikiEngine;
-	}
-
 	private String _getHelpPage(String format) {
 		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
 
@@ -595,6 +583,20 @@ public class WikiUtil {
 		catch (WikiFormatException wfe) {
 			return Collections.emptyMap();
 		}
+	}
+
+	private WikiEngine _getWikiEngine(String format)
+		throws WikiFormatException {
+
+		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
+
+		WikiEngine wikiEngine = wikiEngineTracker.getWikiEngine(format);
+
+		if (wikiEngine == null) {
+			throw new WikiFormatException("Unknown wiki format " + format);
+		}
+
+		return wikiEngine;
 	}
 
 	private String _readConfigurationFile(String propertyName, String format)

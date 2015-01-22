@@ -418,6 +418,7 @@ public class VerifyProperties extends VerifyProcess {
 		"amazon.access.key.id", "amazon.associate.tag",
 		"amazon.secret.access.key",
 		"asset.entry.increment.view.counter.enabled",
+		"asset.publisher.asset.entry.query.processors",
 		"asset.publisher.filter.unlistable.entries",
 		"asset.tag.permissions.enabled", "asset.tag.properties.default",
 		"asset.tag.properties.enabled", "auth.max.failures.limit",

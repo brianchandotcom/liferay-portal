@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
@@ -49,6 +48,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -198,10 +198,17 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		FieldInterceptionHelperUtil.initialize();
 
-		InitUtil.init();
-
 		final ServletContext servletContext =
 			servletContextEvent.getServletContext();
+
+		String portalLibDir = servletContext.getRealPath("/WEB-INF/lib");
+
+		if (Validator.isNotNull(portalLibDir)) {
+			SystemProperties.set(
+				PropsKeys.LIFERAY_LIB_PORTAL_DIR, portalLibDir);
+		}
+
+		InitUtil.init();
 
 		_portalServletContextName = servletContext.getServletContextName();
 
@@ -234,19 +241,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR =
 			tempDir.getAbsolutePath();
-
-		String portalLibDir = servletContext.getRealPath("/WEB-INF/lib");
-
-		if (Validator.isNotNull(portalLibDir)) {
-			if (!portalLibDir.endsWith(StringPool.SLASH)) {
-				portalLibDir += StringPool.SLASH;
-			}
-
-			PropsValues.LIFERAY_LIB_PORTAL_DIR = portalLibDir;
-
-			PropsValues.LIFERAY_WEB_PORTAL_DIR = WebDirDetector.getRootDir(
-				portalLibDir);
-		}
 
 		try {
 			ModuleFrameworkUtilAdapter.startFramework();

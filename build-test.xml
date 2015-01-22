@@ -465,8 +465,8 @@
 					<equals arg1="${env.BUILD_NUMBER}" arg2="1" />
 				</or>
 				<then>
-					<property name="liferay.plugins.previous.git.id" value="${liferay.plugins.git.id}" />
-					<property name="liferay.portal.previous.git.id" value="${liferay.portal.git.id}" />
+					<property name="liferay.previous.plugins.git.id" value="${liferay.plugins.git.id}" />
+					<property name="liferay.previous.portal.git.id" value="${liferay.portal.git.id}" />
 				</then>
 				<else>
 					<math
@@ -477,25 +477,22 @@
 						result="previous.build.number"
 					/>
 
-					<property
-						name="previous.git.id.dir"
-						value="${env.JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${previous.build.number}"
+					<property name="previous.commit.id.dir" value="${env.JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${previous.build.number}" />
+
+					<loadfile
+						property="liferay.previous.plugins.git.id"
+						srcfile="${previous.commit.id.dir}/git-commit-plugins"
 					/>
 
 					<loadfile
-						property="liferay.plugins.previous.git.id"
-						srcfile="${previous.git.id.dir}/git-commit-plugins"
-					/>
-
-					<loadfile
-						property="liferay.portal.previous.git.id"
-						srcfile="${previous.git.id.dir}/git-commit-portal"
+						property="liferay.previous.portal.git.id"
+						srcfile="${previous.commit.id.dir}/git-commit-portal"
 					/>
 				</else>
 			</if>
 
-			<property name="liferay.plugins.compare.url" value="https://github.com/liferay/liferay-plugins-ee/compare/${liferay.plugins.previous.git.id}...${liferay.plugins.git.id}" />
-			<property name="liferay.portal.compare.url" value="https://github.com/liferay/liferay-portal-ee/compare/${liferay.portal.previous.git.id}...${liferay.portal.git.id}" />
+			<property name="liferay.plugins.compare.url" value="https://github.com/liferay/liferay-plugins-ee/compare/${liferay.previous.plugins.git.id}...${liferay.plugins.git.id}" />
+			<property name="liferay.portal.compare.url" value="https://github.com/liferay/liferay-portal-ee/compare/${liferay.previous.portal.git.id}...${liferay.portal.git.id}" />
 		</sequential>
 	</macrodef>
 

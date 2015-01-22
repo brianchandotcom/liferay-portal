@@ -215,10 +215,6 @@
 
 		<action path="/asset/get_categories" type="com.liferay.portlet.asset.action.GetCategoriesAction" />
 
-		<!-- Asset Browser -->
-
-		<action path="/asset_browser/view" forward="portlet.asset_browser.view" />
-
 		<!-- Blogs -->
 
 		<action path="/blogs/cover_image_selector" type="com.liferay.portlet.blogs.action.CoverImageSelectorAction" />

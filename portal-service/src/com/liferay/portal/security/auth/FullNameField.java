@@ -29,7 +29,7 @@ public class FullNameField {
 		return _name;
 	}
 
-	public String[] getValueOptions() {
+	public String[] getValues() {
 		return _valueOptions;
 	}
 

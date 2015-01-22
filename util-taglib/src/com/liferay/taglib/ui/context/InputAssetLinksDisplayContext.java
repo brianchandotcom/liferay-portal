@@ -311,8 +311,6 @@ public class InputAssetLinksDisplayContext {
 			_request, PortletKeys.ASSET_BROWSER, controlPanelPlid,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/asset_browser/view");
-
 		long groupId = _getAssetBrowserGroupId(assetRendererFactory);
 
 		portletURL.setParameter("groupId", String.valueOf(groupId));

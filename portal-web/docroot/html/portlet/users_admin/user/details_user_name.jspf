@@ -37,7 +37,7 @@ FullNameDefinition fullNameDefinition = LocalizationUtil.getFullNameDefinition(u
 				</aui:input>
 			</c:when>
 			<c:otherwise>
-				<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("Type") %>' showEmptyOption="<%= true %>">
+				<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("Value") %>' showEmptyOption="<%= true %>">
 
 					<%
 					String selected = StringPool.BLANK;

@@ -30,6 +30,12 @@ public class ListTypeServiceWrapper implements ListTypeService,
 		_listTypeService = listTypeService;
 	}
 
+	@Override
+	public com.liferay.portal.model.ListType addListType(
+		java.lang.String name, java.lang.String type) {
+		return _listTypeService.addListType(name, type);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

@@ -118,8 +118,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.ControlPanelEntry;
-import com.liferay.portlet.assetpublisher.util.AssetEntryQueryProcessor;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScanner;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerWrapper;
@@ -434,27 +432,6 @@ public class HookHotDeployListener
 		}
 
 		resetPortalProperties(servletContextName, portalProperties, false);
-
-		if (portalProperties.containsKey(
-				PropsKeys.ASSET_PUBLISHER_ASSET_ENTRY_QUERY_PROCESSORS)) {
-
-			String[] assetQueryProcessorClassNames = StringUtil.split(
-				portalProperties.getProperty(
-					PropsKeys.ASSET_PUBLISHER_ASSET_ENTRY_QUERY_PROCESSORS));
-
-			for (String assetQueryProcessorClassName :
-					assetQueryProcessorClassNames) {
-
-				AssetPublisherUtil.unregisterAssetQueryProcessor(
-					assetQueryProcessorClassName);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unregistered asset query processor " +
-							assetQueryProcessorClassName);
-				}
-			}
-		}
 
 		if (portalProperties.containsKey(PropsKeys.CAPTCHA_ENGINE_IMPL)) {
 			CaptchaImpl captchaImpl = null;
@@ -1454,32 +1431,6 @@ public class HookHotDeployListener
 		}
 
 		resetPortalProperties(servletContextName, portalProperties, true);
-
-		if (portalProperties.containsKey(
-				PropsKeys.ASSET_PUBLISHER_ASSET_ENTRY_QUERY_PROCESSORS)) {
-
-			String[] assetQueryProcessorClassNames = StringUtil.split(
-				portalProperties.getProperty(
-					PropsKeys.ASSET_PUBLISHER_ASSET_ENTRY_QUERY_PROCESSORS));
-
-			for (String assetQueryProcessorClassName :
-					assetQueryProcessorClassNames) {
-
-				AssetEntryQueryProcessor assetQueryProcessor =
-					(AssetEntryQueryProcessor)newInstance(
-						portletClassLoader, AssetEntryQueryProcessor.class,
-						assetQueryProcessorClassName);
-
-				AssetPublisherUtil.registerAssetQueryProcessor(
-					assetQueryProcessorClassName, assetQueryProcessor);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Registered asset query processor " +
-							assetQueryProcessorClassName);
-				}
-			}
-		}
 
 		if (portalProperties.containsKey(PropsKeys.AUTH_PUBLIC_PATHS)) {
 			initAuthPublicPaths(servletContextName, portalProperties);

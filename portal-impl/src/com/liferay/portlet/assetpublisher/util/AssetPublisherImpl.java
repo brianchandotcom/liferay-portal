@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -81,6 +80,11 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -94,7 +98,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -107,22 +111,13 @@ import javax.portlet.PortletRequest;
 public class AssetPublisherImpl implements AssetPublisher {
 
 	public AssetPublisherImpl() {
-		for (String assetEntryQueryProcessorClassName :
-				PropsValues.ASSET_PUBLISHER_ASSET_ENTRY_QUERY_PROCESSORS) {
+		Registry registry = RegistryUtil.getRegistry();
 
-			try {
-				AssetEntryQueryProcessor assetEntryQueryProcessor =
-					(AssetEntryQueryProcessor)InstanceFactory.newInstance(
-						assetEntryQueryProcessorClassName);
+		_serviceTracker = registry.trackServices(
+			AssetEntryQueryProcessor.class,
+			new AssetEntryQueryServiceTrackerCustomizer());
 
-				registerAssetQueryProcessor(
-					assetEntryQueryProcessorClassName,
-					assetEntryQueryProcessor);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
+		_serviceTracker.open();
 	}
 
 	@Override
@@ -1296,7 +1291,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		throws Exception {
 
 		for (AssetEntryQueryProcessor assetEntryQueryProcessor :
-				_assetEntryQueryProcessor.values()) {
+				_assetEntryQueryProcessor) {
 
 			assetEntryQueryProcessor.processAssetEntryQuery(
 				user, portletPreferences, assetEntryQuery);
@@ -1307,13 +1302,6 @@ public class AssetPublisherImpl implements AssetPublisher {
 	public void registerAssetQueryProcessor(
 		String assetQueryProcessorClassName,
 		AssetEntryQueryProcessor assetQueryProcessor) {
-
-		if (assetQueryProcessor == null) {
-			return;
-		}
-
-		_assetEntryQueryProcessor.put(
-			assetQueryProcessorClassName, assetQueryProcessor);
 	}
 
 	@Override
@@ -1371,8 +1359,6 @@ public class AssetPublisherImpl implements AssetPublisher {
 	@Override
 	public void unregisterAssetQueryProcessor(
 		String assetQueryProcessorClassName) {
-
-		_assetEntryQueryProcessor.remove(assetQueryProcessorClassName);
 	}
 
 	@Override
@@ -1569,8 +1555,11 @@ public class AssetPublisherImpl implements AssetPublisher {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherImpl.class);
 
-	private final Map<String, AssetEntryQueryProcessor>
-		_assetEntryQueryProcessor = new ConcurrentHashMap<>();
+	private final List<AssetEntryQueryProcessor>
+		_assetEntryQueryProcessor =
+			new CopyOnWriteArrayList<AssetEntryQueryProcessor>();
+	private final ServiceTracker<
+		AssetEntryQueryProcessor, AssetEntryQueryProcessor> _serviceTracker;
 
 	private final Accessor<AssetEntry, String> _titleAccessor =
 		new Accessor<AssetEntry, String>() {
@@ -1591,5 +1580,43 @@ public class AssetPublisherImpl implements AssetPublisher {
 			}
 
 		};
+
+	private class AssetEntryQueryServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<AssetEntryQueryProcessor, AssetEntryQueryProcessor> {
+
+		@Override
+		public AssetEntryQueryProcessor addingService(
+			ServiceReference<AssetEntryQueryProcessor> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			AssetEntryQueryProcessor assetEntryQueryProcessor =
+				registry.getService(serviceReference);
+
+			_assetEntryQueryProcessor.add(assetEntryQueryProcessor);
+
+			return assetEntryQueryProcessor;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<AssetEntryQueryProcessor> serviceReference,
+			AssetEntryQueryProcessor assetEntryQueryProcessor) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<AssetEntryQueryProcessor> serviceReference,
+			AssetEntryQueryProcessor assetEntryQueryProcessor) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_assetEntryQueryProcessor.remove(assetEntryQueryProcessor);
+		}
+
+	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.assetpublisher.util;
 
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,6 +26,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Jorge Ferrer
  */
+@OSGiBeanProperties
 public class CustomUserAttributesAssetEntryQueryProcessor
 	implements AssetEntryQueryProcessor {
 

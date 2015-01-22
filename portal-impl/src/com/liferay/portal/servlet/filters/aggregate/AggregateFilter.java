@@ -46,10 +46,9 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -288,14 +287,30 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 					continue;
 				}
 
-				URLConnection urlConnection = resourceURL.openConnection();
+				URLConnection urlConnection = null;
 
-				if (urlConnection.getLastModified() >
-						cacheFile.lastModified()) {
+				try {
+					urlConnection = resourceURL.openConnection();
 
-					staleCache = true;
+					if (urlConnection.getLastModified() >
+							cacheFile.lastModified()) {
 
-					break;
+						staleCache = true;
+
+						break;
+					}
+				}
+				finally {
+					if (urlConnection != null) {
+						try {
+							InputStream inputStream = urlConnection.getInputStream();
+
+							inputStream.close();
+						}
+						catch (IOException ioe) {
+
+						}
+					}
 				}
 			}
 

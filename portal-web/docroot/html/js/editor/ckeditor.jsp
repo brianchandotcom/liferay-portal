@@ -412,55 +412,55 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		currentToolbarSet = getToolbarSet(initialToolbarSet);
 
+		var filebrowserBrowseUrl = '';
+		var filebrowserImageBrowseUrl = '';
+		var filebrowserImageBrowseLinkUrl = '';
+		var filebrowserFlashBrowseUrl = '';
+
+		<c:if test="<%= allowBrowseDocuments %>">
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/document_selector/view" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+				<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
+				<portlet:param name="showGroupsSelector" value="true" />
+			</liferay-portlet:renderURL>
+
+			<%
+			if (fileBrowserParamsMap != null) {
+				for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
+					documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
+				}
+			}
+			%>
+
+			filebrowserBrowseUrl = '<%= documentSelectorURL %>';
+
+			<%
+			PortletURL imageDocumentSelectorURL = PortletURLUtil.clone(documentSelectorURL, liferayPortletResponse);
+
+			imageDocumentSelectorURL.setParameter("type", "image");
+			%>
+
+			filebrowserImageBrowseUrl = '<%= imageDocumentSelectorURL %>';
+			filebrowserImageBrowseLinkUrl = '<%= imageDocumentSelectorURL %>';
+
+			<%
+			PortletURL flashDocumentSelectorURL = PortletURLUtil.clone(documentSelectorURL, liferayPortletResponse);
+
+			flashDocumentSelectorURL.setParameter("type", "flash");
+			%>
+
+			filebrowserFlashBrowseUrl = '<%= flashDocumentSelectorURL %>';
+		</c:if>
+
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>(
 			'<%= name %>',
 			{
 				customConfig: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/<%= HtmlUtil.escapeJS(ckEditorConfigFileName) %>?p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&contentsLanguageId=<%= HttpUtil.encodeURL(contentsLanguageId) %>&colorSchemeCssClass=<%= HttpUtil.encodeURL(themeDisplay.getColorScheme().getCssClass()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&imagesPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeImages()) %>&inlineEdit=<%= inlineEdit %><%= configParams %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %>&name=<%= name %>&resizable=<%= resizable %>&showSource=<%= showSource %>',
-
-				<c:choose>
-					<c:when test="<%= allowBrowseDocuments %>">
-						<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="struts_action" value="/document_selector/view" />
-							<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-							<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
-							<portlet:param name="showGroupsSelector" value="true" />
-						</liferay-portlet:renderURL>
-
-						<%
-						if (fileBrowserParamsMap != null) {
-							for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
-								documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
-							}
-						}
-						%>
-
-						filebrowserBrowseUrl: '<%= documentSelectorURL %>',
-
-						<%
-						PortletURL imageDocumentSelectorURL = PortletURLUtil.clone(documentSelectorURL, liferayPortletResponse);
-
-						imageDocumentSelectorURL.setParameter("type", "image");
-						%>
-
-						filebrowserImageBrowseUrl: '<%= imageDocumentSelectorURL %>',
-						filebrowserImageBrowseLinkUrl: '<%= imageDocumentSelectorURL %>',
-
-						<%
-						PortletURL flashDocumentSelectorURL = PortletURLUtil.clone(documentSelectorURL, liferayPortletResponse);
-
-						flashDocumentSelectorURL.setParameter("type", "flash");
-						%>
-
-						filebrowserFlashBrowseUrl: '<%= flashDocumentSelectorURL %>',
-					</c:when>
-					<c:otherwise>
-						filebrowserBrowseUrl: '',
-						filebrowserImageBrowseUrl: '',
-						filebrowserImageBrowseLinkUrl: '',
-						filebrowserFlashBrowseUrl: '',
-					</c:otherwise>
-				</c:choose>
-
+				filebrowserBrowseUrl: filebrowserBrowseUrl,
+				filebrowserImageBrowseUrl: filebrowserImageBrowseUrl,
+				filebrowserImageBrowseLinkUrl: filebrowserImageBrowseLinkUrl,
+				filebrowserFlashBrowseUrl: filebrowserFlashBrowseUrl,
 				filebrowserUploadUrl: null,
 				toolbar: currentToolbarSet
 			}

@@ -52,10 +52,10 @@ FullNameDefinition fullNameDefinition = LocalizationUtil.getFullNameDefinition(u
 						}
 					}
 
-					for (String valueOption : fullNameField.getValueOptions()) {
+					for (String value : fullNameField.getValues()) {
 					%>
 
-						<aui:option label="<%= valueOption %>" selected="<%= selected.equals(valueOption) %>" value="<%= valueOption %>" />
+						<aui:option label="<%= value %>" selected="<%= selected.equals(value) %>" value="<%= value %>" />
 
 					<%
 					}

@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Document Library Google Docs
-Bundle-SymbolicName: com.liferay.document.library.google.docs
+Bundle-Name: Liferay Portal Template FreeMarker
+Bundle-SymbolicName: com.liferay.portal.template.freemarker
 Bundle-Version: 1.0.0
 Import-Package:\
 	!com.sun.org.apache.xml.internal.utils,\
@@ -11,4 +11,7 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	@lib/org.freemarker.jar
+	@lib/org.freemarker.jar,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+
+-metatype: *

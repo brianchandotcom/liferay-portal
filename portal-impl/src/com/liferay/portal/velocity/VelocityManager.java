@@ -20,13 +20,24 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.taglib.servlet.PipingServletResponse;
+import com.liferay.taglib.util.VelocityTaglib;
+import com.liferay.taglib.util.VelocityTaglibImpl;
+
+import java.io.IOException;
 
 import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.app.VelocityEngine;
@@ -38,6 +49,23 @@ import org.apache.velocity.util.introspection.SecureUberspector;
  */
 @DoPrivileged
 public class VelocityManager extends BaseTemplateManager {
+
+	@Override
+	public void addTaglibRequest(
+		Map<String, Object> contextObjects, String applicationName,
+		HttpServletRequest request, HttpServletResponse response) {
+
+		contextObjects.put(
+			applicationName, getVelocityTaglib(request, response));
+	}
+
+	@Override
+	public void addTaglibRequest(
+		Template template, String applicationName, HttpServletRequest request,
+		HttpServletResponse response) {
+
+		template.put(applicationName, getVelocityTaglib(request, response));
+	}
 
 	@Override
 	public void destroy() {
@@ -60,6 +88,12 @@ public class VelocityManager extends BaseTemplateManager {
 	@Override
 	public String getName() {
 		return TemplateConstants.LANG_TYPE_VM;
+	}
+
+	@Override
+	public String[] getRestrictedVariables() {
+		return PropsUtil.getArray(
+			PropsKeys.VELOCITY_ENGINE_RESTRICTED_VARIABLES);
 	}
 
 	@Override
@@ -162,6 +196,26 @@ public class VelocityManager extends BaseTemplateManager {
 		}
 
 		return template;
+	}
+
+	protected VelocityTaglib getVelocityTaglib(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+
+		ServletContext servletContext = session.getServletContext();
+
+		try {
+			VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
+				servletContext, request,
+				new PipingServletResponse(response, response.getWriter()),
+				null);
+
+			return velocityTaglib;
+		}
+		catch (IOException ioe) {
+			return ReflectionUtil.throwException(ioe);
+		}
 	}
 
 	private VelocityEngine _velocityEngine;

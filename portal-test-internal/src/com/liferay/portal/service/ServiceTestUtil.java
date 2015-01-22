@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -136,15 +135,6 @@ public class ServiceTestUtil {
 
 		try {
 			JCRFactoryUtil.prepare();
-		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
-		}
-
-		// Template manager
-
-		try {
-			TemplateManagerUtil.init();
 		}
 		catch (Exception e) {
 			_log.error(e.getMessage(), e);

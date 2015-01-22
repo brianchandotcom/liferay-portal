@@ -303,6 +303,7 @@
 				<classpath mode="compile">lib/development/mysql.jar</classpath>
 				<classpath mode="compile">lib/development/objenesis.jar</classpath>
 				<classpath mode="compile">lib/development/orangevolt-ant-tasks.jar</classpath>
+				<classpath mode="compile">lib/development/org.freemarker-2.3.17.LIFERAY-PATCHED-1.jar</classpath>
 				<classpath mode="compile">lib/development/p6spy.jar</classpath>
 				<classpath mode="compile">lib/development/persistence.jar</classpath>
 				<classpath mode="compile">lib/development/postgresql.jar</classpath>
@@ -398,7 +399,6 @@
 				<classpath mode="compile">lib/portal/fastutil.jar</classpath>
 				<classpath mode="compile">lib/portal/felix-fileinstall.jar</classpath>
 				<classpath mode="compile">lib/portal/fontbox.jar</classpath>
-				<classpath mode="compile">lib/portal/freemarker.jar</classpath>
 				<classpath mode="compile">lib/portal/freshcookies-security.jar</classpath>
 				<classpath mode="compile">lib/portal/gif89.jar</classpath>
 				<classpath mode="compile">lib/portal/groovy.jar</classpath>

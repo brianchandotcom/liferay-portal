@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
-import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -35,6 +35,10 @@ import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLUIItem;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -70,9 +74,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.portlet.PortletRequest;
@@ -406,21 +408,30 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 			new JavascriptMenuItem(), menuItems, "icon-file-alt",
 			DLUIItemKeys.OPEN_IN_MS_OFFICE, "open-in-ms-office", onClick);
 
-		Map<String, String> context = new HashMap<>();
+		String javaScript =
+			"/com/liferay/portlet/documentlibrary/context/dependencies" +
+				"/open_in_ms_office_js.ftl";
 
-		context.put(
+		Class<?> clazz = getClass();
+
+		URLTemplateResource urlTemplateResource = new URLTemplateResource(
+			javaScript, clazz.getResource(javaScript));
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
+
+		template.put(
 			"errorMessage", UnicodeLanguageUtil.get(
 				request,
 				"cannot-open-the-requested-document-due-to-the-following-" +
 					"reason"));
-		context.put("namespace", getNamespace());
+		template.put("namespace", getNamespace());
 
-		String javaScript = _processFreeMarkerTemplate(
-			"/com/liferay/portlet/documentlibrary/context/dependencies" +
-				"/open_in_ms_office_js.ftl",
-			context);
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		javascriptMenuItem.setJavascript(javaScript);
+		template.processTemplate(unsyncStringWriter);
+
+		javascriptMenuItem.setJavascript(unsyncStringWriter.toString());
 	}
 
 	protected void addPermissionsMenuItem(List<MenuItem> menuItems)
@@ -959,18 +970,6 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		return portletDisplay.isWebDAVEnabled();
-	}
-
-	private String _processFreeMarkerTemplate(
-		String name, Map<String, String> context) {
-
-		try {
-			return FreeMarkerUtil.process(name, context);
-		}
-		catch (Exception e) {
-			throw new SystemException(
-				"Unable to process Freemarker template", e);
-		}
 	}
 
 	private static final UUID _UUID = UUID.fromString(

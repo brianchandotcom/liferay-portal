@@ -42,6 +42,16 @@
 		String iconOn = (String)dynamicAttributes.get("iconOn");
 		String labelOff = (String)dynamicAttributes.get("labelOff");
 		String labelOn = (String)dynamicAttributes.get("labelOn");
+
+		if (localizeLabel) {
+			if (Validator.isNotNull(labelOff)) {
+				labelOff = LanguageUtil.get(request, labelOff);
+			}
+
+			if (Validator.isNotNull(labelOn)) {
+				labelOn = LanguageUtil.get(request, labelOn);
+			}
+		}
 		%>
 
 		<span aria-hidden="true" class="switch-bar">

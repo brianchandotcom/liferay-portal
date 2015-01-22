@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
+import com.liferay.portal.scripting.ruby.RubyExecutor;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -339,6 +340,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		initListeners(servletContext);
+
+		RubyExecutor.initRubyGems(servletContext);
 	}
 
 	protected void clearFilteredPropertyDescriptorsCache(

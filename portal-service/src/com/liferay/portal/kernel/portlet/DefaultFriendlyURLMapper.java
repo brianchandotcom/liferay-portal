@@ -40,8 +40,7 @@ import javax.portlet.WindowState;
  * </p>
  *
  * <p>
- * If you do need to extend this class, use {@link
- * com.liferay.util.bridges.alloy.AlloyFriendlyURLMapper} as a guide. The key
+ * If you do need to extend this class, the key
  * methods to override are {@link #buildPath(LiferayPortletURL)} and {@link
  * #populateParams(String, Map, Map)}.
  * </p>

@@ -68,8 +68,9 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalServiceUtil#checkDefaultLayoutSetBranches(
-	 *             long, Group, boolean, boolean, boolean, ServiceContext)}
+	 *             com.liferay.portal.service.StagingLocalServiceUtil#
+	 *             checkDefaultLayoutSetBranches(long, Group, boolean, boolean,
+	 *             boolean, ServiceContext)}
 	 */
 	@Deprecated
 	public static void checkDefaultLayoutSetBranches(

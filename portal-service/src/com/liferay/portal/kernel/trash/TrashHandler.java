@@ -55,10 +55,6 @@ import javax.portlet.PortletRequest;
  * BlogsEntry via {@link com.liferay.portlet.blogs.trash.BlogsEntryTrashHandler}
  * </li>
  * <li>
- * BookmarksEntry via {@link
- * com.liferay.portlet.bookmarks.trash.BookmarksEntryTrashHandler}
- * </li>
- * <li>
  * DLFileEntry via {@link
  * com.liferay.portlet.documentlibrary.trash.DLFileEntryTrashHandler}
  * </li>

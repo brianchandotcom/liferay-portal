@@ -282,6 +282,9 @@ input.switch {
 		font-size: 1.2rem;
 		line-height: 2.6rem;
 		position: relative;
+
+		@include user-select(none);
+
 		text-indent: 5rem;
 
 		&:after, &:before {

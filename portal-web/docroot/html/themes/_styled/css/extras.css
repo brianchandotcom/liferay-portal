@@ -598,8 +598,6 @@ input.switch {
 	}
 
 	&:empty ~ .switch-bar {
-		@include user-select(none);
-
 		&:after, &:before, .label-on, .label-off, .switch-icon {
 			@include transition(all 100ms ease-in);
 		}

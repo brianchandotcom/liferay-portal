@@ -40,9 +40,9 @@ public abstract class BaseDisplayContext<T extends DisplayContext>
 		return _uuid;
 	}
 
-	protected T parentDisplayContext;
-	protected HttpServletRequest request;
-	protected HttpServletResponse response;
+	protected final T parentDisplayContext;
+	protected final HttpServletRequest request;
+	protected final HttpServletResponse response;
 
 	private final UUID _uuid;
 

@@ -12,7 +12,8 @@ Import-Package:\
 	!org.apache.commons.net.*,\
 	!org.exolab.castor.xml.*,\
 	!sun.*,\
-	com.liferay.portal.theme,*
+	com.liferay.portal.theme,\
+	*
 Include-Resource:\
 	classes,\
 	lib/axis.jar=../../../lib/portal/axis.jar,\

@@ -32,36 +32,46 @@ public class WeblogicIncludeFilter extends BasePortalFilter
 	public HttpServletResponse getWrappedHttpServletResponse(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		if (needsWrappedHttpServletResponse(response)) {
+		if (shouldWrap(response)) {
 			return new WeblogicIncludeServletResponse(response);
 		}
 
 		return response;
 	}
 
-	protected boolean needsWrappedHttpServletResponse(
-		HttpServletResponse response) {
-
+	protected boolean shouldWrap(HttpServletResponse response) {
 		if (!ServerDetector.isWebLogic()) {
 			return false;
 		}
 
-		while (response instanceof HttpServletResponseWrapper) {
-			if (response instanceof WeblogicIncludeServletResponse) {
-				return false;
-			}
-
-			if (response instanceof MetaInfoCacheServletResponse) {
-				return true;
-			}
-
-			HttpServletResponseWrapper wrapper =
-				(HttpServletResponseWrapper)response;
-
-			response = (HttpServletResponse)wrapper.getResponse();
+		if (response instanceof WeblogicIncludeServletResponse) {
+			return false;
 		}
 
-		return false;
+		boolean shouldWrap = false;
+
+		HttpServletResponseWrapper previousResponseWrapper = null;
+
+		while (response instanceof HttpServletResponseWrapper) {
+			if (!shouldWrap &&
+				(response instanceof MetaInfoCacheServletResponse)) {
+
+				shouldWrap = true;
+			}
+
+			HttpServletResponseWrapper responseWrapper =
+				(HttpServletResponseWrapper)response;
+
+			response = (HttpServletResponse)responseWrapper.getResponse();
+
+			if (responseWrapper instanceof WeblogicIncludeServletResponse) {
+				previousResponseWrapper.setResponse(response);
+			}
+
+			previousResponseWrapper = responseWrapper;
+		}
+
+		return shouldWrap;
 	}
 
 }

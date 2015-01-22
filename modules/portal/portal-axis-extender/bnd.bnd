@@ -14,5 +14,6 @@ Import-Package:\
 	!sun.*,\
 	com.liferay.portal.theme,*
 Include-Resource:\
+	classes,\
 	lib/axis.jar=../../../lib/portal/axis.jar,\
 	lib/wsdl4j.jar=../../../lib/portal/wsdl4j.jar

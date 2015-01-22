@@ -307,10 +307,9 @@ input.switch {
 			width: 1.8rem;
 		}
 
-		.switch-toggle {
-			&:after {
-				content: attr(data-label-off);
-			}
+		.switch-toggle:after {
+			content: attr(data-label-off);
+			text-transform: uppercase;
 		}
 
 		.switch-icon {

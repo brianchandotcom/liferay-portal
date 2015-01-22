@@ -14,5 +14,8 @@
 	<classpathentry kind="lib" path="/portal-master/lib/portal/log4j.jar"/>
 	<classpathentry kind="lib" path="/portal-master/portal-service/portal-service.jar"/>
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar"/>
+	<classpathentry kind="lib" path="lib/jna.jar"/>
+	<classpathentry kind="lib" path="lib/jnaerator-runtime.jar"/>
+	<classpathentry kind="lib" path="lib/ochafik-util.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

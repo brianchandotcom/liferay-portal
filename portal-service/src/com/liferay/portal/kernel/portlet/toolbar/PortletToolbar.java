@@ -1,0 +1,148 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.kernel.portlet.toolbar;
+
+import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.portlet.PortletRequest;
+
+/**
+ * @author Sergio González
+ */
+public class PortletToolbar {
+
+	public Menu getContentAdditionMenu(
+		String portletId, PortletRequest portletRequest) {
+
+		List<MenuItem> contentAdditionMenuItems = new ArrayList<>();
+
+		for (PortletToolbarContributorLocator
+				portletToolbarContributorLocator :
+					_portletToolbarContributorLocators) {
+
+			List<PortletToolbarContributor> portletToolbarContributors =
+				portletToolbarContributorLocator.getPortletToolbarContributors(
+					portletId, portletRequest);
+
+			if (portletToolbarContributors == null) {
+				continue;
+			}
+
+			for (PortletToolbarContributor portletToolbarContributor :
+					portletToolbarContributors) {
+
+				List<MenuItem> curContentAdditionMenuItems =
+					portletToolbarContributor.getContentAdditionMenuItems(
+						portletRequest);
+
+				if (curContentAdditionMenuItems != null) {
+					contentAdditionMenuItems.addAll(
+						curContentAdditionMenuItems);
+				}
+			}
+		}
+
+		return new Menu(
+			"portlet-options", "down", false, "../aui/plus-sign-2",
+			StringPool.BLANK, contentAdditionMenuItems, "add", true, false,
+			true, StringPool.BLANK);
+	}
+
+	private static void _addPortletToolbarContributorLocator(
+		PortletToolbarContributorLocator portletToolbarContributorLocator) {
+
+		_portletToolbarContributorLocators.add(
+			portletToolbarContributorLocator);
+	}
+
+	private static void _removePortletToolbarContributorLocator(
+		PortletToolbarContributorLocator portletToolbarContributorLocator) {
+
+		_portletToolbarContributorLocators.remove(
+			portletToolbarContributorLocator);
+	}
+
+	private static final List<PortletToolbarContributorLocator>
+		_portletToolbarContributorLocators = new CopyOnWriteArrayList<>();
+	private static final ServiceTracker<
+		PortletToolbarContributorLocator, PortletToolbarContributorLocator>
+			_serviceTracker;
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			PortletToolbarContributorLocator.class,
+			new PortletToolbarServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	private static class PortletToolbarServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<
+			PortletToolbarContributorLocator,
+			PortletToolbarContributorLocator> {
+
+		@Override
+		public PortletToolbarContributorLocator addingService(
+			ServiceReference<PortletToolbarContributorLocator>
+				serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			PortletToolbarContributorLocator portletToolbarContributorLocator =
+				registry.getService(serviceReference);
+
+			_addPortletToolbarContributorLocator(
+				portletToolbarContributorLocator);
+
+			return portletToolbarContributorLocator;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<PortletToolbarContributorLocator> serviceReference,
+			PortletToolbarContributorLocator portletToolbarContributorLocator) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<PortletToolbarContributorLocator> serviceReference,
+			PortletToolbarContributorLocator portletToolbarContributorLocator) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_removePortletToolbarContributorLocator(
+				portletToolbarContributorLocator);
+		}
+
+	}
+
+}

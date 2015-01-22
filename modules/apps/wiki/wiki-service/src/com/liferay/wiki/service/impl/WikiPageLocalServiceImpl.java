@@ -240,12 +240,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			String summary, boolean minorEdit, ServiceContext serviceContext)
 		throws PortalException {
 
+		double version = WikiPageConstants.VERSION_DEFAULT;
+
 		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
 
 		WikiSettings wikiSettings = WikiSettings.getInstance(node.getGroupId());
 
-		double version = WikiPageConstants.VERSION_DEFAULT;
 		String format = wikiSettings.getDefaultFormat();
+
 		boolean head = false;
 		String parentTitle = null;
 		String redirectTitle = null;

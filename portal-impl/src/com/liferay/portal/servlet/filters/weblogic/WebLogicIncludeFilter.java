@@ -65,9 +65,7 @@ public class WebLogicIncludeFilter
 		HttpServletResponseWrapper previousResponseWrapper = null;
 
 		while (response instanceof HttpServletResponseWrapper) {
-			if (!wrap &&
-				(response instanceof MetaInfoCacheServletResponse)) {
-
+			if (!wrap && (response instanceof MetaInfoCacheServletResponse)) {
 				wrap = true;
 			}
 

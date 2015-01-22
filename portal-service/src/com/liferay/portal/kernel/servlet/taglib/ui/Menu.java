@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
-import java.util.List;
-
 import com.liferay.portal.kernel.util.StringPool;
+
+import java.util.List;
 
 /**
  * @author Sergio González

@@ -208,7 +208,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 				srcNode: '#<%= name %>',
 
 				toolbars: {
-					<c:if test="<%= !alloyEditorMode.equals("text") %>">
+					<c:if test='<%= !alloyEditorMode.equals("text") %>'>
 						add: ['imageselector'],
 						image: ['left', 'right'],
 						styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']

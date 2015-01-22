@@ -131,15 +131,9 @@ public class AssetPublisherImpl implements AssetPublisher {
 			int assetEntryOrder)
 		throws Exception {
 
-		String referringPortletResource = ParamUtil.getString(
-			portletRequest, "referringPortletResource");
+		String portletId = PortalUtil.getPortletId(portletRequest);
 
-		if (Validator.isNull(referringPortletResource)) {
-			return;
-		}
-
-		String rootPortletId = PortletConstants.getRootPortletId(
-			referringPortletResource);
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
 		if (!rootPortletId.equals(PortletKeys.ASSET_PUBLISHER)) {
 			return;
@@ -149,11 +143,11 @@ public class AssetPublisherImpl implements AssetPublisher {
 			WebKeys.THEME_DISPLAY);
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(
-			themeDisplay.getRefererPlid());
+			themeDisplay.getPlid());
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, referringPortletResource);
+				layout, portletId);
 
 		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
 			return;
@@ -170,7 +164,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			className, classPK);
 
 		addSelection(
-			themeDisplay, portletPreferences, referringPortletResource,
+			themeDisplay, portletPreferences, portletId,
 			assetEntry.getEntryId(), assetEntryOrder, className);
 
 		portletPreferences.store();

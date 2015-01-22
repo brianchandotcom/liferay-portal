@@ -28,7 +28,7 @@
 	</c:if>
 
 	<c:if test="<%= changesContext %>">
-		<span class="hide-accessible"><liferay-ui:message key="changing-the-value-of-this-field-will-reload-the-page" />)</span>
+		<span class="hide-accessible">(<liferay-ui:message key="changing-the-value-of-this-field-will-reload-the-page" />)</span>
 	</c:if>
 </liferay-util:buffer>
 

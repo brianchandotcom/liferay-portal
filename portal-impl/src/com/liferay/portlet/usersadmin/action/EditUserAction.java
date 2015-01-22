@@ -132,9 +132,9 @@ public class EditUserAction extends PortletAction {
 		String suffix = ParamUtil.getString(actionRequest, "suffixId");
 
 		int prefixId = ListTypeServiceUtil.addListType(
-			ListTypeConstants.CONTACT_PREFIX, prefix).getPrimaryKey();
+			prefix, ListTypeConstants.CONTACT_PREFIX).getPrimaryKey();
 		int suffixId = ListTypeServiceUtil.addListType(
-			ListTypeConstants.CONTACT_SUFFIX, suffix).getPrimaryKey();
+			suffix, ListTypeConstants.CONTACT_SUFFIX).getPrimaryKey();
 
 		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(
 			actionRequest);

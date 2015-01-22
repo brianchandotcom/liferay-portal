@@ -128,8 +128,8 @@ public class EditUserAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String prefix = ParamUtil.getString(actionRequest, "prefixId");
-		String suffix = ParamUtil.getString(actionRequest, "suffixId");
+		String prefix = ParamUtil.getString(actionRequest, "prefixValue");
+		String suffix = ParamUtil.getString(actionRequest, "suffixValue");
 
 		int prefixId = ListTypeServiceUtil.addListType(
 			prefix, ListTypeConstants.CONTACT_PREFIX).getPrimaryKey();

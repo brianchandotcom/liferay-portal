@@ -87,41 +87,19 @@ if (fileShortcut == null) {
 	dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
 }
 else {
-	fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
-
 	dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
 }
 
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
 %>
 
-<liferay-util:buffer var="iconMenu">
-	<liferay-ui:icon-menu direction='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? "down" : "left" %>' extended="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? false : true %>" icon="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" message='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' showExpanded="<%= false %>" showWhenSingleIcon="<%= dlActionsDisplayContext.isShowWhenSingleIconActionButton() %>" triggerCssClass="btn btn-default">
-
-		<%
-		for (MenuItem menuItem : dlViewFileVersionDisplayContext.getMenuItems()) {
-		%>
-
-			<liferay-ui:menu-item menuItem="<%= menuItem %>" />
-
-		<%
-		}
-		%>
-
-	</liferay-ui:icon-menu>
-</liferay-util:buffer>
-
 <c:choose>
 	<c:when test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlActionsDisplayContext.isShowMinimalActionsButton() %>">
-
-		<%= iconMenu %>
-
+		<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
 	</c:when>
 	<c:otherwise>
 		<span class="entry-action overlay">
-
-			<%= iconMenu %>
-
+			<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
 		</span>
 	</c:otherwise>
 </c:choose>

@@ -20,6 +20,7 @@ import com.liferay.document.library.google.docs.util.ResourceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.UIItem;
@@ -85,15 +86,19 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public Menu getMenu() throws PortalException {
+		Menu menu = super.getMenu();
+
+		_processGoogleDocsMenuItems(menu.getMenuItems());
+
+		return menu;
+	}
+
+	@Override
 	public List<MenuItem> getMenuItems() throws PortalException {
 		List<MenuItem> menuItems = super.getMenuItems();
 
-		_removeUnsupportedUIItems(menuItems);
-
-		URLMenuItem urlMenuItem = _insertEditInGoogleURLUIItem(
-			new URLMenuItem(), menuItems);
-
-		urlMenuItem.setMethod("GET");
+		_processGoogleDocsMenuItems(menuItems);
 
 		return menuItems;
 	}
@@ -191,6 +196,19 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		urlUIItems.add(index, urlUIItem);
 
 		return urlUIItem;
+	}
+
+	private List<MenuItem> _processGoogleDocsMenuItems(
+		List<MenuItem> menuItems) {
+
+		_removeUnsupportedUIItems(menuItems);
+
+		URLMenuItem urlMenuItem = _insertEditInGoogleURLUIItem(
+			new URLMenuItem(), menuItems);
+
+		urlMenuItem.setMethod("GET");
+
+		return menuItems;
 	}
 
 	private void _removeUIItem(List<? extends UIItem> uiItems, String key) {

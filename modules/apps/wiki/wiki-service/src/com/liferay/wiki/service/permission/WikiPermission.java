@@ -57,8 +57,7 @@ public class WikiPermission implements ResourcePermissionChecker {
 
 	@Override
 	public Boolean checkResource(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException {
+		PermissionChecker permissionChecker, long classPK, String actionId) {
 
 		return contains(permissionChecker, classPK, actionId);
 	}

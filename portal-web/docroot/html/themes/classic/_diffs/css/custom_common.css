@@ -685,12 +685,10 @@ input.switch {
 			background-color: #868B96;
 		}
 
-		.label-on, .label-off {
-			font-weight: 500;
-		}
-
-		.label-on {
-			color: #34ADAB;
+		.switch-toggle {
+			&:after {
+				font-weight: bold;
+			}
 		}
 
 		.button-icon {
@@ -701,6 +699,12 @@ input.switch {
 	&:checked ~ .switch-bar {
 		&:before {
 			background-color: #34ADAB;
+		}
+
+		.switch-toggle {
+			&:after {
+				color: #34ADAB;
+			}
 		}
 
 		.button-icon {

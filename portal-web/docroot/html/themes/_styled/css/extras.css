@@ -598,7 +598,7 @@ input.switch {
 	}
 
 	&:empty ~ .switch-bar {
-		&:after, &:before, .label-on, .label-off, .switch-icon {
+		&:after, &:before, .switch-icon, .switch-toggle:after, .switch-toggle:before {
 			@include transition(all 100ms ease-in);
 		}
 	}

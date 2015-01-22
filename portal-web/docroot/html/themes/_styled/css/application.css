@@ -281,6 +281,7 @@ input.switch {
 		display: block;
 		font-size: 1.2rem;
 		line-height: 2.6rem;
+		min-height: 2.6rem;
 		position: relative;
 
 		@include user-select(none);
@@ -304,6 +305,12 @@ input.switch {
 			left: 0.4rem;
 			top: 0.4rem;
 			width: 1.8rem;
+		}
+
+		.switch-toggle {
+			&:after {
+				content: attr(data-label-off);
+			}
 		}
 
 		.switch-icon {
@@ -339,16 +346,6 @@ input.switch {
 		.switch-icon-off {
 			left: 2.4rem;
 		}
-
-		.label-on {
-			opacity: 0;
-		}
-
-		.label-off {
-			left: 0;
-			position: absolute;
-			top: 0;
-		}
 	}
 
 	&:checked ~ .switch-bar {
@@ -358,6 +355,10 @@ input.switch {
 
 		&:before {
 			background-color: #1E9C38;
+		}
+
+		.switch-toggle:after {
+			content: attr(data-label-on);
 		}
 
 		.button-icon {
@@ -372,11 +373,11 @@ input.switch {
 			}
 		}
 
-		.label-on, .switch-icon-on {
+		.switch-icon-on {
 			opacity: 1;
 		}
 
-		.label-off, .switch-icon-off {
+		.switch-icon-off {
 			opacity: 0;
 		}
 	}

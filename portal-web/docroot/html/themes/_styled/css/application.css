@@ -323,23 +323,18 @@ input.switch {
 			top: 0.4rem;
 			width: 1.8rem;
 			z-index: 1;
-
-			&.button-icon-on {
-				display: block;
-			}
-
-			&.button-icon-off {
-				display: none;
-			}
 		}
 
 		.button-icon {
 			color: #DDD;
 		}
 
+		.button-icon-on, .switch-icon-on {
+			opacity: 0;
+		}
+
 		.switch-icon-on {
 			left: 0.2rem;
-			opacity: 0;
 		}
 
 		.switch-icon-off {
@@ -362,21 +357,13 @@ input.switch {
 
 		.button-icon {
 			left: 2.2rem;
-
-			&.button-icon-on {
-				display: none;
-			}
-
-			&.button-icon-off {
-				display: block;
-			}
 		}
 
-		.switch-icon-on {
+		.button-icon-on, .switch-icon-on {
 			opacity: 1;
 		}
 
-		.switch-icon-off {
+		.button-icon-off, .switch-icon-off {
 			opacity: 0;
 		}
 	}

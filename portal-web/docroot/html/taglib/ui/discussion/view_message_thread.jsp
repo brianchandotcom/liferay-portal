@@ -55,7 +55,7 @@ request.setAttribute("page.jsp-i", new Integer(i));
 		<div class="lfr-discussion-details">
 			<liferay-ui:user-display
 				displayStyle="2"
-				showImageOverlay="<%= userId == message.getUserId() %>"
+				isAuthor="<%= userId == message.getUserId() %>"
 				showUserName="<%= false %>"
 				userId="<%= message.getUserId() %>"
 			/>

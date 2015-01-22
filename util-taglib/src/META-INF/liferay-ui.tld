@@ -4937,7 +4937,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>showImageOverlay</name>
+			<name>isAuthor</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

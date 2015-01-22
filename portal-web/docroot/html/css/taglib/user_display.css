@@ -36,7 +36,9 @@
 		margin: 0 auto;
 		width: 65px;
 
-		.avatar-overlay {
+		&.author:after {
+			border-radius: 50%;
+			content: '';
 			display: block;
 			height: 100%;
 			width: 100%;
@@ -55,7 +57,7 @@
 		text-decoration: underline;
 	}
 
-	.avatar .avatar-overlay {
+	.avatar.author:after {
 		background: rgba(50, 168, 230, 0.5);
 	}
 

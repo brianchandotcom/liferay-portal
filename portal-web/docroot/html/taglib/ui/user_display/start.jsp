@@ -20,6 +20,10 @@
 if (Validator.isNull(url) && (userDisplay != null)) {
 	url = userDisplay.getDisplayURL(themeDisplay);
 }
+
+if (isAuthor) {
+	imageCssClass += " author";
+}
 %>
 
 <div class="display-style-<%= displayStyle %> taglib-user-display">
@@ -37,11 +41,7 @@ if (Validator.isNull(url) && (userDisplay != null)) {
 
 	<aui:a href="<%= url %>">
 		<span class="user-profile-image">
-			<span class="avatar <%= imageCssClass %>" style="background-image: url('<%= HtmlUtil.escape(taglibSrc) %>')">
-				<c:if test="<%= showImageOverlay %>">
-					<span class="avatar-overlay <%= imageCssClass %>"></span>
-				</c:if>
-			</span>
+			<span class="avatar <%= imageCssClass %>" style="background-image: url('<%= HtmlUtil.escape(taglibSrc) %>')"></span>
 		</span>
 
 		<c:if test="<%= showUserName %>">

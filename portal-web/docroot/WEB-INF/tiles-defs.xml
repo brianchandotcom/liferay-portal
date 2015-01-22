@@ -144,14 +144,6 @@
 		<put name="portlet_content" value="/portlet/announcements/view.jsp" />
 	</definition>
 
-	<!-- Asset Browser -->
-
-	<definition name="portlet.asset_browser" extends="portlet" />
-
-	<definition name="portlet.asset_browser.view" extends="portlet.asset_browser">
-		<put name="portlet_content" value="/portlet/asset_browser/view.jsp" />
-	</definition>
-
 	<!-- Background Task-->
 
 	<definition name="portlet.background_task" extends="portlet" />

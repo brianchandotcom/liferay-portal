@@ -116,7 +116,6 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 							<%
 							PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 
-							assetBrowserURL.setParameter("struts_action", "/asset_browser/view");
 							assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
 							assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(groupId));
 							assetBrowserURL.setParameter("eventName", eventName);

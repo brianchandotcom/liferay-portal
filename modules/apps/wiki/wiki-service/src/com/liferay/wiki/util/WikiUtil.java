@@ -650,8 +650,8 @@ public class WikiUtil {
 		"\\[\\$BEGIN_PAGE_TITLE\\$\\](.*?)\\[\\$END_PAGE_TITLE\\$\\]");
 	private static final ServiceTracker<WikiEngineTracker, WikiEngineTracker>
 		_wikiEngineServiceTracker;
-	private static final ServiceTracker<
-		WikiImporterTracker, WikiImporterTracker> _wikiImporterServiceTracker;
+	private static final ServiceTracker
+		<WikiImporterTracker, WikiImporterTracker> _wikiImporterServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(WikiUtil.class);

@@ -594,7 +594,7 @@ body:first-of-type {
 
 input.switch {
 	&:focus ~ .switch-bar:before {
-		@include box-shadow(0 0 3px #00F);
+		box-shadow: 0 0 3px #00F;
 	}
 
 	&:empty ~ .switch-bar {

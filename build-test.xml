@@ -982,7 +982,7 @@ create database lportal${database.index} character set utf8;</echo>
 					<property name="operating.system.type" value="${operating.system.type}" />
 					<property name="operating.system.version" value="${operating.system.version}" />
 					<property name="testray.build.name" value="${testray.build.name}" />
-					<property name="testray.build.time" value="${env.BUILD_FLOW_TIME_STAMP}" />
+					<property name="testray.build.time" value="${testray.build.time}" />
 					<property name="testray.build.type" value="${testray.build.type}" />
 					<property name="testray.product.type" value="${testray.product.type}" />
 					<property name="testray.product.version" value="${testray.product.version}" />

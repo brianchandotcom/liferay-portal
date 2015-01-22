@@ -515,7 +515,6 @@ public class PortletDisplay implements Serializable {
 		_namespace = StringPool.BLANK;
 		_portletName = StringPool.BLANK;
 		_portletSetup = null;
-		_portletToolbar = null;
 		_resourcePK = StringPool.BLANK;
 		_restoreCurrentView = false;
 		_rootPortletId = StringPool.BLANK;

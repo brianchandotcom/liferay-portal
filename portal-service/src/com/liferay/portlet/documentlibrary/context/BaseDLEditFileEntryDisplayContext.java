@@ -70,93 +70,93 @@ public class BaseDLEditFileEntryDisplayContext
 	public DLFilePicker getDLFilePicker(String onFilePickCallback)
 		throws PortalException {
 
-		return parentDLDisplayContext.getDLFilePicker(onFilePickCallback);
+		return parentDisplayContext.getDLFilePicker(onFilePickCallback);
 	}
 
 	@Override
 	public long getMaximumUploadSize() throws PortalException {
-		return parentDLDisplayContext.getMaximumUploadSize();
+		return parentDisplayContext.getMaximumUploadSize();
 	}
 
 	@Override
 	public String getPublishButtonLabel() throws PortalException {
-		return parentDLDisplayContext.getPublishButtonLabel();
+		return parentDisplayContext.getPublishButtonLabel();
 	}
 
 	@Override
 	public String getSaveButtonLabel() throws PortalException {
-		return parentDLDisplayContext.getSaveButtonLabel();
+		return parentDisplayContext.getSaveButtonLabel();
 	}
 
 	@Override
 	public boolean isCancelCheckoutDocumentButtonDisabled()
 		throws PortalException {
 
-		return parentDLDisplayContext.isCancelCheckoutDocumentButtonDisabled();
+		return parentDisplayContext.isCancelCheckoutDocumentButtonDisabled();
 	}
 
 	@Override
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException {
 
-		return parentDLDisplayContext.isCancelCheckoutDocumentButtonVisible();
+		return parentDisplayContext.isCancelCheckoutDocumentButtonVisible();
 	}
 
 	@Override
 	public boolean isCheckinButtonDisabled() throws PortalException {
-		return parentDLDisplayContext.isCheckinButtonDisabled();
+		return parentDisplayContext.isCheckinButtonDisabled();
 	}
 
 	@Override
 	public boolean isCheckinButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isCheckinButtonVisible();
+		return parentDisplayContext.isCheckinButtonVisible();
 	}
 
 	@Override
 	public boolean isCheckoutDocumentButtonDisabled() throws PortalException {
-		return parentDLDisplayContext.isCheckoutDocumentButtonDisabled();
+		return parentDisplayContext.isCheckoutDocumentButtonDisabled();
 	}
 
 	@Override
 	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isCheckoutDocumentButtonVisible();
+		return parentDisplayContext.isCheckoutDocumentButtonVisible();
 	}
 
 	@Override
 	public boolean isDDMStructureVisible(DDMStructure ddmStructure)
 		throws PortalException {
 
-		return parentDLDisplayContext.isDDMStructureVisible(ddmStructure);
+		return parentDisplayContext.isDDMStructureVisible(ddmStructure);
 	}
 
 	@Override
 	public boolean isFolderSelectionVisible() throws PortalException {
-		return parentDLDisplayContext.isFolderSelectionVisible();
+		return parentDisplayContext.isFolderSelectionVisible();
 	}
 
 	@Override
 	public boolean isPublishButtonDisabled() throws PortalException {
-		return parentDLDisplayContext.isPublishButtonDisabled();
+		return parentDisplayContext.isPublishButtonDisabled();
 	}
 
 	@Override
 	public boolean isPublishButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isPublishButtonVisible();
+		return parentDisplayContext.isPublishButtonVisible();
 	}
 
 	@Override
 	public boolean isSaveButtonDisabled() throws PortalException {
-		return parentDLDisplayContext.isSaveButtonDisabled();
+		return parentDisplayContext.isSaveButtonDisabled();
 	}
 
 	@Override
 	public boolean isSaveButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isSaveButtonVisible();
+		return parentDisplayContext.isSaveButtonVisible();
 	}
 
 	@Override
 	public boolean isVersionInfoVisible() throws PortalException {
-		return parentDLDisplayContext.isVersionInfoVisible();
+		return parentDisplayContext.isVersionInfoVisible();
 	}
 
 	protected DLFileEntryType dlFileEntryType;

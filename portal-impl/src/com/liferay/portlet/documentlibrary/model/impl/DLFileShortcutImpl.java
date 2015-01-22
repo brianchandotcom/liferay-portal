@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Repository;
@@ -49,6 +50,14 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		Folder folder = getFolder();
 
 		return (DLFolder)folder.getModel();
+	}
+
+	@Override
+	public FileVersion getFileVersion() throws PortalException {
+		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+			getToFileEntryId());
+
+		return fileEntry.getFileVersion();
 	}
 
 	@Override

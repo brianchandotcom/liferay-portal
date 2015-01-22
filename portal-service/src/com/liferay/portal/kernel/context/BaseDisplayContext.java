@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.context;
-
-import com.liferay.portal.kernel.context.BaseDisplayContext;
+package com.liferay.portal.kernel.context;
 
 import java.util.UUID;
 
@@ -24,14 +22,28 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public abstract class BaseDLDisplayContext<T extends DLDisplayContext>
-	extends BaseDisplayContext<T> implements DLDisplayContext {
+public abstract class BaseDisplayContext<T extends DisplayContext>
+	implements DisplayContext {
 
-	public BaseDLDisplayContext(
-		UUID uuid, T parentDLDisplayContext, HttpServletRequest request,
+	public BaseDisplayContext(
+		UUID uuid, T parentDisplayContext, HttpServletRequest request,
 		HttpServletResponse response) {
 
-		super(uuid, parentDLDisplayContext, request, response);
+		_uuid = uuid;
+		this.parentDisplayContext = parentDisplayContext;
+		this.request = request;
+		this.response = response;
 	}
+
+	@Override
+	public UUID getUuid() {
+		return _uuid;
+	}
+
+	protected final T parentDisplayContext;
+	protected final HttpServletRequest request;
+	protected final HttpServletResponse response;
+
+	private final UUID _uuid;
 
 }

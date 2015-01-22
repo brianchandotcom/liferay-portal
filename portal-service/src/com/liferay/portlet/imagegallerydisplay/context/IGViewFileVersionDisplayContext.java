@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,19 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%
-for (MenuItem menuItem : igViewFileVersionDisplayContext.getMenuItems()) {
-%>
+package com.liferay.portlet.imagegallerydisplay.context;
 
-	<liferay-ui:menu-item menuItem="<%= menuItem %>" />
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 
-<%
+import java.util.List;
+
+/**
+ * @author Iván Zaera
+ */
+public interface IGViewFileVersionDisplayContext extends IGDisplayContext {
+
+	public List<MenuItem> getMenuItems() throws PortalException;
+
 }
-%>

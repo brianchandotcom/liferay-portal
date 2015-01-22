@@ -56,7 +56,7 @@ if (resizable) {
 	</table>
 </liferay-util:buffer>
 
-<aui:script use='<%= modules %>'>
+<aui:script use="<%= modules %>">
 	var onInputHandle;
 
 	var onInput = function(event) {

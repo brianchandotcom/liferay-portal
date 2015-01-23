@@ -97,6 +97,11 @@ public class PasswordPolicyToolkitTest {
 		Assert.assertEquals(true, validate("xH9fxM@w"));
 	}
 
+	@Test
+	public void testValidateValidUpperCase() {
+		Assert.assertEquals(true, validate("xO9fxlM@w"));
+	}
+
 	protected boolean validate(String password) {
 		try {
 			_passwordPolicyToolkit.validate(

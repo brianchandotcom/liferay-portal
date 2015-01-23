@@ -65,6 +65,42 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			PropsValues.PASSWORDS_PASSWORDPOLICYTOOLKIT_CHARSET_UPPERCASE);
 
 		_completeCharset = sb.toString();
+
+		_lowerCaseGeneratorCharsetArray = getSortedCharArray(
+			PropsValues.
+				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_LOWERCASE);
+		_numbersGeneratorCharsetArray = getSortedCharArray(
+			PropsValues.
+				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_NUMBERS);
+		_symbolsGeneratorCharsetArray = getSortedCharArray(
+			PropsValues.
+				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_SYMBOLS);
+		_upperCaseGeneratorCharsetArray = getSortedCharArray(
+			PropsValues.
+				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_UPPERCASE);
+
+		_alphanumericGeneratorCharsetArray = ArrayUtil.append(
+			_lowerCaseGeneratorCharsetArray, _upperCaseGeneratorCharsetArray,
+			_numbersGeneratorCharsetArray);
+
+		Arrays.sort(_alphanumericGeneratorCharsetArray);
+
+		sb = new StringBundler(4);
+
+		sb.append(
+			PropsValues.
+				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_LOWERCASE);
+		sb.append(
+			PropsValues.
+				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_NUMBERS);
+		sb.append(
+			PropsValues.
+				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_SYMBOLS);
+		sb.append(
+			PropsValues.
+				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_UPPERCASE);
+
+		_completeGeneratorCharset = sb.toString();
 	}
 
 	@Override
@@ -176,31 +212,36 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 		if (passwordPolicy.getMinLowerCase() > 0) {
 			sb.append(
 				getRandomString(
-					passwordPolicy.getMinLowerCase(), _lowerCaseCharsetArray));
+					passwordPolicy.getMinLowerCase(),
+					_lowerCaseGeneratorCharsetArray));
 		}
 
 		if (passwordPolicy.getMinNumbers() > 0) {
 			sb.append(
 				getRandomString(
-					passwordPolicy.getMinNumbers(), _numbersCharsetArray));
+					passwordPolicy.getMinNumbers(),
+					_numbersGeneratorCharsetArray));
 		}
 
 		if (passwordPolicy.getMinSymbols() > 0) {
 			sb.append(
 				getRandomString(
-					passwordPolicy.getMinSymbols(), _symbolsCharsetArray));
+					passwordPolicy.getMinSymbols(),
+					_symbolsGeneratorCharsetArray));
 		}
 
 		if (passwordPolicy.getMinUpperCase() > 0) {
 			sb.append(
 				getRandomString(
-					passwordPolicy.getMinUpperCase(), _upperCaseCharsetArray));
+					passwordPolicy.getMinUpperCase(),
+					_upperCaseGeneratorCharsetArray));
 		}
 
 		if (alphanumericMinLength > alphanumericActualMinLength) {
 			int count = alphanumericMinLength - alphanumericActualMinLength;
 
-			sb.append(getRandomString(count, _alphanumericCharsetArray));
+			sb.append(
+				getRandomString(count, _alphanumericGeneratorCharsetArray));
 		}
 
 		if (passwordMinLength >
@@ -210,13 +251,14 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 				passwordMinLength -
 					(alphanumericMinLength + passwordPolicy.getMinSymbols());
 
-			sb.append(PwdGenerator.getPassword(_completeCharset, count));
+			sb.append(
+				PwdGenerator.getPassword(_completeGeneratorCharset, count));
 		}
 
 		if (sb.index() == 0) {
 			sb.append(
 				PwdGenerator.getPassword(
-					_completeCharset,
+					_completeGeneratorCharset,
 					PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH));
 		}
 
@@ -262,10 +304,16 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 	}
 
 	private final char[] _alphanumericCharsetArray;
+	private final char[] _alphanumericGeneratorCharsetArray;
 	private final String _completeCharset;
+	private final String _completeGeneratorCharset;
 	private final char[] _lowerCaseCharsetArray;
+	private final char[] _lowerCaseGeneratorCharsetArray;
 	private final char[] _numbersCharsetArray;
+	private final char[] _numbersGeneratorCharsetArray;
 	private final char[] _symbolsCharsetArray;
+	private final char[] _symbolsGeneratorCharsetArray;
 	private final char[] _upperCaseCharsetArray;
+	private final char[] _upperCaseGeneratorCharsetArray;
 
 }

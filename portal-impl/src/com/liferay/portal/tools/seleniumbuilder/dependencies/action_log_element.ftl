@@ -13,13 +13,13 @@
 
 	<#assign actionCommand = action?substring(x + 1)>
 
-	<#assign functionName = seleniumBuilderFileUtil.getObjectName(actionCommand)>
+	<#assign functionLocatorCount = seleniumBuilderContext.getFunctionLocatorCount(seleniumBuilderFileUtil.getObjectName(actionCommand))>
 
 	"${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action#${actionCommand}",
 
 	new String[] {
 
-	<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+	<#list 1..functionLocatorCount as i>
 		<#if actionElement.attributeValue("locator${i}")??>
 			<#assign actionLocator = actionElement.attributeValue("locator${i}")>
 

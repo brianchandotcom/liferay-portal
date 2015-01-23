@@ -18,7 +18,9 @@ ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${f
 	ignoreJavaScriptError,
 </#if>
 
-<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+<#assign functionLocatorCount = seleniumBuilderContext.getFunctionLocatorCount(seleniumBuilderFileUtil.getObjectName(function?substring(0, x)))>
+
+<#list 1..functionLocatorCount as i>
 	locator${i},
 
 	<#if functionElement.attributeValue("value${i}")??>

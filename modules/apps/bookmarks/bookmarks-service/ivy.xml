@@ -17,6 +17,6 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="com.liferay.portal.spring.extender" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="com.liferay.portal.spring.extender" org="com.liferay" rev="1.0.0" />
 	</dependencies>
 </ivy-module>

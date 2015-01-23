@@ -72,26 +72,6 @@ public class DLDisplayContextProviderUtil {
 			getDLViewFileVersionDisplayContext(request, response, fileVersion);
 	}
 
-	public static DLViewFileVersionDisplayContext
-		getIGFileVersionActionsDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut) {
-
-		return getDLDisplayContextFactoryProvider().
-			getIGFileVersionActionsDisplayContext(
-				request, response, dlFileShortcut);
-	}
-
-	public static DLViewFileVersionDisplayContext
-		getIGFileVersionActionsDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
-
-		return getDLDisplayContextFactoryProvider().
-			getIGFileVersionActionsDisplayContext(
-				request, response, fileVersion);
-	}
-
 	public void setDLDisplayContextFactoryProvider(
 		DLDisplayContextProvider dlDisplayContextProvider) {
 

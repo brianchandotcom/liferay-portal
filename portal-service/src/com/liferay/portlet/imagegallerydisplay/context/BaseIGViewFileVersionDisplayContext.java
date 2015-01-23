@@ -12,51 +12,40 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.context;
+package com.liferay.portlet.imagegallerydisplay.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Adolfo Pérez
+ * @author Iván Zaera
  */
-public class DefaultIGViewFileVersionDisplayContext
-	extends BaseDefaultDLViewFileVersionDisplayContext {
+public class BaseIGViewFileVersionDisplayContext
+	extends BaseIGDisplayContext<IGViewFileVersionDisplayContext>
+	implements IGViewFileVersionDisplayContext {
 
-	public DefaultIGViewFileVersionDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		DLFileShortcut dlFileShortcut) {
-
-		super(request, response, dlFileShortcut);
-	}
-
-	public DefaultIGViewFileVersionDisplayContext(
+	public BaseIGViewFileVersionDisplayContext(
+		UUID uuid, IGViewFileVersionDisplayContext parentIGDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion) {
 
-		super(request, response, fileVersion);
+		super(uuid, parentIGDisplayContext, request, response);
+
+		this.fileVersion = fileVersion;
 	}
 
 	@Override
-	protected void buildMenuItems(List<MenuItem> menuItems)
-		throws PortalException {
-
-		addDownloadMenuItem(menuItems);
-
-		addViewOriginalFileMenuItem(menuItems);
-
-		addEditMenuItem(menuItems);
-
-		addPermissionsMenuItem(menuItems);
-
-		addDeleteMenuItem(menuItems);
+	public List<MenuItem> getMenuItems() throws PortalException {
+		return parentDisplayContext.getMenuItems();
 	}
+
+	protected FileVersion fileVersion;
 
 }

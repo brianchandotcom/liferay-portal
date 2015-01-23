@@ -206,8 +206,8 @@ public class DDMTemplateServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> copyTemplates(
-		HttpPrincipal httpPrincipal, long classNameId, long classPK,
-		long newClassPK, java.lang.String type,
+		HttpPrincipal httpPrincipal, long classNameId, long oldClassPK,
+		long sourceClassNameId, long newClassPK, java.lang.String type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -215,7 +215,8 @@ public class DDMTemplateServiceHttp {
 					"copyTemplates", _copyTemplatesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					classNameId, classPK, newClassPK, type, serviceContext);
+					classNameId, oldClassPK, sourceClassNameId, newClassPK,
+					type, serviceContext);
 
 			Object returnObj = null;
 
@@ -979,7 +980,8 @@ public class DDMTemplateServiceHttp {
 			long.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyTemplatesParameterTypes4 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
+			long.class, long.class, long.class, long.class,
+			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteTemplateParameterTypes5 = new Class[] {

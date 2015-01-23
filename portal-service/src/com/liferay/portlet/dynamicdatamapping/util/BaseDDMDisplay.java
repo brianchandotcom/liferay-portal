@@ -138,20 +138,6 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
-	public String getResourceName(long classNameId) {
-		if (classNameId > 0) {
-			TemplateHandler templateHandler =
-				TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
-
-			if (templateHandler != null) {
-				return templateHandler.getResourceName();
-			}
-		}
-
-		return getResourceName();
-	}
-
-	@Override
 	public String getStorageType() {
 		return StringPool.BLANK;
 	}

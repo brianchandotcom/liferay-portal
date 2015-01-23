@@ -1410,8 +1410,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	*
 	* @param companyId the primary key of the structure's company
 	* @param groupIds the primary keys of the groups
-	* @param classNameIds the primary keys of the class names of the models
-	the structure's are related to
 	* @param name the name keywords
 	* @param description the description keywords
 	* @param storageType the structure's storage type. It can be "xml" or

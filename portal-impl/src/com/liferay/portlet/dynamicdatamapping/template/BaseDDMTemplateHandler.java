@@ -55,6 +55,11 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 		return templateVariableGroups;
 	}
 
+	@Override
+	public boolean isDisplayTemplateHandler() {
+		return false;
+	}
+
 	protected void addTemplateVariableGroup(
 		Map<String, TemplateVariableGroup> templateVariableGroups,
 		TemplateVariableGroup templateVariableGroup) {

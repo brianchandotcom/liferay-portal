@@ -48,8 +48,8 @@ public class DDMTemplateServiceUtil {
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param classPK the primary key of the template's related entity
-	* @param sourceClassNameId the primary key of the class name for template's
-	source model
+	* @param sourceClassNameId the primary key of the class name for
+	template's source model
 	* @param nameMap the template's locales and localized names
 	* @param descriptionMap the template's locales and localized descriptions
 	* @param type the template's type. For more information, see {@link
@@ -89,8 +89,8 @@ public class DDMTemplateServiceUtil {
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param classPK the primary key of the template's related entity
-	* @param sourceClassNameId the primary key of the class name for template's
-	source model
+	* @param sourceClassNameId the primary key of the class name for
+	template's source model
 	* @param templateKey the unique string identifying the template
 	(optionally <code>null</code>)
 	* @param nameMap the template's locales and localized names
@@ -177,7 +177,9 @@ public class DDMTemplateServiceUtil {
 	*
 	* @param classNameId the primary key of the class name for template's
 	related model
-	* @param classPK the primary key of the original template's related entity
+	* @param oldClassPK the primary key of the old template's related entity
+	* @param sourceClassNameId the primary key of the class name for
+	template's source model
 	* @param newClassPK the primary key of the new template's related entity
 	* @param type the template's type. For more information, see {@link
 	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
@@ -190,12 +192,13 @@ public class DDMTemplateServiceUtil {
 	template or if a portal exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> copyTemplates(
-		long classNameId, long classPK, long newClassPK, java.lang.String type,
+		long classNameId, long oldClassPK, long sourceClassNameId,
+		long newClassPK, java.lang.String type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .copyTemplates(classNameId, classPK, newClassPK, type,
-			serviceContext);
+				   .copyTemplates(classNameId, oldClassPK, sourceClassNameId,
+			newClassPK, type, serviceContext);
 	}
 
 	/**

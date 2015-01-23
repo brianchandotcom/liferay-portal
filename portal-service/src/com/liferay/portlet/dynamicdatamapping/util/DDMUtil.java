@@ -38,8 +38,10 @@ public class DDMUtil {
 		return _ddm;
 	}
 
-	public static DDMDisplay getDDMDisplay(ServiceContext serviceContext) {
-		return getDDM().getDDMDisplay(serviceContext);
+	public static DDMDisplay getDDMDisplay(long classNameId)
+		throws PortalException {
+
+		return getDDM().getDDMDisplay(classNameId);
 	}
 
 	public static Serializable getDisplayFieldValue(

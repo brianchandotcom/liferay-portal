@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,6 +34,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -71,7 +74,35 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
+	public long[] getResourceClassNameIds() {
+		List<Long> resourceClassNameIds = new ArrayList<>();
+
+		for (TemplateHandler templateHandler :
+				TemplateHandlerRegistryUtil.getTemplateHandlers()) {
+
+			if (templateHandler.isDisplayTemplateHandler()) {
+				resourceClassNameIds.add(
+					PortalUtil.getClassNameId(templateHandler.getClassName()));
+			}
+		}
+
+		return ArrayUtil.toLongArray(resourceClassNameIds);
+	}
+
+	@Override
 	public String getResourceName() {
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getResourceName(long classNameId) {
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+
+		if (templateHandler != null) {
+			return templateHandler.getResourceName();
+		}
+
 		return StringPool.BLANK;
 	}
 

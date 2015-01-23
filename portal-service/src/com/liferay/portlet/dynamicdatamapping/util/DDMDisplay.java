@@ -56,6 +56,8 @@ public interface DDMDisplay {
 
 	public String getPortletId();
 
+	public long[] getResourceClassNameIds();
+
 	public String getResourceName();
 
 	public String getResourceName(long classNameId);

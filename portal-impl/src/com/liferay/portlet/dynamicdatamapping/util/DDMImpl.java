@@ -104,21 +104,20 @@ public class DDMImpl implements DDM {
 	public static final String TYPE_SELECT = "select";
 
 	@Override
-	public DDMDisplay getDDMDisplay(ServiceContext serviceContext) {
-		String refererPortletName = (String)serviceContext.getAttribute(
-			"refererPortletName");
+	public DDMDisplay getDDMDisplay(long classNameId) throws PortalException {
+		List<DDMDisplay> ddmDisplays = DDMDisplayRegistryUtil.getDDMDisplays();
 
-		if (refererPortletName == null) {
-			refererPortletName = serviceContext.getPortletId();
+		for (DDMDisplay ddmDisplay : ddmDisplays) {
+			if (ArrayUtil.contains(
+					ddmDisplay.getResourceClassNameIds(), classNameId)) {
 
-			if (refererPortletName == null) {
-				throw new IllegalArgumentException(
-					"Service context must have values for either " +
-						"the referer portlet nme or portlet preference IDs");
+				return ddmDisplay;
 			}
 		}
 
-		return DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
+		throw new IllegalArgumentException(
+			"No DDM display registered for " +
+				PortalUtil.getClassName(classNameId));
 	}
 
 	@Override

@@ -219,16 +219,16 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 	private final SortedSet<DLDisplayContextFactoryReference>
 		_dlDisplayContextFactoryReferences = new ConcurrentSkipListSet<>();
-	private final ConcurrentMap<
-		DLDisplayContextFactory, DLDisplayContextFactoryReference>
-		_dlDisplayContextFactoryReferencesMap = new ConcurrentHashMap<>();
+	private final ConcurrentMap
+		<DLDisplayContextFactory, DLDisplayContextFactoryReference>
+			_dlDisplayContextFactoryReferencesMap = new ConcurrentHashMap<>();
 	private final
 		ServiceTracker<DLDisplayContextFactory, DLDisplayContextFactory>
 			_serviceTracker;
 
 	private class DLDisplayContextFactoryServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<
-		DLDisplayContextFactory, DLDisplayContextFactory> {
+		implements ServiceTrackerCustomizer
+		<DLDisplayContextFactory, DLDisplayContextFactory> {
 
 		@Override
 		public DLDisplayContextFactory addingService(

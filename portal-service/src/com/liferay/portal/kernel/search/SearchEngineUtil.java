@@ -1108,8 +1108,8 @@ public class SearchEngineUtil {
 		new ConcurrentHashMap<>();
 	private static SearchPermissionChecker _searchPermissionChecker;
 
-	private final ServiceTracker<
-		SearchEngineConfigurator, SearchEngineConfigurator> _serviceTracker;
+	private final ServiceTracker
+		<SearchEngineConfigurator, SearchEngineConfigurator> _serviceTracker;
 
 	private class SearchEngineConfiguratorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

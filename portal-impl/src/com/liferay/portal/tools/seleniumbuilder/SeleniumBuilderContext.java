@@ -766,10 +766,16 @@ public class SeleniumBuilderContext {
 
 		for (Element conditionAndExecuteElement : conditionAndExecuteElements) {
 			String action = conditionAndExecuteElement.attributeValue("action");
+			String function = conditionAndExecuteElement.attributeValue(
+				"function");
 			String macro = conditionAndExecuteElement.attributeValue("macro");
 
 			if (action != null) {
 				_validateActionElement(
+					macroFileName, conditionAndExecuteElement);
+			}
+			else if (function != null) {
+				_validateFunctionElement(
 					macroFileName, conditionAndExecuteElement);
 			}
 			else if (macro != null) {
@@ -825,11 +831,15 @@ public class SeleniumBuilderContext {
 
 		for (Element executeElement : executeElements) {
 			String action = executeElement.attributeValue("action");
+			String function = executeElement.attributeValue("function");
 			String macro = executeElement.attributeValue("macro");
 			String testCase = executeElement.attributeValue("test-case");
 
 			if (action != null) {
 				_validateActionElement(testCaseFileName, executeElement);
+			}
+			else if (function != null) {
+				_validateFunctionElement(testCaseFileName, executeElement);
 			}
 			else if (macro != null) {
 				_validateMacroElement(testCaseFileName, executeElement);

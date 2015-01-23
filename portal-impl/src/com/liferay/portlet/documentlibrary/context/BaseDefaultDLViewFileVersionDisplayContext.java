@@ -150,20 +150,20 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 
 		menu.setExtended(extended);
 
-		String icon = StringPool.BLANK;
+		String icon = null;
 
 		if (dlActionsDisplayContext.isShowMinimalActionsButton()) {
-			icon = null;
+			icon = StringPool.BLANK;
 		}
 
 		menu.setIcon(icon);
 
 		menu.setMenuItems(getMenuItems());
 
-		String message = StringPool.BLANK;
+		String message = "actions";
 
 		if (dlActionsDisplayContext.isShowMinimalActionsButton()) {
-			message = "actions";
+			message = StringPool.BLANK;
 		}
 
 		menu.setMessage(message);

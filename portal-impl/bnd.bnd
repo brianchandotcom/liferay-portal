@@ -43,7 +43,6 @@ Export-Package:\
 	com.liferay.portlet.journal.search,\
 	com.liferay.portlet.journal.service.permission,\
 	com.liferay.portlet.layoutsadmin.context,\
-	com.liferay.portlet.portletdisplaytemplate.ddm,\
 	com.liferay.util.log4j,\
 	\
 	javax.sql,org.hibernate,\

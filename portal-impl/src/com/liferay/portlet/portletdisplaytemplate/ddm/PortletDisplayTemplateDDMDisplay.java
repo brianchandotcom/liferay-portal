@@ -39,6 +39,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.rss.web.util.RSSFeed;
 
 import java.util.Locale;
 import java.util.Set;
@@ -51,7 +52,7 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	public static final String[] CLASS_NAMES = {
 		AssetCategory.class.getName(), AssetEntry.class.getName(),
 		AssetTag.class.getName(), BlogsEntry.class.getName(),
-		Layout.class.getName(), Locale.class.getName(),
+		Layout.class.getName(), Locale.class.getName(), RSSFeed.class.getName(),
 		LayoutSet.class.getName(), WikiPage.class.getName()
 	};
 

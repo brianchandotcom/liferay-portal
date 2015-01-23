@@ -20,7 +20,13 @@
 int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH);
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
+
+Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 %>
+
+<liferay-util:html-top outputKey="blogs_common_main_css">
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/html/portlet/blogs/css/common_main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
 
 <c:if test="<%= entry.isSmallImage() %>">
 	<div class="asset-small-image">
@@ -43,4 +49,17 @@ if (Validator.isNull(summary)) {
 }
 %>
 
-<%= StringUtil.shorten(summary, abstractLength) %>
+<div class="portlet-blogs">
+	<div class="entry-body">
+
+		<%
+		String coverImageURL = entry.getCoverImageURL(themeDisplay);
+		%>
+
+		<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
+			<div class="cover-image-container" style="background-image: url(<%= coverImageURL %>)"></div>
+		</c:if>
+
+		<%= StringUtil.shorten(summary, abstractLength) %>
+	</div>
+</div>

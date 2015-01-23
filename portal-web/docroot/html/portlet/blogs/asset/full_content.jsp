@@ -18,15 +18,50 @@
 
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
+
+Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 %>
 
-<%= entry.getContent() %>
+<liferay-util:html-top outputKey="blogs_common_main_css">
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/html/portlet/blogs/css/common_main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
 
-<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
-	<liferay-ui:custom-attribute-list
-		className="<%= BlogsEntry.class.getName() %>"
-		classPK="<%= (entry != null) ? entry.getEntryId() : 0 %>"
-		editable="<%= false %>"
-		label="<%= true %>"
-	/>
-</liferay-ui:custom-attributes-available>
+<div class="portlet-blogs">
+	<div class="entry-body">
+
+		<%
+		String coverImageURL = entry.getCoverImageURL(themeDisplay);
+		%>
+
+		<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
+			<div class="cover-image-container" style="background-image: url(<%= coverImageURL %>)"></div>
+		</c:if>
+
+		<%
+		String subtitle = entry.getSubtitle();
+		%>
+
+		<c:if test="<%= Validator.isNotNull(subtitle) %>">
+			<div class="entry-subtitle">
+				<p><%= HtmlUtil.escape(subtitle) %></p>
+			</div>
+		</c:if>
+
+		<div class="entry-date icon-calendar">
+			<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
+
+			<%= dateFormatDateTime.format(entry.getDisplayDate()) %>
+		</div>
+
+		<%= entry.getContent() %>
+
+		<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
+			<liferay-ui:custom-attribute-list
+				className="<%= BlogsEntry.class.getName() %>"
+				classPK="<%= (entry != null) ? entry.getEntryId() : 0 %>"
+				editable="<%= false %>"
+				label="<%= true %>"
+			/>
+		</liferay-ui:custom-attributes-available>
+	</div>
+</div>

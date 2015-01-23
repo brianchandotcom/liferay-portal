@@ -417,6 +417,24 @@ public class LayoutStagedModelDataHandler
 				SitesUtil.addMergeFailFriendlyURLLayout(
 					mergeFailFriendlyURLLayout);
 
+				if (_log.isWarnEnabled()) {
+					Locale locale = LocaleUtil.getSiteDefault();
+
+					StringBundler sb = new StringBundler(9);
+
+					sb.append(layout.getName(locale));
+					sb.append(" page from the site template cannot be ");
+					sb.append("propagated because its friendly URL conflict ");
+					sb.append("with");
+					sb.append(mergeFailFriendlyURLLayout.getName(locale));
+					sb.append("page. Modify the friendly URL of ");
+					sb.append(mergeFailFriendlyURLLayout.getName(locale));
+					sb.append(" page to allow its propagation from the site ");
+					sb.append("template");
+
+					_log.warn(sb.toString());
+				}
+
 				return;
 			}
 		}

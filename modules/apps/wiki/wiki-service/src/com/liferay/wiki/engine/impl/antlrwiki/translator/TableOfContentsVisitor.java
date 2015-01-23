@@ -16,9 +16,9 @@ package com.liferay.wiki.engine.impl.antlrwiki.translator;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.TreeNode;
-import com.liferay.wiki.parsers.creole.ast.HeadingNode;
-import com.liferay.wiki.parsers.creole.ast.WikiPageNode;
-import com.liferay.wiki.parsers.creole.visitor.impl.BaseASTVisitor;
+import com.liferay.wiki.parser.creole.ast.HeadingNode;
+import com.liferay.wiki.parser.creole.ast.WikiPageNode;
+import com.liferay.wiki.parser.creole.visitor.impl.BaseASTVisitor;
 
 import java.util.List;
 

@@ -22,12 +22,12 @@ import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.impl.antlrwiki.translator.XhtmlTranslator;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.parsers.creole.ast.ASTNode;
-import com.liferay.wiki.parsers.creole.ast.WikiPageNode;
-import com.liferay.wiki.parsers.creole.ast.link.LinkNode;
-import com.liferay.wiki.parsers.creole.parser.Creole10Lexer;
-import com.liferay.wiki.parsers.creole.parser.Creole10Parser;
-import com.liferay.wiki.parsers.creole.visitor.impl.LinkNodeCollectorVisitor;
+import com.liferay.wiki.parser.creole.ast.ASTNode;
+import com.liferay.wiki.parser.creole.ast.WikiPageNode;
+import com.liferay.wiki.parser.creole.ast.link.LinkNode;
+import com.liferay.wiki.parser.creole.parser.Creole10Lexer;
+import com.liferay.wiki.parser.creole.parser.Creole10Parser;
+import com.liferay.wiki.parser.creole.visitor.impl.LinkNodeCollectorVisitor;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
 import java.util.HashMap;

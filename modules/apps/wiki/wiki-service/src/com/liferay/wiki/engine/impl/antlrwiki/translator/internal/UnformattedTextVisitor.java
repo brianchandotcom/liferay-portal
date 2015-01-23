@@ -15,13 +15,13 @@
 package com.liferay.wiki.engine.impl.antlrwiki.translator.internal;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.wiki.parsers.creole.ast.BoldTextNode;
-import com.liferay.wiki.parsers.creole.ast.FormattedTextNode;
-import com.liferay.wiki.parsers.creole.ast.ItalicTextNode;
-import com.liferay.wiki.parsers.creole.ast.NoWikiSectionNode;
-import com.liferay.wiki.parsers.creole.ast.UnformattedTextNode;
-import com.liferay.wiki.parsers.creole.ast.link.LinkNode;
-import com.liferay.wiki.parsers.creole.visitor.impl.BaseASTVisitor;
+import com.liferay.wiki.parser.creole.ast.BoldTextNode;
+import com.liferay.wiki.parser.creole.ast.FormattedTextNode;
+import com.liferay.wiki.parser.creole.ast.ItalicTextNode;
+import com.liferay.wiki.parser.creole.ast.NoWikiSectionNode;
+import com.liferay.wiki.parser.creole.ast.UnformattedTextNode;
+import com.liferay.wiki.parser.creole.ast.link.LinkNode;
+import com.liferay.wiki.parser.creole.visitor.impl.BaseASTVisitor;
 
 /**
  * @author Miguel Pastor

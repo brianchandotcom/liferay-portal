@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.wiki.engine.creole.util.CreoleTestUtil;
-import com.liferay.wiki.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
+import com.liferay.wiki.parser.creole.visitor.impl.XhtmlTranslationVisitor;
 
 import org.junit.Assert;
 import org.junit.Before;

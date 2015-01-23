@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.engine.impl.antlrwiki.translator.internal;
 
-import com.liferay.wiki.parsers.creole.ast.link.LinkNode;
+import com.liferay.wiki.parser.creole.ast.link.LinkNode;
 
 /**
  * @author Miguel Pastor

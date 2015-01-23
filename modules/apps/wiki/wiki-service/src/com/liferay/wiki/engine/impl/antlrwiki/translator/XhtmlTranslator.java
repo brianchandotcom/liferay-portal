@@ -26,13 +26,13 @@ import com.liferay.wiki.engine.impl.antlrwiki.translator.internal.UnformattedHea
 import com.liferay.wiki.engine.impl.antlrwiki.translator.internal.UnformattedLinksTextVisitor;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.parsers.creole.ast.CollectionNode;
-import com.liferay.wiki.parsers.creole.ast.HeadingNode;
-import com.liferay.wiki.parsers.creole.ast.ImageNode;
-import com.liferay.wiki.parsers.creole.ast.WikiPageNode;
-import com.liferay.wiki.parsers.creole.ast.extension.TableOfContentsNode;
-import com.liferay.wiki.parsers.creole.ast.link.LinkNode;
-import com.liferay.wiki.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
+import com.liferay.wiki.parser.creole.ast.CollectionNode;
+import com.liferay.wiki.parser.creole.ast.HeadingNode;
+import com.liferay.wiki.parser.creole.ast.ImageNode;
+import com.liferay.wiki.parser.creole.ast.WikiPageNode;
+import com.liferay.wiki.parser.creole.ast.extension.TableOfContentsNode;
+import com.liferay.wiki.parser.creole.ast.link.LinkNode;
+import com.liferay.wiki.parser.creole.visitor.impl.XhtmlTranslationVisitor;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
 import java.util.List;

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
-import com.liferay.wiki.translators.ClassicToCreoleTranslator;
+import com.liferay.wiki.translator.ClassicToCreoleTranslator;
 
 import java.util.List;
 

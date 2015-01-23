@@ -54,7 +54,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.translators.MediaWikiToCreoleTranslator;
+import com.liferay.wiki.translator.MediaWikiToCreoleTranslator;
 
 import java.io.IOException;
 import java.io.InputStream;

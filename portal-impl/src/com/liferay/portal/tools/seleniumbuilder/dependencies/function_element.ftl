@@ -12,23 +12,35 @@ ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${f
 	<#assign ignoreJavaScriptError = functionElement.attributeValue("ignore-javascript-error")>
 
 	"${ignoreJavaScriptError}",
-<#elseif actionName??>
-	null,
-<#else>
+<#elseif functionName??>
 	ignoreJavaScriptError,
+<#else>
+	null,
 </#if>
 
 <#assign functionLocatorCount = seleniumBuilderContext.getFunctionLocatorCount(seleniumBuilderFileUtil.getObjectName(function?substring(0, x)))>
 
 <#list 1..functionLocatorCount as i>
-	locator${i},
+	<#if functionElement.attributeValue("locator${i}")??>
+		<#assign locator = functionElement.attributeValue("locator${i}")>
+
+		"${locator}"
+	<#elseif actionName?? || functionName??>
+		locator${i}
+	<#else>
+		""
+	</#if>
+
+	,
 
 	<#if functionElement.attributeValue("value${i}")??>
 		<#assign functionValue = functionElement.attributeValue("value${i}")>
 
 		"${functionValue}"
-	<#else>
+	<#elseif actionName?? || functionName??>
 		value${i}
+	<#else>
+		""
 	</#if>
 
 	<#if i_has_next>

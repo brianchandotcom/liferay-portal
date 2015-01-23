@@ -20,4 +20,4 @@
 page import="com.liferay.portlet.assetbrowser.search.AssetBrowserSearch" %><%@
 page import="com.liferay.portlet.assetbrowser.search.AssetBrowserSearchTerms" %>
 
-<%@ include file="/html/portlet/asset_browser/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

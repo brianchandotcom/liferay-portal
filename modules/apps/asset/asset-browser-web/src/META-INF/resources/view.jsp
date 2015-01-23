@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_browser/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -44,7 +44,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		>
 			<aui:nav-bar>
 				<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-					<liferay-util:include page="/html/portlet/asset_browser/toolbar.jsp">
+					<liferay-util:include page="/toolbar.jsp">
 						<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<liferay-util:param name="typeSelection" value="<%= typeSelection %>" />
 						<liferay-util:param name="subtypeSelectionId" value="<%= String.valueOf(subtypeSelectionId) %>" />

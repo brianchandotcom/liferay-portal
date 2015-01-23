@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.configuration;
+package com.liferay.wiki.settings;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;

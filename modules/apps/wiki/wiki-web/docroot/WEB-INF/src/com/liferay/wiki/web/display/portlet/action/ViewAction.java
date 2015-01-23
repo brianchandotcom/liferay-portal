@@ -78,7 +78,8 @@ public class ViewAction extends PortletAction {
 
 			if ((page == null) || page.isInTrash()) {
 				page = WikiPageServiceUtil.getPage(
-					node.getNodeId(), WikiServiceConfigurationValues.FRONT_PAGE_NAME);
+					node.getNodeId(),
+					WikiServiceConfigurationValues.FRONT_PAGE_NAME);
 			}
 
 			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);

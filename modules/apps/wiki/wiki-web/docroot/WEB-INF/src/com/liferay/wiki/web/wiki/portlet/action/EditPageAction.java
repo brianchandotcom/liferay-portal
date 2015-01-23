@@ -344,7 +344,8 @@ public class EditPageAction extends PortletAction {
 
 			if (title.equals(WikiServiceConfigurationValues.FRONT_PAGE_NAME)) {
 				WikiPage overridePage = WikiPageLocalServiceUtil.fetchPage(
-					pageResource.getNodeId(), WikiServiceConfigurationValues.FRONT_PAGE_NAME);
+					pageResource.getNodeId(),
+					WikiServiceConfigurationValues.FRONT_PAGE_NAME);
 
 				if (overridePage != null) {
 					overridePageResourcePrimKey =

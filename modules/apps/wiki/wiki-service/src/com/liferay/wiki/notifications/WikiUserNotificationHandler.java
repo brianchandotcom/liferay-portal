@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.notifications;
+package com.liferay.wiki.notifications;
 
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.wiki.constants.WikiPortletKeys;

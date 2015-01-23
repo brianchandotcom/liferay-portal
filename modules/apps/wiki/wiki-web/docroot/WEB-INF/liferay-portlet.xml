@@ -19,7 +19,7 @@
 		<template-handler>com.liferay.wiki.web.wiki.portlet.template.WikiPortletDisplayTemplateHandler</template-handler>
 		<social-activity-interpreter-class>com.liferay.wiki.social.WikiActivityInterpreter</social-activity-interpreter-class>
 		<user-notification-definitions>com/liferay/wiki/web/wiki-user-notification-definitions.xml</user-notification-definitions>
-		<user-notification-handler-class>com.liferay.wiki.web.notifications.WikiUserNotificationHandler</user-notification-handler-class>
+		<user-notification-handler-class>com.liferay.wiki.notifications.WikiUserNotificationHandler</user-notification-handler-class>
 		<asset-renderer-factory>com.liferay.wiki.asset.WikiPageAssetRendererFactory</asset-renderer-factory>
 		<custom-attributes-display>com.liferay.wiki.web.WikiPageCustomAttributesDisplay</custom-attributes-display>
 		<permission-propagator>com.liferay.wiki.web.security.permission.WikiPermissionPropagatorImpl</permission-propagator>

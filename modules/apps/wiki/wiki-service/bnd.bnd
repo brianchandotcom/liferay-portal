@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.wiki.indexer,\
 	com.liferay.wiki.lar,\
 	com.liferay.wiki.model.impl,\
+	com.liferay.wiki.notifications,\
 	com.liferay.wiki.search,\
 	com.liferay.wiki.service.configuration.configurator,\
 	com.liferay.wiki.service.permission,\

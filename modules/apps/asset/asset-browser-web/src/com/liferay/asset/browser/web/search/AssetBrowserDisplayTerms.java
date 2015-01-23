@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetbrowser.search;
+package com.liferay.asset.browser.web.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ParamUtil;

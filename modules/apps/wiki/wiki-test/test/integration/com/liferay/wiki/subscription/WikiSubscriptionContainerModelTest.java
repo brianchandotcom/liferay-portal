@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.subscriptions;
+package com.liferay.wiki.subscription;
 
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.test.LiferayIntegrationTestRule;

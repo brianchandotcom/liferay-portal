@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.wiki.subscriptions;
+package com.liferay.bookmarks.subscription;
 
+import com.liferay.bookmarks.constants.BookmarksConstants;
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.util.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailTestRule;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.util.WikiConstants;
-import com.liferay.wiki.util.test.WikiTestUtil;
+import com.liferay.portal.util.test.ServiceContextTestUtil;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -36,7 +36,7 @@ import org.junit.Rule;
  * @author Roberto Díaz
  */
 @Sync
-public class WikiSubscriptionLocalizedContentTest
+public class BookmarksSubscriptionLocalizedContentTest
 	extends BaseSubscriptionLocalizedContentTestCase {
 
 	@ClassRule
@@ -46,57 +46,51 @@ public class WikiSubscriptionLocalizedContentTest
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousMailTestRule.INSTANCE);
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		_node = WikiTestUtil.addNode(group.getGroupId());
-	}
-
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		WikiPage page = WikiTestUtil.addPage(
-			group.getGroupId(), _node.getNodeId(), true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		return page.getResourcePrimKey();
+		BookmarksEntry entry = BookmarksTestUtil.addEntry(
+			containerModelId, true, serviceContext);
+
+		return entry.getEntryId();
 	}
 
 	@Override
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		WikiNodeLocalServiceUtil.subscribeNode(
-			user.getUserId(), _node.getNodeId());
+		BookmarksFolderLocalServiceUtil.subscribeFolder(
+			user.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override
 	protected String getPortletId() {
-		return WikiPortletKeys.WIKI;
+		return BookmarksPortletKeys.BOOKMARKS;
 	}
 
 	@Override
 	protected String getServiceName() {
-		return WikiConstants.SERVICE_NAME;
+		return BookmarksConstants.SERVICE_NAME;
 	}
 
 	@Override
 	protected String getSubscriptionAddedBodyPreferenceName() {
-		return "emailPageAddedBody";
+		return "emailEntryAddedBody";
 	}
 
 	@Override
 	protected String getSubscriptionUpdatedBodyPreferenceName() {
-		return "emailPageUpdatedBody";
+		return "emailEntryUpdatedBody";
 	}
 
 	@Override
 	protected void updateBaseModel(long baseModelId) throws Exception {
-		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
+			baseModelId);
 
-		WikiTestUtil.updatePage(page);
+		BookmarksTestUtil.updateEntry(entry);
 	}
-
-	private WikiNode _node;
 
 }

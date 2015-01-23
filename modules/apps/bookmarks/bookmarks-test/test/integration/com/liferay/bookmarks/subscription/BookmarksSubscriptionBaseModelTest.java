@@ -12,21 +12,24 @@
  * details.
  */
 
-package com.liferay.bookmarks.subscriptions;
+package com.liferay.bookmarks.subscription;
 
-import com.liferay.bookmarks.constants.BookmarksConstants;
-import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.util.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailTestRule;
-import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
+import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
+import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portal.util.test.RoleTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 
 import org.junit.ClassRule;
@@ -36,8 +39,8 @@ import org.junit.Rule;
  * @author Roberto Díaz
  */
 @Sync
-public class BookmarksSubscriptionLocalizedContentTest
-	extends BaseSubscriptionLocalizedContentTestCase {
+public class BookmarksSubscriptionBaseModelTest
+	extends BaseSubscriptionBaseModelTestCase {
 
 	@ClassRule
 	@Rule
@@ -58,31 +61,35 @@ public class BookmarksSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected long addContainerModel(long containerModelId) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		_folder = BookmarksTestUtil.addFolder(
+			containerModelId, RandomTestUtil.randomString(), serviceContext);
+
+		return _folder.getFolderId();
+	}
+
+	@Override
+	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
+		BookmarksEntryLocalServiceUtil.subscribeEntry(
+			user.getUserId(), baseModelId);
+	}
+
+	@Override
+	protected void removeContainerModelResourceViewPermission()
 		throws Exception {
 
-		BookmarksFolderLocalServiceUtil.subscribeFolder(
-			user.getUserId(), group.getGroupId(), containerModelId);
-	}
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, BookmarksFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_folder.getFolderId()), ActionKeys.VIEW);
 
-	@Override
-	protected String getPortletId() {
-		return BookmarksPortletKeys.BOOKMARKS;
-	}
-
-	@Override
-	protected String getServiceName() {
-		return BookmarksConstants.SERVICE_NAME;
-	}
-
-	@Override
-	protected String getSubscriptionAddedBodyPreferenceName() {
-		return "emailEntryAddedBody";
-	}
-
-	@Override
-	protected String getSubscriptionUpdatedBodyPreferenceName() {
-		return "emailEntryUpdatedBody";
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.SITE_MEMBER, BookmarksFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_folder.getFolderId()), ActionKeys.VIEW);
 	}
 
 	@Override
@@ -92,5 +99,7 @@ public class BookmarksSubscriptionLocalizedContentTest
 
 		BookmarksTestUtil.updateEntry(entry);
 	}
+
+	private BookmarksFolder _folder;
 
 }

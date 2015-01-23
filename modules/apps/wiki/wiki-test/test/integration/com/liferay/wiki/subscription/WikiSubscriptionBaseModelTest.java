@@ -12,34 +12,34 @@
  * details.
  */
 
-package com.liferay.bookmarks.subscriptions;
+package com.liferay.wiki.subscription;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.bookmarks.util.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.MainServletTestRule;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailTestRule;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.RoleTestUtil;
-import com.liferay.portal.util.test.ServiceContextTestUtil;
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.util.test.WikiTestUtil;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
 
 /**
+ * @author Sergio González
  * @author Roberto Díaz
  */
 @Sync
-public class BookmarksSubscriptionBaseModelTest
+public class WikiSubscriptionBaseModelTest
 	extends BaseSubscriptionBaseModelTestCase {
 
 	@ClassRule
@@ -49,32 +49,33 @@ public class BookmarksSubscriptionBaseModelTest
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousMailTestRule.INSTANCE);
 
+	@Ignore
+	@Override
+	@Test
+	public void testSubscriptionBaseModelWhenInRootContainerModel() {
+	}
+
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+		WikiPage page = WikiTestUtil.addPage(
+			group.getGroupId(), containerModelId, true);
 
-		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			containerModelId, true, serviceContext);
-
-		return entry.getEntryId();
+		return page.getResourcePrimKey();
 	}
 
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+		_node = WikiTestUtil.addNode(group.getGroupId());
 
-		_folder = BookmarksTestUtil.addFolder(
-			containerModelId, RandomTestUtil.randomString(), serviceContext);
-
-		return _folder.getFolderId();
+		return _node.getNodeId();
 	}
 
 	@Override
 	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
-		BookmarksEntryLocalServiceUtil.subscribeEntry(
-			user.getUserId(), baseModelId);
+		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
+
+		WikiPageLocalServiceUtil.subscribePage(
+			user.getUserId(), page.getNodeId(), page.getTitle());
 	}
 
 	@Override
@@ -82,24 +83,23 @@ public class BookmarksSubscriptionBaseModelTest
 		throws Exception {
 
 		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, BookmarksFolder.class.getName(),
+			RoleConstants.GUEST, WikiNode.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(_folder.getFolderId()), ActionKeys.VIEW);
+			String.valueOf(_node.getNodeId()), ActionKeys.VIEW);
 
 		RoleTestUtil.removeResourcePermission(
-			RoleConstants.SITE_MEMBER, BookmarksFolder.class.getName(),
+			RoleConstants.SITE_MEMBER, WikiNode.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(_folder.getFolderId()), ActionKeys.VIEW);
+			String.valueOf(_node.getNodeId()), ActionKeys.VIEW);
 	}
 
 	@Override
 	protected void updateBaseModel(long baseModelId) throws Exception {
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
-			baseModelId);
+		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId, true);
 
-		BookmarksTestUtil.updateEntry(entry);
+		WikiTestUtil.updatePage(page);
 	}
 
-	private BookmarksFolder _folder;
+	private WikiNode _node;
 
 }

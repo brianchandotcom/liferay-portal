@@ -2177,7 +2177,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			throw new PageTitleException(title + " is reserved");
 		}
 
-		if (Validator.isNotNull(WikiServiceConfigurationValues.PAGE_TITLES_REGEXP)) {
+		if (Validator.isNotNull(
+				WikiServiceConfigurationValues.PAGE_TITLES_REGEXP)) {
+
 			Pattern pattern = Pattern.compile(
 				WikiServiceConfigurationValues.PAGE_TITLES_REGEXP);
 

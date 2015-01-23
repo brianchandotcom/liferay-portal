@@ -63,7 +63,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 		if (addPortletProvider == null) {
 			addPortletProvider = _serviceTrackerMap.getService(
-				AddPortletProvider.DEFAULT);
+				AddPortletProvider.ANY_CLASSNAME);
 
 			if (addPortletProvider == null) {
 				return StringPool.BLANK;
@@ -364,7 +364,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 		if (addPortletProvider == null) {
 			addPortletProvider = _serviceTrackerMap.getService(
-				AddPortletProvider.DEFAULT);
+				AddPortletProvider.ANY_CLASSNAME);
 
 			if (addPortletProvider == null) {
 				return;

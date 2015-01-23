@@ -31,7 +31,7 @@ import javax.portlet.PortletPreferences;
  */
 @OSGiBeanProperties(
 	property = {
-		"model.class.name=" + PortletProvider.DEFAULT
+		"model.class.name=" + PortletProvider.ANY_CLASSNAME
 	}
 )
 public class AssetPublisherPortletProvider

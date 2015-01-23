@@ -31,7 +31,7 @@ public class PortletProviderUtil {
 
 			if (portletProvider == null) {
 				portletProvider = _addServiceTrackerMap.getService(
-					PortletProvider.DEFAULT);
+					PortletProvider.ANY_CLASSNAME);
 			}
 		}
 		else if (action.equals(PortletProvider.ACTION_BROWSE)) {
@@ -39,7 +39,7 @@ public class PortletProviderUtil {
 
 			if (portletProvider == null) {
 				portletProvider = _browseServiceTrackerMap.getService(
-					PortletProvider.DEFAULT);
+					PortletProvider.ANY_CLASSNAME);
 			}
 		}
 		else if (action.equals(PortletProvider.ACTION_VIEW)) {
@@ -47,7 +47,7 @@ public class PortletProviderUtil {
 
 			if (portletProvider == null) {
 				portletProvider = _viewServiceTrackerMap.getService(
-					PortletProvider.DEFAULT);
+					PortletProvider.ANY_CLASSNAME);
 			}
 		}
 

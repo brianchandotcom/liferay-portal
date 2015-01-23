@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web;
+package com.liferay.wiki.web.wiki.portlet.route;
 
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;

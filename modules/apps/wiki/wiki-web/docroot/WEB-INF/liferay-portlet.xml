@@ -10,9 +10,9 @@
 		<indexer-class>com.liferay.wiki.indexer.WikiNodeIndexer</indexer-class>
 		<indexer-class>com.liferay.wiki.indexer.WikiPageIndexer</indexer-class>
 		<open-search-class>com.liferay.wiki.search.WikiOpenSearchImpl</open-search-class>
-		<friendly-url-mapper-class>com.liferay.wiki.web.WikiFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapper-class>com.liferay.wiki.web.wiki.portlet.route.WikiFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>wiki</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/wiki/web/wiki-friendly-url-routes.xml</friendly-url-routes>
+		<friendly-url-routes>com/liferay/wiki/web/wiki/portlet/route/wiki-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.wiki.lar.WikiPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.wiki.lar.WikiNodeStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.wiki.lar.WikiPageStagedModelDataHandler</staged-model-data-handler-class>

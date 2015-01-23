@@ -42,6 +42,7 @@ import com.liferay.wiki.service.permission.WikiPagePermission;
 import com.liferay.wiki.settings.WikiSettings;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
+
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -54,6 +55,7 @@ import com.sun.syndication.io.FeedException;
 
 import java.io.File;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.generic;
+package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;

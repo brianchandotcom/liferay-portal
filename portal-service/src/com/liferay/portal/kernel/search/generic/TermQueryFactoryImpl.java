@@ -12,31 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.search.generic;
+package com.liferay.portal.kernel.search.generic;
 
-import com.liferay.portal.kernel.search.BaseQueryImpl;
-import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.TermQueryFactory;
 
 /**
  * @author Michael C. Han
  */
-public class TermQueryImpl extends BaseQueryImpl implements TermQuery {
+public class TermQueryFactoryImpl implements TermQueryFactory {
 
-	public TermQueryImpl(QueryTerm queryTerm) {
-		_queryTerm = queryTerm;
+	@Override
+	public TermQuery create(String field, long value) {
+		return create(field, String.valueOf(value));
 	}
 
 	@Override
-	public QueryTerm getQueryTerm() {
-		return _queryTerm;
+	public TermQuery create(String field, String value) {
+		return new TermQueryImpl(new QueryTermImpl(field, value));
 	}
-
-	@Override
-	public Object getWrappedQuery() {
-		return this;
-	}
-
-	private final QueryTerm _queryTerm;
 
 }

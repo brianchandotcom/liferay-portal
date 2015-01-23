@@ -12,19 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.search.generic;
+package com.liferay.portal.kernel.search.generic;
 
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactory;
+import com.liferay.portal.kernel.search.QueryTerm;
 
 /**
  * @author Michael C. Han
  */
-public class BooleanQueryFactoryImpl implements BooleanQueryFactory {
+public class QueryTermImpl implements QueryTerm {
+
+	public QueryTermImpl(String field, String value) {
+		_field = field;
+		_value = value;
+	}
 
 	@Override
-	public BooleanQuery create() {
-		return new BooleanQueryImpl();
+	public String getField() {
+		return _field;
 	}
+
+	@Override
+	public String getValue() {
+		return _value;
+	}
+
+	private final String _field;
+	private final String _value;
 
 }

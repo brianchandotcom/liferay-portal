@@ -113,17 +113,17 @@
 
 	<bean id="com.liferay.portal.search.generic.GenericSearchEngineImpl" class="com.liferay.portal.kernel.search.BaseSearchEngine">
 		<property name="booleanClauseFactory" >
-			<bean class="com.liferay.portal.search.generic.BooleanClauseFactoryImpl" />
+			<bean class="com.liferay.portal.kernel.search.generic.BooleanClauseFactoryImpl" />
 		</property>
 		<property name="booleanQueryFactory" >
-			<bean class="com.liferay.portal.search.generic.BooleanQueryFactoryImpl" />
+			<bean class="com.liferay.portal.kernel.search.generic.BooleanQueryFactoryImpl" />
 		</property>
 		<property name="luceneBased" value="false" />
 		<property name="termQueryFactory">
-			<bean class="com.liferay.portal.search.generic.TermQueryFactoryImpl" />
+			<bean class="com.liferay.portal.kernel.search.generic.TermQueryFactoryImpl" />
 		</property>
 		<property name="termRangeQueryFactory">
-			<bean class="com.liferay.portal.search.generic.TermRangeQueryFactoryImpl" />
+			<bean class="com.liferay.portal.kernel.search.generic.TermRangeQueryFactoryImpl" />
 		</property>
 	</bean>
 
@@ -137,7 +137,7 @@
 	</bean>
 	<bean id="com.liferay.portal.search.lucene.LuceneSearchEngineImpl" class="com.liferay.portal.search.lucene.LuceneSearchEngine">
 		<property name="booleanClauseFactory" >
-			<bean class="com.liferay.portal.search.generic.BooleanClauseFactoryImpl" />
+			<bean class="com.liferay.portal.kernel.search.generic.BooleanClauseFactoryImpl" />
 		</property>
 		<property name="booleanQueryFactory" >
 			<bean class="com.liferay.portal.search.lucene.BooleanQueryFactoryImpl" />

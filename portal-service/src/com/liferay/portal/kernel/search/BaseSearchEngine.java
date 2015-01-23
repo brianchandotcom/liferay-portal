@@ -45,7 +45,8 @@ public class BaseSearchEngine implements SearchEngine {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 			String className =
-				"com.liferay.portal.search.generic.BooleanClauseFactoryImpl";
+				"com.liferay.portal.kernel.search.generic." +
+					"BooleanClauseFactoryImpl";
 
 			try {
 				_booleanClauseFactory =
@@ -74,7 +75,8 @@ public class BaseSearchEngine implements SearchEngine {
 
 		if (!isLuceneBased()) {
 			className =
-				"com.liferay.portal.search.generic.BooleanQueryFactoryImpl";
+				"com.liferay.portal.kernel.search.generic." +
+					"BooleanQueryFactoryImpl";
 		}
 
 		try {
@@ -117,7 +119,7 @@ public class BaseSearchEngine implements SearchEngine {
 
 		if (!isLuceneBased()) {
 			className =
-				"com.liferay.portal.search.generic.TermQueryFactoryImpl";
+				"com.liferay.portal.kernel.search.generic.TermQueryFactoryImpl";
 		}
 
 		try {
@@ -144,7 +146,7 @@ public class BaseSearchEngine implements SearchEngine {
 
 		if (!isLuceneBased()) {
 			className =
-				"com.liferay.portal.search.generic." +
+				"com.liferay.portal.kernel.search.generic." +
 					"TermRangeQueryFactoryImpl";
 		}
 

@@ -6,8 +6,7 @@ Include-Resource: \
 	classes,\
 	@lib/jna.jar,\
 	@lib/jnaerator-runtime.jar,\
-	@lib/ochafik-util.jar,\
-	resources
+	@lib/ochafik-util.jar
 Private-Package: \
 	com.ochafik.*,\
 	com.sun.jna,\

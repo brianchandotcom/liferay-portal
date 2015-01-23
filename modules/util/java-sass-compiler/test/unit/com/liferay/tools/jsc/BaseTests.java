@@ -14,41 +14,16 @@
 
 package com.liferay.tools.jsc;
 
-import static org.junit.Assert.fail;
-
-import com.sun.jna.NativeLibrary;
-import com.sun.jna.Platform;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.Method;
-
-import org.junit.Before;
 
 /**
  * @author Gregory Amerson
  */
 public class BaseTests {
-
-	@Before
-	public void extendJnaSearchPath() throws Exception {
-		Method prefix = Platform.class.getDeclaredMethod(
-			"getNativeLibraryResourcePrefix");
-		prefix.setAccessible(true);
-		String prefixPath = (String)prefix.invoke(null);
-		File libDir = new File("resources/" + prefixPath);
-		String libPath = libDir.getCanonicalPath();
-		if (libDir.exists()) {
-			NativeLibrary.addSearchPath("sass", libPath);
-			System.out.println("Added search path " + libPath);
-		}
-		else {
-			fail("Unable to find resources dir at " + libPath);
-		}
-	}
 
 	protected String readFileContents(String filename) throws Exception {
 		return readStreamToString(

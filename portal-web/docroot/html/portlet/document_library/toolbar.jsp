@@ -113,7 +113,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 					<portlet:param name="searchRepositoryId" value="<%= String.valueOf(repositoryId) %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 					<portlet:param name="searchFolderId" value="<%= String.valueOf(folderId) %>" />
-					<portlet:param name="keywords" value="<%= String.valueOf(keywords) %>" />
 					<portlet:param name="showRepositoryTabs" value="<%= (folderId == 0) ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" />
 					<portlet:param name="showSearchInfo" value="<%= Boolean.TRUE.toString() %>" />
 				</liferay-portlet:renderURL>

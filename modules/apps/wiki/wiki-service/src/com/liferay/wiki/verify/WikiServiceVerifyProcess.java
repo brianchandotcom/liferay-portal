@@ -151,7 +151,7 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyUUIDModels() throws Exception {
-		_verifyUUID.verify(new WikiPageResourceVerifiableModel());
+		VerifyUUID.verify(new WikiPageResourceVerifiableModel());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -159,7 +159,6 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 
 	private final VerifyResourcePermissions _verifyResourcePermissions =
 		new VerifyResourcePermissions();
-	private final VerifyUUID _verifyUUID = new VerifyUUID();
 	private WikiPageLocalService _wikiPageLocalService;
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 

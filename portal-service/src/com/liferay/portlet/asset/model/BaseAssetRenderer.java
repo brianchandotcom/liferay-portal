@@ -61,11 +61,16 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		AddPortletProvider addPortletProvider = _serviceTrackerMap.getService(
 			getClassName());
 
-		if (addPortletProvider != null) {
-			return addPortletProvider.getPortletId();
+		if (addPortletProvider == null) {
+			addPortletProvider = _serviceTrackerMap.getService(
+				AddPortletProvider.DEFAULT);
+
+			if (addPortletProvider == null) {
+				return StringPool.BLANK;
+			}
 		}
 
-		return StringPool.BLANK;
+		return addPortletProvider.getPortletId();
 	}
 
 	public AssetRendererFactory getAssetRendererFactory() {
@@ -358,7 +363,12 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 			getClassName());
 
 		if (addPortletProvider == null) {
-			return;
+			addPortletProvider = _serviceTrackerMap.getService(
+				AddPortletProvider.DEFAULT);
+
+			if (addPortletProvider == null) {
+				return;
+			}
 		}
 
 		addPortletProvider.setPortletPreferences(

@@ -34,10 +34,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -107,21 +105,19 @@ public class DDMImpl implements DDM {
 
 	@Override
 	public DDMDisplay getDDMDisplay(long classNameId) throws PortalException {
-		ClassName className = ClassNameLocalServiceUtil.getClassName(
-			classNameId);
-
 		List<DDMDisplay> ddmDisplays = DDMDisplayRegistryUtil.getDDMDisplays();
 
 		for (DDMDisplay ddmDisplay : ddmDisplays) {
 			if (ArrayUtil.contains(
-					ddmDisplay.getClassNames(), className.getClassName())) {
+					ddmDisplay.getResourceClassNameIds(), classNameId)) {
 
 				return ddmDisplay;
 			}
 		}
 
 		throw new IllegalArgumentException(
-			"No DDMDisplay registered for " + className.getClassName());
+			"No DDM display registered for " +
+				PortalUtil.getClassName(classNameId));
 	}
 
 	@Override

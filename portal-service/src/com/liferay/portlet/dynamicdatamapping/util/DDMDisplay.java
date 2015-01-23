@@ -37,8 +37,6 @@ public interface DDMDisplay {
 
 	public String getAvailableFields();
 
-	public String[] getClassNames();
-
 	public String getEditStructureDefaultValuesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
@@ -57,6 +55,8 @@ public interface DDMDisplay {
 	public String getEditTemplateTitle(long classNameId, Locale locale);
 
 	public String getPortletId();
+
+	public long[] getResourceClassNameIds();
 
 	public String getResourceName();
 

@@ -42,18 +42,13 @@ import javax.portlet.PortletURL;
  */
 public class JournalDDMDisplay extends BaseDDMDisplay {
 
-	public static final String[] CLASS_NAMES = {
-		DDMStructure.class.getName(), JournalArticle.class.getName()
+	public static final long[] RESOURCE_CLASS_NAME_IDS = new long[] {
+		PortalUtil.getClassNameId(JournalArticle.class)
 	};
 
 	@Override
 	public String getAvailableFields() {
 		return "Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE";
-	}
-
-	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
 	}
 
 	@Override
@@ -108,7 +103,17 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
+	public long[] getResourceClassNameIds() {
+		return RESOURCE_CLASS_NAME_IDS;
+	}
+
+	@Override
 	public String getResourceName() {
+		return JournalPermission.RESOURCE_NAME;
+	}
+
+	@Override
+	public String getResourceName(long classNameId) {
 		return JournalPermission.RESOURCE_NAME;
 	}
 

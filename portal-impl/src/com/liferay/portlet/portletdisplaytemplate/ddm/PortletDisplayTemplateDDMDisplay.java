@@ -19,28 +19,23 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.rss.web.util.RSSFeed;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -49,21 +44,9 @@ import java.util.Set;
  */
 public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 
-	public static final String[] CLASS_NAMES = {
-		AssetCategory.class.getName(), AssetEntry.class.getName(),
-		AssetTag.class.getName(), BlogsEntry.class.getName(),
-		Layout.class.getName(), Locale.class.getName(), RSSFeed.class.getName(),
-		LayoutSet.class.getName(), WikiPage.class.getName()
-	};
-
 	@Override
 	public String getAddTemplateActionId() {
 		return ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
-	}
-
-	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
 	}
 
 	@Override
@@ -91,7 +74,35 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
+	public long[] getResourceClassNameIds() {
+		List<Long> resourceClassNameIds = new ArrayList<>();
+
+		for (TemplateHandler templateHandler :
+				TemplateHandlerRegistryUtil.getTemplateHandlers()) {
+
+			if (templateHandler.isDisplayTemplateHandler()) {
+				resourceClassNameIds.add(
+					PortalUtil.getClassNameId(templateHandler.getClassName()));
+			}
+		}
+
+		return ArrayUtil.toLongArray(resourceClassNameIds);
+	}
+
+	@Override
 	public String getResourceName() {
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getResourceName(long classNameId) {
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
+
+		if (templateHandler != null) {
+			return templateHandler.getResourceName();
+		}
+
 		return StringPool.BLANK;
 	}
 

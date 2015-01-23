@@ -30,12 +30,9 @@ import java.util.Locale;
  */
 public class DDLDDMDisplay extends BaseDDMDisplay {
 
-	public static final String[] CLASS_NAMES = {DDLRecordSet.class.getName()};
-
-	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
+	public static final long[] RESOURCE_CLASS_NAME_IDS = new long[] {
+		PortalUtil.getClassNameId(DDLRecordSet.class)
+	};
 
 	@Override
 	public String getPortletId() {
@@ -43,7 +40,17 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
+	public long[] getResourceClassNameIds() {
+		return RESOURCE_CLASS_NAME_IDS;
+	}
+
+	@Override
 	public String getResourceName() {
+		return DDLPermission.RESOURCE_NAME;
+	}
+
+	@Override
+	public String getResourceName(long classNameId) {
 		return DDLPermission.RESOURCE_NAME;
 	}
 

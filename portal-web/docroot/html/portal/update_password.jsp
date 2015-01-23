@@ -31,7 +31,12 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 %>
 
 <c:choose>
-	<c:when test="<%= SessionErrors.contains(request, UserLockoutException.class.getName()) %>">
+	<c:when test="<%= SessionErrors.contains(request, UserLockoutException.LDAPLockout.class.getName()) %>">
+		<div class="alert alert-danger">
+			<liferay-ui:message key="this-account-has-been-locked-out-of-a-required-ldap-server" />
+		</div>
+	</c:when>
+	<c:when test="<%= SessionErrors.contains(request, UserLockoutException.PasswordPolicyLockout.class.getName()) %>">
 		<div class="alert alert-danger">
 			<liferay-ui:message key="this-account-has-been-locked" />
 		</div>

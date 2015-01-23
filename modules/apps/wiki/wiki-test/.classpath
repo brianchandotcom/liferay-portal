@@ -19,6 +19,7 @@
 	<classpathentry kind="lib" path="/portal-master/lib/development/mail.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/servlet-api.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/global/portlet.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/antlr3-runtime.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/bnd.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-io.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-lang.jar" />
@@ -73,6 +74,5 @@
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-spi/jars/shrinkwrap-spi-1.1.2.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-impl-base/jars/shrinkwrap-impl-base-1.1.2.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-container/jars/arquillian-junit-container-1.1.2.Final.jar" />
-	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

@@ -26,19 +26,6 @@ import org.junit.Test;
 public class SassCompilerTest extends BaseTests {
 
 	@Test
-	public void testBasicCompile() throws Exception {
-		SassCompiler compiler = new SassCompiler();
-		assumeNotNull(compiler);
-
-		String output = compiler.compile(
-			".foo { background: white; .bar { margin-top: 10px; } }", "", "");
-		assertNotNull(output);
-		assertEquals(
-			".foo { background: white; } .foo .bar { margin-top: 10px; }",
-			stripNewLines(output));
-	}
-
-	@Test
 	public void testCompile_asset_category_selector() throws Exception {
 		SassCompiler compiler = new SassCompiler();
 		assumeNotNull(compiler);

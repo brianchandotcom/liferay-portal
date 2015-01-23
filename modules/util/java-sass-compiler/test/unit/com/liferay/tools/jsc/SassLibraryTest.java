@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import sass.SassLibrary;
-import sass.sass_context;
+import sass.SassLibrary.Sass_File_Context;
 
 /**
  * @author Gregory Amerson
@@ -28,10 +28,10 @@ public class SassLibraryTest extends BaseTests {
 
 	@Test
 	public void testSassContextSharedLibraryLoading() throws Exception {
-		sass_context ctx = SassLibrary.INSTANCE.sass_new_context();
+		Sass_File_Context ctx = SassLibrary.INSTANCE.sass_make_file_context("");
 		assertNotNull(ctx);
 
-		SassLibrary.INSTANCE.sass_free_context(ctx);
+		SassLibrary.INSTANCE.sass_delete_file_context(ctx);
 	}
 
 	@Test

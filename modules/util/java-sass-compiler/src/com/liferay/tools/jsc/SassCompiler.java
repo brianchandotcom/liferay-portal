@@ -14,111 +14,75 @@
 
 package com.liferay.tools.jsc;
 
-import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
 
 import java.io.File;
 
-import sass.OutputStyle;
 import sass.SassLibrary;
-import sass.SourceComments;
-import sass.sass_context;
-import sass.sass_file_context;
+import sass.SassLibrary.Sass_Context;
+import sass.SassLibrary.Sass_File_Context;
+import sass.SassLibrary.Sass_Options;
 
 /**
  * @author Gregory Amerson
  */
 public class SassCompiler {
 
-	public String compile(String input, String includePath, String imgPath)
-		throws SassCompilationException {
-
-		sass_context sassContext = null;
-
-		try {
-			sassContext = _libsass.sass_new_context();
-			sassContext.options.image_path = str(imgPath);
-			sassContext.options.include_paths = str(includePath);
-			sassContext.options.output_style = OutputStyle.EXPANDED.value();
-			sassContext.options.source_comments = SourceComments.NONE.value();
-			sassContext.source_string = str(input);
-
-			_libsass.sass_compile(sassContext);
-
-			if (sassContext.error_status != 0) {
-				throw new SassCompilationException(
-					sassContext.error_message.getString(0));
-			}
-
-			if (sassContext.output_string == null ||
-				sassContext.output_string.getString(0) == null) {
-
-				throw new SassCompilationException("libsass returned null");
-			}
-
-			return sassContext.output_string.getString(0);
-		} finally {
-			try {
-				if (sassContext != null) {
-					_libsass.sass_free_context(sassContext);
-				}
-			} catch (Throwable t) {
-				throw new SassCompilationException(t);
-			}
-		}
-	}
-
 	public String compileFile(
 			String inputFile, String includePath, String imgPath)
 		throws SassCompilationException {
 
-		sass_file_context sassFileContext = null;
+		Sass_File_Context sassFileContext = null;
 
 		try {
-			sassFileContext = _libsass.sass_new_file_context();
+			sassFileContext = _libsass.sass_make_file_context(inputFile);
 
-			sassFileContext.input_path = str(inputFile);
-			sassFileContext.output_path = str("");
+			Sass_Options opt = _libsass.sass_make_options();
+			_libsass.sass_option_set_output_path(opt, "");
+			_libsass.sass_option_set_image_path(opt, imgPath);
+
+			int outputstyle = 1; // NESTED 0 EXPANDED 1 COMPACT 2 COMPRESSED 3 FORMATTED 4
+			_libsass.sass_option_set_output_style(opt, outputstyle);
+
+			byte sourceComments = (byte)0; // NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
+			_libsass.sass_option_set_source_comments(opt, sourceComments);
+//			sassFileContext.source_map_string = str("");
 
 			String includePaths = includePath +
 				File.pathSeparator + new File(inputFile).getParent();
 
-			sassFileContext.options.image_path = str(imgPath);
-			sassFileContext.options.include_paths = str(includePaths);
-			sassFileContext.options.output_style = OutputStyle.EXPANDED.value();
-			sassFileContext.options.source_comments =
-				SourceComments.NONE.value();
-			sassFileContext.source_map_string = str("");
+			_libsass.sass_option_set_include_path(opt, includePaths);
 
-			_libsass.sass_compile_file(sassFileContext);
+			_libsass.sass_file_context_set_options(sassFileContext, opt);
 
-			if (sassFileContext.error_status != 0) {
-				throw new SassCompilationException(
-					sassFileContext.error_message.getString(0));
+			_libsass.sass_compile_file_context(sassFileContext);
+
+			Sass_Context context = _libsass.sass_file_context_get_context(sassFileContext);
+
+			int errorStatus = _libsass.sass_context_get_error_status(context);
+
+			if (errorStatus != 0) {
+				Pointer errorMsg = _libsass.sass_context_get_error_message(context);
+				throw new SassCompilationException( errorMsg.getString(0));
 			}
 
-			if (sassFileContext.output_string == null ||
-				sassFileContext.output_string.getString(0) == null) {
+			Pointer outputString = _libsass.sass_context_get_output_string(context);
+
+			if (outputString == null || outputString.getString(0) == null) {
 
 				throw new SassCompilationException("libsass returned null");
 			}
 
-			return sassFileContext.output_string.getString(0);
+			return outputString.getString(0);
 		} finally {
 			try {
 				if (sassFileContext != null) {
-					_libsass.sass_free_file_context(sassFileContext);
+					_libsass.sass_delete_file_context(sassFileContext);
 				}
 			} catch (Throwable t) {
 				throw new SassCompilationException(t);
 			}
 		}
-	}
-
-	private Pointer str(String src) {
-		Memory mem = new Memory(src.length() + 2);
-		mem.setString(0, src);
-		return mem;
 	}
 
 	private static final SassLibrary _libsass = SassLibrary.INSTANCE;

@@ -49,11 +49,10 @@
   .app-view-entry-taglib.entry-display-style.display-descriptive .entry-title {
     white-space: nowrap;
     overflow: hidden;
-    -webkit-text-overflow: ellipsis;
-    -moz-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
-    text-overflow: ellipsis; }
+    text-overflow: ellipsis;
+    }
   @media (max-width: 979px) {
     .app-view-entry-taglib.entry-display-style.display-descriptive .folder-action a, .app-view-entry-taglib.entry-display-style.display-descriptive .entry-action a {
       padding: 10px 12px;

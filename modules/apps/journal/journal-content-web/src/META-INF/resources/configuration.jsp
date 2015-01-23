@@ -151,7 +151,11 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 		function(event) {
 			event.preventDefault();
 
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.ASSET_BROWSER %>" refererPlid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" var="selectWebContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<%
+			String portletId = PortletProviderUtil.getPortletId(JournalArticle.class.getName(), PortletProvider.ACTION_BROWSE);
+			%>
+
+			<liferay-portlet:renderURL portletName="<%= portletId %>" refererPlid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" var="selectWebContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 				<portlet:param name="selectedGroupIds" value="<%= StringUtil.merge(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId())) %>" />
 				<portlet:param name="typeSelection" value="<%= JournalArticle.class.getName() %>" />

@@ -141,4 +141,6 @@ public interface TemplateHandler {
 			long classPK, String language, Locale locale)
 		throws Exception;
 
+	public boolean isDisplayTemplateHandler();
+
 }

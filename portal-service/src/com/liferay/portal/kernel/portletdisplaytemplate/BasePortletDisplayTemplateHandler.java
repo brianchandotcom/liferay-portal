@@ -40,4 +40,9 @@ public abstract class BasePortletDisplayTemplateHandler
 		return PortletDisplayTemplateUtil.getTemplateVariableGroups(language);
 	}
 
+	@Override
+	public boolean isDisplayTemplateHandler() {
+		return true;
+	}
+
 }

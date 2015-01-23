@@ -100,9 +100,9 @@ public class PortletToolbar {
 			_serviceTracker;
 
 	private static class PortletToolbarServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<
-			PortletToolbarContributorLocator,
-			PortletToolbarContributorLocator> {
+		implements ServiceTrackerCustomizer
+			<PortletToolbarContributorLocator,
+			 PortletToolbarContributorLocator> {
 
 		@Override
 		public PortletToolbarContributorLocator addingService(

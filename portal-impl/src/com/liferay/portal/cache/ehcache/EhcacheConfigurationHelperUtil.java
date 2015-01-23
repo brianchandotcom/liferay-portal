@@ -50,23 +50,22 @@ import net.sf.ehcache.event.NotificationScope;
  */
 public class EhcacheConfigurationHelperUtil {
 
-	public static ObjectValuePair<
-			Configuration, PortalCacheManagerConfiguration>
-		getConfiguration(String configurationPath) {
+	public static ObjectValuePair
+		<Configuration, PortalCacheManagerConfiguration>getConfiguration(
+			String configurationPath) {
 
 		return getConfiguration(configurationPath, false, false);
 	}
 
-	public static ObjectValuePair<
-			Configuration, PortalCacheManagerConfiguration>
-		getConfiguration(String configurationPath, boolean clusterAware) {
+	public static ObjectValuePair
+		<Configuration, PortalCacheManagerConfiguration>getConfiguration(
+			String configurationPath, boolean clusterAware) {
 
 		return getConfiguration(configurationPath, clusterAware, false);
 	}
 
-	public static ObjectValuePair<
-			Configuration, PortalCacheManagerConfiguration>
-		getConfiguration(
+	public static ObjectValuePair
+		<Configuration, PortalCacheManagerConfiguration>getConfiguration(
 			String configurationPath, boolean clusterAware,
 			boolean usingDefault) {
 
@@ -79,23 +78,22 @@ public class EhcacheConfigurationHelperUtil {
 			clusterAware, usingDefault);
 	}
 
-	public static ObjectValuePair<
-			Configuration, PortalCacheManagerConfiguration>
-		getConfiguration(URL configurationURL) {
+	public static ObjectValuePair
+		<Configuration, PortalCacheManagerConfiguration>getConfiguration(
+			URL configurationURL) {
 
 		return getConfiguration(configurationURL, false, false);
 	}
 
-	public static ObjectValuePair<
-			Configuration, PortalCacheManagerConfiguration>
-		getConfiguration(URL configurationURL, boolean clusterAware) {
+	public static ObjectValuePair
+		<Configuration, PortalCacheManagerConfiguration>getConfiguration(
+			URL configurationURL, boolean clusterAware) {
 
 		return getConfiguration(configurationURL, clusterAware, false);
 	}
 
-	public static ObjectValuePair<
-			Configuration, PortalCacheManagerConfiguration>
-		getConfiguration(
+	public static ObjectValuePair
+		<Configuration, PortalCacheManagerConfiguration>getConfiguration(
 			URL configurationURL, boolean clusterAware, boolean usingDefault) {
 
 		if (configurationURL == null) {
@@ -154,9 +152,9 @@ public class EhcacheConfigurationHelperUtil {
 				cacheManagerListenerConfigurations,
 				defaultPortalCacheConfiguration, portalCacheConfigurations);
 
-		return new ObjectValuePair<
-				Configuration, PortalCacheManagerConfiguration>(
-			ehcacheConfiguration, portalCacheManagerConfiguration);
+		return new ObjectValuePair
+			<Configuration, PortalCacheManagerConfiguration>(
+				ehcacheConfiguration, portalCacheManagerConfiguration);
 	}
 
 	private static CacheListenerScope _getCacheListenerScope(

@@ -2006,6 +2006,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				previousLine, linePart, tabDiff, true, true, false);
 		}
 
+		if (previousLine.endsWith("<") && !previousLine.endsWith(" <")) {
+			return getCombinedLinesContent(
+				content, fileName, line, trimmedLine, lineLength, lineCount,
+				previousLine, "<", tabDiff, false, false, false);
+		}
+
 		int previousLineLength = getLineLength(previousLine);
 
 		if ((trimmedLine.length() + previousLineLength) < _MAX_LINE_LENGTH) {

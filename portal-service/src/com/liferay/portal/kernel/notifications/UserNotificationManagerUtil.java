@@ -305,10 +305,10 @@ public class UserNotificationManagerUtil {
 	private final ServiceTrackerMap<String, List<UserNotificationDefinition>>
 		_userNotificationDefinitions = ServiceTrackerCollections.multiValueMap(
 			UserNotificationDefinition.class, "javax.portlet.name");
-	private final ConcurrentHashMap<
-		String, List<ServiceRegistration<UserNotificationDefinition>>>
-		_userNotificationDefinitionServiceRegistrations =
-			new ConcurrentHashMap<>();
+	private final ConcurrentHashMap
+		<String, List<ServiceRegistration<UserNotificationDefinition>>>
+			_userNotificationDefinitionServiceRegistrations =
+				new ConcurrentHashMap<>();
 	private final Map<String, Map<String, UserNotificationHandler>>
 		_userNotificationHandlers = new ConcurrentHashMap
 			<String, Map<String, UserNotificationHandler>>();

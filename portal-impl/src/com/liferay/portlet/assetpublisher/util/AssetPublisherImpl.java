@@ -1565,8 +1565,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	private final List<AssetEntryQueryProcessor>
 		_assetEntryQueryProcessors = new CopyOnWriteArrayList<>();
-	private final ServiceTracker<
-		AssetEntryQueryProcessor, AssetEntryQueryProcessor> _serviceTracker;
+	private final ServiceTracker
+		<AssetEntryQueryProcessor, AssetEntryQueryProcessor> _serviceTracker;
 
 	private final Accessor<AssetEntry, String> _titleAccessor =
 		new Accessor<AssetEntry, String>() {

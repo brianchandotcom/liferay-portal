@@ -8,12 +8,12 @@
 
 <#assign actionCommand = action?substring(x + 1)>
 
+<#assign functionLocatorCount = seleniumBuilderContext.getFunctionLocatorCount(seleniumBuilderFileUtil.getObjectName(actionCommand))>
+
 <#if !action?contains("#is") && !action?ends_with("#confirm")>
 	${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actionCommand}Description(
 
-	<#assign functionName = seleniumBuilderFileUtil.getObjectName(actionCommand)>
-
-	<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+	<#list 1..functionLocatorCount as i>
 		<#if actionElement.attributeValue("locator${i}")??>
 			<#assign actionLocator = actionElement.attributeValue("locator${i}")>
 
@@ -51,9 +51,7 @@
 </#if>
 
 ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actionCommand}(
-	<#assign functionName = seleniumBuilderFileUtil.getObjectName(actionCommand)>
-
-	<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
+	<#list 1..functionLocatorCount as i>
 		<#if actionElement.attributeValue("locator${i}")??>
 			<#assign actionLocator = actionElement.attributeValue("locator${i}")>
 

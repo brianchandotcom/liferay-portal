@@ -116,7 +116,7 @@ public class SassCompiler {
 	}
 
 	private Pointer str(String src) {
-		Memory mem = new Memory(src.length() + 10);
+		Memory mem = new Memory(src.length() + 2);
 		mem.setString(0, src);
 		return mem;
 	}

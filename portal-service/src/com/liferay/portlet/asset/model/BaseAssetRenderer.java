@@ -31,11 +31,8 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.provider.AddPortletProvider;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -68,7 +65,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 			return addPortletProvider.getPortletId();
 		}
 
-		return PortletKeys.ASSET_PUBLISHER;
+		return StringPool.BLANK;
 	}
 
 	public AssetRendererFactory getAssetRendererFactory() {
@@ -360,27 +357,13 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		AddPortletProvider addPortletProvider = _serviceTrackerMap.getService(
 			getClassName());
 
-		if (addPortletProvider != null) {
-			addPortletProvider.setPortletPreferences(
-				portletPreferences, portletId, getClassName(), getClassPK(),
-				themeDisplay);
-
+		if (addPortletProvider == null) {
 			return;
 		}
 
-		portletPreferences.setValue("displayStyle", "full-content");
-		portletPreferences.setValue(
-			"emailAssetEntryAddedEnabled", Boolean.FALSE.toString());
-		portletPreferences.setValue("selectionStyle", "manual");
-		portletPreferences.setValue(
-			"showAddContentButton", Boolean.FALSE.toString());
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			getClassName(), getClassPK());
-
-		AssetPublisherUtil.addSelection(
-			themeDisplay, portletPreferences, portletId,
-			assetEntry.getEntryId(), -1, assetEntry.getClassName());
+		addPortletProvider.setPortletPreferences(
+			portletPreferences, portletId, getClassName(), getClassPK(),
+			themeDisplay);
 	}
 
 	public void setAssetRendererType(int assetRendererType) {

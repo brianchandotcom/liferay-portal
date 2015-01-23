@@ -14,9 +14,11 @@
 			<span class="portlet-title-text">${portlet_title}</span>
 		</h1>
 
-		<menu class="portlet-topper-toolbar add-content" id="portlet-topper-toolbar-add-content_${portlet_id}" type="toolbar">
-			<@liferay_ui["menu"] menu=portlet_toolbar.getContentAdditionMenu(portlet_id, renderRequest) />
-		</menu>
+		<#if renderRequest??>
+			<menu class="portlet-topper-toolbar add-content" id="portlet-topper-toolbar-add-content_${portlet_id}" type="toolbar">
+				<@liferay_ui["menu"] menu=portlet_toolbar.getContentAdditionMenu(portlet_id, renderRequest) />
+			</menu>
+		</#if>
 
 		<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
 			<#if portlet_display.isShowBackIcon()>

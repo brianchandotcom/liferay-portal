@@ -1092,6 +1092,26 @@ $editLayoutPanelWidth: 460px;
 					float: right;
 				}
 			}
+
+			.workflow-status .status{
+				color: #FFF !important;
+
+				&.approved {
+					background-color: #5cb85c;
+				}
+
+				&.draft {
+					background-color: #5bc0de;
+				}
+
+				&.expired {
+					background-color: #d9534f;
+				}
+
+				&.pending {
+					background-color: #f0ad4e;
+				}
+			}
 		}
 	}
 }

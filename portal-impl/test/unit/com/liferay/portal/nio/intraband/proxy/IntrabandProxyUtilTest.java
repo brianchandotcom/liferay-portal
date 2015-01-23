@@ -1979,7 +1979,11 @@ public class IntrabandProxyUtilTest {
 
 		ClassLoader classLoader = new URLClassLoader(new URL[0], null);
 
-		Level level = logEnabled ? Level.INFO : Level.WARNING;
+		Level level = Level.WARNING;
+
+		if (logEnabled) {
+			level = Level.INFO;
+		}
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(

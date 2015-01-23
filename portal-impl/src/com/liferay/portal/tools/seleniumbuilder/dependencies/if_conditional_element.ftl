@@ -25,6 +25,10 @@
 		<#assign actionElement = ifConditionalElement>
 
 		(<#include "action_log_element.ftl">) && (<#include "action_element.ftl">)
+	<#elseif ifConditionalElement.attributeValue("function")??>
+		<#assign functionElement = ifConditionalElement>
+
+		(<#include "function_log_element.ftl">) && (<#include "function_element.ftl">)
 	<#elseif ifConditionalElement.attributeValue("macro")??>
 		<#assign macroElement = ifConditionalElement>
 

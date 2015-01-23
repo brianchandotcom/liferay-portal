@@ -6,7 +6,7 @@
 
 .sendActionLogger(
 
-<#if functionElement.getName() == "execute">
+<#if functionElement.getName() == "condition" || functionElement.getName() == "execute">
 	<#assign function = functionElement.attributeValue("function")>
 
 	<#assign x = function?last_index_of("#")>

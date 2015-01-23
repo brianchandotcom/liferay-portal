@@ -1,3 +1,5 @@
+/* global L */
+
 AUI.add(
 	'liferay-map-openstreet',
 	function(A) {

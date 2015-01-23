@@ -21,16 +21,12 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.BaseDDMFormValuesReader;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Adolfo Pérez
@@ -52,57 +48,8 @@ public class DLFileEntryDDMFormValuesReader extends BaseDDMFormValuesReader {
 			return new DDMFormValues(null);
 		}
 
-		DDMFormValues ddmStorageDDMFormValues =
-			StorageEngineUtil.getDDMFormValues(
-				dlFileEntryMetadata.getDDMStorageId());
-
-		DDMFormValues ddmFormValues = new DDMFormValues(
-			ddmStorageDDMFormValues.getDDMForm());
-
-		for (DDMFormFieldValue ddmFormFieldValue :
-				ddmStorageDDMFormValues.getDDMFormFieldValues()) {
-
-			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-		}
-
-		return ddmFormValues;
-	}
-
-	@Override
-	public DDMFormValues getDDMFormValues(String ddmFormFieldType)
-		throws PortalException {
-
-		DLFileEntryMetadata dlFileEntryMetadata = getDLFileEntryMetadata();
-
-		if (dlFileEntryMetadata == null) {
-			return new DDMFormValues(null);
-		}
-
-		DDMStructure ddmStructure = dlFileEntryMetadata.getDDMStructure();
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		Map<String, DDMFormField> currentDDMFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(false);
-
-		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
-
-		DDMFormValues ddmStorageDDMFormValues =
-			StorageEngineUtil.getDDMFormValues(
-				dlFileEntryMetadata.getDDMStorageId());
-
-		for (DDMFormFieldValue ddmFormFieldValue :
-				ddmStorageDDMFormValues.getDDMFormFieldValues()) {
-
-			DDMFormField ddmFormField = currentDDMFormFieldsMap.get(
-				ddmFormFieldValue.getName());
-
-			if (ddmFormFieldType.equals(ddmFormField.getType())) {
-				ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-			}
-		}
-
-		return ddmFormValues;
+		return StorageEngineUtil.getDDMFormValues(
+			dlFileEntryMetadata.getDDMStorageId());
 	}
 
 	protected DLFileEntryMetadata getDLFileEntryMetadata() {

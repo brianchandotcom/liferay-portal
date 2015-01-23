@@ -26,11 +26,11 @@
 
 	<#assign ddmFormValuesReader = assetRenderer.getDDMFormValuesReader() />
 
-	<#assign ddmFormValues = ddmFormValuesReader.getDDMFormValues("ddm-geolocation") />
+	<#assign ddmFormFieldValues = ddmFormValuesReader.getDDMFormFieldValues("ddm-geolocation") />
 
 	<#assign coordinatesJSONObjects = [] />
 
-	<#list ddmFormValues.getDDMFormFieldValues() as ddmFormFieldValue>
+	<#list ddmFormFieldValues as ddmFormFieldValue>
 		<#assign value = ddmFormFieldValue.getValue() />
 
 		<#assign coordinatesJSONObject = jsonFactoryUtil.createJSONObject(value.getString(locale)) />

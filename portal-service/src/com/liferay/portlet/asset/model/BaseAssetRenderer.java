@@ -35,10 +35,13 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletMode;
@@ -423,13 +426,16 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		implements DDMFormValuesReader {
 
 		@Override
-		public DDMFormValues getDDMFormValues() {
-			return new DDMFormValues(new DDMForm());
+		public List<DDMFormFieldValue> getDDMFormFieldValues(
+				String ddmFormFieldType)
+			throws PortalException {
+
+			return Collections.emptyList();
 		}
 
 		@Override
-		public DDMFormValues getDDMFormValues(String ddmFormFieldType) {
-			return getDDMFormValues();
+		public DDMFormValues getDDMFormValues() {
+			return new DDMFormValues(new DDMForm());
 		}
 
 	}

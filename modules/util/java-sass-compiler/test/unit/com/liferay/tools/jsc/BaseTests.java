@@ -14,6 +14,8 @@
 
 package com.liferay.tools.jsc;
 
+import static org.junit.Assert.fail;
+
 import com.sun.jna.NativeLibrary;
 import com.sun.jna.Platform;
 
@@ -22,7 +24,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
 import java.lang.reflect.Method;
 
 import org.junit.Before;
@@ -38,8 +39,15 @@ public class BaseTests {
 			"getNativeLibraryResourcePrefix");
 		prefix.setAccessible(true);
 		String prefixPath = (String)prefix.invoke(null);
-		String path = new File("resources/" + prefixPath).getCanonicalPath();
-		NativeLibrary.addSearchPath("sass", path);
+		File libDir = new File("resources/" + prefixPath);
+		String libPath = libDir.getCanonicalPath();
+		if (libDir.exists()) {
+			NativeLibrary.addSearchPath("sass", libPath);
+			System.out.println("Added search path " + libPath);
+		}
+		else {
+			fail("Unable to find resources dir at " + libPath);
+		}
 	}
 
 	protected String readFileContents(String filename) throws Exception {

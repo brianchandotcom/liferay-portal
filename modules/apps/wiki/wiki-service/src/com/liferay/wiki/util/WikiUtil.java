@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.util;
 
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.diff.DiffVersion;
@@ -39,11 +38,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -64,8 +61,6 @@ import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.wiki.util.comparator.PageTitleComparator;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
-
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -597,23 +592,6 @@ public class WikiUtil {
 		}
 
 		return wikiEngine;
-	}
-
-	private String _readConfigurationFile(String propertyName, String format)
-		throws IOException {
-
-		ClassLoader classLoader = getClass().getClassLoader();
-
-		String configurationFile = PropsUtil.get(
-			propertyName, new Filter(format));
-
-		if (Validator.isNotNull(configurationFile)) {
-			return HttpUtil.URLtoString(
-				classLoader.getResource(configurationFile));
-		}
-		else {
-			return StringPool.BLANK;
-		}
 	}
 
 	private String _replaceAttachments(

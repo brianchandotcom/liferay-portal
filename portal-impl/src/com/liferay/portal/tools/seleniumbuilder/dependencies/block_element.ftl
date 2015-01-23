@@ -122,7 +122,7 @@
 
 			${selenium}.saveScreenshotBeforeAction(false);
 
-			<#include "function_logger.ftl">
+			<#include "function_element.ftl">
 
 			<#if function?contains("#is")>
 				}

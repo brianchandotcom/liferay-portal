@@ -22,10 +22,6 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
  */
 public class WikiConfigurationUtil {
 
-	public static final Configuration _configuration =
-		ConfigurationFactoryUtil.getConfiguration(
-			WikiConfigurationUtil.class.getClassLoader(), "portlet");
-
 	public static String get(String key) {
 		return _configuration.get(key);
 	}
@@ -33,5 +29,9 @@ public class WikiConfigurationUtil {
 	public static String[] getArray(String key) {
 		return _configuration.getArray(key);
 	}
+
+	private static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			WikiConfigurationUtil.class.getClassLoader(), "portlet");
 
 }

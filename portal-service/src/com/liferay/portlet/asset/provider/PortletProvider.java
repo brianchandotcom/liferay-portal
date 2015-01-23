@@ -19,6 +19,12 @@ package com.liferay.portlet.asset.provider;
  */
 public interface PortletProvider {
 
+	public static final String ACTION_ADD = "add";
+
+	public static final String ACTION_BROWSE = "browse";
+
+	public static final String ACTION_VIEW = "view";
+
 	public static final String DEFAULT = "default";
 
 	public String getPortletId();

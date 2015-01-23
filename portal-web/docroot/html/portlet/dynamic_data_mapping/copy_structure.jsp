@@ -38,6 +38,7 @@ boolean copyDisplayTemplates = ParamUtil.getBoolean(request, "copyDisplayTemplat
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
+	<aui:input name="sourceClassNameId" type="hidden" value="<%= String.valueOf(scopeClassNameId) %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= true %>" />
 
 	<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />

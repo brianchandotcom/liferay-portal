@@ -217,7 +217,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *
 	 * @param  classNameId the primary key of the class name for template's
 	 *         related model
-	 * @param  classPK the primary key of the original template's related entity
+	 * @param  oldClassPK the primary key of the old template's related entity
+	 * @param  sourceClassNameId the primary key of the class name for template's
+	 *         source model
 	 * @param  newClassPK the primary key of the new template's related entity
 	 * @param  type the template's type. For more information, see {@link
 	 *         com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
@@ -231,8 +233,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMTemplate> copyTemplates(
-			long classNameId, long classPK, long newClassPK, String type,
-			ServiceContext serviceContext)
+			long classNameId, long oldClassPK, long sourceClassNameId,
+			long newClassPK, String type, ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);

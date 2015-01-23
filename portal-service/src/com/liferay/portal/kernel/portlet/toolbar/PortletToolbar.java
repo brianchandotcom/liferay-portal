@@ -52,6 +52,7 @@ public class PortletToolbar {
 
 		menu.setCssClass("portlet-options");
 		menu.setDirection("down");
+		menu.setExtended(false);
 		menu.setIcon("../aui/plus-sign-2");
 
 		List<MenuItem> contentAdditionMenuItems = new ArrayList<>();
@@ -86,7 +87,7 @@ public class PortletToolbar {
 		menu.setMenuItems(contentAdditionMenuItems);
 
 		menu.setMessage("add");
-		menu.setShowArrow(true);
+		menu.setShowArrow(false);
 		menu.setShowWhenSingleIcon(true);
 
 		return menu;

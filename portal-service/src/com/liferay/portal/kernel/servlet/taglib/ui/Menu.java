@@ -112,13 +112,13 @@ public class Menu extends BaseUIItem {
 	}
 
 	private String _cssClass = StringPool.BLANK;
-	private String _direction = StringPool.BLANK;
-	private boolean _extended;
+	private String _direction = "left";
+	private boolean _extended = true;
 	private String _icon = StringPool.BLANK;
 	private String _label = StringPool.BLANK;
 	private List<MenuItem> _menuItems;
 	private String _message = StringPool.BLANK;
-	private boolean _showArrow;
+	private boolean _showArrow = true;
 	private boolean _showExpanded;
 	private boolean _showWhenSingleIcon;
 	private String _triggerCssClass = StringPool.BLANK;

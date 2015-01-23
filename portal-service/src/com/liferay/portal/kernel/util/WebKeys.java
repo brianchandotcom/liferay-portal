@@ -50,6 +50,8 @@ public interface WebKeys {
 	@Distributed(direction = Direction.REQUEST)
 	public static final String CURRENT_URL = "CURRENT_URL";
 
+	public static final String DIFF_HTML_RESULTS = "DIFF_HTML_RESULTS";
+
 	public static final String DOCUMENT_LIBRARY_FOLDER = "DOCUMENT_LIBRARY_FOLDER";
 
 	public static final String EXTEND_SESSION = "EXTEND_SESSION";
@@ -75,6 +77,9 @@ public interface WebKeys {
 	public static final String LAST_PATH = "LAST_PATH";
 
 	public static final String LAYOUT = "LAYOUT";
+
+	@Distributed
+	public static final String LAYOUT_ASSET_ENTRY = "LIFERAY_SHARED_LAYOUT_ASSET_ENTRY";
 
 	public static final String LAYOUTS = "LAYOUTS";
 
@@ -187,6 +192,8 @@ public interface WebKeys {
 
 	public static final String SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID = "SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID";
 
+	public static final String SOURCE_VERSION = "SOURCE_VERSION";
+
 	@Distributed(direction = Direction.RESPONSE)
 	public static final String SPI_AGENT_ACTION_RESULT = "SPI_AGENT_ACTION_RESULT";
 
@@ -214,9 +221,13 @@ public interface WebKeys {
 
 	public static final String SPI_AGENT_RESPONSE = "SPI_AGENT_RESPONSE";
 
+	public static final String TARGET_VERSION = "TARGET_VERSION";
+
 	public static final String THEME = "THEME";
 
 	public static final String THEME_DISPLAY = "LIFERAY_SHARED_THEME_DISPLAY";
+
+	public static final String TITLE = "TITLE";
 
 	public static final String UNIQUE_ELEMENT_IDS = "LIFERAY_SHARED_UNIQUE_ELEMENT_IDS";
 

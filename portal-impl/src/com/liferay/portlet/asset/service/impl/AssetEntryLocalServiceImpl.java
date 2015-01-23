@@ -53,7 +53,6 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -718,14 +717,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				mbMessage.setSubject(title);
 
 				mbMessagePersistence.update(mbMessage);
-			}
-			else if (className.equals(WikiPage.class.getName())) {
-				WikiPage wikiPage = wikiPagePersistence.findByPrimaryKey(
-					classPK);
-
-				wikiPage.setTitle(title);
-
-				wikiPagePersistence.update(wikiPage);
 			}
 		}
 

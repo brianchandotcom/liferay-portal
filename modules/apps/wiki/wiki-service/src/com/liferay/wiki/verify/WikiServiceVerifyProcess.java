@@ -48,10 +48,10 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyResourcedModels();
-		verifyUUIDModels();
 		verifyCreateDate();
 		verifyNoAssetPages();
+		verifyResourcedModels();
+		verifyUUIDModels();
 	}
 
 	@Reference(unbind = "-")

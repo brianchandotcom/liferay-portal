@@ -1097,19 +1097,19 @@ $editLayoutPanelWidth: 460px;
 				color: #FFF !important;
 
 				&.approved {
-					background-color: #5cb85c;
+					background-color: $status-approved-text;
 				}
 
 				&.draft {
-					background-color: #5bc0de;
+					background-color: $status-draft-text;
 				}
 
 				&.expired {
-					background-color: #d9534f;
+					background-color: $status-expired-text;
 				}
 
 				&.pending {
-					background-color: #f0ad4e;
+					background-color: $status-pending-text;
 				}
 			}
 		}

@@ -7,8 +7,6 @@ AUI.add(
 		var TOKEN_SERIALIZE = 'serialize://';
 
 		var Store = function(key, value) {
-			var instance = Store;
-
 			var method;
 
 			if (Lang.isFunction(value)) {
@@ -30,7 +28,7 @@ AUI.add(
 			}
 
 			if (method) {
-				instance[method].apply(Store, arguments);
+				Store[method].apply(Store, arguments);
 			}
 		};
 

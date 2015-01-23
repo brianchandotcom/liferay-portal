@@ -9,12 +9,6 @@ AUI.add(
 
 		var TogglerKeyFilter = A.Component.create(
 			{
-				EXTENDS: A.Plugin.Base,
-
-				NAME: NAME,
-
-				NS: NAME,
-
 				ATTRS: {
 					filter: {
 						validator: A.Lang.isArray,
@@ -28,6 +22,12 @@ AUI.add(
 						]
 					}
 				},
+
+				EXTENDS: A.Plugin.Base,
+
+				NAME: NAME,
+
+				NS: NAME,
 
 				prototype: {
 					initializer: function() {

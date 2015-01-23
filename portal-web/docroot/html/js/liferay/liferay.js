@@ -59,6 +59,28 @@ Liferay = window.Liferay || {};
 				return _.bind.apply(_, args);
 			},
 
+			parseInvokeArgs: function(args) {
+				var instance = this;
+
+				var payload = args[0];
+
+				var ioConfig = instance.parseIOConfig(args);
+
+				if (_.isString(payload)) {
+					payload = instance.parseStringPayload(args);
+
+					instance.parseIOFormConfig(ioConfig, args);
+
+					var lastArg = args[args.length - 1];
+
+					if (_.isObject(lastArg) && lastArg.method) {
+						ioConfig.method = lastArg.method;
+					}
+				}
+
+				return [payload, ioConfig];
+			},
+
 			parseIOConfig: function(args) {
 				var instance = this;
 
@@ -113,28 +135,6 @@ Liferay = window.Liferay || {};
 				if (isNode(form)) {
 					ioConfig.form = form;
 				}
-			},
-
-			parseInvokeArgs: function(args) {
-				var instance = this;
-
-				var payload = args[0];
-
-				var ioConfig = instance.parseIOConfig(args);
-
-				if (_.isString(payload)) {
-					payload = instance.parseStringPayload(args);
-
-					instance.parseIOFormConfig(ioConfig, args);
-
-					var lastArg = args[args.length - 1];
-
-					if (_.isObject(lastArg) && lastArg.method) {
-						ioConfig.method = lastArg.method;
-					}
-				}
-
-				return [payload, ioConfig];
 			},
 
 			parseStringPayload: function(args) {

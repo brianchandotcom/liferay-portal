@@ -5,9 +5,9 @@ AUI.add(
 
 		var CHANGE_IMAGE_CONTROLS_DELAY = 5000;
 
-		var CSS_DROP_ACTIVE = 'drop-active';
-
 		var CSS_CHECK_ACTIVE = 'check-active';
+
+		var CSS_DROP_ACTIVE = 'drop-active';
 
 		var CSS_PROGRESS_ACTIVE = 'progress-active';
 

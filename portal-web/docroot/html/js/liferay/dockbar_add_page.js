@@ -28,9 +28,9 @@ AUI.add(
 
 		var STR_NAME = 'addLayoutName';
 
-		var STR_NODE_LIST = 'nodeList';
-
 		var STR_NODES = 'nodes';
+
+		var STR_NODE_LIST = 'nodeList';
 
 		var STR_RESPONSE_DATA = 'responseData';
 

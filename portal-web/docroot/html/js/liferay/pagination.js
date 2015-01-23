@@ -18,9 +18,9 @@ AUI.add(
 
 		var RESULTS = 'results';
 
-		var STR_SPACE = ' ';
-
 		var STRINGS = 'strings';
+
+		var STR_SPACE = ' ';
 
 		var Pagination = A.Component.create(
 			{

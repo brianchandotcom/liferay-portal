@@ -219,6 +219,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: [ 'aui-base',	'dd', 'liferay-dockbar', 'liferay-layout', 'liferay-layout-column',	'liferay-layout-freeform', 'liferay-portlet-base' ]
+		requires: ['aui-base', 'dd', 'liferay-dockbar', 'liferay-layout', 'liferay-layout-column', 'liferay-layout-freeform', 'liferay-portlet-base']
 	}
 );

@@ -101,7 +101,7 @@ AUI.add(
 						try {
 							responseText = A.JSON.parse(responseText);
 						}
-						catch (err) {
+						catch (e) {
 						}
 
 						var portraitPreviewImg = instance._portraitPreviewImg;

@@ -7,9 +7,9 @@ AUI.add(
 
 		var BODY_CONTENT = 'bodyContent';
 
-		var CSS_SUCCESS = 'alert alert-success';
-
 		var CSS_ERROR = 'alert alert-danger';
+
+		var CSS_SUCCESS = 'alert alert-success';
 
 		var EDITOR = 'editor';
 
@@ -60,9 +60,17 @@ AUI.add(
 				value: 8000
 			},
 
+			editor: {
+				validator: Lang.isObject
+			},
+
 			editorPrefix: {
 				validator: isString,
 				value: '#cke_'
+			},
+
+			editorName: {
+				validator: isString
 			},
 
 			editorSuffix: {
@@ -70,25 +78,17 @@ AUI.add(
 				value: '_original'
 			},
 
-			editor: {
-				validator: Lang.isObject
-			},
-
-			editorName: {
+			namespace: {
 				validator: isString
 			},
 
-			namespace: {
+			saveURL: {
 				validator: isString
 			},
 
 			toolbarTopOffset: {
 				validator: isNumber,
 				value: 30
-			},
-
-			saveURL: {
-				validator: isString
 			}
 		};
 

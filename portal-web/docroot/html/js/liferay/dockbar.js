@@ -13,9 +13,9 @@ AUI.add(
 
 		var CSS_ADD_CONTENT = 'lfr-has-add-content';
 
-		var CSS_EDIT_LAYOUT_CONTENT = 'lfr-has-edit-layout';
-
 		var CSS_DOCKBAR_ITEM = 'dockbar-item';
+
+		var CSS_EDIT_LAYOUT_CONTENT = 'lfr-has-edit-layout';
 
 		var CSS_PREVIEW_CONTENT = 'lfr-has-device-preview';
 
@@ -41,9 +41,9 @@ AUI.add(
 
 		var TPL_EDIT_LAYOUT_PANEL = '<div class="lfr-admin-panel lfr-edit-layout-panel" id="{0}" />';
 
-		var TPL_PREVIEW_PANEL = '<div class="lfr-admin-panel lfr-device-preview-panel" id="{0}" />';
-
 		var TPL_LOADING = '<div class="loading-animation" />';
+
+		var TPL_PREVIEW_PANEL = '<div class="lfr-admin-panel lfr-device-preview-panel" id="{0}" />';
 
 		var Dockbar = {
 			init: function(containerId) {

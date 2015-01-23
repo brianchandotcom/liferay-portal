@@ -32,6 +32,10 @@ AUI.add(
 				Layout.DEFAULT_LAYOUT_OPTIONS,
 				{
 					after: {
+						'drag:end': function(event) {
+							Layout._columnContainer.removeClass(CSS_DRAGGING);
+						},
+
 						'drag:start': function(event) {
 							var node = DDM.activeDrag.get('node');
 							var nodeId = node.get('id');
@@ -43,10 +47,6 @@ AUI.add(
 							}
 
 							Layout._columnContainer.addClass(CSS_DRAGGING);
-						},
-
-						'drag:end': function(event) {
-							Layout._columnContainer.removeClass(CSS_DRAGGING);
 						}
 					},
 					on: {
@@ -88,9 +88,9 @@ AUI.add(
 									}
 								}
 
-								var isOverColumn = !activeDropNode.drop;
+								var overColumn = !activeDropNode.drop;
 
-								if (!Layout.OVER_NESTED_PORTLET && isOverColumn) {
+								if (!Layout.OVER_NESTED_PORTLET && overColumn) {
 									var activeDropNodeId = activeDropNode.get('id');
 									var emptyColumn = Layout.EMPTY_COLUMNS[activeDropNodeId];
 
@@ -147,9 +147,9 @@ AUI.add(
 					}
 				},
 
-				NAME: 'ColumnLayout',
-
 				EXTENDS: A.SortableLayout,
+
+				NAME: 'ColumnLayout',
 
 				prototype: {
 					dragItem: 0,

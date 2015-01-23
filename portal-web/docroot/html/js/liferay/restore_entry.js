@@ -212,8 +212,8 @@ AUI.add(
 									'arguments': form,
 									data: instance.ns(
 										{
-											trashEntryId: trashEntryId.val(),
-											newName: newName.val()
+											newName: newName.val(),
+											trashEntryId: trashEntryId.val()
 										}
 									),
 									dataType: 'JSON'

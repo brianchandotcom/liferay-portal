@@ -14,9 +14,9 @@ AUI.add(
 
 		var EVENT_KEY = 'key';
 
-		var NAME = 'liferaydockbarkeyboardinteraction';
-
 		var MENU_ITEM_CSS_CLASSES = [CSS_DROPDOWN, CSS_SITE_NAVIGATION];
+
+		var NAME = 'liferaydockbarkeyboardinteraction';
 
 		var SELECTOR_DOCKBAR_ITEM = '.dockbar-item:visible, a.nav-navigation-btn:visible';
 

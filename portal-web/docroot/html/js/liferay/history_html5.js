@@ -19,7 +19,7 @@ AUI.add(
 		A.mix(
 			History.prototype,
 			{
-				PROTECTED_HASH_KEYS: [ /^liferay$/, /^tab$/, /^_\d+_tab$/ ],
+				PROTECTED_HASH_KEYS: [/^liferay$/, /^tab$/, /^_\d+_tab$/],
 
 				add: function(state, options) {
 					var instance = this;
@@ -130,6 +130,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-history', 'history-html5', 'querystring-stringify-simple']
+		requires: ['history-html5', 'liferay-history', 'querystring-stringify-simple']
 	}
 );

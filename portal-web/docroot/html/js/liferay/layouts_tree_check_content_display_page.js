@@ -1,9 +1,9 @@
 AUI.add(
 	'liferay-layouts-tree-check-content-display-page',
 	function(A) {
-		var CSS_TREE_HITAREA = A.getClassName('tree', 'hitarea');
-
 		var CSS_LAYOUT_INVALID = 'layout-page-invalid';
+
+		var CSS_TREE_HITAREA = A.getClassName('tree', 'hitarea');
 
 		var STR_HOST = 'host';
 

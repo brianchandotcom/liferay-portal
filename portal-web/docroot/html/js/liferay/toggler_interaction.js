@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var NAME = 'togglerinteraction';
+
 		var STR_CHILDREN = 'children';
 
 		var STR_CONTAINER = 'container';
@@ -17,16 +19,8 @@ AUI.add(
 
 		var STR_TOGGLER = 'toggler';
 
-		var NAME = 'togglerinteraction';
-
 		var TogglerInteraction = A.Component.create(
 			{
-				EXTENDS: Liferay.TogglerKeyFilter,
-
-				NAME: NAME,
-
-				NS: NAME,
-
 				ATTRS: {
 					children: {
 						validator: Lang.isString
@@ -49,6 +43,12 @@ AUI.add(
 						validator: Lang.isString
 					}
 				},
+
+				EXTENDS: Liferay.TogglerKeyFilter,
+
+				NAME: NAME,
+
+				NS: NAME,
 
 				prototype: {
 					initializer: function() {
@@ -78,22 +78,6 @@ AUI.add(
 						var instance = this;
 
 						(new A.EventHandle(instance._eventHandles)).detach();
-					},
-
-					_onExpandedChange: function(event) {
-						var instance = this;
-
-						if (event.silent) {
-							var host = instance.get(STR_HOST);
-
-							var container = host.get(STR_CONTAINER);
-
-							var headerCssClass = host.get(STR_HEADER) + ':visible';
-
-							instance._focusManager.refresh();
-
-							instance._focusManager.set('activeDescendant', container.one(headerCssClass));
-						}
 					},
 
 					_childrenEventHandler: function(event) {
@@ -140,6 +124,22 @@ AUI.add(
 						instance._focusManager.refresh();
 
 						return TogglerInteraction.superclass._headerEventHandler.call(instance, event);
+					},
+
+					_onExpandedChange: function(event) {
+						var instance = this;
+
+						if (event.silent) {
+							var host = instance.get(STR_HOST);
+
+							var container = host.get(STR_CONTAINER);
+
+							var headerCssClass = host.get(STR_HEADER) + ':visible';
+
+							instance._focusManager.refresh();
+
+							instance._focusManager.set('activeDescendant', container.one(headerCssClass));
+						}
 					}
 				}
 			}

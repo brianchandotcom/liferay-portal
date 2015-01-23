@@ -14,7 +14,7 @@
 
 	var EVENT_CLICK = 'click';
 
-	var STR_RIGHT_SQUARE_BRACKET = ']';
+	var REGEX_PORTLET_ID = /^(?:p_p_id)?_(.*)_.*$/;
 
 	var SRC_HIDE_LINK = {
 		src: 'hideLink'
@@ -22,7 +22,7 @@
 
 	var STR_CHECKED = 'checked';
 
-	var REGEX_PORTLET_ID = /^(?:p_p_id)?_(.*)_.*$/;
+	var STR_RIGHT_SQUARE_BRACKET = ']';
 
 	var Window = {
 		_map: {}
@@ -92,7 +92,7 @@
 		},
 
 		checkTab: function(box) {
-			if ((document.all) && (event.keyCode == 9)) {
+			if ((document.all) && (window.event.keyCode == 9)) {
 				box.selection = document.selection.createRange();
 
 				setTimeout(
@@ -105,8 +105,8 @@
 		},
 
 		disableEsc: function() {
-			if ((document.all) && (event.keyCode == 27)) {
-				event.returnValue = false;
+			if ((document.all) && (window.event.keyCode == 27)) {
+				window.event.returnValue = false;
 			}
 		},
 
@@ -163,8 +163,8 @@
 
 				result = {};
 
-				var isGetterFn = Lang.isFunction(attributeGetter);
-				var isGetterString = Lang.isString(attributeGetter);
+				var getterFn = Lang.isFunction(attributeGetter);
+				var getterString = Lang.isString(attributeGetter);
 
 				var attrs = el.attributes;
 				var length = attrs.length;
@@ -174,7 +174,7 @@
 					var name = attr.nodeName.toLowerCase();
 					var value = attr.nodeValue;
 
-					if (isGetterString) {
+					if (getterString) {
 						if (name.indexOf(attributeGetter) === 0) {
 							name = name.substr(attributeGetter.length);
 						}
@@ -182,7 +182,7 @@
 							continue;
 						}
 					}
-					else if (isGetterFn) {
+					else if (getterFn) {
 						value = attributeGetter(value, name, attrs);
 
 						if (value === false) {
@@ -1159,9 +1159,9 @@
 					}
 
 				}
-				catch (exception) {
+				catch (e) {
 					if (Lang.isFunction(onError)) {
-						onError(exception);
+						onError(e);
 					}
 				}
 			}
@@ -1790,15 +1790,15 @@
 	// 400+: Liferay
 
 	Liferay.zIndex = {
+		ALERT: 430,
 		DOCK: 10,
 		DOCK_PARENT: 20,
-		ALERT: 430,
+		DRAG_ITEM: 460,
 		DROP_AREA: 440,
 		DROP_POSITION: 450,
-		DRAG_ITEM: 460,
-		OVERLAY: 1000,
-		WINDOW: 1200,
 		MENU: 5000,
-		TOOLTIP: 10000
+		OVERLAY: 1000,
+		TOOLTIP: 10000,
+		WINDOW: 1200
 	};
 })(AUI(), AUI.$, AUI._, Liferay);

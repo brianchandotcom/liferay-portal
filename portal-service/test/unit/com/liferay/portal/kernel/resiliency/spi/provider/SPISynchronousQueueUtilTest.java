@@ -92,6 +92,8 @@ public class SPISynchronousQueueUtilTest {
 
 		Assert.assertSame(mockSPI, synchronousQueue.take());
 
+		notifyThread.join();
+
 		// Destroy
 
 		synchronousQueue = SPISynchronousQueueUtil.createSynchronousQueue(

@@ -16,7 +16,7 @@
 		<portlet-data-handler-class>com.liferay.wiki.lar.WikiPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.wiki.lar.WikiNodeStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.wiki.lar.WikiPageStagedModelDataHandler</staged-model-data-handler-class>
-		<template-handler>com.liferay.wiki.web.template.WikiPortletDisplayTemplateHandler</template-handler>
+		<template-handler>com.liferay.wiki.web.wiki.portlet.template.WikiPortletDisplayTemplateHandler</template-handler>
 		<social-activity-interpreter-class>com.liferay.wiki.social.WikiActivityInterpreter</social-activity-interpreter-class>
 		<user-notification-definitions>com/liferay/wiki/web/wiki-user-notification-definitions.xml</user-notification-definitions>
 		<user-notification-handler-class>com.liferay.wiki.web.notifications.WikiUserNotificationHandler</user-notification-handler-class>

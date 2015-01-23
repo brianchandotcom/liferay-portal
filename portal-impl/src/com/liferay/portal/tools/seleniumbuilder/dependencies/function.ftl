@@ -1,6 +1,7 @@
 package ${seleniumBuilderContext.getFunctionPackageName(functionName)};
 
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
+import com.liferay.portalweb.util.RuntimeVariables;
 import com.liferay.portalweb.util.block.function.BaseFunction;
 
 public class ${seleniumBuilderContext.getFunctionSimpleClassName(functionName)} extends BaseFunction {

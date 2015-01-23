@@ -15,17 +15,20 @@
 package com.liferay.asset.browser.web.asset.provider;
 
 import com.liferay.asset.browser.web.constants.AssetBrowserPortletKeys;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.asset.provider.BrowsePortletProvider;
 import com.liferay.portlet.asset.provider.PortletProvider;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
 		"model.class.name=" + PortletProvider.CLASS_NAME_ANY
-	}
+	},
+	service = BrowsePortletProvider.class
 )
 public class AssetBrowserPortletProvider implements BrowsePortletProvider {
 

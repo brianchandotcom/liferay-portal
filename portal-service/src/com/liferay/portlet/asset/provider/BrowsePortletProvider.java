@@ -14,20 +14,8 @@
 
 package com.liferay.portlet.asset.provider;
 
-import com.liferay.portal.theme.ThemeDisplay;
-
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Eudaldo Alonso
  */
-public interface DisplayPortletProvider {
-
-	public String getPortletId();
-
-	public void setPortletPreferences(
-			PortletPreferences portletPreferences, String portletId,
-			String className, long classPK, ThemeDisplay themeDisplay)
-		throws Exception;
-
+public interface BrowsePortletProvider extends PortletProvider {
 }

@@ -33,7 +33,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.provider.DisplayPortletProvider;
+import com.liferay.portlet.asset.provider.AddPortletProvider;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -61,11 +61,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	@Override
 	public String getAddToPagePortletId() throws Exception {
-		DisplayPortletProvider displayPortletProvider =
-			_serviceTrackerMap.getService(getClassName());
+		AddPortletProvider addPortletProvider = _serviceTrackerMap.getService(
+			getClassName());
 
-		if (displayPortletProvider != null) {
-			return displayPortletProvider.getPortletId();
+		if (addPortletProvider != null) {
+			return addPortletProvider.getPortletId();
 		}
 
 		return PortletKeys.ASSET_PUBLISHER;
@@ -357,11 +357,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		DisplayPortletProvider displayPortletProvider =
-			_serviceTrackerMap.getService(getClassName());
+		AddPortletProvider addPortletProvider = _serviceTrackerMap.getService(
+			getClassName());
 
-		if (displayPortletProvider != null) {
-			displayPortletProvider.setPortletPreferences(
+		if (addPortletProvider != null) {
+			addPortletProvider.setPortletPreferences(
 				portletPreferences, portletId, getClassName(), getClassPK(),
 				themeDisplay);
 
@@ -442,9 +442,9 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	private static final DDMFieldReader _nullDDMFieldReader =
 		new NullDDMFieldReader();
-	private static final ServiceTrackerMap<String, DisplayPortletProvider>
+	private static final ServiceTrackerMap<String, AddPortletProvider>
 		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
-			DisplayPortletProvider.class, "model.class.name");
+			AddPortletProvider.class, "model.class.name");
 
 	static {
 		_serviceTrackerMap.open();

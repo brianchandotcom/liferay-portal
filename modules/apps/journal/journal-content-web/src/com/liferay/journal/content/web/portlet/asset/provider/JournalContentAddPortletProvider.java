@@ -19,7 +19,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.provider.DisplayPortletProvider;
+import com.liferay.portlet.asset.provider.AddPortletProvider;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
@@ -39,10 +39,9 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
 	},
-	service = DisplayPortletProvider.class
+	service = AddPortletProvider.class
 )
-public class JournalContentDisplayPortletProvider
-	implements DisplayPortletProvider {
+public class JournalContentAddPortletProvider implements AddPortletProvider {
 
 	@Override
 	public String getPortletId() {

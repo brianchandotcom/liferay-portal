@@ -80,11 +80,11 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			String language, String script, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(sourceClassNameId);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmDisplay.getResourceName(classNameId),
+			ddmDisplay.getResourceName(sourceClassNameId),
 			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.addTemplate(
@@ -138,11 +138,11 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(sourceClassNameId);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmDisplay.getResourceName(classNameId),
+			ddmDisplay.getResourceName(sourceClassNameId),
 			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.addTemplate(
@@ -179,11 +179,11 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			templateId);
 
 		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(
-			template.getClassNameId());
+			template.getSourceClassNameId());
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmDisplay.getResourceName(template.getClassNameId()),
+			ddmDisplay.getResourceName(template.getSourceClassNameId()),
 			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.copyTemplate(
@@ -199,11 +199,11 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			templateId);
 
 		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(
-			template.getClassNameId());
+			template.getSourceClassNameId());
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmDisplay.getResourceName(template.getClassNameId()),
+			ddmDisplay.getResourceName(template.getSourceClassNameId()),
 			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.copyTemplate(
@@ -237,15 +237,15 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			long newClassPK, String type, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(sourceClassNameId);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmDisplay.getResourceName(classNameId),
+			ddmDisplay.getResourceName(sourceClassNameId),
 			ddmDisplay.getAddTemplateActionId());
 
 		return ddmTemplateLocalService.copyTemplates(
-			getUserId(), classNameId, classPK, newClassPK, type,
+			getUserId(), classNameId, oldClassPK, newClassPK, type,
 			serviceContext);
 	}
 

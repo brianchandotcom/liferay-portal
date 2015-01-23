@@ -321,10 +321,10 @@ public class DDLImpl implements DDL {
 			recordSet.getName(themeDisplay.getLocale()));
 		contextObjects.put(TemplateConstants.TEMPLATE_ID, ddmTemplateId);
 
-		String viewMode = ParamUtil.getString(renderRequest, "viewMode");
+		String viewMode = Constants.VIEW;
 
-		if (Validator.isNull(viewMode)) {
-			viewMode = Constants.VIEW;
+		if(Validator.isNotNull(renderRequest)) {
+			viewMode = ParamUtil.getString(renderRequest, "viewMode", Constants.VIEW);
 		}
 
 		contextObjects.put("viewMode", viewMode);

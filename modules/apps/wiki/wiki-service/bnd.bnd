@@ -12,6 +12,7 @@ Export-Package:\
 	com.liferay.wiki.service.permission,\
 	com.liferay.wiki.settings,\
 	com.liferay.wiki.social,\
+	com.liferay.wiki.trash,\
 	com.liferay.wiki.util,\
 	com.liferay.wiki.util.comparator
 Import-Package:\

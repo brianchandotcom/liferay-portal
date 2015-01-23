@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.trash;
+package com.liferay.wiki.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;

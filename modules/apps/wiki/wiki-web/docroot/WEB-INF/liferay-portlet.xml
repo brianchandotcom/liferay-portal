@@ -23,8 +23,8 @@
 		<asset-renderer-factory>com.liferay.wiki.asset.WikiPageAssetRendererFactory</asset-renderer-factory>
 		<custom-attributes-display>com.liferay.wiki.web.WikiPageCustomAttributesDisplay</custom-attributes-display>
 		<permission-propagator>com.liferay.wiki.web.security.permission.WikiPermissionPropagatorImpl</permission-propagator>
-		<trash-handler>com.liferay.wiki.web.trash.WikiNodeTrashHandler</trash-handler>
-		<trash-handler>com.liferay.wiki.web.trash.WikiPageTrashHandler</trash-handler>
+		<trash-handler>com.liferay.wiki.trash.WikiNodeTrashHandler</trash-handler>
+		<trash-handler>com.liferay.wiki.trash.WikiPageTrashHandler</trash-handler>
 		<workflow-handler>com.liferay.wiki.web.workflow.WikiPageWorkflowHandler</workflow-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>true</use-default-template>

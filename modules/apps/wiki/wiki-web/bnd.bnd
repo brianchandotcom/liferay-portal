@@ -39,6 +39,7 @@ Import-Package: \
 	com.liferay.wiki.search,\
 	com.liferay.wiki.service.permission,\
 	com.liferay.wiki.social,\
+	com.liferay.wiki.trash,\
 	com.liferay.wiki.util,\
 	com.liferay.wiki.util.comparator,\
 	\

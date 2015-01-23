@@ -24,7 +24,16 @@ ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${f
 	<#if functionElement.attributeValue("locator${i}")??>
 		<#assign locator = functionElement.attributeValue("locator${i}")>
 
-		"${locator}"
+		<#if locator?contains("#")>
+			<#assign x = locator?last_index_of("#")>
+
+			<#assign pathLocatorKey = locator?substring(x + 1)>
+			<#assign pathName = locator?substring(0, x)>
+
+			${pathName}Path.getPathLocator("${pathLocatorKey}")
+		<#else>
+			"${locator}"
+		</#if>
 	<#elseif actionName?? || functionName??>
 		locator${i}
 	<#else>

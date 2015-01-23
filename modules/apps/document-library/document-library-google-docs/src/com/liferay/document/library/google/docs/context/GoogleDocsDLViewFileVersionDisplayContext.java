@@ -19,7 +19,6 @@ import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portlet.documentlibrary.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContext;
@@ -85,15 +84,6 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		_googleDocsUIItemsProcessor.processMenuItems(menu.getMenuItems());
 
 		return menu;
-	}
-
-	@Override
-	public List<MenuItem> getMenuItems() throws PortalException {
-		List<MenuItem> menuItems = super.getMenuItems();
-
-		_googleDocsUIItemsProcessor.processMenuItems(menuItems);
-
-		return menuItems;
 	}
 
 	@Override

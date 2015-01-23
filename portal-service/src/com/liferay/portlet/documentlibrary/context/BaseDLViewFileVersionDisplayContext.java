@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
@@ -62,12 +61,7 @@ public class BaseDLViewFileVersionDisplayContext
 
 	@Override
 	public Menu getMenu() throws PortalException {
-		return parentDLDisplayContext.getMenu();
-	}
-
-	@Override
-	public List<MenuItem> getMenuItems() throws PortalException {
-		return parentDisplayContext.getMenuItems();
+		return parentDisplayContext.getMenu();
 	}
 
 	@Override

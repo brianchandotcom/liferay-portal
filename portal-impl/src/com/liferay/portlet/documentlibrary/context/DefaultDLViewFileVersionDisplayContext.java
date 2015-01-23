@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.context.helper.FileEntryDisplayContextHelper;
@@ -90,32 +92,51 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public List<MenuItem> getMenuItems() throws PortalException {
-		List<MenuItem> menuItems = new ArrayList<>();
+	public Menu getMenu() throws PortalException {
+		Menu menu = new Menu();
 
-		if (_isShowActions()) {
-			uiItemsBuilder.addDownloadMenuItem(menuItems);
+		String direction = "left";
 
-			uiItemsBuilder.addOpenInMsOfficeMenuItem(menuItems);
+		DLActionsDisplayContext dlActionsDisplayContext =
+			_getDLActionsDisplayContext();
 
-			uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
-
-			uiItemsBuilder.addEditMenuItem(menuItems);
-
-			uiItemsBuilder.addMoveMenuItem(menuItems);
-
-			uiItemsBuilder.addCheckoutMenuItem(menuItems);
-
-			uiItemsBuilder.addCheckinMenuItem(menuItems);
-
-			uiItemsBuilder.addCancelCheckoutMenuItem(menuItems);
-
-			uiItemsBuilder.addPermissionsMenuItem(menuItems);
-
-			uiItemsBuilder.addDeleteMenuItem(menuItems);
+		if (dlActionsDisplayContext.isShowMinimalActionsButton()) {
+			direction = "down";
 		}
 
-		return menuItems;
+		menu.setDirection(direction);
+
+		boolean extended = true;
+
+		if (dlActionsDisplayContext.isShowMinimalActionsButton()) {
+			extended = false;
+		}
+
+		menu.setExtended(extended);
+
+		String icon = StringPool.BLANK;
+
+		if (dlActionsDisplayContext.isShowMinimalActionsButton()) {
+			icon = null;
+		}
+
+		menu.setIcon(icon);
+
+		menu.setMenuItems(_getMenuItems());
+
+		String message = StringPool.BLANK;
+
+		if (dlActionsDisplayContext.isShowMinimalActionsButton()) {
+			message = "actions";
+		}
+
+		menu.setMessage(message);
+
+		menu.setShowWhenSingleIcon(
+			dlActionsDisplayContext.isShowWhenSingleIconActionButton());
+		menu.setTriggerCssClass("btn btn-default");
+
+		return menu;
 	}
 
 	@Override
@@ -229,6 +250,34 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		return _dlActionsDisplayContext;
+	}
+
+	private List<MenuItem> _getMenuItems() throws PortalException {
+		List<MenuItem> menuItems = new ArrayList<>();
+
+		if (_isShowActions()) {
+			uiItemsBuilder.addDownloadMenuItem(menuItems);
+
+			uiItemsBuilder.addOpenInMsOfficeMenuItem(menuItems);
+
+			uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
+
+			uiItemsBuilder.addEditMenuItem(menuItems);
+
+			uiItemsBuilder.addMoveMenuItem(menuItems);
+
+			uiItemsBuilder.addCheckoutMenuItem(menuItems);
+
+			uiItemsBuilder.addCheckinMenuItem(menuItems);
+
+			uiItemsBuilder.addCancelCheckoutMenuItem(menuItems);
+
+			uiItemsBuilder.addPermissionsMenuItem(menuItems);
+
+			uiItemsBuilder.addDeleteMenuItem(menuItems);
+		}
+
+		return menuItems;
 	}
 
 	private boolean _isShowActions() throws PortalException {

@@ -45,7 +45,7 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.wiki.configuration.WikiPropsValues;
+import com.liferay.wiki.configuration.WikiServiceConfigurationValues;
 import com.liferay.wiki.exception.ImportFilesException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.importer.WikiImporter;
@@ -263,7 +263,8 @@ public class MediaWikiImporter implements WikiImporter {
 
 					WikiPageLocalServiceUtil.renamePage(
 						userId, node.getNodeId(), frontPageTitle,
-						WikiPropsValues.FRONT_PAGE_NAME, false, serviceContext);
+						WikiServiceConfigurationValues.FRONT_PAGE_NAME, false,
+						serviceContext);
 				}
 			}
 			catch (Exception e) {
@@ -271,7 +272,7 @@ public class MediaWikiImporter implements WikiImporter {
 					StringBundler sb = new StringBundler(4);
 
 					sb.append("Could not move ");
-					sb.append(WikiPropsValues.FRONT_PAGE_NAME);
+					sb.append(WikiServiceConfigurationValues.FRONT_PAGE_NAME);
 					sb.append(" to the title provided: ");
 					sb.append(frontPageTitle);
 
@@ -697,7 +698,7 @@ public class MediaWikiImporter implements WikiImporter {
 	private static final Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
 		new String[] {"archive", "temp", "thumb"});
 	private static final Pattern _wikiPageTitlesRemovePattern = Pattern.compile(
-		WikiPropsValues.PAGE_TITLES_REMOVE_REGEXP);
+		WikiServiceConfigurationValues.PAGE_TITLES_REMOVE_REGEXP);
 
 	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();

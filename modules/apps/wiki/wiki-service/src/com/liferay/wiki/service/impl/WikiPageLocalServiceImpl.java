@@ -72,7 +72,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.wiki.configuration.WikiPropsValues;
+import com.liferay.wiki.configuration.WikiServiceConfigurationValues;
 import com.liferay.wiki.configuration.WikiSettings;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicatePageException;
@@ -2177,9 +2177,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			throw new PageTitleException(title + " is reserved");
 		}
 
-		if (Validator.isNotNull(WikiPropsValues.PAGE_TITLES_REGEXP)) {
+		if (Validator.isNotNull(WikiServiceConfigurationValues.PAGE_TITLES_REGEXP)) {
 			Pattern pattern = Pattern.compile(
-				WikiPropsValues.PAGE_TITLES_REGEXP);
+				WikiServiceConfigurationValues.PAGE_TITLES_REGEXP);
 
 			Matcher matcher = pattern.matcher(title);
 

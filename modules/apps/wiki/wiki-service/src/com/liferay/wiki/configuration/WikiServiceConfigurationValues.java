@@ -17,18 +17,22 @@ package com.liferay.wiki.configuration;
 /**
  * @author Ivan Zaera
  */
-public class WikiPropsKeys {
+public class WikiServiceConfigurationValues {
 
-	public static final String FRONT_PAGE_NAME = "front.page.name";
+	public static final String FRONT_PAGE_NAME =
+		WikiServiceConfigurationUtil.get("front.page.name");
 
-	public static final String INITIAL_NODE_NAME = "initial.node.name";
+	public static final String INITIAL_NODE_NAME =
+		WikiServiceConfigurationUtil.get("initial.node.name");
 
-	public static final String PAGE_TITLES_REGEXP = "page.titles.regexp";
+	public static final String PAGE_TITLES_REGEXP =
+		WikiServiceConfigurationUtil.get("page.titles.regexp");
 
 	public static final String PAGE_TITLES_REMOVE_REGEXP =
-		"page.titles.remove.regexp";
+		WikiServiceConfigurationUtil.get("page.titles.remove.regexp");
 
-	public static final String PARSERS_CREOLE_SUPPORTED_PROTOCOLS =
-		"parsers.creole.supported.protocols";
+	public static final String[] PARSERS_CREOLE_SUPPORTED_PROTOCOLS =
+		WikiServiceConfigurationUtil.getArray(
+			"parsers.creole.supported.protocols");
 
 }

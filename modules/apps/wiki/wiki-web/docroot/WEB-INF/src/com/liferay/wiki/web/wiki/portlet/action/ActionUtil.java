@@ -26,7 +26,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.wiki.configuration.WikiPropsValues;
+import com.liferay.wiki.configuration.WikiServiceConfigurationValues;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -99,7 +99,7 @@ public class ActionUtil {
 			WebKeys.THEME_DISPLAY);
 
 		WikiPage page = WikiPageLocalServiceUtil.fetchPage(
-			nodeId, WikiPropsValues.FRONT_PAGE_NAME, 0);
+			nodeId, WikiServiceConfigurationValues.FRONT_PAGE_NAME, 0);
 
 		if (page == null) {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -123,7 +123,7 @@ public class ActionUtil {
 
 				page = WikiPageLocalServiceUtil.addPage(
 					themeDisplay.getDefaultUserId(), nodeId,
-					WikiPropsValues.FRONT_PAGE_NAME, null,
+					WikiServiceConfigurationValues.FRONT_PAGE_NAME, null,
 					WikiPageConstants.NEW, true, serviceContext);
 			}
 			finally {
@@ -196,7 +196,7 @@ public class ActionUtil {
 		}
 
 		if (Validator.isNull(title)) {
-			title = WikiPropsValues.FRONT_PAGE_NAME;
+			title = WikiServiceConfigurationValues.FRONT_PAGE_NAME;
 		}
 
 		WikiPage page = null;
@@ -219,7 +219,7 @@ public class ActionUtil {
 			}
 		}
 		catch (NoSuchPageException nspe) {
-			if (title.equals(WikiPropsValues.FRONT_PAGE_NAME) &&
+			if (title.equals(WikiServiceConfigurationValues.FRONT_PAGE_NAME) &&
 				(version == 0)) {
 
 				page = getFirstVisiblePage(nodeId, portletRequest);

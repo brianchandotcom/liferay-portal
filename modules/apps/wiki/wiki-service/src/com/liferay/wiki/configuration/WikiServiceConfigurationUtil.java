@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 /**
  * @author Ivan Zaera
  */
-public class WikiConfigurationUtil {
+public class WikiServiceConfigurationUtil {
 
 	public static String get(String key) {
 		return _configuration.get(key);
@@ -32,6 +32,6 @@ public class WikiConfigurationUtil {
 
 	private static final Configuration _configuration =
 		ConfigurationFactoryUtil.getConfiguration(
-			WikiConfigurationUtil.class.getClassLoader(), "portlet");
+			WikiServiceConfigurationUtil.class.getClassLoader(), "portlet");
 
 }

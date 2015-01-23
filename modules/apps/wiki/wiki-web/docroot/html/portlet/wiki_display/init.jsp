@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.wiki.configuration.WikiPropsValues" %><%@
+<%@ page import="com.liferay.wiki.configuration.WikiServiceConfigurationValues" %><%@
 page import="com.liferay.wiki.exception.NoSuchNodeException" %><%@
 page import="com.liferay.wiki.model.WikiNode" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
@@ -25,7 +25,7 @@ page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %>
 
 <%
 long nodeId = GetterUtil.getLong(portletPreferences.getValue("nodeId", StringPool.BLANK));
-String title = GetterUtil.getString(portletPreferences.getValue("title", WikiPropsValues.FRONT_PAGE_NAME));
+String title = GetterUtil.getString(portletPreferences.getValue("title", WikiServiceConfigurationValues.FRONT_PAGE_NAME));
 %>
 
 <%@ include file="/html/portlet/wiki_display/init-ext.jsp" %>

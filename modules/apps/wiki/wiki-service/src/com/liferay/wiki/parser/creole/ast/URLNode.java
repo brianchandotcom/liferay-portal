@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.parser.creole.ast;
 
-import com.liferay.wiki.configuration.WikiPropsValues;
+import com.liferay.wiki.configuration.WikiServiceConfigurationValues;
 
 /**
  * @author Miguel Pastor
@@ -66,6 +66,6 @@ public abstract class URLNode extends ASTNode {
 
 	private String _link;
 	private String[] _supportedProtocols =
-		WikiPropsValues.PARSERS_CREOLE_SUPPORTED_PROTOCOLS;
+		WikiServiceConfigurationValues.PARSERS_CREOLE_SUPPORTED_PROTOCOLS;
 
 }

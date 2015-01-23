@@ -23,7 +23,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.wiki.configuration.WikiPropsValues;
+import com.liferay.wiki.configuration.WikiServiceConfigurationValues;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -63,7 +63,7 @@ public class ViewAction extends PortletAction {
 			String title = ParamUtil.getString(
 				renderRequest, "title",
 				portletPreferences.getValue(
-					"title", WikiPropsValues.FRONT_PAGE_NAME));
+					"title", WikiServiceConfigurationValues.FRONT_PAGE_NAME));
 			double version = ParamUtil.getDouble(renderRequest, "version");
 
 			WikiNode node = getNode(renderRequest);
@@ -78,7 +78,7 @@ public class ViewAction extends PortletAction {
 
 			if ((page == null) || page.isInTrash()) {
 				page = WikiPageServiceUtil.getPage(
-					node.getNodeId(), WikiPropsValues.FRONT_PAGE_NAME);
+					node.getNodeId(), WikiServiceConfigurationValues.FRONT_PAGE_NAME);
 			}
 
 			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);

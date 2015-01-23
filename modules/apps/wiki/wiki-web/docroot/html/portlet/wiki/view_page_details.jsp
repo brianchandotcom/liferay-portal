@@ -345,7 +345,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 					<%
 					PortletURL frontPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
-					frontPageURL.setParameter("title", WikiPropsValues.FRONT_PAGE_NAME);
+					frontPageURL.setParameter("title", WikiServiceConfigurationValues.FRONT_PAGE_NAME);
 
 					PortletURL deletePageURL = PortletURLUtil.clone(editPageURL, PortletRequest.ACTION_PHASE, renderResponse);
 

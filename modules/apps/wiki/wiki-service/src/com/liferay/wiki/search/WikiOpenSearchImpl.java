@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.opensearch;
+package com.liferay.wiki.search;
 
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;

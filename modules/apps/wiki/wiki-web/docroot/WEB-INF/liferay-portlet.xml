@@ -9,7 +9,7 @@
 		<configuration-action-class>com.liferay.wiki.web.wiki.portlet.action.ConfigurationActionImpl</configuration-action-class>
 		<indexer-class>com.liferay.wiki.indexer.WikiNodeIndexer</indexer-class>
 		<indexer-class>com.liferay.wiki.indexer.WikiPageIndexer</indexer-class>
-		<open-search-class>com.liferay.wiki.opensearch.WikiOpenSearchImpl</open-search-class>
+		<open-search-class>com.liferay.wiki.search.WikiOpenSearchImpl</open-search-class>
 		<friendly-url-mapper-class>com.liferay.wiki.web.WikiFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>wiki</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/wiki/web/wiki-friendly-url-routes.xml</friendly-url-routes>

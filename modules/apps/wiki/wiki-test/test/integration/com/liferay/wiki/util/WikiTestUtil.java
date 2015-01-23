@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.util.test;
+package com.liferay.wiki.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;

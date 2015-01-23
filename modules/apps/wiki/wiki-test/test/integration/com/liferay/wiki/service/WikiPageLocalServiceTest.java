@@ -49,7 +49,7 @@ import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.exception.NodeChangeException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.util.test.WikiTestUtil;
+import com.liferay.wiki.util.WikiTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;

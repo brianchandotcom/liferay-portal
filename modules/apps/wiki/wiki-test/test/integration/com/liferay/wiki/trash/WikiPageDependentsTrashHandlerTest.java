@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.trash;
+package com.liferay.wiki.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.AggregateTestRule;
@@ -37,7 +37,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
-import com.liferay.wiki.util.test.WikiTestUtil;
+import com.liferay.wiki.util.WikiTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;

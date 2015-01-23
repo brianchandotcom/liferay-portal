@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.social;
+package com.liferay.wiki.social;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.AggregateTestRule;
@@ -34,7 +34,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.social.WikiActivityInterpreter;
 import com.liferay.wiki.social.WikiActivityKeys;
-import com.liferay.wiki.util.test.WikiTestUtil;
+import com.liferay.wiki.util.WikiTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

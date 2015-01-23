@@ -25,7 +25,7 @@ import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.util.test.WikiTestUtil;
+import com.liferay.wiki.util.WikiTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

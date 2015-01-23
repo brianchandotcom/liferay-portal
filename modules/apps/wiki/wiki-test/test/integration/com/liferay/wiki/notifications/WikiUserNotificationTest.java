@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.notifications;
+package com.liferay.wiki.notifications;
 
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.model.BaseModel;
@@ -25,7 +25,7 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.wiki.util.test.WikiTestUtil;
+import com.liferay.wiki.util.WikiTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

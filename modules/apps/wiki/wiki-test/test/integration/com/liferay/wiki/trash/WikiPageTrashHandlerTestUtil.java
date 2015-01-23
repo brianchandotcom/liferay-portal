@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.trash;
+package com.liferay.wiki.trash;
 
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
@@ -25,7 +25,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.util.test.WikiTestUtil;
+import com.liferay.wiki.util.WikiTestUtil;
 
 /**
  * @author Roberto Díaz

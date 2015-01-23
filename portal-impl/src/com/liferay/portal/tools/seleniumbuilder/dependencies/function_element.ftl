@@ -21,6 +21,10 @@ ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${f
 <#assign functionLocatorCount = seleniumBuilderContext.getFunctionLocatorCount(seleniumBuilderFileUtil.getObjectName(function?substring(0, x)))>
 
 <#list 1..functionLocatorCount as i>
+	<#if variableContext??>
+		RuntimeVariables.evaluateVariable(
+	</#if>
+
 	<#if functionElement.attributeValue("locator${i}")??>
 		<#assign locator = functionElement.attributeValue("locator${i}")>
 
@@ -30,7 +34,17 @@ ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${f
 			<#assign pathLocatorKey = locator?substring(x + 1)>
 			<#assign pathName = locator?substring(0, x)>
 
-			${pathName}Path.getPathLocator("${pathLocatorKey}")
+			${pathName}Path.getPathLocator(
+				<#if variableContext??>
+					RuntimeVariables.evaluateVariable(
+				</#if>
+
+				"${pathLocatorKey}"
+
+				<#if variableContext??>
+					, ${variableContext})
+				</#if>
+			)
 		<#else>
 			"${locator}"
 		</#if>
@@ -40,7 +54,15 @@ ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${f
 		""
 	</#if>
 
+	<#if variableContext??>
+		, ${variableContext})
+	</#if>
+
 	,
+
+	<#if variableContext??>
+		RuntimeVariables.evaluateVariable(
+	</#if>
 
 	<#if functionElement.attributeValue("value${i}")??>
 		<#assign functionValue = functionElement.attributeValue("value${i}")>
@@ -50,6 +72,10 @@ ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${f
 		value${i}
 	<#else>
 		""
+	</#if>
+
+	<#if variableContext??>
+		, ${variableContext})
 	</#if>
 
 	<#if i_has_next>

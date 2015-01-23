@@ -15,16 +15,20 @@
 package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
  */
 public interface DDMFormValuesReader {
 
-	public DDMFormValues getDDMFormValues() throws PortalException;
-
-	public DDMFormValues getDDMFormValues(String ddmFormFieldType)
+	public List<DDMFormFieldValue> getDDMFormFieldValues(
+			String ddmFormFieldType)
 		throws PortalException;
+
+	public DDMFormValues getDDMFormValues() throws PortalException;
 
 }

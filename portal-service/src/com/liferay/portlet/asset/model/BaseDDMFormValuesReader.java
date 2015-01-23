@@ -15,12 +15,11 @@
 package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -28,35 +27,35 @@ import java.util.Map;
 public abstract class BaseDDMFormValuesReader implements DDMFormValuesReader {
 
 	@Override
-	public DDMFormValues getDDMFormValues(String ddmFormFieldType)
+	public List<DDMFormFieldValue> getDDMFormFieldValues(
+			String ddmFormFieldType)
 		throws PortalException {
 
-		DDMFormValues currentDDMFormValues = getDDMFormValues();
+		List<DDMFormFieldValue> filteredDDMFormFieldValues = new ArrayList<>();
 
-		DDMForm currentDDMForm = currentDDMFormValues.getDDMForm();
+		DDMFormValues ddmFormValues = getDDMFormValues();
 
-		if (currentDDMForm == null) {
-			throw new IllegalStateException(
-				"Unable to filter by type when DDMForm reference is null");
-		}
+		addDDMFormFieldValuesByType(
+			ddmFormValues.getDDMFormFieldValues(), filteredDDMFormFieldValues,
+			ddmFormFieldType);
 
-		DDMFormValues filteredDDMFormValues = new DDMFormValues(currentDDMForm);
+		return filteredDDMFormFieldValues;
+	}
 
-		Map<String, DDMFormField> currentDDMFormFieldsMap =
-			currentDDMForm.getDDMFormFieldsMap(false);
+	protected void addDDMFormFieldValuesByType(
+		List<DDMFormFieldValue> ddmFormFieldValues,
+		List<DDMFormFieldValue> filteredDDMFormFieldValues,
+		String ddmFormFieldType) {
 
-		for (DDMFormFieldValue ddmFormFieldValue :
-				currentDDMFormValues.getDDMFormFieldValues()) {
-
-			DDMFormField ddmFormField = currentDDMFormFieldsMap.get(
-				ddmFormFieldValue.getName());
-
-			if (ddmFormFieldType.equals(ddmFormField.getType())) {
-				filteredDDMFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (ddmFormFieldType.equals(ddmFormFieldValue.getType())) {
+				filteredDDMFormFieldValues.add(ddmFormFieldValue);
 			}
-		}
 
-		return filteredDDMFormValues;
+			addDDMFormFieldValuesByType(
+				ddmFormFieldValue.getNestedDDMFormFieldValues(),
+				filteredDDMFormFieldValues, ddmFormFieldType);
+		}
 	}
 
 }

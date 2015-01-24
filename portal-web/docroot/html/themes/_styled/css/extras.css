@@ -589,3 +589,17 @@ body:first-of-type {
 		border-radius: 0;
 	}
 }
+
+/* ---------- Switches ---------- */
+
+input.switch {
+	&:focus ~ .switch-bar:before {
+		box-shadow: 0 0 3px #00F;
+	}
+
+	&:empty ~ .switch-bar {
+		&:after, &:before, .switch-icon, .switch-toggle:after, .switch-toggle:before {
+			@include transition(all 100ms ease-in);
+		}
+	}
+}

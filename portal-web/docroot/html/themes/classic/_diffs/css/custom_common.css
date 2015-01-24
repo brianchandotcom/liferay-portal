@@ -677,6 +677,42 @@ select:focus {
 	}
 }
 
+/* ---------- Switches ---------- */
+
+input.switch {
+	&:empty ~ .switch-bar {
+		&:before {
+			background-color: #868B96;
+		}
+
+		.switch-toggle {
+			&:after {
+				font-weight: bold;
+			}
+		}
+
+		.button-icon {
+			color: #868B96;
+		}
+	}
+
+	&:checked ~ .switch-bar {
+		&:before {
+			background-color: #34ADAB;
+		}
+
+		.switch-toggle {
+			&:after {
+				color: #34ADAB;
+			}
+		}
+
+		.button-icon {
+			color: #34ADAB;
+		}
+	}
+}
+
 /* ---------- Hidden accessible ---------- */
 
 #banner h2, #banner h3, .site-breadcrumbs h1 {

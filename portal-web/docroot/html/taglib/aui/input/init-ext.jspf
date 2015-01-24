@@ -65,6 +65,10 @@ if (baseType.equals("email") || baseType.equals("password") || baseType.equals("
 	fieldCssClass += " form-control";
 }
 
+if (type.equals("switch")) {
+	fieldCssClass += " switch";
+}
+
 boolean useInputWrapper = true;
 
 String inputWrapperClass = controlGroupCssClass;

@@ -24,48 +24,48 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENABLE_DESCRIPTION</td>
-	<td>//input[contains(@id,'Description')]</td>
+	<td>ENABLE_DESCRIPTION_CHECKBOX</td>
+	<td>//input[contains(@id,'enableKBArticleDescription')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENABLE_RATINGS</td>
-	<td>//input[contains(@id,'Ratings')]</td>
+	<td>ENABLE_RATINGS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableKBArticleRatings')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SHOW_ASSET_ENTRIES</td>
-	<td>//input[contains(@id,'AssetEntries')]</td>
+	<td>SHOW_ASSET_ENTRIES_CHECKBOX</td>
+	<td>//input[contains(@id,'showKBArticleAssetEntries')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENABLE_RELATED_ASSETS</td>
-	<td>//input[contains(@id,'AssetLinks')]</td>
+	<td>ENABLE_RELATED_ASSETS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableKBArticleAssetLinks')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENABLE_VIEW_COUNT_INCREMENT</td>
-	<td>//input[contains(@id,'ViewCountIncrement')]</td>
+	<td>ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX</td>
+	<td>//input[contains(@id,'enableKBArticleViewCountIncrement')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_SUBSCRIPTIONS_CHECKBOX</td>
-	<td>//input[contains(@id,'Subscriptions')]</td>
+	<td>//input[contains(@id,'enableKBArticleSubscriptions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_HISTORY_CHECKBOX</td>
-	<td>//input[contains(@id,'History')]</td>
+	<td>//input[contains(@id,'enableKBArticleHistory')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_PRINT_CHECKBOX</td>
-	<td>//input[contains(@id,'Print')]</td>
+	<td>//input[contains(@id,'enableKBArticlePrint')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENABLE_SOCIAL_BOOKMARKS</td>
-	<td>//input[contains(@id,'SocialBookmarks')]</td>
+	<td>ENABLE_SOCIAL_BOOKMARKS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableSocialBookmarks')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -85,12 +85,12 @@
 </tr>
 <!--RATINGS-->
 <tr>
-	<td>USE_STAR_RATINGS</td>
+	<td>USE_STAR_RATINGS_RADIO</td>
 	<td>//div[contains(@id,'ratingsType')]/label[contains(.,'Use Star Ratings')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>USE_THUMBS_RATINGS</td>
+	<td>USE_THUMBS_RATINGS_RADIO</td>
 	<td>//div[contains(@id,'ratingsType')]/label[contains(.,'Use Thumbs Up/Thumbs Down')]</td>
 	<td></td>
 </tr>

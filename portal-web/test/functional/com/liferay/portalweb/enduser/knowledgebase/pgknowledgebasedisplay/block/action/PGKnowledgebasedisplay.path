@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>ARTICLE_CONTENT_IMAGE_CAPTION</td>
-	<td>//p/img</td>
+	<td>//p[contains(@class,'caption')]</td>
 	<td></td>
 </tr>
 <tr>

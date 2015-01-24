@@ -456,7 +456,7 @@
 
 		<execute action="PGKnowledgebasedisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
-		<execute action="PGKnowledgebasedisplayConfigurationScope#assertClick" locator-key1="SCOPE" value1="Scope" />
+		<execute action="PGKnowledgebasedisplayConfigurationScope#assertClick" locator-key1="SCOPE_TAB" value1="Scope" />
 		<execute action="PGKnowledgebasedisplayConfigurationScope#assertClick" locator-key1="SCOPE_MENU_BUTTON" value1="${currentKBPageScope}" />
 		<execute action="PGKnowledgebasedisplayConfigurationScope#assertClick" locator-key1="SCOPE_SELECTION" value1="${newKBPageScope}" />
 		<execute action="PGKnowledgebasedisplayConfigurationScope#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
@@ -564,7 +564,7 @@
 		<execute action="CPKnowledgebaseadmin#click" locator-key1="ARTICLE_TABLE_ACTIONS" />
 		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="CPKnowledgebaseadminAddarticle#assertClick" locator-key1="ATTACHMENTS_HEADER" value1="Attachments" />
+		<execute action="CPKnowledgebaseadminAddarticle#assertClick" locator-key1="ATTACHMENTS_HEADER_COLLAPSED" value1="Attachments" />
 		<execute action="CPKnowledgebaseadminAddarticle#assertElementPresent" locator-key1="ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
 	</command>
 
@@ -748,11 +748,11 @@
 		</if>
 	</command>
 
-	<command name="viewImageCaptionViaContent">
+	<command name="viewImageCaptionViaContentCmd">
 		<execute action="CPKnowledgebaseadminArticle#assertElementPresent" locator-key1="ARTICLE_CONTENT_IMAGE" value1="${kbImageCaption}" />
 	</command>
 
-	<command name="viewImageViaContent">
+	<command name="viewImageViaContentCmd">
 		<execute action="CPKnowledgebaseadminArticle#assertElementPresent" locator-key1="ARTICLE_CONTENT_IMAGE" />
 	</command>
 

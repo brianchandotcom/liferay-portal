@@ -24,7 +24,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SCOPE</td>
+	<td>SCOPE_TAB</td>
 	<td>//ul/li[4]/a[contains(.,'Scope')]</td>
 	<td></td>
 </tr>
@@ -41,12 +41,6 @@
 <tr>
 	<td>SCOPE_SELECTION</td>
 	<td>//ul[contains(@class,'dropdown-menu')]/li//span[contains(.,'${key_newKBPageScope}')]</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

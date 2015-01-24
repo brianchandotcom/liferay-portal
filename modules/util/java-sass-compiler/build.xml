@@ -3,4 +3,6 @@
 
 <project>
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="../../../lib/development/" />
 </project>

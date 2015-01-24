@@ -18,6 +18,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assume.assumeNotNull;
 
+import java.io.File;
+
 import org.junit.Test;
 
 /**
@@ -52,7 +54,16 @@ public class SassCompilerTest extends BaseTests {
 			"/compass/_app_view_entry.css")), stripNewLines(output));
 	}
 
-	private static final String _BASE_RESOURCES =
-		"bin/com/liferay/tools/jsc/testfiles/";
+	private static String getBaseDir() {
+		if (new File("bin").exists()) {
+			return "bin";
+		}
+		else {
+			return "test-classes/unit";
+		}
+	}
+
+	private static final String _BASE_RESOURCES = getBaseDir() +
+		"/com/liferay/tools/jsc/testfiles/";
 
 }

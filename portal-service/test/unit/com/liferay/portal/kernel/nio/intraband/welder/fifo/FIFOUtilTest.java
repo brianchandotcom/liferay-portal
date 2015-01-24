@@ -161,10 +161,10 @@ public class FIFOUtilTest {
 			return;
 		}
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			FIFOUtil.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					FIFOUtil.class.getName(), Level.WARNING)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			File newTmpDir = new File("newTmpDir");
@@ -200,9 +200,6 @@ public class FIFOUtilTest {
 					"Unable to create FIFO with command \"mkfifo\", " +
 						"external process returned "));
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@Test
@@ -211,10 +208,10 @@ public class FIFOUtilTest {
 			return;
 		}
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			FIFOUtil.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					FIFOUtil.class.getName(), Level.OFF)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			File newTmpDir = new File("newTmpDir");
@@ -233,9 +230,6 @@ public class FIFOUtilTest {
 			}
 
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

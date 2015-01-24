@@ -158,10 +158,10 @@ public class ServletPathsTest {
 
 		Assert.assertNull(servletPaths.getContent());
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ServletPaths.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ServletPaths.class.getName(), Level.SEVERE)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			servletPaths = new ServletPaths(servletContext, file1.getName());
@@ -179,9 +179,6 @@ public class ServletPathsTest {
 			servletPaths = new ServletPaths(servletContext, file2.getName());
 
 			Assert.assertEquals(testContent, servletPaths.getContent());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

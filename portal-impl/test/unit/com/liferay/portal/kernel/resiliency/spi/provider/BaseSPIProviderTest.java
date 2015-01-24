@@ -95,10 +95,9 @@ public class BaseSPIProviderTest {
 
 	@Test
 	public void testCreateSPI() throws PortalResiliencyException {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			MPIHelperUtil.class.getName(), Level.OFF);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					MPIHelperUtil.class.getName(), Level.OFF)) {
 
 			// Timeout
 
@@ -174,9 +173,6 @@ public class BaseSPIProviderTest {
 				Assert.assertSame(ProcessException.class, throwable.getClass());
 				Assert.assertEquals("ProcessException", throwable.getMessage());
 			}
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

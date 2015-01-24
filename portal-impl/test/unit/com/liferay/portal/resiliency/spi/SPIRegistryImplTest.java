@@ -146,10 +146,9 @@ public class SPIRegistryImplTest {
 
 		mockSPI.spiConfiguration = spiConfiguration;
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			SPIRegistryImpl.class.getName(), Level.WARNING);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					SPIRegistryImpl.class.getName(), Level.WARNING)) {
 
 			// With log
 
@@ -270,9 +269,6 @@ public class SPIRegistryImplTest {
 			Assert.assertEquals(
 				"Skip unknown servlet context name portletApp2",
 				logRecord2.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 
 		_spiRegistryImpl.unregisterSPI(mockSPI);

@@ -408,10 +408,10 @@ public class LocalProcessExecutorTest {
 
 	@Test
 	public void testBrokenPiping() throws Exception {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LocalProcessExecutor.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocalProcessExecutor.class.getName(), Level.SEVERE)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			BrokenPipingProcessCallable brokenPipingProcessCallable =
@@ -458,9 +458,6 @@ public class LocalProcessExecutorTest {
 			Assert.assertTrue(file.exists());
 
 			file.delete();
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -538,10 +535,9 @@ public class LocalProcessExecutorTest {
 
 	@Test
 	public void testCrash() throws Exception {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LocalProcessExecutor.class.getName(), Level.OFF);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocalProcessExecutor.class.getName(), Level.OFF)) {
 
 			// One crash
 
@@ -607,9 +603,6 @@ public class LocalProcessExecutorTest {
 
 				Assert.assertSame(EOFException.class, throwable.getClass());
 			}
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -777,10 +770,10 @@ public class LocalProcessExecutorTest {
 		ExceptionPipingBackProcessCallable exceptionPipingBackProcessCallable =
 			new ExceptionPipingBackProcessCallable();
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LocalProcessExecutor.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocalProcessExecutor.class.getName(), Level.SEVERE)) {
 
-		try {
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
@@ -807,9 +800,6 @@ public class LocalProcessExecutorTest {
 			Assert.assertEquals(
 				DummyExceptionProcessCallable.class.getName(),
 				throwable.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -948,10 +938,9 @@ public class LocalProcessExecutorTest {
 
 	@Test
 	public void testLeadingLog() throws Exception {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LocalProcessExecutor.class.getName(), Level.WARNING);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocalProcessExecutor.class.getName(), Level.WARNING)) {
 
 			// Warn level
 
@@ -1036,9 +1025,6 @@ public class LocalProcessExecutorTest {
 			Assert.assertTrue(future.isDone());
 
 			Assert.assertEquals(0, logRecords.size());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -1276,10 +1262,10 @@ public class LocalProcessExecutorTest {
 			}
 		}
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LocalProcessExecutor.class.getName(), Level.OFF);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocalProcessExecutor.class.getName(), Level.OFF)) {
 
-		try {
 			_localProcessExecutor.destroy();
 
 			try {
@@ -1292,9 +1278,6 @@ public class LocalProcessExecutorTest {
 				Assert.assertTrue(future.isDone());
 			}
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@Test
@@ -1303,10 +1286,10 @@ public class LocalProcessExecutorTest {
 			unserializablePipingBackProcessCallable =
 				new UnserializablePipingBackProcessCallable();
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LocalProcessExecutor.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocalProcessExecutor.class.getName(), Level.SEVERE)) {
 
-		try {
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
@@ -1340,9 +1323,6 @@ public class LocalProcessExecutorTest {
 				Assert.assertSame(
 					NotSerializableException.class, cause.getClass());
 			}
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

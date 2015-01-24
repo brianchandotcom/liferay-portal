@@ -90,10 +90,10 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 
 		ddmFormValues.addDDMFormFieldValue(titleDDMFormFieldValue);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LocaleUtil.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocaleUtil.class.getName(), Level.WARNING)) {
 
-		try {
 			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
 				ddmStructure, ddmFormValues);
 
@@ -121,9 +121,6 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 
 			Assert.assertEquals(
 				"Boolean_INSTANCE_rztm", fieldsDisplayField.getValue());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -242,10 +239,10 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 
 		ddmFormValues.addDDMFormFieldValue(joeDDMFormFieldValue);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LocaleUtil.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocaleUtil.class.getName(), Level.WARNING)) {
 
-		try {
 			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
 				ddmStructure, ddmFormValues);
 
@@ -287,9 +284,6 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 				"Name_INSTANCE_rght,Phone_INSTANCE_latb,Phone_INSTANCE_jewp," +
 				"Phone_INSTANCE_mkar", fieldsDisplayField.getValue());
 		}
-		finally {
-			captureHandler.close();
-		}
 	}
 
 	@Test
@@ -325,10 +319,10 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 
 		ddmFormFieldValues.add(nameDDMFormFieldValue3);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LocaleUtil.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocaleUtil.class.getName(), Level.WARNING)) {
 
-		try {
 			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
 				ddmStructure, ddmFormValues);
 
@@ -356,9 +350,6 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 			Assert.assertEquals(
 				"Name_INSTANCE_rztm,Name_INSTANCE_uayd,Name_INSTANCE_pamh",
 				fieldsDisplayField.getValue());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -389,10 +380,10 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 
 		ddmFormValues.addDDMFormFieldValue(contentDDMFormFieldValue);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			LocaleUtil.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocaleUtil.class.getName(), Level.WARNING)) {
 
-		try {
 			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
 				ddmStructure, ddmFormValues);
 
@@ -426,9 +417,6 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 			Assert.assertEquals(
 				"Title_INSTANCE_rztm,Content_INSTANCE_ovho",
 				fieldsDisplayField.getValue());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

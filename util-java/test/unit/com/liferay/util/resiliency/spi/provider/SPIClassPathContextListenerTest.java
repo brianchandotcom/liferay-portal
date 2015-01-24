@@ -206,10 +206,9 @@ public class SPIClassPathContextListenerTest {
 
 	@Test
 	public void testClassPathGeneration() {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			SPIClassPathContextListener.class.getName(), Level.FINE);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					SPIClassPathContextListener.class.getName(), Level.FINE)) {
 
 			// With log
 
@@ -276,9 +275,6 @@ public class SPIClassPathContextListenerTest {
 			Assert.assertEquals(
 				spiClassPath, SPIClassPathContextListener.SPI_CLASS_PATH);
 			Assert.assertTrue(logRecords.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -362,10 +358,11 @@ public class SPIClassPathContextListenerTest {
 
 		// Duplicate register
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			SPIClassPathContextListener.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					SPIClassPathContextListener.class.getName(),
+					Level.SEVERE)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			spiClassPathContextListener.contextInitialized(
@@ -380,9 +377,6 @@ public class SPIClassPathContextListenerTest {
 					" is already registered in servlet context " +
 						_mockServletContext.getContextPath(),
 				logRecord.getMessage());
-		}
-		finally {
-			captureHandler.close();
 		}
 
 		// Unregister

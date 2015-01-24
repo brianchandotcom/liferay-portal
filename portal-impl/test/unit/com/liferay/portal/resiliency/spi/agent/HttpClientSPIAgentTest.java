@@ -176,11 +176,9 @@ public class HttpClientSPIAgentTest {
 
 			socket.close();
 
-			CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					HttpClientSPIAgent.class.getName(), Level.OFF);
-
-			try {
+			try (CaptureHandler captureHandler =
+					JDKLoggerTestUtil.configureJDKLogger(
+						HttpClientSPIAgent.class.getName(), Level.OFF)) {
 
 				// Clean up when input is shutdown, failed without log
 
@@ -239,9 +237,6 @@ public class HttpClientSPIAgentTest {
 				Throwable throwable = logRecord.getThrown();
 
 				Assert.assertSame(IOException.class, throwable.getClass());
-			}
-			finally {
-				captureHandler.close();
 			}
 
 			// Clean up when output is shutdown()
@@ -382,10 +377,9 @@ public class HttpClientSPIAgentTest {
 
 	@Test
 	public void testDestroy() throws Exception {
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			HttpClientSPIAgent.class.getName(), Level.OFF);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					HttpClientSPIAgent.class.getName(), Level.OFF)) {
 
 			// Error without log
 
@@ -476,9 +470,6 @@ public class HttpClientSPIAgentTest {
 
 				Assert.assertTrue(logRecords.isEmpty());
 			}
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 
@@ -654,11 +645,9 @@ public class HttpClientSPIAgentTest {
 
 			closePeers(socket, serverSocket);
 
-			CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					HttpClientSPIAgent.class.getName(), Level.OFF);
-
-			try {
+			try (CaptureHandler captureHandler =
+					JDKLoggerTestUtil.configureJDKLogger(
+						HttpClientSPIAgent.class.getName(), Level.OFF)) {
 
 				// Force close, failed without log
 
@@ -705,9 +694,6 @@ public class HttpClientSPIAgentTest {
 				Throwable throwable = logRecord.getThrown();
 
 				Assert.assertSame(IOException.class, throwable.getClass());
-			}
-			finally {
-				captureHandler.close();
 			}
 
 			// socket.isConnected()
@@ -836,10 +822,9 @@ public class HttpClientSPIAgentTest {
 
 		closePeers(socket, serverSocket);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			HttpClientSPIAgent.class.getName(), Level.OFF);
-
-		try {
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					HttpClientSPIAgent.class.getName(), Level.OFF)) {
 
 			// Unable to send, unable to close, without log
 
@@ -914,9 +899,6 @@ public class HttpClientSPIAgentTest {
 			Assert.assertSame(IOException.class, throwable.getClass());
 
 			swapSocketImpl(socket, socketImpl);
-		}
-		finally {
-			captureHandler.close();
 		}
 
 		closePeers(socket, serverSocket);

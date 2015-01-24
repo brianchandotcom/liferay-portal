@@ -496,10 +496,10 @@ public class ExecutorIntrabandTest {
 
 		// Callback timeout, with log
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			BaseIntraband.class.getName(), Level.WARNING);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					BaseIntraband.class.getName(), Level.WARNING)) {
 
-		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			recordCompletionHandler = new RecordCompletionHandler<>();
@@ -525,9 +525,6 @@ public class ExecutorIntrabandTest {
 
 			gatheringByteChannel.close();
 			scatteringByteChannel.close();
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

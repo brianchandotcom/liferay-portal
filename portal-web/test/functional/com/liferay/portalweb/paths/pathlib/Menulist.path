@@ -1,0 +1,139 @@
+<html>
+<head>
+<title>Menulist</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Menulist</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Menulist</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Activate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_LOCATION</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Location')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_REGULAR_ORGANIZATION</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Regular Organization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_USER</td>
+	<td>//a[@role='menuitem' and contains(.,'Add User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGN_MEMBERS</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGN_ORGANIZATION_ROLES</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Organization Roles')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGN_USERS</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEACTIVATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Deactivate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINE_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Define Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_IMPORT</td>
+	<td>//a[@role='menuitem' and contains(.,'Export / Import')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER</td>
+	<td>//a[@role='menuitem' and contains(.,'Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_PAGES</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Site')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Site')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_SITE_PAGES</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Site Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REGULAR_ROLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Regular Role')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Site Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURES</td>
+	<td>//a[@role='menuitem' and contains(.,'Structures')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATES</td>
+	<td>//a[@role='menuitem' and contains(.,'Templates')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW</td>
+	<td>//a[@role='menuitem' and contains(.,'View')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

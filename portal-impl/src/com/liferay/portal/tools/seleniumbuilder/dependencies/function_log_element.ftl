@@ -11,9 +11,7 @@
 
 	<#assign x = function?last_index_of("#")>
 
-	<#assign functionCommand = function?substring(x + 1)>
-
-	"${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function#${functionCommand}",
+	"${seleniumBuilderFileUtil.getObjectName(function?substring(0, x))}#${function?substring(x + 1)}",
 
 	new String[] {
 
@@ -25,16 +23,7 @@
 		<#if functionElement.attributeValue("locator${i}")??>
 			<#assign locator = functionElement.attributeValue("locator${i}")>
 
-			<#if locator?contains("#")>
-				<#assign y = locator?last_index_of("#")>
-
-				<#assign pathLocatorKey = locator?substring(y + 1)>
-				<#assign pathName = locator?substring(0, y)>
-
-				RuntimeVariables.evaluateVariable(${pathName}Path.getPathLocator("${seleniumBuilderFileUtil.escapeJava(pathLocatorKey)}"), ${variableContext})
-			<#else>
-				RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(locator)}", ${variableContext})
-			</#if>
+			RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(locator)}", ${variableContext})
 		<#else>
 			""
 		</#if>

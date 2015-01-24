@@ -72,7 +72,7 @@ public class SassCompiler {
 			final Pointer outputString =
 				_libsass.sass_context_get_output_string(context);
 
-			if (outputString == null || outputString.getString(0) == null) {
+			if ((outputString == null) || (outputString.getString(0) == null)) {
 				throw new SassCompilationException("libsass returned null");
 			}
 

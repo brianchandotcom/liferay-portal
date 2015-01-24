@@ -32,12 +32,12 @@ public class SassCompilerTest extends BaseTests {
 		SassCompiler compiler = new SassCompiler();
 		assumeNotNull(compiler);
 
-		String output =
-			compiler.compileFile(_BASE_RESOURCES +
-				"_asset_category_selector.scss", "", "");
+		String output = compiler.compileFile(
+			_BASE_RESOURCES + "_asset_category_selector.scss", "", "");
 		assertNotNull(output);
-		assertEquals(stripNewLines(readFileContents(_BASE_RESOURCES +
-			"_asset_category_selector.css")), stripNewLines(output));
+		String expected = readFileContents(
+			_BASE_RESOURCES + "_asset_category_selector.css");
+		assertEquals(stripNewLines(expected), stripNewLines(output));
 	}
 
 	@Test
@@ -45,13 +45,14 @@ public class SassCompilerTest extends BaseTests {
 		SassCompiler compiler = new SassCompiler();
 		assumeNotNull(compiler);
 
-		String output =
-			compiler.compileFile(_BASE_RESOURCES +
-				"/compass/_app_view_entry.scss", _BASE_RESOURCES +
-				"/compass/common", "");
+		String inputFile = _BASE_RESOURCES + "/compass/_app_view_entry.scss";
+		String includePath = _BASE_RESOURCES + "/compass/common";
+		String output = compiler.compileFile(inputFile, includePath, "");
+
 		assertNotNull(output);
-		assertEquals(stripNewLines(readFileContents(_BASE_RESOURCES +
-			"/compass/_app_view_entry.css")), stripNewLines(output));
+		String expected = readFileContents(
+			_BASE_RESOURCES + "/compass/_app_view_entry.css");
+		assertEquals(stripNewLines(expected), stripNewLines(output));
 	}
 
 	private static String getBaseDir() {
@@ -63,7 +64,7 @@ public class SassCompilerTest extends BaseTests {
 		}
 	}
 
-	private static final String _BASE_RESOURCES = getBaseDir() +
-		"/com/liferay/tools/jsc/testfiles/";
+	private static final String _BASE_RESOURCES =
+		getBaseDir() + "/com/liferay/tools/jsc/testfiles/";
 
 }

@@ -9,17 +9,17 @@ AUI.add(
 
 		var STR_DDM = 'ddm';
 
+		var STR_DESCRIPTION_INPUT_LOCALIZED = 'descriptionInputLocalized';
+
 		var STR_SELECT_STRUCTURE = 'selectStructure';
 
 		var STR_SELECT_TEMPLATE = 'selectTemplate';
 
 		var STR_STRINGS = 'strings';
 
-		var STR_TRANSLATION_MANAGER = 'translationManager';
-
-		var STR_DESCRIPTION_INPUT_LOCALIZED = 'descriptionInputLocalized';
-
 		var STR_TITLE_INPUT_LOCALIZED = 'titleInputLocalized';
+
+		var STR_TRANSLATION_MANAGER = 'translationManager';
 
 		var STR_URLS = 'urls';
 
@@ -97,6 +97,26 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
+					_afterEditingLocaleChange: function(event) {
+						var instance = this;
+
+						var descriptionInputLocalized = instance.get(STR_DESCRIPTION_INPUT_LOCALIZED);
+
+						var titleInputLocalized = instance.get(STR_TITLE_INPUT_LOCALIZED);
+
+						var items = descriptionInputLocalized.get('items');
+
+						var editingLocale = event.newVal;
+
+						var selectedIndex = AArray.indexOf(items, editingLocale);
+
+						descriptionInputLocalized.set('selected', selectedIndex);
+						descriptionInputLocalized.selectFlag(editingLocale);
+
+						titleInputLocalized.set('selected', selectedIndex);
+						titleInputLocalized.selectFlag(editingLocale);
+					},
+
 					_bindUI: function() {
 						var instance = this;
 
@@ -143,33 +163,6 @@ AUI.add(
 						}
 
 						instance._eventHandles = eventHandles;
-					},
-
-					_renderUI: function() {
-						var instance = this;
-
-						instance.get(STR_DESCRIPTION_INPUT_LOCALIZED).render();
-						instance.get(STR_TITLE_INPUT_LOCALIZED).render();
-					},
-
-					_afterEditingLocaleChange: function(event) {
-						var instance = this;
-
-						var descriptionInputLocalized = instance.get(STR_DESCRIPTION_INPUT_LOCALIZED);
-
-						var titleInputLocalized = instance.get(STR_TITLE_INPUT_LOCALIZED);
-
-						var items = descriptionInputLocalized.get('items');
-
-						var editingLocale = event.newVal;
-
-						var selectedIndex = AArray.indexOf(items, editingLocale);
-
-						descriptionInputLocalized.set('selected', selectedIndex);
-						descriptionInputLocalized.selectFlag(editingLocale);
-
-						titleInputLocalized.set('selected', selectedIndex);
-						titleInputLocalized.selectFlag(editingLocale);
 					},
 
 					_editStructure: function(event) {
@@ -290,6 +283,13 @@ AUI.add(
 								}
 							}
 						);
+					},
+
+					_renderUI: function() {
+						var instance = this;
+
+						instance.get(STR_DESCRIPTION_INPUT_LOCALIZED).render();
+						instance.get(STR_TITLE_INPUT_LOCALIZED).render();
 					}
 				}
 			}

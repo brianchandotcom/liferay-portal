@@ -5,18 +5,16 @@ AUI.add(
 		var Lang = A.Lang;
 		var Poller = Liferay.Poller;
 
-		var WIN = A.config.win;
-
 		var STR_CLICK = 'click';
 
 		var STR_PORTLET_MSG_ERROR = 'alert alert-danger';
 
 		var STR_PORTLET_MSG_SUCCESS = 'alert alert-success';
 
+		var WIN = A.config.win;
+
 		var Admin = A.Component.create(
 			{
-				AUGMENTS: [Liferay.PortletBase],
-
 				ATTRS: {
 					form: {
 						setter: A.one,
@@ -27,6 +25,8 @@ AUI.add(
 						value: null
 					}
 				},
+
+				AUGMENTS: [Liferay.PortletBase],
 
 				EXTENDS: A.Base,
 

@@ -12,8 +12,6 @@ AUI.add(
 
 		var sub = Lang.sub;
 
-		var DOC = A.config.doc;
-
 		var CSS_ACTIVE_AREA = 'active-area';
 
 		var CSS_APP_VIEW_ENTRY = 'app-view-entry-taglib';
@@ -33,6 +31,8 @@ AUI.add(
 		var CSS_UPLOAD_SUCCESS = 'upload-success';
 
 		var CSS_UPLOAD_WARNING = 'upload-warning';
+
+		var DOC = A.config.doc;
 
 		var ERROR_RESULTS_MIXED = 1;
 
@@ -74,9 +74,9 @@ AUI.add(
 
 		var SELECTOR_TAGLIB_ICON = STR_DOT + CSS_TAGLIB_ICON;
 
-		var STR_BOUNDING_BOX = 'boundingBox';
-
 		var STR_BLANK = '';
+
+		var STR_BOUNDING_BOX = 'boundingBox';
 
 		var STR_CONTENT_BOX = 'contentBox';
 
@@ -921,7 +921,7 @@ AUI.add(
 						try {
 							responseData = A.JSON.parse(responseData);
 						}
-						catch (err) {
+						catch (e) {
 						}
 
 						if (Lang.isObject(responseData)) {

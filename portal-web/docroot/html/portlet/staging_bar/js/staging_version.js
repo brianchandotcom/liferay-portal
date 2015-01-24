@@ -32,6 +32,46 @@ AUI.add(
 					}
 				},
 
+				_getGraphDialog: function() {
+					var instance = this;
+
+					var graphDialog = instance._graphDialog;
+
+					if (!graphDialog) {
+						graphDialog = Liferay.Util.Window.getWindow(
+							{
+								title: Liferay.Language.get('history')
+							}
+						);
+
+						graphDialog.plug(
+							A.Plugin.IO,
+							{
+								autoLoad: false,
+								data: {
+									doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+									p_l_id: themeDisplay.getPlid(),
+									p_p_isolated: true,
+									redirect: Liferay.currentURL
+								},
+								uri: themeDisplay.getPathMain() + '/staging_bar/view_layout_revisions'
+							}
+						);
+
+						graphDialog.bodyNode.delegate(
+							'click',
+							function(event) {
+								instance._selectRevision(event.target);
+							},
+							'a.layout-revision.selection-handle'
+						);
+
+						instance._graphDialog = graphDialog;
+					}
+
+					return graphDialog;
+				},
+
 				_getNotification: function() {
 					var instance = this;
 
@@ -103,46 +143,6 @@ AUI.add(
 					}
 
 					instance._eventHandles = eventHandles;
-				},
-
-				_getGraphDialog: function() {
-					var instance = this;
-
-					var graphDialog = instance._graphDialog;
-
-					if (!graphDialog) {
-						graphDialog = Liferay.Util.Window.getWindow(
-							{
-								title: Liferay.Language.get('history')
-							}
-						);
-
-						graphDialog.plug(
-							A.Plugin.IO,
-							{
-								autoLoad: false,
-								data: {
-									doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-									p_l_id: themeDisplay.getPlid(),
-									p_p_isolated: true,
-									redirect: Liferay.currentURL
-								},
-								uri: themeDisplay.getPathMain() + '/staging_bar/view_layout_revisions'
-							}
-						);
-
-						graphDialog.bodyNode.delegate(
-							'click',
-							function(event) {
-								instance._selectRevision(event.target);
-							},
-							'a.layout-revision.selection-handle'
-						);
-
-						instance._graphDialog = graphDialog;
-					}
-
-					return graphDialog;
 				},
 
 				_onRevisionChange: function(event, type) {

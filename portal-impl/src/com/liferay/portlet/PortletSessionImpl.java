@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,31 +75,13 @@ public class PortletSessionImpl implements LiferayPortletSession {
 
 	@Override
 	public Map<String, Object> getAttributeMap(int scope) {
-		Map<String, Object> map = new HashMap<>();
+		String attributeNamespace = StringPool.BLANK;
 
-		Enumeration<String> enu = _getAttributeNames(scope, false);
-
-		int portletScopeLength = _portletScope.length();
-
-		while (enu.hasMoreElements()) {
-			String name = enu.nextElement();
-
-			Object value = _session.getAttribute(name);
-
-			if (scope == PortletSession.PORTLET_SCOPE) {
-				if ((name.length() <= (portletScopeLength + 1)) ||
-					!name.startsWith(_portletScope + StringPool.QUESTION)) {
-
-					continue;
-				}
-
-				name = name.substring(portletScopeLength + 1);
-			}
-
-			map.put(name, value);
+		if (scope == PortletSession.PORTLET_SCOPE) {
+			attributeNamespace = _portletScope + StringPool.QUESTION;
 		}
 
-		return map;
+		return new PortletSessionAttributeMap(_session, attributeNamespace);
 	}
 
 	@Override

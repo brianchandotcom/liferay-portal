@@ -18,6 +18,7 @@ import com.liferay.tools.jsc.libsass.SassLibrary;
 import com.liferay.tools.jsc.libsass.SassLibrary.Sass_Context;
 import com.liferay.tools.jsc.libsass.SassLibrary.Sass_File_Context;
 import com.liferay.tools.jsc.libsass.SassLibrary.Sass_Options;
+
 import com.sun.jna.Pointer;
 
 import java.io.File;
@@ -28,13 +29,15 @@ import java.io.File;
 public class SassCompiler {
 
 	public String compileFile(
-		String inputFile, String includePath, String imgPath)
+			String inputFile, String includePath, String imgPath)
 		throws SassCompilationException {
 
 		// NESTED 0 EXPANDED 1 COMPACT 2 COMPRESSED 3 FORMATTED 4
+
 		final int outputstyle = 1;
 
 		// NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
+
 		final byte sourceComments = (byte) 0;
 
 		final String includePaths =
@@ -55,14 +58,14 @@ public class SassCompiler {
 
 			_libsass.sass_compile_file_context(sassFileContext);
 
-			final Sass_Context context =
-				_libsass.sass_file_context_get_context(sassFileContext);
-			final int errorStatus =
-				_libsass.sass_context_get_error_status(context);
+			final Sass_Context context = _libsass.sass_file_context_get_context(
+				sassFileContext);
+			final int errorStatus = _libsass.sass_context_get_error_status(
+				context);
 
 			if (errorStatus != 0) {
-				Pointer errorMsg =
-					_libsass.sass_context_get_error_message(context);
+				Pointer errorMsg = _libsass.sass_context_get_error_message(
+					context);
 				throw new SassCompilationException(errorMsg.getString(0));
 			}
 

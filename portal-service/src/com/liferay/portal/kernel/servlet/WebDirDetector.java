@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -52,7 +53,8 @@ public class WebDirDetector {
 	}
 
 	public static String getRootDir(String libDir) {
-		String rootDir = libDir;
+		String rootDir = StringUtil.replace(
+			libDir, CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
 
 		if (rootDir.endsWith("/WEB-INF/lib/")) {
 			rootDir = rootDir.substring(0, rootDir.length() - 12);

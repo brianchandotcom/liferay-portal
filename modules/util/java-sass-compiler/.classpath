@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="src"/>
+	<classpathentry kind="src" path="test/unit"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="/portal-master/lib/development/activation.jar"/>
+	<classpathentry kind="lib" path="/portal-master/lib/development/annotations.jar"/>
+	<classpathentry kind="lib" path="/portal-master/lib/development/jsp-api.jar"/>
+	<classpathentry kind="lib" path="/portal-master/lib/development/mail.jar"/>
+	<classpathentry kind="lib" path="/portal-master/lib/development/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/portal-master/lib/global/portlet.jar"/>
+	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-logging.jar"/>
+	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-io.jar"/>
+	<classpathentry kind="lib" path="/portal-master/lib/portal/log4j.jar"/>
+	<classpathentry kind="lib" path="/portal-master/portal-service/portal-service.jar"/>
+	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

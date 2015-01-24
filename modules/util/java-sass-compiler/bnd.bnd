@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Java Sass Compiler
+Bundle-SymbolicName: com.liferay.tools.jsc
+Bundle-Version: 1.0.0
+Include-Resource: classes

@@ -53,12 +53,12 @@ AUI.add(
 					}
 				},
 
+				CSS_PREFIX: 'lfr-message',
+
 				HTML_PARSER: {
 					closeButton: '.close',
 					hideAllNotices: '.btn-link'
 				},
-
-				CSS_PREFIX: 'lfr-message',
 
 				NAME: NAME,
 
@@ -157,16 +157,16 @@ AUI.add(
 						}
 					},
 
-					_onHideAllClick: function(event) {
-						var instance = this;
-
-						instance.set('visible', false, EVENT_DATA_DISMISS_ALL);
-					},
-
 					_onCloseButtonClick: function(event) {
 						var instance = this;
 
 						instance.hide();
+					},
+
+					_onHideAllClick: function(event) {
+						var instance = this;
+
+						instance.set('visible', false, EVENT_DATA_DISMISS_ALL);
 					},
 
 					_onTriggerClick: function(event) {

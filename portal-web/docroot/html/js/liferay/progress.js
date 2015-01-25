@@ -5,9 +5,9 @@ AUI.add(
 
 		var STR_EMPTY = '';
 
-		var STR_VALUE = 'value';
-
 		var STR_UPDATE_PERIOD = 'updatePeriod';
+
+		var STR_VALUE = 'value';
 
 		var TPL_FRAME = '<iframe frameborder="0" height="0" id="{0}-poller" src="javascript:;" style="display:none" tabindex="-1" title="empty" width="0"></iframe>';
 

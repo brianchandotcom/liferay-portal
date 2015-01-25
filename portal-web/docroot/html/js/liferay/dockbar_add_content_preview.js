@@ -26,9 +26,9 @@ AUI.add(
 
 		var STR_RIGHT = 'right';
 
-		var TPL_MESSAGE_ERROR = '<div class="portlet-msg-error">{0}</div>';
-
 		var TPL_LOADING = '<div class="loading-animation" />';
+
+		var TPL_MESSAGE_ERROR = '<div class="portlet-msg-error">{0}</div>';
 
 		var AddContentPreview = function() {
 		};

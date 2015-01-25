@@ -24,11 +24,6 @@ YUI.add(
 			return parseVersionNumber(version);
 		};
 
-		var MAP_OS_SELECTORS = {
-			windows: 'win',
-			macintosh: 'mac'
-		};
-
 		var BROWSERS = [
 			'ie',
 			'opera',
@@ -44,38 +39,41 @@ YUI.add(
 			'safari'
 		];
 
+		var MAP_OS_SELECTORS = {
+			macintosh: 'mac',
+			windows: 'win'
+		};
+
 		var nav = navigator;
 
-		var CONFIG = A.config,
-			DOC = CONFIG.doc;
+		var CONFIG = A.config;
+
+		var	DOC = CONFIG.doc;
 
 		var userAgent = nav.userAgent;
 
 		var UA = A.UA;
+
 		var OS = UA.os;
 
 		var UAX = {
-			aol: 0,
+			agent: userAgent,
 
+			aol: 0,
+			browser: 0,
 			camino: 0,
 			firefox: 0,
 			flock: 0,
-			mozilla: 0,
-			netscape: 0,
-
 			icab: 0,
 			konqueror: 0,
-
-			safari: 0,
-
-			browser: 0,
-
-			win: OS == 'windows',
-			mac: OS == 'macintosh',
-			rhino: OS == 'rhino',
-
-			agent: userAgent
+			mozilla: 0,
+			netscape: 0,
+			safari: 0
 		};
+
+		UAX.mac = (OS == 'macintosh');
+		UAX.rhino = (OS == 'rhino');
+		UAX.win = (OS == 'windows');
 
 		if (UA.ie) {
 			UAX.aol = getVersion(/America Online Browser ([^\s]*);/, userAgent);
@@ -131,8 +129,8 @@ YUI.add(
 		var uaVersionMinor;
 
 		var versionObj = {
-			string: '',
-			major: versionMajor
+			major: versionMajor,
+			string: ''
 		};
 
 		var i = BROWSERS.length;
@@ -216,8 +214,8 @@ YUI.add(
 		if (!documentElement._yuid) {
 			documentElement.className += ' ' + UA.selectors;
 
-			var vml,
-				svg;
+			var	svg;
+			var vml;
 
 			vml = !(svg = !!(CONFIG.win.SVGAngle || DOC.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#BasicStructure', '1.1')));
 

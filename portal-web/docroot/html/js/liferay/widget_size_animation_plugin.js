@@ -15,12 +15,6 @@ AUI.add(
 
 		var SizeAnim = A.Component.create(
 			{
-				EXTENDS: A.Plugin.Base,
-
-				NAME: NAME,
-
-				NS: NAME,
-
 				ATTRS: {
 					align: {
 						validator: Lang.isBoolean
@@ -37,6 +31,12 @@ AUI.add(
 						validator: Lang.isBoolean
 					}
 				},
+
+				EXTENDS: A.Plugin.Base,
+
+				NAME: NAME,
+
+				NS: NAME,
 
 				prototype: {
 					initializer: function(config) {

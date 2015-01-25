@@ -6,8 +6,6 @@ AUI.add(
 		var History = Liferay.HistoryManager;
 		var Util = Liferay.Util;
 
-		var WIN = A.config.win;
-
 		var ATTR_CHECKED = 'checked';
 
 		var CSS_RESULT_ROW = 'tr.selectable';
@@ -29,6 +27,8 @@ AUI.add(
 		var STR_FOCUS = 'focus';
 
 		var STR_TOGGLE_ACTIONS_BUTTON = 'toggleActionsButton';
+
+		var WIN = A.config.win;
 
 		var AppViewSelect = A.Component.create(
 			{

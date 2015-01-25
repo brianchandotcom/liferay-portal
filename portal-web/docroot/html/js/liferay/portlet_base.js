@@ -58,18 +58,18 @@ AUI.add(
 				return A.byIdNS(instance.NS, id);
 			},
 
+			ns: function(str) {
+				var instance = this;
+
+				return Liferay.Util.ns(instance.NS, str);
+			},
+
 			one: function(selector, root) {
 				var instance = this;
 
 				root = root || instance.rootNode || A;
 
 				return root.oneNS(instance.NS, selector);
-			},
-
-			ns: function(str) {
-				var instance = this;
-
-				return Liferay.Util.ns(instance.NS, str);
 			},
 
 			_getNS: function(value) {

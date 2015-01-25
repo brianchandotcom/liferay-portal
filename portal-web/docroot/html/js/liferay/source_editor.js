@@ -1,3 +1,5 @@
+/* global ace */
+
 AUI.add(
 	'liferay-source-editor',
 	function(A) {

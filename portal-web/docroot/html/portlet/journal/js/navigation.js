@@ -3,9 +3,9 @@ AUI.add(
 	function(A) {
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
 
-		var STR_ROW_IDS_JOURNAL_FOLDER_CHECKBOX = 'rowIdsJournalFolder';
-
 		var STR_ROW_IDS_JOURNAL_ARTICLE_CHECKBOX = 'rowIdsJournalArticle';
+
+		var STR_ROW_IDS_JOURNAL_FOLDER_CHECKBOX = 'rowIdsJournalFolder';
 
 		var JournalNavigation = A.Component.create(
 			{

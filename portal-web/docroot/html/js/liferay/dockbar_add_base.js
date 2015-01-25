@@ -8,8 +8,6 @@ AUI.add(
 		var Portlet = Liferay.Portlet;
 		var Util = Liferay.Util;
 
-		var PROXY_NODE_ITEM = Layout.PROXY_NODE_ITEM;
-
 		var CSS_LFR_PORTLET_USED = 'lfr-portlet-used';
 
 		var DATA_CLASS_NAME = 'data-class-name';
@@ -17,6 +15,8 @@ AUI.add(
 		var DATA_CLASS_PK = 'data-class-pk';
 
 		var DATA_PORTLET_ID = 'data-portlet-id';
+
+		var PROXY_NODE_ITEM = Layout.PROXY_NODE_ITEM;
 
 		var STR_EMPTY = '';
 

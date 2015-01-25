@@ -5,11 +5,11 @@ AUI.add(
 
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
 
+		var STR_ROW_IDS_FILE_ENTRY_CHECKBOX = 'rowIdsFileEntry';
+
 		var STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX = 'rowIdsDLFileShortcut';
 
 		var STR_ROW_IDS_FOLDER_CHECKBOX = 'rowIdsFolder';
-
-		var STR_ROW_IDS_FILE_ENTRY_CHECKBOX = 'rowIdsFileEntry';
 
 		var WIN = A.config.win;
 

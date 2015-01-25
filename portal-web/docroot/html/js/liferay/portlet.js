@@ -240,7 +240,7 @@
 
 			data.currentURL = Liferay.currentURL;
 
-			return instance.addHTML(
+			instance.addHTML(
 				{
 					beforePortletLoaded: beforePortletLoaded,
 					data: data,

@@ -7,8 +7,6 @@ AUI.add(
 
 		var LString = Lang.String;
 
-		var NAME = 'tagselector';
-
 		var CSS_INPUT_NODE = 'lfr-tag-selector-input';
 
 		var CSS_NO_MATCHES = 'no-matches';
@@ -48,11 +46,19 @@ AUI.add(
 			]
 		);
 
+		var NAME = 'tagselector';
+
 		var STR_BLANK = '';
 
 		var TPL_CHECKED = ' checked="checked" ';
 
 		var TPL_LOADING = '<div class="loading-animation" />';
+
+		var TPL_SEARCH_FORM = '<form action="javascript:;" class="form-search lfr-tag-selector-search row">' +
+			'<input class="col-md-12 lfr-tag-selector-input search-query" placeholder="{0}" type="text" />' +
+		'</form>';
+
+		var TPL_SUGGESTIONS_QUERY = 'select * from search.termextract where context="{0}"';
 
 		var TPL_TAG = new A.Template(
 			'<fieldset class="{[(!values.tags || !values.tags.length) ? "', CSS_NO_MATCHES, '" : "', STR_BLANK, '" ]}">',
@@ -62,12 +68,6 @@ AUI.add(
 				'<div class="lfr-tag-message">{message}</div>',
 			'</fieldset>'
 		);
-
-		var TPL_SEARCH_FORM = '<form action="javascript:;" class="form-search lfr-tag-selector-search row">' +
-			'<input class="col-md-12 lfr-tag-selector-input search-query" placeholder="{0}" type="text" />' +
-		'</form>';
-
-		var TPL_SUGGESTIONS_QUERY = 'select * from search.termextract where context="{0}"';
 
 		var TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';
 

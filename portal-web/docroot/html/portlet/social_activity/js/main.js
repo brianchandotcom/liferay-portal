@@ -7,13 +7,13 @@ AUI.add(
 
 		var Widget = A.Widget;
 
+		var COL_LIMIT_TYPE = [Liferay.Language.get('social-activity-limit-type-times-a-day'), Liferay.Language.get('social-activity-limit-type-times'), Liferay.Language.get('social-activity-limit-type-times-per-period')];
+
 		var CSS_SETTINGS_ICON_CLOSE = 'settings-icon-close';
 
 		var CSS_SETTINGS_ICON_EXPANDED = 'settings-icon-expanded';
 
 		var CSS_TOKEN = 'lfr-token';
-
-		var COL_LIMIT_TYPE = [Liferay.Language.get('social-activity-limit-type-times-a-day'), Liferay.Language.get('social-activity-limit-type-times'), Liferay.Language.get('social-activity-limit-type-times-per-period')];
 
 		var STR_ACTION_FIELD = 'action-field';
 
@@ -95,9 +95,9 @@ AUI.add(
 
 		var SELECTOR_SETTINGS_LIMIT = STR_DOT + STR_SETTINGS_LIMIT;
 
-		var SELECTOR_SOCIAL_ACTIVITY_ITEM = '.social-activity-item';
-
 		var SELECTOR_SOCIAL_ACTIVITY_CONTENT = '.social-activity-details';
+
+		var SELECTOR_SOCIAL_ACTIVITY_ITEM = '.social-activity-item';
 
 		var SELECTOR_UPDATE_SOCIAL_ACTIVITY_FORM = 'form.update-socialactivity-form';
 
@@ -272,22 +272,6 @@ AUI.add(
 						);
 					},
 
-					_revealSection: function(menuItem, getSocialActivitySettingMappingCallback) {
-						var instance = this;
-
-						var modelName = menuItem.attr(STR_DATA_MODEL_NAME);
-
-						menuItem.radioClass(STR_SELECTED);
-
-						instance._getSocialActivitySettingMapping(
-							themeDisplay.getScopeGroupIdOrLiveGroupId(),
-							modelName,
-							function(result) {
-								getSocialActivitySettingMappingCallback(result, modelName);
-							}
-						);
-					},
-
 					_addSettingsDisplay: function(config) {
 						var instance = this;
 
@@ -321,8 +305,8 @@ AUI.add(
 						Liferay.Service(
 							'/socialactivitysetting/get-json-activity-definitions',
 							{
-								groupId: groupId,
-								className: modelName
+								className: modelName,
+								groupId: groupId
 							},
 							callback
 						);
@@ -340,6 +324,22 @@ AUI.add(
 						submitForm(form);
 					},
 
+					_revealSection: function(menuItem, getSocialActivitySettingMappingCallback) {
+						var instance = this;
+
+						var modelName = menuItem.attr(STR_DATA_MODEL_NAME);
+
+						menuItem.radioClass(STR_SELECTED);
+
+						instance._getSocialActivitySettingMapping(
+							themeDisplay.getScopeGroupIdOrLiveGroupId(),
+							modelName,
+							function(result) {
+								getSocialActivitySettingMappingCallback(result, modelName);
+							}
+						);
+					},
+
 					_updateCheckboxStatus: function(event) {
 						var instance = this;
 
@@ -350,9 +350,9 @@ AUI.add(
 						Liferay.Service(
 							'/socialactivitysetting/update-activity-setting',
 							{
-								groupId: themeDisplay.getScopeGroupIdOrLiveGroupId(),
 								className: modelName,
-								enabled: currentTarget.attr('checked')
+								enabled: currentTarget.attr('checked'),
+								groupId: themeDisplay.getScopeGroupIdOrLiveGroupId()
 							}
 						);
 					},

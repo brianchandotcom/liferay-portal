@@ -9,13 +9,13 @@ AUI.add(
 
 		var Lang = A.Lang;
 
+		var AJSON = A.JSON;
+
 		var EMPTY_FN = A.Lang.emptyFn;
 
 		var FIELDS_DISPLAY_INSTANCE_SEPARATOR = '_INSTANCE_';
 
 		var FIELDS_DISPLAY_NAME = '_fieldsDisplay';
-
-		var AJSON = A.JSON;
 
 		var STR_EMPTY = '';
 

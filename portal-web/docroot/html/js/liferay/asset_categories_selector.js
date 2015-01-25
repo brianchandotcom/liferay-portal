@@ -19,11 +19,11 @@ AUI.add(
 
 		var STR_EXPANDED = 'expanded';
 
+		var STR_MAX_ENTRIES = 'maxEntries';
+
 		var STR_MORE_RESULTS_LABEL = 'moreResultsLabel';
 
 		var STR_PREV_EXPANDED = '_LFR_prevExpanded';
-
-		var STR_MAX_ENTRIES = 'maxEntries';
 
 		var STR_START = 'start';
 

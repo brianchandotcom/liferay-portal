@@ -38,8 +38,8 @@ AUI.add(
 		var STR_TOP = 't';
 
 		var MAP_ALIGN_HORIZONTAL_OVERLAY = {
-			right: STR_LEFT,
-			left: STR_RIGHT
+			left: STR_RIGHT,
+			right: STR_LEFT
 		};
 
 		var MAP_ALIGN_HORIZONTAL_OVERLAY_RTL = {
@@ -48,8 +48,8 @@ AUI.add(
 		};
 
 		var MAP_ALIGN_HORIZONTAL_TRIGGER = {
-			right: STR_RIGHT,
-			left: STR_LEFT
+			left: STR_LEFT,
+			right: STR_RIGHT
 		};
 
 		var MAP_ALIGN_HORIZONTAL_TRIGGER_RTL = {
@@ -175,8 +175,6 @@ AUI.add(
 				if (!overlay) {
 					var MenuOverlay = A.Component.create(
 						{
-							NAME: 'overlay',
-
 							AUGMENTS: [
 								A.WidgetCssClass,
 								A.WidgetPosition,
@@ -189,7 +187,9 @@ AUI.add(
 
 							CSS_PREFIX: 'overlay',
 
-							EXTENDS: A.Widget
+							EXTENDS: A.Widget,
+
+							NAME: 'overlay'
 						}
 					);
 

@@ -308,8 +308,8 @@ AUI.add(
 
 								var extend = false;
 
-								var isExpirationMoment = (elapsed == sessionLength);
-								var isWarningMoment = (elapsed == warningTime);
+								var expirationMoment = (elapsed == sessionLength);
+								var warningMoment = (elapsed == warningTime);
 
 								var hasExpired = (elapsed >= sessionLength);
 								var hasWarned = (elapsed >= warningTime);
@@ -317,41 +317,39 @@ AUI.add(
 								var updateSessionState = true;
 
 								if (hasWarned) {
-									if (isWarningMoment || isExpirationMoment) {
+									if (warningMoment || expirationMoment) {
 										var timestamp = instance.get('timestamp');
 
 										if (timestamp == 'expired') {
-											isExpirationMoment = true;
+											expirationMoment = true;
 											hasExpired = true;
 										}
+										else if (instance.get('autoExtend')) {
+											hasExpired = false;
+											hasWarned = false;
+
+											expirationMoment = false;
+											warningMoment = false;
+
+											extend = true;
+										}
 										else {
-											if (instance.get('autoExtend')) {
-												hasExpired = false;
+											var timeOffset = Math.floor((Lang.now() - timestamp) / 1000) * 1000;
+
+											if (timeOffset < warningTime) {
+												instance._elapsed = timeOffset;
+
+												updateSessionState = false;
 												hasWarned = false;
-
-												isExpirationMoment = false;
-												isWarningMoment = false;
-
-												extend = true;
-											}
-											else {
-												var timeOffset = Math.floor((Lang.now() - timestamp) / 1000) * 1000;
-
-												if (timeOffset < warningTime) {
-													instance._elapsed = timeOffset;
-
-													updateSessionState = false;
-													hasWarned = false;
-												}
 											}
 										}
 									}
 
 									if (updateSessionState) {
-										if (isExpirationMoment) {
+										if (expirationMoment) {
 											instance.expire();
 										}
-										else if (isWarningMoment) {
+										else if (warningMoment) {
 											instance.warn();
 										}
 										else if (extend) {
@@ -361,7 +359,7 @@ AUI.add(
 								}
 
 								for (var i in registered) {
-									registered[i](elapsed, interval, hasWarned, hasExpired, isWarningMoment, isExpirationMoment);
+									registered[i](elapsed, interval, hasWarned, hasExpired, warningMoment, expirationMoment);
 								}
 							},
 							interval
@@ -453,12 +451,12 @@ AUI.add(
 						banner.show();
 
 						instance._intervalId = host.registerInterval(
-							function(elapsed, interval, hasWarned, hasExpired, isWarningMoment, isExpirationMoment) {
+							function(elapsed, interval, hasWarned, hasExpired, warningMoment, expirationMoment) {
 								if (!hasWarned) {
 									instance._uiSetActivated();
 								}
 								else if (!hasExpired) {
-									if (isWarningMoment) {
+									if (warningMoment) {
 										if (remainingTime <= 0) {
 											remainingTime = warningLength;
 										}

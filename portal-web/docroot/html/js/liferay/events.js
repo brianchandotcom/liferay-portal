@@ -4,6 +4,7 @@ Liferay.detach = function(){};
 
 ;(function(A, Liferay) {
 	var CLICK_EVENTS = {};
+
 	var DOC = A.config.doc;
 
 	Liferay.provide(

@@ -3,6 +3,7 @@ AUI.add(
 	function(A) {
 		var bbCode = function(options) {
 			var instance = this;
+
 			options = options || {};
 
 			instance._textarea = A.one(options.textarea);
@@ -410,10 +411,31 @@ AUI.add(
 				}
 			},
 
+			_getSelection: function() {
+				var instance = this;
+
+				var textarea = instance._textarea;
+				var field = textarea.getDOM();
+				var value = textarea.val();
+				var selection;
+
+				if (Liferay.Browser.isIe()) {
+					instance._setSelectionRange();
+
+					selection = instance._selectionRange.text;
+				}
+				else if (field.selectionStart || field.selectionStart === 0) {
+					selection = value.substring(field.selectionStart, field.selectionEnd);
+				}
+
+				return selection;
+			},
+
 			_insertColor: function() {
 				var instance = this;
 
 				var color = instance._fontColorInput.val();
+
 				instance.insertTag('color', color);
 			},
 
@@ -436,26 +458,6 @@ AUI.add(
 				}
 			},
 
-			_getSelection: function() {
-				var instance = this;
-
-				var textarea = instance._textarea;
-				var field = textarea.getDOM();
-				var value = textarea.val();
-				var selection;
-
-				if (Liferay.Browser.isIe()) {
-					instance._setSelectionRange();
-
-					selection = instance._selectionRange.text;
-				}
-				else if (field.selectionStart || field.selectionStart === 0) {
-					selection = value.substring(field.selectionStart, field.selectionEnd);
-				}
-
-				return selection;
-			},
-
 			_insertEmoticon: function(emoticon) {
 				var instance = this;
 
@@ -471,7 +473,7 @@ AUI.add(
 
 					sel.text = emoticon;
 				}
-				else if (field.selectionStart || field.selectionStart == "0") {
+				else if (field.selectionStart || field.selectionStart == '0') {
 					var startPos = field.selectionStart;
 					var endPos = field.selectionEnd;
 
@@ -499,7 +501,7 @@ AUI.add(
 			_insertList: function(ordered) {
 				var instance = this;
 
-				var list = "\n";
+				var list = '\n';
 				var entry;
 
 				while ((entry = prompt(Liferay.Language.get('enter-a-list-item-click-cancel-or-leave-blank-to-end-the-list'), ''))) {

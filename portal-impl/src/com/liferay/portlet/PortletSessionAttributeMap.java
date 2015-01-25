@@ -11,33 +11,39 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portlet;
 
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.MappingEnumeration;
+import com.liferay.portal.kernel.util.MappingEnumeration.Mapper;
+import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
 /**
  * @author Minhchau Dang
+ * @author Shuyang Zhou
  */
-public class PortletSessionAttributeMap implements Map<String, Object> {
-	public PortletSessionAttributeMap(
-		HttpSession httpSession, String attributeNamespace) {
+public class PortletSessionAttributeMap extends AbstractMap<String, Object> {
 
-		_httpSession = httpSession;
-		_attributeNamespace = attributeNamespace;
-		_attributeNamespaceLength = attributeNamespace.length();
+	public PortletSessionAttributeMap(HttpSession session) {
+		this(session, null);
+	}
+
+	public PortletSessionAttributeMap(HttpSession session, String scopePrefix) {
+		this.session = session;
+		this.scopePrefix = scopePrefix;
 	}
 
 	@Override
@@ -47,10 +53,16 @@ public class PortletSessionAttributeMap implements Map<String, Object> {
 
 	@Override
 	public boolean containsKey(Object key) {
-		Iterator<String> iterator = new PortletSessionAttributeNameIterator();
+		if (key == null) {
+			return false;
+		}
 
-		while (iterator.hasNext()) {
-			String attributeName = iterator.next();
+		key = encodeKey(String.valueOf(key));
+
+		Enumeration<String> enumeration = getAttributeNames(false);
+
+		while (enumeration.hasMoreElements()) {
+			String attributeName = enumeration.nextElement();
 
 			if (attributeName.equals(key)) {
 				return true;
@@ -62,12 +74,11 @@ public class PortletSessionAttributeMap implements Map<String, Object> {
 
 	@Override
 	public boolean containsValue(Object value) {
-		Iterator<String> iterator = new PortletSessionAttributeNameIterator();
+		Enumeration<String> enumeration = getAttributeNames(false);
 
-		while (iterator.hasNext()) {
-			String attributeName = iterator.next();
-
-			Object attributeValue = get(attributeName);
+		while (enumeration.hasMoreElements()) {
+			Object attributeValue = session.getAttribute(
+				enumeration.nextElement());
 
 			if (attributeValue.equals(value)) {
 				return true;
@@ -79,19 +90,17 @@ public class PortletSessionAttributeMap implements Map<String, Object> {
 
 	@Override
 	public Set<Entry<String, Object>> entrySet() {
-		Map<String, Object> map = new LinkedHashMap<>();
+		Map<String, Object> map = new HashMap<>();
 
-		Iterator<String> iterator = new PortletSessionAttributeNameIterator();
+		Enumeration<String> enumeration = getAttributeNames(true);
 
-		while (iterator.hasNext()) {
-			String attributeName = iterator.next();
+		while (enumeration.hasMoreElements()) {
+			String attributeName = enumeration.nextElement();
 
-			Object attributeValue = get(attributeName);
-
-			map.put(attributeName, attributeValue);
+			map.put(attributeName, get(attributeName));
 		}
 
-		return map.entrySet();
+		return Collections.unmodifiableSet(map.entrySet());
 	}
 
 	@Override
@@ -100,36 +109,20 @@ public class PortletSessionAttributeMap implements Map<String, Object> {
 			return null;
 		}
 
-		String attributeName = null;
-
-		if (Validator.isNull(_attributeNamespace)) {
-			attributeName = key.toString();
-		}
-		else {
-			attributeName = _attributeNamespace + key.toString();
-		}
-
-		return _httpSession.getAttribute(attributeName);
+		return session.getAttribute(encodeKey(String.valueOf(key)));
 	}
 
 	@Override
 	public boolean isEmpty() {
-		Iterator<String> iterator = new PortletSessionAttributeNameIterator();
+		Enumeration<String> enumeration = getAttributeNames(false);
 
-		return !iterator.hasNext();
+		return !enumeration.hasMoreElements();
 	}
 
 	@Override
 	public Set<String> keySet() {
-		Set<String> keySet = new LinkedHashSet<>();
-
-		Iterator<String> iterator = new PortletSessionAttributeNameIterator();
-
-		while (iterator.hasNext()) {
-			keySet.add(iterator.next());
-		}
-
-		return keySet;
+		return Collections.unmodifiableSet(
+			SetUtil.fromEnumeration(getAttributeNames(true)));
 	}
 
 	@Override
@@ -151,10 +144,10 @@ public class PortletSessionAttributeMap implements Map<String, Object> {
 	public int size() {
 		int size = 0;
 
-		Iterator<String> iterator = new PortletSessionAttributeNameIterator();
+		Enumeration<String> enumeration = getAttributeNames(false);
 
-		while (iterator.hasNext()) {
-			iterator.next();
+		while (enumeration.hasMoreElements()) {
+			enumeration.nextElement();
 
 			size++;
 		}
@@ -166,84 +159,66 @@ public class PortletSessionAttributeMap implements Map<String, Object> {
 	public Collection<Object> values() {
 		List<Object> attributeValues = new ArrayList<>();
 
-		Iterator<String> iterator = new PortletSessionAttributeNameIterator();
+		Enumeration<String> enumeration = getAttributeNames(false);
 
-		while (iterator.hasNext()) {
-			String attributeName = iterator.next();
-
-			Object attributeValue = get(attributeName);
-
-			attributeValues.add(attributeValue);
+		while (enumeration.hasMoreElements()) {
+			attributeValues.add(
+				session.getAttribute(enumeration.nextElement()));
 		}
 
 		return attributeValues;
 	}
 
-	protected class PortletSessionAttributeNameIterator
-		implements Iterator<String> {
-
-		public PortletSessionAttributeNameIterator() {
-			_attributeNames = _httpSession.getAttributeNames();
-
-			advanceToNext();
+	protected String encodeKey(String key) {
+		if (scopePrefix == null) {
+			return key;
 		}
 
-		@Override
-		public boolean hasNext() {
-			if (_next != null) {
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public String next() {
-			if (_next == null) {
-				throw new NoSuchElementException();
-			}
-
-			String next = _next;
-
-			advanceToNext();
-
-			return next;
-		}
-
-		@Override
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-
-		protected void advanceToNext() {
-			while (_attributeNames.hasMoreElements()) {
-				String attributeName = _attributeNames.nextElement();
-
-				if (_attributeNamespaceLength == 0) {
-					_next = attributeName;
-
-					return;
-				}
-
-				if ((attributeName.length() > _attributeNamespaceLength) &&
-					attributeName.startsWith(_attributeNamespace)) {
-
-					_next = attributeName.substring(_attributeNamespaceLength);
-
-					return;
-				}
-			}
-
-			_next = null;
-		}
-
-		private final Enumeration<String> _attributeNames;
-		private String _next;
-
+		return scopePrefix.concat(key);
 	}
 
-	private final String _attributeNamespace;
-	private final int _attributeNamespaceLength;
-	private final HttpSession _httpSession;
+	protected Enumeration<String> getAttributeNames(boolean removePrefix) {
+		Enumeration<String> enumeration = session.getAttributeNames();
+
+		if (scopePrefix == null) {
+			return enumeration;
+		}
+
+		return new MappingEnumeration<>(
+			enumeration,
+			new AttributeNameMapper(scopePrefix, removePrefix));
+	}
+
+	protected final String scopePrefix;
+	protected final HttpSession session;
+
+	protected static class AttributeNameMapper
+		implements Mapper<String, String> {
+
+		@Override
+		public String map(String attributeName) {
+			if (attributeName.startsWith(_attributeNamespace)) {
+				if (_removePrefix) {
+					return attributeName.substring(
+						_attributeNamespace.length());
+				}
+
+				return attributeName;
+			}
+
+			return null;
+		}
+
+		protected AttributeNameMapper(
+			String attributeNamespace, boolean removePrefix) {
+
+			_attributeNamespace = attributeNamespace;
+			_removePrefix = removePrefix;
+		}
+
+		private final String _attributeNamespace;
+		private final boolean _removePrefix;
+
+	}
 
 }

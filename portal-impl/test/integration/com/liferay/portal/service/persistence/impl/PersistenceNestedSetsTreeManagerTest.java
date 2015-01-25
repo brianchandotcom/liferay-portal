@@ -230,11 +230,10 @@ public class PersistenceNestedSetsTreeManagerTest {
 	public void testError() {
 		_sessionFactoryInvocationHandler.setFailOpenSession(true);
 
-		CaptureAppender captureAppender =
-			Log4JLoggerTestUtil.configureLog4JLogger(
-				BasePersistenceImpl.class.getName(), Level.OFF);
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					BasePersistenceImpl.class.getName(), Level.OFF)) {
 
-		try {
 			try {
 				_nestedSetsTreeManager.doCountAncestors(0, 0, 0);
 
@@ -327,8 +326,6 @@ public class PersistenceNestedSetsTreeManagerTest {
 			}
 		}
 		finally {
-			captureAppender.close();
-
 			_sessionFactoryInvocationHandler.setFailOpenSession(false);
 		}
 	}

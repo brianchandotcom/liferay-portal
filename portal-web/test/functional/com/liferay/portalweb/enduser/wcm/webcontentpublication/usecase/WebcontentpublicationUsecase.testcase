@@ -44,7 +44,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-52502" name="AddAndEditAssetsViaVirtualHostOrganizations" priority="4">
+	<command name="AddAndEditAssetsViaVirtualHostOrganizations" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

@@ -228,7 +228,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-12828" name="ADTDMMediaGallery" priority="3">
+	<command known-issues="LIFERAYQA-9807" name="ADTDMMediaGallery" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">

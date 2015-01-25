@@ -45,7 +45,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-6795" name="AddNewWebContentViaAddContentPanel" priority="5">
+	<command name="AddNewWebContentViaAddContentPanel" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Page" />
 		</execute>
@@ -115,7 +115,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-41756" name="AddWebContentPortalScopeCurrentPage" priority="5">
+	<command name="AddWebContentPortalScopeCurrentPage" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page1" />
 		</execute>

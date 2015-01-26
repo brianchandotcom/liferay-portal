@@ -29,11 +29,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(
-	service = WikiEngine.class,
 	property = {
 		"enabled=false", "format=text",
 		"edit.page=/html/portlet/wiki/edit/plain_text.jsp",
-	}
+	},
+	service = WikiEngine.class
 )
 public class TextEngine implements WikiEngine {
 

@@ -48,13 +48,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Jonathan Potter
  */
 @Component(
-	service = WikiEngine.class,
 	property = {
 		"enabled=true", "format=mediawiki",
 		"edit.page=/html/portlet/wiki/edit/wiki.jsp",
 		"help.page=/html/portlet/wiki/help/mediawiki.jsp",
 		"help.url=http://www.mediawiki.org/wiki/Help:Formatting"
-	}
+	},
+	service = WikiEngine.class
 )
 public class MediaWikiEngine implements WikiEngine {
 

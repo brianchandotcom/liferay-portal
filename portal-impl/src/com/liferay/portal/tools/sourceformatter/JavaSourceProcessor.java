@@ -112,6 +112,76 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected static void checkAnnotationParameters(
+		String fileName, String javaTermName, String annotation) {
+
+		int x = annotation.indexOf(StringPool.OPEN_PARENTHESIS);
+
+		String annotationParameters = stripQuotes(
+			annotation.substring(x + 1), CharPool.QUOTE);
+
+		x = -1;
+		int y = -1;
+
+		String previousParameterName = StringPool.BLANK;
+
+		while (true) {
+			x = annotationParameters.indexOf(StringPool.EQUAL, x + 1);
+
+			if (x == -1) {
+				return;
+			}
+
+			if (Validator.isNotNull(previousParameterName)) {
+				y = annotationParameters.lastIndexOf(StringPool.COMMA, x);
+
+				if (y == -1) {
+					return;
+				}
+			}
+
+			String parameterName = StringUtil.trim(
+				annotationParameters.substring(y + 1, x));
+
+			if (Validator.isNull(previousParameterName) ||
+				(previousParameterName.compareTo(parameterName) <= 0)) {
+
+				previousParameterName = parameterName;
+
+				continue;
+			}
+
+			x = annotation.indexOf(StringPool.AT);
+			y = annotation.indexOf(StringPool.OPEN_PARENTHESIS);
+
+			if ((x == -1) || (x > y)) {
+				return;
+			}
+
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("sort: ");
+
+			if (Validator.isNotNull(javaTermName)) {
+				sb.append(javaTermName);
+				sb.append(StringPool.POUND);
+			}
+
+			String annotationName = annotation.substring(x, y);
+
+			sb.append(annotationName);
+
+			sb.append(StringPool.POUND);
+			sb.append(parameterName);
+			sb.append(StringPool.SPACE);
+			sb.append(fileName);
+
+			processErrorMessage(fileName, sb.toString());
+
+			return;
+		}
+	}
+
 	protected static int getLeadingTabCount(String line) {
 		int leadingTabCount = 0;
 
@@ -124,7 +194,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return leadingTabCount;
 	}
 
-	protected static String sortAnnotations(String content, String indent)
+	protected static String sortAnnotations(
+			String fileName, String javaTermName, String content, String indent)
 		throws IOException {
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -140,7 +211,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return content;
 			}
 
-			if (StringUtil.count(line, StringPool.TAB) == indent.length()) {
+			if ((StringUtil.count(line, StringPool.TAB) == indent.length()) &&
+				!line.startsWith(indent + StringPool.CLOSE_PARENTHESIS)) {
+
+				if (Validator.isNotNull(annotation) &&
+					annotation.contains(StringPool.OPEN_PARENTHESIS)) {
+
+					checkAnnotationParameters(
+						fileName, javaTermName, annotation);
+				}
+
 				if (Validator.isNotNull(previousAnnotation) &&
 					(previousAnnotation.compareTo(annotation) > 0)) {
 
@@ -149,7 +229,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					content = StringUtil.replaceLast(
 						content, annotation, previousAnnotation);
 
-					return sortAnnotations(content, indent);
+					return sortAnnotations(
+						fileName, javaTermName, content, indent);
 				}
 
 				if (line.startsWith(indent + StringPool.AT)) {
@@ -717,7 +798,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			break;
 		}
 
-		newContent = sortAnnotations(newContent, StringPool.BLANK);
+		newContent = sortAnnotations(
+			fileName, StringPool.BLANK, newContent, StringPool.BLANK);
 
 		Matcher matcher = _logPattern.matcher(newContent);
 

@@ -1390,7 +1390,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected String stripLine(
+	protected static String stripLine(
 		String s, char startDelimeter, char endDelimeter) {
 
 		boolean insideDelimeters = false;
@@ -1432,7 +1432,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return sb.toString();
 	}
 
-	protected String stripQuotes(String s, char delimeter) {
+	protected static String stripQuotes(String s, char delimeter) {
 		return stripLine(s, delimeter, delimeter);
 	}
 

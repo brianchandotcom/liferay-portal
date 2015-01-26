@@ -984,6 +984,12 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
+		// WCM-202
+
+		if (line.contains("No score point assigners available")) {
+			return true;
+		}
+
 		if (Validator.equals(
 				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
 			Validator.equals(

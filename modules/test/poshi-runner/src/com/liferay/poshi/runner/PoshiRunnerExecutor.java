@@ -27,8 +27,7 @@ import org.dom4j.Element;
  */
 public class PoshiRunnerExecutor {
 
-	public static Object invoker(
-			Method method, Object obj, String[] parameters, String methodName)
+	public static Object invoker(Method method, Object obj, String[] parameters)
 		throws Exception {
 
 		int parameterCount = 0;
@@ -48,10 +47,6 @@ public class PoshiRunnerExecutor {
 			return invokedObject;
 		}
 		else if (parameterCount == 2) {
-			if (methodName.equals("clickAt") && (parameters[1] == null)) {
-				parameters[1] = "";
-			}
-
 			Object invokedObject = method.invoke(
 				obj, parameters[0], parameters[1]);
 
@@ -69,44 +64,40 @@ public class PoshiRunnerExecutor {
 
 	public static void runSeleniumElement(Element element) throws Exception {
 		String argument1 = element.attributeValue("argument1");
+		String argument2 = element.attributeValue("argument2");
+		String argument3 = element.attributeValue("argument3");
 		String selenium = element.attributeValue("selenium");
 
 		int x = PoshiRunnerContext.getSeleniumParameterCount(selenium);
 
-		Object obj = _liferaySelenium;
-
-		Class clazz = obj.getClass();
+		Class clazz = _liferaySelenium.getClass();
 
 		if (x == 0) {
 			Method method = clazz.getMethod(selenium, null);
 
-			invoker(method, obj, new String[] {}, selenium);
+			invoker(method, _liferaySelenium, new String[] {});
 		}
 		else if (x == 1) {
 			Method method = clazz.getMethod(
 				selenium, new Class[] {String.class});
 
-			invoker(method, obj, new String[] {argument1}, selenium);
+			invoker(method, _liferaySelenium, new String[] {argument1});
 		}
 		else if (x == 2) {
-			String argument2 = element.attributeValue("argument2");
-
 			Method method = clazz.getMethod(
 				selenium, new Class[] {String.class, String.class});
 
-			invoker(method, obj, new String[] {argument1, argument2}, selenium);
+			invoker(
+				method, _liferaySelenium, new String[] {argument1, argument2});
 		}
 		else if (x == 3) {
-			String argument2 = element.attributeValue("argument2");
-			String argument3 = element.attributeValue("argument3");
-
 			Method method = clazz.getMethod(
 				selenium,
 				new Class[] {String.class, String.class, String.class});
 
 			invoker(
-				method, obj, new String[] {argument1, argument2, argument3},
-				selenium);
+				method, _liferaySelenium,
+				new String[] {argument1, argument2, argument3});
 		}
 	}
 

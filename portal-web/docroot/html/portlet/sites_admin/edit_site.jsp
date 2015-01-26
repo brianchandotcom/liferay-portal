@@ -105,6 +105,12 @@ if (!trashEnabled && ArrayUtil.contains(advancedSections, "recycle-bin")) {
 	advancedSections = ArrayUtil.remove(advancedSections, "recycle-bin");
 }
 
+String[] portletRatingsPortletIds = PortletRatingsDefinitionUtil.getPortletIds();
+
+if (ArrayUtil.isEmpty(portletRatingsPortletIds) && ArrayUtil.contains(miscellaneousSections, "ratings")) {
+	miscellaneousSections = ArrayUtil.remove(miscellaneousSections, "ratings");
+}
+
 if ((group != null) && group.isCompany()) {
 	mainSections = ArrayUtil.remove(mainSections, "categorization");
 	mainSections = ArrayUtil.remove(mainSections, "site-url");

@@ -14,12 +14,12 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_publisher/init.jsp" %>
+<%@ include file="/html/portlet/asset_browser/init.jsp" %>
 
 <%
-AssetSearch searchContainer = (AssetSearch)request.getAttribute("liferay-ui:search:searchContainer");
+AssetBrowserSearch searchContainer = (AssetBrowserSearch)request.getAttribute("liferay-ui:search:searchContainer");
 
-AssetDisplayTerms displayTerms = (AssetDisplayTerms)searchContainer.getDisplayTerms();
+AssetBrowserDisplayTerms displayTerms = (AssetBrowserDisplayTerms)searchContainer.getDisplayTerms();
 
 long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selectedGroupIds"), 0L);
 %>
@@ -30,15 +30,15 @@ long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selecte
 	id="toggle_id_asset_search"
 >
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= AssetDisplayTerms.TITLE %>" size="20" type="text" value="<%= displayTerms.getTitle() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= AssetBrowserDisplayTerms.TITLE %>" size="20" type="text" value="<%= displayTerms.getTitle() %>" />
 
-		<aui:input inlineField="<%= true %>" name="<%= AssetDisplayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= AssetBrowserDisplayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
 
-		<aui:input inlineField="<%= true %>" name="<%= AssetDisplayTerms.USER_NAME %>" size="20" type="text" value="<%= displayTerms.getUserName() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= AssetBrowserDisplayTerms.USER_NAME %>" size="20" type="text" value="<%= displayTerms.getUserName() %>" />
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:select inlineField="<%= true %>" label="my-sites" name="<%= AssetDisplayTerms.GROUP_ID %>">
+		<aui:select inlineField="<%= true %>" label="my-sites" name="<%= AssetBrowserDisplayTerms.GROUP_ID %>">
 
 			<%
 			for (long groupId : selectedGroupIds) {

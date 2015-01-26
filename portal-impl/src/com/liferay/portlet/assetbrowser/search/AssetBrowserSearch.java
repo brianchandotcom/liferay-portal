@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.search;
+package com.liferay.portlet.assetbrowser.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -27,7 +27,7 @@ import javax.portlet.PortletURL;
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
-public class AssetSearch extends SearchContainer<AssetEntry> {
+public class AssetBrowserSearch extends SearchContainer<AssetEntry> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-results";
 
@@ -41,28 +41,32 @@ public class AssetSearch extends SearchContainer<AssetEntry> {
 		headerNames.add("scope");
 	}
 
-	public AssetSearch(
+	public AssetBrowserSearch(
 		PortletRequest portletRequest, int delta, PortletURL iteratorURL) {
 
 		super(
-			portletRequest, new AssetDisplayTerms(portletRequest),
-			new AssetSearchTerms(portletRequest), DEFAULT_CUR_PARAM, delta,
-			iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
+			portletRequest, new AssetBrowserDisplayTerms(portletRequest),
+			new AssetBrowserSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
+			delta, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 
-		AssetDisplayTerms displayTerms = (AssetDisplayTerms)getDisplayTerms();
+		AssetBrowserDisplayTerms displayTerms =
+			(AssetBrowserDisplayTerms)getDisplayTerms();
 
 		iteratorURL.setParameter(
-			AssetDisplayTerms.DESCRIPTION, displayTerms.getDescription());
+			AssetBrowserDisplayTerms.DESCRIPTION,
+			displayTerms.getDescription());
 		iteratorURL.setParameter(
-			AssetDisplayTerms.GROUP_ID,
+			AssetBrowserDisplayTerms.GROUP_ID,
 			String.valueOf(displayTerms.getGroupId()));
 		iteratorURL.setParameter(
-			AssetDisplayTerms.TITLE, displayTerms.getTitle());
+			AssetBrowserDisplayTerms.TITLE, displayTerms.getTitle());
 		iteratorURL.setParameter(
-			AssetDisplayTerms.USER_NAME, displayTerms.getUserName());
+			AssetBrowserDisplayTerms.USER_NAME, displayTerms.getUserName());
 	}
 
-	public AssetSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
+	public AssetBrowserSearch(
+		PortletRequest portletRequest, PortletURL iteratorURL) {
+
 		this(portletRequest, DEFAULT_DELTA, iteratorURL);
 	}
 

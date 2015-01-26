@@ -349,8 +349,23 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getEntries(
+		long[] groupIds, long[] classNameIds, java.lang.String keywords,
+		java.lang.String userName, java.lang.String title,
+		java.lang.String description, boolean advancedSearch,
+		boolean andOperator, int start, int end, java.lang.String orderByCol1,
+		java.lang.String orderByCol2, java.lang.String orderByType1,
+		java.lang.String orderByType2);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(
 		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(long[] groupIds, long[] classNameIds,
+		java.lang.String keywords, java.lang.String userName,
+		java.lang.String title, java.lang.String description,
+		boolean advancedSearch, boolean andOperator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetEntry getEntry(

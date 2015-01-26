@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.search;
+package com.liferay.portlet.assetbrowser.search;
 
 import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,9 +23,9 @@ import javax.portlet.PortletRequest;
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
-public class AssetSearchTerms extends AssetDisplayTerms {
+public class AssetBrowserSearchTerms extends AssetBrowserDisplayTerms {
 
-	public AssetSearchTerms(PortletRequest portletRequest) {
+	public AssetBrowserSearchTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
 		description = DAOParamUtil.getString(portletRequest, DESCRIPTION);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.search;
+package com.liferay.portlet.assetbrowser.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -23,7 +23,7 @@ import javax.portlet.PortletRequest;
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
-public class AssetDisplayTerms extends DisplayTerms {
+public class AssetBrowserDisplayTerms extends DisplayTerms {
 
 	public static final String DESCRIPTION = "description";
 
@@ -33,7 +33,7 @@ public class AssetDisplayTerms extends DisplayTerms {
 
 	public static final String USER_NAME = "user-name";
 
-	public AssetDisplayTerms(PortletRequest portletRequest) {
+	public AssetBrowserDisplayTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
 		description = ParamUtil.getString(portletRequest, DESCRIPTION);

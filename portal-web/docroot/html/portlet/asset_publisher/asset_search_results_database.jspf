@@ -15,11 +15,11 @@
 --%>
 
 <%
-int assetEntriesTotal = AssetPublisherUtil.getAssetEntriesCount(groupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+int assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(groupIds, new long[]{assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator());
 
 searchContainer.setTotal(assetEntriesTotal);
 
-List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(groupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), "modifiedDate", "title", "DESC", "ASC");
+List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(groupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), "modifiedDate", "title", "DESC", "ASC");
 
 searchContainer.setResults(assetEntries);
 %>

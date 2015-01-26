@@ -437,9 +437,31 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getEntries(entryQuery);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getEntries(
+		long[] groupIds, long[] classNameIds, java.lang.String keywords,
+		java.lang.String userName, java.lang.String title,
+		java.lang.String description, boolean advancedSearch,
+		boolean andOperator, int start, int end, java.lang.String orderByCol1,
+		java.lang.String orderByCol2, java.lang.String orderByType1,
+		java.lang.String orderByType2) {
+		return getService()
+				   .getEntries(groupIds, classNameIds, keywords, userName,
+			title, description, advancedSearch, andOperator, start, end,
+			orderByCol1, orderByCol2, orderByType1, orderByType2);
+	}
+
 	public static int getEntriesCount(
 		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery) {
 		return getService().getEntriesCount(entryQuery);
+	}
+
+	public static int getEntriesCount(long[] groupIds, long[] classNameIds,
+		java.lang.String keywords, java.lang.String userName,
+		java.lang.String title, java.lang.String description,
+		boolean advancedSearch, boolean andOperator) {
+		return getService()
+				   .getEntriesCount(groupIds, classNameIds, keywords, userName,
+			title, description, advancedSearch, andOperator);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetEntry getEntry(

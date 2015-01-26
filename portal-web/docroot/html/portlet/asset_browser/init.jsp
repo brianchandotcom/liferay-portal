@@ -16,8 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.assetpublisher.search.AssetSearch" %><%@
-page import="com.liferay.portlet.assetpublisher.search.AssetSearchTerms" %><%@
-page import="com.liferay.portlet.assetpublisher.util.AssetPublisherUtil" %>
+<%@ page import="com.liferay.portlet.assetbrowser.search.AssetBrowserDisplayTerms" %><%@
+page import="com.liferay.portlet.assetbrowser.search.AssetBrowserSearch" %><%@
+page import="com.liferay.portlet.assetbrowser.search.AssetBrowserSearchTerms" %>
 
 <%@ include file="/html/portlet/asset_browser/init-ext.jsp" %>

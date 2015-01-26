@@ -323,8 +323,9 @@ public class DDLImpl implements DDL {
 
 		String viewMode = Constants.VIEW;
 
-		if(Validator.isNotNull(renderRequest)) {
-			viewMode = ParamUtil.getString(renderRequest, "viewMode", Constants.VIEW);
+		if (renderRequest != null) {
+			viewMode = ParamUtil.getString(
+				renderRequest, "viewMode", Constants.VIEW);
 		}
 
 		contextObjects.put("viewMode", viewMode);

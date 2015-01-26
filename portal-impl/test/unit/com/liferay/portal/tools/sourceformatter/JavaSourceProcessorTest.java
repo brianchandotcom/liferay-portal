@@ -166,6 +166,16 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSortAnnotationParameters() throws Exception {
+		test(
+			"SortAnnotationParameters.testjava",
+			new String[] {
+				"sort: @Component#immediate",
+				"sort: method#@Transactional#propagation",
+			});
+	}
+
+	@Test
 	public void testSortAnnotations() throws Exception {
 		test("SortAnnotations.testjava");
 	}

@@ -123,7 +123,9 @@ public class ClusterExecutorImpl
 		for (Address address : addresses) {
 			ClusterNode clusterNode = _liveInstances.get(address);
 
-			clusterNodeIds.add(clusterNode.getClusterNodeId());
+			if (clusterNode != null) {
+				clusterNodeIds.add(clusterNode.getClusterNodeId());
+			}
 		}
 
 		FutureClusterResponses futureClusterResponses =
@@ -464,7 +466,7 @@ public class ClusterExecutorImpl
 		Address previousAddress = _clusterNodeAddresses.put(
 			clusterNode.getClusterNodeId(), joinAddress);
 
-		if ((previousAddress == null) && !_localAddress.equals(joinAddress)) {
+		if (previousAddress == null) {
 			ClusterEvent clusterEvent = ClusterEvent.join(clusterNode);
 
 			// PLACEHOLDER

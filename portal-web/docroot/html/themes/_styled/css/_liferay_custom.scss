@@ -23,6 +23,12 @@
 	@extend .alert-danger;
 }
 
+/* ---------- Alert messages ---------- */
+
+.portlet-msg-alert {
+	@extend .alert-warning;
+}
+
 /* ---------- Success messages ---------- */
 
 .portlet-msg-success {
@@ -34,6 +40,7 @@
 .navbar .nav li > a {
 	@include word-wrap(break-all);
 }
+
 /* ---------- Status ---------- */
 
 .entry-status {

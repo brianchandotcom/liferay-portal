@@ -10,7 +10,7 @@
 	<property name="alloyeditor.version" value="0.2.5" />
 	<property name="ckeditor.file" value="ckeditor_4.4.5_liferay.zip" />
 	<property name="scayt.file" value="scayt_4.4.5.zip" />
-	<property name="tinymce.file" value="tinymce_3.5.6.zip" />
+	<property name="tinymce.file" value="tinymce_4.1.7.zip" />
 	<property name="vaadin.file" value="vaadin-6.8.12-liferay.zip" />
 	<property name="wsc.file" value="wsc_4.4.5.zip" />
 
@@ -743,58 +743,6 @@
 	<target name="build-tinymce">
 		<if>
 			<not>
-				<available file="docroot/html/js/editor/tiny_mce_diffs/langs/en.js" />
-			</not>
-			<then>
-
-				<!--
-				Delete docroot/html/js/editor/tiny_mce_diffs/langs/en.js and rerun this task to
-				download the latest language files from TinyMCE's website.
-
-				This task will also delete the directory docroot/html/js/editor/tiny_mce to
-				ensure that ${tinymce.file} is properly unzipped.
-				-->
-
-				<delete dir="docroot/html/js/editor/tiny_mce" />
-
-				<script classpathref="project.classpath" language="beanshell">
-					<![CDATA[
-						import com.liferay.portal.kernel.util.GetterUtil;
-
-						import java.io.File;
-
-						import java.net.URL;
-
-						import java.util.StringTokenizer;
-
-						import org.apache.tools.ant.taskdefs.Get;
-
-						StringTokenizer st = new StringTokenizer("languages=[ar,ar,133];[nb,nb,207];[bg,bg,136];[es_CA,ca,140];[hr,hr,158];[cs,cs,142];[nl,nl,176];[en_GB,en,132];[et,et,149];[fi,fi,152];[fr,fr,153];[es_GL,gl,154];[de,de,145];[el,el,147];[iw,he,156];[hi_IN,hi,157];[hu,hu,159];[in,id,162];[it,it,164];[ja,ja,165];[ko,ko,205];[fa,fa,151];[pt,pl,179];[pt_PT,pt,181];[ro,ro,182];[ru,ru,183];[sr,sr,190];[sk,sk,187];[sl,sl,188];[es_ES,es,148];[sv,sv,191];[tr,tr,196];[uk,uk,199];[vi,vi,201];[zh_TW,zh-tw,221];[zh_CN,zh-cn,216]",";");
-
-						while (st.hasMoreElements()) {
-							String lang = st.nextToken();
-
-							int x = lang.indexOf(",");
-							int y = lang.lastIndexOf(",");
-
-							//String liferayLanguageCode = lang.substring(1, x);
-							String tinyMceLanguageCode = lang.substring(x + 1, y);
-							int tinyMceLanguageId = GetterUtil.getInteger(lang.substring(y + 1));
-
-							Get get = new Get();
-
-							get.setDest(new File("docroot/html/js/editor/tiny_mce_diffs/langs/" + tinyMceLanguageCode + ".js"));
-							get.setSrc(new URL("http://www.tinymce.com/i18n/index.php?ctrl=export&act=js&pr_id=7&la_id=" + tinyMceLanguageId));
-
-							get.execute();
-						}
-					]]>
-				</script>
-			</then>
-		</if>
-
-		<if>
-			<not>
 				<uptodate
 					srcfile="third-party/${tinymce.file}"
 					targetfile="docroot/html/js/editor/tiny_mce"
@@ -806,7 +754,11 @@
 
 				<unzip src="third-party/${tinymce.file}" dest="docroot/html/js/editor" />
 
-				<move file="docroot/html/js/editor/tinymce/jscripts/tiny_mce" todir="docroot/html/js/editor" />
+				<move todir="docroot/html/js/editor/tiny_mce" preservelastmodified="true">
+					<fileset dir="docroot/html/js/editor/tinymce/js/tinymce">
+						<include name="*/**" />
+					</fileset>
+				</move>
 
 				<copy todir="docroot/html/js/editor/tiny_mce" overwrite="true" preservelastmodified="true">
 					<fileset dir="docroot/html/js/editor/tiny_mce_diffs" />
@@ -859,7 +811,7 @@
 		<delete dir="docroot/html/js/aui" />
 		<delete dir="docroot/html/js/editor/alloyeditor" />
 		<delete dir="docroot/html/js/editor/ckeditor" />
-		<delete dir="docroot/html/js/editor/tinymce" />
+		<delete dir="docroot/html/js/editor/tiny_mce" />
 		<delete dir="docroot/html/portal/aui" />
 		<delete dir="docroot/html/themes/_unstyled/images/aui/" />
 		<delete dir="docroot/html/themes/classic/color_schemes" />

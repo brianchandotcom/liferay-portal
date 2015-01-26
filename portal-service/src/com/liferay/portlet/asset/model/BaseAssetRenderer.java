@@ -36,12 +36,16 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.provider.DisplayPortletProvider;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletMode;
@@ -103,8 +107,8 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	}
 
 	@Override
-	public DDMFieldReader getDDMFieldReader() {
-		return _nullDDMFieldReader;
+	public DDMFormValuesReader getDDMFormValuesReader() {
+		return _nullDDMFormValuesReader;
 	}
 
 	@Override
@@ -440,8 +444,8 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	private static final String[] _AVAILABLE_LANGUAGE_IDS = new String[0];
 
-	private static final DDMFieldReader _nullDDMFieldReader =
-		new NullDDMFieldReader();
+	private static final DDMFormValuesReader _nullDDMFormValuesReader =
+		new NullDDMFormValuesReader();
 	private static final ServiceTrackerMap<String, DisplayPortletProvider>
 		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
 			DisplayPortletProvider.class, "model.class.name");
@@ -453,16 +457,20 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	private AssetRendererFactory _assetRendererFactory;
 	private int _assetRendererType = AssetRendererFactory.TYPE_LATEST_APPROVED;
 
-	private static final class NullDDMFieldReader implements DDMFieldReader {
+	private static final class NullDDMFormValuesReader
+		implements DDMFormValuesReader {
 
 		@Override
-		public Fields getFields() {
-			return new Fields();
+		public List<DDMFormFieldValue> getDDMFormFieldValues(
+				String ddmFormFieldType)
+			throws PortalException {
+
+			return Collections.emptyList();
 		}
 
 		@Override
-		public Fields getFields(String ddmType) {
-			return getFields();
+		public DDMFormValues getDDMFormValues() {
+			return new DDMFormValues(new DDMForm());
 		}
 
 	}

@@ -17,14 +17,13 @@ package com.liferay.portlet.documentlibrary.asset;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.service.ClassNameLocalServiceUtil;
-import com.liferay.portlet.asset.model.BaseDDMFieldReader;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.BaseDDMFormValuesReader;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
 import java.util.List;
@@ -32,9 +31,9 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-public class DLFileEntryDDMFieldReader extends BaseDDMFieldReader {
+public class DLFileEntryDDMFormValuesReader extends BaseDDMFormValuesReader {
 
-	public DLFileEntryDDMFieldReader(
+	public DLFileEntryDDMFormValuesReader(
 		FileEntry dlFileEntry, FileVersion fileVersion) {
 
 		_fileEntry = dlFileEntry;
@@ -42,35 +41,37 @@ public class DLFileEntryDDMFieldReader extends BaseDDMFieldReader {
 	}
 
 	@Override
-	public Fields getFields() throws PortalException {
-		Fields fields = new Fields();
+	public DDMFormValues getDDMFormValues() throws PortalException {
+		DLFileEntryMetadata dlFileEntryMetadata = getDLFileEntryMetadata();
 
-		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-			DLFileEntryMetadata.class);
+		if (dlFileEntryMetadata == null) {
+			return new DDMFormValues(null);
+		}
 
+		return StorageEngineUtil.getDDMFormValues(
+			dlFileEntryMetadata.getDDMStorageId());
+	}
+
+	protected DLFileEntryMetadata getDLFileEntryMetadata() {
 		List<DDMStructure> ddmStructures =
 			DDMStructureLocalServiceUtil.getClassStructures(
-				_fileEntry.getCompanyId(), classNameId);
+				_fileEntry.getCompanyId(),
+				PortalUtil.getClassNameId(DLFileEntryMetadata.class));
+
+		DLFileEntryMetadata dlFileEntryMetadata = null;
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			DLFileEntryMetadata dlFileEntryMetadata =
+			dlFileEntryMetadata =
 				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
 					ddmStructure.getStructureId(),
 					_fileVersion.getFileVersionId());
 
-			if (dlFileEntryMetadata == null) {
-				continue;
-			}
-
-			Fields ddmStorageFields = StorageEngineUtil.getFields(
-				dlFileEntryMetadata.getDDMStorageId());
-
-			for (Field ddmStorageField : ddmStorageFields) {
-				fields.put(ddmStorageField);
+			if (dlFileEntryMetadata != null) {
+				break;
 			}
 		}
 
-		return fields;
+		return dlFileEntryMetadata;
 	}
 
 	private final FileEntry _fileEntry;

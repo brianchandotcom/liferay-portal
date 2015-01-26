@@ -12,28 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.asset.model;
+package com.liferay.portlet.dynamicdatalists;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatalists.asset.DDLRecordDDMFormValuesReaderTest;
+import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetImplTest;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * @author Adolfo Pérez
+ * @author Marcellus Tavares
  */
-public abstract class BaseDDMFieldReader implements DDMFieldReader {
-
-	@Override
-	public Fields getFields(String ddmType) throws PortalException {
-		Fields filteredFields = new Fields();
-
-		for (Field field : getFields()) {
-			if (ddmType.equals(field.getDataType())) {
-				filteredFields.put(field);
-			}
-		}
-
-		return filteredFields;
-	}
-
+@RunWith(Suite.class)
+@SuiteClasses(
+	{
+		DDLRecordDDMFormValuesReaderTest.class, DDLRecordSetImplTest.class
+	})
+public class DDLTestSuite {
 }

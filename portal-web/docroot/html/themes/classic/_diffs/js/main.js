@@ -1,5 +1,7 @@
 AUI().ready(
-	'liferay-hudcrumbs', 'liferay-navigation-interaction', 'liferay-sign-in-modal',
+	'liferay-hudcrumbs',
+	'liferay-navigation-interaction',
+	'liferay-sign-in-modal',
 	function(A) {
 		var navigation = A.one('#navigation');
 

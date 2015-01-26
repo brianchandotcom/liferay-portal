@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,27 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.portlet.assetbrowser.provider;
 
-<%@ page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
-page import="com.liferay.portlet.asset.provider.PortletProvider" %><%@
-page import="com.liferay.portlet.asset.provider.PortletProviderUtil" %><%@
-page import="com.liferay.taglib.aui.AUIUtil" %>
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.asset.provider.BrowsePortletProvider;
+import com.liferay.portlet.asset.provider.PortletProvider;
 
-<%@ page import="java.util.regex.Matcher" %><%@
-page import="java.util.regex.Pattern" %>
+/**
+ * @author Eudaldo Alonso
+ */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=" + PortletProvider.ANY_CLASSNAME
+	}
+)
+public class AssetBrowserPortletProvider implements BrowsePortletProvider {
 
-<%@ include file="/html/portlet/dockbar/init-ext.jsp" %>
+	@Override
+	public String getPortletId() {
+		return PortletKeys.ASSET_BROWSER;
+	}
+
+}

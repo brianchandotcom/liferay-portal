@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.portlet.asset.provider;
 
-<%@ page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
-page import="com.liferay.portlet.asset.provider.PortletProvider" %><%@
-page import="com.liferay.portlet.asset.provider.PortletProviderUtil" %><%@
-page import="com.liferay.taglib.aui.AUIUtil" %>
+/**
+ * @author Eudaldo Alonso
+ */
+public interface PortletProvider {
 
-<%@ page import="java.util.regex.Matcher" %><%@
-page import="java.util.regex.Pattern" %>
+	public static final String ACTION_ADD = "add";
 
-<%@ include file="/html/portlet/dockbar/init-ext.jsp" %>
+	public static final String ACTION_BROWSE = "browse";
+
+	public static final String ACTION_VIEW = "view";
+
+	public static final String ANY_CLASSNAME = "any-classname";
+
+	public String getPortletId();
+
+}

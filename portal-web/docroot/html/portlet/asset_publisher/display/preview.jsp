@@ -72,16 +72,18 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp
 	</div>
 
 	<%
+	String portletId = PortletProviderUtil.getPortletId(assetEntry.getClassName(), PortletProvider.ACTION_ADD);
+
 	Map<String, Object> data = new HashMap<String, Object>();
 
 	data.put("class-name", assetEntry.getClassName());
 	data.put("class-pk", assetEntry.getClassPK());
 	data.put("instanceable", Boolean.TRUE);
-	data.put("portlet-id", assetRenderer.getAddToPagePortletId());
+	data.put("portlet-id", portletId);
 	data.put("title", HtmlUtil.escape(assetRenderer.getTitle(themeDisplay.getLocale())));
 	%>
 
-	<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, assetRenderer.getAddToPagePortletId(), ActionKeys.ADD_TO_PAGE) %>">
+	<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE) %>">
 		<aui:button cssClass="add-button-preview" data="<%= data %>" value="add" />
 	</c:if>
 </div>

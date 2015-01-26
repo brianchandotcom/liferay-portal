@@ -114,20 +114,22 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 						>
 
 							<%
-							PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
-
-							assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
-							assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(groupId));
-							assetBrowserURL.setParameter("eventName", eventName);
-							assetBrowserURL.setPortletMode(PortletMode.VIEW);
-							assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
 							List <AssetRendererFactory> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
 
 							for (AssetRendererFactory curRendererFactory : assetRendererFactories) {
 								if (!curRendererFactory.isSelectable()) {
 									continue;
 								}
+
+								String portletId = PortletProviderUtil.getPortletId(curRendererFactory.getClassName(), PortletProvider.ACTION_BROWSE);
+
+								PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, portletId, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
+
+								assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
+								assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(groupId));
+								assetBrowserURL.setParameter("eventName", eventName);
+								assetBrowserURL.setPortletMode(PortletMode.VIEW);
+								assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 								assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
 

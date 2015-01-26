@@ -56,6 +56,9 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.provider.AddPortletProvider;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import javax.portlet.PortletPreferences;
 
@@ -374,7 +377,28 @@ public class UpdateLayoutAction extends JSONAction {
 		assetRenderer.setAddToPagePreferences(
 			portletSetup, portletId, themeDisplay);
 
+		AddPortletProvider addPortletProvider = _serviceTrackerMap.getService(
+			className);
+
+		if (addPortletProvider == null) {
+			addPortletProvider = _serviceTrackerMap.getService(
+				AddPortletProvider.ANY_CLASSNAME);
+		}
+
+		if (addPortletProvider != null) {
+			addPortletProvider.updatePortletPreferences(
+				portletSetup, portletId, className, classPK, themeDisplay);
+		}
+
 		portletSetup.store();
+	}
+
+	private static final ServiceTrackerMap<String, AddPortletProvider>
+		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+			AddPortletProvider.class, "model.class.name");
+
+	static {
+		_serviceTrackerMap.open();
 	}
 
 }

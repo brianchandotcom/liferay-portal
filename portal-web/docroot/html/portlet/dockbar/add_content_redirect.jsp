@@ -24,6 +24,8 @@ Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 
+String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.ACTION_ADD);
+
 AssetRenderer assetRenderer = null;
 
 Map<String, Object> data = new HashMap<String, Object>();
@@ -36,7 +38,7 @@ if (Validator.isNotNull(className) && (classPK > 0)) {
 	data.put("class-name", className);
 	data.put("class-pk", classPK);
 	data.put("instanceable", true);
-	data.put("portlet-id", assetRenderer.getAddToPagePortletId());
+	data.put("portlet-id", portletId);
 }
 %>
 
@@ -46,7 +48,7 @@ if (Validator.isNotNull(className) && (classPK > 0)) {
 	<c:if test="<%= assetRenderer != null %>">
 		var Util = Liferay.Util;
 
-		<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, assetRenderer.getAddToPagePortletId(), ActionKeys.ADD_TO_PAGE) %>">
+		<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE) %>">
 			Util.getOpener().Liferay.fire(
 				'AddContent:addPortlet',
 				{

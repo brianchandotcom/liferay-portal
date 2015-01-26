@@ -21,11 +21,9 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Eudaldo Alonso
  */
-public interface DisplayPortletProvider {
+public interface AddPortletProvider extends PortletProvider {
 
-	public String getPortletId();
-
-	public void setPortletPreferences(
+	public void updatePortletPreferences(
 			PortletPreferences portletPreferences, String portletId,
 			String className, long classPK, ThemeDisplay themeDisplay)
 		throws Exception;

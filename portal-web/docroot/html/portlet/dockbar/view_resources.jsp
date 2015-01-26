@@ -113,7 +113,9 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 
 						String title = HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60));
 
-						boolean hasAddToPagePermission = PortletPermissionUtil.contains(permissionChecker, layout, assetRenderer.getAddToPagePortletId(), ActionKeys.ADD_TO_PAGE);
+						String portletId = PortletProviderUtil.getPortletId(assetEntry.getClassName(), PortletProvider.ACTION_ADD);
+
+						boolean hasAddToPagePermission = PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE);
 
 						Map<String, Object> data = new HashMap<String, Object>();
 
@@ -125,7 +127,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 						}
 
 						data.put("instanceable", true);
-						data.put("portlet-id", assetRenderer.getAddToPagePortletId());
+						data.put("portlet-id", portletId);
 						data.put("title", title);
 
 						String navItemCssClass="content-shortcut drag-content-item lfr-content-item ";

@@ -1,4 +1,4 @@
-<definition>
+<definition default="selectWindow">
 	<command name="selectWindow">
 		<execute argument1="5000" selenium="pause" />
 

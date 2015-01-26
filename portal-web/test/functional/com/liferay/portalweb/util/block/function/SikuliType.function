@@ -1,4 +1,4 @@
-<definition>
+<definition default="sikuliType">
 	<command name="sikuliType">
 		<execute selenium="sikuliType" />
 

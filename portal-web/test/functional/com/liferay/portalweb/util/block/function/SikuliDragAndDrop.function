@@ -1,4 +1,4 @@
-<definition>
+<definition default="sikuliDragAndDrop">
 	<command name="sikuliDragAndDrop">
 		<execute selenium="sikuliDragAndDrop" />
 

@@ -1,4 +1,4 @@
-<definition>
+<definition default="assertTextNotPresent">
 	<command name="assertTextNotPresent">
 		<execute selenium="waitForTextNotPresent" />
 

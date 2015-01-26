@@ -1,4 +1,4 @@
-<definition>
+<definition default="isElementPresent">
 	<command name="isElementPresent">
 		<execute selenium="isElementPresent" />
 	</command>

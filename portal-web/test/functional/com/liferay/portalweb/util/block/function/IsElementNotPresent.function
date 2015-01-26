@@ -1,4 +1,4 @@
-<definition>
+<definition default="isElementNotPresent">
 	<command name="isElementNotPresent">
 		<if>
 			<condition selenium="isElementPresent" />

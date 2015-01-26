@@ -19,32 +19,47 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CANCEL_BUTTON</td>
+	<td>CANCEL</td>
 	<td>//a[contains(@class,'btn-cancel')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW_BUTTON</td>
+	<td>DEACTIVATE</td>
+	<td>//button[contains(.,'Deactivate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE</td>
+	<td>//button[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW</td>
 	<td>//button[contains(.,'Preview')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLISH_BUTTON</td>
+	<td>PUBLISH</td>
 	<td>//button[contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_BUTTON</td>
+	<td>RESTORE</td>
+	<td>//button[contains(.,'Restore')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_AS_DRAFT_BUTTON</td>
+	<td>SAVE_AS_DRAFT</td>
 	<td>//button[contains(.,'Save as Draft')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_BUTTON</td>
+	<td>SEARCH</td>
 	<td>//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>

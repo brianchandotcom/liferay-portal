@@ -14,20 +14,18 @@
 
 package com.liferay.portal.tools.sourceformatter.dependencies;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.transaction.Transactional;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Hugo Huijser
  */
-public class SortExceptions {
+@Component(service = SortAnnotationParameters.class, immediate = true)
+public class SortAnnotationParameters {
 
-	public void method() throws RuntimeException, PortalException {
-		if (true) {
-			throw new PortalException();
-		}
-		else {
-			throw new RuntimeException();
-		}
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	public void method() {
 	}
 
 }

@@ -76,10 +76,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(
-	service = WikiImporter.class,
 	property = {
 		"importer=MediaWiki", "page=/html/portlet/wiki/import/mediawiki.jsp"
-	}
+	},
+	service = WikiImporter.class
 )
 public class MediaWikiImporter implements WikiImporter {
 

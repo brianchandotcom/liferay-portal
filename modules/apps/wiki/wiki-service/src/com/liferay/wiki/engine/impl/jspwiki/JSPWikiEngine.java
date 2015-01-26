@@ -52,10 +52,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(
-	service = WikiEngine.class,
 	property = {
 		"enabled=false", "format=creole"
-	}
+	},
+	service = WikiEngine.class
 )
 public class JSPWikiEngine implements WikiEngine {
 

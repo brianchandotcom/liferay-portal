@@ -48,11 +48,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Zsigmond Rab
  */
 @Component(
-	service = WikiEngine.class,
 	property = {
 		"enabled=true", "format=html",
 		"edit.page=/html/portlet/wiki/edit/html.jsp"
-	}
+	},
+	service = WikiEngine.class
 )
 public class HtmlEngine implements WikiEngine {
 

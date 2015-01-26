@@ -19,6 +19,8 @@
 <%
 int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH);
 
+AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
+
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
@@ -34,21 +36,6 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 	</div>
 </c:if>
 
-<%
-String summary = HtmlUtil.escape(entry.getDescription());
-
-summary = HtmlUtil.replaceNewLine(summary);
-
-if (Validator.isNull(summary)) {
-	summary = HtmlUtil.escape(entry.getSubtitle());
-	summary = HtmlUtil.replaceNewLine(summary);
-}
-
-if (Validator.isNull(summary)) {
-	summary = HtmlUtil.stripHtml(entry.getContent());
-}
-%>
-
 <div class="portlet-blogs">
 	<div class="entry-body">
 
@@ -60,6 +47,6 @@ if (Validator.isNull(summary)) {
 			<div class="cover-image-container" style="background-image: url(<%= coverImageURL %>)"></div>
 		</c:if>
 
-		<%= StringUtil.shorten(summary, abstractLength) %>
+		<%= StringUtil.shorten(HtmlUtil.stripHtml(assetRenderer.getSummary()), abstractLength) %>
 	</div>
 </div>

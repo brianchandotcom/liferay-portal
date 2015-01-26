@@ -19,14 +19,14 @@ package com.liferay.portal.security.sso;
  */
 public interface SSO {
 
-	public String getSessionExpirationRedirectUrl();
+	public String getSessionExpirationRedirectUrl(long companyId);
 
-	public String getSignInURL();
+	public String getSignInURL(long companyId, String defaultSignInURL);
 
-	public boolean isLoginRedirectRequired();
+	public boolean isLoginRedirectRequired(long companyId);
 
-	public boolean isRedirectRequired();
+	public boolean isRedirectRequired(long companyId);
 
-	public boolean isSessionRedirectOnExpire();
+	public boolean isSessionRedirectOnExpire(long companyId);
 
 }

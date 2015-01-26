@@ -15,7 +15,6 @@
 package com.liferay.util.log4j;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -45,7 +44,6 @@ import org.apache.log4j.Appender;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 import org.apache.log4j.WriterAppender;
 import org.apache.log4j.xml.DOMConfigurator;
 
@@ -158,7 +156,7 @@ public class Log4JUtil {
 			}
 		}
 		catch (Exception e) {
-			_logger.error(e);
+			_logger.error(e, e);
 		}
 	}
 
@@ -198,7 +196,7 @@ public class Log4JUtil {
 			LogFactoryUtil.setLogFactory(logFactory);
 		}
 		catch (Exception e) {
-			_logger.error(e);
+			_logger.error(e, e);
 		}
 
 		for (String name : customLogSettings.keySet()) {
@@ -287,7 +285,7 @@ public class Log4JUtil {
 			urlContent = new String(bytes, StringPool.UTF8);
 		}
 		catch (Exception e) {
-			_logger.error(e);
+			_logger.error(e, e);
 
 			return null;
 		}
@@ -327,10 +325,10 @@ public class Log4JUtil {
 			StringPool.BLANK);
 	}
 
+	private static final Logger _logger = Logger.getRootLogger();
+
 	private static final Map<String, String> _customLogSettings =
 		new ConcurrentHashMap<>();
 	private static String _liferayHome;
-
-	public static final Logger _logger = Logger.getRootLogger();
 
 }

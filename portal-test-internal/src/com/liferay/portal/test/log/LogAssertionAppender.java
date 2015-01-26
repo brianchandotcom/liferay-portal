@@ -55,9 +55,14 @@ public class LogAssertionAppender extends AppenderSkeleton {
 			ThrowableInformation throwableInformation =
 				loggingEvent.getThrowableInformation();
 
+			Throwable cause = null;
+
+			if (throwableInformation != null){
+				cause = throwableInformation.getThrowable();
+			}
+
 			LogAssertionTestRule.caughtFailure(
-				new AssertionError(
-					sb.toString(), throwableInformation.getThrowable()));
+				new AssertionError(sb.toString(), cause));
 		}
 	}
 

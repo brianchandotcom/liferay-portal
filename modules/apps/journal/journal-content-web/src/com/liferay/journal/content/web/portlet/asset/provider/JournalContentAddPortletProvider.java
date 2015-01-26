@@ -49,7 +49,7 @@ public class JournalContentAddPortletProvider implements AddPortletProvider {
 	}
 
 	@Override
-	public void setPortletPreferences(
+	public void updatePortletPreferences(
 			PortletPreferences portletPreferences, String portletId,
 			String className, long classPK, ThemeDisplay themeDisplay)
 		throws Exception {

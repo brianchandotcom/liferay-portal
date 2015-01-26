@@ -371,7 +371,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 			}
 		}
 
-		addPortletProvider.setPortletPreferences(
+		addPortletProvider.updatePortletPreferences(
 			portletPreferences, portletId, getClassName(), getClassPK(),
 			themeDisplay);
 	}

@@ -23,7 +23,7 @@ import javax.portlet.PortletPreferences;
  */
 public interface AddPortletProvider extends PortletProvider {
 
-	public void setPortletPreferences(
+	public void updatePortletPreferences(
 			PortletPreferences portletPreferences, String portletId,
 			String className, long classPK, ThemeDisplay themeDisplay)
 		throws Exception;

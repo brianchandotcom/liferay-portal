@@ -24,6 +24,7 @@ import org.junit.Test;
 
 /**
  * @author Jonathan McCann
+ * @author Sergio González
  */
 public class IntervalActionTest {
 
@@ -125,6 +126,72 @@ public class IntervalActionTest {
 		intervalAction.performActions();
 
 		Assert.assertEquals(1, _count.get());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testIntervalActionWithNegativeIncrementStart()
+		throws Exception {
+
+		final IntervalAction intervalAction = new IntervalAction(125, 200);
+
+		intervalAction.setPerformActionMethod(
+			new IntervalAction.PerformIntervalActionMethod() {
+
+				@Override
+				public void performAction(int start, int end)
+					throws PortalException {
+
+					intervalAction.incrementStart(start - end);
+				}
+
+			});
+
+		intervalAction.performActions();
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testIntervalActionWithNegativeInterval() throws Exception {
+		new IntervalAction(125, -10);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testIntervalActionWithNegativeTotal1() throws Exception {
+		new IntervalAction(-10);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testIntervalActionWithNegativeTotal2() throws Exception {
+		new IntervalAction(-10, 200);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testIntervalActionWithZeroInterval() throws Exception {
+		new IntervalAction(125, 0);
+	}
+
+	@Test
+	public void testIntervalActionWithZeroTotal() throws Exception {
+		final IntervalAction intervalAction = new IntervalAction(0);
+
+		intervalAction.setPerformActionMethod(
+			new IntervalAction.PerformIntervalActionMethod() {
+
+				@Override
+				public void performAction(int start, int end)
+					throws PortalException {
+
+					for (int i = start; i < end; i++) {
+						_count.incrementAndGet();
+					}
+
+					intervalAction.incrementStart(end - start);
+				}
+
+			});
+
+		intervalAction.performActions();
+
+		Assert.assertEquals(0, _count.get());
 	}
 
 	private final AtomicInteger _count = new AtomicInteger();

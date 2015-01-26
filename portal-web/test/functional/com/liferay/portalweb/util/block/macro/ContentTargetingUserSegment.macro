@@ -258,7 +258,7 @@
 	<command name="deleteAllCP">
 		<execute action="CPContenttargeting#click" locator-key1="CHECKBOX_ALL" />
 
-		<execute action="CPContenttargeting#click" locator-key1="DELETE_USER_SEGMENT_BUTTON" />
+		<execute action="CPContenttargeting#clickNoError" locator-key1="DELETE_USER_SEGMENT_BUTTON" />
 		<execute action="CPContenttargeting#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPContenttargeting#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

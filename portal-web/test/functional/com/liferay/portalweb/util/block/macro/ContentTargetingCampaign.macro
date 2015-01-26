@@ -109,7 +109,7 @@
 
 		<execute action="CPContenttargeting#click" locator-key1="CHECKBOX_ALL" />
 
-		<execute action="CPContenttargeting#click" locator-key1="DELETE_CAMPAIGN_BUTTON" />
+		<execute action="CPContenttargeting#clickNoError" locator-key1="DELETE_CAMPAIGN_BUTTON" />
 		<execute action="CPContenttargeting#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPContenttargeting#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -121,7 +121,7 @@
 
 		<execute action="CPContenttargeting#check" locator-key1="CAMPAIGN_TABLE_CHECKBOX" />
 		<execute action="CPContenttargeting#click" locator-key1="CAMPAIGN_TABLE_ACTIONS" />
-		<execute action="CPContenttargeting#click" locator-key1="USER_SEGMENT_TABLE_ACTIONS_MENULIST_DELETE" />
+		<execute action="CPContenttargeting#clickNoError" locator-key1="USER_SEGMENT_TABLE_ACTIONS_MENULIST_DELETE" />
 		<execute action="CPContenttargeting#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 	</command>
 
@@ -180,7 +180,7 @@
 				<for list="${trackingActionDeleteList}" param="trackingActionDelete">
 					<var name="key_trackingAction" value="${trackingActionDelete}" />
 
-					<execute action="CPContenttargetingEditcampaign#click" locator-key1="TRACKING_ACTIONS_DELETE" />
+					<execute action="CPContenttargetingEditcampaign#clickNoError" locator-key1="TRACKING_ACTIONS_DELETE" />
 					<execute action="CPContenttargetingEditcampaign#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected field(s)?" />
 				</for>
 			</then>

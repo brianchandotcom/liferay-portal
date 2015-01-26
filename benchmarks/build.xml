@@ -6,6 +6,7 @@
 	<target name="build-sample-sql">
 		<path id="sample.sql.builder.classpath">
 			<fileset dir="${project.dir}/tools/sdk/dist" includes="com.liferay.portal.tools*.jar" />
+			<fileset dir="${project.dir}/tools/sdk/dist" includes="com.liferay.wiki.*.jar" />
 			<path refid="project.classpath" />
 		</path>
 

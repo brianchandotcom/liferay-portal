@@ -156,7 +156,7 @@ public class Log4JUtil {
 			}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_logger.error(e, e);
 		}
 	}
 
@@ -196,7 +196,7 @@ public class Log4JUtil {
 			LogFactoryUtil.setLogFactory(logFactory);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_logger.error(e, e);
 		}
 
 		for (String name : customLogSettings.keySet()) {
@@ -285,7 +285,7 @@ public class Log4JUtil {
 			urlContent = new String(bytes, StringPool.UTF8);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_logger.error(e, e);
 
 			return null;
 		}
@@ -324,6 +324,8 @@ public class Log4JUtil {
 			content, "<appender-ref ref=\"" + appenderName + "\" />",
 			StringPool.BLANK);
 	}
+
+	private static final Logger _logger = Logger.getRootLogger();
 
 	private static final Map<String, String> _customLogSettings =
 		new ConcurrentHashMap<>();

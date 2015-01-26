@@ -64,7 +64,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<liferay-ui:search-container-results>
 				<c:choose>
-					<c:when test="<%= PropsValues.ASSET_BROWSER_SEARCH_WITH_DATABASE %>">
+					<c:when test="<%= AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE %>">
 
 						<%
 						int assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(groupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator());

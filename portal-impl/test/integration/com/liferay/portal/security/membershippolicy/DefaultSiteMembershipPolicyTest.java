@@ -15,51 +15,49 @@
 package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.events.IntervalAction;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.test.DeleteAfterTestRun;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.test.GroupTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
-import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portal.util.test.UserTestUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DefaultSiteMembershipPolicyTest
 	extends BaseSiteMembershipPolicyTestCase {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+
 	@Before
 	public void setUp() throws Exception {
-		_parentGroup = GroupTestUtil.addGroup(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		_parentGroup = GroupTestUtil.addGroup();
 
 		UserLocalServiceUtil.unsetGroupUsers(
 			_parentGroup.getGroupId(), new long[] {TestPropsValues.getUserId()},
 			null);
 
-		_group = GroupTestUtil.addGroup(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_parentGroup.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+		_group = GroupTestUtil.addGroup(_parentGroup.getGroupId());
 
 		UserLocalServiceUtil.unsetGroupUsers(
 			_group.getGroupId(), new long[] {TestPropsValues.getUserId()},
@@ -78,7 +76,7 @@ public class DefaultSiteMembershipPolicyTest
 
 			GroupLocalServiceUtil.setUserGroups(
 				user.getUserId(),
-				new long[]{_parentGroup.getGroupId(), _group.getGroupId()});
+				new long[] {_parentGroup.getGroupId(), _group.getGroupId()});
 
 			userIds.add(user.getUserId());
 		}
@@ -87,7 +85,7 @@ public class DefaultSiteMembershipPolicyTest
 			User user = UserTestUtil.addUser();
 
 			GroupLocalServiceUtil.setUserGroups(
-				user.getUserId(), new long[]{_group.getGroupId()});
+				user.getUserId(), new long[] {_group.getGroupId()});
 
 			userIds.add(user.getUserId());
 		}

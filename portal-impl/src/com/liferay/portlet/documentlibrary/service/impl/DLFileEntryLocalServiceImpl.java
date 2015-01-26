@@ -101,7 +101,6 @@ import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.expando.NoSuchRowException;
 import com.liferay.portlet.expando.NoSuchTableException;
@@ -112,10 +111,12 @@ import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.awt.image.RenderedImage;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -149,8 +150,8 @@ public class DLFileEntryLocalServiceImpl
 			long userId, long groupId, long repositoryId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, long fileEntryTypeId,
-			Map<String, DDMFormValues> ddmFormValuesMap, File file, InputStream is, long size,
-			ServiceContext serviceContext)
+			Map<String, DDMFormValues> ddmFormValuesMap, File file,
+			InputStream is, long size, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
@@ -627,8 +628,7 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<String, DDMFormValues> ddmFormValuesMap =
-			new HashMap<String, DDMFormValues>();
+		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
 
 		List<DDMStructure> ddmStructures = null;
 
@@ -1705,8 +1705,8 @@ public class DLFileEntryLocalServiceImpl
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
 			boolean majorVersion, long fileEntryTypeId,
-			Map<String, DDMFormValues> ddmFormValuesMap, File file, InputStream is, long size,
-			ServiceContext serviceContext)
+			Map<String, DDMFormValues> ddmFormValuesMap, File file,
+			InputStream is, long size, ServiceContext serviceContext)
 		throws PortalException {
 
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
@@ -1988,8 +1988,9 @@ public class DLFileEntryLocalServiceImpl
 			User user, DLFileEntry dlFileEntry, Date modifiedDate,
 			String fileName, String extension, String mimeType, String title,
 			String description, String changeLog, String extraSettings,
-			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap, String version,
-			long size, int status, ServiceContext serviceContext)
+			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
+			String version, long size, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long fileVersionId = counterLocalService.increment();
@@ -2465,8 +2466,8 @@ public class DLFileEntryLocalServiceImpl
 			long userId, long fileEntryId, String sourceFileName,
 			String extension, String mimeType, String title, String description,
 			String changeLog, boolean majorVersion, String extraSettings,
-			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap, File file,
-			InputStream is, long size, ServiceContext serviceContext)
+			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
+			File file, InputStream is, long size, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -2641,8 +2642,8 @@ public class DLFileEntryLocalServiceImpl
 			User user, DLFileVersion dlFileVersion, String sourceFileName,
 			String fileName, String extension, String mimeType, String title,
 			String description, String changeLog, String extraSettings,
-			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap, String version,
-			long size, int status, Date statusDate,
+			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
+			String version, long size, int status, Date statusDate,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2674,7 +2675,8 @@ public class DLFileEntryLocalServiceImpl
 		if ((fileEntryTypeId > 0) && (ddmFormValuesMap != null)) {
 			dlFileEntryMetadataLocalService.updateFileEntryMetadata(
 				fileEntryTypeId, dlFileVersion.getFileEntryId(),
-				dlFileVersion.getFileVersionId(), ddmFormValuesMap, serviceContext);
+				dlFileVersion.getFileVersionId(), ddmFormValuesMap,
+				serviceContext);
 		}
 
 		return dlFileVersion;

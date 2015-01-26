@@ -22,7 +22,6 @@ import com.liferay.portlet.documentlibrary.service.base.DLFileEntryMetadataLocal
 import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
 import java.util.List;
@@ -138,8 +137,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 		throws PortalException {
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			DDMFormValues ddmFormValues =
-					ddmFormValuesMap.get(ddmStructure.getStructureKey());
+			DDMFormValues ddmFormValues = ddmFormValuesMap.get(
+				ddmStructure.getStructureKey());
 
 			if (ddmFormValues != null) {
 				updateFileEntryMetadata(

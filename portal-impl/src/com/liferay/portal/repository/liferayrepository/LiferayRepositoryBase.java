@@ -131,22 +131,11 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 		}
 	}
 
-	protected long getDefaultFileEntryTypeId(
-			ServiceContext serviceContext, long folderId)
-		throws PortalException {
-
-		folderId = dlFolderLocalService.getFolderId(
-			serviceContext.getCompanyId(), folderId);
-
-		return dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
-	}
-
 	protected HashMap<String, DDMFormValues> getDDMFormValuesMap(
 			ServiceContext serviceContext, long fileEntryTypeId)
 		throws PortalException {
 
-		HashMap<String, DDMFormValues> ddmFormValuesMap = 
-			new HashMap<String, DDMFormValues>();
+		HashMap<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
 
 		if (fileEntryTypeId <= 0) {
 			return ddmFormValuesMap;
@@ -160,9 +149,9 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 		for (DDMStructure ddmStructure : ddmStructures) {
 			String namespace = String.valueOf(ddmStructure.getStructureId());
 
-			DDMFormValues ddmFormValues = 
+			DDMFormValues ddmFormValues =
 				(DDMFormValues)serviceContext.getAttribute(
-					DDMFormValues.class.getName() + 
+					DDMFormValues.class.getName() +
 						ddmStructure.getStructureId());
 
 			if (ddmFormValues == null) {
@@ -170,13 +159,23 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 					ddmStructure.getStructureId(), namespace, serviceContext);
 
 				ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(
-						ddmStructure, fields);
+					ddmStructure, fields);
 			}
 
 			ddmFormValuesMap.put(ddmStructure.getStructureKey(), ddmFormValues);
 		}
 
 		return ddmFormValuesMap;
+	}
+
+	protected long getDefaultFileEntryTypeId(
+			ServiceContext serviceContext, long folderId)
+		throws PortalException {
+
+		folderId = dlFolderLocalService.getFolderId(
+			serviceContext.getCompanyId(), folderId);
+
+		return dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
 	}
 
 	protected long getGroupId() {

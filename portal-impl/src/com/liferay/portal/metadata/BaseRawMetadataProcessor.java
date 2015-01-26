@@ -28,7 +28,9 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.File;
 import java.io.InputStream;
+
 import java.lang.reflect.Field;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -85,20 +87,20 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 		Metadata metadata, Field[] fields) {
 
 		DDMForm ddmForm = new DDMForm();
-		
+
 		Set<Locale> availableLocales = new LinkedHashSet<>();
 		Locale defaultLocale = LocaleUtil.getDefault();
-		
+
 		availableLocales.add(defaultLocale);
-		
+
 		ddmForm.setAvailableLocales(availableLocales);
 		ddmForm.setDefaultLocale(defaultLocale);
-		
+
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 		ddmFormValues.setAvailableLocales(availableLocales);
 		ddmFormValues.setDefaultLocale(defaultLocale);
-		
+
 		for (Field field : fields) {
 			Class<?> fieldClass = field.getDeclaringClass();
 
@@ -114,16 +116,16 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 			}
 
 			DDMFormField ddmFormField = new DDMFormField(name, "text");
-			
+
 			ddmFormField.setDataType("string");
-			
+
 			ddmForm.addDDMFormField(ddmFormField);
-			
+
 			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-			
+
 			ddmFormFieldValue.setName(name);
 			ddmFormFieldValue.setValue(new UnlocalizedValue(value));
-			
+
 			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 		}
 
@@ -133,8 +135,7 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 	protected Map<String, DDMFormValues> createDDMFormValuesMap(
 		Metadata metadata, Map<String, Field[]> fieldsMap) {
 
-		Map<String, DDMFormValues> ddmFormValuesMap =
-				new HashMap<String, DDMFormValues>();
+		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
 
 		if (metadata == null) {
 			return ddmFormValuesMap;
@@ -145,8 +146,8 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 
 			DDMFormValues ddmFormValues = createDDMFormValues(metadata, fields);
 
-			Set<String> names = 
-					ddmFormValues.getDDMFormFieldValuesMap().keySet();
+			Set<String> names =
+				ddmFormValues.getDDMFormFieldValuesMap().keySet();
 
 			if (names.isEmpty()) {
 				continue;

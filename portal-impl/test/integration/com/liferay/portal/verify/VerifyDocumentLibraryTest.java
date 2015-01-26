@@ -55,6 +55,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.ByteArrayInputStream;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -303,7 +304,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 		DDMStructure ddmStructure = ddmStructures.get(0);
 
 		Map<String, DDMFormValues> ddmFormValuesMap = getDDMFormValuesMap(
-				ddmStructure.getStructureKey(), user.getLocale());
+			ddmStructure.getStructureKey(), user.getLocale());
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			RandomTestUtil.randomBytes());
@@ -318,37 +319,37 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 	}
 
 	protected Map<String, DDMFormValues> getDDMFormValuesMap(
-			String ddmStructureKey, Locale currentLocale) {
-		
-		Set<Locale> availableLocales =
-				DDLRecordTestUtil.createAvailableLocales(currentLocale);
-		
+		String ddmStructureKey, Locale currentLocale) {
+
+		Set<Locale> availableLocales = DDLRecordTestUtil.createAvailableLocales(
+			currentLocale);
+
 		DDMForm ddmForm = DDLRecordTestUtil.createDDMForm(
-				availableLocales, currentLocale);
+			availableLocales, currentLocale);
 
 		DDMFormValues ddmFormValues = DDLRecordTestUtil.createDDMFormValues(
-				ddmForm, availableLocales, currentLocale);
-		
+			ddmForm, availableLocales, currentLocale);
+
 		DDMFormField ddmFormField = new DDMFormField("date_an", "ddm-date");
-		
+
 		ddmFormField.setDataType("date");
-		
+
 		ddmForm.addDDMFormField(ddmFormField);
-		
+
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-		
+
 		ddmFormFieldValue.setName("date_an");
 		ddmFormFieldValue.setValue(new UnlocalizedValue(""));
-		
+
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-		
+
 		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
-		
+
 		ddmFormValuesMap.put(ddmStructureKey, ddmFormValues);
-		
+
 		return ddmFormValuesMap;
 	}
-	
+
 	@Override
 	protected VerifyProcess getVerifyProcess() {
 		return new VerifyDocumentLibrary();

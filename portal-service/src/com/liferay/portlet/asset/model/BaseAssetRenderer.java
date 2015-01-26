@@ -53,6 +53,10 @@ import javax.portlet.WindowState;
  */
 public abstract class BaseAssetRenderer implements AssetRenderer {
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getAddToPagePortletId() throws Exception {
 		return StringPool.BLANK;
@@ -338,6 +342,10 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void setAddToPagePreferences(
 			PortletPreferences portletPreferences, String portletId,

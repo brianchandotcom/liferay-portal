@@ -41,6 +41,10 @@ public interface AssetRenderer {
 
 	public static final String TEMPLATE_FULL_CONTENT = "full_content";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getAddToPagePortletId() throws Exception;
 
 	public int getAssetRendererType();
@@ -164,6 +168,10 @@ public interface AssetRenderer {
 			String template)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setAddToPagePreferences(
 			PortletPreferences portletPreferences, String portletId,
 			ThemeDisplay themeDisplay)

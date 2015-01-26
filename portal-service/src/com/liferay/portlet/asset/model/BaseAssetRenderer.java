@@ -32,11 +32,8 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.provider.AddPortletProvider;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Date;
 import java.util.Locale;
@@ -58,19 +55,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	@Override
 	public String getAddToPagePortletId() throws Exception {
-		AddPortletProvider addPortletProvider = _serviceTrackerMap.getService(
-			getClassName());
-
-		if (addPortletProvider == null) {
-			addPortletProvider = _serviceTrackerMap.getService(
-				AddPortletProvider.ANY_CLASSNAME);
-
-			if (addPortletProvider == null) {
-				return StringPool.BLANK;
-			}
-		}
-
-		return addPortletProvider.getPortletId();
+		return StringPool.BLANK;
 	}
 
 	public AssetRendererFactory getAssetRendererFactory() {
@@ -358,22 +343,6 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 			PortletPreferences portletPreferences, String portletId,
 			ThemeDisplay themeDisplay)
 		throws Exception {
-
-		AddPortletProvider addPortletProvider = _serviceTrackerMap.getService(
-			getClassName());
-
-		if (addPortletProvider == null) {
-			addPortletProvider = _serviceTrackerMap.getService(
-				AddPortletProvider.ANY_CLASSNAME);
-
-			if (addPortletProvider == null) {
-				return;
-			}
-		}
-
-		addPortletProvider.updatePortletPreferences(
-			portletPreferences, portletId, getClassName(), getClassPK(),
-			themeDisplay);
 	}
 
 	public void setAssetRendererType(int assetRendererType) {
@@ -435,13 +404,6 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	private static final DDMFieldReader _nullDDMFieldReader =
 		new NullDDMFieldReader();
-	private static final ServiceTrackerMap<String, AddPortletProvider>
-		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
-			AddPortletProvider.class, "model.class.name");
-
-	static {
-		_serviceTrackerMap.open();
-	}
 
 	private AssetRendererFactory _assetRendererFactory;
 	private int _assetRendererType = AssetRendererFactory.TYPE_LATEST_APPROVED;

@@ -54,6 +54,8 @@ public class AssetPublisherPortletProvider
 		portletPreferences.setValue("selectionStyle", "manual");
 		portletPreferences.setValue(
 			"showAddContentButton", Boolean.FALSE.toString());
+		portletPreferences.setValue("showAssetTitle", Boolean.FALSE.toString());
+		portletPreferences.setValue("showExtraInfo", Boolean.FALSE.toString());
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			className, classPK);

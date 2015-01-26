@@ -2753,14 +2753,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		List<WikiPage> redirectPages = getRedirectPages(
 			nodeId, true, trashTitle, WorkflowConstants.STATUS_IN_TRASH);
 
-		for (WikiPage curPage : redirectPages) {
-			curPage.setRedirectTitle(title);
+		for (WikiPage redirectPage : redirectPages) {
+			redirectPage.setRedirectTitle(title);
 
-			wikiPagePersistence.update(curPage);
+			wikiPagePersistence.update(redirectPage);
 
-			if (curPage.isInTrashImplicitly()) {
+			if (redirectPage.isInTrashImplicitly()) {
 				moveDependentFromTrash(
-					curPage, page.getNodeId(), curPage.getParentTitle());
+					redirectPage, page.getNodeId(),
+					redirectPage.getParentTitle());
 			}
 		}
 	}

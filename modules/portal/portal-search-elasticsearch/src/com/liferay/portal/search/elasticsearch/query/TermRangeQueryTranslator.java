@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.elasticsearch.query;
+
+import com.liferay.portal.kernel.search.TermRangeQuery;
+
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
- * @author Raymond Augé
+ * @author Miguel Angelo Caldas Gallindo
  */
-public interface QueryTranslator<T> {
+public interface TermRangeQueryTranslator {
 
-	public T translate(Query query) throws ParseException;
-
-	public Object translateForSolr(Query query) throws ParseException;
+	QueryBuilder translate(TermRangeQuery termRangeQuery);
 
 }

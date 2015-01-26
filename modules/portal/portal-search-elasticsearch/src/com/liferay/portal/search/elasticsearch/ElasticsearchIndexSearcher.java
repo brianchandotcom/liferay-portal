@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.QuerySuggester;
+import com.liferay.portal.kernel.search.QueryTranslator;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
@@ -60,7 +62,6 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHitField;
 import org.elasticsearch.search.SearchHits;
@@ -197,6 +198,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	@Reference
 	public void setQuerySuggester(QuerySuggester querySuggester) {
 		super.setQuerySuggester(querySuggester);
+	}
+
+	@Reference
+	public void setQueryTranslator(
+		QueryTranslator<QueryBuilder> queryTranslator) {
+
+		_queryTranslator = queryTranslator;
 	}
 
 	public void setSwallowException(boolean swallowException) {
@@ -377,14 +385,15 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	protected SearchResponse doSearch(
 			SearchContext searchContext, Query query, int start, int end)
-		throws Exception {
+		throws ParseException {
 
 		return doSearch(searchContext, query, start, end, false);
 	}
 
 	protected SearchResponse doSearch(
 		SearchContext searchContext, Query query, int start, int end,
-		boolean count) {
+			boolean count)
+		throws ParseException {
 
 		Client client = _elasticsearchConnectionManager.getClient();
 
@@ -415,7 +424,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			searchRequestBuilder.setSize(0);
 		}
 
-		QueryBuilder queryBuilder = QueryBuilders.queryString(query.toString());
+		QueryBuilder queryBuilder = _queryTranslator.translate(query);
 
 		searchRequestBuilder.setQuery(queryBuilder);
 
@@ -545,6 +554,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private FacetProcessor<SearchRequestBuilder> _facetProcessor;
+	private QueryTranslator<QueryBuilder> _queryTranslator;
 	private boolean _swallowException;
 
 }

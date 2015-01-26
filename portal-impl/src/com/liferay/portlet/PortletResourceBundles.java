@@ -149,7 +149,11 @@ public class PortletResourceBundles {
 			ResourceBundle resourceBundle = _getResourceBundle(
 				resourceBundles, languageId);
 
-			return ResourceBundleUtil.getString(resourceBundle, key);
+			String value = ResourceBundleUtil.getString(resourceBundle, key);
+
+			if (value != null) {
+				return value;
+			}
 		}
 
 		return null;

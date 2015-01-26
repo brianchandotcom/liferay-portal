@@ -190,6 +190,52 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_errorMessagesMap.put(fileName, errorMessages);
 	}
 
+	protected static String stripLine(
+		String s, char startDelimeter, char endDelimeter) {
+
+		boolean insideDelimeters = false;
+		int level = 0;
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			if (insideDelimeters) {
+				if (c == endDelimeter) {
+					if (level > 0) {
+						level -= 1;
+					}
+					else {
+						if ((c > 1) &&
+							(s.charAt(i - 1) == CharPool.BACK_SLASH) &&
+							(s.charAt(i - 2) != CharPool.BACK_SLASH)) {
+
+							continue;
+						}
+
+						insideDelimeters = false;
+					}
+				}
+				else if (c == startDelimeter) {
+					level += 1;
+				}
+			}
+			else if (c == startDelimeter) {
+				insideDelimeters = true;
+			}
+			else {
+				sb.append(c);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	protected static String stripQuotes(String s, char delimeter) {
+		return stripLine(s, delimeter, delimeter);
+	}
+
 	protected void checkEmptyCollection(
 		String line, String fileName, int lineCount) {
 
@@ -1388,52 +1434,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				previousAttributeAndValue = currentAttributeAndValue;
 			}
 		}
-	}
-
-	protected static String stripLine(
-		String s, char startDelimeter, char endDelimeter) {
-
-		boolean insideDelimeters = false;
-		int level = 0;
-
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-
-			if (insideDelimeters) {
-				if (c == endDelimeter) {
-					if (level > 0) {
-						level -= 1;
-					}
-					else {
-						if ((c > 1) &&
-							(s.charAt(i - 1) == CharPool.BACK_SLASH) &&
-							(s.charAt(i - 2) != CharPool.BACK_SLASH)) {
-
-							continue;
-						}
-
-						insideDelimeters = false;
-					}
-				}
-				else if (c == startDelimeter) {
-					level += 1;
-				}
-			}
-			else if (c == startDelimeter) {
-				insideDelimeters = true;
-			}
-			else {
-				sb.append(c);
-			}
-		}
-
-		return sb.toString();
-	}
-
-	protected static String stripQuotes(String s, char delimeter) {
-		return stripLine(s, delimeter, delimeter);
 	}
 
 	protected String stripRedundantParentheses(String s) {

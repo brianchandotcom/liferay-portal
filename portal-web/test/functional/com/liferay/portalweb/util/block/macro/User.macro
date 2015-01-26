@@ -1371,7 +1371,7 @@
 		<execute macro="Page#openURL" />
 
 		<if>
-			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
+			<condition function="IsElementPresent#isElementPresent" locator1="Dockbar#USER_NAME" />
 			<then>
 				<execute macro="User#logoutPG" />
 				<execute macro="User#loginPG" />
@@ -1416,7 +1416,7 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute action="Home#open" locator1="http://localhost:${nodePort}" />
+				<execute function="Open#open" locator1="http://localhost:${nodePort}" />
 			</then>
 			<else>
 				<execute macro="Page#openURL" />
@@ -1426,56 +1426,56 @@
 		<if>
 			<equals arg1="${authenticationMethod}" arg2="By Screen Name" />
 			<then>
-				<execute action="PGLogin#type" locator-key1="SCREEN_NAME_FIELD" value1="${userScreenName}" />
+				<execute function="Type#type" locator1="PGLogin#SCREEN_NAME_FIELD" value1="${userScreenName}" />
 			</then>
 			<else>
-				<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+				<execute function="Type#type" locator1="PGLogin#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 			</else>
 		</if>
 
-		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
+		<execute function="Type#type" locator1="PGLogin#PASSWORD_FIELD" value1="${password}" />
 
 		<if>
 			<equals arg1="${rememberMeChecked}" arg2="true" />
 			<then>
-				<execute action="PGLogin#check" locator-key1="REMEMBER_ME_CHECKBOX" />
+				<execute function="Check#clickAt" locator1="PGLogin#REMEMBER_ME_CHECKBOX" />
 			</then>
 		</if>
 
 		<take-screenshot />
 
-		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
+		<execute function="Click#click" locator1="PGLogin#SIGN_IN_BUTTON" value1="Sign In" />
 
-		<execute action="Dockbar#assertElementPresent" locator-key1="USER_AVATAR_IMAGE" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 
 		<if>
-			<condition action="PGLoginTermsofservice#isElementPresent" locator-key1="I_AGREE_BUTTON" value1="I Agree" />
+			<condition function="IsElementPresent#isElementPresent" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			<then>
-				<execute action="PGLoginTermsofservice#assertClick" locator-key1="I_AGREE_BUTTON" value1="I Agree" />
+				<execute function="AssertClick#assertTextClick" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			</then>
 		</if>
 
 		<if>
-			<condition action="PGLoginNewpassword#isElementPresent" locator-key1="PASSWORD_FIELD" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginNewpassword#PASSWORD_FIELD" />
 			<then>
 				<if>
 					<not>
 						<equals arg1="${syntaxCheckingEnabled}" arg2="true" />
 					</not>
 					<then>
-						<execute action="PGLoginNewpassword#type" locator-key1="PASSWORD_FIELD" value1="test" />
-						<execute action="PGLoginNewpassword#type" locator-key1="ENTER_AGAIN_FIELD" value1="test" />
-						<execute action="PGLoginNewpassword#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+						<execute function="Type#type" locator1="PGLoginNewpassword#PASSWORD_FIELD" value1="test" />
+						<execute function="Type#type" locator1="PGLoginNewpassword#ENTER_AGAIN_FIELD" value1="test" />
+						<execute function="AssertClick#assertTextClick" locator1="PGLoginNewpassword#SAVE_BUTTON" value1="Save" />
 					</then>
 				</if>
 			</then>
 		</if>
 
 		<if>
-			<condition action="PGLoginPasswordreminder#isElementPresent" locator-key1="ANSWER_FIELD" />
+			<condition function="IsElementPresent#isElementPresent" locator1="PGLoginPasswordreminder#ANSWER_FIELD" />
 			<then>
-				<execute action="PGLoginPasswordreminder#type" locator-key1="ANSWER_FIELD" value1="test" />
-				<execute action="PGLoginPasswordreminder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+				<execute function="Type#type" locator1="PGLoginPasswordreminder#ANSWER_FIELD" value1="test" />
+				<execute function="AssertClick#assertTextClick" locator1="PGLoginPasswordreminder#SAVE_BUTTON" value1="Save" />
 			</then>
 		</if>
 	</command>
@@ -1521,7 +1521,7 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute action="Home#open" locator1="http://localhost:${nodePort}" />
+				<execute function="Open#open" locator1="http://localhost:${nodePort}" />
 			</then>
 			<else>
 				<execute macro="Page#openURL" />
@@ -1529,10 +1529,10 @@
 		</if>
 
 		<if>
-			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
+			<condition function="IsElementPresent#isElementPresent" locator1="Dockbar#USER_NAME" />
 			<then>
-				<execute action="Dockbar#click" locator-key1="USER_NAME" />
-				<execute action="Dockbar#click" locator-key1="USER_SIGN_OUT" />
+				<execute function="Click#click" locator1="Dockbar#USER_NAME" />
+				<execute function="Click#click" locator1="Dockbar#USER_SIGN_OUT" />
 			</then>
 		</if>
 	</command>

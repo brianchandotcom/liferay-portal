@@ -58,6 +58,7 @@ import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -957,9 +958,10 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 		definitionTerms.put("[$PORTAL_URL$]", company.getVirtualHostname());
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		definitionTerms.put(
-			"[$PORTLET_NAME$]",
-			HtmlUtil.escape(PortalUtil.getPortletTitle(portletRequest)));
+			"[$PORTLET_NAME$]", HtmlUtil.escape(portletDisplay.getTitle()));
 		definitionTerms.put(
 			"[$SITE_NAME$]",
 			LanguageUtil.get(

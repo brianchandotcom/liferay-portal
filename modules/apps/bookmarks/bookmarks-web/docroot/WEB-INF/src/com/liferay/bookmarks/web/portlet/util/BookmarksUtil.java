@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -177,9 +178,10 @@ public class BookmarksUtil {
 
 		definitionTerms.put("[$PORTAL_URL$]", company.getVirtualHostname());
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		definitionTerms.put(
-			"[$PORTLET_NAME$]",
-			HtmlUtil.escape(PortalUtil.getPortletTitle(portletRequest)));
+			"[$PORTLET_NAME$]", HtmlUtil.escape(portletDisplay.getTitle()));
 		definitionTerms.put(
 			"[$TO_ADDRESS$]",
 			LanguageUtil.get(

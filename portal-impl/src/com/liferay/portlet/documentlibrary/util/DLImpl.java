@@ -562,9 +562,10 @@ public class DLImpl implements DL {
 
 		definitionTerms.put("[$PORTAL_URL$]", company.getVirtualHostname());
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		definitionTerms.put(
-			"[$PORTLET_NAME$]",
-			HtmlUtil.escape(PortalUtil.getPortletTitle(portletRequest)));
+			"[$PORTLET_NAME$]", HtmlUtil.escape(portletDisplay.getTitle()));
 		definitionTerms.put(
 			"[$SITE_NAME$]",
 			LanguageUtil.get(

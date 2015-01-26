@@ -417,23 +417,20 @@ public class LayoutStagedModelDataHandler
 				SitesUtil.addMergeFailFriendlyURLLayout(
 					mergeFailFriendlyURLLayout);
 
-				if (_log.isWarnEnabled()) {
-					Locale locale = LocaleUtil.getSiteDefault();
-
-					StringBundler sb = new StringBundler(9);
-
-					sb.append(layout.getName(locale));
-					sb.append(" page from the site template cannot be ");
-					sb.append("propagated because its friendly URL conflict ");
-					sb.append("with");
-					sb.append(mergeFailFriendlyURLLayout.getName(locale));
-					sb.append("page. Modify the friendly URL of ");
-					sb.append(mergeFailFriendlyURLLayout.getName(locale));
-					sb.append(" page to allow its propagation from the site ");
-					sb.append("template");
-
-					_log.warn(sb.toString());
+				if (!_log.isWarnEnabled()) {
+					return;
 				}
+
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("Layout with layout id ");
+				sb.append(layout.getLayoutId());
+				sb.append(" cannot be propagated because the friendlyURL ");
+				sb.append("conflicts with the friendlyURL of layout with ");
+				sb.append("layout id ");
+				sb.append(mergeFailFriendlyURLLayout.getLayoutId());
+
+				_log.warn(sb.toString());
 
 				return;
 			}

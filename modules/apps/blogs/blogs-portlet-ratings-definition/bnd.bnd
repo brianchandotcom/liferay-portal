@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Blogs Toolbar Contributor
+Bundle-SymbolicName: com.liferay.blogs.toolbar.contributor
+Bundle-Version: 1.0.0
+Include-Resource: classes

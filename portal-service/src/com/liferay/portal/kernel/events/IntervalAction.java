@@ -18,18 +18,27 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Jonathan McCann
+ * @author Sergio González
  */
 public class IntervalAction {
 
 	public static final int DEFAULT_INTERVAL = 100;
 
 	public IntervalAction(int total) {
+		if (total < 0) {
+			throw new IllegalArgumentException();
+		}
+
 		_total = total;
 
 		_interval = DEFAULT_INTERVAL;
 	}
 
 	public IntervalAction(int total, int interval) {
+		if ((total < 0) || (interval <= 0)) {
+			throw new IllegalArgumentException();
+		}
+
 		_total = total;
 		_interval = interval;
 	}
@@ -39,6 +48,10 @@ public class IntervalAction {
 	}
 
 	public void incrementStart(int increment) {
+		if (increment < 0) {
+			throw new IllegalArgumentException();
+		}
+
 		_start += increment;
 	}
 
@@ -50,10 +63,6 @@ public class IntervalAction {
 
 			if (end > _total) {
 				end = _total;
-
-				if (end == _start) {
-					break;
-				}
 			}
 
 			performActions(_start, end);

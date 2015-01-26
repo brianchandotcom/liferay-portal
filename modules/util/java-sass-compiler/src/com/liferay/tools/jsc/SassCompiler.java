@@ -19,6 +19,7 @@ import com.liferay.tools.jsc.libsass.SassLibrary;
 import com.liferay.tools.jsc.libsass.SassLibrary.Sass_Context;
 import com.liferay.tools.jsc.libsass.SassLibrary.Sass_File_Context;
 import com.liferay.tools.jsc.libsass.SassLibrary.Sass_Options;
+
 import com.sun.jna.Pointer;
 
 import java.io.File;
@@ -33,7 +34,6 @@ import java.io.Writer;
 public class SassCompiler {
 
 	public static void main(String[] args) {
-
 		try {
 			new SassCompiler(args);
 		}
@@ -45,9 +45,7 @@ public class SassCompiler {
 	public SassCompiler() {
 	}
 
-	public SassCompiler(String[] args)
-		throws Exception {
-
+	public SassCompiler(String[] args) throws Exception {
 		final SassCompiler compiler = new SassCompiler();
 
 		for (String arg : args) {
@@ -126,23 +124,19 @@ public class SassCompiler {
 	}
 
 	private File getOutputFile(File file) {
-
 		return new File(file.getParentFile(), getOutputFileName(file));
 	}
 
 	private String getOutputFileName(File file) {
-
 		return file.getName().replaceAll("scss$", "css");
 	}
 
 	private boolean isValidFile(File file) {
-
 		return file != null && file.exists() &&
 			file.getName().endsWith(".scss");
 	}
 
 	private void write(File outputFile, String output) throws IOException {
-
 		try (Writer writer = new OutputStreamWriter(
 			new FileOutputStream(outputFile, false), StringPool.UTF8)) {
 

@@ -57,7 +57,7 @@
 			padding-bottom: 3px;
 		}
 
-		.entry-description, {
+		.entry-description {
 			display: block;
 		}
 
@@ -74,7 +74,7 @@
 			}
 		}
 
-		dt, dd, .entry-categories, .entry-tags, .entry-description, {
+		dt, dd, .entry-categories, .entry-tags, .entry-description {
 			color: #333;
 			line-height: 1.5em;
 			overflow: hidden;

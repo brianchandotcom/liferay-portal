@@ -29,7 +29,7 @@
 
 		li {
 			.lfr-pagination-link {
-				border: none;
+				border-width: 0;
 				clear: both;
 				color: #333;
 				display: block;

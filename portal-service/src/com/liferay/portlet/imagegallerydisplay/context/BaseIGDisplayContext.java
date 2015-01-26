@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,27 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%
-for (MenuItem menuItem : igViewFileVersionDisplayContext.getMenuItems()) {
-%>
+package com.liferay.portlet.imagegallerydisplay.context;
 
-	<liferay-ui:menu-item menuItem="<%= menuItem %>" />
+import com.liferay.portal.kernel.context.BaseDisplayContext;
 
-<%
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * @author Iván Zaera
+ */
+public abstract class BaseIGDisplayContext<T extends IGDisplayContext>
+	extends BaseDisplayContext<T> implements IGDisplayContext {
+
+	public BaseIGDisplayContext(
+		UUID uuid, T parentIGDisplayContext, HttpServletRequest request,
+		HttpServletResponse response) {
+
+		super(uuid, parentIGDisplayContext, request, response);
+	}
+
 }
-%>

@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.context;
+package com.liferay.portlet.imagegallerydisplay.context;
 
-import com.liferay.portal.kernel.context.DisplayContextProvider;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.context.DisplayContextFactory;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,23 +24,19 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ivan Zaera
  */
-public interface DLDisplayContextProvider extends DisplayContextProvider {
+public interface IGDisplayContextFactory extends DisplayContextFactory {
 
-	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		DLFileEntryType dlFileEntryType);
-
-	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry);
-
-	public DLViewFileVersionDisplayContext
-		getDLViewFileVersionDisplayContext(
+	public IGViewFileVersionDisplayContext
+		getIGViewFileVersionDisplayContext(
+			IGViewFileVersionDisplayContext
+				parentIGViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
 			DLFileShortcut dlFileShortcut);
 
-	public DLViewFileVersionDisplayContext
-		getDLViewFileVersionDisplayContext(
+	public IGViewFileVersionDisplayContext
+		getIGViewFileVersionDisplayContext(
+			IGViewFileVersionDisplayContext
+				parentIGViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion);
 

@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
@@ -52,37 +51,32 @@ public class BaseDLViewFileVersionDisplayContext
 	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
 		throws PortalException {
 
-		return parentDLDisplayContext.getDDMFormValues(ddmStructure);
+		return parentDisplayContext.getDDMFormValues(ddmStructure);
 	}
 
 	@Override
 	public List<DDMStructure> getDDMStructures() throws PortalException {
-		return parentDLDisplayContext.getDDMStructures();
+		return parentDisplayContext.getDDMStructures();
 	}
 
 	@Override
 	public Menu getMenu() throws PortalException {
-		return parentDLDisplayContext.getMenu();
-	}
-
-	@Override
-	public List<MenuItem> getMenuItems() throws PortalException {
-		return parentDLDisplayContext.getMenuItems();
+		return parentDisplayContext.getMenu();
 	}
 
 	@Override
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
-		return parentDLDisplayContext.getToolbarItems();
+		return parentDisplayContext.getToolbarItems();
 	}
 
 	@Override
 	public boolean isDownloadLinkVisible() throws PortalException {
-		return parentDLDisplayContext.isDownloadLinkVisible();
+		return parentDisplayContext.isDownloadLinkVisible();
 	}
 
 	@Override
 	public boolean isVersionInfoVisible() throws PortalException {
-		return parentDLDisplayContext.isVersionInfoVisible();
+		return parentDisplayContext.isVersionInfoVisible();
 	}
 
 	@Override
@@ -90,7 +84,7 @@ public class BaseDLViewFileVersionDisplayContext
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		parentDLDisplayContext.renderPreview(request, response);
+		parentDisplayContext.renderPreview(request, response);
 	}
 
 	protected FileVersion fileVersion;

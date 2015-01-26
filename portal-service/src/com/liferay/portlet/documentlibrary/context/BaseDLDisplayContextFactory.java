@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
+import com.liferay.portal.kernel.context.BaseDisplayContextFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -25,7 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ivan Zaera
  */
-public class BaseDLDisplayContextFactory implements DLDisplayContextFactory {
+public class BaseDLDisplayContextFactory
+	extends BaseDisplayContextFactory implements DLDisplayContextFactory {
 
 	@Override
 	public DLEditFileEntryDisplayContext
@@ -58,28 +60,6 @@ public class BaseDLDisplayContextFactory implements DLDisplayContextFactory {
 	@Override
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
-
-		return parentDLViewFileVersionDisplayContext;
-	}
-
-	@Override
-	public DLViewFileVersionDisplayContext
-		getIGFileVersionActionsDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut) {
-
-		return parentDLViewFileVersionDisplayContext;
-	}
-
-	@Override
-	public DLViewFileVersionDisplayContext
-		getIGFileVersionActionsDisplayContext(
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,

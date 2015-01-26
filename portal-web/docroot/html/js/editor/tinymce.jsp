@@ -178,7 +178,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 	var toolbars = {
 		email: [
 			'fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify',
-			'cut copy paste bullist numlist | blockquote | undo redo | link unlink image <c:if test="<%= showSource %>">code</c:if> | hr removeformat  | preview print fullscreen'
+			'cut copy paste bullist numlist | blockquote | undo redo | link unlink image <c:if test="<%= showSource %>">code</c:if> | hr removeformat | preview print fullscreen'
 		],
 		liferay: [
 			'styleselect fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify',
@@ -193,7 +193,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 			'bold italic underline strikethrough | bullist numlist | table | link unlink image <c:if test="<%= showSource %>">code</c:if>'
 		],
 		tablet: [
-			'styleselect fontselect fontsizeselect | bold italic underline strikethrough |  alignleft aligncenter alignright alignjustify',
+			'styleselect fontselect fontsizeselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify',
 			'bullist numlist | link unlink image <c:if test="<%= showSource %>">code</c:if>'
 		]
 	};

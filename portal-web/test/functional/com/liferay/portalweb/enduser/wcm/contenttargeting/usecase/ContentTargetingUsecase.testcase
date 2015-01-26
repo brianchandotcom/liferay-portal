@@ -96,11 +96,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name Age" />
 		</execute>
@@ -119,11 +119,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description High Priority" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name Higher Priority" />
 			<var name="campaignPriorityField" value="2" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name Signed In" />
 		</execute>
@@ -216,11 +216,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
@@ -279,11 +279,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 		</execute>
 
@@ -296,11 +296,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description 2" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name 2" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 		</execute>
 
@@ -313,11 +313,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description 3" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name 3" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 		</execute>
 
@@ -370,7 +370,7 @@
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
@@ -500,11 +500,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description Male" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name Male" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name Male" />
 		</execute>
@@ -518,11 +518,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description Female" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name Female" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name Female" />
 		</execute>
@@ -586,11 +586,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
@@ -680,11 +680,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
@@ -753,11 +753,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description Started" />
-			<var name="campaignEndDate" value="01/01/2015" />
+			<var name="campaignEndDate" value="01/01/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name Started" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="01/01/2014" />
+			<var name="campaignStartDate" value="01/01/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 		</execute>
 
@@ -775,11 +775,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description Finished" />
-			<var name="campaignEndDate" value="01/02/2013" />
+			<var name="campaignEndDate" value="01/02/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name Finished" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="01/01/2013" />
+			<var name="campaignStartDate" value="01/01/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 		</execute>
 
@@ -854,7 +854,7 @@
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
@@ -1075,11 +1075,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="Male Users" />
 		</execute>
@@ -1284,11 +1284,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPriorityField" value="3" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name (Global)" />
 		</execute>
@@ -1352,11 +1352,11 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description" />
-			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPriorityField" value="2" />
-			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name (Site Name)" />
 		</execute>

@@ -1,4 +1,4 @@
-<definition>
+<definition default="mouseDown">
 	<command name="mouseDown">
 		<execute selenium="mouseDown" />
 

@@ -1,4 +1,4 @@
-<definition>
+<definition default="assertChecked">
 	<command name="assertChecked">
 		<execute selenium="waitForVisible" />
 

@@ -1,4 +1,4 @@
-<definition>
+<definition default="sikuliUploadTempFile">
 	<command name="sikuliUploadTempFile">
 		<execute selenium="sikuliUploadTempFile" />
 

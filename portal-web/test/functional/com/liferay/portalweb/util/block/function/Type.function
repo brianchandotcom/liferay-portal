@@ -1,4 +1,4 @@
-<definition>
+<definition default="type">
 	<command name="clickAtSendKeys">
 		<execute selenium="waitForVisible" />
 

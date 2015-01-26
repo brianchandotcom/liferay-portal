@@ -1,4 +1,4 @@
-<definition>
+<definition default="select">
 	<command name="pauseSelect">
 		<execute argument1="5000" selenium="pause" />
 

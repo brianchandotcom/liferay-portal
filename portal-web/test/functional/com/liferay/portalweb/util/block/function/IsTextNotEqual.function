@@ -1,4 +1,4 @@
-<definition>
+<definition default="isNotText">
 	<command name="isNotPartialText">
 		<execute selenium="waitForElementPresent" />
 

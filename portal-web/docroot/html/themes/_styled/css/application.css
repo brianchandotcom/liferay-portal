@@ -557,6 +557,7 @@ input.switch {
 		position: absolute;
 		right: 0;
 		top: 0;
+
 		-webkit-overflow-scrolling: touch;
 	}
 }
@@ -898,7 +899,7 @@ input.switch {
 	}
 }
 
-.alloy-editor-container {
+.alloy-editor-wrapper {
 	.lfr-source-editor {
 		display: none;
 	}

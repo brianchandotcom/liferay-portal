@@ -29,7 +29,7 @@ public class IntervalActionTest {
 
 	@Test
 	public void testIntervalActionEndCalculation() throws Exception {
-		final IntervalAction intervalAction = new IntervalAction(_TOTAL);
+		final IntervalAction intervalAction = new IntervalAction(125);
 
 		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
@@ -56,8 +56,7 @@ public class IntervalActionTest {
 	public void testIntervalActionEndCalculationWithInterval()
 		throws Exception {
 
-		final IntervalAction intervalAction = new IntervalAction(
-			_TOTAL, _INTERVAL);
+		final IntervalAction intervalAction = new IntervalAction(125, 200);
 
 		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
@@ -82,7 +81,7 @@ public class IntervalActionTest {
 
 	@Test
 	public void testIntervalActionPageCalculation() throws Exception {
-		final IntervalAction intervalAction = new IntervalAction(_TOTAL);
+		final IntervalAction intervalAction = new IntervalAction(125);
 
 		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
@@ -107,8 +106,7 @@ public class IntervalActionTest {
 	public void testIntervalActionPageCalculationWithInterval()
 		throws Exception {
 
-		final IntervalAction intervalAction = new IntervalAction(
-			_TOTAL, _INTERVAL);
+		final IntervalAction intervalAction = new IntervalAction(125, 200);
 
 		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
@@ -128,10 +126,6 @@ public class IntervalActionTest {
 
 		Assert.assertEquals(1, _count.get());
 	}
-
-	private static final int _INTERVAL = 200;
-
-	private static final int _TOTAL = 125;
 
 	private final AtomicInteger _count = new AtomicInteger();
 

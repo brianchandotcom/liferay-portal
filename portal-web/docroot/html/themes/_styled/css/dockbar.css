@@ -1094,7 +1094,7 @@ $editLayoutPanelWidth: 460px;
 			}
 
 			.workflow-status .status{
-				color: #FFF !important;
+				color: #FFF;
 
 				&.approved {
 					background-color: $status-approved-text;

@@ -352,8 +352,9 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 }
 
 .lfr-progress-active .progress-bar-status, .lfr-upload-container .file-uploading .progress-bar .progress {
-	background-size: 40px 40px;
 	$transparent: rgba(255, 255, 255, 0);
+
+	background-size: 40px 40px;
 
 	@include background-image(linear-gradient(-45deg, rgba(255, 255, 255, 0.3) 25%, $transparent 25%, $transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, $transparent 75%, $transparent));
 	@include experimental(animation, progress-bar-stripes 0.5s linear infinite);

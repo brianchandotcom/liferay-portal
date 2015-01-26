@@ -34,7 +34,7 @@ public interface IPGeocoderConfiguration {
 			"http://cdn.mirrors.liferay.com/geolite.maxmind.com/download/" +
 				"geoip/database/GeoLiteCity.dat.xz",
 		description = "The URL of the Geo IP City database", name = "File URL",
-		required = true)
+		required = false)
 	public String fileURL();
 
 }

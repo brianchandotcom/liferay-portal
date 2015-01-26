@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Hugo Huijser
  */
-public class SortAnnotations {
+public class SortExceptions {
 
 	public void method() throws RuntimeException, PortalException {
 		if (true) {

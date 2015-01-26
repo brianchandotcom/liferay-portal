@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.spring.aop.Skip;
 /**
  * @author Hugo Huijser
  */
-public class SortExceptions {
+public class SortAnnotations {
 
 	@JSON
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

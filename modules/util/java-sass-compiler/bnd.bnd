@@ -7,6 +7,8 @@ Include-Resource: \
 	@lib/jna.jar,\
 	@lib/jnaerator-runtime.jar,\
 	@lib/ochafik-util.jar
+JPM-Command: jsc
+Main-Class:	com.liferay.tools.jsc.jsc
 Private-Package: \
 	com.liferay.tools.jsc.libsass,\
 	com.ochafik.*,\

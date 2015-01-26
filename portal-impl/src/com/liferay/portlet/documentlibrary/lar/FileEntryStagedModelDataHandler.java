@@ -46,7 +46,6 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -202,16 +201,16 @@ public class FileEntryStagedModelDataHandler
 			try {
 				is = FileEntryUtil.getContentStream(fileEntry);
 			}
-			catch (NoSuchFileException nsfe) {
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to retrieve content for file entry " +
+							fileEntry.getFileEntryId(),
+						e);
+				}
 			}
 
 			if (is == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"No file found for file entry " +
-							fileEntry.getFileEntryId());
-				}
-
 				fileEntryElement.detach();
 
 				return;
@@ -316,7 +315,15 @@ public class FileEntryStagedModelDataHandler
 			try {
 				is = FileEntryUtil.getContentStream(fileEntry);
 			}
-			catch (NoSuchFileException nsfe) {
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to retrieve content for file entry " +
+							fileEntry.getFileEntryId(),
+						e);
+				}
+
+				return;
 			}
 		}
 		else {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.json.web.service.tracker.internal;
+package com.liferay.portal.json.web.service.extender.internal;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.util.ClassLoaderUtil;

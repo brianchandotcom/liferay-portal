@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Portal JSON Web Service Tracker
-Bundle-SymbolicName: com.liferay.portal.json.web.service.tracker
+Bundle-Name: Liferay Portal JSON Web Service Extender
+Bundle-SymbolicName: com.liferay.portal.json.web.service.extender
 Bundle-Version: 1.0.0
-Private-Package: com.liferay.portal.json.web.service.tracker.internal
+Private-Package: com.liferay.portal.json.web.service.extender.internal

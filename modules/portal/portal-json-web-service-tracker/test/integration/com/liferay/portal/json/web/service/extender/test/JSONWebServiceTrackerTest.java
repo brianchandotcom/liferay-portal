@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.json.web.service.tracker.test;
+package com.liferay.portal.json.web.service.extender.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.portal.kernel.util.StringUtil;

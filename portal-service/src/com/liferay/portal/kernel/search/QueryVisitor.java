@@ -15,32 +15,17 @@
 package com.liferay.portal.kernel.search;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
+ * @author Miguel Angelo Caldas Gallindo
  */
-public abstract class BaseQueryImpl implements Query {
+public interface QueryVisitor<T> {
 
-	@Override
-	public <T> T accept(QueryVisitor<T> queryVisitor) {
-		return null;
-	}
+	public T visitQuery(BooleanQuery booleanQuery);
 
-	@Override
-	public QueryConfig getQueryConfig() {
-		if (_queryConfig == null) {
-			_queryConfig = new QueryConfig();
-		}
+	public T visitQuery(TermQuery termQuery);
 
-		return _queryConfig;
-	}
+	public T visitQuery(TermRangeQuery termRangeQuery);
 
-	@Override
-	public abstract Object getWrappedQuery();
-
-	@Override
-	public void setQueryConfig(QueryConfig queryConfig) {
-		_queryConfig = queryConfig;
-	}
-
-	private QueryConfig _queryConfig;
+	public T visitQuery(WildcardQuery wildcardQuery);
 
 }

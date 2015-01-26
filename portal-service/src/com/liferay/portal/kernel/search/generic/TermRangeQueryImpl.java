@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BaseQueryImpl;
+import com.liferay.portal.kernel.search.QueryVisitor;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -34,6 +35,11 @@ public class TermRangeQueryImpl extends BaseQueryImpl
 		_upperTerm = upperTerm;
 		_includesLower = includesLower;
 		_includesUpper = includesUpper;
+	}
+
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visitQuery(this);
 	}
 
 	@Override

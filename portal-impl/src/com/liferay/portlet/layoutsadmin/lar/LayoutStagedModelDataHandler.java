@@ -437,7 +437,7 @@ public class LayoutStagedModelDataHandler
 		}
 		else {
 
-			// The default behaviour of import mode is
+			// The default behavior of import mode is
 			// PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID
 
 			existingLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(

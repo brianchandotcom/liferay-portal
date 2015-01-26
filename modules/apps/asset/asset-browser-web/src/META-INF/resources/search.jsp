@@ -14,14 +14,8 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
-
 <%
-AssetBrowserSearch searchContainer = (AssetBrowserSearch)request.getAttribute("liferay-ui:search:searchContainer");
-
 AssetBrowserDisplayTerms displayTerms = (AssetBrowserDisplayTerms)searchContainer.getDisplayTerms();
-
-long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selectedGroupIds"), 0L);
 %>
 
 <liferay-ui:search-toggle
@@ -41,11 +35,11 @@ long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selecte
 		<aui:select inlineField="<%= true %>" label="my-sites" name="<%= AssetBrowserDisplayTerms.GROUP_ID %>">
 
 			<%
-			for (long groupId : selectedGroupIds) {
+			for (long curGroupId : selectedGroupIds) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 			%>
 
-				<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" selected="<%= displayTerms.getGroupId() == groupId %>" value="<%= groupId %>" />
+				<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" selected="<%= displayTerms.getGroupId() == curGroupId %>" value="<%= curGroupId %>" />
 
 			<%
 			}

@@ -26,7 +26,7 @@
 
 		a {
 			color: #000;
-			text-decoration:none;
+			text-decoration: none;
 		}
 	}
 
@@ -87,6 +87,7 @@
 				display: none;
 			}
 		}
+
 		.container-drop-box {
 			margin: 0;
 			min-height: 130px;

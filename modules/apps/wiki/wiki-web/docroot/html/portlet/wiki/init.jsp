@@ -60,7 +60,7 @@ page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %>
 String portletId = portletDisplay.getId();
 
 if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	 portletId = ParamUtil.getString(request, "portletResource");
+	portletId = ParamUtil.getString(request, "portletResource");
 }
 
 WikiPortletInstanceSettings wikiPortletInstanceSettings = WikiPortletInstanceSettings.getInstance(layout, portletId);

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
@@ -2418,6 +2419,30 @@ public class HookHotDeployListener
 			_log.error(
 				currentServletContextName + " is colliding with the " +
 					"currently installed hooks");
+
+			if (_log.isDebugEnabled()) {
+				Log log = SanitizerLogWrapper.allowCRLF(_log);
+
+				StringBundler sb = new StringBundler(
+					collidingCustomJsps.size() * 4 + 3);
+
+				sb.append("Colliding JSP files in ");
+				sb.append(currentServletContextName);
+				sb.append(StringPool.NEW_LINE);
+
+				for (Map.Entry<String, String> entry :
+						collidingCustomJsps.entrySet()) {
+
+					sb.append((String)entry.getKey());
+					sb.append(" with ");
+					sb.append((String)entry.getValue());
+					sb.append(StringPool.NEW_LINE);
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				log.debug(sb.toString());
+			}
 
 			throw new DuplicateCustomJspException();
 		}

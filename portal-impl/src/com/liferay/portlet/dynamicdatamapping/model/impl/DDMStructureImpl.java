@@ -37,10 +37,15 @@ import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
@@ -138,6 +143,18 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		}
 
 		return filterTransientDDMFormFields(ddmFormFields);
+	}
+
+	@Override
+	public DDMFormLayout getDDMFormLayout() throws PortalException {
+		DDMStructureVersion structureVersion = getStructureVersion();
+
+		DDMStructureLayout ddmStructureLayout =
+			DDMStructureLayoutLocalServiceUtil.
+				getStructureLayoutByStructureVersionId(
+					structureVersion.getStructureVersionId());
+
+		return ddmStructureLayout.getDDMFormLayout();
 	}
 
 	@Override
@@ -257,6 +274,12 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		DDMForm ddmForm = getFullHierarchyDDMForm();
 
 		return getDDMFormFieldNames(ddmForm.getDDMFormFields());
+	}
+
+	@Override
+	public DDMStructureVersion getStructureVersion() throws PortalException {
+		return DDMStructureVersionLocalServiceUtil.getStructureVersion(
+			getStructureId(), getVersion());
 	}
 
 	@Override

@@ -1,0 +1,242 @@
+<html>
+<head>
+<title>UsersAdmin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">UsersAdmin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>UsersAdmin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALL_ORGANIZATIONS_TAB</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'All Organizations')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALL_USERS_TAB</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'All Users')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD</td>
+	<td>//ul[@role='menubar']/li/a[@title='Add']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_USER</td>
+	<td>//ul[@class='dropdown-menu']/li/a[@title='User']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_REGULAR_ORGANIZATION</td>
+	<td>//ul[@class='dropdown-menu']/li/a[@title='Regular Organization']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_ICON</td>
+	<td>//a[@id='toggle_id_users_admin_organization_searchtoggleAdvanced']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADVANCED_SEARCH-->
+<tr>
+	<td>ADVANCED_SEARCH_MATCH_SELECT</td>
+	<td>//select[@id='_125_andOperator']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_NAME_FIELD</td>
+	<td>//input[@id='_125_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_STREET_FIELD</td>
+	<td>//input[@id='_125_street']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_CITY_FIELD</td>
+	<td>//input[@id='_125_city']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_TYPE_SELECT</td>
+	<td>//select[@id='_125_type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_COUNTRY_SELECT</td>
+	<td>//select[@id='_125_countryId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_REGION_SELECT</td>
+	<td>//select[@id='_125_regionId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_POSTAL_CODE_FIELD</td>
+	<td>//input[@id='_125_zip']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_FIRST_NAME_FIELD</td>
+	<td>//input[@id='_125_firstName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_MIDDLE_NAME_FIELD</td>
+	<td>//input[@id='_125_middleName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_LAST_NAME_FIELD</td>
+	<td>//input[@id='_125_lastName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_SCREEN_NAME_FIELD</td>
+	<td>//input[@id='_125_screenName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD</td>
+	<td>//input[@id='_125_emailAddress']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_STATUS_SELECT</td>
+	<td>//select[@id='_125_status']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATION_TABLE-->
+<tr>
+	<td>ORGANIZATION_TABLE_ALL_CHECKBOX</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//th[contains(.,'Name')]/preceding-sibling::th) + 1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_NAME_GENERIC</td>
+	<td>//div[@id='usersAdminOrganizationsPanelContent']//tr/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_PARENT_ORGANIZATION</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//th[contains(.,'Parent Organization')]/preceding-sibling::th) + 1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//th[contains(.,'Type')]/preceding-sibling::th) + 1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_CITY</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//th[contains(.,'City')]/preceding-sibling::th) + 1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_REGION</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//th[contains(.,'Region')]/preceding-sibling::th) + 1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_COUNTRY</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//th[contains(.,'Country')]/preceding-sibling::th) + 1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_SUBORGANIZATION_COUNT</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[2]/em</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_TABLE-->
+<tr>
+	<td>USER_TABLE_ALL_CHECKBOX</td>
+	<td>//input[@name='_125_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[1]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_FIRST_NAME</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_LAST_NAME</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_SCREEN_NAME</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[8]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_IMPERSONATE</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[8]/span/a[contains(.,'Impersonate User')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

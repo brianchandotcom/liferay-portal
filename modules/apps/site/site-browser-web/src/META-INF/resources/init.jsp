@@ -33,6 +33,7 @@ page import="com.liferay.portal.model.GroupConstants" %><%@
 page import="com.liferay.portal.model.Layout" %><%@
 page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portlet.sites.util.SitesUtil" %><%@
+page import="com.liferay.portlet.usersadmin.search.GroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
 
@@ -42,7 +43,8 @@ page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.WindowState" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
@@ -50,6 +52,8 @@ page import="java.util.Map" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.GroupDisplayTerms" %>
 
 <%
+WindowState windowState = liferayPortletRequest.getWindowState();
+
 boolean filterManageableGroups = true;
 
 if (permissionChecker.isCompanyAdmin()) {

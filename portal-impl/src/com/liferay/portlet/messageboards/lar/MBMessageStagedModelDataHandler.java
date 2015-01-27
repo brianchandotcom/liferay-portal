@@ -243,11 +243,11 @@ public class MBMessageStagedModelDataHandler
 
 		long threadId = MapUtil.getLong(threadIds, message.getThreadId(), 0);
 
-		Element element = portletDataContext.getImportDataStagedModelElement(
-			message);
+		Element messageElement =
+			portletDataContext.getImportDataStagedModelElement(message);
 
 		if (threadId == 0) {
-			String threadUuid = element.attributeValue("threadUuid");
+			String threadUuid = messageElement.attributeValue("threadUuid");
 
 			MBThread thread =
 				MBThreadLocalServiceUtil.fetchMBThreadByUuidAndGroupId(
@@ -267,7 +267,7 @@ public class MBMessageStagedModelDataHandler
 			message.getParentMessageId());
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			getAttachments(portletDataContext, element, message);
+			getAttachments(portletDataContext, messageElement, message);
 
 		try {
 			ServiceContext serviceContext =
@@ -345,7 +345,8 @@ public class MBMessageStagedModelDataHandler
 			if (importedMessage.isRoot() && !importedMessage.isDiscussion()) {
 				MBThreadLocalServiceUtil.updateQuestion(
 					importedMessage.getThreadId(),
-					GetterUtil.getBoolean(element.attributeValue("question")));
+					GetterUtil.getBoolean(
+						messageElement.attributeValue("question")));
 			}
 
 			if (message.isDiscussion()) {
@@ -363,7 +364,7 @@ public class MBMessageStagedModelDataHandler
 
 			MBThread thread = importedMessage.getThread();
 
-			thread.setUuid(element.attributeValue("threadUuid"));
+			thread.setUuid(messageElement.attributeValue("threadUuid"));
 
 			MBThreadLocalServiceUtil.updateMBThread(thread);
 

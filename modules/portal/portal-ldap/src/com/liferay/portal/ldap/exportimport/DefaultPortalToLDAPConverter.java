@@ -14,7 +14,6 @@
 
 package com.liferay.portal.ldap.exportimport;
 
-import com.liferay.portal.PwdEncryptorException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -42,7 +41,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoConverterUtil;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -450,11 +448,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 			return sb.toString();
 		}
-		catch (PwdEncryptorException pee) {
-			throw new SystemException(pee);
-		}
-		catch (UnsupportedEncodingException uee) {
-			throw new SystemException(uee);
+		catch (Exception e) {
+			throw new SystemException(e);
 		}
 	}
 

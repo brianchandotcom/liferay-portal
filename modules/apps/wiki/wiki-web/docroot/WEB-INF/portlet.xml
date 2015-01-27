@@ -21,7 +21,7 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Wiki</title>
 			<short-title>Wiki</short-title>
@@ -60,7 +60,7 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Wiki Display</title>
 			<short-title>Wiki Display</short-title>
@@ -93,7 +93,7 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Wiki Admin</title>
 			<short-title>Wiki Admin</short-title>

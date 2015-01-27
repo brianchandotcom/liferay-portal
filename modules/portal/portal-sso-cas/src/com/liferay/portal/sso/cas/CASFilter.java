@@ -56,7 +56,15 @@ import org.osgi.service.component.annotations.Modified;
  * @author Zsolt Balogh
  */
 @Component(
-	immediate = true, properties = {},
+	immediate = true,
+	property = {
+		"dispatcher=FORWARD",
+		"dispatcher=REQUEST",
+		"servlet-context-name=",
+		"servlet-filter-name=SSO CAS Filter",
+		"url-pattern=/c/portal/login",
+		"url-pattern=/c/portal/logout"
+	},
 	service = Filter.class
 )
 public class CASFilter extends BasePortalFilter {

@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Portal CAS SSO
+Bundle-SymbolicName: com.liferay.portal.sso.cas
+Bundle-Version: 1.0.0
+libs: ${lsr;lib;*.jar}
+Import-Package:\
+	!javax.microedition.*,\
+	!junit.*,\
+	*
+Include-Resource:\
+	${replace;${libs};^;@lib/},\
+	classes,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+
+-metatype: *

@@ -279,15 +279,16 @@ public class DDMStructureStagedModelDataHandler
 					parentStructureId, structure.getClassNameId(),
 					structure.getStructureKey(), structure.getNameMap(),
 					structure.getDescriptionMap(), structure.getDDMForm(),
-					structure.getStorageType(), structure.getType(),
-					serviceContext);
+					structure.getDDMFormLayout(), structure.getStorageType(),
+					structure.getType(), serviceContext);
 			}
 			else {
 				importedStructure =
 					DDMStructureLocalServiceUtil.updateStructure(
 						existingStructure.getStructureId(), parentStructureId,
 						structure.getNameMap(), structure.getDescriptionMap(),
-						structure.getDDMForm(), serviceContext);
+						structure.getDDMForm(), structure.getDDMFormLayout(),
+						serviceContext);
 			}
 		}
 		else {
@@ -295,8 +296,8 @@ public class DDMStructureStagedModelDataHandler
 				userId, portletDataContext.getScopeGroupId(), parentStructureId,
 				structure.getClassNameId(), null, structure.getNameMap(),
 				structure.getDescriptionMap(), structure.getDDMForm(),
-				structure.getStorageType(), structure.getType(),
-				serviceContext);
+				structure.getDDMFormLayout(), structure.getStorageType(),
+				structure.getType(), serviceContext);
 		}
 
 		portletDataContext.importClassedModel(structure, importedStructure);

@@ -34,6 +34,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_CONTENT_IMAGE</td>
+	<td>//p/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_CONTENT_IMAGE_CAPTION</td>
+	<td>//p[@class='caption']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

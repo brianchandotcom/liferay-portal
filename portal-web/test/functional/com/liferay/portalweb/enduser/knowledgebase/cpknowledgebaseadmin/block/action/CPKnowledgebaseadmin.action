@@ -3,5 +3,9 @@
 		<case locator-key1="ARTICLE_TABLE_PRIORITY">
 			<execute function="AssertTextEquals#assertValue" />
 		</case>
+
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 </definition>

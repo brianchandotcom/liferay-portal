@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SOURCE_URL_FIELD</td>
+	<td>//input[contains(@id,'sourceURL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_FIELD</td>
 	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td></td>
@@ -81,6 +86,22 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--ATTACHMENTS-->
+<tr>
+	<td>ATTACHMENTS_HEADER</td>
+	<td>//div/span[contains(.,'Attachments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_SELECT_FILES_BUTTON</td>
+	<td>//button[contains(.,'Select Files')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER</td>
+	<td>//div[contains(@id,'AttachmentsContainer')]</td>
 	<td></td>
 </tr>
 <!--RELATED_ASSETS-->

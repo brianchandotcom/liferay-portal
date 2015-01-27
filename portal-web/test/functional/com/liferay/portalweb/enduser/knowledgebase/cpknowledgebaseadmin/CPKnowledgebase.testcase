@@ -259,9 +259,11 @@
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
-		<execute macro="KBArticle#deleteCP">
+		<execute macro="KBArticle#selectArticleCP">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
+
+		<execute macro="KBArticle#deleteCP" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />

@@ -12,6 +12,52 @@
 		<execute macro="KBArticle#tearDownCP" />
 	</tear-down>
 
+	<command name="DeleteImportedArticles" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#importCP">
+			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
+			<var name="kbArticle1ChildArticleTitle1" value="Implementing Application Display Templates" />
+			<var name="kbArticle2ChildArticleTitle1" value="Using liferay-ui:success and liferay-ui:error Messages" />
+			<var name="kbArticle2ChildArticleTitle2" value="Using Liferay UI Tabs and Sections" />
+			<var name="kbArticleTitle1" value="Application Display Templates" />
+			<var name="kbArticleTitle2" value="Liferay UI Taglibs" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#selectAllCP" />
+
+		<execute macro="KBArticle#deleteCP" />
+	</command>
+
 	<command name="Demo" priority="5">
 		<property name="portlet.properties.knowledge-base-portlet" value="admin.kb.article.sections=Application Server,Authentication,Content Management,Database,Development,Plugins,Portlets,Security,Server Configuration,User Interface$${line.separator}admin.kb.article.default.sections=" />
 
@@ -19,6 +65,7 @@
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_BUTTON" value1="Add" />
 		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_ARTICLE_BUTTON" value1="Add Article" />
 
 		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="TITLE_FIELD" value1="KB Admin Article" />
@@ -293,6 +340,284 @@
 		</execute>
 	</command>
 
+	<command name="ViewImportedKBArticlesWithMarkdownFormatHierarchy" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#importCP">
+			<var name="kbZipFile" value="KBArticlesWithMarkdown.zip" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
+			<var name="kbArticle2ChildArticleTitle1" value="Developing Applications with Liferay Developer Studio" />
+			<var name="kbArticle2ChildArticleTitle2" value="Developing Apps with Liferay IDE" />
+			<var name="kbArticle2ChildArticleTitle3" value="Writing Your First Liferay Application" />
+			<var name="kbArticleTitle1" value="Learning Paths" />
+			<var name="kbArticleTitle2" value="Beginning Liferay Development" />
+			<var name="kbArticleTitle3" value="Writing a Data-Driven Application" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPGHierarchyNavigationPG">
+			<var name="kbArticleTitle" value="Beginning Liferay Development" />
+			<var name="kbChildArticleTitle" value="Developing Applications with Liferay Developer Studio" />
+		</execute>
+
+		<execute macro="KBArticle#viewImageViaContent">
+			<var name="kbMarkdownImage" value="lds-first-launch-3.png" />
+			<var name="kbMarkdownImageCaption" value="Figure 1: The First Start wizard makes it easy to configure the runtime that ships with Liferay Developer Studio." />
+		</execute>
+	</command>
+
+	<command name="ViewImportedKBArticleWithImagesAsKBAttachments" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#importCP">
+			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Application Display Templates" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPGHierarchyNavigationPG">
+			<var name="kbArticleTitle" value="Liferay UI Taglibs" />
+			<var name="kbChildArticleTitle" value="Using Liferay UI Tabs and Sections" />
+		</execute>
+
+		<execute macro="KBArticle#viewImageViaContent" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBAdminCP">
+			<var name="hasChildArticle" value="true" />
+			<var name="kbArticleTitle" value="Liferay UI Taglibs" />
+		</execute>
+
+		<execute macro="KBArticle#viewAttachmentCP">
+			<var name="kbArticleTitle" value="Using Liferay UI Tabs and Sections" />
+		</execute>
+	</command>
+
+	<command name="ViewImportedKBArticleWithSourceURLMetadata" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#importCP">
+			<var name="kbZipFile" value="KBtest.zip" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBAdminCP">
+			<var name="hasChildArticle" value="true" />
+			<var name="kbArticleTitle" value="Liferay UI Taglibs" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Application Display Templates" />
+		</execute>
+
+		<execute macro="KBArticle#viewSourceURLCP">
+			<var name="kbArticleSourceURL" value="https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/liferayui-taglibs/using-liferay-ui-tabs-and-sections.markdown" />
+			<var name="kbArticleTitle" value="Using Liferay UI Tabs and Sections" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewSourceURLPG">
+			<var name="kbArticleSourceURL" value="https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/adt/intro.markdown" />
+			<var name="kbArticleTitle" value="Application Display Templates" />
+		</execute>
+	</command>
+
+	<command name="ViewImportedMultiplePeerHierarchies" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#importCP">
+			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
+			<var name="kbArticle1ChildArticleTitle1" value="Implementing Application Display Templates" />
+			<var name="kbArticle2ChildArticleTitle1" value="Using liferay-ui:success and liferay-ui:error Messages" />
+			<var name="kbArticle2ChildArticleTitle2" value="Using Liferay UI Tabs and Sections" />
+			<var name="kbArticleTitle1" value="Application Display Templates" />
+			<var name="kbArticleTitle2" value="Liferay UI Taglibs" />
+		</execute>
+	</command>
+
+	<command name="ViewKBArticlesInDifferentScopesPerSite" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page 1" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Knowledge Base Display" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="KBArticle#selectScopePG">
+			<var name="currentKBPageScope" value="Liferay" />
+			<var name="newKBPageScope" value="Knowledge Base Display Page 1 (Create New)" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page 2" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Knowledge Base Display" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="KBArticle#selectScopePG">
+			<var name="currentKBPageScope" value="Liferay" />
+			<var name="newKBPageScope" value="Knowledge Base Display Page 2 (Create New)" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#setScopeCP">
+			<var name="kbPageScope" value="Knowledge Base Display Page 1" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 1" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#setScopeCP">
+			<var name="kbPageScope" value="Knowledge Base Display Page 2" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page 1" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 1" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBArticlePG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page 2" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 2" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBArticlePG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 2" />
+		</execute>
+	</command>
+
 	<command name="ViewKBArticleSuggestionsWorkflow" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
@@ -374,18 +699,16 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
 
-		<execute macro="KBArticleSuggestion#gotoStatus">
-			<var name="status" value="New" />
+		<execute macro="KBArticleSuggestion#goToSuggestionStatusNew">
 			<var name="suggestionCount" value="1" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#moveToStatusCP">
+		<execute macro="KBArticleSuggestion#moveToInProgressStatus">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="status" value="In Progress" />
+			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#gotoStatus">
-			<var name="status" value="In Progress" />
+		<execute macro="KBArticleSuggestion#goToSuggestionStatusInProgress">
 			<var name="suggestionCount" value="1" />
 		</execute>
 
@@ -400,18 +723,17 @@
 
 		<execute macro="KBArticle#goBackCP" />
 
-		<execute macro="KBArticleSuggestion#moveToStatusCP">
+		<execute macro="KBArticleSuggestion#moveToResolvedStatus">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="status" value="Resolved" />
+			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#gotoStatus">
-			<var name="status" value="Resolved" />
+		<execute macro="KBArticleSuggestion#goToSuggestionStatusResolved">
 			<var name="suggestionCount" value="1" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#deleteCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -420,31 +742,22 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
 
-		<execute macro="KBArticleSuggestion#gotoStatus">
-			<var name="status" value="New" />
+		<execute macro="KBArticleSuggestion#goToSuggestionStatusNew">
 			<var name="suggestionCount" value="0" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#viewDefault">
-			<var name="status" value="New" />
-		</execute>
+		<execute macro="KBArticleSuggestion#viewDefaultNew" />
 
-		<execute macro="KBArticleSuggestion#gotoStatus">
-			<var name="status" value="In Progress" />
+		<execute macro="KBArticleSuggestion#goToSuggestionStatusInProgress">
 			<var name="suggestionCount" value="0" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#viewDefault">
-			<var name="status" value="In Progress" />
-		</execute>
+		<execute macro="KBArticleSuggestion#viewDefaultInProgress" />
 
-		<execute macro="KBArticleSuggestion#gotoStatus">
-			<var name="status" value="Resolved" />
+		<execute macro="KBArticleSuggestion#goToSuggestionStatusResolved">
 			<var name="suggestionCount" value="0" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#viewDefault">
-			<var name="status" value="Resolved" />
-		</execute>
+		<execute macro="KBArticleSuggestion#viewDefaultResolved" />
 	</command>
 </definition>

@@ -24,13 +24,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE</td>
+	<td>//div[contains(@class, 'alert') and contains(@class,'alert-danger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_ERROR_MESSAGE</td>
+	<td>//form//div[contains(@class, 'alert') and contains(@class,'alert-danger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRMATION</td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE_SELECTOR_BUTTON</td>
+	<td>//div[contains(@class,'lfr-title-scope-selector')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE_MENU</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a/span[contains(.,'${key_kbPageScope}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,7 +65,7 @@
 </tr>
 <tr>
 	<td>ACTIONS_BUTTON</td>
-	<td>//a[contains(.,'Actions')]</td>
+	<td>//a/span[contains(.,'Actions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -206,6 +226,78 @@
 <tr>
 	<td>ARTICLE_MENULIST_DELETE</td>
 	<td>//a[contains(@id,'kbArticlesAdminSearchContainer') and contains(@id,'menu_delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUGGESTION-->
+<tr>
+	<td>SUGGESTION_TITLE</td>
+	<td>//div[@class='kb-article-comment']//h4/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_CONTENT</td>
+	<td>//div[@class='kb-article-comment']//div[contains(.,'${kbSuggestionBody}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_USER_NAME</td>
+	<td>//div[@class='kb-article-comment']//td[contains(.,'${kbSuggestionBody}')]/../td[@class='kb-article-comment-user']/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_STATUS</td>
+	<td>//div[@class='kb-article-comment']//td[contains(.,'${kbSuggestionBody}')]/div[@class='kb-article-comment-date']/span[@class='taglib-workflow-status']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_MOVE_TO_IN_PROGRESS_BUTTON</td>
+	<td>//tr[contains(.,'${key_kbSuggestionBody}')]/td[2]/div[@class='kb-suggestion-actions']/a[contains(.,'Move to in Progress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_MOVE_TO_NEW_BUTTON</td>
+	<td>//tr[contains(.,'${key_kbSuggestionBody}')]/td[2]/div[@class='kb-suggestion-actions']/a[contains(.,'Move to New')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_RESOLVE_BUTTON</td>
+	<td>//tr[contains(.,'${key_kbSuggestionBody}')]/td[2]/div[@class='kb-suggestion-actions']/a[contains(.,'Resolve')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_DELETE_BUTTON</td>
+	<td>//tr[contains(.,'${key_kbSuggestionBody}')]/td[2]/div[@class='kb-suggestion-actions']/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUGGESTION_NAVIGATION-->
+<tr>
+	<td>SUGGESTION_NAVIGATION_BAR</td>
+	<td>//ul[contains(@id,'knowledgebaseportlet') and contains(@class,'navbar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_NAVIGATION_NEW</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(.,'New')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_NAVIGATION_IN_PROGRESS</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(.,'In Progress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_NAVIGATION_RESOLVED</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(.,'Resolved')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -24,6 +24,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_DESCRIPTION</td>
+	<td>//input[contains(@id,'Description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_RATINGS</td>
+	<td>//input[contains(@id,'Ratings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_ASSET_ENTRIES</td>
+	<td>//input[contains(@id,'AssetEntries')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_RELATED_ASSETS</td>
+	<td>//input[contains(@id,'AssetLinks')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_VIEW_COUNT_INCREMENT</td>
+	<td>//input[contains(@id,'ViewCountIncrement')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_SUBSCRIPTIONS_CHECKBOX</td>
 	<td>//input[contains(@id,'Subscriptions')]</td>
 	<td></td>
@@ -39,8 +64,39 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_SOCIAL_BOOKMARKS</td>
+	<td>//input[contains(@id,'SocialBookmarks')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_ROOT_PREFIX_FIELD</td>
+	<td>//input[contains(@id,'RootPrefix')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RATINGS-->
+<tr>
+	<td>USE_STAR_RATINGS</td>
+	<td>//div[contains(@id,'ratingsType')]/label[contains(.,'Use Star Ratings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USE_THUMBS_RATINGS</td>
+	<td>//div[contains(@id,'ratingsType')]/label[contains(.,'Use Thumbs Up/Thumbs Down')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 </tbody>

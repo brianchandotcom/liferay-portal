@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 import java.io.InputStream;
@@ -249,10 +251,14 @@ public class SAXReaderUtil {
 
 		StackTraceElement caller = callStack[3];
 
-		String signature = caller.getClassName() + "." + caller.getMethodName();
+		StringBundler stringBundler = new StringBundler(3);
+
+		stringBundler.append(caller.getClassName());
+		stringBundler.append(StringPool.PERIOD);
+		stringBundler.append(caller.getMethodName());
 
 		for (String trustedCall : _XML_SECURITY_WHITELIST) {
-			if (signature.contains(trustedCall)) {
+			if (stringBundler.toString().contains(trustedCall)) {
 				return true;
 			}
 		}

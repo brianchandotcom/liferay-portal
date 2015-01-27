@@ -71,6 +71,8 @@ if ((liveGroup.isStaged() && liveGroup.isStagedRemotely()) || cmd.equals(Constan
 	localPublishing = false;
 }
 
+boolean quickPublish = ParamUtil.getBoolean(request, "quickPublish");
+
 String treeId = "liveLayoutsTree";
 
 if (liveGroup.isStaged()) {
@@ -179,7 +181,7 @@ String tabs2Names = StringPool.BLANK;
 if (cmd.equals("view_processes")) {
 	tabs2Names = "current-and-previous";
 }
-else {
+else if (!quickPublish) {
 	tabs2Names = "new-publication-process,current-and-previous,scheduled";
 }
 %>
@@ -191,7 +193,7 @@ else {
 	param="tabs2"
 	refresh="<%= false %>"
 >
-	<c:if test='<%= !cmd.equals("view_processes") %>'>
+	<c:if test='<%= !cmd.equals("view_processes") && !quickPublish %>'>
 		<liferay-ui:section>
 			<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
 				<aui:nav-bar>
@@ -396,7 +398,7 @@ else {
 		</div>
 	</liferay-ui:section>
 
-	<c:if test='<%= !cmd.equals("view_processes") %>'>
+	<c:if test='<%= !cmd.equals("view_processes") && !quickPublish %>'>
 		<liferay-ui:section>
 
 			<%
@@ -505,5 +507,9 @@ else {
 		}
 	};
 
-	A.one('#<portlet:namespace />publishConfigurationButtons').delegate('click', clickHandler, 'li a');
+	var publishConfigurationButtons = A.one('#<portlet:namespace />publishConfigurationButtons');
+
+	if (publishConfigurationButtons) {
+		publishConfigurationButtons.delegate('click', clickHandler, 'li a');
+	}
 </aui:script>

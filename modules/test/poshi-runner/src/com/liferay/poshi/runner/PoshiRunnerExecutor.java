@@ -30,6 +30,20 @@ import org.dom4j.Element;
  */
 public class PoshiRunnerExecutor {
 
+	public static void parse(Element element) throws Exception {
+		List<Element> childElements = element.elements();
+
+		for (Element childElement : childElements) {
+			String childElementName = childElement.getName();
+
+			if (childElementName.equals("execute")) {
+				if (childElement.attributeValue("selenium") != null) {
+					PoshiRunnerExecutor.runSeleniumElement(childElement);
+				}
+			}
+		}
+	}
+
 	public static void runSeleniumElement(Element element) throws Exception {
 		List<Class> parameterClasses = new ArrayList<>();
 		List<String> arguments = new ArrayList<>();

@@ -122,11 +122,8 @@ public class AssetVocabularyStagedModelDataHandler
 
 		vocabulary.setUserUuid(vocabulary.getUserUuid());
 
-		Element assetVocabularyElement =
-			portletDataContext.getExportDataElement(vocabulary);
-
 		portletDataContext.addReferenceElement(
-			vocabulary, assetVocabularyElement, vocabulary,
+			vocabulary, vocabularyElement, vocabulary,
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
 
 		portletDataContext.addPermissions(

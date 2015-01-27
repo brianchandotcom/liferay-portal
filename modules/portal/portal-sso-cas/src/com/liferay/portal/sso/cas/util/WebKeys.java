@@ -12,21 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.security.sso;
+package com.liferay.portal.sso.cas.util;
 
 /**
- * @author Raymond Augé
+ * @author Michael C. Han
  */
-public interface SSO {
+public interface WebKeys {
 
-	public String getSessionExpirationRedirectUrl(long companyId);
+	public static final String CAS_FORCE_LOGOUT = "CAS_FORCE_LOGOUT";
 
-	public String getSignInURL(long companyId, String defaultSignInURL);
+	public static final String CAS_LOGIN = "CAS_LOGIN";
 
-	public boolean isLoginRedirectRequired(long companyId);
-
-	public boolean isRedirectRequired(long companyId);
-
-	public boolean isSessionRedirectOnExpire(long companyId);
+	public static final String CAS_NO_SUCH_USER_EXCEPTION =
+		"CAS_NO_SUCH_USER_EXCEPTION";
 
 }

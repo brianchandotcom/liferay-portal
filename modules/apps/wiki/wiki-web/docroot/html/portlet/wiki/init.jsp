@@ -53,14 +53,14 @@ page import="com.liferay.wiki.util.WikiConstants" %><%@
 page import="com.liferay.wiki.util.WikiPageAttachmentsUtil" %><%@
 page import="com.liferay.wiki.util.WikiUtil" %><%@
 page import="com.liferay.wiki.util.comparator.PageVersionComparator" %><%@
-page import="com.liferay.wiki.web.configuration.WikiPortletInstanceSettings" %><%@
-page import="com.liferay.wiki.web.context.WikiConfigurationDisplayContext" %>
+page import="com.liferay.wiki.web.context.WikiConfigurationDisplayContext" %><%@
+page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %>
 
 <%
 String portletId = portletDisplay.getId();
 
 if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	 portletId = ParamUtil.getString(request, "portletResource");
+	portletId = ParamUtil.getString(request, "portletResource");
 }
 
 WikiPortletInstanceSettings wikiPortletInstanceSettings = WikiPortletInstanceSettings.getInstance(layout, portletId);

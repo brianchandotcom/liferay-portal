@@ -17,7 +17,7 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<resource-bundle>content.Language</resource-bundle>
 		<security-role-ref>
 			<role-name>guest</role-name>
 		</security-role-ref>

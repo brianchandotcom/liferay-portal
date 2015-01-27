@@ -6,10 +6,6 @@
 		<display-name>IP Geocoder Sample</display-name>
 		<portlet-class>com.liferay.ip.geocoder.sample.web.portlet.IPGeocoderSamplePortlet</portlet-class>
 		<init-param>
-			<name>com.liferay.portal.invokerPortletName</name>
-			<value>o/com.liferay.ip.geocoder.sample.web/1</value>
-		</init-param>
-		<init-param>
 			<name>view-template</name>
 			<value>/view.jsp</value>
 		</init-param>

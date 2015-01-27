@@ -212,6 +212,7 @@
 
 		<execute macro="WebContent#viewSelectNoPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

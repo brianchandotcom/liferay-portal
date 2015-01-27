@@ -6,9 +6,7 @@ Import-Package: \
 	*
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources,\
-	@../../../../util-java/util-java.jar,\
-	@../../../../util-taglib/util-taglib.jar
+	META-INF/resources=src/META-INF/resources
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\

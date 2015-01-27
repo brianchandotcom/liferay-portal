@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/site_browser/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");

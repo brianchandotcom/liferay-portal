@@ -26,4 +26,4 @@ if (permissionChecker.isCompanyAdmin()) {
 }
 %>
 
-<%@ include file="/html/portlet/site_browser/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

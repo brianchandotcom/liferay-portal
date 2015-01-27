@@ -61,36 +61,32 @@ it's also your place to [participate](https://dev.liferay.com/participate) in
 making Liferay better. Come check out the [Liferay Developer
 Network](https://dev.liferay.com). 
 
-## Versioning
+## Stay Connected
 
-For transparency and insight into Liferay's release cycle, and for striving to
-maintain backward compatibility, we make a strong effort to uphold the
-[Versioning
-Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/Liferay+Versioning+Policy)
-for our software.
+There are many ways for you to learn what's new in Liferay, get answers to
+questions, and connect with other Liferay community members.
 
-## Bug Tracker
+### Twitter
 
-Have a bug? Please file an issue at
-[https://issues.liferay.com](https://issues.liferay.com) following [Liferay's JIRA
-Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/JIRA).
+Follow us on Twitter:
 
-## Twitter Account
+- [@Liferay](http://twitter.com/Liferay) tweets the Liferay's latest
+announcements 
+- [@Liferaydocs](http://twitter.com/Liferaydocs) tweets about new articles
 
-Stay updated on announcements and more by following Liferay on Twitter,
-[@Liferay](http://twitter.com/Liferay).
+### Blog
 
-## Blog
+Read details on announcements, engage in discussions, and learn more by
+following [Liferay's Blog Stream](http://www.liferay.com/community/blogs).
 
-Read detailed announcements, discussions, and more on [Liferay's Blog
-Stream](http://www.liferay.com/community/blogs).
+### Forum
 
-## Forum
-
-Have questions? Ask them on our very active
+Do you have questions? Ask them on our very active
 [forums](http://www.liferay.com/community/forums)!
 
-## IRC
+### IRC Channel
+
+Tune into Liferay's Internet Relay Chat (IRC) channel.
 
 Server: `irc.freenode.net`
 
@@ -108,17 +104,29 @@ project](http://www.liferay.com/community/liferay-projects/liferay-ide) provides
 an Eclipse-based Liferay development environment to help you build and maintain
 Liferay projects easily.
 
-Finally, consider using Maven to build Liferay and your Liferay projects. For
-excellent overviews of Maven support for Liferay, check out [Mika Koivisto's
-presentation](http://www.slideshare.net/koivimik/developing-liferay-plugins-with-maven)
-and [Getting Started with Liferay Maven
-SDK](http://www.liferay.com/web/mika.koivisto/blog/-/blogs/12322618).
+Finally, consider using Maven to build Liferay and your Liferay projects. To
+learn how to use Maven with Liferay, you can read our
+[Maven](https://dev.liferay.com/develop/tutorials/-/knowledge_base/6-2/maven)
+tutorials.
 
 ## Contributing
 
 Liferay welcomes any and all contributions! Please read the [CONTRIBUTING
 guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown)
 for details on developing and submitting your contributions.
+
+## Versioning
+
+For transparency and insight into Liferay's release cycle, and for striving to
+maintain backward compatibility, we make a strong effort to uphold the
+versioning for our software as described in [Understanding Liferay's
+Releases](https://dev.liferay.com/discover/deployment/-/knowledge_base/6-2/understanding-liferays-releases).
+
+## Bug Tracker
+
+Did you find a bug? Please file an issue for it at
+[https://issues.liferay.com](https://issues.liferay.com) following [Liferay's
+JIRA Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/JIRA).
 
 ## Professional Services
 

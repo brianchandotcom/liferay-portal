@@ -86,7 +86,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *             structure, if the XSD was not well-formed, or if a portal
 	 *             exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
-	 *             long, Map, Map, DDMForm, ServiceContext)}
+	 *             long, Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -156,7 +156,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *             the structure, if the XSD is not well formed, or if a portal
 	 *             exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
-	 *             long, String, Map, Map, DDMForm, String, int,
+	 *             long, String, Map, Map, DDMForm, DDMFormLayout, String, int,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -232,8 +232,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *             structure, if the XSD was not well-formed, or if a portal
 	 *             exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
-	 *             String, long, String, Map, Map, DDMForm, String, int,
-	 *             ServiceContext)}
+	 *             String, long, String, Map, Map, DDMForm, DDMFormLayout,
+	 *             String, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -663,7 +663,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @throws     PortalException if the user did not have permission to update
 	 *             the structure or if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
-	 *             long, String, Map, Map, DDMForm, ServiceContext)}
+	 *             long, String, Map, Map, DDMForm, DDMFormLayout,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -715,7 +716,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @throws     PortalException if the user did not have permission to update
 	 *             the structure or if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
-	 *             Map, Map, DDMForm, ServiceContext)}
+	 *             Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

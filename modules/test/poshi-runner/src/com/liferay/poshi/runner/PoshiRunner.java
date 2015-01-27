@@ -43,7 +43,7 @@ public class PoshiRunner extends TestCase {
 		Element element = PoshiRunnerContext.getTestcaseCommandElement(
 			classCommandName);
 
-		PoshiRunnerExecutor.parse(element);
+		PoshiRunnerExecutor.parseElement(element);
 	}
 
 }

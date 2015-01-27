@@ -28,6 +28,7 @@ import com.liferay.portlet.messageboards.model.MBThreadFlag;
 import com.liferay.portlet.messageboards.service.base.MBThreadFlagLocalServiceBaseImpl;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -111,12 +112,22 @@ public class MBThreadFlagLocalServiceImpl
 
 	@Override
 	public void deleteThreadFlagsByThreadId(long threadId) {
-		mbThreadFlagPersistence.removeByThreadId(threadId);
+		List<MBThreadFlag> threadFlags = mbThreadFlagPersistence.findByThreadId(
+			threadId);
+
+		for (MBThreadFlag threadFlag : threadFlags) {
+			mbThreadFlagLocalService.deleteThreadFlag(threadFlag);
+		}
 	}
 
 	@Override
 	public void deleteThreadFlagsByUserId(long userId) {
-		mbThreadFlagPersistence.removeByUserId(userId);
+		List<MBThreadFlag> threadFlags = mbThreadFlagPersistence.findByUserId(
+			userId);
+
+		for (MBThreadFlag threadFlag : threadFlags) {
+			mbThreadFlagLocalService.deleteThreadFlag(threadFlag);
+		}
 	}
 
 	@Override

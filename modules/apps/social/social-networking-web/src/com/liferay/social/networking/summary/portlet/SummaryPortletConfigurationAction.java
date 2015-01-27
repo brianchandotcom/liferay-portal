@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	property = { "javax.portlet.name=" + SummaryPortlet.JAVAX_PORTLET_NAME },
+	property = {"javax.portlet.name=" + SummaryPortlet.JAVAX_PORTLET_NAME},
 	service = ConfigurationAction.class
 )
 public class SummaryPortletConfigurationAction

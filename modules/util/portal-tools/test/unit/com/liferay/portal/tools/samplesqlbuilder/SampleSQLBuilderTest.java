@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.test.log.LogAssertionTestRule;
 import com.liferay.portal.tools.DBLoader;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sql.SQLQueryProvider;
@@ -34,12 +35,17 @@ import java.sql.Statement;
 import java.util.Properties;
 import java.util.ServiceLoader;
 
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Tina Tian
  */
 public class SampleSQLBuilderTest {
+
+	@ClassRule
+	public static final LogAssertionTestRule logAssertionTestRule =
+		LogAssertionTestRule.INSTANCE;
 
 	@Test
 	public void testGenerateAndInsertSampleSQL() throws Exception {

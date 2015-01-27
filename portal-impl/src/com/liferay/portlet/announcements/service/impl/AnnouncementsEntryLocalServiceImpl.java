@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.announcements.service.impl;
 
+import com.liferay.portal.kernel.events.IntervalAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -453,39 +453,58 @@ public class AnnouncementsEntryLocalServiceImpl
 				user.getFullName());
 		}
 		else {
-			int count = 0;
-
-			if (teamId > 0) {
-				count = userLocalService.getTeamUsersCount(teamId);
-			}
-			else {
-				count = userLocalService.searchCount(
-					company.getCompanyId(), null,
-					WorkflowConstants.STATUS_APPROVED, params);
-			}
-
-			int pages = count / Indexer.DEFAULT_INTERVAL;
-
-			for (int i = 0; i <= pages; i++) {
-				int start = (i * Indexer.DEFAULT_INTERVAL);
-				int end = start + Indexer.DEFAULT_INTERVAL;
-
-				List<User> users = null;
-
-				if (teamId > 0) {
-					users = userLocalService.getTeamUsers(teamId, start, end);
-				}
-				else {
-					users = userLocalService.search(
-						company.getCompanyId(), null,
-						WorkflowConstants.STATUS_APPROVED, params, start, end,
-						(OrderByComparator<User>)null);
-				}
-
-				notifyUsers(
-					users, entry, company.getLocale(), toAddress, toName);
-			}
+			notifyUsers(entry, teamId, params, toName, toAddress, company);
 		}
+	}
+
+	protected void notifyUsers(
+			final AnnouncementsEntry entry, final long teamId,
+			final LinkedHashMap<String, Object> params, final String toName,
+			final String toAddress, final Company company)
+		throws PortalException {
+
+		int total = 0;
+
+		if (teamId > 0) {
+			total = userLocalService.getTeamUsersCount(teamId);
+		}
+		else {
+			total = userLocalService.searchCount(
+				company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+				params);
+		}
+
+		final IntervalAction intervalAction = new IntervalAction(total);
+
+		intervalAction.setPerformActionMethod(
+			new IntervalAction.PerformIntervalActionMethod() {
+
+				@Override
+				public void performAction(int start, int end)
+					throws PortalException {
+
+					List<User> users = null;
+
+					if (teamId > 0) {
+						users = userLocalService.getTeamUsers(
+							teamId, start, end);
+					}
+					else {
+						users = userLocalService.search(
+							company.getCompanyId(), null,
+							WorkflowConstants.STATUS_APPROVED, params, start,
+							end, (OrderByComparator<User>)null);
+					}
+
+					notifyUsers(
+						users, entry, company.getLocale(), toAddress, toName);
+
+					intervalAction.incrementStart(users.size());
+				}
+
+			});
+
+		intervalAction.performActions();
 	}
 
 	protected void notifyUsers(

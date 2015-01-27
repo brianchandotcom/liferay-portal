@@ -297,6 +297,9 @@ public class LangBuilder {
 						else if (key.equals("lang.line.end")) {
 							translatedText = "right";
 						}
+						else if (key.startsWith("lang.user.name.")) {
+							translatedText = "";
+						}
 						else if (languageId.equals("el") &&
 								 (key.equals("enabled") || key.equals("on") ||
 								  key.equals("on-date"))) {

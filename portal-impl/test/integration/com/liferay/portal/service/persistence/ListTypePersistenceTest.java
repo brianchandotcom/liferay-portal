@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ListType;
+import com.liferay.portal.model.impl.ListTypeModelImpl;
 import com.liferay.portal.test.LiferayIntegrationTestRule;
 import com.liferay.portal.test.PersistenceTestRule;
 import com.liferay.portal.test.TransactionalTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 
 import org.junit.After;
@@ -124,6 +127,20 @@ public class ListTypePersistenceTest {
 			_persistence.countByType(StringPool.NULL);
 
 			_persistence.countByType((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByN_T() {
+		try {
+			_persistence.countByN_T(StringPool.BLANK, StringPool.BLANK);
+
+			_persistence.countByN_T(StringPool.NULL, StringPool.NULL);
+
+			_persistence.countByN_T((String)null, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -338,6 +355,26 @@ public class ListTypePersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+			return;
+		}
+
+		ListType newListType = addListType();
+
+		_persistence.clearCache();
+
+		ListTypeModelImpl existingListTypeModelImpl = (ListTypeModelImpl)_persistence.findByPrimaryKey(newListType.getPrimaryKey());
+
+		Assert.assertTrue(Validator.equals(
+				existingListTypeModelImpl.getName(),
+				existingListTypeModelImpl.getOriginalName()));
+		Assert.assertTrue(Validator.equals(
+				existingListTypeModelImpl.getType(),
+				existingListTypeModelImpl.getOriginalType()));
 	}
 
 	protected ListType addListType() throws Exception {

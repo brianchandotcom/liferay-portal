@@ -37,7 +37,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		if (<portlet:namespace />itemsInStock || confirm('<%= UnicodeLanguageUtil.get(request, "your-cart-has-items-that-are-out-of-stock") %>')) {
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.CHECKOUT %>');
 			form.fm('redirect').val('<portlet:actionURL><portlet:param name="struts_action" value="/shopping/checkout" /><portlet:param name="cmd" value='<%= Constants.CHECKOUT %>'/></portlet:actionURL>');
-			<portlet:namespace />updateCart()
+			<portlet:namespace />updateCart();
 		}
 	}
 

@@ -92,7 +92,7 @@ if (selLayout != null) {
 						label: item.name,
 						leaf: item.leaf,
 						type: 'task'
-					}
+					};
 
 					if (nodeChildren) {
 						newNode.children = TreeUtil.formatJSONResults(item);

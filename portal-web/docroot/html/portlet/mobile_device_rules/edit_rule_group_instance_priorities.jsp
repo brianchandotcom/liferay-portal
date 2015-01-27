@@ -64,7 +64,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 		%>
 
 			<div class="rule-group-instance <%= (i == 0) ? "rule-group-instance-first" : StringPool.BLANK %>" data-rule-group-instance-id="<%= ruleGroupInstance.getRuleGroupInstanceId() %>">
-				<span class="rule-group-instance-handle icon icon-grip-dotted-vertical"></span>
+				<span class="icon icon-grip-dotted-vertical rule-group-instance-handle"></span>
 
 				<span class="rule-group-instance-label"><%= HtmlUtil.escape(ruleGroup.getName(locale)) %></span>
 
@@ -116,7 +116,6 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 				container: container,
 				handles: ['.rule-group-instance'],
 				nodes: '.rule-group-instance',
-				opacity: '.4',
 				on: {
 					moved: function(event) {
 						var instance = this;
@@ -135,7 +134,8 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 							priorityNode.html(nodes.indexOf(currentNode));
 						}
 					}
-				}
+				},
+				opacity: '.4'
 			}
 		);
 

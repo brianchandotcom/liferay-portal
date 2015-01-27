@@ -23,7 +23,7 @@ for (int i = 0; i < emoticons.length; i++) {
 	String image = StringUtil.replace(emoticons[i][0], ThemeConstants.TOKEN_THEME_IMAGES_PATH, themeDisplay.getPathThemeImages());
 %>
 
-	<a class="lfr-button emoticon" emoticonCode="<%= emoticons[i][1] %>"><%= image %></a>
+	<a class="emoticon lfr-button" emoticonCode="<%= emoticons[i][1] %>"><%= image %></a>
 
 <%
 }

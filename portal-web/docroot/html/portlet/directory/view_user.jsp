@@ -41,7 +41,7 @@ request.setAttribute("websites.classPK", selContact.getContactId());
 <liferay-util:include page="/html/portlet/directory/tabs1.jsp" />
 
 <div class="user-information">
-	<div class="section entity-details">
+	<div class="entity-details section">
 		<liferay-util:include page="/html/portlet/directory/user/details.jsp" />
 	</div>
 

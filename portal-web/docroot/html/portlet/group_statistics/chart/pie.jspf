@@ -126,23 +126,23 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 	var chart = new A.Chart(
 		{
 			dataProvider: data,
+			height: containerWidth,
 			seriesCollection: [
 				{
 					categoryKey: 'category',
 					styles: {
-						fill: {
-							colors: ['<%= StringUtil.merge(_BACKGROUND_COLORS, "', '") %>']
-						},
 						border: {
 							alpha: 0.8,
 							colors: new Array(9).join('#333,').split(','),
 							weight: 1
+						},
+						fill: {
+							colors: ['<%= StringUtil.merge(_BACKGROUND_COLORS, "', '") %>']
 						}
 					},
 					valueKey: 'values'
 				}
 			],
-			height: containerWidth,
 			tooltip: tooltip,
 			type: 'pie',
 			width: containerWidth

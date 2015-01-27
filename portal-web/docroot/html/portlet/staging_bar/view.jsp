@@ -210,9 +210,9 @@ if (layout != null) {
 			Liferay.Service(
 				'/backgroundtask/get-background-tasks-count',
 				{
+					completed: false,
 					groupId: '<%= liveGroup.getGroupId() %>',
-					taskExecutorClassName: '<%= LayoutStagingBackgroundTaskExecutor.class.getName() %>',
-					completed: false
+					taskExecutorClassName: '<%= LayoutStagingBackgroundTaskExecutor.class.getName() %>'
 				},
 				function(obj) {
 					var incomplete = obj > 0;

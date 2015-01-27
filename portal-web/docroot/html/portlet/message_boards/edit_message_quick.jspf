@@ -118,7 +118,6 @@ boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 
 <aui:script>
 	function <portlet:namespace />saveMessage() {
-		document.<portlet:namespace />addQuickReplyFm.<portlet:namespace /><%= Constants.CMD %>.value;
 		document.<portlet:namespace />addQuickReplyFm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
 
 		submitForm(document.<portlet:namespace />addQuickReplyFm);

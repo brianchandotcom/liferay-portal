@@ -34,7 +34,7 @@ if (maxValue != minValue) {
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<ul class="tag-items tag-cloud">
+<ul class="tag-cloud tag-items">
 
 	<%
 	for (AssetTag assetTag : assetTags) {

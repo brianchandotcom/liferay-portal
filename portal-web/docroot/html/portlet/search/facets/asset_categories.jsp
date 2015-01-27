@@ -31,7 +31,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
 	<ul class="<%= (showAssetCount && displayStyle.equals("cloud")) ? "tag-cloud" : "tag-list" %> nav nav-pills nav-stacked">
-		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
+		<li class="default facet-value <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
 			<a data-value="" href="javascript:;"><aui:icon image="tags" /> <liferay-ui:message key="any" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 		</li>
 

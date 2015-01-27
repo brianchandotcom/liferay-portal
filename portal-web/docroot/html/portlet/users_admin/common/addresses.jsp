@@ -102,8 +102,8 @@ else {
 						select: '<portlet:namespace />addressCountryId<%= addressesIndex %>',
 						selectData: Liferay.Address.getCountries,
 						selectDesc: 'nameCurrentValue',
-						selectSort: '<%= true %>',
 						selectId: 'countryId',
+						selectSort: '<%= true %>',
 						selectVal: '<%= countryId %>'
 					},
 					{
@@ -150,8 +150,8 @@ else {
 										select: '<portlet:namespace />addressCountryId' + guid,
 										selectData: Liferay.Address.getCountries,
 										selectDesc: 'nameCurrentValue',
-										selectSort: '<%= true %>',
 										selectId: 'countryId',
+										selectSort: '<%= true %>',
 										selectVal: '0'
 									},
 									{

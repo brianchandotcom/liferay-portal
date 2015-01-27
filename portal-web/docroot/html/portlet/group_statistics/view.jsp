@@ -81,7 +81,7 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 
 	<div class="group-statistics-container">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "groupStatisticsPanel" + displayActivityCounterNameIndex %>' persistState="<%= true %>" title="<%= title %>">
-			<div class="group-statistics-body chart-<%= HtmlUtil.escapeAttribute(chartType) %>" style="min-height: <%= displayHeight %>px;">
+			<div class="chart-<%= HtmlUtil.escapeAttribute(chartType) %> group-statistics-body" style="min-height: <%= displayHeight %>px;">
 				<c:choose>
 					<c:when test="<%= dataSize > 0 %>">
 						<c:choose>

@@ -143,7 +143,7 @@ else {
 <aui:script>
 	function <portlet:namespace />createURL(href, value, onclick) {
 		return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
-	};
+	}
 </aui:script>
 
 <%!

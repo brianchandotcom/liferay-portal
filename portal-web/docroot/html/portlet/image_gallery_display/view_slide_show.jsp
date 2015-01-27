@@ -83,7 +83,7 @@ int defaultSpeed = 3000;
 </table>
 
 <aui:script>
-	var <portlet:namespace />imgArray = new Array();
+	var <portlet:namespace />imgArray = [];
 
 	<%
 	for (int i = 0; i < fileEntries.size(); i++) {
@@ -98,7 +98,7 @@ int defaultSpeed = 3000;
 	}
 	%>
 
-	var <portlet:namespace />imgArrayPos = 0
+	var <portlet:namespace />imgArrayPos = 0;
 	var <portlet:namespace />speed = <%= defaultSpeed %>;
 	var <portlet:namespace />timeout = 0;
 
@@ -109,7 +109,7 @@ int defaultSpeed = 3000;
 
 	function <portlet:namespace />play() {
 		if (<portlet:namespace />timeout == 0) {
-			<portlet:namespace />timeout = setInterval('<portlet:namespace />showNext()', <portlet:namespace />speed);
+			<portlet:namespace />timeout = setInterval(<portlet:namespace />showNext, <portlet:namespace />speed);
 		}
 	}
 

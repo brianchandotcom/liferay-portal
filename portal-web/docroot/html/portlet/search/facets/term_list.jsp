@@ -29,7 +29,7 @@ int maxTerms = dataJSONObject.getInt("maxTerms");
 	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
 	<ul class="nav nav-pills nav-stacked term-list">
-		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
+		<li class="default facet-value <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
 			<a data-value="" href="javascript:;"><liferay-ui:message key="any-term" /></a>
 		</li>
 

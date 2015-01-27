@@ -35,7 +35,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
 	<ul class="nav nav-pills nav-stacked scopes">
-		<li class="facet-value default <%= fieldParam.equals("0") ? "active" : StringPool.BLANK %>">
+		<li class="default facet-value <%= fieldParam.equals("0") ? "active" : StringPool.BLANK %>">
 			<a data-value="0" href="javascript:;"><aui:icon image="sitemap" /> <liferay-ui:message key="any" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 		</li>
 

@@ -157,8 +157,8 @@ if (Validator.isNotNull(scriptContent)) {
 					function(item, index) {
 						results.push(
 							{
-								node: item.ancestor(),
-								data: trim(item.text())
+								data: trim(item.text()),
+								node: item.ancestor()
 							}
 						);
 					}

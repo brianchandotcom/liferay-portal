@@ -229,7 +229,7 @@ if (layout != null) {
 				%>
 
 					{
-						"clearScreensCache": <%= (Validator.isNotNull(portletId) && Validator.isNotNull(singlePageApplicationLastPortletId) && !Validator.equals(portletId, singlePageApplicationLastPortletId)) %>
+						clearScreensCache: <%= (Validator.isNotNull(portletId) && Validator.isNotNull(singlePageApplicationLastPortletId) && !Validator.equals(portletId, singlePageApplicationLastPortletId)) %>
 					}
 
 				<%

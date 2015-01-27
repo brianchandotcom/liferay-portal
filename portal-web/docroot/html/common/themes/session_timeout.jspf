@@ -25,9 +25,9 @@
 			Liferay.Session = new Liferay.SessionBase(
 				{
 					autoExtend: <%= !themeDisplay.isSignedIn() || PropsValues.SESSION_TIMEOUT_AUTO_EXTEND %>,
-					sessionLength: <%= PropsValues.SESSION_TIMEOUT %>,
 					redirectOnExpire: <%= SSOUtil.isSessionRedirectOnExpire(themeDisplay.getCompanyId()) %>,
 					redirectUrl: '<%= HtmlUtil.escapeJS(SSOUtil.getSessionExpirationRedirectURL(themeDisplay.getCompanyId(), themeDisplay.getURLHome())) %>',
+					sessionLength: <%= PropsValues.SESSION_TIMEOUT %>,
 					warningLength: <%= PropsValues.SESSION_TIMEOUT_WARNING %>
 				}
 			);

@@ -319,7 +319,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 						String[] fieldParamFromParts = StringUtil.split(fieldParamFrom, "-");
 						%>
 
-						new Date(<%= GetterUtil.getInteger(fieldParamFromParts[0]) %>,<%= GetterUtil.getInteger(fieldParamFromParts[1]) - 1 %>,<%= GetterUtil.getInteger(fieldParamFromParts[2]) %>)
+						new Date(<%= GetterUtil.getInteger(fieldParamFromParts[0]) %>, <%= GetterUtil.getInteger(fieldParamFromParts[1]) - 1 %>, <%= GetterUtil.getInteger(fieldParamFromParts[2]) %>)
 					],
 				</c:if>
 
@@ -350,7 +350,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 						String[] fieldParamToParts = StringUtil.split(fieldParamTo, "-");
 						%>
 
-						new Date(<%= GetterUtil.getInteger(fieldParamToParts[0]) %>,<%= GetterUtil.getInteger(fieldParamToParts[1]) - 1 %>,<%= GetterUtil.getInteger(fieldParamToParts[2]) %>)
+						new Date(<%= GetterUtil.getInteger(fieldParamToParts[0]) %>, <%= GetterUtil.getInteger(fieldParamToParts[1]) - 1 %>, <%= GetterUtil.getInteger(fieldParamToParts[2]) %>)
 					],
 				</c:if>
 

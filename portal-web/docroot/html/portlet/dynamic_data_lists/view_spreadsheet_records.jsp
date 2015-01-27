@@ -149,10 +149,10 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 			editEvent: 'dblclick',
 			plugins: [
 				{
-					fn: A.Plugin.DataTableHighlight,
 					cfg: {
 						highlightRange: false
-					}
+					},
+					fn: A.Plugin.DataTableHighlight
 				}
 			],
 			recordsetId: <%= recordSet.getRecordSetId() %>,

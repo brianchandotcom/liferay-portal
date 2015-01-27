@@ -265,7 +265,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 			Country country = address.getCountry();
 		%>
 
-			if ('<%= address.getAddressId() %>' == addressId) {
+			if (addressId == '<%= address.getAddressId() %>') {
 				form.fm(type + 'Street').val('<%= HtmlUtil.escapeJS(address.getStreet1()) %>');
 				form.fm(type + 'City').val('<%= HtmlUtil.escapeJS(address.getCity()) %>');
 

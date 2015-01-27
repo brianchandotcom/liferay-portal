@@ -93,7 +93,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 	$('.layout-branch-selector').on(
 		'mouseenter',
 		function(event) {
-			Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="page-variation" />')
+			Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="page-variation" />');
 		}
 	);
 

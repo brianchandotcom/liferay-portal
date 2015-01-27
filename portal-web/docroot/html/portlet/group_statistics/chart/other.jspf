@@ -131,19 +131,22 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 		}
 	};
 
+	var chartType;
+	var customConfig;
+
 	<c:choose>
 		<c:when test='<%= chartType.equals("area") %>'>
-			var chartType = 'combo';
+			chartType = 'combo';
 
-			var customConfig = {
+			customConfig = {
 				showAreaFill: true,
 				showMarkers: true,
 				styles: {
 					series: {
 						values: {
 							area: {
-								color: '#5CC0FF',
-								alpha: 0.4
+								alpha: 0.4,
+								color: '#5CC0FF'
 							},
 							line: {
 								color: '#4572A7',
@@ -161,9 +164,9 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 			};
 		</c:when>
 		<c:otherwise>
-			var chartType = '<%= HtmlUtil.escapeJS(chartType) %>';
+			chartType = '<%= HtmlUtil.escapeJS(chartType) %>';
 
-			var customConfig = {
+			customConfig = {
 				showAreaFill: true,
 				showMarkers: true
 			};

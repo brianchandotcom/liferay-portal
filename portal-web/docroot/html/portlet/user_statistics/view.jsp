@@ -101,7 +101,7 @@ if (!rankingNamesList.isEmpty()) {
 	<aui:script sandbox="<%= true %>">
 		var searchTopUsers = $('#<portlet:namespace />searchTopUsers');
 
-		var parent = searchTopUsers.parent();
+		var parentNode = searchTopUsers.parent();
 
 		searchTopUsers.on(
 			'click',
@@ -111,7 +111,7 @@ if (!rankingNamesList.isEmpty()) {
 
 				var uri = $(event.currentTarget).attr('href').replace(/p_p_state=normal/i, 'p_p_state=exclusive');
 
-				parent.load(uri);
+				parentNode.load(uri);
 			}
 		);
 	</aui:script>

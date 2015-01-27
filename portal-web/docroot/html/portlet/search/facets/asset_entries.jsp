@@ -37,7 +37,7 @@ if (dataJSONObject.has("values")) {
 	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
 	<ul class="asset-type nav nav-pills nav-stacked">
-		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
+		<li class="default facet-value <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
 			<a data-value="" href="javascript:;"><aui:icon image="search" /> <liferay-ui:message key="everything" /></a>
 		</li>
 

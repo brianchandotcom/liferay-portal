@@ -54,7 +54,7 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 				<liferay-util:include page="<%= jspPath %>" portletId="<%= portletId %>" />
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message key="<%= message %>" /><button type="button" class="close">&times;</button>
+				<liferay-ui:message key="<%= message %>" /><button class="close" type="button">&times;</button>
 			</c:otherwise>
 		</c:choose>
 	</div>

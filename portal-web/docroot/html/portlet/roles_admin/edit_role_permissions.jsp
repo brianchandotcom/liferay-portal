@@ -164,7 +164,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 		var trim = A.Lang.trim;
 
-		var PermissionNavigationSearch = A.Component.create (
+		var PermissionNavigationSearch = A.Component.create(
 			{
 				AUGMENTS: [A.AutoCompleteBase],
 

@@ -200,7 +200,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 				Liferay.detach('destroyPortlet', onDestroyPortlet);
 			}
-		}
+		};
 
 		Liferay.on('destroyPortlet', onDestroyPortlet);
 	</aui:script>

@@ -266,7 +266,7 @@ for (long defaultTeamId : defaultTeamIds) {
 						}
 					}
 
-					searchContainer = Liferay.SearchContainer.get('<portlet:namespace />' + event.searchcontainername + 'SearchContainer');
+					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />' + event.searchcontainername + 'SearchContainer');
 
 					var rowColumns = [];
 
@@ -312,7 +312,7 @@ for (long defaultTeamId : defaultTeamIds) {
 					uri: '<%= selectTeamURL.toString() %>'
 				},
 				function(event) {
-					searchContainer = Liferay.SearchContainer.get('<portlet:namespace />' + event.teamsearchcontainername + 'SearchContainer');
+					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />' + event.teamsearchcontainername + 'SearchContainer');
 
 					var rowColumns = [];
 

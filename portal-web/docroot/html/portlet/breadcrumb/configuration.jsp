@@ -86,7 +86,7 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 		'_<%= HtmlUtil.escapeJS(portletResource) %>_showLayout': <%= showLayout %>,
 		'_<%= HtmlUtil.escapeJS(portletResource) %>_showParentGroups': <%= showParentGroups %>,
 		'_<%= HtmlUtil.escapeJS(portletResource) %>_showPortletBreadcrumb': <%= showPortletBreadcrumb %>
-	}
+	};
 
 	var selectDisplayStyle = $('#<portlet:namespace />displayStyle');
 

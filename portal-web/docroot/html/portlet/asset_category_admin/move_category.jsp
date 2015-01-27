@@ -77,9 +77,9 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 						</c:if>
 
 						hiddenInput: '#<portlet:namespace />parentCategoryId',
-						singleSelect: <%= true %>,
 						instanceVar: '<portlet:namespace />',
 						label: '<%= UnicodeLanguageUtil.format(request, "select-x", curVocabulary.getTitle(locale), false) %>',
+						singleSelect: <%= true %>,
 						vocabularyGroupIds: '<%= scopeGroupId %>',
 						vocabularyIds: '<%= curVocabulary.getVocabularyId() %>'
 					}

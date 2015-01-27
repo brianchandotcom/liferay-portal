@@ -180,7 +180,7 @@ for (Portlet portlet : portlets) {
 <aui:script sandbox="<%= true %>">
 	var Util = Liferay.Util;
 
-	Util.toggleBoxes('<portlet:namespace />socialInteractionsSocialRelationTypesEnabled','<portlet:namespace />socialRelations');
+	Util.toggleBoxes('<portlet:namespace />socialInteractionsSocialRelationTypesEnabled', '<portlet:namespace />socialRelations');
 
 	Util.toggleRadio('<portlet:namespace />socialInteractionsAnyUser', '', '<portlet:namespace />socialInteractionsUsersWrapper');
 	Util.toggleRadio('<portlet:namespace />socialInteractionsChooseUsers', '<portlet:namespace />socialInteractionsUsersWrapper', '');
@@ -189,7 +189,7 @@ for (Portlet portlet : portlets) {
 	for (Portlet socialInteractionsConfigurationPortlet : socialInteractionsConfigurationPortlets) {
 	%>
 
-		Util.toggleBoxes('<%= renderResponse.getNamespace() + "socialInteractionsSocialRelationTypesEnabled" + socialInteractionsConfigurationPortlet.getPortletId() + "Checkbox" %>','<%= renderResponse.getNamespace() + "socialRelations" + socialInteractionsConfigurationPortlet.getPortletId() %>');
+		Util.toggleBoxes('<%= renderResponse.getNamespace() + "socialInteractionsSocialRelationTypesEnabled" + socialInteractionsConfigurationPortlet.getPortletId() + "Checkbox" %>', '<%= renderResponse.getNamespace() + "socialRelations" + socialInteractionsConfigurationPortlet.getPortletId() %>');
 
 		Util.toggleRadio('<%= renderResponse.getNamespace() + "inheritSocialInteractionsConfiguration" + socialInteractionsConfigurationPortlet.getPortletId() %>', '', '<%= renderResponse.getNamespace() + "socialInteractionsUsersWrapper" + socialInteractionsConfigurationPortlet.getPortletId() %>');
 		Util.toggleRadio('<%= renderResponse.getNamespace() + "socialInteractionsAnyUser" + socialInteractionsConfigurationPortlet.getPortletId() %>', '', '<%= renderResponse.getNamespace() + "socialInteractionsUsersWrapper" + socialInteractionsConfigurationPortlet.getPortletId() %>');

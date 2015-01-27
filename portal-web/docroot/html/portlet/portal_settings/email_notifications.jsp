@@ -82,7 +82,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 				showSubject="<%= false %>"
 			/>
 
-			<aui:fieldset cssClass="terms email-user-add definition-of-terms">
+			<aui:fieldset cssClass="definition-of-terms email-user-add terms">
 				<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
 			</aui:fieldset>
 		</aui:fieldset>
@@ -100,7 +100,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 			showEmailEnabled="<%= false %>"
 		/>
 
-		<aui:fieldset cssClass="terms email-verification definition-of-terms">
+		<aui:fieldset cssClass="definition-of-terms email-verification terms">
 			<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
 		</aui:fieldset>
 	</liferay-ui:section>
@@ -117,7 +117,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 			showEmailEnabled="<%= false %>"
 		/>
 
-		<aui:fieldset cssClass="terms email-verification definition-of-terms">
+		<aui:fieldset cssClass="definition-of-terms email-verification terms">
 			<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
 		</aui:fieldset>
 	</liferay-ui:section>
@@ -134,7 +134,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 			showEmailEnabled="<%= false %>"
 		/>
 
-		<aui:fieldset cssClass="terms email-verification definition-of-terms">
+		<aui:fieldset cssClass="definition-of-terms email-verification terms">
 			<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
 		</aui:fieldset>
 	</liferay-ui:section>

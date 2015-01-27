@@ -225,15 +225,17 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 		<c:if test="<%= liveGroup != null %>">
 			var stagingTypeEl = $('input[name=<portlet:namespace />stagingType]:checked');
 
+			var oldValue;
+
 			<c:choose>
 				<c:when test="<%= liveGroup.isStaged() && !liveGroup.isStagedRemotely() %>">
-					var oldValue = 1;
+					oldValue = 1;
 				</c:when>
 				<c:when test="<%= liveGroup.isStaged() && liveGroup.isStagedRemotely() %>">
-					var oldValue = 2;
+					oldValue = 2;
 				</c:when>
 				<c:otherwise>
-					var oldValue = 0;
+					oldValue = 0;
 				</c:otherwise>
 			</c:choose>
 

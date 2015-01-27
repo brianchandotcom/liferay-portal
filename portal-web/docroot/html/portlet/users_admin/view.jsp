@@ -146,17 +146,21 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		var status = <%= WorkflowConstants.STATUS_INACTIVE %>;
 
 		<portlet:namespace />getUsersCount(
-			className, ids, status,
+			className,
+			ids,
+			status,
 			function(responseData) {
-				var count = parseInt(responseData);
+				var count = parseInt(responseData, 10);
 
 				if (count > 0) {
 					status = <%= WorkflowConstants.STATUS_APPROVED %>;
 
 					<portlet:namespace />getUsersCount(
-						className, ids, status,
+						className,
+						ids,
+						status,
 						function(responseData) {
-							count = parseInt(responseData);
+							count = parseInt(responseData, 10);
 
 							if (count > 0) {
 								if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
@@ -180,10 +184,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						}
 					);
 				}
-				else {
-					if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-						<portlet:namespace />doDeleteOrganizations(ids);
-					}
+				else if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+					<portlet:namespace />doDeleteOrganizations(ids);
 				}
 			}
 		);

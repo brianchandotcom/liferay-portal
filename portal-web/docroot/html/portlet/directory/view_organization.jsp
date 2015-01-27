@@ -35,7 +35,7 @@ request.setAttribute("websites.classPK", organizationId);
 <liferay-util:include page="/html/portlet/directory/tabs1.jsp" />
 
 <div class="organization-information">
-	<div class="section entity-details">
+	<div class="entity-details section">
 		<liferay-util:include page="/html/portlet/directory/organization/details.jsp" />
 	</div>
 

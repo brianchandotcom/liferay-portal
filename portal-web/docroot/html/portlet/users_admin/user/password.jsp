@@ -127,7 +127,7 @@ else {
 	</aui:fieldset>
 
 	<aui:script sandbox="<%= true %>">
-		var customQuestionDiv = $('#<portlet:namespace />customQuestionDiv')
+		var customQuestionDiv = $('#<portlet:namespace />customQuestionDiv');
 
 		$('#<portlet:namespace />reminderQueryQuestion').on(
 			'change',

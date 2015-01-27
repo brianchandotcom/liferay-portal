@@ -457,7 +457,7 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 			exportMappingGroupDefaultObjectClass = '';
 		}
 		else if (ldapType == 'novell') {
-			url = 'ldap://localhost:389';
+			baseProviderURL = 'ldap://localhost:389';
 			baseDN = '';
 			principal = 'cn=admin,ou=test';
 			credentials = 'secret';
@@ -483,7 +483,7 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 			exportMappingGroupDefaultObjectClass = '';
 		}
 		else if (ldapType == 'open') {
-			url = 'ldap://localhost:389';
+			baseProviderURL = 'ldap://localhost:389';
 			baseDN = 'dc=example,dc=com';
 			principal = 'cn=admin,ou=test';
 			credentials = 'secret';

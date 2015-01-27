@@ -34,7 +34,7 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
 	<ul class="folders nav nav-pills nav-stacked">
-		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
+		<li class="default facet-value <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
 			<a data-value="" href="javascript:;"><aui:icon image="folder-open" /> <liferay-ui:message key="any" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 		</li>
 

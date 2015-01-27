@@ -285,6 +285,21 @@
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_SEARCH_BUTTON" />
 	</command>
 
+	<command name="viewDefaultEmailFromCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="CPMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_EMAIL_FROM" value1="Email From" />
+
+		<execute action="CPMessageboardsConfigurationSetupEmailFrom#assertTextEquals" locator-key1="EMAIL_FROM_NAME" value1="[$MESSAGE_USER_NAME$]" />
+		<execute action="CPMessageboardsConfigurationSetupEmailFrom#assertTextEquals" locator-key1="EMAIL_FROM_ADDRESS" value1="test@liferay.com" />
+	</command>
+
 	<command name="viewNoPermissionCP">
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Message Boards" />
 		<execute action="CPMessageboards#assertElementPresent" locator-key1="NAVBAR_CONTAINER" />

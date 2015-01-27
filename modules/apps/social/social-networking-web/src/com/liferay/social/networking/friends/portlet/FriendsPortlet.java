@@ -28,8 +28,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.icon=/icons/friends.png",
 		"com.liferay.portlet.header-portlet-css=/friends/css/main.css",
-		"com.liferay.portlet.css-class-wrapper=" +
-			"social-networking-portlet-friends",
+		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-friends",
 		"javax.portlet.display-name=Friends",
 		"javax.portlet.init-param.view-template=/friends/view.jsp",
 		"javax.portlet.expiration-cache=0",

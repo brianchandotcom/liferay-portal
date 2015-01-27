@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -135,7 +136,7 @@ public class DDMFormValues implements Serializable {
 		_defaultLocale = defaultLocale;
 	}
 
-	private Set<Locale> _availableLocales;
+	private Set<Locale> _availableLocales = new LinkedHashSet<>();
 	private final DDMForm _ddmForm;
 	private List<DDMFormFieldValue> _ddmFormFieldValues = new ArrayList<>();
 	private Locale _defaultLocale;

@@ -65,8 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.header-portlet-css=/summary/css/main.css",
-		"com.liferay.portlet.css-class-wrapper=" +
-			"social-networking-portlet-summary",
+		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-summary",
 		"javax.portlet.display-name=Summary",
 		"javax.portlet.init-param.clear-request-parameters=true",
 		"javax.portlet.init-param.config-template=/summary/configuration.jsp",

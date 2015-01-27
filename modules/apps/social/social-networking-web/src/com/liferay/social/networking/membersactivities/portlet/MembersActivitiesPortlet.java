@@ -27,16 +27,11 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.friendly-url-mapping=activities",
-		"com.liferay.portlet.friendly-url-routes=" +
-			"com/liferay/social/networking/members/social/" +
-				"activities-friendly-url-routes.xml",
-		"com.liferay.portlet.css-class-wrapper=" +
-			"social-networking-portlet-members",
+		"com.liferay.portlet.friendly-url-routes=com/liferay/social/networking/members/social/activities-friendly-url-routes.xml",
+		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-members",
 		"javax.portlet.display-name=Members' Activities",
-		"javax.portlet.init-param.config-template=" +
-			"/members_activities/configuration.jsp",
-		"javax.portlet.init-param.view-template=" +
-			"/members_activities/view.jsp",
+		"javax.portlet.init-param.config-template=/members_activities/configuration.jsp",
+		"javax.portlet.init-param.view-template=/members_activities/view.jsp",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.supports.mime-type=text/html",
 		"javax.portlet.resource-bundle=content.Language",

@@ -268,6 +268,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout getDDMFormLayout()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructure.getDDMFormLayout();
+	}
+
+	@Override
 	public java.lang.String getDefaultLanguageId() {
 		return _ddmStructure.getDefaultLanguageId();
 	}
@@ -595,6 +601,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	@Override
 	public java.lang.String getStructureKey() {
 		return _ddmStructure.getStructureKey();
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getStructureVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructure.getStructureVersion();
 	}
 
 	@Override

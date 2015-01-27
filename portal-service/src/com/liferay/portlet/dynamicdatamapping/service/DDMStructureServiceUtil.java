@@ -46,13 +46,14 @@ public class DDMStructureServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
+		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
 		java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addStructure(groupId, parentStructureId, classNameId,
-			structureKey, nameMap, descriptionMap, ddmForm, storageType, type,
-			serviceContext);
+			structureKey, nameMap, descriptionMap, ddmForm, ddmFormLayout,
+			storageType, type, serviceContext);
 	}
 
 	/**
@@ -106,11 +107,12 @@ public class DDMStructureServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
+		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addStructure(userId, groupId, classNameId, nameMap,
-			descriptionMap, ddmForm, serviceContext);
+			descriptionMap, ddmForm, ddmFormLayout, serviceContext);
 	}
 
 	/**
@@ -156,13 +158,14 @@ public class DDMStructureServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
+		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
 		java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addStructure(userId, groupId, parentStructureKey,
 			classNameId, structureKey, nameMap, descriptionMap, ddmForm,
-			storageType, type, serviceContext);
+			ddmFormLayout, storageType, type, serviceContext);
 	}
 
 	/**
@@ -552,11 +555,13 @@ public class DDMStructureServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
+		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStructure(groupId, parentStructureId, classNameId,
-			structureKey, nameMap, descriptionMap, ddmForm, serviceContext);
+			structureKey, nameMap, descriptionMap, ddmForm, ddmFormLayout,
+			serviceContext);
 	}
 
 	/**
@@ -600,11 +605,12 @@ public class DDMStructureServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
+		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStructure(structureId, parentStructureId, nameMap,
-			descriptionMap, ddmForm, serviceContext);
+			descriptionMap, ddmForm, ddmFormLayout, serviceContext);
 	}
 
 	/**

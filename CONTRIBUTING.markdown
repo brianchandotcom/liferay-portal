@@ -15,12 +15,13 @@ and engage them as you contribute to the areas they maintain.
 As you have ideas for features you want to implement, follow the contribution
 steps outlined in the sections, below. For more details on specific steps, and
 to get a deeper understanding of Liferay in general, make sure to read Liferay's
-official [User
-Guide](http://www.liferay.com/documentation/liferay-portal/6.1/user-guide) and
-[Development
-Guide](http://www.liferay.com/documentation/liferay-portal/6.1/development).
-These guides contain extensive explanations, examples, and reference material
-for you to consult time and time again.
+official documentation on the [Liferay Developer
+Network](https://dev.liferay.com/), for
+[using](https://dev.liferay.com/discover/portal) and
+[deploying](https://dev.liferay.com/discover/deployment)  Liferay Portal, and
+[developing](https://dev.liferay.com/develop) on Liferay. This documentation
+contains extensive explanations, examples, and reference material for you to
+consult time and time again.
 
 Also, check out Liferay's extensive Wiki, including its articles on
 [Understanding and Improving

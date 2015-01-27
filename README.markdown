@@ -33,72 +33,83 @@ from their respective repositories.
 To get up and running quickly, *download* a [pre-built Liferay
 release](http://liferay.com/downloads) and follow the [Quick
 Start](http://liferay.com/quick-start) instructions. For more detailed
-installation instructions, please read the [Installation and
-Setup](http://www.liferay.com/documentation/liferay-portal/6.1/user-guide/-/ai/installing-lifer-2)
-chapter of the *Liferay User Guide*.
+installation instructions, please read the
+[Deployment](https://dev.liferay.com/discover/deployment) section of
+documentation on the [Liferay Developer Network](https://dev.liferay.com).
 
 If you wish to *build* core Liferay or its plugins, read the [CONTRIBUTING
 guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown).
 It includes details on using the repositories and building the software.
 
-## Versioning
+## Liferay Developer Network
 
-For transparency and insight into Liferay's release cycle, and for striving to
-maintain backward compatibility, we make a strong effort to uphold the
-[Versioning
-Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/Liferay+Versioning+Policy)
-for our software.
+The [Liferay Developer Network](https://dev.liferay.com) \(LDN\) at
+<http://dev.liferay.com>, is the best place to learn about Liferay. It has over
+200 tutorials, guided learning, and much more.
 
-## Bug Tracker
+LDN's [Learning Paths](https://dev.liferay.com/develop/learning-paths) are a
+great place to learn how to develop on Liferay, especially if you're new to
+Liferay development. As you gain experience developing on Liferay, you'll want
+to dive into [Tutorials](https://dev.liferay.com/develop/tutorials) for details
+on leveraging Liferay's technologies and frameworks. If you create apps that you
+want to share or sell, you can read LDN's
+[Distribute](https://dev.liferay.com/distribute) section to learn how to publish
+the apps to the Liferay Marketplace.
 
-Have a bug? Please file an issue at
-[https://issues.liferay.com](https://issues.liferay.com) following [Liferay's JIRA
-Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/JIRA).
+The Liferay Developer Network is not only your home for Liferay development, but
+it's also your place to [participate](https://dev.liferay.com/participate) in
+making Liferay better. Come check out the [Liferay Developer
+Network](https://dev.liferay.com). 
 
-## Twitter Account
+## Stay Connected
 
-Stay updated on announcements and more by following Liferay on Twitter,
-[@Liferay](http://twitter.com/Liferay).
+There are many ways for you to learn what's new in Liferay, get answers to
+questions, and connect with other Liferay community members.
 
-## Blog
+### Twitter
 
-Read detailed announcements, discussions, and more on [Liferay's Blog
-Stream](http://www.liferay.com/community/blogs).
+Follow us on Twitter:
 
-## Forum
+- [@Liferay](http://twitter.com/Liferay) tweets the Liferay's latest
+announcements
+- [@Liferaydocs](http://twitter.com/Liferaydocs) tweets about new articles
 
-Have questions? Ask them on our very active
+### Blog
+
+Read details on announcements, engage in discussions, and learn more by
+following [Liferay's Blog Stream](http://www.liferay.com/community/blogs).
+
+### Forum
+
+Do you have questions? Ask them on our very active
 [forums](http://www.liferay.com/community/forums)!
 
-## IRC
+### IRC Channel
+
+Tune into Liferay's Internet Relay Chat (IRC) channel.
 
 Server: `irc.freenode.net`
 
 Channel: `#liferay`
-
-## Development Options
-
-To understand how to develop for Liferay, read the [Liferay Development
-Guide](http://www.liferay.com/documentation/liferay-portal/6.1/development).
-This guide contains indispensable explanations, examples, and reference material
-on the Liferay platform and surrounding technologies.
-
-Also, check out Liferay IDE. The [Liferay IDE
-project](http://www.liferay.com/community/liferay-projects/liferay-ide) provides
-an Eclipse-based Liferay development environment to help you build and maintain
-Liferay projects easily.
-
-Finally, consider using Maven to build Liferay and your Liferay projects. For
-excellent overviews of Maven support for Liferay, check out [Mika Koivisto's
-presentation](http://www.slideshare.net/koivimik/developing-liferay-plugins-with-maven)
-and [Getting Started with Liferay Maven
-SDK](http://www.liferay.com/web/mika.koivisto/blog/-/blogs/12322618).
 
 ## Contributing
 
 Liferay welcomes any and all contributions! Please read the [CONTRIBUTING
 guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown)
 for details on developing and submitting your contributions.
+
+## Versioning
+
+For transparency and insight into Liferay's release cycle, and for striving to
+maintain backward compatibility, we make a strong effort to uphold the
+versioning for our software as described in [Understanding Liferay's
+Releases](https://dev.liferay.com/discover/deployment/-/knowledge_base/6-2/understanding-liferays-releases).
+
+## Bug Tracker
+
+Did you find a bug? Please file an issue for it at
+[https://issues.liferay.com](https://issues.liferay.com) following [Liferay's
+JIRA Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/JIRA).
 
 ## Professional Services
 

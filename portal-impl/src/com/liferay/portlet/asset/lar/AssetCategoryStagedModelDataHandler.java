@@ -160,6 +160,10 @@ public class AssetCategoryStagedModelDataHandler
 
 		categoryElement.addAttribute("path", categoryPath);
 
+		portletDataContext.addReferenceElement(
+			category, categoryElement, category,
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
+
 		portletDataContext.addPermissions(
 			AssetCategory.class, category.getCategoryId());
 

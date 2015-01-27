@@ -19,6 +19,7 @@ import com.liferay.tools.jsc.libsass.SassLibrary;
 import com.liferay.tools.jsc.libsass.SassLibrary.Sass_Context;
 import com.liferay.tools.jsc.libsass.SassLibrary.Sass_File_Context;
 import com.liferay.tools.jsc.libsass.SassLibrary.Sass_Options;
+import com.liferay.tools.jsc.libsass.SassLibrary.Sass_Output_Style;
 
 import com.sun.jna.Pointer;
 
@@ -64,10 +65,6 @@ public class SassCompiler {
 			String inputFile, String includePath, String imgPath)
 		throws SassCompilationException {
 
-		// NESTED 0 EXPANDED 1 COMPACT 2 COMPRESSED 3 FORMATTED 4
-
-		final int outputstyle = 1;
-
 		// NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
 
 		final byte sourceComments = (byte) 0;
@@ -82,7 +79,8 @@ public class SassCompiler {
 			_libsass.sass_option_set_input_path(opt, inputFile);
 			_libsass.sass_option_set_output_path(opt, "");
 			_libsass.sass_option_set_image_path(opt, imgPath);
-			_libsass.sass_option_set_output_style(opt, outputstyle);
+			_libsass.sass_option_set_output_style(
+				opt, Sass_Output_Style.SASS_STYLE_EXPANDED);
 			_libsass.sass_option_set_source_comments(opt, sourceComments);
 			_libsass.sass_option_set_include_path(opt, includePaths);
 

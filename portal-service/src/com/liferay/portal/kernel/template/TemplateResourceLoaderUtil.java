@@ -14,8 +14,12 @@
 
 package com.liferay.portal.kernel.template;
 
-import java.util.Collections;
-import java.util.List;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,6 +30,66 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TemplateResourceLoaderUtil {
 
 	public static void clearCache() {
+		_instance._clearCache();
+	}
+
+	public static void clearCache(String templateResourceLoaderName)
+		throws TemplateException {
+
+		_instance._clearCache(templateResourceLoaderName);
+	}
+
+	public static void clearCache(
+			String templateResourceLoaderName, String templateId)
+		throws TemplateException {
+
+		_instance._clearCache(templateResourceLoaderName, templateId);
+	}
+
+	public static TemplateResource getTemplateResource(
+			String templateResourceLoaderName, String templateId)
+		throws TemplateException {
+
+		return _instance._getTemplateResource(
+			templateResourceLoaderName, templateId);
+	}
+
+	public static TemplateResourceLoader getTemplateResourceLoader(
+			String templateResourceLoaderName)
+		throws TemplateException {
+
+		return _instance._getTemplateResourceLoader(templateResourceLoaderName);
+	}
+
+	public static Set<String> getTemplateResourceLoaderNames() {
+		return _instance._getTemplateResourceLoaderNames();
+	}
+
+	public static boolean hasTemplateResource(
+			String templateResourceLoaderName, String templateId)
+		throws TemplateException {
+
+		return _instance._hasTemplateResource(
+			templateResourceLoaderName, templateId);
+	}
+
+	public static boolean hasTemplateResourceLoader(
+		String templateResourceLoaderName) {
+
+		return _instance._hasTemplateResourceLoader(templateResourceLoaderName);
+	}
+
+	private TemplateResourceLoaderUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			TemplateResourceLoader.class,
+			new TemplateResourceLoaderTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	private void _clearCache() {
 		for (TemplateResourceLoader templateResourceLoader :
 				_templateResourceLoaders.values()) {
 
@@ -33,7 +97,7 @@ public class TemplateResourceLoaderUtil {
 		}
 	}
 
-	public static void clearCache(String templateResourceLoaderName)
+	private void _clearCache(String templateResourceLoaderName)
 		throws TemplateException {
 
 		TemplateResourceLoader templateResourceLoader =
@@ -42,7 +106,7 @@ public class TemplateResourceLoaderUtil {
 		templateResourceLoader.clearCache();
 	}
 
-	public static void clearCache(
+	private void _clearCache(
 			String templateResourceLoaderName, String templateId)
 		throws TemplateException {
 
@@ -52,17 +116,7 @@ public class TemplateResourceLoaderUtil {
 		templateResourceLoader.clearCache(templateId);
 	}
 
-	public static void destroy() {
-		for (TemplateResourceLoader templateResourceLoader :
-				_templateResourceLoaders.values()) {
-
-			templateResourceLoader.destroy();
-		}
-
-		_templateResourceLoaders.clear();
-	}
-
-	public static TemplateResource getTemplateResource(
+	private TemplateResource _getTemplateResource(
 			String templateResourceLoaderName, String templateId)
 		throws TemplateException {
 
@@ -72,68 +126,7 @@ public class TemplateResourceLoaderUtil {
 		return templateResourceLoader.getTemplateResource(templateId);
 	}
 
-	public static TemplateResourceLoader getTemplateResourceLoader(
-		String templateResourceLoaderName) {
-
-		return _templateResourceLoaders.get(templateResourceLoaderName);
-	}
-
-	public static Set<String> getTemplateResourceLoaderNames() {
-		return _templateResourceLoaders.keySet();
-	}
-
-	public static Map<String, TemplateResourceLoader>
-		getTemplateResourceLoaders() {
-
-		return Collections.unmodifiableMap(_templateResourceLoaders);
-	}
-
-	public static boolean hasTemplateResource(
-			String templateResourceLoaderName, String templateId)
-		throws TemplateException {
-
-		TemplateResourceLoader templateResourceLoader =
-			_getTemplateResourceLoader(templateResourceLoaderName);
-
-		return templateResourceLoader.hasTemplateResource(templateId);
-	}
-
-	public static boolean hasTemplateResourceLoader(
-		String templateResourceLoaderName) {
-
-		return _templateResourceLoaders.containsKey(templateResourceLoaderName);
-	}
-
-	public static void registerTemplateResourceLoader(
-		TemplateResourceLoader templateResourceLoader) {
-
-		_templateResourceLoaders.put(
-			templateResourceLoader.getName(), templateResourceLoader);
-	}
-
-	public static void unregisterTemplateResourceLoader(
-		String templateResourceLoaderName) {
-
-		TemplateResourceLoader templateResourceLoader =
-			_templateResourceLoaders.remove(templateResourceLoaderName);
-
-		if (templateResourceLoader != null) {
-			templateResourceLoader.destroy();
-		}
-	}
-
-	public void setTemplateResourceLoaders(
-		List<TemplateResourceLoader> templateResourceLoaders) {
-
-		for (TemplateResourceLoader templateResourceLoader :
-				templateResourceLoaders) {
-
-			_templateResourceLoaders.put(
-				templateResourceLoader.getName(), templateResourceLoader);
-		}
-	}
-
-	private static TemplateResourceLoader _getTemplateResourceLoader(
+	private TemplateResourceLoader _getTemplateResourceLoader(
 			String templateResourceLoaderName)
 		throws TemplateException {
 
@@ -149,7 +142,73 @@ public class TemplateResourceLoaderUtil {
 		return templateResourceLoader;
 	}
 
-	private static final Map<String, TemplateResourceLoader>
-		_templateResourceLoaders = new ConcurrentHashMap<>();
+	private Set<String> _getTemplateResourceLoaderNames() {
+		return _templateResourceLoaders.keySet();
+	}
+
+	private boolean _hasTemplateResource(
+			String templateResourceLoaderName, String templateId)
+		throws TemplateException {
+
+		TemplateResourceLoader templateResourceLoader =
+			_getTemplateResourceLoader(templateResourceLoaderName);
+
+		return templateResourceLoader.hasTemplateResource(templateId);
+	}
+
+	private boolean _hasTemplateResourceLoader(
+		String templateResourceLoaderName) {
+
+		return _templateResourceLoaders.containsKey(templateResourceLoaderName);
+	}
+
+	private static final TemplateResourceLoaderUtil _instance =
+		new TemplateResourceLoaderUtil();
+
+	private final ServiceTracker<TemplateResourceLoader, TemplateResourceLoader>
+		_serviceTracker;
+	private final Map<String, TemplateResourceLoader> _templateResourceLoaders =
+		new ConcurrentHashMap<>();
+
+	private class TemplateResourceLoaderTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<TemplateResourceLoader, TemplateResourceLoader> {
+
+		@Override
+		public TemplateResourceLoader addingService(
+			ServiceReference<TemplateResourceLoader> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			TemplateResourceLoader templateResourceLoader = registry.getService(
+				serviceReference);
+
+			_templateResourceLoaders.put(
+				templateResourceLoader.getName(), templateResourceLoader);
+
+			return templateResourceLoader;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<TemplateResourceLoader> serviceReference,
+			TemplateResourceLoader templateResourceLoader) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<TemplateResourceLoader> serviceReference,
+			TemplateResourceLoader templateResourceLoader) {
+
+			_templateResourceLoaders.remove(templateResourceLoader.getName());
+
+			templateResourceLoader.destroy();
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+		}
+
+	}
 
 }

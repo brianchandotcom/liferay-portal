@@ -632,6 +632,21 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/org.freemarker-2.3.17.LIFERAY-PATCHED-1.jar</file-name>
+				<version>2.3.17.LIFERAY-PATCHED-1</version>
+				<project-name>FreeMarker</project-name>
+				<project-url>http://www.freemarker.org</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD Style License</license-name>
+						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+					</license>
+				</licenses>
+				<comments>
+					See modules/third-party/org-freemarker/build.xml.
+				</comments>
+			</library>
+			<library>
 				<file-name>lib/development/p6spy.jar</file-name>
 				<version>1.3</version>
 				<project-name>P6Spy</project-name>
@@ -1853,21 +1868,6 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/freemarker.jar</file-name>
-				<version>2.3.17</version>
-				<project-name>FreeMarker</project-name>
-				<project-url>http://www.freemarker.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-				<comments>
-					See the Ant target "build-freemarker-jar" in portal-impl/build.xml.
-				</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/freshcookies-security.jar</file-name>

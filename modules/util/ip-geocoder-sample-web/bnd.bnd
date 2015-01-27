@@ -23,17 +23,9 @@ Import-Package:\
 	*
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"
-Web-ContextPath: /com.liferay.ip.geocoder.sample.web
--wab: \
-	icon.png=docroot/icon.png,\
-	view.jsp=docroot/view.jsp,\
-	WEB-INF/classes=docroot/WEB-INF/classes,\
-	WEB-INF/liferay-display.xml=docroot/WEB-INF/liferay-display.xml,\
-	WEB-INF/liferay-plugin-package.properties=docroot/WEB-INF/liferay-plugin-package.properties,\
-	WEB-INF/liferay-portlet.xml=docroot/WEB-INF/liferay-portlet.xml,\
-	WEB-INF/portlet.xml=docroot/WEB-INF/portlet.xml,\
-	WEB-INF/tld=docroot/WEB-INF/tld,\
-	WEB-INF/web.xml=docroot/WEB-INF/web.xml
--wablib: \
-	${app.server.portal.dir}/WEB-INF/lib/util-bridges.jar,\
+Web-ContextPath: /ip-geocoder-sample-web
+
+-donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
+-wab: docroot
+-wablib:\
 	${app.server.portal.dir}/WEB-INF/lib/util-java.jar

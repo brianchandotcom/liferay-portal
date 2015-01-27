@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="osgi.runtime.dependencies" value="com.liferay.ip.geocoder.jar" />
+	<property name="osgi.runtime.dependencies" value="com.liferay.ip.geocoder.jar,geoip-api.jar" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

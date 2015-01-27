@@ -1149,22 +1149,18 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			<#list entity.order.columns as column>
 				<#if column.isPrimitiveType()>
 					<#if column.type == "boolean">
-						<#assign ltComparator = "==">
-						<#assign gtComparator = "!=">
+						value = Boolean.compare(get${column.methodName}(), ${entity.varName}.get${column.methodName}());
 					<#else>
-						<#assign ltComparator = "<">
-						<#assign gtComparator = ">">
+						if (get${column.methodName}() < ${entity.varName}.get${column.methodName}()) {
+							value = -1;
+						}
+						else if (get${column.methodName}() > ${entity.varName}.get${column.methodName}()) {
+							value = 1;
+						}
+						else {
+							value = 0;
+						}
 					</#if>
-
-					if (get${column.methodName}() ${ltComparator} ${entity.varName}.get${column.methodName}()) {
-						value = -1;
-					}
-					else if (get${column.methodName}() ${gtComparator} ${entity.varName}.get${column.methodName}()) {
-						value = 1;
-					}
-					else {
-						value = 0;
-					}
 				<#else>
 					<#if column.type == "Date">
 						value = DateUtil.compareTo(get${column.methodName}(), ${entity.varName}.get${column.methodName}());

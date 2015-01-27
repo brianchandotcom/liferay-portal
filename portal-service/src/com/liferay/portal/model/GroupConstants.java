@@ -42,7 +42,8 @@ public class GroupConstants {
 	public static final int MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS = 1;
 
 	public static final String[] SYSTEM_GROUPS = {
-		CONTROL_PANEL, GUEST, GroupConstants.USER_PERSONAL_SITE
+		CONTROL_PANEL, GUEST, GroupConstants.USER_PERSONAL_SITE,
+		GroupConstants.USER_PERSONAL_SPACE
 	};
 
 	public static final int TYPE_SITE_OPEN = 1;
@@ -65,6 +66,11 @@ public class GroupConstants {
 
 	public static final String USER_PERSONAL_SITE_FRIENDLY_URL =
 		"/personal_site";
+
+	public static final String USER_PERSONAL_SPACE = "User Personal Space";
+
+	public static final String USER_PERSONAL_SPACE_FRIENDLY_URL =
+		"/personal_space";
 
 	public static String getTypeLabel(int type) {
 		if (type == TYPE_SITE_OPEN) {

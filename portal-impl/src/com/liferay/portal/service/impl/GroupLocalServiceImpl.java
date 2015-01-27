@@ -304,7 +304,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		if (className.equals(Group.class.getName())) {
 			if (!site && (liveGroupId == 0) &&
-				!groupKey.equals(GroupConstants.CONTROL_PANEL)) {
+				(!groupKey.equals(GroupConstants.CONTROL_PANEL) &&
+				 !groupKey.equals(GroupConstants.USER_PERSONAL_SPACE))) {
 
 				throw new IllegalArgumentException();
 			}
@@ -706,6 +707,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					type = GroupConstants.TYPE_SITE_PRIVATE;
 					friendlyURL =
 						GroupConstants.USER_PERSONAL_SITE_FRIENDLY_URL;
+					site = false;
+				}
+				else if (groupKey.equals(GroupConstants.USER_PERSONAL_SPACE)) {
+					type = GroupConstants.TYPE_SITE_PRIVATE;
+					friendlyURL =
+						GroupConstants.USER_PERSONAL_SPACE_FRIENDLY_URL;
 					site = false;
 				}
 

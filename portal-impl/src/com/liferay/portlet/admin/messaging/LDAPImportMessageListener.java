@@ -16,42 +16,16 @@ package com.liferay.portlet.admin.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
-import com.liferay.portal.security.ldap.LDAPSettingsUtil;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
-
-import java.util.List;
 
 /**
  * @author Shuyang Zhou
  */
 public class LDAPImportMessageListener extends BaseMessageListener {
 
-	protected void doImportOnStartup() throws Exception {
-		List<Company> companies = CompanyLocalServiceUtil.getCompanies(false);
-
-		for (Company company : companies) {
-			long companyId = company.getCompanyId();
-
-			if (LDAPSettingsUtil.isImportOnStartup(companyId)) {
-				UserImporterUtil.importUsers(companyId);
-			}
-		}
-	}
-
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if (_startup) {
-			_startup = false;
-
-			doImportOnStartup();
-		}
-		else {
-			UserImporterUtil.importUsers();
-		}
+		UserImporterUtil.importUsers();
 	}
-
-	private boolean _startup = true;
 
 }

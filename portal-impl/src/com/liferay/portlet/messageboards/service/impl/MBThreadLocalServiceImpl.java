@@ -166,7 +166,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Thread flags
 
-		mbThreadFlagPersistence.removeByThreadId(thread.getThreadId());
+		mbThreadFlagLocalService.deleteThreadFlagsByThreadId(
+			thread.getThreadId());
 
 		// Messages
 

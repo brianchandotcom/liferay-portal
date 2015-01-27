@@ -170,6 +170,7 @@
 		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBCategoryStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBDiscussionStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBMessageStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBThreadStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBThreadFlagStagedModelDataHandler</staged-model-data-handler-class>
 		<pop-message-listener-class>com.liferay.portlet.messageboards.pop.MessageListenerImpl</pop-message-listener-class>
 		<social-activity-interpreter-class>com.liferay.portlet.messageboards.social.MBMessageActivityInterpreter</social-activity-interpreter-class>

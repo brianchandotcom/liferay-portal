@@ -3669,14 +3669,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.getCompanyId());
 
 		String friendlyURL = getFriendlyURL(
-			GroupConstants.USER_PERSONAL_SPACE_FRIENDLY_URL);
+			PropsValues.USER_PERSONAL_SPACE_LAYOUT_FRIENDLY_URL);
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		layoutLocalService.addLayout(
 			defaultUserId, group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			GroupConstants.USER_PERSONAL_SPACE, StringPool.BLANK,
+			PropsValues.USER_PERSONAL_SPACE_LAYOUT_NAME, StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
 			serviceContext);
 	}

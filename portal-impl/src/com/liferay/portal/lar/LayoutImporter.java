@@ -1147,7 +1147,20 @@ public class LayoutImporter {
 			long sourceGroupId = GetterUtil.getLong(
 				headerElement.attributeValue("group-id"));
 
-			if (group.isCompany() ^ (sourceCompanyGroupId == sourceGroupId)) {
+			boolean sourceGroupIsCompanyGroup = false;
+
+			if (group.hasRemoteStagingGroup()) {
+				sourceGroupIsCompanyGroup =
+					sourceCompanyGroupId == sourceGroupId;
+			}
+			else if (group.isStaged() || group.hasStagingGroup()) {
+				Group sourceGroup = GroupLocalServiceUtil.fetchGroup(
+					sourceGroupId);
+
+				sourceGroupIsCompanyGroup = sourceGroup.isCompany();
+			}
+
+			if (group.isCompany() ^ sourceGroupIsCompanyGroup) {
 				throw new LARTypeException(
 					"A company site can only be imported to a company site");
 			}

@@ -146,7 +146,24 @@ if (row == null) {
 			url="<%= taglibImportURL %>"
 		/>
 
-		<liferay-staging:menu extended="<%= true %>" onlyActions="<%= true %>" showManageBranches="<%= false %>" />
+		<c:if test="<%= group.isStaged() %>">
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="publishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= group.isStagedRemotely() ? Constants.PUBLISH_TO_REMOTE : Constants.PUBLISH_TO_LIVE %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+				<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />
+			</liferay-portlet:renderURL>
+
+			<%
+			String taglibPublishURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "publishDialog', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, "publish")) + "', uri: '" + HtmlUtil.escapeJS(publishURL.toString()) + "'});";
+			%>
+
+			<liferay-ui:icon
+				iconCssClass="icon-share-alt"
+				message="publish"
+				url="<%= taglibPublishURL %>"
+			/>
+		</c:if>
 	</c:if>
 
 	<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">

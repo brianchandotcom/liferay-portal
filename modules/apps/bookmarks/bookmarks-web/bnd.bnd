@@ -2,6 +2,24 @@ Bundle-Name: Liferay Bookmarks Web
 Bundle-SymbolicName: com.liferay.bookmarks.web
 Bundle-Version: 1.0.0
 Import-Package: \
+	com.liferay.bookmarks.asset,\
+	com.liferay.bookmarks.constants,\
+	com.liferay.bookmarks.customattributes,\
+	com.liferay.bookmarks.indexer,\
+	com.liferay.bookmarks.lar,\
+	com.liferay.bookmarks.model,\
+	com.liferay.bookmarks.notifications,\
+	com.liferay.bookmarks.opensearch,\
+	com.liferay.bookmarks.routes,\
+	com.liferay.bookmarks.service,\
+	com.liferay.bookmarks.service.permission,\
+	com.liferay.bookmarks.settings,\
+	com.liferay.bookmarks.social,\
+	com.liferay.bookmarks.search,\
+	com.liferay.bookmarks.trash,\
+	com.liferay.bookmarks.util,\
+	com.liferay.bookmarks.*,\
+	\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.xml,\
@@ -29,23 +47,8 @@ Import-Package: \
 	com.liferay.portlet.asset,\
 	com.liferay.portlet.asset.model,\
 	com.liferay.portlet.asset.service,\
-	com.liferay.bookmarks.asset,\
-	com.liferay.bookmarks.constants,\
-	com.liferay.bookmarks.customattributes,\
-	com.liferay.bookmarks.indexer,\
-	com.liferay.bookmarks.lar,\
-	com.liferay.bookmarks.model,\
-	com.liferay.bookmarks.notifications,\
-	com.liferay.bookmarks.opensearch,\
-	com.liferay.bookmarks.routes,\
-	com.liferay.bookmarks.service,\
-	com.liferay.bookmarks.service.permission,\
-	com.liferay.bookmarks.settings,\
-	com.liferay.bookmarks.social,\
-	com.liferay.bookmarks.search,\
-	com.liferay.bookmarks.trash,\
-	com.liferay.bookmarks.util,\
-	com.liferay.bookmarks.*,\
+	com.liferay.portlet.expando.model,\
+	com.liferay.portlet.social.model,\
 	com.liferay.portlet.trash.model,\
 	\
 	org.apache.struts.action,\

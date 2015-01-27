@@ -4,18 +4,19 @@ Bundle-Version: 1.0.0
 Import-Package: \
 	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
+	com.liferay.portal.model,\
 	com.liferay.portal.upload,\
 	\
 	com.liferay.portlet.documentlibrary,\
-    com.liferay.portlet.documentlibrary.model,\
-    com.liferay.portlet.documentlibrary.service,\
-    com.liferay.portlet.documentlibrary.service.permission,\
-    com.liferay.portlet.dynamicdatamapping.storage,\
-    com.liferay.portlet.journal.search,\
-    com.liferay.portlet.layoutsadmin.context,\
-    com.liferay.wiki.model,\
-    com.liferay.wiki.service,\
-    \
+	com.liferay.portlet.documentlibrary.model,\
+	com.liferay.portlet.documentlibrary.service,\
+	com.liferay.portlet.documentlibrary.service.permission,\
+	com.liferay.portlet.dynamicdatamapping.storage,\
+	com.liferay.portlet.journal.search,\
+	com.liferay.portlet.layoutsadmin.context,\
+	com.liferay.wiki.model,\
+	com.liferay.wiki.service,\
+	\
 	org.apache.struts.action,\
 	org.apache.struts.action.*,\
 	org.apache.struts.config,\
@@ -24,7 +25,6 @@ Import-Package: \
 	\
 	javax.portlet,\
 	javax.portlet.filter,\
-	javax.portlet.*,\
 	*
 Include-Resource:\
 	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties

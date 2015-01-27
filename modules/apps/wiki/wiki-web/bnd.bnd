@@ -27,9 +27,11 @@ Import-Package: \
 	com.liferay.portal.webserver,\
 	com.liferay.portal,\
 	\
+	com.liferay.portlet,\
 	com.liferay.portlet.asset.util,\
 	com.liferay.portlet.documentlibrary.antivirus,\
 	com.liferay.portlet.portletdisplaytemplate.util,\
+	com.liferay.portlet.social.model,\
 	com.liferay.portlet.social.service,\
 	\
 	com.liferay.wiki.asset,\
@@ -52,7 +54,6 @@ Import-Package: \
 	\
 	javax.portlet,\
 	javax.portlet.filter,\
-	javax.portlet.*,\
 	*
 Include-Resource:\
 	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\

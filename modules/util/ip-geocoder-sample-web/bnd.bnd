@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.ip.geocoder.sample.web
 Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.ip.geocoder,\
-	com.liferay.portal.http.service.servlet,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.language,\
 	com.liferay.portal.kernel.lar,\
@@ -18,19 +17,10 @@ Import-Package:\
 	com.liferay.portal.servlet.filters.dynamiccss,\
 	com.liferay.portal.webserver,\
 	com.liferay.portlet,\
-	com.liferay.util.bridges.freemarker,\
-	javax.el,\
 	javax.portlet,\
 	javax.servlet,\
 	javax.servlet.http,\
-    org.apache.el,\
-	org.apache.jasper.runtime,\
-    org.apache.jasper.servlet,\
-    org.apache.taglibs.standard.tei,\
-    org.apache.taglibs.standard.tlv,\
-    org.eclipse.jetty.servlet.listener,\
-    org.glassfish.jsp.api,\
-	*;resolution:="optional"
+	*
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"
 Web-ContextPath: /com.liferay.ip.geocoder.sample.web

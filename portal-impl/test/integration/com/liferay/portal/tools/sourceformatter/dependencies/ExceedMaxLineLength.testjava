@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.sourceformatter.dependencies;
 
+import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.util.bridges.mvc.ActionCommand;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,5 +35,10 @@ public class ExceedMaxLineLength {
 
 	public static final String TEST =
 		"This is very long line and therefore it will exceed the maximum allowed line length";
+
+	@Meta.AD(
+		deflt = "java.lang.Class|java.lang.ClassLoader|java.lang.ClassValue|java.lang.Thread",
+		required = false)
+	public String[] restrictedClasses();
 
 }

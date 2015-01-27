@@ -40,7 +40,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testExceedMaxLineLength() throws Exception {
-		test("ExceedMaxLineLength.testjava", "> 80:", 35);
+		test("ExceedMaxLineLength.testjava", "> 80:", 37);
 	}
 
 	@Test

@@ -225,26 +225,33 @@ public class ServiceBuilder {
 		ToolDependencies.wireServiceBuilder();
 
 		String apiDir = arguments.get("service.api.dir");
-		boolean autoImportDefaultReferences = GetterUtil.getBoolean(arguments.get("service.auto.import.default.references"), true);
-		boolean autoNamespaceTables = GetterUtil.getBoolean(arguments.get("service.auto.namespace.tables"));
+		boolean autoImportDefaultReferences = GetterUtil.getBoolean(
+			arguments.get("service.auto.import.default.references"), true);
+		boolean autoNamespaceTables = GetterUtil.getBoolean(
+			arguments.get("service.auto.namespace.tables"));
 		String beanLocatorUtil = arguments.get("service.bean.locator.util");
-		long buildNumber = GetterUtil.getLong(arguments.get("service.build.number"), 1);
-		boolean buildNumberIncrement = GetterUtil.getBoolean(arguments.get("service.build.number.increment"), true);
+		long buildNumber = GetterUtil.getLong(
+			arguments.get("service.build.number"), 1);
+		boolean buildNumberIncrement = GetterUtil.getBoolean(
+			arguments.get("service.build.number.increment"), true);
 		String hbmFileName = arguments.get("service.hbm.file");
 		String implDir = arguments.get("service.impl.dir");
 		String inputFileName = arguments.get("service.input.file");
 		String modelHintsFileName = arguments.get("service.model.hints.file");
-		boolean osgiModule = GetterUtil.getBoolean(arguments.get("service.osgi.module"));
+		boolean osgiModule = GetterUtil.getBoolean(
+			arguments.get("service.osgi.module"));
 		String pluginName = arguments.get("service.plugin.name");
 		String propsUtil = arguments.get("service.props.util");
 		String remotingFileName = arguments.get("service.remoting.file");
 		String resourcesDir = arguments.get("service.resources.dir");
 		String springFileName = arguments.get("service.spring.file");
-		String[] springNamespaces = StringUtil.split(arguments.get("service.spring.namespaces"));
+		String[] springNamespaces = StringUtil.split(
+			arguments.get("service.spring.namespaces"));
 		String sqlDir = arguments.get("service.sql.dir");
 		String sqlFileName = arguments.get("service.sql.file");
 		String sqlIndexesFileName = arguments.get("service.sql.indexes.file");
-		String sqlSequencesFileName = arguments.get("service.sql.sequences.file");
+		String sqlSequencesFileName = arguments.get(
+			"service.sql.sequences.file");
 		String targetEntityName = arguments.get("service.target.entity.name");
 		String testDir = arguments.get("service.test.dir");
 
@@ -837,7 +844,8 @@ public class ServiceBuilder {
 						}
 						else {
 							_removeServiceImpl(entity, _SESSION_TYPE_REMOTE);
-							_removeServiceBaseImpl(entity, _SESSION_TYPE_REMOTE);
+							_removeServiceBaseImpl(
+								entity, _SESSION_TYPE_REMOTE);
 							_removeService(entity, _SESSION_TYPE_REMOTE);
 							_removeServiceUtil(entity, _SESSION_TYPE_REMOTE);
 
@@ -3303,7 +3311,8 @@ public class ServiceBuilder {
 					IndexMetadataFactoryUtil.createIndexMetadata(indexSQL);
 
 				_addIndexMetadata(
-					indexMetadataMap, indexMetadata.getTableName(), indexMetadata);
+					indexMetadataMap, indexMetadata.getTableName(),
+					indexMetadata);
 			}
 		}
 

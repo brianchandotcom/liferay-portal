@@ -53,9 +53,6 @@ import com.liferay.portal.util.LayoutCloneFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.provider.AddPortletProvider;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -366,16 +363,6 @@ public class UpdateLayoutAction extends JSONAction {
 		if ((classPK <= 0) || Validator.isNull(className)) {
 			return;
 		}
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			classPK);
-
-		assetRenderer.setAddToPagePreferences(
-			portletSetup, portletId, themeDisplay);
 
 		AddPortletProvider addPortletProvider = _serviceTrackerMap.getService(
 			className);

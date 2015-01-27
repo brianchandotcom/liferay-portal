@@ -112,6 +112,11 @@ import org.osgi.service.component.annotations.Reference;
 public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	@Override
+	public long getLastImportTime() {
+		return _lastImportTime;
+	}
+
+	@Override
 	public User importUser(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			Attributes attributes, String password)
@@ -414,6 +419,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		if (ldapContext == null) {
 			return;
 		}
+
+		_lastImportTime = System.currentTimeMillis();
 
 		try {
 			Properties userMappings = LDAPSettingsUtil.getUserMappings(
@@ -1380,6 +1387,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		LDAPUserImporterImpl.class);
 
 	private AttributesTransformer _attributesTransformer;
+	private long _lastImportTime;
 	private volatile LDAPConfiguration _ldapConfiguration;
 	private LDAPToPortalConverter _ldapToPortalConverter;
 	private Set<String> _ldapUserIgnoreAttributes;

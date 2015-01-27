@@ -26,7 +26,8 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 	extends BaseSubscriptionTestCase {
 
 	@Test
-	public void testSubscriptionRootContainerModelWhenAddingBaseModelInContainerModel()
+	public void
+			testSubscriptionRootContainerModelWhenAddingBaseModelInContainerModel()
 		throws Exception {
 
 		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
@@ -40,7 +41,8 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 	}
 
 	@Test
-	public void testSubscriptionRootContainerModelWhenAddingBaseModelInRootContainerModel()
+	public void
+			testSubscriptionRootContainerModelWhenAddingBaseModelInRootContainerModel()
 		throws Exception {
 
 		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
@@ -51,7 +53,8 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 	}
 
 	@Test
-	public void testSubscriptionRootContainerModelWhenAddingBaseModelInSubcontainerModel()
+	public void
+			testSubscriptionRootContainerModelWhenAddingBaseModelInSubcontainerModel()
 		throws Exception {
 
 		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
@@ -67,7 +70,8 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 	}
 
 	@Test
-	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInContainerModel()
+	public void
+			testSubscriptionRootContainerModelWhenUpdatingBaseModelInContainerModel()
 		throws Exception {
 
 		long containerModelId = addContainerModel(
@@ -83,7 +87,8 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 	}
 
 	@Test
-	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInRootContainerModel()
+	public void
+			testSubscriptionRootContainerModelWhenUpdatingBaseModelInRootContainerModel()
 		throws Exception {
 
 		long baseModelId = addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
@@ -96,7 +101,8 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 	}
 
 	@Test
-	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInSubcontainerModel()
+	public void
+			testSubscriptionRootContainerModelWhenUpdatingBaseModelInSubcontainerModel()
 		throws Exception {
 
 		long containerModelId = addContainerModel(

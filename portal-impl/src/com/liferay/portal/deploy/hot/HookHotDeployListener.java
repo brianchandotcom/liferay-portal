@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
@@ -538,6 +539,15 @@ public class HookHotDeployListener
 				hotDeployEvent.getPluginPackage(), rootElement);
 		}
 		catch (DuplicateCustomJspException dcje) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(servletContextName + " will be undeployed");
+			}
+
+			HotDeployUtil.fireUndeployEvent(
+				new HotDeployEvent(servletContext, portletClassLoader));
+
+			DeployManagerUtil.undeploy(servletContextName);
+
 			return;
 		}
 

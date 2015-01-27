@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
 import com.liferay.portal.kernel.util.ClearTimerThreadUtil;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
@@ -203,6 +205,9 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			servletContextEvent.getServletContext();
 
 		String portalLibDir = servletContext.getRealPath("/WEB-INF/lib");
+
+		portalLibDir = StringUtil.replace(
+			portalLibDir, CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
 
 		if (Validator.isNotNull(portalLibDir)) {
 			SystemProperties.set(

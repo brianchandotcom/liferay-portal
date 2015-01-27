@@ -27,6 +27,10 @@ import com.liferay.registry.ServiceTracker;
  */
 public class UserImporterUtil {
 
+	public static long getLastImportTime() throws Exception {
+		return _getInstance().getLastImportTime();
+	}
+
 	public static User importUser(
 			long ldapServerId, long companyId, String emailAddress,
 			String screenName)

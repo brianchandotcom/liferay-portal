@@ -33,13 +33,33 @@ from their respective repositories.
 To get up and running quickly, *download* a [pre-built Liferay
 release](http://liferay.com/downloads) and follow the [Quick
 Start](http://liferay.com/quick-start) instructions. For more detailed
-installation instructions, please read the [Installation and
-Setup](http://www.liferay.com/documentation/liferay-portal/6.1/user-guide/-/ai/installing-lifer-2)
-chapter of the *Liferay User Guide*.
+installation instructions, please read the
+[Deployment](https://dev.liferay.com/discover/deployment) section of
+documentation on the [Liferay Developer Network](https://dev.liferay.com).
 
 If you wish to *build* core Liferay or its plugins, read the [CONTRIBUTING
 guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown).
 It includes details on using the repositories and building the software.
+
+## Liferay Developer Network
+
+The [Liferay Developer Network](https://dev.liferay.com) \(LDN\) at
+<http://dev.liferay.com>, is the best place to learn about Liferay. It has over
+200 tutorials, guided learning, and much more.
+
+LDN's [Learning Paths](https://dev.liferay.com/develop/learning-paths) are a
+great place to learn how to develop on Liferay, especially if you're new to
+Liferay development. As you gain experience developing on Liferay, you'll want
+to dive into [Tutorials](https://dev.liferay.com/develop/tutorials) for details
+on leveraging Liferay's technologies and frameworks. If you create apps that you
+want to share or sell, you can read LDN's
+[Distribute](https://dev.liferay.com/distribute) section to learn how to publish
+the apps to the Liferay Marketplace.
+
+The Liferay Developer Network is not only your home for Liferay development, but
+it's also your place to [participate](https://dev.liferay.com/participate) in
+making Liferay better. Come check out the [Liferay Developer
+Network](https://dev.liferay.com). 
 
 ## Versioning
 

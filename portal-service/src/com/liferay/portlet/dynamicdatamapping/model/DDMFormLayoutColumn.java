@@ -19,6 +19,8 @@ package com.liferay.portlet.dynamicdatamapping.model;
  */
 public class DDMFormLayoutColumn {
 
+	public static final int FULL = 12;
+
 	public DDMFormLayoutColumn(DDMFormLayoutColumn ddmFormLayoutColumn) {
 		this(ddmFormLayoutColumn._ddmFormFieldName, ddmFormLayoutColumn._size);
 	}

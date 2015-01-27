@@ -31,6 +31,8 @@ Import-Package:\
     org.eclipse.jetty.servlet.listener,\
     org.glassfish.jsp.api,\
 	*;resolution:="optional"
+Require-Capability:\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"
 Web-ContextPath: /com.liferay.ip.geocoder.sample.web
 -wab: \
 	icon.png=docroot/icon.png,\
@@ -44,5 +46,4 @@ Web-ContextPath: /com.liferay.ip.geocoder.sample.web
 	WEB-INF/web.xml=docroot/WEB-INF/web.xml
 -wablib: \
 	${app.server.portal.dir}/WEB-INF/lib/util-bridges.jar,\
-	${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar
+	${app.server.portal.dir}/WEB-INF/lib/util-java.jar

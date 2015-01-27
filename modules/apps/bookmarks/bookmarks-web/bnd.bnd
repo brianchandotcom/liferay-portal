@@ -60,10 +60,17 @@ Import-Package: \
 Include-Resource:\
 	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\
 	WEB-INF/classes/resource-actions=docroot/WEB-INF/src/resource-actions
+Require-Capability:\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/portlet))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/security))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/theme))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/util))"
 Web-ContextPath: /bookmarks-web
 
 -donotcopy=(docroot/WEB-INF/src|.*\.jar|.*\.java)
 -wab: docroot
 -wablib:\
-	${app.server.lib.portal.dir}/util-java.jar,\
-	${app.server.lib.portal.dir}/util-taglib.jar
+	${app.server.lib.portal.dir}/util-java.jar

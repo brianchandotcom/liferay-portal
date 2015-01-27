@@ -26,6 +26,5 @@ import org.osgi.service.component.annotations.Component;
 	property = {"javax.portlet.name=" + SummaryPortlet.JAVAX_PORTLET_NAME},
 	service = ConfigurationAction.class
 )
-public class SummaryPortletConfigurationAction
-	extends DefaultConfigurationAction {
+public class SummaryConfigurationAction extends DefaultConfigurationAction {
 }

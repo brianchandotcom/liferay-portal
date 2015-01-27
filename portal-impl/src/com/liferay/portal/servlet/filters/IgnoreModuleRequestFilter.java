@@ -14,8 +14,6 @@
 
 package com.liferay.portal.servlet.filters;
 
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,16 +47,14 @@ public abstract class IgnoreModuleRequestFilter extends BasePortalFilter {
 			resourcePath = resourcePath.substring(contextPath.length());
 		}
 
-		StringBundler sb = new StringBundler();
-
-		sb.append(PortalUtil.getPathModule());
-		sb.append(StringPool.SLASH);
-
-		if (resourcePath.startsWith(sb.toString())) {
+		if (resourcePath.startsWith(_MODULE_REQUEST_PREFIX)) {
 			return true;
 		}
 
 		return false;
 	}
+
+	private static final String _MODULE_REQUEST_PREFIX =
+		PortalUtil.getPathModule() + "/";
 
 }

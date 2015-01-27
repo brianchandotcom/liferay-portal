@@ -26,8 +26,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
-import org.springframework.context.ApplicationContext;
-
 /**
  * @author Iván Zaera
  */
@@ -57,16 +55,6 @@ public class WikiServiceConfigurator {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		return new ModuleResourceLoader(bundle);
-	}
-
-	@Reference(
-		target =
-			"(org.springframework.context.service.name=" +
-				"com.liferay.wiki.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
 	}
 
 	@Reference(unbind = "-")

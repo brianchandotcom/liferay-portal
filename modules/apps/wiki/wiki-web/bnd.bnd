@@ -67,7 +67,7 @@ Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/util))"
 Web-ContextPath: /wiki-web
 
--donotcopy=(docroot/WEB-INF/src|.*\.jar|.*\.java)
+-donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
 -wab: docroot
 -wablib:\
 	${app.server.lib.portal.dir}/util-java.jar

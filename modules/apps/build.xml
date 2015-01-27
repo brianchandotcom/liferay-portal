@@ -21,6 +21,7 @@
 		<dirset dir="polls" includes="*" />
 		<dirset dir="quick-note" includes="*" />
 		<dirset dir="rss" includes="*" />
+		<dirset dir="site" includes="*" />
 		<dirset dir="social" includes="*" />
 		<dirset dir="translator" includes="*" />
 		<dirset dir="unit-converter" includes="*" />

@@ -1,6 +1,7 @@
 Bundle-Name: Java Sass Compiler
 Bundle-SymbolicName: com.liferay.tools.jsc
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.tools.jsc
 Include-Resource: \
 	classes,\
 	@lib/jna.jar,\

@@ -24,6 +24,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_2</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>

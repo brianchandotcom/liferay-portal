@@ -63,6 +63,16 @@
 	<td>//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>UNLOCK</td>
+	<td>//button[contains(.,'Unlock')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPDATE_ASSOCIATIONS</td>
+	<td>//button[contains(.,'Update Associations')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

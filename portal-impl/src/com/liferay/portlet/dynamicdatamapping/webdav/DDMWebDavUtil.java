@@ -27,12 +27,14 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.HashMap;
@@ -70,6 +72,9 @@ public class DDMWebDavUtil {
 
 			DDMForm ddmForm = getDDMForm(definition);
 
+			DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(
+				ddmForm);
+
 			Map<Locale, String> nameMap = new HashMap<>();
 
 			Locale defaultLocale = ddmForm.getDefaultLocale();
@@ -83,7 +88,8 @@ public class DDMWebDavUtil {
 
 			DDMStructureLocalServiceUtil.addStructure(
 				webDavRequest.getUserId(), webDavRequest.getGroupId(),
-				classNameId, nameMap, null, ddmForm, serviceContext);
+				classNameId, nameMap, null, ddmForm, ddmFormLayout,
+				serviceContext);
 
 			return HttpServletResponse.SC_CREATED;
 		}
@@ -240,11 +246,14 @@ public class DDMWebDavUtil {
 
 				DDMForm ddmForm = getDDMForm(definition);
 
+				DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(
+					ddmForm);
+
 				DDMStructureServiceUtil.updateStructure(
 					structure.getGroupId(), structure.getParentStructureId(),
 					structure.getClassNameId(), structure.getStructureKey(),
 					structure.getNameMap(), structure.getDescriptionMap(),
-					ddmForm, new ServiceContext());
+					ddmForm, ddmFormLayout, new ServiceContext());
 
 				return HttpServletResponse.SC_CREATED;
 			}

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
@@ -32,6 +34,8 @@ import java.io.Serializable;
 public interface DDM {
 
 	public DDMDisplay getDDMDisplay(long classNameId) throws PortalException;
+
+	public DDMFormLayout getDefaultDDMFormLayout(DDMForm ddmForm);
 
 	public Serializable getDisplayFieldValue(
 			ThemeDisplay themeDisplay, Serializable fieldValue, String type)

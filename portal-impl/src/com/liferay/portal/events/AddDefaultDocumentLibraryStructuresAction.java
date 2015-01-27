@@ -38,10 +38,12 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portlet.documentlibrary.util.RawMetadataProcessor;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.io.StringReader;
 
@@ -213,11 +215,14 @@ public class AddDefaultDocumentLibraryStructuresAction
 				DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
 					structureElementRootXML);
 
+				DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(
+					ddmForm);
+
 				DDMStructureLocalServiceUtil.addStructure(
 					userId, groupId,
 					DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 					PortalUtil.getClassNameId(RawMetadataProcessor.class), name,
-					nameMap, descriptionMap, ddmForm,
+					nameMap, descriptionMap, ddmForm, ddmFormLayout,
 					StorageType.JSON.toString(),
 					DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 			}

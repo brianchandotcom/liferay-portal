@@ -56,6 +56,7 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypePe
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureLayoutPersistence;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureLinkPersistence;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureVersionPersistence;
@@ -1229,6 +1230,44 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the d d m structure layout local service.
+	 *
+	 * @return the d d m structure layout local service
+	 */
+	public com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalService getDDMStructureLayoutLocalService() {
+		return ddmStructureLayoutLocalService;
+	}
+
+	/**
+	 * Sets the d d m structure layout local service.
+	 *
+	 * @param ddmStructureLayoutLocalService the d d m structure layout local service
+	 */
+	public void setDDMStructureLayoutLocalService(
+		com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
+		this.ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
+	}
+
+	/**
+	 * Returns the d d m structure layout persistence.
+	 *
+	 * @return the d d m structure layout persistence
+	 */
+	public DDMStructureLayoutPersistence getDDMStructureLayoutPersistence() {
+		return ddmStructureLayoutPersistence;
+	}
+
+	/**
+	 * Sets the d d m structure layout persistence.
+	 *
+	 * @param ddmStructureLayoutPersistence the d d m structure layout persistence
+	 */
+	public void setDDMStructureLayoutPersistence(
+		DDMStructureLayoutPersistence ddmStructureLayoutPersistence) {
+		this.ddmStructureLayoutPersistence = ddmStructureLayoutPersistence;
+	}
+
+	/**
 	 * Returns the d d m structure link local service.
 	 *
 	 * @return the d d m structure link local service
@@ -1514,6 +1553,10 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	protected JournalFolderPersistence journalFolderPersistence;
 	@BeanReference(type = JournalFolderFinder.class)
 	protected JournalFolderFinder journalFolderFinder;
+	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalService.class)
+	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalService ddmStructureLayoutLocalService;
+	@BeanReference(type = DDMStructureLayoutPersistence.class)
+	protected DDMStructureLayoutPersistence ddmStructureLayoutPersistence;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService.class)
 	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService ddmStructureLinkLocalService;
 	@BeanReference(type = DDMStructureLinkPersistence.class)

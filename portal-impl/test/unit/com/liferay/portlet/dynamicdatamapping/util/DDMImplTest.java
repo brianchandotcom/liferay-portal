@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
@@ -48,6 +51,21 @@ public class DDMImplTest extends BaseDDMTestCase {
 		setUpLocaleUtil();
 		setUpPropsUtil();
 		setUpSAXReaderUtil();
+	}
+
+	@Test
+	public void testGetDefaultDDMFormLayout() {
+		DDMForm ddmForm = createDDMForm("Text1", "Text2");
+
+		DDMFormLayout ddmFormLayout = _ddmImpl.getDefaultDDMFormLayout(ddmForm);
+
+		List<DDMFormLayoutRow> ddmFormLayoutRows =
+			ddmFormLayout.getDDMFormLayoutRows();
+
+		Assert.assertEquals(2, ddmFormLayoutRows.size());
+
+		assertDefaultDDMFormLayoutRow("Text1", ddmFormLayoutRows.get(0));
+		assertDefaultDDMFormLayoutRow("Text2", ddmFormLayoutRows.get(1));
 	}
 
 	@Test
@@ -476,6 +494,25 @@ public class DDMImplTest extends BaseDDMTestCase {
 		testValues(
 			actualNameNestedField.getValues(LocaleUtil.BRAZIL), "Nome nested 1",
 			"Nome nested 2");
+	}
+
+	protected void assertDefaultDDMFormLayoutRow(
+		String expectedDDMFormFieldName,
+		DDMFormLayoutRow actualDDMFormLayoutRow) {
+
+		List<DDMFormLayoutColumn> actualDDMFormLayoutColumns =
+			actualDDMFormLayoutRow.getDDMFormLayoutColumns();
+
+		Assert.assertEquals(1, actualDDMFormLayoutColumns.size());
+
+		DDMFormLayoutColumn actualDDMFormLayoutColumn =
+			actualDDMFormLayoutColumns.get(0);
+
+		Assert.assertEquals(
+			expectedDDMFormFieldName,
+			actualDDMFormLayoutColumn.getDDMFormFieldName());
+		Assert.assertEquals(
+			DDMFormLayoutColumn.FULL, actualDDMFormLayoutColumn.getSize());
 	}
 
 	protected void testValues(

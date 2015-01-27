@@ -134,6 +134,10 @@ create index IX_20FDE04C on DDMStructure (structureKey);
 create index IX_F9FB8D60 on DDMStructure (uuid_, companyId);
 create unique index IX_85C7EBE2 on DDMStructure (uuid_, groupId);
 
+create unique index IX_B7158C0A on DDMStructureLayout (structureVersionId);
+create index IX_A90FF72A on DDMStructureLayout (uuid_, companyId);
+create unique index IX_C9A0402C on DDMStructureLayout (uuid_, groupId);
+
 create index IX_D43E4208 on DDMStructureLink (classNameId);
 create unique index IX_C803899D on DDMStructureLink (classPK);
 create index IX_17692B58 on DDMStructureLink (structureId);

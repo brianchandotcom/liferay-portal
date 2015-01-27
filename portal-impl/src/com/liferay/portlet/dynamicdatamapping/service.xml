@@ -141,10 +141,44 @@
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntryType" />
+		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLayout" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureVersion" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplate" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalFolder" />
+	</entity>
+	<entity name="DDMStructureLayout" uuid="true" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="structureLayoutId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="structureVersionId" type="long" />
+		<column name="definition" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="StructureVersionId" return-type="DDMStructureLayout" unique="true">
+			<finder-column name="structureVersionId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
 	<entity name="DDMStructureLink" local-service="true" remote-service="false">
 

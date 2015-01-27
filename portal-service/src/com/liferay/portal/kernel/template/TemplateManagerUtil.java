@@ -263,6 +263,8 @@ public class TemplateManagerUtil {
 			registry.ungetService(serviceReference);
 
 			_templateManagers.remove(templateManager.getName());
+
+			templateManager.destroy();
 		}
 
 	}

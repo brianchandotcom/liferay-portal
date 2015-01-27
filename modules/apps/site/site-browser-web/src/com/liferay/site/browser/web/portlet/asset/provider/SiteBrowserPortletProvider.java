@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.sitebrowser.provider;
+package com.liferay.site.browser.web.portlet.asset.provider;
 
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;

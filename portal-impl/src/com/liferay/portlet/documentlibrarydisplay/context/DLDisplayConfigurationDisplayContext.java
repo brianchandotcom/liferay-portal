@@ -24,7 +24,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext;
+import com.liferay.portlet.documentlibrary.display.context.DLActionsDisplayContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;

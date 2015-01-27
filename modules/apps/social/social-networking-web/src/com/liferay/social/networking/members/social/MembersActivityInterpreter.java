@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	property = { "javax.portlet.name=" + MembersPortlet.JAVAX_PORTLET_NAME },
+	property = {"javax.portlet.name=" + MembersPortlet.JAVAX_PORTLET_NAME},
 	service = SocialActivityInterpreter.class
 )
 public class MembersActivityInterpreter extends BaseSocialActivityInterpreter {

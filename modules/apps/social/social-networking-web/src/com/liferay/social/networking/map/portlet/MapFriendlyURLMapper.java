@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	property = { "javax.portlet.name=" + MapPortlet.JAVAX_PORTLET_NAME },
+	property = {"javax.portlet.name=" + MapPortlet.JAVAX_PORTLET_NAME},
 	service = FriendlyURLMapper.class
 )
 public class MapFriendlyURLMapper extends DefaultFriendlyURLMapper {

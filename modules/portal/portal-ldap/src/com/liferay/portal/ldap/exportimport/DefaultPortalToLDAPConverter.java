@@ -14,7 +14,6 @@
 
 package com.liferay.portal.ldap.exportimport;
 
-import com.liferay.portal.PwdEncryptorException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -222,7 +221,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			user.getScreenName(), attributes);
 		addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.PASSWORD),
-			getEncryptedPasswordForLDAP(user), attributes);
+			getEncryptedPasswordForLDAP(user, userMappings), attributes);
 		addAttributeMapping(
 			userMappings.getProperty(UserConverterKeys.EMAIL_ADDRESS),
 			user.getEmailAddress(), attributes);
@@ -300,25 +299,13 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		if (user.isPasswordModified() &&
 			Validator.isNotNull(user.getPasswordUnencrypted())) {
 
-			String newPassword = getEncryptedPasswordForLDAP(user);
+			String newPassword = getEncryptedPasswordForLDAP(
+				user, userMappings);
 
 			String passwordKey = userMappings.getProperty(
 				UserConverterKeys.PASSWORD);
 
-			if (passwordKey.equals("unicodePwd")) {
-				String newQuotedPassword = StringPool.QUOTE.concat(
-					newPassword).concat(StringPool.QUOTE);
-
-				byte[] newUnicodePassword = newQuotedPassword.getBytes(
-					"UTF-16LE");
-
-				addModificationItem(
-					new BasicAttribute(passwordKey, newUnicodePassword),
-					modifications);
-			}
-			else {
-				addModificationItem(passwordKey, newPassword, modifications);
-			}
+			addModificationItem(passwordKey, newPassword, modifications);
 		}
 
 		String portraitKey = userMappings.getProperty(
@@ -419,7 +406,9 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 	}
 
-	protected String getEncryptedPasswordForLDAP(User user) {
+	protected String getEncryptedPasswordForLDAP(
+		User user, Properties userMappings) {
+
 		String password = user.getPasswordUnencrypted();
 
 		if (Validator.isNull(password)) {
@@ -445,10 +434,22 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 			sb.append(PasswordEncryptorUtil.encrypt(algorithm, password, null));
 
+			String passwordKey = userMappings.getProperty(
+				UserConverterKeys.PASSWORD);
+
+			if (passwordKey.equals("unicodePwd")) {
+				String quotedPassword = StringPool.QUOTE.concat(
+					sb.toString()).concat(StringPool.QUOTE);
+
+				byte[] unicodePassword = quotedPassword.getBytes("UTF-16LE");
+
+				return new String(unicodePassword);
+			}
+
 			return sb.toString();
 		}
-		catch (PwdEncryptorException pee) {
-			throw new SystemException(pee);
+		catch (Exception e) {
+			throw new SystemException(e);
 		}
 	}
 

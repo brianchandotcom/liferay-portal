@@ -79,7 +79,7 @@ public class MeetupsEntryLocalServiceImpl
 		meetupsEntryPersistence.update(meetupsEntry);
 
 		if (ArrayUtil.isNotEmpty(thumbnail)) {
-			getImageLocalService().updateImage(
+			imageLocalService.updateImage(
 				meetupsEntry.getThumbnailId(), thumbnail);
 		}
 
@@ -97,7 +97,7 @@ public class MeetupsEntryLocalServiceImpl
 
 		meetupsRegistrationPersistence.removeByMeetupsEntryId(meetupsEntryId);
 
-		getImageLocalService().deleteImage(meetupsEntry.getThumbnailId());
+		imageLocalService.deleteImage(meetupsEntry.getThumbnailId());
 
 		return meetupsEntry;
 	}
@@ -151,7 +151,7 @@ public class MeetupsEntryLocalServiceImpl
 		meetupsEntryPersistence.update(meetupsEntry);
 
 		if (ArrayUtil.isNotEmpty(thumbnail)) {
-			getImageLocalService().updateImage(
+			imageLocalService.updateImage(
 				meetupsEntry.getThumbnailId(), thumbnail);
 		}
 

@@ -53,10 +53,10 @@ public class PoshiRunnerExecutor {
 		int parameterCount = PoshiRunnerContext.getSeleniumParameterCount(
 			selenium);
 
-		for (int i = 0; i < parameterCount; i++) {
+		for (int i = 1; i <= parameterCount; i++) {
 			parameterClasses.add(String.class);
 
-			String argument = element.attributeValue("argument" + (i + 1));
+			String argument = element.attributeValue("argument" + i);
 
 			arguments.add(argument);
 		}
@@ -67,7 +67,8 @@ public class PoshiRunnerExecutor {
 			selenium,
 			parameterClasses.toArray(new Class[parameterClasses.size()]));
 
-		method.invoke(clazz, arguments.toArray(new String[arguments.size()]));
+		method.invoke(
+			_liferaySelenium, arguments.toArray(new String[arguments.size()]));
 	}
 
 	private static final LiferaySelenium _liferaySelenium =

@@ -47,7 +47,7 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 
 		// Wall entry
 
-		Group group = getGroupLocalService().getGroup(groupId);
+		Group group = groupLocalService.getGroup(groupId);
 		User user = userLocalService.getUserById(userId);
 		Date now = new Date();
 
@@ -81,7 +81,7 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 		extraDataJSONObject.put("comments", wallEntry.getComments());
 
 		if (userId != group.getClassPK()) {
-			getSocialActivityLocalService().addActivity(
+			socialActivityLocalService.addActivity(
 				userId, groupId, WallEntry.class.getName(), wallEntryId,
 				WallActivityKeys.ADD_ENTRY, extraDataJSONObject.toString(),
 				group.getClassPK());
@@ -117,7 +117,7 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 
 		// Social
 
-		getSocialActivityLocalService().deleteActivities(
+		socialActivityLocalService.deleteActivities(
 			WallEntry.class.getName(), wallEntry.getWallEntryId());
 
 		return wallEntry;
@@ -175,7 +175,7 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 
 		String wallEntryURL = portalURL + layoutURL;
 
-		Group group = getGroupLocalService().getGroup(wallEntry.getGroupId());
+		Group group = groupLocalService.getGroup(wallEntry.getGroupId());
 
 		User user = userLocalService.getUserById(group.getClassPK());
 		User wallEntryUser = userLocalService.getUserById(
@@ -229,7 +229,7 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 		MailMessage mailMessage = new MailMessage(
 			from, to, subject, body, true);
 
-		getMailService().sendEmail(mailMessage);
+		mailService.sendEmail(mailMessage);
 	}
 
 }

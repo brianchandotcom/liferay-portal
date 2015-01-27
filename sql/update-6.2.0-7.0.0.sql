@@ -15,6 +15,19 @@ alter table DDMStructure add version VARCHAR(75) null;
 
 update DDMStructure set version = '1.0';
 
+create table DDMStructureLayout (
+	uuid_ VARCHAR(75) null,
+	structureLayoutId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	structureVersionId LONG,
+	definition TEXT null
+);
+
 create table DDMStructureVersion (
 	structureVersionId LONG not null primary key,
 	groupId LONG,

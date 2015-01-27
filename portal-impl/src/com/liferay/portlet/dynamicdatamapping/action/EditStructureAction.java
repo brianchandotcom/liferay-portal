@@ -39,9 +39,11 @@ import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -274,6 +276,7 @@ public class EditStructureAction extends PortletAction {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		DDMForm ddmForm = getDDMForm(actionRequest);
+		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 		String storageType = ParamUtil.getString(actionRequest, "storageType");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -284,13 +287,13 @@ public class EditStructureAction extends PortletAction {
 		if (cmd.equals(Constants.ADD)) {
 			structure = DDMStructureServiceUtil.addStructure(
 				groupId, parentStructureId, scopeClassNameId, structureKey,
-				nameMap, descriptionMap, ddmForm, storageType,
+				nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType,
 				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			structure = DDMStructureServiceUtil.updateStructure(
 				classPK, parentStructureId, nameMap, descriptionMap, ddmForm,
-				serviceContext);
+				ddmFormLayout, serviceContext);
 		}
 
 		return structure;

@@ -12,33 +12,31 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.portlet.dynamicdatamapping;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.NoSuchModelException;
 
 /**
- * @author Marcellus Tavares
+ * @author Brian Wing Shun Chan
  */
-public class DDMFormLayoutColumn {
+@ProviderType
+public class NoSuchStructureLayoutException extends NoSuchModelException {
 
-	public static final int FULL = 12;
-
-	public DDMFormLayoutColumn(DDMFormLayoutColumn ddmFormLayoutColumn) {
-		this(ddmFormLayoutColumn._ddmFormFieldName, ddmFormLayoutColumn._size);
+	public NoSuchStructureLayoutException() {
 	}
 
-	public DDMFormLayoutColumn(String ddmFormFieldName, int size) {
-		_ddmFormFieldName = ddmFormFieldName;
-		_size = size;
+	public NoSuchStructureLayoutException(String msg) {
+		super(msg);
 	}
 
-	public String getDDMFormFieldName() {
-		return _ddmFormFieldName;
+	public NoSuchStructureLayoutException(String msg, Throwable cause) {
+		super(msg, cause);
 	}
 
-	public int getSize() {
-		return _size;
+	public NoSuchStructureLayoutException(Throwable cause) {
+		super(cause);
 	}
-
-	private final String _ddmFormFieldName;
-	private final int _size;
 
 }

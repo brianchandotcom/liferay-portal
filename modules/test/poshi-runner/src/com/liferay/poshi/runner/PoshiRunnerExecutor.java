@@ -30,9 +30,23 @@ import org.dom4j.Element;
  */
 public class PoshiRunnerExecutor {
 
+	public static void parseElement(Element element) throws Exception {
+		List<Element> childElements = element.elements();
+
+		for (Element childElement : childElements) {
+			String childElementName = childElement.getName();
+
+			if (childElementName.equals("execute")) {
+				if (childElement.attributeValue("selenium") != null) {
+					PoshiRunnerExecutor.runSeleniumElement(childElement);
+				}
+			}
+		}
+	}
+
 	public static void runSeleniumElement(Element element) throws Exception {
-		List<Class> parameterClasses = new ArrayList<>();
 		List<String> arguments = new ArrayList<>();
+		List<Class> parameterClasses = new ArrayList<>();
 
 		String selenium = element.attributeValue("selenium");
 
@@ -40,11 +54,11 @@ public class PoshiRunnerExecutor {
 			selenium);
 
 		for (int i = 0; i < parameterCount; i++) {
-			parameterClasses.add(String.class);
-
 			String argument = element.attributeValue("argument" + (i + 1));
 
 			arguments.add(argument);
+
+			parameterClasses.add(String.class);
 		}
 
 		Class clazz = _liferaySelenium.getClass();
@@ -53,7 +67,8 @@ public class PoshiRunnerExecutor {
 			selenium,
 			parameterClasses.toArray(new Class[parameterClasses.size()]));
 
-		method.invoke(clazz, arguments.toArray(new String[arguments.size()]));
+		method.invoke(
+			_liferaySelenium, arguments.toArray(new String[arguments.size()]));
 	}
 
 	private static final LiferaySelenium _liferaySelenium =

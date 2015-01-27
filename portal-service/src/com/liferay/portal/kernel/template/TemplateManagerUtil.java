@@ -25,7 +25,9 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -167,26 +169,33 @@ public class TemplateManagerUtil {
 	}
 
 	private TemplateManager _getTemplateManager(String templateManagerName) {
-		Map<String, TemplateManager> templateManagers = _templateManagers;
+		Collection<TemplateManager> templateManagers =
+			_templateManagers.values();
 
-		return templateManagers.get(templateManagerName);
+		for (TemplateManager templateManager : templateManagers) {
+			if (templateManager.getName().equals(templateManagerName)) {
+				return templateManager;
+			}
+		}
+
+		return null;
 	}
 
 	private TemplateManager _getTemplateManagerChecked(
 			String templateManagerName)
 		throws TemplateException {
 
-		Map<String, TemplateManager> templateManagers = _templateManagers;
+		Collection<TemplateManager> templateManagers =
+			_templateManagers.values();
 
-		TemplateManager templateManager = templateManagers.get(
-			templateManagerName);
-
-		if (templateManager == null) {
-			throw new TemplateException(
-				"Unsupported template manager " + templateManagerName);
+		for (TemplateManager templateManager : templateManagers) {
+			if (templateManager.getName().equals(templateManagerName)) {
+				return templateManager;
+			}
 		}
 
-		return templateManager;
+		throw new TemplateException(
+			"Unsupported template manager " + templateManagerName);
 	}
 
 	private Set<String> _getTemplateManagerNames() {
@@ -196,13 +205,29 @@ public class TemplateManagerUtil {
 	}
 
 	private Map<String, TemplateManager> _getTemplateManagers() {
-		return Collections.unmodifiableMap(_templateManagers);
+		Map<String, TemplateManager> map = new HashMap<>();
+
+		Collection<TemplateManager> templateManagers =
+			_templateManagers.values();
+
+		for (TemplateManager templateManager : templateManagers) {
+			map.put(templateManager.getName(), templateManager);
+		}
+
+		return Collections.unmodifiableMap(map);
 	}
 
 	private boolean _hasTemplateManager(String templateManagerName) {
-		Map<String, TemplateManager> templateManagers = _templateManagers;
+		Collection<TemplateManager> templateManagers =
+			_templateManagers.values();
 
-		return templateManagers.containsKey(templateManagerName);
+		for (TemplateManager templateManager : templateManagers) {
+			if (templateManager.getName().equals(templateManagerName)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -215,8 +240,8 @@ public class TemplateManagerUtil {
 		_serviceTracker;
 	private final Map<String, Set<String>> _supportedLanguageTypes =
 		new ConcurrentHashMap<>();
-	private final Map<String, TemplateManager> _templateManagers =
-		new ConcurrentHashMap<>();
+	private final Map<ServiceReference<TemplateManager>, TemplateManager>
+		_templateManagers = new ConcurrentHashMap<>();
 
 	private class TemplateManagerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<TemplateManager, TemplateManager> {
@@ -235,7 +260,7 @@ public class TemplateManagerUtil {
 			try {
 				templateManager.init();
 
-				_templateManagers.put(name, templateManager);
+				_templateManagers.put(serviceReference, templateManager);
 			}
 			catch (TemplateException e) {
 				if (_log.isWarnEnabled()) {
@@ -262,7 +287,7 @@ public class TemplateManagerUtil {
 
 			registry.ungetService(serviceReference);
 
-			_templateManagers.remove(templateManager.getName());
+			_templateManagers.remove(serviceReference);
 
 			templateManager.destroy();
 		}

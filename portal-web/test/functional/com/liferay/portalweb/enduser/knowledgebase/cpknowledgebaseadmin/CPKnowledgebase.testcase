@@ -378,12 +378,12 @@
 			</execute>
 		</for>
 
-		<execute macro="KBArticle#viewKBArticlePriorityViaAdmin">
+		<execute macro="KBArticle#viewKBArticlePriorityCP">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title 1" />
 			<var name="kbPriority" value="1.0" />
 		</execute>
 
-		<execute macro="KBArticle#viewKBArticlePriorityViaAdmin">
+		<execute macro="KBArticle#viewKBArticlePriorityCP">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title 2" />
 			<var name="kbPriority" value="2.0" />
 		</execute>

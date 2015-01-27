@@ -11,6 +11,7 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
+	WEB-INF=src/WEB-INF,\
 	@lib/org.freemarker.jar,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
 

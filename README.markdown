@@ -71,7 +71,7 @@ questions, and connect with other Liferay community members.
 Follow us on Twitter:
 
 - [@Liferay](http://twitter.com/Liferay) tweets the Liferay's latest
-announcements 
+announcements
 - [@Liferaydocs](http://twitter.com/Liferaydocs) tweets about new articles
 
 ### Blog
@@ -91,23 +91,6 @@ Tune into Liferay's Internet Relay Chat (IRC) channel.
 Server: `irc.freenode.net`
 
 Channel: `#liferay`
-
-## Development Options
-
-To understand how to develop for Liferay, read the [Liferay Development
-Guide](http://www.liferay.com/documentation/liferay-portal/6.1/development).
-This guide contains indispensable explanations, examples, and reference material
-on the Liferay platform and surrounding technologies.
-
-Also, check out Liferay IDE. The [Liferay IDE
-project](http://www.liferay.com/community/liferay-projects/liferay-ide) provides
-an Eclipse-based Liferay development environment to help you build and maintain
-Liferay projects easily.
-
-Finally, consider using Maven to build Liferay and your Liferay projects. To
-learn how to use Maven with Liferay, you can read our
-[Maven](https://dev.liferay.com/develop/tutorials/-/knowledge_base/6-2/maven)
-tutorials.
 
 ## Contributing
 

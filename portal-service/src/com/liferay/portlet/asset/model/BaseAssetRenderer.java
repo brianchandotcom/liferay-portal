@@ -32,8 +32,6 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
@@ -414,10 +412,10 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return PortalUtil.addPreservedParameters(themeDisplay, sb.toString());
 	}
 
-	pprivate static final String[] _AVAILABLE_LANGUAGE_IDS = new String[0];
+	private static final String[] _AVAILABLE_LANGUAGE_IDS = new String[0];
 
-	private static final DDMFieldReader _nullDDMFieldReader =
-		new NullDDMFieldReader();
+	private static final DDMFormValuesReader _nullDDMFormValuesReader =
+		new NullDDMFormValuesReader();
 
 	private AssetRendererFactory _assetRendererFactory;
 	private int _assetRendererType = AssetRendererFactory.TYPE_LATEST_APPROVED;

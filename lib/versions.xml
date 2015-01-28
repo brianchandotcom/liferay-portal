@@ -1317,18 +1317,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/cas-client-core.jar</file-name>
-				<version>3.1.9</version>
-				<project-name>CAS Java Client</project-name>
-				<project-url>http://www.ja-sig.org/downloads/cas-clients</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/ccpp.jar</file-name>
 				<version>1.0</version>
 				<project-name>CC/PP Processing</project-name>

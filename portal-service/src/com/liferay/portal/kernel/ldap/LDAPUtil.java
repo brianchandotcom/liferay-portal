@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.LDAPFilterValidator;
 
 import java.text.DateFormat;
+
 import java.util.Date;
 import java.util.Properties;
 
@@ -250,6 +251,5 @@ public class LDAPUtil {
 	}
 
 	private static LDAPFilterValidator _ldapFilterValidator;
-
 
 }

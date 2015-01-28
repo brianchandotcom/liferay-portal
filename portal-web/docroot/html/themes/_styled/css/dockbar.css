@@ -138,7 +138,7 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	.impersonating-user {
-		.alert-icon{
+		.alert-icon {
 			margin-right: 9px;
 		}
 
@@ -1093,7 +1093,7 @@ $editLayoutPanelWidth: 460px;
 				}
 			}
 
-			.workflow-status .status{
+			.workflow-status .status {
 				color: #FFF;
 
 				&.approved {

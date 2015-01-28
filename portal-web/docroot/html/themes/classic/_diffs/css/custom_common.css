@@ -1079,7 +1079,7 @@ body.yui3-skin-sam .yui3-widget-mask {
 			.ace_string {
 				color: #FF6C58;
 
-				&.ace_regex {
+				&.ace_regex {
 					color: #F00;
 				}
 			}

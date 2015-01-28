@@ -893,9 +893,9 @@
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.documentlibrary.context.DLDisplayContextFactoryProviderUtil" class="com.liferay.portlet.documentlibrary.context.DLDisplayContextProviderUtil">
+	<bean id="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactoryProviderUtil" class="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderUtil">
 		<property name="DLDisplayContextFactoryProvider">
-			<bean class="com.liferay.portlet.documentlibrary.context.DLDisplayContextProviderImpl" />
+			<bean class="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" />
@@ -1122,6 +1122,11 @@
 	<bean id="com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil" class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil">
 		<property name="expandoBridgeIndexer">
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderUtil" class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderUtil">
+		<property name="IGDisplayContextProvider">
+			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.journal.service.permission.JournalArticlePermission" class="com.liferay.portlet.journal.service.permission.JournalArticlePermission" />

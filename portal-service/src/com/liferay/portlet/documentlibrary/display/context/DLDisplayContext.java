@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%
-for (MenuItem menuItem : igViewFileVersionDisplayContext.getMenuItems()) {
-%>
+package com.liferay.portlet.documentlibrary.display.context;
 
-	<liferay-ui:menu-item menuItem="<%= menuItem %>" />
+import com.liferay.portal.kernel.display.context.DisplayContext;
 
-<%
+/**
+ * @author Iván Zaera
+ */
+public interface DLDisplayContext extends DisplayContext {
 }
-%>

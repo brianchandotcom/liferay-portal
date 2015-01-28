@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%
-for (MenuItem menuItem : igViewFileVersionDisplayContext.getMenuItems()) {
-%>
+package com.liferay.document.library.google.docs.display.context;
 
-	<liferay-ui:menu-item menuItem="<%= menuItem %>" />
+/**
+ * @author Ivan Zaera
+ */
+public class GoogleDocsUIItemKeys {
 
-<%
+	public static final String EDIT_IN_GOOGLE =
+		GoogleDocsUIItemKeys.class.getName() + "#edit-in-google-docs";
+
 }
-%>

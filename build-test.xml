@@ -4600,4 +4600,12 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 
 		<ant dir="modules" target="test-unit" inheritAll="false" />
 	</target>
+
+	<target name="test-persistence">
+		<ant dir="portal-service" target="test-persistence" inheritAll="false" />
+
+		<ant dir="portal-impl" target="test-persistence" inheritAll="false" />
+
+		<ant dir="util-java" target="test-persistence" inheritAll="false" />
+	</target>
 </project>

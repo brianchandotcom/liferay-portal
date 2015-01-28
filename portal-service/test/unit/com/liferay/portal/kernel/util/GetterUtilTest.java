@@ -48,60 +48,56 @@ public class GetterUtilTest {
 
 		// Wrong first char
 
-		double result = GetterUtil.getDouble("e12.3");
-
 		Assert.assertEquals(
-			"", GetterUtil.DEFAULT_DOUBLE, result, GetterUtil.DEFAULT_DOUBLE);
+			GetterUtil.DEFAULT_DOUBLE, GetterUtil.getDouble("e12.3"),
+			GetterUtil.DEFAULT_DOUBLE);
 
 		// Wrong middle char
 
-		result =  GetterUtil.getDouble("12e.3");
-
 		Assert.assertEquals(
-			"", GetterUtil.DEFAULT_DOUBLE, result, GetterUtil.DEFAULT_DOUBLE);
+			GetterUtil.DEFAULT_DOUBLE, GetterUtil.getDouble("12e.3"),
+			GetterUtil.DEFAULT_DOUBLE);
 
 		// Start with '+'
 
-		result = GetterUtil.getDouble("+12.3");
-
-		Assert.assertEquals("", 12.3, result, GetterUtil.DEFAULT_DOUBLE);
+		Assert.assertEquals(
+			12.3, GetterUtil.getDouble("+12.3"), GetterUtil.DEFAULT_DOUBLE);
 
 		// Start with '-'
 
-		result = GetterUtil.getDouble("-12.3");
-
-		Assert.assertEquals("", -12.3, result, GetterUtil.DEFAULT_DOUBLE);
+		Assert.assertEquals(
+			-12.3, GetterUtil.getDouble("-12.3"), GetterUtil.DEFAULT_DOUBLE);
 
 		// Maximum double
 
-		result = GetterUtil.getDouble(Double.toString(Double.MAX_VALUE));
-
 		Assert.assertEquals(
-			"", Double.MAX_VALUE, result, GetterUtil.DEFAULT_DOUBLE);
+			Double.MAX_VALUE,
+			GetterUtil.getDouble(Double.toString(Double.MAX_VALUE)),
+			GetterUtil.DEFAULT_DOUBLE);
 
 		// Minimum double
 
-		result = GetterUtil.getDouble(Double.toString(Double.MIN_VALUE));
-
 		Assert.assertEquals(
-			"", Double.MIN_VALUE, result, GetterUtil.DEFAULT_DOUBLE);
+			Double.MIN_VALUE,
+			GetterUtil.getDouble(Double.toString(Double.MIN_VALUE)),
+			GetterUtil.DEFAULT_DOUBLE);
 
 		// Locale aware
 
-		result = GetterUtil.getDouble("4,7", LocaleUtil.PORTUGAL);
+		Assert.assertEquals(
+			4.7, GetterUtil.getDouble("4,7", LocaleUtil.PORTUGAL),
+			GetterUtil.DEFAULT_DOUBLE);
 
-		Assert.assertEquals("", 4.7, result, GetterUtil.DEFAULT_DOUBLE);
-
-		result = GetterUtil.getDouble("4.7", LocaleUtil.US);
-
-		Assert.assertEquals("", 4.7, result, GetterUtil.DEFAULT_DOUBLE);
+		Assert.assertEquals(
+			4.7, GetterUtil.getDouble("4.7", LocaleUtil.US),
+			GetterUtil.DEFAULT_DOUBLE);
 
 		// Locale aware respecting the whole input
 
-		result = GetterUtil.getDouble("4.7", LocaleUtil.HUNGARY);
-
 		Assert.assertEquals(
-			"", GetterUtil.DEFAULT_DOUBLE, result, GetterUtil.DEFAULT_DOUBLE);
+			GetterUtil.DEFAULT_DOUBLE,
+			GetterUtil.getDouble("4.7", LocaleUtil.HUNGARY),
+			GetterUtil.DEFAULT_DOUBLE);
 	}
 
 	@Test

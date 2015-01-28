@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher;
+package com.liferay.asset.publisher.web.portlet;
 
+import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.asset.publisher.web.util.AssetRSSUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -28,8 +30,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
-import com.liferay.portlet.assetpublisher.util.AssetRSSUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;

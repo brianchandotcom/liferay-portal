@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.util;
+package com.liferay.asset.publisher.web.util;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;

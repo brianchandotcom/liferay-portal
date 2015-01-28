@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.lar;
+package com.liferay.asset.publisher.web.lar;
 
+import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
@@ -39,7 +40,6 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;

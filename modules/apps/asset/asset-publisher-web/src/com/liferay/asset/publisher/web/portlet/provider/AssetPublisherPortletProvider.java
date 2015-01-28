@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.provider;
+package com.liferay.asset.publisher.web.portlet.provider;
 
+import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
@@ -22,7 +23,6 @@ import com.liferay.portlet.asset.provider.AddPortletProvider;
 import com.liferay.portlet.asset.provider.PortletProvider;
 import com.liferay.portlet.asset.provider.ViewPortletProvider;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 
 import javax.portlet.PortletPreferences;
 

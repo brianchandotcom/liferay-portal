@@ -4,7 +4,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S_T">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT structureId) AS COUNT_VALUE
+				COUNT(DDMStructure.structureId) AS COUNT_VALUE
 			FROM
 				DDMStructure
 			WHERE
@@ -22,7 +22,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T">
 		<![CDATA[
 			SELECT
-				DISTINCT {DDMStructure.*}
+				{DDMStructure.*}
 			FROM
 				DDMStructure
 			WHERE
@@ -42,7 +42,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.countByG_C_SC">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT templateId) AS COUNT_VALUE
+				COUNT(DDMTemplate.templateId) AS COUNT_VALUE
 			FROM
 				DDMTemplate
 			WHERE
@@ -64,7 +64,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.countByC_G_C_C_N_D_T_M_L">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT templateId) AS COUNT_VALUE
+				COUNT(DDMTemplate.templateId) AS COUNT_VALUE
 			FROM
 				DDMTemplate
 			WHERE
@@ -84,7 +84,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByG_C_SC">
 		<![CDATA[
 			SELECT
-				DISTINCT {DDMTemplate.*}
+				{DDMTemplate.*}
 			FROM
 				DDMTemplate
 			WHERE
@@ -108,7 +108,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_N_D_T_M_L">
 		<![CDATA[
 			SELECT
-				DISTINCT {DDMTemplate.*}
+				{DDMTemplate.*}
 			FROM
 				DDMTemplate
 			WHERE

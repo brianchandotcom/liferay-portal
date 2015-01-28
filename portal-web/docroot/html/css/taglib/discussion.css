@@ -145,6 +145,8 @@
 					top: 5px;
 
 					.avatar {
+						background-size: 40px;
+						height: 40px;
 						width: 40px;
 					}
 				}

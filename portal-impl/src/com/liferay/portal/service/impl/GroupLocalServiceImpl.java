@@ -3806,7 +3806,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			String groupKey = group.getGroupKey();
 
-			if (groupKey.equals(GroupConstants.CONTROL_PANEL)) {
+			if (groupKey.equals(GroupConstants.CONTROL_PANEL) ||
+				groupKey.equals(GroupConstants.USER_PERSONAL_SPACE)) {
+
 				iterator.remove();
 
 				continue;

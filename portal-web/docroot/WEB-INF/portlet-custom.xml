@@ -2148,14 +2148,14 @@
 	<portlet>
 		<portlet-name>185</portlet-name>
 		<display-name>Site Browser</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/site_browser/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/site_browser/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/site_browser/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

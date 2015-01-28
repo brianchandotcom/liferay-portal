@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,18 +11,26 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.portlet.sitebrowser.provider;
 
-<%@ page import="com.liferay.portlet.usersadmin.search.GroupDisplayTerms" %>
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.asset.provider.BrowsePortletProvider;
 
-<%
-boolean filterManageableGroups = true;
+/**
+ * @author Eudaldo Alonso
+ */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portal.model.Group"
+	}
+)
+public class SiteBrowserPortletProvider implements BrowsePortletProvider {
 
-if (permissionChecker.isCompanyAdmin()) {
-	filterManageableGroups = false;
+	@Override
+	public String getPortletId() {
+		return PortletKeys.SITE_BROWSER;
+	}
+
 }
-%>
-
-<%@ include file="/html/portlet/site_browser/init-ext.jsp" %>

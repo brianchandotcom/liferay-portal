@@ -31,12 +31,14 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -294,13 +296,21 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionRequest actionRequest, PortletPreferences preferences)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String[] scopeIds = preferences.getValues(
 			"scopeIds",
 			new String[] {
 				AssetPublisher.SCOPE_ID_GROUP_PREFIX + GroupConstants.DEFAULT
 			});
 
-		String scopeId = ParamUtil.getString(actionRequest, "scopeId");
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		Group selectedGroup = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		String scopeId = AssetPublisherUtil.getScopeId(
+			selectedGroup, themeDisplay.getScopeGroupId());
 
 		checkPermission(actionRequest, scopeId);
 

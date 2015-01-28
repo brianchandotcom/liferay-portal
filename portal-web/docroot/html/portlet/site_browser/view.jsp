@@ -44,7 +44,6 @@ String target = ParamUtil.getString(request, "target");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/site_browser/view");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("selectedGroupIds", StringUtil.merge(selectedGroupIds));
 portletURL.setParameter("type", type);
@@ -80,7 +79,7 @@ portletURL.setParameter("target", target);
 				</c:if>
 
 				<c:if test='<%= !type.equals("parent-sites") %>'>
-					<aui:nav-bar-search file="/html/portlet/users_admin/group_search.jsp" searchContainer="<%= searchContainer %>" />
+					<aui:nav-bar-search file="/html/portlet/site_browser/search.jsp" searchContainer="<%= searchContainer %>" />
 				</c:if>
 			</aui:nav-bar>
 		</c:if>
@@ -213,7 +212,6 @@ portletURL.setParameter("target", target);
 
 				data.put("groupdescriptivename", group.getDescriptiveName(locale));
 				data.put("groupid", group.getGroupId());
-				data.put("scopeid", AssetPublisherUtil.getScopeId(group, scopeGroupId));
 				data.put("target", target);
 				%>
 

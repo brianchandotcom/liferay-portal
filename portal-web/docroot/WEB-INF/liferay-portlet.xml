@@ -1583,8 +1583,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>185</portlet-name>
-		<struts-path>site_browser</struts-path>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>

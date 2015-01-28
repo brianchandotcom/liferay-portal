@@ -39,7 +39,6 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 	<aui:input name="assetEntryId" type="hidden" />
 	<aui:input name="assetEntryOrder" type="hidden" value="-1" />
 	<aui:input name="assetEntryType" type="hidden" />
-	<aui:input name="scopeId" type="hidden" />
 
 	<liferay-util:buffer var="selectStyle">
 		<c:choose>
@@ -152,9 +151,10 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 					<c:if test="<%= GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), Layout.class.getName(), layout.getGroupId()) > 0 %>">
 
 						<%
-						PortletURL layoutSiteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
+						String portletId = PortletProviderUtil.getPortletId(Group.class.getName(), PortletProvider.ACTION_BROWSE);
 
-						layoutSiteBrowserURL.setParameter("struts_action", "/site_browser/view");
+						PortletURL layoutSiteBrowserURL = PortletURLFactoryUtil.create(request, portletId, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
+
 						layoutSiteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
 						layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
 						layoutSiteBrowserURL.setParameter("type", "layoutScopes");
@@ -202,9 +202,10 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 					<c:if test="<%= !types.isEmpty() %>">
 
 						<%
-						PortletURL siteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
+						String portletId = PortletProviderUtil.getPortletId(Group.class.getName(), PortletProvider.ACTION_BROWSE);
 
-						siteBrowserURL.setParameter("struts_action", "/site_browser/view");
+						PortletURL siteBrowserURL = PortletURLFactoryUtil.create(request, portletId, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
+
 						siteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
 						siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
 						siteBrowserURL.setParameter("types", StringUtil.merge(types));
@@ -279,7 +280,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 				},
 				function(event) {
 					form.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
-					form.<portlet:namespace />scopeId.value = event.scopeid;
+					form.<portlet:namespace />groupId.value = event.groupid;
 
 					submitForm(form);
 				}

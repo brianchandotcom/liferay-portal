@@ -1182,14 +1182,6 @@
 		<put name="portlet_content" value="/portlet/shopping/view_item.jsp" />
 	</definition>
 
-	<!-- Site Browser -->
-
-	<definition name="portlet.site_browser" extends="portlet" />
-
-	<definition name="portlet.site_browser.view" extends="portlet.site_browser">
-		<put name="portlet_content" value="/portlet/site_browser/view.jsp" />
-	</definition>
-
 	<!-- Site Map -->
 
 	<definition name="portlet.site_map" extends="portlet" />

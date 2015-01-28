@@ -29,8 +29,6 @@ import ${packagePath}.service.persistence.${entity.name}PK;
 import ${packagePath}.service.persistence.${entity.name}Persistence;
 import ${packagePath}.service.persistence.${entity.name}Util;
 
-import com.liferay.arquillian.extension.persistence.internal.annotation.PersistenceTest;
-
 import ${beanLocatorUtil};
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -82,10 +80,7 @@ import org.junit.runner.RunWith;
 /**
  * @generated
  */
-<#if !osgiModule>
-@PersistenceTest
-</#if>
-	@RunWith(Arquillian.class)
+@RunWith(Arquillian.class)
 @Transactional(propagation = Propagation.REQUIRED)
 public class ${entity.name}PersistenceTest {
 

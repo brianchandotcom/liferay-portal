@@ -21,6 +21,18 @@ String fieldParamSelection = ParamUtil.getString(request, facet.getFieldId() + "
 String fieldParamFrom = ParamUtil.getString(request, facet.getFieldId() + "from");
 String fieldParamTo = ParamUtil.getString(request, facet.getFieldId() + "to");
 
+int fromDay = ParamUtil.getInteger(request, HtmlUtil.escapeJS(facet.getFieldId()) + "dayFrom");
+int fromMonth = ParamUtil.getInteger(request, HtmlUtil.escapeJS(facet.getFieldId()) + "monthFrom");
+int fromYear = ParamUtil.getInteger(request, HtmlUtil.escapeJS(facet.getFieldId()) + "yearFrom");
+
+Date fromDate = PortalUtil.getDate(fromMonth, fromDay, fromYear);
+
+int toDay = ParamUtil.getInteger(request, HtmlUtil.escapeJS(facet.getFieldId()) + "dayTo");
+int toMonth = ParamUtil.getInteger(request, HtmlUtil.escapeJS(facet.getFieldId()) + "monthTo");
+int toYear = ParamUtil.getInteger(request, HtmlUtil.escapeJS(facet.getFieldId()) + "yearTo");
+
+Date toDate = PortalUtil.getDate(toMonth, toDay, toYear);
+
 JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 
 String modifiedLabel = StringPool.BLANK;
@@ -30,10 +42,6 @@ int index = 0;
 if (fieldParamSelection.equals("0")) {
 	modifiedLabel = LanguageUtil.get(request, "any-time");
 }
-
-Calendar localeCal = CalendarFactoryUtil.getCalendar(timeZone, locale);
-
-int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 %>
 
 <div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
@@ -111,20 +119,61 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 				</aui:a>
 			</li>
 
+			<%
+			Calendar fromCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+			if (Validator.isNotNull(fromDate)) {
+				fromCalendar.setTime(fromDate);
+			}
+			else {
+				fromCalendar.add(Calendar.DATE, -1);
+			}
+
+			Calendar toCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+			if (Validator.isNotNull(toDate)) {
+				toCalendar.setTime(toDate);
+			}
+			%>
+
 			<div class="<%= !fieldParamSelection.equals(String.valueOf(index + 1)) ? "hide" : StringPool.BLANK %> modified-custom-range" id="<%= randomNamespace %>custom-range">
 				<div id="<%= randomNamespace %>custom-range-from">
-					<aui:input label="from" name='<%= HtmlUtil.escapeAttribute(facet.getFieldId()) + "from" %>' size="14" />
+					<aui:field-wrapper label="from">
+						<liferay-ui:input-date
+							dayParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "dayFrom" %>'
+							dayValue="<%= fromCalendar.get(Calendar.DATE) %>"
+							disabled="<%= false %>"
+							firstDayOfWeek="<%= fromCalendar.getFirstDayOfWeek() - 1 %>"
+							monthValue="<%= fromCalendar.get(Calendar.MONTH) %>"
+							monthParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "monthFrom" %>'
+							name='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "from" %>'
+							yearValue="<%= fromCalendar.get(Calendar.YEAR) %>"
+							yearParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "yearFrom" %>'
+						/>
+					</aui:field-wrapper>
 				</div>
 
 				<div id="<%= randomNamespace %>custom-range-to">
-					<aui:input label="to" name='<%= HtmlUtil.escapeAttribute(facet.getFieldId()) + "to" %>' size="14" />
+					<aui:field-wrapper label="to">
+						<liferay-ui:input-date
+							dayParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "dayTo" %>'
+							dayValue="<%= toCalendar.get(Calendar.DATE) %>"
+							disabled="<%= false %>"
+							firstDayOfWeek="<%= toCalendar.getFirstDayOfWeek() - 1 %>"
+							monthValue="<%= toCalendar.get(Calendar.MONTH) %>"
+							monthParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "monthTo" %>'
+							name='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "to" %>'
+							yearValue="<%= toCalendar.get(Calendar.YEAR) %>"
+							yearParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "yearTo" %>'
+						/>
+					</aui:field-wrapper>
 				</div>
 
 				<%
 				String taglibSearchCustomRange = "window['" + renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "searchCustomRange'](" + (index + 1) + ");";
 				%>
 
-				<aui:button disabled="<%= Validator.isNull(fieldParamFrom) || Validator.isNull(fieldParamTo) %>" name="searchCustomRangeButton" onClick="<%= taglibSearchCustomRange %>" value="search" />
+				<aui:button disabled="<%= (toCalendar.getTimeInMillis() < fromCalendar.getTimeInMillis()) %>" name="searchCustomRangeButton" onClick="<%= taglibSearchCustomRange %>" value="search" />
 			</div>
 		</ul>
 	</aui:field-wrapper>
@@ -172,28 +221,20 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>searchCustomRange(selection) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var fromDate = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>from');
-		var toDate = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>to');
+		var dayFrom = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayFrom');
+		var monthFrom = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthFrom');
+		var yearFrom = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearFrom');
 
-		var fromDateVal = fromDate.val();
-		var toDateVal = toDate.val();
+		var dayTo = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>dayTo');
+		var monthTo = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>monthTo');
+		var yearTo = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearTo');
 
-		if (fromDateVal && toDateVal) {
-			if (fromDateVal > toDateVal) {
-				fromDateVal = toDate.val();
-				toDateVal = fromDate.val();
+		var range = '[' + yearFrom.val() + monthFrom.val() + dayFrom.val() + '000000 TO ' + yearTo.val() + monthTo.val() + dayTo.val() + '235959]';
 
-				fromDate.val(fromDateVal);
-				toDate.val(toDateVal);
-			}
+		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>').val(range);
+		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection').val(selection);
 
-			var range = '[' + fromDateVal.replace(/-/g, '') + '000000 TO ' + toDateVal.replace(/-/g, '') + '235959]';
-
-			form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>').val(range);
-			form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection').val(selection);
-
-			submitForm(form);
-		}
+		submitForm(form);
 	}
 
 	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>setRange(selection, range) {
@@ -206,21 +247,14 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 	}
 </aui:script>
 
-<aui:script use="aui-datepicker-deprecated,aui-form-validator">
+<aui:script use="aui-form-validator">
 	var Util = Liferay.Util;
 
-	var DATE_FORMAT = '%Y-%m-%d';
+	var customRangeFrom = Liferay.component('<%= renderResponse.getNamespace() %>modifiedfromDatePicker');
+	var customRangeTo = Liferay.component('<%= renderResponse.getNamespace() %>modifiedtoDatePicker');
+	var searchButton = A.one('#<portlet:namespace />searchCustomRangeButton');
 
 	var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
-
-	var REGEX_DATE = /^\d{4}(-)(0[1-9]|1[012])\1(0[1-9]|[12][0-9]|3[01])$/;
-
-	var dateFrom = null;
-	var dateTo = null;
-
-	var customRangeFrom = A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from');
-	var customRangeTo = A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to');
-	var searchButton = A.one('#<portlet:namespace />searchCustomRangeButton');
 
 	A.mix(
 		DEFAULTS_FORM_VALIDATOR.STRINGS,
@@ -235,32 +269,11 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 		DEFAULTS_FORM_VALIDATOR.RULES,
 		{
 			<portlet:namespace />dateFormat: function(val, fieldNode, ruleValue) {
-				var validDate = (REGEX_DATE.test(val) === true);
-
-				var dateValue = null;
-
-				if (validDate) {
-					dateValue = A.Date.parse(DATE_FORMAT, val);
-				}
-
-				if (fieldNode === customRangeFrom) {
-					dateFrom = dateValue;
-				}
-				else if (fieldNode === customRangeTo) {
-					dateTo = dateValue;
-				}
-
-				return validDate;
+				return true;
 			},
 
 			<portlet:namespace />dateRange: function(val, fieldNode, ruleValue) {
-				var greaterOrEqual = true;
-
-				if (dateTo && dateFrom) {
-					greaterOrEqual = A.Date.isGreaterOrEqual(dateTo, dateFrom);
-				}
-
-				return greaterOrEqual;
+				return A.Date.isGreaterOrEqual(customRangeTo.getDate(), customRangeFrom.getDate());
 			}
 		},
 		true
@@ -275,14 +288,15 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					Util.toggleDisabled(searchButton, true);
 				},
 				validField: function(event) {
-					if (A.Date.isValidDate(dateFrom) && A.Date.isValidDate(dateTo)) {
+					if (A.Date.isValidDate(customRangeTo.getDate()) && A.Date.isValidDate(customRangeFrom.getDate())) {
 						Util.toggleDisabled(searchButton, false);
 					}
 				}
 			},
 			rules: {
 				'<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from': {
-					<portlet:namespace />dateFormat: true
+					<portlet:namespace />dateFormat: true,
+					<portlet:namespace />dateRange: true
 				},
 				'<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to': {
 					<portlet:namespace />dateFormat: true,
@@ -291,76 +305,6 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 			}
 		}
 	);
-
-	var calendarStrings = {
-		next: '<liferay-ui:message key="next" />',
-		none: '<liferay-ui:message key="none" />',
-		previous: '<liferay-ui:message key="previous" />',
-		today: '<liferay-ui:message key="today" />'
-	};
-
-	var fromDatepicker = new A.DatePicker(
-		{
-			after: {
-				'calendar:dateChange': function(e) {
-					customRangeValidator.validateField(customRangeFrom);
-					customRangeValidator.validateField(customRangeTo);
-				}
-			},
-			calendar: {
-				dateFormat: DATE_FORMAT,
-				firstDayOfWeek: <%= firstDayOfWeek %>,
-				locale: '<%= locale %>',
-
-				<c:if test='<%= fieldParamSelection.equals("6") && Validator.isNotNull(fieldParamFrom) %>'>
-					selectedDates: [
-
-						<%
-						String[] fieldParamFromParts = StringUtil.split(fieldParamFrom, "-");
-						%>
-
-						new Date(<%= GetterUtil.getInteger(fieldParamFromParts[0]) %>, <%= GetterUtil.getInteger(fieldParamFromParts[1]) - 1 %>, <%= GetterUtil.getInteger(fieldParamFromParts[2]) %>)
-					],
-				</c:if>
-
-				selectionMode: 'single'
-			},
-			trigger: '#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from'
-		}
-	).render('#<%= randomNamespace %>custom-range-from');
-
-	fromDatepicker.set('strings', calendarStrings);
-
-	var toDatepicker = new A.DatePicker(
-		{
-			after: {
-				'calendar:dateChange': function(e) {
-					customRangeValidator.validateField(customRangeTo);
-				}
-			},
-			calendar: {
-				dateFormat: DATE_FORMAT,
-				firstDayOfWeek: <%= firstDayOfWeek %>,
-				locale: '<%= locale %>',
-
-				<c:if test='<%= fieldParamSelection.equals("6") && Validator.isNotNull(fieldParamTo) %>'>
-					selectedDates: [
-
-						<%
-						String[] fieldParamToParts = StringUtil.split(fieldParamTo, "-");
-						%>
-
-						new Date(<%= GetterUtil.getInteger(fieldParamToParts[0]) %>, <%= GetterUtil.getInteger(fieldParamToParts[1]) - 1 %>, <%= GetterUtil.getInteger(fieldParamToParts[2]) %>)
-					],
-				</c:if>
-
-				selectionMode: 'single'
-			},
-			trigger: '#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to'
-		}
-	).render('#<%= randomNamespace %>custom-range-to');
-
-	toDatepicker.set('strings', calendarStrings);
 
 	A.one('.<%= randomNamespace %>custom-range-toggle').on(
 		'click',

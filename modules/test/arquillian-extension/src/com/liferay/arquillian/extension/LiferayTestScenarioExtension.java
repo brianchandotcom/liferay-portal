@@ -14,7 +14,8 @@
 
 package com.liferay.arquillian.extension;
 
-import com.liferay.arquillian.extension.internal.observer.InitializeLiferayTestEnvironment;
+import com.liferay.arquillian.extension.internal.event.LiferayEventTestRunnerAdaptor;
+import com.liferay.arquillian.extension.internal.instanceproducer.ExtensionInstanceProducer;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutorImpl;
 
@@ -27,7 +28,8 @@ public class LiferayTestScenarioExtension implements LoadableExtension {
 
 	@Override
 	public void register(ExtensionBuilder extensionBuilder) {
-		extensionBuilder.observer(InitializeLiferayTestEnvironment.class);
+		extensionBuilder.observer(ExtensionInstanceProducer.class);
+		extensionBuilder.observer(LiferayEventTestRunnerAdaptor.class);
 
 		extensionBuilder.service(
 			InitTestLiferayContextExecutor.class,

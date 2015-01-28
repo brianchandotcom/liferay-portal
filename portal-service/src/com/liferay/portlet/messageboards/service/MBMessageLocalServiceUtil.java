@@ -386,6 +386,11 @@ public class MBMessageLocalServiceUtil {
 			classPK, status);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getDiscussionMessageDisplay(
+	long, long, String, long, int)}
+	*/
+	@Deprecated
 	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getDiscussionMessageDisplay(
 		long userId, long groupId, java.lang.String className, long classPK,
 		int status, java.lang.String threadView)

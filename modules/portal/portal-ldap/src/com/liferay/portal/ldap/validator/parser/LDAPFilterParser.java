@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 LDAPFilter.g 2014-11-26 08:47:44
+// $ANTLR 3.0.1 LDAPFilter.g 2015-01-28 13:02:44
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.

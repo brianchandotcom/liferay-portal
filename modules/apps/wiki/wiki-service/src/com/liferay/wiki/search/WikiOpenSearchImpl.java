@@ -17,7 +17,6 @@ package com.liferay.wiki.search;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.wiki.indexer.WikiPageIndexer;
 import com.liferay.wiki.model.WikiPage;
 
 /**
@@ -32,11 +31,6 @@ public class WikiOpenSearchImpl extends HitsOpenSearchImpl {
 	@Override
 	public Indexer getIndexer() {
 		return IndexerRegistryUtil.getIndexer(WikiPage.class);
-	}
-
-	@Override
-	public String getPortletId() {
-		return WikiPageIndexer.PORTLET_ID;
 	}
 
 	@Override

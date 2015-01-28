@@ -65,8 +65,8 @@ public class IndexWriterProxyBean extends BaseMultiDestinationProxyBean
 	}
 
 	@Override
-	public void deletePortletDocuments(
-		SearchContext searchContext, String portletId) {
+	public void deleteEntityDocuments(
+		SearchContext searchContext, String className) {
 
 		throw new UnsupportedOperationException();
 	}

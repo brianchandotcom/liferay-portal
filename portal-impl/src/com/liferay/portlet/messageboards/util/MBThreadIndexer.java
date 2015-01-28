@@ -27,12 +27,12 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -50,29 +50,22 @@ import javax.portlet.PortletURL;
 /**
  * @author Eudaldo Alonso
  */
+@OSGiBeanProperties
 public class MBThreadIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {MBThread.class.getName()};
-
-	public static final String PORTLET_ID = PortletKeys.MESSAGE_BOARDS;
+	public static final String CLASS_NAME = MBThread.class.getName();
 
 	public MBThreadIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.CLASS_NAME_ID, Field.CLASS_PK, Field.COMPANY_ID,
-			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.PORTLET_ID,
-			Field.UID);
+			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -124,7 +117,7 @@ public class MBThreadIndexer extends BaseIndexer {
 
 		Document document = new DocumentImpl();
 
-		document.addUID(PORTLET_ID, thread.getThreadId());
+		document.addUID(CLASS_NAME, thread.getThreadId());
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), thread.getCompanyId(), document.get(Field.UID),
@@ -135,7 +128,7 @@ public class MBThreadIndexer extends BaseIndexer {
 	protected Document doGetDocument(Object obj) throws Exception {
 		MBThread thread = (MBThread)obj;
 
-		Document document = getBaseModelDocument(PORTLET_ID, thread);
+		Document document = getBaseModelDocument(CLASS_NAME, thread);
 
 		try {
 			MBDiscussionLocalServiceUtil.getThreadDiscussion(
@@ -187,11 +180,6 @@ public class MBThreadIndexer extends BaseIndexer {
 		reindexCategories(companyId);
 		reindexDiscussions(companyId);
 		reindexRoot(companyId);
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void reindexCategories(final long companyId)

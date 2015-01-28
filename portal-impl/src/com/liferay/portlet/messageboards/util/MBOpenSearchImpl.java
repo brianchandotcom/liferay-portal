@@ -34,11 +34,6 @@ public class MBOpenSearchImpl extends HitsOpenSearchImpl {
 	}
 
 	@Override
-	public String getPortletId() {
-		return MBMessageIndexer.PORTLET_ID;
-	}
-
-	@Override
 	public String getSearchPath() {
 		return SEARCH_PATH;
 	}

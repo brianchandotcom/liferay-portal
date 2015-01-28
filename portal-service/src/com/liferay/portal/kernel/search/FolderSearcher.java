@@ -50,7 +50,7 @@ public class FolderSearcher extends BaseSearcher {
 	}
 
 	@Override
-	public String[] getClassNames() {
+	public String[] getSearchClassNames() {
 		return _classNames;
 	}
 

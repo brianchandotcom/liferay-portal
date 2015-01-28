@@ -103,29 +103,6 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 			name="active"
 			value='<%= LanguageUtil.get(request, (portlet.isActive() ? "yes" : "no")) %>'
 		/>
-
-		<c:if test="<%= showReindexButton %>">
-			<liferay-ui:search-container-column-text
-				name="search-index"
-			>
-
-				<%
-				List<String> indexerClasses = portlet.getIndexerClasses();
-				%>
-
-				<c:if test="<%= !indexerClasses.isEmpty() %>">
-
-					<%
-					Map<String, String> data = new HashMap<String, String>();
-
-					data.put(Constants.CMD, "reindex");
-					data.put("portletid", HtmlUtil.escapeJS(portlet.getPortletId()));
-					%>
-
-					<aui:button cssClass="save-server-button" data="<%= data %>" value="reindex" />
-				</c:if>
-			</liferay-ui:search-container-column-text>
-		</c:if>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator/>

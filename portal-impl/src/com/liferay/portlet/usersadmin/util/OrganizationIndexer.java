@@ -25,12 +25,12 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -50,11 +50,10 @@ import javax.portlet.PortletURL;
  * @author Zsigmond Rab
  * @author Hugo Huijser
  */
+@OSGiBeanProperties
 public class OrganizationIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {Organization.class.getName()};
-
-	public static final String PORTLET_ID = PortletKeys.USERS_ADMIN;
+	public static final String CLASS_NAME = Organization.class.getName();
 
 	public OrganizationIndexer() {
 		setCommitImmediately(true);
@@ -66,13 +65,8 @@ public class OrganizationIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -169,7 +163,7 @@ public class OrganizationIndexer extends BaseIndexer {
 	protected Document doGetDocument(Object obj) throws Exception {
 		Organization organization = (Organization)obj;
 
-		Document document = getBaseModelDocument(PORTLET_ID, organization);
+		Document document = getBaseModelDocument(CLASS_NAME, organization);
 
 		document.addKeyword(Field.COMPANY_ID, organization.getCompanyId());
 		document.addText(Field.NAME, organization.getName());
@@ -293,11 +287,6 @@ public class OrganizationIndexer extends BaseIndexer {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexOrganizations(companyId);
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void reindexOrganizations(long companyId) throws Exception {

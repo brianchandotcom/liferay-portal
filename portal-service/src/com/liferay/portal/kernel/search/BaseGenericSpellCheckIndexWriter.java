@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.PortletKeys;
 
 import java.io.InputStream;
 
@@ -74,8 +73,8 @@ public abstract class BaseGenericSpellCheckIndexWriter
 		document.addKeyword(Field.COMPANY_ID, companyId);
 		document.addKeyword(Field.GROUP_ID, groupId);
 		document.addKeyword(Field.LANGUAGE_ID, languageId);
-		document.addKeyword(Field.PORTLET_ID, PortletKeys.SEARCH);
 		document.addKeyword(Field.PRIORITY, String.valueOf(weight));
+		document.addKeyword(Field.SPELL_CHECK_WORD, true);
 		document.addKeyword(keywordFieldName, keywords);
 		document.addKeyword(Field.TYPE, typeFieldValue);
 		document.addKeyword(Field.UID, getUID(companyId, languageId, keywords));

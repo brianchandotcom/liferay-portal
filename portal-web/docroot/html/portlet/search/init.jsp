@@ -39,6 +39,8 @@ page import="com.liferay.portal.kernel.xml.SAXReaderUtil" %><%@
 page import="com.liferay.portal.security.permission.comparator.ModelResourceComparator" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.NoSuchCategoryException" %><%@
+page import="com.liferay.portlet.asset.provider.PortletProvider" %><%@
+page import="com.liferay.portlet.asset.provider.PortletProviderUtil" %><%@
 page import="com.liferay.taglib.aui.ScriptTag" %><%@
 page import="com.liferay.util.PropertyComparator" %>
 
@@ -142,7 +144,9 @@ private String _checkViewURL(ThemeDisplay themeDisplay, String viewURL, String c
 	return viewURL;
 }
 
-private PortletURL _getViewFullContentURL(HttpServletRequest request, ThemeDisplay themeDisplay, String portletId, Document document) throws Exception {
+private PortletURL _getViewFullContentURL(HttpServletRequest request, ThemeDisplay themeDisplay, String className, Document document) throws Exception {
+	String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.ACTION_VIEW);
+
 	long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
 
 	if (groupId == 0) {

@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -27,11 +26,8 @@ import com.liferay.registry.collections.StringServiceRegistrationMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -62,11 +58,11 @@ public class IndexerRegistryUtil {
 	}
 
 	public static void register(Indexer indexer) {
-		_instance._register(null, indexer);
+		_instance._register(indexer);
 	}
 
 	public static void register(String className, Indexer indexer) {
-		_instance._register(className, indexer);
+		_instance._register(indexer);
 	}
 
 	public static void unregister(Indexer indexer) {
@@ -86,34 +82,6 @@ public class IndexerRegistryUtil {
 		_serviceTracker.open();
 	}
 
-	private Set<String> _aggregrateClassNames(
-		String[] classNames, String... moreClassNames) {
-
-		Set<String> set = new HashSet<>();
-
-		if (classNames != null) {
-			for (String className : classNames) {
-				if (className == null) {
-					continue;
-				}
-
-				set.add(className);
-			}
-		}
-
-		if (moreClassNames != null) {
-			for (String className : moreClassNames) {
-				if (className == null) {
-					continue;
-				}
-
-				set.add(className);
-			}
-		}
-
-		return set;
-	}
-
 	private Indexer _nullSafeGetIndexer(String className) {
 		Indexer indexer = _indexers.get(className);
 
@@ -128,36 +96,17 @@ public class IndexerRegistryUtil {
 		return _dummyIndexer;
 	}
 
-	private void _register(String className, Indexer indexer) {
+	private void _register(Indexer indexer) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		Set<String> classNames = _aggregrateClassNames(
-			indexer.getClassNames(), ClassUtil.getClassName(indexer),
-			className);
-
-		properties.put(
-			"indexer.classNames",
-			classNames.toArray(new String[classNames.size()]));
-
-		properties.put("javax.portlet.name", indexer.getPortletId());
-
 		ServiceRegistration<Indexer> serviceRegistration =
-			registry.registerService(Indexer.class, indexer, properties);
+			registry.registerService(Indexer.class, indexer);
 
-		for (String curClassName : classNames) {
-			_serviceRegistrations.put(curClassName, serviceRegistration);
-		}
+		_serviceRegistrations.put(indexer.getClassName(), serviceRegistration);
 	}
 
 	private void _unregister(Indexer indexer) {
-		Set<String> classNames = _aggregrateClassNames(
-			indexer.getClassNames(), ClassUtil.getClassName(indexer));
-
-		for (String className : classNames) {
-			_unregister(className);
-		}
+		_unregister(indexer.getClassName());
 	}
 
 	private void _unregister(String className) {
@@ -193,13 +142,7 @@ public class IndexerRegistryUtil {
 
 			Indexer indexer = registry.getService(serviceReference);
 
-			Set<String> classNames = _aggregrateClassNames(
-				(String[])serviceReference.getProperty("indexer.classNames"),
-				indexer.getClassNames());
-
-			for (String className : classNames) {
-				_indexers.put(className, indexer);
-			}
+			_indexers.put(indexer.getClassName(), indexer);
 
 			return indexer;
 		}
@@ -217,13 +160,7 @@ public class IndexerRegistryUtil {
 
 			registry.ungetService(serviceReference);
 
-			Set<String> classNames = _aggregrateClassNames(
-				(String[])serviceReference.getProperty("indexer.classNames"),
-				indexer.getClassNames());
-
-			for (String className : classNames) {
-				_indexers.remove(className);
-			}
+			_indexers.remove(indexer.getClassName());
 		}
 
 	}

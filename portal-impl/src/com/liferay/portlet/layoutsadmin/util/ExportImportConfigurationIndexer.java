@@ -20,16 +20,15 @@ import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.io.Serializable;
 
@@ -45,21 +44,15 @@ import javax.portlet.PortletURL;
 /**
  * @author Mate Thurzo
  */
+@OSGiBeanProperties
 public class ExportImportConfigurationIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES =
-		{ExportImportConfiguration.class.getName()};
-
-	public static final String PORTLET_ID = PortletKeys.LAYOUTS_ADMIN;
+	public static final String CLASS_NAME =
+		ExportImportConfiguration.class.getName();
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -78,7 +71,7 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 			(ExportImportConfiguration)obj;
 
 		Document document = getBaseModelDocument(
-			PORTLET_ID, exportImportConfiguration);
+			CLASS_NAME, exportImportConfiguration);
 
 		document.addText(
 			Field.DESCRIPTION, exportImportConfiguration.getDescription());
@@ -150,11 +143,6 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexExportImportConfigurations(companyId);
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void populateDates(

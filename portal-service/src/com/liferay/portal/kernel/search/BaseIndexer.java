@@ -135,6 +135,15 @@ public abstract class BaseIndexer implements Indexer {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSearchClassNames()}
+	 */
+	@Deprecated
+	@Override
+	public String[] getClassNames() {
+		return getSearchClassNames();
+	}
+
 	@Override
 	public int getDatabaseCount() throws Exception {
 		return 0;
@@ -221,11 +230,11 @@ public abstract class BaseIndexer implements Indexer {
 
 			if (ArrayUtil.isNotEmpty(fullQueryEntryClassNames)) {
 				searchContext.setAttribute(
-					"relatedEntryClassNames", getClassNames());
+					"relatedEntryClassNames", getSearchClassNames());
 			}
 
 			String[] entryClassNames = ArrayUtil.append(
-				getClassNames(), fullQueryEntryClassNames);
+				getSearchClassNames(), fullQueryEntryClassNames);
 
 			searchContext.setEntryClassNames(entryClassNames);
 
@@ -258,6 +267,20 @@ public abstract class BaseIndexer implements Indexer {
 	@Override
 	public IndexerPostProcessor[] getIndexerPostProcessors() {
 		return _indexerPostProcessors;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getClassName()}
+	 */
+	@Deprecated
+	@Override
+	public String getPortletId() {
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public String[] getSearchClassNames() {
+		return new String[]{getClassName()};
 	}
 
 	@Override
@@ -1454,7 +1477,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		Document document = new DocumentImpl();
 
-		document.addUID(getPortletId(), field1);
+		document.addUID(getClassName(), field1);
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), companyId, document.get(Field.UID),
@@ -1466,7 +1489,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		Document document = new DocumentImpl();
 
-		document.addUID(getPortletId(), field1, field2);
+		document.addUID(getClassName(), field1, field2);
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), companyId, document.get(Field.UID),
@@ -1543,7 +1566,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		documentHelper.setEntryKey(className, classPK);
 
-		document.addUID(portletId, classPK);
+		document.addUID(className, classPK);
 
 		List<AssetCategory> assetCategories =
 			AssetCategoryLocalServiceUtil.getCategories(className, classPK);
@@ -1570,8 +1593,6 @@ public abstract class BaseIndexer implements Indexer {
 			assetTags, AssetTag.TAG_ID_ACCESSOR);
 
 		document.addKeyword(Field.ASSET_TAG_IDS, assetTagsIds);
-
-		document.addKeyword(Field.PORTLET_ID, portletId);
 
 		if (resourcePrimKey > 0) {
 			document.addKeyword(Field.ROOT_ENTRY_CLASS_PK, resourcePrimKey);
@@ -1634,9 +1655,7 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected String getClassName(SearchContext searchContext) {
-		String[] classNames = getClassNames();
-
-		return classNames[0];
+		return getClassName();
 	}
 
 	protected String[] getDefaultSelectedFieldNames() {
@@ -1679,7 +1698,13 @@ public abstract class BaseIndexer implements Indexer {
 		return getSiteGroupId(groupId);
 	}
 
-	protected abstract String getPortletId(SearchContext searchContext);
+	/**
+	 * @deprecated As of 7.0.0 replaced by {@link #getClassName()}
+	 */
+	@Deprecated
+	protected String getPortletId(SearchContext searchContext) {
+		return StringPool.BLANK;
+	}
 
 	protected long getSiteGroupId(long groupId) {
 		long siteGroupId = groupId;

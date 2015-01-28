@@ -49,7 +49,7 @@ if (assetRendererFactory != null) {
 
 	downloadURL = assetRenderer.getURLDownload(themeDisplay);
 
-	viewFullContentURL = _getViewFullContentURL(request, themeDisplay, PortletKeys.ASSET_PUBLISHER, document);
+	viewFullContentURL = _getViewFullContentURL(request, themeDisplay, className, document);
 
 	viewFullContentURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
 
@@ -84,9 +84,7 @@ if (assetRendererFactory != null) {
 	}
 }
 else {
-	String portletId = document.get(Field.PORTLET_ID);
-
-	viewFullContentURL = _getViewFullContentURL(request, themeDisplay, portletId, document);
+	viewFullContentURL = _getViewFullContentURL(request, themeDisplay, className, document);
 
 	if (Validator.isNotNull(returnToFullPageURL)) {
 		viewFullContentURL.setParameter("returnToFullPageURL", returnToFullPageURL);

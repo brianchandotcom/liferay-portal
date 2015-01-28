@@ -34,11 +34,6 @@ public class CalendarOpenSearchImpl extends HitsOpenSearchImpl {
 	}
 
 	@Override
-	public String getPortletId() {
-		return CalIndexer.PORTLET_ID;
-	}
-
-	@Override
 	public String getSearchPath() {
 		return SEARCH_PATH;
 	}

@@ -35,8 +35,8 @@ public interface IndexWriter extends SpellCheckIndexWriter {
 			SearchContext searchContext, Collection<String> uids)
 		throws SearchException;
 
-	public void deletePortletDocuments(
-			SearchContext searchContext, String portletId)
+	public void deleteEntityDocuments(
+			SearchContext searchContext, String className)
 		throws SearchException;
 
 	public void updateDocument(SearchContext searchContext, Document document)

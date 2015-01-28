@@ -45,7 +45,7 @@
 			<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 			<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
-			<aui:input name="portletId" type="hidden" />
+			<aui:input name="className" type="hidden" />
 
 			<c:if test="<%= showTabs1 %>">
 				<liferay-ui:tabs
@@ -81,7 +81,6 @@
 					}
 
 					boolean showEditPluginHREF = false;
-					boolean showReindexButton = true;
 					%>
 
 					<%@ include file="/html/portlet/plugins_admin/plugins.jspf" %>
@@ -114,10 +113,10 @@
 					form.<portlet:namespace /><%= Constants.CMD %>.value = currentTarget.data('cmd');
 					form.<portlet:namespace />redirect.value = '<%= redirectURL %>';
 
-					var portletId = currentTarget.data('portletid');
+					var className = currentTarget.data('classname');
 
-					if (portletId) {
-						form.<portlet:namespace />portletId.value = portletId;
+					if (className) {
+						form.<portlet:namespace />className.value = className;
 					}
 
 					submitForm(form, '<%= editServerURL %>');

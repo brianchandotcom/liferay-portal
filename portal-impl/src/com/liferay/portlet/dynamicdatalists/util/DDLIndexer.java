@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
@@ -54,11 +54,10 @@ import javax.portlet.PortletURL;
 /**
  * @author Marcellus Tavares
  */
+@OSGiBeanProperties
 public class DDLIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {DDLRecord.class.getName()};
-
-	public static final String PORTLET_ID = PortletKeys.DYNAMIC_DATA_LISTS;
+	public static final String CLASS_NAME = DDLRecord.class.getName();
 
 	public DDLIndexer() {
 		setDefaultSelectedFieldNames(
@@ -69,13 +68,8 @@ public class DDLIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -122,7 +116,7 @@ public class DDLIndexer extends BaseIndexer {
 	protected Document doGetDocument(Object obj) throws Exception {
 		DDLRecord record = (DDLRecord)obj;
 
-		Document document = getBaseModelDocument(PORTLET_ID, record);
+		Document document = getBaseModelDocument(CLASS_NAME, record);
 
 		DDLRecordVersion recordVersion = record.getRecordVersion();
 
@@ -231,11 +225,6 @@ public class DDLIndexer extends BaseIndexer {
 
 		return DDMIndexerUtil.extractAttributes(
 			recordSet.getDDMStructure(), ddmFormValues, locale);
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected String getTitle(long recordSetId, Locale locale) {

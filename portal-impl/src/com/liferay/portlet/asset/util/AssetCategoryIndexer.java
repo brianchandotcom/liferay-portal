@@ -28,12 +28,12 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
@@ -49,11 +49,10 @@ import javax.portlet.PortletURL;
 /**
  * @author Istvan Andras Dezsi
  */
+@OSGiBeanProperties
 public class AssetCategoryIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {AssetCategory.class.getName()};
-
-	public static final String PORTLET_ID = PortletKeys.ASSET_CATEGORIES_ADMIN;
+	public static final String CLASS_NAME = AssetCategory.class.getName();
 
 	public AssetCategoryIndexer() {
 		setCommitImmediately(true);
@@ -65,13 +64,8 @@ public class AssetCategoryIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -153,7 +147,7 @@ public class AssetCategoryIndexer extends BaseIndexer {
 
 		Document document = new DocumentImpl();
 
-		document.addUID(PORTLET_ID, assetCategory.getCategoryId());
+		document.addUID(CLASS_NAME, assetCategory.getCategoryId());
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), assetCategory.getCompanyId(),
@@ -168,7 +162,7 @@ public class AssetCategoryIndexer extends BaseIndexer {
 			_log.debug("Indexing category " + category);
 		}
 
-		Document document = getBaseModelDocument(PORTLET_ID, category);
+		Document document = getBaseModelDocument(CLASS_NAME, category);
 
 		document.addKeyword(Field.ASSET_CATEGORY_ID, category.getCategoryId());
 
@@ -229,11 +223,6 @@ public class AssetCategoryIndexer extends BaseIndexer {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexCategories(companyId);
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void reindexCategories(final long companyId)

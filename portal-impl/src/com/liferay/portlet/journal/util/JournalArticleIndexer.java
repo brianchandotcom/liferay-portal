@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -47,7 +48,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -83,11 +83,10 @@ import javax.portlet.PortletURL;
  * @author Hugo Huijser
  * @author Tibor Lipusz
  */
+@OSGiBeanProperties
 public class JournalArticleIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {JournalArticle.class.getName()};
-
-	public static final String PORTLET_ID = PortletKeys.JOURNAL;
+	public static final String CLASS_NAME = JournalArticle.class.getName();
 
 	public JournalArticleIndexer() {
 		setDefaultSelectedFieldNames(
@@ -102,13 +101,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -355,7 +349,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 	protected Document doGetDocument(Object obj) throws Exception {
 		JournalArticle article = (JournalArticle)obj;
 
-		Document document = getBaseModelDocument(PORTLET_ID, article);
+		Document document = getBaseModelDocument(CLASS_NAME, article);
 
 		long classPK = article.getId();
 
@@ -363,7 +357,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			classPK = article.getResourcePrimKey();
 		}
 
-		document.addUID(PORTLET_ID, classPK);
+		document.addUID(CLASS_NAME, classPK);
 
 		String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(
 			article.getDocument());
@@ -683,11 +677,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 
 		return content;
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected boolean isHead(JournalArticle article) {

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -30,7 +31,6 @@ import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ContactLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -44,24 +44,18 @@ import javax.portlet.PortletURL;
  * @author Zsigmond Rab
  * @author Hugo Huijser
  */
+@OSGiBeanProperties
 public class ContactIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {Contact.class.getName()};
-
-	public static final String PORTLET_ID = PortletKeys.USERS_ADMIN;
+	public static final String CLASS_NAME = Contact.class.getName();
 
 	public ContactIndexer() {
 		setStagingAware(false);
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -115,7 +109,7 @@ public class ContactIndexer extends BaseIndexer {
 			}
 		}
 
-		Document document = getBaseModelDocument(PORTLET_ID, contact);
+		Document document = getBaseModelDocument(CLASS_NAME, contact);
 
 		document.addKeyword(Field.COMPANY_ID, contact.getCompanyId());
 		document.addDate(Field.MODIFIED_DATE, contact.getModifiedDate());
@@ -184,11 +178,6 @@ public class ContactIndexer extends BaseIndexer {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexContacts(companyId);
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void reindexContacts(long companyId) throws PortalException {

@@ -14,7 +14,6 @@
 
 package com.liferay.bookmarks.search;
 
-import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
@@ -32,11 +31,6 @@ public class BookmarksOpenSearchImpl extends HitsOpenSearchImpl {
 	@Override
 	public Indexer getIndexer() {
 		return IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
-	}
-
-	@Override
-	public String getPortletId() {
-		return BookmarksPortletKeys.BOOKMARKS;
 	}
 
 	@Override

@@ -49,6 +49,14 @@ public class IndexerWrapper implements Indexer {
 		_indexer.delete(obj);
 	}
 
+	public String getClassName() {
+		return _indexer.getClassName();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getClassName()}
+	 */
+	@Deprecated
 	@Override
 	public String[] getClassNames() {
 		return _indexer.getClassNames();
@@ -84,9 +92,18 @@ public class IndexerWrapper implements Indexer {
 		return _indexer.getIndexerPostProcessors();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getClassName()}
+	 */
+	@Deprecated
 	@Override
 	public String getPortletId() {
 		return _indexer.getPortletId();
+	}
+
+	@Override
+	public String[] getSearchClassNames() {
+		return _indexer.getSearchClassNames();
 	}
 
 	@Override

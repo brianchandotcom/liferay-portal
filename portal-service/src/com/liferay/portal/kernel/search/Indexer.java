@@ -39,6 +39,12 @@ public interface Indexer {
 
 	public void delete(Object obj) throws SearchException;
 
+	public String getClassName();
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSearchClassNames()}
+	 */
+	@Deprecated
 	public String[] getClassNames();
 
 	public int getDatabaseCount() throws Exception;
@@ -54,7 +60,13 @@ public interface Indexer {
 
 	public IndexerPostProcessor[] getIndexerPostProcessors();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getClassName()}
+	 */
+	@Deprecated
 	public String getPortletId();
+
+	public String[] getSearchClassNames();
 
 	public String getSearchEngineId();
 

@@ -42,6 +42,15 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
+	public String getClassName() {
+		return StringPool.BLANK;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSearchClassNames()}
+	 */
+	@Deprecated
+	@Override
 	public String[] getClassNames() {
 		return new String[0];
 	}
@@ -73,9 +82,18 @@ public class DummyIndexer implements Indexer {
 		return new IndexerPostProcessor[0];
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getClassName()}
+	 */
+	@Deprecated
 	@Override
 	public String getPortletId() {
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public String[] getSearchClassNames() {
+		return new String[0];
 	}
 
 	@Override

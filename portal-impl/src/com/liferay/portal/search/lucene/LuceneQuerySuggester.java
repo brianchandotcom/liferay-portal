@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SuggestionConstants;
 import com.liferay.portal.kernel.search.TokenizerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.io.IOException;
 
@@ -245,8 +244,8 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 			suggestWordQuery, Field.LANGUAGE_ID, languageId, null,
 			BooleanClause.Occur.MUST);
 		addTermQuery(
-			suggestWordQuery, Field.PORTLET_ID, PortletKeys.SEARCH, null,
-			BooleanClause.Occur.MUST);
+			suggestWordQuery, Field.SPELL_CHECK_WORD, Boolean.TRUE.toString(),
+			null, BooleanClause.Occur.MUST);
 		addTermQuery(
 			suggestWordQuery, Field.TYPE, typeFieldValue, null,
 			BooleanClause.Occur.MUST);

@@ -40,6 +40,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.asset.provider.PortletProvider;
+import com.liferay.portlet.asset.provider.PortletProviderUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
@@ -92,7 +94,10 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 			for (int i = 0; i < results.getDocs().length; i++) {
 				Document result = results.doc(i);
 
-				String portletId = result.get(Field.PORTLET_ID);
+				String className = result.get(Field.ENTRY_CLASS_NAME);
+
+				String portletId = PortletProviderUtil.getPortletId(
+					className, PortletProvider.ACTION_VIEW);
 
 				Portlet portlet = PortletLocalServiceUtil.getPortletById(
 					themeDisplay.getCompanyId(), portletId);

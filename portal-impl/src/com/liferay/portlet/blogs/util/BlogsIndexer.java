@@ -26,12 +26,12 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
@@ -49,11 +49,10 @@ import javax.portlet.PortletURL;
  * @author Bruno Farache
  * @author Raymond Augé
  */
+@OSGiBeanProperties
 public class BlogsIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {BlogsEntry.class.getName()};
-
-	public static final String PORTLET_ID = PortletKeys.BLOGS;
+	public static final String CLASS_NAME = BlogsEntry.class.getName();
 
 	public BlogsIndexer() {
 		setDefaultSelectedFieldNames(
@@ -64,13 +63,8 @@ public class BlogsIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -109,7 +103,7 @@ public class BlogsIndexer extends BaseIndexer {
 	protected Document doGetDocument(Object obj) throws Exception {
 		BlogsEntry entry = (BlogsEntry)obj;
 
-		Document document = getBaseModelDocument(PORTLET_ID, entry);
+		Document document = getBaseModelDocument(CLASS_NAME, entry);
 
 		document.addText(
 			Field.CONTENT, HtmlUtil.extractText(entry.getContent()));
@@ -162,11 +156,6 @@ public class BlogsIndexer extends BaseIndexer {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexEntries(companyId);
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void reindexEntries(long companyId) throws PortalException {

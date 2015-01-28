@@ -19,7 +19,7 @@ options {
  * details.
  */
 
-package com.liferay.portal.parsers.ldap.parser;
+package com.liferay.portal.ldap.validator.parser;
 }
 
 @lexer::header {
@@ -37,7 +37,7 @@ package com.liferay.portal.parsers.ldap.parser;
  * details.
  */
 
-package com.liferay.portal.parsers.ldap.parser;
+package com.liferay.portal.ldap.validator.parser;
 }
 @lexer::members {
 	@Override

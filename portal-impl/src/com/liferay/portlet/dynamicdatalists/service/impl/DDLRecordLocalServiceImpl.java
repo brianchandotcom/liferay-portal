@@ -269,7 +269,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             DDLRecordVersionLocalServiceImpl#getLatestRecordVersion(
+	 *             com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getLatestRecordVersion(
 	 *             long)}
 	 */
 	@Deprecated
@@ -327,7 +327,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             DDLRecordVersionLocalServiceImpl#getRecordVersion(long)}
+	 *             com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getRecordVersion(long)}
 	 */
 	@Deprecated
 	@Override
@@ -339,7 +339,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             DDLRecordVersionLocalServiceImpl#getRecordVersion(long,
+	 *             com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getRecordVersion(long,
 	 *             String)}
 	 */
 	@Deprecated
@@ -352,7 +352,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             DDLRecordVersionLocalServiceImpl#getRecordVersions(long, int,
+	 *             com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getRecordVersions(long, int,
 	 *             int, OrderByComparator)}
 	 */
 	@Deprecated
@@ -367,7 +367,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             DDLRecordVersionLocalServiceImpl#getRecordVersionsCount(
+	 *             com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getRecordVersionsCount(
 	 *             long)}
 	 */
 	@Deprecated
@@ -749,7 +749,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @see com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl#isKeepFileVersionLabel(
-	 *      DLFileEntry, DLFileVersion, DLFileVersion, ServiceContext)
+	 *      com.liferay.portlet.documentlibrary.model.DLFileEntry, com.liferay.portlet.documentlibrary.model.DLFileVersion, com.liferay.portlet.documentlibrary.model.DLFileVersion, ServiceContext)
 	 */
 	protected boolean isKeepRecordVersionLabel(
 			DDLRecordVersion lastRecordVersion,

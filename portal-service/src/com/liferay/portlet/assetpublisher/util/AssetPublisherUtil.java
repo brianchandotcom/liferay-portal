@@ -92,7 +92,7 @@ public class AssetPublisherUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetEntryLocalServiceUtil#getEntries(long[], long[], String,
+	 *             com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil#getEntries(long[], long[], String,
 	 *             String, String, String, boolean, boolean, int, int,
 	 *             String, String, String, String)}
 	 */
@@ -188,7 +188,7 @@ public class AssetPublisherUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetEntryLocalServiceUtil#getEntriesCount(long[], long[],
+	 *             com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil#getEntriesCount(long[], long[],
 	 *             String, String, String, String, boolean, boolean, int, int)}
 	 */
 	@Deprecated

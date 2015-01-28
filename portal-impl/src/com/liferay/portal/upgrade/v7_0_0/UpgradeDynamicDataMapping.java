@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
@@ -33,11 +34,13 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMContentTable;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMStructureTable;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
@@ -46,6 +49,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFieldsCounter;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,6 +70,55 @@ import java.util.Set;
  * @author Marcellus Tavares
  */
 public class UpgradeDynamicDataMapping extends UpgradeProcess {
+
+	protected void addStructureLayout(
+			String uuid_, long structureLayoutId, long groupId, long companyId,
+			long userId, String userName, Timestamp createDate,
+			Timestamp modifiedDate, long structureVersionId, String definition)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("insert into DDMStructureLayout (uuid_, ");
+			sb.append("structureLayoutId, groupId, companyId, userId, ");
+			sb.append("userName, createDate, modifiedDate, ");
+			sb.append("structureVersionId, definition) values (?, ?, ?, ?, ");
+			sb.append("?, ?, ?, ?, ?, ?)");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			ps.setString(1, uuid_);
+			ps.setLong(2, structureLayoutId);
+			ps.setLong(3, groupId);
+			ps.setLong(4, companyId);
+			ps.setLong(5, userId);
+			ps.setString(6, userName);
+			ps.setTimestamp(7, createDate);
+			ps.setTimestamp(8, modifiedDate);
+			ps.setLong(9, structureVersionId);
+			ps.setString(10, definition);
+
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to upgrade dynamic data mapping structure layout " +
+					"with structure version ID " + structureVersionId);
+
+			throw e;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
 
 	protected void addStructureVersion(
 			long structureVersionId, long groupId, long companyId, long userId,
@@ -120,7 +173,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected void addStructureVersions() throws Exception {
+	protected void addStructureVersionsAndLayouts() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -145,10 +198,20 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				String storageType = rs.getString("storageType");
 				int type = rs.getInt("type_");
 
+				long structureVersionId = increment();
+
 				addStructureVersion(
-					increment(), groupId, companyId, userId, userName,
+					structureVersionId, groupId, companyId, userId, userName,
 					modifiedDate, structureId, name, description, definition,
 					storageType, type);
+
+				String ddmFormLayoutDefinition =
+					getDefaultDDMFormLayoutDefinition(structureId);
+
+				addStructureLayout(
+					PortalUUIDUtil.generate(), increment(), groupId, companyId,
+					userId, userName, modifiedDate, modifiedDate,
+					structureVersionId, ddmFormLayoutDefinition);
 			}
 		}
 		finally {
@@ -263,7 +326,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				DDMStructureTable.TABLE_SQL_ADD_INDEXES);
 		}
 
-		addStructureVersions();
+		addStructureVersionsAndLayouts();
 		addTemplateVersions();
 
 		upgradeXMLStorageAdapter();
@@ -311,6 +374,20 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+	}
+
+	protected String getDefaultDDMFormLayoutDefinition(DDMForm ddmForm) {
+		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+
+		return DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout);
+	}
+
+	protected String getDefaultDDMFormLayoutDefinition(long structureId)
+		throws Exception {
+
+		DDMForm ddmForm = getDDMForm(structureId);
+
+		return getDefaultDDMFormLayoutDefinition(ddmForm);
 	}
 
 	protected String toJSON(DDMForm ddmForm, String xml)

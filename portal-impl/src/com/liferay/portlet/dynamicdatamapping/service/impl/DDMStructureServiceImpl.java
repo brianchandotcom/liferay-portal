@@ -21,6 +21,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureServiceBaseImpl;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission;
@@ -48,7 +49,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	public DDMStructure addStructure(
 			long userId, long groupId, long classNameId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			DDMForm ddmForm, ServiceContext serviceContext)
+			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
@@ -59,7 +61,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 		return ddmStructureLocalService.addStructure(
 			getUserId(), groupId, classNameId, nameMap, descriptionMap, ddmForm,
-			serviceContext);
+			ddmFormLayout, serviceContext);
 	}
 
 	/**
@@ -84,7 +86,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *             structure, if the XSD was not well-formed, or if a portal
 	 *             exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
-	 *             long, Map, Map, DDMForm, ServiceContext)}
+	 *             long, Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -110,7 +112,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, DDMForm ddmForm,
-			String storageType, int type, ServiceContext serviceContext)
+			DDMFormLayout ddmFormLayout, String storageType, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
@@ -121,7 +124,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 		return ddmStructureLocalService.addStructure(
 			getUserId(), groupId, parentStructureId, classNameId, structureKey,
-			nameMap, descriptionMap, ddmForm, storageType, type,
+			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
 			serviceContext);
 	}
 
@@ -153,7 +156,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *             the structure, if the XSD is not well formed, or if a portal
 	 *             exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
-	 *             long, String, Map, Map, DDMForm, String, int,
+	 *             long, String, Map, Map, DDMForm, DDMFormLayout, String, int,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -181,7 +184,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			long userId, long groupId, String parentStructureKey,
 			long classNameId, String structureKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, DDMForm ddmForm,
-			String storageType, int type, ServiceContext serviceContext)
+			DDMFormLayout ddmFormLayout, String storageType, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
@@ -192,7 +196,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 		return ddmStructureLocalService.addStructure(
 			userId, groupId, parentStructureKey, classNameId, structureKey,
-			nameMap, descriptionMap, ddmForm, storageType, type,
+			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
 			serviceContext);
 	}
 
@@ -228,8 +232,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *             structure, if the XSD was not well-formed, or if a portal
 	 *             exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
-	 *             String, long, String, Map, Map, DDMForm, String, int,
-	 *             ServiceContext)}
+	 *             String, long, String, Map, Map, DDMForm, DDMFormLayout,
+	 *             String, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -627,7 +631,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, DDMForm ddmForm,
-			ServiceContext serviceContext)
+			DDMFormLayout ddmFormLayout, ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMStructurePermission.check(
@@ -636,7 +640,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 		return ddmStructureLocalService.updateStructure(
 			groupId, parentStructureId, classNameId, structureKey, nameMap,
-			descriptionMap, ddmForm, serviceContext);
+			descriptionMap, ddmForm, ddmFormLayout, serviceContext);
 	}
 
 	/**
@@ -659,7 +663,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @throws     PortalException if the user did not have permission to update
 	 *             the structure or if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
-	 *             long, String, Map, Map, DDMForm, ServiceContext)}
+	 *             long, String, Map, Map, DDMForm, DDMFormLayout,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -683,7 +688,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	public DDMStructure updateStructure(
 			long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			DDMForm ddmForm, ServiceContext serviceContext)
+			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMStructurePermission.check(
@@ -691,7 +697,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 		return ddmStructureLocalService.updateStructure(
 			structureId, parentStructureId, nameMap, descriptionMap, ddmForm,
-			serviceContext);
+			ddmFormLayout, serviceContext);
 	}
 
 	/**
@@ -710,7 +716,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @throws     PortalException if the user did not have permission to update
 	 *             the structure or if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
-	 *             Map, Map, DDMForm, ServiceContext)}
+	 *             Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.arquillian.extension.internal.event;
 
 import com.liferay.portal.test.util.ClearThreadLocalExecutor;
+import com.liferay.portal.test.util.DeleteAfterTestRunExecutor;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
 import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutor;
 
@@ -37,6 +38,9 @@ public class LiferayEventTestRunnerAdaptor {
 		throws Throwable {
 
 		eventContext.proceed();
+
+		DeleteAfterTestRunExecutor deleteAfterTestExecutor =
+			_deleteAfterTestExecutorInstance.get();
 	}
 
 	public void afterClass(@Observes EventContext<AfterClass> eventContext)
@@ -82,6 +86,10 @@ public class LiferayEventTestRunnerAdaptor {
 	@Inject
 	private Instance<ClearThreadLocalExecutor>
 		_clearThreadLocalExecutorInstance;
+
+	@Inject
+	private Instance<DeleteAfterTestRunExecutor>
+		_deleteAfterTestExecutorInstance;
 
 	@Inject
 	private Instance<InitTestLiferayContextExecutor>

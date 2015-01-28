@@ -58,7 +58,6 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 	private static final InitTestLiferayContextExecutor
 		_initTestLiferayContextExecutor =
 			new InitTestLiferayContextExecutorImpl();
-
 	private static final UniqueStringRandomizerBumperExecutor
 		_uniqueStringRandomizerBumperExecutor =
 			new UniqueStringRandomizerBumperExecutorImpl();

@@ -19,9 +19,10 @@ import com.liferay.arquillian.extension.internal.log.LogAssertionExecuterInArqui
 import com.liferay.arquillian.extension.internal.log.LogAssertionHandlerArquillian;
 import com.liferay.portal.test.log.LogAssertionExecuter;
 import com.liferay.portal.test.util.ClearThreadLocalExecutor;
+import com.liferay.portal.test.util.DeleteAfterTestRunExecutor;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
-
 import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutor;
+
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
 import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.Instance;
@@ -43,6 +44,9 @@ public class ExtensionInstanceProducer {
 
 		_clearThreadLocalExecutorInstanceProducer.set(
 			serviceLoader.onlyOne(ClearThreadLocalExecutor.class));
+
+		_deleteAfterTestExecutorInstanceProducer.set(
+			serviceLoader.onlyOne(DeleteAfterTestRunExecutor.class));
 
 		InitTestLiferayContextExecutor initTestLiferayContextExecutor =
 			serviceLoader.onlyOne(InitTestLiferayContextExecutor.class);
@@ -87,6 +91,11 @@ public class ExtensionInstanceProducer {
 
 	@ApplicationScoped
 	@Inject
+	private InstanceProducer<DeleteAfterTestRunExecutor>
+		_deleteAfterTestExecutorInstanceProducer;
+
+	@ApplicationScoped
+	@Inject
 	private InstanceProducer<InitTestLiferayContextExecutor>
 		_initLiferayContextInstanceProducer;
 
@@ -107,7 +116,6 @@ public class ExtensionInstanceProducer {
 	@Inject
 	private InstanceProducer<LogAssertionHandlerArquillian>
 		_logAssertionHandlerArquillianInstanceProducer;
-
 
 	@Inject
 	private Instance<ServiceLoader> _serviceLoaderInstance;

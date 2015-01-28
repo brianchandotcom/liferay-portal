@@ -21,6 +21,8 @@ import com.liferay.arquillian.extension.internal.log.LogAssertionObserver;
 import com.liferay.portal.test.log.LogAssertionExecuter;
 import com.liferay.portal.test.util.ClearThreadLocalExecutor;
 import com.liferay.portal.test.util.ClearThreadLocalExecutorImpl;
+import com.liferay.portal.test.util.DeleteAfterTestRunExecutor;
+import com.liferay.portal.test.util.DeleteAfterTestRunExecutorImpl;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutorImpl;
 import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutor;
@@ -41,6 +43,9 @@ public class LiferayTestScenarioExtension implements LoadableExtension {
 
 		extensionBuilder.service(
 			ClearThreadLocalExecutor.class, ClearThreadLocalExecutorImpl.class);
+		extensionBuilder.service(
+			DeleteAfterTestRunExecutor.class,
+			DeleteAfterTestRunExecutorImpl.class);
 		extensionBuilder.service(
 			InitTestLiferayContextExecutor.class,
 			InitTestLiferayContextExecutorImpl.class);

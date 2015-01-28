@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_publisher/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
@@ -71,10 +71,10 @@ try {
 %>
 
 	<div>
-		<liferay-util:include page="/html/portlet/asset_publisher/display/full_content.jsp" />
+		<liferay-util:include page="/display/full_content.jsp" />
 	</div>
 
-	<liferay-util:include page="/html/portlet/asset_publisher/asset_html_metadata.jsp" />
+	<liferay-util:include page="/asset_html_metadata.jsp" />
 
 <%
 	PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL);
@@ -83,7 +83,7 @@ catch (NoSuchModelException nsme) {
 	SessionErrors.add(renderRequest, NoSuchModelException.class.getName());
 %>
 
-	<liferay-util:include page="/html/portlet/asset_publisher/error.jsp" />
+	<liferay-util:include page="/error.jsp" />
 
 <%
 }

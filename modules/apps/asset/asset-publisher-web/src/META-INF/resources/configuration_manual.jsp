@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_publisher/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configuration.jsp-configurationRenderURL");
@@ -85,7 +85,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 					<liferay-ui:search-container-column-jsp
 						align="right"
 						cssClass="entry-action"
-						path="/html/portlet/asset_publisher/asset_selection_action.jsp"
+						path="/asset_selection_action.jsp"
 					/>
 				</liferay-ui:search-container-row>
 
@@ -201,12 +201,12 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 	<liferay-ui:section>
 		<liferay-ui:error-marker key="errorSection" value="display-settings" />
 
-		<%@ include file="/html/portlet/asset_publisher/display_settings.jspf" %>
+		<%@ include file="/display_settings.jspf" %>
 	</liferay-ui:section>
 	<liferay-ui:section>
 		<liferay-ui:error-marker key="errorSection" value="subscriptions" />
 
-		<%@ include file="/html/portlet/asset_publisher/email_subscription_settings.jspf" %>
+		<%@ include file="/email_subscription_settings.jspf" %>
 	</liferay-ui:section>
 </liferay-ui:tabs>
 

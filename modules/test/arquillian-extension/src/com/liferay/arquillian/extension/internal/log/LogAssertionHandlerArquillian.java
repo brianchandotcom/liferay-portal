@@ -12,21 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.test.log;
-
-import com.liferay.portal.kernel.util.StringBundler;
+package com.liferay.arquillian.extension.internal.log;
 
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
-/**
- * @author William Newbury
- */
-public class LogAssertionHandler extends Handler {
+import org.jboss.arquillian.core.api.Event;
+import org.jboss.arquillian.core.api.annotation.Inject;
 
-	public static final LogAssertionHandler INSTANCE =
-		new LogAssertionHandler();
+/**
+ * @author Cristina González
+ */
+public class LogAssertionHandlerArquillian extends Handler {
 
 	@Override
 	public void close() throws SecurityException {
@@ -41,23 +39,11 @@ public class LogAssertionHandler extends Handler {
 		Level level = logRecord.getLevel();
 
 		if (level.equals(Level.SEVERE)) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("{level=");
-			sb.append(logRecord.getLevel());
-			sb.append(", loggerName=");
-			sb.append(logRecord.getLoggerName());
-			sb.append(", message=");
-			sb.append(logRecord.getMessage());
-
-			LogAssertionExecuter logAssertionExecuter =
-				LogAssertionExecuterUtil.getInstance();
-
-			logAssertionExecuter.caughtFailure(
-				Thread.currentThread(),
-				new AssertionError(
-					new AssertionError(sb.toString(), logRecord.getThrown())));
+			_event.fire(new LogMessageError(logRecord, Thread.currentThread()));
 		}
 	}
+
+	@Inject
+	private Event<LogMessageError> _event;
 
 }

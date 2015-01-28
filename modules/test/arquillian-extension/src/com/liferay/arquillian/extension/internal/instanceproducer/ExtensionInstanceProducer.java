@@ -14,10 +14,14 @@
 
 package com.liferay.arquillian.extension.internal.instanceproducer;
 
+import com.liferay.arquillian.extension.internal.log.LogAssertionAppenderArquillian;
+import com.liferay.arquillian.extension.internal.log.LogAssertionExecuterInArquillian;
+import com.liferay.arquillian.extension.internal.log.LogAssertionHandlerArquillian;
+import com.liferay.portal.test.log.LogAssertionExecuter;
 import com.liferay.portal.test.util.ClearThreadLocalExecutor;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
-import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutor;
 
+import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutor;
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
 import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.Instance;
@@ -49,6 +53,29 @@ public class ExtensionInstanceProducer {
 
 		injector.inject(initTestLiferayContextExecutor);
 
+		LogAssertionExecuter logAssertionExecuter =
+			new LogAssertionExecuterInArquillian();
+
+		_logAssertionExecuterInstanceProducer.set(logAssertionExecuter);
+
+		LogAssertionAppenderArquillian logAssertionAppenderArquillian =
+			new LogAssertionAppenderArquillian();
+
+		_logAssertionAppenderArquillianInstanceProducer.set(
+			logAssertionAppenderArquillian);
+
+		LogAssertionHandlerArquillian logAssertionHandlerArquillian =
+			new LogAssertionHandlerArquillian();
+
+		_logAssertionHandlerArquillianInstanceProducer.set(
+			logAssertionHandlerArquillian);
+
+		injector.inject(logAssertionExecuter);
+
+		injector.inject(logAssertionAppenderArquillian);
+
+		injector.inject(logAssertionHandlerArquillian);
+
 		_uniqueStringRandomizerBumperExecutorInstanceProducer.set(
 			serviceLoader.onlyOne(UniqueStringRandomizerBumperExecutor.class));
 	}
@@ -65,6 +92,22 @@ public class ExtensionInstanceProducer {
 
 	@Inject
 	private Instance<Injector> _injectorInstance;
+
+	@ApplicationScoped
+	@Inject
+	private InstanceProducer<LogAssertionAppenderArquillian>
+		_logAssertionAppenderArquillianInstanceProducer;
+
+	@ApplicationScoped
+	@Inject
+	private InstanceProducer<LogAssertionExecuter>
+		_logAssertionExecuterInstanceProducer;
+
+	@ApplicationScoped
+	@Inject
+	private InstanceProducer<LogAssertionHandlerArquillian>
+		_logAssertionHandlerArquillianInstanceProducer;
+
 
 	@Inject
 	private Instance<ServiceLoader> _serviceLoaderInstance;

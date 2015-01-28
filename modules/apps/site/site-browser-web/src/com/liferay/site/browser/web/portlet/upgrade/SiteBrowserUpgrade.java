@@ -62,7 +62,7 @@ public class SiteBrowserUpgrade {
 		};
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.journal.content.web",
+			"com.liferay.site.browser.web",
 			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
 			false);
 	}

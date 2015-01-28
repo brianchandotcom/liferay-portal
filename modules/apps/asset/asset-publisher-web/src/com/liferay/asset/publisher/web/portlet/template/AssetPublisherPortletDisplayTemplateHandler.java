@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.portlet.template;
 
+import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTempla
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetCategoryLocalService;
 import com.liferay.portlet.asset.service.AssetCategoryService;
@@ -128,7 +128,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return PropsValues.ASSET_PUBLISHER_DISPLAY_TEMPLATES_CONFIG;
+		return AssetPublisherWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

@@ -35,11 +35,11 @@ boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences
 		<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 
 		<liferay-ui:email-notification-settings
-			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailAssetEntryAddedBody", "preferences", ContentUtil.get(PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY)) %>'
+			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailAssetEntryAddedBody", "preferences", ContentUtil.get(AssetPublisherWebConfigurationValues.EMAIL_ASSET_ENTRY_ADDED_BODY)) %>'
 			emailDefinitionTerms="<%= AssetPublisherUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName) %>"
 			emailEnabled="<%= emailAssetEntryAddedEnabled %>"
 			emailParam="emailAssetEntryAdded"
-			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailAssetEntryAddedSubject", "preferences", ContentUtil.get(PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT)) %>'
+			emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailAssetEntryAddedSubject", "preferences", ContentUtil.get(AssetPublisherWebConfigurationValues.EMAIL_ASSET_ENTRY_ADDED_SUBJECT)) %>'
 			showEmailEnabled="<%= false %>"
 		/>
 	</div>

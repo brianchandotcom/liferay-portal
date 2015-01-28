@@ -14,6 +14,7 @@
 
 package com.liferay.arquillian.extension.internal.instanceproducer;
 
+import com.liferay.portal.test.util.ClearThreadLocalExecutor;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
 
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
@@ -35,6 +36,9 @@ public class ExtensionInstanceProducer {
 
 		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
 
+		_clearThreadLocalExecutorInstanceProducer.set(
+			serviceLoader.onlyOne(ClearThreadLocalExecutor.class));
+
 		InitTestLiferayContextExecutor initTestLiferayContextExecutor =
 			serviceLoader.onlyOne(InitTestLiferayContextExecutor.class);
 
@@ -44,6 +48,11 @@ public class ExtensionInstanceProducer {
 
 		injector.inject(initTestLiferayContextExecutor);
 	}
+
+	@ApplicationScoped
+	@Inject
+	private InstanceProducer<ClearThreadLocalExecutor>
+		_clearThreadLocalExecutorInstanceProducer;
 
 	@ApplicationScoped
 	@Inject

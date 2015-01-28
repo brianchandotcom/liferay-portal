@@ -14,6 +14,7 @@
 
 package com.liferay.arquillian.extension.internal.event;
 
+import com.liferay.portal.test.util.ClearThreadLocalExecutor;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
 
 import org.jboss.arquillian.core.api.Instance;
@@ -41,6 +42,11 @@ public class LiferayEventTestRunnerAdaptor {
 		throws Throwable {
 
 		eventContext.proceed();
+
+		ClearThreadLocalExecutor clearThreadLocalExecutor =
+			_clearThreadLocalExecutorInstance.get();
+
+		clearThreadLocalExecutor.clearThreadLocal();
 	}
 
 	public void before(@Observes EventContext<Before> eventContext)
@@ -63,8 +69,12 @@ public class LiferayEventTestRunnerAdaptor {
 	public void test(@Observes EventContext<Test> eventContext)
 		throws Throwable {
 
+		eventContext.proceed();
 	}
 
+	@Inject
+	private Instance<ClearThreadLocalExecutor>
+		_clearThreadLocalExecutorInstance;
 
 	@Inject
 	private Instance<InitTestLiferayContextExecutor>

@@ -40,7 +40,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && assetPublisherD
 Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
-<c:if test="<%= assetPublisherDisplayContext.isShowAddContentButton() && (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
+<c:if test="<%= assetPublisherDisplayContext.isShowAddContentButton() && (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
 
 	<%
 	long[] groupIds = assetPublisherDisplayContext.getGroupIds();
@@ -71,7 +71,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 </c:if>
 
 <div class="subscribe-action">
-	<c:if test="<%= !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(PortletKeys.RECENT_CONTENT) && !portletName.equals(PortletKeys.RELATED_ASSETS) && PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), ActionKeys.SUBSCRIBE) && AssetPublisherUtil.getEmailAssetEntryAddedEnabled(portletPreferences) %>">
+	<c:if test="<%= !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.RECENT_CONTENT) && !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) && PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), ActionKeys.SUBSCRIBE) && AssetPublisherUtil.getEmailAssetEntryAddedEnabled(portletPreferences) %>">
 		<c:choose>
 			<c:when test="<%= AssetPublisherUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), themeDisplay.getPlid(), portletDisplay.getId()) %>">
 				<portlet:actionURL name="unsubscribe" var="unsubscribeURL">

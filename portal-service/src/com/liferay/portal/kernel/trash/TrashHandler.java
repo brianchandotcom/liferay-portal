@@ -55,6 +55,11 @@ import javax.portlet.PortletRequest;
  * BlogsEntry via {@link com.liferay.portlet.blogs.trash.BlogsEntryTrashHandler}
  * </li>
  * <li>
+ * BookmarksEntry via
+ * <code>com.liferay.bookmarks.trash.BookmarksEntryTrashHandler</code>
+ * located in Liferay Portal's external <code>modules</code> directory.
+ * </li>
+ * <li>
  * DLFileEntry via {@link
  * com.liferay.portlet.documentlibrary.trash.DLFileEntryTrashHandler}
  * </li>
@@ -71,12 +76,12 @@ import javax.portlet.PortletRequest;
  * com.liferay.portlet.messageboards.trash.MBThreadTrashHandler}
  * </li>
  * <li>
- * WikiNode via {@link
- * com.liferay.portlet.wiki.trash.WikiNodeTrashHandler}
+ * WikiNode via <code>com.liferay.wiki.trash.WikiNodeTrashHandler</code> located
+ * in Liferay Portal's external <code>modules</code> directory.
  * </li>
  * <li>
- * WikiPage via {@link
- * com.liferay.portlet.wiki.trash.WikiPageTrashHandler}
+ * WikiPage via <code>com.liferay.wiki.trash.WikiPageTrashHandler</code> located
+ * in Liferay Portal's external <code>modules</code> directory.
  * </li>
  * </ul>
  *

@@ -18,12 +18,16 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
- * <p>
  * Provides the strategy for creating new content when new Journal content is
  * imported into a layout set from a LAR. The default strategy implemented by
  * this class is to return zero for the author and approval user IDs, which
  * causes the default user ID import strategy to be used. Content will be added
  * as is with no transformations.
+ * 
+ * <p>
+ * For a better understanding of this class, see
+ * <code>com.liferay.journal.content.web.lar.JournalContentPortletDataHandler</code>
+ * located in Liferay Portal's external <code>modules</code> directory.
  * </p>
  *
  * @author Joel Kozikowski

@@ -38,7 +38,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,8 +89,7 @@ public class RuntimeTag extends TagSupport {
 
 		if (!portletId.equals(request.getParameter("p_p_id"))) {
 			parameterMap = MapUtil.filter(
-				parameterMap, new HashMap<String, String[]>(),
-				new PrefixPredicateFilter("p_p_"));
+				parameterMap, new PrefixPredicateFilter("p_p_"));
 		}
 
 		request = DynamicServletRequest.addQueryString(

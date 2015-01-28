@@ -37,15 +37,25 @@ public class MapUtil {
 		merge(master, copy);
 	}
 
-	public static <K, V> Map<K, V> filter(
-		Map<? extends K, ? extends V> inputMap, Map<K, V> outputMap,
-		PredicateFilter<K> keyPredicateFilter) {
+	public static <K, V> void filter(
+		Map<? extends K, ? extends V> inputMap,
+		Map<? super K, ? super V> outputMap,
+		PredicateFilter<Map.Entry<K, V>> keyPredicateFilter) {
 
 		for (Map.Entry<? extends K, ? extends V> entry : inputMap.entrySet()) {
-			if (keyPredicateFilter.filter(entry.getKey())) {
+			if (keyPredicateFilter.filter((Map.Entry<K, V>)entry)) {
 				outputMap.put(entry.getKey(), entry.getValue());
 			}
 		}
+	}
+
+	public static <K, V> Map<K, V> filter(
+		Map<K, V> inputMap,
+		PredicateFilter<Map.Entry<K, V>> keyPredicateFilter) {
+
+		Map<K, V> outputMap = new HashMap<>();
+
+		filter(inputMap, outputMap, keyPredicateFilter);
 
 		return outputMap;
 	}

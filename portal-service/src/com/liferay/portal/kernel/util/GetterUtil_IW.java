@@ -74,6 +74,11 @@ public class GetterUtil_IW {
 		return GetterUtil.get(value, defaultValue);
 	}
 
+	public double get(java.lang.String value, double defaultValue,
+		java.util.Locale locale) {
+		return GetterUtil.get(value, defaultValue, locale);
+	}
+
 	public float get(java.lang.String value, float defaultValue) {
 		return GetterUtil.get(value, defaultValue);
 	}
@@ -183,6 +188,10 @@ public class GetterUtil_IW {
 
 	public double getDouble(java.lang.String value, double defaultValue) {
 		return GetterUtil.getDouble(value, defaultValue);
+	}
+
+	public double getDouble(java.lang.String value, java.util.Locale locale) {
+		return GetterUtil.getDouble(value, locale);
 	}
 
 	public double[] getDoubleValues(java.lang.Object value) {

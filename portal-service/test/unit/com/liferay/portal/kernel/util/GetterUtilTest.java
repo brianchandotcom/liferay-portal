@@ -19,6 +19,8 @@ import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
+ * @author Cleydyr de Albuquerque
+ * @author Tibor Lipusz
  */
 public class GetterUtilTest {
 
@@ -39,6 +41,63 @@ public class GetterUtilTest {
 			Assert.assertTrue(GetterUtil.getBoolean(s, true));
 			Assert.assertTrue(GetterUtil.getBoolean(s, false));
 		}
+	}
+
+	@Test
+	public void testGetDouble() {
+
+		// Wrong first char
+
+		Assert.assertEquals(
+			GetterUtil.DEFAULT_DOUBLE, GetterUtil.getDouble("e12.3"),
+			GetterUtil.DEFAULT_DOUBLE);
+
+		// Wrong middle char
+
+		Assert.assertEquals(
+			GetterUtil.DEFAULT_DOUBLE, GetterUtil.getDouble("12e.3"),
+			GetterUtil.DEFAULT_DOUBLE);
+
+		// Start with '+'
+
+		Assert.assertEquals(
+			12.3, GetterUtil.getDouble("+12.3"), GetterUtil.DEFAULT_DOUBLE);
+
+		// Start with '-'
+
+		Assert.assertEquals(
+			-12.3, GetterUtil.getDouble("-12.3"), GetterUtil.DEFAULT_DOUBLE);
+
+		// Maximum double
+
+		Assert.assertEquals(
+			Double.MAX_VALUE,
+			GetterUtil.getDouble(Double.toString(Double.MAX_VALUE)),
+			GetterUtil.DEFAULT_DOUBLE);
+
+		// Minimum double
+
+		Assert.assertEquals(
+			Double.MIN_VALUE,
+			GetterUtil.getDouble(Double.toString(Double.MIN_VALUE)),
+			GetterUtil.DEFAULT_DOUBLE);
+
+		// Locale aware
+
+		Assert.assertEquals(
+			4.7, GetterUtil.getDouble("4,7", LocaleUtil.PORTUGAL),
+			GetterUtil.DEFAULT_DOUBLE);
+
+		Assert.assertEquals(
+			4.7, GetterUtil.getDouble("4.7", LocaleUtil.US),
+			GetterUtil.DEFAULT_DOUBLE);
+
+		// Locale aware respecting the whole input
+
+		Assert.assertEquals(
+			GetterUtil.DEFAULT_DOUBLE,
+			GetterUtil.getDouble("4.7", LocaleUtil.HUNGARY),
+			GetterUtil.DEFAULT_DOUBLE);
 	}
 
 	@Test

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.Locale;
+
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
@@ -85,6 +87,26 @@ public class PrefsParamUtil {
 	}
 
 	public static double getDouble(
+		PortletPreferences preferences, HttpServletRequest request,
+		String param, double defaultValue, Locale locale) {
+
+		String preferencesValue = preferences.getValue(param, null);
+
+		double getterUtilValue = GetterUtil.getDouble(
+			preferencesValue, defaultValue);
+
+		return ParamUtil.getDouble(request, param, getterUtilValue, locale);
+	}
+
+	public static double getDouble(
+		PortletPreferences preferences, HttpServletRequest request,
+		String param, Locale locale) {
+
+		return getDouble(
+			preferences, request, param, GetterUtil.DEFAULT_DOUBLE, locale);
+	}
+
+	public static double getDouble(
 		PortletPreferences preferences, PortletRequest portletRequest,
 		String param) {
 
@@ -102,6 +124,28 @@ public class PrefsParamUtil {
 			preferencesValue, defaultValue);
 
 		return ParamUtil.get(portletRequest, param, getterUtilValue);
+	}
+
+	public static double getDouble(
+		PortletPreferences preferences, PortletRequest portletRequest,
+		String param, double defaultValue, Locale locale) {
+
+		String preferencesValue = preferences.getValue(param, null);
+
+		double getterUtilValue = GetterUtil.getDouble(
+			preferencesValue, defaultValue);
+
+		return ParamUtil.getDouble(
+			portletRequest, param, getterUtilValue, locale);
+	}
+
+	public static double getDouble(
+		PortletPreferences preferences, PortletRequest portletRequest,
+		String param, Locale locale) {
+
+		return getDouble(
+			preferences, portletRequest, param, GetterUtil.DEFAULT_DOUBLE,
+			locale);
 	}
 
 	public static int getInteger(

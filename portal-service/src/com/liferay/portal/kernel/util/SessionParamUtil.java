@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.Locale;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
@@ -123,6 +125,41 @@ public class SessionParamUtil {
 	}
 
 	public static double getDouble(
+		HttpServletRequest request, String param, double defaultValue,
+		Locale locale) {
+
+		HttpSession session = request.getSession(false);
+
+		String requestValue = request.getParameter(param);
+
+		if (requestValue != null) {
+			double value = GetterUtil.getDouble(requestValue, locale);
+
+			if (session != null) {
+				session.setAttribute(param, value);
+			}
+
+			return value;
+		}
+
+		if (session != null) {
+			Double sessionValue = (Double)session.getAttribute(param);
+
+			if (sessionValue != null) {
+				return sessionValue;
+			}
+		}
+
+		return defaultValue;
+	}
+
+	public static double getDouble(
+		HttpServletRequest request, String param, Locale locale) {
+
+		return getDouble(request, param, GetterUtil.DEFAULT_DOUBLE, locale);
+	}
+
+	public static double getDouble(
 		PortletRequest portletRequest, String param) {
 
 		return getDouble(portletRequest, param, GetterUtil.DEFAULT_DOUBLE);
@@ -153,6 +190,41 @@ public class SessionParamUtil {
 		}
 
 		return defaultValue;
+	}
+
+	public static double getDouble(
+		PortletRequest portletRequest, String param, double defaultValue,
+		Locale locale) {
+
+		PortletSession portletSession = portletRequest.getPortletSession(false);
+
+		String portletRequestValue = portletRequest.getParameter(param);
+
+		if (portletRequestValue != null) {
+			double value = GetterUtil.getDouble(portletRequestValue, locale);
+
+			portletSession.setAttribute(param, value);
+
+			return value;
+		}
+
+		if (portletSession != null) {
+			Double portletSessionValue = (Double)portletSession.getAttribute(
+				param);
+
+			if (portletSessionValue != null) {
+				return portletSessionValue;
+			}
+		}
+
+		return defaultValue;
+	}
+
+	public static double getDouble(
+		PortletRequest portletRequest, String param, Locale locale) {
+
+		return getDouble(
+			portletRequest, param, GetterUtil.DEFAULT_DOUBLE, locale);
 	}
 
 	public static int getInteger(HttpServletRequest request, String param) {

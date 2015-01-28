@@ -1064,6 +1064,18 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
+	public boolean isUserPersonalSpace() {
+		String groupKey = getGroupKey();
+
+		if (groupKey.equals(GroupConstants.USER_PERSONAL_SPACE)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
 	public void setTypeSettings(String typeSettings) {
 		_typeSettingsProperties = null;
 

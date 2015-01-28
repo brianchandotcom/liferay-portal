@@ -746,12 +746,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				}
 			}
 
-			if (groupKey.equals(GroupConstants.USER_PERSONAL_SPACE)) {
+			if (group.isUserPersonalSpace()) {
 				LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
 					group.getGroupId(), true);
 
 				if (layoutSet.getPageCount() == 0) {
-					addPersonalSpaceLayouts(group);
+					addUserPersonalSpaceLayouts(group);
 				}
 			}
 
@@ -3664,23 +3664,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			defaultUserId, group.getGroupId(), false, parameterMap, larFile);
 	}
 
-	protected void addPersonalSpaceLayouts(Group group) throws PortalException {
-		long defaultUserId = userLocalService.getDefaultUserId(
-			group.getCompanyId());
-
-		String friendlyURL = getFriendlyURL(
-			PropsValues.USER_PERSONAL_SPACE_LAYOUT_FRIENDLY_URL);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		layoutLocalService.addLayout(
-			defaultUserId, group.getGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			PropsValues.USER_PERSONAL_SPACE_LAYOUT_NAME, StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-			serviceContext);
-	}
-
 	protected void addPortletDefaultData(Group group) throws PortalException {
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createPreparePortletDataContext(
@@ -3706,6 +3689,25 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				}
 			}
 		}
+	}
+
+	protected void addUserPersonalSpaceLayouts(Group group)
+		throws PortalException {
+
+		long defaultUserId = userLocalService.getDefaultUserId(
+			group.getCompanyId());
+
+		String friendlyURL = getFriendlyURL(
+			PropsValues.USER_PERSONAL_SPACE_LAYOUT_FRIENDLY_URL);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		layoutLocalService.addLayout(
+			defaultUserId, group.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			PropsValues.USER_PERSONAL_SPACE_LAYOUT_NAME, StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
+			serviceContext);
 	}
 
 	protected void deletePortletData(Group group) throws PortalException {

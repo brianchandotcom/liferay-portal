@@ -20,6 +20,8 @@ import com.liferay.portal.test.util.ClearThreadLocalExecutor;
 import com.liferay.portal.test.util.ClearThreadLocalExecutorImpl;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutorImpl;
+import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutor;
+import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutorImpl;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
 
@@ -38,6 +40,9 @@ public class LiferayTestScenarioExtension implements LoadableExtension {
 		extensionBuilder.service(
 			InitTestLiferayContextExecutor.class,
 			InitTestLiferayContextExecutorImpl.class);
+		extensionBuilder.service(
+			UniqueStringRandomizerBumperExecutor.class,
+			UniqueStringRandomizerBumperExecutorImpl.class);
 	}
 
 }

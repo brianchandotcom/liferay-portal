@@ -17,12 +17,13 @@ package com.liferay.portal.test;
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.BaseTestRule;
 import com.liferay.portal.test.log.LogAssertionTestRule;
-import com.liferay.portal.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.test.rule.DeleteAfterTestRunTestRule;
 import com.liferay.portal.test.util.ClearThreadLocalExecutor;
 import com.liferay.portal.test.util.ClearThreadLocalExecutorImpl;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutorImpl;
+import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutor;
+import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutorImpl;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -58,12 +59,16 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 		_initTestLiferayContextExecutor =
 			new InitTestLiferayContextExecutorImpl();
 
+	private static final UniqueStringRandomizerBumperExecutor
+		_uniqueStringRandomizerBumperExecutor =
+			new UniqueStringRandomizerBumperExecutorImpl();
+
 	private static final TestRule _uniqueStringRandomizerBumperTestRule =
 		new BaseTestRule<Object, Object>() {
 
 			@Override
 			protected Object beforeClass(Description description) {
-				UniqueStringRandomizerBumper.reset();
+				_uniqueStringRandomizerBumperExecutor.reset();
 
 				return null;
 			}

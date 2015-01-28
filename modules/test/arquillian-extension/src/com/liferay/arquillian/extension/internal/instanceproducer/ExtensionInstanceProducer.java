@@ -16,6 +16,7 @@ package com.liferay.arquillian.extension.internal.instanceproducer;
 
 import com.liferay.portal.test.util.ClearThreadLocalExecutor;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
+import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutor;
 
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
 import org.jboss.arquillian.core.api.Injector;
@@ -47,6 +48,9 @@ public class ExtensionInstanceProducer {
 		Injector injector = _injectorInstance.get();
 
 		injector.inject(initTestLiferayContextExecutor);
+
+		_uniqueStringRandomizerBumperExecutorInstanceProducer.set(
+			serviceLoader.onlyOne(UniqueStringRandomizerBumperExecutor.class));
 	}
 
 	@ApplicationScoped
@@ -64,5 +68,10 @@ public class ExtensionInstanceProducer {
 
 	@Inject
 	private Instance<ServiceLoader> _serviceLoaderInstance;
+
+	@ApplicationScoped
+	@Inject
+	private InstanceProducer<UniqueStringRandomizerBumperExecutor>
+		_uniqueStringRandomizerBumperExecutorInstanceProducer;
 
 }

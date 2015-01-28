@@ -16,6 +16,7 @@ package com.liferay.arquillian.extension.internal.event;
 
 import com.liferay.portal.test.util.ClearThreadLocalExecutor;
 import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
+import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutor;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
@@ -63,6 +64,12 @@ public class LiferayEventTestRunnerAdaptor {
 
 		initTestLiferayContextExecutor.init();
 
+		UniqueStringRandomizerBumperExecutor
+			uniqueStringRandomizerBumperExecutor =
+				_uniqueStringRandomizerBumperExecutorInstance.get();
+
+		uniqueStringRandomizerBumperExecutor.reset();
+
 		eventContext.proceed();
 	}
 
@@ -79,5 +86,9 @@ public class LiferayEventTestRunnerAdaptor {
 	@Inject
 	private Instance<InitTestLiferayContextExecutor>
 		_initTestLiferayContextExecutorInstance;
+
+	@Inject
+	private Instance<UniqueStringRandomizerBumperExecutor>
+		_uniqueStringRandomizerBumperExecutorInstance;
 
 }

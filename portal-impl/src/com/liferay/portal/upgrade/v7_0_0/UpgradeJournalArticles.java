@@ -25,7 +25,6 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -237,7 +236,7 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
 			new String[] {
-				_PORTLET_ID_JOURNAL_CONTENT_LIST, PortletKeys.ASSET_PUBLISHER
+				_PORTLET_ID_JOURNAL_CONTENT_LIST, _PORTLET_ID_ASSET_PUBLISHER
 			}
 		};
 	}
@@ -324,7 +323,7 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 				String instanceId = PortletConstants.getInstanceId(portletId);
 
 				String newPortletId = PortletConstants.assemblePortletId(
-					PortletKeys.ASSET_PUBLISHER, userId, instanceId);
+					_PORTLET_ID_ASSET_PUBLISHER, userId, instanceId);
 
 				updatePortletPreference(
 					portletPreferencesId, newPortletId, newPreferences);
@@ -383,6 +382,9 @@ public class UpgradeJournalArticles extends UpgradePortletId {
 			DataAccess.cleanUp(con, ps);
 		}
 	}
+
+	private static final String _PORTLET_ID_ASSET_PUBLISHER =
+		"com_liferay_asset_publisher_web_AssetPublisherPortlet";
 
 	private static final String _PORTLET_ID_JOURNAL_CONTENT_LIST = "62";
 

@@ -16,10 +16,10 @@
 
 <%
 if (StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
-	assetPublisherDisplayContext.setDisplayStyle(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLE_DEFAULT);
+	assetPublisherDisplayContext.setDisplayStyle(AssetPublisherWebConfigurationValues.DISPLAY_STYLE_DEFAULT);
 }
 
-if (!ArrayUtil.contains(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES, assetPublisherDisplayContext.getDisplayStyle())) {
+if (!ArrayUtil.contains(AssetPublisherWebConfigurationValues.DISPLAY_STYLES, assetPublisherDisplayContext.getDisplayStyle())) {
 %>
 
 	<%= HtmlUtil.escape(LanguageUtil.format(request, "x-is-not-a-display-type", assetPublisherDisplayContext.getDisplayStyle())) %>
@@ -27,7 +27,7 @@ if (!ArrayUtil.contains(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES, assetPublish
 <%
 }
 else {
-	for (String curDisplayStyle : PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) {
+	for (String curDisplayStyle : AssetPublisherWebConfigurationValues.DISPLAY_STYLES) {
 		if (assetPublisherDisplayContext.getDisplayStyle().equals(curDisplayStyle)) {
 			String displayStyleJsp = "/display/" + TextFormatter.format(curDisplayStyle, TextFormatter.N) + ".jsp";
 %>

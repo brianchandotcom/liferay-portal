@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.util;
 
+import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -64,7 +65,6 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
@@ -785,7 +785,7 @@ public class AssetPublisherUtil {
 
 		return LocalizationUtil.getLocalizationMap(
 			portletPreferences, "emailAssetEntryAddedBody",
-			PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY);
+			AssetPublisherWebConfigurationValues.EMAIL_ASSET_ENTRY_ADDED_BODY);
 	}
 
 	public static boolean getEmailAssetEntryAddedEnabled(
@@ -798,7 +798,9 @@ public class AssetPublisherUtil {
 			return GetterUtil.getBoolean(emailAssetEntryAddedEnabled);
 		}
 		else {
-			return PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_ENABLED;
+			return
+				AssetPublisherWebConfigurationValues.
+					EMAIL_ASSET_ENTRY_ADDED_ENABLED;
 		}
 	}
 
@@ -807,7 +809,8 @@ public class AssetPublisherUtil {
 
 		return LocalizationUtil.getLocalizationMap(
 			portletPreferences, "emailAssetEntryAddedSubject",
-			PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT);
+			AssetPublisherWebConfigurationValues.
+				EMAIL_ASSET_ENTRY_ADDED_SUBJECT);
 	}
 
 	public static Map<String, String> getEmailDefinitionTerms(
@@ -873,7 +876,7 @@ public class AssetPublisherUtil {
 
 		return PortalUtil.getEmailFromAddress(
 			portletPreferences, companyId,
-			PropsValues.ASSET_PUBLISHER_EMAIL_FROM_ADDRESS);
+			AssetPublisherWebConfigurationValues.EMAIL_FROM_ADDRESS);
 	}
 
 	public static String getEmailFromName(
@@ -881,7 +884,7 @@ public class AssetPublisherUtil {
 
 		return PortalUtil.getEmailFromName(
 			portletPreferences, companyId,
-			PropsValues.ASSET_PUBLISHER_EMAIL_FROM_NAME);
+			AssetPublisherWebConfigurationValues.EMAIL_FROM_NAME);
 	}
 
 	public static long getGroupIdFromScopeId(
@@ -1293,7 +1296,8 @@ public class AssetPublisherUtil {
 
 		List<AssetEntry> assetEntries = getAssetEntries(
 			portletPreferences, layout, layout.getGroupId(),
-			PropsValues.ASSET_PUBLISHER_DYNAMIC_SUBSCRIPTION_LIMIT, false);
+			AssetPublisherWebConfigurationValues.DYNAMIC_SUBSCRIPTION_LIMIT,
+			false);
 
 		if (assetEntries.isEmpty()) {
 			return;

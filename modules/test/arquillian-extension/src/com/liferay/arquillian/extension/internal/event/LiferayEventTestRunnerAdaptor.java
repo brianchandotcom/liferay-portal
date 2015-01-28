@@ -12,26 +12,59 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.internal.observer;
+package com.liferay.arquillian.extension.internal.event;
 
 import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
+import org.jboss.arquillian.core.spi.EventContext;
+import org.jboss.arquillian.test.spi.event.suite.After;
+import org.jboss.arquillian.test.spi.event.suite.AfterClass;
+import org.jboss.arquillian.test.spi.event.suite.Before;
 import org.jboss.arquillian.test.spi.event.suite.BeforeClass;
+import org.jboss.arquillian.test.spi.event.suite.Test;
 
 /**
  * @author Cristina González
  */
-public class InitializeLiferayTestEnvironment {
+public class LiferayEventTestRunnerAdaptor {
 
-	public void beforeClass(@Observes BeforeClass beforeClass) {
+	public void after(@Observes EventContext<After> eventContext)
+		throws Throwable {
+
+		eventContext.proceed();
+	}
+
+	public void afterClass(@Observes EventContext<AfterClass> eventContext)
+		throws Throwable {
+
+		eventContext.proceed();
+	}
+
+	public void before(@Observes EventContext<Before> eventContext)
+		throws Throwable {
+
+		eventContext.proceed();
+	}
+
+	public void beforeClass(@Observes EventContext<BeforeClass> eventContext)
+		throws Throwable {
+
 		InitTestLiferayContextExecutor initTestLiferayContextExecutor =
 			_initTestLiferayContextExecutorInstance.get();
 
 		initTestLiferayContextExecutor.init();
+
+		eventContext.proceed();
 	}
+
+	public void test(@Observes EventContext<Test> eventContext)
+		throws Throwable {
+
+	}
+
 
 	@Inject
 	private Instance<InitTestLiferayContextExecutor>

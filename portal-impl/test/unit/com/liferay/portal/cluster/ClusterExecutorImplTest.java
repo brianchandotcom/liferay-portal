@@ -64,7 +64,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		adviceClasses = {
 			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
-			EnableClusterExecutorDebugAdvice.class, EnableLiveUsersAdvice.class
+			EnableClusterExecutorDebugAdvice.class
 		})
 	@Test
 	public void testClusterEventListener() throws Exception {
@@ -74,7 +74,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			List<ClusterEventListener> clusterEventListeners =
 				clusterExecutorImpl.getClusterEventListeners();
 
-			Assert.assertEquals(2, clusterEventListeners.size());
+			Assert.assertEquals(1, clusterEventListeners.size());
 
 			// Test 1, add cluster event listener
 
@@ -86,7 +86,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			clusterEventListeners =
 				clusterExecutorImpl.getClusterEventListeners();
 
-			Assert.assertEquals(3, clusterEventListeners.size());
+			Assert.assertEquals(2, clusterEventListeners.size());
 
 			// Test 2, remove cluster event listener
 
@@ -96,7 +96,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			clusterEventListeners =
 				clusterExecutorImpl.getClusterEventListeners();
 
-			Assert.assertEquals(2, clusterEventListeners.size());
+			Assert.assertEquals(1, clusterEventListeners.size());
 
 			// Test 3, set cluster event listener
 
@@ -109,7 +109,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			clusterEventListeners =
 				clusterExecutorImpl.getClusterEventListeners();
 
-			Assert.assertEquals(3, clusterEventListeners.size());
+			Assert.assertEquals(2, clusterEventListeners.size());
 		}
 		finally {
 			clusterExecutorImpl.destroy();

@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.util;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -131,7 +132,7 @@ public class AssetPublisherUtil {
 
 		String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
-		if (!rootPortletId.equals(PortletKeys.ASSET_PUBLISHER)) {
+		if (!rootPortletId.equals(AssetPublisherPortletKeys.ASSET_PUBLISHER)) {
 			return;
 		}
 
@@ -288,7 +289,7 @@ public class AssetPublisherUtil {
 						"portletId");
 
 					String portletId =
-						PortletKeys.ASSET_PUBLISHER +
+						AssetPublisherPortletKeys.ASSET_PUBLISHER +
 							PortletConstants.INSTANCE_SEPARATOR +
 								StringPool.PERCENT;
 
@@ -1154,7 +1155,8 @@ public class AssetPublisherUtil {
 		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("asset_entry", assetEntry.getEntryId());
-		subscriptionSender.setPortletId(PortletKeys.ASSET_PUBLISHER);
+		subscriptionSender.setPortletId(
+			AssetPublisherPortletKeys.ASSET_PUBLISHER);
 		subscriptionSender.setReplyToAddress(fromAddress);
 
 		subscriptionSender.addPersistedSubscribers(

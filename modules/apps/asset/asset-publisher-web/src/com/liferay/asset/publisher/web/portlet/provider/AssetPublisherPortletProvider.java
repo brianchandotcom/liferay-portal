@@ -14,10 +14,10 @@
 
 package com.liferay.asset.publisher.web.portlet.provider;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.provider.AddPortletProvider;
 import com.liferay.portlet.asset.provider.PortletProvider;
@@ -39,7 +39,7 @@ public class AssetPublisherPortletProvider
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.ASSET_PUBLISHER;
+		return AssetPublisherPortletKeys.ASSET_PUBLISHER;
 	}
 
 	@Override

@@ -688,6 +688,15 @@ public class SeleniumBuilderContext {
 			}
 		}
 
+		String defaultCommandName =
+			_seleniumBuilderFileUtil.getDefaultCommandName(rootElement);
+
+		if (!commandElementNames.contains(defaultCommandName)) {
+			_seleniumBuilderFileUtil.throwValidationException(
+				1016, functionFileName, rootElement, "default",
+				defaultCommandName);
+		}
+
 		List<Element> conditionAndExecuteElements =
 			_seleniumBuilderFileUtil.getAllChildElements(
 				rootElement, "condition");

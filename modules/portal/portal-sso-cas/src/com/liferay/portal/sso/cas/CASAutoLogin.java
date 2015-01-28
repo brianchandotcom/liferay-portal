@@ -12,27 +12,38 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.sso.cas;
+
+import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.AutoLogin;
+import com.liferay.portal.security.auth.BaseAutoLogin;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.sso.cas.configuration.CASConfiguration;
+import com.liferay.portal.sso.cas.util.WebKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.WebKeys;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
@@ -40,7 +51,15 @@ import javax.servlet.http.HttpSession;
  * @author Wesley Gong
  * @author Daeyoung Song
  */
+@Component(immediate = true, service = AutoLogin.class)
 public class CASAutoLogin extends BaseAutoLogin {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_casConfiguration = Configurable.createConfigurable(
+			CASConfiguration.class, properties);
+	}
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
@@ -81,7 +100,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.CAS_AUTH_ENABLED,
-				PropsValues.CAS_AUTH_ENABLED)) {
+				_casConfiguration.casAuthEnabled())) {
 
 			return null;
 		}
@@ -102,7 +121,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 			String redirect = PrefsPropsUtil.getString(
 				companyId, PropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
-				PropsValues.CAS_NO_SUCH_USER_REDIRECT_URL);
+				_casConfiguration.casNoSuchUserRedirectURL());
 
 			request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
 
@@ -117,7 +136,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.CAS_IMPORT_FROM_LDAP,
-				PropsValues.CAS_IMPORT_FROM_LDAP)) {
+				_casConfiguration.casImportFromLDAP())) {
 
 			try {
 				if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
@@ -156,5 +175,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(CASAutoLogin.class);
+
+	private volatile CASConfiguration _casConfiguration;
 
 }

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_publisher/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 boolean showIconLabel = ((Boolean)request.getAttribute("view.jsp-showIconLabel")).booleanValue();
@@ -28,7 +28,7 @@ PortletURL editPortletURL = null;
 if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 	PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(plid, portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
 
-	redirectURL.setParameter("mvcPath", "/html/portlet/asset_publisher/add_asset_redirect.jsp");
+	redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
 
 	String fullContentRedirect = (String)request.getAttribute("view.jsp-fullContentRedirect");
 

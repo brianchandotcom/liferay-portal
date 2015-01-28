@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_publisher/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
@@ -137,10 +137,10 @@ request.setAttribute("view.jsp-viewInContext", assetPublisherDisplayContext.isAs
 
 <c:choose>
 	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
-		<%@ include file="/html/portlet/asset_publisher/view_dynamic_list.jspf" %>
+		<%@ include file="/view_dynamic_list.jspf" %>
 	</c:when>
 	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
-		<%@ include file="/html/portlet/asset_publisher/view_manual.jspf" %>
+		<%@ include file="/view_manual.jspf" %>
 	</c:when>
 </c:choose>
 

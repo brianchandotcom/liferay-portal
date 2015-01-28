@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_publisher/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 List results = (List)request.getAttribute("view.jsp-results");
@@ -169,7 +169,7 @@ request.setAttribute("view.jsp-showIconLabel", false);
 	<c:if test="<%= !stageableGroup.hasStagingGroup() %>">
 		<td class="table-cell">
 			<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) && (editPortletURL != null) %>">
-				<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
+				<liferay-util:include page="/asset_actions.jsp" />
 			</c:if>
 		</td>
 	</c:if>

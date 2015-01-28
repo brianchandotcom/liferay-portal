@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_publisher/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -28,7 +28,7 @@ List results = (List)request.getAttribute("view.jsp-results");
 if (Validator.isNull(redirect) && results.isEmpty()) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view.jsp");
+	portletURL.setParameter("mvcPath", "/view.jsp");
 
 	redirect = portletURL.toString();
 }
@@ -61,20 +61,20 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 <div class="asset-full-content <%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %>">
 	<c:if test="<%= !print %>">
-		<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
+		<liferay-util:include page="/asset_actions.jsp" />
 	</c:if>
 
 	<c:if test="<%= (assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible()) || (assetPublisherDisplayContext.isEnablePrint() && assetRenderer.isPrintable()) || (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable()) %>">
 		<div class="asset-user-actions">
 			<c:if test="<%= assetPublisherDisplayContext.isEnablePrint() %>">
 				<div class="print-action">
-					<%@ include file="/html/portlet/asset_publisher/asset_print.jspf" %>
+					<%@ include file="/asset_print.jspf" %>
 				</div>
 			</c:if>
 
 			<c:if test="<%= (assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible()) && !print %>">
 				<div class="export-actions">
-					<%@ include file="/html/portlet/asset_publisher/asset_export.jspf" %>
+					<%@ include file="/asset_export.jspf" %>
 				</div>
 			</c:if>
 			<c:if test="<%= (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable()) && !print %>">
@@ -123,7 +123,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 	PortletURL viewFullContentURL = renderResponse.createRenderURL();
 
-	viewFullContentURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
+	viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
 	viewFullContentURL.setParameter("type", assetRendererFactory.getType());
 	viewFullContentURL.setParameter("viewMode", print ? Constants.PRINT : Constants.VIEW);
 

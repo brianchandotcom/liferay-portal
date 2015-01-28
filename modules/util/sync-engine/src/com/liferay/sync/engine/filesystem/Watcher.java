@@ -200,7 +200,9 @@ public class Watcher implements Runnable {
 						fireWatchEventListener(childFilePath, watchEvent);
 					}
 					else if (kind == StandardWatchEventKind.ENTRY_MODIFY) {
-						if ((removeCreatedFilePathName(
+						if (_downloadedFilePathNames.remove(
+							 childFilePath.toString()) ||
+							(removeCreatedFilePathName(
 								childFilePath.toString()) &&
 							 !FileUtil.isValidChecksum(childFilePath)) ||
 							Files.isDirectory(childFilePath)) {

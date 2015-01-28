@@ -55,7 +55,7 @@ request.setAttribute("view.jsp-results", assetEntries);
 		try {
 	%>
 
-			<%@ include file="/html/portlet/asset_publisher/view_display.jspf" %>
+			<%@ include file="/view_display.jspf" %>
 
 	<%
 		}

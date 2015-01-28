@@ -17,7 +17,7 @@
 <%
 PortletURL printAssetURL = renderResponse.createRenderURL();
 
-printAssetURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
+printAssetURL.setParameter("mvcPath", "/view_content.jsp");
 printAssetURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
 printAssetURL.setParameter("viewMode", Constants.PRINT);
 printAssetURL.setParameter("type", assetRendererFactory.getType());

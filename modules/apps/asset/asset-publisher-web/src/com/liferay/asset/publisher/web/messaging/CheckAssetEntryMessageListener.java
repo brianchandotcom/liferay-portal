@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.messaging;
+package com.liferay.asset.publisher.web.messaging;
 
+import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 
 /**
  * @author Roberto Diaz

@@ -27,10 +27,10 @@
 
 		<liferay-ui:ddm-template-selector
 			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
-			defaultDisplayStyle="<%= PropsValues.ASSET_PUBLISHER_DISPLAY_STYLE_DEFAULT %>"
+			defaultDisplayStyle="<%= AssetPublisherWebConfigurationValues.DISPLAY_STYLE_DEFAULT %>"
 			displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
 			displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
-			displayStyles="<%= Arrays.asList(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) %>"
+			displayStyles="<%= Arrays.asList(AssetPublisherWebConfigurationValues.DISPLAY_STYLES) %>"
 			label="display-template"
 			refreshURL="<%= configurationRenderURL.toString() %>"
 		/>
@@ -65,7 +65,7 @@
 		<aui:option label="regular" selected="<%= assetPublisherDisplayContext.isPaginationTypeRegular() %>" />
 	</aui:select>
 
-	<c:if test="<%= !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
+	<c:if test="<%= !AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX %>">
 		<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
 			<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="checkbox" value="<%= assetPublisherDisplayContext.isExcludeZeroViewCount() %>" />
 		</c:if>

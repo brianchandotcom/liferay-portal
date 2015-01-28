@@ -70,7 +70,7 @@ public class GroupConstants {
 	public static final String USER_PERSONAL_SPACE = "User Personal Space";
 
 	public static final String USER_PERSONAL_SPACE_FRIENDLY_URL =
-		"/personal_space";
+		"/user_personal_space";
 
 	public static String getTypeLabel(int type) {
 		if (type == TYPE_SITE_OPEN) {

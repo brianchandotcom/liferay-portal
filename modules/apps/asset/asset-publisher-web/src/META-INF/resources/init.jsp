@@ -37,4 +37,4 @@ AssetPublisherDisplayContext assetPublisherDisplayContext = new AssetPublisherDi
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
 
-<%@ include file="/html/portlet/asset_publisher/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

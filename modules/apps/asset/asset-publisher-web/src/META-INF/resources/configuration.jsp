@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_publisher/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2");
@@ -247,10 +247,10 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 
 	<c:choose>
 		<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
-			<liferay-util:include page="/html/portlet/asset_publisher/configuration_manual.jsp" />
+			<liferay-util:include page="/configuration_manual.jsp" />
 		</c:when>
 		<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
-			<liferay-util:include page="/html/portlet/asset_publisher/configuration_dynamic.jsp" />
+			<liferay-util:include page="/configuration_dynamic.jsp" />
 		</c:when>
 	</c:choose>
 </aui:form>

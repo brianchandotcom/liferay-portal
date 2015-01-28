@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_publisher/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <portlet:renderURL var="portletURL">
-	<portlet:param name="mvcPath" value="/html/portlet/asset_publisher/view.jsp" />
+	<portlet:param name="mvcPath" value="/view.jsp" />
 </portlet:renderURL>
 
 <liferay-ui:header

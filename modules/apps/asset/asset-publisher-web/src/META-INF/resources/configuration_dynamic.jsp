@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_publisher/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 List<AssetRendererFactory> classTypesAssetRendererFactories = (List<AssetRendererFactory>)request.getAttribute("configuration.jsp-classTypesAssetRendererFactories");
@@ -318,7 +318,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 								<div class="lfr-form-row <%= cssClass %>">
 									<div class="row-fields">
-										<liferay-util:include page="/html/portlet/asset_publisher/edit_query_rule.jsp" />
+										<liferay-util:include page="/edit_query_rule.jsp" />
 									</div>
 								</div>
 
@@ -358,7 +358,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			%>
 
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "assetPublisherPanelContainerSection_" + sectionId %>' persistState="<%= true %>" title="<%= section %>">
-					<liferay-util:include page='<%= "/html/portlet/asset_publisher/query/" + _getSectionJsp(section) + ".jsp" %>' />
+					<liferay-util:include page='<%= "/query/" + _getSectionJsp(section) + ".jsp" %>' />
 				</liferay-ui:panel>
 
 			<%
@@ -506,7 +506,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	<liferay-ui:section>
 		<liferay-ui:error-marker key="errorSection" value="display-settings" />
 
-		<%@ include file="/html/portlet/asset_publisher/display_settings.jspf" %>
+		<%@ include file="/display_settings.jspf" %>
 	</liferay-ui:section>
 
 	<liferay-ui:section>
@@ -524,7 +524,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			/>
 		</c:if>
 
-		<%@ include file="/html/portlet/asset_publisher/email_subscription_settings.jspf" %>
+		<%@ include file="/email_subscription_settings.jspf" %>
 	</liferay-ui:section>
 </liferay-ui:tabs>
 

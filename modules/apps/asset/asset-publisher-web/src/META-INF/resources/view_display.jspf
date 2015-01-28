@@ -29,7 +29,7 @@ if (!ArrayUtil.contains(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES, assetPublish
 else {
 	for (String curDisplayStyle : PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) {
 		if (assetPublisherDisplayContext.getDisplayStyle().equals(curDisplayStyle)) {
-			String displayStyleJsp = "/html/portlet/asset_publisher/display/" + TextFormatter.format(curDisplayStyle, TextFormatter.N) + ".jsp";
+			String displayStyleJsp = "/display/" + TextFormatter.format(curDisplayStyle, TextFormatter.N) + ".jsp";
 %>
 
 			<liferay-util:include page="<%= displayStyleJsp %>" />

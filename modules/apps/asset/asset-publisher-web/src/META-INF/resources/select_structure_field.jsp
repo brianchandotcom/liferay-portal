@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_publisher/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String className = ParamUtil.getString(request, "className");
@@ -29,7 +29,7 @@ ClassType classType = classTypeReader.getClassType(classTypeId, locale);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/asset_publisher/select_structure_field.jsp");
+portletURL.setParameter("mvcPath", "/select_structure_field.jsp");
 portletURL.setParameter("portletResource", assetPublisherDisplayContext.getPortletResource());
 portletURL.setParameter("className", className);
 portletURL.setParameter("classTypeId", String.valueOf(classTypeId));

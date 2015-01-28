@@ -56,7 +56,7 @@ for (int assetEntryIndex = 0; assetEntryIndex < results.size(); assetEntryIndex+
 	try {
 %>
 
-		<%@ include file="/html/portlet/asset_publisher/view_display.jspf" %>
+		<%@ include file="/view_display.jspf" %>
 
 <%
 	}

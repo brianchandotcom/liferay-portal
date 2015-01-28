@@ -144,6 +144,9 @@ public class SeleniumBuilderFileUtil {
 					childElementAttributeValues.add(
 						childElementName.substring(0, x));
 				}
+				else if (attributeName.equals("function")) {
+					childElementAttributeValues.add(childElementName);
+				}
 			}
 
 			childElementAttributeValues.addAll(

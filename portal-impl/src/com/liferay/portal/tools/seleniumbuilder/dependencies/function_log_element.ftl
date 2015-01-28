@@ -11,11 +11,19 @@
 
 	<#assign x = function?last_index_of("#")>
 
-	"${seleniumBuilderFileUtil.getObjectName(function?substring(0, x))}#${function?substring(x + 1)}",
+	<#if x != -1>
+		<#assign elementFunctionCommandName = function?substring(x + 1)>
+		<#assign elementFunctionName = function?substring(0, x)>
+	<#else>
+		<#assign elementFunctionCommandName = seleniumBuilderContext.getFunctionDefaultCommandName(function)>
+		<#assign elementFunctionName = function>
+	</#if>
+
+	"${seleniumBuilderFileUtil.getObjectName(elementFunctionName)}#${elementFunctionCommandName}",
 
 	new String[] {
 
-	<#assign functionLocatorCount = seleniumBuilderContext.getFunctionLocatorCount(seleniumBuilderFileUtil.getObjectName(function?substring(0, x)))>
+	<#assign functionLocatorCount = seleniumBuilderContext.getFunctionLocatorCount(seleniumBuilderFileUtil.getObjectName(elementFunctionName))>
 
 	<#list 1..functionLocatorCount as i>
 		"",

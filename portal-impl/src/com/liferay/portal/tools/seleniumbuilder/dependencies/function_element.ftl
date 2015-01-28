@@ -6,7 +6,15 @@
 
 <#assign x = function?last_index_of("#")>
 
-${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${function?substring(x + 1)}(
+<#if x != -1>
+	<#assign elementFunctionCommandName = function?substring(x + 1)>
+	<#assign elementFunctionName = function?substring(0, x)>
+<#else>
+	<#assign elementFunctionCommandName = seleniumBuilderContext.getFunctionDefaultCommandName(function)>
+	<#assign elementFunctionName = function>
+</#if>
+
+${seleniumBuilderFileUtil.getVariableName(elementFunctionName)}Function.${elementFunctionCommandName}(
 
 <#if functionElement.attributeValue("ignore-javascript-error")??>
 	<#assign ignoreJavaScriptError = functionElement.attributeValue("ignore-javascript-error")>
@@ -18,7 +26,7 @@ ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${f
 	null,
 </#if>
 
-<#assign functionLocatorCount = seleniumBuilderContext.getFunctionLocatorCount(seleniumBuilderFileUtil.getObjectName(function?substring(0, x)))>
+<#assign functionLocatorCount = seleniumBuilderContext.getFunctionLocatorCount(seleniumBuilderFileUtil.getObjectName(elementFunctionName))>
 
 <#list 1..functionLocatorCount as i>
 	<#if variableContext??>

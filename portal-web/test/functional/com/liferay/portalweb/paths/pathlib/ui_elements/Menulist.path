@@ -114,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORGANIZATION_ROLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Organization Role')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REGULAR_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Regular Role')]</td>
 	<td></td>
@@ -121,6 +126,11 @@
 <tr>
 	<td>SITE_PERMISSIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Site Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ROLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Site Role')]</td>
 	<td></td>
 </tr>
 <tr>

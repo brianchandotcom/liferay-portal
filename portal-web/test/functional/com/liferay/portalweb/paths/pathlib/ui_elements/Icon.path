@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>Icon</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Icon</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Icon</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH</td>
+	<td>//a[contains(@class,'toggle-advanced') and i[@class='icon-search']]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
+	<td>//a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COG</td>
+	<td>//i[contains(@class,'icon-cog') and contains(@class,'lfr-icon-menu-icon')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

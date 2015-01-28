@@ -14,9 +14,6 @@
 
 package com.liferay.arquillian.extension.persistence;
 
-import com.liferay.arquillian.extension.internal.descriptor.SpringDescriptor;
-import com.liferay.arquillian.extension.internal.descriptor.SpringDescriptorImpl;
-import com.liferay.arquillian.extension.persistence.internal.descriptor.PersistenceTestSpringDescriptorImpl;
 import com.liferay.arquillian.extension.persistence.internal.instanceproducer.ExtensionInstanceProducer;
 import com.liferay.arquillian.extension.persistence.internal.observer.PersistenceTestObserver;
 import com.liferay.portal.test.util.InitPersistenceTest;
@@ -34,9 +31,6 @@ public class PersistenceTestScenarioExtension implements LoadableExtension {
 		builder.observer(ExtensionInstanceProducer.class);
 		builder.observer(PersistenceTestObserver.class);
 
-		builder.override(
-			SpringDescriptor.class, SpringDescriptorImpl.class,
-			PersistenceTestSpringDescriptorImpl.class);
 		builder.service(
 			InitPersistenceTest.class, InitPersistenceTestImpl.class);
 	}

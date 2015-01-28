@@ -551,11 +551,6 @@
 				"store": "yes",
 				"type": "date"
 			},
-			"portletId": {
-				"index": "not_analyzed",
-				"store": "yes",
-				"type": "string"
-			},
 			"properties": {
 				"index": "not_analyzed",
 				"store": "yes",

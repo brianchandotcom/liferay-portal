@@ -41,7 +41,6 @@ import com.liferay.portal.test.SynchronousDestinationTestRule;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.SearchContextTestUtil;
 import com.liferay.portal.util.test.UserTestUtil;
-import com.liferay.portlet.usersadmin.util.UserIndexer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,7 +72,7 @@ public class DocumentImplTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_indexer = IndexerRegistryUtil.getIndexer(UserIndexer.class);
+		_indexer = IndexerRegistryUtil.getIndexer(User.class);
 
 		_indexerPostProcessor = new BaseIndexerPostProcessor() {
 

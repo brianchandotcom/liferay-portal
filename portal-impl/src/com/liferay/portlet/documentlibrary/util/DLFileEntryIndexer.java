@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -97,11 +98,10 @@ import javax.portlet.WindowStateException;
  * @author Raymond Augé
  * @author Alexander Chow
  */
+@OSGiBeanProperties
 public class DLFileEntryIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {DLFileEntry.class.getName()};
-
-	public static final String PORTLET_ID = PortletKeys.DOCUMENT_LIBRARY;
+	public static final String CLASS_NAME = DLFileEntry.class.getName();
 
 	public DLFileEntryIndexer() {
 		setDefaultSelectedFieldNames(
@@ -139,13 +139,8 @@ public class DLFileEntryIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -326,7 +321,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		Document document = new DocumentImpl();
 
-		document.addUID(PORTLET_ID, dlFileEntry.getFileEntryId());
+		document.addUID(CLASS_NAME, dlFileEntry.getFileEntryId());
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), dlFileEntry.getCompanyId(),
@@ -367,7 +362,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		try {
 			Document document = getBaseModelDocument(
-				PORTLET_ID, dlFileEntry, dlFileVersion);
+				CLASS_NAME, dlFileEntry, dlFileVersion);
 
 			if (indexContent) {
 				if (is != null) {
@@ -579,11 +574,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		}
 
 		return sb.toString();
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void reindexFileEntries(

@@ -36,11 +36,6 @@ public class FacetedSearcher extends BaseSearcher {
 		return new FacetedSearcher();
 	}
 
-	@Override
-	public String[] getClassNames() {
-		return null;
-	}
-
 	protected void addSearchExpandoKeywords(
 			BooleanQuery searchQuery, SearchContext searchContext,
 			String keywords, String className)

@@ -18,38 +18,17 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
-import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.TermQueryFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DirectoryNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -357,101 +336,6 @@ public class DLStoreImpl implements DLStore {
 	@Override
 	public void move(String srcDir, String destDir) {
 		store.move(srcDir, destDir);
-	}
-
-	public Hits search(
-		long companyId, long userId, String portletId, long groupId,
-		long[] repositoryIds, String keywords, int start, int end) {
-
-		try {
-			SearchContext searchContext = new SearchContext();
-
-			searchContext.setCompanyId(companyId);
-			searchContext.setEnd(end);
-			searchContext.setEntryClassNames(
-				new String[] {DLFileEntryConstants.getClassName()});
-			searchContext.setGroupIds(new long[] {groupId});
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
-				DLFileEntryConstants.getClassName());
-
-			searchContext.setSearchEngineId(indexer.getSearchEngineId());
-
-			searchContext.setStart(start);
-			searchContext.setUserId(userId);
-
-			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			contextQuery.addRequiredTerm(Field.PORTLET_ID, portletId);
-
-			if (groupId > 0) {
-				Group group = groupLocalService.getGroup(groupId);
-
-				if (group.isLayout()) {
-					contextQuery.addRequiredTerm(Field.SCOPE_GROUP_ID, groupId);
-
-					groupId = group.getParentGroupId();
-				}
-
-				contextQuery.addRequiredTerm(Field.GROUP_ID, groupId);
-			}
-
-			if (ArrayUtil.isNotEmpty(repositoryIds)) {
-				BooleanQuery repositoryIdsQuery =
-					BooleanQueryFactoryUtil.create(searchContext);
-
-				for (long repositoryId : repositoryIds) {
-					try {
-						if (userId > 0) {
-							PermissionChecker permissionChecker =
-								PermissionThreadLocal.getPermissionChecker();
-
-							DLFolderPermission.check(
-								permissionChecker, groupId, repositoryId,
-								ActionKeys.VIEW);
-						}
-
-						if (repositoryId ==
-								DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-							repositoryId = groupId;
-						}
-
-						TermQuery termQuery = TermQueryFactoryUtil.create(
-							searchContext, "repositoryId", repositoryId);
-
-						repositoryIdsQuery.add(
-							termQuery, BooleanClauseOccur.SHOULD);
-					}
-					catch (Exception e) {
-					}
-				}
-
-				contextQuery.add(repositoryIdsQuery, BooleanClauseOccur.MUST);
-			}
-
-			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			searchQuery.addTerms(_KEYWORDS_FIELDS, keywords);
-
-			BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
-
-			List<BooleanClause> clauses = searchQuery.clauses();
-
-			if (!clauses.isEmpty()) {
-				fullQuery.add(searchQuery, BooleanClauseOccur.MUST);
-			}
-
-			return SearchEngineUtil.search(searchContext, fullQuery);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
 	}
 
 	@Override

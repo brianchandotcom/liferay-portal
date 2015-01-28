@@ -7,8 +7,6 @@
 		<icon>/html/icons/wiki.png</icon>
 		<struts-path>wiki</struts-path>
 		<configuration-action-class>com.liferay.wiki.web.admin.portlet.action.WikiSettingsConfigurationAction</configuration-action-class>
-		<indexer-class>com.liferay.wiki.indexer.WikiNodeIndexer</indexer-class>
-		<indexer-class>com.liferay.wiki.indexer.WikiPageIndexer</indexer-class>
 		<open-search-class>com.liferay.wiki.search.WikiOpenSearchImpl</open-search-class>
 		<friendly-url-mapper-class>com.liferay.wiki.web.wiki.portlet.route.WikiFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>wiki</friendly-url-mapping>

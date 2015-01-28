@@ -27,7 +27,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
-import com.liferay.portlet.usersadmin.util.UserIndexer;
 
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
@@ -51,11 +50,6 @@ public class DirectoryOpenSearchImpl extends HitsOpenSearchImpl {
 	@Override
 	public Indexer getIndexer() {
 		return IndexerRegistryUtil.getIndexer(User.class);
-	}
-
-	@Override
-	public String getPortletId() {
-		return UserIndexer.PORTLET_ID;
 	}
 
 	@Override

@@ -27,7 +27,6 @@ portletURL.setParameter("tabs2", tabs2);
 PortletURL marketplaceURL = null;
 
 boolean showEditPluginHREF = true;
-boolean showReindexButton = false;
 %>
 
 <%@ include file="/html/portlet/plugins_admin/plugins.jspf" %>

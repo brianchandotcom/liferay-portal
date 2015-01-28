@@ -51,8 +51,8 @@ public class DummyIndexWriter implements IndexWriter {
 	}
 
 	@Override
-	public void deletePortletDocuments(
-		SearchContext searchContext, String portletId) {
+	public void deleteEntityDocuments(
+		SearchContext searchContext, String className) {
 	}
 
 	@Override

@@ -97,8 +97,6 @@
 		<icon>/html/icons/journal.png</icon>
 		<struts-path>journal</struts-path>
 		<configuration-action-class>com.liferay.portlet.journal.action.ConfigurationActionImpl</configuration-action-class>
-		<indexer-class>com.liferay.portlet.journal.util.JournalArticleIndexer</indexer-class>
-		<indexer-class>com.liferay.portlet.journal.util.JournalFolderIndexer</indexer-class>
 		<open-search-class>com.liferay.portlet.journal.util.JournalOpenSearchImpl</open-search-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.journal.messaging.CheckArticleMessageListener</scheduler-event-listener-class>
@@ -150,8 +148,6 @@
 		<portlet-name>19</portlet-name>
 		<icon>/html/icons/message_boards.png</icon>
 		<struts-path>message_boards</struts-path>
-		<indexer-class>com.liferay.portlet.messageboards.util.MBMessageIndexer</indexer-class>
-		<indexer-class>com.liferay.portlet.messageboards.util.MBThreadIndexer</indexer-class>
 		<open-search-class>com.liferay.portlet.messageboards.util.MBOpenSearchImpl</open-search-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.messageboards.messaging.ExpireBanMessageListener</scheduler-event-listener-class>
@@ -207,8 +203,6 @@
 		<icon>/html/icons/document_library.png</icon>
 		<struts-path>document_library</struts-path>
 		<configuration-action-class>com.liferay.portlet.documentlibrary.action.ConfigurationActionImpl</configuration-action-class>
-		<indexer-class>com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer</indexer-class>
-		<indexer-class>com.liferay.portlet.documentlibrary.util.DLFolderIndexer</indexer-class>
 		<open-search-class>com.liferay.portlet.documentlibrary.util.DLOpenSearchImpl</open-search-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler</portlet-data-handler-class>
@@ -298,7 +292,6 @@
 		<icon>/html/icons/blogs.png</icon>
 		<struts-path>blogs</struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.SettingsConfigurationAction</configuration-action-class>
-		<indexer-class>com.liferay.portlet.blogs.util.BlogsIndexer</indexer-class>
 		<open-search-class>com.liferay.portlet.blogs.util.BlogsOpenSearchImpl</open-search-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.blogs.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
@@ -554,7 +547,6 @@
 		<portlet-name>88</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>layouts_admin</struts-path>
-		<indexer-class>com.liferay.portlet.layoutsadmin.util.ExportImportConfigurationIndexer</indexer-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<staged-model-data-handler-class>com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.layoutsadmin.lar.LayoutStagedModelDataHandler</staged-model-data-handler-class>
@@ -581,7 +573,6 @@
 		<portlet-name>98</portlet-name>
 		<icon>/html/icons/software_catalog.png</icon>
 		<struts-path>software_catalog</struts-path>
-		<indexer-class>com.liferay.portlet.softwarecatalog.util.SCIndexer</indexer-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>software_catalog</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/softwarecatalog/software-catalog-friendly-url-routes.xml</friendly-url-routes>
@@ -600,7 +591,6 @@
 		<portlet-name>101</portlet-name>
 		<icon>/html/icons/asset_publisher.png</icon>
 		<configuration-action-class>com.liferay.portlet.assetpublisher.action.ConfigurationActionImpl</configuration-action-class>
-		<indexer-class>com.liferay.portlet.assetpublisher.util.AssetIndexer</indexer-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.assetpublisher.messaging.CheckAssetEntryMessageListener</scheduler-event-listener-class>
 			<trigger>
@@ -765,9 +755,6 @@
 		<portlet-name>125</portlet-name>
 		<icon>/html/icons/users_admin.png</icon>
 		<struts-path>users_admin</struts-path>
-		<indexer-class>com.liferay.portlet.usersadmin.util.ContactIndexer</indexer-class>
-		<indexer-class>com.liferay.portlet.usersadmin.util.OrganizationIndexer</indexer-class>
-		<indexer-class>com.liferay.portlet.usersadmin.util.UserIndexer</indexer-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.usersadmin.lar.UsersAdminPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.usersadmin.lar.AddressStagedModelDataHandler</staged-model-data-handler-class>
@@ -797,7 +784,6 @@
 		<portlet-name>127</portlet-name>
 		<icon>/html/icons/user_groups_admin.png</icon>
 		<struts-path>user_groups_admin</struts-path>
-		<indexer-class>com.liferay.portlet.usergroupsadmin.util.UserGroupIndexer</indexer-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.usergroupsadmin.lar.UserGroupsAdminPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.usergroupsadmin.lar.UserGroupStagedModelDataHandler</staged-model-data-handler-class>
@@ -1056,8 +1042,6 @@
 	<portlet>
 		<portlet-name>147</portlet-name>
 		<icon>/html/icons/asset_category_admin.png</icon>
-		<indexer-class>com.liferay.portlet.asset.util.AssetCategoryIndexer</indexer-class>
-		<indexer-class>com.liferay.portlet.asset.util.AssetVocabularyIndexer</indexer-class>
 		<portlet-data-handler-class>com.liferay.portlet.asset.lar.AssetCategoryPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.asset.lar.AssetCategoryStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.asset.lar.AssetVocabularyStagedModelDataHandler</staged-model-data-handler-class>
@@ -1319,7 +1303,6 @@
 		<portlet-name>167</portlet-name>
 		<icon>/html/icons/dynamic_data_lists.png</icon>
 		<struts-path>dynamic_data_lists</struts-path>
-		<indexer-class>com.liferay.portlet.dynamicdatalists.util.DDLIndexer</indexer-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLRecordSetStagedModelDataHandler</staged-model-data-handler-class>
@@ -1522,7 +1505,6 @@
 		<portlet-name>182</portlet-name>
 		<icon>/html/icons/trash.png</icon>
 		<struts-path>trash</struts-path>
-		<indexer-class>com.liferay.portlet.trash.util.TrashIndexer</indexer-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.trash.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
 			<trigger>
@@ -1689,7 +1671,6 @@
 		<portlet-name>193</portlet-name>
 		<icon>/html/icons/asset_publisher.png</icon>
 		<configuration-action-class>com.liferay.portlet.assetpublisher.action.ConfigurationActionImpl</configuration-action-class>
-		<indexer-class>com.liferay.portlet.assetpublisher.util.AssetIndexer</indexer-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>asset_publisher</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/assetpublisher/asset-publisher-friendly-url-routes.xml</friendly-url-routes>
@@ -1712,7 +1693,6 @@
 		<portlet-name>194</portlet-name>
 		<icon>/html/icons/asset_publisher.png</icon>
 		<configuration-action-class>com.liferay.portlet.assetpublisher.action.ConfigurationActionImpl</configuration-action-class>
-		<indexer-class>com.liferay.portlet.assetpublisher.util.AssetIndexer</indexer-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>asset_publisher</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/assetpublisher/asset-publisher-friendly-url-routes.xml</friendly-url-routes>

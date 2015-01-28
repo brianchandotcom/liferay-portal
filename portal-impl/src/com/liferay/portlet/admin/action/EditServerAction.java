@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingHelperUtil;
 import com.liferay.portal.kernel.scripting.ScriptingUtil;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -74,7 +75,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.search.SearchEngineInitializer;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.search.lucene.cluster.LuceneClusterUtil;
@@ -89,7 +89,6 @@ import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryU
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
@@ -111,7 +110,6 @@ import java.io.File;
 
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -377,7 +375,7 @@ public class EditServerAction extends PortletAction {
 	}
 
 	protected void reindex(ActionRequest actionRequest) throws Exception {
-		String portletId = ParamUtil.getString(actionRequest, "portletId");
+		String className = ParamUtil.getString(actionRequest, "className");
 
 		long[] companyIds = PortalInstances.getCompanyIds();
 
@@ -388,7 +386,7 @@ public class EditServerAction extends PortletAction {
 
 		Set<String> usedSearchEngineIds = new HashSet<>();
 
-		if (Validator.isNull(portletId)) {
+		if (Validator.isNull(className)) {
 			for (long companyId : companyIds) {
 				try {
 					SearchEngineInitializer searchEngineInitializer =
@@ -405,48 +403,36 @@ public class EditServerAction extends PortletAction {
 			}
 		}
 		else {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				companyIds[0], portletId);
+			Indexer indexer = IndexerRegistryUtil.getIndexer(className);
 
-			if (portlet == null) {
-				return;
-			}
-
-			List<Indexer> indexers = portlet.getIndexerInstances();
-
-			if (indexers == null) {
+			if (indexer == null) {
 				return;
 			}
 
 			Set<String> searchEngineIds = new HashSet<>();
 
-			for (Indexer indexer : indexers) {
-				searchEngineIds.add(indexer.getSearchEngineId());
-			}
+			searchEngineIds.add(indexer.getSearchEngineId());
 
 			for (String searchEngineId : searchEngineIds) {
 				for (long companyId : companyIds) {
-					SearchEngineUtil.deletePortletDocuments(
-						searchEngineId, companyId, portletId, true);
+					SearchEngineUtil.deleteEntityDocuments(
+						searchEngineId, companyId, className, true);
 				}
 			}
 
-			for (Indexer indexer : indexers) {
-				for (long companyId : companyIds) {
-					ShardUtil.pushCompanyService(companyId);
+			for (long companyId : companyIds) {
+				ShardUtil.pushCompanyService(companyId);
 
-					try {
-						indexer.reindex(
-							new String[] {String.valueOf(companyId)});
+				try {
+					indexer.reindex(new String[] {String.valueOf(companyId)});
 
-						usedSearchEngineIds.add(indexer.getSearchEngineId());
-					}
-					catch (Exception e) {
-						_log.error(e, e);
-					}
-					finally {
-						ShardUtil.popCompanyService();
-					}
+					usedSearchEngineIds.add(indexer.getSearchEngineId());
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+				finally {
+					ShardUtil.popCompanyService();
 				}
 			}
 		}

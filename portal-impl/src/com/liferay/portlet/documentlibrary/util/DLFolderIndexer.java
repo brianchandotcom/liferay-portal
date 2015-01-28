@@ -32,12 +32,12 @@ import com.liferay.portal.kernel.search.FolderIndexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
@@ -52,11 +52,10 @@ import javax.portlet.WindowStateException;
 /**
  * @author Alexander Chow
  */
+@OSGiBeanProperties
 public class DLFolderIndexer extends BaseIndexer implements FolderIndexer {
 
-	public static final String[] CLASS_NAMES = {DLFolder.class.getName()};
-
-	public static final String PORTLET_ID = PortletKeys.DOCUMENT_LIBRARY;
+	public static final String CLASS_NAME = DLFolder.class.getName();
 
 	public DLFolderIndexer() {
 		setDefaultSelectedFieldNames(
@@ -67,18 +66,13 @@ public class DLFolderIndexer extends BaseIndexer implements FolderIndexer {
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
 	public String[] getFolderClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+		return new String[]{CLASS_NAME};
 	}
 
 	@Override
@@ -109,7 +103,7 @@ public class DLFolderIndexer extends BaseIndexer implements FolderIndexer {
 
 		Document document = new DocumentImpl();
 
-		document.addUID(PORTLET_ID, dlFolder.getFolderId());
+		document.addUID(CLASS_NAME, dlFolder.getFolderId());
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), dlFolder.getCompanyId(),
@@ -124,7 +118,7 @@ public class DLFolderIndexer extends BaseIndexer implements FolderIndexer {
 			_log.debug("Indexing folder " + dlFolder);
 		}
 
-		Document document = getBaseModelDocument(PORTLET_ID, dlFolder);
+		Document document = getBaseModelDocument(CLASS_NAME, dlFolder);
 
 		document.addText(Field.DESCRIPTION, dlFolder.getDescription());
 		document.addKeyword(Field.FOLDER_ID, dlFolder.getParentFolderId());
@@ -201,11 +195,6 @@ public class DLFolderIndexer extends BaseIndexer implements FolderIndexer {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexFolders(companyId);
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void reindexFolders(final long companyId) throws PortalException {

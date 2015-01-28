@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.asset.model.AssetEntry;
 
 import java.util.Locale;
@@ -33,11 +33,10 @@ import javax.portlet.PortletURL;
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
+@OSGiBeanProperties
 public class AssetIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {AssetEntry.class.getName()};
-
-	public static final String PORTLET_ID = PortletKeys.ASSET_PUBLISHER;
+	public static final String CLASS_NAME = AssetEntry.class.getName();
 
 	public AssetIndexer() {
 		setDefaultSelectedFieldNames(
@@ -45,13 +44,8 @@ public class AssetIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -95,11 +89,6 @@ public class AssetIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(String[] ids) {
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 }

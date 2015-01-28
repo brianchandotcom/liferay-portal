@@ -200,13 +200,8 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 	private class TestIndexer extends BaseIndexer {
 
 		@Override
-		public String[] getClassNames() {
-			return new String[] {_CLASS_NAME};
-		}
-
-		@Override
-		public String getPortletId() {
-			return null;
+		public String getClassName() {
+			return _CLASS_NAME;
 		}
 
 		@Override
@@ -238,11 +233,6 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 		@Override
 		protected void doReindex(String[] ids) throws Exception {
-		}
-
-		@Override
-		protected String getPortletId(SearchContext searchContext) {
-			return null;
 		}
 
 	}

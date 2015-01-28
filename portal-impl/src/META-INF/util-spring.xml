@@ -525,6 +525,7 @@
 			</bean>
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.plugin.PluginPackageIndexer" class="com.liferay.portal.plugin.PluginPackageIndexer" />
 	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepository" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryImpl" />
 	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil">
 		<property name="portletFileRepository" ref="com.liferay.portal.portletfilerepository.PortletFileRepository" />
@@ -875,7 +876,10 @@
 	<bean id="com.liferay.portlet.RestrictPortletContainerWrapper" class="com.liferay.portlet.RestrictPortletContainerWrapper" factory-method="createRestrictPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.SecurityPortletContainerWrapper" />
 	</bean>
+	<bean id="com.liferay.portlet.asset.util.AssetCategoryIndexer" class="com.liferay.portlet.asset.util.AssetCategoryIndexer" />
+	<bean id="com.liferay.portlet.asset.util.AssetVocabularyIndexer" class="com.liferay.portlet.asset.util.AssetVocabularyIndexer" />
 	<bean id="com.liferay.portlet.assetbrowser.provider.AssetBrowserPortletProvider" class="com.liferay.portlet.assetbrowser.provider.AssetBrowserPortletProvider" />
+	<bean id="com.liferay.portlet.assetpublisher.util.AssetIndexer" class="com.liferay.portlet.assetpublisher.util.AssetIndexer" />
 	<bean id="com.liferay.portlet.assetpublisher.provider.AssetPublisherPortletProvider" class="com.liferay.portlet.assetpublisher.provider.AssetPublisherPortletProvider" />
 	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisher" class="com.liferay.portlet.assetpublisher.util.AssetPublisherImpl" />
 	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherHelper" class="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperImpl" />
@@ -888,6 +892,8 @@
 	<bean id="com.liferay.portlet.assetpublisher.util.CustomUserAttributesAssetEntryQueryProcessor" class="com.liferay.portlet.assetpublisher.util.CustomUserAttributesAssetEntryQueryProcessor" />
 	<bean id="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" class="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" />
 	<bean id="com.liferay.portlet.blogs.service.permission.BlogsPermission" class="com.liferay.portlet.blogs.service.permission.BlogsPermission" />
+	<bean id="com.liferay.portlet.blogs.util.BlogsIndexer" class="com.liferay.portlet.blogs.util.BlogsIndexer" />
+	<bean id="com.liferay.portlet.calendar.util.CalIndexer" class="com.liferay.portlet.calendar.util.CalIndexer" />
 	<bean id="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil" class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil">
 		<property name="antivirusScanner">
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
@@ -907,7 +913,9 @@
 			<bean class="com.liferay.portlet.documentlibrary.store.StoreProxyImpl" />
 		</constructor-arg>
 	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer" class="com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer" />
 	<bean id="com.liferay.portlet.documentlibrary.util.DLFileEntryLockListener" class="com.liferay.portlet.documentlibrary.util.DLFileEntryLockListener" />
+	<bean id="com.liferay.portlet.documentlibrary.util.DLFolderIndexer" class="com.liferay.portlet.documentlibrary.util.DLFolderIndexer" />
 	<bean id="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil" class="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil">
 		<property name="dLProcessorRegistry">
 			<bean class="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryImpl" />
@@ -935,6 +943,7 @@
 			</map>
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLIndexer" class="com.liferay.portlet.dynamicdatalists.util.DDLIndexer" />
 	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLUtil" class="com.liferay.portlet.dynamicdatalists.util.DDLUtil">
 		<property name="DDL">
 			<bean class="com.liferay.portlet.dynamicdatalists.util.DDLImpl" />
@@ -1133,6 +1142,8 @@
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFeedPermission" class="com.liferay.portlet.journal.service.permission.JournalFeedPermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFolderPermission" class="com.liferay.portlet.journal.service.permission.JournalFolderPermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalPermission" class="com.liferay.portlet.journal.service.permission.JournalPermission" />
+	<bean id="com.liferay.portlet.journal.util.JournalArticleIndexer" class="com.liferay.portlet.journal.util.JournalArticleIndexer" />
+	<bean id="com.liferay.portlet.journal.util.JournalFolderIndexer" class="com.liferay.portlet.journal.util.JournalFolderIndexer" />
 	<bean id="com.liferay.portlet.journal.util.JournalContent" class="com.liferay.portlet.journal.util.JournalContentImpl" />
 	<bean id="com.liferay.portlet.journal.util.JournalContentUtil" class="com.liferay.portlet.journal.util.JournalContentUtil">
 		<property name="journalContent" ref="com.liferay.portlet.journal.util.JournalContent" />
@@ -1146,6 +1157,7 @@
 			<bean class="com.liferay.portlet.journal.util.JournalValidatorImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.layoutsadmin.util.ExportImportConfigurationIndexer" class="com.liferay.portlet.layoutsadmin.util.ExportImportConfigurationIndexer" />
 	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">
 		<property name="sitemap">
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />
@@ -1156,6 +1168,8 @@
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" class="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBPermission" class="com.liferay.portlet.messageboards.service.permission.MBPermission" />
+	<bean id="com.liferay.portlet.messageboards.util.MBMessageIndexer" class="com.liferay.portlet.messageboards.util.MBMessageIndexer" />
+	<bean id="com.liferay.portlet.messageboards.util.MBThreadIndexer" class="com.liferay.portlet.messageboards.util.MBThreadIndexer" />
 	<bean id="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil" class="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil">
 		<property name="MDRPermission">
 			<bean class="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionImpl" />
@@ -1211,12 +1225,18 @@
 	</bean>
 	<bean id="com.liferay.portlet.softwarecatalog.service.permission.SCFrameworkVersionPermission" class="com.liferay.portlet.softwarecatalog.service.permission.SCFrameworkVersionPermission" />
 	<bean id="com.liferay.portlet.softwarecatalog.service.permission.SCProductEntryPermission" class="com.liferay.portlet.softwarecatalog.service.permission.SCProductEntryPermission" />
+	<bean id="com.liferay.portlet.softwarecatalog.util.SCIndexer" class="com.liferay.portlet.softwarecatalog.util.SCIndexer" />
 	<bean id="com.liferay.portlet.trash.util.Trash" class="com.liferay.portlet.trash.util.TrashImpl" />
+	<bean id="com.liferay.portlet.trash.util.TrashIndexer" class="com.liferay.portlet.trash.util.TrashIndexer" />
 	<bean id="com.liferay.portlet.trash.util.TrashUtil" class="com.liferay.portlet.trash.util.TrashUtil">
 		<property name="trash" ref="com.liferay.portlet.trash.util.Trash" />
 	</bean>
+	<bean id="com.liferay.portlet.usersadmin.util.ContactIndexer" class="com.liferay.portlet.usersadmin.util.ContactIndexer" />
+	<bean id="com.liferay.portlet.usersadmin.util.OrganizationIndexer" class="com.liferay.portlet.usersadmin.util.OrganizationIndexer" />
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdmin" class="com.liferay.portlet.usersadmin.util.UsersAdminImpl" />
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />
 	</bean>
+	<bean id="com.liferay.portlet.usersadmin.util.UserIndexer" class="com.liferay.portlet.usersadmin.util.UserIndexer" />
+	<bean id="com.liferay.portlet.usergroupsadmin.util.UserGroupIndexer" class="com.liferay.portlet.usergroupsadmin.util.UserGroupIndexer" />
 </beans>

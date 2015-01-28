@@ -128,6 +128,32 @@ long usedMemory = totalMemory - runtime.freeMemory();
 			</td>
 		</tr>
 		<tr>
+			<td colspan="2">
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="adminServerAdministrationIndexersActionPanel" persistState="<%= true %>" title="search-indexes">
+					<table class="table table-condensed table-hover">
+
+						<%
+						for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
+						%>
+
+							<tr>
+								<td>
+									<liferay-ui:message arguments="<%= indexer.getClassName() %>" key="reindex-x" />
+								</td>
+								<td>
+									<aui:button cssClass="save-server-button" data-classname="<%= indexer.getClassName() %>" data-cmd="reindex" value="execute" />
+								</td>
+							</tr>
+
+						<%
+						}
+						%>
+
+					</table>
+				</liferay-ui:panel>
+			</td>
+		</tr>
+		<tr>
 			<td>
 				<liferay-ui:message key="reindex-all-spell-check-indexes" />
 			</td>

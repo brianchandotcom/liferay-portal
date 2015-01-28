@@ -64,7 +64,7 @@ public class AssetCategoryLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		IndexerRegistryUtil.register(BlogsEntry.class.getName(), _blogsIndexer);
+		IndexerRegistryUtil.register(_blogsIndexer);
 	}
 
 	@Test
@@ -98,8 +98,7 @@ public class AssetCategoryLocalServiceTest {
 		assetTestIndexer.setExpectedValues(
 			BlogsEntry.class.getName(), blogsEntry.getEntryId());
 
-		IndexerRegistryUtil.register(
-			BlogsEntry.class.getName(), assetTestIndexer);
+		IndexerRegistryUtil.register(assetTestIndexer);
 
 		AssetCategoryLocalServiceUtil.deleteCategory(assetCategory, true);
 	}

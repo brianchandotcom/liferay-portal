@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,7 +41,6 @@ import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -61,11 +61,10 @@ import javax.portlet.PortletURL;
  * @author Zsigmond Rab
  * @author Hugo Huijser
  */
+@OSGiBeanProperties
 public class UserIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {User.class.getName()};
-
-	public static final String PORTLET_ID = PortletKeys.USERS_ADMIN;
+	public static final String CLASS_NAME = User.class.getName();
 
 	public static long getUserId(Document document) {
 		return GetterUtil.getLong(document.get(Field.USER_ID));
@@ -81,13 +80,8 @@ public class UserIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -238,7 +232,7 @@ public class UserIndexer extends BaseIndexer {
 	protected Document doGetDocument(Object obj) throws Exception {
 		User user = (User)obj;
 
-		Document document = getBaseModelDocument(PORTLET_ID, user);
+		Document document = getBaseModelDocument(CLASS_NAME, user);
 
 		long[] organizationIds = user.getOrganizationIds();
 
@@ -425,11 +419,6 @@ public class UserIndexer extends BaseIndexer {
 		}
 
 		return ArrayUtil.toLongArray(ancestorOrganizationIds);
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void reindexUsers(long companyId) throws PortalException {

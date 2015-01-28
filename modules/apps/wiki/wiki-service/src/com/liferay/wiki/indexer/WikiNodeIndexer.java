@@ -23,14 +23,13 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermission;
@@ -41,14 +40,17 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true, service = Indexer.class
+)
 public class WikiNodeIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {WikiNode.class.getName()};
-
-	public static final String PORTLET_ID = WikiPortletKeys.WIKI;
+	public static final String CLASS_NAME = WikiNode.class.getName();
 
 	public WikiNodeIndexer() {
 		setDefaultSelectedFieldNames(
@@ -59,13 +61,8 @@ public class WikiNodeIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -86,7 +83,7 @@ public class WikiNodeIndexer extends BaseIndexer {
 
 		Document document = new DocumentImpl();
 
-		document.addUID(PORTLET_ID, node.getNodeId(), node.getName());
+		document.addUID(CLASS_NAME, node.getNodeId(), node.getName());
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), node.getCompanyId(), document.get(Field.UID),
@@ -97,9 +94,9 @@ public class WikiNodeIndexer extends BaseIndexer {
 	protected Document doGetDocument(Object obj) throws Exception {
 		WikiNode node = (WikiNode)obj;
 
-		Document document = getBaseModelDocument(PORTLET_ID, node);
+		Document document = getBaseModelDocument(CLASS_NAME, node);
 
-		document.addUID(PORTLET_ID, node.getNodeId(), node.getName());
+		document.addUID(CLASS_NAME, node.getNodeId(), node.getName());
 
 		document.addText(Field.DESCRIPTION, node.getDescription());
 		document.addText(Field.TITLE, node.getName());
@@ -148,11 +145,6 @@ public class WikiNodeIndexer extends BaseIndexer {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexEntries(companyId);
-	}
-
-	@Override
-	protected String getPortletId(SearchContext searchContext) {
-		return PORTLET_ID;
 	}
 
 	protected void reindexEntries(long companyId) throws PortalException {

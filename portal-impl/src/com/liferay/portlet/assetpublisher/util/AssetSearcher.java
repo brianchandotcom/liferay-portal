@@ -52,7 +52,7 @@ public class AssetSearcher extends BaseSearcher {
 	}
 
 	@Override
-	public String[] getClassNames() {
+	public String[] getSearchClassNames() {
 		long[] classNameIds = _assetEntryQuery.getClassNameIds();
 
 		String[] classNames = new String[classNameIds.length];

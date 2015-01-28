@@ -47,7 +47,7 @@ public class JournalSearcher extends BaseSearcher {
 	}
 
 	@Override
-	public String[] getClassNames() {
+	public String[] getSearchClassNames() {
 		return CLASS_NAMES;
 	}
 

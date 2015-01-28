@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.asset.browser.web.constants;
 
-<%@ page import="com.liferay.portlet.assetbrowser.search.AssetBrowserDisplayTerms" %><%@
-page import="com.liferay.portlet.assetbrowser.search.AssetBrowserSearch" %><%@
-page import="com.liferay.portlet.assetbrowser.search.AssetBrowserSearchTerms" %>
+/**
+ * @author Eudaldo Alonso
+ */
+public class AssetBrowserPortletKeys {
 
-<%@ include file="/html/portlet/asset_browser/init-ext.jsp" %>
+	public static final String ASSET_BROWSER =
+		"com_liferay_asset_browser_web_portlet_AssetBrowserPortlet";
+
+}

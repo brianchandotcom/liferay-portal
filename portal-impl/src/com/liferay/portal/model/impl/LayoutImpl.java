@@ -459,6 +459,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 		Locale defaultSiteLocale = LocaleUtil.getSiteDefault();
 
+		// If the site/portal default language changes, there may not exist a
+		// value for the new default language. In this situation, we will use
+		// the value from the previous default language
+
 		if (Validator.isNull(friendlyURLMap.get(defaultSiteLocale))) {
 			Locale defaultLocale = LocaleUtil.fromLanguageId(
 				getDefaultLanguageId());

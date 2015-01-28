@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.action;
+package com.liferay.asset.publisher.web.portlet.action;
 
+import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -51,7 +52,6 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.ClassType;
 import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.util.ContentUtil;
 
 import java.util.ArrayList;
@@ -69,7 +69,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  * @author Juan Fernández
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+public class AssetPublisherConfigurationAction
+	extends DefaultConfigurationAction {
 
 	@Override
 	public void postProcess(

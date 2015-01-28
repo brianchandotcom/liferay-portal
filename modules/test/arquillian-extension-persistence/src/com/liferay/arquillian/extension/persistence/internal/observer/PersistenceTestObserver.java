@@ -14,33 +14,41 @@
 
 package com.liferay.arquillian.extension.persistence.internal.observer;
 
-import com.liferay.arquillian.extension.internal.event.LiferayContextCreatedEvent;
-import com.liferay.arquillian.extension.persistence.internal.annotation.PersistenceTest;
-import com.liferay.portal.kernel.template.TemplateException;
-import com.liferay.portal.tools.DBUpgrader;
+import com.liferay.portal.test.util.InitPersistenceTest;
 
+import org.jboss.arquillian.core.api.Instance;
+import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
-import org.jboss.arquillian.test.spi.TestClass;
+import org.jboss.arquillian.core.spi.EventContext;
+import org.jboss.arquillian.test.spi.event.suite.After;
+import org.jboss.arquillian.test.spi.event.suite.Before;
 
 /**
  * @author Cristina González
  */
 public class PersistenceTestObserver {
 
-	public void afterLiferayContexCreated(
-			@Observes LiferayContextCreatedEvent liferayContextCreatedEvent)
-		throws TemplateException {
+	public void afterTest(@Observes EventContext<After> eventContext)
+		throws Throwable {
 
-		TestClass testClass = liferayContextCreatedEvent.getTestClass();
+		InitPersistenceTest initPersistenceTest =
+			_initPersistenceTestInstance.get();
 
-		if (testClass.getAnnotation(PersistenceTest.class) != null) {
-			try {
-				DBUpgrader.upgrade();
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
+		initPersistenceTest.release(modelListeners);
 	}
+
+	public void beforeTest(@Observes EventContext<Before> eventContext)
+		throws Throwable {
+
+		InitPersistenceTest initPersistenceTest =
+			_initPersistenceTestInstance.get();
+
+		modelListeners = initPersistenceTest.init();
+	}
+
+	@Inject
+	private Instance<InitPersistenceTest> _initPersistenceTestInstance;
+
+	private Object modelListeners;
 
 }

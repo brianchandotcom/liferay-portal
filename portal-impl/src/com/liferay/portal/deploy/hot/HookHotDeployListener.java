@@ -2397,8 +2397,13 @@ public class HookHotDeployListener
 		for (Map.Entry<String, CustomJspBag> entry :
 				_customJspBagsMap.entrySet()) {
 
-			String servletContextName = (String)entry.getKey();
 			CustomJspBag customJspBag = (CustomJspBag)entry.getValue();
+
+			if (!customJspBag.isCustomJspGlobal()) {
+				continue;
+			}
+
+			String servletContextName = (String)entry.getKey();
 
 			String customJspDir = customJspBag.getCustomJspDir();
 			List<String> customJsps = customJspBag.getCustomJsps();

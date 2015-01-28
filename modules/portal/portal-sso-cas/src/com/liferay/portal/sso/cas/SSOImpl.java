@@ -39,7 +39,7 @@ public class SSOImpl implements SSO {
 		if (isSessionRedirectOnExpire(companyId)) {
 			return PrefsPropsUtil.getString(
 				companyId, PropsKeys.CAS_LOGOUT_URL,
-				_casConfiguration.casLogoutURL());
+				_casConfiguration.logoutURL());
 		}
 
 		return null;
@@ -51,8 +51,8 @@ public class SSOImpl implements SSO {
 			return null;
 		}
 
-		if (Validator.isNotNull(_casConfiguration.casLoginURL())) {
-			defaultSigninURL = _casConfiguration.casLoginURL();
+		if (Validator.isNotNull(_casConfiguration.loginURL())) {
+			defaultSigninURL = _casConfiguration.loginURL();
 		}
 
 		return PrefsPropsUtil.getString(
@@ -72,7 +72,7 @@ public class SSOImpl implements SSO {
 	@Override
 	public boolean isSessionRedirectOnExpire(long companyId) {
 		if (isCASAuthEnabled(companyId)) {
-			return _casConfiguration.casLogoutOnSessionExpiration();
+			return _casConfiguration.logoutOnSessionExpiration();
 		}
 
 		return false;
@@ -88,7 +88,7 @@ public class SSOImpl implements SSO {
 	protected boolean isCASAuthEnabled(long companyId) {
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.CAS_AUTH_ENABLED,
-			_casConfiguration.casAuthEnabled())) {
+			_casConfiguration.enabled())) {
 
 			return true;
 		}

@@ -23,47 +23,46 @@ import aQute.bnd.annotation.metatype.Meta;
 	id = "com.liferay.portal.sso.cas", localization = "content.Language"
 )
 public interface CASConfiguration {
-	@Meta.AD(
-		deflt = "false", id = "cas.auth.enabled", required = false)
-	public boolean casAuthEnabled();
 
 	@Meta.AD(
-		deflt = "false", id = "cas.import.from.ldap", required = false)
-	public boolean casImportFromLDAP();
+		deflt = "false", id = "enabled", required = false)
+	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "https://localhost:8443/cas-web/login", id = "cas.login.url",
+		deflt = "false", id = "import.from.ldap", required = false)
+	public boolean importFromLDAP();
+
+	@Meta.AD(
+		deflt = "https://localhost:8443/cas-web/login", id = "login.url",
 		required = false)
-	public String casLoginURL();
+	public String loginURL();
 
 	@Meta.AD(
-		deflt = "http://localhost:8080",
-		id = "cas.logout.on.session.expiration", required = false)
-	public boolean casLogoutOnSessionExpiration();
-
-	@Meta.AD(
-		deflt = "https://localhost:8443/cas-web/logout", id = "cas.logout.url",
+		deflt = "http://localhost:8080", id = "logout.on.session.expiration",
 		required = false)
-	public String casLogoutURL();
+	public boolean logoutOnSessionExpiration();
 
 	@Meta.AD(
-		deflt = "http://localhost:8080", id = "cas.no.such.user.redirect.url",
+		deflt = "https://localhost:8443/cas-web/logout", id = "logout.url",
 		required = false)
-	public String casNoSuchUserRedirectURL();
+	public String logoutURL();
 
 	@Meta.AD(
-		deflt = "https://localhost:8080", id = "cas.server.name",
+		deflt = "http://localhost:8080", id = "no.such.user.redirect.url",
 		required = false)
-	public String casServerName();
+	public String noSuchUserRedirectURL();
 
 	@Meta.AD(
-		deflt = "https://localhost:8443/cas-web", id = "cas.server.url",
-		required = false)
-	public String casServerURL();
+		deflt = "https://localhost:8080", id = "server.name", required = false)
+	public String serverName();
 
 	@Meta.AD(
-		deflt = "http://localhost:8080", id = "cas.service.url",
+		deflt = "https://localhost:8443/cas-web", id = "server.url",
 		required = false)
-	public String casServiceURL();
+	public String serverURL();
+
+	@Meta.AD(
+		deflt = "http://localhost:8080", id = "service.url", required = false)
+	public String serviceURL();
 
 }

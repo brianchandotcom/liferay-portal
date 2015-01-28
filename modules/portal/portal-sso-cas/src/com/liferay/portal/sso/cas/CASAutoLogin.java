@@ -100,7 +100,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.CAS_AUTH_ENABLED,
-				_casConfiguration.casAuthEnabled())) {
+				_casConfiguration.enabled())) {
 
 			return null;
 		}
@@ -121,7 +121,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 			String redirect = PrefsPropsUtil.getString(
 				companyId, PropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
-				_casConfiguration.casNoSuchUserRedirectURL());
+				_casConfiguration.noSuchUserRedirectURL());
 
 			request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
 
@@ -136,7 +136,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.CAS_IMPORT_FROM_LDAP,
-				_casConfiguration.casImportFromLDAP())) {
+				_casConfiguration.importFromLDAP())) {
 
 			try {
 				if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {

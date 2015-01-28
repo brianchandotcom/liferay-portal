@@ -79,7 +79,7 @@ public class CASFilter extends BasePortalFilter {
 
 			if (PrefsPropsUtil.getBoolean(
 					companyId, PropsKeys.CAS_AUTH_ENABLED,
-				_casConfiguration.casAuthEnabled())) {
+				_casConfiguration.enabled())) {
 
 				return true;
 			}
@@ -114,13 +114,11 @@ public class CASFilter extends BasePortalFilter {
 
 		String serverName = PrefsPropsUtil.getString(
 			companyId, PropsKeys.CAS_SERVER_NAME,
-			_casConfiguration.casServerName());
+			_casConfiguration.serverName());
 		String serverUrl = PrefsPropsUtil.getString(
-			companyId, PropsKeys.CAS_SERVER_URL,
-			_casConfiguration.casServerURL());
+			companyId, PropsKeys.CAS_SERVER_URL, _casConfiguration.serverURL());
 		String loginUrl = PrefsPropsUtil.getString(
-			companyId, PropsKeys.CAS_LOGIN_URL,
-			_casConfiguration.casLoginURL());
+			companyId, PropsKeys.CAS_LOGIN_URL, _casConfiguration.loginURL());
 
 		Cas20ProxyTicketValidator cas20ProxyTicketValidator =
 			new Cas20ProxyTicketValidator(serverUrl);
@@ -158,7 +156,7 @@ public class CASFilter extends BasePortalFilter {
 
 			String logoutUrl = PrefsPropsUtil.getString(
 				companyId, PropsKeys.CAS_LOGOUT_URL,
-				_casConfiguration.casLogoutURL());
+				_casConfiguration.logoutURL());
 
 			response.sendRedirect(logoutUrl);
 
@@ -172,7 +170,7 @@ public class CASFilter extends BasePortalFilter {
 
 			String logoutUrl = PrefsPropsUtil.getString(
 				companyId, PropsKeys.CAS_LOGOUT_URL,
-				_casConfiguration.casLogoutURL());
+				_casConfiguration.logoutURL());
 
 			response.sendRedirect(logoutUrl);
 
@@ -189,11 +187,11 @@ public class CASFilter extends BasePortalFilter {
 
 			String serverName = PrefsPropsUtil.getString(
 				companyId, PropsKeys.CAS_SERVER_NAME,
-				_casConfiguration.casServerName());
+				_casConfiguration.serverName());
 
 			String serviceUrl = PrefsPropsUtil.getString(
 				companyId, PropsKeys.CAS_SERVICE_URL,
-				_casConfiguration.casServiceURL());
+				_casConfiguration.serviceURL());
 
 			if (Validator.isNull(serviceUrl)) {
 				serviceUrl = CommonUtils.constructServiceUrl(
@@ -205,7 +203,7 @@ public class CASFilter extends BasePortalFilter {
 			if (Validator.isNull(ticket)) {
 				String loginUrl = PrefsPropsUtil.getString(
 					companyId, PropsKeys.CAS_LOGIN_URL,
-					_casConfiguration.casLoginURL());
+					_casConfiguration.loginURL());
 
 				loginUrl = HttpUtil.addParameter(
 					loginUrl, "service", serviceUrl);

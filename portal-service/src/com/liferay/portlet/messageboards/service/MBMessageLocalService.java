@@ -309,6 +309,11 @@ public interface MBMessageLocalService extends BaseLocalService,
 		long userId, long groupId, java.lang.String className, long classPK,
 		int status) throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getDiscussionMessageDisplay(
+	long, long, String, long, int)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBMessageDisplay getDiscussionMessageDisplay(
 		long userId, long groupId, java.lang.String className, long classPK,

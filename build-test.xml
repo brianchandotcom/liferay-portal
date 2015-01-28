@@ -2250,8 +2250,6 @@ lucene.dir=$${liferay.home}/lucene/
 
 jcr.jackrabbit.repository.root=$${liferay.home}/jackrabbit
 
-discussion.thread.view=combination
-
 dl.hook.impl=com.liferay.documentlibrary.util.JCRHook
 
 dl.hook.file.system.root.dir=$${liferay.home}/document_library</echo>

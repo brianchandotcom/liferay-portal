@@ -1126,6 +1126,34 @@ public class SeleniumBuilderContext {
 			_seleniumBuilderFileUtil.throwValidationException(
 				1012, fileName, element, "function", functionCommand);
 		}
+
+		List<Attribute> attributes = element.attributes();
+
+		for (Attribute attribute : attributes) {
+			String attributeName = attribute.getName();
+
+			if (attributeName.startsWith("locator")) {
+				String attributeValue = attribute.getValue();
+
+				x = attributeValue.indexOf(StringPool.POUND);
+
+				if (x != -1) {
+					String pathName = attributeValue.substring(0, x);
+
+					if (!_pathNames.contains(pathName)) {
+						_seleniumBuilderFileUtil.throwValidationException(
+							1014, fileName, pathName);
+					}
+
+					String pathLocatorKey = attributeValue.substring(x + 1);
+
+					if (!_isValidLocatorKey(pathName, null, pathLocatorKey)) {
+						_seleniumBuilderFileUtil.throwValidationException(
+							1010, fileName, element, pathLocatorKey);
+					}
+				}
+			}
+		}
 	}
 
 	private void _validateLocatorKeyElement(

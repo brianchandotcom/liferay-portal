@@ -128,12 +128,15 @@ public class SeleniumBuilderContext {
 
 			_functionClassNames.put(functionName, _getClassName(fileName));
 
+			Element rootElement = _getRootElement(fileName);
+
+			_functionDefaultCommandNames.put(
+				functionName, _getDefaultCommandName(rootElement));
+
 			_functionFileNames.put(functionName, fileName);
 
 			_functionJavaFileNames.put(
 				functionName, _getJavaFileName(fileName));
-
-			Element rootElement = _getRootElement(fileName);
 
 			_functionLocatorCounts.put(
 				functionName, _getLocatorCount(rootElement));
@@ -279,6 +282,10 @@ public class SeleniumBuilderContext {
 
 	public String getFunctionClassName(String functionName) {
 		return _functionClassNames.get(functionName);
+	}
+
+	public String getFunctionDefaultCommandName(String functionName) {
+		return _functionDefaultCommandNames.get(functionName);
 	}
 
 	public String getFunctionFileName(String functionName) {
@@ -883,6 +890,12 @@ public class SeleniumBuilderContext {
 		return _seleniumBuilderFileUtil.getClassName(fileName, classSuffix);
 	}
 
+	private String _getDefaultCommandName(Element rootElement)
+		throws Exception {
+
+		return _seleniumBuilderFileUtil.getDefaultCommandName(rootElement);
+	}
+
 	private String _getHTMLFileName(String fileName) {
 		return _seleniumBuilderFileUtil.getHTMLFileName(fileName);
 	}
@@ -1273,6 +1286,8 @@ public class SeleniumBuilderContext {
 	private final Map<String, Element> _actionRootElements = new HashMap<>();
 	private final Map<String, String> _actionSimpleClassNames = new HashMap<>();
 	private final Map<String, String> _functionClassNames = new HashMap<>();
+	private final Map<String, String> _functionDefaultCommandNames =
+		new HashMap<>();
 	private final Map<String, String> _functionFileNames = new HashMap<>();
 	private final Map<String, String> _functionJavaFileNames = new HashMap<>();
 	private final Map<String, Integer> _functionLocatorCounts = new HashMap<>();

@@ -212,6 +212,10 @@ public class SeleniumBuilderFileUtil {
 		return _componentNames;
 	}
 
+	public String getDefaultCommandName(Element rootElement) {
+		return rootElement.attributeValue("default");
+	}
+
 	public String getHTMLFileName(String fileName) {
 		String javaFileName = getJavaFileName(fileName);
 

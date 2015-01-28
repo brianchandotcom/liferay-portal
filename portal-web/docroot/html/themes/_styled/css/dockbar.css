@@ -138,7 +138,7 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	.impersonating-user {
-		.alert-icon{
+		.alert-icon {
 			margin-right: 9px;
 		}
 
@@ -1090,6 +1090,26 @@ $editLayoutPanelWidth: 460px;
 
 				&.history {
 					float: right;
+				}
+			}
+
+			.workflow-status .status {
+				color: #FFF;
+
+				&.approved {
+					background-color: $status-approved-text;
+				}
+
+				&.draft {
+					background-color: $status-draft-text;
+				}
+
+				&.expired {
+					background-color: $status-expired-text;
+				}
+
+				&.pending {
+					background-color: $status-pending-text;
 				}
 			}
 		}

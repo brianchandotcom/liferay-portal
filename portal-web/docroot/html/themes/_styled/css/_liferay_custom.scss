@@ -71,26 +71,26 @@
 
 .status {
 	&.approved {
-		color: $status-approved-text !important;
+		color: $status-approved-text;
 	}
 
 	&.scheduled {
-		color: $status-scheduled-text !important;
+		color: $status-scheduled-text;
 	}
 
 	&.pending {
-		color: $status-pending-text !important;
+		color: $status-pending-text;
 	}
 
 	&.denied {
-		color: $status-denied-text !important;
+		color: $status-denied-text;
 	}
 
 	&.expired {
-		color: $status-expired-text !important;
+		color: $status-expired-text;
 	}
 
 	&.draft {
-		color: $status-draft-text !important;
+		color: $status-draft-text;
 	}
 }

@@ -1122,22 +1122,25 @@ public class SeleniumBuilderContext {
 		int x = function.indexOf(StringPool.POUND);
 
 		if (x == -1) {
-			_seleniumBuilderFileUtil.throwValidationException(
-				1006, fileName, element, "function");
+			if (!_isFunctionName(function)) {
+				_seleniumBuilderFileUtil.throwValidationException(
+					1011, fileName, element, "function", function);
+			}
 		}
+		else {
+			String functionName = function.substring(0, x);
 
-		String functionName = function.substring(0, x);
+			if (!_isFunctionName(functionName)) {
+				_seleniumBuilderFileUtil.throwValidationException(
+					1011, fileName, element, "function", functionName);
+			}
 
-		if (!_isFunctionName(functionName)) {
-			_seleniumBuilderFileUtil.throwValidationException(
-				1011, fileName, element, "function", functionName);
-		}
+			String functionCommand = function.substring(x + 1);
 
-		String functionCommand = function.substring(x + 1);
-
-		if (!_isFunctionCommand(functionName, functionCommand)) {
-			_seleniumBuilderFileUtil.throwValidationException(
-				1012, fileName, element, "function", functionCommand);
+			if (!_isFunctionCommand(functionName, functionCommand)) {
+				_seleniumBuilderFileUtil.throwValidationException(
+					1012, fileName, element, "function", functionCommand);
+			}
 		}
 
 		List<Attribute> attributes = element.attributes();

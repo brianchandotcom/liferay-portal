@@ -1,7 +1,7 @@
 <definition>
 	<command name="click">
 		<case comparator="endsWith" locator-key1="LOCATOR_KEY">
-			<execute function="Click" />
+			<execute function="Clicks" />
 		</case>
 	</command>
 </definition>

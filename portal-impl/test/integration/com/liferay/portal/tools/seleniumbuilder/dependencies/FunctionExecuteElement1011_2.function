@@ -1,5 +1,5 @@
 <definition>
 	<command name="name">
-		<execute function="Click" />
+		<execute function="Clicks" />
 	</command>
 </definition>

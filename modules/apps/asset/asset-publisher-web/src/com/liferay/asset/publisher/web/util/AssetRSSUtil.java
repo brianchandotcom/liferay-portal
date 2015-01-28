@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.util;
+package com.liferay.asset.publisher.web.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -190,8 +190,8 @@ public class AssetRSSUtil {
 			portletPreferences.getValue("rssDelta", "20"));
 
 		return AssetPublisherUtil.getAssetEntries(
-			portletPreferences, themeDisplay.getLayout(),
-			themeDisplay.getScopeGroupId(), rssDelta, true);
+				portletPreferences, themeDisplay.getLayout(),
+				themeDisplay.getScopeGroupId(), rssDelta, true);
 	}
 
 	protected static String getAssetPublisherURL(PortletRequest portletRequest)

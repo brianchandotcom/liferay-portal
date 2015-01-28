@@ -1039,6 +1039,9 @@ public class LayoutImporter {
 
 				Layout layout = layouts.get(layoutId);
 
+				// Layout might have not been imported due to a controlled error
+				// See SitesImpl#addMergeFailFriendlyURLLayout
+
 				if (layout == null) {
 					continue;
 				}

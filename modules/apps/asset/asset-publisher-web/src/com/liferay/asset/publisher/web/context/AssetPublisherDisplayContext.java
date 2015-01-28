@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.context;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -147,7 +147,7 @@ public class AssetPublisherDisplayContext {
 
 		String portletName = getPortletName();
 
-		if (!portletName.equals(PortletKeys.RELATED_ASSETS)) {
+		if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
 			assetEntryQuery.setGroupIds(getGroupIds());
 		}
 
@@ -161,7 +161,7 @@ public class AssetPublisherDisplayContext {
 			assetEntryQuery.setLayout(themeDisplay.getLayout());
 		}
 
-		if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
+		if (portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
 			AssetEntry layoutAssetEntry = (AssetEntry)_request.getAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY);
 
@@ -291,7 +291,7 @@ public class AssetPublisherDisplayContext {
 
 		String portletName = getPortletName();
 
-		if (portletName.equals(PortletKeys.RECENT_CONTENT)) {
+		if (portletName.equals(AssetPublisherPortletKeys.RECENT_CONTENT)) {
 			_delta = PropsValues.RECENT_CONTENT_MAX_DISPLAY_ITEMS;
 		}
 
@@ -593,8 +593,9 @@ public class AssetPublisherDisplayContext {
 
 		String portletName = getPortletName();
 
-		if (!portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) &&
-			!portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) &&
+		if (!portletName.equals(
+				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
+			!portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) &&
 			PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
 
 			_enablePermissions = true;
@@ -654,7 +655,7 @@ public class AssetPublisherDisplayContext {
 	public boolean isEnableSetAsDefaultAssetPublisher() {
 		String rootPortletId = getRootPortletId();
 
-		if (rootPortletId.equals(PortletKeys.ASSET_PUBLISHER)) {
+		if (rootPortletId.equals(AssetPublisherPortletKeys.ASSET_PUBLISHER)) {
 			return true;
 		}
 
@@ -720,8 +721,10 @@ public class AssetPublisherDisplayContext {
 	public boolean isOrderingAndGroupingEnabled() {
 		String rootPortletId = getRootPortletId();
 
-		if (rootPortletId.equals(PortletKeys.HIGHEST_RATED_ASSETS) ||
-			rootPortletId.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
+		if (rootPortletId.equals(
+				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) ||
+			rootPortletId.equals(
+				AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
 
 			return false;
 		}
@@ -733,7 +736,7 @@ public class AssetPublisherDisplayContext {
 		String rootPortletId = getRootPortletId();
 
 		if (!PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX ||
-			rootPortletId.equals(PortletKeys.RELATED_ASSETS)) {
+			rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
 
 			return false;
 		}
@@ -768,9 +771,11 @@ public class AssetPublisherDisplayContext {
 	public boolean isSelectionStyleEnabled() {
 		String rootPortletId = getRootPortletId();
 
-		if (rootPortletId.equals(PortletKeys.HIGHEST_RATED_ASSETS) ||
-			rootPortletId.equals(PortletKeys.MOST_VIEWED_ASSETS) ||
-			rootPortletId.equals(PortletKeys.RELATED_ASSETS)) {
+		if (rootPortletId.equals(
+				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) ||
+			rootPortletId.equals(
+				AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) ||
+			rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
 
 			return false;
 		}
@@ -824,8 +829,10 @@ public class AssetPublisherDisplayContext {
 	public boolean isShowEnableAddContentButton() {
 		String rootPortletId = getRootPortletId();
 
-		if (rootPortletId.equals(PortletKeys.HIGHEST_RATED_ASSETS) ||
-			rootPortletId.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
+		if (rootPortletId.equals(
+				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) ||
+			rootPortletId.equals(
+				AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
 
 			return false;
 		}
@@ -844,7 +851,7 @@ public class AssetPublisherDisplayContext {
 	public boolean isShowEnableRelatedAssets() {
 		String rootPortletId = getRootPortletId();
 
-		if (rootPortletId.equals(PortletKeys.RELATED_ASSETS)) {
+		if (rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
 			return false;
 		}
 
@@ -882,7 +889,7 @@ public class AssetPublisherDisplayContext {
 	public boolean isShowScopeSelector() {
 		String rootPortletId = getRootPortletId();
 
-		if (rootPortletId.equals(PortletKeys.RELATED_ASSETS)) {
+		if (rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
 			return false;
 		}
 
@@ -893,7 +900,7 @@ public class AssetPublisherDisplayContext {
 		String rootPortletId = getRootPortletId();
 
 		if (!PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX ||
-			rootPortletId.equals(PortletKeys.RELATED_ASSETS)) {
+			rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
 
 			return false;
 		}

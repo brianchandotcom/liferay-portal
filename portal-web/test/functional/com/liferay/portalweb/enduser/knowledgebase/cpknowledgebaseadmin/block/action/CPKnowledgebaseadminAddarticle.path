@@ -90,8 +90,13 @@
 </tr>
 <!--ATTACHMENTS-->
 <tr>
-	<td>ATTACHMENTS_HEADER</td>
-	<td>//div/span[contains(.,'Attachments')]</td>
+	<td>ATTACHMENTS_HEADER_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and contains(.,'Attachments')]/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_HEADER_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Attachments')]/div/span</td>
 	<td></td>
 </tr>
 <tr>

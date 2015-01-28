@@ -340,7 +340,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewImportedKBArticlesWithMarkdownFormatHierarchy" priority="5">
+	<command name="ViewImportedKBArticlesInHierarchyWithMarkdownFormat" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -383,9 +383,47 @@
 			<var name="kbChildArticleTitle" value="Developing Applications with Liferay Developer Studio" />
 		</execute>
 
-		<execute macro="KBArticle#viewImageViaContent">
+		<execute macro="KBArticle#viewImageViaContentCmd">
 			<var name="kbMarkdownImage" value="lds-first-launch-3.png" />
 			<var name="kbMarkdownImageCaption" value="Figure 1: The First Start wizard makes it easy to configure the runtime that ships with Liferay Developer Studio." />
+		</execute>
+	</command>
+
+	<command name="ViewImportedKBArticlesWithMultiplePeerHierarchies" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#importCP">
+			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
+			<var name="kbArticle1ChildArticleTitle1" value="Implementing Application Display Templates" />
+			<var name="kbArticle2ChildArticleTitle1" value="Using liferay-ui:success and liferay-ui:error Messages" />
+			<var name="kbArticle2ChildArticleTitle2" value="Using Liferay UI Tabs and Sections" />
+			<var name="kbArticleTitle1" value="Application Display Templates" />
+			<var name="kbArticleTitle2" value="Liferay UI Taglibs" />
 		</execute>
 	</command>
 
@@ -423,7 +461,7 @@
 			<var name="kbChildArticleTitle" value="Using Liferay UI Tabs and Sections" />
 		</execute>
 
-		<execute macro="KBArticle#viewImageViaContent" />
+		<execute macro="KBArticle#viewImageViaContentCmd" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
@@ -463,7 +501,7 @@
 		</execute>
 
 		<execute macro="KBArticle#importCP">
-			<var name="kbZipFile" value="KBtest.zip" />
+			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
 		</execute>
 
 		<execute macro="KBArticle#gotoViaKBAdminCP">
@@ -487,44 +525,6 @@
 		<execute macro="KBArticle#viewSourceURLPG">
 			<var name="kbArticleSourceURL" value="https://github.com/liferay/liferay-docs/blob/master/develop/tutorials/articles/adt/intro.markdown" />
 			<var name="kbArticleTitle" value="Application Display Templates" />
-		</execute>
-	</command>
-
-	<command name="ViewImportedMultiplePeerHierarchies" priority="5">
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#importCP">
-			<var name="kbZipFile" value="KBArticlesWithMetadata.zip" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#gotoViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewHierarchyViaKBDisplayPG">
-			<var name="kbArticle1ChildArticleTitle1" value="Implementing Application Display Templates" />
-			<var name="kbArticle2ChildArticleTitle1" value="Using liferay-ui:success and liferay-ui:error Messages" />
-			<var name="kbArticle2ChildArticleTitle2" value="Using Liferay UI Tabs and Sections" />
-			<var name="kbArticleTitle1" value="Application Display Templates" />
-			<var name="kbArticleTitle2" value="Liferay UI Taglibs" />
 		</execute>
 	</command>
 

@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SCOPE_MENU</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a/span[contains(.,'${key_kbPageScope}')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//span[contains(.,'${key_kbPageScope}')]</td>
 	<td></td>
 </tr>
 <tr>

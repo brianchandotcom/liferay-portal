@@ -14,8 +14,6 @@
 
 package com.liferay.counter.service.persistence.test;
 
-import com.liferay.arquillian.extension.persistence.internal.annotation.PersistenceTest;
-
 import com.liferay.counter.NoSuchCounterException;
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.service.persistence.CounterPersistence;
@@ -52,7 +50,6 @@ import java.util.Set;
 /**
  * @generated
  */
-@PersistenceTest
 @RunWith(Arquillian.class)
 @Transactional(propagation = Propagation.REQUIRED)
 public class CounterPersistenceTest {

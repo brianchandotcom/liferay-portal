@@ -111,7 +111,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	found, if the XSD was not well-formed, or if a portal
 	exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
-	long, Map, Map, DDMForm, ServiceContext)}
+	long, Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
@@ -215,8 +215,8 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	found, if the XSD was not well-formed, or if a portal
 	exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
-	String, long, String, Map, Map, DDMForm, String, int,
-	ServiceContext)}
+	String, long, String, Map, Map, DDMForm, DDMFormLayout,
+	String, int, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
@@ -1203,7 +1203,8 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	if the XSD was not well-formed, or if a portal exception
 	occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
-	long, String, Map, Map, DDMForm, ServiceContext)}
+	long, String, Map, Map, DDMForm, DDMFormLayout,
+	ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
@@ -1248,7 +1249,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	if the XSD was not well-formed, or if a portal exception
 	occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
-	Map, Map, DDMForm, ServiceContext)}
+	Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateStructure(
@@ -1271,8 +1272,8 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @throws PortalException if a matching structure could not be found,
 	if the XSD was not well-formed, or if a portal exception
 	occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateDDMForm(long, String,
-	ServiceContext)}
+	* @deprecated As of 7.0.0, replaced by {@link #updateStructure(long,
+	DDMForm, DDMFormLayout, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateXSD(

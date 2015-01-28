@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence.test;
 
-import com.liferay.arquillian.extension.persistence.internal.annotation.PersistenceTest;
-
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -57,7 +55,6 @@ import java.util.Set;
 /**
  * @generated
  */
-@PersistenceTest
 @RunWith(Arquillian.class)
 @Transactional(propagation = Propagation.REQUIRED)
 public class DLSyncEventPersistenceTest {

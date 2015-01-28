@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.portlet.action;
 
+import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -41,7 +42,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -86,12 +86,14 @@ public class AssetPublisherConfigurationAction
 			portletRequest, portletPreferences,
 			"emailAssetEntryAddedBody_" + languageId,
 			ContentUtil.get(
-				PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY));
+				AssetPublisherWebConfigurationValues.
+					EMAIL_ASSET_ENTRY_ADDED_BODY));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailAssetEntryAddedSubject_" + languageId,
 			ContentUtil.get(
-				PropsValues.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT));
+				AssetPublisherWebConfigurationValues.
+					EMAIL_ASSET_ENTRY_ADDED_SUBJECT));
 	}
 
 	@Override

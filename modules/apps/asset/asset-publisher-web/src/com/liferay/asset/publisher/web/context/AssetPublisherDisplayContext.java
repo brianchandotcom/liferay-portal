@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.context;
 
+import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -303,7 +304,8 @@ public class AssetPublisherDisplayContext {
 			_displayStyle = GetterUtil.getString(
 				_portletPreferences.getValue(
 					"displayStyle",
-					PropsValues.ASSET_PUBLISHER_DISPLAY_STYLE_DEFAULT));
+					AssetPublisherWebConfigurationValues.
+						DISPLAY_STYLE_DEFAULT));
 		}
 
 		return _displayStyle;
@@ -596,14 +598,16 @@ public class AssetPublisherDisplayContext {
 		if (!portletName.equals(
 				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
 			!portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) &&
-			PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
+			AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX) {
 
 			_enablePermissions = true;
 
 			return _enablePermissions;
 		}
 
-		if (!PropsValues.ASSET_PUBLISHER_PERMISSION_CHECKING_CONFIGURABLE) {
+		if (!AssetPublisherWebConfigurationValues.
+				PERMISSION_CHECKING_CONFIGURABLE) {
+
 			_enablePermissions = true;
 
 			return _enablePermissions;
@@ -735,7 +739,7 @@ public class AssetPublisherDisplayContext {
 	public boolean isOrderingByTitleEnabled() {
 		String rootPortletId = getRootPortletId();
 
-		if (!PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX ||
+		if (!AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX ||
 			rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
 
 			return false;
@@ -841,11 +845,12 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public Boolean isShowEnablePermissions() {
-		if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
+		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX) {
 			return false;
 		}
 
-		return PropsValues.ASSET_PUBLISHER_PERMISSION_CHECKING_CONFIGURABLE;
+		return AssetPublisherWebConfigurationValues.
+			PERMISSION_CHECKING_CONFIGURABLE;
 	}
 
 	public boolean isShowEnableRelatedAssets() {
@@ -899,7 +904,7 @@ public class AssetPublisherDisplayContext {
 	public boolean isShowSubtypeFieldsFilter() {
 		String rootPortletId = getRootPortletId();
 
-		if (!PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX ||
+		if (!AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX ||
 			rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
 
 			return false;

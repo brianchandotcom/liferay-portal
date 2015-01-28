@@ -211,7 +211,7 @@ portletURL.setParameter("target", target);
 				Map<String, Object> data = new HashMap<String, Object>();
 
 				data.put("groupdescriptivename", group.getDescriptiveName(locale));
-				data.put("selectedgroupid", group.getGroupId());
+				data.put("groupid", group.getGroupId());
 				data.put("target", target);
 				%>
 

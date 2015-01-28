@@ -39,7 +39,6 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 	<aui:input name="assetEntryId" type="hidden" />
 	<aui:input name="assetEntryOrder" type="hidden" value="-1" />
 	<aui:input name="assetEntryType" type="hidden" />
-	<aui:input name="selectedGroupId" type="hidden" />
 
 	<liferay-util:buffer var="selectStyle">
 		<c:choose>
@@ -281,7 +280,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 				},
 				function(event) {
 					form.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
-					form.<portlet:namespace />selectedGroupId.value = event.selectedgroupid;
+					form.<portlet:namespace />groupId.value = event.groupid;
 
 					submitForm(form);
 				}

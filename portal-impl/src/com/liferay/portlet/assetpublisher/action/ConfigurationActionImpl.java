@@ -305,10 +305,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				AssetPublisher.SCOPE_ID_GROUP_PREFIX + GroupConstants.DEFAULT
 			});
 
-		long selectedGroupId = ParamUtil.getLong(
-			actionRequest, "selectedGroupId");
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-		Group selectedGroup = GroupLocalServiceUtil.fetchGroup(selectedGroupId);
+		Group selectedGroup = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		String scopeId = AssetPublisherUtil.getScopeId(
 			selectedGroup, themeDisplay.getScopeGroupId());

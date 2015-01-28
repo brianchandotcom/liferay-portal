@@ -983,7 +983,8 @@ public class SeleniumBuilderFileUtil {
 				}
 
 				if (attributeName.equals("locator") ||
-					attributeName.equals("value")) {
+					attributeName.equals("value") ||
+					attributeName.startsWith("locator-key")) {
 
 					throwValidationException(
 						1005, fileName, executeElement, attributeName);

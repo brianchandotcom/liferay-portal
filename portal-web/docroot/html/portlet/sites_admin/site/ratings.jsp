@@ -60,7 +60,7 @@ else {
 		for (String className : classNames) {
 			String propertyKey = className + StringPool.UNDERLINE + "RatingsType";
 
-			PortletRatingsDefinition.RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(portletId, className);
+			RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(portletId, className);
 
 			String companyRatingsTypeString = PrefsParamUtil.getString(companyPortletPreferences, request, propertyKey, defaultRatingsType.toString());
 
@@ -71,7 +71,7 @@ else {
 				<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "TypeSettingsProperties--" + propertyKey + "--" %>'>
 
 					<%
-					for (PortletRatingsDefinition.RatingsType ratingsType : PortletRatingsDefinition.RatingsType.values()) {
+					for (RatingsType ratingsType : RatingsType.values()) {
 					%>
 
 						<aui:option label="<%= LanguageUtil.get(request, ratingsType.getValue()) %>" selected="<%= ratingsTypeString.equals(ratingsType.getValue()) %>" value="<%= ratingsType.getValue() %>" />

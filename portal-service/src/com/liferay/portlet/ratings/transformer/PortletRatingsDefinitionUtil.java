@@ -37,7 +37,7 @@ public class PortletRatingsDefinitionUtil {
 		return portletRatingsDefinition.getClassNames();
 	}
 
-	public static PortletRatingsDefinition.RatingsType getDefaultRatingsType(
+	public static RatingsType getDefaultRatingsType(
 		String portletId, String className) {
 
 		PortletRatingsDefinition portletRatingsDefinition =

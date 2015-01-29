@@ -270,6 +270,7 @@ page import="com.liferay.portlet.messageboards.util.MBUtil" %><%@
 page import="com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil" %><%@
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.portlet.ratings.transformer.PortletRatingsDefinition" %><%@
+page import="com.liferay.portlet.ratings.transformer.RatingsType" %><%@
 page import="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" %><%@
 page import="com.liferay.portlet.sites.util.Sites" %><%@
 page import="com.liferay.portlet.sites.util.SitesUtil" %><%@

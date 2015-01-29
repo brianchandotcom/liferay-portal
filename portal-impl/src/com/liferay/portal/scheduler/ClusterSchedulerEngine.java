@@ -620,7 +620,8 @@ public class ClusterSchedulerEngine
 	}
 
 	@BeanReference(
-		name = "com.liferay.portal.scheduler.ClusterSchedulerEngineService")
+		name = "com.liferay.portal.scheduler.ClusterSchedulerEngineService"
+	)
 	protected SchedulerEngine schedulerEngine;
 
 	private static final String _PLUGIN_READY = "plugin.ready";

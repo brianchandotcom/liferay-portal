@@ -383,7 +383,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@BufferedIncrement(
-		configuration = "AssetEntry", incrementClass = NumberIncrement.class)
+		configuration = "AssetEntry", incrementClass = NumberIncrement.class
+	)
 	@Override
 	public void incrementViewCounter(
 		long userId, String className, long classPK, int increment) {

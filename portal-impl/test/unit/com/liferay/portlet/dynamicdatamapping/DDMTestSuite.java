@@ -62,6 +62,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		DDMXSDImplTest.class, FieldsToDDMFormValuesConverterTest.class,
 		GeolocationFieldRendererTest.class, LocalizedValueTest.class,
 		UnlocalizedValueTest.class
-	})
+	}
+)
 public class DDMTestSuite {
 }

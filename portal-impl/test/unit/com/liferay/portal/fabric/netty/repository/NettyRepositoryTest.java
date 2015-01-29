@@ -556,7 +556,8 @@ public class NettyRepositoryTest {
 	@AdviseWith(
 		adviceClasses = {
 			NettyUtilAdvice.class, DefaultNoticeableFutureAdvice.class
-		})
+		}
+	)
 	@Test
 	public void testGetFilesCovertCausedException() throws Exception {
 		Map<Path, Path> pathMap = new HashMap<>();
@@ -686,7 +687,8 @@ public class NettyRepositoryTest {
 
 		@Around(
 			"execution(public void com.liferay.portal.kernel.concurrent." +
-				"DefaultNoticeableFuture.set(Object))")
+				"DefaultNoticeableFuture.set(Object))"
+		)
 		public void set(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 

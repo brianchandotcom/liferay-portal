@@ -387,7 +387,8 @@ public class TransactionalPortalCacheTest {
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"TRANSACTIONAL_CACHE_ENABLED)")
+				"TRANSACTIONAL_CACHE_ENABLED)"
+		)
 		public Object disableTransactionalCache(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
@@ -402,7 +403,8 @@ public class TransactionalPortalCacheTest {
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"TRANSACTIONAL_CACHE_ENABLED)")
+				"TRANSACTIONAL_CACHE_ENABLED)"
+		)
 		public Object enableTransactionalCache(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {

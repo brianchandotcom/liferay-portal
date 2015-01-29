@@ -239,7 +239,8 @@ public class FileUploadChannelHandlerTest {
 		@Around(
 			"execution(public static java.nio.file.Path " +
 				"com.liferay.portal.fabric.netty.fileserver.FileHelperUtil." +
-					"unzip(java.nio.file.Path, java.nio.file.Path))")
+					"unzip(java.nio.file.Path, java.nio.file.Path))"
+		)
 		public Object unzip(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 

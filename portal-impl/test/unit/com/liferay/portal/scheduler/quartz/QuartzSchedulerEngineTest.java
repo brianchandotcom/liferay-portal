@@ -420,7 +420,8 @@ public class QuartzSchedulerEngineTest {
 	@AdviseWith(
 		adviceClasses = {
 			EnableSchedulerAdvice.class, PortalLocalServiceUtilAdvice.class
-		})
+		}
+	)
 	@Test
 	public void testSchedule1() throws Exception {
 		List<SchedulerResponse> schedulerResponses =
@@ -732,7 +733,8 @@ public class QuartzSchedulerEngineTest {
 	public static class EnableSchedulerAdvice {
 
 		@Around(
-			"set(* com.liferay.portal.util.PropsValues.SCHEDULER_ENABLED)")
+			"set(* com.liferay.portal.util.PropsValues.SCHEDULER_ENABLED)"
+		)
 		public Object enableScheduler(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
@@ -746,7 +748,8 @@ public class QuartzSchedulerEngineTest {
 
 		@Around(
 			"execution(* com.liferay.portal.service.PortletLocalServiceUtil." +
-				"getPortletById(java.lang.String)) && args(portletId)")
+				"getPortletById(java.lang.String)) && args(portletId)"
+		)
 		public Portlet getPortletById(String portletId) {
 			Portlet portlet = new PortletImpl();
 

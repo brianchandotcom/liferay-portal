@@ -149,7 +149,8 @@ public class WelderFactoryUtilTest {
 
 		@Around(
 			"execution(public static boolean com.liferay.portal.kernel." +
-				"nio.intraband.welder.fifo.FIFOUtil.isFIFOSupported())")
+				"nio.intraband.welder.fifo.FIFOUtil.isFIFOSupported())"
+		)
 		public boolean isFIFOSupported() {
 			return _fifoSupported;
 		}
@@ -163,7 +164,8 @@ public class WelderFactoryUtilTest {
 
 		@Around(
 			"execution(public static boolean com.liferay.portal.kernel.util." +
-				"OSDetector.isWindows())")
+				"OSDetector.isWindows())"
+		)
 		public boolean isWindows() {
 			return _windows;
 		}

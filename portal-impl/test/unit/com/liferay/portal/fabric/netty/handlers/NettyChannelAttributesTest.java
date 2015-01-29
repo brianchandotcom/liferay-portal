@@ -208,7 +208,8 @@ public class NettyChannelAttributesTest {
 
 		@Around(
 			"execution(public Object io.netty.util.Attribute.setIfAbsent(" +
-				"Object))")
+				"Object))"
+		)
 		public Object setIfAbsent(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 

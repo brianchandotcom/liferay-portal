@@ -153,7 +153,8 @@ public class LayoutPrototypeLocalServiceImpl
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE)
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public LayoutPrototype deleteLayoutPrototype(
 			LayoutPrototype layoutPrototype)
 		throws PortalException {

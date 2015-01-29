@@ -27,7 +27,8 @@ public class PortalExecutorManagerUtilAdvice {
 
 	@Around(
 		"execution(* com.liferay.portal.kernel.executor." +
-			"PortalExecutorManagerUtil.getPortalExecutor(..))")
+			"PortalExecutorManagerUtil.getPortalExecutor(..))"
+	)
 	public ThreadPoolExecutor getPortalExecutor() {
 		return new ThreadPoolExecutor(0, 1) {
 

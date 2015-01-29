@@ -182,19 +182,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected static int getLeadingTabCount(String line) {
-		int leadingTabCount = 0;
-
-		while (line.startsWith(StringPool.TAB)) {
-			line = line.substring(1);
-
-			leadingTabCount++;
-		}
-
-		return leadingTabCount;
-	}
-
-	protected static String sortAnnotations(
+	protected static String formatAnnotations(
 			String fileName, String javaTermName, String content, String indent)
 		throws IOException {
 
@@ -217,6 +205,27 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (Validator.isNotNull(annotation) &&
 					annotation.contains(StringPool.OPEN_PARENTHESIS)) {
 
+					Matcher matcher = _annotationPattern.matcher(
+						"\n" + annotation);
+
+					if (matcher.find()) {
+						String match = matcher.group();
+
+						match = match.substring(1);
+
+						if (!match.endsWith("\n)\n") &&
+							!match.endsWith("\t)\n")) {
+
+							String tabs = matcher.group(1);
+
+							String replacement = StringUtil.replaceLast(
+								match, ")", "\n" + tabs + ")");
+
+							return StringUtil.replace(
+								content, match, replacement);
+						}
+					}
+
 					checkAnnotationParameters(
 						fileName, javaTermName, annotation);
 				}
@@ -229,7 +238,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					content = StringUtil.replaceLast(
 						content, annotation, previousAnnotation);
 
-					return sortAnnotations(
+					return formatAnnotations(
 						fileName, javaTermName, content, indent);
 				}
 
@@ -255,6 +264,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
+	}
+
+	protected static int getLeadingTabCount(String line) {
+		int leadingTabCount = 0;
+
+		while (line.startsWith(StringPool.TAB)) {
+			line = line.substring(1);
+
+			leadingTabCount++;
+		}
+
+		return leadingTabCount;
 	}
 
 	protected String applyDiamondOperator(String content) {
@@ -798,7 +819,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			break;
 		}
 
-		newContent = sortAnnotations(
+		newContent = formatAnnotations(
 			fileName, StringPool.BLANK, newContent, StringPool.BLANK);
 
 		Matcher matcher = _logPattern.matcher(newContent);
@@ -1759,14 +1780,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								return truncateLongLinesContent;
 							}
 
-							Matcher matcher =
-								_annotationParameterPattern.matcher(line);
-
-							if (!matcher.find()) {
-								processErrorMessage(
-									fileName, "> 80: " + fileName + " " +
-										lineCount);
-							}
+							processErrorMessage(
+								fileName, "> 80: " + fileName + " " +
+									lineCount);
 						}
 					}
 					else {
@@ -2693,10 +2709,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected boolean isAnnotationParameter(String content, String line) {
-		if (!line.contains(" = ") && !line.startsWith(StringPool.QUOTE)) {
-			return false;
-		}
-
 		Matcher matcher = _annotationPattern.matcher(content);
 
 		while (matcher.find()) {
@@ -2806,15 +2818,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private static final int _MAX_LINE_LENGTH = 80;
 
+	private static Pattern _annotationPattern = Pattern.compile(
+		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
 	private static Pattern _importsPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
-	private Pattern _annotationParameterPattern = Pattern.compile(
-		"\t[A-Za-z]+ = \"[^\"]+\"[,|\\)]$");
-	private Pattern _annotationPattern = Pattern.compile(
-		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\n(\t*)\\)");
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;

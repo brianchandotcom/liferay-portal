@@ -28,6 +28,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses(
 	{
 		DDLRecordDDMFormValuesReaderTest.class, DDLRecordSetImplTest.class
-	})
+	}
+)
 public class DDLTestSuite {
 }

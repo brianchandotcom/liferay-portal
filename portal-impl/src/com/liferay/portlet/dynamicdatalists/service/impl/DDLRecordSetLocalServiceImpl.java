@@ -139,7 +139,8 @@ public class DDLRecordSetLocalServiceImpl
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE)
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public void deleteRecordSet(DDLRecordSet recordSet) throws PortalException {
 
 		// Record set

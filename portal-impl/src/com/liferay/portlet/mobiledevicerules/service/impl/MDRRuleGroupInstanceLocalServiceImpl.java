@@ -117,7 +117,8 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE)
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public void deleteRuleGroupInstance(
 		MDRRuleGroupInstance ruleGroupInstance) {
 

@@ -1008,7 +1008,8 @@ public class IntrabandProxyUtilTest {
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"INTRABAND_PROXY_DUMP_CLASSES_ENABLED)")
+				"INTRABAND_PROXY_DUMP_CLASSES_ENABLED)"
+		)
 		public Object disableClusterLink(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
@@ -1023,7 +1024,8 @@ public class IntrabandProxyUtilTest {
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"INTRABAND_PROXY_DUMP_CLASSES_ENABLED)")
+				"INTRABAND_PROXY_DUMP_CLASSES_ENABLED)"
+		)
 		public Object enableClusterLink(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 

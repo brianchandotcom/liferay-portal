@@ -44,6 +44,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testFormatAnnotations() throws Exception {
+		test("FormatAnnotations.testjava");
+	}
+
+	@Test
 	public void testFormatImports() throws Exception {
 		test("FormatImports.testjava");
 	}
@@ -173,11 +178,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"sort: @Component#immediate",
 				"sort: method#@Transactional#propagation",
 			});
-	}
-
-	@Test
-	public void testSortAnnotations() throws Exception {
-		test("SortAnnotations.testjava");
 	}
 
 	@Test

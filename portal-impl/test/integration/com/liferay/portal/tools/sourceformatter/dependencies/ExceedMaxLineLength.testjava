@@ -38,7 +38,8 @@ public class ExceedMaxLineLength {
 
 	@Meta.AD(
 		deflt = "java.lang.Class|java.lang.ClassLoader|java.lang.ClassValue|java.lang.Thread",
-		required = false)
+		required = false
+	)
 	public String[] restrictedClasses();
 
 }

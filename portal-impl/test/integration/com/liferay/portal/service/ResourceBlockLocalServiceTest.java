@@ -81,10 +81,12 @@ public class ResourceBlockLocalServiceTest {
 				expectedLog =
 					"Deadlock found when trying to get lock; try restarting " +
 						"transaction",
-				expectedType = ExpectedType.EXACT),
+				expectedType = ExpectedType.EXACT
+			),
 			@ExpectedLog(
 				expectedLog = "Duplicate entry ",
-				expectedType = ExpectedType.PREFIX)
+				expectedType = ExpectedType.PREFIX
+			)
 		},
 		level = "ERROR", loggerClass = JDBCExceptionReporter.class
 	)
@@ -172,7 +174,8 @@ public class ResourceBlockLocalServiceTest {
 				expectedType = ExpectedType.EXACT),
 			@ExpectedLog(
 				expectedLog = "Duplicate entry ",
-				expectedType = ExpectedType.PREFIX)
+				expectedType = ExpectedType.PREFIX
+	)
 		},
 		level = "ERROR", loggerClass = JDBCExceptionReporter.class
 	)

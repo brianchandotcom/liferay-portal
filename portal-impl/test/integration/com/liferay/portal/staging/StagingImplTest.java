@@ -284,10 +284,6 @@ public class StagingImplTest {
 			new String[] {Boolean.FALSE.toString()});
 		parameters.put(
 			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-				PortletKeys.ASSET_CATEGORIES_ADMIN,
-			new String[] {String.valueOf(stageAssetCategories)});
-		parameters.put(
-			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
 				PortletKeys.JOURNAL,
 			new String[] {String.valueOf(stageJournal)});
 		parameters.put(

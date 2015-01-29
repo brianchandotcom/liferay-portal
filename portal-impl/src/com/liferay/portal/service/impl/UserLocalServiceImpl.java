@@ -31,7 +31,6 @@ import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.PasswordExpiredException;
 import com.liferay.portal.RequiredUserException;
 import com.liferay.portal.ReservedUserEmailAddressException;
-import com.liferay.portal.ReservedUserScreenNameException;
 import com.liferay.portal.SendPasswordException;
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserIdException;
@@ -6729,7 +6728,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		for (String reservedScreenName : reservedScreenNames) {
 			if (StringUtil.equalsIgnoreCase(screenName, reservedScreenName)) {
-				throw new ReservedUserScreenNameException();
+				throw new UserScreenNameException.MustNotBeReserved(
+					userId, screenName, reservedScreenNames);
 			}
 		}
 	}

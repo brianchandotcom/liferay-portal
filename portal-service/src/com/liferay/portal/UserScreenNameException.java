@@ -137,6 +137,28 @@ public class UserScreenNameException extends PortalException {
 
 	}
 
+	public static class MustNotBeReserved extends UserScreenNameException {
+
+		public MustNotBeReserved(
+			long userId, String screenName, String[] reservedScreenNames) {
+
+			super(
+				String.format(
+					"Screen name %s for user %s must not be a reserved name " +
+						"such as: %s",
+					screenName, userId, StringUtil.merge(reservedScreenNames)));
+
+			this.userId = userId;
+			this.screenName = screenName;
+			this.reservedScreenNames = reservedScreenNames;
+		}
+
+		public final String[] reservedScreenNames;
+		public final String screenName;
+		public final long userId;
+
+	}
+
 	public static class MustNotBeReservedForAnonymous
 		extends UserScreenNameException {
 

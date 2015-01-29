@@ -35,7 +35,6 @@ import com.liferay.portal.PhoneNumberException;
 import com.liferay.portal.RequiredFieldException;
 import com.liferay.portal.RequiredUserException;
 import com.liferay.portal.ReservedUserEmailAddressException;
-import com.liferay.portal.ReservedUserScreenNameException;
 import com.liferay.portal.TermsOfUseException;
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserIdException;
@@ -150,7 +149,6 @@ public class CreateAccountAction extends PortletAction {
 				e instanceof RequiredFieldException ||
 				e instanceof RequiredUserException ||
 				e instanceof ReservedUserEmailAddressException ||
-				e instanceof ReservedUserScreenNameException ||
 				e instanceof TermsOfUseException ||
 				e instanceof UserEmailAddressException ||
 				e instanceof UserIdException ||

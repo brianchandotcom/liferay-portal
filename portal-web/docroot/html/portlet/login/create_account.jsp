@@ -70,7 +70,6 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 	<liferay-ui:error exception="<%= RequiredFieldException.class %>" message="please-fill-out-all-required-fields" />
 	<liferay-ui:error exception="<%= ReservedUserEmailAddressException.class %>" message="the-email-address-you-requested-is-reserved" />
 	<liferay-ui:error exception="<%= ReservedUserIdException.class %>" message="the-user-id-you-requested-is-reserved" />
-	<liferay-ui:error exception="<%= ReservedUserScreenNameException.class %>" message="the-screen-name-you-requested-is-reserved" />
 	<liferay-ui:error exception="<%= TermsOfUseException.class %>" message="you-must-agree-to-the-terms-of-use" />
 	<liferay-ui:error exception="<%= UserEmailAddressException.class %>" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error exception="<%= UserEmailAddressException.MustNotBeDuplicate.class %>" message="the-email-address-you-requested-is-already-taken" />
@@ -102,6 +101,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 	<liferay-ui:error exception="<%= UserPasswordException.MustNotContainDictionaryWords.class %>" message="that-password-uses-common-dictionary-words" />
 	<liferay-ui:error exception="<%= UserScreenNameException.class %>" message="please-enter-a-valid-screen-name" />
 	<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeDuplicate.class %>" message="the-screen-name-you-requested-is-already-taken" />
+	<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeReserved.class %>" message="the-screen-name-you-requested-is-reserved" />
 	<liferay-ui:error exception="<%= WebsiteURLException.class %>" message="please-enter-a-valid-url" />
 
 	<c:if test='<%= SessionMessages.contains(request, "openIdUserInformationMissing") %>'>

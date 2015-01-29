@@ -3429,7 +3429,6 @@
 		<exception>RequiredUserGroup</exception>
 		<exception>ReservedUserEmailAddress</exception>
 		<exception>ReservedUserId</exception>
-		<exception>ReservedUserScreenName</exception>
 		<exception>ResourcePrimKey</exception>
 		<exception>RoleAssignment</exception>
 		<exception>RoleName</exception>

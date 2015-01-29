@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.ratings.transformer;
+package com.liferay.portlet.ratings;
 
 /**
  * @author Sergio Gonzalez
  * @author Roberto Díaz
  */
-
 public enum RatingsType {
 
 	LIKE("like"), STARS("stars"), THUMBS("thumbs");

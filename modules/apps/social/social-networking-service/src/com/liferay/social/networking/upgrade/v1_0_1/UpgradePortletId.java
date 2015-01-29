@@ -14,7 +14,7 @@
 
 package com.liferay.social.networking.upgrade.v1_0_1;
 
-import com.liferay.social.networking.util.SocialNetworkingPortletKeys;
+import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 
 /**
  * @author Adolfo Pérez

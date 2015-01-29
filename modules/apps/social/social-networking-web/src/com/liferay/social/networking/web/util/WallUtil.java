@@ -25,7 +25,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.social.networking.configuration.SocialNetworkingPropsValues;
-import com.liferay.social.networking.util.SocialNetworkingPortletKeys;
+import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 
 /**
  * @author Zsolt Berentey

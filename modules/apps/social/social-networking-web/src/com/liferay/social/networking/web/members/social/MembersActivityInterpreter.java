@@ -27,7 +27,7 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
-import com.liferay.social.networking.util.SocialNetworkingPortletKeys;
+import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

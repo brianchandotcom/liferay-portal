@@ -28,7 +28,6 @@ page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
 page import="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderUtil" %><%@
 page import="com.liferay.portlet.imagegallerydisplay.display.context.IGViewFileVersionDisplayContext" %><%@
-page import="com.liferay.portlet.imagegallerydisplay.display.context.logic.IGConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.imagegallerydisplay.display.context.util.IGRequestHelper" %><%@
 page import="com.liferay.portlet.imagegallerydisplay.util.IGUtil" %>
 

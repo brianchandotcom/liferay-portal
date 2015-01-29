@@ -14,10 +14,19 @@
 
 package com.liferay.portlet.documentlibrary.display.context.logic;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Ivan Zaera
@@ -26,6 +35,22 @@ public class DLPortletInstanceSettingsHelper {
 
 	public DLPortletInstanceSettingsHelper(DLRequestHelper dlRequestHelper) {
 		_dlRequestHelper = dlRequestHelper;
+	}
+
+	public List<KeyValuePair> getAvailableMimeTypes() {
+		if (_availableMimeTypes == null) {
+			_populateMimeTypes();
+		}
+
+		return _availableMimeTypes;
+	}
+
+	public List<KeyValuePair> getCurrentMimeTypes() {
+		if (_currentMimeTypes == null) {
+			_populateMimeTypes();
+		}
+
+		return _currentMimeTypes;
 	}
 
 	public String[] getEntryColumns() {
@@ -124,6 +149,41 @@ public class DLPortletInstanceSettingsHelper {
 		return dlPortletInstanceSettings.isShowTabs();
 	}
 
+	private void _populateMimeTypes() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String[] mediaGalleryMimeTypes =
+			dlPortletInstanceSettings.getMimeTypes();
+
+		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
+
+		_currentMimeTypes = new ArrayList<>();
+
+		for (String mimeType : mediaGalleryMimeTypes) {
+			_currentMimeTypes.add(
+				new KeyValuePair(
+					mimeType,
+					LanguageUtil.get(themeDisplay.getLocale(), mimeType)));
+		}
+
+		_availableMimeTypes = new ArrayList<>();
+
+		Set<String> allMediaGalleryMimeTypes =
+			DLUtil.getAllMediaGalleryMimeTypes();
+
+		for (String mimeType : allMediaGalleryMimeTypes) {
+			if (Arrays.binarySearch(mediaGalleryMimeTypes, mimeType) < 0) {
+				_availableMimeTypes.add(
+					new KeyValuePair(
+						mimeType,
+						LanguageUtil.get(themeDisplay.getLocale(), mimeType)));
+			}
+		}
+	}
+
+	private List<KeyValuePair> _availableMimeTypes;
+	private List<KeyValuePair> _currentMimeTypes;
 	private final DLRequestHelper _dlRequestHelper;
 
 }

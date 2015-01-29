@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
 
 <%
-IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfigurationDisplayContext(request, dlPortletInstanceSettings);
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(igRequestHelper);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
@@ -48,11 +48,11 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfiguratio
 				<aui:field-wrapper label="show-media-type">
 					<liferay-ui:input-move-boxes
 						leftBoxName="currentMimeTypes"
-						leftList="<%= igConfigurationDisplayContext.getCurrentMimeTypes() %>"
+						leftList="<%= dlPortletInstanceSettingsHelper.getCurrentMimeTypes() %>"
 						leftReorder="true"
 						leftTitle="current"
 						rightBoxName="availableMimeTypes"
-						rightList="<%= igConfigurationDisplayContext.getAvailableMimeTypes() %>"
+						rightList="<%= dlPortletInstanceSettingsHelper.getAvailableMimeTypes() %>"
 						rightTitle="available"
 					/>
 				</aui:field-wrapper>

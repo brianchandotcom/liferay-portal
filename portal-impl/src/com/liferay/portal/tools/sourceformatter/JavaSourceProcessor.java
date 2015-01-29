@@ -217,6 +217,27 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (Validator.isNotNull(annotation) &&
 					annotation.contains(StringPool.OPEN_PARENTHESIS)) {
 
+					Matcher matcher = _annotationPattern.matcher(
+						"\n" + annotation);
+
+					if (matcher.find()) {
+						String match = matcher.group();
+
+						match = match.substring(1);
+
+						if (!match.endsWith("\n)\n") &&
+							!match.endsWith("\t)\n")) {
+
+							String tabs = matcher.group(1);
+
+							String replacement = StringUtil.replaceLast(
+								match, ")", "\n" + tabs + ")");
+
+							return StringUtil.replace(
+								content, match, replacement);
+						}
+					}
+
 					checkAnnotationParameters(
 						fileName, javaTermName, annotation);
 				}
@@ -2688,10 +2709,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected boolean isAnnotationParameter(String content, String line) {
-		if (!line.contains(" = ") && !line.startsWith(StringPool.QUOTE)) {
-			return false;
-		}
-
 		Matcher matcher = _annotationPattern.matcher(content);
 
 		while (matcher.find()) {
@@ -2801,13 +2818,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private static final int _MAX_LINE_LENGTH = 80;
 
+	private static Pattern _annotationPattern = Pattern.compile(
+		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
 	private static Pattern _importsPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
-	private Pattern _annotationPattern = Pattern.compile(
-		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;

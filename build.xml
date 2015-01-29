@@ -1071,6 +1071,10 @@
 		<ant antfile="build-test.xml" target="test-unit" inheritAll="false" />
 	</target>
 
+	<target name="test-persistence">
+		<ant antfile="build-test.xml" target="test-persistence" inheritAll="false" />
+	</target>
+
 	<target name="update-app-server-scripts">
 		<if>
 			<equals arg1="${app.server.type}" arg2="jboss" />

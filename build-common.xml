@@ -669,6 +669,14 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					</then>
 				</elseif>
 				<elseif>
+					<equals arg1="@{test.type}" arg2="persistence" />
+					<then>
+						<compile-test-cmd
+							test.type="persistence"
+						/>
+					</then>
+				</elseif>
+				<elseif>
 					<equals arg1="@{test.type}" arg2="functional" />
 					<then>
 						<compile-test-cmd
@@ -1080,6 +1088,15 @@ Please set the environment variable ANT_OPTS to the recommended value of
 							</resourcecount>
 						</then>
 					</if>
+
+					<if>
+						<available file="test/persistence" type="dir" />
+						<then>
+							<resourcecount property="test.persistence.count">
+								<fileset dir="test/persistence" includes="**/${test.class}.java" />
+							</resourcecount>
+						</then>
+					</if>
 				</then>
 				<else>
 					<resourcecount property="test.${test.type}.count">
@@ -1131,19 +1148,27 @@ Please set the environment variable ANT_OPTS to the recommended value of
 						<var name="test.type" value="unit" />
 					</then>
 				</elseif>
+				<elseif>
+					<and>
+						<isset property="test.persistence.count" />
+						<not>
+							<equals arg1="${test.persistence.count}" arg2="0" />
+						</not>
+					</and>
+					<then>
+						<var name="test.type" value="persistence" />
+					</then>
+				</elseif>
 			</if>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="setup-test-classpath">
 		<attribute name="test.type" />
+		<attribute name="file" default="${project.dir}/dependencies/ivy-test.xml" />
 
 		<sequential>
-			<ivy:resolve log="download-only">
-				<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.2.Final" />
-				<dependency name="com.liferay.arquillian.extension" org="com.liferay" rev="1.0.0-SNAPSHOT" />
-				<exclude org="junit" />
-			</ivy:resolve>
+			<ivy:resolve log="download-only" file="@{file}" conf="test-@{test.type}" />
 
 			<path id="test-ivy.classpath">
 				<ivy:resources type="bundle,jar,orbit" />
@@ -1334,12 +1359,17 @@ rerun your task.
 			<or>
 				<available file="test/integration" type="dir" />
 				<available file="test/unit" type="dir" />
+				<available file="test/persistence" type="dir" />
 			</or>
 			<then>
 				<compile-test-integration />
 
 				<compile-test-cmd
 					test.type="unit"
+				/>
+
+				<compile-test-cmd
+					test.type="persistence"
 				/>
 			</then>
 			<else>
@@ -1478,6 +1508,7 @@ rerun your task.
 	<target name="test">
 		<antcall target="test-integration" />
 		<antcall target="test-unit" />
+		<antcall target="test-persistence" />
 	</target>
 
 	<target name="test-class" depends="compile">
@@ -1551,6 +1582,7 @@ rerun your task.
 	</target>
 
 	<target name="test-integration" depends="compile">
+
 		<compile-test-integration />
 
 		<test-cmd
@@ -1561,6 +1593,22 @@ rerun your task.
 
 		<report-test-coverage
 			test.type="integration"
+		/>
+	</target>
+
+	<target name="test-persistence" depends="compile">
+		<compile-test-cmd
+				test.type="persistence"
+				/>
+
+		<test-cmd
+				junit.forkmode="once"
+				test.includes="**/*Test.class"
+				test.type="persistence"
+				/>
+
+		<report-test-coverage
+				test.type="persistence"
 		/>
 	</target>
 

@@ -16,16 +16,14 @@ package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.test.BaseTestRule;
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.log.LogAssertionTestRule;
-import com.liferay.portal.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.test.rule.DeleteAfterTestRunTestRule;
-import com.liferay.portal.util.InitUtil;
-import com.liferay.portal.util.PropsUtil;
-
-import java.util.List;
+import com.liferay.portal.test.util.ClearThreadLocalExecutor;
+import com.liferay.portal.test.util.ClearThreadLocalExecutorImpl;
+import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
+import com.liferay.portal.test.util.InitTestLiferayContextExecutorImpl;
+import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutor;
+import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutorImpl;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -41,34 +39,35 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 			_uniqueStringRandomizerBumperTestRule,
 			new DeleteAfterTestRunTestRule());
 
-		System.setProperty("catalina.base", ".");
-
-		List<String> configLocations = ListUtil.fromArray(
-			PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
-
-		InitUtil.initWithSpring(configLocations, true);
-
-		if (System.getProperty("external-properties") == null) {
-			System.setProperty("external-properties", "portal-test.properties");
-		}
+		_initTestLiferayContextExecutor.init();
 	}
+
+	private static final ClearThreadLocalExecutor _clearThreadLocalExecutor =
+		new ClearThreadLocalExecutorImpl();
 
 	private static final TestRule _clearThreadLocalTestRule =
 		new BaseTestRule<Object, Object>() {
 
 			@Override
 			protected void afterClass(Description description, Object object) {
-				CentralizedThreadLocal.clearShortLivedThreadLocals();
+				_clearThreadLocalExecutor.clearThreadLocal();
 			}
 
 		};
+
+	private static final InitTestLiferayContextExecutor
+		_initTestLiferayContextExecutor =
+			new InitTestLiferayContextExecutorImpl();
+	private static final UniqueStringRandomizerBumperExecutor
+		_uniqueStringRandomizerBumperExecutor =
+			new UniqueStringRandomizerBumperExecutorImpl();
 
 	private static final TestRule _uniqueStringRandomizerBumperTestRule =
 		new BaseTestRule<Object, Object>() {
 
 			@Override
 			protected Object beforeClass(Description description) {
-				UniqueStringRandomizerBumper.reset();
+				_uniqueStringRandomizerBumperExecutor.reset();
 
 				return null;
 			}

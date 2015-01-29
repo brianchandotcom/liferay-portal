@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<ivy-module
+		version="2.0"
+		xmlns:m2="http://ant.apache.org/ivy/maven"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
+		>
+
+	<info module="liferay-portal-tests" organisation="com.liferay" />
+
+	<configurations>
+		<conf name="default" />
+		<conf name="internal" />
+		<conf name="provided" />
+		<conf name="test" />
+		<conf name="test-integration" extends="test" />
+		<conf name="test-persistence" extends="test" />
+		<conf name="test-unit" extends="test" />
+	</configurations>
+
+
+	<dependencies defaultconf="default">
+		<dependency conf="test-integration->default;test-persistence->default" name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.3.Final" />
+		<dependency conf="test-persistence->default" name="com.liferay.arquillian.extension.persistence" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency conf="test-persistence->default" name="com.liferay.arquillian.extension.transactional" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<exclude org="junit" />
+	</dependencies>
+</ivy-module>

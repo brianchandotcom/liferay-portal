@@ -14,6 +14,8 @@
 
 package com.liferay.social.networking.upgrade.v1_0_1;
 
+import com.liferay.social.networking.util.SocialNetworkingPortletKeys;
+
 /**
  * @author Adolfo Pérez
  */
@@ -23,28 +25,19 @@ public class UpgradePortletId
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
 			{"1_WAR_socialnetworkingportlet",
-				"com_liferay_social_networking_summary_portlet_" +
-					"SummaryPortlet"},
+				SocialNetworkingPortletKeys.SUMMARY},
 			{"2_WAR_socialnetworkingportlet",
-				"com_liferay_social_networking_friends_portlet_" +
-					"FriendsPortlet"},
-			{"3_WAR_socialnetworkingportlet",
-				"com_liferay_social_networking_wall_portlet_" +
-					"WallPortlet"},
+				SocialNetworkingPortletKeys.FRIENDS},
+			{"3_WAR_socialnetworkingportlet", SocialNetworkingPortletKeys.WALL},
 			{"4_WAR_socialnetworkingportlet",
-				"com_liferay_social_networking_friendsactivities_" +
-					"portlet_FriendsActivitiesPortlet"},
+				SocialNetworkingPortletKeys.FRIENDS_ACTIVITIES},
 			{"5_WAR_socialnetworkingportlet",
-				"com_liferay_social_networking_members_portlet_" +
-					"MembersPortlet"},
-			{"6_WAR_socialnetworkingportlet",
-				"com_liferay_social_networking_map_portlet_MapPortlet"},
+				SocialNetworkingPortletKeys.MEMBERS},
+			{"6_WAR_socialnetworkingportlet", SocialNetworkingPortletKeys.MAP},
 			{"7_WAR_socialnetworkingportlet",
-				"com_liferay_social_networking_meetups_portlet_" +
-					"MeetupsPortlet"},
+				SocialNetworkingPortletKeys.MEETUPS},
 			{"8_WAR_socialnetworkingportlet",
-				"com_liferay_social_networking_membersactivities_" +
-					"portlet_MembersActivitiesPortlet"}
+				SocialNetworkingPortletKeys.MEMBERS_ACTIVITIES}
 		};
 	}
 

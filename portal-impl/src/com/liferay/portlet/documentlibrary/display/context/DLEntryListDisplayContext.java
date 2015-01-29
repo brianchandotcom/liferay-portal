@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.display.context;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
+import com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 
 /**
@@ -26,11 +27,9 @@ public class DLEntryListDisplayContext {
 
 	public DLEntryListDisplayContext(DLRequestHelper dlRequestHelper) {
 		_dlRequestHelper = dlRequestHelper;
-		_dlActionsDisplayContext = new DLActionsDisplayContext(dlRequestHelper);
-	}
 
-	public DLActionsDisplayContext getDLActionsDisplayContext() {
-		return _dlActionsDisplayContext;
+		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
+			_dlRequestHelper);
 	}
 
 	public String[] getEntryColumns() {
@@ -41,7 +40,7 @@ public class DLEntryListDisplayContext {
 
 		String portletName = _dlRequestHelper.getPortletName();
 
-		if (!_dlActionsDisplayContext.isShowActions()) {
+		if (!_dlPortletInstanceSettingsHelper.isShowActions()) {
 			entryColumns = ArrayUtil.remove(entryColumns, "action");
 		}
 		else if (!portletName.equals(PortletKeys.DOCUMENT_LIBRARY) &&
@@ -61,7 +60,7 @@ public class DLEntryListDisplayContext {
 		String[] fileEntryColumns =
 			dlPortletInstanceSettings.getFileEntryColumns();
 
-		if (!_dlActionsDisplayContext.isShowActions()) {
+		if (!_dlPortletInstanceSettingsHelper.isShowActions()) {
 			fileEntryColumns = ArrayUtil.remove(fileEntryColumns, "action");
 		}
 
@@ -74,14 +73,15 @@ public class DLEntryListDisplayContext {
 
 		String[] folderColumns = dlPortletInstanceSettings.getFolderColumns();
 
-		if (!_dlActionsDisplayContext.isShowActions()) {
+		if (!_dlPortletInstanceSettingsHelper.isShowActions()) {
 			folderColumns = ArrayUtil.remove(folderColumns, "action");
 		}
 
 		return folderColumns;
 	}
 
-	private final DLActionsDisplayContext _dlActionsDisplayContext;
+	private final DLPortletInstanceSettingsHelper
+		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
 
 }

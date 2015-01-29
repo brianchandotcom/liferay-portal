@@ -12,20 +12,18 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.display.context;
+package com.liferay.portlet.documentlibrary.display.context.logic;
 
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 
 /**
- * @author Iván Zaera
- * @author Sergio González
+ * @author Ivan Zaera
  */
-public class DLActionsDisplayContext {
+public class DLVisualizationHelper {
 
-	public DLActionsDisplayContext(DLRequestHelper dlRequestHelper) {
+	public DLVisualizationHelper(DLRequestHelper dlRequestHelper) {
 		_dlRequestHelper = dlRequestHelper;
 	}
 
@@ -41,39 +39,6 @@ public class DLActionsDisplayContext {
 		return false;
 	}
 
-	public boolean isFolderMenuVisible() {
-		String portletName = _dlRequestHelper.getPortletName();
-
-		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			return true;
-		}
-
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_dlRequestHelper.getDLPortletInstanceSettings();
-
-		return dlPortletInstanceSettings.isShowFolderMenu();
-	}
-
-	public boolean isShowActions() {
-		String portletName = _dlRequestHelper.getPortletName();
-		String portletResource = _dlRequestHelper.getPortletResource();
-
-		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
-			portletResource.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletResource.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			return true;
-		}
-
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_dlRequestHelper.getDLPortletInstanceSettings();
-
-		return dlPortletInstanceSettings.isShowActions();
-	}
-
 	public boolean isShowMinimalActionsButton() {
 		String portletName = _dlRequestHelper.getPortletName();
 
@@ -85,21 +50,6 @@ public class DLActionsDisplayContext {
 
 		return ParamUtil.getBoolean(
 			_dlRequestHelper.getRequest(), "showMinimalActionButtons");
-	}
-
-	public boolean isShowTabs() {
-		String portletName = _dlRequestHelper.getPortletName();
-
-		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			return true;
-		}
-
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_dlRequestHelper.getDLPortletInstanceSettings();
-
-		return dlPortletInstanceSettings.isShowTabs();
 	}
 
 	public boolean isShowWhenSingleIconActionButton() {

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
+import com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 
 import java.util.ArrayList;
@@ -36,7 +37,9 @@ public class DLConfigurationDisplayContext {
 
 	public DLConfigurationDisplayContext(DLRequestHelper dlRequestHelper) {
 		_dlRequestHelper = dlRequestHelper;
-		_dlActionsDisplayContext = new DLActionsDisplayContext(dlRequestHelper);
+
+		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
+			_dlRequestHelper);
 	}
 
 	public List<KeyValuePair> getAvailableDisplayViews() {
@@ -71,10 +74,6 @@ public class DLConfigurationDisplayContext {
 		return _currentEntryColumns;
 	}
 
-	public DLActionsDisplayContext getDLActionsDisplayContext() {
-		return _dlActionsDisplayContext;
-	}
-
 	private String[] _getAllEntryColumns() {
 		String allEntryColumns = "name,size,status";
 
@@ -82,7 +81,7 @@ public class DLConfigurationDisplayContext {
 			allEntryColumns += ",downloads";
 		}
 
-		if (_dlActionsDisplayContext.isShowActions()) {
+		if (_dlPortletInstanceSettingsHelper.isShowActions()) {
 			allEntryColumns += ",action";
 		}
 
@@ -168,7 +167,8 @@ public class DLConfigurationDisplayContext {
 	private List<KeyValuePair> _availableEntryColumns;
 	private List<KeyValuePair> _currentDisplayViews;
 	private List<KeyValuePair> _currentEntryColumns;
-	private final DLActionsDisplayContext _dlActionsDisplayContext;
+	private final DLPortletInstanceSettingsHelper
+		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
 
 }

@@ -19,7 +19,7 @@
 <%
 DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(dlRequestHelper);
 
-DLActionsDisplayContext dlActionsDisplayContext = dlEntriesListDisplayContext.getDLActionsDisplayContext();
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
 String strutsAction = ParamUtil.getString(request, "struts_action");
 
@@ -109,7 +109,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 			<liferay-util:include page="/html/portlet/document_library/view_folders.jsp" />
 		</aui:col>
 
-		<aui:col cssClass="context-pane" width="<%= dlActionsDisplayContext.isFolderMenuVisible() ? 75 : 100 %>">
+		<aui:col cssClass="context-pane" width="<%= dlPortletInstanceSettingsHelper.isFolderMenuVisible() ? 75 : 100 %>">
 			<liferay-ui:app-view-toolbar
 				includeDisplayStyle="<%= true %>"
 				includeSelectAll="<%= showSelectAll %>"

@@ -17,7 +17,7 @@ package com.liferay.portlet.imagegallerydisplay.display.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portlet.documentlibrary.display.context.DLActionsDisplayContext;
+import com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.portlet.documentlibrary.display.context.logic.UIItemsBuilder;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.imagegallerydisplay.display.context.util.IGRequestHelper;
@@ -59,6 +59,9 @@ public class DefaultIGViewFileVersionDisplayContext
 
 		_igRequestHelper = new IGRequestHelper(request);
 
+		_dlPorletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
+			_igRequestHelper);
+
 		if (dlFileShortcut == null) {
 			_uiItemsBuilder = new UIItemsBuilder(
 				request, response, fileVersion);
@@ -73,7 +76,7 @@ public class DefaultIGViewFileVersionDisplayContext
 	public List<MenuItem> getMenuItems() throws PortalException {
 		List<MenuItem> menuItems = new ArrayList<>();
 
-		if (_isShowActions()) {
+		if (_dlPorletInstanceSettingsHelper.isShowActions()) {
 			_uiItemsBuilder.addDownloadMenuItem(menuItems);
 
 			_uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
@@ -93,28 +96,11 @@ public class DefaultIGViewFileVersionDisplayContext
 		return _UUID;
 	}
 
-	private DLActionsDisplayContext _getDLActionsDisplayContext()
-		throws PortalException {
-
-		if (_dlActionsDisplayContext == null) {
-			_dlActionsDisplayContext = new DLActionsDisplayContext(
-				_igRequestHelper);
-		}
-
-		return _dlActionsDisplayContext;
-	}
-
-	private boolean _isShowActions() throws PortalException {
-		DLActionsDisplayContext dlActionsDisplayContext =
-			_getDLActionsDisplayContext();
-
-		return dlActionsDisplayContext.isShowActions();
-	}
-
 	private static final UUID _UUID = UUID.fromString(
 		"C04528F9-C005-4E21-A926-F068750B99DB");
 
-	private DLActionsDisplayContext _dlActionsDisplayContext;
+	private final DLPortletInstanceSettingsHelper
+		_dlPorletInstanceSettingsHelper;
 	private final IGRequestHelper _igRequestHelper;
 	private final UIItemsBuilder _uiItemsBuilder;
 

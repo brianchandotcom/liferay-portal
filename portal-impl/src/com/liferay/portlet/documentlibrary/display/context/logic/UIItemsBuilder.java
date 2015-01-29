@@ -51,8 +51,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.display.context.DLUIItemKeys;
-import com.liferay.portlet.documentlibrary.display.context.logic.FileEntryDisplayContextHelper;
-import com.liferay.portlet.documentlibrary.display.context.logic.FileVersionDisplayContextHelper;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.util.DLUtil;

@@ -98,15 +98,17 @@ else {
 
 boolean showWhenSingleIcon = false;
 
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(dlRequestHelper);
+DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
 
-if ((row == null) || dlActionsDisplayContext.isShowWhenSingleIconActionButton()) {
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
+
+if ((row == null) || dlVisualizationHelper.isShowWhenSingleIconActionButton()) {
 	showWhenSingleIcon = true;
 }
 
 boolean view = false;
 
-if ((row == null) && ((portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlActionsDisplayContext.isShowMinimalActionsButton()) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
+if ((row == null) && ((portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlVisualizationHelper.isShowMinimalActionsButton()) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
 	view = true;
 }
 
@@ -114,13 +116,13 @@ String iconMenuId = null;
 %>
 
 <liferay-util:buffer var="iconMenu">
-	<liferay-ui:icon-menu cssClass="list-unstyled" direction='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? "down" : "left" %>' icon="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" message='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>">
+	<liferay-ui:icon-menu cssClass="list-unstyled" direction='<%= dlVisualizationHelper.isShowMinimalActionsButton() ? "down" : "left" %>' icon="<%= dlVisualizationHelper.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" message='<%= dlVisualizationHelper.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>">
 
 		<%
 		boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
 		%>
 
-		<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
+		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 			<c:if test="<%= hasViewPermission %>">
 				<portlet:resourceURL var="downloadURL">
 					<portlet:param name="struts_action" value="/document_library/edit_folder" />
@@ -324,7 +326,7 @@ String iconMenuId = null;
 
 		<c:choose>
 			<c:when test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) %>">
-				<c:if test="<%= dlActionsDisplayContext.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
+				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
 					<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) %>">
 						<portlet:renderURL var="editFileEntryURL">
 							<portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" />
@@ -374,7 +376,7 @@ String iconMenuId = null;
 					/>
 				</c:if>
 
-				<c:if test="<%= dlActionsDisplayContext.isShowActions() && ((folder == null) || (!folder.isMountPoint() && folder.isSupportsShortcuts())) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
+				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && ((folder == null) || (!folder.isMountPoint() && folder.isSupportsShortcuts())) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
 					<portlet:renderURL var="editFileShortcutURL">
 						<portlet:param name="struts_action" value="/document_library_display/edit_file_shortcut" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -405,7 +407,7 @@ String iconMenuId = null;
 			/>
 		</c:if>
 
-		<c:if test="<%= dlActionsDisplayContext.isShowActions() && (folder != null) %>">
+		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && (folder != null) %>">
 
 			<%
 			boolean hasDeletePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.DELETE);
@@ -447,7 +449,7 @@ String iconMenuId = null;
 </liferay-util:buffer>
 
 <c:choose>
-	<c:when test="<%= (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) && !dlActionsDisplayContext.isShowMinimalActionsButton() %>">
+	<c:when test="<%= (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) && !dlVisualizationHelper.isShowMinimalActionsButton() %>">
 
 		<%= iconMenu %>
 

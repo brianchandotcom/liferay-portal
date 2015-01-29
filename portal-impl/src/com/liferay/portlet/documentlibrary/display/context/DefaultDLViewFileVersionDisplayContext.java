@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper;
+import com.liferay.portlet.documentlibrary.display.context.logic.DLVisualizationHelper;
 import com.liferay.portlet.documentlibrary.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.portlet.documentlibrary.display.context.logic.FileVersionDisplayContextHelper;
 import com.liferay.portlet.documentlibrary.display.context.logic.UIItemsBuilder;
@@ -99,10 +101,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		String direction = "left";
 
-		DLActionsDisplayContext dlActionsDisplayContext =
-			_getDLActionsDisplayContext();
-
-		if (dlActionsDisplayContext.isShowMinimalActionsButton()) {
+		if (_dlVisualizationHelper.isShowMinimalActionsButton()) {
 			direction = "down";
 		}
 
@@ -110,7 +109,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		boolean extended = true;
 
-		if (dlActionsDisplayContext.isShowMinimalActionsButton()) {
+		if (_dlVisualizationHelper.isShowMinimalActionsButton()) {
 			extended = false;
 		}
 
@@ -118,7 +117,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		String icon = null;
 
-		if (dlActionsDisplayContext.isShowMinimalActionsButton()) {
+		if (_dlVisualizationHelper.isShowMinimalActionsButton()) {
 			icon = StringPool.BLANK;
 		}
 
@@ -128,14 +127,14 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		String message = "actions";
 
-		if (dlActionsDisplayContext.isShowMinimalActionsButton()) {
+		if (_dlVisualizationHelper.isShowMinimalActionsButton()) {
 			message = StringPool.BLANK;
 		}
 
 		menu.setMessage(message);
 
 		menu.setShowWhenSingleIcon(
-			dlActionsDisplayContext.isShowWhenSingleIconActionButton());
+			_dlVisualizationHelper.isShowWhenSingleIconActionButton());
 		menu.setTriggerCssClass("btn btn-default");
 
 		return menu;
@@ -202,17 +201,19 @@ public class DefaultDLViewFileVersionDisplayContext
 		FileVersion fileVersion, DLFileShortcut dlFileShortcut) {
 
 		try {
-			_dlRequestHelper = new DLRequestHelper(request);
 			_fileVersion = fileVersion;
 
-			FileEntry fileEntry = null;
+			DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
 
-			if (fileVersion != null) {
-				fileEntry = fileVersion.getFileEntry();
-			}
+			_dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
+
+			_dlPortletInstanceSettingsHelper =
+				new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
 			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
-				_dlRequestHelper.getPermissionChecker(), fileEntry);
+				dlRequestHelper.getPermissionChecker(),
+				_getFileEntry(fileVersion));
+
 			_fileVersionDisplayContextHelper =
 				new FileVersionDisplayContextHelper(fileVersion);
 
@@ -233,21 +234,20 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 	}
 
-	private DLActionsDisplayContext _getDLActionsDisplayContext()
+	private FileEntry _getFileEntry(FileVersion fileVersion)
 		throws PortalException {
 
-		if (_dlActionsDisplayContext == null) {
-			_dlActionsDisplayContext = new DLActionsDisplayContext(
-				_dlRequestHelper);
+		if (fileVersion != null) {
+			return fileVersion.getFileEntry();
 		}
 
-		return _dlActionsDisplayContext;
+		return null;
 	}
 
 	private List<MenuItem> _getMenuItems() throws PortalException {
 		List<MenuItem> menuItems = new ArrayList<>();
 
-		if (_isShowActions()) {
+		if (_dlPortletInstanceSettingsHelper.isShowActions()) {
 			_uiItemsBuilder.addDownloadMenuItem(menuItems);
 
 			_uiItemsBuilder.addOpenInMsOfficeMenuItem(menuItems);
@@ -272,18 +272,12 @@ public class DefaultDLViewFileVersionDisplayContext
 		return menuItems;
 	}
 
-	private boolean _isShowActions() throws PortalException {
-		DLActionsDisplayContext dlActionsDisplayContext =
-			_getDLActionsDisplayContext();
-
-		return dlActionsDisplayContext.isShowActions();
-	}
-
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
-	private DLActionsDisplayContext _dlActionsDisplayContext;
-	private final DLRequestHelper _dlRequestHelper;
+	private final DLPortletInstanceSettingsHelper
+		_dlPortletInstanceSettingsHelper;
+	private final DLVisualizationHelper _dlVisualizationHelper;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
 	private final FileVersion _fileVersion;
 	private final FileVersionDisplayContextHelper

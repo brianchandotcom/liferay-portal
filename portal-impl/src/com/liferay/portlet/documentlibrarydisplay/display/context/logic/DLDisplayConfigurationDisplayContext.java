@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.display.context.DLActionsDisplayContext;
+import com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.portlet.documentlibrarydisplay.display.context.util.DLDisplayRequestHelper;
 
 import java.util.ArrayList;
@@ -39,7 +39,8 @@ public class DLDisplayConfigurationDisplayContext {
 		DLDisplayRequestHelper dlDisplayRequestHelper) {
 
 		_dlDisplayRequestHelper = dlDisplayRequestHelper;
-		_dlActionsDisplayContext = new DLActionsDisplayContext(
+
+		_dlPorletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			dlDisplayRequestHelper);
 	}
 
@@ -75,10 +76,6 @@ public class DLDisplayConfigurationDisplayContext {
 		return _currentFolderColumns;
 	}
 
-	public DLActionsDisplayContext getDLActionsDisplayContext() {
-		return _dlActionsDisplayContext;
-	}
-
 	private String[] _getAllFileEntryColumns() {
 		String allFileEntryColumns = "name,size";
 
@@ -88,7 +85,7 @@ public class DLDisplayConfigurationDisplayContext {
 
 		allFileEntryColumns += ",locked";
 
-		if (_dlActionsDisplayContext.isShowActions()) {
+		if (_dlPorletInstanceSettingsHelper.isShowActions()) {
 			allFileEntryColumns += ",action";
 		}
 
@@ -98,7 +95,7 @@ public class DLDisplayConfigurationDisplayContext {
 	private String[] _getAllFolderColumns() {
 		String allFolderColumns = "name,num-of-folders,num-of-documents";
 
-		if (_dlActionsDisplayContext.isShowActions()) {
+		if (_dlPorletInstanceSettingsHelper.isShowActions()) {
 			allFolderColumns += ",action";
 		}
 
@@ -187,7 +184,8 @@ public class DLDisplayConfigurationDisplayContext {
 	private List<KeyValuePair> _availableFolderColumns;
 	private List<KeyValuePair> _currentFileEntryColumns;
 	private List<KeyValuePair> _currentFolderColumns;
-	private final DLActionsDisplayContext _dlActionsDisplayContext;
 	private final DLDisplayRequestHelper _dlDisplayRequestHelper;
+	private final DLPortletInstanceSettingsHelper
+		_dlPorletInstanceSettingsHelper;
 
 }

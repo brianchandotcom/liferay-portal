@@ -84,8 +84,9 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryC
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(dlRequestHelper);
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileVersion);
+
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 %>
 
 <portlet:actionURL var="editFileEntry">
@@ -107,7 +108,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 </c:if>
 
 <div class="view">
-	<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
+	<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 		<liferay-ui:app-view-toolbar>
 			<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
 		</liferay-ui:app-view-toolbar>
@@ -115,7 +116,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 
 	<aui:row>
 		<aui:col cssClass="lfr-asset-column-details" width="<%= 70 %>">
-			<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
+			<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 				<liferay-ui:app-view-toolbar>
 					<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
 				</liferay-ui:app-view-toolbar>
@@ -614,7 +615,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 	<%@ include file="/html/portlet/document_library/action/open_document_js.jspf" %>
 </c:if>
 
-<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
+<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 	<aui:script use="aui-toolbar">
 		var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
 

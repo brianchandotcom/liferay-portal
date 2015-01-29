@@ -19,16 +19,16 @@
 <%@ page import="com.liferay.portal.kernel.search.Document" %><%@
 page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
-page import="com.liferay.portlet.documentlibrary.display.context.DLActionsDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
-page import="com.liferay.portlet.imagegallerydisplay.display.context.logic.IGConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderUtil" %><%@
 page import="com.liferay.portlet.imagegallerydisplay.display.context.IGViewFileVersionDisplayContext" %><%@
+page import="com.liferay.portlet.imagegallerydisplay.display.context.logic.IGConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.imagegallerydisplay.display.context.util.IGRequestHelper" %><%@
 page import="com.liferay.portlet.imagegallerydisplay.util.IGUtil" %>
 

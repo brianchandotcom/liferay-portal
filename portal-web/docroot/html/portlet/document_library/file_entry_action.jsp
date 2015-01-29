@@ -90,11 +90,11 @@ else {
 	dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
 }
 
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(dlRequestHelper);
+DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
 %>
 
 <c:choose>
-	<c:when test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlActionsDisplayContext.isShowMinimalActionsButton() %>">
+	<c:when test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlVisualizationHelper.isShowMinimalActionsButton() %>">
 		<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
 	</c:when>
 	<c:otherwise>

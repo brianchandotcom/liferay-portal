@@ -19,8 +19,8 @@
 <%@ page import="com.liferay.portal.kernel.repository.RepositoryException" %><%@
 page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
-page import="com.liferay.portlet.documentlibrary.display.context.DLActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.display.context.DLEntryListDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
 page import="com.liferay.portlet.documentlibrary.search.EntriesChecker" %><%@

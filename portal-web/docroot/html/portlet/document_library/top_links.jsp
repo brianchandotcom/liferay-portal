@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <%
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(dlDisplayRequestHelper);
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlDisplayRequestHelper);
 %>
 
 <c:choose>
@@ -31,9 +31,9 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(dl
 		long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 		%>
 
-		<c:if test="<%= dlActionsDisplayContext.isShowTabs() || dlPortletInstanceSettings.isShowFoldersSearch() %>">
+		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowTabs() || dlPortletInstanceSettings.isShowFoldersSearch() %>">
 			<aui:nav-bar>
-				<c:if test="<%= dlActionsDisplayContext.isShowTabs() %>">
+				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowTabs() %>">
 					<aui:nav cssClass="navbar-nav">
 
 						<%
@@ -101,7 +101,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(dl
 			</aui:nav-bar>
 		</c:if>
 	</c:when>
-	<c:when test="<%= (dlActionsDisplayContext.isShowTabs() || dlPortletInstanceSettings.isShowFoldersSearch()) && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
+	<c:when test="<%= (dlPortletInstanceSettingsHelper.isShowTabs() || dlPortletInstanceSettings.isShowFoldersSearch()) && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
 		<liferay-ui:header
 			title="home"
 		/>

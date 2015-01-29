@@ -54,7 +54,7 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 contextObjects.put("dlPortletInstanceSettings", dlPortletInstanceSettings);
 
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(igRequestHelper);
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(igRequestHelper);
 
 String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 
@@ -156,7 +156,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 				request.setAttribute("view.jsp-searchContainer", searchContainer);
 				%>
 
-				<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= dlActionsDisplayContext.isFolderMenuVisible() ? 75 : 100 %>">
+				<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= dlPortletInstanceSettingsHelper.isFolderMenuVisible() ? 75 : 100 %>">
 					<div id="<portlet:namespace />imageGalleryAssetInfo">
 						<c:if test="<%= folder != null %>">
 							<div class="lfr-asset-description">
@@ -199,7 +199,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 					</div>
 				</aui:col>
 
-				<c:if test="<%= dlActionsDisplayContext.isFolderMenuVisible() %>">
+				<c:if test="<%= dlPortletInstanceSettingsHelper.isFolderMenuVisible() %>">
 					<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
 						<div class="lfr-asset-summary">
 							<liferay-ui:icon

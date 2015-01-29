@@ -17,8 +17,7 @@ package com.liferay.social.networking.util;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialNetworkingPortletKeys
-	extends com.liferay.portal.util.PortletKeys {
+public class SocialNetworkingPortletKeys {
 
 	public static final String FRIENDS =
 		"com_liferay_social_networking_friends_portlet_FriendsPortlet";

@@ -33,8 +33,8 @@ import com.liferay.portal.sso.ntlm.NetlogonConnectionManager;
 import com.liferay.portal.sso.ntlm.NtlmManager;
 import com.liferay.portal.sso.ntlm.NtlmUserAccount;
 import com.liferay.portal.sso.ntlm.configuration.NtlmConfiguration;
+import com.liferay.portal.sso.ntlm.constants.NtlmWebKeys;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.WebKeys;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -277,11 +277,11 @@ public class NtlmFilter extends BaseFilter {
 			}
 
 			request.setAttribute(
-				WebKeys.NTLM_REMOTE_USER, ntlmUserAccount.getUserName());
+				NtlmWebKeys.NTLM_REMOTE_USER, ntlmUserAccount.getUserName());
 
 			if (session != null) {
 				session.setAttribute(
-					WebKeys.NTLM_USER_ACCOUNT, ntlmUserAccount);
+					NtlmWebKeys.NTLM_USER_ACCOUNT, ntlmUserAccount);
 			}
 		}
 
@@ -292,7 +292,7 @@ public class NtlmFilter extends BaseFilter {
 
 			if (session != null) {
 				ntlmUserAccount = (NtlmUserAccount)session.getAttribute(
-					WebKeys.NTLM_USER_ACCOUNT);
+					NtlmWebKeys.NTLM_USER_ACCOUNT);
 			}
 
 			if (ntlmUserAccount == null) {
@@ -306,7 +306,8 @@ public class NtlmFilter extends BaseFilter {
 			}
 			else {
 				request.setAttribute(
-					WebKeys.NTLM_REMOTE_USER, ntlmUserAccount.getUserName());
+					NtlmWebKeys.NTLM_REMOTE_USER,
+					ntlmUserAccount.getUserName());
 			}
 		}
 

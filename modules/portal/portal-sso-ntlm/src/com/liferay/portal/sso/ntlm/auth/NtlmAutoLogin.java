@@ -23,8 +23,8 @@ import com.liferay.portal.security.auth.AutoLogin;
 import com.liferay.portal.security.auth.BaseAutoLogin;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.sso.ntlm.configuration.NtlmConfiguration;
+import com.liferay.portal.sso.ntlm.constants.NtlmWebKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
 
 import java.util.Map;
 
@@ -63,13 +63,13 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 		}
 
 		String screenName = (String)request.getAttribute(
-			WebKeys.NTLM_REMOTE_USER);
+			NtlmWebKeys.NTLM_REMOTE_USER);
 
 		if (screenName == null) {
 			return null;
 		}
 
-		request.removeAttribute(WebKeys.NTLM_REMOTE_USER);
+		request.removeAttribute(NtlmWebKeys.NTLM_REMOTE_USER);
 
 		User user = UserImporterUtil.importUserByScreenName(
 			companyId, screenName);

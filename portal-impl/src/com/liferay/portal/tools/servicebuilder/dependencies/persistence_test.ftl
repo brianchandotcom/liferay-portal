@@ -78,9 +78,7 @@ import org.junit.runner.RunWith;
 /**
  * @generated
  */
-<#if osgiModule>
-	@RunWith(Arquillian.class)
-</#if>
+@RunWith(Arquillian.class)
 public class ${entity.name}PersistenceTest {
 
 	@Rule

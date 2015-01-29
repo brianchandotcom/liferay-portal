@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.networking.wall.portlet;
+package com.liferay.social.networking.meetups.portlet.route;
 
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
@@ -24,8 +24,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	property = {"javax.portlet.name=" + SocialNetworkingPortletKeys.WALL},
+	property = {"javax.portlet.name=" + SocialNetworkingPortletKeys.MEETUPS},
 	service = FriendlyURLMapper.class
 )
-public class WallFriendlyURLMapper extends DefaultFriendlyURLMapper {
+public class MeetupsFriendlyURLMapper extends DefaultFriendlyURLMapper {
 }

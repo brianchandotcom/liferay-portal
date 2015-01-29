@@ -580,7 +580,6 @@
 	</bean>
 	<bean id="com.liferay.portal.security.auth.AuthTokenUtil" class="com.liferay.portal.security.auth.AuthTokenUtil" />
 	<bean id="com.liferay.portal.security.auth.BasicAuthHeaderAutoLogin" class="com.liferay.portal.security.auth.BasicAuthHeaderAutoLogin" />
-	<bean id="com.liferay.portal.security.auth.CASAutoLogin" class="com.liferay.portal.security.auth.CASAutoLogin" />
 	<bean id="com.liferay.portal.security.auth.DefaultEmailAddressGenerator" class="com.liferay.portal.security.auth.DefaultEmailAddressGenerator" />
 	<bean id="com.liferay.portal.security.auth.DefaultEmailAddressValidator" class="com.liferay.portal.security.auth.DefaultEmailAddressValidator" />
 	<bean id="com.liferay.portal.security.auth.DefaultFullNameGenerator" class="com.liferay.portal.security.auth.DefaultFullNameGenerator" />

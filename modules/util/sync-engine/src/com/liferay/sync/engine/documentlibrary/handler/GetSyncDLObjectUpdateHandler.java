@@ -168,13 +168,10 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	protected void downloadFile(
 		SyncFile syncFile, String sourceVersion, boolean patch) {
 
-		String targetVersion = syncFile.getVersion();
-
-		if (patch &&
-			(Double.valueOf(targetVersion) > Double.valueOf(sourceVersion))) {
-
+		if (patch) {
 			FileEventUtil.downloadPatch(
-				sourceVersion, getSyncAccountId(), syncFile, targetVersion);
+				sourceVersion, getSyncAccountId(), syncFile,
+				syncFile.getVersion());
 		}
 		else {
 			FileEventUtil.downloadFile(getSyncAccountId(), syncFile);

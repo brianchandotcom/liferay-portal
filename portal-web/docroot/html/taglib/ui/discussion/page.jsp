@@ -29,7 +29,7 @@ String permissionClassName = (String)request.getAttribute("liferay-ui:discussion
 long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:permissionClassPK"));
 boolean ratingsEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:ratingsEnabled"));
 String redirect = (String)request.getAttribute("liferay-ui:discussion:redirect");
-long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:userId"));
+long userId = GetterUtil.getLong((String) request.getAttribute("liferay-ui:discussion:userId"));
 
 String strutsAction = ParamUtil.getString(request, "struts_action");
 
@@ -38,20 +38,10 @@ MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessage
 MBCategory category = messageDisplay.getCategory();
 MBThread thread = messageDisplay.getThread();
 MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
-MBMessage rootMessage = null;
-List<MBMessage> messages = null;
-int messagesCount = 0;
+MBMessage rootMessage = treeWalker.getRoot();
+List<MBMessage> messages = treeWalker.getMessages();
+int messagesCount = messages.size();
 SearchContainer searchContainer = null;
-
-if (treeWalker != null) {
-	rootMessage = treeWalker.getRoot();
-	messages = treeWalker.getMessages();
-	messagesCount = messages.size();
-}
-else {
-	rootMessage = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
-	messagesCount = MBMessageLocalServiceUtil.getThreadMessagesCount(rootMessage.getThreadId(), WorkflowConstants.STATUS_ANY);
-}
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
@@ -203,7 +193,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			<c:if test="<%= messagesCount > 1 %>">
 				<a name="<%= randomNamespace %>messages_top"></a>
 
-				<c:if test="<%= treeWalker != null %>">
 				<table class="table table-bordered table-hover table-striped tree-walker">
 					<thead class="table-columns">
 					<tr>
@@ -251,8 +240,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					</tbody>
 				</table>
 
-					<br />
-				</c:if>
+				<br />
 
 				<aui:row>
 

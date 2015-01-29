@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.spring.aop.Skip;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.model.SystemEventConstants;
 
 /**
  * @author Hugo Huijser
@@ -27,7 +29,13 @@ public class SortAnnotations {
 	@Skip
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@JSON
-	public void method() {
+	public void method1() {
+	}
+
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
+	public void method2() {
 	}
 
 }

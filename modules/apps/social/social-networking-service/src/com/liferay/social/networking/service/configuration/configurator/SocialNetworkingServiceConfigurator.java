@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.networking.service.configuration;
+package com.liferay.social.networking.service.configuration.configurator;
 
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;

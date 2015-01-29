@@ -24,13 +24,12 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.ratings.RatingsType;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.ratings.transformer.PortletRatingsDefinitionUtil;
 import com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil;
-import com.liferay.portlet.ratings.transformer.RatingsType;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.portlet.PortletPreferences;
@@ -124,29 +123,23 @@ public class RatingsTag extends IncludeTag {
 			groupTypeSettings = group.getTypeSettingsProperties();
 		}
 
-		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
+		RatingsType defaultRatingsType =
+			PortletRatingsDefinitionUtil.getDefaultRatingsType(_className);
 
-		if (portlet != null) {
-			RatingsType defaultRatingsType =
-				PortletRatingsDefinitionUtil.getDefaultRatingsType(
-					portlet.getPortletId(), _className);
+		if (defaultRatingsType != null) {
+			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(
+				_className);
 
-			if (defaultRatingsType != null) {
-				String propertyKey =
-					RatingsDataTransformerUtil.getPropertyKey(_className);
+			String companyRatingsType = PrefsParamUtil.getString(
+				companyPortletPreferences, request, propertyKey,
+				defaultRatingsType.getValue());
 
-				String companyRatingsType = PrefsParamUtil.getString(
-					companyPortletPreferences, request, propertyKey,
-					defaultRatingsType.getValue());
+			String type = PropertiesParamUtil.getString(
+				groupTypeSettings, request, propertyKey, companyRatingsType);
 
-				_type = PropertiesParamUtil.getString(
-					groupTypeSettings, request, propertyKey,
-					companyRatingsType);
+			if (Validator.isNotNull(type)) {
+				return type;
 			}
-		}
-
-		if (Validator.isNotNull(_type)) {
-			return _type;
 		}
 
 		return _DEFAULT_TYPE;
@@ -183,8 +176,7 @@ public class RatingsTag extends IncludeTag {
 	private static final int _DEFAULT_NUMBER_OF_STARS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.RATINGS_DEFAULT_NUMBER_OF_STARS));
 
-	private static final String _DEFAULT_TYPE =
-		RatingsType.STARS.getValue();
+	private static final String _DEFAULT_TYPE = RatingsType.STARS.getValue();
 
 	private static final String _PAGE = "/html/taglib/ui/ratings/page.jsp";
 

@@ -22,10 +22,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionValues;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
+
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -77,19 +81,20 @@ public class RatingsDataTransformerUtil {
 			return;
 		}
 
-		for (String portletId : PortletRatingsDefinitionUtil.getPortletIds()) {
-			String[] classNames = PortletRatingsDefinitionUtil.getClassNames(
-				portletId);
+		Map<String, PortletRatingsDefinitionValues>
+			portletRatingsDefinitionValuesMap =
+				PortletRatingsDefinitionUtil.
+					getPortletRatingsDefinitionValuesMap();
 
-			for (final String className : classNames) {
-				String propertyKey = getPropertyKey(className);
+		for (final String className :
+				portletRatingsDefinitionValuesMap.keySet()) {
 
-				_transformRatingsData(
-					"companyId", companyId, className,
-					oldPortletPreferences.getValue(
-						propertyKey, StringPool.BLANK),
-					properties.getProperty(propertyKey));
-			}
+			String propertyKey = getPropertyKey(className);
+
+			_transformRatingsData(
+				"companyId", companyId, className,
+				oldPortletPreferences.getValue(propertyKey, StringPool.BLANK),
+				properties.getProperty(propertyKey));
 		}
 	}
 
@@ -105,18 +110,20 @@ public class RatingsDataTransformerUtil {
 			return;
 		}
 
-		for (String portletId : PortletRatingsDefinitionUtil.getPortletIds()) {
-			String[] classNames = PortletRatingsDefinitionUtil.getClassNames(
-				portletId);
+		Map<String, PortletRatingsDefinitionValues>
+			portletRatingsDefinitionValuesMap =
+				PortletRatingsDefinitionUtil.
+					getPortletRatingsDefinitionValuesMap();
 
-			for (final String className : classNames) {
-				String propertyKey = getPropertyKey(className);
+		for (final String className :
+				portletRatingsDefinitionValuesMap.keySet()) {
 
-				_transformRatingsData(
-					"groupId", groupId, className,
-					oldProperties.getProperty(propertyKey),
-					properties.getProperty(propertyKey));
-			}
+			String propertyKey = getPropertyKey(className);
+
+			_transformRatingsData(
+				"groupId", groupId, className,
+				oldProperties.getProperty(propertyKey),
+				properties.getProperty(propertyKey));
 		}
 	}
 

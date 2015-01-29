@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.io.Serializable;
 import java.io.Writer;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -81,6 +82,21 @@ public abstract class AbstractTemplate implements Template {
 	}
 
 	@Override
+	public void clear() {
+		context.clear();
+	}
+
+	@Override
+	public boolean containsKey(Object key) {
+		return context.containsKey(key);
+	}
+
+	@Override
+	public boolean containsValue(Object value) {
+		return context.containsValue(value);
+	}
+
+	@Override
 	public void doProcessTemplate(Writer writer) throws Exception {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -91,6 +107,20 @@ public abstract class AbstractTemplate implements Template {
 		StringBundler sb = unsyncStringWriter.getStringBundler();
 
 		sb.writeTo(writer);
+	}
+
+	@Override
+	public Set<Entry<String, Object>> entrySet() {
+		return context.entrySet();
+	}
+
+	@Override
+	public Object get(Object key) {
+		if (key == null) {
+			return null;
+		}
+
+		return context.get(key);
 	}
 
 	@Override
@@ -107,6 +137,16 @@ public abstract class AbstractTemplate implements Template {
 		Set<String> keys = context.keySet();
 
 		return keys.toArray(new String[keys.size()]);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return context.isEmpty();
+	}
+
+	@Override
+	public Set<String> keySet() {
+		return context.keySet();
 	}
 
 	@Override
@@ -146,12 +186,32 @@ public abstract class AbstractTemplate implements Template {
 	}
 
 	@Override
-	public void put(String key, Object value) {
+	public Object put(String key, Object value) {
 		if ((key == null) || (value == null)) {
-			return;
+			return null;
 		}
 
-		context.put(key, value);
+		return context.put(key, value);
+	}
+
+	@Override
+	public void putAll(Map<? extends String, ? extends Object> map) {
+		context.putAll(map);
+	}
+
+	@Override
+	public Object remove(Object key) {
+		return context.remove(key);
+	}
+
+	@Override
+	public int size() {
+		return context.size();
+	}
+
+	@Override
+	public Collection<Object> values() {
+		return context.values();
 	}
 
 	protected String getTemplateResourceUUID(

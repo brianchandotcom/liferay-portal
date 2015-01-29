@@ -19,7 +19,7 @@ import com.liferay.portlet.social.model.SocialRequestInterpreter;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.social.networking.social.BaseSocialNetworkingRequestInterpreter;
-import com.liferay.social.networking.util.PortletKeys;
+import com.liferay.social.networking.util.SocialNetworkingPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.FRIENDS},
+	property = {"javax.portlet.name=" + SocialNetworkingPortletKeys.FRIENDS},
 	service = SocialRequestInterpreter.class
 )
 public class FriendsRequestInterpreter

@@ -53,6 +53,14 @@ import org.slf4j.LoggerFactory;
  */
 public class FileUtil {
 
+	public static boolean checksumsEqual(String checksum1, String checksum2) {
+		if (checksum1.isEmpty() || checksum2.isEmpty()) {
+			return false;
+		}
+
+		return checksum1.equals(checksum2);
+	}
+
 	public static String getChecksum(Path filePath) throws IOException {
 		if (!isValidChecksum(filePath)) {
 			return "";
@@ -189,7 +197,7 @@ public class FileUtil {
 			}
 		}
 
-		if ((extension != null) && !extension.equals("")) {
+		if ((extension != null) && !extension.isEmpty()) {
 			int x = fileName.lastIndexOf(".");
 
 			if ((x == -1) ||
@@ -202,7 +210,7 @@ public class FileUtil {
 		if (fileName.length() > 255) {
 			int x = fileName.length() - 1;
 
-			if ((extension != null) && !extension.equals("")) {
+			if ((extension != null) && !extension.isEmpty()) {
 				x = fileName.lastIndexOf(".");
 			}
 
@@ -212,34 +220,6 @@ public class FileUtil {
 		}
 
 		return fileName;
-	}
-
-	public static boolean hasFileChanged(SyncFile syncFile) throws IOException {
-		if (syncFile.getFilePathName() == null) {
-			return true;
-		}
-
-		Path filePath = Paths.get(syncFile.getFilePathName());
-
-		return hasFileChanged(syncFile, filePath);
-	}
-
-	public static boolean hasFileChanged(SyncFile syncFile, Path filePath)
-		throws IOException {
-
-		if (filePath == null) {
-			return true;
-		}
-
-		if ((syncFile.getSize() > 0) &&
-			(syncFile.getSize() != Files.size(filePath))) {
-
-			return true;
-		}
-
-		String checksum = getChecksum(filePath);
-
-		return !checksum.equals(syncFile.getChecksum());
 	}
 
 	public static boolean isHidden(Path filePath) {
@@ -279,6 +259,34 @@ public class FileUtil {
 		}
 
 		return false;
+	}
+
+	public static boolean isModified(SyncFile syncFile) throws IOException {
+		if (syncFile.getFilePathName() == null) {
+			return true;
+		}
+
+		Path filePath = Paths.get(syncFile.getFilePathName());
+
+		return isModified(syncFile, filePath);
+	}
+
+	public static boolean isModified(SyncFile syncFile, Path filePath)
+		throws IOException {
+
+		if (filePath == null) {
+			return true;
+		}
+
+		if ((syncFile.getSize() > 0) &&
+			(syncFile.getSize() != Files.size(filePath))) {
+
+			return true;
+		}
+
+		String checksum = getChecksum(filePath);
+
+		return !checksumsEqual(checksum, syncFile.getChecksum());
 	}
 
 	public static boolean isValidChecksum(Path filePath) throws IOException {

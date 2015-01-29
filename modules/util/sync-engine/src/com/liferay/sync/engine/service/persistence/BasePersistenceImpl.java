@@ -138,7 +138,7 @@ public class BasePersistenceImpl<TT extends BaseModel, TID>
 		for (String syncNotificationFieldName :
 				getSyncNotificationFieldNames(dataClass.getSimpleName())) {
 
-			if (syncNotificationFieldName.equals("")) {
+			if (syncNotificationFieldName.isEmpty()) {
 				continue;
 			}
 

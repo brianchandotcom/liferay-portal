@@ -200,7 +200,9 @@ public class Watcher implements Runnable {
 						fireWatchEventListener(childFilePath, watchEvent);
 					}
 					else if (kind == StandardWatchEventKind.ENTRY_MODIFY) {
-						if ((removeCreatedFilePathName(
+						if (_downloadedFilePathNames.remove(
+								childFilePath.toString()) ||
+							(removeCreatedFilePathName(
 								childFilePath.toString()) &&
 							 !FileUtil.isValidChecksum(childFilePath)) ||
 							Files.isDirectory(childFilePath)) {
@@ -237,7 +239,7 @@ public class Watcher implements Runnable {
 								SyncWatchEvent.EVENT_TYPE_CREATE,
 								failedFilePath);
 						}
-						else if (FileUtil.hasFileChanged(
+						else if (FileUtil.isModified(
 									syncFile, failedFilePath)) {
 
 							fireWatchEventListener(
@@ -360,7 +362,7 @@ public class Watcher implements Runnable {
 							fireWatchEventListener(
 								SyncWatchEvent.EVENT_TYPE_CREATE, filePath);
 						}
-						else if (FileUtil.hasFileChanged(syncFile, filePath)) {
+						else if (FileUtil.isModified(syncFile, filePath)) {
 							fireWatchEventListener(
 								SyncWatchEvent.EVENT_TYPE_MODIFY, filePath);
 						}

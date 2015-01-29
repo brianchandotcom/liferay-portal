@@ -72,7 +72,8 @@ public abstract class BaseClusterExecutorImplTestCase
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"CLUSTER_EXECUTOR_DEBUG_ENABLED)")
+				"CLUSTER_EXECUTOR_DEBUG_ENABLED)"
+		)
 		public Object enableClusterExecutorDebug(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
@@ -86,7 +87,8 @@ public abstract class BaseClusterExecutorImplTestCase
 	public static class EnableLiveUsersAdvice {
 
 		@Around(
-			"set(* com.liferay.portal.util.PropsValues.LIVE_USERS_ENABLED)")
+			"set(* com.liferay.portal.util.PropsValues.LIVE_USERS_ENABLED)"
+		)
 		public Object enableLiveUsers(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
@@ -106,7 +108,8 @@ public abstract class BaseClusterExecutorImplTestCase
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"PORTAL_INSTANCE_HTTP_INET_SOCKET_ADDRESS)")
+				"PORTAL_INSTANCE_HTTP_INET_SOCKET_ADDRESS)"
+		)
 		public Object setPortalInetSocketAddress(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
@@ -123,7 +126,8 @@ public abstract class BaseClusterExecutorImplTestCase
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"PORTAL_INSTANCE_HTTPS_INET_SOCKET_ADDRESS)")
+				"PORTAL_INSTANCE_HTTPS_INET_SOCKET_ADDRESS)"
+		)
 		public Object setSecurePortalInetSocketAddress(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
@@ -155,7 +159,8 @@ public abstract class BaseClusterExecutorImplTestCase
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"PORTAL_INSTANCE_HTTP_INET_SOCKET_ADDRESS)")
+				"PORTAL_INSTANCE_HTTP_INET_SOCKET_ADDRESS)"
+		)
 		public Object setPortalInetSocketAddress(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
@@ -166,7 +171,8 @@ public abstract class BaseClusterExecutorImplTestCase
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
-				"PORTAL_INSTANCE_HTTPS_INET_SOCKET_ADDRESS)")
+				"PORTAL_INSTANCE_HTTPS_INET_SOCKET_ADDRESS)"
+		)
 		public Object setSecurePortalInetSocketAddress(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
@@ -184,7 +190,8 @@ public abstract class BaseClusterExecutorImplTestCase
 	public static class SetWebServerProtocolAdvice {
 
 		@Around(
-			"set(* com.liferay.portal.util.PropsValues.WEB_SERVER_PROTOCOL)")
+			"set(* com.liferay.portal.util.PropsValues.WEB_SERVER_PROTOCOL)"
+		)
 		public Object setWebServerProtocol(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {

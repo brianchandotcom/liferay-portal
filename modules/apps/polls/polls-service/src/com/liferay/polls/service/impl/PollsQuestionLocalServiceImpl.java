@@ -177,7 +177,8 @@ public class PollsQuestionLocalServiceImpl
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE)
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public void deleteQuestion(PollsQuestion question) throws PortalException {
 
 		// Question

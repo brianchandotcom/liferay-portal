@@ -68,7 +68,8 @@ public class LockLocalServiceTest {
 				expectedLog =
 					"Deadlock found when trying to get lock; try restarting " +
 						"transaction",
-				expectedType = ExpectedType.EXACT)
+				expectedType = ExpectedType.EXACT
+			)
 		},
 		level = "ERROR", loggerClass = JDBCExceptionReporter.class
 	)

@@ -171,7 +171,8 @@ public class RepositoryLocalServiceImpl
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE)
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public Repository deleteRepository(Repository repository) {
 		expandoValueLocalService.deleteValues(
 			Repository.class.getName(), repository.getRepositoryId());

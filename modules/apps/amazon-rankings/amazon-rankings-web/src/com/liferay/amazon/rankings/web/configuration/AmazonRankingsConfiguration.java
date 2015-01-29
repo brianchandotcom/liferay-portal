@@ -33,7 +33,8 @@ public interface AmazonRankingsConfiguration {
 
 	@Meta.AD(
 		deflt = "0066620996|0131412752|0201633612|0310205719|0310241448",
-		required = false)
+		required = false
+	)
 	public String[] isbns();
 
 }

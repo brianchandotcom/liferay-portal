@@ -47,7 +47,8 @@ public class ClusterRequestReceiverTest
 		adviceClasses = {
 			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class
-		})
+		}
+	)
 	@Test
 	public void testInvoke() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl1 = getClusterExecutorImpl();
@@ -148,7 +149,8 @@ public class ClusterRequestReceiverTest
 			DisableAutodetectedAddressAdvice.class,
 			EnableClusterLinkAdvice.class,
 			SetJGroupsSingleThreadPoolAdvice.class
-		})
+		}
+	)
 	@Test
 	public void testInvokeWithSingleThreadPool() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl1 = getClusterExecutorImpl();
@@ -206,7 +208,8 @@ public class ClusterRequestReceiverTest
 	public static class SetJGroupsSingleThreadPoolAdvice {
 
 		@Around(
-			"call(* com.liferay.portal.cluster.ClusterBase.createJChannel(..))")
+			"call(* com.liferay.portal.cluster.ClusterBase.createJChannel(..))"
+		)
 		public Object setSingleThreadInPool(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {

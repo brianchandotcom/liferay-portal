@@ -387,7 +387,8 @@ public class ResourceBlockLocalServiceImpl
 	@Override
 	@Transactional(
 		isolation = Isolation.READ_COMMITTED,
-		propagation = Propagation.REQUIRES_NEW)
+		propagation = Propagation.REQUIRES_NEW
+	)
 	public void releasePermissionedModelResourceBlock(
 		PermissionedModel permissionedModel) {
 
@@ -414,7 +415,8 @@ public class ResourceBlockLocalServiceImpl
 	@Override
 	@Transactional(
 		isolation = Isolation.READ_COMMITTED,
-		propagation = Propagation.REQUIRES_NEW)
+		propagation = Propagation.REQUIRES_NEW
+	)
 	public void releaseResourceBlock(long resourceBlockId) {
 		Session session = resourceBlockPersistence.openSession();
 
@@ -469,7 +471,8 @@ public class ResourceBlockLocalServiceImpl
 	@Override
 	@Transactional(
 		isolation = Isolation.READ_COMMITTED,
-		propagation = Propagation.REQUIRES_NEW)
+		propagation = Propagation.REQUIRES_NEW
+	)
 	public void releaseResourceBlock(ResourceBlock resourceBlock) {
 		releaseResourceBlock(resourceBlock.getResourceBlockId());
 	}
@@ -818,7 +821,8 @@ public class ResourceBlockLocalServiceImpl
 	@Override
 	@Transactional(
 		isolation = Isolation.READ_COMMITTED,
-		propagation = Propagation.REQUIRES_NEW)
+		propagation = Propagation.REQUIRES_NEW
+	)
 	public ResourceBlock updateResourceBlockId(
 		long companyId, long groupId, String name,
 		final PermissionedModel permissionedModel, String permissionsHash,

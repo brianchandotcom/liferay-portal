@@ -261,7 +261,8 @@ public class MailboxUtilTest {
 
 		@Around(
 			"execution(public long com.liferay.portal.kernel.nio.intraband." +
-				"mailbox.MailboxUtil$ReceiptStub.getReceipt())")
+				"mailbox.MailboxUtil$ReceiptStub.getReceipt())"
+		)
 		public Object getReceipt(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 

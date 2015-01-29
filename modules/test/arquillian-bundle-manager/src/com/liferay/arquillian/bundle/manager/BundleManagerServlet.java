@@ -58,7 +58,8 @@ import org.osgi.util.tracker.ServiceTracker;
 		"servletName=arquillian-bundle-manager",
 		"urlPattern=/arquillian-bundle-manager"
 	},
-	service = Servlet.class)
+	service = Servlet.class
+)
 public class BundleManagerServlet extends HttpServlet {
 
 	@Override

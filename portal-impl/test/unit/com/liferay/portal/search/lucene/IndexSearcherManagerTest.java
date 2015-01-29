@@ -282,7 +282,8 @@ public class IndexSearcherManagerTest {
 
 		@Around(
 			"execution(public boolean org.apache.lucene.index.IndexReader." +
-				"tryIncRef())")
+				"tryIncRef())"
+		)
 		public Object tryIncRef(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 

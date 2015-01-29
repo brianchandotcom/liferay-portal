@@ -256,7 +256,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE)
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public DLFolder deleteFolder(DLFolder dlFolder) throws PortalException {
 		return deleteFolder(dlFolder, true);
 	}
@@ -265,7 +266,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE)
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public DLFolder deleteFolder(
 			DLFolder dlFolder, boolean includeTrashedEntries)
 		throws PortalException {
@@ -1267,7 +1269,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@BufferedIncrement(
 		configuration = "DLFolderEntry",
-		incrementClass = DateOverrideIncrement.class)
+		incrementClass = DateOverrideIncrement.class
+	)
 	@Override
 	public void updateLastPostDate(long folderId, Date lastPostDate)
 		throws PortalException {

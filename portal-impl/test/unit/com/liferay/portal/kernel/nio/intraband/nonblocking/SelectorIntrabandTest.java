@@ -1295,28 +1295,32 @@ public class SelectorIntrabandTest {
 
 		@org.aspectj.lang.annotation.After(
 			"execution(* com.liferay.portal.kernel.log.Jdk14LogImpl.error(" +
-				"Object, Throwable))")
+				"Object, Throwable))"
+		)
 		public void error() {
 			_errorCalledCountDownLatch.countDown();
 		}
 
 		@org.aspectj.lang.annotation.After(
 			"execution(* com.liferay.portal.kernel.log.Jdk14LogImpl." +
-				"isWarnEnabled())")
+				"isWarnEnabled())"
+		)
 		public void isWarnEnabled() {
 			_isWarnEnabledCalledCountDownLatch.countDown();
 		}
 
 		@org.aspectj.lang.annotation.After(
 			"execution(* com.liferay.portal.kernel.log.Jdk14LogImpl.warn(" +
-				"Object))")
+				"Object))"
+		)
 		public void warn1() {
 			_warnCalledCountDownLatch.countDown();
 		}
 
 		@org.aspectj.lang.annotation.After(
 			"execution(* com.liferay.portal.kernel.log.Jdk14LogImpl.warn(" +
-				"Object, Throwable))")
+				"Object, Throwable))"
+		)
 		public void warn2() {
 			_warnCalledCountDownLatch.countDown();
 		}

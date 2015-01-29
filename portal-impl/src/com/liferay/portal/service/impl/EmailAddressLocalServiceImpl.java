@@ -90,7 +90,8 @@ public class EmailAddressLocalServiceImpl
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE)
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public EmailAddress deleteEmailAddress(EmailAddress emailAddress) {
 		emailAddressPersistence.remove(emailAddress);
 

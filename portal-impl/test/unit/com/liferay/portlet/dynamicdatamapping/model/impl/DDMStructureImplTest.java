@@ -44,7 +44,8 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 	{
 		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
 		LocaleUtil.class
-	})
+	}
+)
 public class DDMStructureImplTest extends BaseDDMTestCase {
 
 	@Before

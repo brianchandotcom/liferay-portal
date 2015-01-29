@@ -292,7 +292,8 @@ public class PortalResiliencyActionTest {
 
 		@Around(
 			"execution(* com.liferay.portal.kernel.resiliency.spi.agent." +
-				"SPIAgent$Lifecycle.values())")
+				"SPIAgent$Lifecycle.values())"
+		)
 		public SPIAgent.Lifecycle[] values(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {

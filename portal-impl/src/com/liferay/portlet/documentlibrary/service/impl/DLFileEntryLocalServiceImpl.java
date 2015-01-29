@@ -689,7 +689,8 @@ public class DLFileEntryLocalServiceImpl
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE)
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public DLFileEntry deleteFileEntry(DLFileEntry dlFileEntry)
 		throws PortalException {
 
@@ -1430,7 +1431,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@BufferedIncrement(
-		configuration = "DLFileEntry", incrementClass = NumberIncrement.class)
+		configuration = "DLFileEntry", incrementClass = NumberIncrement.class
+	)
 	@Override
 	public void incrementViewCounter(DLFileEntry dlFileEntry, int increment) {
 		if (ExportImportThreadLocal.isImportInProcess()) {

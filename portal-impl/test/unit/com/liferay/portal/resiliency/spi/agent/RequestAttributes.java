@@ -33,7 +33,8 @@ public class RequestAttributes {
 	public static final String ATTRIBUTE_2 = "ATTRIBUTE_2";
 
 	@Distributed(
-		direction = Direction.RESPONSE, matchType = MatchType.EXACT)
+		direction = Direction.RESPONSE, matchType = MatchType.EXACT
+	)
 	public static final String ATTRIBUTE_3 = "ATTRIBUTE_3";
 
 	public static void setRequestAttributes(HttpServletRequest request) {

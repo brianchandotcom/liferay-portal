@@ -140,7 +140,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE)
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public void deleteThread(MBThread thread) throws PortalException {
 		MBMessage rootMessage = mbMessagePersistence.findByPrimaryKey(
 			thread.getRootMessageId());
@@ -638,7 +639,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	@BufferedIncrement(
-		configuration = "MBThread", incrementClass = NumberIncrement.class)
+		configuration = "MBThread", incrementClass = NumberIncrement.class
+	)
 	@Override
 	public void incrementViewCounter(long threadId, int increment)
 		throws PortalException {

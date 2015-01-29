@@ -519,7 +519,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 		@Around(
 			"execution(* com.liferay.portal.util.PropsUtil.getProperties(" +
-				"String, boolean))")
+				"String, boolean))"
+		)
 		public Object getTransportationConfigurationProperties(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {

@@ -226,7 +226,8 @@ public class MVCCPortalCacheTest {
 
 		@Around(
 			"execution(protected * com.liferay.portal.cache.memory." +
-				"MemoryPortalCache.doPutIfAbsent(..))")
+				"MemoryPortalCache.doPutIfAbsent(..))"
+		)
 		public Object doPutIfAbsent(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
@@ -241,7 +242,8 @@ public class MVCCPortalCacheTest {
 
 		@Around(
 			"execution(protected * com.liferay.portal.cache.memory." +
-				"MemoryPortalCache.doReplace(..))")
+				"MemoryPortalCache.doReplace(..))"
+		)
 		public Object doReplace(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 

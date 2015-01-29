@@ -705,7 +705,8 @@ public class SPIAgentSerializableTest {
 
 		@Around(
 			"execution(public * " +
-				"com.liferay.portal.kernel.io.Deserializer.readObject())")
+				"com.liferay.portal.kernel.io.Deserializer.readObject())"
+		)
 		public Object readObject(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 

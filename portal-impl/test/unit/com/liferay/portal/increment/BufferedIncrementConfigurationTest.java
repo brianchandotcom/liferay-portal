@@ -164,7 +164,8 @@ public class BufferedIncrementConfigurationTest {
 		@Around(
 			"execution(public static String com.liferay.portal.util." +
 				"PropsUtil.get(String, com.liferay.portal.kernel." +
-					"configuration.Filter)) && args(key, filter)")
+					"configuration.Filter)) && args(key, filter)"
+		)
 		public Object get(String key, Filter filter) {
 			return _props.get(key);
 		}

@@ -25,7 +25,8 @@ import java.nio.file.StandardWatchEventKinds;
  * @author Michael Young
  */
 @DatabaseTable(
-	daoClass = BasePersistenceImpl.class, tableName = "SyncWatchEvent")
+	daoClass = BasePersistenceImpl.class, tableName = "SyncWatchEvent"
+)
 public class SyncWatchEvent extends BaseModel {
 
 	public static final String EVENT_TYPE_CREATE =

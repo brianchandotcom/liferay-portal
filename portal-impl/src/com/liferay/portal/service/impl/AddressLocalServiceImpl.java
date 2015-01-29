@@ -107,7 +107,8 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE)
+		type = SystemEventConstants.TYPE_DELETE
+	)
 	public Address deleteAddress(Address address) {
 		addressPersistence.remove(address);
 

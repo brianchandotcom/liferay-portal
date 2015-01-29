@@ -536,7 +536,8 @@ public class LuceneHelperImplTest {
 	public static class DisableClusterLinkAdvice {
 
 		@Around(
-			"set(* com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED)")
+			"set(* com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED)"
+		)
 		public Object disableClusterLink(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
@@ -550,7 +551,8 @@ public class LuceneHelperImplTest {
 	public static class DisableIndexOnStartUpAdvice {
 
 		@Around(
-			"set(* com.liferay.portal.util.PropsValues.INDEX_ON_STARTUP)")
+			"set(* com.liferay.portal.util.PropsValues.INDEX_ON_STARTUP)"
+		)
 		public Object disableIndexOnStartUp(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
@@ -564,7 +566,8 @@ public class LuceneHelperImplTest {
 	public static class EnableClusterLinkAdvice {
 
 		@Around(
-			"set(* com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED)")
+			"set(* com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED)"
+		)
 		public Object enableClusterLink(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
@@ -577,7 +580,8 @@ public class LuceneHelperImplTest {
 	public static class EnableLuceneReplicateWriteAdvice {
 
 		@Around(
-			"set(* com.liferay.portal.util.PropsValues.LUCENE_REPLICATE_WRITE)")
+			"set(* com.liferay.portal.util.PropsValues.LUCENE_REPLICATE_WRITE)"
+		)
 		public Object enableLuceneReplicateWrite(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
@@ -604,7 +608,8 @@ public class LuceneHelperImplTest {
 
 		@Around(
 			"execution(* com.liferay.portal.search.lucene.cluster." +
-				"LuceneClusterUtil.loadIndexesFromCluster(long))")
+				"LuceneClusterUtil.loadIndexesFromCluster(long))"
+		)
 		public void loadIndexesFromCluster(
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
@@ -632,7 +637,8 @@ public class LuceneHelperImplTest {
 
 		@Around(
 			"execution(* com.liferay.portal.search.lucene.LuceneHelperImpl." +
-				"_getBootupClusterNodeObjectValuePair(..))")
+				"_getBootupClusterNodeObjectValuePair(..))"
+		)
 		public Object _getBootupClusterNodeObjectValuePair() {
 			return new ObjectValuePair<>(StringPool.BLANK, _url);
 		}
@@ -648,7 +654,8 @@ public class LuceneHelperImplTest {
 			"execution(* com.liferay.portal.search.lucene.LuceneHelperImpl." +
 				"getLoadIndexesInputStreamFromCluster(" +
 					"long, com.liferay.portal.kernel.cluster.Address)) && " +
-						"args(companyId, bootupAddress)")
+						"args(companyId, bootupAddress)"
+		)
 		public Object getLoadIndexesInputStreamFromCluster(
 			long companyId, Address bootupAddress) {
 

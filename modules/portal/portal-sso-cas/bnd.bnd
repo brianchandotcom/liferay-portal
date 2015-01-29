@@ -6,9 +6,9 @@ Import-Package:\
 	!junit.*,\
 	*
 Include-Resource:\
-	${replace;${libs};^;@lib/},\
 	classes,\
+	@lib/cas-client-core.jar,\
+	@lib/opensaml.jar,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
-libs: ${lsr;lib;*.jar}
 
 -metatype: *

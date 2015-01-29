@@ -15,13 +15,9 @@
 package com.liferay.portlet.documentlibrary.display.context;
 
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-
-import javax.servlet.http.HttpServletRequest;
+import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 
 /**
  * @author Iván Zaera
@@ -29,21 +25,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DLActionsDisplayContext {
 
-	public DLActionsDisplayContext(
-		HttpServletRequest request,
-		DLPortletInstanceSettings dlPortletInstanceSettings) {
-
-		_request = request;
-		_dlPortletInstanceSettings = dlPortletInstanceSettings;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_portletDisplay = themeDisplay.getPortletDisplay();
+	public DLActionsDisplayContext(DLRequestHelper dlRequestHelper) {
+		_dlRequestHelper = dlRequestHelper;
 	}
 
 	public boolean isAddFolderButtonVisible() {
-		String portletName = _portletDisplay.getPortletName();
+		String portletName = _dlRequestHelper.getPortletName();
 
 		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
 			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
@@ -55,7 +42,7 @@ public class DLActionsDisplayContext {
 	}
 
 	public boolean isFolderMenuVisible() {
-		String portletName = _portletDisplay.getPortletName();
+		String portletName = _dlRequestHelper.getPortletName();
 
 		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
 			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
@@ -63,12 +50,15 @@ public class DLActionsDisplayContext {
 			return true;
 		}
 
-		return _dlPortletInstanceSettings.isShowFolderMenu();
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		return dlPortletInstanceSettings.isShowFolderMenu();
 	}
 
 	public boolean isShowActions() {
-		String portletName = _portletDisplay.getPortletName();
-		String portletResource = _portletDisplay.getPortletResource();
+		String portletName = _dlRequestHelper.getPortletName();
+		String portletResource = _dlRequestHelper.getPortletResource();
 
 		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
 			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
@@ -78,11 +68,14 @@ public class DLActionsDisplayContext {
 			return true;
 		}
 
-		return _dlPortletInstanceSettings.isShowActions();
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		return dlPortletInstanceSettings.isShowActions();
 	}
 
 	public boolean isShowMinimalActionsButton() {
-		String portletName = _portletDisplay.getPortletName();
+		String portletName = _dlRequestHelper.getPortletName();
 
 		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
 			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
@@ -90,11 +83,12 @@ public class DLActionsDisplayContext {
 			return true;
 		}
 
-		return ParamUtil.getBoolean(_request, "showMinimalActionButtons");
+		return ParamUtil.getBoolean(
+			_dlRequestHelper.getRequest(), "showMinimalActionButtons");
 	}
 
 	public boolean isShowTabs() {
-		String portletName = _portletDisplay.getPortletName();
+		String portletName = _dlRequestHelper.getPortletName();
 
 		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
 			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
@@ -102,11 +96,14 @@ public class DLActionsDisplayContext {
 			return true;
 		}
 
-		return _dlPortletInstanceSettings.isShowTabs();
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		return dlPortletInstanceSettings.isShowTabs();
 	}
 
 	public boolean isShowWhenSingleIconActionButton() {
-		String portletName = _portletDisplay.getPortletName();
+		String portletName = _dlRequestHelper.getPortletName();
 
 		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
 			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
@@ -117,8 +114,6 @@ public class DLActionsDisplayContext {
 		return false;
 	}
 
-	private final DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private final PortletDisplay _portletDisplay;
-	private final HttpServletRequest _request;
+	private final DLRequestHelper _dlRequestHelper;
 
 }

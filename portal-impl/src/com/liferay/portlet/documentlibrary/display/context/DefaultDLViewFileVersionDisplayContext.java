@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.display.context.helper.FileEntryDisplayContextHelper;
 import com.liferay.portlet.documentlibrary.display.context.helper.FileVersionDisplayContextHelper;
+import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 import com.liferay.portlet.documentlibrary.display.context.util.JSPRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -74,7 +74,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		DLFileEntryMetadata dlFileEntryMetadata =
 			DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
-				ddmStructure.getStructureId(), fileVersion.getFileVersionId());
+				ddmStructure.getStructureId(), _fileVersion.getFileVersionId());
 
 		return StorageEngineUtil.getDDMFormValues(
 			dlFileEntryMetadata.getDDMStorageId());
@@ -83,7 +83,8 @@ public class DefaultDLViewFileVersionDisplayContext
 	@Override
 	public List<DDMStructure> getDDMStructures() throws PortalException {
 		if (_fileVersionDisplayContextHelper.isDLFileVersion()) {
-			DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
+			DLFileVersion dlFileVersion =
+				(DLFileVersion)_fileVersion.getModel();
 
 			return dlFileVersion.getDDMStructures();
 		}
@@ -143,25 +144,25 @@ public class DefaultDLViewFileVersionDisplayContext
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
 		List<ToolbarItem> toolbarItems = new ArrayList<>();
 
-		uiItemsBuilder.addDownloadToolbarItem(toolbarItems);
+		_uiItemsBuilder.addDownloadToolbarItem(toolbarItems);
 
-		uiItemsBuilder.addOpenInMsOfficeToolbarItem(toolbarItems);
+		_uiItemsBuilder.addOpenInMsOfficeToolbarItem(toolbarItems);
 
-		uiItemsBuilder.addEditToolbarItem(toolbarItems);
+		_uiItemsBuilder.addEditToolbarItem(toolbarItems);
 
-		uiItemsBuilder.addMoveToolbarItem(toolbarItems);
+		_uiItemsBuilder.addMoveToolbarItem(toolbarItems);
 
-		uiItemsBuilder.addCheckoutToolbarItem(toolbarItems);
+		_uiItemsBuilder.addCheckoutToolbarItem(toolbarItems);
 
-		uiItemsBuilder.addCancelCheckoutToolbarItem(toolbarItems);
+		_uiItemsBuilder.addCancelCheckoutToolbarItem(toolbarItems);
 
-		uiItemsBuilder.addCheckinToolbarItem(toolbarItems);
+		_uiItemsBuilder.addCheckinToolbarItem(toolbarItems);
 
-		uiItemsBuilder.addPermissionsToolbarItem(toolbarItems);
+		_uiItemsBuilder.addPermissionsToolbarItem(toolbarItems);
 
-		uiItemsBuilder.addMoveToTheRecycleBinToolbarItem(toolbarItems);
+		_uiItemsBuilder.addMoveToTheRecycleBinToolbarItem(toolbarItems);
 
-		uiItemsBuilder.addDeleteToolbarItem(toolbarItems);
+		_uiItemsBuilder.addDeleteToolbarItem(toolbarItems);
 
 		return toolbarItems;
 	}
@@ -190,23 +191,18 @@ public class DefaultDLViewFileVersionDisplayContext
 			"/html/portlet/document_library/view_file_entry_preview.jsp");
 
 		jspRenderer.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
+			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);
 
 		jspRenderer.render(request, response);
 	}
-
-	protected final FileEntry fileEntry;
-	protected final FileVersion fileVersion;
-	protected final HttpServletRequest request;
-	protected final UIItemsBuilder uiItemsBuilder;
 
 	private DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion, DLFileShortcut dlFileShortcut) {
 
 		try {
-			this.request = request;
-			this.fileVersion = fileVersion;
+			_dlRequestHelper = new DLRequestHelper(request);
+			_fileVersion = fileVersion;
 
 			FileEntry fileEntry = null;
 
@@ -214,29 +210,24 @@ public class DefaultDLViewFileVersionDisplayContext
 				fileEntry = fileVersion.getFileEntry();
 			}
 
-			this.fileEntry = fileEntry;
-
-			_themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
-				_themeDisplay.getPermissionChecker(), this.fileEntry);
+				_dlRequestHelper.getPermissionChecker(), fileEntry);
 			_fileVersionDisplayContextHelper =
 				new FileVersionDisplayContextHelper(fileVersion);
 
 			if (dlFileShortcut == null) {
-				uiItemsBuilder = new UIItemsBuilder(
+				_uiItemsBuilder = new UIItemsBuilder(
 					request, response, fileVersion);
 			}
 			else {
-				uiItemsBuilder = new UIItemsBuilder(
+				_uiItemsBuilder = new UIItemsBuilder(
 					request, response, dlFileShortcut);
 			}
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
-				"Unable to build BaseDefaultDLViewFileVersionDisplayContext " +
-					"for " + fileVersion,
+				"Unable to build DefaultDLViewFileVersionDisplayContext for " +
+					fileVersion,
 				pe);
 		}
 	}
@@ -245,8 +236,8 @@ public class DefaultDLViewFileVersionDisplayContext
 		throws PortalException {
 
 		if (_dlActionsDisplayContext == null) {
-			_dlActionsDisplayContext =
-				DLActionsDisplayContextUtil.getDLActionsDisplayContext(request);
+			_dlActionsDisplayContext = new DLActionsDisplayContext(
+				_dlRequestHelper);
 		}
 
 		return _dlActionsDisplayContext;
@@ -256,25 +247,25 @@ public class DefaultDLViewFileVersionDisplayContext
 		List<MenuItem> menuItems = new ArrayList<>();
 
 		if (_isShowActions()) {
-			uiItemsBuilder.addDownloadMenuItem(menuItems);
+			_uiItemsBuilder.addDownloadMenuItem(menuItems);
 
-			uiItemsBuilder.addOpenInMsOfficeMenuItem(menuItems);
+			_uiItemsBuilder.addOpenInMsOfficeMenuItem(menuItems);
 
-			uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
+			_uiItemsBuilder.addViewOriginalFileMenuItem(menuItems);
 
-			uiItemsBuilder.addEditMenuItem(menuItems);
+			_uiItemsBuilder.addEditMenuItem(menuItems);
 
-			uiItemsBuilder.addMoveMenuItem(menuItems);
+			_uiItemsBuilder.addMoveMenuItem(menuItems);
 
-			uiItemsBuilder.addCheckoutMenuItem(menuItems);
+			_uiItemsBuilder.addCheckoutMenuItem(menuItems);
 
-			uiItemsBuilder.addCheckinMenuItem(menuItems);
+			_uiItemsBuilder.addCheckinMenuItem(menuItems);
 
-			uiItemsBuilder.addCancelCheckoutMenuItem(menuItems);
+			_uiItemsBuilder.addCancelCheckoutMenuItem(menuItems);
 
-			uiItemsBuilder.addPermissionsMenuItem(menuItems);
+			_uiItemsBuilder.addPermissionsMenuItem(menuItems);
 
-			uiItemsBuilder.addDeleteMenuItem(menuItems);
+			_uiItemsBuilder.addDeleteMenuItem(menuItems);
 		}
 
 		return menuItems;
@@ -291,9 +282,11 @@ public class DefaultDLViewFileVersionDisplayContext
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
 	private DLActionsDisplayContext _dlActionsDisplayContext;
+	private final DLRequestHelper _dlRequestHelper;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
+	private final FileVersion _fileVersion;
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;
-	private final ThemeDisplay _themeDisplay;
+	private final UIItemsBuilder _uiItemsBuilder;
 
 }

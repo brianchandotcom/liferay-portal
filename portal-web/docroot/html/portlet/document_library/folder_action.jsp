@@ -98,7 +98,7 @@ else {
 
 boolean showWhenSingleIcon = false;
 
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(dlRequestHelper);
 
 if ((row == null) || dlActionsDisplayContext.isShowWhenSingleIconActionButton()) {
 	showWhenSingleIcon = true;

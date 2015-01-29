@@ -15,32 +15,18 @@
 package com.liferay.portlet.documentlibrary.display.context;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-
-import javax.servlet.http.HttpServletRequest;
+import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 
 /**
  * @author Iván Zaera
  */
 public class DLEntryListDisplayContext {
 
-	public DLEntryListDisplayContext(
-		HttpServletRequest request,
-		DLPortletInstanceSettings dlPortletInstanceSettings) {
-
-		_dlPortletInstanceSettings = dlPortletInstanceSettings;
-
-		_dlActionsDisplayContext = new DLActionsDisplayContext(
-			request, dlPortletInstanceSettings);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_portletDisplay = themeDisplay.getPortletDisplay();
+	public DLEntryListDisplayContext(DLRequestHelper dlRequestHelper) {
+		_dlRequestHelper = dlRequestHelper;
+		_dlActionsDisplayContext = new DLActionsDisplayContext(dlRequestHelper);
 	}
 
 	public DLActionsDisplayContext getDLActionsDisplayContext() {
@@ -48,9 +34,12 @@ public class DLEntryListDisplayContext {
 	}
 
 	public String[] getEntryColumns() {
-		String[] entryColumns = _dlPortletInstanceSettings.getEntryColumns();
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
 
-		String portletName = _portletDisplay.getPortletName();
+		String[] entryColumns = dlPortletInstanceSettings.getEntryColumns();
+
+		String portletName = _dlRequestHelper.getPortletName();
 
 		if (!_dlActionsDisplayContext.isShowActions()) {
 			entryColumns = ArrayUtil.remove(entryColumns, "action");
@@ -66,8 +55,11 @@ public class DLEntryListDisplayContext {
 	}
 
 	public String[] getFileEntryColumns() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
 		String[] fileEntryColumns =
-			_dlPortletInstanceSettings.getFileEntryColumns();
+			dlPortletInstanceSettings.getFileEntryColumns();
 
 		if (!_dlActionsDisplayContext.isShowActions()) {
 			fileEntryColumns = ArrayUtil.remove(fileEntryColumns, "action");
@@ -77,7 +69,10 @@ public class DLEntryListDisplayContext {
 	}
 
 	public String[] getFolderColumns() {
-		String[] folderColumns = _dlPortletInstanceSettings.getFolderColumns();
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String[] folderColumns = dlPortletInstanceSettings.getFolderColumns();
 
 		if (!_dlActionsDisplayContext.isShowActions()) {
 			folderColumns = ArrayUtil.remove(folderColumns, "action");
@@ -87,7 +82,6 @@ public class DLEntryListDisplayContext {
 	}
 
 	private final DLActionsDisplayContext _dlActionsDisplayContext;
-	private final DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private final PortletDisplay _portletDisplay;
+	private final DLRequestHelper _dlRequestHelper;
 
 }

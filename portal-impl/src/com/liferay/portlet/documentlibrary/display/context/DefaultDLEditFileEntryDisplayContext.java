@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.display.context.helper.FileEntryDisplayContextHelper;
 import com.liferay.portlet.documentlibrary.display.context.helper.FileVersionDisplayContextHelper;
+import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -47,14 +47,14 @@ public class DefaultDLEditFileEntryDisplayContext
 		HttpServletRequest request, HttpServletResponse response,
 		DLFileEntryType dlFileEntryType) {
 
-		_init(request, dlFileEntryType, null);
+		this(request, dlFileEntryType, null);
 	}
 
 	public DefaultDLEditFileEntryDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileEntry fileEntry) {
 
-		_init(request, null, fileEntry);
+		this(request, (DLFileEntryType)null, fileEntry);
 	}
 
 	@Override
@@ -82,7 +82,10 @@ public class DefaultDLEditFileEntryDisplayContext
 			publishButtonLabel = "submit-for-publication";
 		}
 
-		if (_dlPortletInstanceSettings.isEnableFileEntryDrafts()) {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		if (dlPortletInstanceSettings.isEnableFileEntryDrafts()) {
 			publishButtonLabel = "save";
 		}
 
@@ -154,9 +157,12 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public boolean isPublishButtonDisabled() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
 		if (_fileEntryDisplayContextHelper.isCheckedOutByOther() ||
 			(_fileVersionDisplayContextHelper.isPending() &&
-			 _dlPortletInstanceSettings.isEnableFileEntryDrafts())) {
+			 dlPortletInstanceSettings.isEnableFileEntryDrafts())) {
 
 			return true;
 		}
@@ -180,7 +186,10 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public boolean isSaveButtonVisible() {
-		return _dlPortletInstanceSettings.isEnableFileEntryDrafts();
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		return dlPortletInstanceSettings.isEnableFileEntryDrafts();
 	}
 
 	@Override
@@ -188,54 +197,33 @@ public class DefaultDLEditFileEntryDisplayContext
 		return true;
 	}
 
-	private boolean _hasFolderWorkflowDefinitionLink() {
-		try {
-			if (_dlFileEntryType == null) {
-				return false;
-			}
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			long folderId = BeanParamUtil.getLong(
-				_fileEntry, _request, "folderId");
-
-			return DLUtil.hasWorkflowDefinitionLink(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				folderId, _dlFileEntryType.getFileEntryTypeId());
-		}
-		catch (Exception e) {
-			throw new SystemException(
-				"Unable to check if folder has workflow definition link", e);
-		}
-	}
-
-	private void _init(
+	private DefaultDLEditFileEntryDisplayContext(
 		HttpServletRequest request, DLFileEntryType dlFileEntryType,
 		FileEntry fileEntry) {
 
 		try {
-			_request = request;
-			_dlFileEntryType = dlFileEntryType;
+			_dlRequestHelper = new DLRequestHelper(request);
 			_fileEntry = fileEntry;
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			_dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(
-				themeDisplay.getLayout(), portletDisplay.getId());
 			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
 				themeDisplay.getPermissionChecker(), _fileEntry);
 
-			if ((_dlFileEntryType == null) && (_fileEntry != null)) {
+			if ((dlFileEntryType == null) && (fileEntry != null)) {
 				_dlFileEntryType =
 					_fileEntryDisplayContextHelper.getDLFileEntryType();
+			}
+			else {
+				_dlFileEntryType = dlFileEntryType;
 			}
 
 			if (fileEntry != null) {
 				_fileVersion = fileEntry.getFileVersion();
+			}
+			else {
+				_fileVersion = null;
 			}
 
 			_fileVersionDisplayContextHelper =
@@ -252,16 +240,36 @@ public class DefaultDLEditFileEntryDisplayContext
 		}
 	}
 
+	private boolean _hasFolderWorkflowDefinitionLink() {
+		try {
+			if (_dlFileEntryType == null) {
+				return false;
+			}
+
+			long folderId = BeanParamUtil.getLong(
+				_fileEntry, _dlRequestHelper.getRequest(), "folderId");
+
+			return DLUtil.hasWorkflowDefinitionLink(
+				_dlRequestHelper.getCompanyId(),
+				_dlRequestHelper.getScopeGroupId(), folderId,
+				_dlFileEntryType.getFileEntryTypeId());
+		}
+		catch (Exception e) {
+			throw new SystemException(
+				"Unable to check if folder has workflow definition link", e);
+		}
+	}
+
 	private static final UUID _UUID = UUID.fromString(
 		"63326141-02F6-42B5-AE38-ABC73FA72BB5");
 
-	private DLFileEntryType _dlFileEntryType;
-	private DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private FileEntry _fileEntry;
-	private FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
-	private FileVersion _fileVersion;
-	private FileVersionDisplayContextHelper _fileVersionDisplayContextHelper;
-	private HttpServletRequest _request;
-	private boolean _showSelectFolder;
+	private final DLFileEntryType _dlFileEntryType;
+	private final DLRequestHelper _dlRequestHelper;
+	private final FileEntry _fileEntry;
+	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
+	private final FileVersion _fileVersion;
+	private final FileVersionDisplayContextHelper
+		_fileVersionDisplayContextHelper;
+	private final boolean _showSelectFolder;
 
 }

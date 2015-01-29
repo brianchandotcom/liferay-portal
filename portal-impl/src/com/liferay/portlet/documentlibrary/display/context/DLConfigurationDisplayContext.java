@@ -20,33 +20,23 @@ import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
+import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Iván Zaera
  */
 public class DLConfigurationDisplayContext {
 
-	public DLConfigurationDisplayContext(
-		HttpServletRequest request,
-		DLPortletInstanceSettings dlPortletInstanceSettings) {
-
-		_dlPortletInstanceSettings = dlPortletInstanceSettings;
-
-		_dlActionsDisplayContext = new DLActionsDisplayContext(
-			request, dlPortletInstanceSettings);
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public DLConfigurationDisplayContext(DLRequestHelper dlRequestHelper) {
+		_dlRequestHelper = dlRequestHelper;
+		_dlActionsDisplayContext = new DLActionsDisplayContext(dlRequestHelper);
 	}
 
 	public List<KeyValuePair> getAvailableDisplayViews() {
@@ -102,7 +92,10 @@ public class DLConfigurationDisplayContext {
 	}
 
 	private void _populateDisplayViews() {
-		String[] displayViews = _dlPortletInstanceSettings.getDisplayViews();
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String[] displayViews = dlPortletInstanceSettings.getDisplayViews();
 
 		_currentDisplayViews = new ArrayList<>();
 
@@ -110,7 +103,8 @@ public class DLConfigurationDisplayContext {
 			_currentDisplayViews.add(
 				new KeyValuePair(
 					displayView,
-					LanguageUtil.get(_themeDisplay.getLocale(), displayView)));
+					LanguageUtil.get(
+						_dlRequestHelper.getLocale(), displayView)));
 		}
 
 		Arrays.sort(displayViews);
@@ -126,7 +120,7 @@ public class DLConfigurationDisplayContext {
 					new KeyValuePair(
 						displayView,
 						LanguageUtil.get(
-							_themeDisplay.getLocale(), displayView)));
+							_dlRequestHelper.getLocale(), displayView)));
 			}
 		}
 
@@ -135,7 +129,10 @@ public class DLConfigurationDisplayContext {
 	}
 
 	private void _populateEntryColumns() {
-		String[] entryColumns = _dlPortletInstanceSettings.getEntryColumns();
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String[] entryColumns = dlPortletInstanceSettings.getEntryColumns();
 
 		_currentEntryColumns = new ArrayList<>();
 
@@ -143,7 +140,8 @@ public class DLConfigurationDisplayContext {
 			_currentEntryColumns.add(
 				new KeyValuePair(
 					entryColumn,
-					LanguageUtil.get(_themeDisplay.getLocale(), entryColumn)));
+					LanguageUtil.get(
+						_dlRequestHelper.getLocale(), entryColumn)));
 		}
 
 		Arrays.sort(entryColumns);
@@ -158,7 +156,7 @@ public class DLConfigurationDisplayContext {
 					new KeyValuePair(
 						entryColumn,
 						LanguageUtil.get(
-							_themeDisplay.getLocale(), entryColumn)));
+							_dlRequestHelper.getLocale(), entryColumn)));
 			}
 		}
 
@@ -171,7 +169,6 @@ public class DLConfigurationDisplayContext {
 	private List<KeyValuePair> _currentDisplayViews;
 	private List<KeyValuePair> _currentEntryColumns;
 	private final DLActionsDisplayContext _dlActionsDisplayContext;
-	private final DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private final ThemeDisplay _themeDisplay;
+	private final DLRequestHelper _dlRequestHelper;
 
 }

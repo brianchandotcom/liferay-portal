@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 public class SocialNetworkingPropsValues {
 
 	public static final String WALL_LAYOUT_FRIENDLY_URL = GetterUtil.getString(
-		SocialNetworkingConfigurationUtil.get(
-			SocialNetworkingPropsKeys.WALL_LAYOUT_FRIENDLY_URL));
+		SocialNetworkingConfigurationUtil.get("wall.layout.friendly.url"));
 
 }

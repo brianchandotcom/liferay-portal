@@ -33,36 +33,33 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 <aui:fieldset>
 
 	<%
-	String[] portletIds = PortletRatingsDefinitionUtil.getPortletIds();
+	PortletRatingsDefinitionDisplayContext portletRatingsDisplayContext = new PortletRatingsDefinitionDisplayContext();
 
-	for (String portletId : portletIds) {
+	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = portletRatingsDisplayContext.getPortletRatingsDefinitionMap();
+
+	for (String portletId : portletRatingsDefinitionMap.keySet()) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 	%>
 
 		<p>
-			<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
+			<strong><%= PortalUtil.getPortletTitle(portlet, application, locale) %></strong>
 		</p>
 
 		<%
-		String[] classNames = PortletRatingsDefinitionUtil.getClassNames(portletId);
+		Map<String, RatingsType> ratingsTypeMap = portletRatingsDefinitionMap.get(portletId);
+
+		Set<String> classNames = ratingsTypeMap.keySet();
 
 		for (String className : classNames) {
-		%>
-
-			<c:if test="<%= classNames.length > 1 %>">
-				<p><%= ResourceActionsUtil.getModelResource(locale, className) %></p>
-			</c:if>
-
-			<%
 			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
 
-			RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(portletId, className);
+			RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(className);
 
 			String ratingsTypeString = PrefsParamUtil.getString(companyPortletPreferences, request, propertyKey, defaultRatingsType.toString());
 			%>
 
-			<div class="row-fields">
-				<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "settings--" + propertyKey + "--" %>'>
+			<div class="ratings-type-select">
+				<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "settings--" + propertyKey + "--" %>'>
 
 					<%
 					for (RatingsType curRatingsType : RatingsType.values()) {

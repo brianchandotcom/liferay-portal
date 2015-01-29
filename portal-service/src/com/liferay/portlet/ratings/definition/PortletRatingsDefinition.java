@@ -12,16 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.ratings.transformer;
+package com.liferay.portlet.ratings.definition;
 
 /**
  * @author Roberto Díaz
  * @author Sergio González
  */
 public interface PortletRatingsDefinition {
-
-	public String[] getClassNames();
-
-	public RatingsType getDefaultRatingsType(String className);
-
 }

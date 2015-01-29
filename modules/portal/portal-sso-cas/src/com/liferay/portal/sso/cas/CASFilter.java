@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.sso.cas;
+package com.liferay.portal.sso.cas;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
@@ -48,7 +48,7 @@ import org.jasig.cas.client.validation.TicketValidator;
  * @author Tina Tian
  * @author Zsolt Balogh
  */
-public class CASFilter extends BasePortalFilter {
+public class CASFilter extends BaseFilter {
 
 	public static void reload(long companyId) {
 		_ticketValidators.remove(companyId);
@@ -62,8 +62,8 @@ public class CASFilter extends BasePortalFilter {
 			long companyId = PortalUtil.getCompanyId(request);
 
 			if (PrefsPropsUtil.getBoolean(
-					companyId, PropsKeys.CAS_AUTH_ENABLED,
-					PropsValues.CAS_AUTH_ENABLED)) {
+				companyId, PropsKeys.CAS_AUTH_ENABLED,
+				PropsValues.CAS_AUTH_ENABLED)) {
 
 				return true;
 			}

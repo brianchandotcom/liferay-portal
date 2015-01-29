@@ -289,10 +289,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String NOTES_LIST = "NOTES_LIST";
 
-	public static final String NTLM_REMOTE_USER = "NTLM_REMOTE_USER";
-
-	public static final String NTLM_USER_ACCOUNT = "NTLM_USER_ACCOUNT";
-
 	public static final String OPEN_ID_DISCO = "openid-disco";
 
 	public static final String OPEN_ID_LOGIN = "OPEN_ID_LOGIN";

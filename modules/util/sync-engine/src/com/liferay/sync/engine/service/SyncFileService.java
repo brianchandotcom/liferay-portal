@@ -254,7 +254,7 @@ public class SyncFileService {
 	public static SyncFile fetchSyncFileByFileKey(
 		String fileKey, long syncAccountId) {
 
-		if ((fileKey == null) || fileKey.equals("")) {
+		if ((fileKey == null) || fileKey.isEmpty()) {
 			return null;
 		}
 
@@ -534,7 +534,7 @@ public class SyncFileService {
 		String sourceVersion = syncFile.getVersion();
 		String targetChecksum = FileUtil.getChecksum(filePath);
 
-		if (!FileUtil.isEqualChecksum(sourceChecksum, targetChecksum) &&
+		if (!FileUtil.checksumsEqual(sourceChecksum, targetChecksum) &&
 			!IODeltaUtil.isIgnoredFilePatchingExtension(syncFile)) {
 
 			deltaFilePath = Files.createTempFile(

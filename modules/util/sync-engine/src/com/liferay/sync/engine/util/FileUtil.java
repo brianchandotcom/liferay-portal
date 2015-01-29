@@ -53,6 +53,14 @@ import org.slf4j.LoggerFactory;
  */
 public class FileUtil {
 
+	public static boolean checksumsEqual(String checksum1, String checksum2) {
+		if (checksum1.isEmpty() || checksum2.isEmpty()) {
+			return false;
+		}
+
+		return checksum1.equals(checksum2);
+	}
+
 	public static String getChecksum(Path filePath) throws IOException {
 		if (!isValidChecksum(filePath)) {
 			return "";
@@ -189,7 +197,7 @@ public class FileUtil {
 			}
 		}
 
-		if ((extension != null) && !extension.equals("")) {
+		if ((extension != null) && !extension.isEmpty()) {
 			int x = fileName.lastIndexOf(".");
 
 			if ((x == -1) ||
@@ -202,7 +210,7 @@ public class FileUtil {
 		if (fileName.length() > 255) {
 			int x = fileName.length() - 1;
 
-			if ((extension != null) && !extension.equals("")) {
+			if ((extension != null) && !extension.isEmpty()) {
 				x = fileName.lastIndexOf(".");
 			}
 
@@ -239,15 +247,7 @@ public class FileUtil {
 
 		String checksum = getChecksum(filePath);
 
-		return !isEqualChecksum(checksum, syncFile.getChecksum());
-	}
-
-	public static boolean isEqualChecksum(String checksum1, String checksum2) {
-		if (checksum1.equals("") || checksum2.equals("")) {
-			return false;
-		}
-
-		return checksum1.equals(checksum2);
+		return !checksumsEqual(checksum, syncFile.getChecksum());
 	}
 
 	public static boolean isHidden(Path filePath) {

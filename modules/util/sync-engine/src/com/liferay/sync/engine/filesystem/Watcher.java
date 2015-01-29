@@ -201,7 +201,7 @@ public class Watcher implements Runnable {
 					}
 					else if (kind == StandardWatchEventKind.ENTRY_MODIFY) {
 						if (_downloadedFilePathNames.remove(
-							 childFilePath.toString()) ||
+								childFilePath.toString()) ||
 							(removeCreatedFilePathName(
 								childFilePath.toString()) &&
 							 !FileUtil.isValidChecksum(childFilePath)) ||

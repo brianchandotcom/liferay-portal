@@ -84,7 +84,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 		if (Files.exists(filePath) &&
 			(syncFile.isFolder() ||
-			 !FileUtil.hasFileChanged(syncFile, filePath))) {
+			 !FileUtil.isModified(syncFile, filePath))) {
 
 			return;
 		}
@@ -168,34 +168,14 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	protected void downloadFile(
 		SyncFile syncFile, String sourceVersion, boolean patch) {
 
-		String targetVersion = syncFile.getVersion();
-
-		if (patch &&
-			(Double.valueOf(targetVersion) > Double.valueOf(sourceVersion))) {
-
+		if (patch) {
 			FileEventUtil.downloadPatch(
-				sourceVersion, getSyncAccountId(), syncFile, targetVersion);
+				sourceVersion, getSyncAccountId(), syncFile,
+				syncFile.getVersion());
 		}
 		else {
 			FileEventUtil.downloadFile(getSyncAccountId(), syncFile);
 		}
-	}
-
-	protected boolean hasFileChanged(
-			SyncFile sourceSyncFile, SyncFile targetSyncFile,
-			Path sourceFilePath)
-		throws IOException {
-
-		String sourceSyncFileChecksum = sourceSyncFile.getChecksum();
-		String targetSyncFileChecksum = targetSyncFile.getChecksum();
-
-		if (sourceSyncFileChecksum.equals("") ||
-			targetSyncFileChecksum.equals("")) {
-
-			return true;
-		}
-
-		return FileUtil.hasFileChanged(targetSyncFile, sourceFilePath);
 	}
 
 	protected boolean isIgnoredFilePath(
@@ -410,7 +390,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			}
 		}
 		else if (targetSyncFile.isFile() &&
-				 hasFileChanged(sourceSyncFile, targetSyncFile, filePath)) {
+				 FileUtil.isModified(targetSyncFile, filePath)) {
 
 			downloadFile(
 				sourceSyncFile, sourceVersion,

@@ -175,7 +175,7 @@ public class SyncWatchEventProcessor implements Runnable {
 				return;
 			}
 
-			if (FileUtil.hasFileChanged(syncFile)) {
+			if (FileUtil.isModified(syncFile)) {
 				SyncFileService.updateFileSyncFile(
 					targetFilePath, _syncAccountId, syncFile);
 			}
@@ -473,7 +473,7 @@ public class SyncWatchEventProcessor implements Runnable {
 
 			return;
 		}
-		else if (!FileUtil.hasFileChanged(syncFile)) {
+		else if (!FileUtil.isModified(syncFile)) {
 			return;
 		}
 

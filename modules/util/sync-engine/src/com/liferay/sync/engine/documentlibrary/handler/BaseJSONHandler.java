@@ -93,7 +93,7 @@ public class BaseJSONHandler extends BaseHandler {
 
 	@Override
 	public boolean handlePortalException(String exception) throws Exception {
-		if (exception.equals("")) {
+		if (exception.isEmpty()) {
 			return false;
 		}
 

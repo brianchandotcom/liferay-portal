@@ -29,8 +29,8 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.ratings.transformer.PortletRatingsDefinition;
 import com.liferay.portlet.ratings.transformer.PortletRatingsDefinitionUtil;
+import com.liferay.portlet.ratings.transformer.RatingsType;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.portlet.PortletPreferences;
@@ -127,7 +127,7 @@ public class RatingsTag extends IncludeTag {
 		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
 		if (portlet != null) {
-			PortletRatingsDefinition.RatingsType defaultRatingsType =
+			RatingsType defaultRatingsType =
 				PortletRatingsDefinitionUtil.getDefaultRatingsType(
 					portlet.getPortletId(), _className);
 
@@ -184,7 +184,7 @@ public class RatingsTag extends IncludeTag {
 		PropsUtil.get(PropsKeys.RATINGS_DEFAULT_NUMBER_OF_STARS));
 
 	private static final String _DEFAULT_TYPE =
-		PortletRatingsDefinition.RatingsType.STARS.getValue();
+		RatingsType.STARS.getValue();
 
 	private static final String _PAGE = "/html/taglib/ui/ratings/page.jsp";
 

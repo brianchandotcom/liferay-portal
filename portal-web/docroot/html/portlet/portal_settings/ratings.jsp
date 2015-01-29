@@ -56,7 +56,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 			<%
 			String propertyKey = className + StringPool.UNDERLINE + "RatingsType";
 
-			PortletRatingsDefinition.RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(portletId, className);
+			RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(portletId, className);
 
 			String ratingsTypeString = PrefsParamUtil.getString(companyPortletPreferences, request, propertyKey, defaultRatingsType.toString());
 			%>
@@ -65,7 +65,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 				<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "settings--" + propertyKey + "--" %>'>
 
 					<%
-					for (PortletRatingsDefinition.RatingsType curRatingsType : PortletRatingsDefinition.RatingsType.values()) {
+					for (RatingsType curRatingsType : RatingsType.values()) {
 					%>
 
 						<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= ratingsTypeString.equals(curRatingsType.getValue()) %>" value="<%= curRatingsType.getValue() %>" />

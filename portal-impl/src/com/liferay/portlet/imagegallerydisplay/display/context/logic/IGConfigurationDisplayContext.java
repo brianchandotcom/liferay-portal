@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.display.context;
+package com.liferay.portlet.imagegallerydisplay.display.context.logic;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;

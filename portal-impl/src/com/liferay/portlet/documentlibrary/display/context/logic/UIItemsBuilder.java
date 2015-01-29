@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.display.context;
+package com.liferay.portlet.documentlibrary.display.context.logic;
 
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,8 +50,9 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
-import com.liferay.portlet.documentlibrary.display.context.helper.FileEntryDisplayContextHelper;
-import com.liferay.portlet.documentlibrary.display.context.helper.FileVersionDisplayContextHelper;
+import com.liferay.portlet.documentlibrary.display.context.DLUIItemKeys;
+import com.liferay.portlet.documentlibrary.display.context.logic.FileEntryDisplayContextHelper;
+import com.liferay.portlet.documentlibrary.display.context.logic.FileVersionDisplayContextHelper;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -68,7 +69,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Iván Zaera
+ * @author Ivï¿½n Zaera
  */
 public class UIItemsBuilder {
 

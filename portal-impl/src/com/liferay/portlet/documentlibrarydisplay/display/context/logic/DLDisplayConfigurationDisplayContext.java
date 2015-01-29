@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrarydisplay.context;
+package com.liferay.portlet.documentlibrarydisplay.display.context.logic;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.display.context.DLActionsDisplayContext;
-import com.liferay.portlet.documentlibrarydisplay.context.util.DLDisplayRequestHelper;
+import com.liferay.portlet.documentlibrarydisplay.display.context.util.DLDisplayRequestHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;

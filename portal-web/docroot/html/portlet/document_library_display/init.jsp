@@ -26,8 +26,8 @@ page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
 page import="com.liferay.portlet.documentlibrary.search.EntriesChecker" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
-page import="com.liferay.portlet.documentlibrarydisplay.context.DLDisplayConfigurationDisplayContext" %><%@
-page import="com.liferay.portlet.documentlibrarydisplay.context.util.DLDisplayRequestHelper" %>
+page import="com.liferay.portlet.documentlibrarydisplay.display.context.logic.DLDisplayConfigurationDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrarydisplay.display.context.util.DLDisplayRequestHelper" %>
 
 <%
 if (layout.isTypeControlPanel()) {

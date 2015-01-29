@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrarydisplay.context.util;
+package com.liferay.portlet.documentlibrarydisplay.display.context.util;
 
 import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 

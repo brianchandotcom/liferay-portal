@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portlet.documentlibrary.display.context.DLActionsDisplayContext;
-import com.liferay.portlet.documentlibrary.display.context.UIItemsBuilder;
+import com.liferay.portlet.documentlibrary.display.context.logic.UIItemsBuilder;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.imagegallerydisplay.display.context.util.IGRequestHelper;
 

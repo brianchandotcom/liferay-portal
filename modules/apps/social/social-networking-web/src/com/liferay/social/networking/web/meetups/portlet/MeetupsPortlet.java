@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.friendly-url-mapping=meetups",
-		"com.liferay.portlet.friendly-url-routes=com/liferay/social/networking/meetups/portlet/route/meetups-friendly-url-routes.xml",
+		"com.liferay.portlet.friendly-url-routes=com/liferay/social/networking/web/meetups/portlet/route/meetups-friendly-url-routes.xml",
 		"com.liferay.portlet.header-portlet-css=/meetups/css/main.css",
 		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-meetups",
 		"com.liferay.portlet.add-default-resource=true",

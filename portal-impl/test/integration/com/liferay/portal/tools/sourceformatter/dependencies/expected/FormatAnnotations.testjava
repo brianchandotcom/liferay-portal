@@ -24,7 +24,7 @@ import com.liferay.portal.model.SystemEventConstants;
 /**
  * @author Hugo Huijser
  */
-public class SortAnnotations {
+public class FormatAnnotations {
 
 	@JSON
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

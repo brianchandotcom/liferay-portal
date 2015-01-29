@@ -30,7 +30,7 @@ import com.liferay.portlet.social.model.SocialRequestConstants;
 import com.liferay.portlet.social.model.SocialRequestFeedEntry;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
-import com.liferay.social.networking.util.SocialNetworkingPortletKeys;
+import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

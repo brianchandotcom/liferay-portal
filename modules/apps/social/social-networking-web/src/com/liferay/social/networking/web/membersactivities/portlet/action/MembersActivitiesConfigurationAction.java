@@ -16,7 +16,7 @@ package com.liferay.social.networking.web.membersactivities.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.social.networking.util.SocialNetworkingPortletKeys;
+import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

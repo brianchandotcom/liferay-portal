@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.networking.util;
+package com.liferay.social.networking.constants;
 
 /**
  * @author Brian Wing Shun Chan

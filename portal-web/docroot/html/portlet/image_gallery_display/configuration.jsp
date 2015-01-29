@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
 
 <%
-dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(layout, portletId, request.getParameterMap());
-
 IGConfigurationDisplayContext igConfigurationDisplayContext = new IGConfigurationDisplayContext(request, dlPortletInstanceSettings);
 %>
 

@@ -54,7 +54,7 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 contextObjects.put("dlPortletInstanceSettings", dlPortletInstanceSettings);
 
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(igRequestHelper);
 
 String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 

@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portlet.documentlibrary.display.context.DLActionsDisplayContext;
-import com.liferay.portlet.documentlibrary.display.context.DLActionsDisplayContextUtil;
 import com.liferay.portlet.documentlibrary.display.context.UIItemsBuilder;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.imagegallerydisplay.display.context.util.IGRequestHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class DefaultIGViewFileVersionDisplayContext
 			FileVersion fileVersion, DLFileShortcut dlFileShortcut)
 		throws PortalException {
 
-		_request = request;
+		_igRequestHelper = new IGRequestHelper(request);
 
 		if (dlFileShortcut == null) {
 			_uiItemsBuilder = new UIItemsBuilder(
@@ -97,9 +97,8 @@ public class DefaultIGViewFileVersionDisplayContext
 		throws PortalException {
 
 		if (_dlActionsDisplayContext == null) {
-			_dlActionsDisplayContext =
-				DLActionsDisplayContextUtil.getDLActionsDisplayContext(
-					_request);
+			_dlActionsDisplayContext = new DLActionsDisplayContext(
+				_igRequestHelper);
 		}
 
 		return _dlActionsDisplayContext;
@@ -116,7 +115,7 @@ public class DefaultIGViewFileVersionDisplayContext
 		"C04528F9-C005-4E21-A926-F068750B99DB");
 
 	private DLActionsDisplayContext _dlActionsDisplayContext;
-	private final HttpServletRequest _request;
+	private final IGRequestHelper _igRequestHelper;
 	private final UIItemsBuilder _uiItemsBuilder;
 
 }

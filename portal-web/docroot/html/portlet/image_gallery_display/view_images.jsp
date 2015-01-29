@@ -23,7 +23,7 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("view.js
 
 List results = searchContainer.getResults();
 
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
+DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(igRequestHelper);
 %>
 
 <c:choose>

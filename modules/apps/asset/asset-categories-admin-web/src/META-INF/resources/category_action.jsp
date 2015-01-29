@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_category_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -25,7 +25,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editCategoryURL">
-			<portlet:param name="mvcPath" value="/html/portlet/asset_category_admin/edit_category.jsp" />
+			<portlet:param name="mvcPath" value="/edit_category.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="categoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(category.getVocabularyId()) %>" />
@@ -40,7 +40,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 
 	<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.ADD_CATEGORY) %>">
 		<portlet:renderURL var="addSubcategoryCategoryURL">
-			<portlet:param name="mvcPath" value="/html/portlet/asset_category_admin/edit_category.jsp" />
+			<portlet:param name="mvcPath" value="/edit_category.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(category.getVocabularyId()) %>" />
 			<portlet:param name="parentCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
@@ -55,7 +55,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 
 	<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="moveCategoryURL">
-			<portlet:param name="mvcPath" value="/html/portlet/asset_category_admin/move_category.jsp" />
+			<portlet:param name="mvcPath" value="/move_category.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="categoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(category.getVocabularyId()) %>" />

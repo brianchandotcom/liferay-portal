@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_category_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long categoryId = ParamUtil.getLong(request, "categoryId");
@@ -33,7 +33,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/asset_category_admin/view_categories.jsp");
+portletURL.setParameter("mvcPath", "/view_categories.jsp");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("categoryId", String.valueOf(categoryId));
 portletURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
@@ -61,7 +61,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 		<aui:nav cssClass="navbar-nav">
 			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY) %>">
 				<portlet:renderURL var="addCategoryURL">
-					<portlet:param name="mvcPath" value="/html/portlet/asset_category_admin/edit_category.jsp" />
+					<portlet:param name="mvcPath" value="/edit_category.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
@@ -118,7 +118,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 			modelVar="curCategory"
 		>
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/html/portlet/asset_category_admin/view_categories.jsp" />
+				<portlet:param name="mvcPath" value="/view_categories.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="categoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 				<portlet:param name="vocabularyId" value="<%= String.valueOf(curCategory.getVocabularyId()) %>" />
@@ -137,7 +137,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/asset_category_admin/category_action.jsp"
+				path="/category_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_category_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -51,7 +51,7 @@ if (vocabularyId > 0) {
 
 				<aui:input name="description" />
 
-				<%@ include file="/html/portlet/asset_category_admin/edit_vocabulary_settings.jspf" %>
+				<%@ include file="/edit_vocabulary_settings.jspf" %>
 
 				<c:choose>
 					<c:when test="<%= vocabulary == null %>">

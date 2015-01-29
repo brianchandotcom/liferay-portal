@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/asset_category_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String keywords = ParamUtil.getString(request, "keywords");
@@ -29,7 +29,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		<aui:nav cssClass="navbar-nav">
 			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY) %>">
 				<portlet:renderURL var="addVocabularyURL">
-					<portlet:param name="mvcPath" value="/html/portlet/asset_category_admin/edit_vocabulary.jsp" />
+					<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
@@ -95,7 +95,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			modelVar="vocabulary"
 		>
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/html/portlet/asset_category_admin/view_categories.jsp" />
+				<portlet:param name="mvcPath" value="/view_categories.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 			</portlet:renderURL>
@@ -173,7 +173,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/asset_category_admin/vocabulary_action.jsp"
+				path="/vocabulary_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

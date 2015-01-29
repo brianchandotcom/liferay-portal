@@ -14,12 +14,36 @@
 			<#include "selenium_element.ftl">
 		</#if>
 	<#elseif name == "if">
-		<#assign conditionElement = element.element("condition")>
-
 		if (
-			<#assign seleniumElement = conditionElement>
+			<#if element.element("condition")??>
+				<#assign conditionElement = element.element("condition")>
 
-			<#include "selenium_element.ftl">
+				<#assign seleniumElement = conditionElement>
+
+				<#include "selenium_element.ftl">
+			<#elseif element.element("contains")??>
+				<#assign conditionElement = element.element("contains")>
+
+				<#assign string = conditionElement.attributeValue("string")>
+
+				<#if string?starts_with("${") && string?ends_with("}")>
+					${seleniumBuilderFileUtil.escapeJava(string?substring(2, string?length - 1))}
+				<#else>
+					"${seleniumBuilderFileUtil.escapeJava(string)}"
+				</#if>
+
+				.contains(
+
+				<#assign substring = conditionElement.attributeValue("substring")>
+
+				<#if substring?starts_with("${") && substring?ends_with("}")>
+					${seleniumBuilderFileUtil.escapeJava(substring?substring(2, substring?length - 1))}
+				<#else>
+					"${seleniumBuilderFileUtil.escapeJava(substring)}"
+				</#if>
+
+				)
+			</#if>
 		) {
 			<#assign thenElement = element.element("then")>
 

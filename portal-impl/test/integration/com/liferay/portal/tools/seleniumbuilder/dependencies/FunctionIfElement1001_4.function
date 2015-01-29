@@ -1,7 +1,7 @@
 <definition default="name">
 	<command name="name">
 		<if>
-			<contains string="string" substring="substring" />
+			<equals arg1="arg1" arg2="arg2" />
 			<then>
 				<execute selenium="selenium" />
 			</then>

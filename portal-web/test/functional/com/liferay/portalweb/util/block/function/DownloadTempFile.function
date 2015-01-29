@@ -1,4 +1,4 @@
-<definition>
+<definition default="downloadTempFile">
 	<command name="downloadTempFile">
 		<execute argument1="5000" selenium="pause" />
 

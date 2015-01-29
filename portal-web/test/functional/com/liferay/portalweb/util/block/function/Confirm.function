@@ -1,4 +1,4 @@
-<definition>
+<definition default="assertConfirmation">
 	<command name="assertConfirmation">
 		<execute selenium="assertConfirmation" />
 

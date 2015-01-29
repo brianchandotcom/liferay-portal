@@ -1,4 +1,4 @@
-<definition>
+<definition default="dragAndDropToObject">
 	<command name="dragAndDrop">
 		<execute selenium="dragAndDrop" />
 

@@ -1,4 +1,4 @@
-<definition>
+<definition default="assertSelectedLabel">
 	<command name="assertSelectedLabel">
 		<execute selenium="waitForVisible" />
 

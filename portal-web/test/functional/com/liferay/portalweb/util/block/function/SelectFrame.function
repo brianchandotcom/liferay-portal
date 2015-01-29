@@ -1,4 +1,4 @@
-<definition>
+<definition default="selectFrame">
 	<command name="selectFrame">
 		<execute selenium="waitForVisible" />
 

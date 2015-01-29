@@ -1,4 +1,4 @@
-<definition>
+<definition default="assertElementNotPresent">
 	<command name="assertElementNotPresent">
 		<execute selenium="waitForElementNotPresent" />
 

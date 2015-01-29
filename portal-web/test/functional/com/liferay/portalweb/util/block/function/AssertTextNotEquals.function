@@ -1,4 +1,4 @@
-<definition>
+<definition default="assertNotText">
 	<command name="assertNotPartialText">
 		<execute selenium="waitForVisible" />
 

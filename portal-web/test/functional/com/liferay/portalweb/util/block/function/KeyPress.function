@@ -1,4 +1,4 @@
-<definition>
+<definition default="keyPress">
 	<command name="keyPress">
 		<execute selenium="mouseOver" />
 

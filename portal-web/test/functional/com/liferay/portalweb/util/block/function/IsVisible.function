@@ -1,4 +1,4 @@
-<definition>
+<definition default="isVisible">
 	<command name="isVisible">
 		<execute selenium="isVisible" />
 	</command>

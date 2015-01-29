@@ -44,12 +44,8 @@ import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 
 import java.io.ByteArrayInputStream;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,17 +104,18 @@ public class DLFileEntryDDMFormValuesReaderTest {
 
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
-		Map<String, Fields> fieldsMap = createFieldsMap(ddmStructures.get(0));
+		Map<String, DDMFormValues> ddmFormValuesMap = createDDMFormValuesMap(
+			ddmStructures.get(0));
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			RandomTestUtil.randomBytes());
-
+ 
 		return DLFileEntryLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			null, null, dlFileEntryType.getFileEntryTypeId(), fieldsMap, null,
-			byteArrayInputStream, byteArrayInputStream.available(),
+			null, null, dlFileEntryType.getFileEntryTypeId(), ddmFormValuesMap,
+			null, byteArrayInputStream, byteArrayInputStream.available(),
 			serviceContext);
 	}
 
@@ -146,33 +143,35 @@ public class DLFileEntryDDMFormValuesReaderTest {
 		return ddmFormFieldValue;
 	}
 
-	protected Field createField(long structureId, String name, String value) {
-		Field field  = new Field(structureId, name, value);
+	protected DDMFormValues createDDMFormValues(DDMForm ddmForm)
+		throws Exception {
+		
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
-		field.setDefaultLocale(LocaleUtil.US);
+		ddmFormValues.addAvailableLocale(LocaleUtil.US);
+		ddmFormValues.setDefaultLocale(LocaleUtil.US);
 
-		return field;
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue("baga", "Text1", "Text 1 Value"));
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue("hagt", "Text2", "Text 2 Value"));
+
+		return ddmFormValues;
 	}
+	
+	protected Map<String, DDMFormValues> createDDMFormValuesMap(
+			DDMStructure ddmStructure)
+		throws Exception {
+		
+		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
 
-	protected Map<String, Fields> createFieldsMap(DDMStructure ddmStructure) {
-		Map<String, Fields> fieldsMap = new HashMap<>();
+		DDMForm ddmForm = createDDMForm();
+		
+		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
 
-		Fields fields = new Fields();
+		ddmFormValuesMap.put(ddmStructure.getStructureKey(), ddmFormValues);
 
-		fields.put(
-			createField(
-				ddmStructure.getStructureId(), "Text1", "Text 1 Value"));
-		fields.put(
-			createField(
-				ddmStructure.getStructureId(), "Text2", "Text 2 Value"));
-		fields.put(
-			new Field(
-				ddmStructure.getStructureId(), DDMImpl.FIELDS_DISPLAY_NAME,
-				"Text1_INSTANCE_baga,Text2_INSTANCE_hagt"));
-
-		fieldsMap.put(ddmStructure.getStructureKey(), fields);
-
-		return fieldsMap;
+		return ddmFormValuesMap;
 	}
 
 	protected DDMFormField createTextDDMFormField(String name) {
@@ -191,17 +190,7 @@ public class DLFileEntryDDMFormValuesReaderTest {
 	}
 
 	protected DDMFormValues getExpectedDDMFormValues() throws Exception {
-		DDMFormValues ddmFormValues = new DDMFormValues(null);
-
-		ddmFormValues.addAvailableLocale(LocaleUtil.US);
-		ddmFormValues.setDefaultLocale(LocaleUtil.US);
-
-		ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue("baga", "Text1", "Text 1 Value"));
-		ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue("hagt", "Text2", "Text 2 Value"));
-
-		return ddmFormValues;
+		return createDDMFormValues(null);
 	}
 
 	protected ServiceContext getServiceContext() throws Exception {

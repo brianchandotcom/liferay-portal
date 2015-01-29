@@ -46,9 +46,79 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
+		<model-name>com.liferay.portlet.asset</model-name>
+		<portlet-ref>
+			<portlet-name>147</portlet-name>
+		</portlet-ref>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_CATEGORY</action-key>
+				<action-key>ADD_VOCABULARY</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_CATEGORY</action-key>
+				<action-key>ADD_VOCABULARY</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.portlet.asset.model.AssetCategory</model-name>
+		<portlet-ref>
+			<portlet-name>147</portlet-name>
+		</portlet-ref>
+		<weight>3</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_CATEGORY</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>ADD_CATEGORY</action-key>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>ADD_CATEGORY</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.portlet.asset.model.AssetTag</model-name>
 		<portlet-ref>
 			<portlet-name>99</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.portlet.asset.model.AssetVocabulary</model-name>
+		<portlet-ref>
+			<portlet-name>147</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

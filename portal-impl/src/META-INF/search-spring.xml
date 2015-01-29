@@ -69,6 +69,9 @@
 			<bean class="com.liferay.portal.search.NGramHolderBuilderImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.search.QueryPreProcessConfiguration" class="com.liferay.portal.search.QueryPreProcessConfigurationImpl">
+		<property name="analyzer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzer" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.search.QueryTranslator" class="com.liferay.portal.search.lucene.QueryTranslatorImpl" />
 	<bean id="com.liferay.portal.kernel.search.QueryTranslatorUtil" class="com.liferay.portal.kernel.search.QueryTranslatorUtil">
 		<property name="queryTranslator" ref="com.liferay.portal.kernel.search.QueryTranslator" />
@@ -161,6 +164,7 @@
 	</bean>
 	<bean id="com.liferay.portal.search.lucene.LuceneHelperImpl" class="com.liferay.portal.search.lucene.LuceneHelperImpl">
 		<property name="analyzer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzer" />
+		<property name="queryPreProcessConfiguration" ref="com.liferay.portal.kernel.search.QueryPreProcessConfiguration" />
 		<property name="version" ref="org.apache.lucene.util.Version" />
 	</bean>
 	<bean id="com.liferay.portal.search.lucene.LuceneHelperUtil" class="com.liferay.portal.search.lucene.LuceneHelperUtil">

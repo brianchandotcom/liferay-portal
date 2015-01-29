@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.display.context.logic;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
@@ -25,6 +26,54 @@ public class DLPortletInstanceSettingsHelper {
 
 	public DLPortletInstanceSettingsHelper(DLRequestHelper dlRequestHelper) {
 		_dlRequestHelper = dlRequestHelper;
+	}
+
+	public String[] getEntryColumns() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String[] entryColumns = dlPortletInstanceSettings.getEntryColumns();
+
+		String portletName = _dlRequestHelper.getPortletName();
+
+		if (!isShowActions()) {
+			entryColumns = ArrayUtil.remove(entryColumns, "action");
+		}
+		else if (!portletName.equals(PortletKeys.DOCUMENT_LIBRARY) &&
+				 !portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) &&
+				 !ArrayUtil.contains(entryColumns, "action")) {
+
+			entryColumns = ArrayUtil.append(entryColumns, "action");
+		}
+
+		return entryColumns;
+	}
+
+	public String[] getFileEntryColumns() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String[] fileEntryColumns =
+			dlPortletInstanceSettings.getFileEntryColumns();
+
+		if (!isShowActions()) {
+			fileEntryColumns = ArrayUtil.remove(fileEntryColumns, "action");
+		}
+
+		return fileEntryColumns;
+	}
+
+	public String[] getFolderColumns() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String[] folderColumns = dlPortletInstanceSettings.getFolderColumns();
+
+		if (!isShowActions()) {
+			folderColumns = ArrayUtil.remove(folderColumns, "action");
+		}
+
+		return folderColumns;
 	}
 
 	public boolean isFolderMenuVisible() {

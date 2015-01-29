@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(dlRequestHelper);
-
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
 String strutsAction = ParamUtil.getString(request, "struts_action");
@@ -179,7 +177,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 <aui:script use="liferay-document-library">
 
 	<%
-	String[] entryColumns = dlEntriesListDisplayContext.getEntryColumns();
+	String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
 	String[] escapedEntryColumns = new String[entryColumns.length];
 
 	for (int i = 0; i < entryColumns.length; i++) {

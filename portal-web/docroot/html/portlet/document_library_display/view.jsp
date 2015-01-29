@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <%
-DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(dlDisplayRequestHelper);
-
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlDisplayRequestHelper);
 
 String topLink = ParamUtil.getString(request, "topLink", "home");
@@ -58,8 +56,8 @@ if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 	status = WorkflowConstants.STATUS_ANY;
 }
 
-String[] folderColumns = dlEntriesListDisplayContext.getFolderColumns();
-String[] fileEntryColumns = dlEntriesListDisplayContext.getFileEntryColumns();
+String[] folderColumns = dlPortletInstanceSettingsHelper.getFolderColumns();
+String[] fileEntryColumns = dlPortletInstanceSettingsHelper.getFileEntryColumns();
 
 int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId);
 int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);

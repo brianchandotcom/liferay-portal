@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.networking.web.hook.events;
+package com.liferay.social.networking.web.events;
 
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;

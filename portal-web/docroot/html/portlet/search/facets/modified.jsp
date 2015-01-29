@@ -254,12 +254,20 @@ if (fieldParamSelection.equals("0")) {
 	var customRangeTo = Liferay.component('<%= renderResponse.getNamespace() %>modifiedtoDatePicker');
 	var searchButton = A.one('#<portlet:namespace />searchCustomRangeButton');
 
+	var preventKeyboardDateChange = function(event) {
+		if (event.keyCode !== 9) {
+			event.preventDefault();
+		}
+	};
+
+	A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from').on('keydown', preventKeyboardDateChange);
+	A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to').on('keydown', preventKeyboardDateChange);
+
 	var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 	A.mix(
 		DEFAULTS_FORM_VALIDATOR.STRINGS,
 		{
-			<portlet:namespace />dateFormat: '<%= UnicodeLanguageUtil.get(request, "search-custom-range-date-format") %>',
 			<portlet:namespace />dateRange: '<%= UnicodeLanguageUtil.get(request, "search-custom-range-invalid-date-range") %>'
 		},
 		true
@@ -268,10 +276,6 @@ if (fieldParamSelection.equals("0")) {
 	A.mix(
 		DEFAULTS_FORM_VALIDATOR.RULES,
 		{
-			<portlet:namespace />dateFormat: function(val, fieldNode, ruleValue) {
-				return true;
-			},
-
 			<portlet:namespace />dateRange: function(val, fieldNode, ruleValue) {
 				return A.Date.isGreaterOrEqual(customRangeTo.getDate(), customRangeFrom.getDate());
 			}
@@ -288,23 +292,26 @@ if (fieldParamSelection.equals("0")) {
 					Util.toggleDisabled(searchButton, true);
 				},
 				validField: function(event) {
-					if (A.Date.isValidDate(customRangeTo.getDate()) && A.Date.isValidDate(customRangeFrom.getDate())) {
-						Util.toggleDisabled(searchButton, false);
-					}
+					Util.toggleDisabled(searchButton, false);
 				}
 			},
 			rules: {
 				'<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from': {
-					<portlet:namespace />dateFormat: true,
 					<portlet:namespace />dateRange: true
 				},
 				'<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to': {
-					<portlet:namespace />dateFormat: true,
 					<portlet:namespace />dateRange: true
 				}
 			}
 		}
 	);
+
+	var onRangeSelectionChange = function(event) {
+		customRangeValidator.validate();
+	};
+
+	customRangeFrom.on('selectionChange', onRangeSelectionChange);
+	customRangeTo.on('selectionChange', onRangeSelectionChange);
 
 	A.one('.<%= randomNamespace %>custom-range-toggle').on(
 		'click',

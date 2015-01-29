@@ -12,6 +12,10 @@
 	<filter>
 		<filter-name>Aggregate Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.aggregate.AggregateFilter</filter-class>
+		<init-param>
+			<param-name>url-regex-ignore-pattern</param-name>
+			<param-value>^/html/js/editor/ckeditor[^/]*/ckeditor\.js(\?.*)?$</param-value>
+		</init-param>
 	</filter>
 	<filter>
 		<filter-name>Aggregate Filter - JSP</filter-name>

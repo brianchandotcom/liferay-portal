@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,6 +42,8 @@ import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
 import org.jasig.cas.client.validation.TicketValidator;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael Young
  * @author Brian Wing Shun Chan
@@ -48,6 +51,15 @@ import org.jasig.cas.client.validation.TicketValidator;
  * @author Tina Tian
  * @author Zsolt Balogh
  */
+@Component(
+	immediate = true,
+	property = {
+		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
+		"servlet-filter-name=SSO CAS Filter", "url-pattern=/c/portal/login",
+		"url-pattern=/c/portal/logout"
+	},
+	service = Filter.class
+)
 public class CASFilter extends BaseFilter {
 
 	public static void reload(long companyId) {
@@ -62,7 +74,7 @@ public class CASFilter extends BaseFilter {
 			long companyId = PortalUtil.getCompanyId(request);
 
 			if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.CAS_AUTH_ENABLED,
+					companyId, PropsKeys.CAS_AUTH_ENABLED,
 				PropsValues.CAS_AUTH_ENABLED)) {
 
 				return true;

@@ -222,34 +222,6 @@ public class FileUtil {
 		return fileName;
 	}
 
-	public static boolean hasFileChanged(SyncFile syncFile) throws IOException {
-		if (syncFile.getFilePathName() == null) {
-			return true;
-		}
-
-		Path filePath = Paths.get(syncFile.getFilePathName());
-
-		return hasFileChanged(syncFile, filePath);
-	}
-
-	public static boolean hasFileChanged(SyncFile syncFile, Path filePath)
-		throws IOException {
-
-		if (filePath == null) {
-			return true;
-		}
-
-		if ((syncFile.getSize() > 0) &&
-			(syncFile.getSize() != Files.size(filePath))) {
-
-			return true;
-		}
-
-		String checksum = getChecksum(filePath);
-
-		return !checksumsEqual(checksum, syncFile.getChecksum());
-	}
-
 	public static boolean isHidden(Path filePath) {
 		if (!Files.exists(filePath)) {
 			return false;
@@ -287,6 +259,34 @@ public class FileUtil {
 		}
 
 		return false;
+	}
+
+	public static boolean isModified(SyncFile syncFile) throws IOException {
+		if (syncFile.getFilePathName() == null) {
+			return true;
+		}
+
+		Path filePath = Paths.get(syncFile.getFilePathName());
+
+		return isModified(syncFile, filePath);
+	}
+
+	public static boolean isModified(SyncFile syncFile, Path filePath)
+		throws IOException {
+
+		if (filePath == null) {
+			return true;
+		}
+
+		if ((syncFile.getSize() > 0) &&
+			(syncFile.getSize() != Files.size(filePath))) {
+
+			return true;
+		}
+
+		String checksum = getChecksum(filePath);
+
+		return !compareChecksums(checksum, syncFile.getChecksum());
 	}
 
 	public static boolean isValidChecksum(Path filePath) throws IOException {

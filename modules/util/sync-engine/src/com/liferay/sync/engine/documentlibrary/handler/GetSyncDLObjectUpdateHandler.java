@@ -84,7 +84,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 		if (Files.exists(filePath) &&
 			(syncFile.isFolder() ||
-			 !FileUtil.hasFileChanged(syncFile, filePath))) {
+			 !FileUtil.isModified(syncFile, filePath))) {
 
 			return;
 		}
@@ -390,7 +390,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			}
 		}
 		else if (targetSyncFile.isFile() &&
-				 FileUtil.hasFileChanged(targetSyncFile, filePath)) {
+				 FileUtil.isModified(targetSyncFile, filePath)) {
 
 			downloadFile(
 				sourceSyncFile, sourceVersion,

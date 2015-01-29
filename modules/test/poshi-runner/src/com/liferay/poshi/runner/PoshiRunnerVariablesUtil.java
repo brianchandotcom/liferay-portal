@@ -17,6 +17,8 @@ package com.liferay.poshi.runner;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Karen Dang
@@ -48,6 +50,21 @@ public class PoshiRunnerVariablesUtil {
 		_variablesStack.push(_tempMap);
 	}
 
+	public static String replaceVariables(String variable) {
+		Pattern pattern = Pattern.compile(_REGEX);
+		Matcher matcher = pattern.matcher(variable);
+
+		while (matcher.find()) {
+			String token = getVarValue(matcher.group(1));
+
+			String replacement = Matcher.quoteReplacement(token);
+
+			variable = variable.replaceFirst(_REGEX, replacement);
+		}
+
+		return variable;
+	}
+
 	public static void resetTempMap() {
 		_tempMap = new HashMap<>();
 	}
@@ -63,6 +80,8 @@ public class PoshiRunnerVariablesUtil {
 
 		pushTempMapToStack();
 	}
+
+	private static final String _REGEX = "\\$\\{([^}]*)\\}";
 
 	private static Map<String, String> _tempMap = new HashMap<>();
 	private static final Stack<Map<String, String>> _variablesStack =

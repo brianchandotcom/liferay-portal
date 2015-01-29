@@ -428,6 +428,12 @@ public class AssetVocabularyLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getVocabularies(
+		com.liferay.portal.kernel.search.Hits hits)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getVocabularies(hits);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getVocabularies(
 		long[] vocabularyIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getVocabularies(vocabularyIds);

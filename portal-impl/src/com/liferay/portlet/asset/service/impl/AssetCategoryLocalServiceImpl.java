@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
@@ -50,7 +51,6 @@ import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetCategoryProperty;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.base.AssetCategoryLocalServiceBaseImpl;
-import com.liferay.portlet.asset.util.AssetCategoryUtil;
 import com.liferay.portlet.asset.util.comparator.AssetCategoryLeftCategoryIdComparator;
 
 import java.io.Serializable;
@@ -362,6 +362,37 @@ public class AssetCategoryLocalServiceImpl
 	@Override
 	public List<AssetCategory> getCategories() {
 		return assetCategoryPersistence.findAll();
+	}
+
+	@Override
+	public List<AssetCategory> getCategories(Hits hits) throws PortalException {
+		List<Document> documents = hits.toList();
+
+		List<AssetCategory> categories = new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			long categoryId = GetterUtil.getLong(
+				document.get(Field.ASSET_CATEGORY_ID));
+
+			AssetCategory category = fetchCategory(categoryId);
+
+			if (category == null) {
+				categories = null;
+
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					AssetCategory.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (categories != null) {
+				categories.add(category);
+			}
+		}
+
+		return categories;
 	}
 
 	@Override
@@ -788,8 +819,7 @@ public class AssetCategoryLocalServiceImpl
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext);
 
-			List<AssetCategory> categories = AssetCategoryUtil.getCategories(
-				hits);
+			List<AssetCategory> categories = getCategories(hits);
 
 			if (categories != null) {
 				return new BaseModelSearchResult<>(

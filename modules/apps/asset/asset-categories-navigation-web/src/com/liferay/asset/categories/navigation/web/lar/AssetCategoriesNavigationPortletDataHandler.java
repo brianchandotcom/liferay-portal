@@ -14,6 +14,7 @@
 
 package com.liferay.asset.categories.navigation.web.lar;
 
+import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
@@ -38,7 +39,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet"
+		"javax.portlet.name=" +
+			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION
 	},
 	service = PortletDataHandler.class
 )

@@ -15,6 +15,7 @@
 package com.liferay.journal.content.web.lar;
 
 import com.liferay.journal.content.web.configuration.JournalContentWebConfigurationValues;
+import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
@@ -79,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_journal_content_web_portlet_JournalContentPortlet"
+		"javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT
 	},
 	service = PortletDataHandler.class
 )

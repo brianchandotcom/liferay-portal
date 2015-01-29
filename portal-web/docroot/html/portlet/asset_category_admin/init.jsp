@@ -33,7 +33,7 @@ page import="com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl" %><
 page import="com.liferay.portlet.asset.service.AssetCategoryPropertyServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetPermission" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetVocabularyPermission" %><%@
-page import="com.liferay.portlet.asset.util.AssetCategoryUtil" %><%@
-page import="com.liferay.portlet.asset.util.AssetVocabularySettingsHelper" %>
+page import="com.liferay.portlet.asset.util.AssetVocabularySettingsHelper" %><%@
+page import="com.liferay.portlet.assetcategoryadmin.util.AssetCategoryUtil" %>
 
 <%@ include file="/html/portlet/asset_category_admin/init-ext.jsp" %>

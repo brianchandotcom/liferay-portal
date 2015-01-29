@@ -14,6 +14,7 @@
 
 package com.liferay.asset.categories.navigation.web.portlet.action;
 
+import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 
@@ -25,7 +26,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet"
+		"javax.portlet.name=" +
+			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION
 	},
 	service = ConfigurationAction.class
 )

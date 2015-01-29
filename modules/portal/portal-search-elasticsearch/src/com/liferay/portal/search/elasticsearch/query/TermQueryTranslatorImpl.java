@@ -14,13 +14,17 @@
 
 package com.liferay.portal.search.elasticsearch.query;
 
+import com.liferay.portal.kernel.search.QueryPreProcessConfiguration;
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author André de Oliveira
@@ -29,12 +33,39 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = TermQueryTranslator.class)
 public class TermQueryTranslatorImpl implements TermQueryTranslator {
 
+	@Reference
+	public void setQueryPreProcessConfiguration(
+		QueryPreProcessConfiguration queryPreProcessConfiguration) {
+
+		_queryPreProcessConfiguration = queryPreProcessConfiguration;
+	}
+
 	@Override
 	public QueryBuilder translate(TermQuery termQuery) {
 		QueryTerm queryTerm = termQuery.getQueryTerm();
 
-		return QueryBuilders.matchQuery(
-			queryTerm.getField(), queryTerm.getValue());
+		String field = queryTerm.getField();
+		String value = queryTerm.getValue();
+
+		if (_queryPreProcessConfiguration.isSubstringSearchAlways(field)) {
+			return _toCaseInsensitiveSubstringQuery(field, value);
+		}
+
+		return QueryBuilders.matchQuery(field, value);
 	}
+
+	private QueryBuilder _toCaseInsensitiveSubstringQuery(
+		String field, String value) {
+
+		value = StringUtil.replace(value, StringPool.PERCENT, StringPool.BLANK);
+
+		value = StringUtil.toLowerCase(value);
+
+		value = StringPool.STAR + value + StringPool.STAR;
+
+		return QueryBuilders.wildcardQuery(field, value);
+	}
+
+	private QueryPreProcessConfiguration _queryPreProcessConfiguration;
 
 }

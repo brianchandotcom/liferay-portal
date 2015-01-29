@@ -52,10 +52,12 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
 import java.io.File;
@@ -158,12 +160,18 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		Field textField = new Field(
 			_ddmStructure.getStructureId(), "name", getSearchKeywords());
 
+		textField.setDefaultLocale(LocaleUtil.US);
+		
 		fields.put(textField);
+		
+		DDMFormValues ddmFormValues =
+			FieldsToDDMFormValuesConverterUtil.convert(_ddmStructure, fields);
 
 		serviceContext.setAttribute(
 			"fileEntryTypeId",dlFileEntryType.getFileEntryTypeId());
 		serviceContext.setAttribute(
-			Fields.class.getName() + _ddmStructure.getStructureId(), fields);
+			DDMFormValues.class.getName() + _ddmStructure.getStructureId(),
+			ddmFormValues);
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			serviceContext.getScopeGroupId(),

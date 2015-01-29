@@ -27,6 +27,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {"javax.portlet.name=" + SocialNetworkingPortletKeys.FRIENDS_ACTIVITIES},
 	service = ConfigurationAction.class
 )
-public class FriendsActivitiesConfigurationActionImpl
+public class FriendsActivitiesConfigurationAction
 	extends DefaultConfigurationAction {
 }

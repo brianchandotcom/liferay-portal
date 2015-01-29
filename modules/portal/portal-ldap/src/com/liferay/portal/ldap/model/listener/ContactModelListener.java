@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.ldap.listener;
+package com.liferay.portal.ldap.model.listener;
 
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.ldap.exportimport.UserImportTransactionThreadLocal;

@@ -452,6 +452,12 @@ public class AssetCategoryLocalServiceUtil {
 		return getService().getCategories(classNameId, classPK);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories(
+		com.liferay.portal.kernel.search.Hits hits)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCategories(hits);
+	}
+
 	public static com.liferay.portlet.asset.model.AssetCategory getCategory(
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

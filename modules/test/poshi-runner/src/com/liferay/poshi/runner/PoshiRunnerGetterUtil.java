@@ -38,7 +38,7 @@ import org.dom4j.io.SAXReader;
  * @author Karen Dang
  * @author Michael Hashimoto
  */
-public class PoshiRunnerUtil {
+public class PoshiRunnerGetterUtil {
 
 	public static String getCanonicalPath(String dir) {
 		try {

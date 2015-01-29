@@ -30,7 +30,7 @@ import com.liferay.portlet.social.model.SocialRequestConstants;
 import com.liferay.portlet.social.model.SocialRequestFeedEntry;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
-import com.liferay.social.networking.members.portlet.MembersPortlet;
+import com.liferay.social.networking.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author M Murali Krishna Reddy
  */
 @Component(
-	property = {"javax.portlet.name=" + MembersPortlet.JAVAX_PORTLET_NAME},
+	property = {"javax.portlet.name=" + PortletKeys.MEMBERS},
 	service = SocialRequestInterpreter.class
 )
 public class MembersRequestInterpreter extends BaseSocialRequestInterpreter {

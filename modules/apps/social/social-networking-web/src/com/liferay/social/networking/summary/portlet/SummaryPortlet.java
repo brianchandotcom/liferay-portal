@@ -82,9 +82,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SummaryPortlet extends MVCPortlet {
 
-	public static final String JAVAX_PORTLET_NAME =
-		"com_liferay_social_networking_summary_portlet_SummaryPortlet";
-
 	public void addFriend(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

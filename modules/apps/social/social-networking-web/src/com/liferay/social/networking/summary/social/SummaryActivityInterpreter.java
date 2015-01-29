@@ -16,7 +16,7 @@ package com.liferay.social.networking.summary.social;
 
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.social.networking.social.BaseSocialNetworkingActivityInterpreter;
-import com.liferay.social.networking.summary.portlet.SummaryPortlet;
+import com.liferay.social.networking.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	property = {"javax.portlet.name=" + SummaryPortlet.JAVAX_PORTLET_NAME},
+	property = {"javax.portlet.name=" + PortletKeys.SUMMARY},
 	service = SocialActivityInterpreter.class
 )
 public class SummaryActivityInterpreter

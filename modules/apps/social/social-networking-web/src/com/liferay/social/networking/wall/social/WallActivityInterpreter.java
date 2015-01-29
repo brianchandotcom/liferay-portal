@@ -26,8 +26,8 @@ import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.social.networking.model.WallEntry;
 import com.liferay.social.networking.service.WallEntryLocalService;
+import com.liferay.social.networking.util.PortletKeys;
 import com.liferay.social.networking.util.WallUtil;
-import com.liferay.social.networking.wall.portlet.WallPortlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"javax.portlet.name=" + WallPortlet.JAVAX_PORTLET_NAME},
+	property = {"javax.portlet.name=" + PortletKeys.WALL},
 	service = SocialActivityInterpreter.class
 )
 public class WallActivityInterpreter extends BaseSocialActivityInterpreter {

@@ -98,8 +98,8 @@ public class PoshiRunnerContext {
 			if (classType.equals("action") || classType.equals("function") ||
 				classType.equals("macro") || classType.equals("testcase")) {
 
-				Element element = PoshiRunnerGetterUtil.getRootElementFromFilePath(
-					filePath);
+				Element element =
+					PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
 
 				_rootElements.put(classType + "#" + className, element);
 
@@ -193,8 +193,9 @@ public class PoshiRunnerContext {
 		_seleniumParameterCounts.put("open", 1);
 	}
 
-	private static final String _BASE_DIR = PoshiRunnerGetterUtil.getCanonicalPath(
-		"../../../portal-web/test/functional/com/liferay/portalweb/");
+	private static final String _BASE_DIR =
+		PoshiRunnerGetterUtil.getCanonicalPath(
+			"../../../portal-web/test/functional/com/liferay/portalweb/");
 
 	private static final Map<String, Element> _commandElements =
 		new HashMap<>();

@@ -12,23 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.security.ntlm;
+package com.liferay.portal.sso.ntlm;
 
-import java.io.Serializable;
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
- * @author Marcellus Tavares
+ * @author Michael C. Han
  */
-public class NtlmUserAccount implements Serializable {
+public class NtlmLogonException extends SystemException {
 
-	public NtlmUserAccount(String userName) {
-		_userName = userName;
+	public NtlmLogonException() {
 	}
 
-	public String getUserName() {
-		return _userName;
+	public NtlmLogonException(String msg) {
+		super(msg);
 	}
 
-	private final String _userName;
+	public NtlmLogonException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NtlmLogonException(Throwable cause) {
+		super(cause);
+	}
 
 }

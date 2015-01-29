@@ -26,22 +26,20 @@ page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
 page import="com.liferay.portlet.documentlibrary.search.EntriesChecker" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
-page import="com.liferay.portlet.documentlibrarydisplay.context.DLDisplayConfigurationDisplayContext" %>
+page import="com.liferay.portlet.documentlibrarydisplay.context.DLDisplayConfigurationDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrarydisplay.context.util.DLDisplayRequestHelper" %>
 
 <%
-String portletResource = ParamUtil.getString(request, "portletResource");
-
 if (layout.isTypeControlPanel()) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
 }
 
-String portletId = portletDisplay.getId();
+DLDisplayRequestHelper dlDisplayRequestHelper = new DLDisplayRequestHelper(request);
 
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	portletId = portletResource;
-}
+String portletResource = dlDisplayRequestHelper.getPortletResource();
+String portletId = dlDisplayRequestHelper.getResourcePortletId();
 
-DLPortletInstanceSettings dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(layout, portletId);
+DLPortletInstanceSettings dlPortletInstanceSettings = dlDisplayRequestHelper.getDLPortletInstanceSettings();
 
 long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;

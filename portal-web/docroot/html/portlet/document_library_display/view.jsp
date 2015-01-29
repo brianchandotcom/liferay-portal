@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <%
-DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(request, dlPortletInstanceSettings);
+DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(dlDisplayRequestHelper);
 
 DLActionsDisplayContext dlActionsDisplayContext = dlEntriesListDisplayContext.getDLActionsDisplayContext();
 

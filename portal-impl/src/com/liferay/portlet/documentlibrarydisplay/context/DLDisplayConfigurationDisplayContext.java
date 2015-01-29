@@ -20,18 +20,15 @@ import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.display.context.DLActionsDisplayContext;
+import com.liferay.portlet.documentlibrarydisplay.context.util.DLDisplayRequestHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Iván Zaera
@@ -39,15 +36,11 @@ import javax.servlet.http.HttpServletRequest;
 public class DLDisplayConfigurationDisplayContext {
 
 	public DLDisplayConfigurationDisplayContext(
-		HttpServletRequest request,
-		DLPortletInstanceSettings dlPortletInstanceSettings) {
+		DLDisplayRequestHelper dlDisplayRequestHelper) {
 
-		_dlPortletInstanceSettings = dlPortletInstanceSettings;
-
+		_dlDisplayRequestHelper = dlDisplayRequestHelper;
 		_dlActionsDisplayContext = new DLActionsDisplayContext(
-			request, dlPortletInstanceSettings);
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			dlDisplayRequestHelper);
 	}
 
 	public List<KeyValuePair> getAvailableFileEntryColumns() {
@@ -113,8 +106,11 @@ public class DLDisplayConfigurationDisplayContext {
 	}
 
 	private void _populateFileEntryColumns() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlDisplayRequestHelper.getDLPortletInstanceSettings();
+
 		String[] fileEntryColumns =
-			_dlPortletInstanceSettings.getFileEntryColumns();
+			dlPortletInstanceSettings.getFileEntryColumns();
 
 		_currentFileEntryColumns = new ArrayList<>();
 
@@ -123,7 +119,7 @@ public class DLDisplayConfigurationDisplayContext {
 				new KeyValuePair(
 					fileEntryColumn,
 					LanguageUtil.get(
-						_themeDisplay.getLocale(), fileEntryColumn)));
+						_dlDisplayRequestHelper.getLocale(), fileEntryColumn)));
 		}
 
 		_availableFileEntryColumns = new ArrayList<>();
@@ -139,7 +135,8 @@ public class DLDisplayConfigurationDisplayContext {
 					new KeyValuePair(
 						fileEntryColumn,
 						LanguageUtil.get(
-							_themeDisplay.getLocale(), fileEntryColumn)));
+							_dlDisplayRequestHelper.getLocale(),
+							fileEntryColumn)));
 			}
 		}
 
@@ -149,7 +146,10 @@ public class DLDisplayConfigurationDisplayContext {
 	}
 
 	private void _populateFolderColumns() {
-		String[] folderColumns = _dlPortletInstanceSettings.getFolderColumns();
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlDisplayRequestHelper.getDLPortletInstanceSettings();
+
+		String[] folderColumns = dlPortletInstanceSettings.getFolderColumns();
 
 		_currentFolderColumns = new ArrayList<>();
 
@@ -157,7 +157,8 @@ public class DLDisplayConfigurationDisplayContext {
 			_currentFolderColumns.add(
 				new KeyValuePair(
 					folderColumn,
-					LanguageUtil.get(_themeDisplay.getLocale(), folderColumn)));
+					LanguageUtil.get(
+						_dlDisplayRequestHelper.getLocale(), folderColumn)));
 		}
 
 		_availableFolderColumns = new ArrayList<>();
@@ -173,7 +174,8 @@ public class DLDisplayConfigurationDisplayContext {
 					new KeyValuePair(
 						folderColumn,
 						LanguageUtil.get(
-							_themeDisplay.getLocale(), folderColumn)));
+							_dlDisplayRequestHelper.getLocale(),
+							folderColumn)));
 			}
 		}
 
@@ -186,7 +188,6 @@ public class DLDisplayConfigurationDisplayContext {
 	private List<KeyValuePair> _currentFileEntryColumns;
 	private List<KeyValuePair> _currentFolderColumns;
 	private final DLActionsDisplayContext _dlActionsDisplayContext;
-	private final DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private final ThemeDisplay _themeDisplay;
+	private final DLDisplayRequestHelper _dlDisplayRequestHelper;
 
 }

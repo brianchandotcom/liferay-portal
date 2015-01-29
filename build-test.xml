@@ -565,6 +565,24 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="record-testray-logs-path">
+		<sequential>
+			<if>
+				<isset property="jenkins.testray.results.dir" />
+				<then>
+					<antelope:stringutil property="job.name" string="${env.JOB_NAME}">
+						<antelope:replace regex="," replacement="_" />
+					</antelope:stringutil>
+
+					<property name="testray.logs.report.path" value="${jenkins.testray.results.dir}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}/report.html" />
+				</then>
+				<else>
+					<property name="testray.logs.report.path" value="" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="record-testray-project-name">
 		<sequential>
 			<propertyregex
@@ -996,6 +1014,7 @@ create database lportal${database.index} character set utf8;</echo>
 		<record-env-operating-system />
 		<record-testray-components />
 		<record-testray-job-name />
+		<record-testray-logs-path />
 		<record-testray-project-name />
 		<record-testray-team-name />
 
@@ -1042,6 +1061,7 @@ create database lportal${database.index} character set utf8;</echo>
 					<property name="testray.build.time" value="${testray.build.time}" />
 					<property name="testray.build.type" value="${testray.build.type}" />
 					<property name="testray.job.name" value="${testray.job.name}" />
+					<property name="testray.logs.report.path" value="${testray.logs.report.path}" />
 					<property name="testray.product.type" value="${testray.product.type}" />
 					<property name="testray.product.version" value="${testray.product.version}" />
 					<property name="testray.project.name" value="${testray.project.name}" />

@@ -27,9 +27,9 @@ import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.social.networking.model.WallEntry;
 import com.liferay.social.networking.service.WallEntryLocalService;
 import com.liferay.social.networking.util.SocialNetworkingPortletKeys;
+import com.liferay.social.networking.wall.social.WallActivityKeys;
 import com.liferay.social.networking.web.util.WallUtil;
 
-import com.liferay.social.networking.wall.social.WallActivityKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

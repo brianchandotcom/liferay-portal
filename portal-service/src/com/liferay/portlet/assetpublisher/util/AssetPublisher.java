@@ -79,8 +79,8 @@ public interface AssetPublisher {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             AssetEntryLocalServiceUtil#getEntries(long[], long[], String,
-	 *             String, String, String, boolean, boolean, int, int,
-	 *             String, String, String, String)}
+	 *             String, String, String, boolean, boolean, int, int, String,
+	 *             String, String, String)}
 	 */
 	@Deprecated
 	public List<AssetEntry> getAssetEntries(
@@ -142,8 +142,9 @@ public interface AssetPublisher {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil#getEntriesCount(long[], long[],
-	 *             String, String, String, String, boolean, boolean, int, int)}
+	 *             com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil#getEntriesCount(
+	 *             long[], long[], String, String, String, String, boolean,
+	 *             boolean, int, int)}
 	 */
 	@Deprecated
 	public int getAssetEntriesCount(

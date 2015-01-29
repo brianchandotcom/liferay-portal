@@ -424,7 +424,8 @@ public class JSONServiceAction extends JSONAction {
 	}
 
 	/**
-	 * @see com.liferay.portal.jsonwebservice.JSONWebServiceServiceAction#getCSRFOrigin(HttpServletRequest)
+	 * @see com.liferay.portal.jsonwebservice.JSONWebServiceServiceAction#getCSRFOrigin(
+	 *      HttpServletRequest)
 	 */
 	@Override
 	protected String getCSRFOrigin(HttpServletRequest request) {

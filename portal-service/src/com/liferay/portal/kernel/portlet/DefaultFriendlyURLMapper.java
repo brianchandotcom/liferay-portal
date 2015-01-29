@@ -40,9 +40,8 @@ import javax.portlet.WindowState;
  * </p>
  *
  * <p>
- * If you do need to extend this class, the key
- * methods to override are {@link #buildPath(LiferayPortletURL)} and {@link
- * #populateParams(String, Map, Map)}.
+ * If you do need to extend this class, the key methods to override are {@link
+ * #buildPath(LiferayPortletURL)} and {@link #populateParams(String, Map, Map)}.
  * </p>
  *
  * @author Connor McKay

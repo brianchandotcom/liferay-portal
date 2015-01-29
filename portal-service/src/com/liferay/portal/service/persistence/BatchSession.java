@@ -27,7 +27,8 @@ import com.liferay.portal.model.BaseModel;
  * usage examples see {@link
  * com.liferay.portal.service.impl.LayoutLocalServiceImpl#importLayouts(long,
  * long, boolean, java.util.Map, java.io.File)}, and {@link
- * com.liferay.portal.verify.VerifyProcessUtil#verifyProcess(boolean, boolean, boolean)}.
+ * com.liferay.portal.verify.VerifyProcessUtil#verifyProcess(boolean, boolean,
+ * boolean)}.
  * </p>
  *
  * @author     Raymond Augé

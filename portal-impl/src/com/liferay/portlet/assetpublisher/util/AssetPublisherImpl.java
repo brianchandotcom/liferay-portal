@@ -352,8 +352,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             AssetEntryLocalServiceUtil#getEntries(long[], long[], String,
-	 *             String, String, String, boolean, boolean, int, int,
-	 *             String, String, String, String)}
+	 *             String, String, String, boolean, boolean, int, int, String,
+	 *             String, String, String)}
 	 */
 	@Deprecated
 	@Override

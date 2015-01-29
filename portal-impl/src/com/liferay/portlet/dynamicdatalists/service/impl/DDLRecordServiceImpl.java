@@ -129,8 +129,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #revertRecord(long,
-	 *             String, ServiceContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, String,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override

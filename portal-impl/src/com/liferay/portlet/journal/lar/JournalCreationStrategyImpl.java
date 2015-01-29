@@ -23,7 +23,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
  * this class is to return zero for the author and approval user IDs, which
  * causes the default user ID import strategy to be used. Content will be added
  * as is with no transformations.
- * 
+ *
  * <p>
  * For a better understanding of this class, see
  * <code>com.liferay.journal.content.web.lar.JournalContentPortletDataHandler</code>

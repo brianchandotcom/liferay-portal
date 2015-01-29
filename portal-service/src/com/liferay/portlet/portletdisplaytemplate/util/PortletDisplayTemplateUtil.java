@@ -112,12 +112,17 @@ public class PortletDisplayTemplateUtil {
 	 *
 	 * @param  language the portlet display template's scripting language.
 	 *         Acceptable values for the FreeMarker, Velocity, or XSL languages
-	 *         are {@link com.liferay.portal.kernel.template.TemplateConstants#LANG_TYPE_FTL}, {@link
-	 *         com.liferay.portal.kernel.template.TemplateConstants#LANG_TYPE_VM}, or {@link
-	 *         com.liferay.portal.kernel.template.TemplateConstants#LANG_TYPE_XSL}, respectively.
+	 *         are {@link
+	 *         com.liferay.portal.kernel.template.TemplateConstants#LANG_TYPE_FTL},
+	 *         {@link
+	 *         com.liferay.portal.kernel.template.TemplateConstants#LANG_TYPE_VM},
+	 *         or {@link
+	 *         com.liferay.portal.kernel.template.TemplateConstants#LANG_TYPE_XSL},
+	 *         respectively.
 	 * @return the portlet display template's map of script variable groups for
 	 *         which hints are displayed in the template editor palette
-	 * @see    TemplateHandler#getTemplateVariableGroups(long, String, java.util.Locale)
+	 * @see    TemplateHandler#getTemplateVariableGroups(long, String,
+	 *         java.util.Locale)
 	 */
 	public static Map<String, TemplateVariableGroup>
 		getTemplateVariableGroups(String language) {

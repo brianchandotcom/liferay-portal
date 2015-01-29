@@ -41,7 +41,7 @@ public class WallUtil {
 			Group group = user.getGroup();
 
 			long plid = LayoutLocalServiceUtil.getDefaultPlid(
-				group.getGroupId(), false, PortletKeys.WALL);
+				group.getGroupId(), false, SocialNetworkingPortletKeys.WALL);
 
 			if (plid != 0) {
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);

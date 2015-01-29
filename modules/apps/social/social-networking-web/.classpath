@@ -19,6 +19,9 @@
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.ip.geocoder.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.portal.spring.extender.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.social.networking.api.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.social.networking.service.jar" />
 	<classpathentry kind="lib" path="lib/geoip-api.jar" />
 	<classpathentry kind="lib" path="lib/javax.servlet.jsp.jstl.jar" />
 	<classpathentry kind="lib" path="lib/jsp-api.jar" />

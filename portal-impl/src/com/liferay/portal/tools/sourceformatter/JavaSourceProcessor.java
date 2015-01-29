@@ -1759,14 +1759,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								return truncateLongLinesContent;
 							}
 
-							Matcher matcher =
-								_annotationParameterPattern.matcher(line);
-
-							if (!matcher.find()) {
-								processErrorMessage(
-									fileName, "> 80: " + fileName + " " +
-										lineCount);
-							}
+							processErrorMessage(
+								fileName, "> 80: " + fileName + " " +
+									lineCount);
 						}
 					}
 					else {
@@ -2811,8 +2806,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
-	private Pattern _annotationParameterPattern = Pattern.compile(
-		"\t[A-Za-z]+ = \"[^\"]+\"[,|\\)]$");
 	private Pattern _annotationPattern = Pattern.compile(
 		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\n(\t*)\\)");
 	private Pattern _catchExceptionPattern = Pattern.compile(

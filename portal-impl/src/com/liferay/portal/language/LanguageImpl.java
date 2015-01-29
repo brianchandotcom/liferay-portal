@@ -720,7 +720,7 @@ public class LanguageImpl implements Language, Serializable {
 			liveGroup = group.getLiveGroup();
 		}
 
-		if (!group.isSite() || group.isCompany()) {
+		else if (!group.isSite() || group.isCompany()) {
 			return true;
 		}
 

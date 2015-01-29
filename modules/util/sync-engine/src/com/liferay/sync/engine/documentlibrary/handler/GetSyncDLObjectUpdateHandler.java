@@ -181,23 +181,6 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		}
 	}
 
-	protected boolean hasFileChanged(
-			SyncFile sourceSyncFile, SyncFile targetSyncFile,
-			Path sourceFilePath)
-		throws IOException {
-
-		String sourceSyncFileChecksum = sourceSyncFile.getChecksum();
-		String targetSyncFileChecksum = targetSyncFile.getChecksum();
-
-		if (sourceSyncFileChecksum.equals("") ||
-			targetSyncFileChecksum.equals("")) {
-
-			return true;
-		}
-
-		return FileUtil.hasFileChanged(targetSyncFile, sourceFilePath);
-	}
-
 	protected boolean isIgnoredFilePath(
 		SyncFile syncFile, String filePathName) {
 
@@ -410,7 +393,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			}
 		}
 		else if (targetSyncFile.isFile() &&
-				 hasFileChanged(sourceSyncFile, targetSyncFile, filePath)) {
+				 FileUtil.hasFileChanged(targetSyncFile, filePath)) {
 
 			downloadFile(
 				sourceSyncFile, sourceVersion,

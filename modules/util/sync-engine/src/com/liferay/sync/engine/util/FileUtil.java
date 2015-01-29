@@ -239,7 +239,15 @@ public class FileUtil {
 
 		String checksum = getChecksum(filePath);
 
-		return !checksum.equals(syncFile.getChecksum());
+		return !isEqualChecksum(checksum, syncFile.getChecksum());
+	}
+
+	public static boolean isEqualChecksum(String checksum1, String checksum2) {
+		if (checksum1.equals("") || checksum2.equals("")) {
+			return false;
+		}
+
+		return checksum1.equals(checksum2);
 	}
 
 	public static boolean isHidden(Path filePath) {

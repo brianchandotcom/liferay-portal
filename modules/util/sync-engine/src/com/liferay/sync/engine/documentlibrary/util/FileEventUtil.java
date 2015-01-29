@@ -359,7 +359,7 @@ public class FileEventUtil {
 		parameters.put("syncFile", syncFile);
 		parameters.put("title", name);
 
-		if (sourceChecksum.equals(targetChecksum)) {
+		if (FileUtil.isEqualChecksum(sourceChecksum, targetChecksum)) {
 			parameters.put("-file", null);
 		}
 		else {

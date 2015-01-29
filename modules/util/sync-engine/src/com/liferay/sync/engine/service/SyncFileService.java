@@ -534,7 +534,7 @@ public class SyncFileService {
 		String sourceVersion = syncFile.getVersion();
 		String targetChecksum = FileUtil.getChecksum(filePath);
 
-		if (!sourceChecksum.equals(targetChecksum) &&
+		if (!FileUtil.isEqualChecksum(sourceChecksum, targetChecksum) &&
 			!IODeltaUtil.isIgnoredFilePatchingExtension(syncFile)) {
 
 			deltaFilePath = Files.createTempFile(

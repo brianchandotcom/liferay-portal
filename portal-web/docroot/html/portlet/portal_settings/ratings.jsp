@@ -54,7 +54,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 			</c:if>
 
 			<%
-			String propertyKey = className + StringPool.UNDERLINE + "RatingsType";
+			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
 
 			RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(portletId, className);
 

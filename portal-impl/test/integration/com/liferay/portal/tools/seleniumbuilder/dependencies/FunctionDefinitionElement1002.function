@@ -1,4 +1,4 @@
-<definition>
+<definition default="name">
 	<command-fail name="name">
 		<execute selenium="selenium" />
 	</command-fail>

@@ -1,4 +1,4 @@
-<definition>
+<definition default="name">
 	<command name="name">
 		<execute function="Click#clickAt" />
 

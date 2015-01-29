@@ -1,4 +1,4 @@
-<definition>
+<definition default="sikuliAssertElementNotPresent">
 	<command name="sikuliAssertElementNotPresent">
 		<execute selenium="sikuliAssertElementNotPresent" />
 

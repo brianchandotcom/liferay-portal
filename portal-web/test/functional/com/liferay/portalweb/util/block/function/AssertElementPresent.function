@@ -1,4 +1,4 @@
-<definition>
+<definition default="assertVisible">
 	<command name="assertElementPresent">
 		<execute selenium="waitForElementPresent" />
 

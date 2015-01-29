@@ -1,4 +1,4 @@
-<definition>
+<definition default="doubleClickAt">
 	<command name="doubleClickAt">
 		<execute selenium="waitForVisible" />
 

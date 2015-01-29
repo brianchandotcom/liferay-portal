@@ -1,4 +1,4 @@
-<definition>
+<definition default="sikuliClick">
 	<command name="sikuliClick">
 		<execute selenium="sikuliClick" />
 

@@ -1,4 +1,4 @@
-<definition>
+<definition default="sikuliUploadCommonFile">
 	<command name="sikuliUploadCommonFile">
 		<execute selenium="sikuliUploadCommonFile" />
 

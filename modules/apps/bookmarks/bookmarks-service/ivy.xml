@@ -18,5 +18,6 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="com.liferay.portal.spring.extender" org="com.liferay" rev="1.0.0" />
+		<dependency name="org.freemarker" org="com.liferay" rev="2.3.17.LIFERAY-PATCHED-1" />
 	</dependencies>
 </ivy-module>

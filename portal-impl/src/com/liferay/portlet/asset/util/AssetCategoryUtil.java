@@ -16,20 +16,12 @@ package com.liferay.portlet.asset.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -93,39 +85,6 @@ public class AssetCategoryUtil {
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, category.getTitle(themeDisplay.getLocale()), null);
-	}
-
-	public static List<AssetCategory> getCategories(Hits hits)
-		throws PortalException {
-
-		List<Document> documents = hits.toList();
-
-		List<AssetCategory> categories = new ArrayList<>(documents.size());
-
-		for (Document document : documents) {
-			long categoryId = GetterUtil.getLong(
-				document.get(Field.ASSET_CATEGORY_ID));
-
-			AssetCategory category = AssetCategoryLocalServiceUtil.getCategory(
-				categoryId);
-
-			if (category == null) {
-				categories = null;
-
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					AssetCategory.class);
-
-				long companyId = GetterUtil.getLong(
-					document.get(Field.COMPANY_ID));
-
-				indexer.delete(companyId, document.getUID());
-			}
-			else if (categories != null) {
-				categories.add(category);
-			}
-		}
-
-		return categories;
 	}
 
 }

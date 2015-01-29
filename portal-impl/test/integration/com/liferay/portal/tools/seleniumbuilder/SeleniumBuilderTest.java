@@ -642,8 +642,8 @@ public class SeleniumBuilderTest {
 	public void testFunctionIfElement1001_1() throws Exception {
 		test(
 			"FunctionIfElement1001_1.function",
-			"Error 1001: Missing (condition) child element in " + _DIR_NAME +
-				"/FunctionIfElement1001_1.function:3");
+			"Error 1001: Missing (condition|contains) child element in " +
+				_DIR_NAME + "/FunctionIfElement1001_1.function:3");
 	}
 
 	@Test
@@ -658,16 +658,16 @@ public class SeleniumBuilderTest {
 	public void testFunctionIfElement1001_3() throws Exception {
 		test(
 			"FunctionIfElement1001_3.function",
-			"Error 1001: Missing (condition) child element in " + _DIR_NAME +
-				"/FunctionIfElement1001_3.function:3");
+			"Error 1001: Missing (condition|contains) child element in " +
+				_DIR_NAME + "/FunctionIfElement1001_3.function:3");
 	}
 
 	@Test
 	public void testFunctionIfElement1001_4() throws Exception {
 		test(
 			"FunctionIfElement1001_4.function",
-			"Error 1001: Missing (condition) child element in " + _DIR_NAME +
-				"/FunctionIfElement1001_4.function:3");
+			"Error 1001: Missing (condition|contains) child element in " +
+				_DIR_NAME + "/FunctionIfElement1001_4.function:3");
 	}
 
 	@Test

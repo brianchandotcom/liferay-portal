@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.rss.web.constants.RSSPortletKeys;
 
 import java.util.Collections;
 
@@ -50,11 +51,7 @@ public class RSSWebUpgrade {
 
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {
-						"39", "com_liferay_rss_web_portlet_RSSPortlet"
-					}
-				};
+				return new String[][] {new String[] {"39", RSSPortletKeys.RSS}};
 			}
 
 		};

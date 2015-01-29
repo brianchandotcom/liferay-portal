@@ -14,6 +14,7 @@
 
 package com.liferay.asset.categories.navigation.web.upgrade;
 
+import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -55,8 +56,8 @@ public class AssetCategoriesNavigationWebUpgrade {
 				return new String[][] {
 					new String[] {
 						"122",
-						"com_liferay_asset_categories_navigation_web_portlet_" +
-							"AssetCategoriesNavigationPortlet"
+						AssetCategoriesNavigationPortletKeys.
+							ASSET_CATEGORIES_NAVIGATION
 					}
 				};
 			}

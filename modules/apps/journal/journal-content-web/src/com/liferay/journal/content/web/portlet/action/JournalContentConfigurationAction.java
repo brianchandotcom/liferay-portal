@@ -14,6 +14,7 @@
 
 package com.liferay.journal.content.web.portlet.action;
 
+import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -43,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_journal_content_web_portlet_JournalContentPortlet"
+		"javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT
 	},
 	service = ConfigurationAction.class
 )

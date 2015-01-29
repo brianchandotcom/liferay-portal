@@ -503,6 +503,13 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories(
+		com.liferay.portal.kernel.search.Hits hits)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryLocalService.getCategories(hits);
+	}
+
+	@Override
 	public com.liferay.portlet.asset.model.AssetCategory getCategory(
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

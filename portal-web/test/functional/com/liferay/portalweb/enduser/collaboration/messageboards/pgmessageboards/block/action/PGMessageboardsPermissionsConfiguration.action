@@ -1,7 +1,0 @@
-<definition>
-	<command name="check">
-		<case locator-key1="GUEST_REPLY_TO_MESSAGE_CHECKBOX">
-			<execute function="Check#clickAt" />
-		</case>
-	</command>
-</definition>

@@ -60,13 +60,11 @@ public class MapPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		if (_ipGeocoder != null) {
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				renderRequest);
+		HttpServletRequest request = _portal.getHttpServletRequest(
+			renderRequest);
 
-			request.setAttribute(
-				WebKeys.IP_GEOCODER, new IPGeocoderHelper(_ipGeocoder));
-		}
+		request.setAttribute(
+			WebKeys.IP_GEOCODER, new IPGeocoderHelper(_ipGeocoder));
 
 		super.render(renderRequest, renderResponse);
 	}

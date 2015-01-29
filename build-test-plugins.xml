@@ -13,48 +13,46 @@ plugins.includes=${plugins.includes}</echo>
 
 		<for list="${plugins.includes}" param="plugin">
 			<sequential>
+				<if>
+					<contains string="@{plugin}" substring="layouttpl" />
+					<then>
+						<var name="select" value="\2" />
+					</then>
+					<else>
+						<var name="select" value="\2s" />
+					</else>
+				</if>
+
 				<propertyregex
 					input="@{plugin}"
 					override="true"
-					property="plugin.types"
+					property="plugin.type"
 					regexp="(\w+-)+(\w+)"
-					select="\2s"
+					select="${select}"
 				/>
 
-				<if>
-					<equals arg1="${plugin.types}" arg2="layouttpls" />
-					<then>
-						<var name="plugin.types" unset="true" />
-
-						<property name="plugin.types" value="layouttpl" />
-					</then>
-				</if>
-
 				<ant-execute
-					ant.dir="${lp.plugins.dir}/${plugin.types}/@{plugin}"
+					ant.dir="${lp.plugins.dir}/${plugin.type}/@{plugin}"
 					ant.target="clean"
 				/>
 
 				<if>
-					<equals arg1="${plugin.types}" arg2="portlets" />
+					<contains string="@{plugin}" substring="portlet" />
 					<then>
 						<ant-execute
-							ant.dir="${lp.plugins.dir}/${plugin.types}/@{plugin}"
+							ant.dir="${lp.plugins.dir}/${plugin.type}/@{plugin}"
 							ant.target="compile-jsp"
 						/>
 					</then>
 					<else>
 						<ant-execute
-							ant.dir="${lp.plugins.dir}/${plugin.types}/@{plugin}"
+							ant.dir="${lp.plugins.dir}/${plugin.type}/@{plugin}"
 							ant.target="compile"
 						/>
 					</else>
 				</if>
 			</sequential>
 		</for>
-
-		<delete dir="${lp.plugins.dir}/dist" />
-		<mkdir dir="${lp.plugins.dir}/dist" />
 	</target>
 
 	<target name="deploy-extra-apps">

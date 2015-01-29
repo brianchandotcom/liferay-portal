@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.networking.membersactivities.portlet;
+package com.liferay.social.networking.friendsactivities.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -24,9 +24,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	property = {"javax.portlet.name=" + SocialNetworkingPortletKeys.MEMBERS_ACTIVITIES},
+	property = {"javax.portlet.name=" + SocialNetworkingPortletKeys.FRIENDS_ACTIVITIES},
 	service = ConfigurationAction.class
 )
-public class MembersActivitiesConfigurationAction
+public class FriendsActivitiesConfigurationActionImpl
 	extends DefaultConfigurationAction {
 }

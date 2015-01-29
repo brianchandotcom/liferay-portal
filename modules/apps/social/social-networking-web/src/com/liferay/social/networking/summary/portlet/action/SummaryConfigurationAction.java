@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.networking.summary.portlet;
+package com.liferay.social.networking.summary.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;

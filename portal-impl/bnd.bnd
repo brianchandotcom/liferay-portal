@@ -1,6 +1,5 @@
 Bundle-Version: 6.2.0
 Export-Package:\
-	com.liferay.counter.service,\
 	com.liferay.portal.bean,\
 	com.liferay.portal.cache,\
 	com.liferay.portal.cache.configurator,\

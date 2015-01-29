@@ -1234,6 +1234,12 @@ public class SeleniumBuilderFileUtil {
 			throwValidationException(1000, fileName, rootElement);
 		}
 
+		String defaultCommandName = getDefaultCommandName(rootElement);
+
+		if (defaultCommandName == null) {
+			throwValidationException(1003, fileName, rootElement, "default");
+		}
+
 		List<Element> elements = rootElement.elements();
 
 		if (elements.isEmpty()) {

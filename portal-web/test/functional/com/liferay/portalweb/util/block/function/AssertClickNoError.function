@@ -1,4 +1,4 @@
-<definition>
+<definition default="assertTextClick">
 	<command name="assertTextClick">
 		<execute selenium="waitForVisible" />
 

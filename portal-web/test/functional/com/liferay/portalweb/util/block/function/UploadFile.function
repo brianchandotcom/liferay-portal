@@ -1,4 +1,4 @@
-<definition>
+<definition default="uploadFile">
 	<command name="uploadFile">
 		<execute selenium="waitForVisible" />
 

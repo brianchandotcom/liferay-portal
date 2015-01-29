@@ -1,4 +1,4 @@
-<definition>
+<definition default="assertNotVisible">
 	<command name="assertNotVisible">
 		<execute selenium="waitForNotVisible" />
 

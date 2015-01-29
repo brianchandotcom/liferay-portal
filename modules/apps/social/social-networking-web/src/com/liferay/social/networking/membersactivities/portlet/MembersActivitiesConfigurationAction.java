@@ -16,6 +16,7 @@ package com.liferay.social.networking.membersactivities.portlet;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.social.networking.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,9 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + MembersActivitiesPortlet.JAVAX_PORTLET_NAME
-	},
+	property = {"javax.portlet.name=" + PortletKeys.MEMBERS_ACTIVITIES},
 	service = ConfigurationAction.class
 )
 public class MembersActivitiesConfigurationAction

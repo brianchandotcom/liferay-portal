@@ -2807,7 +2807,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
 	private Pattern _annotationPattern = Pattern.compile(
-		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\n(\t*)\\)");
+		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;

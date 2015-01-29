@@ -194,7 +194,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return leadingTabCount;
 	}
 
-	protected static String sortAnnotations(
+	protected static String formatAnnotations(
 			String fileName, String javaTermName, String content, String indent)
 		throws IOException {
 
@@ -250,7 +250,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					content = StringUtil.replaceLast(
 						content, annotation, previousAnnotation);
 
-					return sortAnnotations(
+					return formatAnnotations(
 						fileName, javaTermName, content, indent);
 				}
 
@@ -819,7 +819,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			break;
 		}
 
-		newContent = sortAnnotations(
+		newContent = formatAnnotations(
 			fileName, StringPool.BLANK, newContent, StringPool.BLANK);
 
 		Matcher matcher = _logPattern.matcher(newContent);

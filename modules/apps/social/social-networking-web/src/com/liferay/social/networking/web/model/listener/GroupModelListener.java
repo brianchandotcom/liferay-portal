@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.networking.web.hook.listeners;
+package com.liferay.social.networking.web.model.listener;
 
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;

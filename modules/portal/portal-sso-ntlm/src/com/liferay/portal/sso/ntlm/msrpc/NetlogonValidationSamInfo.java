@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ntlm.msrpc;
+package com.liferay.portal.sso.ntlm.msrpc;
 
 import jcifs.dcerpc.ndr.NdrBuffer;
 import jcifs.dcerpc.ndr.NdrException;

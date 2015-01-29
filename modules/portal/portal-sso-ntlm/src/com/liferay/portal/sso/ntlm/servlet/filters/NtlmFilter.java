@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.sso.ntlm;
+package com.liferay.portal.sso.ntlm.servlet.filters;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
@@ -20,17 +20,17 @@ import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.ntlm.NtlmManager;
-import com.liferay.portal.security.ntlm.NtlmUserAccount;
-import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.portal.sso.ntlm.NtlmManager;
+import com.liferay.portal.sso.ntlm.NtlmUserAccount;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
@@ -56,7 +56,7 @@ import jcifs.util.Base64;
  * @author Marcellus Tavares
  * @author Michael C. Han
  */
-public class NtlmFilter extends BasePortalFilter {
+public class NtlmFilter extends BaseFilter {
 
 	@Override
 	public void init(FilterConfig filterConfig) {

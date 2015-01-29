@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.sso.ntlm;
+package com.liferay.portal.sso.ntlm.servlet.filters;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.FilterChain;
@@ -38,7 +38,7 @@ import jcifs.util.Base64;
 /**
  * @author Brian Wing Shun Chan
  */
-public class NtlmPostFilter extends BasePortalFilter {
+public class NtlmPostFilter extends BaseFilter {
 
 	@Override
 	protected Log getLog() {

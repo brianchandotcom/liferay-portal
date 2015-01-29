@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.security.ntlm;
+package com.liferay.portal.sso.ntlm;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.ntlm.msrpc.NetlogonAuthenticator;
-import com.liferay.portal.security.ntlm.msrpc.NetlogonIdentityInfo;
-import com.liferay.portal.security.ntlm.msrpc.NetlogonNetworkInfo;
-import com.liferay.portal.security.ntlm.msrpc.NetlogonValidationSamInfo;
-import com.liferay.portal.security.ntlm.msrpc.NetrLogonSamLogon;
+import com.liferay.portal.sso.ntlm.msrpc.NetlogonAuthenticator;
+import com.liferay.portal.sso.ntlm.msrpc.NetlogonIdentityInfo;
+import com.liferay.portal.sso.ntlm.msrpc.NetlogonNetworkInfo;
+import com.liferay.portal.sso.ntlm.msrpc.NetlogonValidationSamInfo;
+import com.liferay.portal.sso.ntlm.msrpc.NetrLogonSamLogon;
 
 import java.io.IOException;
 

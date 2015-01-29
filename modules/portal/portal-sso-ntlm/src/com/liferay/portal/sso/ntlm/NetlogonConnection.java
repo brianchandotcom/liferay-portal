@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.security.ntlm;
+package com.liferay.portal.sso.ntlm;
 
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.security.ntlm.msrpc.NetlogonAuthenticator;
-import com.liferay.portal.security.ntlm.msrpc.NetrServerAuthenticate3;
-import com.liferay.portal.security.ntlm.msrpc.NetrServerReqChallenge;
+import com.liferay.portal.sso.ntlm.msrpc.NetlogonAuthenticator;
+import com.liferay.portal.sso.ntlm.msrpc.NetrServerAuthenticate3;
+import com.liferay.portal.sso.ntlm.msrpc.NetrServerReqChallenge;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;

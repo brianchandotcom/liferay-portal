@@ -1042,6 +1042,11 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public boolean isUserPersonalSpace() {
+		return _group.isUserPersonalSpace();
+	}
+
+	@Override
 	public void persist() {
 		_group.persist();
 	}

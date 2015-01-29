@@ -2637,6 +2637,10 @@ public interface PropsKeys {
 
 	public static final String USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED = "user.notification.event.confirmation.enabled";
 
+	public static final String USER_PERSONAL_SPACE_LAYOUT_FRIENDLY_URL = "user.personal.space.layout.friendly.url";
+
+	public static final String USER_PERSONAL_SPACE_LAYOUT_NAME = "user.personal.space.layout.name";
+
 	public static final String USERS_ADMIN_ORGANIZATION_COLUMN_LIMIT = "users.admin.organization.column.limit";
 
 	public static final String USERS_ADMIN_ROLE_COLUMN_LIMIT = "users.admin.role.column.limit";

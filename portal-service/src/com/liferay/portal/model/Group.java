@@ -193,6 +193,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public boolean isUserPersonalSite();
 
+	public boolean isUserPersonalSpace();
+
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);
 }

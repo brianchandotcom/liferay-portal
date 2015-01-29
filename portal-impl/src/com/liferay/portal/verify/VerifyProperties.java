@@ -354,6 +354,39 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.bookmarks.service"
 		},
 
+		// CAS
+
+		new String[] {
+			"cas.auth.enabled", "enabled", "com.liferay.portal.sso.cas"
+		},
+		new String[] {
+			"cas.import.from.ldap", "import.from.ldap",
+			"com.liferay.portal.sso.cas"
+		},
+		new String[] {
+			"login.url", "login.url", "com.liferay.portal.sso.cas"
+		},
+		new String[] {
+			"logout.on.session.expiration", "logout.on.session.expiration",
+			"com.liferay.portal.sso.cas"
+		},
+		new String[] {
+			"cas.logout.url", "logout.url", "com.liferay.portal.sso.cas"
+		},
+		new String[] {
+			"cas.no.such.user.redirect.url", "no.such.user.redirect.url",
+			"com.liferay.portal.sso.cas"
+		},
+		new String[] {
+			"cas.server.name", "server.name", "com.liferay.portal.sso.cas"
+		},
+		new String[] {
+			"cas.server.url", "server.url", "com.liferay.portal.sso.cas"
+		},
+		new String[] {
+			"cas.service.url", "service.url", "com.liferay.portal.sso.cas"
+		},
+
 		// FreeMarker Engine
 
 		new String[] {

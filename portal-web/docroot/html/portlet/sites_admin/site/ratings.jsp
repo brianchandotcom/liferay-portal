@@ -58,7 +58,7 @@ else {
 		String[] classNames = PortletRatingsDefinitionUtil.getClassNames(portletId);
 
 		for (String className : classNames) {
-			String propertyKey = className + StringPool.UNDERLINE + "RatingsType";
+			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
 
 			RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(portletId, className);
 

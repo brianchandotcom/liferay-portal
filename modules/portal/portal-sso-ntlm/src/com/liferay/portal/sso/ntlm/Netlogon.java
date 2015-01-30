@@ -38,15 +38,26 @@ import jcifs.smb.SmbException;
  */
 public class Netlogon {
 
+	public Netlogon(
+		NetlogonConnectionManager netlogonConnectionManager,
+		String domainController, String domainControllerName,
+		NtlmServiceAccount ntlmServiceAccount) {
+
+		_domainController = domainController;
+		_domainControllerName = domainControllerName;
+		_netlogonConnectionManager = netlogonConnectionManager;
+		_ntlmServiceAccount = ntlmServiceAccount;
+	}
+
 	public NtlmUserAccount logon(
 			String domain, String userName, String workstation,
 			byte[] serverChallenge, byte[] ntResponse, byte[] lmResponse)
 		throws NtlmLogonException {
 
-		NetlogonConnection netlogonConnection = new NetlogonConnection();
+		NetlogonConnection netlogonConnection = null;
 
 		try {
-			netlogonConnection.connect(
+			netlogonConnection = _netlogonConnectionManager.connect(
 				_domainController, _domainControllerName, _ntlmServiceAccount);
 
 			NetlogonAuthenticator netlogonAuthenticator =
@@ -97,21 +108,14 @@ public class Netlogon {
 		}
 		finally {
 			try {
-				netlogonConnection.disconnect();
+				if (netlogonConnection != null) {
+					netlogonConnection.disconnect();
+				}
 			}
 			catch (Exception e) {
 				_log.error("Unable to disconnect Netlogon connection", e);
 			}
 		}
-	}
-
-	public void setConfiguration(
-		String domainController, String domainControllerName,
-		NtlmServiceAccount ntlmServiceAccount) {
-
-		_domainController = domainController;
-		_domainControllerName = domainControllerName;
-		_ntlmServiceAccount = ntlmServiceAccount;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(Netlogon.class);
@@ -121,8 +125,9 @@ public class Netlogon {
 			"netlogon", "12345678-1234-abcd-ef00-01234567cffb:1.0");
 	}
 
-	private String _domainController;
-	private String _domainControllerName;
-	private NtlmServiceAccount _ntlmServiceAccount;
+	private final String _domainController;
+	private final String _domainControllerName;
+	private final NetlogonConnectionManager _netlogonConnectionManager;
+	private final NtlmServiceAccount _ntlmServiceAccount;
 
 }

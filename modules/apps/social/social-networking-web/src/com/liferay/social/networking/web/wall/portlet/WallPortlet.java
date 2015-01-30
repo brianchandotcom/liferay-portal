@@ -28,7 +28,7 @@ import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.social.networking.model.WallEntry;
 import com.liferay.social.networking.service.WallEntryLocalService;
-import com.liferay.social.networking.service.configuration.SocialNetworkingServiceConfigurator;
+import com.liferay.social.networking.service.configuration.configurator.SocialNetworkingServiceConfigurator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

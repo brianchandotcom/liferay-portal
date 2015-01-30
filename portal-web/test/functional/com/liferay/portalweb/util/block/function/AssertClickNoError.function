@@ -1,4 +1,16 @@
-<definition default="assertTextClick">
+<definition default="assertClickNoError">
+	<command name="assertClickNoError">
+		<if>
+			<contains string="${locator1}" substring="/input" />
+			<then>
+				<execute function="AssertClickNoError#assertValueClick" />
+			</then>
+			<else>
+				<execute function="AssertClickNoError#assertTextClick" />
+			</else>
+		</if>
+	</command>
+
 	<command name="assertTextClick">
 		<execute selenium="waitForVisible" />
 

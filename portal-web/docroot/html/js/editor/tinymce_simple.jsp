@@ -77,8 +77,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 <aui:script use="aui-node-base">
 	window['<%= name %>'] = {
-		onChangeCallbackCounter: 0,
-
 		init: function(value) {
 			if (typeof value != 'string') {
 				value = '';
@@ -142,7 +140,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 				}
 			}
 			else {
-				data = tinyMCE.editors['<%= name %>'].getContent();
+				data = tinyMCE.editors['<%= name %>'].getBody().textContent;
 			}
 
 			return data;
@@ -167,21 +165,32 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 					language: tinyMCELanguage['<%= HtmlUtil.escape(contentsLanguageId) %>'] || tinyMCELanguage['en_US'],
 					menubar: false,
 					mode: 'textareas',
+					plugins: 'contextmenu preview print <c:if test="<%= showSource %>">code</c:if>',
+					relative_urls: false,
+					remove_script_host: false,
+					selector: '#<%= name %>',
 
 					<%
 					if (Validator.isNotNull(onChangeMethod)) {
 					%>
 
-						onchange_callback: window['<%= name %>'].onChangeCallback,
+						setup: function(editor) {
+							/*
+							 * LPS-52626
+							 *
+							 * TinyMCE 'change' event does not fire until editor looses focus.
+							 * YUI 'input' event does not work in IE in an iframe.
+							 * jQuery does not normalize 'input' event.
+							 */
+							editor.on('keyup', function() {
+								<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getHTML());
+							});
+						},
 
 					<%
 					}
 					%>
 
-					plugins: 'contextmenu preview print <c:if test="<%= showSource %>">code</c:if>',
-					relative_urls: false,
-					remove_script_host: false,
-					selector: '#<%= name %>',
 					toolbar: 'bold italic underline | alignleft aligncenter alignright alignjustify | <c:if test="<%= showSource %>"> code</c:if> preview print',
 					toolbar_items_size: 'small'
 				}
@@ -213,37 +222,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		},
 
 		instanceReady: false,
-
-		<%
-		if (Validator.isNotNull(onChangeMethod)) {
-		%>
-
-			onChangeCallback: function(tinyMCE) {
-
-				// This purposely ignores the first callback event because each call
-				// to setContent triggers an undo level which fires the callback
-				// when no changes have yet been made.
-
-				// setContent is not really the correct way of initializing this
-				// editor with content. The content should be placed statically
-				// (from the editor's perspective) within the textarea. This is a
-				// problem from the portal's perspective because it's passing the
-				// content via a javascript method (initMethod).
-
-				var onChangeCallbackCounter = window['<%= name %>'].onChangeCallbackCounter;
-
-				if (onChangeCallbackCounter > 0) {
-
-					<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getHTML());
-
-				}
-
-				window['<%= name %>'].onChangeCallbackCounter++;
-			},
-
-		<%
-		}
-		%>
 
 		setHTML: function(value) {
 			if (window['<%= name %>'].instanceReady) {

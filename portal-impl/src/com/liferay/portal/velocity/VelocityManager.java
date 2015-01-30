@@ -51,20 +51,9 @@ import org.apache.velocity.util.introspection.SecureUberspector;
 public class VelocityManager extends BaseTemplateManager {
 
 	@Override
-	public void addTaglibRequest(
-		Map<String, Object> contextObjects, String applicationName,
+	public void addTaglibTheme(
+		Map<String, Object> contextObjects, String themeName,
 		HttpServletRequest request, HttpServletResponse response) {
-
-		contextObjects.put(
-			applicationName, getVelocityTaglib(request, response));
-	}
-
-	@Override
-	public void addTaglibRequest(
-		Template template, String applicationName, HttpServletRequest request,
-		HttpServletResponse response) {
-
-		template.put(applicationName, getVelocityTaglib(request, response));
 	}
 
 	@Override

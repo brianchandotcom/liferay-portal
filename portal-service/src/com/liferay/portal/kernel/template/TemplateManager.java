@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.template;
 
-import java.io.Writer;
-
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -32,36 +30,21 @@ public interface TemplateManager {
 		Map<String, Object> contextObjects, String variableName,
 		Class<?> variableClass);
 
-	public void addStaticClassSupport(
-		Template template, String variableName, Class<?> variableClass);
-
 	public void addTaglibApplication(
 		Map<String, Object> contextObjects, String applicationName,
-		ServletContext servletContext);
-
-	public void addTaglibApplication(
-		Template template, String applicationName,
 		ServletContext servletContext);
 
 	public void addTaglibFactory(
 		Map<String, Object> contextObjects, String taglibLiferayHash,
 		ServletContext servletContext);
 
-	public void addTaglibFactory(
-		Template template, String taglibLiferayHash,
-		ServletContext servletContext);
-
 	public void addTaglibRequest(
 		Map<String, Object> contextObjects, String applicationName,
 		HttpServletRequest request, HttpServletResponse response);
 
-	public void addTaglibRequest(
-		Template template, String applicationName, HttpServletRequest request,
-		HttpServletResponse response);
-
 	public void addTaglibTheme(
-		Template template, String string, HttpServletRequest request,
-		HttpServletResponse response, Writer writer);
+		Map<String, Object> contextObjects, String string,
+		HttpServletRequest request, HttpServletResponse response);
 
 	public void destroy();
 

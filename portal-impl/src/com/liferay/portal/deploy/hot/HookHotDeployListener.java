@@ -1017,7 +1017,9 @@ public class HookHotDeployListener
 				i++;
 			}
 
-			_log.debug(sb.toString());
+			Log log = SanitizerLogWrapper.allowCRLF(_log);
+
+			log.debug(sb.toString());
 		}
 
 		if (customJspGlobal && !_customJspBagsMap.isEmpty() &&

@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.internal.descriptor;
-
-import java.util.List;
+package com.liferay.portal.test.util;
 
 /**
  * @author Cristina González
  */
-public interface SpringDescriptor {
+public interface ClearThreadLocalExecutor {
 
-	public List<String> getConfigLocations();
+	public void clearThreadLocal();
 
 }

@@ -12,24 +12,13 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.internal.event;
-
-import org.jboss.arquillian.core.spi.event.Event;
-import org.jboss.arquillian.test.spi.TestClass;
+package com.liferay.portal.test.util;
 
 /**
  * @author Cristina González
  */
-public class LiferayContextCreatedEvent implements Event {
+public interface InitTestLiferayContextExecutor {
 
-	public LiferayContextCreatedEvent(TestClass testClass) {
-		_testClass = testClass;
-	}
-
-	public TestClass getTestClass() {
-		return _testClass;
-	}
-
-	private final TestClass _testClass;
+	public void init();
 
 }

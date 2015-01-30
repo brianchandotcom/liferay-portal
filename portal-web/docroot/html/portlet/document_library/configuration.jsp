@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfigurationDisplayContext(dlRequestHelper);
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
@@ -78,11 +78,11 @@ DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfiguratio
 						<aui:field-wrapper label="display-style-views">
 							<liferay-ui:input-move-boxes
 								leftBoxName="currentDisplayViews"
-								leftList="<%= dlConfigurationDisplayContext.getCurrentDisplayViews() %>"
+								leftList="<%= dlPortletInstanceSettingsHelper.getCurrentDisplayViews() %>"
 								leftReorder="true"
 								leftTitle="current"
 								rightBoxName="availableDisplayViews"
-								rightList="<%= dlConfigurationDisplayContext.getAvailableDisplayViews() %>"
+								rightList="<%= dlPortletInstanceSettingsHelper.getAvailableDisplayViews() %>"
 								rightTitle="available"
 							/>
 						</aui:field-wrapper>
@@ -94,11 +94,11 @@ DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfiguratio
 						<aui:field-wrapper label="show-columns">
 							<liferay-ui:input-move-boxes
 								leftBoxName="currentEntryColumns"
-								leftList="<%= dlConfigurationDisplayContext.getCurrentEntryColumns() %>"
+								leftList="<%= dlPortletInstanceSettingsHelper.getCurrentEntryColumns() %>"
 								leftReorder="true"
 								leftTitle="current"
 								rightBoxName="availableEntryColumns"
-								rightList="<%= dlConfigurationDisplayContext.getAvailableEntryColumns() %>"
+								rightList="<%= dlPortletInstanceSettingsHelper.getAvailableEntryColumns() %>"
 								rightTitle="available"
 							/>
 						</aui:field-wrapper>

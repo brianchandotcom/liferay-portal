@@ -42,6 +42,22 @@ public class DLPortletInstanceSettingsHelper {
 		_dlRequestHelper = dlRequestHelper;
 	}
 
+	public List<KeyValuePair> getAvailableDisplayViews() {
+		if (_availableDisplayViews == null) {
+			_populateDisplayViews();
+		}
+
+		return _availableDisplayViews;
+	}
+
+	public List<KeyValuePair> getAvailableEntryColumns() {
+		if (_availableEntryColumns == null) {
+			_populateEntryColumns();
+		}
+
+		return _availableEntryColumns;
+	}
+
 	public List<KeyValuePair> getAvailableFileEntryColumns() {
 		if (_availableFileEntryColumns == null) {
 			_populateFileEntryColumns();
@@ -64,6 +80,22 @@ public class DLPortletInstanceSettingsHelper {
 		}
 
 		return _availableMimeTypes;
+	}
+
+	public List<KeyValuePair> getCurrentDisplayViews() {
+		if (_currentDisplayViews == null) {
+			_populateDisplayViews();
+		}
+
+		return _currentDisplayViews;
+	}
+
+	public List<KeyValuePair> getCurrentEntryColumns() {
+		if (_currentEntryColumns == null) {
+			_populateEntryColumns();
+		}
+
+		return _currentEntryColumns;
 	}
 
 	public List<KeyValuePair> getCurrentFileEntryColumns() {
@@ -186,6 +218,22 @@ public class DLPortletInstanceSettingsHelper {
 		return dlPortletInstanceSettings.isShowTabs();
 	}
 
+	private String[] _getAllEntryColumns() {
+		String allEntryColumns = "name,size,status";
+
+		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
+			allEntryColumns += ",downloads";
+		}
+
+		if (isShowActions()) {
+			allEntryColumns += ",action";
+		}
+
+		allEntryColumns += ",modified-date,create-date";
+
+		return StringUtil.split(allEntryColumns);
+	}
+
 	private String[] _getAllFileEntryColumns() {
 		String allFileEntryColumns = "name,size";
 
@@ -210,6 +258,79 @@ public class DLPortletInstanceSettingsHelper {
 		}
 
 		return StringUtil.split(allFolderColumns);
+	}
+
+	private void _populateDisplayViews() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String[] displayViews = dlPortletInstanceSettings.getDisplayViews();
+
+		_currentDisplayViews = new ArrayList<>();
+
+		for (String displayView : displayViews) {
+			_currentDisplayViews.add(
+				new KeyValuePair(
+					displayView,
+					LanguageUtil.get(
+						_dlRequestHelper.getLocale(), displayView)));
+		}
+
+		Arrays.sort(displayViews);
+
+		_availableDisplayViews = new ArrayList<>();
+
+		Set<String> allDisplayViews = SetUtil.fromArray(
+			PropsValues.DL_DISPLAY_VIEWS);
+
+		for (String displayView : allDisplayViews) {
+			if (Arrays.binarySearch(displayViews, displayView) < 0) {
+				_availableDisplayViews.add(
+					new KeyValuePair(
+						displayView,
+						LanguageUtil.get(
+							_dlRequestHelper.getLocale(), displayView)));
+			}
+		}
+
+		_availableDisplayViews = ListUtil.sort(
+			_availableDisplayViews, new KeyValuePairComparator(false, true));
+	}
+
+	private void _populateEntryColumns() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String[] entryColumns = dlPortletInstanceSettings.getEntryColumns();
+
+		_currentEntryColumns = new ArrayList<>();
+
+		for (String entryColumn : entryColumns) {
+			_currentEntryColumns.add(
+				new KeyValuePair(
+					entryColumn,
+					LanguageUtil.get(
+						_dlRequestHelper.getLocale(), entryColumn)));
+		}
+
+		Arrays.sort(entryColumns);
+
+		_availableEntryColumns = new ArrayList<>();
+
+		Set<String> allEntryColumns = SetUtil.fromArray(_getAllEntryColumns());
+
+		for (String entryColumn : allEntryColumns) {
+			if (Arrays.binarySearch(entryColumns, entryColumn) < 0) {
+				_availableEntryColumns.add(
+					new KeyValuePair(
+						entryColumn,
+						LanguageUtil.get(
+							_dlRequestHelper.getLocale(), entryColumn)));
+			}
+		}
+
+		_availableEntryColumns = ListUtil.sort(
+			_availableEntryColumns, new KeyValuePairComparator(false, true));
 	}
 
 	private void _populateFileEntryColumns() {
@@ -321,9 +442,13 @@ public class DLPortletInstanceSettingsHelper {
 		}
 	}
 
+	private List<KeyValuePair> _availableDisplayViews;
+	private List<KeyValuePair> _availableEntryColumns;
 	private List<KeyValuePair> _availableFileEntryColumns;
 	private List<KeyValuePair> _availableFolderColumns;
 	private List<KeyValuePair> _availableMimeTypes;
+	private List<KeyValuePair> _currentDisplayViews;
+	private List<KeyValuePair> _currentEntryColumns;
 	private List<KeyValuePair> _currentFileEntryColumns;
 	private List<KeyValuePair> _currentFolderColumns;
 	private List<KeyValuePair> _currentMimeTypes;

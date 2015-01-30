@@ -43,7 +43,6 @@ page import="com.liferay.portlet.documentlibrary.RepositoryNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException" %><%@
 page import="com.liferay.portlet.documentlibrary.SourceFileNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.action.EditFileEntryAction" %><%@
-page import="com.liferay.portlet.documentlibrary.display.context.DLConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.display.context.DLEditFileEntryDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.display.context.DLFilePicker" %><%@

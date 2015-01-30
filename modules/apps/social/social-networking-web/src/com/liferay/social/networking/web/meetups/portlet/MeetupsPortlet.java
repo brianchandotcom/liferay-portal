@@ -24,7 +24,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.social.networking.service.MeetupsEntryLocalService;
 import com.liferay.social.networking.service.MeetupsRegistrationLocalService;
-import com.liferay.social.networking.service.configuration.SocialNetworkingServiceConfigurator;
+import com.liferay.social.networking.service.configuration.configurator.SocialNetworkingServiceConfigurator;
 
 import java.io.File;
 

@@ -15,6 +15,7 @@
 package com.liferay.portlet.portletdisplaytemplate.util;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
@@ -63,6 +64,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Eduardo Garcia
  * @author Juan Fernández
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 @DoPrivileged
 public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
@@ -370,10 +372,13 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 				templateManager, contextObjects, request, response);
 		}
 
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
 		contextObjects.putAll(_getPortletPreferences(renderRequest));
 
 		return _transformer.transform(
-			themeDisplay, contextObjects, ddmTemplate.getScript(), language);
+			themeDisplay, contextObjects, ddmTemplate.getScript(), language,
+			unsyncStringWriter);
 	}
 
 	private void _addTaglibSupportFTL(

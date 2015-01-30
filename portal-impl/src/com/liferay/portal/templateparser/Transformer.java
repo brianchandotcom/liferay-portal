@@ -132,7 +132,8 @@ public class Transformer {
 
 	public String transform(
 			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
-			String script, String langType)
+			String script, String langType,
+			UnsyncStringWriter unsyncStringWriter)
 		throws Exception {
 
 		if (Validator.isNull(langType)) {
@@ -157,8 +158,6 @@ public class Transformer {
 			templateId, companyId, companyGroupId, scopeGroupId);
 
 		Template template = getTemplate(templateId, script, langType);
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		try {
 			prepareTemplate(themeDisplay, template);

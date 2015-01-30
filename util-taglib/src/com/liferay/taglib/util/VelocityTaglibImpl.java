@@ -93,14 +93,20 @@ import javax.servlet.jsp.PageContext;
  */
 public class VelocityTaglibImpl implements VelocityTaglib {
 
-	public VelocityTaglibImpl() {
-	}
-
 	public VelocityTaglibImpl(
 		ServletContext servletContext, HttpServletRequest request,
 		HttpServletResponse response, Map<String, Object> contextObjects) {
 
-		init(servletContext, request, response, contextObjects);
+		_servletContext = servletContext;
+		_request = request;
+		_response = response;
+		_contextObjects = contextObjects;
+
+		JspFactory jspFactory = JspFactory.getDefaultFactory();
+
+		_pageContext = jspFactory.getPageContext(
+			new JSPSupportServlet(_servletContext), _request, _response, null,
+			false, 0, false);
 	}
 
 	@Override
@@ -1236,24 +1242,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			wrapPage, portletPage, _servletContext, _request, _response);
 	}
 
-	protected VelocityTaglibImpl init(
-		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response, Map<String, Object> contextObjects) {
-
-		_servletContext = servletContext;
-		_request = request;
-		_response = response;
-		_contextObjects = contextObjects;
-
-		JspFactory jspFactory = JspFactory.getDefaultFactory();
-
-		_pageContext = jspFactory.getPageContext(
-			new JSPSupportServlet(_servletContext), _request, _response, null,
-			false, 0, false);
-
-		return this;
-	}
-
 	protected void setUp(TagSupport tagSupport) throws Exception {
 		Writer writer = null;
 
@@ -1268,10 +1256,10 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		tagSupport.setPageContext(new PipingPageContext(_pageContext, writer));
 	}
 
-	private Map<String, Object> _contextObjects;
-	private PageContext _pageContext;
-	private HttpServletRequest _request;
-	private HttpServletResponse _response;
-	private ServletContext _servletContext;
+	private final Map<String, Object> _contextObjects;
+	private final PageContext _pageContext;
+	private final HttpServletRequest _request;
+	private final HttpServletResponse _response;
+	private final ServletContext _servletContext;
 
 }

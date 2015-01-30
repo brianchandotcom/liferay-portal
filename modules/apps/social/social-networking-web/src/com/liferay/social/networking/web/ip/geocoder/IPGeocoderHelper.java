@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.networking.web.util;
+package com.liferay.social.networking.web.ip.geocoder;
 
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;

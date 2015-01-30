@@ -1,0 +1,245 @@
+<html>
+<head>
+<title>DDL</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DDL</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>DDL</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_ADD</td>
+	<td>//ul[contains(@aria-label,'Dynamic Data List')]//a[@role='menuitem']/span[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_MANAGE_DATA_DEFINITIONS</td>
+	<td>//ul[contains(@aria-label,'Dynamic Data List')]//a[@role='menuitem']/span[contains(.,'Manage Data Definitions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_EXPORT</td>
+	<td>//ul[contains(@aria-label,'Dynamic Data List')]//a[@role='menuitem']/span[contains(.,'Export')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECORD_TABLE-->
+<tr>
+	<td>RECORD_TABLE_ENTRY</td>
+	<td>//tr/th[contains(.,'${key_fieldFieldLabel}')]/../../../tbody/tr/td[contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_ONE_NAME</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[1])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_ONE_RECORD_1</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContain2er')]//tr/td[1])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_TWO_NAME</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[2])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS</td>
+	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[2]/span)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_ONE_PREVIEW_1</td>
+	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[1]/a[contains(.,'Preview')])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_THREE_NAME</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[3])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_COLUMN_THREE_RECORD_1</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[3])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_ACTIONS_1</td>
+	<td>xpath=//td[contains(@class,'entry-action last')]/div/a/i[contains(@class,'menu-arrow caret')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_GUEST_VIEW_LINK</td>
+	<td>//a[contains(.,'View')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_PREVIEW</td>
+	<td>//div/div/div[contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_PREVIEW_CLOSE</td>
+	<td>//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_ADD_FORM_TEMPLATE</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add Form Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD_DISPLAY_TEMPLATE</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add Display Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_EDIT_FORM_TEMPLATE</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Edit Form Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_SELECT_LIST</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Select List')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD_LIST</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add List')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LIST_TABLE-->
+<tr>
+	<td>LIST_TABLE_NAME</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr[contains(.,'${key_ddlListName}')]/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_TABLE_ACTIONS</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr[contains(.,'${key_ddlListName}')]/td[5]/div/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_TABLE_ID_1</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_TABLE_NAME_1</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_TABLE_DESCRIPTION_1</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[3]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_TABLE_ACTIONS_1</td>
+	<td>xpath=//td[contains(@class,'entry-action last')]/div/a/i[contains(@class,'menu-arrow caret')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENULIST-->
+<tr>
+	<td>MENULIST_VIEW</td>
+	<td>//a[@role='menuitem' and contains(.,'View')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENULIST_SPREADSHEET_VIEW</td>
+	<td>//a[@role='menuitem' and contains(.,'Spreadsheet View')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENULIST_EXPORT</td>
+	<td>//a[@role='menuitem' and contains(.,'Export')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SPREADSHEET_EDIT_CONTROLS-->
+<tr>
+	<td>SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_BUTTON</td>
+	<td>//button[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_SELECT_MENULIST</td>
+	<td>//label[contains(.,'More rows at bottom.')]/../select</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>DDLSpreadsheet</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DDLSpreadsheet</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>DDLSpreadsheet</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPREADSHEET_CONTAINER</td>
+	<td>//div[@class='lfr-spreadsheet-container']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CELL_EDITOR_FIELD</td>
+	<td>//input[@name='${key_fieldName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CELL_EDITOR_SELECT</td>
+	<td>//select[@name='${key_fieldName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECORD_TABLE-->
+<tr>
+	<td>RECORD_TABLE_FIELD_ENTRY</td>
+	<td>//tbody[@class='table-data']/tr[${key_ddlRecordRow}]/td[contains(@class,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SPREADSHEET_EDIT_CONTROLS-->
+<tr>
+	<td>SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_BUTTON</td>
+	<td>//button[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_SELECT_MENULIST</td>
+	<td>//label[contains(.,'More rows at bottom.')]/../select</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

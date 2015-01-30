@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>DDLEditList</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DDLEditList</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>DDLEditList</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_DEFINITION_SELECT</td>
+	<td>//a[contains(@class,'btn') and contains(@class,'taglib-icon')]/span[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_SELECT</td>
+	<td>//div/select[contains(@id,'workflowDefinition')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

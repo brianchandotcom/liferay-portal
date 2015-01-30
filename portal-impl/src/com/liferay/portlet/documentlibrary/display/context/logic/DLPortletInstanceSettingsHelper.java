@@ -17,8 +17,13 @@ package com.liferay.portlet.documentlibrary.display.context.logic;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.KeyValuePairComparator;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -37,12 +42,44 @@ public class DLPortletInstanceSettingsHelper {
 		_dlRequestHelper = dlRequestHelper;
 	}
 
+	public List<KeyValuePair> getAvailableFileEntryColumns() {
+		if (_availableFileEntryColumns == null) {
+			_populateFileEntryColumns();
+		}
+
+		return _availableFileEntryColumns;
+	}
+
+	public List<KeyValuePair> getAvailableFolderColumns() {
+		if (_availableFolderColumns == null) {
+			_populateFolderColumns();
+		}
+
+		return _availableFolderColumns;
+	}
+
 	public List<KeyValuePair> getAvailableMimeTypes() {
 		if (_availableMimeTypes == null) {
 			_populateMimeTypes();
 		}
 
 		return _availableMimeTypes;
+	}
+
+	public List<KeyValuePair> getCurrentFileEntryColumns() {
+		if (_currentFileEntryColumns == null) {
+			_populateFileEntryColumns();
+		}
+
+		return _currentFileEntryColumns;
+	}
+
+	public List<KeyValuePair> getCurrentFolderColumns() {
+		if (_currentFolderColumns == null) {
+			_populateFolderColumns();
+		}
+
+		return _currentFolderColumns;
 	}
 
 	public List<KeyValuePair> getCurrentMimeTypes() {
@@ -149,6 +186,108 @@ public class DLPortletInstanceSettingsHelper {
 		return dlPortletInstanceSettings.isShowTabs();
 	}
 
+	private String[] _getAllFileEntryColumns() {
+		String allFileEntryColumns = "name,size";
+
+		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
+			allFileEntryColumns += ",downloads";
+		}
+
+		allFileEntryColumns += ",locked";
+
+		if (isShowActions()) {
+			allFileEntryColumns += ",action";
+		}
+
+		return StringUtil.split(allFileEntryColumns);
+	}
+
+	private String[] _getAllFolderColumns() {
+		String allFolderColumns = "name,num-of-folders,num-of-documents";
+
+		if (isShowActions()) {
+			allFolderColumns += ",action";
+		}
+
+		return StringUtil.split(allFolderColumns);
+	}
+
+	private void _populateFileEntryColumns() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String[] fileEntryColumns =
+			dlPortletInstanceSettings.getFileEntryColumns();
+
+		_currentFileEntryColumns = new ArrayList<>();
+
+		for (String fileEntryColumn : fileEntryColumns) {
+			_currentFileEntryColumns.add(
+				new KeyValuePair(
+					fileEntryColumn,
+					LanguageUtil.get(
+						_dlRequestHelper.getLocale(), fileEntryColumn)));
+		}
+
+		_availableFileEntryColumns = new ArrayList<>();
+
+		Arrays.sort(fileEntryColumns);
+
+		Set<String> allFileEntryColumns = SetUtil.fromArray(
+			_getAllFileEntryColumns());
+
+		for (String fileEntryColumn : allFileEntryColumns) {
+			if (Arrays.binarySearch(fileEntryColumns, fileEntryColumn) < 0) {
+				_availableFileEntryColumns.add(
+					new KeyValuePair(
+						fileEntryColumn,
+						LanguageUtil.get(
+							_dlRequestHelper.getLocale(), fileEntryColumn)));
+			}
+		}
+
+		_availableFileEntryColumns = ListUtil.sort(
+			_availableFileEntryColumns,
+			new KeyValuePairComparator(false, true));
+	}
+
+	private void _populateFolderColumns() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String[] folderColumns = dlPortletInstanceSettings.getFolderColumns();
+
+		_currentFolderColumns = new ArrayList<>();
+
+		for (String folderColumn : folderColumns) {
+			_currentFolderColumns.add(
+				new KeyValuePair(
+					folderColumn,
+					LanguageUtil.get(
+						_dlRequestHelper.getLocale(), folderColumn)));
+		}
+
+		_availableFolderColumns = new ArrayList<>();
+
+		Arrays.sort(folderColumns);
+
+		Set<String> allFolderColumns = SetUtil.fromArray(
+			_getAllFolderColumns());
+
+		for (String folderColumn : allFolderColumns) {
+			if (Arrays.binarySearch(folderColumns, folderColumn) < 0) {
+				_availableFolderColumns.add(
+					new KeyValuePair(
+						folderColumn,
+						LanguageUtil.get(
+							_dlRequestHelper.getLocale(), folderColumn)));
+			}
+		}
+
+		_availableFolderColumns = ListUtil.sort(
+			_availableFolderColumns, new KeyValuePairComparator(false, true));
+	}
+
 	private void _populateMimeTypes() {
 		DLPortletInstanceSettings dlPortletInstanceSettings =
 			_dlRequestHelper.getDLPortletInstanceSettings();
@@ -182,7 +321,11 @@ public class DLPortletInstanceSettingsHelper {
 		}
 	}
 
+	private List<KeyValuePair> _availableFileEntryColumns;
+	private List<KeyValuePair> _availableFolderColumns;
 	private List<KeyValuePair> _availableMimeTypes;
+	private List<KeyValuePair> _currentFileEntryColumns;
+	private List<KeyValuePair> _currentFolderColumns;
 	private List<KeyValuePair> _currentMimeTypes;
 	private final DLRequestHelper _dlRequestHelper;
 

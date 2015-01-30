@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -338,7 +339,7 @@ public class DDLImpl implements DDL {
 
 		return _transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(),
-			ddmTemplate.getLanguage());
+			ddmTemplate.getLanguage(), new UnsyncStringWriter());
 	}
 
 	/**

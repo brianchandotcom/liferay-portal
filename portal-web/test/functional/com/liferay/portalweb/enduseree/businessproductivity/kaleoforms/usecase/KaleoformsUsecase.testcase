@@ -1441,7 +1441,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-43482" name="CompleteFormWithMultipleAssignedProcessRecordsAndViewChanges" priority="4">
+	<command name="CompleteFormWithMultipleAssignedProcessRecordsAndViewChanges" priority="4">
 		<description message="This is a use case for LPS-43482." />
 
 		<var name="kfFieldSetName" value="Field Set Data Definition" />

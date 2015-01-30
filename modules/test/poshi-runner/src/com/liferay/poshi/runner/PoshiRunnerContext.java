@@ -102,11 +102,11 @@ public class PoshiRunnerContext {
 			if (classType.equals("action") || classType.equals("function") ||
 				classType.equals("macro") || classType.equals("testcase")) {
 
-				Element element =
+				Element rootElement =
 					PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
 
 				if (classType.equals("function")) {
-					String xml = element.asXML();
+					String xml = rootElement.asXML();
 
 					for (int i = 1;; i++) {
 						if (xml.contains("${locator" + i + "}")) {
@@ -123,10 +123,10 @@ public class PoshiRunnerContext {
 					}
 				}
 
-				_rootElements.put(classType + "#" + className, element);
+				_rootElements.put(classType + "#" + className, rootElement);
 
-				if (element.element("set-up") != null) {
-					Element setUpElement = element.element("set-up");
+				if (rootElement.element("set-up") != null) {
+					Element setUpElement = rootElement.element("set-up");
 
 					String classCommandName = className + "#set-up";
 
@@ -134,8 +134,8 @@ public class PoshiRunnerContext {
 						classType + "#" + classCommandName, setUpElement);
 				}
 
-				if (element.element("tear-down") != null) {
-					Element tearDownElement = element.element("tear-down");
+				if (rootElement.element("tear-down") != null) {
+					Element tearDownElement = rootElement.element("tear-down");
 
 					String classCommandName = className + "#tear-down";
 
@@ -143,7 +143,7 @@ public class PoshiRunnerContext {
 						classType + "#" + classCommandName, tearDownElement);
 				}
 
-				List<Element> commandElements = element.elements("command");
+				List<Element> commandElements = rootElement.elements("command");
 
 				for (Element commandElement : commandElements) {
 					String classCommandName =

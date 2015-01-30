@@ -22,22 +22,20 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;
 
-import java.io.IOException;
+import java.lang.reflect.Method;
 
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.app.VelocityEngine;
@@ -54,6 +52,27 @@ public class VelocityManager extends BaseTemplateManager {
 	public void addTaglibTheme(
 		Map<String, Object> contextObjects, String themeName,
 		HttpServletRequest request, HttpServletResponse response) {
+
+		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
+			request.getServletContext(), request, response);
+
+		contextObjects.put(themeName, velocityTaglib);
+
+		try {
+			Class<?> clazz = VelocityTaglib.class;
+
+			Method method = clazz.getMethod(
+				"layoutIcon", new Class[] {Layout.class});
+
+			contextObjects.put("velocityTaglib_layoutIcon", method);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
+
+		// Legacy support
+
+		contextObjects.put("theme", velocityTaglib);
 	}
 
 	@Override
@@ -185,26 +204,6 @@ public class VelocityManager extends BaseTemplateManager {
 		}
 
 		return template;
-	}
-
-	protected VelocityTaglib getVelocityTaglib(
-		HttpServletRequest request, HttpServletResponse response) {
-
-		HttpSession session = request.getSession();
-
-		ServletContext servletContext = session.getServletContext();
-
-		try {
-			VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
-				servletContext, request,
-				new PipingServletResponse(response, response.getWriter()),
-				null);
-
-			return velocityTaglib;
-		}
-		catch (IOException ioe) {
-			return ReflectionUtil.throwException(ioe);
-		}
 	}
 
 	private VelocityEngine _velocityEngine;

@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
-import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;
 
@@ -52,7 +52,6 @@ import freemarker.template.TemplateModelException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Writer;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -154,14 +153,25 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		HttpServletRequest request, HttpServletResponse response) {
 
 		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
-			request.getServletContext(), request,
-			new PipingServletResponse(response, writer), template);
+			request.getServletContext(), request, response);
 
-		template.put(themeName, velocityTaglib);
+		contextObjects.put(themeName, velocityTaglib);
+
+		try {
+			Class<?> clazz = VelocityTaglib.class;
+
+			Method method = clazz.getMethod(
+				"layoutIcon", new Class[] {Layout.class});
+
+			contextObjects.put("velocityTaglib_layoutIcon", method);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
 
 		// Legacy support
 
-		template.put("theme", velocityTaglib);
+		contextObjects.put("theme", velocityTaglib);
 	}
 
 	@Override

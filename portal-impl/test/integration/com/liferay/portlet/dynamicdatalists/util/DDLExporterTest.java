@@ -36,7 +36,6 @@ import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordSetTestHelper;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestHelper;
-import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
@@ -46,6 +45,8 @@ import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
 
 import java.io.File;
@@ -77,7 +78,7 @@ public class DDLExporterTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_availableLocales = DDLRecordTestUtil.createAvailableLocales(Locale.US);
+		_availableLocales = DDMFormTestUtil.createAvailableLocales(Locale.US);
 		_defaultLocale = Locale.US;
 		_group = GroupTestUtil.addGroup();
 
@@ -93,12 +94,12 @@ public class DDLExporterTest {
 
 	@Test
 	public void testCSVExport() throws Exception {
-		DDMForm ddmForm = DDLRecordTestUtil.createDDMForm(
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			_availableLocales, _defaultLocale);
 
 		createDDMFormFields(ddmForm);
 
-		DDMFormValues ddmFormValues = DDLRecordTestUtil.createDDMFormValues(
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm, _availableLocales, _defaultLocale);
 
 		createDDMFormFieldValues(ddmFormValues);
@@ -127,12 +128,12 @@ public class DDLExporterTest {
 
 	@Test
 	public void testXMLExport() throws Exception {
-		DDMForm ddmForm = DDLRecordTestUtil.createDDMForm(
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			_availableLocales, _defaultLocale);
 
 		createDDMFormFields(ddmForm);
 
-		DDMFormValues ddmFormValues = DDLRecordTestUtil.createDDMFormValues(
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm, _availableLocales, _defaultLocale);
 
 		createDDMFormFieldValues(ddmFormValues);
@@ -177,7 +178,7 @@ public class DDLExporterTest {
 	protected DDMFormField createDDMFormField(
 		String name, String type, String dataType) {
 
-		DDMFormField ddmFormField = DDLRecordTestUtil.createDDMFormField(
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
 			name, name, type, dataType, true, false, false);
 
 		if (type.equals("radio") || type.equals("select")) {
@@ -213,7 +214,7 @@ public class DDLExporterTest {
 			Value fieldValue = createDDMFormFieldValue(_fieldValues.get(type));
 
 			ddmFormValues.addDDMFormFieldValue(
-				DDLRecordTestUtil.createDDMFormFieldValue(
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
 					fieldName, fieldValue));
 		}
 	}

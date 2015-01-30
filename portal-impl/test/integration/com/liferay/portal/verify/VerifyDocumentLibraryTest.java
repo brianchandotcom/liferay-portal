@@ -45,7 +45,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -53,6 +52,8 @@ import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
 
 import java.io.ByteArrayInputStream;
 
@@ -321,20 +322,20 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 	protected Map<String, DDMFormValues> getDDMFormValuesMap(
 		String ddmStructureKey, Locale currentLocale) {
 
-		Set<Locale> availableLocales = DDLRecordTestUtil.createAvailableLocales(
+		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
 			currentLocale);
 
-		DDMForm ddmForm = DDLRecordTestUtil.createDDMForm(
+		DDMForm ddmForm =  DDMFormTestUtil.createDDMForm(
 			availableLocales, currentLocale);
-
-		DDMFormValues ddmFormValues = DDLRecordTestUtil.createDDMFormValues(
-			ddmForm, availableLocales, currentLocale);
 
 		DDMFormField ddmFormField = new DDMFormField("date_an", "ddm-date");
 
 		ddmFormField.setDataType("date");
 
 		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm, availableLocales, currentLocale);
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 

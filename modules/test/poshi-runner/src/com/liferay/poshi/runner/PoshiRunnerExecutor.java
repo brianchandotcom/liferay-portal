@@ -40,8 +40,46 @@ public class PoshiRunnerExecutor {
 				if (childElement.attributeValue("selenium") != null) {
 					PoshiRunnerExecutor.runSeleniumElement(childElement);
 				}
+				else if (childElement.attributeValue("function") != null) {
+					runFunctionElement(childElement);
+				}
 			}
 		}
+	}
+
+	public static void runFunctionElement(Element element) throws Exception {
+		String classCommandName = element.attributeValue("function");
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
+			className);
+
+		for (int i = 0; i < locatorCount; i++) {
+			String locator = element.attributeValue("locator" + (i + 1));
+			String value = element.attributeValue("value" + (i + 1));
+
+			if (locator != null) {
+				PoshiRunnerVariablesUtil.putIntoExecuteMap(
+					"locator" + (i + 1), locator);
+			}
+
+			if (value != null) {
+				PoshiRunnerVariablesUtil.putIntoExecuteMap(
+					"value" + (i + 1), value);
+			}
+		}
+
+		PoshiRunnerVariablesUtil.pushCommandMap();
+
+		Element function = PoshiRunnerContext.getFunctionCommandElement(
+			classCommandName);
+
+		parseElement(function);
+
+		PoshiRunnerVariablesUtil.popCommandMap();
 	}
 
 	public static void runSeleniumElement(Element element) throws Exception {

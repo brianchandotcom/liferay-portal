@@ -1,4 +1,4 @@
-<definition default="assertNotText">
+<definition default="assertTextNotEquals">
 	<command name="assertNotPartialText">
 		<execute selenium="waitForVisible" />
 
@@ -33,5 +33,17 @@
 		<execute selenium="assertJavaScriptErrors" />
 
 		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="assertTextNotEquals">
+		<if>
+			<contains string="${locator1}" substring="/input" />
+			<then>
+				<execute function="AssertTextNotEquals#assertNotValue" />
+			</then>
+			<else>
+				<execute function="AssertTextNotEquals#assertNotText" />
+			</else>
+		</if>
 	</command>
 </definition>

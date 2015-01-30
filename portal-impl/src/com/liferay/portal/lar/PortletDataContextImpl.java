@@ -1007,6 +1007,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return map;
 	}
 
+	@Override
+	public Map<String, Map<?, ?>> getNewPrimaryKeysMaps() {
+		return _newPrimaryKeysMaps;
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */

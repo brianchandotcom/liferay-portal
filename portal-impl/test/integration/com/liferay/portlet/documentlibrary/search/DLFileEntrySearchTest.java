@@ -161,9 +161,9 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			_ddmStructure.getStructureId(), "name", getSearchKeywords());
 
 		textField.setDefaultLocale(LocaleUtil.US);
-		
+
 		fields.put(textField);
-		
+
 		DDMFormValues ddmFormValues =
 			FieldsToDDMFormValuesConverterUtil.convert(_ddmStructure, fields);
 

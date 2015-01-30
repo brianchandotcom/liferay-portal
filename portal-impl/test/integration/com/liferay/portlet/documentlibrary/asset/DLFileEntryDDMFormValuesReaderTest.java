@@ -46,6 +46,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.ByteArrayInputStream;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,7 +110,7 @@ public class DLFileEntryDDMFormValuesReaderTest {
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			RandomTestUtil.randomBytes());
- 
+
 		return DLFileEntryLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -145,7 +146,7 @@ public class DLFileEntryDDMFormValuesReaderTest {
 
 	protected DDMFormValues createDDMFormValues(DDMForm ddmForm)
 		throws Exception {
-		
+
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 		ddmFormValues.addAvailableLocale(LocaleUtil.US);
@@ -158,15 +159,15 @@ public class DLFileEntryDDMFormValuesReaderTest {
 
 		return ddmFormValues;
 	}
-	
+
 	protected Map<String, DDMFormValues> createDDMFormValuesMap(
 			DDMStructure ddmStructure)
 		throws Exception {
-		
+
 		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
 
 		DDMForm ddmForm = createDDMForm();
-		
+
 		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
 
 		ddmFormValuesMap.put(ddmStructure.getStructureKey(), ddmFormValues);

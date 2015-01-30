@@ -15,10 +15,10 @@
 package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 
 import java.io.Serializable;

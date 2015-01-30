@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `d774a2f`.*
+*This document has been reviewed through commit `58fc0bd`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -692,6 +692,36 @@ its overall lack of functionality.
 
 ---------------------------------------
 
+### Removed Support for *Flat* Thread View in Discussion Comments
+- **Date:** 2014-Dec-30
+- **JIRA Ticket:** LPS-51876
+
+#### What changed?
+
+Discussion comments are now displayed using the *Combination* thread view, and
+the number of levels displayed in the tree is limited.
+
+#### Who is affected?
+
+This affects installations that specify portal property setting
+`discussion.thread.view=flat`, which was the default setting.
+
+#### How should I update my code?
+
+There is no need to update anything since the portal property has been removed
+and the `combination` thread view is now hard-coded.
+
+#### Why was this change made?
+
+Flat view comments were originally implemented as an option to tree view
+comments, which were having performance issues with comment pagination.
+
+Portal now uses a new pagination implementation that performs well. It allows
+comments to display in a hierarchical view, making it easier to see reply
+history. Therefore, the `flat` thread view is no longer needed.
+
+---------------------------------------
+
 ### Removed *Asset Tag Properties*
 - **Date:** 2015-Jan-13
 - **JIRA Ticket:** LPS-52588
@@ -719,27 +749,27 @@ The Asset Tag Properties were deprecated for the 6.2 version of Liferay Portal.
 
 ---------------------------------------
 
-### Removed *asset.publisher.asset.entry.query.processors*
+### Removed the `asset.publisher.asset.entry.query.processors` Property
 - **Date:** 2015-Jan-22
 - **JIRA Ticket:** LPS-52966
 
 #### What changed?
 
-The *asset.publisher.asset.entry.query.processors* property has been removed.
+The `asset.publisher.asset.entry.query.processors` property has been removed
+from `portal.properties`.
 
 #### Who is affected?
 
 This affects any hook that uses the
-*asset.publisher.asset.entry.query.processors* property.
+`asset.publisher.asset.entry.query.processors` property.
 
 #### How should I update my code?
 
-If you are using this property to register Asset Entry Query Processors, they
-have to be registered in a different way. Your Asset Entery Query Processor
-should implements the interface
-`implements com.liferay.portlet.assetpublisher.util.AssetEntryQueryProcessor`
-and it should have the annotation
-`@Component(service=AssetEntryQueryProcessor.class)`.
+If you are using this property to register Asset Entry Query Processors, your
+Asset Entry Query Processor must implement the
+`com.liferay.portlet.assetpublisher.util.AssetEntryQueryProcessor` interface and
+must specify the `@Component(service=AssetEntryQueryProcessor.class)`
+annotation.
 
 #### Why was this change made?
 
@@ -748,63 +778,35 @@ Portal.
 
 ---------------------------------------
 
-### Remove Support for *Flat* Thread View in Comments
-- **Date:** 2014-Dec-30
-- **JIRA Ticket:** LPS-51876
-
-#### What changed?
-
-Comments will always be displayed using the former *Combination* thread view and
-the number of levels displayed in the tree will be limited.
-
-#### Who is affected?
-
-This affects installations with portal.property discussion.thread.view=flat
-which was the default value.
-
-#### How should I update my code?
-
-There is no need to update anything since the portal.property has been removed
-and the value 'combintation' is hardcoded now in the code.
-
-#### Why was this change made?
-
-Comments flat view was implemented in order to solve performance issues with
-pagination with comments when using a tree view.
-Now we have implemented a nicer solution for pagination that doesn't impact
-performance and that allows to display the comments in a hierarchical view
-making easier to see the replies history.
-
----------------------------------------
-
-### UserLocalService throws the new UserScreenNameException.MustNotBeReserved instead of ReservedUserScreenNameException
+### Replaced the `ReservedUserScreenNameException` with `UserScreenNameException.MustNotBeReserved` in `UserLocalService`
 - **Date:** 2015-Jan-29
 - **JIRA Ticket:** LPS-53113
 
 #### What changed?
 
-Previous to Liferay 7, several methods of UserLocalService could throw a
-ReservedUserScreenNameException when a User is set an screen name which is not
-allowed. From Liferay 7 forward that exception has been deprecated and replaced
-with UserScreenNameException.MustNotBeReserved
+Previous to Liferay 7, several methods of `UserLocalService` could throw a
+`ReservedUserScreenNameException` when a user set a screen name that was not
+allowed. That exception has been deprecated and replaced with
+`UserScreenNameException.MustNotBeReserved`.
 
 #### Who is affected?
 
-Developers who have written code that catch ReservedUserScreenNameException
+This affects developers who have written code that catches the
+`ReservedUserScreenNameException` while calling the affected methods.
 
 #### How should I update my code?
 
-Replace ReservedUserScreenNameException with 
-UserScreenNameException.MustNotBeReserved
+You should replace catching exception `ReservedUserScreenNameException` with
+catching exception `UserScreenNameException.MustNotBeReserved`.
 
 #### Why was this change made?
 
-A new pattern has been defined for exceptions that provides higher expresivity
+A new pattern has been defined for exceptions that provides higher expressivity
 in their names and also more information regarding why the exception was thrown.
 
-The new exception (UserScreenNameException.MustNotBeReserved) has all the 
-necessary information about the reason why the exception was thrown and its 
-context. In particular it contains the userId, the problematic screenName and
-the list of reservedScreenNames.
+The new exception `UserScreenNameException.MustNotBeReserved` has all the
+necessary information about why the exception was thrown and its context. In
+particular, it contains the user ID, the problematic screen name, and the list
+of reserved screen names.
 
 ---------------------------------------

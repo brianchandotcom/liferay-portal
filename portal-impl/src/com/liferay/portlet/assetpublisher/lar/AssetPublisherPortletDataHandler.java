@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,6 +37,8 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -175,6 +178,17 @@ public class AssetPublisherPortletDataHandler
 					DDMStructure.class.getName());
 			}
 			else if (name.equals("assetVocabularyId")) {
+				long assetVocabularyId = GetterUtil.getLong(value);
+
+				AssetVocabulary assetVocabulary =
+					AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+						assetVocabularyId);
+
+				if (assetVocabulary != null) {
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, portletId, assetVocabulary);
+				}
+
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
 					AssetVocabulary.class.getName());
@@ -183,6 +197,18 @@ public class AssetPublisherPortletDataHandler
 					 StringUtil.equalsIgnoreCase(value, "assetCategories")) {
 
 				String index = name.substring(9);
+
+				long assetCategoryId = GetterUtil.getLong(
+					portletPreferences.getValue("queryValues" + index, null));
+
+				AssetCategory assetCategory =
+					AssetCategoryLocalServiceUtil.fetchAssetCategory(
+						assetCategoryId);
+
+				if (assetCategory != null) {
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, portletId, assetCategory);
+				}
 
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences,
@@ -300,6 +326,12 @@ public class AssetPublisherPortletDataHandler
 			portletDataContext.getCompanyId());
 
 		Group companyGroup = company.getGroup();
+
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, AssetVocabulary.class);
+
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, AssetCategory.class);
 
 		String anyAssetTypeClassName = portletPreferences.getValue(
 			"anyAssetType", StringPool.BLANK);

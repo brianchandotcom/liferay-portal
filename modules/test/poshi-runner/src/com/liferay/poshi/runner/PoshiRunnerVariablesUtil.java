@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.util.StringUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -26,65 +28,58 @@ import java.util.regex.Pattern;
  */
 public class PoshiRunnerVariablesUtil {
 
-	public static boolean containsKey(String key) {
-		Map<String, String> map = _variablesStack.peek();
-
-		if (map.containsKey(key)) {
-			return true;
-		}
-
-		return false;
+	public static boolean containsKeyInCommandMap(String key) {
+		return _commandMap.containsKey(replaceCommandVars(key));
 	}
 
-	public static String getVarValue(String var) {
-		Map<String, String> map = _variablesStack.peek();
-
-		return map.get(var);
+	public static boolean containsKeyInExecuteMap(String key) {
+		return _executeMap.containsKey(replaceCommandVars(key));
 	}
 
-	public static Map<String, String> popStack() {
-		return _variablesStack.pop();
+	public static String getValueFromCommandMap(String key) {
+		return _commandMap.get(replaceCommandVars(key));
 	}
 
-	public static void pushTempMapToStack() {
-		_variablesStack.push(_tempMap);
+	public static void popCommandMap() {
+		_commandMap = _commandMapStack.pop();
+
+		_executeMap = new HashMap<>();
 	}
 
-	public static String replaceVariables(String variable) {
-		Pattern pattern = Pattern.compile(_REGEX);
-		Matcher matcher = pattern.matcher(variable);
+	public static void pushCommandMap() {
+		_commandMapStack.push(_commandMap);
+
+		_commandMap = _executeMap;
+
+		_executeMap = new HashMap<>();
+	}
+
+	public static void putIntoCommandMap(String key, String value) {
+		_commandMap.put(replaceCommandVars(key), replaceCommandVars(value));
+	}
+
+	public static void putIntoExecuteMap(String key, String value) {
+		_executeMap.put(replaceCommandVars(key), replaceCommandVars(value));
+	}
+
+	public static String replaceCommandVars(String token) {
+		Matcher matcher = _pattern.matcher(token);
 
 		while (matcher.find()) {
-			String token = getVarValue(matcher.group(1));
+			String varValue = getValueFromCommandMap(matcher.group(1));
 
-			String replacement = Matcher.quoteReplacement(token);
+			varValue = Matcher.quoteReplacement(varValue);
 
-			variable = variable.replaceFirst(_REGEX, replacement);
+			token = StringUtil.replace(token, matcher.group(), varValue);
 		}
 
-		return variable;
+		return token;
 	}
 
-	public static void resetTempMap() {
-		_tempMap = new HashMap<>();
-	}
-
-	public static void setVarInTempMap(String var, String value) {
-		_tempMap.put(var, value);
-	}
-
-	public static void setVarToParentMap(String var, String value) {
-		_tempMap = popStack();
-
-		setVarInTempMap(var, value);
-
-		pushTempMapToStack();
-	}
-
-	private static final String _REGEX = "\\$\\{([^}]*)\\}";
-
-	private static Map<String, String> _tempMap = new HashMap<>();
-	private static final Stack<Map<String, String>> _variablesStack =
-		new Stack<Map<String, String>>();
+	private static Map<String, String> _commandMap = new HashMap<>();
+	private static final Stack<Map<String, String>> _commandMapStack =
+		new Stack<>();
+	private static Map<String, String> _executeMap = new HashMap<>();
+	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
 
 }

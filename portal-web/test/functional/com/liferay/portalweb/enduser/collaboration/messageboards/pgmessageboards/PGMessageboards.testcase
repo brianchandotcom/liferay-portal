@@ -838,7 +838,7 @@
 		</execute>
 	</command>
 
-	<command name="viewDefaultEmailFromConfigurationAndSubscriptionEmail" priority="5">
+	<command name="ViewDefaultEmailFromConfigurationAndSubscriptionEmail" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>

@@ -1040,20 +1040,6 @@
 		<css-class-wrapper>portlet-users-admin</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>147</portlet-name>
-		<icon>/html/icons/asset_category_admin.png</icon>
-		<portlet-data-handler-class>com.liferay.portlet.asset.lar.AssetCategoryPortletDataHandler</portlet-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.asset.lar.AssetCategoryStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.asset.lar.AssetVocabularyStagedModelDataHandler</staged-model-data-handler-class>
-		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
-		<control-panel-entry-weight>21.0</control-panel-entry-weight>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-	</portlet>
-	<portlet>
 		<portlet-name>149</portlet-name>
 		<icon>/html/icons/layout_set_prototypes.png</icon>
 		<struts-path>layout_set_prototypes</struts-path>

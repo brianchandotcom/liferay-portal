@@ -333,6 +333,12 @@ public class AssetPublisherPortletDataHandler
 
 		Group companyGroup = company.getGroup();
 
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, AssetVocabulary.class);
+
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, AssetCategory.class);
+
 		String anyAssetTypeClassName = portletPreferences.getValue(
 			"anyAssetType", StringPool.BLANK);
 

@@ -33,7 +33,6 @@ import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -83,22 +82,25 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 		return createDDMFormValuesMap(metadata, getFields());
 	}
 
+	protected DDMForm createDDMForm(Locale defaultLocale) {
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.addAvailableLocale(defaultLocale);
+		ddmForm.setDefaultLocale(defaultLocale);
+
+		return ddmForm;
+	}
+
 	protected DDMFormValues createDDMFormValues(
 		Metadata metadata, Field[] fields) {
 
-		DDMForm ddmForm = new DDMForm();
-
-		Set<Locale> availableLocales = new LinkedHashSet<>();
 		Locale defaultLocale = LocaleUtil.getDefault();
 
-		availableLocales.add(defaultLocale);
-
-		ddmForm.setAvailableLocales(availableLocales);
-		ddmForm.setDefaultLocale(defaultLocale);
+		DDMForm ddmForm = createDDMForm(defaultLocale);
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
-		ddmFormValues.setAvailableLocales(availableLocales);
+		ddmFormValues.addAvailableLocale(defaultLocale);
 		ddmFormValues.setDefaultLocale(defaultLocale);
 
 		for (Field field : fields) {
@@ -115,9 +117,7 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 				continue;
 			}
 
-			DDMFormField ddmFormField = new DDMFormField(name, "text");
-
-			ddmFormField.setDataType("string");
+			DDMFormField ddmFormField = createTextDDMFormField(name);
 
 			ddmForm.addDDMFormField(ddmFormField);
 
@@ -146,8 +146,10 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 
 			DDMFormValues ddmFormValues = createDDMFormValues(metadata, fields);
 
-			Set<String> names =
-				ddmFormValues.getDDMFormFieldValuesMap().keySet();
+			Map<String, List<DDMFormFieldValue>> ddmFormFieldsValuesMap =
+				ddmFormValues.getDDMFormFieldValuesMap();
+
+			Set<String> names = ddmFormFieldsValuesMap.keySet();
 
 			if (names.isEmpty()) {
 				continue;
@@ -157,6 +159,14 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 		}
 
 		return ddmFormValuesMap;
+	}
+
+	protected DDMFormField createTextDDMFormField(String name) {
+		DDMFormField ddmFormField = new DDMFormField(name, "text");
+
+		ddmFormField.setDataType("string");
+
+		return ddmFormField;
 	}
 
 	protected abstract Metadata extractMetadata(

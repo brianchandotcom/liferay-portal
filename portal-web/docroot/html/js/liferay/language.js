@@ -23,15 +23,9 @@
 						}
 					}
 
-					var authToken = Liferay.authToken;
-
-					var data;
-
-					if (authToken) {
-						data = {
-							p_auth: authToken
-						};
-					}
+					var data = {
+						p_auth: Liferay.authToken
+					};
 
 					var value = '';
 

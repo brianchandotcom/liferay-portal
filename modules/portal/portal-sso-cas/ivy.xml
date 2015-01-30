@@ -13,7 +13,5 @@
 	<dependencies defaultconf="default">
 		<dependency name="cas-client-core" org="org.jasig.cas.client" rev="3.1.12" transitive="false" />
 		<dependency name="opensaml" org="org.opensaml" rev="1.1" transitive="false" />
-		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
-		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>

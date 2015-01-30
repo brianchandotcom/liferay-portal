@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Milen Dyankov
  */
-@Component(immediate = true, service = IndexWriter.class)
+@Component(immediate = true, service = ElasticsearchIndexWriter.class)
 public class ElasticsearchIndexWriter extends BaseIndexWriter {
 
 	@Override

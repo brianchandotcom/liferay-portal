@@ -80,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Milen Dyankov
  */
-@Component(immediate = true, service = IndexSearcher.class)
+@Component(immediate = true, service = ElasticsearchIndexSearcher.class)
 public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	@Override

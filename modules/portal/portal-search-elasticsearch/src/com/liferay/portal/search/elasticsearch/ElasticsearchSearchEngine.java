@@ -268,13 +268,13 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	}
 
 	@Override
-	@Reference
+	@Reference(service = ElasticsearchIndexSearcher.class)
 	public void setIndexSearcher(IndexSearcher indexSearcher) {
 		super.setIndexSearcher(indexSearcher);
 	}
 
 	@Override
-	@Reference
+	@Reference(service = ElasticsearchIndexWriter.class)
 	public void setIndexWriter(IndexWriter indexWriter) {
 		super.setIndexWriter(indexWriter);
 	}

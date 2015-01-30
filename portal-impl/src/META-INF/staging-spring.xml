@@ -45,6 +45,7 @@
 			<bean class="com.liferay.portal.staging.permission.StagingPermissionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.lar.lifecycle.IndexingExportImportLifecycleListener" class="com.liferay.portal.lar.lifecycle.IndexingExportImportLifecycleListener" />
 	<bean id="com.liferay.portal.lar.lifecycle.LoggerExportImportLifecycleListener" class="com.liferay.portal.lar.lifecycle.LoggerExportImportLifecycleListener" />
 	<bean id="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" />

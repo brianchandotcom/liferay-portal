@@ -12,36 +12,27 @@
  * details.
  */
 
-package com.liferay.wiki.web.display.context;
+package com.liferay.wiki.web.display.context.logic;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
+import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.web.util.WikiUtil;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
- * @author Iván Zaera
+ * @author Ivan Zaera
  */
-public class WikiConfigurationDisplayContext {
+public class WikiPortletInstanceSettingsHelper {
 
-	public WikiConfigurationDisplayContext(
-		HttpServletRequest request,
-		WikiPortletInstanceSettings wikiPortletInstanceSettings) {
+	public WikiPortletInstanceSettingsHelper(
+		WikiRequestHelper wikiRequestHelper) {
 
-		_wikiPortletInstanceSettings = wikiPortletInstanceSettings;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_scopeGroupId = themeDisplay.getScopeGroupId();
+		_wikiRequestHelper = wikiRequestHelper;
 	}
 
 	public List<String> getAllNodeNames() throws PortalException {
@@ -69,11 +60,15 @@ public class WikiConfigurationDisplayContext {
 	}
 
 	private void _populateNodes() throws PortalException {
-		_allNodes = WikiNodeServiceUtil.getNodes(_scopeGroupId);
+		_allNodes = WikiNodeServiceUtil.getNodes(
+			_wikiRequestHelper.getScopeGroupId());
 
 		_allNodeNames = WikiUtil.getNodeNames(_allNodes);
 
-		_visibleNodeNames = _wikiPortletInstanceSettings.getVisibleNodes();
+		WikiPortletInstanceSettings wikiPortletInstanceSettings =
+			_wikiRequestHelper.getWikiPortletInstanceSettings();
+
+		_visibleNodeNames = wikiPortletInstanceSettings.getVisibleNodes();
 
 		if (ArrayUtil.isNotEmpty(_visibleNodeNames)) {
 			_allNodes = WikiUtil.orderNodes(_allNodes, _visibleNodeNames);
@@ -86,8 +81,7 @@ public class WikiConfigurationDisplayContext {
 
 	private List<String> _allNodeNames;
 	private List<WikiNode> _allNodes;
-	private final long _scopeGroupId;
 	private String[] _visibleNodeNames;
-	private final WikiPortletInstanceSettings _wikiPortletInstanceSettings;
+	private final WikiRequestHelper _wikiRequestHelper;
 
 }

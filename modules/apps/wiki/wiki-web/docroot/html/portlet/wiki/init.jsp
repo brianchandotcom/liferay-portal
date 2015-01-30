@@ -53,20 +53,17 @@ page import="com.liferay.wiki.util.WikiConstants" %><%@
 page import="com.liferay.wiki.util.WikiPageAttachmentsUtil" %><%@
 page import="com.liferay.wiki.util.WikiUtil" %><%@
 page import="com.liferay.wiki.util.comparator.PageVersionComparator" %><%@
-page import="com.liferay.wiki.web.context.WikiConfigurationDisplayContext" %><%@
+page import="com.liferay.wiki.web.display.context.logic.WikiPortletInstanceSettingsHelper" %><%@
+page import="com.liferay.wiki.web.display.context.util.WikiRequestHelper" %><%@
 page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %>
 
 <%
-String portletId = portletDisplay.getId();
+WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
 
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	portletId = ParamUtil.getString(request, "portletResource");
-}
+WikiPortletInstanceSettings wikiPortletInstanceSettings = wikiRequestHelper.getWikiPortletInstanceSettings();
+WikiSettings wikiSettings = wikiRequestHelper.getWikiSettings();
 
-WikiPortletInstanceSettings wikiPortletInstanceSettings = WikiPortletInstanceSettings.getInstance(layout, portletId);
-WikiSettings wikiSettings = WikiSettings.getInstance(scopeGroupId);
-
-WikiConfigurationDisplayContext wikiConfigurationDisplayContext = new WikiConfigurationDisplayContext(request, wikiPortletInstanceSettings);
+WikiPortletInstanceSettingsHelper wikiPortletInstanceSettingsHelper = new WikiPortletInstanceSettingsHelper(wikiRequestHelper);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

@@ -16,12 +16,6 @@
 
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
-<%
-wikiPortletInstanceSettings = WikiPortletInstanceSettings.getInstance(layout, portletId, request.getParameterMap());
-
-wikiConfigurationDisplayContext = new WikiConfigurationDisplayContext(request, wikiPortletInstanceSettings);
-%>
-
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
 	<liferay-portlet:param name="settingsScope" value="portletInstance" />
 </liferay-portlet:actionURL>

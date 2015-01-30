@@ -741,16 +741,6 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#addCP">
-			<var name="userSegmentDescription" value="User Segment Description" />
-			<var name="userSegmentName" value="User Segment Name" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description Started" />
 			<var name="campaignEndDate" value="01/01/2099" />
@@ -766,7 +756,7 @@
 			<var name="pageFriendlyURL" value="/test-page-name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="ContentTargetingCampaign#saveCP" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
@@ -775,7 +765,7 @@
 
 		<execute macro="ContentTargetingCampaign#addCP">
 			<var name="campaignDescription" value="Campaign Description Finished" />
-			<var name="campaignEndDate" value="01/02/2099" />
+			<var name="campaignEndDate" value="01/02/2015" />
 			<var name="campaignEndTime" value="12:00 PM" />
 			<var name="campaignName" value="Campaign Name Finished" />
 			<var name="campaignPriorityField" value="3" />
@@ -788,7 +778,7 @@
 			<var name="pageFriendlyURL" value="/test-page-name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="ContentTargetingCampaign#saveCP" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
@@ -1120,7 +1110,7 @@
 		</execute>
 
 		<execute macro="CampaignDisplayPortlet#configureCampaignRule">
-			<var name="campaignName" value="Campaign Name (Site Name)" />
+			<var name="campaignName" value="Campaign Name" />
 			<var name="contentTitle" value="Web Content Title" />
 			<var name="contentType" value="Web Content Article" />
 			<var name="rowNumber" value="1" />

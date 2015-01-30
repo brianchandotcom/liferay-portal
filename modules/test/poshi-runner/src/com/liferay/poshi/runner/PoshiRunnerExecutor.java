@@ -94,6 +94,38 @@ public class PoshiRunnerExecutor {
 		for (int i = 0; i < parameterCount; i++) {
 			String argument = element.attributeValue("argument" + (i + 1));
 
+			if (argument == null) {
+				if (i == 0) {
+					if (selenium.equals("assertConfirmation") ||
+						selenium.equals("assertConsoleTextNotPresent") ||
+						selenium.equals("assertConsoleTextPresent") ||
+						selenium.equals("assertLocation") ||
+						selenium.equals("assertTextNotPresent") ||
+						selenium.equals("assertTextPresent") ||
+						selenium.equals("waitForConfirmation") ||
+						selenium.equals("waitForTextNotPresent") ||
+						selenium.equals("waitForTextPresent")) {
+
+						argument =
+							PoshiRunnerVariablesUtil.getValueFromCommandMap(
+								"value1");
+					}
+					else {
+						argument =
+							PoshiRunnerVariablesUtil.getValueFromCommandMap(
+								"locator1");
+					}
+				}
+				else if (i == 1) {
+					argument = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+						"value1");
+				}
+				else if (i == 2) {
+					argument = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+						"locator2");
+				}
+			}
+
 			arguments.add(argument);
 
 			parameterClasses.add(String.class);

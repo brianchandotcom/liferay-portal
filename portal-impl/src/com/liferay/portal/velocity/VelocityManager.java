@@ -54,7 +54,7 @@ public class VelocityManager extends BaseTemplateManager {
 		HttpServletRequest request, HttpServletResponse response) {
 
 		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
-			request.getServletContext(), request, response);
+			request.getServletContext(), request, response, contextObjects);
 
 		contextObjects.put(themeName, velocityTaglib);
 

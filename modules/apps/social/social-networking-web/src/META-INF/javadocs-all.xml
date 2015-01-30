@@ -428,7 +428,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MeetupsConstants</name>
-		<type>com.liferay.social.networking.web.meetups.util.MeetupsConstants</type>
+		<type>com.liferay.social.networking.web.meetups.constants.MeetupsConstants</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>STATUS_MAYBE</name>

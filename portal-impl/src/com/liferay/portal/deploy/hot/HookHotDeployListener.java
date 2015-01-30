@@ -2385,17 +2385,16 @@ public class HookHotDeployListener
 	}
 
 	protected void verifyCustomJsps(
-			String currentServletContextName, CustomJspBag currentCustomJspBag)
+			String servletContextName, CustomJspBag customJspBag)
 		throws DuplicateCustomJspException {
 
-		String currentCustomJspDir = currentCustomJspBag.getCustomJspDir();
-		Set<String> currentCustomJsps = new HashSet<>();
+		String customJspDir = customJspBag.getCustomJspDir();
+		Set<String> customJsps = new HashSet<>();
 
-		for (String currentCustomJsp : currentCustomJspBag.getCustomJsps()) {
-			String portalJsp = getPortalJspName(
-				currentCustomJsp, currentCustomJspDir);
+		for (String customJsp : customJspBag.getCustomJsps()) {
+			String portalJsp = getPortalJspName(customJsp, customJspDir);
 
-			currentCustomJsps.add(portalJsp);
+			customJsps.add(portalJsp);
 		}
 
 		Map<String, String> collidingCustomJsps = new HashMap<>();
@@ -2403,29 +2402,32 @@ public class HookHotDeployListener
 		for (Map.Entry<String, CustomJspBag> entry :
 				_customJspBagsMap.entrySet()) {
 
-			CustomJspBag customJspBag = (CustomJspBag)entry.getValue();
+			CustomJspBag currentCustomJspBag = (CustomJspBag)entry.getValue();
 
-			if (!customJspBag.isCustomJspGlobal()) {
+			if (!currentCustomJspBag.isCustomJspGlobal()) {
 				continue;
 			}
 
-			String servletContextName = (String)entry.getKey();
+			String currentServletContextName = (String)entry.getKey();
 
-			String customJspDir = customJspBag.getCustomJspDir();
-			List<String> customJsps = customJspBag.getCustomJsps();
+			String currentCustomJspDir = currentCustomJspBag.getCustomJspDir();
+			List<String> currentCustomJsps =
+				currentCustomJspBag.getCustomJsps();
 
-			for (String customJsp : customJsps) {
-				String portalJsp = getPortalJspName(customJsp, customJspDir);
+			for (String currentCustomJsp : currentCustomJsps) {
+				String currentPortalJsp = getPortalJspName(
+					currentCustomJsp, currentCustomJspDir);
 
-				if (currentCustomJsps.contains(portalJsp)) {
-					collidingCustomJsps.put(portalJsp, servletContextName);
+				if (customJsps.contains(currentPortalJsp)) {
+					collidingCustomJsps.put(
+						currentPortalJsp, currentServletContextName);
 				}
 			}
 		}
 
 		if ((collidingCustomJsps != null) && !collidingCustomJsps.isEmpty()) {
 			_log.error(
-				currentServletContextName + " is colliding with the " +
+				servletContextName + " is colliding with the " +
 					"currently installed hooks");
 
 			if (_log.isDebugEnabled()) {
@@ -2435,7 +2437,7 @@ public class HookHotDeployListener
 					collidingCustomJsps.size() * 4 + 3);
 
 				sb.append("Colliding JSP files in ");
-				sb.append(currentServletContextName);
+				sb.append(servletContextName);
 				sb.append(StringPool.NEW_LINE);
 
 				for (Map.Entry<String, String> entry :

@@ -72,7 +72,7 @@
 		<while>
 			<not>
 				<or>
-					<condition action="Home#isElementPresent" locator-key1="${portletTypeKey}" />
+					<condition function="IsElementPresent#isElementPresent" locator1="Home#${portletTypeKey}" />
 					<equals arg1="${i}" arg2="3" />
 				</or>
 			</not>
@@ -81,7 +81,7 @@
 
 				<echo message="The xpath ${portletTypeKey} could not be found. Refreshing the page. Attempt number ${i}..." />
 
-				<execute action="Home#refresh" />
+				<execute function="Refresh#refresh" />
 
 				<execute macro="Portlet#addPGCmd">
 					<var name="portletName" value="${portletName}" />
@@ -89,7 +89,7 @@
 			</then>
 		</while>
 
-		<execute action="Home#assertElementPresent" locator-key1="${portletTypeKey}" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="Home#${portletTypeKey}" />
 	</command>
 
 	<command name="addPGCmd">
@@ -102,10 +102,10 @@
 			</then>
 		</if>
 
-		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#ADD" value1="Add" />
 
-		<execute action="DockbarAddpanelapplications#assertClick" locator-key1="NAVIGATION_APPLICATIONS" value1="Applications" />
-		<execute action="DockbarAddpanelapplications#type" locator-key1="SEARCH_FIELD" value1="${portletName}" />
+		<execute function="AssertClick#assertTextClickAtAddApplication" locator1="DockbarAddpanelapplications#NAVIGATION_APPLICATIONS" value1="Applications" />
+		<execute function="Type#sendKeysApplicationSearch" locator1="DockbarAddpanelapplications#SEARCH_FIELD" value1="${portletName}" />
 
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
 
@@ -122,7 +122,7 @@
 			</then>
 		</if>
 
-		<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
+		<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" locator1="Dockbar#${portletLocator}" value1="Add" />
 
 		<echo message="Adding ${portletName} portlet..." />
 
@@ -133,7 +133,7 @@
 				<equals arg1="${portletName}" arg2="Media Gallery" />
 			</or>
 			<then>
-				<execute action="Dockbar#pause" locator1="30000" />
+				<execute function="Pause#pause" locator1="30000" />
 			</then>
 		</if>
 	</command>

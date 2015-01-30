@@ -44,7 +44,7 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute action="Home#open" locator1="http://localhost:${nodePort}" />
+				<execute function="Open#open" locator1="http://localhost:${nodePort}" />
 			</then>
 			<elseif>
 				<not>
@@ -56,10 +56,10 @@
 			</elseif>
 		</if>
 
-		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
 
-		<execute action="DockbarAddpanelpage#assertClick" locator-key1="NAVIGATION_PAGE" value1="Page" />
-		<execute action="DockbarAddpanelpage#type" locator-key1="NAME_FIELD" value1="${pageName}" />
+		<execute function="AssertClick#assertTextClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="Type#type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${pageName}" />
 
 		<if>
 			<isset var="pageType" />
@@ -75,24 +75,24 @@
 		<if>
 			<isset var="pageTemplateName" />
 			<then>
-				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
-				<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_RADIO" />
-				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
-				<execute action="CPSitepagesAddpage#check" locator-key1="PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
+				<execute function="AssertTextEquals#assertText" locator1="CPSitepagesAddpage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
+				<execute function="Click#click" locator1="CPSitepagesAddpage#PAGE_TYPE_RADIO" />
+				<execute function="AssertTextEquals#assertText" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
+				<execute function="Check#clickAt" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
 			</then>
 		</if>
 
-		<execute action="DockbarAddpanelpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarAddpanelpage#ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<var name="key_pageName" value="${pageName}" />
 
 		<if>
 			<contains string="${pageName}" substring="&apos;" />
 			<then>
-				<execute action="Home#assertClick" locator-key1="PAGE_WITH_QUOTES" value1="${pageName}" />
+				<execute function="AssertClick#assertTextClick" locator1="Home#PAGE_WITH_QUOTES" value1="${pageName}" />
 			</then>
 			<else>
-				<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
+				<execute function="AssertClick#assertTextClick" locator1="Home#PAGE" value1="${pageName}" />
 			</else>
 		</if>
 	</command>
@@ -198,24 +198,24 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute action="Home#open" locator1="http://localhost:${nodePort}" />
+				<execute function="Open#open" locator1="http://localhost:${nodePort}" />
 			</then>
 			<else>
 				<execute macro="Page#openURL" />
 			</else>
 		</if>
 
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
-		<execute action="Dockbar#assertClick" locator-key1="${portletCategoryKey}" value1="${portletCategoryName}" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
+		<execute function="AssertClick#assertTextClick" locator1="Dockbar#${portletCategoryKey}" value1="${portletCategoryName}" />
 
 		<if>
 			<isset var="siteScopeName" />
 			<then>
-				<execute action="Home#click" locator-key1="SCOPE_SELECTOR" />
+				<execute function="Click#click" locator1="Home#SCOPE_SELECTOR" />
 
 				<var name="key_siteScopeName" value="${siteScopeName}" />
 
-				<execute action="Home#click" locator-key1="SCOPE_SELECTOR_MENULIST_ITEM" />
+				<execute function="Click#click" locator1="Home#SCOPE_SELECTOR_MENULIST_ITEM" />
 			</then>
 		</if>
 
@@ -227,10 +227,10 @@
 			</not>
 			<then>
 				<if>
-					<condition action="Home#isElementPresent" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
+					<condition function="IsElementPresent#isElementPresent" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
 					<then>
-						<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
-						<execute action="Home#assertTextEquals" locator-key1="SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
+						<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="Home#SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
 					</then>
 				</if>
 
@@ -241,7 +241,7 @@
 					<then>
 						<var name="key_portletName" value="${portletName}" />
 
-						<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+						<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
 					</then>
 				</if>
 			</then>
@@ -270,11 +270,11 @@
 		<var name="key_portletCategoryName" value="${localizedPortletCategoryName}" />
 
 		<if>
-			<condition action="Home#isElementPresent" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${localizedPortletCategoryName}" />
+			<condition function="IsElementPresent#isElementPresent" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
 			<then>
-				<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${localizedPortletCategoryName}" />
+				<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
 
-				<execute action="Home#assertTextEquals" locator-key1="SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${localizedPortletCategoryName}" />
+				<execute function="AssertTextEquals#assertText" locator1="Home#SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
 			</then>
 		</if>
 
@@ -285,7 +285,7 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+				<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
 			</then>
 		</if>
 	</command>
@@ -333,7 +333,7 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute action="Home#click" locator-key1="CONTROL_PANEL_NAVIGATION" />
+				<execute action="Home#click" locator1="CONTROL_PANEL_NAVIGATION" />
 			</then>
 		</if>
 	</command>
@@ -405,7 +405,7 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute action="Home#open" locator1="http://localhost:${nodePort}" />
+				<execute function="Open#open" locator1="http://localhost:${nodePort}" />
 			</then>
 			<elseif>
 				<not>
@@ -439,7 +439,7 @@
 				</if>
 			</then>
 			<else>
-				<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}">
+				<execute function="AssertClick#assertTextClick" locator1="Home#PAGE" value1="${pageName}">
 					<var name="key_pageName" value="${pageName}" />
 				</execute>
 			</else>
@@ -524,10 +524,10 @@
 			<then>
 				<var name="siteNameURL" value="${virtualHostsURL}" />
 
-				<execute action="Home#open" locator1="${siteNameURL}" />
+				<execute function="Open#open" locator1="${siteNameURL}" />
 			</then>
 			<else>
-				<execute action="Home#open" locator1="${pageAccessURL}${siteNameURL}${pageStagingURL}" />
+				<execute function="Open#open" locator1="${pageAccessURL}${siteNameURL}${pageStagingURL}" />
 			</else>
 		</if>
 	</command>
@@ -553,12 +553,12 @@
 		<execute macro="Page#openURL" />
 
 		<while>
-			<condition action="Home#isElementPresent" locator-key1="PAGE_2" />
+			<condition function="IsElementPresent#isElementPresentClickNavigation" locator1="Home#PAGE_2" />
 			<then>
-				<execute action="Home#mouseOver" locator-key1="PAGE_2" />
-				<execute action="Home#clickNoError" locator-key1="PAGE_DELETE" />
-				<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
-				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE" />
+				<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_2" />
+				<execute function="ClickNoError#click" locator1="Home#PAGE_DELETE" />
+				<execute function="Confirm#assertConfirmation" value1="Are you sure you want to delete this page?" />
+				<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#PAGE_DELETE" />
 			</then>
 		</while>
 	</command>

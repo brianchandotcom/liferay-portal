@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
-import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.QuerySuggester;
@@ -80,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Milen Dyankov
  */
-@Component(immediate = true, service = IndexSearcher.class)
+@Component(immediate = true, service = ElasticsearchIndexSearcher.class)
 public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	@Override

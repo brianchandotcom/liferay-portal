@@ -41,6 +41,7 @@ import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.VelocityTaglib;
 
 import java.lang.reflect.InvocationHandler;
@@ -363,57 +364,33 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		// Taglibs
 
-		if (language.equals(TemplateConstants.LANG_TYPE_FTL)) {
-			_addTaglibSupportFTL(
-				templateManager, contextObjects, request, response);
-		}
-		else if (language.equals(TemplateConstants.LANG_TYPE_VM)) {
-			_addTaglibSupportVM(
-				templateManager, contextObjects, request, response);
-		}
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		contextObjects.putAll(_getPortletPreferences(renderRequest));
-
-		return _transformer.transform(
-			themeDisplay, contextObjects, ddmTemplate.getScript(), language,
-			unsyncStringWriter);
-	}
-
-	private void _addTaglibSupportFTL(
-			TemplateManager templateManager, Map<String, Object> contextObjects,
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
-
-		// FreeMarker servlet application
-
 		templateManager.addTaglibApplication(
 			contextObjects,
 			PortletDisplayTemplateConstants.FREEMARKER_SERVLET_APPLICATION,
 			request.getServletContext());
-
-		// FreeMarker servlet request
 
 		templateManager.addTaglibRequest(
 			contextObjects,
 			PortletDisplayTemplateConstants.FREEMARKER_SERVLET_REQUEST, request,
 			response);
 
-		// Taglib Liferay hash
-
 		templateManager.addTaglibFactory(
 			contextObjects, PortletDisplayTemplateConstants.TAGLIB_LIFERAY_HASH,
 			request.getServletContext());
-	}
 
-	private void _addTaglibSupportVM(
-		TemplateManager templateManager, Map<String, Object> contextObjects,
-		HttpServletRequest request, HttpServletResponse response) {
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		templateManager.addTaglibRequest(
-			contextObjects, PortletDisplayTemplateConstants.TAGLIB_LIFERAY,
-			request, response);
+		templateManager.addTaglibTheme(
+			contextObjects, "taglibLiferay", request,
+			new PipingServletResponse(response, unsyncStringWriter));
+
+		contextObjects.put(TemplateConstants.WRITER, unsyncStringWriter);
+
+		contextObjects.putAll(_getPortletPreferences(renderRequest));
+
+		return _transformer.transform(
+			themeDisplay, contextObjects, ddmTemplate.getScript(), language,
+			unsyncStringWriter);
 	}
 
 	private Map<String, Object> _getPortletPreferences(

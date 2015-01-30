@@ -1,5 +1,5 @@
 <definition component-name="extra-apps-content-targeting">
-	<property name="testray.main.component.name" value="WCM" />
+	<property name="testray.main.component.name" value="Content Targeting" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

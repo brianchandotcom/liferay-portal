@@ -1,6 +1,6 @@
 <definition component-name="portal-wcm">
 	<property name="portlet.plugins.includes" value="test-localized-portlet" />
-	<property name="testray.main.component.name" value="WCM" />
+	<property name="testray.main.component.name" value="Site Localization" />
 
 	<var name="pageName" value="Test Localization" />
 	<var name="portletName" value="Test Localized Portlet" />

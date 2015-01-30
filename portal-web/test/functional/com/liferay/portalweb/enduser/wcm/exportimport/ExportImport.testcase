@@ -1,5 +1,5 @@
 <definition component-name="portal-staging">
-	<property name="testray.main.component.name" value="WCM" />
+	<property name="testray.main.component.name" value="Export/Import Framework" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

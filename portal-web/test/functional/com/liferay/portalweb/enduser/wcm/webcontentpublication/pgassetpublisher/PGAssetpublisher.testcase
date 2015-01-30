@@ -1,5 +1,5 @@
 <definition component-name="portal-wcm">
-	<property name="testray.main.component.name" value="WCM" />
+	<property name="testray.main.component.name" value="Asset Publisher" />
 
 	<var name="portletName" value="Asset Publisher" />
 

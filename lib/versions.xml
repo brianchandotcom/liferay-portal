@@ -3974,14 +3974,14 @@
 			</library>
 			<library>
 				<file-name>lib/portal/xstream.jar</file-name>
-				<version>1.4.3</version>
+				<version>1.4.7</version>
 				<project-name>XStream</project-name>
 				<project-url>http://xstream.codehaus.org</project-url>
 				<licenses>
 					<license>
 						<license-name>BSD Style License</license-name>
 						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-						<copyright-notice>Copyright (c) 2003-2006, Joe Walnes. Copyright (c) 2006-2007, XStream Committers. All rights reserved.</copyright-notice>
+						<copyright-notice>Copyright (c) 2003-2006, Joe Walnes. Copyright (c) 2006-2009, 2011 XStream Committers. All rights reserved.</copyright-notice>
 					</license>
 				</licenses>
 			</library>

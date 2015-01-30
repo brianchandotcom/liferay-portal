@@ -2455,14 +2455,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private Date _endDate;
 	private final Map<String, List<ExpandoColumn>> _expandoColumnsMap =
 		new HashMap<>();
-	private Element _exportDataRootElement;
+	private transient Element _exportDataRootElement;
 	private long _groupId;
-	private Element _importDataRootElement;
-	private final Map<String, Lock> _locksMap = new HashMap<>();
-	private ManifestSummary _manifestSummary = new ManifestSummary();
-	private final Set<String> _missingReferences = new HashSet<>();
-	private Element _missingReferencesElement;
-	private List<Layout> _newLayouts;
+	private transient Element _importDataRootElement;
+	private transient final Map<String, Lock> _locksMap = new HashMap<>();
+	private transient ManifestSummary _manifestSummary = new ManifestSummary();
+	private transient final Set<String> _missingReferences = new HashSet<>();
+	private transient Element _missingReferencesElement;
+	private transient List<Layout> _newLayouts;
 	private final Map<String, Map<?, ?>> _newPrimaryKeysMaps = new HashMap<>();
 	private final Set<String> _notUniquePerLayout = new HashSet<>();
 	private long _oldPlid;
@@ -2484,10 +2484,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private long _sourceGroupId;
 	private long _sourceUserPersonalSiteGroupId;
 	private Date _startDate;
-	private UserIdStrategy _userIdStrategy;
+	private transient UserIdStrategy _userIdStrategy;
 	private long _userPersonalSiteGroupId;
-	private XStream _xStream;
-	private ZipReader _zipReader;
-	private ZipWriter _zipWriter;
+	private transient XStream _xStream;
+	private transient ZipReader _zipReader;
+	private transient ZipWriter _zipWriter;
 
 }

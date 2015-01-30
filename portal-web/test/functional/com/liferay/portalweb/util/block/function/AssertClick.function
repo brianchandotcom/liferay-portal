@@ -1,4 +1,16 @@
-<definition default="assertTextClick">
+<definition default="assertClick">
+	<command name="assertClick">
+		<if>
+			<contains string="${locator1}" substring="/input" />
+			<then>
+				<execute function="AssertClick#assertValueClickAt" />
+			</then>
+			<else>
+				<execute function="AssertClick#assertTextClickAt" />
+			</else>
+		</if>
+	</command>
+
 	<command name="assertPartialTextClickAt">
 		<execute function="AssertTextEquals#assertPartialText" />
 

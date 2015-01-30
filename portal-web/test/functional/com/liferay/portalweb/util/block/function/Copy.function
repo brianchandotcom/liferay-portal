@@ -1,4 +1,4 @@
-<definition default="textCopy">
+<definition default="copy">
 	<command name="ckEditorCopy">
 		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
@@ -17,6 +17,18 @@
 		<execute selenium="assertJavaScriptErrors" />
 
 		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="copy">
+		<if>
+			<contains string="${locator1}" substring="/input" />
+			<then>
+				<execute function="Copy#valueCopy" />
+			</then>
+			<else>
+				<execute function="Copy#textCopy" />
+			</else>
+		</if>
 	</command>
 
 	<command name="textCopy">

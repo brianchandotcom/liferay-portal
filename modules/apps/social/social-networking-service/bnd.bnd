@@ -3,7 +3,7 @@ Bundle-SymbolicName: com.liferay.social.networking.service
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.social.networking.configuration.*,\
-	com.liferay.social.networking.service.configuration.*
+	com.liferay.social.networking.service.configuration.configurator.*
 Include-Resource:\
 	classes,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\

@@ -2425,37 +2425,39 @@ public class HookHotDeployListener
 			}
 		}
 
-		if ((collidingCustomJsps != null) && !collidingCustomJsps.isEmpty()) {
-			_log.error(
-				servletContextName + " is colliding with the " +
-					"currently installed hooks");
+		if (collidingCustomJsps.isEmpty()) {
+			return;
+		}
 
-			if (_log.isDebugEnabled()) {
-				Log log = SanitizerLogWrapper.allowCRLF(_log);
+		_log.error(
+			servletContextName + " is colliding with the currently installed " +
+				"hooks");
 
-				StringBundler sb = new StringBundler(
-					collidingCustomJsps.size() * 4 + 3);
+		if (_log.isDebugEnabled()) {
+			Log log = SanitizerLogWrapper.allowCRLF(_log);
 
-				sb.append("Colliding JSP files in ");
-				sb.append(servletContextName);
+			StringBundler sb = new StringBundler(
+				collidingCustomJsps.size() * 4 + 3);
+
+			sb.append("Colliding JSP files in ");
+			sb.append(servletContextName);
+			sb.append(StringPool.NEW_LINE);
+
+			for (Map.Entry<String, String> entry :
+					collidingCustomJsps.entrySet()) {
+
+				sb.append((String)entry.getKey());
+				sb.append(" with ");
+				sb.append((String)entry.getValue());
 				sb.append(StringPool.NEW_LINE);
-
-				for (Map.Entry<String, String> entry :
-						collidingCustomJsps.entrySet()) {
-
-					sb.append((String)entry.getKey());
-					sb.append(" with ");
-					sb.append((String)entry.getValue());
-					sb.append(StringPool.NEW_LINE);
-				}
-
-				sb.setIndex(sb.index() - 1);
-
-				log.debug(sb.toString());
 			}
 
-			throw new DuplicateCustomJspException();
+			sb.setIndex(sb.index() - 1);
+
+			log.debug(sb.toString());
 		}
+
+		throw new DuplicateCustomJspException();
 	}
 
 	private static final String[] _PROPS_KEYS_EVENTS = {

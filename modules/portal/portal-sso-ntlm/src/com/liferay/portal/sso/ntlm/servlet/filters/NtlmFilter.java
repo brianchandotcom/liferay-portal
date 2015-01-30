@@ -103,7 +103,7 @@ public class NtlmFilter extends BaseFilter {
 
 	@Reference
 	public void setSingleVMPool(SingleVMPool singleVMPool) {
-		_portalCache = (PortalCache<String, byte[]>) singleVMPool.getCache(
+		_portalCache = (PortalCache<String, byte[]>)singleVMPool.getCache(
 			NtlmFilter.class.getName());
 	}
 

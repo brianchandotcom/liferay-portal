@@ -125,7 +125,7 @@ public class NtlmManager {
 			serviceAccount, servicePassword);
 
 		_netlogon = new Netlogon(
-			_netlogonConnectionManager, domainController, domainControllerName,
+			domainController, domainControllerName, _netlogonConnectionManager,
 			_ntlmServiceAccount);
 	}
 

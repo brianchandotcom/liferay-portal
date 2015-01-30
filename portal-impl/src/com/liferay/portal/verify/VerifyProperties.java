@@ -519,8 +519,7 @@ public class VerifyProperties extends VerifyProcess {
 			"ntlm.auth.enabled", "enabled", "com.liferay.portal.sso.ntlm"
 		},
 		new String[] {
-			"ntlm.auth.domain", "domain",
-			"com.liferay.portal.sso.ntlm"
+			"ntlm.auth.domain", "domain", "com.liferay.portal.sso.ntlm"
 		},
 		new String[] {
 			"ntlm.auth.domain.controller", "domain.controller",
@@ -542,7 +541,6 @@ public class VerifyProperties extends VerifyProcess {
 			"ntlm.auth.service.password", "service.password",
 			"com.liferay.portal.sso.ntlm"
 		},
-
 
 		// Polls
 

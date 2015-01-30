@@ -12,22 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.test.log;
-
-import com.liferay.portal.kernel.util.StringBundler;
+package com.liferay.arquillian.extension.internal.log;
 
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.spi.ThrowableInformation;
+
+import org.jboss.arquillian.core.api.Event;
+import org.jboss.arquillian.core.api.annotation.Inject;
 
 /**
  * @author William Newbury
  */
-public class LogAssertionAppender extends AppenderSkeleton {
-
-	public static final LogAssertionAppender INSTANCE =
-		new LogAssertionAppender();
+public class LogAssertionAppenderArquillian extends AppenderSkeleton {
 
 	@Override
 	public void close() {
@@ -43,26 +40,12 @@ public class LogAssertionAppender extends AppenderSkeleton {
 		Level level = loggingEvent.getLevel();
 
 		if (level.equals(Level.ERROR) || level.equals(Level.FATAL)) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("{level=");
-			sb.append(loggingEvent.getLevel());
-			sb.append(", loggerName=");
-			sb.append(loggingEvent.getLoggerName());
-			sb.append(", message=");
-			sb.append(loggingEvent.getMessage());
-
-			ThrowableInformation throwableInformation =
-				loggingEvent.getThrowableInformation();
-
-			LogAssertionExecuter logAssertionExecuter =
-				LogAssertionExecuterUtil.getInstance();
-
-			logAssertionExecuter.caughtFailure(
-				Thread.currentThread(),
-				new AssertionError(
-					sb.toString(), throwableInformation.getThrowable()));
+			_event.fire(
+				new LogMessageError(loggingEvent, Thread.currentThread()));
 		}
 	}
+
+	@Inject
+	private Event<LogMessageError> _event;
 
 }

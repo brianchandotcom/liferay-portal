@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -99,9 +98,9 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	public VelocityTaglibImpl(
 		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response, Template template) {
+		HttpServletResponse response, Map<String, Object> contextObjects) {
 
-		init(servletContext, request, response, template);
+		init(servletContext, request, response, contextObjects);
 	}
 
 	@Override
@@ -1169,11 +1168,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
-	public void setTemplate(Template template) {
-		_template = template;
-	}
-
-	@Override
 	public void sitesDirectory() throws Exception {
 		SitesDirectoryTag sitesDirectoryTag = new SitesDirectoryTag();
 
@@ -1244,12 +1238,12 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	protected VelocityTaglibImpl init(
 		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response, Template template) {
+		HttpServletResponse response, Map<String, Object> contextObjects) {
 
 		_servletContext = servletContext;
 		_request = request;
 		_response = response;
-		_template = template;
+		_contextObjects = contextObjects;
 
 		JspFactory jspFactory = JspFactory.getDefaultFactory();
 
@@ -1263,8 +1257,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	protected void setUp(TagSupport tagSupport) throws Exception {
 		Writer writer = null;
 
-		if (_template != null) {
-			writer = (Writer)_template.get(TemplateConstants.WRITER);
+		if (_contextObjects != null) {
+			writer = (Writer)_contextObjects.get(TemplateConstants.WRITER);
 		}
 
 		if (writer == null) {
@@ -1274,10 +1268,10 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		tagSupport.setPageContext(new PipingPageContext(_pageContext, writer));
 	}
 
+	private Map<String, Object> _contextObjects;
 	private PageContext _pageContext;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
 	private ServletContext _servletContext;
-	private Template _template;
 
 }

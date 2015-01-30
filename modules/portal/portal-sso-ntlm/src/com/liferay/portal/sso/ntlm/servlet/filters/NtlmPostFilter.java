@@ -14,6 +14,8 @@
 
 package com.liferay.portal.sso.ntlm.servlet.filters;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
@@ -23,9 +25,12 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PropsValues;
 
+import java.util.Map;
+
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,10 +40,29 @@ import jcifs.ntlmssp.Type2Message;
 
 import jcifs.util.Base64;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {
+		"servlet-context-name=", "servlet-filter-name=SSO Ntlm Post Filter",
+		"url-pattern=/*",
+	},
+	service = Filter.class
+)
 public class NtlmPostFilter extends BaseFilter {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ntlmConfiguration = Configurable.createConfigurable(
+			NtlmConfiguration.class, properties);
+	}
 
 	@Override
 	protected Log getLog() {
@@ -55,7 +79,7 @@ public class NtlmPostFilter extends BaseFilter {
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.NTLM_AUTH_ENABLED,
-				PropsValues.NTLM_AUTH_ENABLED) &&
+				_ntlmConfiguration.enabled()) &&
 			BrowserSnifferUtil.isIe(request) &&
 			request.getMethod().equals(HttpMethods.POST)) {
 
@@ -88,5 +112,7 @@ public class NtlmPostFilter extends BaseFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(NtlmPostFilter.class);
+
+	private volatile NtlmConfiguration _ntlmConfiguration;
 
 }

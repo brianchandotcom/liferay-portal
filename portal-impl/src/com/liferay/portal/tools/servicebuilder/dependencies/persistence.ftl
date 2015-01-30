@@ -19,7 +19,7 @@ import java.util.Date;
  * </p>
  *
  * @author ${author}
- * @see ${entity.name}PersistenceImpl
+ * @see ${packagePath}.service.persistence.impl.${entity.name}PersistenceImpl
  * @see ${entity.name}Util
  * @generated
  */
@@ -35,7 +35,7 @@ public interface ${entity.name}Persistence extends BasePersistence<${entity.name
 
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && !serviceBuilder.isBasePersistenceMethod(method)>
-			${serviceBuilder.getJavadocComment(method)}
+			${serviceBuilder.getJavadocComment(method, "persistence", entity.name, "")}
 
 			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
 				@Deprecated

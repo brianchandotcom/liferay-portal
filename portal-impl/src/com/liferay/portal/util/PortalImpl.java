@@ -8289,7 +8289,7 @@ public class PortalImpl implements Portal {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #notifyPortalInetSocketAddressEventListeners(
-	 *             InetSocketAddress, boolean)}
+	 *             InetSocketAddress, boolean, boolean)}
 	 */
 	@Deprecated
 	protected void notifyPortalPortEventListeners(int portalPort) {

@@ -103,6 +103,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import org.dom4j.DocumentException;
 
 /**
@@ -117,6 +119,7 @@ import org.dom4j.DocumentException;
  * @author Shuyang Zhou
  * @author James Lefeu
  * @author Miguel Pastor
+ * @author Cody Hoag
  */
 public class ServiceBuilder {
 
@@ -1219,14 +1222,20 @@ public class ServiceBuilder {
 		return idType;
 	}
 
-	public String getJavadocComment(JavaClass javaClass) {
+	public String getJavadocComment(JavaClass javaClass) throws IOException {
 		return _formatComment(
-			javaClass.getComment(), javaClass.getTags(), StringPool.BLANK);
+			javaClass.getComment(), javaClass.getTags(), StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
 	}
 
-	public String getJavadocComment(JavaMethod javaMethod) {
+	public String getJavadocComment(
+			JavaMethod javaMethod, String classType, String entityName,
+			String sessionTypeName)
+		throws IOException {
+
 		return _formatComment(
-			javaMethod.getComment(), javaMethod.getTags(), StringPool.TAB);
+			javaMethod.getComment(), javaMethod.getTags(), entityName,
+			StringPool.TAB, classType, sessionTypeName);
 	}
 
 	public String getListActualTypeArguments(Type type) {
@@ -3728,7 +3737,9 @@ public class ServiceBuilder {
 	}
 
 	private String _formatComment(
-		String comment, DocletTag[] tags, String indentation) {
+			String comment, DocletTag[] tags, String entityName,
+			String indentation, String classType, String sessionTypeName)
+		throws IOException {
 
 		StringBundler sb = new StringBundler();
 
@@ -3739,8 +3750,11 @@ public class ServiceBuilder {
 		sb.append(indentation);
 		sb.append("/**\n");
 
+		String[] imports = _getImports(entityName, sessionTypeName);
+
 		if (Validator.isNotNull(comment)) {
 			comment = comment.replaceAll("(?m)^", indentation + " * ");
+			comment = _useFullyQualifiedClassNames(comment, imports);
 
 			sb.append(comment);
 			sb.append("\n");
@@ -3752,11 +3766,40 @@ public class ServiceBuilder {
 		}
 
 		for (DocletTag tag : tags) {
+			String tagValue = tag.getValue();
+
+			tagValue = _useFullyQualifiedClassNames(tagValue, imports);
+
 			sb.append(indentation);
 			sb.append(" * @");
 			sb.append(tag.getName());
 			sb.append(" ");
-			sb.append(tag.getValue());
+
+			if (classType.equals("serviceSoap") &&
+				tagValue.startsWith(
+					"com.liferay.portal.kernel.exception.PortalException"))
+			{
+
+				String remoteValue = tagValue.replaceFirst(
+						"com.liferay.portal.kernel.exception.PortalException",
+						"RemoteException");
+
+				sb.append(remoteValue);
+			}
+			else if (classType.equals("serviceSoap") &&
+					 tagValue.startsWith(
+						"com.liferay.portal.security.auth.PrincipalException"))
+			{
+				String remoteValue = tagValue.replaceFirst(
+					"com.liferay.portal.security.auth.PrincipalException",
+					"RemoteException");
+
+				sb.append(remoteValue);
+			}
+			else {
+				sb.append(tagValue);
+			}
+
 			sb.append("\n");
 		}
 
@@ -4177,6 +4220,41 @@ public class ServiceBuilder {
 		return dimensions;
 	}
 
+	private String[] _getImports(String entityName, String sessionTypeName)
+		throws IOException {
+
+		JavaClass javaClass = null;
+		String serviceImplPath = _outputPath + "/service/impl/" + entityName;
+
+		if (sessionTypeName.equals("Local")) {
+			javaClass = _getJavaClass(
+				serviceImplPath + "LocalServiceImpl.java");
+		}
+		else {
+			File serviceImplFile = new File(
+				serviceImplPath + "ServiceImpl.java");
+
+			if (serviceImplFile.exists()) {
+				javaClass = _getJavaClass(serviceImplPath + "ServiceImpl.java");
+			}
+			else {
+				javaClass = _getJavaClass(
+					_outputPath + "/model/impl/" + entityName + "Impl.java");
+			}
+		}
+
+		JavaSource javaSource = javaClass.getSource();
+		String[] imports = javaSource.getImports();
+
+		JavaClass parentJavaClass = _getParentJavaClass(javaClass);
+		JavaSource parentJavaSource = parentJavaClass.getSource();
+		String[] parentImports = parentJavaSource.getImports();
+
+		String[] allImports = ArrayUtils.addAll(imports, parentImports);
+
+		return allImports;
+	}
+
 	private JavaClass _getJavaClass(String fileName) throws IOException {
 		int pos = fileName.indexOf(_implDir + "/");
 
@@ -4258,6 +4336,29 @@ public class ServiceBuilder {
 		}
 
 		return methods;
+	}
+
+	private JavaClass _getParentJavaClass(JavaClass javaClass)
+		throws IOException {
+
+		String parentJavaClassString = javaClass.getSuperJavaClass().toString();
+		int parentJavaClassIndex = parentJavaClassString.indexOf("com.");
+
+		String parentClassPath = parentJavaClassString.substring(
+				parentJavaClassIndex, parentJavaClassString.length());
+		parentClassPath = parentClassPath.replaceAll("\\.", "/");
+
+		int parentOutputPathIndex = _outputPath.indexOf("com/");
+		String parentOutputPath = _outputPath.substring(
+				parentOutputPathIndex, _outputPath.length());
+
+		String finalParentClassPath = _outputPath.replace(
+				parentOutputPath, parentClassPath);
+		finalParentClassPath = finalParentClassPath + ".java";
+
+		JavaClass parentJavaClass = _getJavaClass(finalParentClassPath);
+
+		return parentJavaClass;
 	}
 
 	private String _getSessionTypeName(int sessionType) {
@@ -5148,6 +5249,50 @@ public class ServiceBuilder {
 		if (updateSQLFile.exists()) {
 			_createSQLTables(updateSQLFile, createTableSQL, entity, false);
 		}
+	}
+
+	private String _useFullyQualifiedClassNames(String text, String[] imports) {
+		for (String importedClass : imports) {
+			String className = importedClass.substring(
+				importedClass.lastIndexOf(StringPool.PERIOD) + 1);
+
+			int fromIndex = 0;
+			int pos = text.indexOf(className, fromIndex);
+
+			for (; pos > -1; pos = text.indexOf(className, fromIndex))
+			{
+				String charBefore = StringPool.BLANK;
+				String charAfter = StringPool.BLANK;
+
+				if (pos > 0) {
+					charBefore = text.substring(pos - 1, pos);
+				}
+
+				int endPos = pos + className.length();
+
+				if (text.length() > endPos) {
+					charAfter = text.substring(endPos, endPos + 1);
+				}
+
+				if (!charBefore.matches("[a-zA-Z_0-9;\\.]") &&
+					!charAfter.matches("[a-zA-Z_0-9\\.]") &&
+					(!charAfter.equals(StringPool.BLANK) ||
+						(pos == 0)))
+				{
+					text = StringUtil.replaceFirst(
+						text, className, importedClass, pos);
+
+					fromIndex = pos + importedClass.length();
+				}
+
+				else
+				{
+					fromIndex = endPos;
+				}
+			}
+		}
+
+		return text;
 	}
 
 	private static final int _SESSION_TYPE_LOCAL = 1;

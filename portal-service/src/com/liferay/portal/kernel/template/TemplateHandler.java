@@ -69,9 +69,9 @@ public interface TemplateHandler {
 	 *
 	 * @param  language the template's scripting language. Acceptable values for
 	 *         the FreeMarker, Velocity, or XSL languages are {@link
-	 *         TemplateConstants.LANG_TYPE_FTL}, {@link
-	 *         TemplateConstants.LANG_TYPE_VM}, or {@link
-	 *         TemplateConstants.LANG_TYPE_XSL}, respectively.
+	 *         TemplateConstants#LANG_TYPE_FTL}, {@link
+	 *         TemplateConstants#LANG_TYPE_VM}, or {@link
+	 *         TemplateConstants#LANG_TYPE_XSL}, respectively.
 	 * @return the restricted variables that are excluded from the template's
 	 *         context
 	 */
@@ -83,9 +83,9 @@ public interface TemplateHandler {
 	 *
 	 * @param  language the template's scripting language. Acceptable values for
 	 *         the FreeMarker, Velocity, or XSL languages are {@link
-	 *         TemplateConstants.LANG_TYPE_FTL}, {@link
-	 *         TemplateConstants.LANG_TYPE_VM}, or {@link
-	 *         TemplateConstants.LANG_TYPE_XSL}, respectively.
+	 *         TemplateConstants#LANG_TYPE_FTL}, {@link
+	 *         TemplateConstants#LANG_TYPE_VM}, or {@link
+	 *         TemplateConstants#LANG_TYPE_XSL}, respectively.
 	 * @return initial template content for helping the user create a new
 	 *         template
 	 */
@@ -96,9 +96,9 @@ public interface TemplateHandler {
 	 *
 	 * @param  language the template's scripting language. Acceptable values for
 	 *         the FreeMarker, Velocity, or XSL languages are {@link
-	 *         TemplateConstants.LANG_TYPE_FTL}, {@link
-	 *         TemplateConstants.LANG_TYPE_VM}, or {@link
-	 *         TemplateConstants.LANG_TYPE_XSL}, respectively.
+	 *         TemplateConstants#LANG_TYPE_FTL}, {@link
+	 *         TemplateConstants#LANG_TYPE_VM}, or {@link
+	 *         TemplateConstants#LANG_TYPE_XSL}, respectively.
 	 * @return the path to the template's help content
 	 */
 	public String getTemplatesHelpPath(String language);
@@ -128,9 +128,9 @@ public interface TemplateHandler {
 	 *         primary key of the structure associated to the template.
 	 * @param  language the template's scripting language. Acceptable values for
 	 *         the FreeMarker, Velocity, or XSL languages are {@link
-	 *         TemplateConstants.LANG_TYPE_FTL}, {@link
-	 *         TemplateConstants.LANG_TYPE_VM}, or {@link
-	 *         TemplateConstants.LANG_TYPE_XSL}, respectively.
+	 *         TemplateConstants#LANG_TYPE_FTL}, {@link
+	 *         TemplateConstants#LANG_TYPE_VM}, or {@link
+	 *         TemplateConstants#LANG_TYPE_XSL}, respectively.
 	 * @param  locale the locale of the variable groups to get
 	 * @return the template's map of script variable groups for which hints are
 	 *         displayed in the template editor palette

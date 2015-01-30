@@ -37,8 +37,11 @@ import jcifs.util.Encdec;
 public class NtlmManager {
 
 	public NtlmManager(
-		String domain, String domainController, String domainControllerName,
+		NetlogonConnectionManager netlogonConnectionManager, String domain,
+		String domainController, String domainControllerName,
 		String serviceAccount, String servicePassword) {
+
+		_netlogonConnectionManager = netlogonConnectionManager;
 
 		setConfiguration(
 			domain, domainController, domainControllerName, serviceAccount,
@@ -121,10 +124,9 @@ public class NtlmManager {
 		_ntlmServiceAccount = new NtlmServiceAccount(
 			serviceAccount, servicePassword);
 
-		_netlogon = new Netlogon();
-
-		_netlogon.setConfiguration(
-			domainController, domainControllerName, _ntlmServiceAccount);
+		_netlogon = new Netlogon(
+			_netlogonConnectionManager, domainController, domainControllerName,
+			_ntlmServiceAccount);
 	}
 
 	protected byte[] getAVPairBytes(int avId, String value)
@@ -164,6 +166,7 @@ public class NtlmManager {
 	private String _domainController;
 	private String _domainControllerName;
 	private Netlogon _netlogon;
+	private final NetlogonConnectionManager _netlogonConnectionManager;
 	private NtlmServiceAccount _ntlmServiceAccount;
 
 }

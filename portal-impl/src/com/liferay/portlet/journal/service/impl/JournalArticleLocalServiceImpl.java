@@ -489,7 +489,7 @@ public class JournalArticleLocalServiceImpl
 	 *         long, long, long, String, boolean, double, Map, Map, String,
 	 *         String, String, String, int, int, int, int, int, int, int, int,
 	 *         int, int, boolean, int, int, int, int, int, boolean, boolean,
-	 *         boolean, String, File, Map, String, ServiceContext) description.
+	 *         boolean, String, File, Map, String, ServiceContext)} description.
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -4762,7 +4762,7 @@ public class JournalArticleLocalServiceImpl
 	 *         long, long, long, String, boolean, double, Map, Map, String,
 	 *         String, String, String, int, int, int, int, int, int, int, int,
 	 *         int, int, boolean, int, int, int, int, int, boolean, boolean,
-	 *         boolean, String, File, Map, String, ServiceContext) description.
+	 *         boolean, String, File, Map, String, ServiceContext)} description.
 	 * @param  layoutUuid the unique string identifying the web content
 	 *         article's display page
 	 * @param  serviceContext the service context to be applied. Can set the
@@ -4901,7 +4901,7 @@ public class JournalArticleLocalServiceImpl
 	 *         long, long, long, String, boolean, double, Map, Map, String,
 	 *         String, String, String, int, int, int, int, int, int, int, int,
 	 *         int, int, boolean, int, int, int, int, int, boolean, boolean,
-	 *         boolean, String, File, Map, String, ServiceContext) description.
+	 *         boolean, String, File, Map, String, ServiceContext)} description.
 	 * @param  ddmStructureKey the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
 	 *         <code>null</code> otherwise
@@ -5208,7 +5208,7 @@ public class JournalArticleLocalServiceImpl
 	 *         long, long, long, String, boolean, double, Map, Map, String,
 	 *         String, String, String, int, int, int, int, int, int, int, int,
 	 *         int, int, boolean, int, int, int, int, int, boolean, boolean,
-	 *         boolean, String, File, Map, String, ServiceContext) description.
+	 *         boolean, String, File, Map, String, ServiceContext)} description.
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, expando bridge attributes, asset category IDs,
 	 *         asset tag names, asset link entry IDs, workflow actions, the and
@@ -5270,7 +5270,7 @@ public class JournalArticleLocalServiceImpl
 	 *         long, long, long, String, boolean, double, Map, Map, String,
 	 *         String, String, String, int, int, int, int, int, int, int, int,
 	 *         int, int, boolean, int, int, int, int, int, boolean, boolean,
-	 *         boolean, String, File, Map, String, ServiceContext) description.
+	 *         boolean, String, File, Map, String, ServiceContext)} description.
 	 * @param  images the web content's images
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date and "urlTitle" attribute for the web content
@@ -5478,7 +5478,7 @@ public class JournalArticleLocalServiceImpl
 	 *         long, long, long, String, boolean, double, Map, Map, String,
 	 *         String, String, String, int, int, int, int, int, int, int, int,
 	 *         int, int, boolean, int, int, int, int, int, boolean, boolean,
-	 *         boolean, String, File, Map, String, ServiceContext) description.
+	 *         boolean, String, File, Map, String, ServiceContext)} description.
 	 * @return the updated web content article
 	 * @throws PortalException if a matching web content article could not be
 	 *         found

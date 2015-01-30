@@ -87,9 +87,6 @@ import com.liferay.portlet.expando.service.ExpandoRowLocalService;
 import com.liferay.portlet.expando.service.ExpandoTableLocalService;
 import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 import com.liferay.portlet.journal.util.JournalContentUtil;
-import com.liferay.taglib.util.VelocityTaglibImpl;
-
-import java.lang.reflect.Method;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -686,20 +683,6 @@ public class TemplateContextHelper {
 		// Validator
 
 		variables.put("validator", Validator_IW.getInstance());
-
-		// VelocityTaglib methods
-
-		try {
-			Class<?> clazz = VelocityTaglibImpl.class;
-
-			Method method = clazz.getMethod(
-				"layoutIcon", new Class[] {Layout.class});
-
-			variables.put("velocityTaglib_layoutIcon", method);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 
 		// Web server servlet token
 

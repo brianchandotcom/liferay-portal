@@ -265,8 +265,6 @@ public class StagingImplTest {
 
 		// Create content
 
-		AssetCategory assetCategory = addAssetCategory(
-			_group.getGroupId(), "Title", "content");
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), "Title", "content");
 
@@ -308,13 +306,6 @@ public class StagingImplTest {
 
 		// Update content in staging
 
-		AssetCategory stagingAssetCategory =
-			AssetCategoryLocalServiceUtil.getCategory(
-				assetCategory.getUuid(), stagingGroup.getGroupId());
-
-		stagingAssetCategory = updateAssetCategory(
-			stagingAssetCategory, "new name");
-
 		JournalArticle stagingJournalArticle =
 			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
 				stagingGroup.getGroupId(), journalArticle.getUrlTitle());
@@ -331,25 +322,8 @@ public class StagingImplTest {
 
 		// Retrieve content from live after publishing
 
-		assetCategory = AssetCategoryLocalServiceUtil.getCategory(
-			assetCategory.getUuid(), _group.getGroupId());
 		journalArticle = JournalArticleLocalServiceUtil.getArticle(
 			_group.getGroupId(), journalArticle.getArticleId());
-
-		if (stageAssetCategories) {
-			for (Locale locale : _locales) {
-				Assert.assertEquals(
-					assetCategory.getTitle(locale),
-					stagingAssetCategory.getTitle(locale));
-			}
-		}
-		else {
-			for (Locale locale : _locales) {
-				Assert.assertNotEquals(
-					assetCategory.getTitle(locale),
-					stagingAssetCategory.getTitle(locale));
-			}
-		}
 
 		if (stageJournal) {
 			for (Locale locale : _locales) {

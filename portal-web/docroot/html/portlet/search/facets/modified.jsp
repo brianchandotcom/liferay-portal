@@ -136,8 +136,8 @@ if (fieldParamSelection.equals("0")) {
 			}
 			%>
 
-			<div class="<%= !fieldParamSelection.equals(String.valueOf(index + 1)) ? "hide" : StringPool.BLANK %> modified-custom-range" id="<%= randomNamespace %>custom-range">
-				<div id="<%= randomNamespace %>custom-range-from">
+			<div class="<%= !fieldParamSelection.equals(String.valueOf(index + 1)) ? "hide" : StringPool.BLANK %> modified-custom-range" id="<%= randomNamespace %>customRange">
+				<div id="<%= randomNamespace %>customRangeFrom">
 					<aui:field-wrapper label="from">
 						<liferay-ui:input-date
 							dayParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "dayFrom" %>'
@@ -153,7 +153,7 @@ if (fieldParamSelection.equals("0")) {
 					</aui:field-wrapper>
 				</div>
 
-				<div id="<%= randomNamespace %>custom-range-to">
+				<div id="<%= randomNamespace %>customRangeTo">
 					<aui:field-wrapper label="to">
 						<liferay-ui:input-date
 							dayParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "dayTo" %>'
@@ -186,7 +186,6 @@ if (fieldParamSelection.equals("0")) {
 	%>
 
 	<aui:script use="liferay-token-list">
-
 		<%
 		String tokenLabel = modifiedLabel;
 
@@ -255,7 +254,7 @@ if (fieldParamSelection.equals("0")) {
 	var searchButton = A.one('#<portlet:namespace />searchCustomRangeButton');
 
 	var preventKeyboardDateChange = function(event) {
-		if (event.keyCode !== 9) {
+		if (!event.isKey('TAB')) {
 			event.preventDefault();
 		}
 	};
@@ -318,7 +317,7 @@ if (fieldParamSelection.equals("0")) {
 		function(event) {
 			event.halt();
 
-			A.one('#<%= randomNamespace + "custom-range" %>').toggle();
+			A.one('#<%= randomNamespace + "customRange" %>').toggle();
 		}
 	);
 </aui:script>

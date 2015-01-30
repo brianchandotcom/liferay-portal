@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.sso.ntlm.NetlogonConnectionManager;
 import com.liferay.portal.sso.ntlm.NtlmManager;
 import com.liferay.portal.sso.ntlm.NtlmUserAccount;
 import com.liferay.portal.sso.ntlm.configuration.NtlmConfiguration;
@@ -94,8 +95,15 @@ public class NtlmFilter extends BaseFilter {
 	}
 
 	@Reference
+	public void setNetlogonConnectionManager(
+		NetlogonConnectionManager netlogonConnectionManager) {
+
+		_netlogonConnectionManager = netlogonConnectionManager;
+	}
+
+	@Reference
 	public void setSingleVMPool(SingleVMPool singleVMPool) {
-		_portalCache = (PortalCache<String, byte[]>)singleVMPool.getCache(
+		_portalCache = (PortalCache<String, byte[]>) singleVMPool.getCache(
 			NtlmFilter.class.getName());
 	}
 
@@ -141,8 +149,8 @@ public class NtlmFilter extends BaseFilter {
 
 		if (ntlmManager == null) {
 			ntlmManager = new NtlmManager(
-				domain, domainController, domainControllerName, serviceAccount,
-				servicePassword);
+				_netlogonConnectionManager, domain, domainController,
+				domainControllerName, serviceAccount, servicePassword);
 
 			_ntlmManagers.put(companyId, ntlmManager);
 		}
@@ -307,6 +315,7 @@ public class NtlmFilter extends BaseFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(NtlmFilter.class);
 
+	private NetlogonConnectionManager _netlogonConnectionManager;
 	private volatile NtlmConfiguration _ntlmConfiguration;
 	private final Map<Long, NtlmManager> _ntlmManagers =
 		new ConcurrentHashMap<>();

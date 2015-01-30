@@ -35,8 +35,8 @@ import com.liferay.portlet.asset.VocabularyNameException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
-import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
+import com.liferay.portlet.asset.service.AssetCategoryService;
+import com.liferay.portlet.asset.service.AssetVocabularyService;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.io.IOException;
@@ -98,7 +98,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 				ParamUtil.getString(actionRequest, "deleteCategoryIds"), 0L);
 		}
 
-		AssetCategoryServiceUtil.deleteCategories(deleteCategoryIds);
+		_assetCategoryService.deleteCategories(deleteCategoryIds);
 	}
 
 	public void deleteVocabulary(
@@ -118,7 +118,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		}
 
 		for (long deleteVocabularyId : deleteVocabularyIds) {
-			AssetVocabularyServiceUtil.deleteVocabulary(deleteVocabularyId);
+			_assetVocabularyService.deleteVocabulary(deleteVocabularyId);
 		}
 	}
 
@@ -144,7 +144,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 			// Add category
 
-			AssetCategoryServiceUtil.addCategory(
+			_assetCategoryService.addCategory(
 				parentCategoryId, titleMap, descriptionMap, vocabularyId,
 				categoryProperties, serviceContext);
 		}
@@ -152,7 +152,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 			// Update category
 
-			AssetCategoryServiceUtil.updateCategory(
+			_assetCategoryService.updateCategory(
 				categoryId, parentCategoryId, titleMap, descriptionMap,
 				vocabularyId, categoryProperties, serviceContext);
 		}
@@ -176,7 +176,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 			// Add vocabulary
 
-			AssetVocabularyServiceUtil.addVocabulary(
+			_assetVocabularyService.addVocabulary(
 				StringPool.BLANK, titleMap, descriptionMap,
 				getSettings(actionRequest), serviceContext);
 		}
@@ -184,7 +184,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 			// Update vocabulary
 
-			AssetVocabularyServiceUtil.updateVocabulary(
+			_assetVocabularyService.updateVocabulary(
 				vocabularyId, StringPool.BLANK, titleMap, descriptionMap,
 				getSettings(actionRequest), serviceContext);
 		}
@@ -203,7 +203,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			AssetCategory.class.getName(), actionRequest);
 
-		AssetCategoryServiceUtil.moveCategory(
+		_assetCategoryService.moveCategory(
 			categoryId, parentCategoryId, vocabularyId, serviceContext);
 	}
 
@@ -311,5 +311,34 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 	protected void setAssetCategoriesAdminUpgrade(
 		AssetCategoriesAdminWebUpgrade assetCategoriesAdminWebUpgrade) {
 	}
+
+	@Reference
+	protected void setAssetCategoryService(
+		AssetCategoryService assetCategoryService) {
+
+		_assetCategoryService = assetCategoryService;
+	}
+
+	@Reference
+	protected void setAssetVocabularyService(
+		AssetVocabularyService assetVocabularyService) {
+
+		_assetVocabularyService = assetVocabularyService;
+	}
+
+	protected void unsetAssetCategoryService(
+		AssetCategoryService assetCategoryService) {
+
+		_assetCategoryService = null;
+	}
+
+	protected void unsetAssetVocabularyService(
+		AssetVocabularyService assetVocabularyService) {
+
+		_assetVocabularyService = null;
+	}
+
+	private AssetCategoryService _assetCategoryService;
+	private AssetVocabularyService _assetVocabularyService;
 
 }

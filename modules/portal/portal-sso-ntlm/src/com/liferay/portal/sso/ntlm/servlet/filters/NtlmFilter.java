@@ -14,8 +14,10 @@
 
 package com.liferay.portal.sso.ntlm.servlet.filters;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,20 +28,18 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.sso.ntlm.NtlmManager;
 import com.liferay.portal.sso.ntlm.NtlmUserAccount;
+import com.liferay.portal.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -47,6 +47,11 @@ import javax.servlet.http.HttpSession;
 import jcifs.Config;
 
 import jcifs.util.Base64;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -56,26 +61,15 @@ import jcifs.util.Base64;
  * @author Marcellus Tavares
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {
+		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
+		"servlet-filter-name=SSO Ntlm Filter", "url-pattern=/c/portal/login",
+	},
+	service = Filter.class
+)
 public class NtlmFilter extends BaseFilter {
-
-	@Override
-	public void init(FilterConfig filterConfig) {
-		super.init(filterConfig);
-
-		try {
-			Properties properties = PropsUtil.getProperties("jcifs.", false);
-
-			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-				String key = (String)entry.getKey();
-				String value = (String)entry.getValue();
-
-				Config.setProperty(key, value);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
 
 	@Override
 	public boolean isFilterEnabled(
@@ -87,7 +81,7 @@ public class NtlmFilter extends BaseFilter {
 			if (BrowserSnifferUtil.isIe(request) &&
 				PrefsPropsUtil.getBoolean(
 					companyId, PropsKeys.NTLM_AUTH_ENABLED,
-					PropsValues.NTLM_AUTH_ENABLED)) {
+					_ntlmConfiguration.enabled())) {
 
 				return true;
 			}
@@ -99,6 +93,29 @@ public class NtlmFilter extends BaseFilter {
 		return false;
 	}
 
+	@Reference
+	public void setSingleVMPool(SingleVMPool singleVMPool) {
+		_portalCache = (PortalCache<String, byte[]>)singleVMPool.getCache(
+			NtlmFilter.class.getName());
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ntlmConfiguration = Configurable.createConfigurable(
+			NtlmConfiguration.class, properties);
+
+		for (Map.Entry<String, Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.contains("jcifs.")) {
+				String value = (String)entry.getValue();
+
+				Config.setProperty(key, value);
+			}
+		}
+	}
+
 	@Override
 	protected Log getLog() {
 		return _log;
@@ -106,19 +123,19 @@ public class NtlmFilter extends BaseFilter {
 
 	protected NtlmManager getNtlmManager(long companyId) {
 		String domain = PrefsPropsUtil.getString(
-			companyId, PropsKeys.NTLM_DOMAIN, PropsValues.NTLM_DOMAIN);
+			companyId, PropsKeys.NTLM_DOMAIN, _ntlmConfiguration.domain());
 		String domainController = PrefsPropsUtil.getString(
 			companyId, PropsKeys.NTLM_DOMAIN_CONTROLLER,
-			PropsValues.NTLM_DOMAIN_CONTROLLER);
+			_ntlmConfiguration.domainController());
 		String domainControllerName = PrefsPropsUtil.getString(
 			companyId, PropsKeys.NTLM_DOMAIN_CONTROLLER_NAME,
-			PropsValues.NTLM_DOMAIN_CONTROLLER_NAME);
+			_ntlmConfiguration.domainControllerName());
 		String serviceAccount = PrefsPropsUtil.getString(
 			companyId, PropsKeys.NTLM_SERVICE_ACCOUNT,
-			PropsValues.NTLM_SERVICE_ACCOUNT);
+			_ntlmConfiguration.serviceAccount());
 		String servicePassword = PrefsPropsUtil.getString(
 			companyId, PropsKeys.NTLM_SERVICE_PASSWORD,
-			PropsValues.NTLM_SERVICE_PASSWORD);
+			_ntlmConfiguration.servicePassword());
 
 		NtlmManager ntlmManager = _ntlmManagers.get(companyId);
 
@@ -290,9 +307,9 @@ public class NtlmFilter extends BaseFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(NtlmFilter.class);
 
+	private volatile NtlmConfiguration _ntlmConfiguration;
 	private final Map<Long, NtlmManager> _ntlmManagers =
 		new ConcurrentHashMap<>();
-	private final PortalCache<String, byte[]> _portalCache =
-		SingleVMPoolUtil.getCache(NtlmFilter.class.getName());
+	private PortalCache<String, byte[]> _portalCache;
 
 }

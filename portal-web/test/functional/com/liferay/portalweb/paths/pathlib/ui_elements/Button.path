@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBMIT_FOR_PUBLICATION</td>
+	<td>//button[contains(.,'Submit for Publication')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>
@@ -71,6 +76,46 @@
 <tr>
 	<td>UPDATE_ASSOCIATIONS</td>
 	<td>//button[contains(.,'Update Associations')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT</td>
+	<td>//a[contains(@id,'edit') and contains(@class,'btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL</td>
+	<td>//a[contains(@id,'cancel') and contains(@class,'btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_HISTORY</td>
+	<td>//button[contains(.,'View History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY</td>
+	<td>//button[contains(.,'Copy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE</td>
+	<td>//button[contains(.,'Close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_AND_CONTINUE</td>
+	<td>//button[contains(.,'Save and Continue')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEND</td>
+	<td>//button[contains(.,'Send')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OK</td>
+	<td>//button[.='OK']</td>
 	<td></td>
 </tr>
 </tbody>

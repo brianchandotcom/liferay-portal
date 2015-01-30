@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Translation</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Translation</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Translation</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD</td>
+	<td>//div[contains(@class,'translation-manager')]/a[@title='Add Translation']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_LANGUAGE</td>
+	<td>//li[contains(@class,'translation-item')]/a[contains(.,'${key_localizedLanguage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVAILABLE_TRANSLATIONS_LABEL</td>
+	<td>//label[contains(.,'Available Translations:')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVAILABLE_TRANSLATION</td>
+	<td>//div[contains(@class,'available-translations')]/span[contains(.,'${key_localizedLanguage}')]/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

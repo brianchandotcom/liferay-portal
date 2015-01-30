@@ -39,8 +39,38 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_1</td>
+	<td>xPath=(//div[@class='alert alert-info'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_2</td>
+	<td>xPath=(//div[@class='alert alert-info'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_3</td>
+	<td>xPath=(//div[@class='alert alert-info'])[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR</td>
+	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_2</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[2]</td>
 	<td></td>
 </tr>
 </tbody>

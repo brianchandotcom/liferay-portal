@@ -1,4 +1,4 @@
-<definition default="isNotText">
+<definition default="isTextNotEqual">
 	<command name="isNotPartialText">
 		<execute selenium="waitForElementPresent" />
 
@@ -15,5 +15,17 @@
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="isNotValue" />
+	</command>
+
+	<command name="isTextNotEqual">
+		<if>
+			<contains string="${locator1}" substring="/input" />
+			<then>
+				<execute function="IsTextNotEqual#isNotValue" />
+			</then>
+			<else>
+				<execute function="IsTextNotEqual#isNotText" />
+			</else>
+		</if>
 	</command>
 </definition>

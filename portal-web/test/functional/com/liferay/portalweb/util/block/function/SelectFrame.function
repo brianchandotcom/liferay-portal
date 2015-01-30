@@ -1,14 +1,22 @@
 <definition default="selectFrame">
 	<command name="selectFrame">
-		<execute selenium="waitForVisible" />
+		<if>
+			<contains string="${locator1}" substring="/iframe" />
+			<then>
+				<execute selenium="waitForVisible" />
 
-		<execute selenium="mouseOver" />
+				<execute selenium="mouseOver" />
 
-		<execute selenium="selectFrame" />
+				<execute selenium="selectFrame" />
 
-		<execute selenium="assertJavaScriptErrors" />
+				<execute selenium="assertJavaScriptErrors" />
 
-		<execute selenium="assertLiferayErrors" />
+				<execute selenium="assertLiferayErrors" />
+			</then>
+			<else>
+				<execute function="SelectFrame#selectFrameTop" />
+			</else>
+		</if>
 	</command>
 
 	<command name="selectFrameTop">

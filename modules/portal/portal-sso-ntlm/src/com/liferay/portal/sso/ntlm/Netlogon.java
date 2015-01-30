@@ -39,8 +39,8 @@ import jcifs.smb.SmbException;
 public class Netlogon {
 
 	public Netlogon(
-		NetlogonConnectionManager netlogonConnectionManager,
 		String domainController, String domainControllerName,
+		NetlogonConnectionManager netlogonConnectionManager,
 		NtlmServiceAccount ntlmServiceAccount) {
 
 		_domainController = domainController;

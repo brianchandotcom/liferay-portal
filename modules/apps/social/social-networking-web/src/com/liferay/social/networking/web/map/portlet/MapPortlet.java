@@ -18,7 +18,7 @@ import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.util.Portal;
 import com.liferay.social.networking.web.constants.WebKeys;
-import com.liferay.social.networking.web.util.IPGeocoderHelper;
+import com.liferay.social.networking.web.ip.geocoder.IPGeocoderHelper;
 
 import java.io.IOException;
 

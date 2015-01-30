@@ -23,7 +23,7 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("view.js
 
 List results = searchContainer.getResults();
 
-DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(igRequestHelper);
 %>
 
 <c:choose>
@@ -136,7 +136,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 						</a>
 					</div>
 
-					<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
+					<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 						<div class="hide" id="<portlet:namespace />buttonsContainer_<%= thumbnailId %>">
 							<div class="buttons-container float-container" id="<portlet:namespace />buttons_<%= thumbnailId %>">
 								<%@ include file="/html/portlet/image_gallery_display/image_action.jspf" %>
@@ -281,7 +281,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 		var imageGallery = new A.ImageViewer(
 			{
 				after: {
-					<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
+					<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 						load: function(event) {
 							var instance = this;
 

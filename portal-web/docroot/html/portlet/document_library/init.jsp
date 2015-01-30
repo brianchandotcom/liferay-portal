@@ -43,13 +43,13 @@ page import="com.liferay.portlet.documentlibrary.RepositoryNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException" %><%@
 page import="com.liferay.portlet.documentlibrary.SourceFileNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.action.EditFileEntryAction" %><%@
-page import="com.liferay.portlet.documentlibrary.display.context.DLActionsDisplayContext" %><%@
-page import="com.liferay.portlet.documentlibrary.display.context.DLConfigurationDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.display.context.DLEditFileEntryDisplayContext" %><%@
-page import="com.liferay.portlet.documentlibrary.display.context.DLEntryListDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.display.context.DLFilePicker" %><%@
 page import="com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper" %><%@
+page import="com.liferay.portlet.documentlibrary.display.context.logic.DLVisualizationHelper" %><%@
+page import="com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants" %><%@
@@ -87,17 +87,14 @@ page import="com.liferay.portlet.dynamicdatamapping.util.comparator.StructureStr
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
-String portletResource = ParamUtil.getString(request, "portletResource");
+DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
 
-String portletId = portletDisplay.getId();
+String portletResource = dlRequestHelper.getPortletResource();
+String portletId = dlRequestHelper.getResourcePortletId();
+portletName = dlRequestHelper.getResourcePortletName();
 
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	portletId = portletResource;
-	portletName = portletResource;
-}
-
-DLPortletInstanceSettings dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(layout, portletId);
-DLSettings dlSettings = DLSettings.getInstance(scopeGroupId);
+DLPortletInstanceSettings dlPortletInstanceSettings = dlRequestHelper.getDLPortletInstanceSettings();
+DLSettings dlSettings = dlRequestHelper.getDLSettings();
 
 long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 String rootFolderName = StringPool.BLANK;

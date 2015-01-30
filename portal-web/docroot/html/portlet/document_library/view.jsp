@@ -17,9 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(request, dlPortletInstanceSettings);
-
-DLActionsDisplayContext dlActionsDisplayContext = dlEntriesListDisplayContext.getDLActionsDisplayContext();
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
 String strutsAction = ParamUtil.getString(request, "struts_action");
 
@@ -109,7 +107,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 			<liferay-util:include page="/html/portlet/document_library/view_folders.jsp" />
 		</aui:col>
 
-		<aui:col cssClass="context-pane" width="<%= dlActionsDisplayContext.isFolderMenuVisible() ? 75 : 100 %>">
+		<aui:col cssClass="context-pane" width="<%= dlPortletInstanceSettingsHelper.isFolderMenuVisible() ? 75 : 100 %>">
 			<liferay-ui:app-view-toolbar
 				includeDisplayStyle="<%= true %>"
 				includeSelectAll="<%= showSelectAll %>"
@@ -179,7 +177,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 <aui:script use="liferay-document-library">
 
 	<%
-	String[] entryColumns = dlEntriesListDisplayContext.getEntryColumns();
+	String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
 	String[] escapedEntryColumns = new String[entryColumns.length];
 
 	for (int i = 0; i < entryColumns.length; i++) {

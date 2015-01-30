@@ -42,7 +42,7 @@ String tagName = ParamUtil.getString(request, "tag");
 
 boolean useAssetEntryQuery = (categoryId > 0) || Validator.isNotNull(tagName);
 
-DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(request, dlPortletInstanceSettings);
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 
 String displayStyle = GetterUtil.getString((String)request.getAttribute("view.jsp-displayStyle"));
 
@@ -358,7 +358,7 @@ dlSearchContainer.setResults(results);
 		<c:otherwise>
 
 			<%
-			String[] entryColumns = dlEntriesListDisplayContext.getEntryColumns();
+			String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
 			%>
 
 			<liferay-ui:search-container

@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>DocumentLibraryEditDocument</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DocumentLibraryEditDocument</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>DocumentLibraryEditDocument</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>DocumentLibrarySelectDocument</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_FIELD</td>
+	<td>//input[contains(@id,'file')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

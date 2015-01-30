@@ -14,15 +14,9 @@
 
 package com.liferay.portal.test;
 
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.test.BaseTestRule;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.model.ModelListenerRegistrationUtil;
-import com.liferay.portal.tools.DBUpgrader;
-
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import com.liferay.portal.test.util.InitPersistenceTest;
+import com.liferay.portal.test.util.InitPersistenceTestImpl;
 
 import org.junit.runner.Description;
 
@@ -36,55 +30,18 @@ public class PersistenceTestRule extends BaseTestRule<Object, Object> {
 
 	@Override
 	protected void afterMethod(Description description, Object modelListeners) {
-		Object instance = ReflectionTestUtil.getFieldValue(
-			ModelListenerRegistrationUtil.class, "_instance");
-
-		CacheRegistryUtil.setActive(true);
-
-		ReflectionTestUtil.setFieldValue(
-			instance, "_modelListeners", modelListeners);
+		_initPersistenceTest.release(modelListeners);
 	}
 
 	@Override
 	protected Object beforeMethod(Description description) {
-		initialize();
-
-		Object instance = ReflectionTestUtil.getFieldValue(
-			ModelListenerRegistrationUtil.class, "_instance");
-
-		Object modelListeners = ReflectionTestUtil.getFieldValue(
-			instance, "_modelListeners");
-
-		ReflectionTestUtil.setFieldValue(
-			instance, "_modelListeners",
-			new ConcurrentHashMap<Class<?>, List<ModelListener<?>>>());
-
-		CacheRegistryUtil.setActive(false);
-
-		return modelListeners;
-	}
-
-	private static void initialize() {
-		if (_initialized) {
-			return;
-		}
-
-		try {
-			DBUpgrader.upgrade();
-		}
-		catch (Throwable t) {
-			throw new ExceptionInInitializerError(t);
-		}
-		finally {
-			CacheRegistryUtil.setActive(true);
-		}
-
-		_initialized = true;
+		return _initPersistenceTest.init();
 	}
 
 	private PersistenceTestRule() {
 	}
 
-	private static boolean _initialized;
+	private static final InitPersistenceTest _initPersistenceTest =
+		new InitPersistenceTestImpl();
 
 }

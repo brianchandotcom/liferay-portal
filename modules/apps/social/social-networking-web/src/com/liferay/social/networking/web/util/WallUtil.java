@@ -24,7 +24,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.social.networking.configuration.SocialServiceNetworkingConfigurationValues;
+import com.liferay.social.networking.configuration.SocialNetworkingServiceConfigurationValues;
 import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 
 /**
@@ -36,7 +36,7 @@ public class WallUtil {
 		throws PortalException {
 
 		String wallLayoutFriendlyURL =
-			SocialServiceNetworkingConfigurationValues.WALL_LAYOUT_FRIENDLY_URL;
+			SocialNetworkingServiceConfigurationValues.WALL_LAYOUT_FRIENDLY_URL;
 
 		if (Validator.isNull(wallLayoutFriendlyURL)) {
 			Group group = user.getGroup();

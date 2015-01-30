@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 /**
  * @author Adolfo Pérez
  */
-public class SocialServiceNetworkingConfigurationUtil {
+public class SocialNetworkingServiceConfigurationUtil {
 
 	public static String get(String key) {
 		return _configuration.get(key);
@@ -28,7 +28,7 @@ public class SocialServiceNetworkingConfigurationUtil {
 
 	private static final Configuration _configuration =
 		ConfigurationFactoryUtil.getConfiguration(
-			SocialServiceNetworkingConfigurationUtil.class.getClassLoader(),
+			SocialNetworkingServiceConfigurationUtil.class.getClassLoader(),
 			"portlet");
 
 }

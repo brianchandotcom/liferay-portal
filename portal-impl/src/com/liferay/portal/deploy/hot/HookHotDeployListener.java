@@ -748,17 +748,16 @@ public class HookHotDeployListener
 		return new File(filePath);
 	}
 
-	protected String getPortalJspName(String customJsp, String customJspDir) {
+	protected String getPortalJsp(String customJsp, String customJspDir) {
 		if (Validator.isNull(customJsp) || Validator.isNull(customJspDir)) {
 			return null;
 		}
 
-		int customJspDirIndex = customJsp.indexOf(customJspDir);
+		int pos = customJsp.indexOf(customJspDir);
 
-		String portalJspName = customJsp.substring(
-			customJspDirIndex + customJspDir.length());
+		String portalJsp = customJsp.substring(pos + customJspDir.length());
 
-		return portalJspName;
+		return portalJsp;
 	}
 
 	protected Map<Object, ServiceRegistration<?>> getServiceRegistrations(
@@ -936,7 +935,7 @@ public class HookHotDeployListener
 		String portalWebDir = PortalUtil.getPortalWebDir();
 
 		for (String customJsp : customJsps) {
-			String portalJsp = getPortalJspName(customJsp, customJspDir);
+			String portalJsp = getPortalJsp(customJsp, customJspDir);
 
 			if (customJspGlobal) {
 				File portalJspFile = new File(portalWebDir + portalJsp);
@@ -2399,7 +2398,7 @@ public class HookHotDeployListener
 		Set<String> customJsps = new HashSet<>();
 
 		for (String customJsp : customJspBag.getCustomJsps()) {
-			String portalJsp = getPortalJspName(customJsp, customJspDir);
+			String portalJsp = getPortalJsp(customJsp, customJspDir);
 
 			customJsps.add(portalJsp);
 		}
@@ -2422,7 +2421,7 @@ public class HookHotDeployListener
 				currentCustomJspBag.getCustomJsps();
 
 			for (String currentCustomJsp : currentCustomJsps) {
-				String currentPortalJsp = getPortalJspName(
+				String currentPortalJsp = getPortalJsp(
 					currentCustomJsp, currentCustomJspDir);
 
 				if (customJsps.contains(currentPortalJsp)) {

@@ -302,8 +302,7 @@ public class LicenseUtil {
 				catch (Exception e) {
 					_log.error(e, e);
 
-					InetAddress inetAddress =
-						clusterNode.getPortalInetAddress();
+					InetAddress inetAddress = clusterNode.getBindInetAddress();
 
 					String message =
 						"Error contacting " + inetAddress.getHostName();

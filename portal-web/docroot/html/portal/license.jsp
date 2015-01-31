@@ -464,7 +464,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 				sendClusterRequest(
 					'serverInfo',
 					'<%= clusterNode.getClusterNodeId() %>',
-					'<%= clusterNode.getPortalInetAddress().getHostAddress() %>',
+					'<%= clusterNode.getBindInetAddress().getHostAddress() %>',
 					'<%= clusterNode.getPortalPort() %>',
 					function(message) {
 						var A = AUI();
@@ -482,7 +482,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 				sendClusterRequest(
 					'licenseProperties',
 					'<%= clusterNode.getClusterNodeId() %>',
-					'<%= clusterNode.getPortalInetAddress().getHostAddress() %>',
+					'<%= clusterNode.getBindInetAddress().getHostAddress() %>',
 					'<%= clusterNode.getPortalPort() %>',
 					function(message) {
 						var A = AUI();

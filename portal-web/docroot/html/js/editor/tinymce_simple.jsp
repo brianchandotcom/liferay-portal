@@ -175,16 +175,12 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 					%>
 
 						setup: function(editor) {
-							/*
-							 * LPS-52626
-							 *
-							 * TinyMCE 'change' event does not fire until editor looses focus.
-							 * YUI 'input' event does not work in IE in an iframe.
-							 * jQuery does not normalize 'input' event.
-							 */
-							editor.on('keyup', function() {
-								<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getHTML());
-							});
+							editor.on(
+								'keyup',
+								function() {
+									<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getHTML());
+								}
+							);
 						},
 
 					<%

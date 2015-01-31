@@ -271,7 +271,6 @@ page import="com.liferay.portlet.portletconfiguration.util.PortletConfigurationU
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.portlet.ratings.RatingsType" %><%@
 page import="com.liferay.portlet.ratings.display.context.PortletRatingsDefinitionDisplayContext" %><%@
-page import="com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil" %><%@
 page import="com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil" %><%@
 page import="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" %><%@
 page import="com.liferay.portlet.sites.util.Sites" %><%@

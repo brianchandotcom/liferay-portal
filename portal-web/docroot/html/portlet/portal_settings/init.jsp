@@ -41,3 +41,7 @@ page import="javax.naming.directory.SearchResult" %><%@
 page import="javax.naming.ldap.LdapContext" %>
 
 <%@ include file="/html/portlet/portal_settings/init-ext.jsp" %>
+
+<%
+PortletRatingsDefinitionDisplayContext portletRatingsDefinitionDisplayContext = new PortletRatingsDefinitionDisplayContext(request);
+%>

@@ -27,12 +27,14 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Mock;
 
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Michael C. Han
  * @author Miguel Pastor
  */
+@PowerMockIgnore("javax.management.*")
 @RunWith(PowerMockRunner.class)
 public class MessageBusManagerTest {
 

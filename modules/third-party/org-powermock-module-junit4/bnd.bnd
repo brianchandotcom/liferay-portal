@@ -1,4 +1,0 @@
-Bundle-SymbolicName: org.powermock.modules.junit4
-Bundle-Version: 1.5.6.LIFERAY-PATCHED-1
-Export-Package: org.powermock.modules.junit4.*
-Include-Resource: classes

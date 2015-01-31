@@ -19,8 +19,8 @@
 	<dependencies defaultconf="default">
 		<dependency name="ant" org="org.apache.ant" rev="1.9.3" />
 		<dependency name="ant-apache-log4j" org="org.apache.ant" rev="1.9.3" />
-		<dependency name="arquillian-container-test-impl-base" org="org.jboss.arquillian.container" rev="1.1.3.Final" />
-		<dependency name="arquillian-container-test-spi" org="org.jboss.arquillian.container" rev="1.1.3.Final" />
+		<dependency name="arquillian-container-test-impl-base" org="org.jboss.arquillian.container" rev="1.1.6.Final" />
+		<dependency name="arquillian-container-test-spi" org="org.jboss.arquillian.container" rev="1.1.6.Final" />
 		<dependency name="log4j" org="log4j" rev="1.2.17" />
 		<dependency name="shrinkwrap-api" org="org.jboss.shrinkwrap" rev="1.2.1" />
 	</dependencies>

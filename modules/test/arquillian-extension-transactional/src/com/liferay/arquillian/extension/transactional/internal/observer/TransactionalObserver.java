@@ -14,15 +14,22 @@
 
 package com.liferay.arquillian.extension.transactional.internal.observer;
 
-import com.liferay.arquillian.extension.transactional.internal.util.TransactionalExecutor;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.TransactionStatus;
+import com.liferay.portal.kernel.transaction.Transactional;
 
-import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.annotation.Inject;
+import java.lang.reflect.Method;
+
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.EventContext;
+import org.jboss.arquillian.junit.State;
+import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.arquillian.test.spi.event.suite.After;
 import org.jboss.arquillian.test.spi.event.suite.Before;
-import org.jboss.arquillian.test.spi.event.suite.Test;
+import org.jboss.arquillian.test.spi.event.suite.TestEvent;
 
 /**
  * @author Cristina González
@@ -32,28 +39,80 @@ public class TransactionalObserver {
 	public void afterTest(@Observes EventContext<After> eventContext)
 		throws Throwable {
 
-		TransactionalExecutor transactionalExecutor = _instance.get();
+		Throwable throwable = State.caughtExceptionAfterJunit();
 
-		transactionalExecutor.execute(eventContext);
+		try {
+			eventContext.proceed();
+		}
+		catch (Throwable t) {
+			if (throwable != null) {
+				t.addSuppressed(throwable);
+			}
+
+			throwable = t;
+		}
+
+		if (throwable == null) {
+			if (_transactionAttribute != null) {
+				TransactionInvokerUtil.commit(
+					_transactionAttribute, _transactionStatus);
+			}
+		}
+		else {
+			if (_transactionAttribute == null) {
+				if (throwable != State.caughtExceptionAfterJunit()) {
+					throw throwable;
+				}
+			}
+			else {
+				TransactionInvokerUtil.rollback(
+					throwable, _transactionAttribute, _transactionStatus);
+			}
+		}
 	}
 
 	public void beforeTest(@Observes EventContext<Before> eventContext)
 		throws Throwable {
 
-		TransactionalExecutor transactionalExecutor = _instance.get();
+		_transactionAttribute = getTransactionAttribute(
+			eventContext.getEvent());
 
-		transactionalExecutor.execute(eventContext);
+		if (_transactionAttribute != null) {
+			_transactionStatus = TransactionInvokerUtil.start(
+				_transactionAttribute);
+		}
+
+		eventContext.proceed();
 	}
 
-	public void test(@Observes EventContext<Test> eventContext)
-		throws Throwable {
+	protected TransactionAttribute getTransactionAttribute(
+		TestEvent testEvent) {
 
-		TransactionalExecutor transactionalExecutor = _instance.get();
+		Method method = testEvent.getTestMethod();
 
-		transactionalExecutor.execute(eventContext);
+		Transactional transactional = method.getAnnotation(Transactional.class);
+
+		if (transactional == null) {
+			TestClass testClass = testEvent.getTestClass();
+
+			transactional = testClass.getAnnotation(Transactional.class);
+		}
+
+		if (transactional == null) {
+			return null;
+		}
+
+		TransactionAttribute.Builder builder =
+			new TransactionAttribute.Builder();
+
+		builder.setPropagation(transactional.propagation());
+		builder.setRollbackForClasses(
+			PortalException.class, SystemException.class);
+
+		return builder.build();
 	}
 
-	@Inject
-	private Instance<TransactionalExecutor> _instance;
+	private TransactionAttribute _transactionAttribute;
+	private TransactionStatus _transactionStatus;
 
 }

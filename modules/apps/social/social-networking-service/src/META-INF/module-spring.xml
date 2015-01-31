@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<osgi:service interface="com.liferay.social.networking.service.MeetupsEntryLocalService" ref="com.liferay.social.networking.service.MeetupsEntryLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="sn" />
+			<entry key="json.web.service.context.path" value="MeetupsEntry" />
+		</osgi:service-properties>
+	</osgi:service>
+	<osgi:service ref="com.liferay.social.networking.service.persistence.MeetupsEntryPersistence" interface="com.liferay.social.networking.service.persistence.MeetupsEntryPersistence" />
+	<osgi:service interface="com.liferay.social.networking.service.MeetupsRegistrationLocalService" ref="com.liferay.social.networking.service.MeetupsRegistrationLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="sn" />
+			<entry key="json.web.service.context.path" value="MeetupsRegistration" />
+		</osgi:service-properties>
+	</osgi:service>
+	<osgi:service ref="com.liferay.social.networking.service.persistence.MeetupsRegistrationPersistence" interface="com.liferay.social.networking.service.persistence.MeetupsRegistrationPersistence" />
+	<osgi:service interface="com.liferay.social.networking.service.WallEntryLocalService" ref="com.liferay.social.networking.service.WallEntryLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="sn" />
+			<entry key="json.web.service.context.path" value="WallEntry" />
+		</osgi:service-properties>
+	</osgi:service>
+	<osgi:service ref="com.liferay.social.networking.service.persistence.WallEntryPersistence" interface="com.liferay.social.networking.service.persistence.WallEntryPersistence" />
+	<osgi:service ref="com.liferay.social.networking.service.persistence.WallEntryFinder" interface="com.liferay.social.networking.service.persistence.WallEntryFinder" />
+	<bean id="com.liferay.social.networking.service.MeetupsEntryLocalService" class="com.liferay.social.networking.service.impl.MeetupsEntryLocalServiceImpl" />
+	<osgi:service interface="com.liferay.social.networking.service.MeetupsEntryLocalService" ref="com.liferay.social.networking.service.MeetupsEntryLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="sn" />
+			<entry key="json.web.service.context.path" value="MeetupsEntry" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.social.networking.service.persistence.MeetupsEntryPersistence" class="com.liferay.social.networking.service.persistence.impl.MeetupsEntryPersistenceImpl" parent="basePersistence" />
+	<osgi:service ref="com.liferay.social.networking.service.persistence.MeetupsEntryPersistence" interface="com.liferay.social.networking.service.persistence.MeetupsEntryPersistence" />
+	<bean id="com.liferay.social.networking.service.MeetupsRegistrationLocalService" class="com.liferay.social.networking.service.impl.MeetupsRegistrationLocalServiceImpl" />
+	<osgi:service interface="com.liferay.social.networking.service.MeetupsRegistrationLocalService" ref="com.liferay.social.networking.service.MeetupsRegistrationLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="sn" />
+			<entry key="json.web.service.context.path" value="MeetupsRegistration" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.social.networking.service.persistence.MeetupsRegistrationPersistence" class="com.liferay.social.networking.service.persistence.impl.MeetupsRegistrationPersistenceImpl" parent="basePersistence" />
+	<osgi:service ref="com.liferay.social.networking.service.persistence.MeetupsRegistrationPersistence" interface="com.liferay.social.networking.service.persistence.MeetupsRegistrationPersistence" />
+	<bean id="com.liferay.social.networking.service.WallEntryLocalService" class="com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl" />
+	<osgi:service interface="com.liferay.social.networking.service.WallEntryLocalService" ref="com.liferay.social.networking.service.WallEntryLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="sn" />
+			<entry key="json.web.service.context.path" value="WallEntry" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.social.networking.service.persistence.WallEntryPersistence" class="com.liferay.social.networking.service.persistence.impl.WallEntryPersistenceImpl" parent="basePersistence" />
+	<osgi:service ref="com.liferay.social.networking.service.persistence.WallEntryPersistence" interface="com.liferay.social.networking.service.persistence.WallEntryPersistence" />
+	<bean id="com.liferay.social.networking.service.persistence.WallEntryFinder" class="com.liferay.social.networking.service.persistence.impl.WallEntryFinderImpl" parent="basePersistence" />
+	<osgi:service ref="com.liferay.social.networking.service.persistence.WallEntryFinder" interface="com.liferay.social.networking.service.persistence.WallEntryFinder" />
+</beans>

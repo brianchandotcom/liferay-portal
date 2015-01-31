@@ -196,7 +196,7 @@ public class SyncEngine {
 		_executorService.execute(watcher);
 
 		if (!ConnectionRetryUtil.retryInProgress(syncAccountId)) {
-			synchronizeSyncFiles(filePath, syncAccountId, watchEventListener);
+			synchronizeSyncFiles(filePath, syncAccountId);
 		}
 
 		scheduleGetSyncDLObjectUpdateEvent(
@@ -255,7 +255,7 @@ public class SyncEngine {
 	}
 
 	protected static void fireDeleteEvents(
-			Path filePath, WatchEventListener watchEventListener)
+			Path filePath, final long syncAccountId)
 		throws IOException {
 
 		long startTime = System.currentTimeMillis();
@@ -270,6 +270,13 @@ public class SyncEngine {
 
 					SyncFile syncFile = SyncFileService.fetchSyncFile(
 						filePath.toString());
+
+					if (syncFile == null) {
+						String fileKey = FileUtil.getFileKey(filePath);
+
+						syncFile = SyncFileService.fetchSyncFileByFileKey(
+							fileKey, syncAccountId);
+					}
 
 					if (syncFile != null) {
 						syncFile.setLocalSyncTime(System.currentTimeMillis());
@@ -286,6 +293,13 @@ public class SyncEngine {
 
 					SyncFile syncFile = SyncFileService.fetchSyncFile(
 						filePath.toString());
+
+					if (syncFile == null) {
+						String fileKey = FileUtil.getFileKey(filePath);
+
+						syncFile = SyncFileService.fetchSyncFileByFileKey(
+							fileKey, syncAccountId);
+					}
 
 					if (syncFile != null) {
 						syncFile.setLocalSyncTime(System.currentTimeMillis());
@@ -384,11 +398,10 @@ public class SyncEngine {
 	}
 
 	protected static void synchronizeSyncFiles(
-			Path filePath, long syncAccountId,
-			WatchEventListener watchEventListener)
+			Path filePath, long syncAccountId)
 		throws IOException {
 
-		fireDeleteEvents(filePath, watchEventListener);
+		fireDeleteEvents(filePath, syncAccountId);
 
 		FileEventUtil.retryFileTransfers(syncAccountId);
 	}

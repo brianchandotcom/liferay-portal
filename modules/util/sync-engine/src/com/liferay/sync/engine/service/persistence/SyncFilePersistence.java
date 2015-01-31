@@ -131,7 +131,7 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 
 		filePathName = StringUtils.replace(filePathName, "\\", "\\\\");
 
-		where.like("filePathName", new SelectArg(filePathName + "%"));
+		where.like("filePathName", new SelectArg(filePathName + "/%"));
 
 		where.and();
 
@@ -139,11 +139,11 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 
 		where.and();
 
-		where.ne("type", SyncFile.TYPE_SYSTEM);
+		where.eq("state", SyncFile.STATE_SYNCED);
 
 		where.and();
 
-		where.ne("uiEvent", SyncFile.UI_EVENT_DOWNLOADING);
+		where.ne("type", SyncFile.TYPE_SYSTEM);
 
 		return query(queryBuilder.prepare());
 	}

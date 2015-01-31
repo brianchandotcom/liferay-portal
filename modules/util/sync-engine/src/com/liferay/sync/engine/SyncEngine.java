@@ -303,12 +303,6 @@ public class SyncEngine {
 			filePath.toString(), startTime);
 
 		for (SyncFile deletedSyncFile : deletedSyncFiles) {
-			if (deletedSyncFile.getUiEvent() ==
-					SyncFile.UI_EVENT_FILE_NAME_TOO_LONG) {
-
-				continue;
-			}
-
 			if (deletedSyncFile.isFolder()) {
 				FileEventUtil.deleteFolder(
 					deletedSyncFile.getSyncAccountId(), deletedSyncFile);

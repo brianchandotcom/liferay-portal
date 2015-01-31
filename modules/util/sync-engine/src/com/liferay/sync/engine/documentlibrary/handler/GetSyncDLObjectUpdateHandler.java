@@ -96,6 +96,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		if (syncFile.isFolder()) {
 			Files.createDirectories(filePath);
 
+			syncFile.setState(SyncFile.STATE_SYNCED);
+
 			SyncFileService.update(syncFile);
 
 			SyncFileService.updateFileKeySyncFile(syncFile);
@@ -201,9 +203,13 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 		if (Files.exists(sourceFilePath)) {
 			Files.move(sourceFilePath, targetFilePath);
+
+			sourceSyncFile.setState(SyncFile.STATE_SYNCED);
 		}
 		else if (targetSyncFile.isFolder()) {
 			Files.createDirectories(targetFilePath);
+
+			sourceSyncFile.setState(SyncFile.STATE_SYNCED);
 
 			SyncFileService.updateFileKeySyncFile(sourceSyncFile);
 		}
@@ -261,7 +267,12 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				return;
 			}
 
+			if (sourceSyncFile != null) {
+				sourceSyncFile.setState(SyncFile.STATE_IN_PROGRESS);
+			}
+
 			targetSyncFile.setFilePathName(filePathName);
+			targetSyncFile.setState(SyncFile.STATE_IN_PROGRESS);
 
 			String event = targetSyncFile.getEvent();
 
@@ -380,6 +391,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				Path targetFilePath = Paths.get(filePathName);
 
 				Files.createDirectories(targetFilePath);
+
+				sourceSyncFile.setState(SyncFile.STATE_SYNCED);
 
 				SyncFileService.update(sourceSyncFile);
 

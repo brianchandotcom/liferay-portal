@@ -22,6 +22,6 @@
 		<dependency name="arquillian-core-impl-base" org="org.jboss.arquillian.core" rev="1.1.3.Final" />
 		<dependency name="arquillian-test-impl-base" org="org.jboss.arquillian.test" rev="1.1.3.Final" />
 		<dependency name="log4j" org="log4j" rev="1.2.17" />
-		<dependency name="junit" org="junit" rev="4.11" />
+		<dependency name="junit" org="junit" rev="4.12" />
 	</dependencies>
 </ivy-module>

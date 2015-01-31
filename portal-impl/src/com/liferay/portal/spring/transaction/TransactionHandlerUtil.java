@@ -22,20 +22,65 @@ import java.util.concurrent.Callable;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Shuyang Zhou
  */
-public class TransactionalCallableUtil {
+public class TransactionHandlerUtil {
 
-	public static <T> T call(
+	public static void commit(
+		TransactionAttribute transactionAttribute,
+		TransactionStatus transactionStatus) {
+
+		if (_transactionHandler == null) {
+			throw new IllegalStateException(
+				_platformTransactionManager + " does not support " +
+					"programmatic transaction handling");
+		}
+
+		_transactionHandler.commit(
+			_platformTransactionManager, transactionAttribute,
+			transactionStatus);
+	}
+
+	public static <T> T invoke(
 			TransactionAttribute transactionAttribute, Callable<T> callable)
 		throws Throwable {
 
 		return (T)_transactionExecutor.execute(
 			_platformTransactionManager, transactionAttribute,
 			new CallableMethodInvocation(callable));
+	}
+
+	public static void rollback(
+			Throwable throwable, TransactionAttribute transactionAttribute,
+			TransactionStatus transactionStatus)
+		throws Throwable {
+
+		if (_transactionHandler == null) {
+			throw new IllegalStateException(
+				_platformTransactionManager + " does not support " +
+					"programmatic transaction handling");
+		}
+
+		_transactionHandler.rollback(
+			_platformTransactionManager, throwable, transactionAttribute,
+			transactionStatus);
+	}
+
+	public static TransactionStatus start(
+		TransactionAttribute transactionAttribute) {
+
+		if (_transactionHandler == null) {
+			throw new IllegalStateException(
+				_platformTransactionManager + " does not support " +
+					"programmatic transaction handling");
+		}
+
+		return _transactionHandler.start(
+			_platformTransactionManager, transactionAttribute);
 	}
 
 	public void setPlatformTransactionManager(
@@ -48,10 +93,15 @@ public class TransactionalCallableUtil {
 		TransactionExecutor transactionExecutor) {
 
 		_transactionExecutor = transactionExecutor;
+
+		if (transactionExecutor instanceof TransactionHandler) {
+			_transactionHandler = (TransactionHandler)transactionExecutor;
+		}
 	}
 
 	private static PlatformTransactionManager _platformTransactionManager;
 	private static TransactionExecutor _transactionExecutor;
+	private static TransactionHandler _transactionHandler;
 
 	private static class CallableMethodInvocation implements MethodInvocation {
 

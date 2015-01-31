@@ -12,28 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.kernel.transaction;
+package com.liferay.portal.spring.transaction;
 
-import java.util.concurrent.Callable;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Shuyang Zhou
  */
-public interface TransactionInvoker {
+public interface TransactionHandler {
 
 	public void commit(
+		PlatformTransactionManager platformTransactionManager,
 		TransactionAttribute transactionAttribute,
 		TransactionStatus transactionStatus);
 
-	public <T> T invoke(
-			TransactionAttribute transactionAttribute, Callable<T> callable)
-		throws Throwable;
-
 	public void rollback(
+			PlatformTransactionManager platformTransactionManager,
 			Throwable throwable, TransactionAttribute transactionAttribute,
 			TransactionStatus transactionStatus)
 		throws Throwable;
 
-	public TransactionStatus start(TransactionAttribute transactionAttribute);
+	public TransactionStatus start(
+		PlatformTransactionManager platformTransactionManager,
+		TransactionAttribute transactionAttribute);
 
 }

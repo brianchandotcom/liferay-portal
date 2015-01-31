@@ -21,11 +21,33 @@ import java.util.concurrent.Callable;
  */
 public class TransactionInvokerUtil {
 
+	public static void commit(
+		TransactionAttribute transactionAttribute,
+		TransactionStatus transactionStatus) {
+
+		_transactionInvoker.commit(transactionAttribute, transactionStatus);
+	}
+
 	public static <T> T invoke(
 			TransactionAttribute transactionAttribute, Callable<T> callable)
 		throws Throwable {
 
 		return _transactionInvoker.invoke(transactionAttribute, callable);
+	}
+
+	public static void rollback(
+			Throwable throwable, TransactionAttribute transactionAttribute,
+			TransactionStatus transactionStatus)
+		throws Throwable {
+
+		_transactionInvoker.rollback(
+			throwable, transactionAttribute, transactionStatus);
+	}
+
+	public static TransactionStatus start(
+		TransactionAttribute transactionAttribute) {
+
+		return _transactionInvoker.start(transactionAttribute);
 	}
 
 	public void setTransactionInvoker(TransactionInvoker transactionInvoker) {

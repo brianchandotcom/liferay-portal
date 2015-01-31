@@ -16,8 +16,11 @@ package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvoker;
+import com.liferay.portal.kernel.transaction.TransactionStatus;
 
 import java.util.concurrent.Callable;
+
+import org.springframework.transaction.support.DefaultTransactionStatus;
 
 /**
  * @author Shuyang Zhou
@@ -25,11 +28,29 @@ import java.util.concurrent.Callable;
 public class TransactionInvokerImpl implements TransactionInvoker {
 
 	@Override
+	public void commit(
+		TransactionAttribute transactionAttribute,
+		TransactionStatus transactionStatus) {
+
+		TransactionHandlerUtil.commit(
+			TransactionAttributeBuilder.build(
+				true, transactionAttribute.getIsolation(),
+				transactionAttribute.getPropagation(),
+				transactionAttribute.isReadOnly(),
+				transactionAttribute.getTimeout(),
+				transactionAttribute.getRollbackForClasses(),
+				transactionAttribute.getRollbackForClassNames(),
+				transactionAttribute.getNoRollbackForClasses(),
+				transactionAttribute.getNoRollbackForClassNames()),
+			toTransactionStatus(transactionStatus));
+	}
+
+	@Override
 	public <T> T invoke(
 			TransactionAttribute transactionAttribute, Callable<T> callable)
 		throws Throwable {
 
-		return TransactionalCallableUtil.call(
+		return TransactionHandlerUtil.invoke(
 			TransactionAttributeBuilder.build(
 				true, transactionAttribute.getIsolation(),
 				transactionAttribute.getPropagation(),
@@ -40,6 +61,65 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 				transactionAttribute.getNoRollbackForClasses(),
 				transactionAttribute.getNoRollbackForClassNames()),
 			callable);
+	}
+
+	@Override
+	public void rollback(
+			Throwable throwable, TransactionAttribute transactionAttribute,
+			TransactionStatus transactionStatus)
+		throws Throwable {
+
+		TransactionHandlerUtil.rollback(
+			throwable,
+			TransactionAttributeBuilder.build(
+				true, transactionAttribute.getIsolation(),
+				transactionAttribute.getPropagation(),
+				transactionAttribute.isReadOnly(),
+				transactionAttribute.getTimeout(),
+				transactionAttribute.getRollbackForClasses(),
+				transactionAttribute.getRollbackForClassNames(),
+				transactionAttribute.getNoRollbackForClasses(),
+				transactionAttribute.getNoRollbackForClassNames()),
+			toTransactionStatus(transactionStatus));
+	}
+
+	@Override
+	public TransactionStatus start(TransactionAttribute transactionAttribute) {
+		org.springframework.transaction.TransactionStatus transactionStatus =
+			TransactionHandlerUtil.start(
+				TransactionAttributeBuilder.build(
+					true, transactionAttribute.getIsolation(),
+					transactionAttribute.getPropagation(),
+					transactionAttribute.isReadOnly(),
+					transactionAttribute.getTimeout(),
+					transactionAttribute.getRollbackForClasses(),
+					transactionAttribute.getRollbackForClassNames(),
+					transactionAttribute.getNoRollbackForClasses(),
+					transactionAttribute.getNoRollbackForClassNames()));
+
+		return new TransactionStatus(
+			transactionStatus.isNewTransaction(),
+			transactionStatus.isRollbackOnly(),
+			transactionStatus.isCompleted());
+	}
+
+	protected static org.springframework.transaction.TransactionStatus
+		toTransactionStatus(TransactionStatus transactionStatus) {
+
+		DefaultTransactionStatus defaultTransactionStatus =
+			new DefaultTransactionStatus(
+				null, transactionStatus.isNewTransaction(), false, false, false,
+				null);
+
+		if (transactionStatus.isCompleted()) {
+			defaultTransactionStatus.setCompleted();
+		}
+
+		if (transactionStatus.isRollbackOnly()) {
+			defaultTransactionStatus.setRollbackOnly();
+		}
+
+		return defaultTransactionStatus;
 	}
 
 }

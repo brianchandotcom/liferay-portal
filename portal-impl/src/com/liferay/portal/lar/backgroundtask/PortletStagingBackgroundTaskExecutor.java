@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
+import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -66,7 +66,7 @@ public class PortletStagingBackgroundTaskExecutor
 					EVENT_PUBLICATION_PORTLET_LOCAL_STARTED,
 				serializableTaskContextMap);
 
-			missingReferences = TransactionalCallableUtil.call(
+			missingReferences = TransactionHandlerUtil.invoke(
 				transactionAttribute,
 				new PortletStagingCallable(
 					backgroundTask.getBackgroundTaskId()));

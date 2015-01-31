@@ -27,36 +27,13 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 /**
  * @author Shuyang Zhou
  */
-public class CounterTransactionExecutor extends BaseTransactionExecutor {
+public class CounterTransactionExecutor
+	extends BaseTransactionExecutor implements TransactionHandler {
 
 	@Override
-	public Object execute(
-			PlatformTransactionManager platformTransactionManager,
-			TransactionAttribute transactionAttribute,
-			MethodInvocation methodInvocation)
-		throws Throwable {
-
-		TransactionStatus transactionStatus =
-			platformTransactionManager.getTransaction(transactionAttribute);
-
-		Object returnValue = null;
-
-		try {
-			returnValue = methodInvocation.proceed();
-		}
-		catch (Throwable throwable) {
-			processThrowable(
-				platformTransactionManager, throwable, transactionAttribute,
-				transactionStatus);
-		}
-
-		processCommit(platformTransactionManager, transactionStatus);
-
-		return returnValue;
-	}
-
-	protected void processCommit(
+	public void commit(
 		PlatformTransactionManager platformTransactionManager,
+		TransactionAttribute transactionAttribute,
 		TransactionStatus transactionStatus) {
 
 		try {
@@ -81,7 +58,36 @@ public class CounterTransactionExecutor extends BaseTransactionExecutor {
 		}
 	}
 
-	protected void processThrowable(
+	@Override
+	public Object execute(
+			PlatformTransactionManager platformTransactionManager,
+			TransactionAttribute transactionAttribute,
+			MethodInvocation methodInvocation)
+		throws Throwable {
+
+		TransactionStatus transactionStatus = start(
+			platformTransactionManager, transactionAttribute);
+
+		Object returnValue = null;
+
+		try {
+			returnValue = methodInvocation.proceed();
+		}
+		catch (Throwable throwable) {
+			rollback(
+				platformTransactionManager, throwable, transactionAttribute,
+				transactionStatus);
+		}
+
+		commit(
+			platformTransactionManager, transactionAttribute,
+			transactionStatus);
+
+		return returnValue;
+	}
+
+	@Override
+	public void rollback(
 			PlatformTransactionManager platformTransactionManager,
 			Throwable throwable, TransactionAttribute transactionAttribute,
 			TransactionStatus transactionStatus)
@@ -113,10 +119,20 @@ public class CounterTransactionExecutor extends BaseTransactionExecutor {
 			}
 		}
 		else {
-			processCommit(platformTransactionManager, transactionStatus);
+			commit(
+				platformTransactionManager, transactionAttribute,
+				transactionStatus);
 		}
 
 		throw throwable;
+	}
+
+	@Override
+	public TransactionStatus start(
+		PlatformTransactionManager platformTransactionManager,
+		TransactionAttribute transactionAttribute) {
+
+		return platformTransactionManager.getTransaction(transactionAttribute);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

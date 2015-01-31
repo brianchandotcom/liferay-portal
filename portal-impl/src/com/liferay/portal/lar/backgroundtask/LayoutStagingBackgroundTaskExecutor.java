@@ -39,7 +39,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.StagingLocalServiceUtil;
-import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
+import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -94,7 +94,7 @@ public class LayoutStagingBackgroundTaskExecutor
 					EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED,
 				exportImportConfiguration);
 
-			missingReferences = TransactionalCallableUtil.call(
+			missingReferences = TransactionHandlerUtil.invoke(
 				transactionAttribute,
 				new LayoutStagingCallable(
 					backgroundTask.getBackgroundTaskId(),

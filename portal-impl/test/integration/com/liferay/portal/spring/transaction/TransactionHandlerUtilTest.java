@@ -34,7 +34,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 /**
  * @author Shuyang Zhou
  */
-public class TransactionalCallableUtilTest {
+public class TransactionHandlerUtilTest {
 
 	@ClassRule
 	@Rule
@@ -47,7 +47,7 @@ public class TransactionalCallableUtilTest {
 		final String classNameValue = PwdGenerator.getPassword();
 
 		try {
-			TransactionalCallableUtil.call(
+			TransactionHandlerUtil.invoke(
 				_transactionAttribute, new Callable<Void>() {
 
 				@Override
@@ -80,7 +80,7 @@ public class TransactionalCallableUtilTest {
 		final Exception exception = new Exception();
 
 		try {
-			TransactionalCallableUtil.call(
+			TransactionHandlerUtil.invoke(
 				_transactionAttribute, new Callable<Void>() {
 
 				@Override

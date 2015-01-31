@@ -44,11 +44,13 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
  */
+@PowerMockIgnore("javax.xml.stream.*")
 @RunWith(PowerMockRunner.class)
 public class UpgradeDynamicDataListsTest extends PowerMockito {
 

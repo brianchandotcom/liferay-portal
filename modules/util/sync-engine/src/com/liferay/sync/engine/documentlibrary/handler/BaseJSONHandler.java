@@ -239,7 +239,10 @@ public class BaseJSONHandler extends BaseHandler {
 		}
 
 		if (_logger.isTraceEnabled()) {
-			_logger.trace("Handling response {}", response);
+			Class<?> clazz = getClass();
+
+			_logger.trace(
+				"Handling response {} {}", clazz.getSimpleName(), response);
 		}
 
 		processResponse(response);

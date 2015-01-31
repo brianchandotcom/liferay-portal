@@ -153,7 +153,7 @@ public class BaseHandler implements Handler<Void> {
 			}
 
 			if (_logger.isTraceEnabled()) {
-				Class<?> clazz = this.getClass();
+				Class<?> clazz = getClass();
 
 				SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
 

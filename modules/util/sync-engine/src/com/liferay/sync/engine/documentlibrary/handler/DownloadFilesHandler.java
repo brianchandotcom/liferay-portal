@@ -122,6 +122,13 @@ public class DownloadFilesHandler extends BaseHandler {
 					continue;
 				}
 
+				if (_logger.isTraceEnabled()) {
+					_logger.trace(
+						"Handling response {} file path {}",
+							DownloadFileHandler.class.getSimpleName(),
+							syncFile.getFilePathName());
+				}
+
 				downloadFileHandler.copyFile(
 					syncFile, Paths.get(syncFile.getFilePathName()),
 					zipInputStream);

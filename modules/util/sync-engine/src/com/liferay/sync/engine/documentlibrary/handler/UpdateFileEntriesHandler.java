@@ -62,6 +62,14 @@ public class UpdateFileEntriesHandler extends BaseJSONHandler {
 					continue;
 				}
 
+				if (_logger.isTraceEnabled()) {
+					Class<?> clazz = handler.getClass();
+
+					_logger.trace(
+						"Handling response {} {}", clazz.getSimpleName(),
+						fieldValue.toString());
+				}
+
 				handler.processResponse(fieldValue.toString());
 			}
 			catch (Exception e) {

@@ -2043,7 +2043,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets whether the editor instance has to be created automatically</description>
 			<name>autoCreate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

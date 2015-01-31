@@ -25,6 +25,7 @@ import com.liferay.sync.engine.session.Session;
 import com.liferay.sync.engine.session.SessionManager;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
+import com.liferay.sync.engine.util.OSDetector;
 import com.liferay.sync.engine.util.StreamUtil;
 
 import java.io.InputStream;
@@ -127,6 +128,10 @@ public class DownloadFileHandler extends BaseHandler {
 
 			downloadedFilePathNames.add(filePath.toString());
 
+			if (OSDetector.isWindows()) {
+				SyncFileService.updateFileKeySyncFile(syncFile);
+			}
+
 			FileTime fileTime = FileTime.fromMillis(syncFile.getModifiedTime());
 
 			Files.setLastModifiedTime(tempFilePath, fileTime);
@@ -146,7 +151,9 @@ public class DownloadFileHandler extends BaseHandler {
 
 			SyncFileService.update(syncFile);
 
-			SyncFileService.updateFileKeySyncFile(syncFile);
+			if (!OSDetector.isWindows()) {
+				SyncFileService.updateFileKeySyncFile(syncFile);
+			}
 
 			IODeltaUtil.checksums(syncFile);
 		}

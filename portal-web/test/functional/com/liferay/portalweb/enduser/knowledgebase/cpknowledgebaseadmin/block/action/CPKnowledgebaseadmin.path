@@ -154,7 +154,7 @@
 </tr>
 <tr>
 	<td>ARTICLE_TABLE_PRIORITY</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[2]//input</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[2]//input[@title='Priority']</td>
 	<td></td>
 </tr>
 <tr>

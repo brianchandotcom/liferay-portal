@@ -54,7 +54,9 @@ import org.slf4j.LoggerFactory;
 public class FileUtil {
 
 	public static boolean checksumsEqual(String checksum1, String checksum2) {
-		if (checksum1.isEmpty() || checksum2.isEmpty()) {
+		if ((checksum1 == null) || (checksum2 == null) ||
+			checksum1.isEmpty() || checksum2.isEmpty()) {
+
 			return false;
 		}
 

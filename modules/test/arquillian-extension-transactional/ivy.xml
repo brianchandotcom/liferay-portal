@@ -20,5 +20,6 @@
 		<dependency name="arquillian-container-test-impl-base" org="org.jboss.arquillian.container" rev="1.1.6.Final" />
 		<dependency name="arquillian-container-test-spi" org="org.jboss.arquillian.container" rev="1.1.6.Final" />
 		<dependency name="arquillian-core-impl-base" org="org.jboss.arquillian.core" rev="1.1.6.Final" />
+		<dependency name="arquillian-junit-core" org="org.jboss.arquillian.junit" rev="1.1.6.Final" />
 	</dependencies>
 </ivy-module>

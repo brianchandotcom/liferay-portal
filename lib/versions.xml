@@ -525,7 +525,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/junit.jar</file-name>
-				<version>4.12 B3</version>
+				<version>4.12</version>
 				<project-name>JUnit</project-name>
 				<project-url>http://www.junit.org/index.htm</project-url>
 				<licenses>

@@ -16,10 +16,6 @@
 
 <%@ include file="/html/portlet/portal_settings/init.jsp" %>
 
-<%
-PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
-%>
-
 <liferay-ui:error-marker key="errorSection" value="ratings" />
 
 <h3><liferay-ui:message key="ratings" /></h3>
@@ -33,9 +29,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 <aui:fieldset>
 
 	<%
-	PortletRatingsDefinitionDisplayContext portletRatingsDisplayContext = new PortletRatingsDefinitionDisplayContext();
-
-	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = portletRatingsDisplayContext.getPortletRatingsDefinitionMap();
+	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = portletRatingsDefinitionDisplayContext.getCompanyPortletRatingsDefinitionMap();
 
 	for (String portletId : portletRatingsDefinitionMap.keySet()) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
@@ -53,26 +47,24 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		for (String className : classNames) {
 			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
 
-			RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(className);
+			RatingsType ratingsType = ratingsTypeMap.get(className);
+		%>
 
-			String ratingsTypeString = PrefsParamUtil.getString(companyPortletPreferences, request, propertyKey, defaultRatingsType.toString());
-			%>
+		<div class="ratings-type-select">
+			<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "settings--" + propertyKey + "--" %>'>
 
-			<div class="ratings-type-select">
-				<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "settings--" + propertyKey + "--" %>'>
+				<%
+				for (RatingsType curRatingsType : RatingsType.values()) {
+				%>
 
-					<%
-					for (RatingsType curRatingsType : RatingsType.values()) {
-					%>
+					<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Validator.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
 
-						<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= ratingsTypeString.equals(curRatingsType.getValue()) %>" value="<%= curRatingsType.getValue() %>" />
+				<%
+				}
+				%>
 
-					<%
-					}
-					%>
-
-				</aui:select>
-			</div>
+			</aui:select>
+		</div>
 
 	<%
 		}

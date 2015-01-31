@@ -45,6 +45,10 @@ public class PoshiRunnerContext {
 		return _commandElements.get("function#" + classCommandName);
 	}
 
+	public static int getFunctionLocatorCount(String className) {
+		return _functionLocatorCounts.get(className);
+	}
+
 	public static Element getFunctionRootElement(String className) {
 		return _rootElements.get("function#" + className);
 	}
@@ -100,6 +104,24 @@ public class PoshiRunnerContext {
 
 				Element element =
 					PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
+
+				if (classType.equals("function")) {
+					String xml = element.asXML();
+
+					for (int i = 1;; i++) {
+						if (xml.contains("${locator" + i + "}")) {
+							continue;
+						}
+
+						if (i > 1) {
+							i--;
+						}
+
+						_functionLocatorCounts.put(className, i);
+
+						break;
+					}
+				}
 
 				_rootElements.put(classType + "#" + className, element);
 
@@ -198,6 +220,8 @@ public class PoshiRunnerContext {
 			"../../../portal-web/test/functional/com/liferay/portalweb/");
 
 	private static final Map<String, Element> _commandElements =
+		new HashMap<>();
+	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
 	private static final Map<String, String> _pathLocators = new HashMap<>();
 	private static final Pattern _pattern = Pattern.compile(

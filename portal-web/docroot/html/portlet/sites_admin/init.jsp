@@ -73,6 +73,8 @@ if (GroupPermissionUtil.contains(permissionChecker, ActionKeys.VIEW)) {
 }
 
 long[] classNameIds = new long[] {PortalUtil.getClassNameId(Company.class), PortalUtil.getClassNameId(Group.class), PortalUtil.getClassNameId(Organization.class)};
+
+PortletRatingsDefinitionDisplayContext portletRatingsDefinitionDisplayContext = new PortletRatingsDefinitionDisplayContext(request);
 %>
 
 <%@ include file="/html/portlet/sites_admin/init-ext.jsp" %>

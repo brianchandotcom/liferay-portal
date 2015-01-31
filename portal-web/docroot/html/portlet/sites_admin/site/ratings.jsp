@@ -16,21 +16,6 @@
 
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
-<%
-PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
-
-Group liveGroup = (Group)request.getAttribute("site.liveGroup");
-
-UnicodeProperties groupTypeSettings = null;
-
-if (liveGroup != null) {
-	groupTypeSettings = liveGroup.getTypeSettingsProperties();
-}
-else {
-	groupTypeSettings = new UnicodeProperties();
-}
-%>
-
 <liferay-ui:error-marker key="errorSection" value="ratings" />
 
 <h3><liferay-ui:message key="ratings" /></h3>
@@ -44,9 +29,7 @@ else {
 <aui:fieldset>
 
 	<%
-	PortletRatingsDefinitionDisplayContext portletRatingsDefinitionDisplayContext = new PortletRatingsDefinitionDisplayContext();
-
-	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = portletRatingsDefinitionDisplayContext.getPortletRatingsDefinitionMap();
+	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = portletRatingsDefinitionDisplayContext.getGroupPortletRatingsDefinitionMap();
 
 	for (String portletId : portletRatingsDefinitionMap.keySet()) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
@@ -64,11 +47,7 @@ else {
 		for (String className : classNames) {
 			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
 
-			RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(className);
-
-			String companyRatingsTypeString = PrefsParamUtil.getString(companyPortletPreferences, request, propertyKey, defaultRatingsType.toString());
-
-			String ratingsTypeString = PropertiesParamUtil.getString(groupTypeSettings, request, propertyKey, companyRatingsTypeString);
+			RatingsType ratingsType = ratingsTypeMap.get(className);
 		%>
 
 			<div class="ratings-type-select">
@@ -78,7 +57,7 @@ else {
 					for (RatingsType curRatingsType : RatingsType.values()) {
 					%>
 
-						<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= ratingsTypeString.equals(curRatingsType.getValue()) %>" value="<%= curRatingsType.getValue() %>" />
+						<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Validator.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
 
 					<%
 					}

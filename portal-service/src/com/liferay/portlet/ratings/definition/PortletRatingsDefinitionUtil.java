@@ -27,7 +27,6 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Roberto Díaz
@@ -58,16 +57,6 @@ public class PortletRatingsDefinitionUtil {
 		}
 
 		return Collections.unmodifiableMap(portletRatingsDefinitionValuesMap);
-	}
-
-	public static boolean hasPortletRatingsDefinitions() {
-		Set<String> keySet = _serviceTrackerMap.keySet();
-
-		if (keySet.isEmpty()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final

@@ -513,6 +513,35 @@ public class VerifyProperties extends VerifyProcess {
 			"layout.template.unsupported", "com.liferay.nested.portlets.web"
 		},
 
+		// NTLM
+
+		new String[] {
+			"ntlm.auth.enabled", "enabled", "com.liferay.portal.sso.ntlm"
+		},
+		new String[] {
+			"ntlm.auth.domain", "domain", "com.liferay.portal.sso.ntlm"
+		},
+		new String[] {
+			"ntlm.auth.domain.controller", "domain.controller",
+			"com.liferay.portal.sso.ntlm"
+		},
+		new String[] {
+			"ntlm.auth.domain.controller.name", "domain.controller.name",
+			"com.liferay.portal.sso.ntlm"
+		},
+		new String[] {
+			"ntlm.auth.negotiate.flags", "negotiate.flags",
+			"com.liferay.portal.sso.ntlm"
+		},
+		new String[] {
+			"ntlm.auth.service.account", "service.account",
+			"com.liferay.portal.sso.ntlm"
+		},
+		new String[] {
+			"ntlm.auth.service.password", "service.password",
+			"com.liferay.portal.sso.ntlm"
+		},
+
 		// Polls
 
 		new String[] {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ntlm;
+package com.liferay.portal.sso.ntlm;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -37,8 +37,11 @@ import jcifs.util.Encdec;
 public class NtlmManager {
 
 	public NtlmManager(
-		String domain, String domainController, String domainControllerName,
+		NetlogonConnectionManager netlogonConnectionManager, String domain,
+		String domainController, String domainControllerName,
 		String serviceAccount, String servicePassword) {
+
+		_netlogonConnectionManager = netlogonConnectionManager;
 
 		setConfiguration(
 			domain, domainController, domainControllerName, serviceAccount,
@@ -121,10 +124,9 @@ public class NtlmManager {
 		_ntlmServiceAccount = new NtlmServiceAccount(
 			serviceAccount, servicePassword);
 
-		_netlogon = new Netlogon();
-
-		_netlogon.setConfiguration(
-			domainController, domainControllerName, _ntlmServiceAccount);
+		_netlogon = new Netlogon(
+			domainController, domainControllerName, _netlogonConnectionManager,
+			_ntlmServiceAccount);
 	}
 
 	protected byte[] getAVPairBytes(int avId, String value)
@@ -164,6 +166,7 @@ public class NtlmManager {
 	private String _domainController;
 	private String _domainControllerName;
 	private Netlogon _netlogon;
+	private final NetlogonConnectionManager _netlogonConnectionManager;
 	private NtlmServiceAccount _ntlmServiceAccount;
 
 }

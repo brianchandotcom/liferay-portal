@@ -109,18 +109,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GEOLOCATION_GEOLOCATE</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/div/button[contains(.,'Geolocate')]</td>
+	<td>GEOLOCATION_MAP_DIAMOND_BAR_PNG</td>
+	<td>/firefox/maps/geolocation_map_diamond_bar_office.png</td>
 	<td></td>
 </tr>
 <tr>
-	<td>GEOLOCATION_LOCATION_LABEL</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/p/strong</td>
+	<td>GEOLOCATION_MAP_DIRECTIONAL_ARROWS_PNG</td>
+	<td>/firefox/maps/geolocation_map_directional_arrows.png</td>
 	<td></td>
 </tr>
 <tr>
-	<td>GEOLOCATION_LOCATION</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/p/span</td>
+	<td>GEOLOCATION_MAP_LOCATION_PIN_PNG</td>
+	<td>/firefox/maps/geolocation_map_location_pin.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GEOLOCATION_MAP_MAP_SATELLITE_TOGGLE_PNG</td>
+	<td>/firefox/maps/geolocation_map_map_satellite_toggle.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GEOLOCATION_MAP_RECENTER_BUTTON_PNG</td>
+	<td>/firefox/maps/geolocation_map_recenter_button.png</td>
 	<td></td>
 </tr>
 <tr>

@@ -45,6 +45,10 @@ public class PoshiRunnerContext {
 		return _commandElements.get("function#" + classCommandName);
 	}
 
+	public static int getFunctionLocatorCount(String className) {
+		return _functionLocatorCounts.get(className);
+	}
+
 	public static Element getFunctionRootElement(String className) {
 		return _rootElements.get("function#" + className);
 	}
@@ -98,13 +102,31 @@ public class PoshiRunnerContext {
 			if (classType.equals("action") || classType.equals("function") ||
 				classType.equals("macro") || classType.equals("testcase")) {
 
-				Element element =
+				Element rootElement =
 					PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
 
-				_rootElements.put(classType + "#" + className, element);
+				if (classType.equals("function")) {
+					String xml = rootElement.asXML();
 
-				if (element.element("set-up") != null) {
-					Element setUpElement = element.element("set-up");
+					for (int i = 1;; i++) {
+						if (xml.contains("${locator" + i + "}")) {
+							continue;
+						}
+
+						if (i > 1) {
+							i--;
+						}
+
+						_functionLocatorCounts.put(className, i);
+
+						break;
+					}
+				}
+
+				_rootElements.put(classType + "#" + className, rootElement);
+
+				if (rootElement.element("set-up") != null) {
+					Element setUpElement = rootElement.element("set-up");
 
 					String classCommandName = className + "#set-up";
 
@@ -112,8 +134,8 @@ public class PoshiRunnerContext {
 						classType + "#" + classCommandName, setUpElement);
 				}
 
-				if (element.element("tear-down") != null) {
-					Element tearDownElement = element.element("tear-down");
+				if (rootElement.element("tear-down") != null) {
+					Element tearDownElement = rootElement.element("tear-down");
 
 					String classCommandName = className + "#tear-down";
 
@@ -121,7 +143,7 @@ public class PoshiRunnerContext {
 						classType + "#" + classCommandName, tearDownElement);
 				}
 
-				List<Element> commandElements = element.elements("command");
+				List<Element> commandElements = rootElement.elements("command");
 
 				for (Element commandElement : commandElements) {
 					String classCommandName =
@@ -198,6 +220,8 @@ public class PoshiRunnerContext {
 			"../../../portal-web/test/functional/com/liferay/portalweb/");
 
 	private static final Map<String, Element> _commandElements =
+		new HashMap<>();
+	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
 	private static final Map<String, String> _pathLocators = new HashMap<>();
 	private static final Pattern _pattern = Pattern.compile(

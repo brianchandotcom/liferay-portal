@@ -38,10 +38,48 @@ public class PoshiRunnerExecutor {
 
 			if (childElementName.equals("execute")) {
 				if (childElement.attributeValue("selenium") != null) {
-					PoshiRunnerExecutor.runSeleniumElement(childElement);
+					runSeleniumElement(childElement);
+				}
+				else if (childElement.attributeValue("function") != null) {
+					runFunctionElement(childElement);
 				}
 			}
 		}
+	}
+
+	public static void runFunctionElement(Element element) throws Exception {
+		String classCommandName = element.attributeValue("function");
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
+			className);
+
+		for (int i = 0; i < locatorCount; i++) {
+			String locator = element.attributeValue("locator" + (i + 1));
+			String value = element.attributeValue("value" + (i + 1));
+
+			if (locator != null) {
+				PoshiRunnerVariablesUtil.putIntoExecuteMap(
+					"locator" + (i + 1), locator);
+			}
+
+			if (value != null) {
+				PoshiRunnerVariablesUtil.putIntoExecuteMap(
+					"value" + (i + 1), value);
+			}
+		}
+
+		PoshiRunnerVariablesUtil.pushCommandMap();
+
+		Element function = PoshiRunnerContext.getFunctionCommandElement(
+			classCommandName);
+
+		parseElement(function);
+
+		PoshiRunnerVariablesUtil.popCommandMap();
 	}
 
 	public static void runSeleniumElement(Element element) throws Exception {
@@ -55,6 +93,38 @@ public class PoshiRunnerExecutor {
 
 		for (int i = 0; i < parameterCount; i++) {
 			String argument = element.attributeValue("argument" + (i + 1));
+
+			if (argument == null) {
+				if (i == 0) {
+					if (selenium.equals("assertConfirmation") ||
+						selenium.equals("assertConsoleTextNotPresent") ||
+						selenium.equals("assertConsoleTextPresent") ||
+						selenium.equals("assertLocation") ||
+						selenium.equals("assertTextNotPresent") ||
+						selenium.equals("assertTextPresent") ||
+						selenium.equals("waitForConfirmation") ||
+						selenium.equals("waitForTextNotPresent") ||
+						selenium.equals("waitForTextPresent")) {
+
+						argument =
+							PoshiRunnerVariablesUtil.getValueFromCommandMap(
+								"value1");
+					}
+					else {
+						argument =
+							PoshiRunnerVariablesUtil.getValueFromCommandMap(
+								"locator1");
+					}
+				}
+				else if (i == 1) {
+					argument = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+						"value1");
+				}
+				else if (i == 2) {
+					argument = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+						"locator2");
+				}
+			}
 
 			arguments.add(argument);
 

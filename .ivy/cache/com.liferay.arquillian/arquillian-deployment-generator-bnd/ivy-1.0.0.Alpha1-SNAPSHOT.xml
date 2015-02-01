@@ -4,7 +4,7 @@
 		module="arquillian-deployment-generator-bnd"
 		revision="1.0.0.Alpha1-SNAPSHOT"
 		status="integration"
-		publication="20150126071531"
+		publication="20150127101254"
 	>
 		<description homepage="" />
 		<m:properties__version.cobertura.plugin>2.6</m:properties__version.cobertura.plugin>
@@ -86,8 +86,8 @@
 		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-maven-plugin__scope>runtime</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-maven-plugin__scope>
 		<m:properties__version.org.eclipse.m2e.lifecycle-mapping>1.0.0</m:properties__version.org.eclipse.m2e.lifecycle-mapping>
 		<m:properties__version.taglist.plugin>2.4</m:properties__version.taglist.plugin>
-		<m:properties__version.pmd.plugin>3.0.1</m:properties__version.pmd.plugin>
 		<m:properties__version.compiler.plugin>3.1</m:properties__version.compiler.plugin>
+		<m:properties__version.pmd.plugin>3.0.1</m:properties__version.pmd.plugin>
 		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-spi-maven__version>2.0.0</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-spi-maven__version>
 		<m:dependency.management__org.jboss.arquillian.junit__arquillian-junit-container__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.junit__arquillian-junit-container__version>
 		<m:dependency.management__org.jboss.arquillian.container__arquillian-container-test-impl-base__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.container__arquillian-container-test-impl-base__version>

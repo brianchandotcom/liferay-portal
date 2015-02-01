@@ -21,8 +21,8 @@
 			<version>2.1.0.CR16</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.arquillian.container</groupId>
-			<artifactId>arquillian-container-spi</artifactId>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>

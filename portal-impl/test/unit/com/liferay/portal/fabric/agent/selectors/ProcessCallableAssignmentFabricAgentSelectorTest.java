@@ -18,7 +18,7 @@ import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.kernel.process.local.ExceptionProcessCallable;
 import com.liferay.portal.kernel.process.local.ReturnProcessCallable;
 import com.liferay.portal.kernel.process.log.LoggingProcessCallable;
-import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.util.ArrayList;
 import java.util.Arrays;

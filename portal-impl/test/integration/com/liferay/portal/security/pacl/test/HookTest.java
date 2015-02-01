@@ -20,7 +20,7 @@ import com.liferay.portal.security.pacl.test.hook.action.FailureStrutsAction;
 import com.liferay.portal.security.pacl.test.hook.action.SuccessStrutsAction;
 import com.liferay.portal.security.pacl.test.hook.indexer.OrganizationIndexerPostProcessor;
 import com.liferay.portal.security.pacl.test.hook.indexer.UserIndexerPostProcessor;
-import com.liferay.portal.test.PACLTestRule;
+import com.liferay.portal.test.rule.PACLTestRule;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil;
 

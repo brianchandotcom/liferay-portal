@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.annotation;
 
-import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;

@@ -15,7 +15,7 @@
 package com.liferay.portal.format;
 
 import com.liferay.portal.kernel.format.PhoneNumberFormat;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

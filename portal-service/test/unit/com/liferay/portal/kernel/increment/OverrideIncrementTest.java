@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.increment;
 
-import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

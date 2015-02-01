@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.test.PACLTestRule;
+import com.liferay.portal.test.rule.PACLTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.journal.util.JournalContentUtil;
 

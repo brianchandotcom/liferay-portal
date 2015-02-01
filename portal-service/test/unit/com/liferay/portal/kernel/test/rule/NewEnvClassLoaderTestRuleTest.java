@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test;
-
-import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
+package com.liferay.portal.kernel.test.rule;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

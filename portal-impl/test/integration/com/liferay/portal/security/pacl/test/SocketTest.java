@@ -15,7 +15,7 @@
 package com.liferay.portal.security.pacl.test;
 
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.test.PACLTestRule;
+import com.liferay.portal.test.rule.PACLTestRule;
 
 import java.io.IOException;
 

@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.test;
+package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.test.rule.AdviseWith;
-import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,8 +26,8 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-@NewEnv(type = NewEnv.Type.CLASSLOADER)
-public class AspectJNewEnvClassLoaderTestRuleTest {
+@NewEnv(type = NewEnv.Type.JVM)
+public class AspectJNewEnvJVMTestRuleTest {
 
 	@NewEnv(type = NewEnv.Type.NONE)
 	@Test

@@ -15,11 +15,11 @@
 package com.liferay.portlet.mobiledevicerules.lar;
 
 import com.liferay.portal.kernel.lar.PortletDataHandler;
-import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
-import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;

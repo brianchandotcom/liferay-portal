@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.resiliency.spi.remote;
 
-import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.util.HashMap;
 import java.util.Map;

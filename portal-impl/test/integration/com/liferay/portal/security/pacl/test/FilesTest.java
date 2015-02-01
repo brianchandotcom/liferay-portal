@@ -17,7 +17,7 @@ package com.liferay.portal.security.pacl.test;
 import com.liferay.portal.kernel.security.pacl.permission.PortalFilePermission;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.OSDetector;
-import com.liferay.portal.test.PACLTestRule;
+import com.liferay.portal.test.rule.PACLTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;

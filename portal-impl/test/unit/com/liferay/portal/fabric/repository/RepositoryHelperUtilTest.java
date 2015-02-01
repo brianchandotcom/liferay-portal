@@ -14,7 +14,7 @@
 
 package com.liferay.portal.fabric.repository;
 
-import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

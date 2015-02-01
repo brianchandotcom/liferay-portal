@@ -14,11 +14,11 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.test.DeleteAfterTestRun;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
-import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.OrganizationTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 

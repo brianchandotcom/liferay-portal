@@ -16,7 +16,7 @@ package com.liferay.portal.webserver;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.methods.Method;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
-import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import java.util.HashMap;

@@ -16,11 +16,11 @@ package com.liferay.portlet.documentlibrary.subscriptions;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.test.AggregateTestRule;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
-import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.SynchronousMailTestRule;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionContainerModelTestCase;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;

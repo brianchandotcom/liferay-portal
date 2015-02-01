@@ -20,8 +20,8 @@ import com.liferay.portal.fabric.netty.util.NettyUtil;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.Time;
 
 import io.netty.channel.Channel;

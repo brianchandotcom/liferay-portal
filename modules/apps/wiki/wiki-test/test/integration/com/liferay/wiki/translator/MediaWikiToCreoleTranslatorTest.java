@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.translator;
 
-import com.liferay.portal.test.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

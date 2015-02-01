@@ -15,12 +15,12 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RoleTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;

@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.social.service;
 
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.UserTestUtil;

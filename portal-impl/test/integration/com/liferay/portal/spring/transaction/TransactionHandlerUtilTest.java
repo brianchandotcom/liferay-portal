@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.persistence.ClassNameUtil;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.concurrent.Callable;
 

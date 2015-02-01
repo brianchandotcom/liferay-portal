@@ -15,9 +15,9 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.test.AggregateTestRule;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
-import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.util.DLUtil;

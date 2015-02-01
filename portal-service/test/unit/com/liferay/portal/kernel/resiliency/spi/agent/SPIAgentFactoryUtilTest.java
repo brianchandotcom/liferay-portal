@@ -16,8 +16,8 @@ package com.liferay.portal.kernel.resiliency.spi.agent;
 
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
-import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.util.HashSet;
 import java.util.Map;

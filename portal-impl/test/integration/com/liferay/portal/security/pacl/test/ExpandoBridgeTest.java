@@ -20,7 +20,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserWrapper;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.test.PACLTestRule;
+import com.liferay.portal.test.rule.PACLTestRule;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import org.junit.Assert;

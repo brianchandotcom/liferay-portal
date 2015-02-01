@@ -17,7 +17,7 @@ package com.liferay.portal.security.pacl.test;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.test.PACLTestRule;
+import com.liferay.portal.test.rule.PACLTestRule;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

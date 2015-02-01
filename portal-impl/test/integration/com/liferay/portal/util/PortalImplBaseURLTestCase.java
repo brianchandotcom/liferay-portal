@@ -14,13 +14,13 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;

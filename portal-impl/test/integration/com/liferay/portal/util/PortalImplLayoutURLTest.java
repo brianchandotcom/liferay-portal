@@ -14,11 +14,11 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
-import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import org.junit.Assert;

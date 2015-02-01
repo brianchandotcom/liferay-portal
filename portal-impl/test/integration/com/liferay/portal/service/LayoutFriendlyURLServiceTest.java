@@ -14,16 +14,16 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutFriendlyURL;
-import com.liferay.portal.test.DeleteAfterTestRun;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
-import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;

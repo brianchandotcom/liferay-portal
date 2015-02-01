@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.security.membershippolicy.samples.TestOrganizationMembershipPolicy;
-import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.OrganizationTestUtil;
 import com.liferay.portal.util.test.RoleTestUtil;
 import com.liferay.registry.Registry;

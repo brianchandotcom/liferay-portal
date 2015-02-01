@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.diff.Diff;
 import com.liferay.portal.kernel.diff.DiffResult;
 import com.liferay.portal.kernel.diff.DiffUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Reader;
 

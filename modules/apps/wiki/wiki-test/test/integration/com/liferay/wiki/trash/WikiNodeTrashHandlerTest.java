@@ -14,15 +14,15 @@
 
 package com.liferay.wiki.trash;
 
-import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
-import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.SynchronousDestinationTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;

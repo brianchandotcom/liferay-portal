@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.test;
 
+import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.After;

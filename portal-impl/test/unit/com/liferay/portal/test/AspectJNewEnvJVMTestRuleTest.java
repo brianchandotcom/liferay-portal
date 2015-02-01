@@ -14,7 +14,9 @@
 
 package com.liferay.portal.test;
 
-import com.liferay.portal.kernel.test.NewEnv;
+import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.test.rule.AdviseWith;
+import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

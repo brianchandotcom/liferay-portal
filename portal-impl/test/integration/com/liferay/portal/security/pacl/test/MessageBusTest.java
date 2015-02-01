@@ -15,7 +15,7 @@
 package com.liferay.portal.security.pacl.test;
 
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.test.PACLTestRule;
+import com.liferay.portal.test.rule.PACLTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

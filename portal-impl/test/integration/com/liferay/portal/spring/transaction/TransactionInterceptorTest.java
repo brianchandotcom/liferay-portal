@@ -24,7 +24,7 @@ import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.persistence.ClassNameUtil;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 

@@ -17,7 +17,7 @@ package com.liferay.portal.security.pacl.test;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.test.PACLTestRule;
+import com.liferay.portal.test.rule.PACLTestRule;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import org.junit.Assert;

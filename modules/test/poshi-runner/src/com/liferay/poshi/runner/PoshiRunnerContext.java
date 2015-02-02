@@ -77,7 +77,7 @@ public class PoshiRunnerContext {
 		return _rootElements.get("testcase#" + className);
 	}
 
-	private static void _readPathFiles(String filePath, String className)
+	private static void _readPathFile(String filePath, String className)
 		throws Exception {
 
 		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
@@ -101,19 +101,15 @@ public class PoshiRunnerContext {
 			String locator = locatorElement.getText();
 
 			if (locatorKey.equals("EXTEND_ACTION_PATH")) {
-				DirectoryScanner directoryScanner = new DirectoryScanner();
+				for (String extendFilePath : _filePaths) {
+					if (extendFilePath.endsWith("/" + locator + ".path")) {
+						extendFilePath = _BASE_DIR + "/" + extendFilePath;
 
-				directoryScanner.setBasedir(_BASE_DIR);
-				directoryScanner.setIncludes(
-					new String[] {"**\\" + locator +".path"});
+						_readPathFile(extendFilePath, className);
 
-				directoryScanner.scan();
-
-				String[] filePaths = directoryScanner.getIncludedFiles();
-
-				filePath = _BASE_DIR + "/" + filePaths[0];
-
-				_readPathFiles(filePath, className);
+						break;
+					}
+				}
 			}
 
 			_pathLocators.put(className + "#" + locatorKey, locator);
@@ -132,9 +128,9 @@ public class PoshiRunnerContext {
 
 		directoryScanner.scan();
 
-		String[] filePaths = directoryScanner.getIncludedFiles();
+		_filePaths = directoryScanner.getIncludedFiles();
 
-		for (String filePath : filePaths) {
+		for (String filePath : _filePaths) {
 			filePath = _BASE_DIR + "/" + filePath;
 
 			String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
@@ -197,7 +193,7 @@ public class PoshiRunnerContext {
 				}
 			}
 			else if (classType.equals("path")) {
-				_readPathFiles(filePath, className);
+				_readPathFile(filePath, className);
 			}
 		}
 	}
@@ -244,6 +240,7 @@ public class PoshiRunnerContext {
 
 	private static final Map<String, Element> _commandElements =
 		new HashMap<>();
+	private static String[] _filePaths;
 	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
 	private static final Map<String, String> _pathLocators = new HashMap<>();

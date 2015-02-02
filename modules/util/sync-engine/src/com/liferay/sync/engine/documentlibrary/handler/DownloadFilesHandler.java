@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.apache.commons.io.input.CloseShieldInputStream;
 import org.apache.commons.io.input.CountingInputStream;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -131,7 +132,7 @@ public class DownloadFilesHandler extends BaseHandler {
 
 				downloadFileHandler.copyFile(
 					syncFile, Paths.get(syncFile.getFilePathName()),
-					zipInputStream);
+					new CloseShieldInputStream(zipInputStream));
 			}
 		}
 		catch (Exception e) {

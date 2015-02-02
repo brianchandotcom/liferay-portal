@@ -77,6 +77,49 @@ public class PoshiRunnerContext {
 		return _rootElements.get("testcase#" + className);
 	}
 
+	private static void _readPathFiles(String filePath, String className)
+		throws Exception {
+
+		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
+			filePath);
+
+		Element bodyElement = rootElement.element("body");
+
+		Element tableElement = bodyElement.element("table");
+
+		Element tBodyElement = tableElement.element("tbody");
+
+		List<Element> trElements = tBodyElement.elements("tr");
+
+		for (Element trElement : trElements) {
+			List<Element> tdElements = trElement.elements("td");
+
+			Element locatorKeyElement = tdElements.get(0);
+			Element locatorElement = tdElements.get(1);
+
+			String locatorKey = locatorKeyElement.getText();
+			String locator = locatorElement.getText();
+
+			if (locatorKey.equals("EXTEND_ACTION_PATH")) {
+				DirectoryScanner directoryScanner = new DirectoryScanner();
+
+				directoryScanner.setBasedir(_BASE_DIR);
+				directoryScanner.setIncludes(
+					new String[] {"**\\" + locator +".path"});
+
+				directoryScanner.scan();
+
+				String[] filePaths = directoryScanner.getIncludedFiles();
+
+				filePath = _BASE_DIR + "/" + filePaths[0];
+
+				_readPathFiles(filePath, className);
+			}
+
+			_pathLocators.put(className + "#" + locatorKey, locator);
+		}
+	}
+
 	private static void _readPoshiFiles() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -154,27 +197,7 @@ public class PoshiRunnerContext {
 				}
 			}
 			else if (classType.equals("path")) {
-				Element rootElement =
-					PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
-
-				Element bodyElement = rootElement.element("body");
-
-				Element tableElement = bodyElement.element("table");
-
-				Element tBodyElement = tableElement.element("tbody");
-
-				List<Element> trElements = tBodyElement.elements("tr");
-
-				for (Element trElement : trElements) {
-					List<Element> tdElements = trElement.elements("td");
-
-					Element locatorKeyElement = tdElements.get(0);
-					Element locatorElement = tdElements.get(1);
-
-					_pathLocators.put(
-						className + "#" + locatorKeyElement.getText(),
-						locatorElement.getText());
-				}
+				_readPathFiles(filePath, className);
 			}
 		}
 	}

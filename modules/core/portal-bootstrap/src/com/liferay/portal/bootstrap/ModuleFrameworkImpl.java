@@ -115,6 +115,12 @@ import org.springframework.context.ApplicationContext;
  */
 public class ModuleFrameworkImpl implements ModuleFramework {
 
+	public ModuleFrameworkImpl() {
+		String liferayLibPortalDir = _getLiferayLibPortalDir();
+
+		_liferayLibPortalDir = StringUtil.toLowerCase(liferayLibPortalDir);
+	}
+
 	@Override
 	public Object addBundle(String location) throws PortalException {
 		return addBundle(location, null);
@@ -1175,7 +1181,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		if (Validator.isNull(bundleSymbolicName)) {
 			String urlString = _decodePath(url.toString());
 
-			if (urlString.contains(_getLiferayLibPortalDir())) {
+			urlString = StringUtil.toLowerCase(urlString);
+
+			if (urlString.contains(_liferayLibPortalDir)) {
 				manifest = _calculateManifest(url, manifest);
 
 				attributes = manifest.getMainAttributes();
@@ -1356,6 +1364,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private Map<String, List<URL>> _extraPackageMap;
 	private List<URL> _extraPackageURLs;
 	private Framework _framework;
+	private final String _liferayLibPortalDir;
 
 	private class StartupFrameworkListener implements FrameworkListener {
 

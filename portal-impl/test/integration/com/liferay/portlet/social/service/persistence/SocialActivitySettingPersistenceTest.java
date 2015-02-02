@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.social.NoSuchActivitySettingException;
 import com.liferay.portlet.social.model.SocialActivitySetting;
-import com.liferay.portlet.social.model.impl.SocialActivitySettingModelImpl;
 import com.liferay.portlet.social.service.SocialActivitySettingLocalServiceUtil;
 
 import org.junit.After;
@@ -463,17 +463,21 @@ public class SocialActivitySettingPersistenceTest {
 
 		_persistence.clearCache();
 
-		SocialActivitySettingModelImpl existingSocialActivitySettingModelImpl = (SocialActivitySettingModelImpl)_persistence.findByPrimaryKey(newSocialActivitySetting.getPrimaryKey());
+		SocialActivitySetting existingSocialActivitySetting = _persistence.findByPrimaryKey(newSocialActivitySetting.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialActivitySettingModelImpl.getGroupId(),
-			existingSocialActivitySettingModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingSocialActivitySettingModelImpl.getClassNameId(),
-			existingSocialActivitySettingModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingSocialActivitySettingModelImpl.getActivityType(),
-			existingSocialActivitySettingModelImpl.getOriginalActivityType());
+		Assert.assertEquals(existingSocialActivitySetting.getGroupId(),
+			ReflectionTestUtil.invoke(existingSocialActivitySetting,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivitySetting.getClassNameId(),
+			ReflectionTestUtil.invoke(existingSocialActivitySetting,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivitySetting.getActivityType(),
+			ReflectionTestUtil.invoke(existingSocialActivitySetting,
+				"getOriginalActivityType", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingSocialActivitySettingModelImpl.getName(),
-				existingSocialActivitySettingModelImpl.getOriginalName()));
+				existingSocialActivitySetting.getName(),
+				ReflectionTestUtil.invoke(existingSocialActivitySetting,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected SocialActivitySetting addSocialActivitySetting()

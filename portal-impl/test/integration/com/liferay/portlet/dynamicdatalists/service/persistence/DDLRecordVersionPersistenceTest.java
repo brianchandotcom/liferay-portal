@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
-import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordVersionModelImpl;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalServiceUtil;
 
 import org.junit.After;
@@ -466,13 +466,15 @@ public class DDLRecordVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDLRecordVersionModelImpl existingDDLRecordVersionModelImpl = (DDLRecordVersionModelImpl)_persistence.findByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
+		DDLRecordVersion existingDDLRecordVersion = _persistence.findByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingDDLRecordVersionModelImpl.getRecordId(),
-			existingDDLRecordVersionModelImpl.getOriginalRecordId());
+		Assert.assertEquals(existingDDLRecordVersion.getRecordId(),
+			ReflectionTestUtil.invoke(existingDDLRecordVersion,
+				"getOriginalRecordId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingDDLRecordVersionModelImpl.getVersion(),
-				existingDDLRecordVersionModelImpl.getOriginalVersion()));
+				existingDDLRecordVersion.getVersion(),
+				ReflectionTestUtil.invoke(existingDDLRecordVersion,
+					"getOriginalVersion", new Class<?>[0])));
 	}
 
 	protected DDLRecordVersion addDDLRecordVersion() throws Exception {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserIdMapper;
-import com.liferay.portal.model.impl.UserIdMapperModelImpl;
 import com.liferay.portal.service.UserIdMapperLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -424,20 +424,22 @@ public class UserIdMapperPersistenceTest {
 
 		_persistence.clearCache();
 
-		UserIdMapperModelImpl existingUserIdMapperModelImpl = (UserIdMapperModelImpl)_persistence.findByPrimaryKey(newUserIdMapper.getPrimaryKey());
+		UserIdMapper existingUserIdMapper = _persistence.findByPrimaryKey(newUserIdMapper.getPrimaryKey());
 
-		Assert.assertEquals(existingUserIdMapperModelImpl.getUserId(),
-			existingUserIdMapperModelImpl.getOriginalUserId());
-		Assert.assertTrue(Validator.equals(
-				existingUserIdMapperModelImpl.getType(),
-				existingUserIdMapperModelImpl.getOriginalType()));
+		Assert.assertEquals(existingUserIdMapper.getUserId(),
+			ReflectionTestUtil.invoke(existingUserIdMapper,
+				"getOriginalUserId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingUserIdMapper.getType(),
+				ReflectionTestUtil.invoke(existingUserIdMapper,
+					"getOriginalType", new Class<?>[0])));
 
+		Assert.assertTrue(Validator.equals(existingUserIdMapper.getType(),
+				ReflectionTestUtil.invoke(existingUserIdMapper,
+					"getOriginalType", new Class<?>[0])));
 		Assert.assertTrue(Validator.equals(
-				existingUserIdMapperModelImpl.getType(),
-				existingUserIdMapperModelImpl.getOriginalType()));
-		Assert.assertTrue(Validator.equals(
-				existingUserIdMapperModelImpl.getExternalUserId(),
-				existingUserIdMapperModelImpl.getOriginalExternalUserId()));
+				existingUserIdMapper.getExternalUserId(),
+				ReflectionTestUtil.invoke(existingUserIdMapper,
+					"getOriginalExternalUserId", new Class<?>[0])));
 	}
 
 	protected UserIdMapper addUserIdMapper() throws Exception {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.model.impl.UserGroupModelImpl;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -476,13 +476,14 @@ public class UserGroupPersistenceTest {
 
 		_persistence.clearCache();
 
-		UserGroupModelImpl existingUserGroupModelImpl = (UserGroupModelImpl)_persistence.findByPrimaryKey(newUserGroup.getPrimaryKey());
+		UserGroup existingUserGroup = _persistence.findByPrimaryKey(newUserGroup.getPrimaryKey());
 
-		Assert.assertEquals(existingUserGroupModelImpl.getCompanyId(),
-			existingUserGroupModelImpl.getOriginalCompanyId());
-		Assert.assertTrue(Validator.equals(
-				existingUserGroupModelImpl.getName(),
-				existingUserGroupModelImpl.getOriginalName()));
+		Assert.assertEquals(existingUserGroup.getCompanyId(),
+			ReflectionTestUtil.invoke(existingUserGroup,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingUserGroup.getName(),
+				ReflectionTestUtil.invoke(existingUserGroup, "getOriginalName",
+					new Class<?>[0])));
 	}
 
 	protected UserGroup addUserGroup() throws Exception {

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionLocalServiceUtil;
 
 import org.junit.After;
@@ -439,13 +439,15 @@ public class DDMTemplateVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMTemplateVersionModelImpl existingDDMTemplateVersionModelImpl = (DDMTemplateVersionModelImpl)_persistence.findByPrimaryKey(newDDMTemplateVersion.getPrimaryKey());
+		DDMTemplateVersion existingDDMTemplateVersion = _persistence.findByPrimaryKey(newDDMTemplateVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMTemplateVersionModelImpl.getTemplateId(),
-			existingDDMTemplateVersionModelImpl.getOriginalTemplateId());
+		Assert.assertEquals(existingDDMTemplateVersion.getTemplateId(),
+			ReflectionTestUtil.invoke(existingDDMTemplateVersion,
+				"getOriginalTemplateId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingDDMTemplateVersionModelImpl.getVersion(),
-				existingDDMTemplateVersionModelImpl.getOriginalVersion()));
+				existingDDMTemplateVersion.getVersion(),
+				ReflectionTestUtil.invoke(existingDDMTemplateVersion,
+					"getOriginalVersion", new Class<?>[0])));
 	}
 
 	protected DDMTemplateVersion addDDMTemplateVersion()

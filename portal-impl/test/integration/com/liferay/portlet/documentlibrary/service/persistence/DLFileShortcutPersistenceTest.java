@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutModelImpl;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 
 import org.junit.After;
@@ -559,13 +559,14 @@ public class DLFileShortcutPersistenceTest {
 
 		_persistence.clearCache();
 
-		DLFileShortcutModelImpl existingDLFileShortcutModelImpl = (DLFileShortcutModelImpl)_persistence.findByPrimaryKey(newDLFileShortcut.getPrimaryKey());
+		DLFileShortcut existingDLFileShortcut = _persistence.findByPrimaryKey(newDLFileShortcut.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingDLFileShortcutModelImpl.getUuid(),
-				existingDLFileShortcutModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingDLFileShortcutModelImpl.getGroupId(),
-			existingDLFileShortcutModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingDLFileShortcut.getUuid(),
+				ReflectionTestUtil.invoke(existingDLFileShortcut,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingDLFileShortcut.getGroupId(),
+			ReflectionTestUtil.invoke(existingDLFileShortcut,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected DLFileShortcut addDLFileShortcut() throws Exception {

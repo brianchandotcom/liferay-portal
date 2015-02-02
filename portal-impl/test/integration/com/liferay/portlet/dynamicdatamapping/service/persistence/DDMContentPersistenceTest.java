@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatamapping.NoSuchContentException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentModelImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
 
 import org.junit.After;
@@ -474,13 +474,14 @@ public class DDMContentPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMContentModelImpl existingDDMContentModelImpl = (DDMContentModelImpl)_persistence.findByPrimaryKey(newDDMContent.getPrimaryKey());
+		DDMContent existingDDMContent = _persistence.findByPrimaryKey(newDDMContent.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingDDMContentModelImpl.getUuid(),
-				existingDDMContentModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingDDMContentModelImpl.getGroupId(),
-			existingDDMContentModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingDDMContent.getUuid(),
+				ReflectionTestUtil.invoke(existingDDMContent,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingDDMContent.getGroupId(),
+			ReflectionTestUtil.invoke(existingDDMContent, "getOriginalGroupId",
+				new Class<?>[0]));
 	}
 
 	protected DDMContent addDDMContent() throws Exception {

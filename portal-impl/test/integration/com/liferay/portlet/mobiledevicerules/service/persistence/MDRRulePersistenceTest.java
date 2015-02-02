@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.mobiledevicerules.NoSuchRuleException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
-import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleModelImpl;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
 
 import org.junit.After;
@@ -464,12 +464,14 @@ public class MDRRulePersistenceTest {
 
 		_persistence.clearCache();
 
-		MDRRuleModelImpl existingMDRRuleModelImpl = (MDRRuleModelImpl)_persistence.findByPrimaryKey(newMDRRule.getPrimaryKey());
+		MDRRule existingMDRRule = _persistence.findByPrimaryKey(newMDRRule.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingMDRRuleModelImpl.getUuid(),
-				existingMDRRuleModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingMDRRuleModelImpl.getGroupId(),
-			existingMDRRuleModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingMDRRule.getUuid(),
+				ReflectionTestUtil.invoke(existingMDRRule, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(existingMDRRule.getGroupId(),
+			ReflectionTestUtil.invoke(existingMDRRule, "getOriginalGroupId",
+				new Class<?>[0]));
 	}
 
 	protected MDRRule addMDRRule() throws Exception {

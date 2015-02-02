@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.social.NoSuchActivityCounterException;
 import com.liferay.portlet.social.model.SocialActivityCounter;
-import com.liferay.portlet.social.model.impl.SocialActivityCounterModelImpl;
 import com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil;
 
 import org.junit.After;
@@ -494,35 +494,47 @@ public class SocialActivityCounterPersistenceTest {
 
 		_persistence.clearCache();
 
-		SocialActivityCounterModelImpl existingSocialActivityCounterModelImpl = (SocialActivityCounterModelImpl)_persistence.findByPrimaryKey(newSocialActivityCounter.getPrimaryKey());
+		SocialActivityCounter existingSocialActivityCounter = _persistence.findByPrimaryKey(newSocialActivityCounter.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialActivityCounterModelImpl.getGroupId(),
-			existingSocialActivityCounterModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingSocialActivityCounterModelImpl.getClassNameId(),
-			existingSocialActivityCounterModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingSocialActivityCounterModelImpl.getClassPK(),
-			existingSocialActivityCounterModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingSocialActivityCounter.getGroupId(),
+			ReflectionTestUtil.invoke(existingSocialActivityCounter,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivityCounter.getClassNameId(),
+			ReflectionTestUtil.invoke(existingSocialActivityCounter,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivityCounter.getClassPK(),
+			ReflectionTestUtil.invoke(existingSocialActivityCounter,
+				"getOriginalClassPK", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingSocialActivityCounterModelImpl.getName(),
-				existingSocialActivityCounterModelImpl.getOriginalName()));
-		Assert.assertEquals(existingSocialActivityCounterModelImpl.getOwnerType(),
-			existingSocialActivityCounterModelImpl.getOriginalOwnerType());
-		Assert.assertEquals(existingSocialActivityCounterModelImpl.getStartPeriod(),
-			existingSocialActivityCounterModelImpl.getOriginalStartPeriod());
+				existingSocialActivityCounter.getName(),
+				ReflectionTestUtil.invoke(existingSocialActivityCounter,
+					"getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(existingSocialActivityCounter.getOwnerType(),
+			ReflectionTestUtil.invoke(existingSocialActivityCounter,
+				"getOriginalOwnerType", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivityCounter.getStartPeriod(),
+			ReflectionTestUtil.invoke(existingSocialActivityCounter,
+				"getOriginalStartPeriod", new Class<?>[0]));
 
-		Assert.assertEquals(existingSocialActivityCounterModelImpl.getGroupId(),
-			existingSocialActivityCounterModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingSocialActivityCounterModelImpl.getClassNameId(),
-			existingSocialActivityCounterModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingSocialActivityCounterModelImpl.getClassPK(),
-			existingSocialActivityCounterModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingSocialActivityCounter.getGroupId(),
+			ReflectionTestUtil.invoke(existingSocialActivityCounter,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivityCounter.getClassNameId(),
+			ReflectionTestUtil.invoke(existingSocialActivityCounter,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivityCounter.getClassPK(),
+			ReflectionTestUtil.invoke(existingSocialActivityCounter,
+				"getOriginalClassPK", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingSocialActivityCounterModelImpl.getName(),
-				existingSocialActivityCounterModelImpl.getOriginalName()));
-		Assert.assertEquals(existingSocialActivityCounterModelImpl.getOwnerType(),
-			existingSocialActivityCounterModelImpl.getOriginalOwnerType());
-		Assert.assertEquals(existingSocialActivityCounterModelImpl.getEndPeriod(),
-			existingSocialActivityCounterModelImpl.getOriginalEndPeriod());
+				existingSocialActivityCounter.getName(),
+				ReflectionTestUtil.invoke(existingSocialActivityCounter,
+					"getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(existingSocialActivityCounter.getOwnerType(),
+			ReflectionTestUtil.invoke(existingSocialActivityCounter,
+				"getOriginalOwnerType", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivityCounter.getEndPeriod(),
+			ReflectionTestUtil.invoke(existingSocialActivityCounter,
+				"getOriginalEndPeriod", new Class<?>[0]));
 	}
 
 	protected SocialActivityCounter addSocialActivityCounter()

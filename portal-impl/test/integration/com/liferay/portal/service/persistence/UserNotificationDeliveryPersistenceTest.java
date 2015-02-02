@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserNotificationDelivery;
-import com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -438,20 +438,24 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		_persistence.clearCache();
 
-		UserNotificationDeliveryModelImpl existingUserNotificationDeliveryModelImpl =
-			(UserNotificationDeliveryModelImpl)_persistence.findByPrimaryKey(newUserNotificationDelivery.getPrimaryKey());
+		UserNotificationDelivery existingUserNotificationDelivery = _persistence.findByPrimaryKey(newUserNotificationDelivery.getPrimaryKey());
 
-		Assert.assertEquals(existingUserNotificationDeliveryModelImpl.getUserId(),
-			existingUserNotificationDeliveryModelImpl.getOriginalUserId());
+		Assert.assertEquals(existingUserNotificationDelivery.getUserId(),
+			ReflectionTestUtil.invoke(existingUserNotificationDelivery,
+				"getOriginalUserId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingUserNotificationDeliveryModelImpl.getPortletId(),
-				existingUserNotificationDeliveryModelImpl.getOriginalPortletId()));
-		Assert.assertEquals(existingUserNotificationDeliveryModelImpl.getClassNameId(),
-			existingUserNotificationDeliveryModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingUserNotificationDeliveryModelImpl.getNotificationType(),
-			existingUserNotificationDeliveryModelImpl.getOriginalNotificationType());
-		Assert.assertEquals(existingUserNotificationDeliveryModelImpl.getDeliveryType(),
-			existingUserNotificationDeliveryModelImpl.getOriginalDeliveryType());
+				existingUserNotificationDelivery.getPortletId(),
+				ReflectionTestUtil.invoke(existingUserNotificationDelivery,
+					"getOriginalPortletId", new Class<?>[0])));
+		Assert.assertEquals(existingUserNotificationDelivery.getClassNameId(),
+			ReflectionTestUtil.invoke(existingUserNotificationDelivery,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingUserNotificationDelivery.getNotificationType(),
+			ReflectionTestUtil.invoke(existingUserNotificationDelivery,
+				"getOriginalNotificationType", new Class<?>[0]));
+		Assert.assertEquals(existingUserNotificationDelivery.getDeliveryType(),
+			ReflectionTestUtil.invoke(existingUserNotificationDelivery,
+				"getOriginalDeliveryType", new Class<?>[0]));
 	}
 
 	protected UserNotificationDelivery addUserNotificationDelivery()

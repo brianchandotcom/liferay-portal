@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ClassName;
-import com.liferay.portal.model.impl.ClassNameModelImpl;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -382,11 +382,11 @@ public class ClassNamePersistenceTest {
 
 		_persistence.clearCache();
 
-		ClassNameModelImpl existingClassNameModelImpl = (ClassNameModelImpl)_persistence.findByPrimaryKey(newClassName.getPrimaryKey());
+		ClassName existingClassName = _persistence.findByPrimaryKey(newClassName.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingClassNameModelImpl.getValue(),
-				existingClassNameModelImpl.getOriginalValue()));
+		Assert.assertTrue(Validator.equals(existingClassName.getValue(),
+				ReflectionTestUtil.invoke(existingClassName,
+					"getOriginalValue", new Class<?>[0])));
 	}
 
 	protected ClassName addClassName() throws Exception {

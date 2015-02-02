@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.model.impl.JournalFolderModelImpl;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 
 import org.junit.After;
@@ -608,27 +608,31 @@ public class JournalFolderPersistenceTest {
 
 		_persistence.clearCache();
 
-		JournalFolderModelImpl existingJournalFolderModelImpl = (JournalFolderModelImpl)_persistence.findByPrimaryKey(newJournalFolder.getPrimaryKey());
+		JournalFolder existingJournalFolder = _persistence.findByPrimaryKey(newJournalFolder.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingJournalFolderModelImpl.getUuid(),
-				existingJournalFolderModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingJournalFolderModelImpl.getGroupId(),
-			existingJournalFolderModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingJournalFolder.getUuid(),
+				ReflectionTestUtil.invoke(existingJournalFolder,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingJournalFolder.getGroupId(),
+			ReflectionTestUtil.invoke(existingJournalFolder,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingJournalFolderModelImpl.getGroupId(),
-			existingJournalFolderModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingJournalFolderModelImpl.getName(),
-				existingJournalFolderModelImpl.getOriginalName()));
+		Assert.assertEquals(existingJournalFolder.getGroupId(),
+			ReflectionTestUtil.invoke(existingJournalFolder,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingJournalFolder.getName(),
+				ReflectionTestUtil.invoke(existingJournalFolder,
+					"getOriginalName", new Class<?>[0])));
 
-		Assert.assertEquals(existingJournalFolderModelImpl.getGroupId(),
-			existingJournalFolderModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingJournalFolderModelImpl.getParentFolderId(),
-			existingJournalFolderModelImpl.getOriginalParentFolderId());
-		Assert.assertTrue(Validator.equals(
-				existingJournalFolderModelImpl.getName(),
-				existingJournalFolderModelImpl.getOriginalName()));
+		Assert.assertEquals(existingJournalFolder.getGroupId(),
+			ReflectionTestUtil.invoke(existingJournalFolder,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingJournalFolder.getParentFolderId(),
+			ReflectionTestUtil.invoke(existingJournalFolder,
+				"getOriginalParentFolderId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingJournalFolder.getName(),
+				ReflectionTestUtil.invoke(existingJournalFolder,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected JournalFolder addJournalFolder() throws Exception {

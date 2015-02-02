@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.journal.NoSuchFeedException;
 import com.liferay.portlet.journal.model.JournalFeed;
-import com.liferay.portlet.journal.model.impl.JournalFeedModelImpl;
 import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 
 import org.junit.After;
@@ -534,19 +534,21 @@ public class JournalFeedPersistenceTest {
 
 		_persistence.clearCache();
 
-		JournalFeedModelImpl existingJournalFeedModelImpl = (JournalFeedModelImpl)_persistence.findByPrimaryKey(newJournalFeed.getPrimaryKey());
+		JournalFeed existingJournalFeed = _persistence.findByPrimaryKey(newJournalFeed.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingJournalFeedModelImpl.getUuid(),
-				existingJournalFeedModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingJournalFeedModelImpl.getGroupId(),
-			existingJournalFeedModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingJournalFeed.getUuid(),
+				ReflectionTestUtil.invoke(existingJournalFeed,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingJournalFeed.getGroupId(),
+			ReflectionTestUtil.invoke(existingJournalFeed,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingJournalFeedModelImpl.getGroupId(),
-			existingJournalFeedModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingJournalFeedModelImpl.getFeedId(),
-				existingJournalFeedModelImpl.getOriginalFeedId()));
+		Assert.assertEquals(existingJournalFeed.getGroupId(),
+			ReflectionTestUtil.invoke(existingJournalFeed,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingJournalFeed.getFeedId(),
+				ReflectionTestUtil.invoke(existingJournalFeed,
+					"getOriginalFeedId", new Class<?>[0])));
 	}
 
 	protected JournalFeed addJournalFeed() throws Exception {

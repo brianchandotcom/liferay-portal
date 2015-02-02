@@ -16,7 +16,6 @@ package com.liferay.polls.service.persistence;
 
 import com.liferay.polls.exception.NoSuchQuestionException;
 import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.model.impl.PollsQuestionModelImpl;
 import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -483,13 +483,14 @@ public class PollsQuestionPersistenceTest {
 
 		_persistence.clearCache();
 
-		PollsQuestionModelImpl existingPollsQuestionModelImpl = (PollsQuestionModelImpl)_persistence.findByPrimaryKey(newPollsQuestion.getPrimaryKey());
+		PollsQuestion existingPollsQuestion = _persistence.findByPrimaryKey(newPollsQuestion.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingPollsQuestionModelImpl.getUuid(),
-				existingPollsQuestionModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingPollsQuestionModelImpl.getGroupId(),
-			existingPollsQuestionModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingPollsQuestion.getUuid(),
+				ReflectionTestUtil.invoke(existingPollsQuestion,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingPollsQuestion.getGroupId(),
+			ReflectionTestUtil.invoke(existingPollsQuestion,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected PollsQuestion addPollsQuestion() throws Exception {

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.trash.NoSuchEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.model.impl.TrashEntryModelImpl;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import org.junit.After;
@@ -467,12 +467,14 @@ public class TrashEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		TrashEntryModelImpl existingTrashEntryModelImpl = (TrashEntryModelImpl)_persistence.findByPrimaryKey(newTrashEntry.getPrimaryKey());
+		TrashEntry existingTrashEntry = _persistence.findByPrimaryKey(newTrashEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingTrashEntryModelImpl.getClassNameId(),
-			existingTrashEntryModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingTrashEntryModelImpl.getClassPK(),
-			existingTrashEntryModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingTrashEntry.getClassNameId(),
+			ReflectionTestUtil.invoke(existingTrashEntry,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingTrashEntry.getClassPK(),
+			ReflectionTestUtil.invoke(existingTrashEntry, "getOriginalClassPK",
+				new Class<?>[0]));
 	}
 
 	protected TrashEntry addTrashEntry() throws Exception {

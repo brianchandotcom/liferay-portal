@@ -16,7 +16,6 @@ package com.liferay.polls.service.persistence;
 
 import com.liferay.polls.exception.NoSuchVoteException;
 import com.liferay.polls.model.PollsVote;
-import com.liferay.polls.model.impl.PollsVoteModelImpl;
 import com.liferay.polls.service.PollsVoteLocalServiceUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -490,18 +490,21 @@ public class PollsVotePersistenceTest {
 
 		_persistence.clearCache();
 
-		PollsVoteModelImpl existingPollsVoteModelImpl = (PollsVoteModelImpl)_persistence.findByPrimaryKey(newPollsVote.getPrimaryKey());
+		PollsVote existingPollsVote = _persistence.findByPrimaryKey(newPollsVote.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingPollsVoteModelImpl.getUuid(),
-				existingPollsVoteModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingPollsVoteModelImpl.getGroupId(),
-			existingPollsVoteModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingPollsVote.getUuid(),
+				ReflectionTestUtil.invoke(existingPollsVote, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(existingPollsVote.getGroupId(),
+			ReflectionTestUtil.invoke(existingPollsVote, "getOriginalGroupId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingPollsVoteModelImpl.getQuestionId(),
-			existingPollsVoteModelImpl.getOriginalQuestionId());
-		Assert.assertEquals(existingPollsVoteModelImpl.getUserId(),
-			existingPollsVoteModelImpl.getOriginalUserId());
+		Assert.assertEquals(existingPollsVote.getQuestionId(),
+			ReflectionTestUtil.invoke(existingPollsVote,
+				"getOriginalQuestionId", new Class<?>[0]));
+		Assert.assertEquals(existingPollsVote.getUserId(),
+			ReflectionTestUtil.invoke(existingPollsVote, "getOriginalUserId",
+				new Class<?>[0]));
 	}
 
 	protected PollsVote addPollsVote() throws Exception {

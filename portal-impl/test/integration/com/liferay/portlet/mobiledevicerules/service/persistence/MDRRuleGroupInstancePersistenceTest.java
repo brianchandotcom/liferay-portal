@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
-import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupInstanceModelImpl;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
 
 import org.junit.After;
@@ -535,20 +535,25 @@ public class MDRRuleGroupInstancePersistenceTest {
 
 		_persistence.clearCache();
 
-		MDRRuleGroupInstanceModelImpl existingMDRRuleGroupInstanceModelImpl = (MDRRuleGroupInstanceModelImpl)_persistence.findByPrimaryKey(newMDRRuleGroupInstance.getPrimaryKey());
+		MDRRuleGroupInstance existingMDRRuleGroupInstance = _persistence.findByPrimaryKey(newMDRRuleGroupInstance.getPrimaryKey());
 
 		Assert.assertTrue(Validator.equals(
-				existingMDRRuleGroupInstanceModelImpl.getUuid(),
-				existingMDRRuleGroupInstanceModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingMDRRuleGroupInstanceModelImpl.getGroupId(),
-			existingMDRRuleGroupInstanceModelImpl.getOriginalGroupId());
+				existingMDRRuleGroupInstance.getUuid(),
+				ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingMDRRuleGroupInstance.getGroupId(),
+			ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingMDRRuleGroupInstanceModelImpl.getClassNameId(),
-			existingMDRRuleGroupInstanceModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingMDRRuleGroupInstanceModelImpl.getClassPK(),
-			existingMDRRuleGroupInstanceModelImpl.getOriginalClassPK());
-		Assert.assertEquals(existingMDRRuleGroupInstanceModelImpl.getRuleGroupId(),
-			existingMDRRuleGroupInstanceModelImpl.getOriginalRuleGroupId());
+		Assert.assertEquals(existingMDRRuleGroupInstance.getClassNameId(),
+			ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingMDRRuleGroupInstance.getClassPK(),
+			ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+				"getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(existingMDRRuleGroupInstance.getRuleGroupId(),
+			ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+				"getOriginalRuleGroupId", new Class<?>[0]));
 	}
 
 	protected MDRRuleGroupInstance addMDRRuleGroupInstance()

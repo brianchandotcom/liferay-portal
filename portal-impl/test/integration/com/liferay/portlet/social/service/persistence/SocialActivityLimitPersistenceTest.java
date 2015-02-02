@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.social.NoSuchActivityLimitException;
 import com.liferay.portlet.social.model.SocialActivityLimit;
-import com.liferay.portlet.social.model.impl.SocialActivityLimitModelImpl;
 import com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil;
 
 import org.junit.After;
@@ -452,21 +452,27 @@ public class SocialActivityLimitPersistenceTest {
 
 		_persistence.clearCache();
 
-		SocialActivityLimitModelImpl existingSocialActivityLimitModelImpl = (SocialActivityLimitModelImpl)_persistence.findByPrimaryKey(newSocialActivityLimit.getPrimaryKey());
+		SocialActivityLimit existingSocialActivityLimit = _persistence.findByPrimaryKey(newSocialActivityLimit.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialActivityLimitModelImpl.getGroupId(),
-			existingSocialActivityLimitModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingSocialActivityLimitModelImpl.getUserId(),
-			existingSocialActivityLimitModelImpl.getOriginalUserId());
-		Assert.assertEquals(existingSocialActivityLimitModelImpl.getClassNameId(),
-			existingSocialActivityLimitModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingSocialActivityLimitModelImpl.getClassPK(),
-			existingSocialActivityLimitModelImpl.getOriginalClassPK());
-		Assert.assertEquals(existingSocialActivityLimitModelImpl.getActivityType(),
-			existingSocialActivityLimitModelImpl.getOriginalActivityType());
+		Assert.assertEquals(existingSocialActivityLimit.getGroupId(),
+			ReflectionTestUtil.invoke(existingSocialActivityLimit,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivityLimit.getUserId(),
+			ReflectionTestUtil.invoke(existingSocialActivityLimit,
+				"getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivityLimit.getClassNameId(),
+			ReflectionTestUtil.invoke(existingSocialActivityLimit,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivityLimit.getClassPK(),
+			ReflectionTestUtil.invoke(existingSocialActivityLimit,
+				"getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivityLimit.getActivityType(),
+			ReflectionTestUtil.invoke(existingSocialActivityLimit,
+				"getOriginalActivityType", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingSocialActivityLimitModelImpl.getActivityCounterName(),
-				existingSocialActivityLimitModelImpl.getOriginalActivityCounterName()));
+				existingSocialActivityLimit.getActivityCounterName(),
+				ReflectionTestUtil.invoke(existingSocialActivityLimit,
+					"getOriginalActivityCounterName", new Class<?>[0])));
 	}
 
 	protected SocialActivityLimit addSocialActivityLimit()

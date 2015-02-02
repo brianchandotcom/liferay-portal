@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.documentlibrary.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
-import com.liferay.portlet.documentlibrary.model.impl.DLContentModelImpl;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 
 import org.junit.After;
@@ -461,18 +461,20 @@ public class DLContentPersistenceTest {
 
 		_persistence.clearCache();
 
-		DLContentModelImpl existingDLContentModelImpl = (DLContentModelImpl)_persistence.findByPrimaryKey(newDLContent.getPrimaryKey());
+		DLContent existingDLContent = _persistence.findByPrimaryKey(newDLContent.getPrimaryKey());
 
-		Assert.assertEquals(existingDLContentModelImpl.getCompanyId(),
-			existingDLContentModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingDLContentModelImpl.getRepositoryId(),
-			existingDLContentModelImpl.getOriginalRepositoryId());
-		Assert.assertTrue(Validator.equals(
-				existingDLContentModelImpl.getPath(),
-				existingDLContentModelImpl.getOriginalPath()));
-		Assert.assertTrue(Validator.equals(
-				existingDLContentModelImpl.getVersion(),
-				existingDLContentModelImpl.getOriginalVersion()));
+		Assert.assertEquals(existingDLContent.getCompanyId(),
+			ReflectionTestUtil.invoke(existingDLContent,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(existingDLContent.getRepositoryId(),
+			ReflectionTestUtil.invoke(existingDLContent,
+				"getOriginalRepositoryId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingDLContent.getPath(),
+				ReflectionTestUtil.invoke(existingDLContent, "getOriginalPath",
+					new Class<?>[0])));
+		Assert.assertTrue(Validator.equals(existingDLContent.getVersion(),
+				ReflectionTestUtil.invoke(existingDLContent,
+					"getOriginalVersion", new Class<?>[0])));
 	}
 
 	protected DLContent addDLContent() throws Exception {

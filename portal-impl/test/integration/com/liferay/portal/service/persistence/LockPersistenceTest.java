@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
-import com.liferay.portal.model.impl.LockModelImpl;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -452,13 +452,14 @@ public class LockPersistenceTest {
 
 		_persistence.clearCache();
 
-		LockModelImpl existingLockModelImpl = (LockModelImpl)_persistence.findByPrimaryKey(newLock.getPrimaryKey());
+		Lock existingLock = _persistence.findByPrimaryKey(newLock.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingLockModelImpl.getClassName(),
-				existingLockModelImpl.getOriginalClassName()));
-		Assert.assertTrue(Validator.equals(existingLockModelImpl.getKey(),
-				existingLockModelImpl.getOriginalKey()));
+		Assert.assertTrue(Validator.equals(existingLock.getClassName(),
+				ReflectionTestUtil.invoke(existingLock, "getOriginalClassName",
+					new Class<?>[0])));
+		Assert.assertTrue(Validator.equals(existingLock.getKey(),
+				ReflectionTestUtil.invoke(existingLock, "getOriginalKey",
+					new Class<?>[0])));
 	}
 
 	protected Lock addLock() throws Exception {

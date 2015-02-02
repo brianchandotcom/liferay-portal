@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.impl.MBCategoryModelImpl;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 
 import org.junit.After;
@@ -651,13 +651,14 @@ public class MBCategoryPersistenceTest {
 
 		_persistence.clearCache();
 
-		MBCategoryModelImpl existingMBCategoryModelImpl = (MBCategoryModelImpl)_persistence.findByPrimaryKey(newMBCategory.getPrimaryKey());
+		MBCategory existingMBCategory = _persistence.findByPrimaryKey(newMBCategory.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingMBCategoryModelImpl.getUuid(),
-				existingMBCategoryModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingMBCategoryModelImpl.getGroupId(),
-			existingMBCategoryModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingMBCategory.getUuid(),
+				ReflectionTestUtil.invoke(existingMBCategory,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingMBCategory.getGroupId(),
+			ReflectionTestUtil.invoke(existingMBCategory, "getOriginalGroupId",
+				new Class<?>[0]));
 	}
 
 	protected MBCategory addMBCategory() throws Exception {

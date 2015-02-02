@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.asset.NoSuchLinkException;
 import com.liferay.portlet.asset.model.AssetLink;
-import com.liferay.portlet.asset.model.impl.AssetLinkModelImpl;
 import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 
 import org.junit.After;
@@ -470,14 +470,17 @@ public class AssetLinkPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetLinkModelImpl existingAssetLinkModelImpl = (AssetLinkModelImpl)_persistence.findByPrimaryKey(newAssetLink.getPrimaryKey());
+		AssetLink existingAssetLink = _persistence.findByPrimaryKey(newAssetLink.getPrimaryKey());
 
-		Assert.assertEquals(existingAssetLinkModelImpl.getEntryId1(),
-			existingAssetLinkModelImpl.getOriginalEntryId1());
-		Assert.assertEquals(existingAssetLinkModelImpl.getEntryId2(),
-			existingAssetLinkModelImpl.getOriginalEntryId2());
-		Assert.assertEquals(existingAssetLinkModelImpl.getType(),
-			existingAssetLinkModelImpl.getOriginalType());
+		Assert.assertEquals(existingAssetLink.getEntryId1(),
+			ReflectionTestUtil.invoke(existingAssetLink, "getOriginalEntryId1",
+				new Class<?>[0]));
+		Assert.assertEquals(existingAssetLink.getEntryId2(),
+			ReflectionTestUtil.invoke(existingAssetLink, "getOriginalEntryId2",
+				new Class<?>[0]));
+		Assert.assertEquals(existingAssetLink.getType(),
+			ReflectionTestUtil.invoke(existingAssetLink, "getOriginalType",
+				new Class<?>[0]));
 	}
 
 	protected AssetLink addAssetLink() throws Exception {

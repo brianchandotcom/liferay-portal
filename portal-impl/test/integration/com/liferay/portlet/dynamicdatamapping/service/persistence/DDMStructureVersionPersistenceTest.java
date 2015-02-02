@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureVersionModelImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionLocalServiceUtil;
 
 import org.junit.After;
@@ -443,13 +443,15 @@ public class DDMStructureVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMStructureVersionModelImpl existingDDMStructureVersionModelImpl = (DDMStructureVersionModelImpl)_persistence.findByPrimaryKey(newDDMStructureVersion.getPrimaryKey());
+		DDMStructureVersion existingDDMStructureVersion = _persistence.findByPrimaryKey(newDDMStructureVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMStructureVersionModelImpl.getStructureId(),
-			existingDDMStructureVersionModelImpl.getOriginalStructureId());
+		Assert.assertEquals(existingDDMStructureVersion.getStructureId(),
+			ReflectionTestUtil.invoke(existingDDMStructureVersion,
+				"getOriginalStructureId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingDDMStructureVersionModelImpl.getVersion(),
-				existingDDMStructureVersionModelImpl.getOriginalVersion()));
+				existingDDMStructureVersion.getVersion(),
+				ReflectionTestUtil.invoke(existingDDMStructureVersion,
+					"getOriginalVersion", new Class<?>[0])));
 	}
 
 	protected DDMStructureVersion addDDMStructureVersion()

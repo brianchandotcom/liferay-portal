@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.PasswordPolicyRel;
-import com.liferay.portal.model.impl.PasswordPolicyRelModelImpl;
 import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -403,12 +403,14 @@ public class PasswordPolicyRelPersistenceTest {
 
 		_persistence.clearCache();
 
-		PasswordPolicyRelModelImpl existingPasswordPolicyRelModelImpl = (PasswordPolicyRelModelImpl)_persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
+		PasswordPolicyRel existingPasswordPolicyRel = _persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
 
-		Assert.assertEquals(existingPasswordPolicyRelModelImpl.getClassNameId(),
-			existingPasswordPolicyRelModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingPasswordPolicyRelModelImpl.getClassPK(),
-			existingPasswordPolicyRelModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingPasswordPolicyRel.getClassNameId(),
+			ReflectionTestUtil.invoke(existingPasswordPolicyRel,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingPasswordPolicyRel.getClassPK(),
+			ReflectionTestUtil.invoke(existingPasswordPolicyRel,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected PasswordPolicyRel addPasswordPolicyRel()

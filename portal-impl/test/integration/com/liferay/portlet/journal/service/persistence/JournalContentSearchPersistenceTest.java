@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.journal.NoSuchContentSearchException;
 import com.liferay.portlet.journal.model.JournalContentSearch;
-import com.liferay.portlet.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
 import org.junit.After;
@@ -514,20 +514,25 @@ public class JournalContentSearchPersistenceTest {
 
 		_persistence.clearCache();
 
-		JournalContentSearchModelImpl existingJournalContentSearchModelImpl = (JournalContentSearchModelImpl)_persistence.findByPrimaryKey(newJournalContentSearch.getPrimaryKey());
+		JournalContentSearch existingJournalContentSearch = _persistence.findByPrimaryKey(newJournalContentSearch.getPrimaryKey());
 
-		Assert.assertEquals(existingJournalContentSearchModelImpl.getGroupId(),
-			existingJournalContentSearchModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingJournalContentSearchModelImpl.getPrivateLayout(),
-			existingJournalContentSearchModelImpl.getOriginalPrivateLayout());
-		Assert.assertEquals(existingJournalContentSearchModelImpl.getLayoutId(),
-			existingJournalContentSearchModelImpl.getOriginalLayoutId());
+		Assert.assertEquals(existingJournalContentSearch.getGroupId(),
+			ReflectionTestUtil.invoke(existingJournalContentSearch,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingJournalContentSearch.getPrivateLayout(),
+			ReflectionTestUtil.invoke(existingJournalContentSearch,
+				"getOriginalPrivateLayout", new Class<?>[0]));
+		Assert.assertEquals(existingJournalContentSearch.getLayoutId(),
+			ReflectionTestUtil.invoke(existingJournalContentSearch,
+				"getOriginalLayoutId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingJournalContentSearchModelImpl.getPortletId(),
-				existingJournalContentSearchModelImpl.getOriginalPortletId()));
+				existingJournalContentSearch.getPortletId(),
+				ReflectionTestUtil.invoke(existingJournalContentSearch,
+					"getOriginalPortletId", new Class<?>[0])));
 		Assert.assertTrue(Validator.equals(
-				existingJournalContentSearchModelImpl.getArticleId(),
-				existingJournalContentSearchModelImpl.getOriginalArticleId()));
+				existingJournalContentSearch.getArticleId(),
+				ReflectionTestUtil.invoke(existingJournalContentSearch,
+					"getOriginalArticleId", new Class<?>[0])));
 	}
 
 	protected JournalContentSearch addJournalContentSearch()

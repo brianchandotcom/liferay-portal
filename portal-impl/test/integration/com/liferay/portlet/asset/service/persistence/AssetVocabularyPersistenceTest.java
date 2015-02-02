@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.asset.NoSuchVocabularyException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import org.junit.After;
@@ -532,19 +532,21 @@ public class AssetVocabularyPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetVocabularyModelImpl existingAssetVocabularyModelImpl = (AssetVocabularyModelImpl)_persistence.findByPrimaryKey(newAssetVocabulary.getPrimaryKey());
+		AssetVocabulary existingAssetVocabulary = _persistence.findByPrimaryKey(newAssetVocabulary.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingAssetVocabularyModelImpl.getUuid(),
-				existingAssetVocabularyModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingAssetVocabularyModelImpl.getGroupId(),
-			existingAssetVocabularyModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingAssetVocabulary.getUuid(),
+				ReflectionTestUtil.invoke(existingAssetVocabulary,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingAssetVocabulary.getGroupId(),
+			ReflectionTestUtil.invoke(existingAssetVocabulary,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingAssetVocabularyModelImpl.getGroupId(),
-			existingAssetVocabularyModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingAssetVocabularyModelImpl.getName(),
-				existingAssetVocabularyModelImpl.getOriginalName()));
+		Assert.assertEquals(existingAssetVocabulary.getGroupId(),
+			ReflectionTestUtil.invoke(existingAssetVocabulary,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingAssetVocabulary.getName(),
+				ReflectionTestUtil.invoke(existingAssetVocabulary,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected AssetVocabulary addAssetVocabulary() throws Exception {

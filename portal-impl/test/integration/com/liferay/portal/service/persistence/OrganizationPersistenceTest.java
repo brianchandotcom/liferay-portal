@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.impl.OrganizationModelImpl;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -546,13 +546,14 @@ public class OrganizationPersistenceTest {
 
 		_persistence.clearCache();
 
-		OrganizationModelImpl existingOrganizationModelImpl = (OrganizationModelImpl)_persistence.findByPrimaryKey(newOrganization.getPrimaryKey());
+		Organization existingOrganization = _persistence.findByPrimaryKey(newOrganization.getPrimaryKey());
 
-		Assert.assertEquals(existingOrganizationModelImpl.getCompanyId(),
-			existingOrganizationModelImpl.getOriginalCompanyId());
-		Assert.assertTrue(Validator.equals(
-				existingOrganizationModelImpl.getName(),
-				existingOrganizationModelImpl.getOriginalName()));
+		Assert.assertEquals(existingOrganization.getCompanyId(),
+			ReflectionTestUtil.invoke(existingOrganization,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingOrganization.getName(),
+				ReflectionTestUtil.invoke(existingOrganization,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected Organization addOrganization() throws Exception {

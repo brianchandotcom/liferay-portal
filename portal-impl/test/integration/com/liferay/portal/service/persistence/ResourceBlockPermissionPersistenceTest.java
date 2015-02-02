@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.ResourceBlockPermission;
-import com.liferay.portal.model.impl.ResourceBlockPermissionModelImpl;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -427,13 +427,14 @@ public class ResourceBlockPermissionPersistenceTest {
 
 		_persistence.clearCache();
 
-		ResourceBlockPermissionModelImpl existingResourceBlockPermissionModelImpl =
-			(ResourceBlockPermissionModelImpl)_persistence.findByPrimaryKey(newResourceBlockPermission.getPrimaryKey());
+		ResourceBlockPermission existingResourceBlockPermission = _persistence.findByPrimaryKey(newResourceBlockPermission.getPrimaryKey());
 
-		Assert.assertEquals(existingResourceBlockPermissionModelImpl.getResourceBlockId(),
-			existingResourceBlockPermissionModelImpl.getOriginalResourceBlockId());
-		Assert.assertEquals(existingResourceBlockPermissionModelImpl.getRoleId(),
-			existingResourceBlockPermissionModelImpl.getOriginalRoleId());
+		Assert.assertEquals(existingResourceBlockPermission.getResourceBlockId(),
+			ReflectionTestUtil.invoke(existingResourceBlockPermission,
+				"getOriginalResourceBlockId", new Class<?>[0]));
+		Assert.assertEquals(existingResourceBlockPermission.getRoleId(),
+			ReflectionTestUtil.invoke(existingResourceBlockPermission,
+				"getOriginalRoleId", new Class<?>[0]));
 	}
 
 	protected ResourceBlockPermission addResourceBlockPermission()

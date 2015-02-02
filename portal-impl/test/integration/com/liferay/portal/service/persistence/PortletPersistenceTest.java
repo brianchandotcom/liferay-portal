@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.impl.PortletModelImpl;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -400,13 +400,14 @@ public class PortletPersistenceTest {
 
 		_persistence.clearCache();
 
-		PortletModelImpl existingPortletModelImpl = (PortletModelImpl)_persistence.findByPrimaryKey(newPortlet.getPrimaryKey());
+		Portlet existingPortlet = _persistence.findByPrimaryKey(newPortlet.getPrimaryKey());
 
-		Assert.assertEquals(existingPortletModelImpl.getCompanyId(),
-			existingPortletModelImpl.getOriginalCompanyId());
-		Assert.assertTrue(Validator.equals(
-				existingPortletModelImpl.getPortletId(),
-				existingPortletModelImpl.getOriginalPortletId()));
+		Assert.assertEquals(existingPortlet.getCompanyId(),
+			ReflectionTestUtil.invoke(existingPortlet, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingPortlet.getPortletId(),
+				ReflectionTestUtil.invoke(existingPortlet,
+					"getOriginalPortletId", new Class<?>[0])));
 	}
 
 	protected Portlet addPortlet() throws Exception {

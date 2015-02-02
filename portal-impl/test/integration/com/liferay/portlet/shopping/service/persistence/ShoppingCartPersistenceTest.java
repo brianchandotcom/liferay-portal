@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.shopping.NoSuchCartException;
 import com.liferay.portlet.shopping.model.ShoppingCart;
-import com.liferay.portlet.shopping.model.impl.ShoppingCartModelImpl;
 import com.liferay.portlet.shopping.service.ShoppingCartLocalServiceUtil;
 
 import org.junit.After;
@@ -442,12 +442,14 @@ public class ShoppingCartPersistenceTest {
 
 		_persistence.clearCache();
 
-		ShoppingCartModelImpl existingShoppingCartModelImpl = (ShoppingCartModelImpl)_persistence.findByPrimaryKey(newShoppingCart.getPrimaryKey());
+		ShoppingCart existingShoppingCart = _persistence.findByPrimaryKey(newShoppingCart.getPrimaryKey());
 
-		Assert.assertEquals(existingShoppingCartModelImpl.getGroupId(),
-			existingShoppingCartModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingShoppingCartModelImpl.getUserId(),
-			existingShoppingCartModelImpl.getOriginalUserId());
+		Assert.assertEquals(existingShoppingCart.getGroupId(),
+			ReflectionTestUtil.invoke(existingShoppingCart,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingShoppingCart.getUserId(),
+			ReflectionTestUtil.invoke(existingShoppingCart,
+				"getOriginalUserId", new Class<?>[0]));
 	}
 
 	protected ShoppingCart addShoppingCart() throws Exception {

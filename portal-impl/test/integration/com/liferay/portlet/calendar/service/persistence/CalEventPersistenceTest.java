@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.calendar.NoSuchEventException;
 import com.liferay.portlet.calendar.model.CalEvent;
-import com.liferay.portlet.calendar.model.impl.CalEventModelImpl;
 import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 
 import org.junit.After;
@@ -620,13 +620,14 @@ public class CalEventPersistenceTest {
 
 		_persistence.clearCache();
 
-		CalEventModelImpl existingCalEventModelImpl = (CalEventModelImpl)_persistence.findByPrimaryKey(newCalEvent.getPrimaryKey());
+		CalEvent existingCalEvent = _persistence.findByPrimaryKey(newCalEvent.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingCalEventModelImpl.getUuid(),
-				existingCalEventModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingCalEventModelImpl.getGroupId(),
-			existingCalEventModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingCalEvent.getUuid(),
+				ReflectionTestUtil.invoke(existingCalEvent, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(existingCalEvent.getGroupId(),
+			ReflectionTestUtil.invoke(existingCalEvent, "getOriginalGroupId",
+				new Class<?>[0]));
 	}
 
 	protected CalEvent addCalEvent() throws Exception {

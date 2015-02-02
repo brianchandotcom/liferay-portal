@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordModelImpl;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 
 import org.junit.After;
@@ -499,13 +499,14 @@ public class DDLRecordPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDLRecordModelImpl existingDDLRecordModelImpl = (DDLRecordModelImpl)_persistence.findByPrimaryKey(newDDLRecord.getPrimaryKey());
+		DDLRecord existingDDLRecord = _persistence.findByPrimaryKey(newDDLRecord.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingDDLRecordModelImpl.getUuid(),
-				existingDDLRecordModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingDDLRecordModelImpl.getGroupId(),
-			existingDDLRecordModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingDDLRecord.getUuid(),
+				ReflectionTestUtil.invoke(existingDDLRecord, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(existingDDLRecord.getGroupId(),
+			ReflectionTestUtil.invoke(existingDDLRecord, "getOriginalGroupId",
+				new Class<?>[0]));
 	}
 
 	protected DDLRecord addDDLRecord() throws Exception {

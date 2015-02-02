@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Shard;
-import com.liferay.portal.model.impl.ShardModelImpl;
 import com.liferay.portal.service.ShardLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -397,15 +397,18 @@ public class ShardPersistenceTest {
 
 		_persistence.clearCache();
 
-		ShardModelImpl existingShardModelImpl = (ShardModelImpl)_persistence.findByPrimaryKey(newShard.getPrimaryKey());
+		Shard existingShard = _persistence.findByPrimaryKey(newShard.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingShardModelImpl.getName(),
-				existingShardModelImpl.getOriginalName()));
+		Assert.assertTrue(Validator.equals(existingShard.getName(),
+				ReflectionTestUtil.invoke(existingShard, "getOriginalName",
+					new Class<?>[0])));
 
-		Assert.assertEquals(existingShardModelImpl.getClassNameId(),
-			existingShardModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingShardModelImpl.getClassPK(),
-			existingShardModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingShard.getClassNameId(),
+			ReflectionTestUtil.invoke(existingShard, "getOriginalClassNameId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingShard.getClassPK(),
+			ReflectionTestUtil.invoke(existingShard, "getOriginalClassPK",
+				new Class<?>[0]));
 	}
 
 	protected Shard addShard() throws Exception {

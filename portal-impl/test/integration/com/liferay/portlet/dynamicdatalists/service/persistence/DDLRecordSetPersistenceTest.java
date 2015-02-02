@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetModelImpl;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 
 import org.junit.After;
@@ -511,19 +511,22 @@ public class DDLRecordSetPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDLRecordSetModelImpl existingDDLRecordSetModelImpl = (DDLRecordSetModelImpl)_persistence.findByPrimaryKey(newDDLRecordSet.getPrimaryKey());
+		DDLRecordSet existingDDLRecordSet = _persistence.findByPrimaryKey(newDDLRecordSet.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingDDLRecordSetModelImpl.getUuid(),
-				existingDDLRecordSetModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingDDLRecordSetModelImpl.getGroupId(),
-			existingDDLRecordSetModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingDDLRecordSet.getUuid(),
+				ReflectionTestUtil.invoke(existingDDLRecordSet,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingDDLRecordSet.getGroupId(),
+			ReflectionTestUtil.invoke(existingDDLRecordSet,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDDLRecordSetModelImpl.getGroupId(),
-			existingDDLRecordSetModelImpl.getOriginalGroupId());
+		Assert.assertEquals(existingDDLRecordSet.getGroupId(),
+			ReflectionTestUtil.invoke(existingDDLRecordSet,
+				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingDDLRecordSetModelImpl.getRecordSetKey(),
-				existingDDLRecordSetModelImpl.getOriginalRecordSetKey()));
+				existingDDLRecordSet.getRecordSetKey(),
+				ReflectionTestUtil.invoke(existingDDLRecordSet,
+					"getOriginalRecordSetKey", new Class<?>[0])));
 	}
 
 	protected DDLRecordSet addDDLRecordSet() throws Exception {

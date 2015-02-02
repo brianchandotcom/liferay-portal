@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
-import com.liferay.portlet.messageboards.model.impl.MBDiscussionModelImpl;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 
 import org.junit.After;
@@ -491,21 +491,25 @@ public class MBDiscussionPersistenceTest {
 
 		_persistence.clearCache();
 
-		MBDiscussionModelImpl existingMBDiscussionModelImpl = (MBDiscussionModelImpl)_persistence.findByPrimaryKey(newMBDiscussion.getPrimaryKey());
+		MBDiscussion existingMBDiscussion = _persistence.findByPrimaryKey(newMBDiscussion.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingMBDiscussionModelImpl.getUuid(),
-				existingMBDiscussionModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingMBDiscussionModelImpl.getGroupId(),
-			existingMBDiscussionModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingMBDiscussion.getUuid(),
+				ReflectionTestUtil.invoke(existingMBDiscussion,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingMBDiscussion.getGroupId(),
+			ReflectionTestUtil.invoke(existingMBDiscussion,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingMBDiscussionModelImpl.getThreadId(),
-			existingMBDiscussionModelImpl.getOriginalThreadId());
+		Assert.assertEquals(existingMBDiscussion.getThreadId(),
+			ReflectionTestUtil.invoke(existingMBDiscussion,
+				"getOriginalThreadId", new Class<?>[0]));
 
-		Assert.assertEquals(existingMBDiscussionModelImpl.getClassNameId(),
-			existingMBDiscussionModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingMBDiscussionModelImpl.getClassPK(),
-			existingMBDiscussionModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingMBDiscussion.getClassNameId(),
+			ReflectionTestUtil.invoke(existingMBDiscussion,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingMBDiscussion.getClassPK(),
+			ReflectionTestUtil.invoke(existingMBDiscussion,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected MBDiscussion addMBDiscussion() throws Exception {

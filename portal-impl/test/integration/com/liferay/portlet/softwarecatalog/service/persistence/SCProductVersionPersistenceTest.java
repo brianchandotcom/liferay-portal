@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.softwarecatalog.NoSuchProductVersionException;
 import com.liferay.portlet.softwarecatalog.model.SCProductVersion;
-import com.liferay.portlet.softwarecatalog.model.impl.SCProductVersionModelImpl;
 import com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalServiceUtil;
 
 import org.junit.After;
@@ -441,11 +441,12 @@ public class SCProductVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		SCProductVersionModelImpl existingSCProductVersionModelImpl = (SCProductVersionModelImpl)_persistence.findByPrimaryKey(newSCProductVersion.getPrimaryKey());
+		SCProductVersion existingSCProductVersion = _persistence.findByPrimaryKey(newSCProductVersion.getPrimaryKey());
 
 		Assert.assertTrue(Validator.equals(
-				existingSCProductVersionModelImpl.getDirectDownloadURL(),
-				existingSCProductVersionModelImpl.getOriginalDirectDownloadURL()));
+				existingSCProductVersion.getDirectDownloadURL(),
+				ReflectionTestUtil.invoke(existingSCProductVersion,
+					"getOriginalDirectDownloadURL", new Class<?>[0])));
 	}
 
 	protected SCProductVersion addSCProductVersion() throws Exception {

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.social.NoSuchActivityAchievementException;
 import com.liferay.portlet.social.model.SocialActivityAchievement;
-import com.liferay.portlet.social.model.impl.SocialActivityAchievementModelImpl;
 import com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceUtil;
 
 import org.junit.After;
@@ -479,16 +479,18 @@ public class SocialActivityAchievementPersistenceTest {
 
 		_persistence.clearCache();
 
-		SocialActivityAchievementModelImpl existingSocialActivityAchievementModelImpl =
-			(SocialActivityAchievementModelImpl)_persistence.findByPrimaryKey(newSocialActivityAchievement.getPrimaryKey());
+		SocialActivityAchievement existingSocialActivityAchievement = _persistence.findByPrimaryKey(newSocialActivityAchievement.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialActivityAchievementModelImpl.getGroupId(),
-			existingSocialActivityAchievementModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingSocialActivityAchievementModelImpl.getUserId(),
-			existingSocialActivityAchievementModelImpl.getOriginalUserId());
+		Assert.assertEquals(existingSocialActivityAchievement.getGroupId(),
+			ReflectionTestUtil.invoke(existingSocialActivityAchievement,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivityAchievement.getUserId(),
+			ReflectionTestUtil.invoke(existingSocialActivityAchievement,
+				"getOriginalUserId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingSocialActivityAchievementModelImpl.getName(),
-				existingSocialActivityAchievementModelImpl.getOriginalName()));
+				existingSocialActivityAchievement.getName(),
+				ReflectionTestUtil.invoke(existingSocialActivityAchievement,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected SocialActivityAchievement addSocialActivityAchievement()

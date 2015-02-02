@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.VirtualHost;
-import com.liferay.portal.model.impl.VirtualHostModelImpl;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -407,16 +407,18 @@ public class VirtualHostPersistenceTest {
 
 		_persistence.clearCache();
 
-		VirtualHostModelImpl existingVirtualHostModelImpl = (VirtualHostModelImpl)_persistence.findByPrimaryKey(newVirtualHost.getPrimaryKey());
+		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(newVirtualHost.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingVirtualHostModelImpl.getHostname(),
-				existingVirtualHostModelImpl.getOriginalHostname()));
+		Assert.assertTrue(Validator.equals(existingVirtualHost.getHostname(),
+				ReflectionTestUtil.invoke(existingVirtualHost,
+					"getOriginalHostname", new Class<?>[0])));
 
-		Assert.assertEquals(existingVirtualHostModelImpl.getCompanyId(),
-			existingVirtualHostModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingVirtualHostModelImpl.getLayoutSetId(),
-			existingVirtualHostModelImpl.getOriginalLayoutSetId());
+		Assert.assertEquals(existingVirtualHost.getCompanyId(),
+			ReflectionTestUtil.invoke(existingVirtualHost,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(existingVirtualHost.getLayoutSetId(),
+			ReflectionTestUtil.invoke(existingVirtualHost,
+				"getOriginalLayoutSetId", new Class<?>[0]));
 	}
 
 	protected VirtualHost addVirtualHost() throws Exception {

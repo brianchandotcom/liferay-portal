@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Region;
-import com.liferay.portal.model.impl.RegionModelImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -401,13 +401,14 @@ public class RegionPersistenceTest {
 
 		_persistence.clearCache();
 
-		RegionModelImpl existingRegionModelImpl = (RegionModelImpl)_persistence.findByPrimaryKey(newRegion.getPrimaryKey());
+		Region existingRegion = _persistence.findByPrimaryKey(newRegion.getPrimaryKey());
 
-		Assert.assertEquals(existingRegionModelImpl.getCountryId(),
-			existingRegionModelImpl.getOriginalCountryId());
-		Assert.assertTrue(Validator.equals(
-				existingRegionModelImpl.getRegionCode(),
-				existingRegionModelImpl.getOriginalRegionCode()));
+		Assert.assertEquals(existingRegion.getCountryId(),
+			ReflectionTestUtil.invoke(existingRegion, "getOriginalCountryId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingRegion.getRegionCode(),
+				ReflectionTestUtil.invoke(existingRegion,
+					"getOriginalRegionCode", new Class<?>[0])));
 	}
 
 	protected Region addRegion() throws Exception {

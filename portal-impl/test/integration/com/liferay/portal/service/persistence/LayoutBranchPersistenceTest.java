@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutBranch;
-import com.liferay.portal.model.impl.LayoutBranchModelImpl;
 import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -459,15 +459,17 @@ public class LayoutBranchPersistenceTest {
 
 		_persistence.clearCache();
 
-		LayoutBranchModelImpl existingLayoutBranchModelImpl = (LayoutBranchModelImpl)_persistence.findByPrimaryKey(newLayoutBranch.getPrimaryKey());
+		LayoutBranch existingLayoutBranch = _persistence.findByPrimaryKey(newLayoutBranch.getPrimaryKey());
 
-		Assert.assertEquals(existingLayoutBranchModelImpl.getLayoutSetBranchId(),
-			existingLayoutBranchModelImpl.getOriginalLayoutSetBranchId());
-		Assert.assertEquals(existingLayoutBranchModelImpl.getPlid(),
-			existingLayoutBranchModelImpl.getOriginalPlid());
-		Assert.assertTrue(Validator.equals(
-				existingLayoutBranchModelImpl.getName(),
-				existingLayoutBranchModelImpl.getOriginalName()));
+		Assert.assertEquals(existingLayoutBranch.getLayoutSetBranchId(),
+			ReflectionTestUtil.invoke(existingLayoutBranch,
+				"getOriginalLayoutSetBranchId", new Class<?>[0]));
+		Assert.assertEquals(existingLayoutBranch.getPlid(),
+			ReflectionTestUtil.invoke(existingLayoutBranch, "getOriginalPlid",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingLayoutBranch.getName(),
+				ReflectionTestUtil.invoke(existingLayoutBranch,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected LayoutBranch addLayoutBranch() throws Exception {

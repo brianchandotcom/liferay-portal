@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -33,7 +34,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.asset.NoSuchTagStatsException;
 import com.liferay.portlet.asset.model.AssetTagStats;
-import com.liferay.portlet.asset.model.impl.AssetTagStatsModelImpl;
 import com.liferay.portlet.asset.service.AssetTagStatsLocalServiceUtil;
 
 import org.junit.After;
@@ -409,12 +409,14 @@ public class AssetTagStatsPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetTagStatsModelImpl existingAssetTagStatsModelImpl = (AssetTagStatsModelImpl)_persistence.findByPrimaryKey(newAssetTagStats.getPrimaryKey());
+		AssetTagStats existingAssetTagStats = _persistence.findByPrimaryKey(newAssetTagStats.getPrimaryKey());
 
-		Assert.assertEquals(existingAssetTagStatsModelImpl.getTagId(),
-			existingAssetTagStatsModelImpl.getOriginalTagId());
-		Assert.assertEquals(existingAssetTagStatsModelImpl.getClassNameId(),
-			existingAssetTagStatsModelImpl.getOriginalClassNameId());
+		Assert.assertEquals(existingAssetTagStats.getTagId(),
+			ReflectionTestUtil.invoke(existingAssetTagStats,
+				"getOriginalTagId", new Class<?>[0]));
+		Assert.assertEquals(existingAssetTagStats.getClassNameId(),
+			ReflectionTestUtil.invoke(existingAssetTagStats,
+				"getOriginalClassNameId", new Class<?>[0]));
 	}
 
 	protected AssetTagStats addAssetTagStats() throws Exception {

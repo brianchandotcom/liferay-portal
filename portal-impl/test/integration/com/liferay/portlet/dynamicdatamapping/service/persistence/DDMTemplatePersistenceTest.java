@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 
 import org.junit.After;
@@ -715,24 +715,29 @@ public class DDMTemplatePersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMTemplateModelImpl existingDDMTemplateModelImpl = (DDMTemplateModelImpl)_persistence.findByPrimaryKey(newDDMTemplate.getPrimaryKey());
+		DDMTemplate existingDDMTemplate = _persistence.findByPrimaryKey(newDDMTemplate.getPrimaryKey());
 
+		Assert.assertTrue(Validator.equals(existingDDMTemplate.getUuid(),
+				ReflectionTestUtil.invoke(existingDDMTemplate,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingDDMTemplate.getGroupId(),
+			ReflectionTestUtil.invoke(existingDDMTemplate,
+				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(existingDDMTemplate.getSmallImageId(),
+			ReflectionTestUtil.invoke(existingDDMTemplate,
+				"getOriginalSmallImageId", new Class<?>[0]));
+
+		Assert.assertEquals(existingDDMTemplate.getGroupId(),
+			ReflectionTestUtil.invoke(existingDDMTemplate,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingDDMTemplate.getClassNameId(),
+			ReflectionTestUtil.invoke(existingDDMTemplate,
+				"getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingDDMTemplateModelImpl.getUuid(),
-				existingDDMTemplateModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingDDMTemplateModelImpl.getGroupId(),
-			existingDDMTemplateModelImpl.getOriginalGroupId());
-
-		Assert.assertEquals(existingDDMTemplateModelImpl.getSmallImageId(),
-			existingDDMTemplateModelImpl.getOriginalSmallImageId());
-
-		Assert.assertEquals(existingDDMTemplateModelImpl.getGroupId(),
-			existingDDMTemplateModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingDDMTemplateModelImpl.getClassNameId(),
-			existingDDMTemplateModelImpl.getOriginalClassNameId());
-		Assert.assertTrue(Validator.equals(
-				existingDDMTemplateModelImpl.getTemplateKey(),
-				existingDDMTemplateModelImpl.getOriginalTemplateKey()));
+				existingDDMTemplate.getTemplateKey(),
+				ReflectionTestUtil.invoke(existingDDMTemplate,
+					"getOriginalTemplateKey", new Class<?>[0])));
 	}
 
 	protected DDMTemplate addDDMTemplate() throws Exception {

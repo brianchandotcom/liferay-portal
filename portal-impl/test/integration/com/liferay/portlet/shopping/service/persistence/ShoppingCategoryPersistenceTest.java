@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.shopping.NoSuchCategoryException;
 import com.liferay.portlet.shopping.model.ShoppingCategory;
-import com.liferay.portlet.shopping.model.impl.ShoppingCategoryModelImpl;
 import com.liferay.portlet.shopping.service.ShoppingCategoryLocalServiceUtil;
 
 import org.junit.After;
@@ -452,13 +452,14 @@ public class ShoppingCategoryPersistenceTest {
 
 		_persistence.clearCache();
 
-		ShoppingCategoryModelImpl existingShoppingCategoryModelImpl = (ShoppingCategoryModelImpl)_persistence.findByPrimaryKey(newShoppingCategory.getPrimaryKey());
+		ShoppingCategory existingShoppingCategory = _persistence.findByPrimaryKey(newShoppingCategory.getPrimaryKey());
 
-		Assert.assertEquals(existingShoppingCategoryModelImpl.getGroupId(),
-			existingShoppingCategoryModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingShoppingCategoryModelImpl.getName(),
-				existingShoppingCategoryModelImpl.getOriginalName()));
+		Assert.assertEquals(existingShoppingCategory.getGroupId(),
+			ReflectionTestUtil.invoke(existingShoppingCategory,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingShoppingCategory.getName(),
+				ReflectionTestUtil.invoke(existingShoppingCategory,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected ShoppingCategory addShoppingCategory() throws Exception {

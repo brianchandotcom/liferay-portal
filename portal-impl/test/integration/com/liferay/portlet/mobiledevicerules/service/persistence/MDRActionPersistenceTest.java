@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.mobiledevicerules.NoSuchActionException;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
-import com.liferay.portlet.mobiledevicerules.model.impl.MDRActionModelImpl;
 import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
 
 import org.junit.After;
@@ -477,13 +477,14 @@ public class MDRActionPersistenceTest {
 
 		_persistence.clearCache();
 
-		MDRActionModelImpl existingMDRActionModelImpl = (MDRActionModelImpl)_persistence.findByPrimaryKey(newMDRAction.getPrimaryKey());
+		MDRAction existingMDRAction = _persistence.findByPrimaryKey(newMDRAction.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingMDRActionModelImpl.getUuid(),
-				existingMDRActionModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingMDRActionModelImpl.getGroupId(),
-			existingMDRActionModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingMDRAction.getUuid(),
+				ReflectionTestUtil.invoke(existingMDRAction, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(existingMDRAction.getGroupId(),
+			ReflectionTestUtil.invoke(existingMDRAction, "getOriginalGroupId",
+				new Class<?>[0]));
 	}
 
 	protected MDRAction addMDRAction() throws Exception {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutFriendlyURL;
-import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -560,30 +560,38 @@ public class LayoutFriendlyURLPersistenceTest {
 
 		_persistence.clearCache();
 
-		LayoutFriendlyURLModelImpl existingLayoutFriendlyURLModelImpl = (LayoutFriendlyURLModelImpl)_persistence.findByPrimaryKey(newLayoutFriendlyURL.getPrimaryKey());
+		LayoutFriendlyURL existingLayoutFriendlyURL = _persistence.findByPrimaryKey(newLayoutFriendlyURL.getPrimaryKey());
 
 		Assert.assertTrue(Validator.equals(
-				existingLayoutFriendlyURLModelImpl.getUuid(),
-				existingLayoutFriendlyURLModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingLayoutFriendlyURLModelImpl.getGroupId(),
-			existingLayoutFriendlyURLModelImpl.getOriginalGroupId());
+				existingLayoutFriendlyURL.getUuid(),
+				ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingLayoutFriendlyURL.getGroupId(),
+			ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingLayoutFriendlyURLModelImpl.getPlid(),
-			existingLayoutFriendlyURLModelImpl.getOriginalPlid());
+		Assert.assertEquals(existingLayoutFriendlyURL.getPlid(),
+			ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
+				"getOriginalPlid", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingLayoutFriendlyURLModelImpl.getLanguageId(),
-				existingLayoutFriendlyURLModelImpl.getOriginalLanguageId()));
+				existingLayoutFriendlyURL.getLanguageId(),
+				ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
+					"getOriginalLanguageId", new Class<?>[0])));
 
-		Assert.assertEquals(existingLayoutFriendlyURLModelImpl.getGroupId(),
-			existingLayoutFriendlyURLModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingLayoutFriendlyURLModelImpl.getPrivateLayout(),
-			existingLayoutFriendlyURLModelImpl.getOriginalPrivateLayout());
+		Assert.assertEquals(existingLayoutFriendlyURL.getGroupId(),
+			ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingLayoutFriendlyURL.getPrivateLayout(),
+			ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
+				"getOriginalPrivateLayout", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingLayoutFriendlyURLModelImpl.getFriendlyURL(),
-				existingLayoutFriendlyURLModelImpl.getOriginalFriendlyURL()));
+				existingLayoutFriendlyURL.getFriendlyURL(),
+				ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
+					"getOriginalFriendlyURL", new Class<?>[0])));
 		Assert.assertTrue(Validator.equals(
-				existingLayoutFriendlyURLModelImpl.getLanguageId(),
-				existingLayoutFriendlyURLModelImpl.getOriginalLanguageId()));
+				existingLayoutFriendlyURL.getLanguageId(),
+				ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
+					"getOriginalLanguageId", new Class<?>[0])));
 	}
 
 	protected LayoutFriendlyURL addLayoutFriendlyURL()

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.impl.GroupModelImpl;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -684,52 +684,65 @@ public class GroupPersistenceTest {
 
 		_persistence.clearCache();
 
-		GroupModelImpl existingGroupModelImpl = (GroupModelImpl)_persistence.findByPrimaryKey(newGroup.getPrimaryKey());
+		Group existingGroup = _persistence.findByPrimaryKey(newGroup.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingGroupModelImpl.getUuid(),
-				existingGroupModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingGroupModelImpl.getGroupId(),
-			existingGroupModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingGroup.getUuid(),
+				ReflectionTestUtil.invoke(existingGroup, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(existingGroup.getGroupId(),
+			ReflectionTestUtil.invoke(existingGroup, "getOriginalGroupId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingGroupModelImpl.getLiveGroupId(),
-			existingGroupModelImpl.getOriginalLiveGroupId());
+		Assert.assertEquals(existingGroup.getLiveGroupId(),
+			ReflectionTestUtil.invoke(existingGroup, "getOriginalLiveGroupId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
-			existingGroupModelImpl.getOriginalCompanyId());
-		Assert.assertTrue(Validator.equals(
-				existingGroupModelImpl.getGroupKey(),
-				existingGroupModelImpl.getOriginalGroupKey()));
+		Assert.assertEquals(existingGroup.getCompanyId(),
+			ReflectionTestUtil.invoke(existingGroup, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingGroup.getGroupKey(),
+				ReflectionTestUtil.invoke(existingGroup, "getOriginalGroupKey",
+					new Class<?>[0])));
 
-		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
-			existingGroupModelImpl.getOriginalCompanyId());
-		Assert.assertTrue(Validator.equals(
-				existingGroupModelImpl.getFriendlyURL(),
-				existingGroupModelImpl.getOriginalFriendlyURL()));
+		Assert.assertEquals(existingGroup.getCompanyId(),
+			ReflectionTestUtil.invoke(existingGroup, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingGroup.getFriendlyURL(),
+				ReflectionTestUtil.invoke(existingGroup,
+					"getOriginalFriendlyURL", new Class<?>[0])));
 
-		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
-			existingGroupModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingGroupModelImpl.getClassNameId(),
-			existingGroupModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingGroupModelImpl.getClassPK(),
-			existingGroupModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingGroup.getCompanyId(),
+			ReflectionTestUtil.invoke(existingGroup, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingGroup.getClassNameId(),
+			ReflectionTestUtil.invoke(existingGroup, "getOriginalClassNameId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingGroup.getClassPK(),
+			ReflectionTestUtil.invoke(existingGroup, "getOriginalClassPK",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
-			existingGroupModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingGroupModelImpl.getLiveGroupId(),
-			existingGroupModelImpl.getOriginalLiveGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingGroupModelImpl.getGroupKey(),
-				existingGroupModelImpl.getOriginalGroupKey()));
+		Assert.assertEquals(existingGroup.getCompanyId(),
+			ReflectionTestUtil.invoke(existingGroup, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingGroup.getLiveGroupId(),
+			ReflectionTestUtil.invoke(existingGroup, "getOriginalLiveGroupId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingGroup.getGroupKey(),
+				ReflectionTestUtil.invoke(existingGroup, "getOriginalGroupKey",
+					new Class<?>[0])));
 
-		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
-			existingGroupModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingGroupModelImpl.getClassNameId(),
-			existingGroupModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingGroupModelImpl.getLiveGroupId(),
-			existingGroupModelImpl.getOriginalLiveGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingGroupModelImpl.getGroupKey(),
-				existingGroupModelImpl.getOriginalGroupKey()));
+		Assert.assertEquals(existingGroup.getCompanyId(),
+			ReflectionTestUtil.invoke(existingGroup, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingGroup.getClassNameId(),
+			ReflectionTestUtil.invoke(existingGroup, "getOriginalClassNameId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingGroup.getLiveGroupId(),
+			ReflectionTestUtil.invoke(existingGroup, "getOriginalLiveGroupId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingGroup.getGroupKey(),
+				ReflectionTestUtil.invoke(existingGroup, "getOriginalGroupKey",
+					new Class<?>[0])));
 	}
 
 	protected Group addGroup() throws Exception {

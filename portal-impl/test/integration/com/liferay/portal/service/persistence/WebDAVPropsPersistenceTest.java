@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.WebDAVProps;
-import com.liferay.portal.model.impl.WebDAVPropsModelImpl;
 import com.liferay.portal.service.WebDAVPropsLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -407,12 +407,14 @@ public class WebDAVPropsPersistenceTest {
 
 		_persistence.clearCache();
 
-		WebDAVPropsModelImpl existingWebDAVPropsModelImpl = (WebDAVPropsModelImpl)_persistence.findByPrimaryKey(newWebDAVProps.getPrimaryKey());
+		WebDAVProps existingWebDAVProps = _persistence.findByPrimaryKey(newWebDAVProps.getPrimaryKey());
 
-		Assert.assertEquals(existingWebDAVPropsModelImpl.getClassNameId(),
-			existingWebDAVPropsModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingWebDAVPropsModelImpl.getClassPK(),
-			existingWebDAVPropsModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingWebDAVProps.getClassNameId(),
+			ReflectionTestUtil.invoke(existingWebDAVProps,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingWebDAVProps.getClassPK(),
+			ReflectionTestUtil.invoke(existingWebDAVProps,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected WebDAVProps addWebDAVProps() throws Exception {

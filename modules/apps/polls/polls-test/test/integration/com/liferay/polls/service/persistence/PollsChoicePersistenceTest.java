@@ -16,7 +16,6 @@ package com.liferay.polls.service.persistence;
 
 import com.liferay.polls.exception.NoSuchChoiceException;
 import com.liferay.polls.model.PollsChoice;
-import com.liferay.polls.model.impl.PollsChoiceModelImpl;
 import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -479,19 +479,21 @@ public class PollsChoicePersistenceTest {
 
 		_persistence.clearCache();
 
-		PollsChoiceModelImpl existingPollsChoiceModelImpl = (PollsChoiceModelImpl)_persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey());
+		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingPollsChoiceModelImpl.getUuid(),
-				existingPollsChoiceModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingPollsChoiceModelImpl.getGroupId(),
-			existingPollsChoiceModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingPollsChoice.getUuid(),
+				ReflectionTestUtil.invoke(existingPollsChoice,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingPollsChoice.getGroupId(),
+			ReflectionTestUtil.invoke(existingPollsChoice,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingPollsChoiceModelImpl.getQuestionId(),
-			existingPollsChoiceModelImpl.getOriginalQuestionId());
-		Assert.assertTrue(Validator.equals(
-				existingPollsChoiceModelImpl.getName(),
-				existingPollsChoiceModelImpl.getOriginalName()));
+		Assert.assertEquals(existingPollsChoice.getQuestionId(),
+			ReflectionTestUtil.invoke(existingPollsChoice,
+				"getOriginalQuestionId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingPollsChoice.getName(),
+				ReflectionTestUtil.invoke(existingPollsChoice,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected PollsChoice addPollsChoice() throws Exception {

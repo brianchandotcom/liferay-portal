@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import org.junit.After;
@@ -581,18 +581,21 @@ public class AssetEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetEntryModelImpl existingAssetEntryModelImpl = (AssetEntryModelImpl)_persistence.findByPrimaryKey(newAssetEntry.getPrimaryKey());
+		AssetEntry existingAssetEntry = _persistence.findByPrimaryKey(newAssetEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingAssetEntryModelImpl.getGroupId(),
-			existingAssetEntryModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingAssetEntryModelImpl.getClassUuid(),
-				existingAssetEntryModelImpl.getOriginalClassUuid()));
+		Assert.assertEquals(existingAssetEntry.getGroupId(),
+			ReflectionTestUtil.invoke(existingAssetEntry, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingAssetEntry.getClassUuid(),
+				ReflectionTestUtil.invoke(existingAssetEntry,
+					"getOriginalClassUuid", new Class<?>[0])));
 
-		Assert.assertEquals(existingAssetEntryModelImpl.getClassNameId(),
-			existingAssetEntryModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingAssetEntryModelImpl.getClassPK(),
-			existingAssetEntryModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingAssetEntry.getClassNameId(),
+			ReflectionTestUtil.invoke(existingAssetEntry,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingAssetEntry.getClassPK(),
+			ReflectionTestUtil.invoke(existingAssetEntry, "getOriginalClassPK",
+				new Class<?>[0]));
 	}
 
 	protected AssetEntry addAssetEntry() throws Exception {

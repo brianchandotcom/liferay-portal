@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.messageboards.NoSuchMailingListException;
 import com.liferay.portlet.messageboards.model.MBMailingList;
-import com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl;
 import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
 
 import org.junit.After;
@@ -544,18 +544,21 @@ public class MBMailingListPersistenceTest {
 
 		_persistence.clearCache();
 
-		MBMailingListModelImpl existingMBMailingListModelImpl = (MBMailingListModelImpl)_persistence.findByPrimaryKey(newMBMailingList.getPrimaryKey());
+		MBMailingList existingMBMailingList = _persistence.findByPrimaryKey(newMBMailingList.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingMBMailingListModelImpl.getUuid(),
-				existingMBMailingListModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingMBMailingListModelImpl.getGroupId(),
-			existingMBMailingListModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingMBMailingList.getUuid(),
+				ReflectionTestUtil.invoke(existingMBMailingList,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingMBMailingList.getGroupId(),
+			ReflectionTestUtil.invoke(existingMBMailingList,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingMBMailingListModelImpl.getGroupId(),
-			existingMBMailingListModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingMBMailingListModelImpl.getCategoryId(),
-			existingMBMailingListModelImpl.getOriginalCategoryId());
+		Assert.assertEquals(existingMBMailingList.getGroupId(),
+			ReflectionTestUtil.invoke(existingMBMailingList,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingMBMailingList.getCategoryId(),
+			ReflectionTestUtil.invoke(existingMBMailingList,
+				"getOriginalCategoryId", new Class<?>[0]));
 	}
 
 	protected MBMailingList addMBMailingList() throws Exception {

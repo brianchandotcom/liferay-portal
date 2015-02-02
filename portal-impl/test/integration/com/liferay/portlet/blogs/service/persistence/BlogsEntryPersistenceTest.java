@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import org.junit.After;
@@ -821,19 +821,21 @@ public class BlogsEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		BlogsEntryModelImpl existingBlogsEntryModelImpl = (BlogsEntryModelImpl)_persistence.findByPrimaryKey(newBlogsEntry.getPrimaryKey());
+		BlogsEntry existingBlogsEntry = _persistence.findByPrimaryKey(newBlogsEntry.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingBlogsEntryModelImpl.getUuid(),
-				existingBlogsEntryModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingBlogsEntryModelImpl.getGroupId(),
-			existingBlogsEntryModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingBlogsEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingBlogsEntry,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingBlogsEntry.getGroupId(),
+			ReflectionTestUtil.invoke(existingBlogsEntry, "getOriginalGroupId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingBlogsEntryModelImpl.getGroupId(),
-			existingBlogsEntryModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingBlogsEntryModelImpl.getUrlTitle(),
-				existingBlogsEntryModelImpl.getOriginalUrlTitle()));
+		Assert.assertEquals(existingBlogsEntry.getGroupId(),
+			ReflectionTestUtil.invoke(existingBlogsEntry, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingBlogsEntry.getUrlTitle(),
+				ReflectionTestUtil.invoke(existingBlogsEntry,
+					"getOriginalUrlTitle", new Class<?>[0])));
 	}
 
 	protected BlogsEntry addBlogsEntry() throws Exception {

@@ -879,6 +879,8 @@ public class ServiceContext implements Cloneable, Serializable {
 			setAssetCategoryIds(serviceContext.getAssetCategoryIds());
 		}
 
+		setAssetEntryVisible(serviceContext.isAssetEntryVisible());
+
 		if (serviceContext.getAssetLinkEntryIds() != null) {
 			setAssetLinkEntryIds(serviceContext.getAssetLinkEntryIds());
 		}
@@ -907,10 +909,15 @@ public class ServiceContext implements Cloneable, Serializable {
 			setCurrentURL(serviceContext.getCurrentURL());
 		}
 
+		setDeriveDefaultPermissions(
+			serviceContext.isDeriveDefaultPermissions());
+
 		if (serviceContext.getExpandoBridgeAttributes() != null) {
 			setExpandoBridgeAttributes(
 				serviceContext.getExpandoBridgeAttributes());
 		}
+
+		setFailOnPortalException(serviceContext.isFailOnPortalException());
 
 		if (serviceContext.getGroupPermissions() != null) {
 			setGroupPermissions(serviceContext.getGroupPermissions());
@@ -924,7 +931,7 @@ public class ServiceContext implements Cloneable, Serializable {
 			setHeaders(serviceContext.getHeaders());
 		}
 
-		setFailOnPortalException(serviceContext.isFailOnPortalException());
+		setIndexingEnabled(serviceContext.isIndexingEnabled());
 		setLanguageId(serviceContext.getLanguageId());
 
 		if (Validator.isNotNull(serviceContext.getLayoutFullURL())) {
@@ -937,6 +944,24 @@ public class ServiceContext implements Cloneable, Serializable {
 
 		if (serviceContext.getModifiedDate() != null) {
 			setModifiedDate(serviceContext.getModifiedDate());
+		}
+
+		if (Validator.isNotNull(
+				serviceContext.getPathFriendlyURLPrivateGroup())) {
+
+			setPathFriendlyURLPrivateGroup(
+				serviceContext.getPathFriendlyURLPrivateGroup());
+		}
+
+		if (Validator.isNotNull(
+				serviceContext.getPathFriendlyURLPrivateUser())) {
+
+			setPathFriendlyURLPrivateUser(
+				serviceContext.getPathFriendlyURLPrivateUser());
+		}
+
+		if (Validator.isNotNull(serviceContext.getPathFriendlyURLPublic())) {
+			setPathFriendlyURLPublic(serviceContext.getPathFriendlyURLPublic());
 		}
 
 		if (Validator.isNotNull(serviceContext.getPathMain())) {
@@ -968,6 +993,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		}
 
 		setSignedIn(serviceContext.isSignedIn());
+
+		if (serviceContext.getTimeZone() != null) {
+			setTimeZone(serviceContext.getTimeZone());
+		}
 
 		if (Validator.isNotNull(serviceContext.getUserDisplayURL())) {
 			setUserDisplayURL(serviceContext.getUserDisplayURL());

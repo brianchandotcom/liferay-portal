@@ -137,7 +137,7 @@ public class ClusterExecutorImpl
 			_futureClusterResponses.put(uuid, futureClusterResponses);
 		}
 
-		if (addresses.remove(getLocalClusterNodeAddress())) {
+		if (addresses.remove(_localAddress)) {
 			runLocalMethod(clusterRequest, futureClusterResponses);
 		}
 
@@ -194,15 +194,6 @@ public class ClusterExecutorImpl
 	}
 
 	@Override
-	public List<Address> getClusterNodeAddresses() {
-		if (!isEnabled()) {
-			return Collections.emptyList();
-		}
-
-		return getAddresses(_controlJChannel);
-	}
-
-	@Override
 	public List<ClusterNode> getClusterNodes() {
 		if (!isEnabled()) {
 			return Collections.emptyList();
@@ -218,15 +209,6 @@ public class ClusterExecutorImpl
 		}
 
 		return _localClusterNode;
-	}
-
-	@Override
-	public Address getLocalClusterNodeAddress() {
-		if (!isEnabled()) {
-			return null;
-		}
-
-		return _localAddress;
 	}
 
 	@Override
@@ -271,17 +253,6 @@ public class ClusterExecutorImpl
 
 			throw new IllegalStateException(e);
 		}
-	}
-
-	@Override
-	public boolean isClusterNodeAlive(Address address) {
-		if (!isEnabled()) {
-			return false;
-		}
-
-		List<Address> addresses = getAddresses(_controlJChannel);
-
-		return addresses.contains(address);
 	}
 
 	@Override
@@ -526,7 +497,7 @@ public class ClusterExecutorImpl
 		}
 
 		if (clusterRequest.isSkipLocal()) {
-			addresses.remove(getLocalClusterNodeAddress());
+			addresses.remove(_localAddress);
 		}
 
 		return addresses;

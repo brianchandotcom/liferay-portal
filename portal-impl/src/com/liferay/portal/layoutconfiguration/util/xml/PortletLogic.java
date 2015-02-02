@@ -34,7 +34,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -92,9 +91,8 @@ public class PortletLogic extends RuntimeLogic {
 		Map<String, String[]> parameterMap = _request.getParameterMap();
 
 		if (!portletId.equals(_request.getParameter("p_p_id"))) {
-			parameterMap = MapUtil.filter(
-				parameterMap, new HashMap<String, String[]>(),
-				new PrefixPredicateFilter("p_p_"));
+			parameterMap = MapUtil.filterByKeys(
+				parameterMap, new PrefixPredicateFilter("p_p_"));
 		}
 
 		HttpServletRequest request = DynamicServletRequest.addQueryString(

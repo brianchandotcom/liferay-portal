@@ -16,7 +16,7 @@ package com.liferay.portlet.documentlibrary.webdav;
 
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.methods.Method;
-import com.liferay.portal.test.MainServletTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
 
 import javax.servlet.http.HttpServletResponse;
 

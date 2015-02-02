@@ -15,8 +15,8 @@
 package com.liferay.portal.fabric.netty.codec.serialization;
 
 import com.liferay.portal.kernel.io.AnnotatedObjectInputStream;
-import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.test.log.LogAssertionTestRule;
+import com.liferay.portal.test.rule.LogAssertionTestRule;
 import com.liferay.portal.tools.DBLoader;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sql.SQLQueryProvider;

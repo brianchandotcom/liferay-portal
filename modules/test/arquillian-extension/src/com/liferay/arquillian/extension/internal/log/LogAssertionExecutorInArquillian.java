@@ -14,7 +14,7 @@
 
 package com.liferay.arquillian.extension.internal.log;
 
-import com.liferay.portal.test.log.LogAssertionExecutorImpl;
+import com.liferay.portal.test.rule.executor.LogAssertionExecutorImpl;
 
 import java.util.logging.Handler;
 

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.log.CaptureAppender;
 import com.liferay.portal.log.Log4JLoggerTestUtil;
 import com.liferay.portal.template.TemplateContextHelper;
-import com.liferay.portal.test.PACLTestRule;
+import com.liferay.portal.test.rule.PACLTestRule;
 
 import org.apache.log4j.Level;
 

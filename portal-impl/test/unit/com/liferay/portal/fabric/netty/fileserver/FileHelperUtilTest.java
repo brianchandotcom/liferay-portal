@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.nio.FileSystemProviderWrapper;
 import com.liferay.portal.kernel.nio.FileSystemWrapper;
 import com.liferay.portal.kernel.nio.PathWrapper;
 import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.SwappableSecurityManager;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.File;

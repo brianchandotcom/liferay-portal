@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.pacl.test;
 
-import com.liferay.portal.test.PACLTestRule;
+import com.liferay.portal.test.rule.PACLTestRule;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.FileDescriptor;

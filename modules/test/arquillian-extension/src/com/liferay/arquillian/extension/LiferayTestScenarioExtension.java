@@ -18,15 +18,15 @@ import com.liferay.arquillian.extension.internal.event.LiferayEventTestRunnerAda
 import com.liferay.arquillian.extension.internal.instanceproducer.ExtensionInstanceProducer;
 import com.liferay.arquillian.extension.internal.log.LogAssertionExecutorInArquillian;
 import com.liferay.arquillian.extension.internal.log.LogAssertionObserver;
-import com.liferay.portal.test.log.LogAssertionExecutor;
-import com.liferay.portal.test.util.ClearThreadLocalExecutor;
-import com.liferay.portal.test.util.ClearThreadLocalExecutorImpl;
-import com.liferay.portal.test.util.DeleteAfterTestRunExecutor;
-import com.liferay.portal.test.util.DeleteAfterTestRunExecutorImpl;
-import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
-import com.liferay.portal.test.util.InitTestLiferayContextExecutorImpl;
-import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutor;
-import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutorImpl;
+import com.liferay.portal.kernel.test.rule.executor.ClearThreadLocalExecutor;
+import com.liferay.portal.kernel.test.rule.executor.DeleteAfterTestRunExecutor;
+import com.liferay.portal.kernel.test.rule.executor.DeleteAfterTestRunExecutorImpl;
+import com.liferay.portal.kernel.test.rule.executor.InitTestLiferayContextExecutor;
+import com.liferay.portal.kernel.test.rule.executor.UniqueStringRandomizerBumperExecutor;
+import com.liferay.portal.test.rule.executor.ClearThreadLocalExecutorImpl;
+import com.liferay.portal.test.rule.executor.InitTestLiferayContextExecutorImpl;
+import com.liferay.portal.test.rule.executor.LogAssertionExecutor;
+import com.liferay.portal.test.rule.executor.UniqueStringRandomizerBumperExecutorImpl;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
 

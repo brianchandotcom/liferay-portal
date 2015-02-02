@@ -14,7 +14,7 @@
 
 package com.liferay.arquillian.extension.persistence.internal.instanceproducer;
 
-import com.liferay.portal.test.util.PersistenceTestInitializer;
+import com.liferay.portal.kernel.test.rule.executor.PersistenceTestInitializer;
 
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
 import org.jboss.arquillian.core.api.Injector;

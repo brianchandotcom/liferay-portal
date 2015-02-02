@@ -14,7 +14,7 @@
 
 package com.liferay.arquillian.extension.persistence.internal.observer;
 
-import com.liferay.portal.test.util.PersistenceTestInitializer;
+import com.liferay.portal.kernel.test.rule.executor.PersistenceTestInitializer;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;

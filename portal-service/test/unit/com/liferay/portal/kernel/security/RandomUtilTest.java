@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.security;
 
-import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.util.Arrays;
 import java.util.Random;

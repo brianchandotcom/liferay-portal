@@ -15,7 +15,7 @@
 package com.liferay.portal.security.pacl.test;
 
 import com.liferay.portal.kernel.portlet.PortletBagPool;
-import com.liferay.portal.test.PACLTestRule;
+import com.liferay.portal.test.rule.PACLTestRule;
 import com.liferay.portlet.PortletBagImpl;
 
 import org.junit.Assert;

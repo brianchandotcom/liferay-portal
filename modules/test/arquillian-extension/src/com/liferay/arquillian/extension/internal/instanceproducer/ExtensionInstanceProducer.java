@@ -17,11 +17,11 @@ package com.liferay.arquillian.extension.internal.instanceproducer;
 import com.liferay.arquillian.extension.internal.log.LogAssertionAppenderArquillian;
 import com.liferay.arquillian.extension.internal.log.LogAssertionExecutorInArquillian;
 import com.liferay.arquillian.extension.internal.log.LogAssertionHandlerArquillian;
-import com.liferay.portal.test.log.LogAssertionExecutor;
-import com.liferay.portal.test.util.ClearThreadLocalExecutor;
-import com.liferay.portal.test.util.DeleteAfterTestRunExecutor;
-import com.liferay.portal.test.util.InitTestLiferayContextExecutor;
-import com.liferay.portal.test.util.UniqueStringRandomizerBumperExecutor;
+import com.liferay.portal.kernel.test.rule.executor.ClearThreadLocalExecutor;
+import com.liferay.portal.kernel.test.rule.executor.DeleteAfterTestRunExecutor;
+import com.liferay.portal.kernel.test.rule.executor.InitTestLiferayContextExecutor;
+import com.liferay.portal.kernel.test.rule.executor.UniqueStringRandomizerBumperExecutor;
+import com.liferay.portal.test.rule.executor.LogAssertionExecutor;
 
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
 import org.jboss.arquillian.core.api.Injector;

@@ -15,7 +15,7 @@
 package com.liferay.portal.fabric.netty.rpc.handlers;
 
 import com.liferay.portal.fabric.netty.rpc.RPCSerializable;
-import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler.Sharable;

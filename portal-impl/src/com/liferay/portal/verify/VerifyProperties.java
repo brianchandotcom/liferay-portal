@@ -354,6 +354,13 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.bookmarks.service"
 		},
 
+		// Breadcrumb
+
+		new String[] {
+			"breadcrumb.display.templates.config", "display.templates.config",
+			"com.liferay.breadcrumb.web"
+		},
+
 		// CAS
 
 		new String[] {

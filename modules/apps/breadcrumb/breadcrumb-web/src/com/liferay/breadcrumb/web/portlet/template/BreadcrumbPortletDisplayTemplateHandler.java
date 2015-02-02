@@ -14,6 +14,7 @@
 
 package com.liferay.breadcrumb.web.portlet.template;
 
+import com.liferay.breadcrumb.web.configuration.BreadcrumbConfigurationValues;
 import com.liferay.breadcrumb.web.constants.BreadcrumbPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
 import java.util.HashMap;
@@ -92,7 +92,7 @@ public class BreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return PropsValues.BREADCRUMB_DISPLAY_TEMPLATES_CONFIG;
+		return BreadcrumbConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -184,11 +185,21 @@ public class UploadImageAction extends PortletAction {
 
 		String contentType = uploadPortletRequest.getContentType("fileName");
 
+		String fileName = uploadPortletRequest.getFileName("fileName");
+
+		File file = uploadPortletRequest.getFile("fileName");
+
+		String mimeType = MimeTypesUtil.getContentType(file, fileName);
+
+		if (!StringUtil.equalsIgnoreCase(
+				ContentTypes.APPLICATION_OCTET_STREAM, mimeType)) {
+
+			contentType = mimeType;
+		}
+
 		if (!MimeTypesUtil.isWebImage(contentType)) {
 			throw new ImageTypeException();
 		}
-
-		String fileName = uploadPortletRequest.getFileName("fileName");
 
 		try {
 			TempFileEntryUtil.deleteTempFileEntry(
@@ -198,18 +209,9 @@ public class UploadImageAction extends PortletAction {
 		catch (Exception e) {
 		}
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = uploadPortletRequest.getFileAsStream("fileName");
-
-			return TempFileEntryUtil.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				getTempImageFolderName(), fileName, inputStream, contentType);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
+		return TempFileEntryUtil.addTempFileEntry(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			getTempImageFolderName(), fileName, file, contentType);
 	}
 
 	protected FileEntry getTempImageFileEntry(PortletRequest portletRequest)

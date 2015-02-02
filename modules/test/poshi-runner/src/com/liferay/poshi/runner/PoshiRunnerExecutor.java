@@ -62,6 +62,19 @@ public class PoshiRunnerExecutor {
 			String value = element.attributeValue("value" + (i + 1));
 
 			if (locator != null) {
+				if (locator.contains("#")) {
+					String functionClassName =
+						PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+							locator);
+
+					String locatorKey =
+						PoshiRunnerGetterUtil.
+							getCommandNameFromClassCommandName(locator);
+
+					locator = PoshiRunnerContext.getPathLocator(
+						functionClassName + "#" + locatorKey);
+				}
+
 				PoshiRunnerVariablesUtil.putIntoExecuteMap(
 					"locator" + (i + 1), locator);
 			}

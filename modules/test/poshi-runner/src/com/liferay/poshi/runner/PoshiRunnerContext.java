@@ -77,6 +77,45 @@ public class PoshiRunnerContext {
 		return _rootElements.get("testcase#" + className);
 	}
 
+	private static void _readPathFile(String filePath, String className)
+		throws Exception {
+
+		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
+			filePath);
+
+		Element bodyElement = rootElement.element("body");
+
+		Element tableElement = bodyElement.element("table");
+
+		Element tBodyElement = tableElement.element("tbody");
+
+		List<Element> trElements = tBodyElement.elements("tr");
+
+		for (Element trElement : trElements) {
+			List<Element> tdElements = trElement.elements("td");
+
+			Element locatorKeyElement = tdElements.get(0);
+			Element locatorElement = tdElements.get(1);
+
+			String locatorKey = locatorKeyElement.getText();
+			String locator = locatorElement.getText();
+
+			if (locatorKey.equals("EXTEND_ACTION_PATH")) {
+				for (String extendedFilePath : _filePaths) {
+					if (extendedFilePath.endsWith("/" + locator + ".path")) {
+						extendedFilePath = _BASE_DIR + "/" + extendedFilePath;
+
+						_readPathFile(extendedFilePath, className);
+
+						break;
+					}
+				}
+			}
+
+			_pathLocators.put(className + "#" + locatorKey, locator);
+		}
+	}
+
 	private static void _readPoshiFiles() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -89,9 +128,9 @@ public class PoshiRunnerContext {
 
 		directoryScanner.scan();
 
-		String[] filePaths = directoryScanner.getIncludedFiles();
+		_filePaths = directoryScanner.getIncludedFiles();
 
-		for (String filePath : filePaths) {
+		for (String filePath : _filePaths) {
 			filePath = _BASE_DIR + "/" + filePath;
 
 			String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
@@ -154,27 +193,7 @@ public class PoshiRunnerContext {
 				}
 			}
 			else if (classType.equals("path")) {
-				Element rootElement =
-					PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
-
-				Element bodyElement = rootElement.element("body");
-
-				Element tableElement = bodyElement.element("table");
-
-				Element tBodyElement = tableElement.element("tbody");
-
-				List<Element> trElements = tBodyElement.elements("tr");
-
-				for (Element trElement : trElements) {
-					List<Element> tdElements = trElement.elements("td");
-
-					Element locatorKeyElement = tdElements.get(0);
-					Element locatorElement = tdElements.get(1);
-
-					_pathLocators.put(
-						className + "#" + locatorKeyElement.getText(),
-						locatorElement.getText());
-				}
+				_readPathFile(filePath, className);
 			}
 		}
 	}
@@ -221,6 +240,7 @@ public class PoshiRunnerContext {
 
 	private static final Map<String, Element> _commandElements =
 		new HashMap<>();
+	private static String[] _filePaths;
 	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
 	private static final Map<String, String> _pathLocators = new HashMap<>();

@@ -49,7 +49,7 @@ boolean smallImage = BeanParamUtil.getBoolean(article, request, "smallImage");
 <aui:fieldset>
 	<div id="<portlet:namespace />smallImageContainer">
 		<div class="lfr-journal-small-image-header">
-			<aui:input label="use-small-image" name="smallImage" />
+			<aui:input id="useSmallImage" label="use-small-image" name="smallImage" />
 		</div>
 
 		<div class="lfr-journal-small-image-content toggler-content-collapsed">
@@ -115,7 +115,7 @@ boolean smallImage = BeanParamUtil.getBoolean(article, request, "smallImage");
 
 						var expanded = !instance.get('expanded');
 
-						A.one('#<portlet:namespace />smallImage').attr('checked', expanded);
+						A.one('#<portlet:namespace />useSmallImage').attr('checked', expanded);
 
 						if (expanded) {
 							types.each(

@@ -50,18 +50,6 @@ else {
 IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(WebKeys.IP_GEOCODER);
 %>
 
-<c:choose>
-	<c:when test="<%= !ipGeocoderInstalled %>">
-		<div class="portlet-msg-error">
-			<liferay-ui:message key="install-and-configure-the-ip-geocoder-portlet-to-enable-this-portlet" />
-		</div>
-	</c:when>
-	<c:when test="<%= !ipGeocoderConfigured %>">
-		<div class="portlet-msg-error">
-			<aui:a href="http://www.maxmind.com/app/geolitecity" target="_blank"><liferay-ui:message key="install-and-configure-maxmind-geoip-city-or-geolite-city-to-enable-this-portlet" /></aui:a>
-		</div>
-	</c:when>
-	<c:otherwise>
 		<c:choose>
 			<c:when test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 				<div id="<portlet:namespace />map" style="height: 600px; width: 900px;"></div>
@@ -184,5 +172,3 @@ IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(WebKeys.IP_GEOCODER);
 
 			google.maps.event.addDomListener(window, 'load', <portlet:namespace />initMap);
 		</aui:script>
-	</c:otherwise>
-</c:choose>

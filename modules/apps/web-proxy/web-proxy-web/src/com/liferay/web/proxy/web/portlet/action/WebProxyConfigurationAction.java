@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.web.proxy.web.constants.WebProxyPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -31,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_web_proxy_web_portlet_WebProxyPortlet"
+		"javax.portlet.name=" + WebProxyPortletKeys.WEB_PROXY
 	},
 	service = ConfigurationAction.class
 )

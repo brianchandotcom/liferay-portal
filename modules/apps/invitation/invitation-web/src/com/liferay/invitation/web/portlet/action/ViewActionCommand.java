@@ -14,6 +14,7 @@
 
 package com.liferay.invitation.web.portlet.action;
 
+import com.liferay.invitation.web.constants.InvitationPortletKeys;
 import com.liferay.invitation.web.util.InvitationUtil;
 import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
@@ -53,7 +54,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"action.command.name=view",
-		"javax.portlet.name=com_liferay_invitation_web_portlet_InvitationPortlet"
+		"javax.portlet.name=" + InvitationPortletKeys.INVITATION
 	},
 	service = ActionCommand.class
 )

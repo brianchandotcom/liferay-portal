@@ -17,6 +17,7 @@ package com.liferay.amazon.rankings.web.portlet.action;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
+import com.liferay.amazon.rankings.web.constants.AmazonRankingsPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.CharPool;
@@ -43,7 +44,7 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.amazon.rankings.web",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_amazon_rankings_web_portlet_AmazonRankingsPortlet"
+		"javax.portlet.name=" + AmazonRankingsPortletKeys.AMAZON_RANKINGS
 	},
 	service = ConfigurationAction.class
 )

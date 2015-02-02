@@ -14,6 +14,7 @@
 
 package com.liferay.invitation.web.upgrade;
 
+import com.liferay.invitation.web.constants.InvitationPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -54,10 +55,7 @@ public class InvitationWebUpgrade {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {
-						"100",
-						"com_liferay_invitation_web_portlet_InvitationPortlet"
-					}
+					new String[] {"100", InvitationPortletKeys.INVITATION}
 				};
 			}
 

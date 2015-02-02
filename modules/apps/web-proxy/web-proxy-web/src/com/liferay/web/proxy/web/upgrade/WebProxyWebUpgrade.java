@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.web.proxy.web.constants.WebProxyPortletKeys;
 
 import java.util.Collections;
 
@@ -53,10 +54,7 @@ public class WebProxyWebUpgrade {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {
-						"66",
-						"com_liferay_web_proxy_web_portlet_WebProxyPortlet"
-					}
+					new String[] {"66", WebProxyPortletKeys.WEB_PROXY}
 				};
 			}
 

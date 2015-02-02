@@ -14,6 +14,7 @@
 
 package com.liferay.amazon.rankings.web.upgrade;
 
+import com.liferay.amazon.rankings.web.constants.AmazonRankingsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -53,9 +54,7 @@ public class AmazonRankingsWebUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"67",
-						"com_liferay_amazon_rankings_web_portlet_" +
-							"AmazonRankingsPortlet"
+						"67", AmazonRankingsPortletKeys.AMAZON_RANKINGS
 					}
 				};
 			}

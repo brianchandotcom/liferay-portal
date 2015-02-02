@@ -14,6 +14,7 @@
 
 package com.liferay.currency.converter.web.portlet.action;
 
+import com.liferay.currency.converter.web.constants.CurrencyConverterPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -39,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"action.command.name=edit",
-		"javax.portlet.name=com_liferay_currency_converter_web_portlet_CurrencyConverterPortlet"
+		"javax.portlet.name=" + CurrencyConverterPortletKeys.CURRENCY_CONVERTER
 	},
 	service = ActionCommand.class
 )

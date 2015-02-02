@@ -16,6 +16,7 @@ package com.liferay.social.activities.web.portlet.route;
 
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_social_activities_web_portlet_SocialActivitiesPortlet"
+		"javax.portlet.name=" + SocialActivitiesPortletKeys.SOCIAL_ACTIVITIES
 	},
 	service = FriendlyURLMapper.class
 )

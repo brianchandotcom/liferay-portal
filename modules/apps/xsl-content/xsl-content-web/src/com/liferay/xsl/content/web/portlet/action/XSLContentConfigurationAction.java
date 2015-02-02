@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -38,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_xsl_content_web_portlet_XSLContentPortlet"
+		"javax.portlet.name=" + XSLContentPortletKeys.XSL_CONTENT
 	},
 	service = ConfigurationAction.class
 )

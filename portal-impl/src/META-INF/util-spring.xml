@@ -1199,7 +1199,6 @@
 	</bean>
 	<bean id="com.liferay.portlet.shopping.service.permission.ShoppingCategoryPermission" class="com.liferay.portlet.shopping.service.permission.ShoppingCategoryPermission" />
 	<bean id="com.liferay.portlet.shopping.service.permission.ShoppingItemPermission" class="com.liferay.portlet.shopping.service.permission.ShoppingItemPermission" />
-	<bean id="com.liferay.portlet.sitebrowser.provider.SiteBrowserPortletProvider" class="com.liferay.portlet.sitebrowser.provider.SiteBrowserPortletProvider" />
 	<bean id="com.liferay.portlet.sites.util.Sites" class="com.liferay.portlet.sites.util.SitesImpl" />
 	<bean id="com.liferay.portlet.sites.util.SitesUtil" class="com.liferay.portlet.sites.util.SitesUtil">
 		<property name="sites" ref="com.liferay.portlet.sites.util.Sites" />

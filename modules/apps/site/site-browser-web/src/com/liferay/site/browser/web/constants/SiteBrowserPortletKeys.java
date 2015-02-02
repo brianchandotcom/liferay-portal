@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,18 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.site.browser.web.constants;
 
-<%@ page import="com.liferay.portlet.usersadmin.search.GroupDisplayTerms" %>
+/**
+ * @author Eudaldo Alonso
+ */
+public class SiteBrowserPortletKeys {
 
-<%
-boolean filterManageableGroups = true;
+	public static final String SITE_BROWSER =
+		"com_liferay_site_browser_web_portlet_SiteBrowserPortlet";
 
-if (permissionChecker.isCompanyAdmin()) {
-	filterManageableGroups = false;
 }
-%>
-
-<%@ include file="/html/portlet/site_browser/init-ext.jsp" %>

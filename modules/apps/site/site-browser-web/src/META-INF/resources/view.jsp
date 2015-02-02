@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/site_browser/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -79,7 +79,9 @@ portletURL.setParameter("target", target);
 				</c:if>
 
 				<c:if test='<%= !type.equals("parent-sites") %>'>
-					<aui:nav-bar-search file="/html/portlet/site_browser/search.jsp" searchContainer="<%= searchContainer %>" />
+					<aui:nav-bar-search>
+						<%@ include file="/search.jspf" %>
+					</aui:nav-bar-search>
 				</c:if>
 			</aui:nav-bar>
 		</c:if>

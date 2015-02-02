@@ -75,6 +75,7 @@ Export-Package:\
 	com.liferay.portlet.trash.service,\
 	com.liferay.portlet.trash.service.persistence,\
 	com.liferay.portlet.trash.util,\
+	com.liferay.portlet.usersadmin.search,\
 	\
 	javax.sql,org.hibernate,\
 	\

@@ -44,7 +44,7 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute function="Open#open" locator1="http://localhost:${nodePort}" />
+				<execute function="Open" locator1="http://localhost:${nodePort}" />
 			</then>
 			<elseif>
 				<not>
@@ -58,8 +58,8 @@
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
 
-		<execute function="AssertClick#assertTextClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
-		<execute function="Type#type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${pageName}" />
+		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="Type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${pageName}" />
 
 		<if>
 			<isset var="pageType" />
@@ -75,10 +75,10 @@
 		<if>
 			<isset var="pageTemplateName" />
 			<then>
-				<execute function="AssertTextEquals#assertText" locator1="CPSitepagesAddpage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
-				<execute function="Click#click" locator1="CPSitepagesAddpage#PAGE_TYPE_RADIO" />
-				<execute function="AssertTextEquals#assertText" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
-				<execute function="Check#clickAt" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
+				<execute function="AssertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
+				<execute function="Click" locator1="CPSitepagesAddpage#PAGE_TYPE_RADIO" />
+				<execute function="AssertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
+				<execute function="Check" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
 			</then>
 		</if>
 
@@ -89,10 +89,10 @@
 		<if>
 			<contains string="${pageName}" substring="&apos;" />
 			<then>
-				<execute function="AssertClick#assertTextClick" locator1="Home#PAGE_WITH_QUOTES" value1="${pageName}" />
+				<execute function="AssertClick" locator1="Home#PAGE_WITH_QUOTES" value1="${pageName}" />
 			</then>
 			<else>
-				<execute function="AssertClick#assertTextClick" locator1="Home#PAGE" value1="${pageName}" />
+				<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}" />
 			</else>
 		</if>
 	</command>
@@ -198,7 +198,7 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute function="Open#open" locator1="http://localhost:${nodePort}" />
+				<execute function="Open" locator1="http://localhost:${nodePort}" />
 			</then>
 			<else>
 				<execute macro="Page#openURL" />
@@ -206,16 +206,16 @@
 		</if>
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="AssertClick#assertTextClick" locator1="Dockbar#${portletCategoryKey}" value1="${portletCategoryName}" />
+		<execute function="AssertClick" locator1="Dockbar#${portletCategoryKey}" value1="${portletCategoryName}" />
 
 		<if>
 			<isset var="siteScopeName" />
 			<then>
-				<execute function="Click#click" locator1="Home#SCOPE_SELECTOR" />
+				<execute function="Click" locator1="Home#SCOPE_SELECTOR" />
 
 				<var name="key_siteScopeName" value="${siteScopeName}" />
 
-				<execute function="Click#click" locator1="Home#SCOPE_SELECTOR_MENULIST_ITEM" />
+				<execute function="Click" locator1="Home#SCOPE_SELECTOR_MENULIST_ITEM" />
 			</then>
 		</if>
 
@@ -227,7 +227,7 @@
 			</not>
 			<then>
 				<if>
-					<condition function="IsElementPresent#isElementPresent" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
+					<condition function="IsElementPresent" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
 					<then>
 						<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
 						<execute function="AssertTextEquals#assertPartialText" locator1="Home#SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
@@ -270,11 +270,11 @@
 		<var name="key_portletCategoryName" value="${localizedPortletCategoryName}" />
 
 		<if>
-			<condition function="IsElementPresent#isElementPresent" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
+			<condition function="IsElementPresent" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
 			<then>
 				<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
 
-				<execute function="AssertTextEquals#assertText" locator1="Home#SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
+				<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
 			</then>
 		</if>
 
@@ -405,7 +405,7 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute function="Open#open" locator1="http://localhost:${nodePort}" />
+				<execute function="Open" locator1="http://localhost:${nodePort}" />
 			</then>
 			<elseif>
 				<not>
@@ -439,7 +439,7 @@
 				</if>
 			</then>
 			<else>
-				<execute function="AssertClick#assertTextClick" locator1="Home#PAGE" value1="${pageName}">
+				<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}">
 					<var name="key_pageName" value="${pageName}" />
 				</execute>
 			</else>
@@ -524,10 +524,10 @@
 			<then>
 				<var name="siteNameURL" value="${virtualHostsURL}" />
 
-				<execute function="Open#open" locator1="${siteNameURL}" />
+				<execute function="Open" locator1="${siteNameURL}" />
 			</then>
 			<else>
-				<execute function="Open#open" locator1="${pageAccessURL}${siteNameURL}${pageStagingURL}" />
+				<execute function="Open" locator1="${pageAccessURL}${siteNameURL}${pageStagingURL}" />
 			</else>
 		</if>
 	</command>
@@ -556,8 +556,8 @@
 			<condition function="IsElementPresent#isElementPresentClickNavigation" locator1="Home#PAGE_2" />
 			<then>
 				<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_2" />
-				<execute function="ClickNoError#click" locator1="Home#PAGE_DELETE" />
-				<execute function="Confirm#assertConfirmation" value1="Are you sure you want to delete this page?" />
+				<execute function="ClickNoError" locator1="Home#PAGE_DELETE" />
+				<execute function="Confirm" value1="Are you sure you want to delete this page?" />
 				<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#PAGE_DELETE" />
 			</then>
 		</while>

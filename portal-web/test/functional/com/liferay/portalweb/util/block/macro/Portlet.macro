@@ -72,7 +72,7 @@
 		<while>
 			<not>
 				<or>
-					<condition function="IsElementPresent#isElementPresent" locator1="Home#${portletTypeKey}" />
+					<condition function="IsElementPresent" locator1="Home#${portletTypeKey}" />
 					<equals arg1="${i}" arg2="3" />
 				</or>
 			</not>
@@ -81,7 +81,7 @@
 
 				<echo message="The xpath ${portletTypeKey} could not be found. Refreshing the page. Attempt number ${i}..." />
 
-				<execute function="Refresh#refresh" />
+				<execute function="Refresh" />
 
 				<execute macro="Portlet#addPGCmd">
 					<var name="portletName" value="${portletName}" />
@@ -89,7 +89,7 @@
 			</then>
 		</while>
 
-		<execute function="AssertElementPresent#assertElementPresent" locator1="Home#${portletTypeKey}" />
+		<execute function="AssertElementPresent" locator1="Home#${portletTypeKey}" />
 	</command>
 
 	<command name="addPGCmd">
@@ -133,7 +133,7 @@
 				<equals arg1="${portletName}" arg2="Media Gallery" />
 			</or>
 			<then>
-				<execute function="Pause#pause" locator1="30000" />
+				<execute function="Pause" locator1="30000" />
 			</then>
 		</if>
 	</command>

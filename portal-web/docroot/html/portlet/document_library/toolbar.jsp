@@ -148,7 +148,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 					on: {
 						visibleChange: function(event) {
 							if (!event.newVal) {
-								Liferay.Portlet.refresh('#p_p_id_' + <%= portletDisplay.getId() %> + '_');
+								Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
 							}
 						}
 					}

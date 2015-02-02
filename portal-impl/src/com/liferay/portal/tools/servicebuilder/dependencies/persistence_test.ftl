@@ -12,7 +12,7 @@
 	<#assign parentPKColumn = entity.getColumn("parent" + pkColumn.methodName)>
 </#if>
 
-package ${packagePath}.service.persistence;
+package ${packagePath}.service.persistence.test;
 
 <#assign noSuchEntity = serviceBuilder.getNoSuchEntityException(entity)>
 
@@ -24,6 +24,9 @@ package ${packagePath}.service.persistence;
 
 import ${packagePath}.model.${entity.name};
 import ${packagePath}.service.${entity.name}LocalServiceUtil;
+import ${packagePath}.service.persistence.${entity.name}PK;
+import ${packagePath}.service.persistence.${entity.name}Persistence;
+import ${packagePath}.service.persistence.${entity.name}Util;
 
 import ${beanLocatorUtil};
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;

@@ -2593,10 +2593,20 @@ public class ServiceBuilder {
 		// Write file
 
 		File ejbFile = new File(
-			_testOutputPath + "/service/persistence/" + entity.getName() +
+			_testOutputPath + "/service/persistence/test/" + entity.getName() +
 				"PersistenceTest.java");
 
 		writeFile(ejbFile, content, _author);
+
+		ejbFile = new File(
+			_testOutputPath + "/service/persistence/" + entity.getName() +
+				"PersistenceTest.java");
+
+		if (ejbFile.exists()) {
+			System.out.println("Relocating " + ejbFile);
+
+			ejbFile.delete();
+		}
 	}
 
 	private void _createPersistenceUtil(Entity entity) throws Exception {

@@ -53,7 +53,7 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(PortletRequest,
-	 *             PortletResponse)}
+	 *             javax.portlet.PortletResponse)}
 	 */
 	@Deprecated
 	@Override

@@ -42,7 +42,6 @@ import javax.servlet.jsp.tagext.TagSupport;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
- * @see    com.liferay.portal.servlet.taglib.ui.InputPermissionsParamsTagUtil
  */
 public class InputPermissionsParamsTag extends TagSupport {
 

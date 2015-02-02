@@ -28,7 +28,6 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Brian Wing Shun Chan
  * @author Wilson S. Man
- * @see    com.liferay.portal.servlet.taglib.ui.InputPermissionsTagUtil
  */
 public class InputPermissionsTag extends IncludeTag {
 

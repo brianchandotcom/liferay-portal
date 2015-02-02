@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.ratings.definition;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.ratings.RatingsType;
@@ -59,6 +61,9 @@ public class PortletRatingsDefinitionUtil {
 		return Collections.unmodifiableMap(portletRatingsDefinitionValuesMap);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletRatingsDefinitionUtil.class);
+
 	private static final
 		ServiceTrackerMap<String, PortletRatingsDefinitionValues>
 			_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
@@ -76,14 +81,13 @@ public class PortletRatingsDefinitionUtil {
 					Object property = serviceReference.getProperty(
 						"model.class.name");
 
-					String[] classNames = new String[0];
+					String[] classNames = null;
 
 					if (property instanceof Object[]) {
 						classNames = (String[])property;
 					}
 					else {
-						classNames = ArrayUtil.append(
-							classNames, (String)property);
+						classNames = new String[] {(String)property};
 					}
 
 					RatingsType defaultRatingsType = RatingsType.parse(
@@ -93,6 +97,13 @@ public class PortletRatingsDefinitionUtil {
 					if (Validator.isNull(portletId) ||
 						ArrayUtil.isEmpty(classNames) ||
 						(defaultRatingsType == null)) {
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"PortletRatingsDefinition must contain " +
+									"javax.portlet.name, model.class.name, " +
+										"ratings.type.default properties");
+						}
 
 						return null;
 					}

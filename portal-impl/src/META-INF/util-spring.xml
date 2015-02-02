@@ -355,6 +355,11 @@
 			<bean class="com.liferay.portal.util.ColorSchemeFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.util.CookieUtil" class="com.liferay.portal.kernel.util.CookieUtil">
+		<property name="cookie">
+			<bean class="com.liferay.portal.util.CookieImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.util.DateFormatFactoryUtil" class="com.liferay.portal.kernel.util.DateFormatFactoryUtil">
 		<property name="dateFormatFactory">
 			<bean class="com.liferay.portal.util.DateFormatFactoryImpl" />

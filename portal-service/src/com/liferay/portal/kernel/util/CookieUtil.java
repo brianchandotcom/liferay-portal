@@ -14,171 +14,44 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.io.Deserializer;
-import com.liferay.portal.kernel.io.Serializer;
-
-import java.nio.ByteBuffer;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import javax.servlet.http.Cookie;
 
 /**
  * @author Shuyang Zhou
+ * @author Yuxing Wu
  */
 public class CookieUtil {
 
 	public static Cookie deserialize(byte[] bytes) {
-		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(bytes));
-
-		String comment = deserializer.readString();
-		String domain = deserializer.readString();
-		boolean httpOnly = deserializer.readBoolean();
-		int maxAge = deserializer.readInt();
-		String name = deserializer.readString();
-		String path = deserializer.readString();
-		boolean secure = deserializer.readBoolean();
-		String value = deserializer.readString();
-
-		if (value.isEmpty()) {
-			value = null;
-		}
-
-		int version = deserializer.readInt();
-
-		Cookie cookie = new Cookie(name, value);
-
-		if (!comment.isEmpty()) {
-			cookie.setComment(comment);
-		}
-
-		if (!domain.isEmpty()) {
-			cookie.setDomain(domain);
-		}
-
-		cookie.setHttpOnly(httpOnly);
-		cookie.setMaxAge(maxAge);
-
-		if (!path.isEmpty()) {
-			cookie.setPath(path);
-		}
-
-		cookie.setSecure(secure);
-		cookie.setVersion(version);
-
-		return cookie;
+		return getCookie().deserialize(bytes);
 	}
 
 	public static boolean equals(Cookie cookie1, Cookie cookie2) {
-		if (!Validator.equals(cookie1.getComment(), cookie2.getComment())) {
-			return false;
-		}
+		return getCookie().equals(cookie1, cookie2);
+	}
 
-		if (!Validator.equals(cookie1.getDomain(), cookie2.getDomain())) {
-			return false;
-		}
+	public static com.liferay.portal.kernel.util.Cookie getCookie() {
+		PortalRuntimePermission.checkGetBeanProperty(CookieUtil.class);
 
-		if (!Validator.equals(cookie1.getMaxAge(), cookie2.getMaxAge())) {
-			return false;
-		}
-
-		if (!Validator.equals(cookie1.getName(), cookie2.getName())) {
-			return false;
-		}
-
-		if (!Validator.equals(cookie1.getPath(), cookie2.getPath())) {
-			return false;
-		}
-
-		if (!Validator.equals(cookie1.getSecure(), cookie2.getSecure())) {
-			return false;
-		}
-
-		if (!Validator.equals(cookie1.getValue(), cookie2.getValue())) {
-			return false;
-		}
-
-		if (!Validator.equals(cookie1.getVersion(), cookie2.getVersion())) {
-			return false;
-		}
-
-		if (!Validator.equals(cookie1.isHttpOnly(), cookie2.isHttpOnly())) {
-			return false;
-		}
-
-		return true;
+		return _cookie;
 	}
 
 	public static byte[] serialize(Cookie cookie) {
-		Serializer serializer = new Serializer();
-
-		String comment = cookie.getComment();
-
-		if (comment == null) {
-			comment = StringPool.BLANK;
-		}
-
-		serializer.writeString(comment);
-
-		String domain = cookie.getDomain();
-
-		if (domain == null) {
-			domain = StringPool.BLANK;
-		}
-
-		serializer.writeString(domain);
-
-		serializer.writeBoolean(cookie.isHttpOnly());
-		serializer.writeInt(cookie.getMaxAge());
-		serializer.writeString(cookie.getName());
-
-		String path = cookie.getPath();
-
-		if (path == null) {
-			path = StringPool.BLANK;
-		}
-
-		serializer.writeString(path);
-
-		serializer.writeBoolean(cookie.getSecure());
-
-		String value = cookie.getValue();
-
-		if (value == null) {
-			value = StringPool.BLANK;
-		}
-
-		serializer.writeString(value);
-
-		serializer.writeInt(cookie.getVersion());
-
-		ByteBuffer byteBuffer = serializer.toByteBuffer();
-
-		return byteBuffer.array();
+		return getCookie().serialize(cookie);
 	}
 
 	public static String toString(Cookie cookie) {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("{comment=");
-		sb.append(cookie.getComment());
-		sb.append(", domain=");
-		sb.append(cookie.getDomain());
-		sb.append(", httpOnly=");
-		sb.append(cookie.isHttpOnly());
-		sb.append(", maxAge=");
-		sb.append(cookie.getMaxAge());
-		sb.append(", name=");
-		sb.append(cookie.getName());
-		sb.append(", path=");
-		sb.append(cookie.getPath());
-		sb.append(", secure=");
-		sb.append(cookie.getSecure());
-		sb.append(", value=");
-		sb.append(cookie.getValue());
-		sb.append(", version=");
-		sb.append(cookie.getVersion());
-		sb.append("}");
-
-		return sb.toString();
+		return getCookie().toString(cookie);
 	}
+
+	public void setCookie(com.liferay.portal.kernel.util.Cookie cookie) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		_cookie = cookie;
+	}
+
+	private static com.liferay.portal.kernel.util.Cookie _cookie;
 
 }

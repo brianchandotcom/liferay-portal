@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.breadcrumb.template;
+package com.liferay.breadcrumb.web.portlet.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;

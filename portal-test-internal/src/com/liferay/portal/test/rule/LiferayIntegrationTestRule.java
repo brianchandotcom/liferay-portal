@@ -14,15 +14,17 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
-import com.liferay.portal.kernel.test.rule.executor.ClearThreadLocalExecutor;
-import com.liferay.portal.kernel.test.rule.executor.InitTestLiferayContextExecutor;
-import com.liferay.portal.kernel.test.rule.executor.UniqueStringRandomizerBumperExecutor;
-import com.liferay.portal.test.rule.executor.ClearThreadLocalExecutorImpl;
-import com.liferay.portal.test.rule.executor.InitTestLiferayContextExecutorImpl;
-import com.liferay.portal.test.rule.executor.UniqueStringRandomizerBumperExecutorImpl;
+import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsUtil;
+
+import java.util.List;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -42,41 +44,42 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 
 	@Override
 	public Statement apply(Statement statement, Description description) {
-		_initTestLiferayContextExecutor.init();
+		if (!InitUtil.isInitialized()) {
+			System.setProperty("catalina.base", ".");
+
+			List<String> configLocations = ListUtil.fromArray(
+				PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
+
+			InitUtil.initWithSpring(configLocations, true);
+
+			if (System.getProperty("external-properties") == null) {
+				System.setProperty(
+					"external-properties", "portal-test.properties");
+			}
+		}
 
 		return super.apply(statement, description);
 	}
-
-	private static final ClearThreadLocalExecutor _clearThreadLocalExecutor =
-		new ClearThreadLocalExecutorImpl();
 
 	private static final TestRule _clearThreadLocalTestRule =
 		new BaseTestRule<Object, Object>() {
 
 			@Override
 			protected void afterClass(Description description, Object object) {
-				_clearThreadLocalExecutor.clearThreadLocal();
+				CentralizedThreadLocal.clearShortLivedThreadLocals();
 			}
 
 		};
-
-	private static final InitTestLiferayContextExecutor
-		_initTestLiferayContextExecutor =
-			new InitTestLiferayContextExecutorImpl();
 
 	private static final TestRule _uniqueStringRandomizerBumperTestRule =
 		new BaseTestRule<Object, Object>() {
 
 			@Override
 			protected Object beforeClass(Description description) {
-				_uniqueStringRandomizerBumperExecutor.reset();
+				UniqueStringRandomizerBumper.reset();
 
 				return null;
 			}
-
-			private final UniqueStringRandomizerBumperExecutor
-				_uniqueStringRandomizerBumperExecutor =
-					new UniqueStringRandomizerBumperExecutorImpl();
 
 		};
 

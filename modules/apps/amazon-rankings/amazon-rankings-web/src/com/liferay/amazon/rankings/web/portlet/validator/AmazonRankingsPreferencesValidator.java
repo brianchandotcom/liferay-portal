@@ -17,6 +17,7 @@ package com.liferay.amazon.rankings.web.portlet.validator;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
+import com.liferay.amazon.rankings.web.constants.AmazonRankingsPortletKeys;
 import com.liferay.amazon.rankings.web.model.AmazonRankings;
 import com.liferay.amazon.rankings.web.util.AmazonRankingsUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -43,7 +44,7 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.amazon.rankings.web",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_amazon_rankings_web_portlet_AmazonRankingsPortlet"
+		"javax.portlet.name=" + AmazonRankingsPortletKeys.AMAZON_RANKINGS
 	}
 )
 public class AmazonRankingsPreferencesValidator

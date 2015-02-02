@@ -24,6 +24,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
+import com.liferay.quick.note.web.constants.QuickNotePortletKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -40,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"action.command.name=save",
-		"javax.portlet.name=com_liferay_quick_note_web_portlet_QuickNotePortlet"
+		"javax.portlet.name=" + QuickNotePortletKeys.QUICK_NOTE
 	},
 	service = ActionCommand.class
 )

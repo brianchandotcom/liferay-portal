@@ -12,24 +12,14 @@
  * details.
  */
 
-package com.liferay.social.activities.web.portlet.action;
-
-import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.quick.note.web.constants;
 
 /**
- * @author Raymond Augé
+ * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + SocialActivitiesPortletKeys.SOCIAL_ACTIVITIES
-	},
-	service = ConfigurationAction.class
-)
-public class SocialActivitiesConfigurationAction
-	extends DefaultConfigurationAction {
+public class QuickNotePortletKeys {
+
+	public static final String QUICK_NOTE =
+		"com_liferay_quick_note_web_portlet_QuickNotePortlet";
+
 }

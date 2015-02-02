@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.quick.note.web.constants.QuickNotePortletKeys;
 
 import java.util.Collections;
 
@@ -52,10 +53,7 @@ public class QuickNoteWebUpgrade {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {
-						"97",
-						"com_liferay_quick_note_web_portlet_QuickNotePortlet"
-					}
+					new String[] {"97", QuickNotePortletKeys.QUICK_NOTE}
 				};
 			}
 

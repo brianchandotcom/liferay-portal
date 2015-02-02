@@ -14,6 +14,7 @@
 
 package com.liferay.nested.portlets.web.upgrade;
 
+import com.liferay.nested.portlets.web.constants.NestedPortletsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -55,9 +56,7 @@ public class NestedPortletWebUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"118",
-						"com_liferay_nested_portlets_web_portlet_" +
-							"NestedPortletsPortlet"
+						"118", NestedPortletsPortletKeys.NESTED_PORTLETS
 					}
 				};
 			}

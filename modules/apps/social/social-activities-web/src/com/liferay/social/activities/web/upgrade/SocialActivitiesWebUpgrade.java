@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
 
 import java.util.Collections;
 
@@ -53,9 +54,7 @@ public class SocialActivitiesWebUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"116",
-						"com_liferay_social_activities_web_portlet_" +
-							"SocialActivitiesPortlet"
+						"116", SocialActivitiesPortletKeys.SOCIAL_ACTIVITIES
 					}
 				};
 			}

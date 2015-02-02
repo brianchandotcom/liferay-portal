@@ -14,6 +14,7 @@
 
 package com.liferay.currency.converter.web.upgrade;
 
+import com.liferay.currency.converter.web.constants.CurrencyConverterPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -53,9 +54,7 @@ public class CurrencyConverterWebUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"67",
-						"com_liferay_currency_converter_web_portlet_" +
-							"CurrencyConverterPortlet"
+						"67", CurrencyConverterPortletKeys.CURRENCY_CONVERTER
 					}
 				};
 			}

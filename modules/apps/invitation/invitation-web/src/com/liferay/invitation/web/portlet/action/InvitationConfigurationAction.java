@@ -14,6 +14,7 @@
 
 package com.liferay.invitation.web.portlet.action;
 
+import com.liferay.invitation.web.constants.InvitationPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -33,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_invitation_web_portlet_InvitationPortlet"
+		"javax.portlet.name=" + InvitationPortletKeys.INVITATION
 	},
 	service = ConfigurationAction.class
 )

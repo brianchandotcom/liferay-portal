@@ -17,6 +17,7 @@ package com.liferay.nested.portlets.web.portlet.action;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration;
+import com.liferay.nested.portlets.web.constants.NestedPortletsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -62,7 +63,7 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.nested.portlets.web",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet"
+		"javax.portlet.name=" + NestedPortletsPortletKeys.NESTED_PORTLETS
 	},
 	service = ConfigurationAction.class
 )

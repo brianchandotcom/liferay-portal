@@ -14,6 +14,7 @@
 
 package com.liferay.iframe.web.upgrade;
 
+import com.liferay.iframe.web.constants.IFramePortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -54,9 +55,7 @@ public class IFrameWebUpgrade {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {
-						"48", "com_liferay_iframe_web_portlet_IFramePortlet"
-					}
+					new String[] {"48", IFramePortletKeys.IFRAME}
 				};
 			}
 

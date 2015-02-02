@@ -17,7 +17,6 @@ package com.liferay.social.networking.service.configuration.configurator;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
-import com.liferay.social.networking.upgrade.SocialNetworkingServiceUpgrade;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -62,11 +61,6 @@ public class SocialNetworkingServiceConfigurator {
 		ServiceConfigurator serviceConfigurator) {
 
 		_serviceConfigurator = serviceConfigurator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSocialNetworkingServiceUpgrade(
-		SocialNetworkingServiceUpgrade socialNetworkingServiceUpgrade) {
 	}
 
 	private ServiceConfigurator _serviceConfigurator;

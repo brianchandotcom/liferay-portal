@@ -25,13 +25,15 @@ if (Validator.isNull(doAsUserId)) {
 	doAsUserId = Encryptor.encrypt(company.getKeyObj(), String.valueOf(themeDisplay.getUserId()));
 }
 
-String alloyEditorMode = ParamUtil.getString(request, "alloyEditorMode");
-
 boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
+
 String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
+JSONObject editorConfig = (data != null) ? (JSONObject) data.get("editorConfig") : null;
+JSONObject editorOptions = (data != null) ? (JSONObject) data.get("editorOptions") : null;
+
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
 Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
@@ -65,7 +67,7 @@ String placeholder = GetterUtil.getString((String)request.getAttribute("liferay-
 
 boolean showSource = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:showSource"));
 
-if (alloyEditorMode.equals("text")) {
+if (Validator.isNotNull(editorOptions) && !editorOptions.getBoolean("showSource")) {
 	showSource = false;
 }
 
@@ -156,7 +158,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 </div>
 
 <aui:script use="aui-base,alloy-editor,liferay-editor-image-uploader">
-
 	<%
 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 
@@ -169,53 +170,47 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	var createInstance = function() {
 		document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
-		var alloyEditor = new A.AlloyEditor(
-			{
-				<c:if test='<%= alloyEditorMode.equals("text") %>'>
-					allowedContent: 'p',
-				</c:if>
+		var defaultConfig = {
+			contentsLangDirection: '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>',
 
-				contentsLangDirection: '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>',
+			contentsLanguage: '<%= contentsLanguageId.replace("iw_", "he_") %>',
 
-				contentsLanguage: '<%= contentsLanguageId.replace("iw_", "he_") %>',
+			language: '<%= languageId.replace("iw_", "he_") %>',
 
-				<c:if test='<%= alloyEditorMode.equals("text") %>'>
-					disallowedContent: 'br',
-				</c:if>
+			srcNode: '#<%= name %>',
 
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/document_selector/view" />
-					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-					<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
-					<portlet:param name="showGroupsSelector" value="true" />
-				</liferay-portlet:renderURL>
+			toolbars: {
+				add: ['imageselector'],
+				image: ['left', 'right'],
+				styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
+			},
 
-				<%
-				if (fileBrowserParamsMap != null) {
-					for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
-						documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
-					}
-				}
-				%>
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/document_selector/view" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+				<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
+				<portlet:param name="showGroupsSelector" value="true" />
+			</liferay-portlet:renderURL>
 
-				filebrowserBrowseUrl: '<%= documentSelectorURL %>',
-				filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
-				filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
-				filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image',
-
-				language: '<%= languageId.replace("iw_", "he_") %>',
-
-				srcNode: '#<%= name %>',
-
-				toolbars: {
-					<c:if test='<%= !alloyEditorMode.equals("text") %>'>
-						add: ['imageselector'],
-						image: ['left', 'right'],
-						styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
-					</c:if>
+			<%
+			if (fileBrowserParamsMap != null) {
+				for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
+					documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
 				}
 			}
-		);
+			%>
+
+			filebrowserBrowseUrl: '<%= documentSelectorURL %>',
+			filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
+			filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
+			filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image'
+		};
+
+		var customConfig = (<%= Validator.isNotNull(editorConfig) %> ) ? <%= editorConfig %> : {};
+
+		var config = A.merge(defaultConfig, customConfig);
+
+		var alloyEditor = new A.AlloyEditor(config);
 
 		var nativeEditor = alloyEditor.get('nativeEditor');
 
@@ -283,7 +278,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			}
 		);
 
-		<c:if test='<%= alloyEditorMode.equals("text") %>'>
+		<c:if test='<%= Validator.isNotNull(editorConfig) && editorConfig.getString("disallowedContent").contains("br") %>'>
 			nativeEditor.on(
 				'key',
 				function(event) {
@@ -453,7 +448,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			var text = '';
 
 			<c:choose>
-				<c:when test='<%= alloyEditorMode.equals("text") %>'>
+				<c:when test='<%= Validator.isNotNull(editorOptions) && editorOptions.getBoolean("textMode") %>'>
 					var editorElement = CKEDITOR.instances['<%= name %>'].element.$;
 
 					var childElement;

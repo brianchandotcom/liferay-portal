@@ -110,6 +110,21 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			type="pills"
 		>
 			<div class="<%= (entry != null) ? "entry-status " + WorkflowConstants.getStatusLabel(entry.getStatus()) : StringPool.BLANK %>">
+				<%
+					Map<String, Object> dataTextEditor = new HashMap<String, Object>();
+
+					JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
+					editorConfig.put("allowedContent", "p");
+					editorConfig.put("disallowedContent", "br");
+					editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
+
+					JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
+					editorOptions.put("textMode", Boolean.TRUE);
+					editorOptions.put("showSource", Boolean.FALSE);
+
+					dataTextEditor.put("editorConfig", editorConfig);
+					dataTextEditor.put("editorOptions", editorOptions);
+				%>
 				<liferay-ui:section>
 					<c:if test="<%= entry != null %>">
 						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
@@ -124,13 +139,13 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					</div>
 
 					<div class="entry-title">
-						<h2><liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="titleEditor" placeholder="title" /></h2>
+						<h2><liferay-ui:input-editor contents="<%= title %>" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="titleEditor" placeholder="title" /></h2>
 					</div>
 
 					<aui:input name="title" type="hidden" />
 
 					<div class="entry-subtitle">
-						<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="subtitleEditor" placeholder="subtitle" />
+						<liferay-ui:input-editor contents="<%= subtitle %>" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="subtitleEditor" placeholder="subtitle" />
 					</div>
 
 					<aui:input name="subtitle" type="hidden" />
@@ -146,7 +161,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						data.put("uploadURL", uploadEditorImageURL);
 						%>
 
-						<liferay-ui:input-editor contents="<%= content %>" data="<%= data %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
+						<liferay-ui:input-editor contents="<%= content %>" data="<%= data %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
 					</div>
 
 					<aui:input name="content" type="hidden" />
@@ -195,7 +210,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 							</div>
 
 							<div class="entry-description">
-								<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" />
+								<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" />
 							</div>
 
 							<aui:input name="description" type="hidden" />
@@ -466,7 +481,5 @@ else {
 %>
 
 <%!
-public static final String EDITOR_HTML_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.html.jsp";
-
-public static final String EDITOR_TEXT_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.text.jsp";
+public static final String EDITOR_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp";
 %>

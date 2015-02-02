@@ -729,7 +729,9 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		map.put("/foo/srvcctx2", params);
 
-		params.put("serviceContext", "{\"failOnPortalException\": false}");
+		params.put(
+			"serviceContext",
+			"{\"failOnPortalException\": false, \"uuid\": \"uuid\"}");
 
 		String json = toJSON(map);
 
@@ -743,6 +745,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		ServiceContext serviceContext =
 			(ServiceContext)invokerResult.getResult();
 
+		Assert.assertEquals("uuid", serviceContext.getUuid());
 		Assert.assertFalse(serviceContext.isFailOnPortalException());
 	}
 

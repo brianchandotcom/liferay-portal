@@ -30,17 +30,17 @@ MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_TR
 MBThread thread = (MBThread)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD);
 int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH)).intValue();
 
-String randomNamespace = (String)request.getAttribute("page.jsp-randomNamespace");
-int i = GetterUtil.getInteger(request.getAttribute("page.jsp-i"));
-MBMessage rootMessage = (MBMessage)request.getAttribute("page.jsp-rootMessage");
-List<RatingsEntry> ratingsEntries = (List<RatingsEntry>)request.getAttribute("page.jsp-ratingsEntries");
-List<RatingsStats> ratingsStatsList = (List<RatingsStats>)request.getAttribute("page.jsp-ratingsStatsList");
+String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:randomNamespace");
+int i = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:i"));
+MBMessage rootMessage = (MBMessage)request.getAttribute("liferay-ui:discussion:rootMessage");
+List<RatingsEntry> ratingsEntries = (List<RatingsEntry>)request.getAttribute("liferay-ui:discussion:ratingsEntries");
+List<RatingsStats> ratingsStatsList = (List<RatingsStats>)request.getAttribute("liferay-ui:discussion:ratingsStatsList");
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
 i++;
 
-request.setAttribute("page.jsp-i", new Integer(i));
+request.setAttribute("liferay-ui:discussion:i", new Integer(i));
 %>
 
 <c:if test="<%= !(!message.isApproved() && ((message.getUserId() != user.getUserId()) || user.isDefaultUser()) && !permissionChecker.isGroupAdmin(scopeGroupId)) && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW) %>">

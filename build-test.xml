@@ -574,9 +574,13 @@
 						<antelope:replace regex="," replacement="_" />
 					</antelope:stringutil>
 
-					<property name="testray.logs.report.path" value="${jenkins.testray.results.dir}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}/report.html" />
+					<property name="testray.logs.dir" value="${jenkins.testray.results.dir}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
+
+					<property name="testray.logs.console.output" value="${testray.logs.dir}/consoleText" />
+					<property name="testray.logs.report.path" value="${testray.logs.dir}/report.html" />
 				</then>
 				<else>
+					<property name="testray.logs.console.output" value="" />
 					<property name="testray.logs.report.path" value="" />
 				</else>
 			</if>
@@ -1061,6 +1065,7 @@ create database lportal${database.index} character set utf8;</echo>
 					<property name="testray.build.time" value="${testray.build.time}" />
 					<property name="testray.build.type" value="${testray.build.type}" />
 					<property name="testray.job.name" value="${testray.job.name}" />
+					<property name="testray.logs.console.output" value="${testray.logs.console.output}" />
 					<property name="testray.logs.report.path" value="${testray.logs.report.path}" />
 					<property name="testray.product.type" value="${testray.product.type}" />
 					<property name="testray.product.version" value="${testray.product.version}" />

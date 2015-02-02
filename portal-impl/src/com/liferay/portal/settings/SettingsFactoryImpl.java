@@ -61,7 +61,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	@Override
 	public void clearCache() {
 		_portletPropertiesMap.clear();
-		_propertiesMap.clear();
 	}
 
 	@Override
@@ -260,25 +259,11 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			getPortletPropertiesSettings(settingsId));
 	}
 
-	protected Properties getPortalProperties(String settingsId) {
-		Properties portalProperties = _propertiesMap.get(settingsId);
-
-		if (portalProperties != null) {
-			return portalProperties;
-		}
-
-		portalProperties = PropsUtil.getProperties();
-
-		_propertiesMap.put(settingsId, portalProperties);
-
-		return portalProperties;
-	}
-
 	protected PropertiesSettings getPortalPropertiesSettings(
 		String settingsId) {
 
 		return new PropertiesSettings(
-			getPortalProperties(settingsId),
+			PropsUtil.getProperties(),
 			new ClassLoaderResourceManager(
 				PortalClassLoaderUtil.getClassLoader()));
 	}
@@ -351,8 +336,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	private final ConcurrentMap<String, List<String>> _multiValuedKeysMap =
 		new ConcurrentHashMap<>();
 	private final Map<String, Properties> _portletPropertiesMap =
-		new ConcurrentHashMap<>();
-	private final Map<String, Properties> _propertiesMap =
 		new ConcurrentHashMap<>();
 	private final ConcurrentMap<String, ResourceManager> _resourceManagers =
 		new ConcurrentHashMap<>();

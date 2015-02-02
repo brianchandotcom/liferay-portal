@@ -110,10 +110,11 @@ public class BaseHandler implements Handler<Void> {
 
 				SyncAccountService.update(syncAccount);
 			}
-			else {
-				retryServerConnection(
-					SyncAccount.UI_EVENT_CONNECTION_EXCEPTION);
-			}
+
+			// Retry connection for now. We are periodically receiving
+			// extraneous HttpStatus.SC_UNAUTHORIZED exceptions.
+
+			retryServerConnection(SyncAccount.UI_EVENT_CONNECTION_EXCEPTION);
 		}
 		else if ((e instanceof NoHttpResponseException) ||
 				 (e instanceof SocketException)) {

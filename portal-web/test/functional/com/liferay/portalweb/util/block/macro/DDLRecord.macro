@@ -186,19 +186,15 @@
 	<command name="populateFieldGeolocation">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="GEOLOCATION_GEOLOCATE" value1="Geolocate" />
+		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="FIELD_LABEL" value1="${fieldName}" />
 		<execute action="CPDynamicdatalistsListAddrecord#sikuliClick" locator-key1="GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
 		<execute action="CPDynamicdatalistsListAddrecord#sikuliClick" locator-key1="GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
 		<execute action="CPDynamicdatalistsListAddrecord#pause" locator1="2000" />
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="GEOLOCATION_LOCATION_LABEL" value1="Location:" />
-
-		<var method="selenium#getText(//div[@data-fieldname='Geolocation']/p/span)" name="coordinates" />
-
-		<var group="0" input="${coordinates}" name="ddlRecordFieldData" pattern="([0.0-9.9]*), ([-0.0-9.9]*)" />
-
-		<echo message="Location coordinates: ${ddlRecordFieldData}" />
-
-		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="GEOLOCATION_LOCATION" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_DIAMOND_BAR_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_DIRECTIONAL_ARROWS_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_LOCATION_PIN_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_MAP_SATELLITE_TOGGLE_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliAssertElementPresent" locator-key1="GEOLOCATION_MAP_RECENTER_BUTTON_PNG" />
 	</command>
 
 	<command name="populateFieldHTML">

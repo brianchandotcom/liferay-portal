@@ -63,7 +63,7 @@ public class PoshiRunnerExecutor {
 
 			if (locator != null) {
 				if (locator.contains("#")) {
-					String functionClassName =
+					String pathClassName =
 						PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 							locator);
 
@@ -72,7 +72,7 @@ public class PoshiRunnerExecutor {
 							getCommandNameFromClassCommandName(locator);
 
 					locator = PoshiRunnerContext.getPathLocator(
-						functionClassName + "#" + locatorKey);
+						pathClassName + "#" + locatorKey);
 				}
 
 				PoshiRunnerVariablesUtil.putIntoExecuteMap(

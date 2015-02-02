@@ -108,7 +108,6 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	public void deleteCategories(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteCategory(
 		com.liferay.portlet.messageboards.model.MBCategory category)
 		throws com.liferay.portal.kernel.exception.PortalException;

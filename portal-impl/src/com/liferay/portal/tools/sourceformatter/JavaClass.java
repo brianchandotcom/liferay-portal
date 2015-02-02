@@ -326,7 +326,7 @@ public class JavaClass {
 
 	protected void checkFinalableFieldType(
 			JavaTerm javaTerm, Set<String> annotationsExclusions,
-			boolean isStatic)
+			boolean isStatic, boolean isTransient)
 		throws Exception {
 
 		String javaTermContent = javaTerm.getContent();
@@ -358,13 +358,28 @@ public class JavaClass {
 
 		String newJavaTermContent = null;
 
-		if (isStatic) {
-			newJavaTermContent = StringUtil.replaceFirst(
-				javaTermContent, "private static ", "private static final ");
+		if (isTransient) {
+			if (isStatic) {
+				newJavaTermContent = StringUtil.replaceFirst(
+					javaTermContent, "private static transient ",
+					"private static transient final ");
+			}
+			else {
+				newJavaTermContent = StringUtil.replaceFirst(
+					javaTermContent, "private transient",
+					"private transient final ");
+			}
 		}
 		else {
-			newJavaTermContent = StringUtil.replaceFirst(
-				javaTermContent, "private ", "private final ");
+			if (isStatic) {
+				newJavaTermContent = StringUtil.replaceFirst(
+					javaTermContent, "private static ",
+					"private static final ");
+			}
+			else {
+				newJavaTermContent = StringUtil.replaceFirst(
+					javaTermContent, "private ", "private final ");
+			}
 		}
 
 		_content = StringUtil.replace(
@@ -402,7 +417,7 @@ public class JavaClass {
 		}
 
 		Pattern pattern = Pattern.compile(
-			"\t(private |protected |public )(static )?(final)?([\\s\\S]*?)" +
+			"\t(private |protected |public )(static )?(transient )?(final)?([\\s\\S]*?)" +
 				javaTerm.getName());
 
 		Matcher matcher = pattern.matcher(javaTerm.getContent());
@@ -411,9 +426,10 @@ public class JavaClass {
 			return;
 		}
 
-		boolean isFinal = Validator.isNotNull(matcher.group(3));
+		boolean isFinal = Validator.isNotNull(matcher.group(4));
 		boolean isStatic = Validator.isNotNull(matcher.group(2));
-		String javaFieldType = StringUtil.trim(matcher.group(4));
+		boolean isTransient = Validator.isNotNull(matcher.group(3));
+		String javaFieldType = StringUtil.trim(matcher.group(5));
 
 		if (isFinal && isStatic && javaFieldType.startsWith("Map<")) {
 			checkMutableFieldType(javaTerm);
@@ -434,7 +450,8 @@ public class JavaClass {
 			}
 		}
 		else {
-			checkFinalableFieldType(javaTerm, annotationsExclusions, isStatic);
+			checkFinalableFieldType(
+				javaTerm, annotationsExclusions, isStatic, isTransient);
 		}
 	}
 

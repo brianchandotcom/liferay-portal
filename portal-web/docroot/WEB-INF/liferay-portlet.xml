@@ -428,22 +428,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>73</portlet-name>
-		<icon>/html/icons/breadcrumb.png</icon>
-		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
-		<template-handler>com.liferay.portlet.breadcrumb.template.BreadcrumbPortletDisplayTemplateHandler</template-handler>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<layout-cacheable>true</layout-cacheable>
-		<instanceable>true</instanceable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>1</render-weight>
-		<ajaxable>false</ajaxable>
-		<css-class-wrapper>portlet-breadcrumb</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-	</portlet>
-	<portlet>
 		<portlet-name>77</portlet-name>
 		<icon>/html/icons/journal_content_search.png</icon>
 		<struts-path>journal_content_search</struts-path>

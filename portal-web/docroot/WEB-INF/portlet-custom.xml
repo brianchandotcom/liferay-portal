@@ -463,37 +463,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>73</portlet-name>
-		<display-name>Breadcrumb</display-name>
-		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/breadcrumb/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/breadcrumb/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/breadcrumb/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>77</portlet-name>
 		<display-name>Journal Content Search</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

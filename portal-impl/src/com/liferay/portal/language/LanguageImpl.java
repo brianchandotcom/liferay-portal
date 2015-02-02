@@ -714,18 +714,16 @@ public class LanguageImpl implements Language, Serializable {
 	public boolean isInheritLocales(long groupId) throws PortalException {
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		Group liveGroup = group;
-
 		if (group.isStagingGroup()) {
-			liveGroup = group.getLiveGroup();
+			group = group.getLiveGroup();
 		}
 
-		else if (!group.isSite() || group.isCompany()) {
+		if (!group.isSite() || group.isCompany()) {
 			return true;
 		}
 
 		return GetterUtil.getBoolean(
-			liveGroup.getTypeSettingsProperty("inheritLocales"), true);
+			group.getTypeSettingsProperty("inheritLocales"), true);
 	}
 
 	@Override

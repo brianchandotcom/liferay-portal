@@ -42,6 +42,7 @@ import org.jboss.arquillian.junit.Arquillian;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -64,6 +65,11 @@ public class PollsVotePersistenceTest {
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = PollsVoteUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -529,5 +535,5 @@ public class PollsVotePersistenceTest {
 	}
 
 	private List<PollsVote> _pollsVotes = new ArrayList<PollsVote>();
-	private PollsVotePersistence _persistence = PollsVoteUtil.getPersistence();
+	private PollsVotePersistence _persistence;
 }

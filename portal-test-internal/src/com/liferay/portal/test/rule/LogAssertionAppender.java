@@ -15,8 +15,6 @@
 package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.test.rule.executor.LogAssertionExecutor;
-import com.liferay.portal.test.rule.executor.LogAssertionExecutorUtil;
 
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Level;
@@ -57,11 +55,7 @@ public class LogAssertionAppender extends AppenderSkeleton {
 			ThrowableInformation throwableInformation =
 				loggingEvent.getThrowableInformation();
 
-			LogAssertionExecutor logAssertionExecutor =
-				LogAssertionExecutorUtil.getInstance();
-
-			logAssertionExecutor.caughtFailure(
-				Thread.currentThread(),
+			LogAssertionTestRule.caughtFailure(
 				new AssertionError(
 					sb.toString(), throwableInformation.getThrowable()));
 		}

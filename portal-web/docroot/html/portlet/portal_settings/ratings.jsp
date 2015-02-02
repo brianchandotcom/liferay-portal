@@ -16,6 +16,12 @@
 
 <%@ include file="/html/portlet/portal_settings/init.jsp" %>
 
+<%
+PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
+
+CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDisplayContext = new CompanyPortletRatingsDefinitionDisplayContext(companyPortletPreferences, request);
+%>
+
 <liferay-ui:error-marker key="errorSection" value="ratings" />
 
 <h3><liferay-ui:message key="ratings" /></h3>
@@ -29,7 +35,7 @@
 <aui:fieldset>
 
 	<%
-	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = portletRatingsDefinitionDisplayContext.getCompanyPortletRatingsDefinitionMap();
+	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = companyPortletRatingsDefinitionDisplayContext.getCompanyPortletRatingsDefinitionMap();
 
 	for (String portletId : portletRatingsDefinitionMap.keySet()) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
@@ -50,21 +56,21 @@
 			RatingsType ratingsType = ratingsTypeMap.get(className);
 		%>
 
-		<div class="ratings-type-select">
-			<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "settings--" + propertyKey + "--" %>'>
+			<div class="ratings-type-select">
+				<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "settings--" + propertyKey + "--" %>'>
 
-				<%
-				for (RatingsType curRatingsType : RatingsType.values()) {
-				%>
+					<%
+					for (RatingsType curRatingsType : RatingsType.values()) {
+					%>
 
-					<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Validator.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
+						<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Validator.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</aui:select>
-		</div>
+				</aui:select>
+			</div>
 
 	<%
 		}

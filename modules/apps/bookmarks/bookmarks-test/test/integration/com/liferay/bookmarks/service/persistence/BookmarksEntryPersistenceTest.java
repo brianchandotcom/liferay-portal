@@ -16,7 +16,6 @@ package com.liferay.bookmarks.service.persistence;
 
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.model.impl.BookmarksEntryModelImpl;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -683,13 +683,14 @@ public class BookmarksEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		BookmarksEntryModelImpl existingBookmarksEntryModelImpl = (BookmarksEntryModelImpl)_persistence.findByPrimaryKey(newBookmarksEntry.getPrimaryKey());
+		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(newBookmarksEntry.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingBookmarksEntryModelImpl.getUuid(),
-				existingBookmarksEntryModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingBookmarksEntryModelImpl.getGroupId(),
-			existingBookmarksEntryModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingBookmarksEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingBookmarksEntry,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingBookmarksEntry.getGroupId(),
+			ReflectionTestUtil.invoke(existingBookmarksEntry,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected BookmarksEntry addBookmarksEntry() throws Exception {

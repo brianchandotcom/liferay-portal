@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.model.WikiPageResource;
-import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 
 import org.jboss.arquillian.junit.Arquillian;
@@ -407,13 +407,15 @@ public class WikiPageResourcePersistenceTest {
 
 		_persistence.clearCache();
 
-		WikiPageResourceModelImpl existingWikiPageResourceModelImpl = (WikiPageResourceModelImpl)_persistence.findByPrimaryKey(newWikiPageResource.getPrimaryKey());
+		WikiPageResource existingWikiPageResource = _persistence.findByPrimaryKey(newWikiPageResource.getPrimaryKey());
 
-		Assert.assertEquals(existingWikiPageResourceModelImpl.getNodeId(),
-			existingWikiPageResourceModelImpl.getOriginalNodeId());
+		Assert.assertEquals(existingWikiPageResource.getNodeId(),
+			ReflectionTestUtil.invoke(existingWikiPageResource,
+				"getOriginalNodeId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingWikiPageResourceModelImpl.getTitle(),
-				existingWikiPageResourceModelImpl.getOriginalTitle()));
+				existingWikiPageResource.getTitle(),
+				ReflectionTestUtil.invoke(existingWikiPageResource,
+					"getOriginalTitle", new Class<?>[0])));
 	}
 
 	protected WikiPageResource addWikiPageResource() throws Exception {

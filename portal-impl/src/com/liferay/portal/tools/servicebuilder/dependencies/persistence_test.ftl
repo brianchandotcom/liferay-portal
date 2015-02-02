@@ -23,7 +23,6 @@ package ${packagePath}.service.persistence;
 </#if>
 
 import ${packagePath}.model.${entity.name};
-import ${packagePath}.model.impl.${entity.name}ModelImpl;
 import ${packagePath}.service.${entity.name}LocalServiceUtil;
 
 import ${beanLocatorUtil};
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -885,18 +885,18 @@ public class ${entity.name}PersistenceTest {
 
 			_persistence.clearCache();
 
-			${entity.name}ModelImpl existing${entity.name}ModelImpl = (${entity.name}ModelImpl)_persistence.findByPrimaryKey(new${entity.name}.getPrimaryKey());
+			${entity.name} existing${entity.name} = _persistence.findByPrimaryKey(new${entity.name}.getPrimaryKey());
 
 			<#list uniqueFinderList as finder>
 				<#assign finderColsList = finder.getColumns()>
 
 				<#list finderColsList as finderCol>
 					<#if finderCol.type == "double">
-						AssertUtils.assertEquals(existing${entity.name}ModelImpl.get${finderCol.methodName}(), existing${entity.name}ModelImpl.getOriginal${finderCol.methodName}());
+						AssertUtils.assertEquals(existing${entity.name}.get${finderCol.methodName}(), ReflectionTestUtil.<Double>invoke(existing${entity.name}, "getOriginal${finderCol.methodName}", new Class<?>[0]));
 					<#elseif finderCol.isPrimitiveType()>
-						Assert.assertEquals(existing${entity.name}ModelImpl.get${finderCol.methodName}(), existing${entity.name}ModelImpl.getOriginal${finderCol.methodName}());
+						Assert.assertEquals(existing${entity.name}.get${finderCol.methodName}(), ReflectionTestUtil.invoke(existing${entity.name}, "getOriginal${finderCol.methodName}", new Class<?>[0]));
 					<#else>
-						Assert.assertTrue(Validator.equals(existing${entity.name}ModelImpl.get${finderCol.methodName}(), existing${entity.name}ModelImpl.getOriginal${finderCol.methodName}()));
+						Assert.assertTrue(Validator.equals(existing${entity.name}.get${finderCol.methodName}(), ReflectionTestUtil.invoke(existing${entity.name}, "getOriginal${finderCol.methodName}", new Class<?>[0])));
 					</#if>
 				</#list>
 			</#list>

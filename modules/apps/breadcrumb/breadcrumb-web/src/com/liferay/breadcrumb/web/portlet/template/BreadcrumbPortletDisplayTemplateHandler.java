@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
@@ -30,10 +31,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author José Manuel Navarro
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + BreadcrumbPortletKeys.BREADCRUMB
+	},
+	service = TemplateHandler.class
+)
 public class BreadcrumbPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
@@ -54,8 +65,11 @@ public class BreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language");
+
 		String portletTitle = PortalUtil.getPortletTitle(
-			getResourceName(), locale);
+			BreadcrumbPortletKeys.BREADCRUMB, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));

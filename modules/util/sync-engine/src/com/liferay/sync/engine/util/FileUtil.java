@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 
 import java.util.Arrays;
@@ -263,7 +264,7 @@ public class FileUtil {
 		return false;
 	}
 
-	public static boolean isModified(SyncFile syncFile) throws IOException {
+	public static boolean isModified(SyncFile syncFile) {
 		if (syncFile.getFilePathName() == null) {
 			return true;
 		}
@@ -273,22 +274,59 @@ public class FileUtil {
 		return isModified(syncFile, filePath);
 	}
 
-	public static boolean isModified(SyncFile syncFile, Path filePath)
-		throws IOException {
-
+	public static boolean isModified(SyncFile syncFile, Path filePath) {
 		if (filePath == null) {
 			return true;
 		}
 
-		if ((syncFile.getSize() > 0) &&
-			(syncFile.getSize() != Files.size(filePath))) {
+		try {
+			if ((syncFile.getSize() > 0) &&
+				(syncFile.getSize() != Files.size(filePath))) {
+
+				return true;
+			}
+		}
+		catch (IOException ioe) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(ioe.getMessage(), ioe);
+			}
+		}
+
+		try {
+			FileTime fileTime = Files.getLastModifiedTime(filePath);
+
+			long modifiedTime = syncFile.getModifiedTime();
+
+			if (OSDetector.isUnix()) {
+				modifiedTime = modifiedTime / 1000 * 1000;
+			}
+
+			if (fileTime.toMillis() == modifiedTime) {
+				String fileKey = FileUtil.getFileKey(filePath);
+
+				if (fileKey.equals(syncFile.getFileKey())) {
+					return false;
+				}
+			}
+		}
+		catch (IOException ioe) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(ioe.getMessage(), ioe);
+			}
+		}
+
+		try {
+			String checksum = getChecksum(filePath);
+
+			return !checksumsEqual(checksum, syncFile.getChecksum());
+		}
+		catch (IOException ioe) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(ioe.getMessage(), ioe);
+			}
 
 			return true;
 		}
-
-		String checksum = getChecksum(filePath);
-
-		return !checksumsEqual(checksum, syncFile.getChecksum());
 	}
 
 	public static boolean isValidChecksum(Path filePath) throws IOException {

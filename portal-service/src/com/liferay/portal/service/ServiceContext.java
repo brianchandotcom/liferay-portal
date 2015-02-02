@@ -980,6 +980,8 @@ public class ServiceContext implements Cloneable, Serializable {
 		String uuid = serviceContext.getUuid();
 
 		if (Validator.isNotNull(uuid)) {
+			serviceContext.setUuid(uuid);
+
 			setUuid(uuid);
 		}
 

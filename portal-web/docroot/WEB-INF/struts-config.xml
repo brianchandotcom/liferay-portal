@@ -293,10 +293,6 @@
 			<forward name="portlet.blogs.error" path="portlet.blogs.error" />
 		</action>
 
-		<!-- Breadcrumb -->
-
-		<action path="/breadcrumb/view" forward="portlet.breadcrumb.view" />
-
 		<!-- Control Panel Home -->
 
 		<action path="/control_panel_home/view" forward="portlet.control_panel_home.view" />

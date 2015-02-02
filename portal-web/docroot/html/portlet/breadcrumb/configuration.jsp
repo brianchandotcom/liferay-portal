@@ -72,7 +72,6 @@ TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler
 
 		<liferay-portlet:preview
 			portletName="<%= portletResource %>"
-			queryString="struts_action=/breadcrumb/view"
 			showBorders="<%= true %>"
 		/>
 	</aui:col>

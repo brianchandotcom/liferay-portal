@@ -513,13 +513,6 @@ public class ClusterExecutorImpl
 		else {
 			addresses = new ArrayList<>();
 
-			Collection<Address> clusterNodeAddresses =
-				clusterRequest.getTargetClusterNodeAddresses();
-
-			if (clusterNodeAddresses != null) {
-				addresses.addAll(clusterNodeAddresses);
-			}
-
 			Collection<String> clusterNodeIds =
 				clusterRequest.getTargetClusterNodeIds();
 

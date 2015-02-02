@@ -430,11 +430,10 @@
 	<portlet>
 		<portlet-name>73</portlet-name>
 		<icon>/html/icons/breadcrumb.png</icon>
-		<struts-path>breadcrumb</struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<template-handler>com.liferay.portlet.breadcrumb.template.BreadcrumbPortletDisplayTemplateHandler</template-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<layout-cacheable>true</layout-cacheable>
 		<instanceable>true</instanceable>
 		<private-request-attributes>false</private-request-attributes>

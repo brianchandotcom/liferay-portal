@@ -407,6 +407,13 @@ public class DLFileEntryFinderImpl
 	public List<DLFileEntry> findByDDMStructureIds(
 		long[] ddmStructureIds, int start, int end) {
 
+		return findByDDMStructureIds(0, ddmStructureIds, start, end);
+	}
+
+	@Override
+	public List<DLFileEntry> findByDDMStructureIds(
+		long groupId, long[] ddmStructureIds, int start, int end) {
+
 		Session session = null;
 
 		try {
@@ -418,6 +425,11 @@ public class DLFileEntryFinderImpl
 				return Collections.emptyList();
 			}
 
+			if (groupId <= 0) {
+				sql = StringUtil.replace(
+					sql, "(DLFileEntry.groupId = ?) AND", StringPool.BLANK);
+			}
+
 			sql = StringUtil.replace(
 				sql, "[$DDM_STRUCTURE_ID$]",
 				getDDMStructureIds(ddmStructureIds));
@@ -427,6 +439,10 @@ public class DLFileEntryFinderImpl
 			q.addEntity(DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (groupId > 0) {
+				qPos.add(groupId);
+			}
 
 			qPos.add(ddmStructureIds);
 

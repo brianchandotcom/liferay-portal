@@ -384,6 +384,11 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getDDMStructureFileEntries(ddmStructureIds);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDDMStructureFileEntries(
+		long groupId, long[] ddmStructureIds) {
+		return getService().getDDMStructureFileEntries(groupId, ddmStructureIds);
+	}
+
 	/**
 	* Returns a range of all the document library file entries.
 	*

@@ -157,6 +157,12 @@ public class DLFileEntryFinderUtil {
 		return getFinder().findByDDMStructureIds(ddmStructureIds, start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByDDMStructureIds(
+		long groupId, long[] ddmStructureIds, int start, int end) {
+		return getFinder()
+				   .findByDDMStructureIds(groupId, ddmStructureIds, start, end);
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByExtraSettings(
 		int start, int end) {
 		return getFinder().findByExtraSettings(start, end);

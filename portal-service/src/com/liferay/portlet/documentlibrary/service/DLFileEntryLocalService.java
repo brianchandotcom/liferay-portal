@@ -314,6 +314,10 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDDMStructureFileEntries(
 		long[] ddmStructureIds);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDDMStructureFileEntries(
+		long groupId, long[] ddmStructureIds);
+
 	/**
 	* Returns a range of all the document library file entries.
 	*

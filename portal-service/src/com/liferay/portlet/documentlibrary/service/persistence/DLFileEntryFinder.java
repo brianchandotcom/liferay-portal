@@ -98,6 +98,9 @@ public interface DLFileEntryFinder {
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByDDMStructureIds(
 		long[] ddmStructureIds, int start, int end);
 
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByDDMStructureIds(
+		long groupId, long[] ddmStructureIds, int start, int end);
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByExtraSettings(
 		int start, int end);
 

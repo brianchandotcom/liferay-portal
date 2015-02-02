@@ -942,6 +942,14 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public List<DLFileEntry> getDDMStructureFileEntries(
+		long groupId, long[] ddmStructureIds) {
+
+		return dlFileEntryFinder.findByDDMStructureIds(
+			groupId, ddmStructureIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	@Override
+	public List<DLFileEntry> getDDMStructureFileEntries(
 		long[] ddmStructureIds) {
 
 		return dlFileEntryFinder.findByDDMStructureIds(

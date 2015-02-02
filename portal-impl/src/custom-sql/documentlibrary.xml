@@ -103,6 +103,7 @@
 			FROM
 				DLFileEntry
 			WHERE
+				(DLFileEntry.groupId = ?) AND
 				(DLFileEntry.fileEntryTypeId IN (
 					SELECT
 						DLFileEntryTypes_DDMStructures.fileEntryTypeId

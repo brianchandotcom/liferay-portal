@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -58,6 +59,7 @@ import java.awt.image.RenderedImage;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.PushbackInputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -162,6 +164,25 @@ public class UploadImageAction extends PortletAction {
 			if (cmd.equals(Constants.GET_TEMP)) {
 				FileEntry tempFileEntry = getTempImageFileEntry(
 					resourceRequest);
+
+				InputStream inputStream = tempFileEntry.getContentStream();
+
+				PushbackInputStream pbis = new PushbackInputStream(
+					inputStream, 3);
+
+				byte[] magicBytes = new byte[3];
+
+				pbis.read(magicBytes);
+				pbis.unread(magicBytes);
+
+				inputStream = pbis;
+
+				if (ArrayUtil.containsAll(_flashMagicBytes[0], magicBytes) ||
+					ArrayUtil.containsAll(_flashMagicBytes[1], magicBytes) ||
+					ArrayUtil.containsAll(_flashMagicBytes[2], magicBytes)) {
+
+					return;
+				}
 
 				serveTempImageFile(
 					resourceResponse, tempFileEntry.getContentStream());
@@ -411,5 +432,8 @@ public class UploadImageAction extends PortletAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UploadImageAction.class);
+
+	private static final byte[][] _flashMagicBytes =
+		{ {0x46, 0x57, 0x53}, {0x43, 0x57, 0x53}, {0x5a, 0x57, 0x53} };
 
 }

@@ -23,8 +23,8 @@
 						}
 					}
 
-					var data = {
-						p_auth: Liferay.authToken
+					var headers = {
+						"X-CSRF-Token": Liferay.authToken
 					};
 
 					var value = '';
@@ -32,14 +32,14 @@
 					A.io(
 						url,
 						{
+							headers: headers,
+							method: 'GET',
 							on: {
 								complete: function(i, o) {
 									value = o.responseText;
 								}
 							},
-							data: data,
-							sync: true,
-							method: 'POST'
+							sync: true
 						}
 					);
 

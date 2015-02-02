@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
@@ -79,6 +80,10 @@ public class SessionAuthToken implements AuthToken {
 		}
 
 		String csrfToken = ParamUtil.getString(request, "p_auth");
+
+		if (Validator.isNull(csrfToken)) {
+			csrfToken = GetterUtil.getString(request.getHeader("X-CSRF-Token"));
+		}
 
 		String sessionToken = getSessionAuthenticationToken(
 			request, _CSRF, false);

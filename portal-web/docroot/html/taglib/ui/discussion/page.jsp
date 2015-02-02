@@ -215,11 +215,11 @@ SearchContainer searchContainer = null;
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, rootMessage);
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
 
-							request.setAttribute("page.jsp-randomNamespace", randomNamespace);
-							request.setAttribute("page.jsp-rootMessage", rootMessage);
+							request.setAttribute("liferay-ui:discussion:randomNamespace", randomNamespace);
+							request.setAttribute("liferay-ui:discussion:rootMessage", rootMessage);
 
-							request.setAttribute("page.jsp-ratingsEntries", ratingsEntries);
-							request.setAttribute("page.jsp-ratingsStatsList", ratingsStatsList);
+							request.setAttribute("liferay-ui:discussion:ratingsEntries", ratingsEntries);
+							request.setAttribute("liferay-ui:discussion:ratingsStatsList", ratingsStatsList);
 						%>
 
 							<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />

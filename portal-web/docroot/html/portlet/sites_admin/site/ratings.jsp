@@ -16,6 +16,21 @@
 
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
+<%
+Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+
+UnicodeProperties groupTypeSettings = null;
+
+if (liveGroup != null) {
+	groupTypeSettings = liveGroup.getTypeSettingsProperties();
+}
+else {
+	groupTypeSettings = new UnicodeProperties();
+}
+
+GroupPortletRatingsDefinitionDisplayContext groupPortletRatingsDefinitionDisplayContext = new GroupPortletRatingsDefinitionDisplayContext(groupTypeSettings, request);
+%>
+
 <liferay-ui:error-marker key="errorSection" value="ratings" />
 
 <h3><liferay-ui:message key="ratings" /></h3>
@@ -29,7 +44,7 @@
 <aui:fieldset>
 
 	<%
-	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = portletRatingsDefinitionDisplayContext.getGroupPortletRatingsDefinitionMap();
+	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = groupPortletRatingsDefinitionDisplayContext.getGroupPortletRatingsDefinitionMap();
 
 	for (String portletId : portletRatingsDefinitionMap.keySet()) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);

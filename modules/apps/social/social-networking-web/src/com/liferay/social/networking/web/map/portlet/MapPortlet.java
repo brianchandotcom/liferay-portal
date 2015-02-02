@@ -18,7 +18,6 @@ import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.util.Portal;
 import com.liferay.social.networking.web.constants.WebKeys;
-import com.liferay.social.networking.web.ip.geocoder.IPGeocoderHelper;
 
 import java.io.IOException;
 
@@ -63,13 +62,12 @@ public class MapPortlet extends MVCPortlet {
 		HttpServletRequest request = _portal.getHttpServletRequest(
 			renderRequest);
 
-		request.setAttribute(
-			WebKeys.IP_GEOCODER, new IPGeocoderHelper(_ipGeocoder));
+		request.setAttribute(WebKeys.IP_GEOCODER, _ipGeocoder);
 
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	@Reference(unbind = "-")
 	protected void setIPGeocoder(IPGeocoder ipGeocoder) {
 		_ipGeocoder = ipGeocoder;
 	}
@@ -77,10 +75,6 @@ public class MapPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setPortal(Portal portal) {
 		_portal = portal;
-	}
-
-	protected void unsetIPGeocoder(IPGeocoder ipGeocoder) {
-		_ipGeocoder = null;
 	}
 
 	private IPGeocoder _ipGeocoder;

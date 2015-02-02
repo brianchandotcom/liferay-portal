@@ -47,10 +47,7 @@ else {
 %>
 
 <%
-IPGeocoderHelper ipGeocoderHelper = (IPGeocoderHelper)request.getAttribute(WebKeys.IP_GEOCODER);
-
-boolean ipGeocoderInstalled = ipGeocoderHelper.isIPGeocoderInstalled();
-boolean ipGeocoderConfigured = ipGeocoderInstalled && ipGeocoderHelper.isIPGeocoderConfigured(request.getRemoteUser());
+IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(WebKeys.IP_GEOCODER);
 %>
 
 <c:choose>
@@ -130,7 +127,7 @@ boolean ipGeocoderConfigured = ipGeocoderInstalled && ipGeocoderHelper.isIPGeoco
 						continue;
 					}
 
-					IPInfo ipInfo = ipGeocoderHelper.getIPInfo(mapUser.getLastLoginIP());
+					IPInfo ipInfo = ipGeocoder.getIPInfo(mapUser.getLastLoginIP());
 
 					if (ipInfo == null) {
 						continue;

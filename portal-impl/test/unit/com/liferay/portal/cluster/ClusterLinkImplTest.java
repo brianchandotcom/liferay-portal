@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -134,72 +133,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		}
 		finally {
 			clusterLinkImpl.destroy();
-		}
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class,
-			TransportationConfigurationAdvice.class
-		}
-	)
-	@Test
-	public void testGetLocalTransportAddresses() {
-		TransportationConfigurationAdvice.setChannelCount(2);
-
-		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
-
-		try {
-			List<Address> addresses =
-				clusterLinkImpl.getLocalTransportAddresses();
-
-			Assert.assertEquals(2, addresses.size());
-
-			List<JChannel> jChannels = getJChannels(clusterLinkImpl);
-
-			assertAddresses(addresses, jChannels.get(0), jChannels.get(1));
-		}
-		finally {
-			clusterLinkImpl.destroy();
-		}
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			DisableAutodetectedAddressAdvice.class,
-			EnableClusterLinkAdvice.class,
-			TransportationConfigurationAdvice.class
-		}
-	)
-	@Test
-	public void testGetTransportAddressesByPriority() {
-		TransportationConfigurationAdvice.setChannelCount(2);
-
-		ClusterLinkImpl clusterLinkImpl1 = getClusterLinkImpl();
-		ClusterLinkImpl clusterLinkImpl2 = getClusterLinkImpl();
-
-		try {
-			List<JChannel> jChannels1 = getJChannels(clusterLinkImpl1);
-			List<JChannel> jChannels2 = getJChannels(clusterLinkImpl2);
-
-			Assert.assertEquals(2, jChannels1.size());
-			Assert.assertEquals(2, jChannels2.size());
-
-			List<Address> addresses1 = clusterLinkImpl1.getTransportAddresses(
-				Priority.LEVEL1);
-			List<Address> addresses2 = clusterLinkImpl1.getTransportAddresses(
-				Priority.LEVEL6);
-
-			Assert.assertEquals(2, addresses1.size());
-			Assert.assertEquals(2, addresses2.size());
-
-			assertAddresses(addresses1, jChannels1.get(0), jChannels2.get(0));
-			assertAddresses(addresses2, jChannels1.get(1), jChannels2.get(1));
-		}
-		finally {
-			clusterLinkImpl1.destroy();
-			clusterLinkImpl2.destroy();
 		}
 	}
 
@@ -493,14 +426,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	public void testWithClusterDisabled() throws Exception {
 		ClusterLinkImpl clusterLinkImpl = getClusterLinkImpl();
 
-		List<Address> addresses = clusterLinkImpl.getLocalTransportAddresses();
-
-		Assert.assertSame(Collections.emptyList(), addresses);
-
-		addresses = clusterLinkImpl.getTransportAddresses(Priority.LEVEL1);
-
-		Assert.assertSame(Collections.emptyList(), addresses);
-
 		clusterLinkImpl.sendMulticastMessage(createMessage(), Priority.LEVEL1);
 
 		clusterLinkImpl.sendUnicastMessage(
@@ -576,10 +501,6 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		clusterLinkImpl.afterPropertiesSet();
 
 		clusterLinkImpl.initialize();
-
-		if (clusterLinkImpl.isEnabled()) {
-			Assert.assertNotNull(clusterLinkImpl.getBindInetAddress());
-		}
 
 		return clusterLinkImpl;
 	}

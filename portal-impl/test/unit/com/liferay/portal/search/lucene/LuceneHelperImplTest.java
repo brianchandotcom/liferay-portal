@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.lucene;
 
-import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
@@ -848,11 +847,6 @@ public class LuceneHelperImplTest {
 			return Collections.unmodifiableList(_clusterEventListeners);
 		}
 
-		@Override
-		public List<Address> getClusterNodeAddresses() {
-			return null;
-		}
-
 		public Set<String> getClusterNodeIds() {
 			return _clusterNodes.keySet();
 		}
@@ -867,22 +861,12 @@ public class LuceneHelperImplTest {
 			return _clusterNodes.get(_CLUSTER_NODE_ID_PREFIX + 0);
 		}
 
-		@Override
-		public Address getLocalClusterNodeAddress() {
-			return null;
-		}
-
 		public String getLocalClusterNodeId() {
 			return _CLUSTER_NODE_ID_PREFIX + 0;
 		}
 
 		@Override
 		public void initialize() {
-		}
-
-		@Override
-		public boolean isClusterNodeAlive(Address address) {
-			return false;
 		}
 
 		@Override

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEventType;
+import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.test.CaptureHandler;
@@ -60,9 +60,13 @@ public class ClusterRequestReceiverTest
 
 		ClusterExecutorImpl clusterExecutorImpl2 = getClusterExecutorImpl();
 
+		ClusterNode clusterNode = clusterExecutorImpl2.getLocalClusterNode();
+
+		String clusterNodeId = clusterNode.getClusterNodeId();
+
 		assertClusterEvent(
 			mockClusterEventListener.waitJoinMessage(), ClusterEventType.JOIN,
-			clusterExecutorImpl2.getLocalClusterNode());
+			clusterNode);
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -72,14 +76,14 @@ public class ClusterRequestReceiverTest
 
 			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
 				new MethodHandler(testMethod1MethodKey, StringPool.BLANK),
-				clusterExecutorImpl2.getLocalClusterNodeAddress());
+				clusterNodeId);
 
 			FutureClusterResponses futureClusterResponses =
 				clusterExecutorImpl1.execute(clusterRequest);
 
 			assertFutureClusterResponsesWithoutException(
 				futureClusterResponses.get(), clusterRequest.getUuid(), null,
-				clusterExecutorImpl2.getLocalClusterNodeAddress());
+				clusterNodeId);
 
 			// Test 2, return value is not null
 
@@ -87,27 +91,25 @@ public class ClusterRequestReceiverTest
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
 				new MethodHandler(testMethod1MethodKey, timestamp),
-				clusterExecutorImpl2.getLocalClusterNodeAddress());
+				clusterNodeId);
 
 			futureClusterResponses = clusterExecutorImpl1.execute(
 				clusterRequest);
 
 			assertFutureClusterResponsesWithoutException(
 				futureClusterResponses.get(), clusterRequest.getUuid(),
-				timestamp, clusterExecutorImpl2.getLocalClusterNodeAddress());
+				timestamp, clusterNodeId);
 
 			// Test 3, return value is not serializable
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
-				new MethodHandler(testMethod2MethodKey),
-				clusterExecutorImpl2.getLocalClusterNodeAddress());
+				new MethodHandler(testMethod2MethodKey), clusterNodeId);
 
 			futureClusterResponses = clusterExecutorImpl1.execute(
 				clusterRequest);
 
 			assertFutureClusterResponsesWithException(
-				futureClusterResponses, clusterRequest.getUuid(),
-				clusterExecutorImpl2.getLocalClusterNodeAddress(),
+				futureClusterResponses, clusterRequest.getUuid(), clusterNodeId,
 				"Return value is not serializable");
 
 			// Test 4, throw exception
@@ -116,26 +118,25 @@ public class ClusterRequestReceiverTest
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
 				new MethodHandler(testMethod3MethodKey, timestamp),
-				clusterExecutorImpl2.getLocalClusterNodeAddress());
+				clusterNodeId);
 
 			futureClusterResponses = clusterExecutorImpl1.execute(
 				clusterRequest);
 
 			assertFutureClusterResponsesWithException(
-				futureClusterResponses, clusterRequest.getUuid(),
-				clusterExecutorImpl2.getLocalClusterNodeAddress(), timestamp);
+				futureClusterResponses, clusterRequest.getUuid(), clusterNodeId,
+				timestamp);
 
 			// Test 5, method handler is null
 
 			clusterRequest = ClusterRequest.createUnicastRequest(
-				null, clusterExecutorImpl2.getLocalClusterNodeAddress());
+				null, clusterNodeId);
 
 			futureClusterResponses = clusterExecutorImpl1.execute(
 				clusterRequest);
 
 			assertFutureClusterResponsesWithException(
-				futureClusterResponses, clusterRequest.getUuid(),
-				clusterExecutorImpl2.getLocalClusterNodeAddress(),
+				futureClusterResponses, clusterRequest.getUuid(), clusterNodeId,
 				"Payload is not of type " + MethodHandler.class.getName());
 		}
 		finally {
@@ -169,30 +170,34 @@ public class ClusterRequestReceiverTest
 		String value = "testValue";
 
 		try {
-			Address address = clusterExecutorImpl2.getLocalClusterNodeAddress();
+			ClusterNode clusterNode =
+				clusterExecutorImpl2.getLocalClusterNode();
+
+			String clusterNodeId = clusterNode.getClusterNodeId();
 
 			ClusterRequest clusterRequest1 =
 				ClusterRequest.createUnicastRequest(
-					new MethodHandler(_testMethod4MethodKey, value), address);
+					new MethodHandler(_testMethod4MethodKey, value),
+					clusterNodeId);
 
 			FutureClusterResponses futureClusterResponses1 =
 				clusterExecutorImpl1.execute(clusterRequest1);
 
 			assertFutureClusterResponsesWithoutException(
 				futureClusterResponses1.get(), clusterRequest1.getUuid(), value,
-				address);
+				clusterNodeId);
 
 			ClusterRequest clusterRequest2 =
 				ClusterRequest.createUnicastRequest(
 					new MethodHandler(_testMethod4MethodKey, StringPool.BLANK),
-					address);
+					clusterNodeId);
 
 			FutureClusterResponses futureClusterResponses2 =
 				clusterExecutorImpl1.execute(clusterRequest2);
 
 			assertFutureClusterResponsesWithoutException(
 				futureClusterResponses2.get(), clusterRequest2.getUuid(), null,
-				address);
+				clusterNodeId);
 		}
 		finally {
 			clusterExecutorImpl1.destroy();

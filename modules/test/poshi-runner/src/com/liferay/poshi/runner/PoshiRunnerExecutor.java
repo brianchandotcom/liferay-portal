@@ -40,6 +40,9 @@ public class PoshiRunnerExecutor {
 				if (childElement.attributeValue("function") != null) {
 					runFunctionElement(childElement);
 				}
+				else if (childElement.attributeValue("macro") != null) {
+					runMacroElement(childElement);
+				}
 				else if (childElement.attributeValue("selenium") != null) {
 					runSeleniumElement(childElement);
 				}
@@ -78,6 +81,44 @@ public class PoshiRunnerExecutor {
 			classCommandName);
 
 		parseElement(function);
+
+		PoshiRunnerVariablesUtil.popCommandMap();
+	}
+
+	public static void runMacroElement(Element element) throws Exception {
+		String classCommandName = element.attributeValue("macro");
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		Element macroFileElement = PoshiRunnerContext.getMacroRootElement(
+			className);
+
+		List<Element> definitionVarElements = macroFileElement.elements("var");
+
+		for (Element definitionVarElement : definitionVarElements) {
+			String name = definitionVarElement.attributeValue("name");
+			String value = definitionVarElement.attributeValue("value");
+
+			PoshiRunnerVariablesUtil.putIntoExecuteMap(name, value);
+		}
+
+		List<Element> executeVarElements = element.elements("var");
+
+		for (Element executeVarElement : executeVarElements) {
+			String name = executeVarElement.attributeValue("name");
+			String value = executeVarElement.attributeValue("value");
+
+			PoshiRunnerVariablesUtil.putIntoExecuteMap(name, value);
+		}
+
+		Element macroElement = PoshiRunnerContext.getMacroCommandElement(
+			classCommandName);
+
+		PoshiRunnerVariablesUtil.pushCommandMap();
+
+		parseElement(macroElement);
 
 		PoshiRunnerVariablesUtil.popCommandMap();
 	}

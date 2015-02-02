@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,10 +31,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.MimeResponse;
@@ -750,21 +750,18 @@ public class PortletRequestModel implements Serializable {
 	protected Map<String, Object> filterInvalidAttributes(
 		Map<String, Object> map) {
 
-		Set<Map.Entry<String, Object>> set = map.entrySet();
+		PredicateFilter predicateFilter =
+			new PredicateFilter<Map.Entry<String, Object>>() {
 
-		Iterator<Map.Entry<String, Object>> iterator = set.iterator();
+				@Override
+				public boolean filter(Map.Entry<String, Object> entry) {
+					return _isValidAttributeName(entry.getKey()) &&
+						_isValidAttributeValue(entry.getValue());
+				}
 
-		while (iterator.hasNext()) {
-			Map.Entry<String, Object> entry = iterator.next();
+			};
 
-			if (!_isValidAttributeName(entry.getKey()) ||
-				!_isValidAttributeValue(entry.getValue())) {
-
-				iterator.remove();
-			}
-		}
-
-		return map;
+		return MapUtil.filter(map, predicateFilter);
 	}
 
 	private static boolean _isValidAttributeName(String name) {

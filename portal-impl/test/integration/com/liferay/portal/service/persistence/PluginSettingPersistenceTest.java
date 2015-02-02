@@ -39,6 +39,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,6 +60,11 @@ public class PluginSettingPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = PluginSettingUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -444,5 +450,5 @@ public class PluginSettingPersistenceTest {
 	}
 
 	private List<PluginSetting> _pluginSettings = new ArrayList<PluginSetting>();
-	private PluginSettingPersistence _persistence = PluginSettingUtil.getPersistence();
+	private PluginSettingPersistence _persistence;
 }

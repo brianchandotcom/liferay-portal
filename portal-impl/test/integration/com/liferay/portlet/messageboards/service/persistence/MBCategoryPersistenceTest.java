@@ -41,6 +41,7 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class MBCategoryPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = MBCategoryUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -701,5 +707,5 @@ public class MBCategoryPersistenceTest {
 	}
 
 	private List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
-	private MBCategoryPersistence _persistence = MBCategoryUtil.getPersistence();
+	private MBCategoryPersistence _persistence;
 }

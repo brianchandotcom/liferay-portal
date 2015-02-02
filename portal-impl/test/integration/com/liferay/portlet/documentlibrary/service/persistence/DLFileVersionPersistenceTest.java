@@ -41,6 +41,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class DLFileVersionPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DLFileVersionUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -702,5 +708,5 @@ public class DLFileVersionPersistenceTest {
 	}
 
 	private List<DLFileVersion> _dlFileVersions = new ArrayList<DLFileVersion>();
-	private DLFileVersionPersistence _persistence = DLFileVersionUtil.getPersistence();
+	private DLFileVersionPersistence _persistence;
 }

@@ -38,6 +38,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServi
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -58,6 +59,11 @@ public class DDMStructureLinkPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DDMStructureLinkUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -428,5 +434,5 @@ public class DDMStructureLinkPersistenceTest {
 	}
 
 	private List<DDMStructureLink> _ddmStructureLinks = new ArrayList<DDMStructureLink>();
-	private DDMStructureLinkPersistence _persistence = DDMStructureLinkUtil.getPersistence();
+	private DDMStructureLinkPersistence _persistence;
 }

@@ -41,6 +41,7 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class AssetTagPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = AssetTagUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -499,5 +505,5 @@ public class AssetTagPersistenceTest {
 	}
 
 	private List<AssetTag> _assetTags = new ArrayList<AssetTag>();
-	private AssetTagPersistence _persistence = AssetTagUtil.getPersistence();
+	private AssetTagPersistence _persistence;
 }

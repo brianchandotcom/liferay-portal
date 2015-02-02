@@ -39,6 +39,7 @@ import com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUt
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,6 +60,11 @@ public class AnnouncementsFlagPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = AnnouncementsFlagUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -427,5 +433,5 @@ public class AnnouncementsFlagPersistenceTest {
 	}
 
 	private List<AnnouncementsFlag> _announcementsFlags = new ArrayList<AnnouncementsFlag>();
-	private AnnouncementsFlagPersistence _persistence = AnnouncementsFlagUtil.getPersistence();
+	private AnnouncementsFlagPersistence _persistence;
 }

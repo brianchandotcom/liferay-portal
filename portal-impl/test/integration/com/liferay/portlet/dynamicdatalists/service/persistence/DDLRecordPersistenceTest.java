@@ -41,6 +41,7 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class DDLRecordPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DDLRecordUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -539,5 +545,5 @@ public class DDLRecordPersistenceTest {
 	}
 
 	private List<DDLRecord> _ddlRecords = new ArrayList<DDLRecord>();
-	private DDLRecordPersistence _persistence = DDLRecordUtil.getPersistence();
+	private DDLRecordPersistence _persistence;
 }

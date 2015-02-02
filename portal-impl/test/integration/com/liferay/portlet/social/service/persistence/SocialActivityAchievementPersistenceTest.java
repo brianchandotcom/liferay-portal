@@ -40,6 +40,7 @@ import com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceU
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -60,6 +61,11 @@ public class SocialActivityAchievementPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = SocialActivityAchievementUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -510,5 +516,5 @@ public class SocialActivityAchievementPersistenceTest {
 	}
 
 	private List<SocialActivityAchievement> _socialActivityAchievements = new ArrayList<SocialActivityAchievement>();
-	private SocialActivityAchievementPersistence _persistence = SocialActivityAchievementUtil.getPersistence();
+	private SocialActivityAchievementPersistence _persistence;
 }

@@ -41,6 +41,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUti
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class DLFileShortcutPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DLFileShortcutUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -605,5 +611,5 @@ public class DLFileShortcutPersistenceTest {
 	}
 
 	private List<DLFileShortcut> _dlFileShortcuts = new ArrayList<DLFileShortcut>();
-	private DLFileShortcutPersistence _persistence = DLFileShortcutUtil.getPersistence();
+	private DLFileShortcutPersistence _persistence;
 }

@@ -39,6 +39,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,6 +60,11 @@ public class DDMStorageLinkPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DDMStorageLinkUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -437,5 +443,5 @@ public class DDMStorageLinkPersistenceTest {
 	}
 
 	private List<DDMStorageLink> _ddmStorageLinks = new ArrayList<DDMStorageLink>();
-	private DDMStorageLinkPersistence _persistence = DDMStorageLinkUtil.getPersistence();
+	private DDMStorageLinkPersistence _persistence;
 }

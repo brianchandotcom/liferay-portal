@@ -41,6 +41,7 @@ import com.liferay.portlet.shopping.service.ShoppingCategoryLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class ShoppingCategoryPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = ShoppingCategoryUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -484,5 +490,5 @@ public class ShoppingCategoryPersistenceTest {
 	}
 
 	private List<ShoppingCategory> _shoppingCategories = new ArrayList<ShoppingCategory>();
-	private ShoppingCategoryPersistence _persistence = ShoppingCategoryUtil.getPersistence();
+	private ShoppingCategoryPersistence _persistence;
 }

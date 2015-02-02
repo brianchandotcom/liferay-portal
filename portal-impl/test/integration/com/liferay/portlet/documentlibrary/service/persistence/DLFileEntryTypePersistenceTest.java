@@ -41,6 +41,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class DLFileEntryTypePersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DLFileEntryTypeUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -541,5 +547,5 @@ public class DLFileEntryTypePersistenceTest {
 	}
 
 	private List<DLFileEntryType> _dlFileEntryTypes = new ArrayList<DLFileEntryType>();
-	private DLFileEntryTypePersistence _persistence = DLFileEntryTypeUtil.getPersistence();
+	private DLFileEntryTypePersistence _persistence;
 }

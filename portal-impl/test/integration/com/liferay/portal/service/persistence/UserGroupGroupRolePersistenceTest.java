@@ -32,6 +32,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -52,6 +53,11 @@ public class UserGroupGroupRolePersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = UserGroupGroupRoleUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -424,5 +430,5 @@ public class UserGroupGroupRolePersistenceTest {
 	}
 
 	private List<UserGroupGroupRole> _userGroupGroupRoles = new ArrayList<UserGroupGroupRole>();
-	private UserGroupGroupRolePersistence _persistence = UserGroupGroupRoleUtil.getPersistence();
+	private UserGroupGroupRolePersistence _persistence;
 }

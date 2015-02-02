@@ -42,6 +42,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -62,6 +63,11 @@ public class AssetEntryPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = AssetEntryUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -652,5 +658,5 @@ public class AssetEntryPersistenceTest {
 	}
 
 	private List<AssetEntry> _assetEntries = new ArrayList<AssetEntry>();
-	private AssetEntryPersistence _persistence = AssetEntryUtil.getPersistence();
+	private AssetEntryPersistence _persistence;
 }

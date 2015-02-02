@@ -39,6 +39,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,6 +60,11 @@ public class WorkflowDefinitionLinkPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = WorkflowDefinitionLinkUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -527,5 +533,5 @@ public class WorkflowDefinitionLinkPersistenceTest {
 	}
 
 	private List<WorkflowDefinitionLink> _workflowDefinitionLinks = new ArrayList<WorkflowDefinitionLink>();
-	private WorkflowDefinitionLinkPersistence _persistence = WorkflowDefinitionLinkUtil.getPersistence();
+	private WorkflowDefinitionLinkPersistence _persistence;
 }

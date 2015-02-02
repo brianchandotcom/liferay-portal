@@ -38,6 +38,7 @@ import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -58,6 +59,11 @@ public class TrashVersionPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = TrashVersionUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -441,5 +447,5 @@ public class TrashVersionPersistenceTest {
 	}
 
 	private List<TrashVersion> _trashVersions = new ArrayList<TrashVersion>();
-	private TrashVersionPersistence _persistence = TrashVersionUtil.getPersistence();
+	private TrashVersionPersistence _persistence;
 }

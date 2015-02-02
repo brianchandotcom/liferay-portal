@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -60,6 +61,11 @@ public class LayoutSetBranchPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = LayoutSetBranchUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -576,5 +582,5 @@ public class LayoutSetBranchPersistenceTest {
 	}
 
 	private List<LayoutSetBranch> _layoutSetBranchs = new ArrayList<LayoutSetBranch>();
-	private LayoutSetBranchPersistence _persistence = LayoutSetBranchUtil.getPersistence();
+	private LayoutSetBranchPersistence _persistence;
 }

@@ -38,6 +38,7 @@ import com.liferay.portlet.announcements.service.AnnouncementsEntryLocalServiceU
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -58,6 +59,11 @@ public class AnnouncementsEntryPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = AnnouncementsEntryUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -526,5 +532,5 @@ public class AnnouncementsEntryPersistenceTest {
 	}
 
 	private List<AnnouncementsEntry> _announcementsEntries = new ArrayList<AnnouncementsEntry>();
-	private AnnouncementsEntryPersistence _persistence = AnnouncementsEntryUtil.getPersistence();
+	private AnnouncementsEntryPersistence _persistence;
 }

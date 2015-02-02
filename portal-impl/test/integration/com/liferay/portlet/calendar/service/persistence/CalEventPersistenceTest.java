@@ -41,6 +41,7 @@ import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class CalEventPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = CalEventUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -678,5 +684,5 @@ public class CalEventPersistenceTest {
 	}
 
 	private List<CalEvent> _calEvents = new ArrayList<CalEvent>();
-	private CalEventPersistence _persistence = CalEventUtil.getPersistence();
+	private CalEventPersistence _persistence;
 }

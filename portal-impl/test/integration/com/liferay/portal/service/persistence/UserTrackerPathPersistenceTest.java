@@ -36,6 +36,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,6 +57,11 @@ public class UserTrackerPathPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = UserTrackerPathUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -393,5 +399,5 @@ public class UserTrackerPathPersistenceTest {
 	}
 
 	private List<UserTrackerPath> _userTrackerPaths = new ArrayList<UserTrackerPath>();
-	private UserTrackerPathPersistence _persistence = UserTrackerPathUtil.getPersistence();
+	private UserTrackerPathPersistence _persistence;
 }

@@ -41,6 +41,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class DLFolderPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DLFolderUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -767,5 +773,5 @@ public class DLFolderPersistenceTest {
 	}
 
 	private List<DLFolder> _dlFolders = new ArrayList<DLFolder>();
-	private DLFolderPersistence _persistence = DLFolderUtil.getPersistence();
+	private DLFolderPersistence _persistence;
 }

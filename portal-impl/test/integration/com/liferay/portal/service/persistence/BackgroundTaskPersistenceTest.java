@@ -37,6 +37,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -58,6 +59,11 @@ public class BackgroundTaskPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = BackgroundTaskUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -652,5 +658,5 @@ public class BackgroundTaskPersistenceTest {
 	}
 
 	private List<BackgroundTask> _backgroundTasks = new ArrayList<BackgroundTask>();
-	private BackgroundTaskPersistence _persistence = BackgroundTaskUtil.getPersistence();
+	private BackgroundTaskPersistence _persistence;
 }

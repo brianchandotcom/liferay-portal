@@ -41,6 +41,7 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUti
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class MDRRuleGroupPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = MDRRuleGroupUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -501,5 +507,5 @@ public class MDRRuleGroupPersistenceTest {
 	}
 
 	private List<MDRRuleGroup> _mdrRuleGroups = new ArrayList<MDRRuleGroup>();
-	private MDRRuleGroupPersistence _persistence = MDRRuleGroupUtil.getPersistence();
+	private MDRRuleGroupPersistence _persistence;
 }

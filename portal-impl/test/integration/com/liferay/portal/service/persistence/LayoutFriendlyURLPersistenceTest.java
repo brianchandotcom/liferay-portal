@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -60,6 +61,11 @@ public class LayoutFriendlyURLPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = LayoutFriendlyURLUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -616,5 +622,5 @@ public class LayoutFriendlyURLPersistenceTest {
 	}
 
 	private List<LayoutFriendlyURL> _layoutFriendlyURLs = new ArrayList<LayoutFriendlyURL>();
-	private LayoutFriendlyURLPersistence _persistence = LayoutFriendlyURLUtil.getPersistence();
+	private LayoutFriendlyURLPersistence _persistence;
 }

@@ -42,6 +42,7 @@ import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -62,6 +63,11 @@ public class JournalFeedPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = JournalFeedUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -596,5 +602,5 @@ public class JournalFeedPersistenceTest {
 	}
 
 	private List<JournalFeed> _journalFeeds = new ArrayList<JournalFeed>();
-	private JournalFeedPersistence _persistence = JournalFeedUtil.getPersistence();
+	private JournalFeedPersistence _persistence;
 }

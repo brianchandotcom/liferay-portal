@@ -39,6 +39,7 @@ import com.liferay.portlet.shopping.service.ShoppingCartLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,6 +60,11 @@ public class ShoppingCartPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = ShoppingCartUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -475,5 +481,5 @@ public class ShoppingCartPersistenceTest {
 	}
 
 	private List<ShoppingCart> _shoppingCarts = new ArrayList<ShoppingCart>();
-	private ShoppingCartPersistence _persistence = ShoppingCartUtil.getPersistence();
+	private ShoppingCartPersistence _persistence;
 }

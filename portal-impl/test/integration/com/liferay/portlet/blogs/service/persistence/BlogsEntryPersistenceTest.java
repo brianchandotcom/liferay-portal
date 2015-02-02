@@ -41,6 +41,7 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class BlogsEntryPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = BlogsEntryUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -893,5 +899,5 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	private List<BlogsEntry> _blogsEntries = new ArrayList<BlogsEntry>();
-	private BlogsEntryPersistence _persistence = BlogsEntryUtil.getPersistence();
+	private BlogsEntryPersistence _persistence;
 }

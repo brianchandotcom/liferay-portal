@@ -39,6 +39,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,6 +60,11 @@ public class DLFileRankPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DLFileRankUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -476,5 +482,5 @@ public class DLFileRankPersistenceTest {
 	}
 
 	private List<DLFileRank> _dlFileRanks = new ArrayList<DLFileRank>();
-	private DLFileRankPersistence _persistence = DLFileRankUtil.getPersistence();
+	private DLFileRankPersistence _persistence;
 }

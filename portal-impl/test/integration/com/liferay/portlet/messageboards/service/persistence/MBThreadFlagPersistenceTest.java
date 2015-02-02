@@ -41,6 +41,7 @@ import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class MBThreadFlagPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = MBThreadFlagUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -517,5 +523,5 @@ public class MBThreadFlagPersistenceTest {
 	}
 
 	private List<MBThreadFlag> _mbThreadFlags = new ArrayList<MBThreadFlag>();
-	private MBThreadFlagPersistence _persistence = MBThreadFlagUtil.getPersistence();
+	private MBThreadFlagPersistence _persistence;
 }

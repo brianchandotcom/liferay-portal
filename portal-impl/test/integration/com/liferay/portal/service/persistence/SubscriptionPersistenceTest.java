@@ -38,6 +38,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -58,6 +59,11 @@ public class SubscriptionPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = SubscriptionUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -502,5 +508,5 @@ public class SubscriptionPersistenceTest {
 	}
 
 	private List<Subscription> _subscriptions = new ArrayList<Subscription>();
-	private SubscriptionPersistence _persistence = SubscriptionUtil.getPersistence();
+	private SubscriptionPersistence _persistence;
 }

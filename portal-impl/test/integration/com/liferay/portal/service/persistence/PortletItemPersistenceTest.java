@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -60,6 +61,11 @@ public class PortletItemPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = PortletItemUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -491,5 +497,5 @@ public class PortletItemPersistenceTest {
 	}
 
 	private List<PortletItem> _portletItems = new ArrayList<PortletItem>();
-	private PortletItemPersistence _persistence = PortletItemUtil.getPersistence();
+	private PortletItemPersistence _persistence;
 }

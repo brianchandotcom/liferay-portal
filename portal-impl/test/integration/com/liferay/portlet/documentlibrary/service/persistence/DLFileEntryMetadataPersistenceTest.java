@@ -39,6 +39,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,6 +60,11 @@ public class DLFileEntryMetadataPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DLFileEntryMetadataUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -478,5 +484,5 @@ public class DLFileEntryMetadataPersistenceTest {
 	}
 
 	private List<DLFileEntryMetadata> _dlFileEntryMetadatas = new ArrayList<DLFileEntryMetadata>();
-	private DLFileEntryMetadataPersistence _persistence = DLFileEntryMetadataUtil.getPersistence();
+	private DLFileEntryMetadataPersistence _persistence;
 }

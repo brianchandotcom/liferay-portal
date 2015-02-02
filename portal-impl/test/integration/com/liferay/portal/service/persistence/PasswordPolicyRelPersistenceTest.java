@@ -37,6 +37,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,6 +58,11 @@ public class PasswordPolicyRelPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = PasswordPolicyRelUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -425,5 +431,5 @@ public class PasswordPolicyRelPersistenceTest {
 	}
 
 	private List<PasswordPolicyRel> _passwordPolicyRels = new ArrayList<PasswordPolicyRel>();
-	private PasswordPolicyRelPersistence _persistence = PasswordPolicyRelUtil.getPersistence();
+	private PasswordPolicyRelPersistence _persistence;
 }

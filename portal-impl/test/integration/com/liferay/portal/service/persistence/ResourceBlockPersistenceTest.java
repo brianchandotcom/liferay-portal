@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceBlock;
-import com.liferay.portal.model.impl.ResourceBlockModelImpl;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -433,18 +433,21 @@ public class ResourceBlockPersistenceTest {
 
 		_persistence.clearCache();
 
-		ResourceBlockModelImpl existingResourceBlockModelImpl = (ResourceBlockModelImpl)_persistence.findByPrimaryKey(newResourceBlock.getPrimaryKey());
+		ResourceBlock existingResourceBlock = _persistence.findByPrimaryKey(newResourceBlock.getPrimaryKey());
 
-		Assert.assertEquals(existingResourceBlockModelImpl.getCompanyId(),
-			existingResourceBlockModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingResourceBlockModelImpl.getGroupId(),
-			existingResourceBlockModelImpl.getOriginalGroupId());
+		Assert.assertEquals(existingResourceBlock.getCompanyId(),
+			ReflectionTestUtil.invoke(existingResourceBlock,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(existingResourceBlock.getGroupId(),
+			ReflectionTestUtil.invoke(existingResourceBlock,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingResourceBlock.getName(),
+				ReflectionTestUtil.invoke(existingResourceBlock,
+					"getOriginalName", new Class<?>[0])));
 		Assert.assertTrue(Validator.equals(
-				existingResourceBlockModelImpl.getName(),
-				existingResourceBlockModelImpl.getOriginalName()));
-		Assert.assertTrue(Validator.equals(
-				existingResourceBlockModelImpl.getPermissionsHash(),
-				existingResourceBlockModelImpl.getOriginalPermissionsHash()));
+				existingResourceBlock.getPermissionsHash(),
+				ReflectionTestUtil.invoke(existingResourceBlock,
+					"getOriginalPermissionsHash", new Class<?>[0])));
 	}
 
 	protected ResourceBlock addResourceBlock() throws Exception {

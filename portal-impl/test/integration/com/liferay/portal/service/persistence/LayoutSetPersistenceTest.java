@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -469,12 +469,14 @@ public class LayoutSetPersistenceTest {
 
 		_persistence.clearCache();
 
-		LayoutSetModelImpl existingLayoutSetModelImpl = (LayoutSetModelImpl)_persistence.findByPrimaryKey(newLayoutSet.getPrimaryKey());
+		LayoutSet existingLayoutSet = _persistence.findByPrimaryKey(newLayoutSet.getPrimaryKey());
 
-		Assert.assertEquals(existingLayoutSetModelImpl.getGroupId(),
-			existingLayoutSetModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingLayoutSetModelImpl.getPrivateLayout(),
-			existingLayoutSetModelImpl.getOriginalPrivateLayout());
+		Assert.assertEquals(existingLayoutSet.getGroupId(),
+			ReflectionTestUtil.invoke(existingLayoutSet, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingLayoutSet.getPrivateLayout(),
+			ReflectionTestUtil.invoke(existingLayoutSet,
+				"getOriginalPrivateLayout", new Class<?>[0]));
 	}
 
 	protected LayoutSet addLayoutSet() throws Exception {

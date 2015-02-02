@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.shopping.NoSuchItemException;
 import com.liferay.portlet.shopping.model.ShoppingItem;
-import com.liferay.portlet.shopping.model.impl.ShoppingItemModelImpl;
 import com.liferay.portlet.shopping.service.ShoppingItemLocalServiceUtil;
 
 import org.junit.After;
@@ -570,22 +570,26 @@ public class ShoppingItemPersistenceTest {
 
 		_persistence.clearCache();
 
-		ShoppingItemModelImpl existingShoppingItemModelImpl = (ShoppingItemModelImpl)_persistence.findByPrimaryKey(newShoppingItem.getPrimaryKey());
+		ShoppingItem existingShoppingItem = _persistence.findByPrimaryKey(newShoppingItem.getPrimaryKey());
 
-		Assert.assertEquals(existingShoppingItemModelImpl.getSmallImageId(),
-			existingShoppingItemModelImpl.getOriginalSmallImageId());
+		Assert.assertEquals(existingShoppingItem.getSmallImageId(),
+			ReflectionTestUtil.invoke(existingShoppingItem,
+				"getOriginalSmallImageId", new Class<?>[0]));
 
-		Assert.assertEquals(existingShoppingItemModelImpl.getMediumImageId(),
-			existingShoppingItemModelImpl.getOriginalMediumImageId());
+		Assert.assertEquals(existingShoppingItem.getMediumImageId(),
+			ReflectionTestUtil.invoke(existingShoppingItem,
+				"getOriginalMediumImageId", new Class<?>[0]));
 
-		Assert.assertEquals(existingShoppingItemModelImpl.getLargeImageId(),
-			existingShoppingItemModelImpl.getOriginalLargeImageId());
+		Assert.assertEquals(existingShoppingItem.getLargeImageId(),
+			ReflectionTestUtil.invoke(existingShoppingItem,
+				"getOriginalLargeImageId", new Class<?>[0]));
 
-		Assert.assertEquals(existingShoppingItemModelImpl.getCompanyId(),
-			existingShoppingItemModelImpl.getOriginalCompanyId());
-		Assert.assertTrue(Validator.equals(
-				existingShoppingItemModelImpl.getSku(),
-				existingShoppingItemModelImpl.getOriginalSku()));
+		Assert.assertEquals(existingShoppingItem.getCompanyId(),
+			ReflectionTestUtil.invoke(existingShoppingItem,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingShoppingItem.getSku(),
+				ReflectionTestUtil.invoke(existingShoppingItem,
+					"getOriginalSku", new Class<?>[0])));
 	}
 
 	protected ShoppingItem addShoppingItem() throws Exception {

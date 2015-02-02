@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.messageboards.NoSuchBanException;
 import com.liferay.portlet.messageboards.model.MBBan;
-import com.liferay.portlet.messageboards.model.impl.MBBanModelImpl;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 
 import org.junit.After;
@@ -481,17 +481,21 @@ public class MBBanPersistenceTest {
 
 		_persistence.clearCache();
 
-		MBBanModelImpl existingMBBanModelImpl = (MBBanModelImpl)_persistence.findByPrimaryKey(newMBBan.getPrimaryKey());
+		MBBan existingMBBan = _persistence.findByPrimaryKey(newMBBan.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingMBBanModelImpl.getUuid(),
-				existingMBBanModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingMBBanModelImpl.getGroupId(),
-			existingMBBanModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingMBBan.getUuid(),
+				ReflectionTestUtil.invoke(existingMBBan, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(existingMBBan.getGroupId(),
+			ReflectionTestUtil.invoke(existingMBBan, "getOriginalGroupId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingMBBanModelImpl.getGroupId(),
-			existingMBBanModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingMBBanModelImpl.getBanUserId(),
-			existingMBBanModelImpl.getOriginalBanUserId());
+		Assert.assertEquals(existingMBBan.getGroupId(),
+			ReflectionTestUtil.invoke(existingMBBan, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingMBBan.getBanUserId(),
+			ReflectionTestUtil.invoke(existingMBBan, "getOriginalBanUserId",
+				new Class<?>[0]));
 	}
 
 	protected MBBan addMBBan() throws Exception {

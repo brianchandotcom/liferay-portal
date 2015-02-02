@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLayoutModelImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalServiceUtil;
 
 import org.junit.After;
@@ -462,16 +462,19 @@ public class DDMStructureLayoutPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMStructureLayoutModelImpl existingDDMStructureLayoutModelImpl = (DDMStructureLayoutModelImpl)_persistence.findByPrimaryKey(newDDMStructureLayout.getPrimaryKey());
+		DDMStructureLayout existingDDMStructureLayout = _persistence.findByPrimaryKey(newDDMStructureLayout.getPrimaryKey());
 
 		Assert.assertTrue(Validator.equals(
-				existingDDMStructureLayoutModelImpl.getUuid(),
-				existingDDMStructureLayoutModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingDDMStructureLayoutModelImpl.getGroupId(),
-			existingDDMStructureLayoutModelImpl.getOriginalGroupId());
+				existingDDMStructureLayout.getUuid(),
+				ReflectionTestUtil.invoke(existingDDMStructureLayout,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingDDMStructureLayout.getGroupId(),
+			ReflectionTestUtil.invoke(existingDDMStructureLayout,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDDMStructureLayoutModelImpl.getStructureVersionId(),
-			existingDDMStructureLayoutModelImpl.getOriginalStructureVersionId());
+		Assert.assertEquals(existingDDMStructureLayout.getStructureVersionId(),
+			ReflectionTestUtil.invoke(existingDDMStructureLayout,
+				"getOriginalStructureVersionId", new Class<?>[0]));
 	}
 
 	protected DDMStructureLayout addDDMStructureLayout()

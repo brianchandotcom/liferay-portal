@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -33,7 +34,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.social.NoSuchActivityException;
 import com.liferay.portlet.social.model.SocialActivity;
-import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 
 import org.junit.After;
@@ -568,25 +568,33 @@ public class SocialActivityPersistenceTest {
 
 		_persistence.clearCache();
 
-		SocialActivityModelImpl existingSocialActivityModelImpl = (SocialActivityModelImpl)_persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
+		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialActivityModelImpl.getMirrorActivityId(),
-			existingSocialActivityModelImpl.getOriginalMirrorActivityId());
+		Assert.assertEquals(existingSocialActivity.getMirrorActivityId(),
+			ReflectionTestUtil.invoke(existingSocialActivity,
+				"getOriginalMirrorActivityId", new Class<?>[0]));
 
-		Assert.assertEquals(existingSocialActivityModelImpl.getGroupId(),
-			existingSocialActivityModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingSocialActivityModelImpl.getUserId(),
-			existingSocialActivityModelImpl.getOriginalUserId());
-		Assert.assertEquals(existingSocialActivityModelImpl.getCreateDate(),
-			existingSocialActivityModelImpl.getOriginalCreateDate());
-		Assert.assertEquals(existingSocialActivityModelImpl.getClassNameId(),
-			existingSocialActivityModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingSocialActivityModelImpl.getClassPK(),
-			existingSocialActivityModelImpl.getOriginalClassPK());
-		Assert.assertEquals(existingSocialActivityModelImpl.getType(),
-			existingSocialActivityModelImpl.getOriginalType());
-		Assert.assertEquals(existingSocialActivityModelImpl.getReceiverUserId(),
-			existingSocialActivityModelImpl.getOriginalReceiverUserId());
+		Assert.assertEquals(existingSocialActivity.getGroupId(),
+			ReflectionTestUtil.invoke(existingSocialActivity,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivity.getUserId(),
+			ReflectionTestUtil.invoke(existingSocialActivity,
+				"getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivity.getCreateDate(),
+			ReflectionTestUtil.invoke(existingSocialActivity,
+				"getOriginalCreateDate", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivity.getClassNameId(),
+			ReflectionTestUtil.invoke(existingSocialActivity,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivity.getClassPK(),
+			ReflectionTestUtil.invoke(existingSocialActivity,
+				"getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivity.getType(),
+			ReflectionTestUtil.invoke(existingSocialActivity,
+				"getOriginalType", new Class<?>[0]));
+		Assert.assertEquals(existingSocialActivity.getReceiverUserId(),
+			ReflectionTestUtil.invoke(existingSocialActivity,
+				"getOriginalReceiverUserId", new Class<?>[0]));
 	}
 
 	protected SocialActivity addSocialActivity() throws Exception {

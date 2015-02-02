@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.journal.NoSuchArticleResourceException;
 import com.liferay.portlet.journal.model.JournalArticleResource;
-import com.liferay.portlet.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 
 import org.junit.After;
@@ -440,19 +440,23 @@ public class JournalArticleResourcePersistenceTest {
 
 		_persistence.clearCache();
 
-		JournalArticleResourceModelImpl existingJournalArticleResourceModelImpl = (JournalArticleResourceModelImpl)_persistence.findByPrimaryKey(newJournalArticleResource.getPrimaryKey());
+		JournalArticleResource existingJournalArticleResource = _persistence.findByPrimaryKey(newJournalArticleResource.getPrimaryKey());
 
 		Assert.assertTrue(Validator.equals(
-				existingJournalArticleResourceModelImpl.getUuid(),
-				existingJournalArticleResourceModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingJournalArticleResourceModelImpl.getGroupId(),
-			existingJournalArticleResourceModelImpl.getOriginalGroupId());
+				existingJournalArticleResource.getUuid(),
+				ReflectionTestUtil.invoke(existingJournalArticleResource,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingJournalArticleResource.getGroupId(),
+			ReflectionTestUtil.invoke(existingJournalArticleResource,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingJournalArticleResourceModelImpl.getGroupId(),
-			existingJournalArticleResourceModelImpl.getOriginalGroupId());
+		Assert.assertEquals(existingJournalArticleResource.getGroupId(),
+			ReflectionTestUtil.invoke(existingJournalArticleResource,
+				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingJournalArticleResourceModelImpl.getArticleId(),
-				existingJournalArticleResourceModelImpl.getOriginalArticleId()));
+				existingJournalArticleResource.getArticleId(),
+				ReflectionTestUtil.invoke(existingJournalArticleResource,
+					"getOriginalArticleId", new Class<?>[0])));
 	}
 
 	protected JournalArticleResource addJournalArticleResource()

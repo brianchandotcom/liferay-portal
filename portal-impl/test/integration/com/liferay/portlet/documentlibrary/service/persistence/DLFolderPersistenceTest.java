@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 import org.junit.After;
@@ -698,26 +698,31 @@ public class DLFolderPersistenceTest {
 
 		_persistence.clearCache();
 
-		DLFolderModelImpl existingDLFolderModelImpl = (DLFolderModelImpl)_persistence.findByPrimaryKey(newDLFolder.getPrimaryKey());
+		DLFolder existingDLFolder = _persistence.findByPrimaryKey(newDLFolder.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingDLFolderModelImpl.getUuid(),
-				existingDLFolderModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingDLFolderModelImpl.getGroupId(),
-			existingDLFolderModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingDLFolder.getUuid(),
+				ReflectionTestUtil.invoke(existingDLFolder, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(existingDLFolder.getGroupId(),
+			ReflectionTestUtil.invoke(existingDLFolder, "getOriginalGroupId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingDLFolderModelImpl.getRepositoryId(),
-			existingDLFolderModelImpl.getOriginalRepositoryId());
-		Assert.assertEquals(existingDLFolderModelImpl.getMountPoint(),
-			existingDLFolderModelImpl.getOriginalMountPoint());
+		Assert.assertEquals(existingDLFolder.getRepositoryId(),
+			ReflectionTestUtil.invoke(existingDLFolder,
+				"getOriginalRepositoryId", new Class<?>[0]));
+		Assert.assertEquals(existingDLFolder.getMountPoint(),
+			ReflectionTestUtil.invoke(existingDLFolder,
+				"getOriginalMountPoint", new Class<?>[0]));
 
-		Assert.assertEquals(existingDLFolderModelImpl.getGroupId(),
-			existingDLFolderModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingDLFolderModelImpl.getParentFolderId(),
-			existingDLFolderModelImpl.getOriginalParentFolderId());
-		Assert.assertTrue(Validator.equals(
-				existingDLFolderModelImpl.getName(),
-				existingDLFolderModelImpl.getOriginalName()));
+		Assert.assertEquals(existingDLFolder.getGroupId(),
+			ReflectionTestUtil.invoke(existingDLFolder, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingDLFolder.getParentFolderId(),
+			ReflectionTestUtil.invoke(existingDLFolder,
+				"getOriginalParentFolderId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingDLFolder.getName(),
+				ReflectionTestUtil.invoke(existingDLFolder, "getOriginalName",
+					new Class<?>[0])));
 	}
 
 	protected DLFolder addDLFolder() throws Exception {

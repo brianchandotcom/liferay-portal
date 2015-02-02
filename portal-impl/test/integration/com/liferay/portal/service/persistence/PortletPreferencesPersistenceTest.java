@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PortletPreferences;
-import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -503,17 +503,21 @@ public class PortletPreferencesPersistenceTest {
 
 		_persistence.clearCache();
 
-		PortletPreferencesModelImpl existingPortletPreferencesModelImpl = (PortletPreferencesModelImpl)_persistence.findByPrimaryKey(newPortletPreferences.getPrimaryKey());
+		PortletPreferences existingPortletPreferences = _persistence.findByPrimaryKey(newPortletPreferences.getPrimaryKey());
 
-		Assert.assertEquals(existingPortletPreferencesModelImpl.getOwnerId(),
-			existingPortletPreferencesModelImpl.getOriginalOwnerId());
-		Assert.assertEquals(existingPortletPreferencesModelImpl.getOwnerType(),
-			existingPortletPreferencesModelImpl.getOriginalOwnerType());
-		Assert.assertEquals(existingPortletPreferencesModelImpl.getPlid(),
-			existingPortletPreferencesModelImpl.getOriginalPlid());
+		Assert.assertEquals(existingPortletPreferences.getOwnerId(),
+			ReflectionTestUtil.invoke(existingPortletPreferences,
+				"getOriginalOwnerId", new Class<?>[0]));
+		Assert.assertEquals(existingPortletPreferences.getOwnerType(),
+			ReflectionTestUtil.invoke(existingPortletPreferences,
+				"getOriginalOwnerType", new Class<?>[0]));
+		Assert.assertEquals(existingPortletPreferences.getPlid(),
+			ReflectionTestUtil.invoke(existingPortletPreferences,
+				"getOriginalPlid", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingPortletPreferencesModelImpl.getPortletId(),
-				existingPortletPreferencesModelImpl.getOriginalPortletId()));
+				existingPortletPreferences.getPortletId(),
+				ReflectionTestUtil.invoke(existingPortletPreferences,
+					"getOriginalPortletId", new Class<?>[0])));
 	}
 
 	protected PortletPreferences addPortletPreferences()

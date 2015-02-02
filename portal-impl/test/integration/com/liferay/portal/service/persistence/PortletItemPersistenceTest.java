@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PortletItem;
-import com.liferay.portal.model.impl.PortletItemModelImpl;
 import com.liferay.portal.service.PortletItemLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -452,18 +452,20 @@ public class PortletItemPersistenceTest {
 
 		_persistence.clearCache();
 
-		PortletItemModelImpl existingPortletItemModelImpl = (PortletItemModelImpl)_persistence.findByPrimaryKey(newPortletItem.getPrimaryKey());
+		PortletItem existingPortletItem = _persistence.findByPrimaryKey(newPortletItem.getPrimaryKey());
 
-		Assert.assertEquals(existingPortletItemModelImpl.getGroupId(),
-			existingPortletItemModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingPortletItemModelImpl.getName(),
-				existingPortletItemModelImpl.getOriginalName()));
-		Assert.assertTrue(Validator.equals(
-				existingPortletItemModelImpl.getPortletId(),
-				existingPortletItemModelImpl.getOriginalPortletId()));
-		Assert.assertEquals(existingPortletItemModelImpl.getClassNameId(),
-			existingPortletItemModelImpl.getOriginalClassNameId());
+		Assert.assertEquals(existingPortletItem.getGroupId(),
+			ReflectionTestUtil.invoke(existingPortletItem,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingPortletItem.getName(),
+				ReflectionTestUtil.invoke(existingPortletItem,
+					"getOriginalName", new Class<?>[0])));
+		Assert.assertTrue(Validator.equals(existingPortletItem.getPortletId(),
+				ReflectionTestUtil.invoke(existingPortletItem,
+					"getOriginalPortletId", new Class<?>[0])));
+		Assert.assertEquals(existingPortletItem.getClassNameId(),
+			ReflectionTestUtil.invoke(existingPortletItem,
+				"getOriginalClassNameId", new Class<?>[0]));
 	}
 
 	protected PortletItem addPortletItem() throws Exception {

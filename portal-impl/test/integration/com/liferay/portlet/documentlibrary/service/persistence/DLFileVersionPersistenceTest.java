@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 
 import org.junit.After;
@@ -630,19 +630,21 @@ public class DLFileVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		DLFileVersionModelImpl existingDLFileVersionModelImpl = (DLFileVersionModelImpl)_persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
+		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingDLFileVersionModelImpl.getUuid(),
-				existingDLFileVersionModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingDLFileVersionModelImpl.getGroupId(),
-			existingDLFileVersionModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingDLFileVersion.getUuid(),
+				ReflectionTestUtil.invoke(existingDLFileVersion,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingDLFileVersion.getGroupId(),
+			ReflectionTestUtil.invoke(existingDLFileVersion,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDLFileVersionModelImpl.getFileEntryId(),
-			existingDLFileVersionModelImpl.getOriginalFileEntryId());
-		Assert.assertTrue(Validator.equals(
-				existingDLFileVersionModelImpl.getVersion(),
-				existingDLFileVersionModelImpl.getOriginalVersion()));
+		Assert.assertEquals(existingDLFileVersion.getFileEntryId(),
+			ReflectionTestUtil.invoke(existingDLFileVersion,
+				"getOriginalFileEntryId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingDLFileVersion.getVersion(),
+				ReflectionTestUtil.invoke(existingDLFileVersion,
+					"getOriginalVersion", new Class<?>[0])));
 	}
 
 	protected DLFileVersion addDLFileVersion() throws Exception {

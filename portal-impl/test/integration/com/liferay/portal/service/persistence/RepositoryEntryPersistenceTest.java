@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.model.impl.RepositoryEntryModelImpl;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -483,19 +483,22 @@ public class RepositoryEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		RepositoryEntryModelImpl existingRepositoryEntryModelImpl = (RepositoryEntryModelImpl)_persistence.findByPrimaryKey(newRepositoryEntry.getPrimaryKey());
+		RepositoryEntry existingRepositoryEntry = _persistence.findByPrimaryKey(newRepositoryEntry.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingRepositoryEntryModelImpl.getUuid(),
-				existingRepositoryEntryModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingRepositoryEntryModelImpl.getGroupId(),
-			existingRepositoryEntryModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingRepositoryEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingRepositoryEntry,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingRepositoryEntry.getGroupId(),
+			ReflectionTestUtil.invoke(existingRepositoryEntry,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingRepositoryEntryModelImpl.getRepositoryId(),
-			existingRepositoryEntryModelImpl.getOriginalRepositoryId());
+		Assert.assertEquals(existingRepositoryEntry.getRepositoryId(),
+			ReflectionTestUtil.invoke(existingRepositoryEntry,
+				"getOriginalRepositoryId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingRepositoryEntryModelImpl.getMappedId(),
-				existingRepositoryEntryModelImpl.getOriginalMappedId()));
+				existingRepositoryEntry.getMappedId(),
+				ReflectionTestUtil.invoke(existingRepositoryEntry,
+					"getOriginalMappedId", new Class<?>[0])));
 	}
 
 	protected RepositoryEntry addRepositoryEntry() throws Exception {

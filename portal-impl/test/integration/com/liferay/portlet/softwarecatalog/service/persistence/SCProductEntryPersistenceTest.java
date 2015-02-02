@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.softwarecatalog.NoSuchProductEntryException;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
-import com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl;
 import com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalServiceUtil;
 
 import org.junit.After;
@@ -493,14 +493,16 @@ public class SCProductEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		SCProductEntryModelImpl existingSCProductEntryModelImpl = (SCProductEntryModelImpl)_persistence.findByPrimaryKey(newSCProductEntry.getPrimaryKey());
+		SCProductEntry existingSCProductEntry = _persistence.findByPrimaryKey(newSCProductEntry.getPrimaryKey());
 
 		Assert.assertTrue(Validator.equals(
-				existingSCProductEntryModelImpl.getRepoGroupId(),
-				existingSCProductEntryModelImpl.getOriginalRepoGroupId()));
+				existingSCProductEntry.getRepoGroupId(),
+				ReflectionTestUtil.invoke(existingSCProductEntry,
+					"getOriginalRepoGroupId", new Class<?>[0])));
 		Assert.assertTrue(Validator.equals(
-				existingSCProductEntryModelImpl.getRepoArtifactId(),
-				existingSCProductEntryModelImpl.getOriginalRepoArtifactId()));
+				existingSCProductEntry.getRepoArtifactId(),
+				ReflectionTestUtil.invoke(existingSCProductEntry,
+					"getOriginalRepoArtifactId", new Class<?>[0])));
 	}
 
 	protected SCProductEntry addSCProductEntry() throws Exception {

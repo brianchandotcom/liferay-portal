@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.LayoutRevision;
-import com.liferay.portal.model.impl.LayoutRevisionModelImpl;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -635,14 +635,17 @@ public class LayoutRevisionPersistenceTest {
 
 		_persistence.clearCache();
 
-		LayoutRevisionModelImpl existingLayoutRevisionModelImpl = (LayoutRevisionModelImpl)_persistence.findByPrimaryKey(newLayoutRevision.getPrimaryKey());
+		LayoutRevision existingLayoutRevision = _persistence.findByPrimaryKey(newLayoutRevision.getPrimaryKey());
 
-		Assert.assertEquals(existingLayoutRevisionModelImpl.getLayoutSetBranchId(),
-			existingLayoutRevisionModelImpl.getOriginalLayoutSetBranchId());
-		Assert.assertEquals(existingLayoutRevisionModelImpl.getHead(),
-			existingLayoutRevisionModelImpl.getOriginalHead());
-		Assert.assertEquals(existingLayoutRevisionModelImpl.getPlid(),
-			existingLayoutRevisionModelImpl.getOriginalPlid());
+		Assert.assertEquals(existingLayoutRevision.getLayoutSetBranchId(),
+			ReflectionTestUtil.invoke(existingLayoutRevision,
+				"getOriginalLayoutSetBranchId", new Class<?>[0]));
+		Assert.assertEquals(existingLayoutRevision.getHead(),
+			ReflectionTestUtil.invoke(existingLayoutRevision,
+				"getOriginalHead", new Class<?>[0]));
+		Assert.assertEquals(existingLayoutRevision.getPlid(),
+			ReflectionTestUtil.invoke(existingLayoutRevision,
+				"getOriginalPlid", new Class<?>[0]));
 	}
 
 	protected LayoutRevision addLayoutRevision() throws Exception {

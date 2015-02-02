@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
-import com.liferay.portal.model.impl.UserModelImpl;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -747,45 +747,57 @@ public class UserPersistenceTest {
 
 		_persistence.clearCache();
 
-		UserModelImpl existingUserModelImpl = (UserModelImpl)_persistence.findByPrimaryKey(newUser.getPrimaryKey());
+		User existingUser = _persistence.findByPrimaryKey(newUser.getPrimaryKey());
 
-		Assert.assertEquals(existingUserModelImpl.getContactId(),
-			existingUserModelImpl.getOriginalContactId());
+		Assert.assertEquals(existingUser.getContactId(),
+			ReflectionTestUtil.invoke(existingUser, "getOriginalContactId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingUserModelImpl.getPortraitId(),
-			existingUserModelImpl.getOriginalPortraitId());
+		Assert.assertEquals(existingUser.getPortraitId(),
+			ReflectionTestUtil.invoke(existingUser, "getOriginalPortraitId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingUserModelImpl.getCompanyId(),
-			existingUserModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingUserModelImpl.getUserId(),
-			existingUserModelImpl.getOriginalUserId());
+		Assert.assertEquals(existingUser.getCompanyId(),
+			ReflectionTestUtil.invoke(existingUser, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingUser.getUserId(),
+			ReflectionTestUtil.invoke(existingUser, "getOriginalUserId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingUserModelImpl.getCompanyId(),
-			existingUserModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingUserModelImpl.getDefaultUser(),
-			existingUserModelImpl.getOriginalDefaultUser());
+		Assert.assertEquals(existingUser.getCompanyId(),
+			ReflectionTestUtil.invoke(existingUser, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingUser.getDefaultUser(),
+			ReflectionTestUtil.invoke(existingUser, "getOriginalDefaultUser",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingUserModelImpl.getCompanyId(),
-			existingUserModelImpl.getOriginalCompanyId());
-		Assert.assertTrue(Validator.equals(
-				existingUserModelImpl.getScreenName(),
-				existingUserModelImpl.getOriginalScreenName()));
+		Assert.assertEquals(existingUser.getCompanyId(),
+			ReflectionTestUtil.invoke(existingUser, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingUser.getScreenName(),
+				ReflectionTestUtil.invoke(existingUser,
+					"getOriginalScreenName", new Class<?>[0])));
 
-		Assert.assertEquals(existingUserModelImpl.getCompanyId(),
-			existingUserModelImpl.getOriginalCompanyId());
-		Assert.assertTrue(Validator.equals(
-				existingUserModelImpl.getEmailAddress(),
-				existingUserModelImpl.getOriginalEmailAddress()));
+		Assert.assertEquals(existingUser.getCompanyId(),
+			ReflectionTestUtil.invoke(existingUser, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingUser.getEmailAddress(),
+				ReflectionTestUtil.invoke(existingUser,
+					"getOriginalEmailAddress", new Class<?>[0])));
 
-		Assert.assertEquals(existingUserModelImpl.getCompanyId(),
-			existingUserModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingUserModelImpl.getFacebookId(),
-			existingUserModelImpl.getOriginalFacebookId());
+		Assert.assertEquals(existingUser.getCompanyId(),
+			ReflectionTestUtil.invoke(existingUser, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingUser.getFacebookId(),
+			ReflectionTestUtil.invoke(existingUser, "getOriginalFacebookId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingUserModelImpl.getCompanyId(),
-			existingUserModelImpl.getOriginalCompanyId());
-		Assert.assertTrue(Validator.equals(existingUserModelImpl.getOpenId(),
-				existingUserModelImpl.getOriginalOpenId()));
+		Assert.assertEquals(existingUser.getCompanyId(),
+			ReflectionTestUtil.invoke(existingUser, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingUser.getOpenId(),
+				ReflectionTestUtil.invoke(existingUser, "getOriginalOpenId",
+					new Class<?>[0])));
 	}
 
 	protected User addUser() throws Exception {

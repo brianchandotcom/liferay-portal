@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceAction;
-import com.liferay.portal.model.impl.ResourceActionModelImpl;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -408,14 +408,15 @@ public class ResourceActionPersistenceTest {
 
 		_persistence.clearCache();
 
-		ResourceActionModelImpl existingResourceActionModelImpl = (ResourceActionModelImpl)_persistence.findByPrimaryKey(newResourceAction.getPrimaryKey());
+		ResourceAction existingResourceAction = _persistence.findByPrimaryKey(newResourceAction.getPrimaryKey());
 
+		Assert.assertTrue(Validator.equals(existingResourceAction.getName(),
+				ReflectionTestUtil.invoke(existingResourceAction,
+					"getOriginalName", new Class<?>[0])));
 		Assert.assertTrue(Validator.equals(
-				existingResourceActionModelImpl.getName(),
-				existingResourceActionModelImpl.getOriginalName()));
-		Assert.assertTrue(Validator.equals(
-				existingResourceActionModelImpl.getActionId(),
-				existingResourceActionModelImpl.getOriginalActionId()));
+				existingResourceAction.getActionId(),
+				ReflectionTestUtil.invoke(existingResourceAction,
+					"getOriginalActionId", new Class<?>[0])));
 	}
 
 	protected ResourceAction addResourceAction() throws Exception {

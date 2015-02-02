@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.asset.NoSuchCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
 import org.junit.After;
@@ -649,21 +649,24 @@ public class AssetCategoryPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetCategoryModelImpl existingAssetCategoryModelImpl = (AssetCategoryModelImpl)_persistence.findByPrimaryKey(newAssetCategory.getPrimaryKey());
+		AssetCategory existingAssetCategory = _persistence.findByPrimaryKey(newAssetCategory.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingAssetCategoryModelImpl.getUuid(),
-				existingAssetCategoryModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingAssetCategoryModelImpl.getGroupId(),
-			existingAssetCategoryModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingAssetCategory.getUuid(),
+				ReflectionTestUtil.invoke(existingAssetCategory,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingAssetCategory.getGroupId(),
+			ReflectionTestUtil.invoke(existingAssetCategory,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingAssetCategoryModelImpl.getParentCategoryId(),
-			existingAssetCategoryModelImpl.getOriginalParentCategoryId());
-		Assert.assertTrue(Validator.equals(
-				existingAssetCategoryModelImpl.getName(),
-				existingAssetCategoryModelImpl.getOriginalName()));
-		Assert.assertEquals(existingAssetCategoryModelImpl.getVocabularyId(),
-			existingAssetCategoryModelImpl.getOriginalVocabularyId());
+		Assert.assertEquals(existingAssetCategory.getParentCategoryId(),
+			ReflectionTestUtil.invoke(existingAssetCategory,
+				"getOriginalParentCategoryId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingAssetCategory.getName(),
+				ReflectionTestUtil.invoke(existingAssetCategory,
+					"getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(existingAssetCategory.getVocabularyId(),
+			ReflectionTestUtil.invoke(existingAssetCategory,
+				"getOriginalVocabularyId", new Class<?>[0]));
 	}
 
 	protected AssetCategory addAssetCategory() throws Exception {

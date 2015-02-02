@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Release;
-import com.liferay.portal.model.impl.ReleaseModelImpl;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -413,11 +413,12 @@ public class ReleasePersistenceTest {
 
 		_persistence.clearCache();
 
-		ReleaseModelImpl existingReleaseModelImpl = (ReleaseModelImpl)_persistence.findByPrimaryKey(newRelease.getPrimaryKey());
+		Release existingRelease = _persistence.findByPrimaryKey(newRelease.getPrimaryKey());
 
 		Assert.assertTrue(Validator.equals(
-				existingReleaseModelImpl.getServletContextName(),
-				existingReleaseModelImpl.getOriginalServletContextName()));
+				existingRelease.getServletContextName(),
+				ReflectionTestUtil.invoke(existingRelease,
+					"getOriginalServletContextName", new Class<?>[0])));
 	}
 
 	protected Release addRelease() throws Exception {

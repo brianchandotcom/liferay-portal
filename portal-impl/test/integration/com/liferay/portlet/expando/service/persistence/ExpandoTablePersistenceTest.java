@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoTable;
-import com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 
 import org.junit.After;
@@ -401,15 +401,17 @@ public class ExpandoTablePersistenceTest {
 
 		_persistence.clearCache();
 
-		ExpandoTableModelImpl existingExpandoTableModelImpl = (ExpandoTableModelImpl)_persistence.findByPrimaryKey(newExpandoTable.getPrimaryKey());
+		ExpandoTable existingExpandoTable = _persistence.findByPrimaryKey(newExpandoTable.getPrimaryKey());
 
-		Assert.assertEquals(existingExpandoTableModelImpl.getCompanyId(),
-			existingExpandoTableModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingExpandoTableModelImpl.getClassNameId(),
-			existingExpandoTableModelImpl.getOriginalClassNameId());
-		Assert.assertTrue(Validator.equals(
-				existingExpandoTableModelImpl.getName(),
-				existingExpandoTableModelImpl.getOriginalName()));
+		Assert.assertEquals(existingExpandoTable.getCompanyId(),
+			ReflectionTestUtil.invoke(existingExpandoTable,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(existingExpandoTable.getClassNameId(),
+			ReflectionTestUtil.invoke(existingExpandoTable,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingExpandoTable.getName(),
+				ReflectionTestUtil.invoke(existingExpandoTable,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected ExpandoTable addExpandoTable() throws Exception {

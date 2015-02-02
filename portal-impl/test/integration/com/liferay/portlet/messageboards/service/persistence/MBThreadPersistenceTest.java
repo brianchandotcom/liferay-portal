@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.messageboards.NoSuchThreadException;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 
 import org.junit.After;
@@ -696,16 +696,18 @@ public class MBThreadPersistenceTest {
 
 		_persistence.clearCache();
 
-		MBThreadModelImpl existingMBThreadModelImpl = (MBThreadModelImpl)_persistence.findByPrimaryKey(newMBThread.getPrimaryKey());
+		MBThread existingMBThread = _persistence.findByPrimaryKey(newMBThread.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingMBThreadModelImpl.getUuid(),
-				existingMBThreadModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingMBThreadModelImpl.getGroupId(),
-			existingMBThreadModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingMBThread.getUuid(),
+				ReflectionTestUtil.invoke(existingMBThread, "getOriginalUuid",
+					new Class<?>[0])));
+		Assert.assertEquals(existingMBThread.getGroupId(),
+			ReflectionTestUtil.invoke(existingMBThread, "getOriginalGroupId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingMBThreadModelImpl.getRootMessageId(),
-			existingMBThreadModelImpl.getOriginalRootMessageId());
+		Assert.assertEquals(existingMBThread.getRootMessageId(),
+			ReflectionTestUtil.invoke(existingMBThread,
+				"getOriginalRootMessageId", new Class<?>[0]));
 	}
 
 	protected MBThread addMBThread() throws Exception {

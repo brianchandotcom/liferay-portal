@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.announcements.NoSuchFlagException;
 import com.liferay.portlet.announcements.model.AnnouncementsFlag;
-import com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl;
 import com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUtil;
 
 import org.junit.After;
@@ -403,14 +403,17 @@ public class AnnouncementsFlagPersistenceTest {
 
 		_persistence.clearCache();
 
-		AnnouncementsFlagModelImpl existingAnnouncementsFlagModelImpl = (AnnouncementsFlagModelImpl)_persistence.findByPrimaryKey(newAnnouncementsFlag.getPrimaryKey());
+		AnnouncementsFlag existingAnnouncementsFlag = _persistence.findByPrimaryKey(newAnnouncementsFlag.getPrimaryKey());
 
-		Assert.assertEquals(existingAnnouncementsFlagModelImpl.getUserId(),
-			existingAnnouncementsFlagModelImpl.getOriginalUserId());
-		Assert.assertEquals(existingAnnouncementsFlagModelImpl.getEntryId(),
-			existingAnnouncementsFlagModelImpl.getOriginalEntryId());
-		Assert.assertEquals(existingAnnouncementsFlagModelImpl.getValue(),
-			existingAnnouncementsFlagModelImpl.getOriginalValue());
+		Assert.assertEquals(existingAnnouncementsFlag.getUserId(),
+			ReflectionTestUtil.invoke(existingAnnouncementsFlag,
+				"getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(existingAnnouncementsFlag.getEntryId(),
+			ReflectionTestUtil.invoke(existingAnnouncementsFlag,
+				"getOriginalEntryId", new Class<?>[0]));
+		Assert.assertEquals(existingAnnouncementsFlag.getValue(),
+			ReflectionTestUtil.invoke(existingAnnouncementsFlag,
+				"getOriginalValue", new Class<?>[0]));
 	}
 
 	protected AnnouncementsFlag addAnnouncementsFlag()

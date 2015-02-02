@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Team;
-import com.liferay.portal.model.impl.TeamModelImpl;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -427,12 +427,14 @@ public class TeamPersistenceTest {
 
 		_persistence.clearCache();
 
-		TeamModelImpl existingTeamModelImpl = (TeamModelImpl)_persistence.findByPrimaryKey(newTeam.getPrimaryKey());
+		Team existingTeam = _persistence.findByPrimaryKey(newTeam.getPrimaryKey());
 
-		Assert.assertEquals(existingTeamModelImpl.getGroupId(),
-			existingTeamModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(existingTeamModelImpl.getName(),
-				existingTeamModelImpl.getOriginalName()));
+		Assert.assertEquals(existingTeam.getGroupId(),
+			ReflectionTestUtil.invoke(existingTeam, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingTeam.getName(),
+				ReflectionTestUtil.invoke(existingTeam, "getOriginalName",
+					new Class<?>[0])));
 	}
 
 	protected Team addTeam() throws Exception {

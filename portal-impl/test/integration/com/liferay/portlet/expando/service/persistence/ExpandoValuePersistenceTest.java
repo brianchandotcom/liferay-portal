@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.expando.NoSuchValueException;
 import com.liferay.portlet.expando.model.ExpandoValue;
-import com.liferay.portlet.expando.model.impl.ExpandoValueModelImpl;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 
 import org.junit.After;
@@ -518,19 +518,24 @@ public class ExpandoValuePersistenceTest {
 
 		_persistence.clearCache();
 
-		ExpandoValueModelImpl existingExpandoValueModelImpl = (ExpandoValueModelImpl)_persistence.findByPrimaryKey(newExpandoValue.getPrimaryKey());
+		ExpandoValue existingExpandoValue = _persistence.findByPrimaryKey(newExpandoValue.getPrimaryKey());
 
-		Assert.assertEquals(existingExpandoValueModelImpl.getColumnId(),
-			existingExpandoValueModelImpl.getOriginalColumnId());
-		Assert.assertEquals(existingExpandoValueModelImpl.getRowId(),
-			existingExpandoValueModelImpl.getOriginalRowId());
+		Assert.assertEquals(existingExpandoValue.getColumnId(),
+			ReflectionTestUtil.invoke(existingExpandoValue,
+				"getOriginalColumnId", new Class<?>[0]));
+		Assert.assertEquals(existingExpandoValue.getRowId(),
+			ReflectionTestUtil.invoke(existingExpandoValue, "getOriginalRowId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingExpandoValueModelImpl.getTableId(),
-			existingExpandoValueModelImpl.getOriginalTableId());
-		Assert.assertEquals(existingExpandoValueModelImpl.getColumnId(),
-			existingExpandoValueModelImpl.getOriginalColumnId());
-		Assert.assertEquals(existingExpandoValueModelImpl.getClassPK(),
-			existingExpandoValueModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingExpandoValue.getTableId(),
+			ReflectionTestUtil.invoke(existingExpandoValue,
+				"getOriginalTableId", new Class<?>[0]));
+		Assert.assertEquals(existingExpandoValue.getColumnId(),
+			ReflectionTestUtil.invoke(existingExpandoValue,
+				"getOriginalColumnId", new Class<?>[0]));
+		Assert.assertEquals(existingExpandoValue.getClassPK(),
+			ReflectionTestUtil.invoke(existingExpandoValue,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected ExpandoValue addExpandoValue() throws Exception {

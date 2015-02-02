@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -33,7 +34,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.trash.NoSuchVersionException;
 import com.liferay.portlet.trash.model.TrashVersion;
-import com.liferay.portlet.trash.model.impl.TrashVersionModelImpl;
 import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
 import org.junit.After;
@@ -418,12 +418,14 @@ public class TrashVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		TrashVersionModelImpl existingTrashVersionModelImpl = (TrashVersionModelImpl)_persistence.findByPrimaryKey(newTrashVersion.getPrimaryKey());
+		TrashVersion existingTrashVersion = _persistence.findByPrimaryKey(newTrashVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingTrashVersionModelImpl.getClassNameId(),
-			existingTrashVersionModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingTrashVersionModelImpl.getClassPK(),
-			existingTrashVersionModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingTrashVersion.getClassNameId(),
+			ReflectionTestUtil.invoke(existingTrashVersion,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingTrashVersion.getClassPK(),
+			ReflectionTestUtil.invoke(existingTrashVersion,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected TrashVersion addTrashVersion() throws Exception {

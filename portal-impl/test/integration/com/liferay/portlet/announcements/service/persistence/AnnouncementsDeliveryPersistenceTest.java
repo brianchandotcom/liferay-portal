@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.announcements.NoSuchDeliveryException;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
-import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl;
 import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
 
 import org.junit.After;
@@ -420,13 +420,15 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 		_persistence.clearCache();
 
-		AnnouncementsDeliveryModelImpl existingAnnouncementsDeliveryModelImpl = (AnnouncementsDeliveryModelImpl)_persistence.findByPrimaryKey(newAnnouncementsDelivery.getPrimaryKey());
+		AnnouncementsDelivery existingAnnouncementsDelivery = _persistence.findByPrimaryKey(newAnnouncementsDelivery.getPrimaryKey());
 
-		Assert.assertEquals(existingAnnouncementsDeliveryModelImpl.getUserId(),
-			existingAnnouncementsDeliveryModelImpl.getOriginalUserId());
+		Assert.assertEquals(existingAnnouncementsDelivery.getUserId(),
+			ReflectionTestUtil.invoke(existingAnnouncementsDelivery,
+				"getOriginalUserId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingAnnouncementsDeliveryModelImpl.getType(),
-				existingAnnouncementsDeliveryModelImpl.getOriginalType()));
+				existingAnnouncementsDelivery.getType(),
+				ReflectionTestUtil.invoke(existingAnnouncementsDelivery,
+					"getOriginalType", new Class<?>[0])));
 	}
 
 	protected AnnouncementsDelivery addAnnouncementsDelivery()

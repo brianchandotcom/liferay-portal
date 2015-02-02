@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceTypePermission;
-import com.liferay.portal.model.impl.ResourceTypePermissionModelImpl;
 import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -444,17 +444,21 @@ public class ResourceTypePermissionPersistenceTest {
 
 		_persistence.clearCache();
 
-		ResourceTypePermissionModelImpl existingResourceTypePermissionModelImpl = (ResourceTypePermissionModelImpl)_persistence.findByPrimaryKey(newResourceTypePermission.getPrimaryKey());
+		ResourceTypePermission existingResourceTypePermission = _persistence.findByPrimaryKey(newResourceTypePermission.getPrimaryKey());
 
-		Assert.assertEquals(existingResourceTypePermissionModelImpl.getCompanyId(),
-			existingResourceTypePermissionModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingResourceTypePermissionModelImpl.getGroupId(),
-			existingResourceTypePermissionModelImpl.getOriginalGroupId());
+		Assert.assertEquals(existingResourceTypePermission.getCompanyId(),
+			ReflectionTestUtil.invoke(existingResourceTypePermission,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(existingResourceTypePermission.getGroupId(),
+			ReflectionTestUtil.invoke(existingResourceTypePermission,
+				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
-				existingResourceTypePermissionModelImpl.getName(),
-				existingResourceTypePermissionModelImpl.getOriginalName()));
-		Assert.assertEquals(existingResourceTypePermissionModelImpl.getRoleId(),
-			existingResourceTypePermissionModelImpl.getOriginalRoleId());
+				existingResourceTypePermission.getName(),
+				ReflectionTestUtil.invoke(existingResourceTypePermission,
+					"getOriginalName", new Class<?>[0])));
+		Assert.assertEquals(existingResourceTypePermission.getRoleId(),
+			ReflectionTestUtil.invoke(existingResourceTypePermission,
+				"getOriginalRoleId", new Class<?>[0]));
 	}
 
 	protected ResourceTypePermission addResourceTypePermission()

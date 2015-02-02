@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.ratings.NoSuchStatsException;
 import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.ratings.model.impl.RatingsStatsModelImpl;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 
 import org.junit.After;
@@ -394,12 +394,14 @@ public class RatingsStatsPersistenceTest {
 
 		_persistence.clearCache();
 
-		RatingsStatsModelImpl existingRatingsStatsModelImpl = (RatingsStatsModelImpl)_persistence.findByPrimaryKey(newRatingsStats.getPrimaryKey());
+		RatingsStats existingRatingsStats = _persistence.findByPrimaryKey(newRatingsStats.getPrimaryKey());
 
-		Assert.assertEquals(existingRatingsStatsModelImpl.getClassNameId(),
-			existingRatingsStatsModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingRatingsStatsModelImpl.getClassPK(),
-			existingRatingsStatsModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingRatingsStats.getClassNameId(),
+			ReflectionTestUtil.invoke(existingRatingsStats,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingRatingsStats.getClassPK(),
+			ReflectionTestUtil.invoke(existingRatingsStats,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected RatingsStats addRatingsStats() throws Exception {

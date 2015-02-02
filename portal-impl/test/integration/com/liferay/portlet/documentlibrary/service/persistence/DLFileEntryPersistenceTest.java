@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryModelImpl;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 
 import org.junit.After;
@@ -760,37 +760,44 @@ public class DLFileEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		DLFileEntryModelImpl existingDLFileEntryModelImpl = (DLFileEntryModelImpl)_persistence.findByPrimaryKey(newDLFileEntry.getPrimaryKey());
+		DLFileEntry existingDLFileEntry = _persistence.findByPrimaryKey(newDLFileEntry.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingDLFileEntryModelImpl.getUuid(),
-				existingDLFileEntryModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingDLFileEntryModelImpl.getGroupId(),
-			existingDLFileEntryModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingDLFileEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingDLFileEntry,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingDLFileEntry.getGroupId(),
+			ReflectionTestUtil.invoke(existingDLFileEntry,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDLFileEntryModelImpl.getGroupId(),
-			existingDLFileEntryModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingDLFileEntryModelImpl.getFolderId(),
-			existingDLFileEntryModelImpl.getOriginalFolderId());
-		Assert.assertTrue(Validator.equals(
-				existingDLFileEntryModelImpl.getName(),
-				existingDLFileEntryModelImpl.getOriginalName()));
+		Assert.assertEquals(existingDLFileEntry.getGroupId(),
+			ReflectionTestUtil.invoke(existingDLFileEntry,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingDLFileEntry.getFolderId(),
+			ReflectionTestUtil.invoke(existingDLFileEntry,
+				"getOriginalFolderId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingDLFileEntry.getName(),
+				ReflectionTestUtil.invoke(existingDLFileEntry,
+					"getOriginalName", new Class<?>[0])));
 
-		Assert.assertEquals(existingDLFileEntryModelImpl.getGroupId(),
-			existingDLFileEntryModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingDLFileEntryModelImpl.getFolderId(),
-			existingDLFileEntryModelImpl.getOriginalFolderId());
-		Assert.assertTrue(Validator.equals(
-				existingDLFileEntryModelImpl.getFileName(),
-				existingDLFileEntryModelImpl.getOriginalFileName()));
+		Assert.assertEquals(existingDLFileEntry.getGroupId(),
+			ReflectionTestUtil.invoke(existingDLFileEntry,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingDLFileEntry.getFolderId(),
+			ReflectionTestUtil.invoke(existingDLFileEntry,
+				"getOriginalFolderId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingDLFileEntry.getFileName(),
+				ReflectionTestUtil.invoke(existingDLFileEntry,
+					"getOriginalFileName", new Class<?>[0])));
 
-		Assert.assertEquals(existingDLFileEntryModelImpl.getGroupId(),
-			existingDLFileEntryModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingDLFileEntryModelImpl.getFolderId(),
-			existingDLFileEntryModelImpl.getOriginalFolderId());
-		Assert.assertTrue(Validator.equals(
-				existingDLFileEntryModelImpl.getTitle(),
-				existingDLFileEntryModelImpl.getOriginalTitle()));
+		Assert.assertEquals(existingDLFileEntry.getGroupId(),
+			ReflectionTestUtil.invoke(existingDLFileEntry,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingDLFileEntry.getFolderId(),
+			ReflectionTestUtil.invoke(existingDLFileEntry,
+				"getOriginalFolderId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingDLFileEntry.getTitle(),
+				ReflectionTestUtil.invoke(existingDLFileEntry,
+					"getOriginalTitle", new Class<?>[0])));
 	}
 
 	protected DLFileEntry addDLFileEntry() throws Exception {

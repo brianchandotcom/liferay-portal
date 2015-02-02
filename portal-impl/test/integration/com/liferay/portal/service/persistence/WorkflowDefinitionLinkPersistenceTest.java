@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.WorkflowDefinitionLink;
-import com.liferay.portal.model.impl.WorkflowDefinitionLinkModelImpl;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -483,18 +483,23 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 		_persistence.clearCache();
 
-		WorkflowDefinitionLinkModelImpl existingWorkflowDefinitionLinkModelImpl = (WorkflowDefinitionLinkModelImpl)_persistence.findByPrimaryKey(newWorkflowDefinitionLink.getPrimaryKey());
+		WorkflowDefinitionLink existingWorkflowDefinitionLink = _persistence.findByPrimaryKey(newWorkflowDefinitionLink.getPrimaryKey());
 
-		Assert.assertEquals(existingWorkflowDefinitionLinkModelImpl.getGroupId(),
-			existingWorkflowDefinitionLinkModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingWorkflowDefinitionLinkModelImpl.getCompanyId(),
-			existingWorkflowDefinitionLinkModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingWorkflowDefinitionLinkModelImpl.getClassNameId(),
-			existingWorkflowDefinitionLinkModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingWorkflowDefinitionLinkModelImpl.getClassPK(),
-			existingWorkflowDefinitionLinkModelImpl.getOriginalClassPK());
-		Assert.assertEquals(existingWorkflowDefinitionLinkModelImpl.getTypePK(),
-			existingWorkflowDefinitionLinkModelImpl.getOriginalTypePK());
+		Assert.assertEquals(existingWorkflowDefinitionLink.getGroupId(),
+			ReflectionTestUtil.invoke(existingWorkflowDefinitionLink,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(existingWorkflowDefinitionLink.getCompanyId(),
+			ReflectionTestUtil.invoke(existingWorkflowDefinitionLink,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(existingWorkflowDefinitionLink.getClassNameId(),
+			ReflectionTestUtil.invoke(existingWorkflowDefinitionLink,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingWorkflowDefinitionLink.getClassPK(),
+			ReflectionTestUtil.invoke(existingWorkflowDefinitionLink,
+				"getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(existingWorkflowDefinitionLink.getTypePK(),
+			ReflectionTestUtil.invoke(existingWorkflowDefinitionLink,
+				"getOriginalTypePK", new Class<?>[0]));
 	}
 
 	protected WorkflowDefinitionLink addWorkflowDefinitionLink()

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -553,19 +553,24 @@ public class RolePersistenceTest {
 
 		_persistence.clearCache();
 
-		RoleModelImpl existingRoleModelImpl = (RoleModelImpl)_persistence.findByPrimaryKey(newRole.getPrimaryKey());
+		Role existingRole = _persistence.findByPrimaryKey(newRole.getPrimaryKey());
 
-		Assert.assertEquals(existingRoleModelImpl.getCompanyId(),
-			existingRoleModelImpl.getOriginalCompanyId());
-		Assert.assertTrue(Validator.equals(existingRoleModelImpl.getName(),
-				existingRoleModelImpl.getOriginalName()));
+		Assert.assertEquals(existingRole.getCompanyId(),
+			ReflectionTestUtil.invoke(existingRole, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingRole.getName(),
+				ReflectionTestUtil.invoke(existingRole, "getOriginalName",
+					new Class<?>[0])));
 
-		Assert.assertEquals(existingRoleModelImpl.getCompanyId(),
-			existingRoleModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingRoleModelImpl.getClassNameId(),
-			existingRoleModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingRoleModelImpl.getClassPK(),
-			existingRoleModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingRole.getCompanyId(),
+			ReflectionTestUtil.invoke(existingRole, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingRole.getClassNameId(),
+			ReflectionTestUtil.invoke(existingRole, "getOriginalClassNameId",
+				new Class<?>[0]));
+		Assert.assertEquals(existingRole.getClassPK(),
+			ReflectionTestUtil.invoke(existingRole, "getOriginalClassPK",
+				new Class<?>[0]));
 	}
 
 	protected Role addRole() throws Exception {

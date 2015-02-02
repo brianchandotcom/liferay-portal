@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 
 import org.junit.After;
@@ -469,13 +469,14 @@ public class AssetTagPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetTagModelImpl existingAssetTagModelImpl = (AssetTagModelImpl)_persistence.findByPrimaryKey(newAssetTag.getPrimaryKey());
+		AssetTag existingAssetTag = _persistence.findByPrimaryKey(newAssetTag.getPrimaryKey());
 
-		Assert.assertEquals(existingAssetTagModelImpl.getGroupId(),
-			existingAssetTagModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingAssetTagModelImpl.getName(),
-				existingAssetTagModelImpl.getOriginalName()));
+		Assert.assertEquals(existingAssetTag.getGroupId(),
+			ReflectionTestUtil.invoke(existingAssetTag, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingAssetTag.getName(),
+				ReflectionTestUtil.invoke(existingAssetTag, "getOriginalName",
+					new Class<?>[0])));
 	}
 
 	protected AssetTag addAssetTag() throws Exception {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.ratings.NoSuchEntryException;
 import com.liferay.portlet.ratings.model.RatingsEntry;
-import com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 
 import org.junit.After;
@@ -470,14 +470,17 @@ public class RatingsEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		RatingsEntryModelImpl existingRatingsEntryModelImpl = (RatingsEntryModelImpl)_persistence.findByPrimaryKey(newRatingsEntry.getPrimaryKey());
+		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(newRatingsEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingRatingsEntryModelImpl.getUserId(),
-			existingRatingsEntryModelImpl.getOriginalUserId());
-		Assert.assertEquals(existingRatingsEntryModelImpl.getClassNameId(),
-			existingRatingsEntryModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingRatingsEntryModelImpl.getClassPK(),
-			existingRatingsEntryModelImpl.getOriginalClassPK());
+		Assert.assertEquals(existingRatingsEntry.getUserId(),
+			ReflectionTestUtil.invoke(existingRatingsEntry,
+				"getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(existingRatingsEntry.getClassNameId(),
+			ReflectionTestUtil.invoke(existingRatingsEntry,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(existingRatingsEntry.getClassPK(),
+			ReflectionTestUtil.invoke(existingRatingsEntry,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected RatingsEntry addRatingsEntry() throws Exception {

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -33,7 +34,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
-import com.liferay.portlet.softwarecatalog.model.impl.SCProductScreenshotModelImpl;
 import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServiceUtil;
 
 import org.junit.After;
@@ -437,18 +437,22 @@ public class SCProductScreenshotPersistenceTest {
 
 		_persistence.clearCache();
 
-		SCProductScreenshotModelImpl existingSCProductScreenshotModelImpl = (SCProductScreenshotModelImpl)_persistence.findByPrimaryKey(newSCProductScreenshot.getPrimaryKey());
+		SCProductScreenshot existingSCProductScreenshot = _persistence.findByPrimaryKey(newSCProductScreenshot.getPrimaryKey());
 
-		Assert.assertEquals(existingSCProductScreenshotModelImpl.getThumbnailId(),
-			existingSCProductScreenshotModelImpl.getOriginalThumbnailId());
+		Assert.assertEquals(existingSCProductScreenshot.getThumbnailId(),
+			ReflectionTestUtil.invoke(existingSCProductScreenshot,
+				"getOriginalThumbnailId", new Class<?>[0]));
 
-		Assert.assertEquals(existingSCProductScreenshotModelImpl.getFullImageId(),
-			existingSCProductScreenshotModelImpl.getOriginalFullImageId());
+		Assert.assertEquals(existingSCProductScreenshot.getFullImageId(),
+			ReflectionTestUtil.invoke(existingSCProductScreenshot,
+				"getOriginalFullImageId", new Class<?>[0]));
 
-		Assert.assertEquals(existingSCProductScreenshotModelImpl.getProductEntryId(),
-			existingSCProductScreenshotModelImpl.getOriginalProductEntryId());
-		Assert.assertEquals(existingSCProductScreenshotModelImpl.getPriority(),
-			existingSCProductScreenshotModelImpl.getOriginalPriority());
+		Assert.assertEquals(existingSCProductScreenshot.getProductEntryId(),
+			ReflectionTestUtil.invoke(existingSCProductScreenshot,
+				"getOriginalProductEntryId", new Class<?>[0]));
+		Assert.assertEquals(existingSCProductScreenshot.getPriority(),
+			ReflectionTestUtil.invoke(existingSCProductScreenshot,
+				"getOriginalPriority", new Class<?>[0]));
 	}
 
 	protected SCProductScreenshot addSCProductScreenshot()

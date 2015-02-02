@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ServiceComponent;
-import com.liferay.portal.model.impl.ServiceComponentModelImpl;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -413,13 +413,15 @@ public class ServiceComponentPersistenceTest {
 
 		_persistence.clearCache();
 
-		ServiceComponentModelImpl existingServiceComponentModelImpl = (ServiceComponentModelImpl)_persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
+		ServiceComponent existingServiceComponent = _persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
 
 		Assert.assertTrue(Validator.equals(
-				existingServiceComponentModelImpl.getBuildNamespace(),
-				existingServiceComponentModelImpl.getOriginalBuildNamespace()));
-		Assert.assertEquals(existingServiceComponentModelImpl.getBuildNumber(),
-			existingServiceComponentModelImpl.getOriginalBuildNumber());
+				existingServiceComponent.getBuildNamespace(),
+				ReflectionTestUtil.invoke(existingServiceComponent,
+					"getOriginalBuildNamespace", new Class<?>[0])));
+		Assert.assertEquals(existingServiceComponent.getBuildNumber(),
+			ReflectionTestUtil.invoke(existingServiceComponent,
+				"getOriginalBuildNumber", new Class<?>[0]));
 	}
 
 	protected ServiceComponent addServiceComponent() throws Exception {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.BrowserTracker;
-import com.liferay.portal.model.impl.BrowserTrackerModelImpl;
 import com.liferay.portal.service.BrowserTrackerLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -386,10 +386,11 @@ public class BrowserTrackerPersistenceTest {
 
 		_persistence.clearCache();
 
-		BrowserTrackerModelImpl existingBrowserTrackerModelImpl = (BrowserTrackerModelImpl)_persistence.findByPrimaryKey(newBrowserTracker.getPrimaryKey());
+		BrowserTracker existingBrowserTracker = _persistence.findByPrimaryKey(newBrowserTracker.getPrimaryKey());
 
-		Assert.assertEquals(existingBrowserTrackerModelImpl.getUserId(),
-			existingBrowserTrackerModelImpl.getOriginalUserId());
+		Assert.assertEquals(existingBrowserTracker.getUserId(),
+			ReflectionTestUtil.invoke(existingBrowserTracker,
+				"getOriginalUserId", new Class<?>[0]));
 	}
 
 	protected BrowserTracker addBrowserTracker() throws Exception {

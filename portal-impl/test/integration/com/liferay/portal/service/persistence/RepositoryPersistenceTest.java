@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Repository;
-import com.liferay.portal.model.impl.RepositoryModelImpl;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -497,22 +497,24 @@ public class RepositoryPersistenceTest {
 
 		_persistence.clearCache();
 
-		RepositoryModelImpl existingRepositoryModelImpl = (RepositoryModelImpl)_persistence.findByPrimaryKey(newRepository.getPrimaryKey());
+		Repository existingRepository = _persistence.findByPrimaryKey(newRepository.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingRepositoryModelImpl.getUuid(),
-				existingRepositoryModelImpl.getOriginalUuid()));
-		Assert.assertEquals(existingRepositoryModelImpl.getGroupId(),
-			existingRepositoryModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(existingRepository.getUuid(),
+				ReflectionTestUtil.invoke(existingRepository,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(existingRepository.getGroupId(),
+			ReflectionTestUtil.invoke(existingRepository, "getOriginalGroupId",
+				new Class<?>[0]));
 
-		Assert.assertEquals(existingRepositoryModelImpl.getGroupId(),
-			existingRepositoryModelImpl.getOriginalGroupId());
-		Assert.assertTrue(Validator.equals(
-				existingRepositoryModelImpl.getName(),
-				existingRepositoryModelImpl.getOriginalName()));
-		Assert.assertTrue(Validator.equals(
-				existingRepositoryModelImpl.getPortletId(),
-				existingRepositoryModelImpl.getOriginalPortletId()));
+		Assert.assertEquals(existingRepository.getGroupId(),
+			ReflectionTestUtil.invoke(existingRepository, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingRepository.getName(),
+				ReflectionTestUtil.invoke(existingRepository,
+					"getOriginalName", new Class<?>[0])));
+		Assert.assertTrue(Validator.equals(existingRepository.getPortletId(),
+				ReflectionTestUtil.invoke(existingRepository,
+					"getOriginalPortletId", new Class<?>[0])));
 	}
 
 	protected Repository addRepository() throws Exception {

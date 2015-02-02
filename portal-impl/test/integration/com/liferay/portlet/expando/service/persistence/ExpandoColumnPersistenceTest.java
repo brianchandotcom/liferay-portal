@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.expando.NoSuchColumnException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 
 import org.junit.After;
@@ -426,13 +426,14 @@ public class ExpandoColumnPersistenceTest {
 
 		_persistence.clearCache();
 
-		ExpandoColumnModelImpl existingExpandoColumnModelImpl = (ExpandoColumnModelImpl)_persistence.findByPrimaryKey(newExpandoColumn.getPrimaryKey());
+		ExpandoColumn existingExpandoColumn = _persistence.findByPrimaryKey(newExpandoColumn.getPrimaryKey());
 
-		Assert.assertEquals(existingExpandoColumnModelImpl.getTableId(),
-			existingExpandoColumnModelImpl.getOriginalTableId());
-		Assert.assertTrue(Validator.equals(
-				existingExpandoColumnModelImpl.getName(),
-				existingExpandoColumnModelImpl.getOriginalName()));
+		Assert.assertEquals(existingExpandoColumn.getTableId(),
+			ReflectionTestUtil.invoke(existingExpandoColumn,
+				"getOriginalTableId", new Class<?>[0]));
+		Assert.assertTrue(Validator.equals(existingExpandoColumn.getName(),
+				ReflectionTestUtil.invoke(existingExpandoColumn,
+					"getOriginalName", new Class<?>[0])));
 	}
 
 	protected ExpandoColumn addExpandoColumn() throws Exception {

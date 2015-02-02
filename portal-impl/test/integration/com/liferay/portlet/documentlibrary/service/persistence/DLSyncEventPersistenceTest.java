@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -33,7 +34,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
-import com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl;
 import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
 
 import org.junit.After;
@@ -400,10 +400,11 @@ public class DLSyncEventPersistenceTest {
 
 		_persistence.clearCache();
 
-		DLSyncEventModelImpl existingDLSyncEventModelImpl = (DLSyncEventModelImpl)_persistence.findByPrimaryKey(newDLSyncEvent.getPrimaryKey());
+		DLSyncEvent existingDLSyncEvent = _persistence.findByPrimaryKey(newDLSyncEvent.getPrimaryKey());
 
-		Assert.assertEquals(existingDLSyncEventModelImpl.getTypePK(),
-			existingDLSyncEventModelImpl.getOriginalTypePK());
+		Assert.assertEquals(existingDLSyncEvent.getTypePK(),
+			ReflectionTestUtil.invoke(existingDLSyncEvent, "getOriginalTypePK",
+				new Class<?>[0]));
 	}
 
 	protected DLSyncEvent addDLSyncEvent() throws Exception {

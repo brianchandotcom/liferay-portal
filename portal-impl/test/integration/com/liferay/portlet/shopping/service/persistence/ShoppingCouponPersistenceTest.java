@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.shopping.NoSuchCouponException;
 import com.liferay.portlet.shopping.model.ShoppingCoupon;
-import com.liferay.portlet.shopping.model.impl.ShoppingCouponModelImpl;
 import com.liferay.portlet.shopping.service.ShoppingCouponLocalServiceUtil;
 
 import org.junit.After;
@@ -466,11 +466,11 @@ public class ShoppingCouponPersistenceTest {
 
 		_persistence.clearCache();
 
-		ShoppingCouponModelImpl existingShoppingCouponModelImpl = (ShoppingCouponModelImpl)_persistence.findByPrimaryKey(newShoppingCoupon.getPrimaryKey());
+		ShoppingCoupon existingShoppingCoupon = _persistence.findByPrimaryKey(newShoppingCoupon.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingShoppingCouponModelImpl.getCode(),
-				existingShoppingCouponModelImpl.getOriginalCode()));
+		Assert.assertTrue(Validator.equals(existingShoppingCoupon.getCode(),
+				ReflectionTestUtil.invoke(existingShoppingCoupon,
+					"getOriginalCode", new Class<?>[0])));
 	}
 
 	protected ShoppingCoupon addShoppingCoupon() throws Exception {

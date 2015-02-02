@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.social.NoSuchRelationException;
 import com.liferay.portlet.social.model.SocialRelation;
-import com.liferay.portlet.social.model.impl.SocialRelationModelImpl;
 import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
 
 import org.junit.After;
@@ -527,14 +527,17 @@ public class SocialRelationPersistenceTest {
 
 		_persistence.clearCache();
 
-		SocialRelationModelImpl existingSocialRelationModelImpl = (SocialRelationModelImpl)_persistence.findByPrimaryKey(newSocialRelation.getPrimaryKey());
+		SocialRelation existingSocialRelation = _persistence.findByPrimaryKey(newSocialRelation.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialRelationModelImpl.getUserId1(),
-			existingSocialRelationModelImpl.getOriginalUserId1());
-		Assert.assertEquals(existingSocialRelationModelImpl.getUserId2(),
-			existingSocialRelationModelImpl.getOriginalUserId2());
-		Assert.assertEquals(existingSocialRelationModelImpl.getType(),
-			existingSocialRelationModelImpl.getOriginalType());
+		Assert.assertEquals(existingSocialRelation.getUserId1(),
+			ReflectionTestUtil.invoke(existingSocialRelation,
+				"getOriginalUserId1", new Class<?>[0]));
+		Assert.assertEquals(existingSocialRelation.getUserId2(),
+			ReflectionTestUtil.invoke(existingSocialRelation,
+				"getOriginalUserId2", new Class<?>[0]));
+		Assert.assertEquals(existingSocialRelation.getType(),
+			ReflectionTestUtil.invoke(existingSocialRelation,
+				"getOriginalType", new Class<?>[0]));
 	}
 
 	protected SocialRelation addSocialRelation() throws Exception {

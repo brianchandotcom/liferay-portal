@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.shopping.NoSuchOrderException;
 import com.liferay.portlet.shopping.model.ShoppingOrder;
-import com.liferay.portlet.shopping.model.impl.ShoppingOrderModelImpl;
 import com.liferay.portlet.shopping.service.ShoppingOrderLocalServiceUtil;
 
 import org.junit.After;
@@ -648,15 +648,15 @@ public class ShoppingOrderPersistenceTest {
 
 		_persistence.clearCache();
 
-		ShoppingOrderModelImpl existingShoppingOrderModelImpl = (ShoppingOrderModelImpl)_persistence.findByPrimaryKey(newShoppingOrder.getPrimaryKey());
+		ShoppingOrder existingShoppingOrder = _persistence.findByPrimaryKey(newShoppingOrder.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingShoppingOrderModelImpl.getNumber(),
-				existingShoppingOrderModelImpl.getOriginalNumber()));
+		Assert.assertTrue(Validator.equals(existingShoppingOrder.getNumber(),
+				ReflectionTestUtil.invoke(existingShoppingOrder,
+					"getOriginalNumber", new Class<?>[0])));
 
-		Assert.assertTrue(Validator.equals(
-				existingShoppingOrderModelImpl.getPpTxnId(),
-				existingShoppingOrderModelImpl.getOriginalPpTxnId()));
+		Assert.assertTrue(Validator.equals(existingShoppingOrder.getPpTxnId(),
+				ReflectionTestUtil.invoke(existingShoppingOrder,
+					"getOriginalPpTxnId", new Class<?>[0])));
 	}
 
 	protected ShoppingOrder addShoppingOrder() throws Exception {

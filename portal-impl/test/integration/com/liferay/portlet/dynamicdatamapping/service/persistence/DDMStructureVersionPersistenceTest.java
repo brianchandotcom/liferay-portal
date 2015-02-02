@@ -41,6 +41,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionLocalSe
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class DDMStructureVersionPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DDMStructureVersionUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -482,5 +488,5 @@ public class DDMStructureVersionPersistenceTest {
 	}
 
 	private List<DDMStructureVersion> _ddmStructureVersions = new ArrayList<DDMStructureVersion>();
-	private DDMStructureVersionPersistence _persistence = DDMStructureVersionUtil.getPersistence();
+	private DDMStructureVersionPersistence _persistence;
 }

@@ -90,6 +90,11 @@ public class ${entity.name}PersistenceTest {
 		</#if>
 		PersistenceTestRule.INSTANCE, new TransactionalTestRule(Propagation.REQUIRED));
 
+	@Before
+	public void setUp() {
+		_persistence = ${entity.name}Util.getPersistence();
+	}
+
 	@After
 	public void tearDown() throws Exception {
 		Iterator<${entity.name}> iterator = _${entity.varNames}.iterator();
@@ -1228,6 +1233,6 @@ public class ${entity.name}PersistenceTest {
 	</#if>
 
 	private List<${entity.name}> _${entity.varNames} = new ArrayList<${entity.name}>();
-	private ${entity.name}Persistence _persistence = ${entity.name}Util.getPersistence();
+	private ${entity.name}Persistence _persistence;
 
 }

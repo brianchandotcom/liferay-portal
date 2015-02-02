@@ -42,6 +42,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -62,6 +63,11 @@ public class MBMessagePersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = MBMessageUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -918,5 +924,5 @@ public class MBMessagePersistenceTest {
 	}
 
 	private List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
-	private MBMessagePersistence _persistence = MBMessageUtil.getPersistence();
+	private MBMessagePersistence _persistence;
 }

@@ -38,6 +38,7 @@ import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -58,6 +59,11 @@ public class DLSyncEventPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DLSyncEventUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -419,5 +425,5 @@ public class DLSyncEventPersistenceTest {
 	}
 
 	private List<DLSyncEvent> _dlSyncEvents = new ArrayList<DLSyncEvent>();
-	private DLSyncEventPersistence _persistence = DLSyncEventUtil.getPersistence();
+	private DLSyncEventPersistence _persistence;
 }

@@ -39,6 +39,7 @@ import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,6 +60,11 @@ public class AssetLinkPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = AssetLinkUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -501,5 +507,5 @@ public class AssetLinkPersistenceTest {
 	}
 
 	private List<AssetLink> _assetLinks = new ArrayList<AssetLink>();
-	private AssetLinkPersistence _persistence = AssetLinkUtil.getPersistence();
+	private AssetLinkPersistence _persistence;
 }

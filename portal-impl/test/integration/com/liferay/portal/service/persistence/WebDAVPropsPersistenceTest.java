@@ -38,6 +38,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -58,6 +59,11 @@ public class WebDAVPropsPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = WebDAVPropsUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -434,5 +440,5 @@ public class WebDAVPropsPersistenceTest {
 	}
 
 	private List<WebDAVProps> _webDAVPropses = new ArrayList<WebDAVProps>();
-	private WebDAVPropsPersistence _persistence = WebDAVPropsUtil.getPersistence();
+	private WebDAVPropsPersistence _persistence;
 }

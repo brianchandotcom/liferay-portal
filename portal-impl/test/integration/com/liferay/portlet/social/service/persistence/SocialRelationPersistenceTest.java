@@ -39,6 +39,7 @@ import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,6 +60,11 @@ public class SocialRelationPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = SocialRelationUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -554,5 +560,5 @@ public class SocialRelationPersistenceTest {
 	}
 
 	private List<SocialRelation> _socialRelations = new ArrayList<SocialRelation>();
-	private SocialRelationPersistence _persistence = SocialRelationUtil.getPersistence();
+	private SocialRelationPersistence _persistence;
 }

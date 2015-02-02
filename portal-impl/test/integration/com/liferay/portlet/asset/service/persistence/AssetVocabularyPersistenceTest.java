@@ -41,6 +41,7 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class AssetVocabularyPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = AssetVocabularyUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -574,5 +580,5 @@ public class AssetVocabularyPersistenceTest {
 	}
 
 	private List<AssetVocabulary> _assetVocabularies = new ArrayList<AssetVocabulary>();
-	private AssetVocabularyPersistence _persistence = AssetVocabularyUtil.getPersistence();
+	private AssetVocabularyPersistence _persistence;
 }

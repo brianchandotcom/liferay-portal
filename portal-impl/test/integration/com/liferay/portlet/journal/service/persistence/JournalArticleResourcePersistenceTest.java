@@ -40,6 +40,7 @@ import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUti
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -60,6 +61,11 @@ public class JournalArticleResourcePersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = JournalArticleResourceUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -467,5 +473,5 @@ public class JournalArticleResourcePersistenceTest {
 	}
 
 	private List<JournalArticleResource> _journalArticleResources = new ArrayList<JournalArticleResource>();
-	private JournalArticleResourcePersistence _persistence = JournalArticleResourceUtil.getPersistence();
+	private JournalArticleResourcePersistence _persistence;
 }

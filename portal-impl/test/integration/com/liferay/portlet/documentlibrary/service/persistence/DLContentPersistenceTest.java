@@ -42,6 +42,7 @@ import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -65,6 +66,11 @@ public class DLContentPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DLContentUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -501,5 +507,5 @@ public class DLContentPersistenceTest {
 	}
 
 	private List<DLContent> _dlContents = new ArrayList<DLContent>();
-	private DLContentPersistence _persistence = DLContentUtil.getPersistence();
+	private DLContentPersistence _persistence;
 }

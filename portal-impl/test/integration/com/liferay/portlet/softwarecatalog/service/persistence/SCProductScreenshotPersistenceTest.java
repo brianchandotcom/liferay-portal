@@ -38,6 +38,7 @@ import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServi
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -58,6 +59,11 @@ public class SCProductScreenshotPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = SCProductScreenshotUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -469,5 +475,5 @@ public class SCProductScreenshotPersistenceTest {
 	}
 
 	private List<SCProductScreenshot> _scProductScreenshots = new ArrayList<SCProductScreenshot>();
-	private SCProductScreenshotPersistence _persistence = SCProductScreenshotUtil.getPersistence();
+	private SCProductScreenshotPersistence _persistence;
 }

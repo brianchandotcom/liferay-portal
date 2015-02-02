@@ -41,6 +41,7 @@ import com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalServiceUti
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class SCProductEntryPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = SCProductEntryUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -538,5 +544,5 @@ public class SCProductEntryPersistenceTest {
 	}
 
 	private List<SCProductEntry> _scProductEntries = new ArrayList<SCProductEntry>();
-	private SCProductEntryPersistence _persistence = SCProductEntryUtil.getPersistence();
+	private SCProductEntryPersistence _persistence;
 }

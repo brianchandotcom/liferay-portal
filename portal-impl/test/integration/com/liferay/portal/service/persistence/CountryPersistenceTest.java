@@ -36,6 +36,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,6 +57,11 @@ public class CountryPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = CountryUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -449,5 +455,5 @@ public class CountryPersistenceTest {
 	}
 
 	private List<Country> _countries = new ArrayList<Country>();
-	private CountryPersistence _persistence = CountryUtil.getPersistence();
+	private CountryPersistence _persistence;
 }

@@ -39,6 +39,7 @@ import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,6 +60,11 @@ public class RatingsStatsPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = RatingsStatsUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -417,5 +423,5 @@ public class RatingsStatsPersistenceTest {
 	}
 
 	private List<RatingsStats> _ratingsStatses = new ArrayList<RatingsStats>();
-	private RatingsStatsPersistence _persistence = RatingsStatsUtil.getPersistence();
+	private RatingsStatsPersistence _persistence;
 }

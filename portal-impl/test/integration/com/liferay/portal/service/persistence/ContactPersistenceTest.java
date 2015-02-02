@@ -36,6 +36,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,6 +57,11 @@ public class ContactPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = ContactUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -590,5 +596,5 @@ public class ContactPersistenceTest {
 	}
 
 	private List<Contact> _contacts = new ArrayList<Contact>();
-	private ContactPersistence _persistence = ContactUtil.getPersistence();
+	private ContactPersistence _persistence;
 }

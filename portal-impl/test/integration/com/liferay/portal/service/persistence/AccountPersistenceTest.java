@@ -36,6 +36,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,6 +57,11 @@ public class AccountPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = AccountUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -448,5 +454,5 @@ public class AccountPersistenceTest {
 	}
 
 	private List<Account> _accounts = new ArrayList<Account>();
-	private AccountPersistence _persistence = AccountUtil.getPersistence();
+	private AccountPersistence _persistence;
 }

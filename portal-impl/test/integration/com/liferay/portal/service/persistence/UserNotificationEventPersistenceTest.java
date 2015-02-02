@@ -36,6 +36,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,6 +57,11 @@ public class UserNotificationEventPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = UserNotificationEventUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -602,5 +608,5 @@ public class UserNotificationEventPersistenceTest {
 	}
 
 	private List<UserNotificationEvent> _userNotificationEvents = new ArrayList<UserNotificationEvent>();
-	private UserNotificationEventPersistence _persistence = UserNotificationEventUtil.getPersistence();
+	private UserNotificationEventPersistence _persistence;
 }

@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -60,6 +61,11 @@ public class RepositoryEntryPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = RepositoryEntryUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -525,5 +531,5 @@ public class RepositoryEntryPersistenceTest {
 	}
 
 	private List<RepositoryEntry> _repositoryEntries = new ArrayList<RepositoryEntry>();
-	private RepositoryEntryPersistence _persistence = RepositoryEntryUtil.getPersistence();
+	private RepositoryEntryPersistence _persistence;
 }

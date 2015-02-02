@@ -39,6 +39,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -59,6 +60,11 @@ public class ClassNamePersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = ClassNameUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -398,5 +404,5 @@ public class ClassNamePersistenceTest {
 	}
 
 	private List<ClassName> _classNames = new ArrayList<ClassName>();
-	private ClassNamePersistence _persistence = ClassNameUtil.getPersistence();
+	private ClassNamePersistence _persistence;
 }

@@ -41,6 +41,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class DDMTemplatePersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = DDMTemplateUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -784,5 +790,5 @@ public class DDMTemplatePersistenceTest {
 	}
 
 	private List<DDMTemplate> _ddmTemplates = new ArrayList<DDMTemplate>();
-	private DDMTemplatePersistence _persistence = DDMTemplateUtil.getPersistence();
+	private DDMTemplatePersistence _persistence;
 }

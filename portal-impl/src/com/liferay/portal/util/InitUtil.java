@@ -215,6 +215,10 @@ public class InitUtil {
 		_initialized = true;
 	}
 
+	public static boolean isInitialized() {
+		return _initialized;
+	}
+
 	public synchronized static void stopModuleFramework() {
 		try {
 			ModuleFrameworkUtilAdapter.stopFramework();

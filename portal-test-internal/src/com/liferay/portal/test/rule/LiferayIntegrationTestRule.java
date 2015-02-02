@@ -26,6 +26,7 @@ import com.liferay.portal.test.rule.executor.UniqueStringRandomizerBumperExecuto
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 
 /**
  * @author Shuyang Zhou
@@ -37,8 +38,13 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 			false, LogAssertionTestRule.INSTANCE, _clearThreadLocalTestRule,
 			_uniqueStringRandomizerBumperTestRule,
 			new DeleteAfterTestRunTestRule());
+	}
 
+	@Override
+	public Statement apply(Statement statement, Description description) {
 		_initTestLiferayContextExecutor.init();
+
+		return super.apply(statement, description);
 	}
 
 	private static final ClearThreadLocalExecutor _clearThreadLocalExecutor =

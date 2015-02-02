@@ -41,6 +41,7 @@ import com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class JournalArticleImagePersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = JournalArticleImageUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -492,5 +498,5 @@ public class JournalArticleImagePersistenceTest {
 	}
 
 	private List<JournalArticleImage> _journalArticleImages = new ArrayList<JournalArticleImage>();
-	private JournalArticleImagePersistence _persistence = JournalArticleImageUtil.getPersistence();
+	private JournalArticleImagePersistence _persistence;
 }

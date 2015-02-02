@@ -41,6 +41,7 @@ import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -61,6 +62,11 @@ public class MBBanPersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = MBBanUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -515,5 +521,5 @@ public class MBBanPersistenceTest {
 	}
 
 	private List<MBBan> _mbBans = new ArrayList<MBBan>();
-	private MBBanPersistence _persistence = MBBanUtil.getPersistence();
+	private MBBanPersistence _persistence;
 }

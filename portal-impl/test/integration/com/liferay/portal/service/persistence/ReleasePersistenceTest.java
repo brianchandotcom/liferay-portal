@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -60,6 +61,11 @@ public class ReleasePersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = ReleaseUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -443,5 +449,5 @@ public class ReleasePersistenceTest {
 	}
 
 	private List<Release> _releases = new ArrayList<Release>();
-	private ReleasePersistence _persistence = ReleaseUtil.getPersistence();
+	private ReleasePersistence _persistence;
 }

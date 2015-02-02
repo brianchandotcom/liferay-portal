@@ -40,6 +40,7 @@ import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -60,6 +61,11 @@ public class ExpandoTablePersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = ExpandoTableUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -423,5 +429,5 @@ public class ExpandoTablePersistenceTest {
 	}
 
 	private List<ExpandoTable> _expandoTables = new ArrayList<ExpandoTable>();
-	private ExpandoTablePersistence _persistence = ExpandoTableUtil.getPersistence();
+	private ExpandoTablePersistence _persistence;
 }

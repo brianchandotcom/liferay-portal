@@ -37,6 +37,7 @@ import com.liferay.portal.test.rule.PersistenceTestRule;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -57,6 +58,11 @@ public class LayoutPrototypePersistenceTest {
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = LayoutPrototypeUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -481,5 +487,5 @@ public class LayoutPrototypePersistenceTest {
 	}
 
 	private List<LayoutPrototype> _layoutPrototypes = new ArrayList<LayoutPrototype>();
-	private LayoutPrototypePersistence _persistence = LayoutPrototypeUtil.getPersistence();
+	private LayoutPrototypePersistence _persistence;
 }

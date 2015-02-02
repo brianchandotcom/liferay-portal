@@ -42,6 +42,7 @@ import org.jboss.arquillian.junit.Arquillian;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -64,6 +65,11 @@ public class WikiNodePersistenceTest {
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = WikiNodeUtil.getPersistence();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -593,5 +599,5 @@ public class WikiNodePersistenceTest {
 	}
 
 	private List<WikiNode> _wikiNodes = new ArrayList<WikiNode>();
-	private WikiNodePersistence _persistence = WikiNodeUtil.getPersistence();
+	private WikiNodePersistence _persistence;
 }

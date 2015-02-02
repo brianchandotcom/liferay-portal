@@ -30,6 +30,10 @@ public class InitTestLiferayContextExecutorImpl
 
 	@Override
 	public void init() {
+		if (InitUtil.isInitialized()) {
+			return;
+		}
+
 		System.setProperty("catalina.base", ".");
 
 		List<String> configLocations = ListUtil.fromArray(

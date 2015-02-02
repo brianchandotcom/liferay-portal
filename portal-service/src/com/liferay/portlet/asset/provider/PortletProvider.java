@@ -19,14 +19,14 @@ package com.liferay.portlet.asset.provider;
  */
 public interface PortletProvider {
 
-	public static final String ACTION_ADD = "add";
-
-	public static final String ACTION_BROWSE = "browse";
-
-	public static final String ACTION_VIEW = "view";
-
 	public static final String CLASS_NAME_ANY = "any-class-name";
 
 	public String getPortletId();
+
+	public enum Action {
+
+		ADD, BROWSE, VIEW
+
+	}
 
 }

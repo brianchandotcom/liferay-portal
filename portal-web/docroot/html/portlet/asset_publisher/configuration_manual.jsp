@@ -121,7 +121,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 									continue;
 								}
 
-								String portletId = PortletProviderUtil.getPortletId(curRendererFactory.getClassName(), PortletProvider.ACTION_BROWSE);
+								String portletId = PortletProviderUtil.getPortletId(curRendererFactory.getClassName(), PortletProvider.Action.BROWSE);
 
 								PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, portletId, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 

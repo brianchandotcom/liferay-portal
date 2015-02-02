@@ -152,7 +152,7 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 			event.preventDefault();
 
 			<%
-			String portletId = PortletProviderUtil.getPortletId(JournalArticle.class.getName(), PortletProvider.ACTION_BROWSE);
+			String portletId = PortletProviderUtil.getPortletId(JournalArticle.class.getName(), PortletProvider.Action.BROWSE);
 			%>
 
 			<liferay-portlet:renderURL portletName="<%= portletId %>" refererPlid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" var="selectWebContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

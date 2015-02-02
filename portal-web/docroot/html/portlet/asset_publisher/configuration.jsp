@@ -151,7 +151,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 					<c:if test="<%= GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), Layout.class.getName(), layout.getGroupId()) > 0 %>">
 
 						<%
-						String portletId = PortletProviderUtil.getPortletId(Group.class.getName(), PortletProvider.ACTION_BROWSE);
+						String portletId = PortletProviderUtil.getPortletId(Group.class.getName(), PortletProvider.Action.BROWSE);
 
 						PortletURL layoutSiteBrowserURL = PortletURLFactoryUtil.create(request, portletId, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 
@@ -202,7 +202,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 					<c:if test="<%= !types.isEmpty() %>">
 
 						<%
-						String portletId = PortletProviderUtil.getPortletId(Group.class.getName(), PortletProvider.ACTION_BROWSE);
+						String portletId = PortletProviderUtil.getPortletId(Group.class.getName(), PortletProvider.Action.BROWSE);
 
 						PortletURL siteBrowserURL = PortletURLFactoryUtil.create(request, portletId, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 

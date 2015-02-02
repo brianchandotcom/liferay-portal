@@ -97,7 +97,7 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 				String className = result.get(Field.ENTRY_CLASS_NAME);
 
 				String portletId = PortletProviderUtil.getPortletId(
-					className, PortletProvider.ACTION_VIEW);
+					className, PortletProvider.Action.VIEW);
 
 				Portlet portlet = PortletLocalServiceUtil.getPortletById(
 					themeDisplay.getCompanyId(), portletId);

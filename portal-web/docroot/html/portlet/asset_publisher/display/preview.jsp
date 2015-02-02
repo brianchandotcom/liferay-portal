@@ -78,7 +78,7 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp
 	data.put("class-pk", assetEntry.getClassPK());
 	data.put("instanceable", Boolean.TRUE);
 
-	String portletId = PortletProviderUtil.getPortletId(assetEntry.getClassName(), PortletProvider.ACTION_ADD);
+	String portletId = PortletProviderUtil.getPortletId(assetEntry.getClassName(), PortletProvider.Action.ADD);
 
 	data.put("portlet-id", portletId);
 

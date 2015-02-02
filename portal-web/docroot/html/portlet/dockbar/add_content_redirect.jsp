@@ -24,7 +24,7 @@ Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 
-String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.ACTION_ADD);
+String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.ADD);
 
 AssetRenderer assetRenderer = null;
 

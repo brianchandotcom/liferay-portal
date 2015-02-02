@@ -113,7 +113,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 
 						String title = HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60));
 
-						String portletId = PortletProviderUtil.getPortletId(assetEntry.getClassName(), PortletProvider.ACTION_ADD);
+						String portletId = PortletProviderUtil.getPortletId(assetEntry.getClassName(), PortletProvider.Action.ADD);
 
 						boolean hasAddToPagePermission = PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE);
 

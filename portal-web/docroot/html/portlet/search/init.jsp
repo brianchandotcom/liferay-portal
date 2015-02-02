@@ -145,7 +145,7 @@ private String _checkViewURL(ThemeDisplay themeDisplay, String viewURL, String c
 }
 
 private PortletURL _getViewFullContentURL(HttpServletRequest request, ThemeDisplay themeDisplay, String className, Document document) throws Exception {
-	String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.ACTION_VIEW);
+	String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.VIEW);
 
 	long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
 

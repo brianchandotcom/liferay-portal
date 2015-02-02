@@ -23,10 +23,12 @@ import com.liferay.registry.collections.ServiceTrackerMap;
  */
 public class PortletProviderUtil {
 
-	public static String getPortletId(String className, String action) {
+	public static String getPortletId(
+		String className, PortletProvider.Action action) {
+
 		PortletProvider portletProvider = null;
 
-		if (action.equals(PortletProvider.ACTION_ADD)) {
+		if (action.equals(PortletProvider.Action.ADD)) {
 			portletProvider = _addServiceTrackerMap.getService(className);
 
 			if (portletProvider == null) {
@@ -34,7 +36,7 @@ public class PortletProviderUtil {
 					PortletProvider.CLASS_NAME_ANY);
 			}
 		}
-		else if (action.equals(PortletProvider.ACTION_BROWSE)) {
+		else if (action.equals(PortletProvider.Action.BROWSE)) {
 			portletProvider = _browseServiceTrackerMap.getService(className);
 
 			if (portletProvider == null) {
@@ -42,7 +44,7 @@ public class PortletProviderUtil {
 					PortletProvider.CLASS_NAME_ANY);
 			}
 		}
-		else if (action.equals(PortletProvider.ACTION_VIEW)) {
+		else if (action.equals(PortletProvider.Action.VIEW)) {
 			portletProvider = _viewServiceTrackerMap.getService(className);
 
 			if (portletProvider == null) {

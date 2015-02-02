@@ -148,7 +148,7 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 				}
 
 				String portletId = PortletProviderUtil.getPortletId(
-					className, PortletProvider.ACTION_VIEW);
+					className, PortletProvider.Action.VIEW);
 
 				PortletURL portletURL = getPortletURL(
 					request, portletId, resultScopeGroupId);

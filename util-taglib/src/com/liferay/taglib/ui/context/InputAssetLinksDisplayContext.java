@@ -309,7 +309,7 @@ public class InputAssetLinksDisplayContext {
 			_themeDisplay.getCompanyId());
 
 		String portletId = PortletProviderUtil.getPortletId(
-			assetRendererFactory.getClassName(), PortletProvider.ACTION_BROWSE);
+			assetRendererFactory.getClassName(), PortletProvider.Action.BROWSE);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			_request, portletId, controlPanelPlid, PortletRequest.RENDER_PHASE);

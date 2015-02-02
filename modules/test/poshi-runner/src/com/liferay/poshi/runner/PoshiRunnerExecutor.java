@@ -85,26 +85,27 @@ public class PoshiRunnerExecutor {
 		PoshiRunnerVariablesUtil.popCommandMap();
 	}
 
-	public static void runMacroElement(Element element) throws Exception {
-		String classCommandName = element.attributeValue("macro");
+	public static void runMacroElement(Element executeElement)
+		throws Exception {
+
+		String classCommandName = executeElement.attributeValue("macro");
 
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 				classCommandName);
 
-		Element macroFileElement = PoshiRunnerContext.getMacroRootElement(
-			className);
+		Element rootElement = PoshiRunnerContext.getMacroRootElement(className);
 
-		List<Element> definitionVarElements = macroFileElement.elements("var");
+		List<Element> rootVarElements = rootElement.elements("var");
 
-		for (Element definitionVarElement : definitionVarElements) {
-			String name = definitionVarElement.attributeValue("name");
-			String value = definitionVarElement.attributeValue("value");
+		for (Element rootVarElement : rootVarElements) {
+			String name = rootVarElement.attributeValue("name");
+			String value = rootVarElement.attributeValue("value");
 
 			PoshiRunnerVariablesUtil.putIntoExecuteMap(name, value);
 		}
 
-		List<Element> executeVarElements = element.elements("var");
+		List<Element> executeVarElements = executeElement.elements("var");
 
 		for (Element executeVarElement : executeVarElements) {
 			String name = executeVarElement.attributeValue("name");
@@ -113,12 +114,12 @@ public class PoshiRunnerExecutor {
 			PoshiRunnerVariablesUtil.putIntoExecuteMap(name, value);
 		}
 
-		Element macroElement = PoshiRunnerContext.getMacroCommandElement(
+		Element commandElement = PoshiRunnerContext.getMacroCommandElement(
 			classCommandName);
 
 		PoshiRunnerVariablesUtil.pushCommandMap();
 
-		parseElement(macroElement);
+		parseElement(commandElement);
 
 		PoshiRunnerVariablesUtil.popCommandMap();
 	}

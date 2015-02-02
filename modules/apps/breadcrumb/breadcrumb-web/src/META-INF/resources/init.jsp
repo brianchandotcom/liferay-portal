@@ -31,4 +31,4 @@ boolean showParentGroups = PrefsParamUtil.getBoolean(portletPreferences, renderR
 boolean showPortletBreadcrumb = PrefsParamUtil.getBoolean(portletPreferences, renderRequest, "showPortletBreadcrumb", true);
 %>
 
-<%@ include file="/html/portlet/breadcrumb/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

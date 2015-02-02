@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/breadcrumb/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(Layout.class.getName());

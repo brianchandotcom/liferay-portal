@@ -21,7 +21,9 @@ String[] configurationSections = PropsValues.COMPANY_SETTINGS_FORM_CONFIGURATION
 String[] identificationSections = PropsValues.COMPANY_SETTINGS_FORM_IDENTIFICATION;
 String[] miscellaneousSections = PropsValues.COMPANY_SETTINGS_FORM_MISCELLANEOUS;
 
-if (!portletRatingsDefinitionDisplayContext.showRatingsSection(miscellaneousSections)) {
+PortletRatingsDefinitionDisplayContextHelper portletRatingsDefinitionDisplayContextHelper = new PortletRatingsDefinitionDisplayContextHelper();
+
+if (!portletRatingsDefinitionDisplayContextHelper.showRatingsSection(miscellaneousSections)) {
 	miscellaneousSections = ArrayUtil.remove(miscellaneousSections, "ratings");
 }
 

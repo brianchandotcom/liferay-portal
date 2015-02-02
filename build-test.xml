@@ -4131,6 +4131,8 @@ if (ppstate.equals("normal")) {
 								dir="portal-web/test-results/functional/screenshots"
 							/>
 						</copy>
+
+						<get dest="${testray.logs.dir}/consoleText" ignoreerrors="true" src="${env.BUILD_URL}/consoleText" />
 					</then>
 				</if>
 			</then>

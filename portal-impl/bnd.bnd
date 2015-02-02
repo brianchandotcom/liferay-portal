@@ -29,6 +29,7 @@ Export-Package:\
 	com.liferay.portal.spring.transaction,\
 	com.liferay.portal.systemevent,\
 	com.liferay.portal.template,\
+	com.liferay.portal.tools,\
 	com.liferay.portal.upgrade.v7_0_0,\
 	com.liferay.portal.upload,\
 	com.liferay.portal.verify,\

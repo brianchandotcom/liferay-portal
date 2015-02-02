@@ -88,7 +88,7 @@ public class RuntimeTag extends TagSupport {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 
 		if (!portletId.equals(request.getParameter("p_p_id"))) {
-			parameterMap = MapUtil.filter(
+			parameterMap = MapUtil.filterByKeys(
 				parameterMap, new PrefixPredicateFilter("p_p_"));
 		}
 

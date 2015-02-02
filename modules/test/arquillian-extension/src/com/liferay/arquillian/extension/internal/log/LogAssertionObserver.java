@@ -14,7 +14,7 @@
 
 package com.liferay.arquillian.extension.internal.log;
 
-import com.liferay.portal.test.log.LogAssertionExecutor;
+import com.liferay.portal.test.rule.executor.LogAssertionExecutor;
 
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;

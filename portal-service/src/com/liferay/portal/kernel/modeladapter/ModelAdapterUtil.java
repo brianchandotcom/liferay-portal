@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.modeladapter;
 
-import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Mate Thurzo
@@ -39,10 +39,8 @@ public class ModelAdapterUtil {
 		T adapteeModel, Class<T> adapteeModelClass,
 		Class<V> adaptedModelClass) {
 
-		Registry registry = RegistryUtil.getRegistry();
-
 		ModelAdapterBuilderLocator modelAdapterBuilderLocator =
-			registry.getService(ModelAdapterBuilderLocator.class);
+			_serviceTracker.getService();
 
 		if (modelAdapterBuilderLocator == null) {
 			return null;
@@ -53,6 +51,15 @@ public class ModelAdapterUtil {
 				adapteeModelClass, adaptedModelClass);
 
 		return modelAdapterBuilder.build(adapteeModel);
+	}
+
+	private static final
+		ServiceTracker<ModelAdapterBuilderLocator, ModelAdapterBuilderLocator>
+			_serviceTracker = RegistryUtil.getRegistry().trackServices(
+				ModelAdapterBuilderLocator.class);
+
+	static {
+		_serviceTracker.open();
 	}
 
 }

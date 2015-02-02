@@ -78,7 +78,7 @@ wikiSettings = WikiSettings.getInstance(themeDisplay.getSiteGroupId(), request.g
 		</liferay-ui:section>
 
 		<%
-		Map<String, String> definitionTerms = WikiWebUtil.getEmailNotificationDefinitionTerms(renderRequest, wikiSettings.getEmailFromAddress(), wikiSettings.getEmailFromName());
+		Map<String, String> definitionTerms = WikiUtil.getEmailNotificationDefinitionTerms(renderRequest, wikiSettings.getEmailFromAddress(), wikiSettings.getEmailFromName());
 		%>
 
 		<liferay-ui:section>

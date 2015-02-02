@@ -51,11 +51,11 @@ page import="com.liferay.wiki.social.WikiActivityKeys" %><%@
 page import="com.liferay.wiki.util.WikiCacheUtil" %><%@
 page import="com.liferay.wiki.util.WikiConstants" %><%@
 page import="com.liferay.wiki.util.WikiPageAttachmentsUtil" %><%@
-page import="com.liferay.wiki.util.WikiUtil" %><%@
 page import="com.liferay.wiki.util.comparator.PageVersionComparator" %><%@
 page import="com.liferay.wiki.web.display.context.logic.WikiPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiRequestHelper" %><%@
-page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %>
+page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %><%@
+page import="com.liferay.wiki.web.util.WikiUtil" %>
 
 <%
 WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);

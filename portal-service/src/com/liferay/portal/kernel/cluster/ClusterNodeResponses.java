@@ -30,19 +30,12 @@ public class ClusterNodeResponses implements Serializable {
 		new ClusterNodeResponses();
 
 	public void addClusterResponse(ClusterNodeResponse clusterNodeResponse) {
-		_clusterResponsesByAddress.put(
-			clusterNodeResponse.getAddress(), clusterNodeResponse);
-
 		ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
 
 		_clusterResponsesByClusterNode.put(
 			clusterNode.getClusterNodeId(), clusterNodeResponse);
 
 		_clusterResponsesQueue.offer(clusterNodeResponse);
-	}
-
-	public ClusterNodeResponse getClusterResponse(Address address) {
-		return _clusterResponsesByAddress.get(address);
 	}
 
 	public ClusterNodeResponse getClusterResponse(ClusterNode clusterNode) {
@@ -61,8 +54,6 @@ public class ClusterNodeResponses implements Serializable {
 		return _clusterResponsesByClusterNode.size();
 	}
 
-	private final Map<Address, ClusterNodeResponse> _clusterResponsesByAddress =
-		new HashMap<>();
 	private final Map<String, ClusterNodeResponse>
 		_clusterResponsesByClusterNode = new HashMap<>();
 	private final BlockingQueue<ClusterNodeResponse> _clusterResponsesQueue =

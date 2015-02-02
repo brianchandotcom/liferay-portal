@@ -361,7 +361,6 @@ public class ClusterExecutorImpl
 
 		ClusterNodeResponse clusterNodeResponse = new ClusterNodeResponse();
 
-		clusterNodeResponse.setAddress(getLocalClusterNodeAddress());
 		clusterNodeResponse.setClusterNode(getLocalClusterNode());
 		clusterNodeResponse.setClusterMessageType(
 			clusterRequest.getClusterMessageType());

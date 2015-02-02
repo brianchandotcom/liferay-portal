@@ -26,7 +26,6 @@
 <%@ page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.xsl.content.web.configuration.XSLContentConfiguration" %><%@
 page import="com.liferay.xsl.content.web.util.XSLContentUtil" %>

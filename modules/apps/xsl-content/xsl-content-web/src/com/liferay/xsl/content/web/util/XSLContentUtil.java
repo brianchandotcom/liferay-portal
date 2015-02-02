@@ -17,6 +17,7 @@ package com.liferay.xsl.content.web.util;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
@@ -58,7 +59,9 @@ public class XSLContentUtil {
 
 		sb.append(themeDisplay.getPortalURL());
 		sb.append("/o/");
-		sb.append(bundle.getBundleId());
+		sb.append(
+			StringUtil.replace(
+				bundle.getSymbolicName(), StringPool.PERIOD, StringPool.BLANK));
 
 		String portletContextUrl = sb.toString();
 

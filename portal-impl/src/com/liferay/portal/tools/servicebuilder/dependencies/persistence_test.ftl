@@ -29,6 +29,9 @@ import ${packagePath}.service.persistence.${entity.name}Persistence;
 import ${packagePath}.service.persistence.${entity.name}Util;
 
 import ${beanLocatorUtil};
+
+import com.liferay.arquillian.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -69,8 +72,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jboss.arquillian.junit.Arquillian;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -88,10 +89,7 @@ public class ${entity.name}PersistenceTest {
 
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		<#if !osgiModule>
-			new LiferayIntegrationTestRule(),
-		</#if>
-		PersistenceTestRule.INSTANCE, new TransactionalTestRule(Propagation.REQUIRED));
+		new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE, new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
 	public void setUp() {

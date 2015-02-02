@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.pacl.test;
 
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.test.rule.PACLTestRule;
-import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.impl.ExpandoBridgeImpl;
 

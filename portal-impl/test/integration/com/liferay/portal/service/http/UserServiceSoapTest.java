@@ -19,12 +19,12 @@ import com.liferay.client.soap.portal.service.ServiceContext;
 import com.liferay.client.soap.portal.service.http.UserServiceSoap;
 import com.liferay.client.soap.portal.service.http.UserServiceSoapServiceLocator;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.test.RandomTestUtil;
-import com.liferay.portal.util.test.TestPropsValues;
 
 import java.util.Calendar;
 

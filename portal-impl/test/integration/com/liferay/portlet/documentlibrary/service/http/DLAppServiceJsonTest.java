@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service.http;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -23,7 +24,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.BaseJsonClientTestCase;
-import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import org.apache.http.client.methods.HttpGet;

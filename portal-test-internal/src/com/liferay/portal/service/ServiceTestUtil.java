@@ -46,9 +46,9 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.test.RoleTestUtil;
-import com.liferay.portal.util.test.TestPropsValues;
 
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;

@@ -20,13 +20,13 @@ import com.liferay.client.soap.portal.service.ServiceContext;
 import com.liferay.client.soap.portlet.documentlibrary.service.http.DLAppServiceSoap;
 import com.liferay.client.soap.portlet.documentlibrary.service.http.DLAppServiceSoapServiceLocator;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.http.HttpPrincipalTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import org.junit.After;

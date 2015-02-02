@@ -17,9 +17,9 @@ package com.liferay.portal.util.mail;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.kernel.test.util.MailServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.test.MailServiceTestUtil;
 import com.liferay.util.mail.MailEngine;
 
 import java.util.List;

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.http.HttpPrincipalTestUtil;
-import com.liferay.portal.util.test.TestPropsValues;
 
 import java.io.IOException;
 

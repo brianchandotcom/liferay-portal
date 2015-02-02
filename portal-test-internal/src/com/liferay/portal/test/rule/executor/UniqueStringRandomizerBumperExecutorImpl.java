@@ -14,8 +14,8 @@
 
 package com.liferay.portal.test.rule.executor;
 
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.executor.UniqueStringRandomizerBumperExecutor;
-import com.liferay.portal.test.randomizerbumpers.UniqueStringRandomizerBumper;
 
 /**
  * @author Cristina González

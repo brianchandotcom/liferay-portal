@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.search.test.SearchTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.util.List;

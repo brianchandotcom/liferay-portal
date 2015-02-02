@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.List;
 

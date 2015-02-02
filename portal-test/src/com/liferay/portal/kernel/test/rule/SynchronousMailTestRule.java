@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.test.rule;
 
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.util.test.MailServiceTestUtil;
+import com.liferay.portal.kernel.test.util.MailServiceTestUtil;
 
 import org.junit.runner.Description;
 

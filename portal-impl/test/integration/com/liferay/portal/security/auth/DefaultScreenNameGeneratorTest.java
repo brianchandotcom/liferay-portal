@@ -15,11 +15,11 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.test.TestPropsValues;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

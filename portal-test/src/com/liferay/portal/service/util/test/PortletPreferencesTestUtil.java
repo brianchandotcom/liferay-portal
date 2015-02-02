@@ -14,13 +14,13 @@
 
 package com.liferay.portal.service.util.test;
 
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.test.TestPropsValues;
 
 /**
  * @author Cristina González

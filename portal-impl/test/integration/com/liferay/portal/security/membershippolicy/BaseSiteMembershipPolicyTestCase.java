@@ -14,10 +14,10 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.membershippolicy.samples.TestSiteMembershipPolicy;
-import com.liferay.portal.util.test.GroupTestUtil;
-import com.liferay.portal.util.test.RoleTestUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;

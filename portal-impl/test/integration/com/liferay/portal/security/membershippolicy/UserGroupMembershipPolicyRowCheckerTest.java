@@ -15,12 +15,12 @@
 package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.usergroupsadmin.search.UserUserGroupChecker;
 
 import javax.portlet.RenderResponse;

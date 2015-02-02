@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLConstants;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.subscriptions.BaseSubscriptionLocalizedContentTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

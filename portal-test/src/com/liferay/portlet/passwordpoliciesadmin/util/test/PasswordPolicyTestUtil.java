@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.passwordpoliciesadmin.util.test;
 
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.test.RandomTestUtil;
 
 /**
  * @author Daniela Zapata Riesco

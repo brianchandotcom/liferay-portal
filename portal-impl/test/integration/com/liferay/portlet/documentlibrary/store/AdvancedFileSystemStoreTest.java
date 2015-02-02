@@ -15,10 +15,10 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 
 import org.junit.Assert;

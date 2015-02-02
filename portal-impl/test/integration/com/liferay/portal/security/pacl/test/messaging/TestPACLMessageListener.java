@@ -17,10 +17,10 @@ package com.liferay.portal.security.pacl.test.messaging;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.PortalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.test.TestPropsValues;
 
 import java.util.HashMap;
 import java.util.Map;

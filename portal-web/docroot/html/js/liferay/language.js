@@ -23,26 +23,23 @@
 						}
 					}
 
-					var authUrl = url;
-
-					var authToken = Liferay.authToken;
-
-					if (authToken) {
-						authUrl = Liferay.Util.addParams('p_auth=' + authToken, url);
-					}
+					var headers = {
+						"X-CSRF-Token": Liferay.authToken
+					};
 
 					var value = '';
 
 					A.io(
-						authUrl,
+						url,
 						{
+							headers: headers,
+							method: 'GET',
 							on: {
 								complete: function(i, o) {
 									value = o.responseText;
 								}
 							},
-							sync: true,
-							type: 'GET'
+							sync: true
 						}
 					);
 

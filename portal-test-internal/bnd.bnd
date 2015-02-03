@@ -1,6 +1,9 @@
 Bundle-Name: Liferay Portal Test Internal
 Bundle-SymbolicName: portal-test-internal
 Bundle-Version: 7.0.0
-Export-Package: *
+Export-Package:\
+	com.liferay.portal.test.lar,\
+	com.liferay.portal.test.rule,\
+	com.liferay.portlet.asset.util.test
 Import-Package: *;resolution:=optional
 Include-Resource: classes

@@ -36,6 +36,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
@@ -453,6 +455,16 @@ public class DocumentImpl implements Document {
 	@Override
 	public void addModifiedDate(Date modifiedDate) {
 		addDate(Field.MODIFIED, modifiedDate);
+	}
+
+	@Override
+	public void addNumber(String name, BigDecimal value) {
+		addNumber(name, String.valueOf(value), BigDecimal.class);
+	}
+
+	@Override
+	public void addNumber(String name, BigDecimal[] values) {
+		addNumber(name, ArrayUtil.toStringArray(values), BigDecimal.class);
 	}
 
 	@Override

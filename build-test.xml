@@ -561,30 +561,26 @@
 				<![CDATA[
 					import org.apache.commons.lang.WordUtils;
 
-					String testrayTeams = project.getProperty("testray.teams");
+					String testrayMainComponentName = project.getProperty("testray.main.component.name");
+					String testrayTeamNamesString = project.getProperty("testray.team.names");
 
-					String[] testrayTeamList = testrayTeams.split(",");
+					String[] testrayTeamNames = testrayTeamNamesString.split(",");
 
-					for (String testrayTeam : testrayTeamList) {
+					for (String testrayTeamName : testrayTeamNames) {
 						StringBuilder sb = new StringBuilder();
 
 						sb.append("testray.team.");
-						sb.append(testrayTeam);
-						sb.append(".components");
+						sb.append(testrayTeamName);
+						sb.append(".component.names");
 
-						String testrayMainComponentName = project.getProperty("testray.main.component.name");
-						String testrayTeamComponents = project.getProperty(sb.toString());
+						String testrayTeamComponentNamesString = project.getProperty(sb.toString());
 
-						String[] testrayTeamComponentList = testrayTeamComponents.split(",");
+						Set testrayTeamComponentNames = new HashSet(Arrays.asList(testrayTeamComponentNamesString.split(",")));
 
-						for (String testrayTeamComponent : testrayTeamComponentList) {
-							if (testrayTeamComponent.equals(testrayMainComponentName)) {
-								String testrayTeamName = testrayTeam.replace('-', ' ');
+						if (testrayTeamComponentNames.contains(testrayMainComponentName)) {
+							project.setProperty("testray.team.name", WordUtils.capitalize(testrayTeamName.replace('-', ' ')));
 
-								project.setProperty("testray.team.name", WordUtils.capitalize(testrayTeamName));
-
-								break;
-							}
+							break;
 						}
 					}
 				]]>

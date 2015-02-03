@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Portal Soy Template Manager
+Bundle-SymbolicName: com.liferay.portal.soy
+Bundle-Version: 1.0.0
+libs: ${lsr;lib;*.jar}
+Import-Package:\
+	!com.google.inject.internal.asm.util,\
+	!javax.microedition.io,\
+	!org.objectweb.asm.util,\
+	*
+Include-Resource:\
+	${replace;${libs};^;@lib/},\
+	classes

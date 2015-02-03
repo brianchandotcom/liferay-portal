@@ -346,7 +346,7 @@ AUI.add(
 
 						var map = instance._map;
 
-						if (map.controls[position]) {
+						if (map.controls[position]) {
 							map.controls[position].push(control.getDOMNode());
 						}
 					},
@@ -361,7 +361,7 @@ AUI.add(
 					getBounds: function() {
 						var instance = this;
 
-						var bounds = instance._map.getBounds() || instance._bounds;
+						var bounds = instance._map.getBounds() || instance._bounds;
 
 						if (!bounds) {
 							bounds = new google.maps.LatLngBounds();

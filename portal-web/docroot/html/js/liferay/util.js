@@ -781,17 +781,6 @@
 			);
 		},
 
-		selectAndCopy: function(el) {
-			el.focus();
-			el.select();
-
-			if (document.all) {
-				var textRange = el.createTextRange();
-
-				textRange.execCommand('copy');
-			}
-		},
-
 		selectEntityHandler: function(container, selectEventName, disableButton) {
 			container = $(container);
 

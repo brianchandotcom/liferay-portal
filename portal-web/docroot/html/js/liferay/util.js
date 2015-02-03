@@ -30,7 +30,7 @@
 				function(A) {
 					new A.ButtonSearchCancel(
 						{
-							trigger: 'input[type=password], input[type=search], input.clearable, input.search-query'
+							trigger: 'input[type=password], input[type=search], input.clearable, input.search-query'
 						}
 					);
 				}

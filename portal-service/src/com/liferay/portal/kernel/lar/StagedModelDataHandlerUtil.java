@@ -208,25 +208,14 @@ public class StagedModelDataHandlerUtil {
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				stagedModelClassName);
 
-		ClassLoader classLoader = portletDataContext.getClassLoader();
+		if (missing) {
+			stagedModelDataHandler.importMissingReference(
+				portletDataContext, referenceElement);
 
-		try {
-			Class<?> clazz = stagedModelDataHandler.getClass();
-
-			portletDataContext.setClassLoader(clazz.getClassLoader());
-
-			if (missing) {
-				stagedModelDataHandler.importMissingReference(
-					portletDataContext, referenceElement);
-
-				return;
-			}
-
-			importStagedModel(portletDataContext, referenceElement);
+			return;
 		}
-		finally {
-			portletDataContext.setClassLoader(classLoader);
-		}
+
+		importStagedModel(portletDataContext, referenceElement);
 	}
 
 	public static void importReferenceStagedModels(
@@ -259,25 +248,14 @@ public class StagedModelDataHandlerUtil {
 				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 					stagedModelClassName);
 
-			ClassLoader classLoader = portletDataContext.getClassLoader();
+			if (missing) {
+				stagedModelDataHandler.importMissingReference(
+					portletDataContext, referenceElement);
 
-			try {
-				Class<?> clazz = stagedModelDataHandler.getClass();
-
-				portletDataContext.setClassLoader(clazz.getClassLoader());
-
-				if (missing) {
-					stagedModelDataHandler.importMissingReference(
-						portletDataContext, referenceElement);
-
-					continue;
-				}
-
-				importStagedModel(portletDataContext, referenceElement);
+				continue;
 			}
-			finally {
-				portletDataContext.setClassLoader(classLoader);
-			}
+
+			importStagedModel(portletDataContext, referenceElement);
 		}
 	}
 

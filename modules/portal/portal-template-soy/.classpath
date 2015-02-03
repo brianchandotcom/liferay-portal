@@ -9,6 +9,7 @@
 	<classpathentry kind="lib" path="/portal-master/lib/development/mockito.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-api-mockito.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-api-support.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-core.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-module-junit4.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-module-junit4-common.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/spring-test.jar" />
@@ -40,7 +41,7 @@
 	<classpathentry kind="lib" path="lib/jsr305.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
 	<classpathentry kind="lib" path="lib/soy.jar" />
-	<classpathentry kind="lib" path="../../../.ivy/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar" />
-	<classpathentry kind="lib" path="../../../.ivy/cache/junit/junit/jars/junit-4.11.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/junit/junit/jars/junit-4.11.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

@@ -29,7 +29,7 @@ import java.net.InetSocketAddress;
  * @author Tina Tian
  */
 @ProviderType
-public class ClusterNode implements Comparable<ClusterNode>, Serializable {
+public class ClusterNode implements Serializable {
 
 	public ClusterNode(String clusterNodeId, InetAddress bindInetAddress) {
 		if (clusterNodeId == null) {
@@ -42,82 +42,6 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 
 		_clusterNodeId = clusterNodeId;
 		_bindInetAddress = bindInetAddress;
-	}
-
-	@Override
-	public int compareTo(ClusterNode clusterNode) {
-		InetAddress bindInetAddress = clusterNode._bindInetAddress;
-
-		String hostAddress = _bindInetAddress.getHostAddress();
-
-		int value = hostAddress.compareTo(bindInetAddress.getHostAddress());
-
-		if (value != 0) {
-			return value;
-		}
-
-		if ((_portalProtocol == null) ||
-			(clusterNode._portalProtocol == null)) {
-
-			if (_portalProtocol != null) {
-				return 1;
-			}
-
-			if (clusterNode._portalProtocol != null) {
-				return -1;
-			}
-
-			return 0;
-		}
-
-		value = _portalProtocol.compareTo(clusterNode._portalProtocol);
-
-		if (value != 0) {
-			return value;
-		}
-
-		if ((_portalInetSocketAddress == null) ||
-			(clusterNode._portalInetSocketAddress == null)) {
-
-			if (_portalInetSocketAddress != null) {
-				return 1;
-			}
-
-			if (clusterNode._portalInetSocketAddress != null) {
-				return -1;
-			}
-
-			return 0;
-		}
-
-		InetAddress thisInetAddress = _portalInetSocketAddress.getAddress();
-
-		String thisHostAddress = thisInetAddress.getHostAddress();
-
-		InetSocketAddress otherPortalInetSocketAddress =
-			clusterNode._portalInetSocketAddress;
-
-		InetAddress otherInetAddress =
-			otherPortalInetSocketAddress.getAddress();
-
-		value = thisHostAddress.compareTo(otherInetAddress.getHostAddress());
-
-		if (value != 0) {
-			return value;
-		}
-
-		int otherPort = otherPortalInetSocketAddress.getPort();
-
-		int thisPort = _portalInetSocketAddress.getPort();
-
-		if (thisPort > otherPort) {
-			value = 1;
-		}
-		else if (thisPort < otherPort) {
-			value = -1;
-		}
-
-		return value;
 	}
 
 	@Override

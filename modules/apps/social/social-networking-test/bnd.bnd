@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Social Networking Tests
+Bundle-SymbolicName: com.liferay.social.networking.test
+Bundle-Version: 1.0.0
+Include-Resource: classes

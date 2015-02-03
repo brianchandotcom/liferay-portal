@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="import.shared" value="social-networking-api" />
+	<property name="osgi.ide.dependencies" value="spring-context.jar" />
+	<property name="service.input.file" value="service.xml" />
+
+	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+
+	<target name="build-service">
+		<build-service
+			service.api.dir="../social-networking-api/src"
+			service.auto.namespace.tables="false"
+			service.hbm.file.name="module-hbm.xml"
+			service.spring.file.name="module-spring.xml"
+			service.sql.dir="src/META-INF/sql"
+			service.test.dir="../social-networking-test/test/integration"
+		/>
+	</target>
+</project>

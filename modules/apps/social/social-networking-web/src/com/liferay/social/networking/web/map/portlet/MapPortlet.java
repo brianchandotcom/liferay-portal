@@ -17,7 +17,7 @@ package com.liferay.social.networking.web.map.portlet;
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.util.Portal;
-import com.liferay.social.networking.web.constants.WebKeys;
+import com.liferay.social.networking.web.constants.SocialNetworkingWebKeys;
 
 import java.io.IOException;
 
@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Adolfo Pérez
@@ -62,7 +61,7 @@ public class MapPortlet extends MVCPortlet {
 		HttpServletRequest request = _portal.getHttpServletRequest(
 			renderRequest);
 
-		request.setAttribute(WebKeys.IP_GEOCODER, _ipGeocoder);
+		request.setAttribute(SocialNetworkingWebKeys.IP_GEOCODER, _ipGeocoder);
 
 		super.render(renderRequest, renderResponse);
 	}

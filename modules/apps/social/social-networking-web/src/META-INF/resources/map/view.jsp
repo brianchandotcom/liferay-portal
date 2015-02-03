@@ -47,7 +47,7 @@ else {
 %>
 
 <%
-IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(WebKeys.IP_GEOCODER);
+IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(SocialNetworkingWebKeys.IP_GEOCODER);
 %>
 
 <c:choose>

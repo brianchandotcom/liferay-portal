@@ -17,7 +17,7 @@ package com.liferay.social.networking.web.constants;
 /**
  * @author Adolfo Pérez
  */
-public interface WebKeys extends com.liferay.portal.kernel.util.WebKeys {
+public interface SocialNetworkingWebKeys {
 
 	public static final String IP_GEOCODER = "IP_GEOCODER";
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.display.context.util;
 
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
@@ -32,6 +33,16 @@ public abstract class BaseRequestHelper {
 
 	public BaseRequestHelper(HttpServletRequest request) {
 		_request = request;
+	}
+
+	public Company getCompany() {
+		if (_company == null) {
+			ThemeDisplay themeDisplay = getThemeDisplay();
+
+			_company = themeDisplay.getCompany();
+		}
+
+		return _company;
 	}
 
 	public long getCompanyId() {
@@ -114,6 +125,16 @@ public abstract class BaseRequestHelper {
 		return _portletResource;
 	}
 
+	public String getPortletTitle() {
+		if (_portletTitle == null) {
+			PortletDisplay portletDisplay = getPortletDisplay();
+
+			_portletTitle = portletDisplay.getTitle();
+		}
+
+		return _portletTitle;
+	}
+
 	public HttpServletRequest getRequest() {
 		return _request;
 	}
@@ -158,6 +179,16 @@ public abstract class BaseRequestHelper {
 		return _scopeGroupId;
 	}
 
+	public long getSiteGroupId() {
+		if (_siteGroupId == null) {
+			ThemeDisplay themeDisplay = getThemeDisplay();
+
+			_siteGroupId = themeDisplay.getSiteGroupId();
+		}
+
+		return _siteGroupId;
+	}
+
 	public ThemeDisplay getThemeDisplay() {
 		if (_themeDisplay == null) {
 			_themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -167,6 +198,7 @@ public abstract class BaseRequestHelper {
 		return _themeDisplay;
 	}
 
+	private Company _company;
 	private Long _companyId;
 	private Layout _layout;
 	private Locale _locale;
@@ -175,10 +207,12 @@ public abstract class BaseRequestHelper {
 	private String _portletId;
 	private String _portletName;
 	private String _portletResource;
+	private String _portletTitle;
 	private final HttpServletRequest _request;
 	private String _resourcePortletId;
 	private String _resourcePortletName;
 	private Long _scopeGroupId;
+	private Long _siteGroupId;
 	private ThemeDisplay _themeDisplay;
 
 }

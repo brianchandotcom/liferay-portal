@@ -64,10 +64,10 @@ public class WikiRequestHelper extends BaseRequestHelper {
 
 				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 					_wikiSettings = WikiSettings.getInstance(
-						getScopeGroupId(), getRequest().getParameterMap());
+						getSiteGroupId(), getRequest().getParameterMap());
 				}
 				else {
-					_wikiSettings = WikiSettings.getInstance(getScopeGroupId());
+					_wikiSettings = WikiSettings.getInstance(getSiteGroupId());
 				}
 			}
 

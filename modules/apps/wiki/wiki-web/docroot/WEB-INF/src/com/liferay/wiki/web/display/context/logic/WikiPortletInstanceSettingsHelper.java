@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
+import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
-import com.liferay.wiki.web.util.WikiUtil;
 
 import java.util.List;
 

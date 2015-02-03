@@ -21,8 +21,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -37,7 +40,12 @@ import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.web.util.WikiUtil;
+import com.liferay.wiki.service.permission.WikiNodePermission;
+import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 
@@ -48,6 +56,43 @@ import javax.servlet.http.HttpServletRequest;
  * @author Jorge Ferrer
  */
 public class ActionUtil {
+
+	public static WikiNode getFirstNode(PortletRequest portletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+		long groupId = themeDisplay.getScopeGroupId();
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		List<WikiNode> nodes = WikiNodeLocalServiceUtil.getNodes(groupId);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		WikiPortletInstanceSettings wikiPortletInstanceSettings =
+			WikiPortletInstanceSettings.getInstance(
+				themeDisplay.getLayout(), portletDisplay.getId());
+
+		String[] visibleNodeNames =
+			wikiPortletInstanceSettings.getVisibleNodes();
+
+		nodes = WikiUtil.orderNodes(nodes, visibleNodeNames);
+
+		String[] hiddenNodes = wikiPortletInstanceSettings.getHiddenNodes();
+		Arrays.sort(hiddenNodes);
+
+		for (WikiNode node : nodes) {
+			if ((Arrays.binarySearch(hiddenNodes, node.getName()) < 0) &&
+				WikiNodePermission.contains(
+					permissionChecker, node, ActionKeys.VIEW)) {
+
+				return node;
+			}
+		}
+
+		return null;
+	}
 
 	public static WikiNode getFirstVisibleNode(PortletRequest portletRequest)
 		throws PortalException {
@@ -79,7 +124,7 @@ public class ActionUtil {
 				themeDisplay.getDefaultUserId(), serviceContext);
 		}
 		else {
-			node = WikiUtil.getFirstNode(portletRequest);
+			node = getFirstNode(portletRequest);
 
 			if (node == null) {
 				throw new PrincipalException();

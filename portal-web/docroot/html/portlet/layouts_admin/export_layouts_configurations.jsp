@@ -60,6 +60,15 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 			<aui:nav-bar-search file="/html/portlet/layouts_admin/export_import_configuration_search.jsp" searchContainer="<%= searchContainer %>" />
 		</aui:nav-bar>
 
+		<liferay-ui:search-container-results>
+
+			<%
+			int exportImportConfigurationType = ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT;
+			%>
+
+			<%@ include file="/html/portlet/layouts_admin/export_import_configuration_search_results.jspf" %>
+		</liferay-ui:search-container-results>
+
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.ExportImportConfiguration"
 			keyProperty="exportImportConfigurationId"

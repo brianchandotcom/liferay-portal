@@ -366,7 +366,7 @@ public class JavaClass {
 			}
 			else {
 				newJavaTermContent = StringUtil.replaceFirst(
-					javaTermContent, "private transient",
+					javaTermContent, "private transient ",
 					"private transient final ");
 			}
 		}

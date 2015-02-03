@@ -276,6 +276,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 		return sb.toString();
 	}
 
+	@Override
+	public boolean isSortableFieldName(String fieldName) {
+		return fieldName.startsWith(DDMIndexer.DDM_FIELD_PREFIX);
+	}
+
 	protected Fields toFields(
 		DDMStructure ddmStructure, DDMFormValues ddmFormValues) {
 

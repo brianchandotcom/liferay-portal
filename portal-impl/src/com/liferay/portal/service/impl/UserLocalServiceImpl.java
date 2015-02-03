@@ -369,8 +369,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		long[] roleIds = ArrayUtil.toArray(
-			roleIdSet.toArray(new Long[roleIdSet.size()]));
+		long[] roleIds = ArrayUtil.toLongArray(roleIdSet);
 
 		roleIds = UsersAdminUtil.addRequiredRoles(user, roleIds);
 
@@ -388,8 +387,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		long[] regularRoleIds = ArrayUtil.toArray(
-			regularRoleIdSet.toArray(new Long[regularRoleIdSet.size()]));
+		long[] regularRoleIds = ArrayUtil.toLongArray(regularRoleIdSet);
 
 		userPersistence.addRoles(userId, regularRoleIds);
 

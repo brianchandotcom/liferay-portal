@@ -66,6 +66,10 @@ public class MBStatsUserPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = MBStatsUserUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -354,7 +358,7 @@ public class MBStatsUserPersistenceTest {
 		MBStatsUser newMBStatsUser = addMBStatsUser();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBStatsUser.class,
-				MBStatsUser.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("statsUserId",
 				newMBStatsUser.getStatsUserId()));
@@ -371,7 +375,7 @@ public class MBStatsUserPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBStatsUser.class,
-				MBStatsUser.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("statsUserId",
 				RandomTestUtil.nextLong()));
@@ -387,7 +391,7 @@ public class MBStatsUserPersistenceTest {
 		MBStatsUser newMBStatsUser = addMBStatsUser();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBStatsUser.class,
-				MBStatsUser.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("statsUserId"));
 
@@ -408,7 +412,7 @@ public class MBStatsUserPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBStatsUser.class,
-				MBStatsUser.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("statsUserId"));
 
@@ -460,4 +464,5 @@ public class MBStatsUserPersistenceTest {
 
 	private List<MBStatsUser> _mbStatsUsers = new ArrayList<MBStatsUser>();
 	private MBStatsUserPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

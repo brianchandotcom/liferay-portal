@@ -57,6 +57,10 @@ public class OrgGroupRolePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = OrgGroupRoleUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -279,7 +283,7 @@ public class OrgGroupRolePersistenceTest {
 		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgGroupRole.class,
-				OrgGroupRole.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.organizationId",
 				newOrgGroupRole.getOrganizationId()));
@@ -300,7 +304,7 @@ public class OrgGroupRolePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgGroupRole.class,
-				OrgGroupRole.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.organizationId",
 				RandomTestUtil.nextLong()));
@@ -320,7 +324,7 @@ public class OrgGroupRolePersistenceTest {
 		OrgGroupRole newOrgGroupRole = addOrgGroupRole();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgGroupRole.class,
-				OrgGroupRole.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"id.organizationId"));
@@ -342,7 +346,7 @@ public class OrgGroupRolePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgGroupRole.class,
-				OrgGroupRole.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"id.organizationId"));
@@ -370,4 +374,5 @@ public class OrgGroupRolePersistenceTest {
 
 	private List<OrgGroupRole> _orgGroupRoles = new ArrayList<OrgGroupRole>();
 	private OrgGroupRolePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

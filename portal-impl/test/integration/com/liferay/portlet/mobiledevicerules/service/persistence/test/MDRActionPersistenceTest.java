@@ -68,6 +68,10 @@ public class MDRActionPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = MDRActionUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -403,7 +407,7 @@ public class MDRActionPersistenceTest {
 		MDRAction newMDRAction = addMDRAction();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRAction.class,
-				MDRAction.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("actionId",
 				newMDRAction.getActionId()));
@@ -420,7 +424,7 @@ public class MDRActionPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRAction.class,
-				MDRAction.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("actionId",
 				RandomTestUtil.nextLong()));
@@ -436,7 +440,7 @@ public class MDRActionPersistenceTest {
 		MDRAction newMDRAction = addMDRAction();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRAction.class,
-				MDRAction.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("actionId"));
 
@@ -457,7 +461,7 @@ public class MDRActionPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRAction.class,
-				MDRAction.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("actionId"));
 
@@ -529,4 +533,5 @@ public class MDRActionPersistenceTest {
 
 	private List<MDRAction> _mdrActions = new ArrayList<MDRAction>();
 	private MDRActionPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

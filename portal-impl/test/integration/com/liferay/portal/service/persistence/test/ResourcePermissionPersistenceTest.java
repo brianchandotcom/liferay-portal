@@ -66,6 +66,10 @@ public class ResourcePermissionPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ResourcePermissionUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -430,7 +434,7 @@ public class ResourcePermissionPersistenceTest {
 		ResourcePermission newResourcePermission = addResourcePermission();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourcePermission.class,
-				ResourcePermission.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePermissionId",
 				newResourcePermission.getResourcePermissionId()));
@@ -447,7 +451,7 @@ public class ResourcePermissionPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourcePermission.class,
-				ResourcePermission.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePermissionId",
 				RandomTestUtil.nextLong()));
@@ -463,7 +467,7 @@ public class ResourcePermissionPersistenceTest {
 		ResourcePermission newResourcePermission = addResourcePermission();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourcePermission.class,
-				ResourcePermission.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"resourcePermissionId"));
@@ -486,7 +490,7 @@ public class ResourcePermissionPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourcePermission.class,
-				ResourcePermission.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"resourcePermissionId"));
@@ -559,4 +563,5 @@ public class ResourcePermissionPersistenceTest {
 
 	private List<ResourcePermission> _resourcePermissions = new ArrayList<ResourcePermission>();
 	private ResourcePermissionPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

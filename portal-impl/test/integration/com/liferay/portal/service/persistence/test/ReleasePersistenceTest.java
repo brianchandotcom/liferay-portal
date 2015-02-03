@@ -67,6 +67,10 @@ public class ReleasePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ReleaseUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -339,7 +343,7 @@ public class ReleasePersistenceTest {
 		Release newRelease = addRelease();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Release.class,
-				Release.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("releaseId",
 				newRelease.getReleaseId()));
@@ -356,7 +360,7 @@ public class ReleasePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Release.class,
-				Release.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("releaseId",
 				RandomTestUtil.nextLong()));
@@ -372,7 +376,7 @@ public class ReleasePersistenceTest {
 		Release newRelease = addRelease();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Release.class,
-				Release.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("releaseId"));
 
@@ -393,7 +397,7 @@ public class ReleasePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Release.class,
-				Release.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("releaseId"));
 
@@ -453,4 +457,5 @@ public class ReleasePersistenceTest {
 
 	private List<Release> _releases = new ArrayList<Release>();
 	private ReleasePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -68,6 +68,10 @@ public class MDRRuleGroupInstancePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = MDRRuleGroupInstanceUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -458,7 +462,7 @@ public class MDRRuleGroupInstancePersistenceTest {
 		MDRRuleGroupInstance newMDRRuleGroupInstance = addMDRRuleGroupInstance();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRuleGroupInstance.class,
-				MDRRuleGroupInstance.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleGroupInstanceId",
 				newMDRRuleGroupInstance.getRuleGroupInstanceId()));
@@ -476,7 +480,7 @@ public class MDRRuleGroupInstancePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRuleGroupInstance.class,
-				MDRRuleGroupInstance.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleGroupInstanceId",
 				RandomTestUtil.nextLong()));
@@ -492,7 +496,7 @@ public class MDRRuleGroupInstancePersistenceTest {
 		MDRRuleGroupInstance newMDRRuleGroupInstance = addMDRRuleGroupInstance();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRuleGroupInstance.class,
-				MDRRuleGroupInstance.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"ruleGroupInstanceId"));
@@ -514,7 +518,7 @@ public class MDRRuleGroupInstancePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRuleGroupInstance.class,
-				MDRRuleGroupInstance.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"ruleGroupInstanceId"));
@@ -593,4 +597,5 @@ public class MDRRuleGroupInstancePersistenceTest {
 
 	private List<MDRRuleGroupInstance> _mdrRuleGroupInstances = new ArrayList<MDRRuleGroupInstance>();
 	private MDRRuleGroupInstancePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

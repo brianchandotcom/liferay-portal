@@ -68,6 +68,10 @@ public class ShoppingCategoryPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ShoppingCategoryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -378,7 +382,7 @@ public class ShoppingCategoryPersistenceTest {
 		ShoppingCategory newShoppingCategory = addShoppingCategory();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCategory.class,
-				ShoppingCategory.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId",
 				newShoppingCategory.getCategoryId()));
@@ -395,7 +399,7 @@ public class ShoppingCategoryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCategory.class,
-				ShoppingCategory.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId",
 				RandomTestUtil.nextLong()));
@@ -411,7 +415,7 @@ public class ShoppingCategoryPersistenceTest {
 		ShoppingCategory newShoppingCategory = addShoppingCategory();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCategory.class,
-				ShoppingCategory.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("categoryId"));
 
@@ -432,7 +436,7 @@ public class ShoppingCategoryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCategory.class,
-				ShoppingCategory.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("categoryId"));
 
@@ -494,4 +498,5 @@ public class ShoppingCategoryPersistenceTest {
 
 	private List<ShoppingCategory> _shoppingCategories = new ArrayList<ShoppingCategory>();
 	private ShoppingCategoryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

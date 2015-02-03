@@ -63,6 +63,10 @@ public class WorkflowInstanceLinkPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = WorkflowInstanceLinkUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -345,7 +349,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 		WorkflowInstanceLink newWorkflowInstanceLink = addWorkflowInstanceLink();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WorkflowInstanceLink.class,
-				WorkflowInstanceLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("workflowInstanceLinkId",
 				newWorkflowInstanceLink.getWorkflowInstanceLinkId()));
@@ -363,7 +367,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WorkflowInstanceLink.class,
-				WorkflowInstanceLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("workflowInstanceLinkId",
 				RandomTestUtil.nextLong()));
@@ -379,7 +383,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 		WorkflowInstanceLink newWorkflowInstanceLink = addWorkflowInstanceLink();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WorkflowInstanceLink.class,
-				WorkflowInstanceLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"workflowInstanceLinkId"));
@@ -402,7 +406,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WorkflowInstanceLink.class,
-				WorkflowInstanceLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"workflowInstanceLinkId"));
@@ -448,4 +452,5 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 	private List<WorkflowInstanceLink> _workflowInstanceLinks = new ArrayList<WorkflowInstanceLink>();
 	private WorkflowInstanceLinkPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

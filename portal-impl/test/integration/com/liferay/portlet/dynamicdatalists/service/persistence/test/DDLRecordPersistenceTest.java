@@ -68,6 +68,10 @@ public class DDLRecordPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DDLRecordUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -425,7 +429,7 @@ public class DDLRecordPersistenceTest {
 		DDLRecord newDDLRecord = addDDLRecord();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDLRecord.class,
-				DDLRecord.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("recordId",
 				newDDLRecord.getRecordId()));
@@ -442,7 +446,7 @@ public class DDLRecordPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDLRecord.class,
-				DDLRecord.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("recordId",
 				RandomTestUtil.nextLong()));
@@ -458,7 +462,7 @@ public class DDLRecordPersistenceTest {
 		DDLRecord newDDLRecord = addDDLRecord();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDLRecord.class,
-				DDLRecord.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("recordId"));
 
@@ -479,7 +483,7 @@ public class DDLRecordPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDLRecord.class,
-				DDLRecord.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("recordId"));
 
@@ -549,4 +553,5 @@ public class DDLRecordPersistenceTest {
 
 	private List<DDLRecord> _ddlRecords = new ArrayList<DDLRecord>();
 	private DDLRecordPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -69,6 +69,10 @@ public class ShoppingCouponPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ShoppingCouponUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -392,7 +396,7 @@ public class ShoppingCouponPersistenceTest {
 		ShoppingCoupon newShoppingCoupon = addShoppingCoupon();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCoupon.class,
-				ShoppingCoupon.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("couponId",
 				newShoppingCoupon.getCouponId()));
@@ -409,7 +413,7 @@ public class ShoppingCouponPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCoupon.class,
-				ShoppingCoupon.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("couponId",
 				RandomTestUtil.nextLong()));
@@ -425,7 +429,7 @@ public class ShoppingCouponPersistenceTest {
 		ShoppingCoupon newShoppingCoupon = addShoppingCoupon();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCoupon.class,
-				ShoppingCoupon.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("couponId"));
 
@@ -446,7 +450,7 @@ public class ShoppingCouponPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCoupon.class,
-				ShoppingCoupon.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("couponId"));
 
@@ -521,4 +525,5 @@ public class ShoppingCouponPersistenceTest {
 
 	private List<ShoppingCoupon> _shoppingCoupons = new ArrayList<ShoppingCoupon>();
 	private ShoppingCouponPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

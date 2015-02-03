@@ -67,6 +67,10 @@ public class JournalArticleResourcePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = JournalArticleResourceUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -363,7 +367,7 @@ public class JournalArticleResourcePersistenceTest {
 		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleResource.class,
-				JournalArticleResource.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePrimKey",
 				newJournalArticleResource.getResourcePrimKey()));
@@ -381,7 +385,7 @@ public class JournalArticleResourcePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleResource.class,
-				JournalArticleResource.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePrimKey",
 				RandomTestUtil.nextLong()));
@@ -397,7 +401,7 @@ public class JournalArticleResourcePersistenceTest {
 		JournalArticleResource newJournalArticleResource = addJournalArticleResource();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleResource.class,
-				JournalArticleResource.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"resourcePrimKey"));
@@ -419,7 +423,7 @@ public class JournalArticleResourcePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleResource.class,
-				JournalArticleResource.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"resourcePrimKey"));
@@ -480,4 +484,5 @@ public class JournalArticleResourcePersistenceTest {
 
 	private List<JournalArticleResource> _journalArticleResources = new ArrayList<JournalArticleResource>();
 	private JournalArticleResourcePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

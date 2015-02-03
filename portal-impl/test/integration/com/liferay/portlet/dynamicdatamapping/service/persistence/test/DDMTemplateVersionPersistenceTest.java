@@ -68,6 +68,10 @@ public class DDMTemplateVersionPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DDMTemplateVersionUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -363,7 +367,7 @@ public class DDMTemplateVersionPersistenceTest {
 		DDMTemplateVersion newDDMTemplateVersion = addDDMTemplateVersion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplateVersion.class,
-				DDMTemplateVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("templateVersionId",
 				newDDMTemplateVersion.getTemplateVersionId()));
@@ -380,7 +384,7 @@ public class DDMTemplateVersionPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplateVersion.class,
-				DDMTemplateVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("templateVersionId",
 				RandomTestUtil.nextLong()));
@@ -396,7 +400,7 @@ public class DDMTemplateVersionPersistenceTest {
 		DDMTemplateVersion newDDMTemplateVersion = addDDMTemplateVersion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplateVersion.class,
-				DDMTemplateVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"templateVersionId"));
@@ -418,7 +422,7 @@ public class DDMTemplateVersionPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplateVersion.class,
-				DDMTemplateVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"templateVersionId"));
@@ -487,4 +491,5 @@ public class DDMTemplateVersionPersistenceTest {
 
 	private List<DDMTemplateVersion> _ddmTemplateVersions = new ArrayList<DDMTemplateVersion>();
 	private DDMTemplateVersionPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -68,6 +68,10 @@ public class CalEventPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = CalEventUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -546,7 +550,7 @@ public class CalEventPersistenceTest {
 		CalEvent newCalEvent = addCalEvent();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalEvent.class,
-				CalEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("eventId",
 				newCalEvent.getEventId()));
@@ -563,7 +567,7 @@ public class CalEventPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalEvent.class,
-				CalEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("eventId",
 				RandomTestUtil.nextLong()));
@@ -579,7 +583,7 @@ public class CalEventPersistenceTest {
 		CalEvent newCalEvent = addCalEvent();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalEvent.class,
-				CalEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("eventId"));
 
@@ -600,7 +604,7 @@ public class CalEventPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CalEvent.class,
-				CalEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("eventId"));
 
@@ -688,4 +692,5 @@ public class CalEventPersistenceTest {
 
 	private List<CalEvent> _calEvents = new ArrayList<CalEvent>();
 	private CalEventPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

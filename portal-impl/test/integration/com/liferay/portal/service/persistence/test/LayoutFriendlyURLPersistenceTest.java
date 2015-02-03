@@ -67,6 +67,10 @@ public class LayoutFriendlyURLPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = LayoutFriendlyURLUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -484,7 +488,7 @@ public class LayoutFriendlyURLPersistenceTest {
 		LayoutFriendlyURL newLayoutFriendlyURL = addLayoutFriendlyURL();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutFriendlyURL.class,
-				LayoutFriendlyURL.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutFriendlyURLId",
 				newLayoutFriendlyURL.getLayoutFriendlyURLId()));
@@ -501,7 +505,7 @@ public class LayoutFriendlyURLPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutFriendlyURL.class,
-				LayoutFriendlyURL.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutFriendlyURLId",
 				RandomTestUtil.nextLong()));
@@ -517,7 +521,7 @@ public class LayoutFriendlyURLPersistenceTest {
 		LayoutFriendlyURL newLayoutFriendlyURL = addLayoutFriendlyURL();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutFriendlyURL.class,
-				LayoutFriendlyURL.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"layoutFriendlyURLId"));
@@ -539,7 +543,7 @@ public class LayoutFriendlyURLPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutFriendlyURL.class,
-				LayoutFriendlyURL.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"layoutFriendlyURLId"));
@@ -633,4 +637,5 @@ public class LayoutFriendlyURLPersistenceTest {
 
 	private List<LayoutFriendlyURL> _layoutFriendlyURLs = new ArrayList<LayoutFriendlyURL>();
 	private LayoutFriendlyURLPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

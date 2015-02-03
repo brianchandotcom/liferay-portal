@@ -67,6 +67,10 @@ public class LayoutSetBranchPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = LayoutSetBranchUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -444,7 +448,7 @@ public class LayoutSetBranchPersistenceTest {
 		LayoutSetBranch newLayoutSetBranch = addLayoutSetBranch();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetBranch.class,
-				LayoutSetBranch.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutSetBranchId",
 				newLayoutSetBranch.getLayoutSetBranchId()));
@@ -461,7 +465,7 @@ public class LayoutSetBranchPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetBranch.class,
-				LayoutSetBranch.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutSetBranchId",
 				RandomTestUtil.nextLong()));
@@ -477,7 +481,7 @@ public class LayoutSetBranchPersistenceTest {
 		LayoutSetBranch newLayoutSetBranch = addLayoutSetBranch();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetBranch.class,
-				LayoutSetBranch.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"layoutSetBranchId"));
@@ -499,7 +503,7 @@ public class LayoutSetBranchPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetBranch.class,
-				LayoutSetBranch.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"layoutSetBranchId"));
@@ -587,4 +591,5 @@ public class LayoutSetBranchPersistenceTest {
 
 	private List<LayoutSetBranch> _layoutSetBranchs = new ArrayList<LayoutSetBranch>();
 	private LayoutSetBranchPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

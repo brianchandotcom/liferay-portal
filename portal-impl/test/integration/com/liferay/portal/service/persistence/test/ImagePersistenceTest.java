@@ -63,6 +63,10 @@ public class ImagePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ImageUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -312,7 +316,7 @@ public class ImagePersistenceTest {
 		Image newImage = addImage();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Image.class,
-				Image.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("imageId",
 				newImage.getImageId()));
@@ -329,7 +333,7 @@ public class ImagePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Image.class,
-				Image.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("imageId",
 				RandomTestUtil.nextLong()));
@@ -345,7 +349,7 @@ public class ImagePersistenceTest {
 		Image newImage = addImage();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Image.class,
-				Image.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("imageId"));
 
@@ -366,7 +370,7 @@ public class ImagePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Image.class,
-				Image.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("imageId"));
 
@@ -402,4 +406,5 @@ public class ImagePersistenceTest {
 
 	private List<Image> _images = new ArrayList<Image>();
 	private ImagePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

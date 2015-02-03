@@ -60,6 +60,10 @@ public class UserGroupRolePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = UserGroupRoleUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -342,7 +346,7 @@ public class UserGroupRolePersistenceTest {
 		UserGroupRole newUserGroupRole = addUserGroupRole();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroupRole.class,
-				UserGroupRole.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.userId",
 				newUserGroupRole.getUserId()));
@@ -363,7 +367,7 @@ public class UserGroupRolePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroupRole.class,
-				UserGroupRole.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.userId",
 				RandomTestUtil.nextLong()));
@@ -383,7 +387,7 @@ public class UserGroupRolePersistenceTest {
 		UserGroupRole newUserGroupRole = addUserGroupRole();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroupRole.class,
-				UserGroupRole.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id.userId"));
 
@@ -404,7 +408,7 @@ public class UserGroupRolePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroupRole.class,
-				UserGroupRole.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id.userId"));
 
@@ -431,4 +435,5 @@ public class UserGroupRolePersistenceTest {
 
 	private List<UserGroupRole> _userGroupRoles = new ArrayList<UserGroupRole>();
 	private UserGroupRolePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

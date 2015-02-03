@@ -62,6 +62,10 @@ public class OrgLaborPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = OrgLaborUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -366,7 +370,7 @@ public class OrgLaborPersistenceTest {
 		OrgLabor newOrgLabor = addOrgLabor();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgLabor.class,
-				OrgLabor.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("orgLaborId",
 				newOrgLabor.getOrgLaborId()));
@@ -383,7 +387,7 @@ public class OrgLaborPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgLabor.class,
-				OrgLabor.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("orgLaborId",
 				RandomTestUtil.nextLong()));
@@ -399,7 +403,7 @@ public class OrgLaborPersistenceTest {
 		OrgLabor newOrgLabor = addOrgLabor();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgLabor.class,
-				OrgLabor.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("orgLaborId"));
 
@@ -420,7 +424,7 @@ public class OrgLaborPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(OrgLabor.class,
-				OrgLabor.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("orgLaborId"));
 
@@ -478,4 +482,5 @@ public class OrgLaborPersistenceTest {
 
 	private List<OrgLabor> _orgLabors = new ArrayList<OrgLabor>();
 	private OrgLaborPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

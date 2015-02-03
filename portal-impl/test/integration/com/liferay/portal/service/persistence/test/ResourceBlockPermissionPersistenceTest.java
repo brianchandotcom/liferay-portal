@@ -64,6 +64,10 @@ public class ResourceBlockPermissionPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ResourceBlockPermissionUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -346,7 +350,7 @@ public class ResourceBlockPermissionPersistenceTest {
 		ResourceBlockPermission newResourceBlockPermission = addResourceBlockPermission();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceBlockPermission.class,
-				ResourceBlockPermission.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"resourceBlockPermissionId",
@@ -365,7 +369,7 @@ public class ResourceBlockPermissionPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceBlockPermission.class,
-				ResourceBlockPermission.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"resourceBlockPermissionId", RandomTestUtil.nextLong()));
@@ -381,7 +385,7 @@ public class ResourceBlockPermissionPersistenceTest {
 		ResourceBlockPermission newResourceBlockPermission = addResourceBlockPermission();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceBlockPermission.class,
-				ResourceBlockPermission.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"resourceBlockPermissionId"));
@@ -405,7 +409,7 @@ public class ResourceBlockPermissionPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ResourceBlockPermission.class,
-				ResourceBlockPermission.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"resourceBlockPermissionId"));
@@ -461,4 +465,5 @@ public class ResourceBlockPermissionPersistenceTest {
 
 	private List<ResourceBlockPermission> _resourceBlockPermissions = new ArrayList<ResourceBlockPermission>();
 	private ResourceBlockPermissionPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

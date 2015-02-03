@@ -67,6 +67,10 @@ public class SocialActivitySettingPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = SocialActivitySettingUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -386,7 +390,7 @@ public class SocialActivitySettingPersistenceTest {
 		SocialActivitySetting newSocialActivitySetting = addSocialActivitySetting();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivitySetting.class,
-				SocialActivitySetting.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activitySettingId",
 				newSocialActivitySetting.getActivitySettingId()));
@@ -404,7 +408,7 @@ public class SocialActivitySettingPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivitySetting.class,
-				SocialActivitySetting.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activitySettingId",
 				RandomTestUtil.nextLong()));
@@ -420,7 +424,7 @@ public class SocialActivitySettingPersistenceTest {
 		SocialActivitySetting newSocialActivitySetting = addSocialActivitySetting();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivitySetting.class,
-				SocialActivitySetting.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"activitySettingId"));
@@ -442,7 +446,7 @@ public class SocialActivitySettingPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivitySetting.class,
-				SocialActivitySetting.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"activitySettingId"));
@@ -507,4 +511,5 @@ public class SocialActivitySettingPersistenceTest {
 
 	private List<SocialActivitySetting> _socialActivitySettings = new ArrayList<SocialActivitySetting>();
 	private SocialActivitySettingPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

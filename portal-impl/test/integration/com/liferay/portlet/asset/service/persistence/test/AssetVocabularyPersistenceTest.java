@@ -68,6 +68,10 @@ public class AssetVocabularyPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = AssetVocabularyUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -456,7 +460,7 @@ public class AssetVocabularyPersistenceTest {
 		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetVocabulary.class,
-				AssetVocabulary.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("vocabularyId",
 				newAssetVocabulary.getVocabularyId()));
@@ -473,7 +477,7 @@ public class AssetVocabularyPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetVocabulary.class,
-				AssetVocabulary.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("vocabularyId",
 				RandomTestUtil.nextLong()));
@@ -489,7 +493,7 @@ public class AssetVocabularyPersistenceTest {
 		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetVocabulary.class,
-				AssetVocabulary.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"vocabularyId"));
@@ -511,7 +515,7 @@ public class AssetVocabularyPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetVocabulary.class,
-				AssetVocabulary.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"vocabularyId"));
@@ -585,4 +589,5 @@ public class AssetVocabularyPersistenceTest {
 
 	private List<AssetVocabulary> _assetVocabularies = new ArrayList<AssetVocabulary>();
 	private AssetVocabularyPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

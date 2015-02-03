@@ -60,6 +60,10 @@ public class UserGroupGroupRolePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = UserGroupGroupRoleUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -342,7 +346,7 @@ public class UserGroupGroupRolePersistenceTest {
 		UserGroupGroupRole newUserGroupGroupRole = addUserGroupGroupRole();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroupGroupRole.class,
-				UserGroupGroupRole.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.userGroupId",
 				newUserGroupGroupRole.getUserGroupId()));
@@ -363,7 +367,7 @@ public class UserGroupGroupRolePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroupGroupRole.class,
-				UserGroupGroupRole.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.userGroupId",
 				RandomTestUtil.nextLong()));
@@ -383,7 +387,7 @@ public class UserGroupGroupRolePersistenceTest {
 		UserGroupGroupRole newUserGroupGroupRole = addUserGroupGroupRole();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroupGroupRole.class,
-				UserGroupGroupRole.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"id.userGroupId"));
@@ -405,7 +409,7 @@ public class UserGroupGroupRolePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserGroupGroupRole.class,
-				UserGroupGroupRole.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"id.userGroupId"));
@@ -434,4 +438,5 @@ public class UserGroupGroupRolePersistenceTest {
 
 	private List<UserGroupGroupRole> _userGroupGroupRoles = new ArrayList<UserGroupGroupRole>();
 	private UserGroupGroupRolePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

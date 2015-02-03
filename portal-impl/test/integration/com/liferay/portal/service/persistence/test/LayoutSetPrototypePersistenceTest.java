@@ -64,6 +64,10 @@ public class LayoutSetPrototypePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = LayoutSetPrototypeUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -388,7 +392,7 @@ public class LayoutSetPrototypePersistenceTest {
 		LayoutSetPrototype newLayoutSetPrototype = addLayoutSetPrototype();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetPrototype.class,
-				LayoutSetPrototype.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutSetPrototypeId",
 				newLayoutSetPrototype.getLayoutSetPrototypeId()));
@@ -405,7 +409,7 @@ public class LayoutSetPrototypePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetPrototype.class,
-				LayoutSetPrototype.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutSetPrototypeId",
 				RandomTestUtil.nextLong()));
@@ -421,7 +425,7 @@ public class LayoutSetPrototypePersistenceTest {
 		LayoutSetPrototype newLayoutSetPrototype = addLayoutSetPrototype();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetPrototype.class,
-				LayoutSetPrototype.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"layoutSetPrototypeId"));
@@ -444,7 +448,7 @@ public class LayoutSetPrototypePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutSetPrototype.class,
-				LayoutSetPrototype.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"layoutSetPrototypeId"));
@@ -492,4 +496,5 @@ public class LayoutSetPrototypePersistenceTest {
 
 	private List<LayoutSetPrototype> _layoutSetPrototypes = new ArrayList<LayoutSetPrototype>();
 	private LayoutSetPrototypePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

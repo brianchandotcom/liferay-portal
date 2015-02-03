@@ -63,6 +63,10 @@ public class UserTrackerPathPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = UserTrackerPathUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -314,7 +318,7 @@ public class UserTrackerPathPersistenceTest {
 		UserTrackerPath newUserTrackerPath = addUserTrackerPath();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserTrackerPath.class,
-				UserTrackerPath.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userTrackerPathId",
 				newUserTrackerPath.getUserTrackerPathId()));
@@ -331,7 +335,7 @@ public class UserTrackerPathPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserTrackerPath.class,
-				UserTrackerPath.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userTrackerPathId",
 				RandomTestUtil.nextLong()));
@@ -347,7 +351,7 @@ public class UserTrackerPathPersistenceTest {
 		UserTrackerPath newUserTrackerPath = addUserTrackerPath();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserTrackerPath.class,
-				UserTrackerPath.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"userTrackerPathId"));
@@ -369,7 +373,7 @@ public class UserTrackerPathPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserTrackerPath.class,
-				UserTrackerPath.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"userTrackerPathId"));
@@ -402,4 +406,5 @@ public class UserTrackerPathPersistenceTest {
 
 	private List<UserTrackerPath> _userTrackerPaths = new ArrayList<UserTrackerPath>();
 	private UserTrackerPathPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

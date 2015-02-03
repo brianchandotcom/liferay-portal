@@ -67,6 +67,10 @@ public class PasswordPolicyPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = PasswordPolicyUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -505,7 +509,7 @@ public class PasswordPolicyPersistenceTest {
 		PasswordPolicy newPasswordPolicy = addPasswordPolicy();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordPolicy.class,
-				PasswordPolicy.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordPolicyId",
 				newPasswordPolicy.getPasswordPolicyId()));
@@ -522,7 +526,7 @@ public class PasswordPolicyPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordPolicy.class,
-				PasswordPolicy.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordPolicyId",
 				RandomTestUtil.nextLong()));
@@ -538,7 +542,7 @@ public class PasswordPolicyPersistenceTest {
 		PasswordPolicy newPasswordPolicy = addPasswordPolicy();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordPolicy.class,
-				PasswordPolicy.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"passwordPolicyId"));
@@ -560,7 +564,7 @@ public class PasswordPolicyPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordPolicy.class,
-				PasswordPolicy.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"passwordPolicyId"));
@@ -680,4 +684,5 @@ public class PasswordPolicyPersistenceTest {
 
 	private List<PasswordPolicy> _passwordPolicies = new ArrayList<PasswordPolicy>();
 	private PasswordPolicyPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -66,6 +66,10 @@ public class TrashEntryPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = TrashEntryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -393,7 +397,7 @@ public class TrashEntryPersistenceTest {
 		TrashEntry newTrashEntry = addTrashEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(TrashEntry.class,
-				TrashEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				newTrashEntry.getEntryId()));
@@ -410,7 +414,7 @@ public class TrashEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(TrashEntry.class,
-				TrashEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				RandomTestUtil.nextLong()));
@@ -426,7 +430,7 @@ public class TrashEntryPersistenceTest {
 		TrashEntry newTrashEntry = addTrashEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(TrashEntry.class,
-				TrashEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
@@ -447,7 +451,7 @@ public class TrashEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(TrashEntry.class,
-				TrashEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
@@ -511,4 +515,5 @@ public class TrashEntryPersistenceTest {
 
 	private List<TrashEntry> _trashEntries = new ArrayList<TrashEntry>();
 	private TrashEntryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

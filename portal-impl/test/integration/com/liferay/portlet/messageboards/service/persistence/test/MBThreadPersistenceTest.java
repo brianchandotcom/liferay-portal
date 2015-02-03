@@ -69,6 +69,10 @@ public class MBThreadPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = MBThreadUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -622,7 +626,7 @@ public class MBThreadPersistenceTest {
 		MBThread newMBThread = addMBThread();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBThread.class,
-				MBThread.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("threadId",
 				newMBThread.getThreadId()));
@@ -639,7 +643,7 @@ public class MBThreadPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBThread.class,
-				MBThread.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("threadId",
 				RandomTestUtil.nextLong()));
@@ -655,7 +659,7 @@ public class MBThreadPersistenceTest {
 		MBThread newMBThread = addMBThread();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBThread.class,
-				MBThread.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("threadId"));
 
@@ -676,7 +680,7 @@ public class MBThreadPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBThread.class,
-				MBThread.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("threadId"));
 
@@ -764,4 +768,5 @@ public class MBThreadPersistenceTest {
 
 	private List<MBThread> _mbThreads = new ArrayList<MBThread>();
 	private MBThreadPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

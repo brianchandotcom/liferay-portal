@@ -64,6 +64,10 @@ public class PhonePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = PhoneUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -423,7 +427,7 @@ public class PhonePersistenceTest {
 		Phone newPhone = addPhone();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Phone.class,
-				Phone.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("phoneId",
 				newPhone.getPhoneId()));
@@ -440,7 +444,7 @@ public class PhonePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Phone.class,
-				Phone.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("phoneId",
 				RandomTestUtil.nextLong()));
@@ -456,7 +460,7 @@ public class PhonePersistenceTest {
 		Phone newPhone = addPhone();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Phone.class,
-				Phone.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("phoneId"));
 
@@ -477,7 +481,7 @@ public class PhonePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Phone.class,
-				Phone.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("phoneId"));
 
@@ -527,4 +531,5 @@ public class PhonePersistenceTest {
 
 	private List<Phone> _phones = new ArrayList<Phone>();
 	private PhonePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -67,6 +67,10 @@ public class SocialActivityAchievementPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = SocialActivityAchievementUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -401,7 +405,7 @@ public class SocialActivityAchievementPersistenceTest {
 		SocialActivityAchievement newSocialActivityAchievement = addSocialActivityAchievement();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityAchievement.class,
-				SocialActivityAchievement.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityAchievementId",
 				newSocialActivityAchievement.getActivityAchievementId()));
@@ -419,7 +423,7 @@ public class SocialActivityAchievementPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityAchievement.class,
-				SocialActivityAchievement.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityAchievementId",
 				RandomTestUtil.nextLong()));
@@ -435,7 +439,7 @@ public class SocialActivityAchievementPersistenceTest {
 		SocialActivityAchievement newSocialActivityAchievement = addSocialActivityAchievement();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityAchievement.class,
-				SocialActivityAchievement.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"activityAchievementId"));
@@ -458,7 +462,7 @@ public class SocialActivityAchievementPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityAchievement.class,
-				SocialActivityAchievement.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"activityAchievementId"));
@@ -521,4 +525,5 @@ public class SocialActivityAchievementPersistenceTest {
 
 	private List<SocialActivityAchievement> _socialActivityAchievements = new ArrayList<SocialActivityAchievement>();
 	private SocialActivityAchievementPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

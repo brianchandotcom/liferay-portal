@@ -68,6 +68,10 @@ public class MBBanPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = MBBanUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -408,7 +412,7 @@ public class MBBanPersistenceTest {
 		MBBan newMBBan = addMBBan();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBBan.class,
-				MBBan.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("banId", newMBBan.getBanId()));
 
@@ -424,7 +428,7 @@ public class MBBanPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBBan.class,
-				MBBan.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("banId",
 				RandomTestUtil.nextLong()));
@@ -440,7 +444,7 @@ public class MBBanPersistenceTest {
 		MBBan newMBBan = addMBBan();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBBan.class,
-				MBBan.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("banId"));
 
@@ -461,7 +465,7 @@ public class MBBanPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBBan.class,
-				MBBan.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("banId"));
 
@@ -528,4 +532,5 @@ public class MBBanPersistenceTest {
 
 	private List<MBBan> _mbBans = new ArrayList<MBBan>();
 	private MBBanPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

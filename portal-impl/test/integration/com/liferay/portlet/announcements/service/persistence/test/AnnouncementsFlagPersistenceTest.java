@@ -66,6 +66,10 @@ public class AnnouncementsFlagPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = AnnouncementsFlagUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -329,7 +333,7 @@ public class AnnouncementsFlagPersistenceTest {
 		AnnouncementsFlag newAnnouncementsFlag = addAnnouncementsFlag();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsFlag.class,
-				AnnouncementsFlag.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("flagId",
 				newAnnouncementsFlag.getFlagId()));
@@ -346,7 +350,7 @@ public class AnnouncementsFlagPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsFlag.class,
-				AnnouncementsFlag.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("flagId",
 				RandomTestUtil.nextLong()));
@@ -362,7 +366,7 @@ public class AnnouncementsFlagPersistenceTest {
 		AnnouncementsFlag newAnnouncementsFlag = addAnnouncementsFlag();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsFlag.class,
-				AnnouncementsFlag.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("flagId"));
 
@@ -383,7 +387,7 @@ public class AnnouncementsFlagPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsFlag.class,
-				AnnouncementsFlag.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("flagId"));
 
@@ -439,4 +443,5 @@ public class AnnouncementsFlagPersistenceTest {
 
 	private List<AnnouncementsFlag> _announcementsFlags = new ArrayList<AnnouncementsFlag>();
 	private AnnouncementsFlagPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

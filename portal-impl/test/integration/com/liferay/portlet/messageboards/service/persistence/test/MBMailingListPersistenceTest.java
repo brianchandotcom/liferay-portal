@@ -68,6 +68,10 @@ public class MBMailingListPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = MBMailingListUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -468,7 +472,7 @@ public class MBMailingListPersistenceTest {
 		MBMailingList newMBMailingList = addMBMailingList();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMailingList.class,
-				MBMailingList.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("mailingListId",
 				newMBMailingList.getMailingListId()));
@@ -485,7 +489,7 @@ public class MBMailingListPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMailingList.class,
-				MBMailingList.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("mailingListId",
 				RandomTestUtil.nextLong()));
@@ -501,7 +505,7 @@ public class MBMailingListPersistenceTest {
 		MBMailingList newMBMailingList = addMBMailingList();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMailingList.class,
-				MBMailingList.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"mailingListId"));
@@ -523,7 +527,7 @@ public class MBMailingListPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMailingList.class,
-				MBMailingList.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"mailingListId"));
@@ -625,4 +629,5 @@ public class MBMailingListPersistenceTest {
 
 	private List<MBMailingList> _mbMailingLists = new ArrayList<MBMailingList>();
 	private MBMailingListPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

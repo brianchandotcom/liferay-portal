@@ -67,6 +67,10 @@ public class TicketPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = TicketUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -334,7 +338,7 @@ public class TicketPersistenceTest {
 		Ticket newTicket = addTicket();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Ticket.class,
-				Ticket.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("ticketId",
 				newTicket.getTicketId()));
@@ -351,7 +355,7 @@ public class TicketPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Ticket.class,
-				Ticket.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("ticketId",
 				RandomTestUtil.nextLong()));
@@ -367,7 +371,7 @@ public class TicketPersistenceTest {
 		Ticket newTicket = addTicket();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Ticket.class,
-				Ticket.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ticketId"));
 
@@ -388,7 +392,7 @@ public class TicketPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Ticket.class,
-				Ticket.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ticketId"));
 
@@ -447,4 +451,5 @@ public class TicketPersistenceTest {
 
 	private List<Ticket> _tickets = new ArrayList<Ticket>();
 	private TicketPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

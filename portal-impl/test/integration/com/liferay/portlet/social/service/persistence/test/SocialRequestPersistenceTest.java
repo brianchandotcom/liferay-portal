@@ -67,6 +67,10 @@ public class SocialRequestPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = SocialRequestUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -499,7 +503,7 @@ public class SocialRequestPersistenceTest {
 		SocialRequest newSocialRequest = addSocialRequest();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialRequest.class,
-				SocialRequest.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("requestId",
 				newSocialRequest.getRequestId()));
@@ -516,7 +520,7 @@ public class SocialRequestPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialRequest.class,
-				SocialRequest.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("requestId",
 				RandomTestUtil.nextLong()));
@@ -532,7 +536,7 @@ public class SocialRequestPersistenceTest {
 		SocialRequest newSocialRequest = addSocialRequest();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialRequest.class,
-				SocialRequest.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("requestId"));
 
@@ -553,7 +557,7 @@ public class SocialRequestPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialRequest.class,
-				SocialRequest.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("requestId"));
 
@@ -637,4 +641,5 @@ public class SocialRequestPersistenceTest {
 
 	private List<SocialRequest> _socialRequests = new ArrayList<SocialRequest>();
 	private SocialRequestPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

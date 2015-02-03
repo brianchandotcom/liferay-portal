@@ -63,6 +63,10 @@ public class MembershipRequestPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = MembershipRequestUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -379,7 +383,7 @@ public class MembershipRequestPersistenceTest {
 		MembershipRequest newMembershipRequest = addMembershipRequest();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MembershipRequest.class,
-				MembershipRequest.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("membershipRequestId",
 				newMembershipRequest.getMembershipRequestId()));
@@ -396,7 +400,7 @@ public class MembershipRequestPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MembershipRequest.class,
-				MembershipRequest.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("membershipRequestId",
 				RandomTestUtil.nextLong()));
@@ -412,7 +416,7 @@ public class MembershipRequestPersistenceTest {
 		MembershipRequest newMembershipRequest = addMembershipRequest();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MembershipRequest.class,
-				MembershipRequest.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"membershipRequestId"));
@@ -434,7 +438,7 @@ public class MembershipRequestPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MembershipRequest.class,
-				MembershipRequest.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"membershipRequestId"));
@@ -480,4 +484,5 @@ public class MembershipRequestPersistenceTest {
 
 	private List<MembershipRequest> _membershipRequests = new ArrayList<MembershipRequest>();
 	private MembershipRequestPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

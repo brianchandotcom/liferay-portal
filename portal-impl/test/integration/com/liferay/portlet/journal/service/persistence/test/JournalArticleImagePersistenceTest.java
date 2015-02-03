@@ -68,6 +68,10 @@ public class JournalArticleImagePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = JournalArticleImageUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -376,7 +380,7 @@ public class JournalArticleImagePersistenceTest {
 		JournalArticleImage newJournalArticleImage = addJournalArticleImage();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleImage.class,
-				JournalArticleImage.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("articleImageId",
 				newJournalArticleImage.getArticleImageId()));
@@ -393,7 +397,7 @@ public class JournalArticleImagePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleImage.class,
-				JournalArticleImage.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("articleImageId",
 				RandomTestUtil.nextLong()));
@@ -409,7 +413,7 @@ public class JournalArticleImagePersistenceTest {
 		JournalArticleImage newJournalArticleImage = addJournalArticleImage();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleImage.class,
-				JournalArticleImage.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"articleImageId"));
@@ -431,7 +435,7 @@ public class JournalArticleImagePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalArticleImage.class,
-				JournalArticleImage.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"articleImageId"));
@@ -507,4 +511,5 @@ public class JournalArticleImagePersistenceTest {
 
 	private List<JournalArticleImage> _journalArticleImages = new ArrayList<JournalArticleImage>();
 	private JournalArticleImagePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

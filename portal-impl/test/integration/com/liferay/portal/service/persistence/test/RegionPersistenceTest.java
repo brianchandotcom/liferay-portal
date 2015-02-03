@@ -63,6 +63,10 @@ public class RegionPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = RegionUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -327,7 +331,7 @@ public class RegionPersistenceTest {
 		Region newRegion = addRegion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Region.class,
-				Region.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("regionId",
 				newRegion.getRegionId()));
@@ -344,7 +348,7 @@ public class RegionPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Region.class,
-				Region.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("regionId",
 				RandomTestUtil.nextLong()));
@@ -360,7 +364,7 @@ public class RegionPersistenceTest {
 		Region newRegion = addRegion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Region.class,
-				Region.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("regionId"));
 
@@ -381,7 +385,7 @@ public class RegionPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Region.class,
-				Region.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("regionId"));
 
@@ -435,4 +439,5 @@ public class RegionPersistenceTest {
 
 	private List<Region> _regions = new ArrayList<Region>();
 	private RegionPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -65,6 +65,10 @@ public class WebDAVPropsPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = WebDAVPropsUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -331,7 +335,7 @@ public class WebDAVPropsPersistenceTest {
 		WebDAVProps newWebDAVProps = addWebDAVProps();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WebDAVProps.class,
-				WebDAVProps.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("webDavPropsId",
 				newWebDAVProps.getWebDavPropsId()));
@@ -348,7 +352,7 @@ public class WebDAVPropsPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WebDAVProps.class,
-				WebDAVProps.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("webDavPropsId",
 				RandomTestUtil.nextLong()));
@@ -364,7 +368,7 @@ public class WebDAVPropsPersistenceTest {
 		WebDAVProps newWebDAVProps = addWebDAVProps();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WebDAVProps.class,
-				WebDAVProps.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"webDavPropsId"));
@@ -386,7 +390,7 @@ public class WebDAVPropsPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WebDAVProps.class,
-				WebDAVProps.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"webDavPropsId"));
@@ -445,4 +449,5 @@ public class WebDAVPropsPersistenceTest {
 
 	private List<WebDAVProps> _webDAVPropses = new ArrayList<WebDAVProps>();
 	private WebDAVPropsPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

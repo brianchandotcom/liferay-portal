@@ -68,6 +68,10 @@ public class AssetCategoryPropertyPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = AssetCategoryPropertyUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -384,7 +388,7 @@ public class AssetCategoryPropertyPersistenceTest {
 		AssetCategoryProperty newAssetCategoryProperty = addAssetCategoryProperty();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetCategoryProperty.class,
-				AssetCategoryProperty.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryPropertyId",
 				newAssetCategoryProperty.getCategoryPropertyId()));
@@ -402,7 +406,7 @@ public class AssetCategoryPropertyPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetCategoryProperty.class,
-				AssetCategoryProperty.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryPropertyId",
 				RandomTestUtil.nextLong()));
@@ -418,7 +422,7 @@ public class AssetCategoryPropertyPersistenceTest {
 		AssetCategoryProperty newAssetCategoryProperty = addAssetCategoryProperty();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetCategoryProperty.class,
-				AssetCategoryProperty.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"categoryPropertyId"));
@@ -440,7 +444,7 @@ public class AssetCategoryPropertyPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetCategoryProperty.class,
-				AssetCategoryProperty.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"categoryPropertyId"));
@@ -503,4 +507,5 @@ public class AssetCategoryPropertyPersistenceTest {
 
 	private List<AssetCategoryProperty> _assetCategoryProperties = new ArrayList<AssetCategoryProperty>();
 	private AssetCategoryPropertyPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -68,6 +68,10 @@ public class DDLRecordVersionPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DDLRecordVersionUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -390,7 +394,7 @@ public class DDLRecordVersionPersistenceTest {
 		DDLRecordVersion newDDLRecordVersion = addDDLRecordVersion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDLRecordVersion.class,
-				DDLRecordVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("recordVersionId",
 				newDDLRecordVersion.getRecordVersionId()));
@@ -407,7 +411,7 @@ public class DDLRecordVersionPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDLRecordVersion.class,
-				DDLRecordVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("recordVersionId",
 				RandomTestUtil.nextLong()));
@@ -423,7 +427,7 @@ public class DDLRecordVersionPersistenceTest {
 		DDLRecordVersion newDDLRecordVersion = addDDLRecordVersion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDLRecordVersion.class,
-				DDLRecordVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"recordVersionId"));
@@ -445,7 +449,7 @@ public class DDLRecordVersionPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDLRecordVersion.class,
-				DDLRecordVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"recordVersionId"));
@@ -519,4 +523,5 @@ public class DDLRecordVersionPersistenceTest {
 
 	private List<DDLRecordVersion> _ddlRecordVersions = new ArrayList<DDLRecordVersion>();
 	private DDLRecordVersionPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

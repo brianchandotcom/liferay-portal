@@ -65,6 +65,10 @@ public class DDMStructureLinkPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DDMStructureLinkUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -335,7 +339,7 @@ public class DDMStructureLinkPersistenceTest {
 		DDMStructureLink newDDMStructureLink = addDDMStructureLink();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureLink.class,
-				DDMStructureLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureLinkId",
 				newDDMStructureLink.getStructureLinkId()));
@@ -352,7 +356,7 @@ public class DDMStructureLinkPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureLink.class,
-				DDMStructureLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureLinkId",
 				RandomTestUtil.nextLong()));
@@ -368,7 +372,7 @@ public class DDMStructureLinkPersistenceTest {
 		DDMStructureLink newDDMStructureLink = addDDMStructureLink();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureLink.class,
-				DDMStructureLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"structureLinkId"));
@@ -390,7 +394,7 @@ public class DDMStructureLinkPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureLink.class,
-				DDMStructureLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"structureLinkId"));
@@ -438,4 +442,5 @@ public class DDMStructureLinkPersistenceTest {
 
 	private List<DDMStructureLink> _ddmStructureLinks = new ArrayList<DDMStructureLink>();
 	private DDMStructureLinkPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

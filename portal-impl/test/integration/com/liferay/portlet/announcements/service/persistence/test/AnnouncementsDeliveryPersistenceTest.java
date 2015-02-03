@@ -67,6 +67,10 @@ public class AnnouncementsDeliveryPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = AnnouncementsDeliveryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -345,7 +349,7 @@ public class AnnouncementsDeliveryPersistenceTest {
 		AnnouncementsDelivery newAnnouncementsDelivery = addAnnouncementsDelivery();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsDelivery.class,
-				AnnouncementsDelivery.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("deliveryId",
 				newAnnouncementsDelivery.getDeliveryId()));
@@ -363,7 +367,7 @@ public class AnnouncementsDeliveryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsDelivery.class,
-				AnnouncementsDelivery.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("deliveryId",
 				RandomTestUtil.nextLong()));
@@ -379,7 +383,7 @@ public class AnnouncementsDeliveryPersistenceTest {
 		AnnouncementsDelivery newAnnouncementsDelivery = addAnnouncementsDelivery();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsDelivery.class,
-				AnnouncementsDelivery.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("deliveryId"));
 
@@ -400,7 +404,7 @@ public class AnnouncementsDeliveryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsDelivery.class,
-				AnnouncementsDelivery.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("deliveryId"));
 
@@ -458,4 +462,5 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 	private List<AnnouncementsDelivery> _announcementsDeliveries = new ArrayList<AnnouncementsDelivery>();
 	private AnnouncementsDeliveryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

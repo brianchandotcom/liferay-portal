@@ -68,6 +68,10 @@ public class MDRRulePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = MDRRuleUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -390,7 +394,7 @@ public class MDRRulePersistenceTest {
 		MDRRule newMDRRule = addMDRRule();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRule.class,
-				MDRRule.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleId",
 				newMDRRule.getRuleId()));
@@ -407,7 +411,7 @@ public class MDRRulePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRule.class,
-				MDRRule.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleId",
 				RandomTestUtil.nextLong()));
@@ -423,7 +427,7 @@ public class MDRRulePersistenceTest {
 		MDRRule newMDRRule = addMDRRule();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRule.class,
-				MDRRule.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ruleId"));
 
@@ -444,7 +448,7 @@ public class MDRRulePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRule.class,
-				MDRRule.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ruleId"));
 
@@ -512,4 +516,5 @@ public class MDRRulePersistenceTest {
 
 	private List<MDRRule> _mdrRules = new ArrayList<MDRRule>();
 	private MDRRulePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

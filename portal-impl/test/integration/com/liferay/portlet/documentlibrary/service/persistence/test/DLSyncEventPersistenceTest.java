@@ -65,6 +65,10 @@ public class DLSyncEventPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DLSyncEventUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -326,7 +330,7 @@ public class DLSyncEventPersistenceTest {
 		DLSyncEvent newDLSyncEvent = addDLSyncEvent();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLSyncEvent.class,
-				DLSyncEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("syncEventId",
 				newDLSyncEvent.getSyncEventId()));
@@ -343,7 +347,7 @@ public class DLSyncEventPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLSyncEvent.class,
-				DLSyncEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("syncEventId",
 				RandomTestUtil.nextLong()));
@@ -359,7 +363,7 @@ public class DLSyncEventPersistenceTest {
 		DLSyncEvent newDLSyncEvent = addDLSyncEvent();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLSyncEvent.class,
-				DLSyncEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("syncEventId"));
 
@@ -380,7 +384,7 @@ public class DLSyncEventPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLSyncEvent.class,
-				DLSyncEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("syncEventId"));
 
@@ -429,4 +433,5 @@ public class DLSyncEventPersistenceTest {
 
 	private List<DLSyncEvent> _dlSyncEvents = new ArrayList<DLSyncEvent>();
 	private DLSyncEventPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

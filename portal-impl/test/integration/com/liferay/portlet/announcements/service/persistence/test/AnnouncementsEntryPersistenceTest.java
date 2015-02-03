@@ -65,6 +65,10 @@ public class AnnouncementsEntryPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = AnnouncementsEntryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -424,7 +428,7 @@ public class AnnouncementsEntryPersistenceTest {
 		AnnouncementsEntry newAnnouncementsEntry = addAnnouncementsEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsEntry.class,
-				AnnouncementsEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				newAnnouncementsEntry.getEntryId()));
@@ -441,7 +445,7 @@ public class AnnouncementsEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsEntry.class,
-				AnnouncementsEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				RandomTestUtil.nextLong()));
@@ -457,7 +461,7 @@ public class AnnouncementsEntryPersistenceTest {
 		AnnouncementsEntry newAnnouncementsEntry = addAnnouncementsEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsEntry.class,
-				AnnouncementsEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
@@ -478,7 +482,7 @@ public class AnnouncementsEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AnnouncementsEntry.class,
-				AnnouncementsEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
@@ -535,4 +539,5 @@ public class AnnouncementsEntryPersistenceTest {
 
 	private List<AnnouncementsEntry> _announcementsEntries = new ArrayList<AnnouncementsEntry>();
 	private AnnouncementsEntryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

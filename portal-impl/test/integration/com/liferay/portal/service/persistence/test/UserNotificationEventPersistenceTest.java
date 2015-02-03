@@ -63,6 +63,10 @@ public class UserNotificationEventPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = UserNotificationEventUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -504,7 +508,7 @@ public class UserNotificationEventPersistenceTest {
 		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationEvent.class,
-				UserNotificationEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userNotificationEventId",
 				newUserNotificationEvent.getUserNotificationEventId()));
@@ -522,7 +526,7 @@ public class UserNotificationEventPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationEvent.class,
-				UserNotificationEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userNotificationEventId",
 				RandomTestUtil.nextLong()));
@@ -538,7 +542,7 @@ public class UserNotificationEventPersistenceTest {
 		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationEvent.class,
-				UserNotificationEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"userNotificationEventId"));
@@ -561,7 +565,7 @@ public class UserNotificationEventPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationEvent.class,
-				UserNotificationEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"userNotificationEventId"));
@@ -611,4 +615,5 @@ public class UserNotificationEventPersistenceTest {
 
 	private List<UserNotificationEvent> _userNotificationEvents = new ArrayList<UserNotificationEvent>();
 	private UserNotificationEventPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

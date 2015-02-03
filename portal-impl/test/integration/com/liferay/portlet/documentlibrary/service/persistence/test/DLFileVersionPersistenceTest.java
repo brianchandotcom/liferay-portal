@@ -68,6 +68,10 @@ public class DLFileVersionPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DLFileVersionUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -554,7 +558,7 @@ public class DLFileVersionPersistenceTest {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileVersion.class,
-				DLFileVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileVersionId",
 				newDLFileVersion.getFileVersionId()));
@@ -571,7 +575,7 @@ public class DLFileVersionPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileVersion.class,
-				DLFileVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileVersionId",
 				RandomTestUtil.nextLong()));
@@ -587,7 +591,7 @@ public class DLFileVersionPersistenceTest {
 		DLFileVersion newDLFileVersion = addDLFileVersion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileVersion.class,
-				DLFileVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"fileVersionId"));
@@ -609,7 +613,7 @@ public class DLFileVersionPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileVersion.class,
-				DLFileVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"fileVersionId"));
@@ -713,4 +717,5 @@ public class DLFileVersionPersistenceTest {
 
 	private List<DLFileVersion> _dlFileVersions = new ArrayList<DLFileVersion>();
 	private DLFileVersionPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

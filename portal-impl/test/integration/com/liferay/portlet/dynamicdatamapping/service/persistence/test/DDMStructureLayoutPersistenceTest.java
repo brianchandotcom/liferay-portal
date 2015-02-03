@@ -68,6 +68,10 @@ public class DDMStructureLayoutPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DDMStructureLayoutUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -386,7 +390,7 @@ public class DDMStructureLayoutPersistenceTest {
 		DDMStructureLayout newDDMStructureLayout = addDDMStructureLayout();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureLayout.class,
-				DDMStructureLayout.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureLayoutId",
 				newDDMStructureLayout.getStructureLayoutId()));
@@ -403,7 +407,7 @@ public class DDMStructureLayoutPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureLayout.class,
-				DDMStructureLayout.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureLayoutId",
 				RandomTestUtil.nextLong()));
@@ -419,7 +423,7 @@ public class DDMStructureLayoutPersistenceTest {
 		DDMStructureLayout newDDMStructureLayout = addDDMStructureLayout();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureLayout.class,
-				DDMStructureLayout.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"structureLayoutId"));
@@ -441,7 +445,7 @@ public class DDMStructureLayoutPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureLayout.class,
-				DDMStructureLayout.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"structureLayoutId"));
@@ -510,4 +514,5 @@ public class DDMStructureLayoutPersistenceTest {
 
 	private List<DDMStructureLayout> _ddmStructureLayouts = new ArrayList<DDMStructureLayout>();
 	private DDMStructureLayoutPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

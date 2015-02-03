@@ -64,6 +64,10 @@ public class PasswordPolicyRelPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = PasswordPolicyRelUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -327,7 +331,7 @@ public class PasswordPolicyRelPersistenceTest {
 		PasswordPolicyRel newPasswordPolicyRel = addPasswordPolicyRel();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordPolicyRel.class,
-				PasswordPolicyRel.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordPolicyRelId",
 				newPasswordPolicyRel.getPasswordPolicyRelId()));
@@ -344,7 +348,7 @@ public class PasswordPolicyRelPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordPolicyRel.class,
-				PasswordPolicyRel.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordPolicyRelId",
 				RandomTestUtil.nextLong()));
@@ -360,7 +364,7 @@ public class PasswordPolicyRelPersistenceTest {
 		PasswordPolicyRel newPasswordPolicyRel = addPasswordPolicyRel();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordPolicyRel.class,
-				PasswordPolicyRel.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"passwordPolicyRelId"));
@@ -382,7 +386,7 @@ public class PasswordPolicyRelPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordPolicyRel.class,
-				PasswordPolicyRel.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"passwordPolicyRelId"));
@@ -436,4 +440,5 @@ public class PasswordPolicyRelPersistenceTest {
 
 	private List<PasswordPolicyRel> _passwordPolicyRels = new ArrayList<PasswordPolicyRel>();
 	private PasswordPolicyRelPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

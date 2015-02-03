@@ -64,6 +64,10 @@ public class PortalPreferencesPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = PortalPreferencesUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -315,7 +319,7 @@ public class PortalPreferencesPersistenceTest {
 		PortalPreferences newPortalPreferences = addPortalPreferences();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortalPreferences.class,
-				PortalPreferences.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("portalPreferencesId",
 				newPortalPreferences.getPortalPreferencesId()));
@@ -332,7 +336,7 @@ public class PortalPreferencesPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortalPreferences.class,
-				PortalPreferences.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("portalPreferencesId",
 				RandomTestUtil.nextLong()));
@@ -348,7 +352,7 @@ public class PortalPreferencesPersistenceTest {
 		PortalPreferences newPortalPreferences = addPortalPreferences();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortalPreferences.class,
-				PortalPreferences.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"portalPreferencesId"));
@@ -370,7 +374,7 @@ public class PortalPreferencesPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortalPreferences.class,
-				PortalPreferences.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"portalPreferencesId"));
@@ -424,4 +428,5 @@ public class PortalPreferencesPersistenceTest {
 
 	private List<PortalPreferences> _portalPreferenceses = new ArrayList<PortalPreferences>();
 	private PortalPreferencesPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

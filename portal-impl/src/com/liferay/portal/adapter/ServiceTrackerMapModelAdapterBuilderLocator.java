@@ -93,7 +93,7 @@ public class ServiceTrackerMapModelAdapterBuilderLocator<T, V>
 							parameterizedType.getActualTypeArguments();
 
 						if (ArrayUtil.isEmpty(typeArguments) ||
-							typeArguments.length != 2) {
+							(typeArguments.length != 2)) {
 
 							return;
 						}

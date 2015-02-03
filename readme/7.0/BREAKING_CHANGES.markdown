@@ -810,3 +810,28 @@ particular, it contains the user ID, the problematic screen name, and the list
 of reserved screen names.
 
 ---------------------------------------
+
+### Removed the `selectAndCopy` Method from `liferay/util.js`
+- **Date:** 2015-Feb-3
+- **JIRA Ticket:** LPS-51717
+
+#### What changed?
+
+The `Liferay.Util.selectAndCopy` method has been completely removed from core
+files.
+
+#### Who is affected?
+
+This only affects third party developers who are explicitly calling
+`Liferay.Util.selectAndCopy` for selecting and copying all text in a field. It will not
+affect any bahavior in core files.
+
+#### How should I update my code?
+
+If you are using the method, you can achieve the text selection behavior with the javascript `select` method which focuses the given field and highlights all text.
+
+#### Why was this change made?
+
+This method was removed becuase copying text to clipboard with javascript is disabled in modern browsers, therefore the only working part of this function was selecting all text of the given field which can be accomplished with other existing methods.
+
+---------------------------------------

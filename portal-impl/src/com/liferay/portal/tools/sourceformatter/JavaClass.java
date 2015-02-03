@@ -417,8 +417,8 @@ public class JavaClass {
 		}
 
 		Pattern pattern = Pattern.compile(
-			"\t(private |protected |public )(static )?(transient )?(final)?([\\s\\S]*?)" +
-				javaTerm.getName());
+			"\t(private |protected |public )(static )?(transient )?(final)?" +
+				"([\\s\\S]*?)" + javaTerm.getName());
 
 		Matcher matcher = pattern.matcher(javaTerm.getContent());
 

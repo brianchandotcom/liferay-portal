@@ -207,6 +207,17 @@
 		return (Math.round(Math.random() * (max - min))) + min;
 	};
 
+	Util.selectAndCopy = function(el) {
+		el.focus();
+		el.select();
+
+		if (document.all) {
+			var textRange = el.createTextRange();
+
+			textRange.execCommand('copy');
+		}
+	};
+
 	Util.setBox = function(oldBox, newBox) {
 		for (var i = oldBox.length - 1; i > -1; i--) {
 			oldBox.options[i] = null;

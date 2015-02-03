@@ -73,6 +73,18 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 	}
 
 	@Override
+	public String getSmallImageType() throws PortalException {
+		if ((_smallImageType == null) && isSmallImage()) {
+			Image smallImage = ImageLocalServiceUtil.getImage(
+				getSmallImageId());
+
+			_smallImageType = smallImage.getType();
+		}
+
+		return _smallImageType;
+	}
+
+	@Override
 	public String getSmallImageURL(ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -83,9 +95,8 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 		long smallImageFileEntryId = getSmallImageFileEntryId();
 
 		if (smallImageFileEntryId != 0) {
-			FileEntry fileEntry =
-				PortletFileRepositoryUtil.getPortletFileEntry(
-					smallImageFileEntryId);
+			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+				smallImageFileEntryId);
 
 			return DLUtil.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
@@ -102,18 +113,6 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 		}
 
 		return getCoverImageURL(themeDisplay);
-	}
-
-	@Override
-	public String getSmallImageType() throws PortalException {
-		if ((_smallImageType == null) && isSmallImage()) {
-			Image smallImage = ImageLocalServiceUtil.getImage(
-				getSmallImageId());
-
-			_smallImageType = smallImage.getType();
-		}
-
-		return _smallImageType;
 	}
 
 	@Override

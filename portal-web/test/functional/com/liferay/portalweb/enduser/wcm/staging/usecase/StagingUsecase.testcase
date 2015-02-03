@@ -183,7 +183,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 	</command>
-]
+
 	<command name="DeleteLivePage" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
@@ -3167,8 +3167,8 @@
 		<property name="app.server.bundles.size" value="1" />
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
-		<var name="siteID" value="${siteID}" />
 		<var name="remotePort" value="9080" />
+		<var name="siteID" value="${siteID}" />
 
 		<execute macro="User#loginPG">
 			<var name="nodePort" value="9080" />
@@ -3213,10 +3213,10 @@
 		</execute>
 
 		<execute macro="DMDocument#addPG">
-			<var name="nodePort" value="8080" />
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.jpg" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="nodePort" value="8080" />
 			<var name="siteScopeName" value="Global" />
 		</execute>
 
@@ -3243,13 +3243,13 @@
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
-			<var name="nodePort" value="9080" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="nodePort" value="9080" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
-			<var name="nodePort" value="9080" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="nodePort" value="9080" />
 		</execute>
 
 		<execute macro="User#loginPG">

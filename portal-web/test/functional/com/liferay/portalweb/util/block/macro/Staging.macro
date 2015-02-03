@@ -17,6 +17,7 @@
 						<execute action="CPSitesEdit#type" locator-key1="REMOTE_STAGING_PORT" value1="8080" />
 					</else>
 				</if>
+
 				<execute action="CPSitesEdit#paste" locator-key1="REMOTE_STAGING_SITE_ID" value1="${siteID}" />
 			</then>
 			<else>
@@ -426,7 +427,7 @@
 	<command name="publishGlobalToLiveCP">
 		<var name="key_siteName" value="Global" />
 
-		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS"/>
+		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 
 		<if>
 			<equals arg1="${remoteStaging}" arg2="true" />

@@ -125,6 +125,7 @@
 
 			var totalBoxes = 0;
 			var totalOn = 0;
+
 			var inputs = form.find('input[type=checkbox]');
 
 			if (!_.isArray(name)) {
@@ -872,15 +873,12 @@
 
 			var shiftKey = event.shiftKey ? event.shiftKey : shiftKeyCode;
 
-			var display;
+			var display = 'none';
 
 			if (((keyCode >= 65 && keyCode <= 90) && !shiftKey) ||
 				((keyCode >= 97 && keyCode <= 122) && shiftKey)) {
 
 				display = '';
-			}
-			else {
-				display = 'none';
 			}
 
 			$('#' + span).css('display', display);
@@ -925,12 +923,7 @@
 
 		toCharCode: _.memoize(
 			function(name) {
-				return _.map(
-					name,
-					function(item, index) {
-						return name.charCodeAt(index);
-					}
-				).join('');
+				return _.invoke(name, 'charCodeAt').join('');
 			}
 		),
 

@@ -92,6 +92,8 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.core.ClassLoaderReference;
+import com.thoughtworks.xstream.io.xml.XppDriver;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -2400,7 +2402,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected void initXStream() {
-		_xStream = new XStream();
+		_xStream = new XStream(
+			null, new XppDriver(),
+			new ClassLoaderReference(
+				XStreamAliasRegistryUtil.getAliasesClassLoader(
+					XStream.class.getClassLoader())));
 
 		Map<Class<?>, String> aliases = XStreamAliasRegistryUtil.getAliases();
 

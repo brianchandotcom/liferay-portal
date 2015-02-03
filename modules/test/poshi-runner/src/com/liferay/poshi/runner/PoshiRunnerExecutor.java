@@ -50,8 +50,10 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
-	public static void runFunctionElement(Element element) throws Exception {
-		String classCommandName = element.attributeValue("function");
+	public static void runFunctionElement(Element executeElement)
+		throws Exception {
+
+		String classCommandName = executeElement.attributeValue("function");
 
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
@@ -61,8 +63,8 @@ public class PoshiRunnerExecutor {
 			className);
 
 		for (int i = 0; i < locatorCount; i++) {
-			String locator = element.attributeValue("locator" + (i + 1));
-			String value = element.attributeValue("value" + (i + 1));
+			String locator = executeElement.attributeValue("locator" + (i + 1));
+			String value = executeElement.attributeValue("value" + (i + 1));
 
 			if (locator != null) {
 				if (locator.contains("#")) {
@@ -90,10 +92,10 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerVariablesUtil.pushCommandMap();
 
-		Element function = PoshiRunnerContext.getFunctionCommandElement(
+		Element commandElement = PoshiRunnerContext.getFunctionCommandElement(
 			classCommandName);
 
-		parseElement(function);
+		parseElement(commandElement);
 
 		PoshiRunnerVariablesUtil.popCommandMap();
 	}
@@ -127,27 +129,30 @@ public class PoshiRunnerExecutor {
 			PoshiRunnerVariablesUtil.putIntoExecuteMap(name, value);
 		}
 
+		PoshiRunnerVariablesUtil.pushCommandMap();
+
 		Element commandElement = PoshiRunnerContext.getMacroCommandElement(
 			classCommandName);
-
-		PoshiRunnerVariablesUtil.pushCommandMap();
 
 		parseElement(commandElement);
 
 		PoshiRunnerVariablesUtil.popCommandMap();
 	}
 
-	public static void runSeleniumElement(Element element) throws Exception {
+	public static void runSeleniumElement(Element executeElement)
+		throws Exception {
+
 		List<String> arguments = new ArrayList<>();
 		List<Class> parameterClasses = new ArrayList<>();
 
-		String selenium = element.attributeValue("selenium");
+		String selenium = executeElement.attributeValue("selenium");
 
 		int parameterCount = PoshiRunnerContext.getSeleniumParameterCount(
 			selenium);
 
 		for (int i = 0; i < parameterCount; i++) {
-			String argument = element.attributeValue("argument" + (i + 1));
+			String argument = executeElement.attributeValue(
+				"argument" + (i + 1));
 
 			if (argument == null) {
 				if (i == 0) {

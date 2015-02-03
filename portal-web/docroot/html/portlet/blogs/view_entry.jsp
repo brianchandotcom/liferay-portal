@@ -83,7 +83,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	%>
 
 	<c:if test="<%= (previousEntry != null) || (nextEntry != null) %>">
-		<div class="entry-navigation container-fluid">
+		<div class="container-fluid entry-navigation">
 			<div class="col-md-6 col-sm-6 previous-entry">
 				<c:if test="<%= previousEntry != null %>">
 					<h2><liferay-ui:message key="previous-entry" /></h2>
@@ -99,7 +99,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 					%>
 
 					<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-						<div class="small-image-wrapper visible-md-block visible-lg-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></div>
+						<div class="small-image-wrapper visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></div>
 					</c:if>
 
 					<div class="entry-content-wrapper">
@@ -142,7 +142,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 					%>
 
 					<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-						<div class="small-image-wrapper visible-md-block visible-lg-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></div>
+						<div class="small-image-wrapper visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></div>
 					</c:if>
 
 					<div class="entry-content-wrapper">

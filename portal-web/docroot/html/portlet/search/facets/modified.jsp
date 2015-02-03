@@ -144,11 +144,11 @@ if (fieldParamSelection.equals("0")) {
 							dayValue="<%= fromCalendar.get(Calendar.DATE) %>"
 							disabled="<%= false %>"
 							firstDayOfWeek="<%= fromCalendar.getFirstDayOfWeek() - 1 %>"
-							monthValue="<%= fromCalendar.get(Calendar.MONTH) %>"
 							monthParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "monthFrom" %>'
+							monthValue="<%= fromCalendar.get(Calendar.MONTH) %>"
 							name='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "from" %>'
-							yearValue="<%= fromCalendar.get(Calendar.YEAR) %>"
 							yearParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "yearFrom" %>'
+							yearValue="<%= fromCalendar.get(Calendar.YEAR) %>"
 						/>
 					</aui:field-wrapper>
 				</div>
@@ -160,11 +160,11 @@ if (fieldParamSelection.equals("0")) {
 							dayValue="<%= toCalendar.get(Calendar.DATE) %>"
 							disabled="<%= false %>"
 							firstDayOfWeek="<%= toCalendar.getFirstDayOfWeek() - 1 %>"
-							monthValue="<%= toCalendar.get(Calendar.MONTH) %>"
 							monthParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "monthTo" %>'
+							monthValue="<%= toCalendar.get(Calendar.MONTH) %>"
 							name='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "to" %>'
-							yearValue="<%= toCalendar.get(Calendar.YEAR) %>"
 							yearParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "yearTo" %>'
+							yearValue="<%= toCalendar.get(Calendar.YEAR) %>"
 						/>
 					</aui:field-wrapper>
 				</div>
@@ -186,6 +186,7 @@ if (fieldParamSelection.equals("0")) {
 	%>
 
 	<aui:script use="liferay-token-list">
+
 		<%
 		String tokenLabel = modifiedLabel;
 

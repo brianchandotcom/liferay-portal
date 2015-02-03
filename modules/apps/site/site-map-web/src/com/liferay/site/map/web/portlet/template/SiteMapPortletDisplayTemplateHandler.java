@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.site.map.web.constants.SiteMapPortletKeys;
 
 import java.util.List;
 import java.util.Locale;
@@ -43,7 +43,7 @@ public class SiteMapPortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.SITE_MAP, locale);
+			SiteMapPortletKeys.SITE_MAP, locale);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -51,7 +51,7 @@ public class SiteMapPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return PortletKeys.SITE_MAP;
+		return SiteMapPortletKeys.SITE_MAP;
 	}
 
 	@Override

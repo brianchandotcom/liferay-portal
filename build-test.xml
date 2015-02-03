@@ -565,7 +565,7 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="record-testray-logs-path">
+	<macrodef name="record-testray-logs">
 		<sequential>
 			<if>
 				<isset property="jenkins.testray.results.dir" />
@@ -576,12 +576,12 @@
 
 					<property name="testray.logs.dir" value="${jenkins.testray.results.dir}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
 
-					<property name="testray.logs.console.output" value="${testray.logs.dir}/consoleText" />
-					<property name="testray.logs.report.path" value="${testray.logs.dir}/report.html" />
+					<property name="testray.logs.console" value="${testray.logs.dir}/console.txt" />
+					<property name="testray.logs.report" value="${testray.logs.dir}/report.html" />
 				</then>
 				<else>
-					<property name="testray.logs.console.output" value="" />
-					<property name="testray.logs.report.path" value="" />
+					<property name="testray.logs.console" value="" />
+					<property name="testray.logs.report" value="" />
 				</else>
 			</if>
 		</sequential>
@@ -1018,7 +1018,7 @@ create database lportal${database.index} character set utf8;</echo>
 		<record-env-operating-system />
 		<record-testray-components />
 		<record-testray-job-name />
-		<record-testray-logs-path />
+		<record-testray-logs />
 		<record-testray-project-name />
 		<record-testray-team-name />
 
@@ -1026,6 +1026,8 @@ create database lportal${database.index} character set utf8;</echo>
 			<![CDATA[
 				<properties>
 					<property name="testray.component.names" value="${testray.component.names}" />
+					<property name="testray.logs.console" value="${testray.logs.console}" />
+					<property name="testray.logs.report" value="${testray.logs.report}" />
 					<property name="testray.main.component.name" value="${testray.main.component.name}" />
 					<property name="testray.team.name" value="${testray.team.name}" />
 					<property name="testray.testcase.description" value="${testray.testcase.description}" />
@@ -1065,8 +1067,6 @@ create database lportal${database.index} character set utf8;</echo>
 					<property name="testray.build.time" value="${testray.build.time}" />
 					<property name="testray.build.type" value="${testray.build.type}" />
 					<property name="testray.job.name" value="${testray.job.name}" />
-					<property name="testray.logs.console.output" value="${testray.logs.console.output}" />
-					<property name="testray.logs.report.path" value="${testray.logs.report.path}" />
 					<property name="testray.product.type" value="${testray.product.type}" />
 					<property name="testray.product.version" value="${testray.product.version}" />
 					<property name="testray.project.name" value="${testray.project.name}" />
@@ -4066,6 +4066,19 @@ if (ppstate.equals("normal")) {
 
 				<if>
 					<and>
+						<available file="portal-web/test-results/functional/report.html" />
+						<equals arg1="${test.selenium.logger.enabled}" arg2="true" />
+					</and>
+					<then>
+						<copy
+							file="portal-web/test-results/functional/report.html"
+							tofile="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/report.html"
+						/>
+					</then>
+				</if>
+
+				<if>
+					<and>
 						<available file="portal-web/test-results/functional/screenshots" />
 						<equals arg1="${test.save.screenshot}" arg2="true" />
 					</and>
@@ -4075,19 +4088,6 @@ if (ppstate.equals("normal")) {
 								dir="portal-web/test-results/functional/screenshots"
 							/>
 						</copy>
-					</then>
-				</if>
-
-				<if>
-					<and>
-						<available file="portal-web/test-results/functional/report.html" />
-						<equals arg1="${test.selenium.logger.enabled}" arg2="true" />
-					</and>
-					<then>
-						<copy
-							file="portal-web/test-results/functional/report.html"
-							tofile="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/report.html"
-						/>
 					</then>
 				</if>
 
@@ -4137,7 +4137,7 @@ if (ppstate.equals("normal")) {
 							/>
 						</copy>
 
-						<get dest="${testray.logs.dir}/consoleText" ignoreerrors="true" src="${env.BUILD_URL}/consoleText" />
+						<get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${env.BUILD_URL}/consoleText" />
 					</then>
 				</if>
 			</then>

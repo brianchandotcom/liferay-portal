@@ -16,10 +16,16 @@ package com.liferay.portal.kernel.dao.search;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+
+import java.util.Locale;
 
 import javax.portlet.PortletResponse;
 
@@ -65,7 +71,7 @@ public class RowChecker {
 
 	public String getAllRowsCheckBox(HttpServletRequest request) {
 		return getAllRowsCheckbox(
-			request, _allRowIds, StringUtil.quote(_rowIds));
+			getLocale(request), _allRowIds, StringUtil.quote(_rowIds));
 	}
 
 	public String getAllRowsId() {
@@ -155,7 +161,7 @@ public class RowChecker {
 	}
 
 	protected String getAllRowsCheckbox(
-		HttpServletRequest request, String name, String checkBoxRowIds) {
+		Locale locale, String name, String checkBoxRowIds) {
 
 		if (Validator.isNull(name)) {
 			return StringPool.BLANK;
@@ -166,7 +172,12 @@ public class RowChecker {
 		sb.append("<input name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");
-		sb.append(LanguageUtil.get(request.getLocale(), "select-all"));
+
+		if (locale == null) {
+			locale = LocaleUtil.getDefault();
+		}
+
+		sb.append(LanguageUtil.get(locale, "select-all"));
 		sb.append("\" type=\"checkbox\" ");
 		sb.append("onClick=\"Liferay.Util.checkAll(");
 		sb.append("AUI().one(this).ancestor('");
@@ -176,6 +187,17 @@ public class RowChecker {
 		sb.append(");\">");
 
 		return sb.toString();
+	}
+
+	protected Locale getLocale(HttpServletRequest request) {
+		if (request != null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			return themeDisplay.getLocale();
+		}
+
+		return LocaleThreadLocal.getThemeDisplayLocale();
 	}
 
 	protected String getNamespacedValue(String value) {

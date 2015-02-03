@@ -31,16 +31,16 @@ MBThread thread = (MBThread)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WAL
 int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH)).intValue();
 
 String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:randomNamespace");
-int i = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:i"));
+int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
 MBMessage rootMessage = (MBMessage)request.getAttribute("liferay-ui:discussion:rootMessage");
 List<RatingsEntry> ratingsEntries = (List<RatingsEntry>)request.getAttribute("liferay-ui:discussion:ratingsEntries");
 List<RatingsStats> ratingsStatsList = (List<RatingsStats>)request.getAttribute("liferay-ui:discussion:ratingsStatsList");
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
-i++;
+index++;
 
-request.setAttribute("liferay-ui:discussion:i", new Integer(i));
+request.setAttribute("liferay-ui:discussion:index", new Integer(index));
 %>
 
 <c:if test="<%= !(!message.isApproved() && ((message.getUserId() != user.getUserId()) || user.isDefaultUser()) && !permissionChecker.isGroupAdmin(scopeGroupId)) && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW) %>">
@@ -48,8 +48,8 @@ request.setAttribute("liferay-ui:discussion:i", new Integer(i));
 		<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
 			<a name="<%= randomNamespace %>message_<%= message.getMessageId() %>"></a>
 
-			<aui:input name='<%= "messageId" + i %>' type="hidden" value="<%= message.getMessageId() %>" />
-			<aui:input name='<%= "parentMessageId" + i %>' type="hidden" value="<%= message.getMessageId() %>" />
+			<aui:input name='<%= "messageId" + index %>' type="hidden" value="<%= message.getMessageId() %>" />
+			<aui:input name='<%= "parentMessageId" + index %>' type="hidden" value="<%= message.getMessageId() %>" />
 		</div>
 
 		<div class="lfr-discussion-details">
@@ -172,8 +172,8 @@ request.setAttribute("liferay-ui:discussion:i", new Integer(i));
 
 						<%
 						String taglibPostReplyURL = "javascript:"
-							+ randomNamespace + "showEditor('" + namespace + randomNamespace + "postReplyBody" + i + "','" + namespace + randomNamespace + "postReplyForm" + i + "'); "
-							+ randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody" + i + "','" + namespace + randomNamespace + "editForm" + i + "');";
+							+ randomNamespace + "showEditor('" + namespace + randomNamespace + "postReplyBody" + index + "','" + namespace + randomNamespace + "postReplyForm" + index + "'); "
+							+ randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody" + index + "','" + namespace + randomNamespace + "editForm" + index + "');";
 						%>
 
 						<c:choose>
@@ -195,14 +195,14 @@ request.setAttribute("liferay-ui:discussion:i", new Integer(i));
 					</c:if>
 
 					<ul class="lfr-discussion-actions">
-						<c:if test="<%= i > 0 %>">
+						<c:if test="<%= index > 0 %>">
 
 							<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
 
 								<%
 								String taglibEditURL = "javascript:"
-									+ randomNamespace + "showEditor('" + namespace + randomNamespace + "editReplyBody" + i + "','" + namespace + randomNamespace + "editForm" + i + "'); "
-									+ randomNamespace + "hideEditor('" + namespace + randomNamespace + "postReplyBody" + i + "','" + namespace + randomNamespace + "postReplyForm" + i + "')";
+									+ randomNamespace + "showEditor('" + namespace + randomNamespace + "editReplyBody" + index + "','" + namespace + randomNamespace + "editForm" + index + "'); "
+									+ randomNamespace + "hideEditor('" + namespace + randomNamespace + "postReplyBody" + index + "','" + namespace + randomNamespace + "postReplyForm" + index + "')";
 								%>
 
 								<li class="lfr-discussion-edit">
@@ -218,7 +218,7 @@ request.setAttribute("liferay-ui:discussion:i", new Integer(i));
 							<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.DELETE_DISCUSSION) %>">
 
 								<%
-								String taglibDeleteURL = "javascript:" + randomNamespace + "deleteMessage(" + i + ");";
+								String taglibDeleteURL = "javascript:" + randomNamespace + "deleteMessage(" + index + ");";
 								%>
 
 								<li class="lfr-discussion-delete">
@@ -235,7 +235,7 @@ request.setAttribute("liferay-ui:discussion:i", new Integer(i));
 		</div>
 
 		<div class="lfr-discussion-form-container">
-			<div class="lfr-discussion-form-reply" id='<portlet:namespace /><%= randomNamespace + "postReplyForm" + i %>' style="display: none;">
+			<div class="lfr-discussion-form-reply" id='<portlet:namespace /><%= randomNamespace + "postReplyForm" + index %>' style="display: none;">
 				<div class="lfr-discussion-details">
 					<liferay-ui:user-display
 						displayStyle="2"
@@ -245,33 +245,33 @@ request.setAttribute("liferay-ui:discussion:i", new Integer(i));
 				</div>
 
 				<div class="lfr-discussion-body">
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody" + i %>' onChangeMethod='<%= randomNamespace + i + "OnChange" %>' placeholder="type-your-comment-here" />
+					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "OnChange" %>' placeholder="type-your-comment-here" />
 
-					<aui:input name='<%= "postReplyBody" + i %>' type="hidden" />
+					<aui:input name='<%= "postReplyBody" + index %>' type="hidden" />
 
 					<aui:button-row>
-						<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+						<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton" + index %>' onClick='<%= randomNamespace + "postReply(" + index + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 
 						<%
-						String taglibCancel = randomNamespace + "hideEditor('" + namespace + randomNamespace + "postReplyBody" + i + "','" + namespace + randomNamespace + "postReplyForm" + i + "')";
+						String taglibCancel = randomNamespace + "hideEditor('" + namespace + randomNamespace + "postReplyBody" + index + "','" + namespace + randomNamespace + "postReplyForm" + index + "')";
 						%>
 
 						<aui:button cssClass="btn-comment" onClick="<%= taglibCancel %>" type="cancel" />
 					</aui:button-row>
 
 					<aui:script>
-						window['<%= namespace + randomNamespace + i %>OnChange'] = function(html) {
-							Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton<%= i %>', (html === ''));
+						window['<%= namespace + randomNamespace + index %>OnChange'] = function(html) {
+							Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton<%= index %>', (html === ''));
 						};
 					</aui:script>
 				</div>
 			</div>
 
 			<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
-				<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= message.getBody() %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "editReplyBody" + i %>' />
+				<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
+					<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= message.getBody() %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "editReplyBody" + index %>' />
 
-					<aui:input name='<%= "editReplyBody" + i %>' type="hidden" value="<%= message.getBody() %>" />
+					<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= message.getBody() %>" />
 
 					<%
 					boolean pending = message.isPending();
@@ -289,10 +289,10 @@ request.setAttribute("liferay-ui:discussion:i", new Integer(i));
 					%>
 
 					<aui:button-row>
-						<aui:button name='<%= randomNamespace + "editReplyButton" + i %>' onClick='<%= randomNamespace + "updateMessage(" + i + ");" %>' value="<%= publishButtonLabel %>" />
+						<aui:button name='<%= randomNamespace + "editReplyButton" + index %>' onClick='<%= randomNamespace + "updateMessage(" + index + ");" %>' value="<%= publishButtonLabel %>" />
 
 						<%
-						String taglibCancel = randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody" + i + "','" + namespace + randomNamespace + "editForm" + i + "');";
+						String taglibCancel = randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody" + index + "','" + namespace + randomNamespace + "editForm" + index + "');";
 						%>
 
 						<aui:button onClick="<%= taglibCancel %>" type="cancel" />

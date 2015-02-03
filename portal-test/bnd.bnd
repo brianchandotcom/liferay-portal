@@ -1,9 +1,17 @@
 Bundle-Name: Liferay Portal Test
 Bundle-Version: 6.2.0
-Export-Package: *
+Export-Package:\
+	com.liferay.portal.kernel.test,\
+	com.liferay.portal.kernel.test.randomizerbumpers,\
+	com.liferay.portal.kernel.test.rule,\
+	com.liferay.portal.kernel.test.util,\
+	com.liferay.portlet.messageboards.util.test,\
+	com.liferay.portlet.ratings.util.test,\
+	junit.*,\
+	org.hamcrest.*,\
+	org.junit.*
 Include-Resource:\
 	classes,\
 	@${project.dir}/../lib/development/dumbster.jar,\
 	@${project.dir}/../lib/development/hamcrest-core.jar,\
-	@${project.dir}/../lib/development/junit.jar,\
-	@${project.dir}/../lib/portal/aspectj-rt.jar
+	@${project.dir}/../lib/development/junit.jar

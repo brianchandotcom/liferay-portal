@@ -1035,6 +1035,15 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public boolean isTypeUserPersonalPanel() {
+		if (getType().equals(LayoutConstants.TYPE_USER_PERSONAL_PANEL)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isTypeEmbedded() {
 		if (getType().equals(LayoutConstants.TYPE_EMBEDDED)) {
 			return true;

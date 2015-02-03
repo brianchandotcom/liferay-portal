@@ -3702,8 +3702,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			defaultUserId, group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			PropsValues.USER_PERSONAL_PANEL_LAYOUT_NAME, StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-			serviceContext);
+			StringPool.BLANK, LayoutConstants.TYPE_USER_PERSONAL_PANEL, false,
+			friendlyURL, serviceContext);
 	}
 
 	protected void deletePortletData(Group group) throws PortalException {

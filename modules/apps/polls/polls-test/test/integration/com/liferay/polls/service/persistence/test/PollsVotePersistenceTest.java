@@ -71,6 +71,10 @@ public class PollsVotePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = PollsVoteUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -416,7 +420,7 @@ public class PollsVotePersistenceTest {
 		PollsVote newPollsVote = addPollsVote();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsVote.class,
-				PollsVote.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("voteId",
 				newPollsVote.getVoteId()));
@@ -433,7 +437,7 @@ public class PollsVotePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsVote.class,
-				PollsVote.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("voteId",
 				RandomTestUtil.nextLong()));
@@ -449,7 +453,7 @@ public class PollsVotePersistenceTest {
 		PollsVote newPollsVote = addPollsVote();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsVote.class,
-				PollsVote.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("voteId"));
 
@@ -470,7 +474,7 @@ public class PollsVotePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsVote.class,
-				PollsVote.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("voteId"));
 
@@ -541,4 +545,5 @@ public class PollsVotePersistenceTest {
 
 	private List<PollsVote> _pollsVotes = new ArrayList<PollsVote>();
 	private PollsVotePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -70,6 +70,10 @@ public class WikiPageResourcePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = WikiPageResourceUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -331,7 +335,7 @@ public class WikiPageResourcePersistenceTest {
 		WikiPageResource newWikiPageResource = addWikiPageResource();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPageResource.class,
-				WikiPageResource.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePrimKey",
 				newWikiPageResource.getResourcePrimKey()));
@@ -348,7 +352,7 @@ public class WikiPageResourcePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPageResource.class,
-				WikiPageResource.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePrimKey",
 				RandomTestUtil.nextLong()));
@@ -364,7 +368,7 @@ public class WikiPageResourcePersistenceTest {
 		WikiPageResource newWikiPageResource = addWikiPageResource();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPageResource.class,
-				WikiPageResource.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"resourcePrimKey"));
@@ -386,7 +390,7 @@ public class WikiPageResourcePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPageResource.class,
-				WikiPageResource.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"resourcePrimKey"));
@@ -438,4 +442,5 @@ public class WikiPageResourcePersistenceTest {
 
 	private List<WikiPageResource> _wikiPageResources = new ArrayList<WikiPageResource>();
 	private WikiPageResourcePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

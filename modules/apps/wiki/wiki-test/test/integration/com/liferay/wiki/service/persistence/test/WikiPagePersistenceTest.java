@@ -72,6 +72,10 @@ public class WikiPagePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = WikiPageUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -884,7 +888,7 @@ public class WikiPagePersistenceTest {
 		WikiPage newWikiPage = addWikiPage();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPage.class,
-				WikiPage.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("pageId",
 				newWikiPage.getPageId()));
@@ -901,7 +905,7 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPage.class,
-				WikiPage.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("pageId",
 				RandomTestUtil.nextLong()));
@@ -917,7 +921,7 @@ public class WikiPagePersistenceTest {
 		WikiPage newWikiPage = addWikiPage();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPage.class,
-				WikiPage.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("pageId"));
 
@@ -938,7 +942,7 @@ public class WikiPagePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiPage.class,
-				WikiPage.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("pageId"));
 
@@ -1046,4 +1050,5 @@ public class WikiPagePersistenceTest {
 
 	private List<WikiPage> _wikiPages = new ArrayList<WikiPage>();
 	private WikiPagePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

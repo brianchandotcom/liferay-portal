@@ -162,29 +162,32 @@
 		},
 
 		disableElements: function(el) {
-			el = $(el);
+			var el = $(el)[0];
 
-			el.off();
+			if (el) {
+				var children = el.getElementsByTagName('*');
 
-			el.find('*').each(
-				function(index, item) {
-					item = $(item);
+				var emptyFnFalse = _.constant(false);
 
-					item.off();
+				for (var i = children.length - 1; i >= 0; i--) {
+					var item = children[i];
 
-					item.css('cursor', 'default');
+					item.style.cursor = 'default';
 
-					item.prop('disabled', true);
+					item.onclick = emptyFnFalse;
+					item.onmouseover = emptyFnFalse;
+					item.onmouseout = emptyFnFalse;
+					item.onmouseenter = emptyFnFalse;
+					item.onmouseleave = emptyFnFalse;
 
-					if (item.attr('action')) {
-						item.attr('action', '');
-					}
+					item.action = '';
+					item.disabled = true;
+					item.href = 'javascript:;';
+					item.onsubmit = emptyFnFalse;
 
-					if (item.attr('href')) {
-						item.attr('href', 'javascript:;');
-					}
+					$(item).off();
 				}
-			);
+			}
 		},
 
 		disableEsc: function() {

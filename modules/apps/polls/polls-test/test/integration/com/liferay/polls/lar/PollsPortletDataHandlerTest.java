@@ -20,7 +20,7 @@ import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
-import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
+import com.liferay.portal.test.lar.BasePortletDataHandlerTestCase;
 
 import org.jboss.arquillian.junit.Arquillian;
 

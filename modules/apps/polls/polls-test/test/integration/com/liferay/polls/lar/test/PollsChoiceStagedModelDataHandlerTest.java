@@ -12,15 +12,12 @@
  * details.
  */
 
-package com.liferay.polls.lar;
+package com.liferay.polls.lar.test;
 
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
-import com.liferay.polls.service.PollsVoteLocalServiceUtil;
-import com.liferay.polls.service.persistence.PollsChoiceUtil;
 import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
@@ -44,7 +41,7 @@ import org.junit.runner.RunWith;
  * @author Mate Thurzo
  */
 @RunWith(Arquillian.class)
-public class PollsVoteStagedModelDataHandlerTest
+public class PollsChoiceStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@Rule
@@ -64,14 +61,6 @@ public class PollsVoteStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, PollsQuestion.class, question);
 
-		PollsChoice choice = PollsTestUtil.addChoice(
-			group.getGroupId(), question.getQuestionId());
-
-		PollsChoiceUtil.update(choice);
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, PollsChoice.class, choice);
-
 		return dependentStagedModelsMap;
 	}
 
@@ -81,25 +70,19 @@ public class PollsVoteStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		List<StagedModel> questionDependentStagedModels =
-			dependentStagedModelsMap.get(PollsQuestion.class.getSimpleName());
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			PollsQuestion.class.getSimpleName());
 
-		PollsQuestion question =
-			(PollsQuestion)questionDependentStagedModels.get(0);
+		PollsQuestion question = (PollsQuestion)dependentStagedModels.get(0);
 
-		List<StagedModel>  choiceDependentStagedModels =
-			dependentStagedModelsMap.get(PollsChoice.class.getSimpleName());
-
-		PollsChoice choice = (PollsChoice)choiceDependentStagedModels.get(0);
-
-		return PollsTestUtil.addVote(
-			group.getGroupId(), question.getQuestionId(), choice.getChoiceId());
+		return PollsTestUtil.addChoice(
+			group.getGroupId(), question.getQuestionId());
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
-			return PollsVoteLocalServiceUtil.getPollsVoteByUuidAndGroupId(
+			return PollsChoiceLocalServiceUtil.getPollsChoiceByUuidAndGroupId(
 				uuid, group.getGroupId());
 		}
 		catch (Exception e) {
@@ -109,7 +92,7 @@ public class PollsVoteStagedModelDataHandlerTest
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return PollsVote.class;
+		return PollsChoice.class;
 	}
 
 	@Override
@@ -118,23 +101,12 @@ public class PollsVoteStagedModelDataHandlerTest
 			Group group)
 		throws Exception {
 
-		List<StagedModel> choiceDependentStagedModels =
-			dependentStagedModelsMap.get(PollsChoice.class.getSimpleName());
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			PollsQuestion.class.getSimpleName());
 
-		Assert.assertEquals(1, choiceDependentStagedModels.size());
+		Assert.assertEquals(1, dependentStagedModels.size());
 
-		PollsChoice choice = (PollsChoice)choiceDependentStagedModels.get(0);
-
-		PollsChoiceLocalServiceUtil.getPollsChoiceByUuidAndGroupId(
-			choice.getUuid(), group.getGroupId());
-
-		List<StagedModel> questionDependentStagedModels =
-			dependentStagedModelsMap.get(PollsQuestion.class.getSimpleName());
-
-		Assert.assertEquals(1, questionDependentStagedModels.size());
-
-		PollsQuestion question =
-			(PollsQuestion)questionDependentStagedModels.get(0);
+		PollsQuestion question = (PollsQuestion)dependentStagedModels.get(0);
 
 		PollsQuestionLocalServiceUtil.getPollsQuestionByUuidAndGroupId(
 			question.getUuid(), group.getGroupId());

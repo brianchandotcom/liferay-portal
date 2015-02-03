@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.polls.lar;
+package com.liferay.polls.lar.test;
 
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionLocalServiceUtil;

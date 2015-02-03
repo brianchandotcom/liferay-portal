@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-wikiSettings = WikiSettings.getInstance(themeDisplay.getSiteGroupId(), request.getParameterMap());
+MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHelper);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
@@ -57,7 +57,7 @@ wikiSettings = WikiSettings.getInstance(themeDisplay.getSiteGroupId(), request.g
 				<dl>
 
 					<%
-					Map<String, String> definitionTerms = com.liferay.wiki.web.util.WikiUtil.getEmailFromDefinitionTerms(renderRequest);
+					Map<String, String> definitionTerms = mailTemplatesHelper.getEmailFromDefinitionTerms();
 
 					for (Map.Entry<String, String> definitionTerm : definitionTerms.entrySet()) {
 					%>
@@ -78,7 +78,7 @@ wikiSettings = WikiSettings.getInstance(themeDisplay.getSiteGroupId(), request.g
 		</liferay-ui:section>
 
 		<%
-		Map<String, String> definitionTerms = WikiUtil.getEmailNotificationDefinitionTerms(renderRequest, wikiSettings.getEmailFromAddress(), wikiSettings.getEmailFromName());
+		Map<String, String> definitionTerms = mailTemplatesHelper.getEmailNotificationDefinitionTerms();
 		%>
 
 		<liferay-ui:section>

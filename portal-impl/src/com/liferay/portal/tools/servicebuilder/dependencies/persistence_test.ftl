@@ -96,6 +96,10 @@ public class ${entity.name}PersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ${entity.name}Util.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -755,7 +759,7 @@ public class ${entity.name}PersistenceTest {
 	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
 		${entity.name} new${entity.name} = add${entity.name}();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(${entity.name}.class, ${entity.name}.class.getClassLoader());
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(${entity.name}.class, _dynamicQueryClassLoader);
 
 		<#if entity.hasCompoundPK()>
 			<#list entity.PKList as column>
@@ -778,7 +782,7 @@ public class ${entity.name}PersistenceTest {
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(${entity.name}.class, ${entity.name}.class.getClassLoader());
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(${entity.name}.class, _dynamicQueryClassLoader);
 
 		<#if entity.hasCompoundPK()>
 			<#list entity.PKList as column>
@@ -819,7 +823,7 @@ public class ${entity.name}PersistenceTest {
 	public void testDynamicQueryByProjectionExisting() throws Exception {
 		${entity.name} new${entity.name} = add${entity.name}();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(${entity.name}.class, ${entity.name}.class.getClassLoader());
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(${entity.name}.class, _dynamicQueryClassLoader);
 
 		<#assign column = entity.PKList[0]>
 
@@ -846,7 +850,7 @@ public class ${entity.name}PersistenceTest {
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(${entity.name}.class, ${entity.name}.class.getClassLoader());
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(${entity.name}.class, _dynamicQueryClassLoader);
 
 		<#assign column = entity.PKList[0]>
 
@@ -1237,5 +1241,6 @@ public class ${entity.name}PersistenceTest {
 
 	private List<${entity.name}> _${entity.varNames} = new ArrayList<${entity.name}>();
 	private ${entity.name}Persistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 
 }

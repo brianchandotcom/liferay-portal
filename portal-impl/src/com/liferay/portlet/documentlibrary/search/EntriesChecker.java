@@ -83,7 +83,7 @@ public class EntriesChecker extends RowChecker {
 	public String getAllRowsCheckBox(HttpServletRequest request) {
 		if (_documentLibraryDisplayPortlet) {
 			return getAllRowsCheckbox(
-				request, getAllRowIds(), getEntryRowIds());
+				getLocale(request), getAllRowIds(), getEntryRowIds());
 		}
 
 		return null;

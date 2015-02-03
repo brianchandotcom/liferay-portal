@@ -326,7 +326,7 @@ public class JavaClass {
 
 	protected void checkFinalableFieldType(
 			JavaTerm javaTerm, Set<String> annotationsExclusions,
-			boolean isStatic)
+			String modifierDefinition)
 		throws Exception {
 
 		String javaTermContent = javaTerm.getContent();
@@ -356,16 +356,8 @@ public class JavaClass {
 			return;
 		}
 
-		String newJavaTermContent = null;
-
-		if (isStatic) {
-			newJavaTermContent = StringUtil.replaceFirst(
-				javaTermContent, "private static ", "private static final ");
-		}
-		else {
-			newJavaTermContent = StringUtil.replaceFirst(
-				javaTermContent, "private ", "private final ");
-		}
+		String newJavaTermContent = StringUtil.replaceFirst(
+			javaTermContent, modifierDefinition, modifierDefinition + "final ");
 
 		_content = StringUtil.replace(
 			_content, javaTermContent, newJavaTermContent);
@@ -402,18 +394,20 @@ public class JavaClass {
 		}
 
 		Pattern pattern = Pattern.compile(
-			"\t(private |protected |public )(static )?(final)?([\\s\\S]*?)" +
-				javaTerm.getName());
+			"\t(private |protected |public )(static )?(transient )?(final)?" +
+				"([\\s\\S]*?)" + javaTerm.getName());
 
-		Matcher matcher = pattern.matcher(javaTerm.getContent());
+		String javaTermContent = javaTerm.getContent();
+
+		Matcher matcher = pattern.matcher(javaTermContent);
 
 		if (!matcher.find()) {
 			return;
 		}
 
-		boolean isFinal = Validator.isNotNull(matcher.group(3));
+		boolean isFinal = Validator.isNotNull(matcher.group(4));
 		boolean isStatic = Validator.isNotNull(matcher.group(2));
-		String javaFieldType = StringUtil.trim(matcher.group(4));
+		String javaFieldType = StringUtil.trim(matcher.group(5));
 
 		if (isFinal && isStatic && javaFieldType.startsWith("Map<")) {
 			checkMutableFieldType(javaTerm);
@@ -434,7 +428,11 @@ public class JavaClass {
 			}
 		}
 		else {
-			checkFinalableFieldType(javaTerm, annotationsExclusions, isStatic);
+			String modifierDefinition = javaTermContent.substring(
+				matcher.start(1), matcher.start(5));
+
+			checkFinalableFieldType(
+				javaTerm, annotationsExclusions, modifierDefinition);
 		}
 	}
 

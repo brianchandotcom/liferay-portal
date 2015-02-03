@@ -555,6 +555,43 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="record-testray-team-name">
+		<sequential>
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					import org.apache.commons.lang.WordUtils;
+
+					String testrayTeams = project.getProperty("testray.teams");
+
+					String[] testrayTeamList = testrayTeams.split(",");
+
+					for (String testrayTeam : testrayTeamList) {
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("testray.team.");
+						sb.append(testrayTeam);
+						sb.append(".components");
+
+						String testrayMainComponentName = project.getProperty("testray.main.component.name");
+						String testrayTeamComponents = project.getProperty(sb.toString());
+
+						String[] testrayTeamComponentList = testrayTeamComponents.split(",");
+
+						for (String testrayTeamComponent : testrayTeamComponentList) {
+							if (testrayTeamComponent.equals(testrayMainComponentName)) {
+								String testrayTeamName = testrayTeam.replace('-', ' ');
+
+								project.setProperty("testray.team.name", WordUtils.capitalize(testrayTeamName));
+
+								break;
+							}
+						}
+					}
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="set-app-server-properties">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
@@ -916,7 +953,7 @@ create database lportal${database.index} character set utf8;</echo>
 		</if>
 	</target>
 
-	<target name="build-test-results-xml">
+	<target name="build-test-results-xml" depends="generate-test-properties">
 		<record-env-app-server />
 		<record-env-browser />
 		<record-env-database />
@@ -926,12 +963,14 @@ create database lportal${database.index} character set utf8;</echo>
 		<record-testray-components />
 		<record-testray-job-name />
 		<record-testray-project-name />
+		<record-testray-team-name />
 
 		<property name="test.case.properties">
 			<![CDATA[
 				<properties>
 					<property name="testray.component.names" value="${testray.component.names}" />
 					<property name="testray.main.component.name" value="${testray.main.component.name}" />
+					<property name="testray.team.name" value="${testray.team.name}" />
 					<property name="testray.testcase.description" value="${testray.testcase.description}" />
 					<property name="testray.testcase.name" value="${testray.testcase.name}" />
 					<property name="testray.testcase.priority" value="${testray.testcase.priority}" />

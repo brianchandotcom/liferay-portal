@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -275,7 +276,9 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	protected void initImport() throws Exception {
 		PortletExporter portletExporter = PortletExporter.getInstance();
 
-		portletExporter.exportAssetTags(portletDataContext);
+		ReflectionTestUtil.invoke(
+			portletExporter, "exportAssetTags",
+			new Class<?>[] {PortletDataContext.class}, portletDataContext);
 
 		userIdStrategy = new CurrentUserIdStrategy(TestPropsValues.getUser());
 		zipReader = ZipReaderFactoryUtil.getZipReader(zipWriter.getFile());
@@ -312,7 +315,9 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		PortletImporter portletImporter = PortletImporter.getInstance();
 
-		portletImporter.readAssetTags(portletDataContext);
+		ReflectionTestUtil.invoke(
+			portletImporter, "readAssetTags",
+			new Class<?>[] {PortletDataContext.class}, portletDataContext);
 	}
 
 	protected boolean isCommentableStagedModel() {

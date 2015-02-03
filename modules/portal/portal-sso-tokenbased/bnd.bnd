@@ -1,0 +1,11 @@
+Bundle-Description: Implmentation of Liferay Portal SSO integration \
+	that works with token based SSO solutions like Shibboleth, \
+	OAM, Siteminder
+Bundle-Name: Liferay Portal Token Based SSO
+Bundle-SymbolicName: com.liferay.portal.sso.tokenbased
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+
+-metatype: *

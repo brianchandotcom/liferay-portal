@@ -572,9 +572,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				localServiceImplFileName);
 
 			if (localServiceImplContent == null) {
-				System.out.println(
-					"Unable to read " + localServiceImplFileName);
-
 				return;
 			}
 

@@ -31,7 +31,10 @@ public class ClassNameDependencyUpgrader {
 		_oldValue = oldValue;
 		_newValue = newValue;
 
-		if (dependencies != null) {
+		if (dependencies == null) {
+			_classNameDependencies = new ArrayList<>();
+		}
+		else {
 			_classNameDependencies = dependencies;
 		}
 	}
@@ -46,8 +49,7 @@ public class ClassNameDependencyUpgrader {
 		}
 	}
 
-	private List<ClassNameDependency> _classNameDependencies =
-		new ArrayList<>();
+	private final List<ClassNameDependency> _classNameDependencies;
 	private final String _newValue;
 	private final String _oldValue;
 

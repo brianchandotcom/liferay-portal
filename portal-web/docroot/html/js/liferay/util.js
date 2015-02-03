@@ -47,11 +47,12 @@
 				params = $.trim(params);
 			}
 
-			if (params) {
-				var loc = url || location.href;
+			var loc = url || location.href;
 
+			var finalUrl = loc;
+
+			if (params) {
 				var anchorHash;
-				var finalUrl;
 
 				if (loc.indexOf('#') > -1) {
 					var locationPieces = loc.split('#');
@@ -77,9 +78,10 @@
 						location.href = finalUrl;
 					}
 
-					return finalUrl;
 				}
 			}
+
+			return finalUrl;
 		},
 
 		checkAll: function(form, name, allBox, selectClassName) {

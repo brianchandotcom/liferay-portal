@@ -19,8 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TITLE</td>
-	<td>//input[contains(@id,'title')]</td>
+	<td>DESCRIPTION</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -29,8 +29,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DESCRIPTION</td>
-	<td>//textarea[contains(@id,'description')]</td>
+	<td>TITLE</td>
+	<td>//input[contains(@id,'title')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -20,7 +20,17 @@
 </tr>
 <tr>
 	<td>CANCEL</td>
-	<td>//a[contains(@class,'btn-cancel')]</td>
+	<td>//a[contains(@id,'cancel') and contains(@class,'btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY</td>
+	<td>//button[contains(.,'Copy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE</td>
+	<td>//button[contains(.,'Close')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -34,8 +44,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT</td>
+	<td>//a[contains(@id,'edit') and contains(@class,'btn')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW</td>
 	<td>//button[contains(.,'Preview')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OK</td>
+	<td>//button[.='OK']</td>
 	<td></td>
 </tr>
 <tr>
@@ -59,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_AND_CONTINUE</td>
+	<td>//button[contains(.,'Save and Continue')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_AS_DRAFT</td>
 	<td>//button[contains(.,'Save as Draft')]</td>
 	<td></td>
@@ -66,6 +91,11 @@
 <tr>
 	<td>SEARCH</td>
 	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEND</td>
+	<td>//button[contains(.,'Send')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,43 +109,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT</td>
-	<td>//a[contains(@id,'edit') and contains(@class,'btn')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CANCEL</td>
-	<td>//a[contains(@id,'cancel') and contains(@class,'btn')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VIEW_HISTORY</td>
 	<td>//button[contains(.,'View History')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COPY</td>
-	<td>//button[contains(.,'Copy')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CLOSE</td>
-	<td>//button[contains(.,'Close')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_AND_CONTINUE</td>
-	<td>//button[contains(.,'Save and Continue')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEND</td>
-	<td>//button[contains(.,'Send')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OK</td>
-	<td>//button[.='OK']</td>
 	<td></td>
 </tr>
 </tbody>

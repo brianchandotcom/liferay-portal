@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lar;
+package com.liferay.portal.test.lar;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;

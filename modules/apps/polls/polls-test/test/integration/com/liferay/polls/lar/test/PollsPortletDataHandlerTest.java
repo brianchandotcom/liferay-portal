@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.polls.lar;
+package com.liferay.polls.lar.test;
 
 import com.liferay.polls.constants.PollsPortletKeys;
+import com.liferay.polls.lar.PollsPortletDataHandler;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
-import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
+import com.liferay.portal.test.lar.BasePortletDataHandlerTestCase;
 
 import org.jboss.arquillian.junit.Arquillian;
 

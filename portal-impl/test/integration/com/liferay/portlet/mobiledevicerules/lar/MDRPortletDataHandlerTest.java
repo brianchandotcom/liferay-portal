@@ -16,8 +16,8 @@ package com.liferay.portlet.mobiledevicerules.lar;
 
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.test.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.util.LayoutTestUtil;

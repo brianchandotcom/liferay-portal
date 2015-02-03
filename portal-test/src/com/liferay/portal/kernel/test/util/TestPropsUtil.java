@@ -46,7 +46,9 @@ public class TestPropsUtil {
 
 	private TestPropsUtil() {
 		try {
-			ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+			Thread currentThread = Thread.currentThread();
+
+			ClassLoader classLoader = currentThread.getContextClassLoader();
 
 			InputStream is = classLoader.getResourceAsStream(
 				"test-portal-impl.properties");

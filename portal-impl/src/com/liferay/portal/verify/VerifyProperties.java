@@ -556,6 +556,13 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.rss.web"
 		},
 
+		// Site Map
+
+		new String[] {
+			"sitemap.display.templates.config", "display.templates.config",
+			"com.liferay.site.map.web"
+		},
+
 		// Translator
 
 		new String[] {

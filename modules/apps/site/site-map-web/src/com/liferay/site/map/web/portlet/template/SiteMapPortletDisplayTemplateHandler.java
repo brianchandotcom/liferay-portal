@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.site.map.web.configuration.SiteMapWebConfigurationValues;
 import com.liferay.site.map.web.constants.SiteMapPortletKeys;
 
 import java.util.List;
@@ -76,7 +76,7 @@ public class SiteMapPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return PropsValues.SITEMAP_DISPLAY_TEMPLATES_CONFIG;
+		return SiteMapWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

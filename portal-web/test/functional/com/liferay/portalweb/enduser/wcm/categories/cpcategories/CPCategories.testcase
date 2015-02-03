@@ -1,4 +1,4 @@
-<definition component-name="portal-wcm">
+<definition component-name="portal-categories">
 	<property name="testray.main.component.name" value="Categories" />
 
 	<set-up>

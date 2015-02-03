@@ -37,7 +37,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -185,12 +184,9 @@ public class BreadcrumbUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String portletName = portletDisplay.getPortletName();
-
 		String name = WebKeys.PORTLET_BREADCRUMBS;
 
 		if (Validator.isNotNull(portletDisplay.getId()) &&
-			!portletName.equals(PortletKeys.BREADCRUMB) &&
 			!portletDisplay.isFocused()) {
 
 			name = name.concat(

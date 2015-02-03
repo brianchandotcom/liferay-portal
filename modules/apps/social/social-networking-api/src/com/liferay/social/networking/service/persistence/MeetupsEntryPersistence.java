@@ -28,7 +28,7 @@ import com.liferay.social.networking.model.MeetupsEntry;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see MeetupsEntryPersistenceImpl
+ * @see com.liferay.social.networking.service.persistence.impl.MeetupsEntryPersistenceImpl
  * @see MeetupsEntryUtil
  * @generated
  */

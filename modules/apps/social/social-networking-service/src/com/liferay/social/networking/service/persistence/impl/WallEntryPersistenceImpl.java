@@ -57,7 +57,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see WallEntryPersistence
- * @see WallEntryUtil
+ * @see com.liferay.social.networking.service.persistence.WallEntryUtil
  * @generated
  */
 @ProviderType

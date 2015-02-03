@@ -28,7 +28,7 @@ import com.liferay.social.networking.model.WallEntry;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see WallEntryPersistenceImpl
+ * @see com.liferay.social.networking.service.persistence.impl.WallEntryPersistenceImpl
  * @see WallEntryUtil
  * @generated
  */

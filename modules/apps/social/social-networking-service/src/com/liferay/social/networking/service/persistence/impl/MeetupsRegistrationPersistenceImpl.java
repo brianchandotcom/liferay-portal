@@ -58,7 +58,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see MeetupsRegistrationPersistence
- * @see MeetupsRegistrationUtil
+ * @see com.liferay.social.networking.service.persistence.MeetupsRegistrationUtil
  * @generated
  */
 @ProviderType

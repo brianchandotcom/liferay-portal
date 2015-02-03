@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.networking.service.persistence;
+package com.liferay.social.networking.service.persistence.test;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -20,26 +20,29 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.test.PersistenceTestRule;
-import com.liferay.portal.test.TransactionalTestRule;
+import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.test.RandomTestUtil;
 
 import com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 import com.liferay.social.networking.model.MeetupsRegistration;
-import com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl;
 import com.liferay.social.networking.service.MeetupsRegistrationLocalServiceUtil;
+import com.liferay.social.networking.service.persistence.MeetupsRegistrationPersistence;
+import com.liferay.social.networking.service.persistence.MeetupsRegistrationUtil;
 
 import org.jboss.arquillian.junit.Arquillian;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -62,6 +65,15 @@ public class MeetupsRegistrationPersistenceTest {
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = MeetupsRegistrationUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -356,7 +368,7 @@ public class MeetupsRegistrationPersistenceTest {
 		MeetupsRegistration newMeetupsRegistration = addMeetupsRegistration();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MeetupsRegistration.class,
-				MeetupsRegistration.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("meetupsRegistrationId",
 				newMeetupsRegistration.getMeetupsRegistrationId()));
@@ -373,7 +385,7 @@ public class MeetupsRegistrationPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MeetupsRegistration.class,
-				MeetupsRegistration.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("meetupsRegistrationId",
 				RandomTestUtil.nextLong()));
@@ -389,7 +401,7 @@ public class MeetupsRegistrationPersistenceTest {
 		MeetupsRegistration newMeetupsRegistration = addMeetupsRegistration();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MeetupsRegistration.class,
-				MeetupsRegistration.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"meetupsRegistrationId"));
@@ -412,7 +424,7 @@ public class MeetupsRegistrationPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MeetupsRegistration.class,
-				MeetupsRegistration.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"meetupsRegistrationId"));
@@ -435,12 +447,14 @@ public class MeetupsRegistrationPersistenceTest {
 
 		_persistence.clearCache();
 
-		MeetupsRegistrationModelImpl existingMeetupsRegistrationModelImpl = (MeetupsRegistrationModelImpl)_persistence.findByPrimaryKey(newMeetupsRegistration.getPrimaryKey());
+		MeetupsRegistration existingMeetupsRegistration = _persistence.findByPrimaryKey(newMeetupsRegistration.getPrimaryKey());
 
-		Assert.assertEquals(existingMeetupsRegistrationModelImpl.getUserId(),
-			existingMeetupsRegistrationModelImpl.getOriginalUserId());
-		Assert.assertEquals(existingMeetupsRegistrationModelImpl.getMeetupsEntryId(),
-			existingMeetupsRegistrationModelImpl.getOriginalMeetupsEntryId());
+		Assert.assertEquals(existingMeetupsRegistration.getUserId(),
+			ReflectionTestUtil.invoke(existingMeetupsRegistration,
+				"getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(existingMeetupsRegistration.getMeetupsEntryId(),
+			ReflectionTestUtil.invoke(existingMeetupsRegistration,
+				"getOriginalMeetupsEntryId", new Class<?>[0]));
 	}
 
 	protected MeetupsRegistration addMeetupsRegistration()
@@ -471,5 +485,6 @@ public class MeetupsRegistrationPersistenceTest {
 	}
 
 	private List<MeetupsRegistration> _meetupsRegistrations = new ArrayList<MeetupsRegistration>();
-	private MeetupsRegistrationPersistence _persistence = MeetupsRegistrationUtil.getPersistence();
+	private MeetupsRegistrationPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

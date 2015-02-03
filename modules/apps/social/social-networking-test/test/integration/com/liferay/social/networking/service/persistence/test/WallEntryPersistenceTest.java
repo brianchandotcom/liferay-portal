@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.networking.service.persistence;
+package com.liferay.social.networking.service.persistence.test;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -20,24 +20,27 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.test.PersistenceTestRule;
-import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portal.test.rule.PersistenceTestRule;
 
 import com.liferay.social.networking.exception.NoSuchWallEntryException;
 import com.liferay.social.networking.model.WallEntry;
 import com.liferay.social.networking.service.WallEntryLocalServiceUtil;
+import com.liferay.social.networking.service.persistence.WallEntryPersistence;
+import com.liferay.social.networking.service.persistence.WallEntryUtil;
 
 import org.jboss.arquillian.junit.Arquillian;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -60,6 +63,15 @@ public class WallEntryPersistenceTest {
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED));
+
+	@Before
+	public void setUp() {
+		_persistence = WallEntryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -348,7 +360,7 @@ public class WallEntryPersistenceTest {
 		WallEntry newWallEntry = addWallEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WallEntry.class,
-				WallEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("wallEntryId",
 				newWallEntry.getWallEntryId()));
@@ -365,7 +377,7 @@ public class WallEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WallEntry.class,
-				WallEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("wallEntryId",
 				RandomTestUtil.nextLong()));
@@ -381,7 +393,7 @@ public class WallEntryPersistenceTest {
 		WallEntry newWallEntry = addWallEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WallEntry.class,
-				WallEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("wallEntryId"));
 
@@ -402,7 +414,7 @@ public class WallEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WallEntry.class,
-				WallEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("wallEntryId"));
 
@@ -439,5 +451,6 @@ public class WallEntryPersistenceTest {
 	}
 
 	private List<WallEntry> _wallEntries = new ArrayList<WallEntry>();
-	private WallEntryPersistence _persistence = WallEntryUtil.getPersistence();
+	private WallEntryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -68,6 +68,10 @@ public class AssetTagPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = AssetTagUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -395,7 +399,7 @@ public class AssetTagPersistenceTest {
 		AssetTag newAssetTag = addAssetTag();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetTag.class,
-				AssetTag.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("tagId",
 				newAssetTag.getTagId()));
@@ -412,7 +416,7 @@ public class AssetTagPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetTag.class,
-				AssetTag.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("tagId",
 				RandomTestUtil.nextLong()));
@@ -428,7 +432,7 @@ public class AssetTagPersistenceTest {
 		AssetTag newAssetTag = addAssetTag();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetTag.class,
-				AssetTag.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("tagId"));
 
@@ -449,7 +453,7 @@ public class AssetTagPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetTag.class,
-				AssetTag.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("tagId"));
 
@@ -509,4 +513,5 @@ public class AssetTagPersistenceTest {
 
 	private List<AssetTag> _assetTags = new ArrayList<AssetTag>();
 	private AssetTagPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

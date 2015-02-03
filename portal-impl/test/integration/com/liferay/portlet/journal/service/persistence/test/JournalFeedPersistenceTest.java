@@ -69,6 +69,10 @@ public class JournalFeedPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = JournalFeedUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -462,7 +466,7 @@ public class JournalFeedPersistenceTest {
 		JournalFeed newJournalFeed = addJournalFeed();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalFeed.class,
-				JournalFeed.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id", newJournalFeed.getId()));
 
@@ -478,7 +482,7 @@ public class JournalFeedPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalFeed.class,
-				JournalFeed.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id",
 				RandomTestUtil.nextLong()));
@@ -494,7 +498,7 @@ public class JournalFeedPersistenceTest {
 		JournalFeed newJournalFeed = addJournalFeed();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalFeed.class,
-				JournalFeed.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id"));
 
@@ -514,7 +518,7 @@ public class JournalFeedPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalFeed.class,
-				JournalFeed.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id"));
 
@@ -607,4 +611,5 @@ public class JournalFeedPersistenceTest {
 
 	private List<JournalFeed> _journalFeeds = new ArrayList<JournalFeed>();
 	private JournalFeedPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

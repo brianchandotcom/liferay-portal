@@ -66,6 +66,10 @@ public class ShoppingCartPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ShoppingCartUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -368,7 +372,7 @@ public class ShoppingCartPersistenceTest {
 		ShoppingCart newShoppingCart = addShoppingCart();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCart.class,
-				ShoppingCart.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("cartId",
 				newShoppingCart.getCartId()));
@@ -385,7 +389,7 @@ public class ShoppingCartPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCart.class,
-				ShoppingCart.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("cartId",
 				RandomTestUtil.nextLong()));
@@ -401,7 +405,7 @@ public class ShoppingCartPersistenceTest {
 		ShoppingCart newShoppingCart = addShoppingCart();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCart.class,
-				ShoppingCart.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("cartId"));
 
@@ -422,7 +426,7 @@ public class ShoppingCartPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingCart.class,
-				ShoppingCart.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("cartId"));
 
@@ -486,4 +490,5 @@ public class ShoppingCartPersistenceTest {
 
 	private List<ShoppingCart> _shoppingCarts = new ArrayList<ShoppingCart>();
 	private ShoppingCartPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

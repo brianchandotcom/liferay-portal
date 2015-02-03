@@ -67,6 +67,10 @@ public class SocialActivityCounterPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = SocialActivityCounterUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -417,7 +421,7 @@ public class SocialActivityCounterPersistenceTest {
 		SocialActivityCounter newSocialActivityCounter = addSocialActivityCounter();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityCounter.class,
-				SocialActivityCounter.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityCounterId",
 				newSocialActivityCounter.getActivityCounterId()));
@@ -435,7 +439,7 @@ public class SocialActivityCounterPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityCounter.class,
-				SocialActivityCounter.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityCounterId",
 				RandomTestUtil.nextLong()));
@@ -451,7 +455,7 @@ public class SocialActivityCounterPersistenceTest {
 		SocialActivityCounter newSocialActivityCounter = addSocialActivityCounter();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityCounter.class,
-				SocialActivityCounter.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"activityCounterId"));
@@ -473,7 +477,7 @@ public class SocialActivityCounterPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityCounter.class,
-				SocialActivityCounter.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"activityCounterId"));
@@ -576,4 +580,5 @@ public class SocialActivityCounterPersistenceTest {
 
 	private List<SocialActivityCounter> _socialActivityCounters = new ArrayList<SocialActivityCounter>();
 	private SocialActivityCounterPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

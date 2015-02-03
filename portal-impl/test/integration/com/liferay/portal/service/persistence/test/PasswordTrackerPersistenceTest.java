@@ -63,6 +63,10 @@ public class PasswordTrackerPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = PasswordTrackerUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -314,7 +318,7 @@ public class PasswordTrackerPersistenceTest {
 		PasswordTracker newPasswordTracker = addPasswordTracker();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordTracker.class,
-				PasswordTracker.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordTrackerId",
 				newPasswordTracker.getPasswordTrackerId()));
@@ -331,7 +335,7 @@ public class PasswordTrackerPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordTracker.class,
-				PasswordTracker.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordTrackerId",
 				RandomTestUtil.nextLong()));
@@ -347,7 +351,7 @@ public class PasswordTrackerPersistenceTest {
 		PasswordTracker newPasswordTracker = addPasswordTracker();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordTracker.class,
-				PasswordTracker.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"passwordTrackerId"));
@@ -369,7 +373,7 @@ public class PasswordTrackerPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PasswordTracker.class,
-				PasswordTracker.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"passwordTrackerId"));
@@ -402,4 +406,5 @@ public class PasswordTrackerPersistenceTest {
 
 	private List<PasswordTracker> _passwordTrackers = new ArrayList<PasswordTracker>();
 	private PasswordTrackerPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

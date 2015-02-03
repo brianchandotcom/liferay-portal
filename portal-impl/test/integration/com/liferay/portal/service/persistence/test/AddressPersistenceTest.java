@@ -64,6 +64,10 @@ public class AddressPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = AddressUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -470,7 +474,7 @@ public class AddressPersistenceTest {
 		Address newAddress = addAddress();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Address.class,
-				Address.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("addressId",
 				newAddress.getAddressId()));
@@ -487,7 +491,7 @@ public class AddressPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Address.class,
-				Address.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("addressId",
 				RandomTestUtil.nextLong()));
@@ -503,7 +507,7 @@ public class AddressPersistenceTest {
 		Address newAddress = addAddress();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Address.class,
-				Address.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("addressId"));
 
@@ -524,7 +528,7 @@ public class AddressPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Address.class,
-				Address.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("addressId"));
 
@@ -586,4 +590,5 @@ public class AddressPersistenceTest {
 
 	private List<Address> _addresses = new ArrayList<Address>();
 	private AddressPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

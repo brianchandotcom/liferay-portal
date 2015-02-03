@@ -67,6 +67,10 @@ public class PortletItemPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = PortletItemUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -376,7 +380,7 @@ public class PortletItemPersistenceTest {
 		PortletItem newPortletItem = addPortletItem();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletItem.class,
-				PortletItem.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("portletItemId",
 				newPortletItem.getPortletItemId()));
@@ -393,7 +397,7 @@ public class PortletItemPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletItem.class,
-				PortletItem.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("portletItemId",
 				RandomTestUtil.nextLong()));
@@ -409,7 +413,7 @@ public class PortletItemPersistenceTest {
 		PortletItem newPortletItem = addPortletItem();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletItem.class,
-				PortletItem.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"portletItemId"));
@@ -431,7 +435,7 @@ public class PortletItemPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletItem.class,
-				PortletItem.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"portletItemId"));
@@ -502,4 +506,5 @@ public class PortletItemPersistenceTest {
 
 	private List<PortletItem> _portletItems = new ArrayList<PortletItem>();
 	private PortletItemPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

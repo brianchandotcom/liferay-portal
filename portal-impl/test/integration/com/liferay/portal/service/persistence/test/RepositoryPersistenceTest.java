@@ -67,6 +67,10 @@ public class RepositoryPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = RepositoryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -421,7 +425,7 @@ public class RepositoryPersistenceTest {
 		Repository newRepository = addRepository();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Repository.class,
-				Repository.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("repositoryId",
 				newRepository.getRepositoryId()));
@@ -438,7 +442,7 @@ public class RepositoryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Repository.class,
-				Repository.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("repositoryId",
 				RandomTestUtil.nextLong()));
@@ -454,7 +458,7 @@ public class RepositoryPersistenceTest {
 		Repository newRepository = addRepository();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Repository.class,
-				Repository.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"repositoryId"));
@@ -476,7 +480,7 @@ public class RepositoryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Repository.class,
-				Repository.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"repositoryId"));
@@ -559,4 +563,5 @@ public class RepositoryPersistenceTest {
 
 	private List<Repository> _repositories = new ArrayList<Repository>();
 	private RepositoryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

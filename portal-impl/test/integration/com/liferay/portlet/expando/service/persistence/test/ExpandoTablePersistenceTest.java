@@ -67,6 +67,10 @@ public class ExpandoTablePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ExpandoTableUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -327,7 +331,7 @@ public class ExpandoTablePersistenceTest {
 		ExpandoTable newExpandoTable = addExpandoTable();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExpandoTable.class,
-				ExpandoTable.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("tableId",
 				newExpandoTable.getTableId()));
@@ -344,7 +348,7 @@ public class ExpandoTablePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExpandoTable.class,
-				ExpandoTable.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("tableId",
 				RandomTestUtil.nextLong()));
@@ -360,7 +364,7 @@ public class ExpandoTablePersistenceTest {
 		ExpandoTable newExpandoTable = addExpandoTable();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExpandoTable.class,
-				ExpandoTable.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("tableId"));
 
@@ -381,7 +385,7 @@ public class ExpandoTablePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExpandoTable.class,
-				ExpandoTable.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("tableId"));
 
@@ -434,4 +438,5 @@ public class ExpandoTablePersistenceTest {
 
 	private List<ExpandoTable> _expandoTables = new ArrayList<ExpandoTable>();
 	private ExpandoTablePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

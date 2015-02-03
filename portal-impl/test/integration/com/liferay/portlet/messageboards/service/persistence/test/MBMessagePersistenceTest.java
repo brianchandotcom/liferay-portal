@@ -69,6 +69,10 @@ public class MBMessagePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = MBMessageUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -782,7 +786,7 @@ public class MBMessagePersistenceTest {
 		MBMessage newMBMessage = addMBMessage();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMessage.class,
-				MBMessage.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("messageId",
 				newMBMessage.getMessageId()));
@@ -799,7 +803,7 @@ public class MBMessagePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMessage.class,
-				MBMessage.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("messageId",
 				RandomTestUtil.nextLong()));
@@ -815,7 +819,7 @@ public class MBMessagePersistenceTest {
 		MBMessage newMBMessage = addMBMessage();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMessage.class,
-				MBMessage.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("messageId"));
 
@@ -836,7 +840,7 @@ public class MBMessagePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBMessage.class,
-				MBMessage.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("messageId"));
 
@@ -928,4 +932,5 @@ public class MBMessagePersistenceTest {
 
 	private List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
 	private MBMessagePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

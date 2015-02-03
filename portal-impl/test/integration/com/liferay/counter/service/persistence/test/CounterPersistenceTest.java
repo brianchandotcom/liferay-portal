@@ -60,6 +60,10 @@ public class CounterPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = CounterUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -259,7 +263,7 @@ public class CounterPersistenceTest {
 		Counter newCounter = addCounter();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Counter.class,
-				Counter.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("name", newCounter.getName()));
 
@@ -275,7 +279,7 @@ public class CounterPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Counter.class,
-				Counter.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("name",
 				RandomTestUtil.randomString()));
@@ -291,7 +295,7 @@ public class CounterPersistenceTest {
 		Counter newCounter = addCounter();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Counter.class,
-				Counter.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("name"));
 
@@ -312,7 +316,7 @@ public class CounterPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Counter.class,
-				Counter.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("name"));
 
@@ -338,4 +342,5 @@ public class CounterPersistenceTest {
 
 	private List<Counter> _counters = new ArrayList<Counter>();
 	private CounterPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -68,6 +68,10 @@ public class BlogsEntryPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = BlogsEntryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -747,7 +751,7 @@ public class BlogsEntryPersistenceTest {
 		BlogsEntry newBlogsEntry = addBlogsEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BlogsEntry.class,
-				BlogsEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				newBlogsEntry.getEntryId()));
@@ -764,7 +768,7 @@ public class BlogsEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BlogsEntry.class,
-				BlogsEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				RandomTestUtil.nextLong()));
@@ -780,7 +784,7 @@ public class BlogsEntryPersistenceTest {
 		BlogsEntry newBlogsEntry = addBlogsEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BlogsEntry.class,
-				BlogsEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
@@ -801,7 +805,7 @@ public class BlogsEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BlogsEntry.class,
-				BlogsEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
@@ -904,4 +908,5 @@ public class BlogsEntryPersistenceTest {
 
 	private List<BlogsEntry> _blogsEntries = new ArrayList<BlogsEntry>();
 	private BlogsEntryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

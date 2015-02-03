@@ -68,6 +68,10 @@ public class DDMStructurePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DDMStructureUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -554,7 +558,7 @@ public class DDMStructurePersistenceTest {
 		DDMStructure newDDMStructure = addDDMStructure();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructure.class,
-				DDMStructure.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureId",
 				newDDMStructure.getStructureId()));
@@ -571,7 +575,7 @@ public class DDMStructurePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructure.class,
-				DDMStructure.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureId",
 				RandomTestUtil.nextLong()));
@@ -587,7 +591,7 @@ public class DDMStructurePersistenceTest {
 		DDMStructure newDDMStructure = addDDMStructure();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructure.class,
-				DDMStructure.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("structureId"));
 
@@ -608,7 +612,7 @@ public class DDMStructurePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructure.class,
-				DDMStructure.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("structureId"));
 
@@ -695,4 +699,5 @@ public class DDMStructurePersistenceTest {
 
 	private List<DDMStructure> _ddmStructures = new ArrayList<DDMStructure>();
 	private DDMStructurePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

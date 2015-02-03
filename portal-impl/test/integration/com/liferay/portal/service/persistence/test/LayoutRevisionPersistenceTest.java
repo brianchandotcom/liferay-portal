@@ -65,6 +65,10 @@ public class LayoutRevisionPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = LayoutRevisionUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -559,7 +563,7 @@ public class LayoutRevisionPersistenceTest {
 		LayoutRevision newLayoutRevision = addLayoutRevision();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutRevision.class,
-				LayoutRevision.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutRevisionId",
 				newLayoutRevision.getLayoutRevisionId()));
@@ -576,7 +580,7 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutRevision.class,
-				LayoutRevision.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutRevisionId",
 				RandomTestUtil.nextLong()));
@@ -592,7 +596,7 @@ public class LayoutRevisionPersistenceTest {
 		LayoutRevision newLayoutRevision = addLayoutRevision();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutRevision.class,
-				LayoutRevision.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"layoutRevisionId"));
@@ -614,7 +618,7 @@ public class LayoutRevisionPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutRevision.class,
-				LayoutRevision.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"layoutRevisionId"));
@@ -722,4 +726,5 @@ public class LayoutRevisionPersistenceTest {
 
 	private List<LayoutRevision> _layoutRevisions = new ArrayList<LayoutRevision>();
 	private LayoutRevisionPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -67,6 +67,10 @@ public class SocialActivityLimitPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = SocialActivityLimitUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -376,7 +380,7 @@ public class SocialActivityLimitPersistenceTest {
 		SocialActivityLimit newSocialActivityLimit = addSocialActivityLimit();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityLimit.class,
-				SocialActivityLimit.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityLimitId",
 				newSocialActivityLimit.getActivityLimitId()));
@@ -393,7 +397,7 @@ public class SocialActivityLimitPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityLimit.class,
-				SocialActivityLimit.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityLimitId",
 				RandomTestUtil.nextLong()));
@@ -409,7 +413,7 @@ public class SocialActivityLimitPersistenceTest {
 		SocialActivityLimit newSocialActivityLimit = addSocialActivityLimit();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityLimit.class,
-				SocialActivityLimit.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"activityLimitId"));
@@ -431,7 +435,7 @@ public class SocialActivityLimitPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SocialActivityLimit.class,
-				SocialActivityLimit.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"activityLimitId"));
@@ -506,4 +510,5 @@ public class SocialActivityLimitPersistenceTest {
 
 	private List<SocialActivityLimit> _socialActivityLimits = new ArrayList<SocialActivityLimit>();
 	private SocialActivityLimitPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

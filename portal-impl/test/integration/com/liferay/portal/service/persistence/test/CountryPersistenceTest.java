@@ -63,6 +63,10 @@ public class CountryPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = CountryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -342,7 +346,7 @@ public class CountryPersistenceTest {
 		Country newCountry = addCountry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Country.class,
-				Country.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("countryId",
 				newCountry.getCountryId()));
@@ -359,7 +363,7 @@ public class CountryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Country.class,
-				Country.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("countryId",
 				RandomTestUtil.nextLong()));
@@ -375,7 +379,7 @@ public class CountryPersistenceTest {
 		Country newCountry = addCountry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Country.class,
-				Country.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("countryId"));
 
@@ -396,7 +400,7 @@ public class CountryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Country.class,
-				Country.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("countryId"));
 
@@ -461,4 +465,5 @@ public class CountryPersistenceTest {
 
 	private List<Country> _countries = new ArrayList<Country>();
 	private CountryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

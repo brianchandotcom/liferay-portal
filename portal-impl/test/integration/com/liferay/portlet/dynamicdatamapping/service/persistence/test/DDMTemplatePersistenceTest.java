@@ -68,6 +68,10 @@ public class DDMTemplatePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DDMTemplateUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -641,7 +645,7 @@ public class DDMTemplatePersistenceTest {
 		DDMTemplate newDDMTemplate = addDDMTemplate();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplate.class,
-				DDMTemplate.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("templateId",
 				newDDMTemplate.getTemplateId()));
@@ -658,7 +662,7 @@ public class DDMTemplatePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplate.class,
-				DDMTemplate.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("templateId",
 				RandomTestUtil.nextLong()));
@@ -674,7 +678,7 @@ public class DDMTemplatePersistenceTest {
 		DDMTemplate newDDMTemplate = addDDMTemplate();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplate.class,
-				DDMTemplate.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("templateId"));
 
@@ -695,7 +699,7 @@ public class DDMTemplatePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMTemplate.class,
-				DDMTemplate.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("templateId"));
 
@@ -798,4 +802,5 @@ public class DDMTemplatePersistenceTest {
 
 	private List<DDMTemplate> _ddmTemplates = new ArrayList<DDMTemplate>();
 	private DDMTemplatePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

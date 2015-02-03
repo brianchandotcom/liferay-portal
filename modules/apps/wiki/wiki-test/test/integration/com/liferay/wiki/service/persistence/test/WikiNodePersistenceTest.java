@@ -71,6 +71,10 @@ public class WikiNodePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = WikiNodeUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -471,7 +475,7 @@ public class WikiNodePersistenceTest {
 		WikiNode newWikiNode = addWikiNode();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiNode.class,
-				WikiNode.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("nodeId",
 				newWikiNode.getNodeId()));
@@ -488,7 +492,7 @@ public class WikiNodePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiNode.class,
-				WikiNode.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("nodeId",
 				RandomTestUtil.nextLong()));
@@ -504,7 +508,7 @@ public class WikiNodePersistenceTest {
 		WikiNode newWikiNode = addWikiNode();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiNode.class,
-				WikiNode.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("nodeId"));
 
@@ -525,7 +529,7 @@ public class WikiNodePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(WikiNode.class,
-				WikiNode.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("nodeId"));
 
@@ -604,4 +608,5 @@ public class WikiNodePersistenceTest {
 
 	private List<WikiNode> _wikiNodes = new ArrayList<WikiNode>();
 	private WikiNodePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -66,6 +66,10 @@ public class VirtualHostPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = VirtualHostUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -331,7 +335,7 @@ public class VirtualHostPersistenceTest {
 		VirtualHost newVirtualHost = addVirtualHost();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(VirtualHost.class,
-				VirtualHost.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("virtualHostId",
 				newVirtualHost.getVirtualHostId()));
@@ -348,7 +352,7 @@ public class VirtualHostPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(VirtualHost.class,
-				VirtualHost.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("virtualHostId",
 				RandomTestUtil.nextLong()));
@@ -364,7 +368,7 @@ public class VirtualHostPersistenceTest {
 		VirtualHost newVirtualHost = addVirtualHost();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(VirtualHost.class,
-				VirtualHost.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"virtualHostId"));
@@ -386,7 +390,7 @@ public class VirtualHostPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(VirtualHost.class,
-				VirtualHost.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"virtualHostId"));
@@ -443,4 +447,5 @@ public class VirtualHostPersistenceTest {
 
 	private List<VirtualHost> _virtualHosts = new ArrayList<VirtualHost>();
 	private VirtualHostPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

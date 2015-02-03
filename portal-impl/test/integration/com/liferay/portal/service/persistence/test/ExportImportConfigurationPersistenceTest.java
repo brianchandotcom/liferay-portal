@@ -63,6 +63,10 @@ public class ExportImportConfigurationPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ExportImportConfigurationUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -423,7 +427,7 @@ public class ExportImportConfigurationPersistenceTest {
 		ExportImportConfiguration newExportImportConfiguration = addExportImportConfiguration();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExportImportConfiguration.class,
-				ExportImportConfiguration.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"exportImportConfigurationId",
@@ -442,7 +446,7 @@ public class ExportImportConfigurationPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExportImportConfiguration.class,
-				ExportImportConfiguration.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"exportImportConfigurationId", RandomTestUtil.nextLong()));
@@ -458,7 +462,7 @@ public class ExportImportConfigurationPersistenceTest {
 		ExportImportConfiguration newExportImportConfiguration = addExportImportConfiguration();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExportImportConfiguration.class,
-				ExportImportConfiguration.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"exportImportConfigurationId"));
@@ -482,7 +486,7 @@ public class ExportImportConfigurationPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ExportImportConfiguration.class,
-				ExportImportConfiguration.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"exportImportConfigurationId"));
@@ -540,4 +544,5 @@ public class ExportImportConfigurationPersistenceTest {
 
 	private List<ExportImportConfiguration> _exportImportConfigurations = new ArrayList<ExportImportConfiguration>();
 	private ExportImportConfigurationPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

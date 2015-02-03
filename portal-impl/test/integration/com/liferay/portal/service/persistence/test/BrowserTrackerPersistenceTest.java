@@ -64,6 +64,10 @@ public class BrowserTrackerPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = BrowserTrackerUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -310,7 +314,7 @@ public class BrowserTrackerPersistenceTest {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BrowserTracker.class,
-				BrowserTracker.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("browserTrackerId",
 				newBrowserTracker.getBrowserTrackerId()));
@@ -327,7 +331,7 @@ public class BrowserTrackerPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BrowserTracker.class,
-				BrowserTracker.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("browserTrackerId",
 				RandomTestUtil.nextLong()));
@@ -343,7 +347,7 @@ public class BrowserTrackerPersistenceTest {
 		BrowserTracker newBrowserTracker = addBrowserTracker();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BrowserTracker.class,
-				BrowserTracker.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"browserTrackerId"));
@@ -365,7 +369,7 @@ public class BrowserTrackerPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BrowserTracker.class,
-				BrowserTracker.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"browserTrackerId"));
@@ -413,4 +417,5 @@ public class BrowserTrackerPersistenceTest {
 
 	private List<BrowserTracker> _browserTrackers = new ArrayList<BrowserTracker>();
 	private BrowserTrackerPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -68,6 +68,10 @@ public class MBCategoryPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = MBCategoryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -577,7 +581,7 @@ public class MBCategoryPersistenceTest {
 		MBCategory newMBCategory = addMBCategory();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBCategory.class,
-				MBCategory.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId",
 				newMBCategory.getCategoryId()));
@@ -594,7 +598,7 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBCategory.class,
-				MBCategory.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId",
 				RandomTestUtil.nextLong()));
@@ -610,7 +614,7 @@ public class MBCategoryPersistenceTest {
 		MBCategory newMBCategory = addMBCategory();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBCategory.class,
-				MBCategory.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("categoryId"));
 
@@ -631,7 +635,7 @@ public class MBCategoryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBCategory.class,
-				MBCategory.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("categoryId"));
 
@@ -711,4 +715,5 @@ public class MBCategoryPersistenceTest {
 
 	private List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
 	private MBCategoryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

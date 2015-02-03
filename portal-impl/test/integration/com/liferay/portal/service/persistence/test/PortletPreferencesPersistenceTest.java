@@ -66,6 +66,10 @@ public class PortletPreferencesPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = PortletPreferencesUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -426,7 +430,7 @@ public class PortletPreferencesPersistenceTest {
 		PortletPreferences newPortletPreferences = addPortletPreferences();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletPreferences.class,
-				PortletPreferences.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("portletPreferencesId",
 				newPortletPreferences.getPortletPreferencesId()));
@@ -443,7 +447,7 @@ public class PortletPreferencesPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletPreferences.class,
-				PortletPreferences.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("portletPreferencesId",
 				RandomTestUtil.nextLong()));
@@ -459,7 +463,7 @@ public class PortletPreferencesPersistenceTest {
 		PortletPreferences newPortletPreferences = addPortletPreferences();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletPreferences.class,
-				PortletPreferences.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"portletPreferencesId"));
@@ -482,7 +486,7 @@ public class PortletPreferencesPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PortletPreferences.class,
-				PortletPreferences.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"portletPreferencesId"));
@@ -547,4 +551,5 @@ public class PortletPreferencesPersistenceTest {
 
 	private List<PortletPreferences> _portletPreferenceses = new ArrayList<PortletPreferences>();
 	private PortletPreferencesPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -68,6 +68,10 @@ public class DLFileEntryPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DLFileEntryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -686,7 +690,7 @@ public class DLFileEntryPersistenceTest {
 		DLFileEntry newDLFileEntry = addDLFileEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntry.class,
-				DLFileEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileEntryId",
 				newDLFileEntry.getFileEntryId()));
@@ -703,7 +707,7 @@ public class DLFileEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntry.class,
-				DLFileEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileEntryId",
 				RandomTestUtil.nextLong()));
@@ -719,7 +723,7 @@ public class DLFileEntryPersistenceTest {
 		DLFileEntry newDLFileEntry = addDLFileEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntry.class,
-				DLFileEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("fileEntryId"));
 
@@ -740,7 +744,7 @@ public class DLFileEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntry.class,
-				DLFileEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("fileEntryId"));
 
@@ -870,4 +874,5 @@ public class DLFileEntryPersistenceTest {
 
 	private List<DLFileEntry> _dlFileEntries = new ArrayList<DLFileEntry>();
 	private DLFileEntryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

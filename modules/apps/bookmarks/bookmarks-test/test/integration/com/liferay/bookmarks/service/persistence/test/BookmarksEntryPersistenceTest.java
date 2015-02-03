@@ -71,6 +71,10 @@ public class BookmarksEntryPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = BookmarksEntryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -609,7 +613,7 @@ public class BookmarksEntryPersistenceTest {
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksEntry.class,
-				BookmarksEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				newBookmarksEntry.getEntryId()));
@@ -626,7 +630,7 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksEntry.class,
-				BookmarksEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				RandomTestUtil.nextLong()));
@@ -642,7 +646,7 @@ public class BookmarksEntryPersistenceTest {
 		BookmarksEntry newBookmarksEntry = addBookmarksEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksEntry.class,
-				BookmarksEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
@@ -663,7 +667,7 @@ public class BookmarksEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksEntry.class,
-				BookmarksEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
 
@@ -745,4 +749,5 @@ public class BookmarksEntryPersistenceTest {
 
 	private List<BookmarksEntry> _bookmarksEntries = new ArrayList<BookmarksEntry>();
 	private BookmarksEntryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

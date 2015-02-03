@@ -68,6 +68,10 @@ public class DDMContentPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DDMContentUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -400,7 +404,7 @@ public class DDMContentPersistenceTest {
 		DDMContent newDDMContent = addDDMContent();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMContent.class,
-				DDMContent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentId",
 				newDDMContent.getContentId()));
@@ -417,7 +421,7 @@ public class DDMContentPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMContent.class,
-				DDMContent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentId",
 				RandomTestUtil.nextLong()));
@@ -433,7 +437,7 @@ public class DDMContentPersistenceTest {
 		DDMContent newDDMContent = addDDMContent();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMContent.class,
-				DDMContent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("contentId"));
 
@@ -454,7 +458,7 @@ public class DDMContentPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMContent.class,
-				DDMContent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("contentId"));
 
@@ -518,4 +522,5 @@ public class DDMContentPersistenceTest {
 
 	private List<DDMContent> _ddmContents = new ArrayList<DDMContent>();
 	private DDMContentPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

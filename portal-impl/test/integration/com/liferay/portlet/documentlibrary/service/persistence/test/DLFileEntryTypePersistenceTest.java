@@ -68,6 +68,10 @@ public class DLFileEntryTypePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DLFileEntryTypeUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -425,7 +429,7 @@ public class DLFileEntryTypePersistenceTest {
 		DLFileEntryType newDLFileEntryType = addDLFileEntryType();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntryType.class,
-				DLFileEntryType.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileEntryTypeId",
 				newDLFileEntryType.getFileEntryTypeId()));
@@ -442,7 +446,7 @@ public class DLFileEntryTypePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntryType.class,
-				DLFileEntryType.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileEntryTypeId",
 				RandomTestUtil.nextLong()));
@@ -458,7 +462,7 @@ public class DLFileEntryTypePersistenceTest {
 		DLFileEntryType newDLFileEntryType = addDLFileEntryType();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntryType.class,
-				DLFileEntryType.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"fileEntryTypeId"));
@@ -480,7 +484,7 @@ public class DLFileEntryTypePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntryType.class,
-				DLFileEntryType.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"fileEntryTypeId"));
@@ -553,4 +557,5 @@ public class DLFileEntryTypePersistenceTest {
 
 	private List<DLFileEntryType> _dlFileEntryTypes = new ArrayList<DLFileEntryType>();
 	private DLFileEntryTypePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -68,6 +68,10 @@ public class DLFileShortcutPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DLFileShortcutUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -483,7 +487,7 @@ public class DLFileShortcutPersistenceTest {
 		DLFileShortcut newDLFileShortcut = addDLFileShortcut();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileShortcut.class,
-				DLFileShortcut.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileShortcutId",
 				newDLFileShortcut.getFileShortcutId()));
@@ -500,7 +504,7 @@ public class DLFileShortcutPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileShortcut.class,
-				DLFileShortcut.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileShortcutId",
 				RandomTestUtil.nextLong()));
@@ -516,7 +520,7 @@ public class DLFileShortcutPersistenceTest {
 		DLFileShortcut newDLFileShortcut = addDLFileShortcut();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileShortcut.class,
-				DLFileShortcut.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"fileShortcutId"));
@@ -538,7 +542,7 @@ public class DLFileShortcutPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileShortcut.class,
-				DLFileShortcut.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"fileShortcutId"));
@@ -615,4 +619,5 @@ public class DLFileShortcutPersistenceTest {
 
 	private List<DLFileShortcut> _dlFileShortcuts = new ArrayList<DLFileShortcut>();
 	private DLFileShortcutPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

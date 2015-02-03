@@ -66,6 +66,10 @@ public class UserIdMapperPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = UserIdMapperUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -348,7 +352,7 @@ public class UserIdMapperPersistenceTest {
 		UserIdMapper newUserIdMapper = addUserIdMapper();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserIdMapper.class,
-				UserIdMapper.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userIdMapperId",
 				newUserIdMapper.getUserIdMapperId()));
@@ -365,7 +369,7 @@ public class UserIdMapperPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserIdMapper.class,
-				UserIdMapper.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userIdMapperId",
 				RandomTestUtil.nextLong()));
@@ -381,7 +385,7 @@ public class UserIdMapperPersistenceTest {
 		UserIdMapper newUserIdMapper = addUserIdMapper();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserIdMapper.class,
-				UserIdMapper.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"userIdMapperId"));
@@ -403,7 +407,7 @@ public class UserIdMapperPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserIdMapper.class,
-				UserIdMapper.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"userIdMapperId"));
@@ -466,4 +470,5 @@ public class UserIdMapperPersistenceTest {
 
 	private List<UserIdMapper> _userIdMappers = new ArrayList<UserIdMapper>();
 	private UserIdMapperPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

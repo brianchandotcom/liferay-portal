@@ -66,6 +66,10 @@ public class DLFileEntryMetadataPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DLFileEntryMetadataUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -376,7 +380,7 @@ public class DLFileEntryMetadataPersistenceTest {
 		DLFileEntryMetadata newDLFileEntryMetadata = addDLFileEntryMetadata();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntryMetadata.class,
-				DLFileEntryMetadata.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileEntryMetadataId",
 				newDLFileEntryMetadata.getFileEntryMetadataId()));
@@ -393,7 +397,7 @@ public class DLFileEntryMetadataPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntryMetadata.class,
-				DLFileEntryMetadata.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileEntryMetadataId",
 				RandomTestUtil.nextLong()));
@@ -409,7 +413,7 @@ public class DLFileEntryMetadataPersistenceTest {
 		DLFileEntryMetadata newDLFileEntryMetadata = addDLFileEntryMetadata();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntryMetadata.class,
-				DLFileEntryMetadata.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"fileEntryMetadataId"));
@@ -431,7 +435,7 @@ public class DLFileEntryMetadataPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DLFileEntryMetadata.class,
-				DLFileEntryMetadata.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"fileEntryMetadataId"));
@@ -489,4 +493,5 @@ public class DLFileEntryMetadataPersistenceTest {
 
 	private List<DLFileEntryMetadata> _dlFileEntryMetadatas = new ArrayList<DLFileEntryMetadata>();
 	private DLFileEntryMetadataPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

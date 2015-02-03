@@ -66,6 +66,10 @@ public class ShardPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ShardUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -323,7 +327,7 @@ public class ShardPersistenceTest {
 		Shard newShard = addShard();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Shard.class,
-				Shard.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("shardId",
 				newShard.getShardId()));
@@ -340,7 +344,7 @@ public class ShardPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Shard.class,
-				Shard.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("shardId",
 				RandomTestUtil.nextLong()));
@@ -356,7 +360,7 @@ public class ShardPersistenceTest {
 		Shard newShard = addShard();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Shard.class,
-				Shard.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("shardId"));
 
@@ -377,7 +381,7 @@ public class ShardPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Shard.class,
-				Shard.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("shardId"));
 
@@ -433,4 +437,5 @@ public class ShardPersistenceTest {
 
 	private List<Shard> _shards = new ArrayList<Shard>();
 	private ShardPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

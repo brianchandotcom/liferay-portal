@@ -71,6 +71,10 @@ public class PollsQuestionPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = PollsQuestionUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -409,7 +413,7 @@ public class PollsQuestionPersistenceTest {
 		PollsQuestion newPollsQuestion = addPollsQuestion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsQuestion.class,
-				PollsQuestion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("questionId",
 				newPollsQuestion.getQuestionId()));
@@ -426,7 +430,7 @@ public class PollsQuestionPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsQuestion.class,
-				PollsQuestion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("questionId",
 				RandomTestUtil.nextLong()));
@@ -442,7 +446,7 @@ public class PollsQuestionPersistenceTest {
 		PollsQuestion newPollsQuestion = addPollsQuestion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsQuestion.class,
-				PollsQuestion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("questionId"));
 
@@ -463,7 +467,7 @@ public class PollsQuestionPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(PollsQuestion.class,
-				PollsQuestion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("questionId"));
 
@@ -529,4 +533,5 @@ public class PollsQuestionPersistenceTest {
 
 	private List<PollsQuestion> _pollsQuestions = new ArrayList<PollsQuestion>();
 	private PollsQuestionPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

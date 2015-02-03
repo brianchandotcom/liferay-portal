@@ -65,6 +65,10 @@ public class TrashVersionPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = TrashVersionUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -344,7 +348,7 @@ public class TrashVersionPersistenceTest {
 		TrashVersion newTrashVersion = addTrashVersion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(TrashVersion.class,
-				TrashVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("versionId",
 				newTrashVersion.getVersionId()));
@@ -361,7 +365,7 @@ public class TrashVersionPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(TrashVersion.class,
-				TrashVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("versionId",
 				RandomTestUtil.nextLong()));
@@ -377,7 +381,7 @@ public class TrashVersionPersistenceTest {
 		TrashVersion newTrashVersion = addTrashVersion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(TrashVersion.class,
-				TrashVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("versionId"));
 
@@ -398,7 +402,7 @@ public class TrashVersionPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(TrashVersion.class,
-				TrashVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("versionId"));
 
@@ -452,4 +456,5 @@ public class TrashVersionPersistenceTest {
 
 	private List<TrashVersion> _trashVersions = new ArrayList<TrashVersion>();
 	private TrashVersionPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

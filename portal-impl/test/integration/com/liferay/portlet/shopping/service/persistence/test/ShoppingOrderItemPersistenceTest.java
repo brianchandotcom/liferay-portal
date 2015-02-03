@@ -65,6 +65,10 @@ public class ShoppingOrderItemPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ShoppingOrderItemUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -336,7 +340,7 @@ public class ShoppingOrderItemPersistenceTest {
 		ShoppingOrderItem newShoppingOrderItem = addShoppingOrderItem();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingOrderItem.class,
-				ShoppingOrderItem.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("orderItemId",
 				newShoppingOrderItem.getOrderItemId()));
@@ -353,7 +357,7 @@ public class ShoppingOrderItemPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingOrderItem.class,
-				ShoppingOrderItem.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("orderItemId",
 				RandomTestUtil.nextLong()));
@@ -369,7 +373,7 @@ public class ShoppingOrderItemPersistenceTest {
 		ShoppingOrderItem newShoppingOrderItem = addShoppingOrderItem();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingOrderItem.class,
-				ShoppingOrderItem.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("orderItemId"));
 
@@ -390,7 +394,7 @@ public class ShoppingOrderItemPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingOrderItem.class,
-				ShoppingOrderItem.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("orderItemId"));
 
@@ -433,4 +437,5 @@ public class ShoppingOrderItemPersistenceTest {
 
 	private List<ShoppingOrderItem> _shoppingOrderItems = new ArrayList<ShoppingOrderItem>();
 	private ShoppingOrderItemPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

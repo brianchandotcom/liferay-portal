@@ -66,6 +66,10 @@ public class AssetLinkPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = AssetLinkUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -396,7 +400,7 @@ public class AssetLinkPersistenceTest {
 		AssetLink newAssetLink = addAssetLink();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetLink.class,
-				AssetLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("linkId",
 				newAssetLink.getLinkId()));
@@ -413,7 +417,7 @@ public class AssetLinkPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetLink.class,
-				AssetLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("linkId",
 				RandomTestUtil.nextLong()));
@@ -429,7 +433,7 @@ public class AssetLinkPersistenceTest {
 		AssetLink newAssetLink = addAssetLink();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetLink.class,
-				AssetLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("linkId"));
 
@@ -450,7 +454,7 @@ public class AssetLinkPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(AssetLink.class,
-				AssetLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("linkId"));
 
@@ -513,4 +517,5 @@ public class AssetLinkPersistenceTest {
 
 	private List<AssetLink> _assetLinks = new ArrayList<AssetLink>();
 	private AssetLinkPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

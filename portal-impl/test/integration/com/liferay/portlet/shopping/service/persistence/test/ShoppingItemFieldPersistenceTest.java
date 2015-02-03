@@ -63,6 +63,10 @@ public class ShoppingItemFieldPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ShoppingItemFieldUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -312,7 +316,7 @@ public class ShoppingItemFieldPersistenceTest {
 		ShoppingItemField newShoppingItemField = addShoppingItemField();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingItemField.class,
-				ShoppingItemField.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("itemFieldId",
 				newShoppingItemField.getItemFieldId()));
@@ -329,7 +333,7 @@ public class ShoppingItemFieldPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingItemField.class,
-				ShoppingItemField.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("itemFieldId",
 				RandomTestUtil.nextLong()));
@@ -345,7 +349,7 @@ public class ShoppingItemFieldPersistenceTest {
 		ShoppingItemField newShoppingItemField = addShoppingItemField();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingItemField.class,
-				ShoppingItemField.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("itemFieldId"));
 
@@ -366,7 +370,7 @@ public class ShoppingItemFieldPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingItemField.class,
-				ShoppingItemField.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("itemFieldId"));
 
@@ -399,4 +403,5 @@ public class ShoppingItemFieldPersistenceTest {
 
 	private List<ShoppingItemField> _shoppingItemFields = new ArrayList<ShoppingItemField>();
 	private ShoppingItemFieldPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

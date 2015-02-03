@@ -63,6 +63,10 @@ public class SystemEventPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = SystemEventUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -397,7 +401,7 @@ public class SystemEventPersistenceTest {
 		SystemEvent newSystemEvent = addSystemEvent();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SystemEvent.class,
-				SystemEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("systemEventId",
 				newSystemEvent.getSystemEventId()));
@@ -414,7 +418,7 @@ public class SystemEventPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SystemEvent.class,
-				SystemEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("systemEventId",
 				RandomTestUtil.nextLong()));
@@ -430,7 +434,7 @@ public class SystemEventPersistenceTest {
 		SystemEvent newSystemEvent = addSystemEvent();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SystemEvent.class,
-				SystemEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"systemEventId"));
@@ -452,7 +456,7 @@ public class SystemEventPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(SystemEvent.class,
-				SystemEvent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"systemEventId"));
@@ -505,4 +509,5 @@ public class SystemEventPersistenceTest {
 
 	private List<SystemEvent> _systemEvents = new ArrayList<SystemEvent>();
 	private SystemEventPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

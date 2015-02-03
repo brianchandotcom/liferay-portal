@@ -66,6 +66,10 @@ public class ServiceComponentPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ServiceComponentUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -337,7 +341,7 @@ public class ServiceComponentPersistenceTest {
 		ServiceComponent newServiceComponent = addServiceComponent();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ServiceComponent.class,
-				ServiceComponent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("serviceComponentId",
 				newServiceComponent.getServiceComponentId()));
@@ -354,7 +358,7 @@ public class ServiceComponentPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ServiceComponent.class,
-				ServiceComponent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("serviceComponentId",
 				RandomTestUtil.nextLong()));
@@ -370,7 +374,7 @@ public class ServiceComponentPersistenceTest {
 		ServiceComponent newServiceComponent = addServiceComponent();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ServiceComponent.class,
-				ServiceComponent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"serviceComponentId"));
@@ -392,7 +396,7 @@ public class ServiceComponentPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ServiceComponent.class,
-				ServiceComponent.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"serviceComponentId"));
@@ -448,4 +452,5 @@ public class ServiceComponentPersistenceTest {
 
 	private List<ServiceComponent> _serviceComponents = new ArrayList<ServiceComponent>();
 	private ServiceComponentPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

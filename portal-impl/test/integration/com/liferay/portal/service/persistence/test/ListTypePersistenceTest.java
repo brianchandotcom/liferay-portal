@@ -60,6 +60,10 @@ public class ListTypePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ListTypeUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -282,7 +286,7 @@ public class ListTypePersistenceTest {
 		ListType newListType = addListType();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ListType.class,
-				ListType.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("listTypeId",
 				newListType.getListTypeId()));
@@ -299,7 +303,7 @@ public class ListTypePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ListType.class,
-				ListType.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("listTypeId",
 				RandomTestUtil.nextInt()));
@@ -315,7 +319,7 @@ public class ListTypePersistenceTest {
 		ListType newListType = addListType();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ListType.class,
-				ListType.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("listTypeId"));
 
@@ -336,7 +340,7 @@ public class ListTypePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ListType.class,
-				ListType.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("listTypeId"));
 
@@ -366,4 +370,5 @@ public class ListTypePersistenceTest {
 
 	private List<ListType> _listTypes = new ArrayList<ListType>();
 	private ListTypePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -64,6 +64,10 @@ public class EmailAddressPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = EmailAddressUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -432,7 +436,7 @@ public class EmailAddressPersistenceTest {
 		EmailAddress newEmailAddress = addEmailAddress();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(EmailAddress.class,
-				EmailAddress.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("emailAddressId",
 				newEmailAddress.getEmailAddressId()));
@@ -449,7 +453,7 @@ public class EmailAddressPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(EmailAddress.class,
-				EmailAddress.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("emailAddressId",
 				RandomTestUtil.nextLong()));
@@ -465,7 +469,7 @@ public class EmailAddressPersistenceTest {
 		EmailAddress newEmailAddress = addEmailAddress();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(EmailAddress.class,
-				EmailAddress.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"emailAddressId"));
@@ -487,7 +491,7 @@ public class EmailAddressPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(EmailAddress.class,
-				EmailAddress.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"emailAddressId"));
@@ -536,4 +540,5 @@ public class EmailAddressPersistenceTest {
 
 	private List<EmailAddress> _emailAddresses = new ArrayList<EmailAddress>();
 	private EmailAddressPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

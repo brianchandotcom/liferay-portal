@@ -67,6 +67,10 @@ public class JournalContentSearchPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = JournalContentSearchUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -437,7 +441,7 @@ public class JournalContentSearchPersistenceTest {
 		JournalContentSearch newJournalContentSearch = addJournalContentSearch();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalContentSearch.class,
-				JournalContentSearch.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentSearchId",
 				newJournalContentSearch.getContentSearchId()));
@@ -455,7 +459,7 @@ public class JournalContentSearchPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalContentSearch.class,
-				JournalContentSearch.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentSearchId",
 				RandomTestUtil.nextLong()));
@@ -471,7 +475,7 @@ public class JournalContentSearchPersistenceTest {
 		JournalContentSearch newJournalContentSearch = addJournalContentSearch();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalContentSearch.class,
-				JournalContentSearch.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"contentSearchId"));
@@ -493,7 +497,7 @@ public class JournalContentSearchPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(JournalContentSearch.class,
-				JournalContentSearch.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"contentSearchId"));
@@ -562,4 +566,5 @@ public class JournalContentSearchPersistenceTest {
 
 	private List<JournalContentSearch> _journalContentSearchs = new ArrayList<JournalContentSearch>();
 	private JournalContentSearchPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -66,6 +66,10 @@ public class UserNotificationDeliveryPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = UserNotificationDeliveryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -357,7 +361,7 @@ public class UserNotificationDeliveryPersistenceTest {
 		UserNotificationDelivery newUserNotificationDelivery = addUserNotificationDelivery();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationDelivery.class,
-				UserNotificationDelivery.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"userNotificationDeliveryId",
@@ -376,7 +380,7 @@ public class UserNotificationDeliveryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationDelivery.class,
-				UserNotificationDelivery.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"userNotificationDeliveryId", RandomTestUtil.nextLong()));
@@ -392,7 +396,7 @@ public class UserNotificationDeliveryPersistenceTest {
 		UserNotificationDelivery newUserNotificationDelivery = addUserNotificationDelivery();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationDelivery.class,
-				UserNotificationDelivery.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"userNotificationDeliveryId"));
@@ -416,7 +420,7 @@ public class UserNotificationDeliveryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(UserNotificationDelivery.class,
-				UserNotificationDelivery.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"userNotificationDeliveryId"));
@@ -490,4 +494,5 @@ public class UserNotificationDeliveryPersistenceTest {
 
 	private List<UserNotificationDelivery> _userNotificationDeliveries = new ArrayList<UserNotificationDelivery>();
 	private UserNotificationDeliveryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

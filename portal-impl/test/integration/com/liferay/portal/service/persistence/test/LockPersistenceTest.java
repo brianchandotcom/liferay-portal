@@ -67,6 +67,10 @@ public class LockPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = LockUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -378,7 +382,7 @@ public class LockPersistenceTest {
 		Lock newLock = addLock();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Lock.class,
-				Lock.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("lockId",
 				newLock.getLockId()));
@@ -395,7 +399,7 @@ public class LockPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Lock.class,
-				Lock.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("lockId",
 				RandomTestUtil.nextLong()));
@@ -411,7 +415,7 @@ public class LockPersistenceTest {
 		Lock newLock = addLock();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Lock.class,
-				Lock.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("lockId"));
 
@@ -432,7 +436,7 @@ public class LockPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Lock.class,
-				Lock.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("lockId"));
 
@@ -498,4 +502,5 @@ public class LockPersistenceTest {
 
 	private List<Lock> _locks = new ArrayList<Lock>();
 	private LockPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -68,6 +68,10 @@ public class MDRRuleGroupPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = MDRRuleGroupUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -395,7 +399,7 @@ public class MDRRuleGroupPersistenceTest {
 		MDRRuleGroup newMDRRuleGroup = addMDRRuleGroup();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRuleGroup.class,
-				MDRRuleGroup.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleGroupId",
 				newMDRRuleGroup.getRuleGroupId()));
@@ -412,7 +416,7 @@ public class MDRRuleGroupPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRuleGroup.class,
-				MDRRuleGroup.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleGroupId",
 				RandomTestUtil.nextLong()));
@@ -428,7 +432,7 @@ public class MDRRuleGroupPersistenceTest {
 		MDRRuleGroup newMDRRuleGroup = addMDRRuleGroup();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRuleGroup.class,
-				MDRRuleGroup.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ruleGroupId"));
 
@@ -449,7 +453,7 @@ public class MDRRuleGroupPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MDRRuleGroup.class,
-				MDRRuleGroup.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("ruleGroupId"));
 
@@ -511,4 +515,5 @@ public class MDRRuleGroupPersistenceTest {
 
 	private List<MDRRuleGroup> _mdrRuleGroups = new ArrayList<MDRRuleGroup>();
 	private MDRRuleGroupPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

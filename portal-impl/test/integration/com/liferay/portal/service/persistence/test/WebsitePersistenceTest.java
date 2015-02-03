@@ -64,6 +64,10 @@ public class WebsitePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = WebsiteUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -425,7 +429,7 @@ public class WebsitePersistenceTest {
 		Website newWebsite = addWebsite();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Website.class,
-				Website.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("websiteId",
 				newWebsite.getWebsiteId()));
@@ -442,7 +446,7 @@ public class WebsitePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Website.class,
-				Website.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("websiteId",
 				RandomTestUtil.nextLong()));
@@ -458,7 +462,7 @@ public class WebsitePersistenceTest {
 		Website newWebsite = addWebsite();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Website.class,
-				Website.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("websiteId"));
 
@@ -479,7 +483,7 @@ public class WebsitePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Website.class,
-				Website.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("websiteId"));
 
@@ -527,4 +531,5 @@ public class WebsitePersistenceTest {
 
 	private List<Website> _websites = new ArrayList<Website>();
 	private WebsitePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -68,6 +68,10 @@ public class MBDiscussionPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = MBDiscussionUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -415,7 +419,7 @@ public class MBDiscussionPersistenceTest {
 		MBDiscussion newMBDiscussion = addMBDiscussion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBDiscussion.class,
-				MBDiscussion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("discussionId",
 				newMBDiscussion.getDiscussionId()));
@@ -432,7 +436,7 @@ public class MBDiscussionPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBDiscussion.class,
-				MBDiscussion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("discussionId",
 				RandomTestUtil.nextLong()));
@@ -448,7 +452,7 @@ public class MBDiscussionPersistenceTest {
 		MBDiscussion newMBDiscussion = addMBDiscussion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBDiscussion.class,
-				MBDiscussion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"discussionId"));
@@ -470,7 +474,7 @@ public class MBDiscussionPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(MBDiscussion.class,
-				MBDiscussion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"discussionId"));
@@ -546,4 +550,5 @@ public class MBDiscussionPersistenceTest {
 
 	private List<MBDiscussion> _mbDiscussions = new ArrayList<MBDiscussion>();
 	private MBDiscussionPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

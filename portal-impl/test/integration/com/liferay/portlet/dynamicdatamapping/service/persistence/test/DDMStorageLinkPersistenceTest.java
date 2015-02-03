@@ -66,6 +66,10 @@ public class DDMStorageLinkPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DDMStorageLinkUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -342,7 +346,7 @@ public class DDMStorageLinkPersistenceTest {
 		DDMStorageLink newDDMStorageLink = addDDMStorageLink();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStorageLink.class,
-				DDMStorageLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("storageLinkId",
 				newDDMStorageLink.getStorageLinkId()));
@@ -359,7 +363,7 @@ public class DDMStorageLinkPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStorageLink.class,
-				DDMStorageLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("storageLinkId",
 				RandomTestUtil.nextLong()));
@@ -375,7 +379,7 @@ public class DDMStorageLinkPersistenceTest {
 		DDMStorageLink newDDMStorageLink = addDDMStorageLink();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStorageLink.class,
-				DDMStorageLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"storageLinkId"));
@@ -397,7 +401,7 @@ public class DDMStorageLinkPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStorageLink.class,
-				DDMStorageLink.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"storageLinkId"));
@@ -447,4 +451,5 @@ public class DDMStorageLinkPersistenceTest {
 
 	private List<DDMStorageLink> _ddmStorageLinks = new ArrayList<DDMStorageLink>();
 	private DDMStorageLinkPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

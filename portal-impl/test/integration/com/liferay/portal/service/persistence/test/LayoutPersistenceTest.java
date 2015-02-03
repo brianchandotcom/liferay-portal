@@ -67,6 +67,10 @@ public class LayoutPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = LayoutUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -615,7 +619,7 @@ public class LayoutPersistenceTest {
 		Layout newLayout = addLayout();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Layout.class,
-				Layout.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("plid", newLayout.getPlid()));
 
@@ -631,7 +635,7 @@ public class LayoutPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Layout.class,
-				Layout.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("plid",
 				RandomTestUtil.nextLong()));
@@ -647,7 +651,7 @@ public class LayoutPersistenceTest {
 		Layout newLayout = addLayout();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Layout.class,
-				Layout.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("plid"));
 
@@ -668,7 +672,7 @@ public class LayoutPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Layout.class,
-				Layout.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("plid"));
 
@@ -810,4 +814,5 @@ public class LayoutPersistenceTest {
 
 	private List<Layout> _layouts = new ArrayList<Layout>();
 	private LayoutPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

@@ -67,6 +67,10 @@ public class OrganizationPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = OrganizationUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -470,7 +474,7 @@ public class OrganizationPersistenceTest {
 		Organization newOrganization = addOrganization();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Organization.class,
-				Organization.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("organizationId",
 				newOrganization.getOrganizationId()));
@@ -487,7 +491,7 @@ public class OrganizationPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Organization.class,
-				Organization.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("organizationId",
 				RandomTestUtil.nextLong()));
@@ -503,7 +507,7 @@ public class OrganizationPersistenceTest {
 		Organization newOrganization = addOrganization();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Organization.class,
-				Organization.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"organizationId"));
@@ -525,7 +529,7 @@ public class OrganizationPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Organization.class,
-				Organization.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"organizationId"));
@@ -604,4 +608,5 @@ public class OrganizationPersistenceTest {
 
 	private List<Organization> _organizations = new ArrayList<Organization>();
 	private OrganizationPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

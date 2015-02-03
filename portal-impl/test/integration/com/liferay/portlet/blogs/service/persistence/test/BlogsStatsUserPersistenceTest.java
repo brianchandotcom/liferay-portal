@@ -67,6 +67,10 @@ public class BlogsStatsUserPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = BlogsStatsUserUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -399,7 +403,7 @@ public class BlogsStatsUserPersistenceTest {
 		BlogsStatsUser newBlogsStatsUser = addBlogsStatsUser();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BlogsStatsUser.class,
-				BlogsStatsUser.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("statsUserId",
 				newBlogsStatsUser.getStatsUserId()));
@@ -416,7 +420,7 @@ public class BlogsStatsUserPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BlogsStatsUser.class,
-				BlogsStatsUser.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("statsUserId",
 				RandomTestUtil.nextLong()));
@@ -432,7 +436,7 @@ public class BlogsStatsUserPersistenceTest {
 		BlogsStatsUser newBlogsStatsUser = addBlogsStatsUser();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BlogsStatsUser.class,
-				BlogsStatsUser.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("statsUserId"));
 
@@ -453,7 +457,7 @@ public class BlogsStatsUserPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BlogsStatsUser.class,
-				BlogsStatsUser.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("statsUserId"));
 
@@ -513,4 +517,5 @@ public class BlogsStatsUserPersistenceTest {
 
 	private List<BlogsStatsUser> _blogsStatsUsers = new ArrayList<BlogsStatsUser>();
 	private BlogsStatsUserPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

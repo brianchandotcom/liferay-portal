@@ -68,6 +68,10 @@ public class DDMStructureVersionPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = DDMStructureVersionUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -367,7 +371,7 @@ public class DDMStructureVersionPersistenceTest {
 		DDMStructureVersion newDDMStructureVersion = addDDMStructureVersion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureVersion.class,
-				DDMStructureVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureVersionId",
 				newDDMStructureVersion.getStructureVersionId()));
@@ -384,7 +388,7 @@ public class DDMStructureVersionPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureVersion.class,
-				DDMStructureVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureVersionId",
 				RandomTestUtil.nextLong()));
@@ -400,7 +404,7 @@ public class DDMStructureVersionPersistenceTest {
 		DDMStructureVersion newDDMStructureVersion = addDDMStructureVersion();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureVersion.class,
-				DDMStructureVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"structureVersionId"));
@@ -422,7 +426,7 @@ public class DDMStructureVersionPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(DDMStructureVersion.class,
-				DDMStructureVersion.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"structureVersionId"));
@@ -493,4 +497,5 @@ public class DDMStructureVersionPersistenceTest {
 
 	private List<DDMStructureVersion> _ddmStructureVersions = new ArrayList<DDMStructureVersion>();
 	private DDMStructureVersionPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

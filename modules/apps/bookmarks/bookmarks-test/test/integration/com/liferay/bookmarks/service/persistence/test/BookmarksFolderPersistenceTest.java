@@ -71,6 +71,10 @@ public class BookmarksFolderPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = BookmarksFolderUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -520,7 +524,7 @@ public class BookmarksFolderPersistenceTest {
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksFolder.class,
-				BookmarksFolder.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("folderId",
 				newBookmarksFolder.getFolderId()));
@@ -537,7 +541,7 @@ public class BookmarksFolderPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksFolder.class,
-				BookmarksFolder.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("folderId",
 				RandomTestUtil.nextLong()));
@@ -553,7 +557,7 @@ public class BookmarksFolderPersistenceTest {
 		BookmarksFolder newBookmarksFolder = addBookmarksFolder();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksFolder.class,
-				BookmarksFolder.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("folderId"));
 
@@ -574,7 +578,7 @@ public class BookmarksFolderPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(BookmarksFolder.class,
-				BookmarksFolder.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("folderId"));
 
@@ -650,4 +654,5 @@ public class BookmarksFolderPersistenceTest {
 
 	private List<BookmarksFolder> _bookmarksFolders = new ArrayList<BookmarksFolder>();
 	private BookmarksFolderPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

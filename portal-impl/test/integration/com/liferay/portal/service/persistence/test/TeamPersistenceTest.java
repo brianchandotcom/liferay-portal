@@ -67,6 +67,10 @@ public class TeamPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = TeamUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -353,7 +357,7 @@ public class TeamPersistenceTest {
 		Team newTeam = addTeam();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Team.class,
-				Team.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("teamId",
 				newTeam.getTeamId()));
@@ -370,7 +374,7 @@ public class TeamPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Team.class,
-				Team.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("teamId",
 				RandomTestUtil.nextLong()));
@@ -386,7 +390,7 @@ public class TeamPersistenceTest {
 		Team newTeam = addTeam();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Team.class,
-				Team.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("teamId"));
 
@@ -407,7 +411,7 @@ public class TeamPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Team.class,
-				Team.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("teamId"));
 
@@ -469,4 +473,5 @@ public class TeamPersistenceTest {
 
 	private List<Team> _teams = new ArrayList<Team>();
 	private TeamPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

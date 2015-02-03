@@ -64,6 +64,10 @@ public class LayoutPrototypePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = LayoutPrototypeUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -388,7 +392,7 @@ public class LayoutPrototypePersistenceTest {
 		LayoutPrototype newLayoutPrototype = addLayoutPrototype();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutPrototype.class,
-				LayoutPrototype.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutPrototypeId",
 				newLayoutPrototype.getLayoutPrototypeId()));
@@ -405,7 +409,7 @@ public class LayoutPrototypePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutPrototype.class,
-				LayoutPrototype.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutPrototypeId",
 				RandomTestUtil.nextLong()));
@@ -421,7 +425,7 @@ public class LayoutPrototypePersistenceTest {
 		LayoutPrototype newLayoutPrototype = addLayoutPrototype();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutPrototype.class,
-				LayoutPrototype.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"layoutPrototypeId"));
@@ -443,7 +447,7 @@ public class LayoutPrototypePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutPrototype.class,
-				LayoutPrototype.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"layoutPrototypeId"));
@@ -490,4 +494,5 @@ public class LayoutPrototypePersistenceTest {
 
 	private List<LayoutPrototype> _layoutPrototypes = new ArrayList<LayoutPrototype>();
 	private LayoutPrototypePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

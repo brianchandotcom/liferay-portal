@@ -67,6 +67,10 @@ public class RepositoryEntryPersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = RepositoryEntryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -407,7 +411,7 @@ public class RepositoryEntryPersistenceTest {
 		RepositoryEntry newRepositoryEntry = addRepositoryEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RepositoryEntry.class,
-				RepositoryEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("repositoryEntryId",
 				newRepositoryEntry.getRepositoryEntryId()));
@@ -424,7 +428,7 @@ public class RepositoryEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RepositoryEntry.class,
-				RepositoryEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("repositoryEntryId",
 				RandomTestUtil.nextLong()));
@@ -440,7 +444,7 @@ public class RepositoryEntryPersistenceTest {
 		RepositoryEntry newRepositoryEntry = addRepositoryEntry();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RepositoryEntry.class,
-				RepositoryEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"repositoryEntryId"));
@@ -462,7 +466,7 @@ public class RepositoryEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(RepositoryEntry.class,
-				RepositoryEntry.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
 				"repositoryEntryId"));
@@ -537,4 +541,5 @@ public class RepositoryEntryPersistenceTest {
 
 	private List<RepositoryEntry> _repositoryEntries = new ArrayList<RepositoryEntry>();
 	private RepositoryEntryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

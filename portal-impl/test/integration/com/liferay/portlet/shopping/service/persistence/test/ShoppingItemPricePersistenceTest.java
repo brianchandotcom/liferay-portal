@@ -64,6 +64,10 @@ public class ShoppingItemPricePersistenceTest {
 	@Before
 	public void setUp() {
 		_persistence = ShoppingItemPriceUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
 	}
 
 	@After
@@ -334,7 +338,7 @@ public class ShoppingItemPricePersistenceTest {
 		ShoppingItemPrice newShoppingItemPrice = addShoppingItemPrice();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingItemPrice.class,
-				ShoppingItemPrice.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("itemPriceId",
 				newShoppingItemPrice.getItemPriceId()));
@@ -351,7 +355,7 @@ public class ShoppingItemPricePersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingItemPrice.class,
-				ShoppingItemPrice.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("itemPriceId",
 				RandomTestUtil.nextLong()));
@@ -367,7 +371,7 @@ public class ShoppingItemPricePersistenceTest {
 		ShoppingItemPrice newShoppingItemPrice = addShoppingItemPrice();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingItemPrice.class,
-				ShoppingItemPrice.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("itemPriceId"));
 
@@ -388,7 +392,7 @@ public class ShoppingItemPricePersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(ShoppingItemPrice.class,
-				ShoppingItemPrice.class.getClassLoader());
+				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property("itemPriceId"));
 
@@ -431,4 +435,5 @@ public class ShoppingItemPricePersistenceTest {
 
 	private List<ShoppingItemPrice> _shoppingItemPrices = new ArrayList<ShoppingItemPrice>();
 	private ShoppingItemPricePersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
 }

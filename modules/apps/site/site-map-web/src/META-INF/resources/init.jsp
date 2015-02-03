@@ -46,4 +46,4 @@ if (rootLayoutId == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 }
 %>
 
-<%@ include file="/html/portlet/site_map/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

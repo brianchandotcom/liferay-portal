@@ -55,7 +55,7 @@
 		_buildNavigation(rootLayout, layout, branchLayouts, themeDisplay, 1, includedLayouts, nestedChildren, sb);
 	}
 	%>
-
+<a href="http://google.com" onclick="alert('foo');">Test</a>
 	<div class="nav-menu nav-menu-style-<%= bulletStyle %>">
 		<c:choose>
 			<c:when test='<%= headerType.equals("root-layout") && (rootLayout != null) %>'>

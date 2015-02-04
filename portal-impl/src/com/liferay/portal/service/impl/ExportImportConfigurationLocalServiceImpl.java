@@ -359,6 +359,7 @@ public class ExportImportConfigurationLocalServiceImpl
 		attributes.put("type", type);
 
 		searchContext.setAttributes(attributes);
+
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 

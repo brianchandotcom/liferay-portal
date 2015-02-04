@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.security.ntlm;
+package com.liferay.portal.sso.ntlm;
+
+import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.security.ntlm.msrpc.NetlogonAuthenticator;
-import com.liferay.portal.security.ntlm.msrpc.NetrServerAuthenticate3;
-import com.liferay.portal.security.ntlm.msrpc.NetrServerReqChallenge;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.sso.ntlm.configuration.NtlmConfiguration;
+import com.liferay.portal.sso.ntlm.msrpc.NetrServerAuthenticate3;
+import com.liferay.portal.sso.ntlm.msrpc.NetrServerReqChallenge;
 
 import java.io.IOException;
 
@@ -27,35 +28,28 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import jcifs.dcerpc.DcerpcHandle;
 
 import jcifs.smb.NtlmPasswordAuthentication;
 
-import jcifs.util.DES;
-import jcifs.util.Encdec;
 import jcifs.util.HMACT64;
 import jcifs.util.MD4;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Michael C. Han
  */
-public class NetlogonConnection {
+@Component(immediate = true, service = NetlogonConnectionManager.class)
+public class NetlogonConnectionManagerImpl
+	implements NetlogonConnectionManager {
 
-	public NetlogonAuthenticator computeNetlogonAuthenticator() {
-		int timestamp = (int)System.currentTimeMillis();
-
-		int input = Encdec.dec_uint32le(_clientCredential, 0) + timestamp;
-
-		Encdec.enc_uint32le(input, _clientCredential, 0);
-
-		byte[] credential = computeNetlogonCredential(
-			_clientCredential, _sessionKey);
-
-		return new NetlogonAuthenticator(credential, timestamp);
-	}
-
-	public void connect(
+	@Override
+	public NetlogonConnection connect(
 			String domainController, String domainControllerName,
 			NtlmServiceAccount ntlmServiceAccount)
 		throws IOException, NoSuchAlgorithmException, NtlmLogonException {
@@ -69,8 +63,6 @@ public class NetlogonConnection {
 
 		DcerpcHandle dcerpcHandle = DcerpcHandle.getHandle(
 			endpoint, ntlmPasswordAuthentication);
-
-		setDcerpcHandle(dcerpcHandle);
 
 		dcerpcHandle.bind();
 
@@ -93,72 +85,51 @@ public class NetlogonConnection {
 			md4.digest(), clientChallenge,
 			netrServerReqChallenge.getServerChallenge());
 
-		byte[] clientCredential = computeNetlogonCredential(
-			clientChallenge, sessionKey);
+		byte[] clientCredential =
+			NetlogonCredentialUtil.computeNetlogonCredential(
+				clientChallenge, sessionKey);
 
 		NetrServerAuthenticate3 netrServerAuthenticate3 =
 			new NetrServerAuthenticate3(
 				domainControllerName, ntlmServiceAccount.getAccountName(), 2,
 				ntlmServiceAccount.getComputerName(), clientCredential,
-				new byte[8], _NEGOTIATE_FLAGS);
+				new byte[8], _negotiateFlags);
 
 		dcerpcHandle.sendrecv(netrServerAuthenticate3);
 
-		byte[] serverCredential = computeNetlogonCredential(
-			netrServerReqChallenge.getServerChallenge(), sessionKey);
+		byte[] serverCredential =
+			NetlogonCredentialUtil.computeNetlogonCredential(
+				netrServerReqChallenge.getServerChallenge(), sessionKey);
 
 		if (!Arrays.equals(
 				serverCredential,
-				netrServerAuthenticate3.getServerCredential())) {
+			netrServerAuthenticate3.getServerCredential())) {
 
 			throw new NtlmLogonException("Session key negotiation failed");
 		}
 
-		_clientCredential = clientCredential;
-		_sessionKey = sessionKey;
+		NetlogonConnection netLogonConnection = new NetlogonConnection(
+			clientCredential, sessionKey);
+
+		netLogonConnection.setDcerpcHandle(dcerpcHandle);
+
+		return netLogonConnection;
 	}
 
-	public void disconnect() throws IOException {
-		if (_dcerpcHandle != null) {
-			_dcerpcHandle.close();
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ntlmConfiguration = Configurable.createConfigurable(
+			NtlmConfiguration.class, properties);
+
+		String negotiateFlags = _ntlmConfiguration.negotiateFlags();
+
+		if (negotiateFlags.startsWith("0x")) {
+			_negotiateFlags = Integer.valueOf(negotiateFlags.substring(2), 16);
 		}
-	}
-
-	public byte[] getClientCredential() {
-		return _clientCredential;
-	}
-
-	public DcerpcHandle getDcerpcHandle() {
-		return _dcerpcHandle;
-	}
-
-	public byte[] getSessionKey() {
-		return _sessionKey;
-	}
-
-	public void setDcerpcHandle(DcerpcHandle dcerpcHandle) {
-		_dcerpcHandle = dcerpcHandle;
-	}
-
-	protected byte[] computeNetlogonCredential(
-		byte[] input, byte[] sessionKey) {
-
-		byte[] k1 = new byte[7];
-		byte[] k2 = new byte[7];
-
-		System.arraycopy(sessionKey, 0, k1, 0, 7);
-		System.arraycopy(sessionKey, 7, k2, 0, 7);
-
-		DES k3 = new DES(k1);
-		DES k4 = new DES(k2);
-
-		byte[] output1 = new byte[8];
-		byte[] output2 = new byte[8];
-
-		k3.encrypt(input, output1);
-		k4.encrypt(output1, output2);
-
-		return output2;
+		else {
+			_negotiateFlags = 0x600FFFFF;
+		}
 	}
 
 	protected byte[] computeSessionKey(
@@ -180,21 +151,7 @@ public class NetlogonConnection {
 		return hmact64.digest();
 	}
 
-	private static final int _NEGOTIATE_FLAGS;
-
-	static {
-		String negotiateFlags = PropsValues.NTLM_AUTH_NEGOTIATE_FLAGS;
-
-		if (negotiateFlags.startsWith("0x")) {
-			_NEGOTIATE_FLAGS = Integer.valueOf(negotiateFlags.substring(2), 16);
-		}
-		else {
-			_NEGOTIATE_FLAGS = 0x600FFFFF;
-		}
-	}
-
-	private byte[] _clientCredential;
-	private DcerpcHandle _dcerpcHandle;
-	private byte[] _sessionKey;
+	private volatile int _negotiateFlags;
+	private volatile NtlmConfiguration _ntlmConfiguration;
 
 }

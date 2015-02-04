@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.security.ntlm;
-
-import java.io.Serializable;
+package com.liferay.portal.sso.ntlm.constants;
 
 /**
- * @author Marcellus Tavares
+ * @author Michael C. Han
  */
-public class NtlmUserAccount implements Serializable {
+public class NtlmWebKeys {
 
-	public NtlmUserAccount(String userName) {
-		_userName = userName;
-	}
+	public static final String NTLM_REMOTE_USER = "NTLM_REMOTE_USER";
 
-	public String getUserName() {
-		return _userName;
-	}
-
-	private final String _userName;
+	public static final String NTLM_USER_ACCOUNT = "NTLM_USER_ACCOUNT";
 
 }

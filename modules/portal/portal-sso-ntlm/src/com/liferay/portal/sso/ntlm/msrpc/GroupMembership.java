@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ntlm.msrpc;
+package com.liferay.portal.sso.ntlm.msrpc;
 
 import jcifs.dcerpc.ndr.NdrBuffer;
 import jcifs.dcerpc.ndr.NdrObject;
@@ -20,52 +20,41 @@ import jcifs.dcerpc.ndr.NdrObject;
 /**
  * @author Marcellus Tavares
  */
-public class NetlogonAuthenticator extends NdrObject {
+public class GroupMembership extends NdrObject {
 
-	public NetlogonAuthenticator() {
-		_credential = new byte[8];
+	public GroupMembership() {
 	}
 
-	public NetlogonAuthenticator(byte[] credential, int timestamp) {
-		_credential = credential;
-		_timestamp = timestamp;
+	public GroupMembership(int relativeId, int attributes) {
+		_relativeId = relativeId;
+		_attributes = attributes;
 	}
 
 	@Override
 	public void decode(NdrBuffer ndrBuffer) {
 		ndrBuffer.align(4);
 
-		int index = ndrBuffer.index;
-
-		ndrBuffer.advance(8);
-
-		_timestamp = ndrBuffer.dec_ndr_long();
-
-		ndrBuffer = ndrBuffer.derive(index);
-
-		for (int i = 0; i < 8; i++) {
-			_credential[i] = (byte)ndrBuffer.dec_ndr_small();
-		}
+		_relativeId = ndrBuffer.dec_ndr_long();
+		_attributes = ndrBuffer.dec_ndr_long();
 	}
 
 	@Override
 	public void encode(NdrBuffer ndrBuffer) {
 		ndrBuffer.align(4);
 
-		int index = ndrBuffer.index;
-
-		ndrBuffer.advance(8);
-
-		ndrBuffer.enc_ndr_long(_timestamp);
-
-		ndrBuffer = ndrBuffer.derive(index);
-
-		for (int i = 0; i < 8; i++) {
-			ndrBuffer.enc_ndr_small(_credential[i]);
-		}
+		ndrBuffer.enc_ndr_long(_relativeId);
+		ndrBuffer.enc_ndr_long(_attributes);
 	}
 
-	private final byte[] _credential;
-	private int _timestamp;
+	public int getAttributes() {
+		return _attributes;
+	}
+
+	public int getRelativeId() {
+		return _relativeId;
+	}
+
+	private int _attributes;
+	private int _relativeId;
 
 }

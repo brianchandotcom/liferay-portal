@@ -100,9 +100,6 @@ public class SSOUtil {
 				companyId, PropsKeys.LOGIN_DIALOG_DISABLED,
 				PropsValues.LOGIN_DIALOG_DISABLED) ||
 			PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.NTLM_AUTH_ENABLED,
-				PropsValues.NTLM_AUTH_ENABLED) ||
-			PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
 				PropsValues.OPEN_SSO_AUTH_ENABLED)) {
 

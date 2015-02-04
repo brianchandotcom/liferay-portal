@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ntlm;
+package com.liferay.portal.sso.ntlm;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;

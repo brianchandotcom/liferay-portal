@@ -30,7 +30,7 @@
 		<dirset dir="apps/xsl-content" includes="*" />
 		<dirset dir="core" includes="*" />
 		<dirset dir="portal" excludes="portal-taglib-aui-form-extension-sample" includes="*" />
-		<dirset dir="util" includes="pmd,portal-tools" />
+		<dirset dir="util" includes="java-sass-compiler,pmd,portal-tools" />
 	</path>
 
 	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />

@@ -41,7 +41,12 @@
 	</target>
 
 	<target name="check-deploy-uptodate" depends="check-jar-uptodate">
-		<uptodate property="deploy.uptodate" srcfile="${jar.file}.jar" targetfile="${deploy.dir}/${jar.file}.jar" />
+		<if>
+			<available file="${jar.file}.jar" />
+			<then>
+				<uptodate property="deploy.uptodate" srcfile="${jar.file}.jar" targetfile="${deploy.dir}/${jar.file}.jar" />
+			</then>
+		</if>
 	</target>
 
 	<target name="check-jar-uptodate" depends="check-compile-uptodate">

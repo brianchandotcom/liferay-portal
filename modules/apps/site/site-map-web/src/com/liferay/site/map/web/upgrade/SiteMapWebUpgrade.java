@@ -52,7 +52,7 @@ public class SiteMapWebUpgrade {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {"39", SiteMapPortletKeys.SITE_MAP}
+					new String[] {"85", SiteMapPortletKeys.SITE_MAP}
 				};
 			}
 

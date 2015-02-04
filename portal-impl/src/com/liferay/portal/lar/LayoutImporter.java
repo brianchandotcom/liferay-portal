@@ -1149,9 +1149,10 @@ public class LayoutImporter {
 
 			boolean sourceGroupIsCompanyGroup = false;
 
-			if (group.hasRemoteStagingGroup()) {
-				sourceGroupIsCompanyGroup =
-					sourceCompanyGroupId == sourceGroupId;
+			if (group.hasRemoteStagingGroup() &&
+				(sourceCompanyGroupId == sourceGroupId)) {
+
+				sourceGroupIsCompanyGroup = true;
 			}
 			else if (group.isStaged() || group.hasStagingGroup()) {
 				Group sourceGroup = GroupLocalServiceUtil.fetchGroup(

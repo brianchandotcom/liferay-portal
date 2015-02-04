@@ -177,6 +177,7 @@
 	&.draggable-image {
 		&.vertical .current-image {
 			max-height: inherit;
+			min-width: 100%;
 		}
 
 		&.horizontal .current-image {

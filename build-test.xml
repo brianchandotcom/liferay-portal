@@ -35,7 +35,6 @@
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
-	<propertycopy from="testray.build.${testray.build.type}.name" name="testray.build.name" />
 	<propertycopy from="testray.product.${testray.product.type}.version" name="testray.product.version" />
 
 	<if>
@@ -541,30 +540,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="record-testray-job-name">
-		<sequential>
-			<script classpathref="project.classpath" language="beanshell">
-				<![CDATA[
-					import org.apache.commons.lang3.StringUtils;
-
-					String testrayBuildType = project.getProperty("testray.build.type");
-
-					project.setProperty("testray.job.type", StringUtils.capitalize(testrayBuildType));
-				]]>
-			</script>
-
-			<if>
-				<equals arg1="${liferay.portal.bundle}" arg2="latest" />
-				<then>
-					<property name="testray.job.name" value="${testray.job.type} Tester - Portal(${liferay.portal.branch}) - Plugins(${liferay.plugins.branch})" />
-				</then>
-				<else>
-					<property name="testray.job.name" value="${testray.job.type} Tester - Portal(${liferay.portal.branch}) - Plugins(${liferay.plugins.branch}) - ${liferay.portal.bundle}" />
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="record-testray-logs">
 		<sequential>
 			<if>
@@ -1017,7 +992,6 @@ create database lportal${database.index} character set utf8;</echo>
 		<record-env-liferay-portal />
 		<record-env-operating-system />
 		<record-testray-components />
-		<record-testray-job-name />
 		<record-testray-logs />
 		<record-testray-project-name />
 		<record-testray-team-name />
@@ -1066,7 +1040,6 @@ create database lportal${database.index} character set utf8;</echo>
 					<property name="testray.build.name" value="${testray.build.name}" />
 					<property name="testray.build.time" value="${testray.build.time}" />
 					<property name="testray.build.type" value="${testray.build.type}" />
-					<property name="testray.job.name" value="${testray.job.name}" />
 					<property name="testray.product.type" value="${testray.product.type}" />
 					<property name="testray.product.version" value="${testray.product.version}" />
 					<property name="testray.project.name" value="${testray.project.name}" />

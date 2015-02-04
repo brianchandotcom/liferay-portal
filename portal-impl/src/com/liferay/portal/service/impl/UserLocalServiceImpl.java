@@ -136,6 +136,7 @@ import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
+import com.liferay.portal.service.persistence.UserGroupRolePK;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -156,6 +157,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -366,12 +368,53 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		long[] roleIds = ArrayUtil.toArray(
-			roleIdSet.toArray(new Long[roleIdSet.size()]));
+		long[] roleIds = ArrayUtil.toLongArray(roleIdSet);
 
 		roleIds = UsersAdminUtil.addRequiredRoles(user, roleIds);
 
-		userPersistence.addRoles(userId, roleIds);
+		Set<Long> regularRoleIdSet = new HashSet<>();
+
+		Set<Long> groupRoleIdSet = new HashSet<>();
+
+		for (long roleId : roleIds) {
+			Role role = roleLocalService.getRole(roleId);
+
+			if (role.getType() == RoleConstants.TYPE_REGULAR) {
+				regularRoleIdSet.add(roleId);
+			}
+			else {
+				groupRoleIdSet.add(roleId);
+			}
+		}
+
+		long[] regularRoleIds = ArrayUtil.toLongArray(regularRoleIdSet);
+
+		userPersistence.addRoles(userId, regularRoleIds);
+
+		List<UserGroupRole> previousUserGroupRoles =
+			userGroupRolePersistence.findByUserId(userId);
+
+		Set<UserGroupRole> userGroupRoles = new LinkedHashSet<>();
+
+		long[] groupIds = user.getGroupIds();
+
+		for (long groupRoleId : groupRoleIdSet) {
+			for (long groupId : groupIds) {
+				UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
+					userId, groupId, groupRoleId);
+
+				UserGroupRole userGroupRole = userGroupRolePersistence.create(
+					userGroupRolePK);
+
+				userGroupRoles.add(userGroupRole);
+			}
+		}
+
+		List<UserGroupRole> userGroupRolesList = new ArrayList<>(
+			userGroupRoles);
+
+		updateUserGroupRoles(
+			user, groupIds, null, userGroupRolesList, previousUserGroupRoles);
 	}
 
 	/**

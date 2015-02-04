@@ -67,7 +67,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 	Liferay.Widget({ url: '<%= widgetURL %>'});
 	</script></liferay-util:buffer>
 
-				<aui:input cssClass="lfr-textarea" label="code" name="widgetScript" onClick="Liferay.Util.selectAndCopy(this);" type="textarea" value="<%= textAreaContent %>" />
+				<aui:input cssClass="lfr-textarea" label="code" name="widgetScript" onClick="this.select();" type="textarea" value="<%= textAreaContent %>" />
 
 				<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-any-website", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="widgetShowAddAppLink" type="checkbox" value="<%= widgetShowAddAppLink %>" />
 			</aui:fieldset>

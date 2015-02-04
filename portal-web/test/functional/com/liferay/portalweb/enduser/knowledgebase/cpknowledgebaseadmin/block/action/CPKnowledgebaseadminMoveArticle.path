@@ -1,21 +1,26 @@
 <html>
 <head>
-<title>PGKnowledgebasedisplayMoveArticle</title>
+<title>CPKnowledgebaseadminMoveArticle</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGKnowledgebasedisplayMoveArticle</td></tr>
+<tr><td rowspan="1" colspan="3">CPKnowledgebaseadminMoveArticle</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGKnowledgebasedisplaySelectParentArticle</td>
+	<td>CPKnowledgebaseadminMoveArticle</td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK_BUTTON</td>
+	<td>//span[@class='header-back-to']/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -24,28 +29,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BACK_BUTTON</td>
-	<td>//a[@title='Back']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CURRENT_PARENT_TITLE_FIELD</td>
-	<td>//input[contains(@id,'currentParentTitle')]</td>
+	<td>//div[contains(.,'Current Parent')]/div/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_PARENT_PRIORITY_FIELD</td>
-	<td>//input[contains(@id,'currentPriority')]</td>
+	<td>//div[contains(.,'Current Parent')]/div/input[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEW_PARENT_TITLE_FIELD</td>
-	<td>//input[contains(@id,'parentTitle')]</td>
+	<td>//div[contains(@id,'knowledgebaseportlet_newParent')]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEW_PARENT_PRIORITY_FIELD</td>
-	<td>//input[contains(@id,'parentPriority')]</td>
+	<td>//div[contains(@id,'knowledgebaseportlet_newParent')]/input[2]</td>
 	<td></td>
 </tr>
 <tr>

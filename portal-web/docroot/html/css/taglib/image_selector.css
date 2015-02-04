@@ -6,8 +6,99 @@
 	position: relative;
 	text-align: center;
 
-	&.drop-enabled, &.drop-active {
+	&.drop-enabled {
 		outline: 2px dashed transparent;
+	}
+
+	.drop-here-info {
+		@include transition(all 0.2s ease-in-out);
+
+		height: 100%;
+		min-height: 115px;
+		position: absolute;
+		text-align: center;
+		top: 0;
+		visibility: hidden;
+		width: 100%;
+
+		.drop-here-center {
+			height: 115px;
+			left: 0;
+			margin: auto;
+			position: absolute;
+			right: 0;
+			top: 50%;
+
+			@include transform(translate(0, -50%));
+		}
+
+		.pages {
+			@include transition(all 0.2s ease-in-out);
+
+			display: inline-block;
+			position: relative;
+			width: 160px;
+
+			.page-1 {
+				@include transform(rotate(25deg));
+
+				height: 60px;
+				left: 50px;
+				line-height: 60px;
+				top: 0;
+				width: 60px;
+				z-index: 1;
+			}
+
+			.page-2 {
+				@include transform(scale(0.8));
+
+				height: 80px;
+				left: 40px;
+				line-height: 80px;
+				width: 80px;
+				z-index: 2;
+			}
+
+			.page-3 {
+				@include transform(rotate(-25deg));
+
+				display: block;
+				font-size: 45px;
+				height: 70px;
+				left: 50px;
+				line-height: 70px;
+				position: relative;
+				top: 0;
+				width: 70px;
+				z-index: 1;
+			}
+		}
+
+		[class*="page-"] {
+			@include transition(all 0.3s ease-in-out);
+
+			position: absolute;
+			text-align: center;
+		}
+
+		.droptext {
+			display: block;
+			margin-left: 0;
+			margin-top: 20px;
+		}
+	}
+
+	&.drop-enabled .drop-here-info {
+		.drop-here-center {
+			height: 90px;
+		}
+
+		.droptext {
+			display: inline-block;
+			margin-left: 20px;
+			margin-top: 0;
+		}
 	}
 
 	.glyphicon-ok {
@@ -47,7 +138,7 @@
 	}
 
 	&.drop-active {
-		outline-width: 2px;
+		outline-width: 0;
 
 		.change-image-controls {
 			display: none;
@@ -55,6 +146,31 @@
 
 		.progress-wrapper {
 			display: none;
+		}
+
+		.drop-here-info {
+			background: rgba(0, 0, 0, 0.4);
+			visibility: visible;
+
+			.page-1 {
+				@include transform(rotate(-20deg));
+
+				left: 0;
+				opacity: 1;
+				top: 10px;
+			}
+
+			.page-2 {
+				@include transform(scale(1));
+			}
+
+			.page-3 {
+				@include transform(rotate(15deg));
+
+				left: 90px;
+				opacity: 1;
+				top: 8px;
+			}
 		}
 	}
 
@@ -102,7 +218,7 @@
 		max-width: 100%;
 	}
 
-	.browse-image-controls, .drop-here-info {
+	.browse-image-controls {
 		left: 0;
 		padding: 10px;
 		position: absolute;
@@ -157,8 +273,39 @@
 
 	.drop-here-info {
 		font-size: 25px;
-
 		opacity: 0;
+
+		.page-1 {
+			background: #E8E6E8;
+			box-shadow: 5px 4px 0 0 rgba(0, 0, 0, 0.08);
+			color: #A5A6AC;
+			font-size: 40px;
+			opacity: 0;
+		}
+
+		.page-2 {
+			background: #00C2FF;
+			box-shadow: 0 6px 0 -2px rgba(0, 0, 0, 0.15);
+			color: #FFF;
+			font-size: 50px;
+		}
+
+		.page-3 {
+			background: #E8E6E8;
+			box-shadow: -5px 4px 0 0 rgba(0, 0, 0, 0.08);
+			color: #A5A6AC;
+			font-size: 45px;
+			opacity: 0;
+		}
+
+		[class*="page-"] {
+			border-radius: 3px;
+		}
+
+		.droptext {
+			color: #FFF;
+			font-size: 20px;
+		}
 	}
 
 	.glyphicon-ok {

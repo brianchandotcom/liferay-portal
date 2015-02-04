@@ -81,6 +81,13 @@
 		</if>
 
 		<if>
+			<isset var="kbArticleSourceURL" />
+			<then>
+				<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="SOURCE_URL_FIELD" value1="${kbArticleSourceURL}" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="kbArticleSection" />
 			<then>
 				<execute action="CPKnowledgebaseadminAddarticle#addSelection" locator-key1="SECTIONS_SELECT" value1="${kbArticleSection}" />
@@ -764,6 +771,26 @@
 	</command>
 
 	<command name="viewKBDisplayPG">
+		<if>
+			<equals arg1="${sourceURL}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_GITHUB" value1="Edit on GitHub" />
+
+				<var name="key_pageTitle" value="Google" />
+				
+				<execute action="Google#selectWindow" locator-key1="PAGE_TITLE" />
+
+				<var method="selenium#getLocation()" name="url" />
+
+				<execute macro="TestUtils#assertEquals">
+					<var name="actual" value="${url}" />
+					<var name="expected" value="https://www.google.com/?gws_rd=ssl" />
+				</execute>
+				
+				<execute action="Google#close" locator-key1="PAGE_TITLE" />
+			</then>	
+		</if>
+
 		<if>
 			<equals arg1="${subscribe}" arg2="true" />
 			<then>

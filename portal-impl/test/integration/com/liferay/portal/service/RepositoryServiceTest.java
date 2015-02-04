@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.AlwaysDenyingPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -181,7 +181,33 @@ public class RepositoryServiceTest {
 
 		try {
 			PermissionThreadLocal.setPermissionChecker(
-				new AlwaysDenyingPermissionChecker());
+				new SimplePermissionChecker() {
+
+					@Override
+					public boolean hasOwnerPermission(
+						long companyId, String name, String primKey,
+						long ownerId, String actionId) {
+
+						return false;
+					}
+
+					@Override
+					public boolean hasPermission(
+						long groupId, String name, String primKey,
+						String actionId) {
+
+						return false;
+					}
+
+					@Override
+					public boolean hasUserPermission(
+						long groupId, String name, String primKey,
+						String actionId, boolean checkAdmin) {
+
+						return false;
+					}
+
+				});
 
 			RepositoryServiceUtil.getRepositoryImpl(
 				dlFolder.getFolderId(), 0, 0);

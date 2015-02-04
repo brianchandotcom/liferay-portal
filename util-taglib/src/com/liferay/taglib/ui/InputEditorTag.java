@@ -33,6 +33,10 @@ public class InputEditorTag extends IncludeTag {
 		_allowBrowseDocuments = allowBrowseDocuments;
 	}
 
+	public void setAutoCreate(boolean autoCreate) {
+		_autoCreate = autoCreate;
+	}
+
 	public void setConfigParams(Map<String, String> configParams) {
 		_configParams = configParams;
 	}
@@ -128,6 +132,7 @@ public class InputEditorTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_allowBrowseDocuments = true;
+		_autoCreate = true;
 		_configParams = null;
 		_contents = null;
 		_contentsLanguageId = null;
@@ -183,6 +188,8 @@ public class InputEditorTag extends IncludeTag {
 			"liferay-ui:input-editor:allowBrowseDocuments",
 			String.valueOf(_allowBrowseDocuments));
 		request.setAttribute(
+			"liferay-ui:input-editor:autoCreate", String.valueOf(_autoCreate));
+		request.setAttribute(
 			"liferay-ui:input-editor:configParams", _configParams);
 		request.setAttribute("liferay-ui:input-editor:contents", _contents);
 		request.setAttribute(
@@ -222,6 +229,7 @@ public class InputEditorTag extends IncludeTag {
 	}
 
 	private boolean _allowBrowseDocuments = true;
+	private boolean _autoCreate = true;
 	private Map<String, String> _configParams;
 	private String _contents;
 	private String _contentsLanguageId;

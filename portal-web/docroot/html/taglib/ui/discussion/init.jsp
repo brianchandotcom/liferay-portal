@@ -22,7 +22,6 @@ page import="com.liferay.portlet.messageboards.model.MBMessageDisplay" %><%@
 page import="com.liferay.portlet.messageboards.model.MBThread" %><%@
 page import="com.liferay.portlet.messageboards.model.MBTreeWalker" %><%@
 page import="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" %><%@
-page import="com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator" %><%@
 page import="com.liferay.portlet.ratings.model.RatingsEntry" %><%@
 page import="com.liferay.portlet.ratings.model.RatingsStats" %><%@
 page import="com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil" %><%@

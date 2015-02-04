@@ -23,7 +23,8 @@
 
 	&.like, &.thumbs {
 		float: left;
-		margin: 10px 0;
+		margin-bottom: 0;
+		margin-top: 0;
 
 		.thumbrating {
 			height: 20px;

@@ -899,7 +899,7 @@ input.switch {
 	}
 }
 
-.alloy-editor-container {
+.alloy-editor-wrapper {
 	.lfr-source-editor {
 		display: none;
 	}

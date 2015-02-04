@@ -15,7 +15,12 @@
 package com.liferay.portlet.journal.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -52,7 +57,10 @@ import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -71,6 +79,22 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
+
+	/**
+	 * See https://issues.liferay.com/browse/LPS-53192
+	 */
+	@Test
+	public void testMatchNotOnlyCompanyIdButAlsoQueryTerms() throws Exception {
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(TestPropsValues.getCompanyId());
+
+		BooleanQuery query = BooleanQueryFactoryUtil.create(searchContext);
+
+		query.addTerm("title", RandomTestUtil.randomString());
+
+		assertSearch(0, query, searchContext);
+	}
 
 	@Ignore()
 	@Override
@@ -131,6 +155,26 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		return JournalTestUtil.addArticleWithWorkflow(
 			group.getGroupId(), folderId, keywords,
 			RandomTestUtil.randomString(50), approved, serviceContext);
+	}
+
+	protected void assertSearch(
+			final long length, final BooleanQuery query,
+			final SearchContext searchContext)
+		throws Exception {
+
+		IdempotentRetryAssert.assertRetry(
+			3, TimeUnit.SECONDS, new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					Hits hits = SearchEngineUtil.search(searchContext, query);
+
+					Assert.assertEquals(length, hits.getLength());
+
+					return null;
+				}
+
+			});
 	}
 
 	@Override

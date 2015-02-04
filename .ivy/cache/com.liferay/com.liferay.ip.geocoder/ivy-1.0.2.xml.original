@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+	<artifactId>com.liferay.ip.geocoder</artifactId>
+	<description>com.liferay.ip.geocoder</description>
+	<developers>
+		<developer>
+			<name>Brian Wing Shun Chan</name>
+			<organization>Liferay, Inc.</organization>
+			<organizationUrl>http://www.liferay.com</organizationUrl>
+		</developer>
+	</developers>
+	<groupId>com.liferay</groupId>
+	<licenses>
+		<license>
+			<name>LGPL 2.1</name>
+			<url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
+		</license>
+	</licenses>
+	<modelVersion>4.0.0</modelVersion>
+	<name>com.liferay.ip.geocoder</name>
+	<packaging>jar</packaging>
+	<scm>
+		<connection>scm:git:git@github.com:liferay/liferay-portal.git</connection>
+		<developerConnection>scm:git:git@github.com:liferay/liferay-portal.git</developerConnection>
+		<url>http://github.com/liferay/liferay-portal</url>
+	</scm>
+	<version>1.0.2</version>
+ <dependencies>
+  <dependency>
+   <groupId>org.osgi</groupId>
+   <artifactId>org.osgi.compendium</artifactId>
+   <version>5.0.0</version>
+   <scope>compile</scope>
+  </dependency>
+  <dependency>
+   <groupId>org.osgi</groupId>
+   <artifactId>org.osgi.core</artifactId>
+   <version>5.0.0</version>
+   <scope>compile</scope>
+  </dependency>
+  <dependency>
+   <groupId>com.maxmind.geoip</groupId>
+   <artifactId>geoip-api</artifactId>
+   <version>1.2.14</version>
+   <scope>compile</scope>
+  </dependency>
+ </dependencies>
+</project>

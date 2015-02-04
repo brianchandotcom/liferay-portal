@@ -1,0 +1,17 @@
+Bundle-Name: Liferay Social Networking Web
+Bundle-SymbolicName: com.liferay.social.networking.web
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.ip.geocoder,\
+	com.liferay.portal.util.comparator,\
+	com.liferay.portlet.blogs.model,\
+	com.liferay.portlet.blogs.service,\
+	com.liferay.portlet.messageboards.service,\
+	com.liferay.social.networking.exception,\
+	*
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources,\
+	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
+	@${app.server.lib.portal.dir}/util-java.jar,\
+	@${app.server.lib.portal.dir}/util-taglib.jar

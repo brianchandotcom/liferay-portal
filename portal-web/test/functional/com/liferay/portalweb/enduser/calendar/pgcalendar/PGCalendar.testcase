@@ -1293,7 +1293,7 @@
 	<command name="DeleteCalendarMyCalendars" priority="5">
 		<var name="calendarName" value="Calendar Name" />
 		<var name="calendarType" value="My Calendars" />
-		<var name="resourceNameList" value="Test Test" />
+		<var name="user" value="Test Test" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

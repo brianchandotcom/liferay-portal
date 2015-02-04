@@ -212,7 +212,7 @@ if (!portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 		}
 	}
 
-	if (layoutTypePortlet.isCustomizable() && !layoutTypePortlet.isColumnDisabled(columnId) && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
+	if (layoutTypePortlet.isCustomizable() && !layoutTypePortlet.isColumnDisabled(columnId) && !portlet.isPreferencesCompanyWide() && portlet.isPreferencesUniquePerLayout() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
 		showConfigurationIcon = true;
 
 		if (PropsValues.PORTLET_CSS_ENABLED) {

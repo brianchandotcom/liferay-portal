@@ -112,7 +112,7 @@
 
 			.pauseLoggerCheck();
 
-			<#if function?contains("#is")>
+			<#if function?starts_with("Is") || function?contains("#is")>
 				try {
 			</#if>
 
@@ -124,7 +124,7 @@
 
 			<#include "function_element.ftl">
 
-			<#if function?contains("#is")>
+			<#if function?starts_with("Is") || function?contains("#is")>
 				}
 				finally {
 					<#assign lineNumber = element.attributeValue("line-number")>

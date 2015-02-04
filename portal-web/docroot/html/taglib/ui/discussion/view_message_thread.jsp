@@ -135,10 +135,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 				<%
 				String msgBody = message.getBody();
-
-				if (message.isFormatBBCode()) {
-					msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
-				}
 				%>
 
 				<div class="lfr-discussion-message-body">
@@ -231,6 +227,20 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		</div>
 
 		<div class="lfr-discussion-form-container">
+			<%
+				Map<String, Object> dataTextEditor = new HashMap<String, Object>();
+
+				JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
+				editorConfig.put("allowedContent", "p strong em u");
+				editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
+
+				JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
+				editorOptions.put("textMode", Boolean.FALSE);
+				editorOptions.put("showSource", Boolean.FALSE);
+
+				dataTextEditor.put("editorConfig", editorConfig);
+				dataTextEditor.put("editorOptions", editorOptions);
+			%>
 			<div class="lfr-discussion lfr-discussion-form-reply" id='<portlet:namespace /><%= randomNamespace + "postReplyForm" + index %>' style="display: none;">
 				<div class="lfr-discussion-details">
 					<liferay-ui:user-display
@@ -241,7 +251,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				</div>
 
 				<div class="lfr-discussion-body">
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "OnChange" %>' placeholder="type-your-comment-here" />
+					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "OnChange" %>' placeholder="type-your-comment-here" />
 
 					<aui:input name='<%= "postReplyBody" + index %>' type="hidden" />
 
@@ -265,7 +275,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 			<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
 				<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= message.getBody() %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "editReplyBody" + index %>' />
+					<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= message.getBody() %>" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "editReplyBody" + index %>' />
 
 					<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= message.getBody() %>" />
 

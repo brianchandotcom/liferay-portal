@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.test.util.LayoutTestUtil;
+import com.liferay.portal.util.test.LayoutTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

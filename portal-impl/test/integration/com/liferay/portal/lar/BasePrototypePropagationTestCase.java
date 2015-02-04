@@ -29,10 +29,10 @@ import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.CompanyUtil;
-import com.liferay.portal.test.util.LayoutTestUtil;
+import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.test.journal.util.JournalTestUtil;
-import com.liferay.portlet.test.util.PortletKeys;
+import com.liferay.portlet.journal.util.test.JournalTestUtil;
+import com.liferay.portlet.util.test.PortletKeys;
 
 import java.util.Date;
 import java.util.HashMap;

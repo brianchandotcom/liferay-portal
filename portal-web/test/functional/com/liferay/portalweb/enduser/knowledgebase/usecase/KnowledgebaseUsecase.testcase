@@ -618,6 +618,51 @@
 		</execute>
 	</command>
 
+	<command name="ViewKBArticleGitHubSourceURL" priority="3">
+		<var name="subscribe" value="true" />
+		<var name="history" value="true" />
+		<var name="print" value="true" />
+		<var name="kbArticleSourceURL" value="http://www.google.com" />
+		<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="kbArticleSourceURL" value="${kbArticleSourceURL}" />
+		</execute>
+
+		<execute macro="KBArticle#viewSourceURLCP">
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Welcome" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="KB Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="KB Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="KBArticle#viewKBDisplayPG">
+			<var name="sourceURL" value="true" />
+			<var name="subscribe" value="${subscribe}" />
+			<var name="history" value="${history}" />
+			<var name="print" value="${print}" />
+		</execute>
+	</command>
+
 	<command name="ViewKBArticleSuggestionsWorkflow" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />

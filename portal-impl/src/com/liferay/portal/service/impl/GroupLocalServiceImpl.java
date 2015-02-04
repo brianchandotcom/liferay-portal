@@ -305,7 +305,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (className.equals(Group.class.getName())) {
 			if (!site && (liveGroupId == 0) &&
 				!groupKey.equals(GroupConstants.CONTROL_PANEL) &&
-				!groupKey.equals(GroupConstants.USER_PERSONAL_SPACE)) {
+				!groupKey.equals(GroupConstants.USER_PERSONAL_PANEL)) {
 
 				throw new IllegalArgumentException();
 			}
@@ -709,10 +709,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 						GroupConstants.USER_PERSONAL_SITE_FRIENDLY_URL;
 					site = false;
 				}
-				else if (groupKey.equals(GroupConstants.USER_PERSONAL_SPACE)) {
+				else if (groupKey.equals(GroupConstants.USER_PERSONAL_PANEL)) {
 					type = GroupConstants.TYPE_SITE_PRIVATE;
 					friendlyURL =
-						GroupConstants.USER_PERSONAL_SPACE_FRIENDLY_URL;
+						GroupConstants.USER_PERSONAL_PANEL_FRIENDLY_URL;
 					site = false;
 				}
 
@@ -746,12 +746,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				}
 			}
 
-			if (group.isUserPersonalSpace()) {
+			if (group.isUserPersonalPanel()) {
 				LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
 					group.getGroupId(), true);
 
 				if (layoutSet.getPageCount() == 0) {
-					addUserPersonalSpaceLayouts(group);
+					addUserPersonalPanelLayouts(group);
 				}
 			}
 
@@ -3687,21 +3687,21 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
-	protected void addUserPersonalSpaceLayouts(Group group)
+	protected void addUserPersonalPanelLayouts(Group group)
 		throws PortalException {
 
 		long defaultUserId = userLocalService.getDefaultUserId(
 			group.getCompanyId());
 
 		String friendlyURL = getFriendlyURL(
-			PropsValues.USER_PERSONAL_SPACE_LAYOUT_FRIENDLY_URL);
+			PropsValues.USER_PERSONAL_PANEL_LAYOUT_FRIENDLY_URL);
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		layoutLocalService.addLayout(
 			defaultUserId, group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			PropsValues.USER_PERSONAL_SPACE_LAYOUT_NAME, StringPool.BLANK,
+			PropsValues.USER_PERSONAL_PANEL_LAYOUT_NAME, StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
 			serviceContext);
 	}
@@ -3805,7 +3805,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			String groupKey = group.getGroupKey();
 
 			if (groupKey.equals(GroupConstants.CONTROL_PANEL) ||
-				groupKey.equals(GroupConstants.USER_PERSONAL_SPACE)) {
+				groupKey.equals(GroupConstants.USER_PERSONAL_PANEL)) {
 
 				iterator.remove();
 

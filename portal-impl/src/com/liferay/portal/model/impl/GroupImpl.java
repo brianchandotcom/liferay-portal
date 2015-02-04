@@ -1064,10 +1064,10 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
-	public boolean isUserPersonalSpace() {
+	public boolean isUserPersonalPanel() {
 		String groupKey = getGroupKey();
 
-		if (groupKey.equals(GroupConstants.USER_PERSONAL_SPACE)) {
+		if (groupKey.equals(GroupConstants.USER_PERSONAL_PANEL)) {
 			return true;
 		}
 		else {

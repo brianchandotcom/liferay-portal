@@ -19,7 +19,7 @@ ${seleniumBuilderFileUtil.getVariableName(elementFunctionName)}Function.${elemen
 <#if functionElement.attributeValue("ignore-javascript-error")??>
 	<#assign ignoreJavaScriptError = functionElement.attributeValue("ignore-javascript-error")>
 
-	"${ignoreJavaScriptError}",
+	"${seleniumBuilderFileUtil.escapeJava(ignoreJavaScriptError)}",
 <#elseif functionName??>
 	ignoreJavaScriptError,
 <#else>
@@ -75,7 +75,7 @@ ${seleniumBuilderFileUtil.getVariableName(elementFunctionName)}Function.${elemen
 	<#if functionElement.attributeValue("value${i}")??>
 		<#assign functionValue = functionElement.attributeValue("value${i}")>
 
-		"${functionValue}"
+		"${seleniumBuilderFileUtil.escapeJava(functionValue)}"
 	<#elseif actionName?? || functionName??>
 		value${i}
 	<#else>

@@ -57,7 +57,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see ExportImportConfigurationPersistence
- * @see ExportImportConfigurationUtil
+ * @see com.liferay.portal.service.persistence.ExportImportConfigurationUtil
  * @generated
  */
 @ProviderType

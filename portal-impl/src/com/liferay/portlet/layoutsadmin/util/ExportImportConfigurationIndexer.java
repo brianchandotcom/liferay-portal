@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -43,6 +45,7 @@ import javax.portlet.PortletURL;
 
 /**
  * @author Mate Thurzo
+ * @author Akos Thurzo
  */
 @OSGiBeanProperties
 public class ExportImportConfigurationIndexer extends BaseIndexer {
@@ -50,9 +53,42 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 	public static final String CLASS_NAME =
 		ExportImportConfiguration.class.getName();
 
+	public ExportImportConfigurationIndexer() {
+		setCommitImmediately(true);
+	}
+
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public void postProcessContextQuery(
+			BooleanQuery contextQuery, SearchContext searchContext)
+		throws Exception {
+
+		contextQuery.addRequiredTerm(
+			Field.COMPANY_ID, searchContext.getCompanyId());
+		contextQuery.addRequiredTerm(
+			Field.GROUP_ID,
+			GetterUtil.getLong(searchContext.getAttribute(Field.GROUP_ID)));
+
+		Serializable type = searchContext.getAttribute(Field.TYPE);
+
+		if (type != null) {
+			contextQuery.addRequiredTerm(Field.TYPE, (int)type);
+		}
+	}
+
+	@Override
+	public void postProcessSearchQuery(
+			BooleanQuery searchQuery, SearchContext searchContext)
+		throws Exception {
+
+		addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, true);
+		addSearchTerm(
+			searchQuery, searchContext, "exportImportConfigurationId", false);
+		addSearchTerm(searchQuery, searchContext, Field.NAME, true);
 	}
 
 	@Override
@@ -75,6 +111,9 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 
 		document.addText(
 			Field.DESCRIPTION, exportImportConfiguration.getDescription());
+		document.addNumber(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
 		document.addText(Field.NAME, exportImportConfiguration.getName());
 		document.addKeyword(Field.TYPE, exportImportConfiguration.getType());
 

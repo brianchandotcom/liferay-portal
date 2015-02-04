@@ -26,7 +26,7 @@ import com.liferay.portal.model.ExportImportConfiguration;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see ExportImportConfigurationPersistenceImpl
+ * @see com.liferay.portal.service.persistence.impl.ExportImportConfigurationPersistenceImpl
  * @see ExportImportConfigurationUtil
  * @generated
  */

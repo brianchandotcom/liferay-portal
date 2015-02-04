@@ -238,14 +238,16 @@ if (!cmd.equals(Constants.ADD)) {
 			</aui:form>
 		</div>
 
-		<div <%= exportConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
-			<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_configurations.jsp">
-				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-				<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				<liferay-util:param name="rootNodeName" value="<%= rootNodeName %>" />
-			</liferay-util:include>
-		</div>
+		<c:if test="<%= !cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE) %>">
+			<div <%= exportConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
+				<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_configurations.jsp">
+					<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+					<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+					<liferay-util:param name="rootNodeName" value="<%= rootNodeName %>" />
+				</liferay-util:include>
+			</div>
+		</c:if>
 	</liferay-ui:section>
 
 	<c:if test="<%= !cmd.equals(Constants.ADD) %>">

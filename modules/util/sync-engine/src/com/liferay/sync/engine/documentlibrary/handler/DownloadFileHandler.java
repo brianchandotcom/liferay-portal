@@ -128,8 +128,15 @@ public class DownloadFileHandler extends BaseHandler {
 
 			downloadedFilePathNames.add(filePath.toString());
 
+			if (syncFile.getFileKey() == null) {
+				syncFile.setUiEvent(SyncFile.UI_EVENT_DOWNLOADED_NEW);
+			}
+			else {
+				syncFile.setUiEvent(SyncFile.UI_EVENT_DOWNLOADED_UPDATE);
+			}
+
 			if (OSDetector.isWindows()) {
-				SyncFileService.updateFileKeySyncFile(syncFile);
+				SyncFileService.updateFileKeySyncFile(syncFile, tempFilePath);
 			}
 
 			FileTime fileTime = FileTime.fromMillis(syncFile.getModifiedTime());
@@ -139,13 +146,6 @@ public class DownloadFileHandler extends BaseHandler {
 			Files.move(
 				tempFilePath, filePath, StandardCopyOption.ATOMIC_MOVE,
 				StandardCopyOption.REPLACE_EXISTING);
-
-			if (syncFile.getFileKey() == null) {
-				syncFile.setUiEvent(SyncFile.UI_EVENT_DOWNLOADED_NEW);
-			}
-			else {
-				syncFile.setUiEvent(SyncFile.UI_EVENT_DOWNLOADED_UPDATE);
-			}
 
 			syncFile.setState(SyncFile.STATE_SYNCED);
 

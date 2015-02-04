@@ -499,9 +499,15 @@ public class SyncFileService {
 	}
 
 	public static SyncFile updateFileKeySyncFile(SyncFile syncFile) {
-		if (OSDetector.isWindows()) {
-			Path filePath = Paths.get(syncFile.getFilePathName());
+		Path filePath = Paths.get(syncFile.getFilePathName());
 
+		return updateFileKeySyncFile(syncFile, filePath);
+	}
+
+	public static SyncFile updateFileKeySyncFile(
+		SyncFile syncFile, Path filePath) {
+
+		if (OSDetector.isWindows()) {
 			FileUtil.writeFileKey(
 				filePath, String.valueOf(syncFile.getSyncFileId()));
 

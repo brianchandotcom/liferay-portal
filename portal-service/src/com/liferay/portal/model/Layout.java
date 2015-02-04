@@ -416,6 +416,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public boolean isTypeControlPanel();
 
+	public boolean isTypeUserPersonalPanel();
+
 	public boolean isTypeEmbedded();
 
 	public boolean isTypeLinkToLayout();

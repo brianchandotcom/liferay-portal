@@ -3163,32 +3163,51 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-13078" name="StagingRemoteDMViaGlobalScope" priority="5">
+	<command name="StagingRemoteDMViaGlobalScope" priority="5">
+		<property name="app.server.bundles.size" value="1" />
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
+		<var name="remotePort" value="9080" />
 		<var name="siteID" value="${siteID}" />
 
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="9080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
 		<execute macro="Page#gotoConfigurationCP">
+			<var name="nodePort" value="9080" />
 			<var name="portletName" value="Site Settings" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteScopeName" value="Global" />
 		</execute>
 
 		<var name="siteID" value="siteID" />
 
 		<execute action="CPSitesEdit#copy" locator-key1="SITE_ID" value1="siteID" />
 
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="8080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
 		<execute macro="Page#gotoConfigurationCP">
+			<var name="nodePort" value="8080" />
 			<var name="portletName" value="Site Settings" />
 			<var name="siteScopeName" value="Global" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
+			<var name="nodePort" value="8080" />
+			<var name="remotePort" value="${remotePort}" />
 			<var name="remoteStaging" value="true" />
 			<var name="siteID" value="${siteID}" />
 			<var name="siteName" value="Global" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="nodePort" value="8080" />
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Global" />
 		</execute>
@@ -3197,27 +3216,46 @@
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.jpg" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="nodePort" value="8080" />
+			<var name="siteScopeName" value="Global" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="nodePort" value="8080" />
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Staging#publishGlobalToLiveCP">
+			<var name="nodePort" value="8080" />
 			<var name="remoteStaging" value="true" />
 		</execute>
 
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="9080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
+			<var name="nodePort" value="9080" />
 			<var name="portletName" value="Documents and Media" />
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteScopeName" value="Global" />
 		</execute>
 
 		<execute macro="DMDocument#gotoCP">
 			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="nodePort" value="9080" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="nodePort" value="9080" />
+		</execute>
+
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="8080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
 

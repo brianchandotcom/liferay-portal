@@ -1,4 +1,4 @@
-<definition component-name="portal-wcm">
+<definition component-name="portal-wcd">
 	<property name="testray.main.component.name" value="Web Content Display" />
 
 	<var name="pageName" value="Web Content Display Page" />

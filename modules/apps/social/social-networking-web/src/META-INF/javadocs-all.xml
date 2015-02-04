@@ -179,7 +179,7 @@
 	</javadoc>
 	<javadoc>
 		<name>FriendsRequestKeys</name>
-		<type>com.liferay.social.networking.web.friends.social.FriendsRequestKeys</type>
+		<type>com.liferay.social.networking.friends.social.FriendsRequestKeys</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>ADD_FRIEND</name>
@@ -618,7 +618,7 @@
 	</javadoc>
 	<javadoc>
 		<name>MembersRequestKeys</name>
-		<type>com.liferay.social.networking.web.members.social.MembersRequestKeys</type>
+		<type>com.liferay.social.networking.members.social.MembersRequestKeys</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<field>
 			<name>ADD_MEMBER</name>

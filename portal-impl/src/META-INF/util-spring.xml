@@ -22,6 +22,7 @@
 	<bean id="com.liferay.portal.cache.configurator.util.PortalCacheConfiguratorUtil" class="com.liferay.portal.cache.configurator.util.PortalCacheConfiguratorUtil">
 		<property name="portalCacheConfigurator" ref="com.liferay.portal.cache.configurator.PortalCacheConfigurator" />
 	</bean>
+	<bean id="com.liferay.portal.adaptors.ServiceTrackerMapModelAdapterLocator" class="com.liferay.portal.adapter.ServiceTrackerMapModelAdapterBuilderLocator" />
 	<bean id="com.liferay.portal.format.IdenticalPhoneNumberFormatImpl" class="com.liferay.portal.format.IdenticalPhoneNumberFormatImpl" />
 	<bean id="com.liferay.portal.kernel.audit.AuditMessageFactoryUtil" class="com.liferay.portal.kernel.audit.AuditMessageFactoryUtil">
 		<property name="auditMessageFactory">

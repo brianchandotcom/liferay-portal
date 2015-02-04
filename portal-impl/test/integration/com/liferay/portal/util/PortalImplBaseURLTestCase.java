@@ -23,8 +23,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.test.util.LayoutTestUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.test.LayoutTestUtil;
 
 import org.junit.Before;
 

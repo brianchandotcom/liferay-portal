@@ -45,8 +45,8 @@ import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
-import com.liferay.portlet.test.journal.util.JournalTestUtil;
-import com.liferay.portlet.test.trash.BaseTrashHandlerTestCase;
+import com.liferay.portlet.journal.util.test.JournalTestUtil;
+import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.HashMap;

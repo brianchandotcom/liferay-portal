@@ -33,8 +33,8 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.test.journal.util.JournalTestUtil;
-import com.liferay.portlet.test.subscriptions.BaseSubscriptionClassTypeTestCase;
+import com.liferay.portlet.journal.util.test.JournalTestUtil;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionClassTypeTestCase;
 
 import java.util.List;
 

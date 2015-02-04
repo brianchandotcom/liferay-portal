@@ -31,8 +31,8 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.test.util.LayoutTestUtil;
 import com.liferay.portal.util.comparator.RoleRoleIdComparator;
+import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

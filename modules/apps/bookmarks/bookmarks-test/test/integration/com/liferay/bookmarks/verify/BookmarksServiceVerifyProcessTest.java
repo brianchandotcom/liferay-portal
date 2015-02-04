@@ -29,8 +29,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.test.verify.BaseVerifyProcessTestCase;
 import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
 import org.junit.Before;
 import org.junit.ClassRule;

@@ -25,8 +25,8 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.test.util.LayoutTestUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.lang.reflect.Field;
 

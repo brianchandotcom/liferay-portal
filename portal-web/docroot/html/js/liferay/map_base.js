@@ -49,7 +49,7 @@ AUI.add(
 						instance.fire(
 							'featureClick',
 							{
-								feature: instance._wrapNativeFeature(event.feature || event.target.feature)
+								feature: instance._wrapNativeFeature(event)
 							}
 						);
 					}

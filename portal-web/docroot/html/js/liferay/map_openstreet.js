@@ -48,7 +48,12 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._dialog = L.popup();
+						instance._dialog = L.popup(
+							{
+								className: 'leaflet-popup',
+								minWidth: 400
+							}
+						);
 					},
 
 					open: function(cfg) {
@@ -59,6 +64,8 @@ AUI.add(
 						dialog.setContent(cfg.content);
 
 						dialog.setLatLng(cfg.position);
+
+						dialog.options.offset = cfg.marker.options.icon.options.popupAnchor || [0, 0];
 
 						dialog.openOn(instance.get('map'));
 					}
@@ -196,7 +203,9 @@ AUI.add(
 						return style;
 					},
 
-					_wrapNativeFeature: function(feature) {
+					_wrapNativeFeature: function(event) {
+						var feature = (event.geometry) ? event : event.target.feature;
+
 						var geometry = feature.geometry;
 
 						return {
@@ -210,6 +219,10 @@ AUI.add(
 										return geometry.type;
 									}
 								};
+							},
+
+							getMarker: function() {
+								return event.target;
 							},
 
 							getProperty: function(prop) {

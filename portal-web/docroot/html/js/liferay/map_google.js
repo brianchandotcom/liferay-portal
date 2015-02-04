@@ -41,7 +41,7 @@ AUI.add(
 
 						instance._dialog.setOptions(cfg);
 
-						instance._dialog.open(instance.get('map'));
+						instance._dialog.open(instance.get('map'), cfg.marker);
 					}
 				}
 			}
@@ -168,7 +168,28 @@ AUI.add(
 						return style;
 					},
 
-					_wrapNativeFeature: function(feature) {
+					_wrapNativeFeature: function(event) {
+						var instance = this;
+
+						var feature = (event.getGeometry) ? event : event.feature;
+
+						feature.getMarker = function() {
+							if (!feature._marker) {
+								var marker = new google.maps.Marker(
+									{
+										icon: feature.getProperty('icon'),
+										map: instance.get('map'),
+										opacity: 0,
+										position: feature.getGeometry().get('location'),
+										zIndex: -1
+									}
+								);
+
+								feature._marker = marker;
+							}
+							return feature._marker;
+						};
+
 						return feature;
 					}
 				}
@@ -325,7 +346,7 @@ AUI.add(
 
 						var map = instance._map;
 
-						if (map.controls[position]) {
+						if (map.controls[position]) {
 							map.controls[position].push(control.getDOMNode());
 						}
 					},
@@ -340,7 +361,7 @@ AUI.add(
 					getBounds: function() {
 						var instance = this;
 
-						var bounds = instance._map.getBounds() || instance._bounds;
+						var bounds = instance._map.getBounds() || instance._bounds;
 
 						if (!bounds) {
 							bounds = new google.maps.LatLngBounds();

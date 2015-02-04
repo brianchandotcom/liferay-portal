@@ -17,6 +17,8 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -35,11 +38,11 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.ExportImportConfigurationLocalServiceBaseImpl;
-import com.liferay.portlet.layoutsadmin.util.ExportImportConfigurationUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -152,6 +155,43 @@ public class ExportImportConfigurationLocalServiceImpl
 			exportImportConfigurationLocalService.
 				deleteExportImportConfiguration(exportImportConfiguration);
 		}
+	}
+
+	@Override
+	public List<ExportImportConfiguration> getExportImportConfigurations(
+			Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<ExportImportConfiguration> exportImportConfigurations =
+			new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			long exportImportConfigurationId = GetterUtil.getLong(
+				document.get("exportImportConfigurationId"));
+
+			ExportImportConfiguration exportImportConfiguration =
+				exportImportConfigurationLocalService.
+					getExportImportConfiguration(exportImportConfigurationId);
+
+			if (exportImportConfiguration == null) {
+				exportImportConfigurations = null;
+
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					ExportImportConfiguration.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (exportImportConfigurations != null) {
+				exportImportConfigurations.add(exportImportConfiguration);
+			}
+		}
+
+		return exportImportConfigurations;
 	}
 
 	@Override
@@ -277,8 +317,8 @@ public class ExportImportConfigurationLocalServiceImpl
 			Hits hits = indexer.search(searchContext);
 
 			List<ExportImportConfiguration> exportImportConfigurations =
-				ExportImportConfigurationUtil.getExportImportConfigurations(
-					hits);
+				exportImportConfigurationLocalService.
+					getExportImportConfigurations(hits);
 
 			if (exportImportConfigurations != null) {
 				return new BaseModelSearchResult<>(

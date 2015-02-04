@@ -871,6 +871,102 @@ input.switch {
 	}
 }
 
+.lfr-header-fullscreen {
+	left: 0;
+	padding: 0 20px;
+	position: absolute;
+	top: 0;
+	width: 100%;
+
+	.header-left {
+		float: left;
+	}
+
+	.header-right {
+		float: right;
+
+		span {
+			cursor: pointer;
+			font-size: 12px;
+			margin: 0 5px;
+		}
+	}
+}
+
+.lfr-source-editor-fullscreen {
+	display: block;
+	height: 100%;
+	overflow: hidden;
+	padding-top: 10px;
+	width: 100%;
+
+	.ace_editor {
+		height: 100%;
+	}
+
+	.splitter {
+		border: 1px solid #CCC;
+	}
+
+	.content-preview {
+		overflow-y: auto;
+		padding: 0 20px;
+	}
+
+	&.vertical {
+		.content-html, .splitter, .content-preview  {
+			float: left;
+			height: 100%;
+		}
+
+		.content-html {
+			width: 50%;
+		}
+
+		.splitter {
+			width: 1px;
+		}
+
+		.content-preview {
+			width: 49%;
+		}
+	}
+
+	&.horizontal {
+		.content-html, .splitter, .content-preview  {
+			width: 100%;
+		}
+
+		.content-html {
+			height: 50%;
+			margin-bottom: 5px;
+		}
+
+		.splitter {
+			height: 1px;
+		}
+
+		.content-preview {
+			height: 49%;
+		}
+	}
+
+	&.simple {
+		.content-html {
+			height: 100%;
+			width: 100%;
+		}
+
+		.splitter, .content-preview  {
+			display: none;
+		}
+	}
+}
+
+.fullscreen-dialog .modal-footer {
+	text-align: left;
+}
+
 /* ---------- Alloy editor ---------- */
 
 .alloy-editor {
@@ -907,10 +1003,9 @@ input.switch {
 	}
 
 	.btn {
-		bottom: 0;
-		padding: 0 5px;
-		position: absolute;
-		right: 0;
+		bottom: 20px;
+		float: right;
+		position: relative;
 	}
 }
 

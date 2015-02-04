@@ -1117,6 +1117,12 @@ body.yui3-skin-sam .yui3-widget-mask {
 	}
 }
 
+.lfr-source-editor-fullscreen {
+	.lfr-source-editor {
+		border-width: 0;
+	}
+}
+
 /* ---------- Alloy editor ---------- */
 
 .alloy-editor-toolbar {
@@ -1145,6 +1151,7 @@ body.yui3-skin-sam .yui3-widget-mask {
 	border-color: transparent;
 	border-radius: 0;
 	color: #868896;
+	height: 20px;
 
 	&:focus {
 		outline: none;

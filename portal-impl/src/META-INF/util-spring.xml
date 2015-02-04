@@ -878,9 +878,9 @@
 	<bean id="com.liferay.portlet.asset.lar.AssetCategoryStagedModelDataHandler" class="com.liferay.portlet.asset.lar.AssetCategoryStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.asset.lar.AssetVocabularyStagedModelDataHandler" class="com.liferay.portlet.asset.lar.AssetVocabularyStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.asset.util.AssetCategoryIndexer" class="com.liferay.portlet.asset.util.AssetCategoryIndexer" />
+	<bean id="com.liferay.portlet.asset.util.AssetIndexer" class="com.liferay.portlet.asset.util.AssetIndexer" />
 	<bean id="com.liferay.portlet.asset.util.AssetVocabularyIndexer" class="com.liferay.portlet.asset.util.AssetVocabularyIndexer" />
 	<bean id="com.liferay.portlet.assetpublisher.provider.AssetPublisherPortletProvider" class="com.liferay.portlet.assetpublisher.provider.AssetPublisherPortletProvider" />
-	<bean id="com.liferay.portlet.assetpublisher.util.AssetIndexer" class="com.liferay.portlet.assetpublisher.util.AssetIndexer" />
 	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisher" class="com.liferay.portlet.assetpublisher.util.AssetPublisherImpl" />
 	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherHelper" class="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperImpl" />
 	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil" class="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil">

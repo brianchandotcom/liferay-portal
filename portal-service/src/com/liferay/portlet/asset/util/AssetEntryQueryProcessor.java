@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.util;
+package com.liferay.portlet.asset.util;
 
 import com.liferay.portal.model.User;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;

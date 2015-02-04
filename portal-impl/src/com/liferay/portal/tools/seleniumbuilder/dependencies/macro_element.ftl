@@ -24,6 +24,8 @@
 	</#if>
 </#if>
 
+<#assign x = macro?last_index_of("#")>
+
 <#if macroElement.getName() == "execute" && macro?substring(x + 1)?starts_with("is")>
 	return
 </#if>

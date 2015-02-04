@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.test.rule.executor.ClearThreadLocalExecutor;
 import com.liferay.portal.kernel.test.rule.executor.DeleteAfterTestRunExecutor;
 import com.liferay.portal.kernel.test.rule.executor.InitTestLiferayContextExecutor;
 import com.liferay.portal.kernel.test.rule.executor.UniqueStringRandomizerBumperExecutor;
-import com.liferay.portal.log.CaptureAppender;
+import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.executor.LogAssertionExecutor;
 

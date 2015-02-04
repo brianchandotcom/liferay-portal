@@ -23,8 +23,8 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
-import com.liferay.portlet.social.BaseSocialActivityInterpreterTestCase;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
+import com.liferay.portlet.test.social.BaseSocialActivityInterpreterTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

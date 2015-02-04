@@ -29,7 +29,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
-import com.liferay.portlet.notifications.BaseUserNotificationTestCase;
+import com.liferay.portlet.test.notifications.BaseUserNotificationTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

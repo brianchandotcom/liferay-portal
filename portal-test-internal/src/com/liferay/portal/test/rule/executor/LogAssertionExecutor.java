@@ -14,7 +14,7 @@
 
 package com.liferay.portal.test.rule.executor;
 
-import com.liferay.portal.log.CaptureAppender;
+import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.rule.ExpectedLogs;
 
 /**

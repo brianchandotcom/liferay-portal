@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.BulkException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.test.verify.BaseVerifyProcessTestCase;
 import com.liferay.portal.verify.model.LayoutVerifiableModel;
 import com.liferay.portal.verify.model.VerifiableUUIDModel;
 

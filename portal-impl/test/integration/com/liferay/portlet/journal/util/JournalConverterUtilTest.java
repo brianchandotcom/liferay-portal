@@ -51,7 +51,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.util.test.JournalTestUtil;
+import com.liferay.portlet.test.journal.util.JournalTestUtil;
 
 import java.io.InputStream;
 import java.io.Serializable;

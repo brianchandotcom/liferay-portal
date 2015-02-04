@@ -27,7 +27,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.layoutsadmin.util.test.ExportImportConfigurationTestUtil;
-import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
+import com.liferay.portlet.test.trash.BaseTrashHandlerTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Ignore;

@@ -37,7 +37,7 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portlet.journal.util.test.JournalTestUtil;
+import com.liferay.portlet.test.journal.util.JournalTestUtil;
 
 import java.util.List;
 import java.util.Map;

@@ -25,7 +25,7 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.asset.util.test.AssetTestUtil;
+import com.liferay.portlet.test.asset.util.AssetTestUtil;
 
 import java.util.HashMap;
 import java.util.List;

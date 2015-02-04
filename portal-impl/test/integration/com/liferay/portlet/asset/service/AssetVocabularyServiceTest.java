@@ -36,7 +36,7 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.util.test.AssetTestUtil;
+import com.liferay.portlet.test.asset.util.AssetTestUtil;
 
 import java.util.HashMap;
 import java.util.Locale;

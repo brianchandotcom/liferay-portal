@@ -29,7 +29,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.subscriptions.BaseSubscriptionClassTypeTestCase;
+import com.liferay.portlet.test.subscriptions.BaseSubscriptionClassTypeTestCase;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

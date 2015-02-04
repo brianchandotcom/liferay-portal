@@ -43,7 +43,7 @@ import com.liferay.portlet.journal.util.comparator.ArticleModifiedDateComparator
 import com.liferay.portlet.journal.util.comparator.ArticleReviewDateComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleTitleComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
-import com.liferay.portlet.journal.util.test.JournalTestUtil;
+import com.liferay.portlet.test.journal.util.JournalTestUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;

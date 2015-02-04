@@ -15,7 +15,7 @@
 package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
-import com.liferay.portal.log.CaptureAppender;
+import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.rule.executor.LogAssertionExecutor;
 import com.liferay.portal.test.rule.executor.LogAssertionExecutorImpl;
 

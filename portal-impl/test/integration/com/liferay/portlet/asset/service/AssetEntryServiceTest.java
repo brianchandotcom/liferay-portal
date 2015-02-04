@@ -23,8 +23,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
-import com.liferay.portlet.asset.util.test.AssetTestUtil;
 import com.liferay.portlet.ratings.util.test.RatingsTestUtil;
+import com.liferay.portlet.test.asset.util.AssetTestUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;

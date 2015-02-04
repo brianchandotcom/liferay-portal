@@ -23,7 +23,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.subscriptions.BaseSubscriptionRootContainerModelTestCase;
+import com.liferay.portlet.test.subscriptions.BaseSubscriptionRootContainerModelTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

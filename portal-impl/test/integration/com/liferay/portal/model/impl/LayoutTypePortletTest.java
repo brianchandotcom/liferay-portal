@@ -33,7 +33,7 @@ import com.liferay.portal.service.impl.PortletLocalServiceImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.util.LayoutTestUtil;
-import com.liferay.portlet.util.PortletKeys;
+import com.liferay.portlet.test.util.PortletKeys;
 
 import java.util.List;
 

@@ -20,9 +20,9 @@ import com.liferay.bookmarks.util.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.permission.BasePermissionTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.test.service.permission.BasePermissionTestCase;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

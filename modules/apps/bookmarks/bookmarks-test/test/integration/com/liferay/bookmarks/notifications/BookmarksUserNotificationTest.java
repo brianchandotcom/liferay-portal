@@ -28,7 +28,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.notifications.BaseUserNotificationTestCase;
+import com.liferay.portlet.test.notifications.BaseUserNotificationTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

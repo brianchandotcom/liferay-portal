@@ -25,7 +25,7 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.MBConstants;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
-import com.liferay.portlet.subscriptions.BaseSubscriptionLocalizedContentTestCase;
+import com.liferay.portlet.test.subscriptions.BaseSubscriptionLocalizedContentTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

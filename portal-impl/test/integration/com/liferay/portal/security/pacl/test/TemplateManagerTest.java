@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.log.CaptureAppender;
-import com.liferay.portal.log.Log4JLoggerTestUtil;
 import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.PACLTestRule;
 
 import org.apache.log4j.Level;

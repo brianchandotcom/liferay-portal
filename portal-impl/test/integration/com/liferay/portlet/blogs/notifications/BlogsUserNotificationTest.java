@@ -27,7 +27,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
-import com.liferay.portlet.notifications.BaseUserNotificationTestCase;
+import com.liferay.portlet.test.notifications.BaseUserNotificationTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;

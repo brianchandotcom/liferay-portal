@@ -434,7 +434,7 @@
 	<portlet>
 		<portlet-name>71</portlet-name>
 		<display-name>Navigation</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/navigation/configuration.jsp</value>
@@ -444,8 +444,8 @@
 			<value>/html/portlet/navigation/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/navigation/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/navigation/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

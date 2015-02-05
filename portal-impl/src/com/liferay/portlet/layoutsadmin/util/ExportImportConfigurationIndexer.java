@@ -76,7 +76,8 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 		Serializable type = searchContext.getAttribute(Field.TYPE);
 
 		if (type != null) {
-			contextQuery.addRequiredTerm(Field.TYPE, (int)type);
+			contextQuery.addRequiredTerm(
+				Field.TYPE, GetterUtil.getInteger(type));
 		}
 	}
 

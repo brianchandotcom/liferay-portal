@@ -1059,11 +1059,6 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
-	public boolean isUserPersonalSite() {
-		return hasClassName(UserPersonalSite.class);
-	}
-
-	@Override
 	public boolean isUserPersonalPanel() {
 		String groupKey = getGroupKey();
 
@@ -1073,6 +1068,11 @@ public class GroupImpl extends GroupBaseImpl {
 		else {
 			return false;
 		}
+	}
+
+	@Override
+	public boolean isUserPersonalSite() {
+		return hasClassName(UserPersonalSite.class);
 	}
 
 	@Override

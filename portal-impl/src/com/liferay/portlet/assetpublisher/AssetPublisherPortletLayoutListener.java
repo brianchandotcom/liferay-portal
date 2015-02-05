@@ -16,6 +16,7 @@ package com.liferay.portlet.assetpublisher;
 
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -58,6 +59,12 @@ public class AssetPublisherPortletLayoutListener
 
 	@Override
 	public void onSetup(String portletId, long plid) {
+	}
+
+	@Override
+	public void updatePropertiesOnRemoveFromLayout(
+			String portletId, UnicodeProperties typeSettingsProperties)
+		throws PortletLayoutListenerException {
 	}
 
 }

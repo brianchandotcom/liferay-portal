@@ -1,0 +1,112 @@
+<definition>
+	<command name="configureLiferaySAMLAsIdPAndLiferaySAMLasSP">
+		<description message="Configures Liferay SAML as the IdP and Liferay SAML as the SP." />
+
+		<!-- Configure IdP (Identity Provider) on http://localhost:8080 with database lportal and saml deployed -->
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="SAML Admin" />
+		</execute>
+
+		<execute macro="SAMLRole#configure">
+			<var name="samlEntityID" value="samlidp" />
+			<var name="samlRoleType" value="Identity Provider" />
+		</execute>
+
+		<execute macro="SAMLRole#configureCertificateAndPrivateKey">
+			<var name="samlKeyPassword" value="samlidp" />
+		</execute>
+
+		<execute macro="SAMLRole#enable">
+			<var name="samlEntityID" value="samlidp" />
+		</execute>
+
+		<execute macro="SAMLNavigation#gotoIdentityProvider" />
+
+		<execute macro="SAMLPortlet#configureIdentityProvider" />
+
+		<!-- Configure SP (Service Provider) on http://www.able.com:9080 with database lportal1 and saml deployed -->
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="rememberMeChecked" value="false" />
+			<var name="specificURL" value="http://www.able.com:9080" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="SAML Admin" />
+			<var name="specificURL" value="http://www.able.com:9080" />
+		</execute>
+
+		<execute macro="SAMLRole#configure">
+			<var name="samlEntityID" value="samlsp" />
+			<var name="samlRoleType" value="Service Provider" />
+		</execute>
+
+		<execute macro="SAMLRole#configureCertificateAndPrivateKey">
+			<var name="samlKeyPassword" value="samlsp" />
+		</execute>
+
+		<execute macro="SAMLNavigation#gotoIdentityProviderConnection" />
+
+		<execute macro="SAMLPortlet#configureIdentityProviderConnection">
+			<var name="IdpEntityID" value="samlidp" />
+			<var name="IdpMetadataURL" value="http://localhost:8080/c/portal/saml/metadata" />
+			<var name="IdpNameID" value="samlidp" />
+		</execute>
+
+		<execute macro="SAMLNavigation#gotoGeneral" />
+
+		<execute macro="SAMLRole#enable">
+			<var name="samlEntityID" value="samlsp" />
+		</execute>
+
+		<execute macro="User#logoutPG">
+			<var name="specificURL" value="http://www.able.com:9080" />
+		</execute>
+
+		<!-- Add the configured SP connection to the IdP -->
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="SAML Admin" />
+		</execute>
+
+		<execute macro="SAMLNavigation#gotoServiceProviderConnection" />
+
+		<execute macro="SAMLPortlet#addServiceProviderConnection">
+			<var name="SPEntityID" value="samlsp" />
+			<var name="SPMetadataURL" value="http://www.able.com:9080/c/portal/saml/metadata" />
+			<var name="SPNameID" value="samlsp" />
+		</execute>
+	</command>
+
+	<command name="executeIdPInitiatedSSO">
+		<description message="Sign into portal by executing a IdP initiated SSO login. The IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions." />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="${password}" />
+			<var name="specificURL" value="${idpInitiatedSSOURL}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute action="Home#pause" locator1="5000" />
+		<execute action="Home#assertLocation" value1="${spURL}" />
+	</command>
+
+	<command name="executeSPInitiatedSSO">
+		<description message="Sign into portal by executing a SP initiated SSO login. In the SP, click on the Sign In button to." />
+
+		<execute macro="User#loginPG">
+			<var name="loginViaDockbar" value="${loginViaDockbar}" />
+			<var name="password" value="${password}" />
+			<var name="rememberMeChecked" value="${rememberMeChecked}" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute action="Home#pause" locator1="5000" />
+		<execute action="Home#assertLocation" value1="${spURL}" />
+	</command>
+</definition>

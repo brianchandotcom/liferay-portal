@@ -526,6 +526,12 @@
 
 				<execute function="Open" locator1="${siteNameURL}" />
 			</then>
+			<elseif>
+				<isset var="specificURL" />
+				<then>
+					<execute function="Open" locator1="${specificURL}" />
+				</then>
+			</elseif>
 			<else>
 				<execute function="Open" locator1="${pageAccessURL}${siteNameURL}${pageStagingURL}" />
 			</else>

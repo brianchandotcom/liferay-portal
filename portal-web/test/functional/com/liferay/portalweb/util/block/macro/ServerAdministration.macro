@@ -1,4 +1,16 @@
 <definition>
+	<command name="addCategoryLogLevels">
+		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_LOG_LEVELS" value1="Log Levels" />
+
+		<execute action="CPServeradministrationLogLevels#assertClick" locator-key1="NAVIGATION_ADD_CATEGORY" value1="Add Category" />
+
+		<execute action="CPServeradministrationLogLevelsAddCategory#type" locator-key1="CATEGORY_NAME_FIELD" value1="${catagoryName}" />
+		<execute action="CPServeradministrationLogLevelsAddCategory#select" locator-key1="CATEGORY_PRIORITY_SELECT" value1="${categoryPriority}" />
+		<execute action="CPServeradministrationLogLevelsAddCategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPServeradministrationLogLevelsAddCategory#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="configureExternalServices">
 		<execute action="CPServeradministration#assertClick" locator-key1="NAVIGATION_EXTERNAL_SERVICES" value1="External Services" />
 

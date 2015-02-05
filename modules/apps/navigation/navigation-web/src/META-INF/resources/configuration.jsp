@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/navigation/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <aui:row>
 	<aui:col width="<%= 50 %>">

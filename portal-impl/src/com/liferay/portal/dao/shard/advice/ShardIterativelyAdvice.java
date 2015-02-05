@@ -46,6 +46,8 @@ public class ShardIterativelyAdvice implements MethodInterceptor {
 						methodInvocation.toString());
 			}
 
+			String currentShardName = ShardUtil.setTargetSource(shardName);
+
 			_shardAdvice.pushCompanyService(shardName);
 
 			try {
@@ -57,6 +59,8 @@ public class ShardIterativelyAdvice implements MethodInterceptor {
 			}
 			finally {
 				_shardAdvice.popCompanyService();
+
+				ShardUtil.setTargetSource(currentShardName);
 
 				CacheRegistryUtil.clear();
 			}

@@ -415,10 +415,9 @@
 	<portlet>
 		<portlet-name>71</portlet-name>
 		<icon>/html/icons/navigation.png</icon>
-		<struts-path>navigation</struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<layout-cacheable>true</layout-cacheable>
 		<instanceable>true</instanceable>
 		<private-request-attributes>false</private-request-attributes>

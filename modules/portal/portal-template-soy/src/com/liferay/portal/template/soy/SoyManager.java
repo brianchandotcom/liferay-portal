@@ -28,6 +28,7 @@ import com.liferay.portal.template.RestrictedTemplate;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Basto
@@ -62,6 +63,13 @@ public class SoyManager extends BaseTemplateManager {
 		}
 
 		_builder = new SoyFileSet.Builder();
+	}
+
+	@Reference(unbind = "-")
+	public void setFreeMarkerTemplateContextHelper(
+		SoyTemplateContextHelper soyTemplateContextHelper) {
+
+		templateContextHelper = soyTemplateContextHelper;
 	}
 
 	@Override

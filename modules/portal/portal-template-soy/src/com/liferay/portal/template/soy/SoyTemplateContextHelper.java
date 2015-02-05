@@ -23,9 +23,12 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Bruno Basto
  */
+@Component(immediate = true, service = SoyTemplateContextHelper.class)
 public class SoyTemplateContextHelper extends TemplateContextHelper {
 
 	@Override

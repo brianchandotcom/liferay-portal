@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
-import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.VelocityTaglib;
@@ -301,7 +300,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 	@Reference(unbind = "-")
 	public void setFreeMarkerTemplateContextHelper(
-		TemplateContextHelper freeMarkerTemplateContextHelper) {
+		FreeMarkerTemplateContextHelper freeMarkerTemplateContextHelper) {
 
 		templateContextHelper = freeMarkerTemplateContextHelper;
 	}

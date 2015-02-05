@@ -47,6 +47,7 @@ public class RetryServerConnectionHandler extends GetSyncContextHandler {
 			}
 
 			syncAccount.setState(SyncAccount.STATE_CONNECTED);
+			syncAccount.setUiEvent(SyncAccount.UI_EVENT_NONE);
 
 			FileEventUtil.retryFileTransfers(getSyncAccountId());
 

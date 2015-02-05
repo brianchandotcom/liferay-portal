@@ -173,6 +173,7 @@ public class SyncEngine {
 
 		if (!ConnectionRetryUtil.retryInProgress(syncAccountId)) {
 			syncAccount.setState(SyncAccount.STATE_CONNECTED);
+			syncAccount.setUiEvent(SyncAccount.UI_EVENT_NONE);
 
 			SyncAccountService.update(syncAccount);
 

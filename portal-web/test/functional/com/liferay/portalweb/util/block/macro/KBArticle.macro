@@ -433,7 +433,6 @@
 
 		<execute action="CPKnowledgebaseadminSelectParent#selectFrame" locator-key1="SELECT_PARENT_IFRAME" />
 		<execute action="CPKnowledgebaseadminSelectParent#click" locator-key1="CHOOSE_BUTTON" value1="Choose" />
-
 		<execute action="CPKnowledgebaseadminSelectParent#selectFrame" value1="relative=top" />
 
 		<execute action="CPKnowledgebaseadminMoveArticle#assertTextEquals" locator-key1="NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />

@@ -102,6 +102,19 @@
 		function(event) {
 			event.preventDefault();
 
+			var searchContainerName = '<portlet:namespace/>assetLinksSearchContainer';
+
+			searchContainer = Liferay.SearchContainer.get(searchContainerName);
+
+			var searchContainerData = searchContainer.getData();
+
+			if (!searchContainerData.length) {
+				searchContainerData = [];
+			}
+			else {
+				searchContainerData = searchContainerData.split(',');
+			}
+
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -110,14 +123,11 @@
 					},
 					eventName: '<%= inputAssetLinksDisplayContext.getEventName() %>',
 					id: '<%= inputAssetLinksDisplayContext.getEventName() %>' + event.currentTarget.attr('id'),
+					selectedData: searchContainerData,
 					title: event.currentTarget.attr('data-title'),
 					uri: event.currentTarget.attr('data-href')
 				},
 				function(event) {
-					var searchContainerName = '<portlet:namespace/>assetLinksSearchContainer';
-
-					searchContainer = Liferay.SearchContainer.get(searchContainerName);
-
 					var entryLink = '<a class="modify-link" data-rowId="' + event.assetentryid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a>';
 
 					searchContainer.addRow([event.assettype, A.Escape.html(event.assettitle), A.Escape.html(event.groupdescriptivename), entryLink], event.assetentryid);

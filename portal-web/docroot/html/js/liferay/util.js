@@ -1435,9 +1435,42 @@
 
 			var eventHandles = [Liferay.on(eventName, callback)];
 
+			var selectedData = config.selectedData;
+
+			if (selectedData) {
+				config.dialog.destroyOnHide = true;
+			}
+
 			var detachSelectionOnHideFn = function(event) {
 				if (!event.newVal) {
 					(new A.EventHandle(eventHandles)).detach();
+				}
+			};
+
+			var disableSelectedAssetsAfterLoadFn = function(event) {
+				if (selectedData && selectedData.length) {
+					var selectorButtons = event.currentTarget.node.get('contentWindow').get('document').all('.lfr-search-container .selector-button');
+
+					A.some(
+						selectorButtons,
+						function(item, index, collection) {
+							for (var i = 0; i < selectedData.length; i++){
+								var assetEntryId = item.attr('data-assetentryid');
+
+								if (assetEntryId === selectedData[i]) {
+									item.attr('disabled', true);
+
+									selectedData.splice(i, 1);
+
+									break;
+								}
+							}
+
+							if (!selectedData.length) {
+								return true;
+							}
+						}
+					);
 				}
 			};
 
@@ -1463,6 +1496,7 @@
 					config,
 					function(dialogWindow) {
 						eventHandles.push(dialogWindow.after(['destroy', 'visibleChange'], detachSelectionOnHideFn));
+						eventHandles.push(dialogWindow.iframe.after(['load'], disableSelectedAssetsAfterLoadFn));
 
 						Liferay.on('destroyPortlet', destroyDialog);
 					}

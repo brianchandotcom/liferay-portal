@@ -884,7 +884,7 @@ public class DLFileEntryLocalServiceImpl
 	public void deleteRepositoryFileEntries(long repositoryId, long folderId)
 		throws PortalException {
 
-		deleteFileEntries(repositoryId, folderId, true);
+		deleteRepositoryFileEntries(repositoryId, folderId, true);
 	}
 
 	@Override

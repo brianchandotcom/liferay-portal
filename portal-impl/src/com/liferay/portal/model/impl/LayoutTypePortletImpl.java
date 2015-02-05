@@ -1835,6 +1835,17 @@ public class LayoutTypePortletImpl
 
 				removeNestedColumns(portletNamespace);
 			}
+
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+			PortletLayoutListener portletLayoutListener = null;
+
+			if (portlet != null) {
+				portletLayoutListener =
+					portlet.getPortletLayoutListenerInstance();
+				portletLayoutListener.updatePropertiesOnRemoveFromLayout(
+					portletId, getTypeSettingsProperties());
+			}
 		}
 
 		try {

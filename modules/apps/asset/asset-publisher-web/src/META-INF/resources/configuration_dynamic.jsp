@@ -344,7 +344,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							contentBox: '#<portlet:namespace />queryRules > fieldset',
 							fieldIndexes: '<portlet:namespace />queryLogicIndexes',
 							namespace: '<portlet:namespace />',
-							url: '<liferay-portlet:renderURL portletName="<%= AssetPublisherPortletKeys.ASSET_PUBLISHER %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/asset_publisher/edit_query_rule.jsp" /></liferay-portlet:renderURL>'
+							url: '<liferay-portlet:renderURL portletName="<%= AssetPublisherPortletKeys.ASSET_PUBLISHER %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_query_rule.jsp" /></liferay-portlet:renderURL>'
 						}
 					).render();
 				</aui:script>

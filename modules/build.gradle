@@ -1,0 +1,1 @@
+apply from: "$sdkDir/build.gradle";

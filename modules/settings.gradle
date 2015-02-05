@@ -1,1 +1,1 @@
-apply from: "../tools/sdk/settings.gradle";
+apply from: "$sdkDir/settings.gradle";

@@ -61,6 +61,7 @@ import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -173,6 +174,35 @@ public class LayoutSetPrototypePropagationTest
 
 		Assert.assertEquals(
 			_initialPrototypeLayoutCount + 1, getGroupLayoutCount());
+	}
+
+	@Test
+	public void testLayoutPropagationWithFriendlyURLConflict()
+		throws Exception {
+
+		LayoutSet layoutSet = group.getPublicLayoutSet();
+
+		List<Layout> initialMergeFailFriendlyURLLayouts =
+			SitesUtil.getMergeFailFriendlyURLLayouts(layoutSet);
+
+		setLinkEnabled(true);
+
+		LayoutTestUtil.addLayout(group.getGroupId(), "testpage", false);
+
+		LayoutTestUtil.addLayout(
+			_layoutSetPrototypeGroup.getGroupId(), "testpage", true);
+
+		propagateChanges(group);
+
+		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			layoutSet.getLayoutSetId());
+
+		List<Layout> mergeFailFriendlyURLLayouts =
+			SitesUtil.getMergeFailFriendlyURLLayouts(layoutSet);
+
+		Assert.assertEquals(
+			initialMergeFailFriendlyURLLayouts.size() + 1,
+			mergeFailFriendlyURLLayouts.size());
 	}
 
 	@Test

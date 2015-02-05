@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
@@ -91,37 +89,25 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 	}
 
 	protected SessionFactory createSessionFactory(DataSource dataSource) {
-		String servletContextName =
-			PortletClassLoaderUtil.getServletContextName();
+		PortletHibernateConfiguration portletHibernateConfiguration =
+			new PortletHibernateConfiguration(
+				getSessionFactoryClassLoader(), dataSource);
 
-		ClassLoader classLoader = getSessionFactoryClassLoader();
+		portletHibernateConfiguration.setDataSource(dataSource);
 
-		PortletClassLoaderUtil.setServletContextName(
-			ClassLoaderPool.getContextName(classLoader));
+		SessionFactory sessionFactory = null;
 
 		try {
-			PortletHibernateConfiguration portletHibernateConfiguration =
-				new PortletHibernateConfiguration();
-
-			portletHibernateConfiguration.setDataSource(dataSource);
-
-			SessionFactory sessionFactory = null;
-
-			try {
-				sessionFactory =
-					portletHibernateConfiguration.buildSessionFactory();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-
-				return null;
-			}
-
-			return sessionFactory;
+			sessionFactory =
+				portletHibernateConfiguration.buildSessionFactory();
 		}
-		finally {
-			PortletClassLoaderUtil.setServletContextName(servletContextName);
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return null;
 		}
+
+		return sessionFactory;
 	}
 
 	protected DataSource getDataSource() {

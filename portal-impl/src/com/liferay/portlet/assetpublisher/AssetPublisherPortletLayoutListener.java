@@ -16,8 +16,10 @@ package com.liferay.portlet.assetpublisher;
 
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
@@ -65,6 +67,16 @@ public class AssetPublisherPortletLayoutListener
 	public void updatePropertiesOnRemoveFromLayout(
 			String portletId, UnicodeProperties typeSettingsProperties)
 		throws PortletLayoutListenerException {
+
+		String defaultAssetPublisherPortletId =
+			typeSettingsProperties.getProperty(
+				LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID);
+
+		if (portletId.equals(defaultAssetPublisherPortletId)) {
+			typeSettingsProperties.setProperty(
+				LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID,
+				StringPool.BLANK);
+		}
 	}
 
 }

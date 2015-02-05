@@ -1028,6 +1028,7 @@
 			clean.delete.ivy.md5=true
 			clean.delete.lib=true
 			ivy.home=${project.dir}/.ivy
+			junit.test.excludes=${junit.test.excludes}
 			liferay.home=${liferay.home}
 			module.framework.base.dir=${liferay.home}/osgi
 		</echo>

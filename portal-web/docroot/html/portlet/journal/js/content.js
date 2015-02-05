@@ -267,6 +267,7 @@ AUI.add(
 								groupId: ddm.groupId,
 								refererPortletName: ddm.refererPortletName,
 								showAncestorScopes: true,
+								sourceClassNameId: ddm.sourceClassNameId,
 								struts_action: '/dynamic_data_mapping/select_template',
 								templateId: ddm.templateId,
 								title: strings.templates

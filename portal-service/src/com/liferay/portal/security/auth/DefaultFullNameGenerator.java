@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -145,9 +146,8 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 		Map<String, String> namesMap = new HashMap<String, String>();
 
-		String fieldsString = LanguageUtil.get(locale, "user.name.fields");
-
-		String[] userNameFields = StringUtil.split(fieldsString);
+		FullNameDefinition fullNameDefinition =
+			LocalizationUtil.getFullNameDefinition(locale);
 
 		if (Validator.isNotNull(firstName)) {
 			if (useInitials) {
@@ -193,10 +193,10 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 			catch (PortalException e) {}
 		}
 
-		for (String userNameField : userNameFields) {
-			if (namesMap.containsKey(userNameField)) {
+		for (FullNameField fullNameField : fullNameDefinition.getFields()) {
+			if (namesMap.containsKey(fullNameField.getName())) {
 				sb.append(StringPool.SPACE);
-				sb.append(namesMap.get(userNameField));
+				sb.append(namesMap.get(fullNameField.getName()));
 			}
 		}
 

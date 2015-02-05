@@ -777,7 +777,7 @@
 				<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_GITHUB" value1="Edit on GitHub" />
 
 				<var name="key_pageTitle" value="Google" />
-				
+
 				<execute action="Google#selectWindow" locator-key1="PAGE_TITLE" />
 
 				<var method="selenium#getLocation()" name="url" />
@@ -786,9 +786,9 @@
 					<var name="actual" value="${url}" />
 					<var name="expected" value="https://www.google.com/?gws_rd=ssl" />
 				</execute>
-				
+
 				<execute action="Google#close" locator-key1="PAGE_TITLE" />
-			</then>	
+			</then>
 		</if>
 
 		<if>

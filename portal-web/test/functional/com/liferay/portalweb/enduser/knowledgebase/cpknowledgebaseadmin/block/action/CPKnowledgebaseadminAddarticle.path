@@ -54,11 +54,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SOURCE_URL_FIELD</td>
-	<td>//input[contains(@id,'sourceURL')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_FIELD</td>
 	<td>//div[@id='cke_1_contents']/iframe</td>
 	<td></td>

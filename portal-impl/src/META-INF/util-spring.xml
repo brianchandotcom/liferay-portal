@@ -988,6 +988,11 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil" class="com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil">
+		<property name="DDMFormFieldTypeRegistry">
+			<bean class="com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRendererRegistryImpl" class="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRendererRegistryImpl">
 		<property name="defaultDDMFormFieldRenderer">
 			<bean class="com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldFreeMarkerRenderer" />

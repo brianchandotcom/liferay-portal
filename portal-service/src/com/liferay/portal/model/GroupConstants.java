@@ -43,7 +43,7 @@ public class GroupConstants {
 
 	public static final String[] SYSTEM_GROUPS = {
 		CONTROL_PANEL, GUEST, GroupConstants.USER_PERSONAL_SITE,
-		GroupConstants.USER_PERSONAL_SPACE
+		GroupConstants.USER_PERSONAL_PANEL
 	};
 
 	public static final int TYPE_SITE_OPEN = 1;
@@ -62,15 +62,15 @@ public class GroupConstants {
 
 	public static final String TYPE_SITE_SYSTEM_LABEL = "system";
 
+	public static final String USER_PERSONAL_PANEL = "User Personal Panel";
+
+	public static final String USER_PERSONAL_PANEL_FRIENDLY_URL =
+		"/user_personal_panel";
+
 	public static final String USER_PERSONAL_SITE = "User Personal Site";
 
 	public static final String USER_PERSONAL_SITE_FRIENDLY_URL =
 		"/personal_site";
-
-	public static final String USER_PERSONAL_SPACE = "User Personal Space";
-
-	public static final String USER_PERSONAL_SPACE_FRIENDLY_URL =
-		"/user_personal_space";
 
 	public static String getTypeLabel(int type) {
 		if (type == TYPE_SITE_OPEN) {

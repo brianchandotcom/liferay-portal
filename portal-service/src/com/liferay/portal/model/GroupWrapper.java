@@ -1037,13 +1037,13 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public boolean isUserPersonalSite() {
-		return _group.isUserPersonalSite();
+	public boolean isUserPersonalPanel() {
+		return _group.isUserPersonalPanel();
 	}
 
 	@Override
-	public boolean isUserPersonalSpace() {
-		return _group.isUserPersonalSpace();
+	public boolean isUserPersonalSite() {
+		return _group.isUserPersonalSite();
 	}
 
 	@Override

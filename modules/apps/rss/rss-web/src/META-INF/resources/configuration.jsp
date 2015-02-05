@@ -66,7 +66,7 @@
 					}
 				%>
 
-					<div class="lfr-form-row lfr-form-row-inline">
+					<div class="field-row lfr-form-row lfr-form-row-inline">
 						<div class="row-fields">
 							<aui:input cssClass="lfr-input-text-container" label="title" name='<%= "title" + i %>' value="<%= title %>" />
 
@@ -159,7 +159,9 @@
 		{
 			contentBox: 'fieldset.subscriptions',
 			fieldIndexes: '<portlet:namespace />subscriptionIndexes',
-			namespace: '<portlet:namespace />'
+			namespace: '<portlet:namespace />',
+			sortable: true,
+			sortableHandle: '.field-row'
 		}
 	).render();
 </aui:script>

@@ -8,7 +8,6 @@
 	<preference>
 		<name>urls</name>
 		<value>http://www.liferay.com/community/blogs/-/blogs_stream/community/rss</value>
-		<value>http://rss.news.yahoo.com/rss/tech</value>
 		<value>http://partners.userland.com/nytRss/technology.xml</value>
 	</preference>
 </portlet-preferences>

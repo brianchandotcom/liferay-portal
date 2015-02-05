@@ -21,8 +21,6 @@ import com.liferay.tools.jsc.libsass.SassLibrary.Sass_File_Context;
 import com.liferay.tools.jsc.libsass.SassLibrary.Sass_Options;
 import com.liferay.tools.jsc.libsass.SassLibrary.Sass_Output_Style;
 
-import com.sun.jna.Pointer;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -80,7 +78,7 @@ public class SassCompiler {
 			_libsass.sass_option_set_output_path(opt, "");
 			_libsass.sass_option_set_image_path(opt, imgPath);
 			_libsass.sass_option_set_output_style(
-				opt, Sass_Output_Style.SASS_STYLE_EXPANDED);
+				opt, Sass_Output_Style.SASS_STYLE_COMPACT);
 			_libsass.sass_option_set_source_comments(opt, sourceComments);
 			_libsass.sass_option_set_include_path(opt, includePaths);
 
@@ -95,19 +93,19 @@ public class SassCompiler {
 				context);
 
 			if (errorStatus != 0) {
-				Pointer errorMsg = _libsass.sass_context_get_error_message(
+				String errorMsg = _libsass.sass_context_get_error_message(
 					context);
-				throw new SassCompilationException(errorMsg.getString(0));
+				throw new SassCompilationException(errorMsg);
 			}
 
-			final Pointer outputString =
+			final String outputString =
 				_libsass.sass_context_get_output_string(context);
 
-			if ((outputString == null) || (outputString.getString(0) == null)) {
+			if ((outputString == null) || (outputString == null)) {
 				throw new SassCompilationException("libsass returned null");
 			}
 
-			return outputString.getString(0);
+			return outputString;
 		}
 		finally {
 			try {

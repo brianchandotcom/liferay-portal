@@ -5,4 +5,55 @@
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="../../../lib/development/" />
+
+	<target name="compile">
+		<if>
+			<not>
+				<available file="src/com/liferay/tools/jsc/libsass/SassLibrary.java" />
+			</not>
+			<then>
+				<if>
+					<not>
+						<available file="jnaerator-0.11-shaded.jar" />
+					</not>
+					<then>
+						<get
+							dest="jnaerator-0.11-shaded.jar"
+							src="https://oss.sonatype.org/content/groups/public/com/nativelibs4java/jnaerator/0.11/jnaerator-0.11-shaded.jar"
+						/>
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<available file="libsass-3.1.0.zip" />
+					</not>
+					<then>
+						<get
+							dest="libsass-3.1.0.zip"
+							src="https://github.com/sass/libsass/archive/3.1.0.zip"
+						/>
+					</then>
+				</if>
+
+				<unzip
+					dest="${basedir}"
+					src="libsass-3.1.0.zip"
+				/>
+
+				<java
+					dir="libsass-3.1.0"
+					jar="jnaerator-0.11-shaded.jar"
+					fork="true"
+					failonerror="true"
+				>
+					<arg line="-f -library sass -mode Directory -o ../src -package com.liferay.tools.jsc.libsass -runtime JNAerator sass_context.h" />
+				</java>
+			</then>
+		</if>
+
+		<compile
+			module.dir="${basedir}"
+		/>
+	</target>
 </project>

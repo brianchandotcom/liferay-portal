@@ -1301,10 +1301,6 @@
 
 		<action path="/my_workflow_tasks/view" forward="portlet.workflow_tasks.view" />
 
-		<!-- Navigation -->
-
-		<action path="/navigation/view" forward="portlet.navigation.view" />
-
 		<!-- News -->
 
 		<action path="/news/edit" type="com.liferay.portlet.news.action.EditPreferencesAction">

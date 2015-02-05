@@ -163,7 +163,7 @@ public class BlogsSettings {
 
 		settingsFactory.registerSettingsMetadata(
 			BlogsConstants.SERVICE_NAME, _getFallbackKeys(), _MULTI_VALUED_KEYS,
-			_resourceManager);
+			null, _resourceManager);
 	}
 
 	private final TypedSettings _typedSettings;

@@ -185,7 +185,7 @@ public class WikiSettings {
 
 		settingsFactory.registerSettingsMetadata(
 			WikiConstants.SERVICE_NAME, _getFallbackKeys(), _MULTI_VALUED_KEYS,
-			_resourceManager);
+			null, _resourceManager);
 	}
 
 	private final TypedSettings _typedSettings;

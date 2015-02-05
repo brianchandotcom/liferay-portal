@@ -200,16 +200,16 @@ public class DLPortletInstanceSettings {
 
 		settingsFactory.registerSettingsMetadata(
 			PortletKeys.DOCUMENT_LIBRARY, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS, _resourceManager);
+			_MULTI_VALUED_KEYS, null, _resourceManager);
 		settingsFactory.registerSettingsMetadata(
 			PortletKeys.DOCUMENT_LIBRARY_ADMIN, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS, _resourceManager);
+			_MULTI_VALUED_KEYS, null, _resourceManager);
 		settingsFactory.registerSettingsMetadata(
 			PortletKeys.DOCUMENT_LIBRARY_DISPLAY, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS, _resourceManager);
+			_MULTI_VALUED_KEYS, null, _resourceManager);
 		settingsFactory.registerSettingsMetadata(
 			PortletKeys.MEDIA_GALLERY_DISPLAY, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS, _resourceManager);
+			_MULTI_VALUED_KEYS, null, _resourceManager);
 	}
 
 	private final TypedSettings _typedSettings;

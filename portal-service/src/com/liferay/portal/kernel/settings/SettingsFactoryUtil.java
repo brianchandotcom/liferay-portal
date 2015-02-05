@@ -102,7 +102,7 @@ public class SettingsFactoryUtil {
 		ResourceManager resourceManager) {
 
 		getSettingsFactory().registerSettingsMetadata(
-			settingsId, fallbackKeys, multiValuedKeys, resourceManager);
+			settingsId, fallbackKeys, multiValuedKeys, null, resourceManager);
 	}
 
 	public void setSettingsFactory(SettingsFactory settingsFactory) {

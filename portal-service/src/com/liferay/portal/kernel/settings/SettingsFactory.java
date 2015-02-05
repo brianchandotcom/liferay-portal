@@ -58,6 +58,7 @@ public interface SettingsFactory {
 
 	public void registerSettingsMetadata(
 		String settingsId, FallbackKeys fallbackKeys,
-		String[] multiValuedKeysArray, ResourceManager resourceManager);
+		String[] multiValuedKeysArray, Object serviceConfigurationBean,
+		ResourceManager resourceManager);
 
 }

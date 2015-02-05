@@ -221,7 +221,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	@Override
 	public void registerSettingsMetadata(
 		String settingsId, FallbackKeys fallbackKeys,
-		String[] multiValuedKeysArray, ResourceManager resourceManager) {
+		String[] multiValuedKeysArray, Object serviceConfigurationBean,
+		ResourceManager resourceManager) {
 
 		settingsId = PortletConstants.getRootPortletId(settingsId);
 
@@ -234,6 +235,11 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		multiValuedKeysList = Collections.unmodifiableList(multiValuedKeysList);
 
 		_multiValuedKeysMap.put(settingsId, multiValuedKeysList);
+
+		if (serviceConfigurationBean != null) {
+			_serviceConfigurationBeans.put(
+				settingsId, serviceConfigurationBean);
+		}
 
 		_resourceManagers.put(settingsId, resourceManager);
 	}
@@ -392,6 +398,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	private final Map<String, Properties> _portletPropertiesMap =
 		new ConcurrentHashMap<>();
 	private final ConcurrentMap<String, ResourceManager> _resourceManagers =
+		new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, Object> _serviceConfigurationBeans =
 		new ConcurrentHashMap<>();
 
 }

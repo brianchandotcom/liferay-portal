@@ -14,11 +14,13 @@
 
 package com.liferay.navigation.web.portlet;
 
+import com.liferay.navigation.web.upgrade.NavigationUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -49,4 +51,9 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class NavigationPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setNavigationUpgrade(NavigationUpgrade navigationUpgrade) {
+	}
+
 }

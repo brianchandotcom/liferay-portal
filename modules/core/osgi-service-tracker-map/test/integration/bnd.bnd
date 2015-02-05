@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Service Tracker Map Tests
+Bundle-SymbolicName: com.liferay.osgi.service.tracker.map.test
+Bundle-Version: 1.0.0
+Include-Resource:\
+	.,\
+	../../classes,\
+	../../test-classes/integration

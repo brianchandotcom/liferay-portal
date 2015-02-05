@@ -2,9 +2,9 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="registry-impl" />
+	<property name="import.shared" value="registry-impl,servicetrackermap" />
 	<property name="osgi.ide.dependencies" value="spring-beans.jar,spring-context.jar,spring-core.jar" />
-	<property name="osgi.runtime.dependencies" value="org.eclipse.osgi.jar,registry-impl.jar" />
+	<property name="osgi.runtime.dependencies" value="org.eclipse.osgi.jar,registry-impl.jar,com.liferay.osgi.servicetrackermap.jar" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

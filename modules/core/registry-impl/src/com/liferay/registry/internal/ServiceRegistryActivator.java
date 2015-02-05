@@ -16,6 +16,8 @@ package com.liferay.registry.internal;
 
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.collections.ServiceTrackerMapFactory;
+import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -32,17 +34,32 @@ public class ServiceRegistryActivator implements BundleActivator {
 
 		RegistryUtil.setRegistry(registry);
 
-		_serviceRegistration = bundleContext.registerService(
+		_registryServiceRegistration = bundleContext.registerService(
 			Registry.class, registry, null);
+
+		ServiceTrackerMapFactoryImpl serviceTrackerMapFactory =
+			new ServiceTrackerMapFactoryImpl(bundleContext);
+
+		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
+			serviceTrackerMapFactory);
+
+		_serviceTrackerMapFactoryServiceRegistration =
+			bundleContext.registerService(
+				ServiceTrackerMapFactory.class, serviceTrackerMapFactory, null);
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		_serviceRegistration.unregister();
+		_registryServiceRegistration.unregister();
+		_serviceTrackerMapFactoryServiceRegistration.unregister();
 
 		RegistryUtil.setRegistry(null);
+
+		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(null);
 	}
 
-	private ServiceRegistration<Registry> _serviceRegistration;
+	private ServiceRegistration<Registry> _registryServiceRegistration;
+	private ServiceRegistration<ServiceTrackerMapFactory>
+		_serviceTrackerMapFactoryServiceRegistration;
 
 }

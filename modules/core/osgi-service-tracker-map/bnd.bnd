@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Service Tracker Map
+Bundle-SymbolicName: com.liferay.osgi.service.tracker.map
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.osgi.service.tracker.map
+Private-Package:\
+	com.liferay.osgi.service.tracker.map.internal

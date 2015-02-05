@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.registry.collections;
+package com.liferay.osgi.service.tracker.map;
 
-import com.liferay.registry.ServiceReference;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Carlos Sierra Andrés

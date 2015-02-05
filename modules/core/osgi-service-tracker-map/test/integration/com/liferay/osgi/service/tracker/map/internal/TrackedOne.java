@@ -12,21 +12,23 @@
  * details.
  */
 
-package com.liferay.registry.collections;
+package com.liferay.osgi.service.tracker.map.internal;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Raymond Augé
  */
-public interface ServiceTrackerBucket<SR, TS, R> {
+public class TrackedOne {
 
-	public R getContent();
+	public TrackedOne() {}
 
-	public boolean isDisposable();
+	public TrackedOne(String key) {
+		this.key = key;
+	}
 
-	public void remove(
-		ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple);
+	public String getKey() {
+		return key;
+	}
 
-	public void store(
-		ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple);
+	private String key;
 
 }

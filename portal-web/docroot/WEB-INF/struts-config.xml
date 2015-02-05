@@ -1309,10 +1309,6 @@
 
 		<action path="/my_workflow_tasks/view_content" forward="portlet.asset_publisher.view_content" />
 
-		<!-- Navigation -->
-
-		<action path="/navigation/view" forward="portlet.navigation.view" />
-
 		<!-- News -->
 
 		<action path="/news/edit" type="com.liferay.portlet.news.action.EditPreferencesAction">

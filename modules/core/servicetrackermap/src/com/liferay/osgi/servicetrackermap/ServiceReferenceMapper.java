@@ -12,13 +12,21 @@
  * details.
  */
 
-package com.liferay.registry.collections;
+package com.liferay.osgi.servicetrackermap;
+
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface ServiceTrackerBucketFactory<SR, TS, R> {
+public interface ServiceReferenceMapper<K, S> {
 
-	public ServiceTrackerBucket<SR, TS, R> create();
+	public void map(ServiceReference<S> serviceReference, Emitter<K> emitter);
+
+	public interface Emitter<K> {
+
+		public void emit(K key);
+
+	}
 
 }

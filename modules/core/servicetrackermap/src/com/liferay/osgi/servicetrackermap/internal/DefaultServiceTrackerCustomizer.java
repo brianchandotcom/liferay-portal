@@ -12,31 +12,30 @@
  * details.
  */
 
-package com.liferay.registry.collections.internal;
+package com.liferay.osgi.servicetrackermap.internal;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class RegistryServiceTrackerCustomizer<S>
+public class DefaultServiceTrackerCustomizer<S>
 	implements ServiceTrackerCustomizer<S, S> {
+
+	public DefaultServiceTrackerCustomizer(BundleContext bundleContext) {
+		this.bundleContext = bundleContext;
+	}
 
 	@Override
 	public S addingService(ServiceReference<S> serviceReference) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		return registry.getService(serviceReference);
+		return bundleContext.getService(serviceReference);
 	}
 
 	@Override
 	public void modifiedService(
 		ServiceReference<S> serviceReference, S service) {
-
-		addingService(serviceReference);
 
 		removedService(serviceReference, service);
 	}
@@ -45,9 +44,9 @@ public class RegistryServiceTrackerCustomizer<S>
 	public void removedService(
 		ServiceReference<S> serviceReference, S service) {
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		registry.ungetService(serviceReference);
+		bundleContext.ungetService(serviceReference);
 	}
+
+	private final BundleContext bundleContext;
 
 }

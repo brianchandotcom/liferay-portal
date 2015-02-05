@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.registry.collections.internal;
+package com.liferay.osgi.servicetrackermap.internal;
 
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceServiceTuple;
-import com.liferay.registry.collections.ServiceReferenceServiceTupleComparator;
-import com.liferay.registry.collections.ServiceTrackerBucket;
-import com.liferay.registry.collections.ServiceTrackerBucketFactory;
+import com.liferay.osgi.servicetrackermap.ServiceReferenceServiceTuple;
+import com.liferay.osgi.servicetrackermap.ServiceReferenceServiceTupleComparator;
+import com.liferay.osgi.servicetrackermap.ServiceTrackerBucket;
+import com.liferay.osgi.servicetrackermap.ServiceTrackerBucketFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +25,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Carlos Sierra Andrés

@@ -53,7 +53,9 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 import com.liferay.registry.internal.RegistryImpl;
+import com.liferay.registry.internal.ServiceTrackerMapFactoryImpl;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -421,6 +423,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		RegistryUtil.setRegistry(
 			new RegistryImpl(_framework.getBundleContext()));
+
+		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
+			new ServiceTrackerMapFactoryImpl(_framework.getBundleContext()));
 
 		_setupInitialBundles();
 	}

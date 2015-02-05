@@ -12,23 +12,24 @@
  * details.
  */
 
-package com.liferay.registry.collections.internal;
+package com.liferay.osgi.servicetrackermap.internal;
 
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceReferenceServiceTuple;
-import com.liferay.registry.collections.ServiceTrackerBucket;
-import com.liferay.registry.collections.ServiceTrackerBucketFactory;
-import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.osgi.servicetrackermap.ServiceReferenceMapper;
+import com.liferay.osgi.servicetrackermap.ServiceReferenceServiceTuple;
+import com.liferay.osgi.servicetrackermap.ServiceTrackerBucket;
+import com.liferay.osgi.servicetrackermap.ServiceTrackerBucketFactory;
+import com.liferay.osgi.servicetrackermap.ServiceTrackerMap;
 
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Carlos Sierra Andrés
@@ -37,27 +38,29 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 	implements ServiceTrackerMap<K, R> {
 
 	public ServiceTrackerMapImpl(
-		Class<SR> clazz, String filterString,
-		ServiceReferenceMapper<K, SR> serviceReferenceMapper,
-		ServiceTrackerCustomizer<SR, TS> serviceTrackerCustomizer,
-		ServiceTrackerBucketFactory<SR, TS, R> serviceTrackerMapBucketFactory) {
+			BundleContext bundleContext, Class<SR> clazz, String filterString,
+			ServiceReferenceMapper<K, SR> serviceReferenceMapper,
+			ServiceTrackerCustomizer<SR, TS> serviceTrackerCustomizer,
+			ServiceTrackerBucketFactory<SR, TS, R>
+				serviceTrackerMapBucketFactory)
+		throws InvalidSyntaxException {
 
 		_serviceReferenceMapper = serviceReferenceMapper;
 		_serviceTrackerCustomizer = serviceTrackerCustomizer;
 		_serviceTrackerMapBucketFactory = serviceTrackerMapBucketFactory;
 
-		Registry registry = RegistryUtil.getRegistry();
-
 		if (filterString != null) {
-			Filter filter = registry.getFilter(
+			Filter filter = bundleContext.createFilter(
 				"(&(objectClass=" + clazz.getName() + ")" + filterString + ")");
 
-			_serviceTracker = registry.trackServices(
-				filter, new ServiceReferenceServiceTrackerCustomizer());
+			_serviceTracker = new ServiceTracker<>(
+				bundleContext, filter,
+				new ServiceReferenceServiceTrackerCustomizer());
 		}
 		else {
-			_serviceTracker = registry.trackServices(
-				clazz, new ServiceReferenceServiceTrackerCustomizer());
+			_serviceTracker = new ServiceTracker<>(
+				bundleContext, clazz,
+				new ServiceReferenceServiceTrackerCustomizer());
 		}
 	}
 
@@ -118,8 +121,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 	private class ServiceReferenceServiceTrackerCustomizer
 		implements
-			ServiceTrackerCustomizer<SR,
-				ServiceReferenceServiceTuple<SR, TS>> {
+			ServiceTrackerCustomizer<SR, ServiceReferenceServiceTuple<SR, TS>> {
 
 		@Override
 		public ServiceReferenceServiceTuple<SR, TS> addingService(
@@ -129,8 +131,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 				new Holder<>();
 
 			_serviceReferenceMapper.map(
-				serviceReference,
-				new ServiceReferenceMapper.Emitter<K>() {
+				serviceReference, new ServiceReferenceMapper.Emitter<K>() {
 
 					@Override
 					public void emit(K key) {
@@ -169,7 +170,6 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 						serviceTrackerBucket.store(
 							serviceReferenceServiceTuple);
 					}
-
 				});
 
 			return holder.get();
@@ -191,8 +191,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 				serviceReferenceServiceTuple) {
 
 			_serviceReferenceMapper.map(
-				serviceReference,
-				new ServiceReferenceMapper.Emitter<K>() {
+				serviceReference, new ServiceReferenceMapper.Emitter<K>() {
 
 					@Override
 					public void emit(K key) {

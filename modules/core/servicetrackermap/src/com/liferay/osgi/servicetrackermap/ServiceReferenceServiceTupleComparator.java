@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.registry.collections;
-
-import com.liferay.registry.ServiceReference;
+package com.liferay.osgi.servicetrackermap;
 
 import java.util.Comparator;
+
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Carlos Sierra Andrés

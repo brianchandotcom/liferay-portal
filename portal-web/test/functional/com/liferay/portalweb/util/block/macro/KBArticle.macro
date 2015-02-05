@@ -360,15 +360,26 @@
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="moveArticleCP">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_MENULIST_MOVE" value1="Move" />
+
+		<execute action="CPKnowledgebaseadminMoveArticle#assertTextEquals" locator-key1="HEADER_TITLE" value1="${kbArticleTitle}" />
+		<execute action="CPKnowledgebaseadminMoveArticle#assertTextEquals" locator-key1="CURRENT_PARENT_TITLE_FIELD" value1="${kbArticleCurrentParent}" />
+		<execute action="CPKnowledgebaseadminMoveArticle#click" locator-key1="SELECT_BUTTON" value1="Select" />
+	</command>
+
 	<command name="moveArticleViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute action="PGKnowledgebasedisplay#click" locator-key1="ARTICLE_ACTIONS_BUTTON" />
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ACTIONS_MENULIST_MOVE" value1="Move" />
 
-		<execute action="PGKnowledgebasedisplayMoveArticle#assertTextEquals" locator-key1="ARTICLE_HEADER" value1="${kbArticleTitle}" />
-		<execute action="PGKnowledgebasedisplayMoveArticle#assertTextEquals" locator-key1="CURRENT_PARENT_TITLE" value1="(None)" />
-		<execute action="PGKnowledgebasedisplayMoveArticle#assertClick" locator-key1="SELECT_PARENT" value1="Select Parent »" />
+		<execute action="PGKnowledgebasedisplayMoveArticle#assertTextEquals" locator-key1="HEADER_TITLE" value1="${kbArticleTitle}" />
+		<execute action="PGKnowledgebasedisplayMoveArticle#assertTextEquals" locator-key1="CURRENT_PARENT_TITLE_FIELD" value1="(None)" />
+		<execute action="PGKnowledgebasedisplayMoveArticle#click" locator-key1="SELECT_BUTTON" />
 	</command>
 
 	<command name="rateArticlePG">
@@ -392,6 +403,16 @@
 		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="ARTICLE_VOTES" value1="${articleVoteCount}" />
 	</command>
 
+	<command name="removeParentArticleCP">
+		<execute action="CPKnowledgebaseadminSelectParent#selectFrame" locator-key1="SELECT_PARENT_IFRAME" />
+		<execute action="CPKnowledgebaseadminSelectParent#click" locator-key1="REMOVE_BUTTON" />
+
+		<execute action="CPKnowledgebaseadminMoveArticle#assertTextEquals" locator-key1="NEW_PARENT_TITLE_FIELD" value1="" />
+		<execute action="CPKnowledgebaseadminMoveArticle#click" locator-key1="MOVE_BUTTON" />
+
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="searchPGViaKBSearch">
 		<execute action="PGKnowledgebasesearch#type" locator-key1="SEARCH_FIELD" value1="${searchTerm}" />
 		<execute action="PGKnowledgebasesearch#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
@@ -407,7 +428,21 @@
 		<execute action="CPKnowledgebaseadmin#check" locator-key1="ARTICLE_TABLE_CHECKBOX" />
 	</command>
 
-	<command name="selectParentPGViaKBDisplayPG">
+	<command name="selectParentArticleCP">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="CPKnowledgebaseadminSelectParent#selectFrame" locator-key1="SELECT_PARENT_IFRAME" />
+		<execute action="CPKnowledgebaseadminSelectParent#click" locator-key1="CHOOSE_BUTTON" value1="Choose" />
+
+		<execute action="CPKnowledgebaseadminSelectParent#selectFrame" value1="relative=top" />
+
+		<execute action="CPKnowledgebaseadminMoveArticle#assertTextEquals" locator-key1="NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
+		<execute action="CPKnowledgebaseadminMoveArticle#click" locator-key1="MOVE_BUTTON" />
+
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="selectParentViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute action="PGKnowledgebasedisplaySelectParentArticle#selectFrame" locator-key1="SELECT_PARENT_IFRAME" />
@@ -416,7 +451,8 @@
 		<execute action="PGKnowledgebasedisplaySelectParentArticle#selectFrame" locator-key1="FRAME_HEADER" />
 		<execute action="PGKnowledgebasedisplaySelectParentArticle#click" locator-key1="CLOSE_BUTTON" />
 
-		<execute action="PGKnowledgebasedisplayMoveArticle#click" locator-key1="SAVE_BUTTON" />
+		<execute action="PGKnowledgebasedisplayMoveArticle#assertTextEquals" locator-key1="NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
+		<execute action="PGKnowledgebasedisplayMoveArticle#click" locator-key1="MOVE_BUTTON" />
 
 		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGKnowledgebasedisplay#selectFrame" value1="relative=top" />

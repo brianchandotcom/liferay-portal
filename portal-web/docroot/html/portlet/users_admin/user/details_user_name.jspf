@@ -15,43 +15,21 @@
 --%>
 
 <%
-List<Map<String,Object>> userFields = new ArrayList<Map<String, Object>>();
-
-String[] userNameFields = StringUtil.split(LanguageUtil.get(locale, "user.name.fields"));
-String userNameRequiredFields = LanguageUtil.get(locale, "user.name.required.fields");
+FullNameDefinition fullNameDefinition = LocalizationUtil.getFullNameDefinition(locale);
 
 List<String> existingFields = new ArrayList<String>();
-
-for (String userNameField: userNameFields) {
-	Map<String, Object> userFieldMap = new HashMap<String, Object>();
-
-	userFieldMap.put("fieldName", userNameField);
-
-	boolean required = StringUtil.contains(userNameRequiredFields, userNameField);
-
-	userFieldMap.put("required", required);
-
-	String testOptionsProperty = "user.name." + userNameField + ".options";
-
-	String optionsString = LanguageUtil.get(locale, testOptionsProperty, StringPool.BLANK);
-
-	if (!optionsString.isEmpty()) {
-		userFieldMap.put("options", StringUtil.split(optionsString));
-	}
-
-	userFields.add(userFieldMap);
-}
 %>
 
 <liferay-ui:error exception="<%= ContactFirstNameException.class %>" message="please-enter-a-valid-first-name" />
 <liferay-ui:error exception="<%= ContactFullNameException.class %>" message="please-enter-a-valid-first-middle-and-last-name" />
 
 <%
-for (Map<String, Object> userField: userFields) {
-	String fieldName = CamelCaseUtil.toCamelCase((String)userField.get("fieldName"));
-	boolean required = Boolean.valueOf((Boolean)userField.get("required"));
-	String[] options = (String[])userField.get("options");
+for (FullNameField fullNameField: fullNameDefinition.getFields()) {
+	String fieldName = CamelCaseUtil.toCamelCase(fullNameField.getName());
+	boolean required = fullNameField.isRequired();
+	String[] options = fullNameField.getOptions();
 %>
+
 <c:if test="<%= !existingFields.contains(fieldName) %>">
 	<c:choose>
 		<c:when test="<%= Validator.isNull(options) %>">

@@ -29,4 +29,4 @@ int rootLayoutLevel = PrefsParamUtil.getInteger(portletPreferences, renderReques
 String rootLayoutType = PrefsParamUtil.getString(portletPreferences, renderRequest, "rootLayoutType", "absolute");
 %>
 
-<%@ include file="/html/portlet/navigation/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

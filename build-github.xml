@@ -190,7 +190,21 @@
 
 					String errorMessage = consoleOutput.substring(x);
 
-					return fixJSON(errorMessage);
+					StringBuilder sb = new StringBuilder();
+
+					if (errorMessage.length() > 20000) {
+						x = errorMessage.length() - 2000;
+
+						sb.append(fixJSON(errorMessage.substring(0, 2000)));
+						sb.append("<br />...</pre>");
+						sb.append("<pre>...<br />");
+						sb.append(fixJSON(errorMessage.substring(x)));
+					}
+					else {
+						sb.append(fixJSON(errorMessage));
+					}
+
+					return sb.toString();
 				}
 
 				public String getDeprecatedMethodErrorMessage(File file) {

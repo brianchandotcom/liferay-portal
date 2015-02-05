@@ -1,3 +1,5 @@
 jnaerator*
 libsass*
+spec-tests.zip
 src/com/liferay/tools/jsc/libsass/
+test/unit/com/liferay/tools/jsc/testfiles/

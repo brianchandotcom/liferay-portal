@@ -28,31 +28,24 @@ import org.junit.Test;
 public class SassCompilerTest extends BaseTests {
 
 	@Test
-	public void testCompile_asset_category_selector() throws Exception {
+	public void testCompile() throws Exception {
 		SassCompiler compiler = new SassCompiler();
 		assumeNotNull(compiler);
 
-		String output = compiler.compileFile(
-			_BASE_RESOURCES + "_asset_category_selector.scss", "", "");
-		assertNotNull(output);
-		String expected = readFileContents(
-			_BASE_RESOURCES + "_asset_category_selector.css");
-		assertEquals(stripNewLines(expected), stripNewLines(output));
-	}
+		for (File testDir : new File(_BASE_RESOURCES).listFiles()) {
+			File input = new File(testDir, "input.scss");
 
-	@Test
-	public void testCompile_compass_app_view_entry() throws Exception {
-		SassCompiler compiler = new SassCompiler();
-		assumeNotNull(compiler);
+			if (input.exists()) {
+				String output = compiler.compileFile(
+					input.getCanonicalPath(), "", "");
+				assertNotNull(output);
 
-		String inputFile = _BASE_RESOURCES + "/compass/_app_view_entry.scss";
-		String includePath = _BASE_RESOURCES + "/compass/common";
-		String output = compiler.compileFile(inputFile, includePath, "");
-
-		assertNotNull(output);
-		String expected = readFileContents(
-			_BASE_RESOURCES + "/compass/_app_view_entry.css");
-		assertEquals(stripNewLines(expected), stripNewLines(output));
+				File expectedOutput = new File(testDir, "expected_output.css");
+				String expected = readFileContents(
+					expectedOutput.getCanonicalPath());
+				assertEquals(stripNewLines(expected), stripNewLines(output));
+			}
+		}
 	}
 
 	private static String getBaseDir() {

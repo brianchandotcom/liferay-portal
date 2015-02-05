@@ -56,4 +56,34 @@
 			module.dir="${basedir}"
 		/>
 	</target>
+
+	<target name="test">
+		<if>
+			<not>
+				<available file="spec-tests.zip" />
+			</not>
+			<then>
+				<mkdir dir="test/unit/com/liferay/tools/jsc/testfiles/" />
+
+				<get
+					dest="spec-tests.zip"
+					src="https://github.com/sass/sass-spec/archive/3818b9d686765461add05e996d990b085e15a348.zip"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="test/unit/com/liferay/tools/jsc/testfiles"
+			src="spec-tests.zip"
+		>
+			<patternset>
+				<include name="**/spec/basic/**" />
+			</patternset>
+			<cutdirsmapper dirs="3" />
+		</unzip>
+
+		<test
+			module.dir="${basedir}"
+		/>
+	</target>
 </project>

@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,7 +32,12 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Repository;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -40,6 +47,8 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
+
+import java.io.ByteArrayInputStream;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -124,6 +133,18 @@ public class DLAppLocalServiceTest {
 		@Before
 		public void setUp() throws Exception {
 			_group = GroupTestUtil.addGroup();
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			_repository = RepositoryLocalServiceUtil.addRepository(
+				serviceContext.getUserId(), _group.getGroupId(),
+				ClassNameLocalServiceUtil.getClassNameId(
+					LiferayRepository.class),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				RandomTestUtil.randomString(), new UnicodeProperties(), true,
+				serviceContext);
 		}
 
 		@Test
@@ -143,8 +164,38 @@ public class DLAppLocalServiceTest {
 			Assert.assertEquals(3, counter.get());
 		}
 
+		@Test
+		public void shouldOnlyDeleteRequestedRepository()
+			throws PortalException {
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			LocalRepository localRepository =
+				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
+					_repository.getRepositoryId());
+
+			FileEntry fileEntry = localRepository.addFileEntry(
+				serviceContext.getUserId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString(), ContentTypes.APPLICATION_TEXT,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				new ByteArrayInputStream(new byte[0]), 0, serviceContext);
+
+			DLAppLocalServiceUtil.deleteAll(_group.getGroupId());
+
+			fileEntry = localRepository.getFileEntry(
+				fileEntry.getFileEntryId());
+
+			Assert.assertNotNull(fileEntry);
+		}
+
 		@DeleteAfterTestRun
 		private Group _group;
+
+		@DeleteAfterTestRun
+		private Repository _repository;
 
 	}
 

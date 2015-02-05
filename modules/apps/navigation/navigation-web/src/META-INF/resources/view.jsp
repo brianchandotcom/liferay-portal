@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/navigation/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-ui:navigation
 	bulletStyle="<%= bulletStyle %>"

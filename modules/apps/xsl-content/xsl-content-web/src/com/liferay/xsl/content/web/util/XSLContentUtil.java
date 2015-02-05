@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
 
 import java.io.ByteArrayInputStream;
@@ -55,13 +56,14 @@ public class XSLContentUtil {
 
 		Bundle bundle = FrameworkUtil.getBundle(XSLContentUtil.class);
 
-		StringBundler sb = new StringBundler(3);
+		String symbolicName = bundle.getSymbolicName();
+
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(themeDisplay.getPortalURL());
-		sb.append("/o/");
-		sb.append(
-			StringUtil.replace(
-				bundle.getSymbolicName(), StringPool.PERIOD, StringPool.BLANK));
+		sb.append(PortalUtil.getPathModule());
+		sb.append(StringPool.SLASH);
+		sb.append(symbolicName.replaceAll("[^a-zA-Z0-9]", StringPool.BLANK));
 
 		String portletContextUrl = sb.toString();
 

@@ -1838,14 +1838,19 @@ public class LayoutTypePortletImpl
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
-			PortletLayoutListener portletLayoutListener = null;
-
-			if (portlet != null) {
-				portletLayoutListener =
-					portlet.getPortletLayoutListenerInstance();
-				portletLayoutListener.updatePropertiesOnRemoveFromLayout(
-					portletId, getTypeSettingsProperties());
+			if (portlet == null) {
+				continue;
 			}
+
+			PortletLayoutListener portletLayoutListener =
+				portlet.getPortletLayoutListenerInstance();
+
+			if (portletLayoutListener == null) {
+				continue;
+			}
+
+			portletLayoutListener.updatePropertiesOnRemoveFromLayout(
+				portletId, getTypeSettingsProperties());
 		}
 
 		try {

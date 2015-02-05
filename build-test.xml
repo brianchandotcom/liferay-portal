@@ -677,6 +677,125 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-testable-tomcat">
+		<sequential>
+			<setup-testable-tomcat-jmx />
+
+			<setup-testable-tomcat-manager />
+
+			<setup-testable-tomcat-osgi-modules />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-jmx">
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<echo file="${app.server.tomcat.dir}/bin/setenv.sh" append="true">
+						<![CDATA[
+							JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=${jmx.remote.authenticate} -Dcom.sun.management.jmxremote.port=${jmx.remote.port} -Dcom.sun.management.jmxremote.ssl=${jmx.remote.ssl}"
+
+							CATALINA_OPTS="${CATALINA_OPTS} ${JMX_OPTS}"
+						]]>
+					</echo>
+				</then>
+				<else>
+					<echo file="${app.server.tomcat.dir}/bin/setenv.bat" append="true">
+						<![CDATA[
+							set JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=${jmx.remote.authenticate} -Dcom.sun.management.jmxremote.port=${jmx.remote.port} -Dcom.sun.management.jmxremote.ssl=${jmx.remote.ssl}"
+
+							set CATALINA_OPTS="%CATALINA_OPTS% %JMX_OPTS%"
+						]]>
+					</echo>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-manager">
+		<sequential>
+			<if>
+				<not>
+					<available file="${app.server.tomcat.dir}/webapps/manager" type="dir" />
+				</not>
+				<then>
+					<antelope:stringutil string="${app.server.tomcat.dir}" property="tomcat.version.beginindex">
+						<antelope:indexof string="tomcat-" fromindex="0" />
+					</antelope:stringutil>
+
+					<antelope:math
+						datatype="int"
+						operand1="${tomcat.version.beginindex}"
+						operand2="7"
+						operation="+"
+						result="tomcat.version.beginindex"
+					/>
+
+					<antelope:stringutil string="${app.server.tomcat.dir}" property="tomcat.version">
+						<antelope:substring beginindex="${tomcat.version.beginindex}" />
+					</antelope:stringutil>
+
+					<antelope:stringutil string="${tomcat.version}" property="tomcat.major.version.endindex">
+						<antelope:indexof string="." fromindex="0" />
+					</antelope:stringutil>
+
+					<antelope:stringutil string="${tomcat.version}" property="tomcat.major.version">
+						<antelope:substring beginindex="0" endindex="${tomcat.major.version.endindex}" />
+					</antelope:stringutil>
+
+					<get
+						dest="tomcat.zip"
+						src="http://archive.apache.org/dist/tomcat/tomcat-${tomcat.major.version}/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip"
+					/>
+
+					<unzip
+						dest="${app.server.tomcat.dir}/webapps"
+						src="tomcat.zip"
+					>
+						<patternset
+							includes="apache-tomcat-${tomcat.version}/webapps/manager/**/*"
+						/>
+						<mapper>
+							<globmapper from="apache-tomcat-${tomcat.version}/webapps/*" to="*" />
+						</mapper>
+					</unzip>
+
+					<delete file="tomcat.zip" />
+
+					<copy
+						file="${app.server.tomcat.dir}/conf/tomcat-users.xml"
+						overwrite="true"
+						tofile="${app.server.tomcat.dir}/conf/tomcat-users.xml.orig"
+					/>
+
+					<echo file="${app.server.tomcat.dir}/conf/tomcat-users.xml"><![CDATA[<?xml version="1.0"?>
+
+<tomcat-users>
+	<role rolename="tomcat" />
+	<role rolename="manager-gui" />
+	<role rolename="manager-script" />
+	<role rolename="manager-jmx" />
+	<role rolename="manager-status" />
+	<user
+		password="${app.server.tomcat.manager.password}"
+		roles="tomcat,manager-gui,manager-script,manager-jmx,manager-status"
+		username="${app.server.tomcat.manager.user}"
+	/>
+</tomcat-users>]]></echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-osgi-modules">
+		<sequential>
+			<copy todir="${liferay.home}/osgi/modules">
+				<fileset dir="${liferay.home}/osgi/test" />
+			</copy>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-app-server">
 		<attribute default="0" name="app.server.bundle.index" />
 
@@ -3031,249 +3150,250 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 		<antcall target="compile" inheritAll="false" />
 
 		<if>
-			<equals arg1="${test.build.unit}" arg2="true" />
+			<matches pattern="http" string="${test.build.bundle.geronimo.zip.url}" />
 			<then>
-				<antcall target="deploy" inheritAll="false" />
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="geronimo" />
+					<param name="test.app.server.bin.dir" value="${app.server.geronimo.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.geronimo.zip.url}" />
+				</antcall>
+			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.geronimo}" arg2="true" />
+				<then>
+					<ant antfile="build-dist.xml" target="build-dist-geronimo" inheritAll="false" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<matches pattern="http" string="${test.build.bundle.glassfish.zip.url}" />
+			<then>
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="glassfish" />
+					<param name="test.app.server.bin.dir" value="${app.server.glassfish.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.glassfish.zip.url}" />
+				</antcall>
+			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.glassfish}" arg2="true" />
+				<then>
+					<ant antfile="build-dist.xml" target="build-dist-glassfish" inheritAll="false" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<matches pattern="http" string="${test.build.bundle.jboss.zip.url}" />
+			<then>
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="jboss" />
+					<param name="test.app.server.bin.dir" value="${app.server.jboss.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jboss.zip.url}" />
+				</antcall>
+			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.jboss}" arg2="true" />
+				<then>
+					<ant antfile="build-dist.xml" target="build-dist-jboss" inheritAll="false" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<equals arg1="${test.build.bundle.jbosseap6.0}" arg2="true" />
+			<then>
+				<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.0" inheritAll="false" />
+			</then>
+		</if>
+
+		<if>
+			<and>
+				<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
+				<isset property="test.build.portal.war.url" />
+			</and>
+			<then>
+				<property name="test.app.server.jboss.eap.version" value="6.1" />
+
+				<app-server-properties-update>
+					app.server.type=jboss
+					app.server.jboss.version=6.1.0
+					app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
+					app.server.jboss.zip.name=jboss-eap-6.1.0.zip
+					app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip
+				</app-server-properties-update>
+
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.lib.global.dir" value="${app.server.parent.dir}/jboss-eap-6.1/modules/com/liferay/portal/main" />
+					<param name="app.server.portal.dir" value="${app.server.parent.dir}/jboss-eap-6.1/standalone/deployments/ROOT.war" />
+					<param name="app.server.type" value="jboss" />
+				</antcall>
+
+				<app-server-properties-reset />
+
+				<var name="test.app.server.jboss.eap.version" unset="true" />
+			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
+				<then>
+					<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.1" inheritAll="false" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<matches pattern="http" string="${test.build.bundle.jetty.zip.url}" />
+			<then>
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="jetty" />
+					<param name="test.app.server.bin.dir" value="${app.server.jetty.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jetty.zip.url}" />
+				</antcall>
+			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.jetty}" arg2="true" />
+				<then>
+					<ant antfile="build-dist.xml" target="build-dist-jetty" inheritAll="false" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<matches pattern="http" string="${test.build.bundle.jonas.zip.url}" />
+			<then>
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="jonas" />
+					<param name="test.app.server.bin.dir" value="${app.server.jonas.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jonas.zip.url}" />
+				</antcall>
+			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.jonas}" arg2="true" />
+				<then>
+					<ant antfile="build-dist.xml" target="build-dist-jonas" inheritAll="false" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<matches pattern="http" string="${test.build.bundle.resin.zip.url}" />
+			<then>
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="resin" />
+					<param name="test.app.server.bin.dir" value="${app.server.resin.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.resin.zip.url}" />
+				</antcall>
+			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.resin}" arg2="true" />
+				<then>
+					<ant antfile="build-dist.xml" target="build-dist-resin" inheritAll="false" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<and>
+				<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
+				<isset property="test.build.portal.war.url" />
+			</and>
+			<then>
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
+					<param name="app.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
+					<param name="app.server.type" value="tcserver" />
+				</antcall>
+			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
+				<then>
+					<ant antfile="build-dist.xml" target="build-dist-tcserver" inheritAll="false" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
+			<then>
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="tomcat" />
+					<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
+				</antcall>
 			</then>
 			<else>
-				<if>
-					<matches pattern="http" string="${test.build.bundle.geronimo.zip.url}" />
-					<then>
-						<antcall target="prepare-test-bundle">
-							<param name="app.server.type" value="geronimo" />
-							<param name="test.app.server.bin.dir" value="${app.server.geronimo.bin.dir}" />
-							<param name="test.build.bundle.zip.url" value="${test.build.bundle.geronimo.zip.url}" />
-						</antcall>
-					</then>
-					<elseif>
-						<equals arg1="${test.build.bundle.geronimo}" arg2="true" />
-						<then>
-							<ant antfile="build-dist.xml" target="build-dist-geronimo" inheritAll="false" />
-						</then>
-					</elseif>
-				</if>
+				<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
 
-				<if>
-					<matches pattern="http" string="${test.build.bundle.glassfish.zip.url}" />
-					<then>
-						<antcall target="prepare-test-bundle">
-							<param name="app.server.type" value="glassfish" />
-							<param name="test.app.server.bin.dir" value="${app.server.glassfish.bin.dir}" />
-							<param name="test.build.bundle.zip.url" value="${test.build.bundle.glassfish.zip.url}" />
-						</antcall>
-					</then>
-					<elseif>
-						<equals arg1="${test.build.bundle.glassfish}" arg2="true" />
-						<then>
-							<ant antfile="build-dist.xml" target="build-dist-glassfish" inheritAll="false" />
-						</then>
-					</elseif>
-				</if>
-
-				<if>
-					<matches pattern="http" string="${test.build.bundle.jboss.zip.url}" />
-					<then>
-						<antcall target="prepare-test-bundle">
-							<param name="app.server.type" value="jboss" />
-							<param name="test.app.server.bin.dir" value="${app.server.jboss.bin.dir}" />
-							<param name="test.build.bundle.zip.url" value="${test.build.bundle.jboss.zip.url}" />
-						</antcall>
-					</then>
-					<elseif>
-						<equals arg1="${test.build.bundle.jboss}" arg2="true" />
-						<then>
-							<ant antfile="build-dist.xml" target="build-dist-jboss" inheritAll="false" />
-						</then>
-					</elseif>
-				</if>
-
-				<if>
-					<equals arg1="${test.build.bundle.jbosseap6.0}" arg2="true" />
-					<then>
-						<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.0" inheritAll="false" />
-					</then>
-				</if>
-
-				<if>
-					<and>
-						<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
-						<isset property="test.build.portal.war.url" />
-					</and>
-					<then>
-						<property name="test.app.server.jboss.eap.version" value="6.1" />
-
-						<app-server-properties-update>
-							app.server.type=jboss
-							app.server.jboss.version=6.1.0
-							app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
-							app.server.jboss.zip.name=jboss-eap-6.1.0.zip
-							app.server.jboss.zip.url=http://mirrors/www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip
-						</app-server-properties-update>
-
-						<antcall target="prepare-test-bundle">
-							<param name="app.server.lib.global.dir" value="${app.server.parent.dir}/jboss-eap-6.1/modules/com/liferay/portal/main" />
-							<param name="app.server.portal.dir" value="${app.server.parent.dir}/jboss-eap-6.1/standalone/deployments/ROOT.war" />
-							<param name="app.server.type" value="jboss" />
-						</antcall>
-
-						<app-server-properties-reset />
-
-						<var name="test.app.server.jboss.eap.version" unset="true" />
-					</then>
-					<elseif>
-						<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
-						<then>
-							<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.1" inheritAll="false" />
-						</then>
-					</elseif>
-				</if>
-
-				<if>
-					<matches pattern="http" string="${test.build.bundle.jetty.zip.url}" />
-					<then>
-						<antcall target="prepare-test-bundle">
-							<param name="app.server.type" value="jetty" />
-							<param name="test.app.server.bin.dir" value="${app.server.jetty.bin.dir}" />
-							<param name="test.build.bundle.zip.url" value="${test.build.bundle.jetty.zip.url}" />
-						</antcall>
-					</then>
-					<elseif>
-						<equals arg1="${test.build.bundle.jetty}" arg2="true" />
-						<then>
-							<ant antfile="build-dist.xml" target="build-dist-jetty" inheritAll="false" />
-						</then>
-					</elseif>
-				</if>
-
-				<if>
-					<matches pattern="http" string="${test.build.bundle.jonas.zip.url}" />
-					<then>
-						<antcall target="prepare-test-bundle">
-							<param name="app.server.type" value="jonas" />
-							<param name="test.app.server.bin.dir" value="${app.server.jonas.bin.dir}" />
-							<param name="test.build.bundle.zip.url" value="${test.build.bundle.jonas.zip.url}" />
-						</antcall>
-					</then>
-					<elseif>
-						<equals arg1="${test.build.bundle.jonas}" arg2="true" />
-						<then>
-							<ant antfile="build-dist.xml" target="build-dist-jonas" inheritAll="false" />
-						</then>
-					</elseif>
-				</if>
-
-				<if>
-					<matches pattern="http" string="${test.build.bundle.resin.zip.url}" />
-					<then>
-						<antcall target="prepare-test-bundle">
-							<param name="app.server.type" value="resin" />
-							<param name="test.app.server.bin.dir" value="${app.server.resin.bin.dir}" />
-							<param name="test.build.bundle.zip.url" value="${test.build.bundle.resin.zip.url}" />
-						</antcall>
-					</then>
-					<elseif>
-						<equals arg1="${test.build.bundle.resin}" arg2="true" />
-						<then>
-							<ant antfile="build-dist.xml" target="build-dist-resin" inheritAll="false" />
-						</then>
-					</elseif>
-				</if>
-
-				<if>
-					<and>
-						<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
-						<isset property="test.build.portal.war.url" />
-					</and>
-					<then>
-						<antcall target="prepare-test-bundle">
-							<param name="app.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
-							<param name="app.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
-							<param name="app.server.type" value="tcserver" />
-						</antcall>
-					</then>
-					<elseif>
-						<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
-						<then>
-							<ant antfile="build-dist.xml" target="build-dist-tcserver" inheritAll="false" />
-						</then>
-					</elseif>
-				</if>
-
-				<if>
-					<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
-					<then>
-						<antcall target="prepare-test-bundle">
-							<param name="app.server.type" value="tomcat" />
-							<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
-							<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
-						</antcall>
-					</then>
-					<else>
-						<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
-					</else>
-				</if>
-
-				<antcall target="prepare-test-build-tomcat-dependents" inheritAll="false" />
-
-				<if>
-					<and>
-						<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
-						<isset property="test.build.portal.war.url" />
-					</and>
-					<then>
-						<antcall target="prepare-test-bundle">
-							<param name="app.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
-							<param name="app.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
-							<param name="app.server.type" value="weblogic" />
-						</antcall>
-					</then>
-					<elseif>
-						<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
-						<then>
-							<app-server-properties-update>
-								app.server.type=weblogic
-							</app-server-properties-update>
-
-							<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
-
-							<antcall target="deploy" inheritAll="false" />
-
-							<app-server-properties-reset />
-						</then>
-					</elseif>
-				</if>
-
-				<if>
-					<matches pattern="http" string="${test.build.license.xml.zip.url}" />
-					<then>
-						<mkdir dir="${liferay.home}/deploy" />
-
-						<get
-							dest="${liferay.home}/deploy/license.xml"
-							src="${test.build.license.xml.zip.url}"
-						/>
-					</then>
-				</if>
-
-				<if>
-					<matches pattern="http" string="${test.build.plugins.war.zip.url}" />
-					<then>
-						<get
-							dest="plugins.war.zip"
-							src="${test.build.plugins.war.zip.url}"
-						/>
-
-						<unzip
-							dest="."
-							src="plugins.war.zip"
-						/>
-
-						<delete file="plugins.war.zip" />
-					</then>
-				</if>
-
-				<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />
+				<setup-testable-tomcat />
 			</else>
+		</if>
+
+		<antcall target="prepare-test-build-tomcat-dependents" inheritAll="false" />
+
+		<if>
+			<and>
+				<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
+				<isset property="test.build.portal.war.url" />
+			</and>
+			<then>
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
+					<param name="app.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
+					<param name="app.server.type" value="weblogic" />
+				</antcall>
+			</then>
+			<elseif>
+				<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
+				<then>
+					<app-server-properties-update>
+						app.server.type=weblogic
+					</app-server-properties-update>
+
+					<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+
+					<antcall target="deploy" inheritAll="false" />
+
+					<app-server-properties-reset />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<matches pattern="http" string="${test.build.license.xml.zip.url}" />
+			<then>
+				<mkdir dir="${liferay.home}/deploy" />
+
+				<get
+					dest="${liferay.home}/deploy/license.xml"
+					src="${test.build.license.xml.zip.url}"
+				/>
+			</then>
+		</if>
+
+		<if>
+			<matches pattern="http" string="${test.build.plugins.war.zip.url}" />
+			<then>
+				<get
+					dest="plugins.war.zip"
+					src="${test.build.plugins.war.zip.url}"
+				/>
+
+				<unzip
+					dest="."
+					src="plugins.war.zip"
+				/>
+
+				<delete file="plugins.war.zip" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<equals arg1="${test.build.unit}" arg2="true" />
+			</not>
+			<then>
+				<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />
+			</then>
 		</if>
 
 		<antcall target="compile-test" inheritAll="false" />

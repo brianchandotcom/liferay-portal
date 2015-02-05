@@ -21,8 +21,11 @@ import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.service.SyncAccountService;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,13 +33,25 @@ import java.util.concurrent.TimeUnit;
  */
 public class ServerEventUtil {
 
-	public static void retryServerConnection(long syncAccountId, long delay) {
+	public static synchronized void retryServerConnection(
+		long syncAccountId, long delay) {
+
+		ScheduledFuture scheduledFuture =
+			_retryServerConnectionScheduledFutures.get(syncAccountId);
+
+		if (scheduledFuture != null) {
+			scheduledFuture.cancel(true);
+		}
+
 		RetryServerConnectionEvent retryServerConnectionEvent =
 			new RetryServerConnectionEvent(
 				syncAccountId, Collections.<String, Object>emptyMap());
 
-		_scheduledExecutorService.schedule(
+		scheduledFuture = _scheduledExecutorService.schedule(
 			retryServerConnectionEvent, delay, TimeUnit.MILLISECONDS);
+
+		_retryServerConnectionScheduledFutures.put(
+			syncAccountId, scheduledFuture);
 	}
 
 	public static SyncAccount synchronizeSyncAccount(long syncAccountId) {
@@ -56,6 +71,8 @@ public class ServerEventUtil {
 		getUserSitesGroupsEvent.run();
 	}
 
+	private static final Map<Long, ScheduledFuture>
+		_retryServerConnectionScheduledFutures = new HashMap<>();
 	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newScheduledThreadPool(5);
 

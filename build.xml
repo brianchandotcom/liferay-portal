@@ -864,7 +864,7 @@
 			<then>
 				<copy
 					file="git-commit-plugins"
-					todir="${env.JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+					todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
 				/>
 			</then>
 		</if>
@@ -882,7 +882,7 @@
 			<then>
 				<copy
 					file="git-commit-portal"
-					todir="${env.JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+					todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
 				/>
 			</then>
 		</if>

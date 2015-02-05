@@ -1227,8 +1227,8 @@ public class ServiceBuilder {
 
 	public String getJavadocComment(JavaMethod javaMethod, String classType) {
 		return _formatComment(
-			javaMethod.getComment(), javaMethod.getTags(), StringPool.TAB,
-			classType);
+			javaMethod.getComment(), javaMethod.getTags(), classType,
+			StringPool.TAB);
 	}
 
 	public String getListActualTypeArguments(Type type) {
@@ -3740,8 +3740,8 @@ public class ServiceBuilder {
 	}
 
 	private String _formatComment(
-		String comment, DocletTag[] tags, String indentation,
-		String classType) {
+		String comment, DocletTag[] tags, String classType,
+		String indentation) {
 
 		StringBundler sb = new StringBundler();
 
@@ -3772,30 +3772,24 @@ public class ServiceBuilder {
 			sb.append(tag.getName());
 			sb.append(" ");
 
-			if (classType.equals("serviceSoap") &&
-				tagValue.startsWith(
-					"com.liferay.portal.kernel.exception.PortalException"))
-			{
-
-				String remoteValue = tagValue.replaceFirst(
+			if (classType.equals("serviceSoap")) {
+				if (tagValue.startsWith(
+						"com.liferay.portal.kernel.exception.PortalException"))
+				{
+					tagValue = tagValue.replaceFirst(
 						"com.liferay.portal.kernel.exception.PortalException",
 						"RemoteException");
+				}
+				else if (tagValue.startsWith(
+							"com.liferay.portal.security.auth.PrincipalException"))
+				{
+					tagValue = tagValue.replaceFirst(
+						"com.liferay.portal.security.auth.PrincipalException",
+						"RemoteException");
+				}
+			}
 
-				sb.append(remoteValue);
-			}
-			else if (classType.equals("serviceSoap") &&
-					 tagValue.startsWith(
-						"com.liferay.portal.security.auth.PrincipalException"))
-			{
-				String remoteValue = tagValue.replaceFirst(
-					"com.liferay.portal.security.auth.PrincipalException",
-					"RemoteException");
-
-				sb.append(remoteValue);
-			}
-			else {
-				sb.append(tagValue);
-			}
+			sb.append(tagValue);
 
 			sb.append("\n");
 		}

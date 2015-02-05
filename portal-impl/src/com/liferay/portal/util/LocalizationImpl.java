@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.security.auth.FullNameDefinition;
+import com.liferay.portal.security.auth.FullNameField;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.util.ContentUtil;
 
@@ -170,6 +172,39 @@ public class LocalizationImpl implements Localization {
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		return _getRootAttributeValue(xml, _DEFAULT_LOCALE, defaultLanguageId);
+	}
+
+	@Override
+	public FullNameDefinition getFullNameDefinition(Locale locale) {
+		String[] userNameFields = StringUtil.split(
+			LanguageUtil.get(locale, "user.name.fields"));
+		String userNameRequiredFields = LanguageUtil.get(
+			locale, "user.name.required.fields");
+
+		FullNameDefinition fullNameDefinition = new FullNameDefinition();
+
+		for (String userNameField : userNameFields) {
+			FullNameField fullNameField = new FullNameField(userNameField);
+
+			boolean required = StringUtil.contains(
+				userNameRequiredFields, userNameField);
+
+			fullNameField.setRequired(required);
+
+			String testOptionsProperty =
+				"user.name." + userNameField + ".options";
+
+			String optionsString = LanguageUtil.get(
+				locale, testOptionsProperty, StringPool.BLANK);
+
+			if (!optionsString.isEmpty()) {
+				fullNameField.setOptions(StringUtil.split(optionsString));
+			}
+
+			fullNameDefinition.addField(fullNameField);
+		}
+
+		return fullNameDefinition;
 	}
 
 	@Override

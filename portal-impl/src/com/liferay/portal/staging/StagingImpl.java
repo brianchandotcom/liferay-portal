@@ -76,6 +76,8 @@ import com.liferay.portal.lar.backgroundtask.BackgroundTaskContextMapFactory;
 import com.liferay.portal.lar.backgroundtask.LayoutRemoteStagingBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.PortletStagingBackgroundTaskExecutor;
+import com.liferay.portal.model.ClassName;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -107,6 +109,7 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.StagingLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
+import com.liferay.portal.service.http.ClassNameServiceHttp;
 import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -2086,6 +2089,19 @@ public class StagingImpl implements Staging {
 			GetterUtil.getString(group.getTypeSettingsProperty(param)));
 	}
 
+	protected boolean isCompanyGroup(Group group, HttpPrincipal httpPrincipal) {
+		ClassName className = ClassNameServiceHttp.fetchClassName(
+			httpPrincipal, String.valueOf(group.getClassNameId()));
+
+		if (Validator.equals(
+				className.getClassName(), Company.class.getName())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void publishLayouts(
 			PortletRequest portletRequest, long sourceGroupId,
 			long targetGroupId, Map<String, String[]> parameterMap,
@@ -2355,13 +2371,11 @@ public class StagingImpl implements Staging {
 
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			String groupUuid = group.getUuid();
-
 			Group remoteGroup = GroupServiceHttp.getGroup(
 				httpPrincipal, remoteGroupId);
 
-			if ((group.isCompany() ^ remoteGroup.isCompany()) ||
-				groupUuid.equals(remoteGroup.getUuid())) {
+			if (group.isCompany() ^
+				isCompanyGroup(remoteGroup, httpPrincipal)) {
 
 				RemoteExportException ree = new RemoteExportException(
 					RemoteExportException.INVALID_GROUP);

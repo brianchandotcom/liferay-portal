@@ -832,54 +832,86 @@
 				app.server.bundle.index="@{app.server.bundle.index}"
 			/>
 
-			<if>
-				<equals arg1="${app.server.type}" arg2="jboss" />
-				<then>
-					<echo file="${test.app.server.deploy.dir}/ROOT.war.dodeploy"></echo>
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
-				<then>
-					<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
-						<arg line="${app.server.start.executable.arg.line}" />
-					</exec>
-				</then>
-				<else>
-					<parallel>
-						<daemons>
-							<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
-								<arg line="${app.server.start.executable.arg.line}" />
-							</exec>
-						</daemons>
-					</parallel>
-				</else>
-			</if>
+			<local name="portal.not.started" />
 
 			<if>
 				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
 				<then>
-					<waitfor maxwait="5" maxwaitunit="minute">
-						<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
+					<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
+						<socket server="localhost" port="${test.app.server.leading.port.number}180" />
 					</waitfor>
 				</then>
 				<elseif>
 					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
 					<then>
-						<waitfor maxwait="1" maxwaitunit="minute">
-							<http url="http://localhost:${test.app.server.leading.port.number}080" />
+						<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
+							<socket server="localhost" port="${test.app.server.leading.port.number}080" />
 						</waitfor>
 					</then>
 				</elseif>
 				<else>
-					<waitfor maxwait="5" maxwaitunit="minute">
+					<waitfor maxwait="1" maxwaitunit="second" timeoutproperty="portal.not.started">
 						<and>
 							<available file="${test.app.server.parent.dir}/logs" />
-							<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+							<socket server="localhost" port="${test.app.server.leading.port.number}080" />
 						</and>
 					</waitfor>
 				</else>
+			</if>
+
+			<if>
+				<isset property="portal.not.started" />
+				<then>
+					<if>
+						<equals arg1="${app.server.type}" arg2="jboss" />
+						<then>
+							<echo file="${test.app.server.deploy.dir}/ROOT.war.dodeploy"></echo>
+						</then>
+					</if>
+
+					<if>
+						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
+						<then>
+							<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+								<arg line="${app.server.start.executable.arg.line}" />
+							</exec>
+						</then>
+						<else>
+							<parallel>
+								<daemons>
+									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+										<arg line="${app.server.start.executable.arg.line}" />
+									</exec>
+								</daemons>
+							</parallel>
+						</else>
+					</if>
+
+					<if>
+						<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
+						<then>
+							<waitfor maxwait="5" maxwaitunit="minute">
+								<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
+							</waitfor>
+						</then>
+						<elseif>
+							<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
+							<then>
+								<waitfor maxwait="1" maxwaitunit="minute">
+									<http url="http://localhost:${test.app.server.leading.port.number}080" />
+								</waitfor>
+							</then>
+						</elseif>
+						<else>
+							<waitfor maxwait="5" maxwaitunit="minute">
+								<and>
+									<available file="${test.app.server.parent.dir}/logs" />
+									<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+								</and>
+							</waitfor>
+						</else>
+					</if>
+				</then>
 			</if>
 		</sequential>
 	</macrodef>

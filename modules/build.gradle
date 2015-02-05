@@ -1,1 +1,1 @@
-apply from: "$lfrSdkDir/build.gradle";
+apply from: "$rootDir/../tools/sdk/build.gradle";

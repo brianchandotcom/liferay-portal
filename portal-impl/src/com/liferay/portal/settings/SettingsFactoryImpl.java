@@ -69,11 +69,12 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		Settings portalPropertiesSettings = getPortalPropertiesSettings();
 
-		Settings portletPropertiesSettings = getPortletPropertiesSettings(
-			serviceName, portalPropertiesSettings);
+		Settings serviceConfigurationBeanSettings =
+			getServiceConfigurationBeanSettings(
+				serviceName, portalPropertiesSettings);
 
 		Settings portalPreferencesSettings = getPortalPreferencesSettings(
-			companyId, portletPropertiesSettings);
+			companyId, serviceConfigurationBeanSettings);
 
 		Settings companyPortletPreferencesSettings =
 			getCompanyPortletPreferencesSettings(
@@ -97,13 +98,14 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		Settings portalPropertiesSettings = getPortalPropertiesSettings();
 
-		Settings portletPropertiesSettings = getPortletPropertiesSettings(
-			serviceName, portalPropertiesSettings);
+		Settings serviceConfigurationBeanSettings =
+			getServiceConfigurationBeanSettings(
+				serviceName, portalPropertiesSettings);
 
 		long companyId = getGroupCompanyId(groupId);
 
 		Settings portalPreferencesSettings = getPortalPreferencesSettings(
-			companyId, portletPropertiesSettings);
+			companyId, serviceConfigurationBeanSettings);
 
 		Settings companyPortletPreferencesSettings =
 			getCompanyPortletPreferencesSettings(
@@ -192,15 +194,16 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		Settings portalPropertiesSettings = getPortalPropertiesSettings();
 
-		Settings portletPropertiesSettings = getPortletPropertiesSettings(
-			portletId, portalPropertiesSettings);
+		Settings serviceConfigurationBeanSettings =
+			getServiceConfigurationBeanSettings(
+				portletId, portalPropertiesSettings);
 
 		long groupId = layout.getGroupId();
 
 		long companyId = getGroupCompanyId(groupId);
 
 		Settings portalPreferencesSettings = getPortalPreferencesSettings(
-			companyId, portletPropertiesSettings);
+			companyId, serviceConfigurationBeanSettings);
 
 		Settings companyPortletPreferencesSettings =
 			getCompanyPortletPreferencesSettings(
@@ -377,18 +380,24 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		return properties;
 	}
 
-	protected Settings getPortletPropertiesSettings(
-		String serviceName, Settings parentSettings) {
-
-		return new PropertiesSettings(
-			getPortletProperties(serviceName), getResourceManager(serviceName),
-			parentSettings);
-	}
-
 	protected ResourceManager getResourceManager(String settingsId) {
 		settingsId = PortletConstants.getRootPortletId(settingsId);
 
 		return _resourceManagers.get(settingsId);
+	}
+
+	private Object getServiceConfigurationBean(String settingsId) {
+		settingsId = PortletConstants.getRootPortletId(settingsId);
+
+		return _serviceConfigurationBeans.get(settingsId);
+	}
+
+	private Settings getServiceConfigurationBeanSettings(
+		String settingsId, Settings parentSettings) {
+
+		return new ServiceConfigurationBeanSettings(
+			getServiceConfigurationBean(settingsId),
+			getResourceManager(settingsId), parentSettings);
 	}
 
 	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =

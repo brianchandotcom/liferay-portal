@@ -14,14 +14,10 @@
 
 package com.liferay.portal.settings;
 
-import com.liferay.portal.kernel.resource.ResourceRetriever;
 import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.BaseSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.IOException;
 
 import java.util.Properties;
 
@@ -44,7 +40,8 @@ public class PropertiesSettings extends BaseSettings {
 		super(parentSettings);
 
 		_properties = properties;
-		_resourceManager = resourceManager;
+		_locationVariableResolver = new LocationVariableResolver(
+			resourceManager);
 	}
 
 	@Override
@@ -64,45 +61,14 @@ public class PropertiesSettings extends BaseSettings {
 	protected String readProperty(String key) {
 		String value = _properties.getProperty(key);
 
-		if (!isLocationVariable("resource", value)) {
-			return value;
+		if (_locationVariableResolver.isLocationVariable(value)) {
+			return _locationVariableResolver.resolve(value);
 		}
 
-		ResourceRetriever resourceRetriever =
-			_resourceManager.getResourceRetriever(
-				getLocation("resource", value));
-
-		try {
-			return StringUtil.read(resourceRetriever.getInputStream());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to read " + value, ioe);
-		}
+		return value;
 	}
 
-	private String getLocation(String protocol, String value) {
-		return value.substring(protocol.length() + 3, value.length() - 1);
-	}
-
-	private boolean isLocationVariable(String protocol, String value) {
-		if (value == null) {
-			return false;
-		}
-
-		String prefix =
-			StringPool.DOLLAR + StringPool.OPEN_CURLY_BRACE + protocol +
-				StringPool.COLON;
-
-		if (value.startsWith(prefix) &&
-			value.endsWith(StringPool.CLOSE_CURLY_BRACE)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
+	private final LocationVariableResolver _locationVariableResolver;
 	private final Properties _properties;
-	private final ResourceManager _resourceManager;
 
 }

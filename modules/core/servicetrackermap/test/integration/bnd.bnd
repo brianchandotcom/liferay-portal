@@ -1,7 +1,0 @@
-Bundle-Name: Service Tracker Map Tests
-Bundle-SymbolicName: servicetrackermap-test
-Bundle-Version: 1.0.0
-Include-Resource:\
-	.,\
-	../../classes,\
-	../../test-classes/integration

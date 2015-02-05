@@ -228,6 +228,7 @@ if (ddmFields != null) {
 		{
 			'ddm.basePortletURL': '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 			'ddm.classNameId': '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
+			'ddm.sourceClassNameId': '<%= ddmStructure.getClassNameId() %>',
 			'ddm.classPK': <%= ddmStructure.getPrimaryKey() %>,
 			'ddm.groupId': <%= groupId %>,
 			'ddm.refererPortletName': '<%= PortletKeys.JOURNAL %>',

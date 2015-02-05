@@ -259,6 +259,7 @@ AUI.add(
 							{
 								basePortletURL: ddm.basePortletURL,
 								classNameId: ddm.classNameId,
+								sourceClassNameId: ddm.sourceClassNameId,
 								classPK: ddm.classPK,
 								dialog: {
 									destroyOnHide: true

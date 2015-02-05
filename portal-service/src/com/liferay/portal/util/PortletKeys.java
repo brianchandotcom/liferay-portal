@@ -133,8 +133,6 @@ public class PortletKeys {
 
 	public static final String MY_WORKFLOW_TASKS = "153";
 
-	public static final String NAVIGATION = "71";
-
 	public static final String NESTED_PORTLETS =
 		"com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet";
 

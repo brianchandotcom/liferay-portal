@@ -98,8 +98,8 @@ public class SassCompiler {
 				throw new SassCompilationException(errorMsg);
 			}
 
-			final String outputString =
-				_libsass.sass_context_get_output_string(context);
+			final String outputString = _libsass.sass_context_get_output_string(
+				context);
 
 			if ((outputString == null) || (outputString == null)) {
 				throw new SassCompilationException("libsass returned null");

@@ -1030,6 +1030,7 @@
 			ivy.home=${project.dir}/.ivy
 			liferay.home=${liferay.home}
 			module.framework.base.dir=${liferay.home}/osgi
+			portal.source.root=${project.dir}
 		</echo>
 
 		<copy file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties" tofile="${project.dir}/tools/sdk/build.${env.HOST}.properties" />

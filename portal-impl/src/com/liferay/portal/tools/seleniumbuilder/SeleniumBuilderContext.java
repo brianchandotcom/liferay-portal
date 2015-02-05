@@ -872,8 +872,16 @@ public class SeleniumBuilderContext {
 			_seleniumBuilderFileUtil.getAllChildElements(rootElement, "var");
 
 		for (Element varElement : varElements) {
+			String varLocator = varElement.attributeValue("locator");
 			String varLocatorKey = varElement.attributeValue("locator-key");
 			String varPath = varElement.attributeValue("path");
+
+			if (Validator.isNotNull(varLocator) && varLocator.contains("#")) {
+				int x = varLocator.indexOf(StringPool.POUND);
+
+				varLocatorKey = varLocator.substring(x + 1);
+				varPath = varLocator.substring(0, x);
+			}
 
 			if (Validator.isNotNull(varLocatorKey) &&
 				Validator.isNotNull(varPath)) {

@@ -45,7 +45,7 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.wiki.configuration.WikiServiceConfigurationValues;
+import com.liferay.wiki.configuration.WikiServiceConfiguration;
 import com.liferay.wiki.exception.ImportFilesException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.importer.WikiImporter;
@@ -69,7 +69,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alvaro del Castillo
@@ -130,6 +132,12 @@ public class MediaWikiImporter implements WikiImporter {
 		catch (Exception e) {
 			throw new PortalException(e);
 		}
+	}
+
+	@Activate
+	protected void activate() {
+		_wikiPageTitlesRemovePattern = Pattern.compile(
+			_wikiServiceConfiguration.pageTitlesRemoveRegexp());
 	}
 
 	protected long getUserId(
@@ -263,7 +271,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 					WikiPageLocalServiceUtil.renamePage(
 						userId, node.getNodeId(), frontPageTitle,
-						WikiServiceConfigurationValues.FRONT_PAGE_NAME, false,
+						_wikiServiceConfiguration.frontPageName(), false,
 						serviceContext);
 				}
 			}
@@ -272,7 +280,7 @@ public class MediaWikiImporter implements WikiImporter {
 					StringBundler sb = new StringBundler(4);
 
 					sb.append("Could not move ");
-					sb.append(WikiServiceConfigurationValues.FRONT_PAGE_NAME);
+					sb.append(_wikiServiceConfiguration.frontPageName());
 					sb.append(" to the title provided: ");
 					sb.append(frontPageTitle);
 
@@ -682,6 +690,13 @@ public class MediaWikiImporter implements WikiImporter {
 		return usersMap;
 	}
 
+	@Reference
+	protected void setWikiServiceConfiguration(
+		WikiServiceConfiguration wikiServiceConfiguration) {
+
+		_wikiServiceConfiguration = wikiServiceConfiguration;
+	}
+
 	private static final String _WORK_IN_PROGRESS = "{{Work in progress}}";
 
 	private static final String _WORK_IN_PROGRESS_TAG = "work in progress";
@@ -696,11 +711,11 @@ public class MediaWikiImporter implements WikiImporter {
 	private static final Pattern _redirectPattern = Pattern.compile(
 		"#REDIRECT \\[\\[([^\\]]*)\\]\\]");
 	private static final Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
-		new String[] {"archive", "temp", "thumb"});
-	private static final Pattern _wikiPageTitlesRemovePattern = Pattern.compile(
-		WikiServiceConfigurationValues.PAGE_TITLES_REMOVE_REGEXP);
+		new String[]{"archive", "temp", "thumb"});
 
 	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();
+	private Pattern _wikiPageTitlesRemovePattern;
+	private WikiServiceConfiguration _wikiServiceConfiguration;
 
 }

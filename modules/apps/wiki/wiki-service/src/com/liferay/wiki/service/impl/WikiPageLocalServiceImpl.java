@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.settings.SettingsProvider;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -72,7 +73,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.wiki.configuration.WikiServiceConfigurationValues;
+import com.liferay.wiki.configuration.WikiServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -218,7 +219,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Message boards
 
-		WikiSettings wikiSettings = WikiSettings.getInstance(node.getGroupId());
+		WikiSettings wikiSettings =
+			_wikiSettingsProvider.getGroupServiceSettings(node.getGroupId());
 
 		if (wikiSettings.isPageCommentsEnabled()) {
 			mbMessageLocalService.addDiscussionMessage(
@@ -244,7 +246,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
 
-		WikiSettings wikiSettings = WikiSettings.getInstance(node.getGroupId());
+		WikiSettings wikiSettings =
+			_wikiSettingsProvider.getGroupServiceSettings(node.getGroupId());
 
 		String format = wikiSettings.getDefaultFormat();
 
@@ -1849,6 +1852,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			oldPage.getRedirectTitle(), serviceContext);
 	}
 
+	public void setWikiServiceConfiguration(
+		WikiServiceConfiguration wikiServiceConfiguration) {
+
+		_wikiServiceConfiguration = wikiServiceConfiguration;
+	}
+
+	public void setWikiSettingsProvider(
+		SettingsProvider<WikiSettings> wikiSettingsProvider) {
+
+		_wikiSettingsProvider = wikiSettingsProvider;
+	}
+
 	@Override
 	public void subscribePage(long userId, long nodeId, String title)
 		throws PortalException {
@@ -2089,8 +2104,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			// Social
 
-			WikiSettings wikiSettings = WikiSettings.getInstance(
-				page.getGroupId());
+			WikiSettings wikiSettings =
+				_wikiSettingsProvider.getGroupServiceSettings(
+					page.getGroupId());
 
 			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
 				(page.getVersion() == WikiPageConstants.VERSION_DEFAULT) &&
@@ -2178,11 +2194,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			throw new PageTitleException(title + " is reserved");
 		}
 
-		if (Validator.isNotNull(
-				WikiServiceConfigurationValues.PAGE_TITLES_REGEXP)) {
-
+		if (Validator.isNotNull(_wikiServiceConfiguration.pageTitlesRegexp())) {
 			Pattern pattern = Pattern.compile(
-				WikiServiceConfigurationValues.PAGE_TITLES_REGEXP);
+				_wikiServiceConfiguration.pageTitlesRegexp());
 
 			Matcher matcher = pattern.matcher(title);
 
@@ -3007,7 +3021,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return;
 		}
 
-		WikiSettings wikiSettings = WikiSettings.getInstance(page.getGroupId());
+		WikiSettings wikiSettings =
+			_wikiSettingsProvider.getGroupServiceSettings(page.getGroupId());
 
 		boolean update = false;
 
@@ -3278,7 +3293,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Social
 
-		WikiSettings wikiSettings = WikiSettings.getInstance(node.getGroupId());
+		WikiSettings wikiSettings =
+			_wikiSettingsProvider.getGroupServiceSettings(node.getGroupId());
 
 		if (!page.isMinorEdit() ||
 			wikiSettings.isPageMinorEditAddSocialActivity()) {
@@ -3341,5 +3357,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		validate(nodeId, content, format);
 	}
+
+	private WikiServiceConfiguration _wikiServiceConfiguration;
+	private SettingsProvider<WikiSettings> _wikiSettingsProvider;
 
 }

@@ -38,7 +38,8 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.wiki.configuration.WikiServiceConfigurationValues;
+import com.liferay.wiki.configuration.WikiServiceConfiguration;
+import com.liferay.wiki.configuration.WikiServiceConfigurationProvider;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.NoSuchNodeException;
@@ -271,8 +272,11 @@ public class EditPageAction extends PortletAction {
 				page = WikiPageServiceUtil.getPage(nodeId, title, false);
 			}
 			catch (NoSuchPageException nspe2) {
-				if (title.equals(
-						WikiServiceConfigurationValues.FRONT_PAGE_NAME) &&
+				WikiServiceConfiguration wikiServiceConfiguration =
+					WikiServiceConfigurationProvider.
+						getWikiServiceConfiguration();
+
+				if (title.equals(wikiServiceConfiguration.frontPageName()) &&
 					(version == 0)) {
 
 					ServiceContext serviceContext = new ServiceContext();
@@ -343,10 +347,13 @@ public class EditPageAction extends PortletAction {
 
 			String title = TrashUtil.getOriginalTitle(pageResource.getTitle());
 
-			if (title.equals(WikiServiceConfigurationValues.FRONT_PAGE_NAME)) {
+			WikiServiceConfiguration wikiServiceConfiguration =
+				WikiServiceConfigurationProvider.getWikiServiceConfiguration();
+
+			if (title.equals(wikiServiceConfiguration.frontPageName())) {
 				WikiPage overridePage = WikiPageLocalServiceUtil.fetchPage(
 					pageResource.getNodeId(),
-					WikiServiceConfigurationValues.FRONT_PAGE_NAME);
+					wikiServiceConfiguration.frontPageName());
 
 				if (overridePage != null) {
 					overridePageResourcePrimKey =

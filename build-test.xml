@@ -679,6 +679,8 @@
 
 	<macrodef name="setup-testable-tomcat">
 		<sequential>
+			<property file="${basedir}/test.run.properties" />
+
 			<antcall target="prepare-portal-ext-properties" />
 
 			<setup-testable-tomcat-jmx />

@@ -54,7 +54,7 @@ public class FullNameDefinitionFactory {
 
 			String[] options = StringUtil.split(
 				LanguageUtil.get(
-					locale, "lang.user.name." + userNameField + ".options",
+					locale, "lang.user.name." + userNameField + ".values",
 					StringPool.BLANK));
 
 			fullNameField.setOptions(options);

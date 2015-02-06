@@ -33,7 +33,7 @@
 					<optgroup label="<liferay-ui:message key="predefined" />">
 
 						<%
-						for (String displayStyleOption : PropsValues.NAVIGATION_DISPLAY_STYLE_OPTIONS) {
+						for (String displayStyleOption : NavigationWebConfigurationValues.DISPLAY_STYLE_OPTIONS) {
 						%>
 
 							<aui:option label="<%= displayStyleOption %>" selected="<%= displayStyle.equals(displayStyleOption) %>" />

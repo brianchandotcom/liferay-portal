@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.navigation.web.configuration;
 
-<liferay-ui:navigation
-	bulletStyle="<%= bulletStyle %>"
-	displayStyleDefinition='<%= NavigationWebConfigurationUtil.getArray("display.style", new Filter(displayStyle)) %>'
-	headerType="<%= headerType %>"
-	includedLayouts="<%= includedLayouts %>"
-	nestedChildren="<%= nestedChildren %>"
-	preview="<%= preview %>"
-	rootLayoutLevel="<%= rootLayoutLevel %>"
-	rootLayoutType="<%= rootLayoutType %>"
-/>
+import com.liferay.portal.kernel.util.GetterUtil;
+
+/**
+ * @author Eudaldo Alonso
+ */
+public class NavigationWebConfigurationValues {
+
+	public static final String DISPLAY_STYLE_DEFAULT = GetterUtil.getString(
+		NavigationWebConfigurationUtil.get("display.style.default"));
+
+	public static final String[] DISPLAY_STYLE_OPTIONS =
+		NavigationWebConfigurationUtil.getArray("display.style.options");
+
+}

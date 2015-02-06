@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCESS_FROM_DESKTOP</td>
+	<td>//a[@role='menuitem' and contains(.,'Access from Desktop')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVATE</td>
 	<td>//a[@role='menuitem' and contains(.,'Activate')]</td>
 	<td></td>
@@ -31,6 +36,11 @@
 <tr>
 	<td>ADD_REGULAR_ORGANIZATION</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Regular Organization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SUBFOLDER</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Subfolder')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,6 +64,36 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BASIC_DOCUMENT</td>
+	<td>//a[@role='menuitem' and @title='Basic Document']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_CHECKOUT</td>
+	<td>//a[@role='menuitem' and contains(.,'Cancel Checkout')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Checkin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT</td>
+	<td>//a[@role='menuitem' and contains(.,'Checkout')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION</td>
+	<td>//a[contains(@id, 'menu_configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTRACT</td>
+	<td>//a[@role='menuitem' and contains(.,'Contract')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEACTIVATE</td>
 	<td>//a[@role='menuitem' and contains(.,'Deactivate')]</td>
 	<td></td>
@@ -69,6 +109,36 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_STYLE_ICON</td>
+	<td>//a[@role='menuitem' and contains(.,'Icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_DESCRIPTIVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Descriptive')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_LIST</td>
+	<td>//a[@role='menuitem' and @title='List']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPE</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_dmDocumentTypeName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPES</td>
+	<td>//a[@role='menuitem' and contains(.,'Document Types')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOWNLOAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Download')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td></td>
@@ -80,7 +150,7 @@
 </tr>
 <tr>
 	<td>FOLDER</td>
-	<td>//a[@role='menuitem' and contains(.,'Folder')]</td>
+	<td>//a[@role='menuitem' and @title='Folder']</td>
 	<td></td>
 </tr>
 <tr>
@@ -114,8 +184,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MARKETING_BANNER</td>
+	<td>//a[@role='menuitem' and contains(.,'Marketing Banner')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_SETS</td>
+	<td>//a[@role='menuitem' and contains(.,'Metadata Sets')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MULTIPLE_DOCUMENTS</td>
+	<td>//a[@role='menuitem' and contains(.,'Multiple Documents')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ONLINE_TRAINING</td>
+	<td>//a[@role='menuitem' and @title='Online Training']</td>
 	<td></td>
 </tr>
 <tr>
@@ -124,8 +219,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REGULAR_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Regular Role')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPOSITORY</td>
+	<td>//a[@role='menuitem' and @title='Repository']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SALES_PRESENTATION</td>
+	<td>//a[@role='menuitem' and contains(.,'Sales Presentation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHORTCUT</td>
+	<td>//a[@role='menuitem' and contains(.,'Shortcut')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -136,6 +251,31 @@
 <tr>
 	<td>SITE_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Site Role')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_BY_CREATE_DATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Create Date')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_BY_DOWNLOADS</td>
+	<td>//a[@role='menuitem' and contains(.,'Downloads')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_BY_MODIFIED_DATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Modified Date')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_BY_SIZE</td>
+	<td>//a[@role='menuitem' and contains(.,'Size')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_BY_TITLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Title')]</td>
 	<td></td>
 </tr>
 <tr>

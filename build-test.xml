@@ -3941,7 +3941,24 @@ if (ppstate.equals("normal")) {
 					DirectoryScanner directoryScanner = new DirectoryScanner();
 
 					directoryScanner.setBasedir(project.getBaseDir());
-					directoryScanner.setExcludes(new String[] {"modules/**/test/integration/**/*Test.java", "*/pacl/test/[\\w]+Test.class", "**/*ServiceHttpTest.java", "**/*ServiceJsonTest.java", "**/*ServiceSoapTest.java"});
+					directoryScanner.setExcludes(
+						new String[] {
+
+							"modules/apps/bookmarks/bookmarks-test/test/integration/**/*Test.java",
+							"modules/apps/polls/polls-test/test/integration/**/*Test.java",
+							"modules/apps/social/social-networking-test/test/integration/**/*Test.java",
+							"modules/apps/wiki/wiki-test/test/integration/**/*Test.java",
+							"modules/core/osgi-service-tracker-map/test/integration/**/*Test.java",
+							"modules/core/registry-test/test/integration/**/*Test.java",
+							"modules/portal/portal-json-web-service-extender/test/integration/**/*Test.java"
+							"modules/portal/portal-template-freemarker/test/integration/**/*Test.java",
+							"modules/util/osgi-util/test/integration/**/*Test.java",
+
+							"*/pacl/test/[\\w]+Test.class",
+							"**/*ServiceHttpTest.java",
+							"**/*ServiceJsonTest.java",
+							"**/*ServiceSoapTest.java"});
+
 					directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
 
 					directoryScanner.scan();

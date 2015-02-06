@@ -146,7 +146,8 @@ public class WikiSettings {
 	protected static FallbackKeys getFallbackKeys() {
 		FallbackKeys fallbackKeys = new FallbackKeys();
 
-		fallbackKeys.add("emailFromAddress",PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		fallbackKeys.add(
+			"emailFromAddress", PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 		fallbackKeys.add("emailFromName", PropsKeys.ADMIN_EMAIL_FROM_NAME);
 
 		return fallbackKeys;

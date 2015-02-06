@@ -40,6 +40,7 @@ public class PropertiesSettings extends BaseSettings {
 		super(parentSettings);
 
 		_properties = properties;
+
 		_locationVariableResolver = new LocationVariableResolver(
 			resourceManager);
 	}

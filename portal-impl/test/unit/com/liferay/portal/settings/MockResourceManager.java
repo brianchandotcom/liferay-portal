@@ -44,6 +44,7 @@ public class MockResourceManager implements ResourceManager, ResourceRetriever {
 	@Override
 	public ResourceRetriever getResourceRetriever(String location) {
 		_requestedLocations.add(location);
+
 		return this;
 	}
 

@@ -43,7 +43,7 @@ public class ServiceConfigurationBeanSettingsTest {
 		Assert.assertArrayEquals(
 			_serviceConfigurationBean.stringArrayValue(),
 			_serviceConfigurationBeanSettings.getValues(
-				"stringArrayValue", new String[]{"defaultValue"}));
+				"stringArrayValue", new String[] {"defaultValue"}));
 	}
 
 	@Test

@@ -711,7 +711,7 @@ public class MediaWikiImporter implements WikiImporter {
 	private static final Pattern _redirectPattern = Pattern.compile(
 		"#REDIRECT \\[\\[([^\\]]*)\\]\\]");
 	private static final Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
-		new String[]{"archive", "temp", "thumb"});
+		new String[] {"archive", "temp", "thumb"});
 
 	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();

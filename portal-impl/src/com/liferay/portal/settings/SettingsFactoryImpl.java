@@ -102,7 +102,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			getServiceConfigurationBeanSettings(
 				serviceName, portalPropertiesSettings);
 
-		long companyId = getGroupCompanyId(groupId);
+		long companyId = getCompanyId(groupId);
 
 		Settings portalPreferencesSettings = getPortalPreferencesSettings(
 			companyId, serviceConfigurationBeanSettings);
@@ -111,12 +111,12 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			getCompanyPortletPreferencesSettings(
 				companyId, serviceName, portalPreferencesSettings);
 
-		Settings getGroupPortletPreferencesSettings =
+		Settings groupPortletPreferencesSettings =
 			getGroupPortletPreferencesSettings(
 				groupId, serviceName, companyPortletPreferencesSettings);
 
 		return applyFallbackKeys(
-			serviceName, getGroupPortletPreferencesSettings);
+			serviceName, groupPortletPreferencesSettings);
 	}
 
 	@Override
@@ -200,7 +200,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		long groupId = layout.getGroupId();
 
-		long companyId = getGroupCompanyId(groupId);
+		long companyId = getCompanyId(groupId);
 
 		Settings portalPreferencesSettings = getPortalPreferencesSettings(
 			companyId, serviceConfigurationBeanSettings);
@@ -279,7 +279,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			parentSettings);
 	}
 
-	protected long getGroupCompanyId(long groupId) throws PortalException {
+	protected long getCompanyId(long groupId) throws PortalException {
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		return group.getCompanyId();

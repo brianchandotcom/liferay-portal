@@ -155,6 +155,8 @@
 		<execute action="PGCalendarCalendarSettings#assertClick" locator-key1="NAVIGATION_NOTIFICATION_TEMPLATES_TAB" value1="Notification Templates" />
 		<execute action="PGCalendarCalendarSettings#assertTextEquals" locator-key1="NOTIFICATION_TEMPLATES_HEADER_TITLE" value1="${calendarName}" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<if>
 			<equals arg1="${inviteEmail}" arg2="true" />
 			<then>

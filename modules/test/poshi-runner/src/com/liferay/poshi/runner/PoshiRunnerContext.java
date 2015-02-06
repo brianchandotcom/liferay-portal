@@ -17,6 +17,7 @@ package com.liferay.poshi.runner;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,15 @@ public class PoshiRunnerContext {
 
 	public static Element getActionCommandElement(String classCommandName) {
 		return _commandElements.get("action#" + classCommandName);
+	}
+
+	public static int getActionLocatorCount(String classCommandName) {
+		String commandName =
+			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+				classCommandName);
+
+		return PoshiRunnerContext.getFunctionLocatorCount(
+			StringUtil.upperCaseFirstLetter(commandName));
 	}
 
 	public static Element getActionRootElement(String className) {
@@ -63,6 +73,33 @@ public class PoshiRunnerContext {
 
 	public static String getPathLocator(String pathLocatorKey) {
 		return _pathLocators.get(pathLocatorKey);
+	}
+
+	public static List<String> getRelatedActionClassCommandNames(
+		String classCommandName) {
+
+		List<String> relatedClassCommandNames = new ArrayList<>();
+
+		relatedClassCommandNames.add(classCommandName);
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+		String commandName =
+			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+				classCommandName);
+
+		while (_actionExtendClassName.get(className) != null) {
+			String extendClassName = _actionExtendClassName.get(className);
+
+			relatedClassCommandNames.add(extendClassName + "#" + commandName);
+
+			className = extendClassName;
+		}
+
+		relatedClassCommandNames.add("BaseLiferay#" + commandName);
+
+		return relatedClassCommandNames;
 	}
 
 	public static int getSeleniumParameterCount(String commandName) {
@@ -112,6 +149,8 @@ public class PoshiRunnerContext {
 						break;
 					}
 				}
+
+				_actionExtendClassName.put(className, locator);
 			}
 
 			_pathLocators.put(className + "#" + locatorKey, locator);
@@ -240,6 +279,8 @@ public class PoshiRunnerContext {
 		PoshiRunnerGetterUtil.getCanonicalPath(
 			"../../../portal-web/test/functional/com/liferay/portalweb/");
 
+	private static final Map<String, String> _actionExtendClassName =
+		new HashMap<>();
 	private static final Map<String, Element> _commandElements =
 		new HashMap<>();
 	private static String[] _filePaths;

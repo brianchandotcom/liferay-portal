@@ -679,6 +679,8 @@
 
 	<macrodef name="setup-testable-tomcat">
 		<sequential>
+			<antcall target="prepare-portal-ext-properties" />
+
 			<setup-testable-tomcat-jmx />
 
 			<setup-testable-tomcat-manager />

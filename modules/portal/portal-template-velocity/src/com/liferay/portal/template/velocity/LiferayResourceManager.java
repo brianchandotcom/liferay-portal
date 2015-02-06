@@ -12,19 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.template.velocity;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
-import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -34,6 +31,8 @@ import java.lang.reflect.Field;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
+
+import java.util.Vector;
 
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.Template;
@@ -84,10 +83,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 			final String encoding)
 		throws Exception, ParseErrorException, ResourceNotFoundException {
 
-		String[] macroTemplateIds = PropsUtil.getArray(
-			PropsKeys.VELOCITY_ENGINE_VELOCIMACRO_LIBRARY);
-
-		for (String macroTemplateId : macroTemplateIds) {
+		for (String macroTemplateId : _macroTemplateIds) {
 			if (resourceName.equals(macroTemplateId)) {
 
 				// This resource is provided by the portal, so invoke it from an
@@ -119,6 +115,24 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 
 		field.set(
 			runtimeServices, new FastExtendedProperties(extendedProperties));
+
+		Vector<String> vectorVelocimacroLibray =
+			(Vector<String>) extendedProperties.get("velocimacro.library");
+
+		_macroTemplateIds = new String[vectorVelocimacroLibray.size()];
+
+		vectorVelocimacroLibray.toArray(_macroTemplateIds);
+
+		String resourceModificationCheckInterval =
+			(String)extendedProperties.get("resourceModificationCheckInterval");
+
+		if (resourceModificationCheckInterval == null) {
+			resourceModificationCheckInterval = "60";
+		}
+		else {
+			_resourceModificationCheckInterval = Integer.parseInt(
+				resourceModificationCheckInterval);
+		}
 
 		super.initialize(runtimeServices);
 	}
@@ -173,16 +187,16 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 
 		Template template = _createTemplate(templateResource);
 
-		if (PropsValues.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL !=
-				0) {
-
+		if (_resourceModificationCheckInterval != 0) {
 			_portalCache.put(templateResource, template);
 		}
 
 		return template;
 	}
 
+	private String[] _macroTemplateIds;
 	private final PortalCache<TemplateResource, Object> _portalCache;
+	private int _resourceModificationCheckInterval = 60;
 
 	private class LiferayTemplate extends Template {
 

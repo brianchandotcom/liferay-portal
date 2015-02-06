@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.template.velocity;
 
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 

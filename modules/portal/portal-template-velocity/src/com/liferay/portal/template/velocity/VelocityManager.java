@@ -12,21 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.template.velocity;
 
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
-import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
+import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;
 
@@ -42,10 +43,21 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.util.introspection.SecureUberspector;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Raymond Augé
+ * @author Peter Fellwock
  */
-@DoPrivileged
+@Component(
+		configurationPid = "com.liferay.portal.template.velocity",
+		configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+		service = TemplateManager.class
+)
 public class VelocityManager extends BaseTemplateManager {
 
 	@Override
@@ -100,8 +112,7 @@ public class VelocityManager extends BaseTemplateManager {
 
 	@Override
 	public String[] getRestrictedVariables() {
-		return PropsUtil.getArray(
-			PropsKeys.VELOCITY_ENGINE_RESTRICTED_VARIABLES);
+		return _velocityEngineConfiguration.restrictedVariables();
 	}
 
 	@Override
@@ -117,7 +128,7 @@ public class VelocityManager extends BaseTemplateManager {
 		extendedProperties.setProperty(
 			VelocityEngine.DIRECTIVE_IF_TOSTRING_NULLCHECK,
 			String.valueOf(
-				PropsValues.VELOCITY_ENGINE_DIRECTIVE_IF_TO_STRING_NULL_CHECK));
+				_velocityEngineConfiguration.directiveIfToStringNullCheck()));
 
 		extendedProperties.setProperty(
 			VelocityEngine.EVENTHANDLER_METHODEXCEPTION,
@@ -125,18 +136,19 @@ public class VelocityManager extends BaseTemplateManager {
 
 		extendedProperties.setProperty(
 			RuntimeConstants.INTROSPECTOR_RESTRICT_CLASSES,
-			StringUtil.merge(PropsValues.VELOCITY_ENGINE_RESTRICTED_CLASSES));
+			StringUtil.merge(_velocityEngineConfiguration.restrictedClasses()));
 
 		extendedProperties.setProperty(
 			RuntimeConstants.INTROSPECTOR_RESTRICT_PACKAGES,
-			StringUtil.merge(PropsValues.VELOCITY_ENGINE_RESTRICTED_PACKAGES));
+			StringUtil.merge(
+				_velocityEngineConfiguration.restrictedPackages()));
 
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_LOADER, "liferay");
 
 		boolean cacheEnabled = false;
 
-		if (PropsValues.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL !=
+		if (_velocityEngineConfiguration.resourceModificationCheckInterval() !=
 				0) {
 
 			cacheEnabled = true;
@@ -147,6 +159,12 @@ public class VelocityManager extends BaseTemplateManager {
 			String.valueOf(cacheEnabled));
 
 		extendedProperties.setProperty(
+			"liferay." + VelocityEngine.RESOURCE_LOADER +
+			".resourceModificationCheckInterval",
+			_velocityEngineConfiguration.resourceModificationCheckInterval() +
+			"");
+
+		extendedProperties.setProperty(
 			"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
 			LiferayResourceLoader.class.getName());
 
@@ -155,12 +173,18 @@ public class VelocityManager extends BaseTemplateManager {
 			LiferayResourceManager.class.getName());
 
 		extendedProperties.setProperty(
+			"liferay." + VelocityEngine.RESOURCE_MANAGER_CLASS +
+			".resourceModificationCheckInterval",
+			_velocityEngineConfiguration.resourceModificationCheckInterval() +
+			"");
+
+		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER));
+			_velocityEngineConfiguration.logger());
 
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM + ".log4j.category",
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER_CATEGORY));
+			_velocityEngineConfiguration.loggerCategory());
 
 		extendedProperties.setProperty(
 			RuntimeConstants.UBERSPECT_CLASSNAME,
@@ -168,7 +192,7 @@ public class VelocityManager extends BaseTemplateManager {
 
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY,
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_VELOCIMACRO_LIBRARY));
+			_velocityEngineConfiguration.velocimacroLibrary());
 
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY_AUTORELOAD,
@@ -188,6 +212,27 @@ public class VelocityManager extends BaseTemplateManager {
 		}
 	}
 
+	@Reference(unbind = "-")
+	public void setVelocityTemplateContextHelper(
+		VelocityTemplateContextHelper velocityTemplateContextHelper) {
+
+		templateContextHelper = velocityTemplateContextHelper;
+	}
+
+	@Reference(unbind = "-")
+	public void setVelocityTemplateResourceLoader(
+		VelocityTemplateResourceLoader velocityTemplateResourceLoader) {
+
+		templateResourceLoader = velocityTemplateResourceLoader;
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_velocityEngineConfiguration = Configurable.createConfigurable(
+			VelocityEngineConfiguration.class, properties);
+	}
+
 	@Override
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
@@ -196,7 +241,9 @@ public class VelocityManager extends BaseTemplateManager {
 
 		Template template = new VelocityTemplate(
 			templateResource, errorTemplateResource, helperUtilities,
-			_velocityEngine, templateContextHelper, privileged);
+			_velocityEngine, templateContextHelper,
+			_velocityEngineConfiguration.resourceModificationCheckInterval(),
+			privileged);
 
 		if (restricted) {
 			template = new RestrictedTemplate(
@@ -205,6 +252,9 @@ public class VelocityManager extends BaseTemplateManager {
 
 		return template;
 	}
+
+	private static volatile VelocityEngineConfiguration
+		_velocityEngineConfiguration;
 
 	private VelocityEngine _velocityEngine;
 

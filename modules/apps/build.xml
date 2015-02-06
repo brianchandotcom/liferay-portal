@@ -19,6 +19,7 @@
 		<dirset dir="invitation" includes="*" />
 		<dirset dir="journal" includes="*" />
 		<dirset dir="loan-calculator" includes="*" />
+		<dirset dir="navigation" includes="*" />
 		<dirset dir="nested-portlets" includes="*" />
 		<dirset dir="network-utilities" includes="*" />
 		<dirset dir="password-generator" includes="*" />

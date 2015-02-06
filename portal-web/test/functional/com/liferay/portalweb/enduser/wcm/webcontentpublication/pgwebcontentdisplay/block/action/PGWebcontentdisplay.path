@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_TEMPLATE</td>
+	<td>//i[@class='icon-edit']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_WEB_CONTENT</td>
 	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Select Web Content')]</td>
 	<td></td>
@@ -61,6 +66,11 @@
 <tr>
 	<td>ADD_BASIC_WEB_CONTENT_LOCALIZED</td>
 	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'${key_localizedBasicWebContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_STRUCTURED_WEB_CONTENT</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'${key_structureName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -251,6 +261,37 @@
 <tr>
 	<td>ADD_MENU_WEB_CONTENT_STRUCTURE</td>
 	<td>//li[contains(@class,'lfr-icon-action')]/a[contains(.,'${key_selectStructureName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGINATION-->
+<tr>
+	<td>PAGINATION_PAGES</td>
+	<td>//div[@class='search-results' and contains(.,'Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_PAGE_1</td>
+	<td>//div[@class='search-results']/a[contains(.,'1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_PAGE_2</td>
+	<td>//div[@class='search-results']/a[contains(.,'2')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_PREVIOUS</td>
+	<td>//ul[contains(@class,'pagination')]//a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_NEXT</td>
+	<td>//ul[contains(@class,'pagination')]//a[contains(.,'Next')]</td>
 	<td></td>
 </tr>
 </tbody>

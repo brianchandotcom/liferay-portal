@@ -3961,9 +3961,20 @@ if (ppstate.equals("normal")) {
 
 					directoryScanner.scan();
 
+					List includedFiles = new ArrayList(Arrays.asList(directoryScanner.getIncludedFiles()));
+
+					directoryScanner = new DirectoryScanner();
+
+					directoryScanner.setBasedir(project.getBaseDir());
+					directoryScanner.setIncludes(new String[] {"modules/apps/polls/polls-test/test/integration/**/*Test.java"});
+
+					directoryScanner.scan();
+
+					includedFiles.addAll(Arrays.asList(directoryScanner.getIncludedFiles()));
+
 					List classFileNames = new ArrayList();
 
-					for (String fileName : directoryScanner.getIncludedFiles()) {
+					for (String fileName : includedFiles) {
 						String classFileName = fileName.substring(fileName.indexOf("com" + File.separator), fileName.length() - 4);
 
 						classFileName = classFileName.concat("class");

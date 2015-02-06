@@ -52,12 +52,6 @@
 			</then>
 		</if>
 
-		<compile
-			module.dir="${basedir}"
-		/>
-	</target>
-
-	<target name="test">
 		<if>
 			<not>
 				<available file="spec-tests.zip" />
@@ -82,7 +76,7 @@
 			<cutdirsmapper dirs="3" />
 		</unzip>
 
-		<test
+		<compile
 			module.dir="${basedir}"
 		/>
 	</target>

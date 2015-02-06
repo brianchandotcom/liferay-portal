@@ -270,7 +270,7 @@ public class LangBuilder {
 						else if (translatedText.endsWith(AUTOMATIC_COPY)) {
 							translatedText = value + AUTOMATIC_COPY;
 						}
-						else if (key.equals("user.name.fields")) {
+						else if (key.equals("lang.user.name.fields")) {
 							if (!translatedText.contains("prefix")) {
 								hasPrefix = false;
 							}
@@ -361,11 +361,11 @@ public class LangBuilder {
 									"Please use another IP.");
 						}
 
-						if (key.equals("user.name.prefix.options") &&
+						if (key.equals("lang.user.name.prefix.options") &&
 							!hasPrefix) {
 							translatedText = "";
 						}
-						else if (key.equals("user.name.suffix.options") &&
+						else if (key.equals("lang.user.name.suffix.options") &&
 							!hasSuffix) {
 							translatedText = "";
 						}

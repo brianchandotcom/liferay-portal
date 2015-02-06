@@ -409,6 +409,11 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				sourceSyncFile, sourceVersion,
 				!IODeltaUtil.isIgnoredFilePatchingExtension(targetSyncFile));
 		}
+		else {
+			sourceSyncFile.setState(SyncFile.STATE_SYNCED);
+
+			SyncFileService.update(sourceSyncFile);
+		}
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

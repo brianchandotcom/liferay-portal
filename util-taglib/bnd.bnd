@@ -1,8 +1,21 @@
 Bundle-Version: 7.0.0
-Export-Package: com.liferay.taglib.*
+Export-Package:\
+	com.liferay.alloy.taglib.*,\
+	com.liferay.taglib.*
 Import-Package:\
+	!com.liferay.portal.freemarker,\
+	!jodd.*,\
+	!org.dom4j.*,\
+	!org.json.*,\
 	com.liferay.*,\
-	*;resolution:=optional
-Include-Resource: classes
+	*
+Include-Resource:\
+	classes,\
+	@../lib/development/alloy-taglib.jar,\
+	@../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
+	@../util-java/util-java.jar!/com/liferay/util/EncryptorException.class,\
+	@../util-java/util-java.jar!/com/liferay/util/JS.class,\
+	@../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
+	@../util-java/util-java.jar!/com/liferay/util/PwdGenerator.class
 
 -baseline: *;version="6.2.0"

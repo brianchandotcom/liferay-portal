@@ -253,6 +253,7 @@
 				<package-root>util-java/test/unit</package-root>
 				<package-root>util-taglib/src</package-root>
 				<classpath mode="compile">lib/development/activation.jar</classpath>
+				<classpath mode="compile">lib/development/alloy-taglib.jar</classpath>
 				<classpath mode="compile">lib/development/annotations.jar</classpath>
 				<classpath mode="compile">lib/development/ant-apache-bsf.jar</classpath>
 				<classpath mode="compile">lib/development/ant-contrib.jar</classpath>
@@ -333,7 +334,6 @@
 				<classpath mode="compile">lib/development/xmltask.jar</classpath>
 				<classpath mode="compile">lib/global/portlet.jar</classpath>
 				<classpath mode="compile">lib/portal/abdera.jar</classpath>
-				<classpath mode="compile">lib/portal/alloy-taglib.jar</classpath>
 				<classpath mode="compile">lib/portal/ant.jar</classpath>
 				<classpath mode="compile">lib/portal/antlr2.jar</classpath>
 				<classpath mode="compile">lib/portal/antlr3-runtime.jar</classpath>

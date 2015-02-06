@@ -17,6 +17,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/alloy-taglib.jar</file-name>
+				<version>1.1.1</version>
+				<project-name>Alloy TagLibs</project-name>
+				<project-url>https://github.com/liferay/alloy-taglibs</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/annotations.jar</file-name>
 				<version>1.0</version>
 				<project-name>Common Annotations</project-name>
@@ -1026,18 +1038,6 @@
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/alloy-taglib.jar</file-name>
-				<version>1.1.1</version>
-				<project-name>Alloy TagLibs</project-name>
-				<project-url>https://github.com/liferay/alloy-taglibs</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
 					</license>
 				</licenses>
 			</library>

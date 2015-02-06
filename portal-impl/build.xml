@@ -32,7 +32,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<ant dir="${alloy.taglibs.dir}" target="clean" inheritAll="false" />
 		<ant dir="${alloy.taglibs.dir}" target="start" inheritAll="false" />
 
-		<copy todir="${project.dir}/lib/portal" preservelastmodified="true">
+		<copy todir="${project.dir}/lib/development" preservelastmodified="true">
 			<fileset file="${alloy.taglibs.dir}/alloy-taglib/alloy-taglib.jar" />
 		</copy>
 	</target>

@@ -26,7 +26,6 @@
 		<pathelement location="${project.dir}/lib/development/mail.jar" />
 		<pathelement location="${project.dir}/lib/global/portal-settings-shared.jar" />
 		<pathelement location="${project.dir}/lib/global/portlet.jar" />
-		<pathelement location="${project.dir}/lib/portal/alloy-taglib.jar" />
 		<pathelement location="${project.dir}/lib/portal/ant.jar" />
 		<pathelement location="${project.dir}/lib/portal/backport-concurrent.jar" />
 		<pathelement location="${project.dir}/lib/portal/commons-collections.jar" />

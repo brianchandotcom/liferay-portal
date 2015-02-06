@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
@@ -88,11 +87,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		AssetPublisherUtil.subscribe(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			themeDisplay.getPlid(), portletDisplay.getId());
+			themeDisplay.getPlid(), themeDisplay.getPpid());
 	}
 
 	public void unsubscribe(
@@ -102,11 +99,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		AssetPublisherUtil.unsubscribe(
 			themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
-			portletDisplay.getId());
+			themeDisplay.getPpid());
 	}
 
 	@Override

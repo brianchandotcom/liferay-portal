@@ -66,13 +66,13 @@ if (fileEntryId != 0) {
 	<i class="glyphicon glyphicon-ok"></i>
 
 	<div class="drop-here-info">
-		<div class="drop-here-center">
-			<div class="pages">
-				<span aria-hidden="true" class="glyphicon glyphicon-picture page-1"></span>
-				<span aria-hidden="true" class="glyphicon glyphicon-picture page-2"></span>
-				<span aria-hidden="true" class="glyphicon glyphicon-picture page-3"></span>
+		<div class="drop-here-indicator">
+			<div class="drop-icons">
+				<span aria-hidden="true" class="glyphicon glyphicon-picture"></span>
+				<span aria-hidden="true" class="glyphicon glyphicon-picture"></span>
+				<span aria-hidden="true" class="glyphicon glyphicon-picture"></span>
 			</div>
-			<div class="droptext">
+			<div class="drop-text">
 				<liferay-ui:message key="drop-files-here" />
 			</div>
 		</div>

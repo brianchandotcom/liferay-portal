@@ -34,10 +34,10 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordSetTestHelper;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestHelper;
-import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
 
 import org.junit.Assert;
@@ -240,16 +240,16 @@ public class DDLRecordSearchTest {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		return DDLRecordTestUtil.createDDMFormValues(
+		return DDMFormValuesTestUtil.createDDMFormValues(
 			ddmStructure.getDDMForm(),
-			DDLRecordTestUtil.createAvailableLocales(LocaleUtil.US),
+			DDMFormValuesTestUtil.createAvailableLocales(LocaleUtil.US),
 			LocaleUtil.US);
 	}
 
 	protected DDMFormFieldValue createLocalizedTextDDMFormFieldValue(
 		String name, String enValue) {
 
-		return DDLRecordTestUtil.createLocalizedTextDDMFormFieldValue(
+		return DDMFormValuesTestUtil.createLocalizedTextDDMFormFieldValue(
 			name, enValue);
 	}
 

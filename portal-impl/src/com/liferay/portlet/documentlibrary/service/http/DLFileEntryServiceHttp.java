@@ -61,7 +61,7 @@ public class DLFileEntryServiceHttp {
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog,
 		long fileEntryTypeId,
-		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> ddmFormValuesMap,
 		java.io.File file, java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -71,8 +71,8 @@ public class DLFileEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					repositoryId, folderId, sourceFileName, mimeType, title,
-					description, changeLog, fileEntryTypeId, fieldsMap, file,
-					is, size, serviceContext);
+					description, changeLog, fileEntryTypeId, ddmFormValuesMap,
+					file, is, size, serviceContext);
 
 			Object returnObj = null;
 
@@ -1396,7 +1396,7 @@ public class DLFileEntryServiceHttp {
 		java.lang.String sourceFileName, java.lang.String mimeType,
 		java.lang.String title, java.lang.String description,
 		java.lang.String changeLog, boolean majorVersion, long fileEntryTypeId,
-		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.Fields> fieldsMap,
+		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> ddmFormValuesMap,
 		java.io.File file, java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1406,8 +1406,8 @@ public class DLFileEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, sourceFileName, mimeType, title, description,
-					changeLog, majorVersion, fileEntryTypeId, fieldsMap, file,
-					is, size, serviceContext);
+					changeLog, majorVersion, fileEntryTypeId, ddmFormValuesMap,
+					file, is, size, serviceContext);
 
 			Object returnObj = null;
 

@@ -53,7 +53,7 @@ import com.liferay.portlet.documentlibrary.util.DLSearcher;
 import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFileEntryOrderByComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFolderOrderByComparator;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.File;
 import java.io.InputStream;
@@ -100,7 +100,7 @@ public class LiferayRepository
 			serviceContext, "fileEntryTypeId",
 			getDefaultFileEntryTypeId(serviceContext, folderId));
 
-		Map<String, Fields> fieldsMap = getFieldsMap(
+		Map<String, DDMFormValues> ddmFormValuesMap = getDDMFormValuesMap(
 			serviceContext, fileEntryTypeId);
 
 		long size = 0;
@@ -112,7 +112,8 @@ public class LiferayRepository
 		DLFileEntry dlFileEntry = dlFileEntryService.addFileEntry(
 			getGroupId(), getRepositoryId(), toFolderId(folderId),
 			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, fieldsMap, file, null, size, serviceContext);
+			fileEntryTypeId, ddmFormValuesMap, file, null, size,
+			serviceContext);
 
 		addFileEntryResources(dlFileEntry, serviceContext);
 
@@ -130,13 +131,13 @@ public class LiferayRepository
 			serviceContext, "fileEntryTypeId",
 			getDefaultFileEntryTypeId(serviceContext, folderId));
 
-		Map<String, Fields> fieldsMap = getFieldsMap(
+		Map<String, DDMFormValues> ddmFormValuesMap = getDDMFormValuesMap(
 			serviceContext, fileEntryTypeId);
 
 		DLFileEntry dlFileEntry = dlFileEntryService.addFileEntry(
 			getGroupId(), getRepositoryId(), toFolderId(folderId),
 			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, fieldsMap, null, is, size, serviceContext);
+			fileEntryTypeId, ddmFormValuesMap, null, is, size, serviceContext);
 
 		addFileEntryResources(dlFileEntry, serviceContext);
 
@@ -919,7 +920,7 @@ public class LiferayRepository
 		long fileEntryTypeId = ParamUtil.getLong(
 			serviceContext, "fileEntryTypeId", -1L);
 
-		Map<String, Fields> fieldsMap = getFieldsMap(
+		Map<String, DDMFormValues> ddmFormValuesMap = getDDMFormValuesMap(
 			serviceContext, fileEntryTypeId);
 
 		long size = 0;
@@ -930,8 +931,8 @@ public class LiferayRepository
 
 		DLFileEntry dlFileEntry = dlFileEntryService.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, fileEntryTypeId, fieldsMap, file, null,
-			size, serviceContext);
+			changeLog, majorVersion, fileEntryTypeId, ddmFormValuesMap, file,
+			null, size, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}
@@ -947,13 +948,13 @@ public class LiferayRepository
 		long fileEntryTypeId = ParamUtil.getLong(
 			serviceContext, "fileEntryTypeId", -1L);
 
-		Map<String, Fields> fieldsMap = getFieldsMap(
+		Map<String, DDMFormValues> ddmFormValuesMap = getDDMFormValuesMap(
 			serviceContext, fileEntryTypeId);
 
 		DLFileEntry dlFileEntry = dlFileEntryService.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, fileEntryTypeId, fieldsMap, null, is, size,
-			serviceContext);
+			changeLog, majorVersion, fileEntryTypeId, ddmFormValuesMap, null,
+			is, size, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

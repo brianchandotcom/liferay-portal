@@ -22,6 +22,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
 
 import java.util.List;
 
@@ -101,7 +102,7 @@ public class DDMStructureLayoutServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	protected void setUpDDMForm() {
-		_ddmForm = ddmStructureTestHelper.createDDMForm("Text1", "Text2");
+		_ddmForm = DDMFormTestUtil.createDDMForm("Text1", "Text2");
 	}
 
 	protected void setUpDDMFormLayout() {

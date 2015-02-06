@@ -35,9 +35,12 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
+import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
@@ -328,8 +331,13 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 
 			fields.put(fieldsDisplayField);
 
+			DDMFormValues ddmFormValues =
+				FieldsToDDMFormValuesConverterUtil.convert(
+					ddmStructure, fields);
+
 			serviceContext.setAttribute(
-				Fields.class.getName() + ddmStructure.getStructureId(), fields);
+				DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+				ddmFormValues);
 		}
 
 		return serviceContext;
@@ -358,8 +366,13 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			Fields fields = (Fields)_serviceContext.getAttribute(
-				Fields.class.getName() + ddmStructure.getStructureId());
+			DDMFormValues ddmFormValues =
+				(DDMFormValues)_serviceContext.getAttribute(
+					DDMFormValues.class.getName() +
+					ddmStructure.getStructureId());
+
+			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+				ddmStructure, ddmFormValues);
 
 			for (Field field : fields) {
 				String type = field.getType();
@@ -369,8 +382,12 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 				}
 			}
 
+			ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(
+				ddmStructure, fields);
+
 			_serviceContext.setAttribute(
-				Fields.class.getName() + ddmStructure.getStructureId(), fields);
+				DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+				ddmFormValues);
 		}
 	}
 

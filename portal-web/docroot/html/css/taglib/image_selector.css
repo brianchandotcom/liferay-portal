@@ -252,44 +252,25 @@
 	}
 
 	.drop-here-info {
-		@include transition(all 0.2s ease-in-out);
-
 		font-size: 25px;
 		opacity: 0;
 
 		.drop-icons {
-			@include transition(all 0.2s ease-in-out);
-
-			span{
-				@include transition(all 0.3s ease-in-out);
-
-				border-radius: 3px;
-			}
-
 			span:nth-of-type(1) {
-				@include transform(rotate(25deg));
-
 				background: #E8E6E8;
-				box-shadow: 5px 4px 0 0 rgba(0, 0, 0, 0.08);
 				color: #A5A6AC;
 				font-size: 40px;
 				opacity: 0;
 			}
 
 			span:nth-of-type(2) {
-				@include transform(scale(0.8));
-
 				background: #00C2FF;
-				box-shadow: 0 6px 0 -2px rgba(0, 0, 0, 0.15);
 				color: #FFF;
 				font-size: 50px;
 			}
 
 			span:nth-of-type(3) {
-				@include transform(rotate(-25deg));
-
 				background: #E8E6E8;
-				box-shadow: -5px 4px 0 0 rgba(0, 0, 0, 0.08);
 				color: #A5A6AC;
 				font-size: 45px;
 				opacity: 0;
@@ -337,19 +318,7 @@
 			background-color: rgba(0, 0, 0, 0.4);
 			opacity: 1;
 
-			span:nth-of-type(1){
-				@include transform(rotate(-20deg));
-
-				opacity: 1;
-			}
-
-			span:nth-of-type(2) {
-				@include transform(scale(1));
-			}
-
-			span:nth-of-type(3) {
-				@include transform(rotate(15deg));
-
+			span:nth-of-type(1), span:nth-of-type(3) {
 				opacity: 1;
 			}
 		}

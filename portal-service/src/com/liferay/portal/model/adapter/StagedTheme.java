@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.lar;
+package com.liferay.portal.model.adapter;
 
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Theme;

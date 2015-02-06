@@ -176,32 +176,30 @@ public class LocalizationImpl implements Localization {
 
 	@Override
 	public FullNameDefinition getFullNameDefinition(Locale locale) {
-		String[] userNameFields = StringUtil.split(
-			LanguageUtil.get(locale, "lang.user.name.field.names"));
-		String userNameRequiredFields = LanguageUtil.get(
-			locale, "lang.user.name.required.field.names");
-
 		FullNameDefinition fullNameDefinition = new FullNameDefinition();
 
-		for (String userNameField : userNameFields) {
+		String[] fieldNames = StringUtil.split(
+			LanguageUtil.get(locale, "lang.user.name.field.names"));
+
+		for (String userNameField : fieldNames) {
 			FullNameField fullNameField = new FullNameField();
 			
 			fullNameField.setName(userNameField);
 
+			String requiredFieldNames = LanguageUtil.get(
+				locale, "lang.user.name.required.field.names");
+
 			boolean required = StringUtil.contains(
-				userNameRequiredFields, userNameField);
+				requiredFieldNames, userNameField);
 
 			fullNameField.setRequired(required);
 
-			String testOptionsProperty =
-				"lang.user.name." + userNameField + ".options";
+			String[] options = StringUtil.split(
+				LanguageUtil.get(
+					locale, "lang.user.name." + userNameField + ".options",
+					StringPool.BLANK));
 
-			String optionsString = LanguageUtil.get(
-				locale, testOptionsProperty, StringPool.BLANK);
-
-			if (!optionsString.isEmpty()) {
-				fullNameField.setOptions(StringUtil.split(optionsString));
-			}
+			fullNameField.setOptions(options);
 
 			fullNameDefinition.addField(fullNameField);
 		}

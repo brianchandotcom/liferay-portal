@@ -14,9 +14,15 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
-import com.liferay.portal.kernel.test.rule.executor.PersistenceTestInitializer;
-import com.liferay.portal.test.rule.executor.PersistenceTestInitializerImpl;
+import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.model.ModelListenerRegistrationUtil;
+import com.liferay.portal.tools.DBUpgrader;
+
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.runner.Description;
 
@@ -30,18 +36,55 @@ public class PersistenceTestRule extends BaseTestRule<Object, Object> {
 
 	@Override
 	protected void afterMethod(Description description, Object modelListeners) {
-		_persistenceTestInitializer.release(modelListeners);
+		Object instance = ReflectionTestUtil.getFieldValue(
+			ModelListenerRegistrationUtil.class, "_instance");
+
+		CacheRegistryUtil.setActive(true);
+
+		ReflectionTestUtil.setFieldValue(
+			instance, "_modelListeners", modelListeners);
 	}
 
 	@Override
 	protected Object beforeMethod(Description description) {
-		return _persistenceTestInitializer.init();
+		initialize();
+
+		Object instance = ReflectionTestUtil.getFieldValue(
+			ModelListenerRegistrationUtil.class, "_instance");
+
+		Object modelListeners = ReflectionTestUtil.getFieldValue(
+			instance, "_modelListeners");
+
+		ReflectionTestUtil.setFieldValue(
+			instance, "_modelListeners",
+			new ConcurrentHashMap<Class<?>, List<ModelListener<?>>>());
+
+		CacheRegistryUtil.setActive(false);
+
+		return modelListeners;
+	}
+
+	private static void initialize() {
+		if (_initialized) {
+			return;
+		}
+
+		try {
+			DBUpgrader.upgrade();
+		}
+		catch (Throwable t) {
+			throw new ExceptionInInitializerError(t);
+		}
+		finally {
+			CacheRegistryUtil.setActive(true);
+		}
+
+		_initialized = true;
 	}
 
 	private PersistenceTestRule() {
 	}
 
-	private static final PersistenceTestInitializer
-		_persistenceTestInitializer = new PersistenceTestInitializerImpl();
+	private static boolean _initialized;
 
 }

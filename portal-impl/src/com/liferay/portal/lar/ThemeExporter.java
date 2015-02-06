@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
+import com.liferay.portal.model.StagedTheme;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.adapter.ModelAdapterUtil;
-import com.liferay.portlet.layoutsadmin.lar.StagedTheme;
 
 /**
  * @author Mate Thurzo

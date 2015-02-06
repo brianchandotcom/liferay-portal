@@ -59,6 +59,8 @@ import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
+import com.liferay.portal.model.StagedTheme;
+import com.liferay.portal.model.impl.StagedThemeImpl;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;

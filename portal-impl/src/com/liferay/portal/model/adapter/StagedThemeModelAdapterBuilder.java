@@ -14,9 +14,9 @@
 
 package com.liferay.portal.model.adapter;
 
+import com.liferay.portal.model.StagedTheme;
 import com.liferay.portal.model.Theme;
-import com.liferay.portlet.layoutsadmin.lar.StagedTheme;
-import com.liferay.portlet.layoutsadmin.lar.StagedThemeImpl;
+import com.liferay.portal.model.impl.StagedThemeImpl;
 
 /**
  * @author Mate Thurzo

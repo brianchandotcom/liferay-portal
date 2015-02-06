@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedTheme;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 

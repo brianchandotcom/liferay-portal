@@ -15,8 +15,8 @@
 package com.liferay.portal.model.adapter;
 
 import com.liferay.portal.model.Group;
-import com.liferay.portlet.sitesadmin.lar.StagedGroup;
-import com.liferay.portlet.sitesadmin.lar.StagedGroupImpl;
+import com.liferay.portal.model.StagedGroup;
+import com.liferay.portal.model.impl.StagedGroupImpl;
 
 /**
  * @author Mate Thurzo

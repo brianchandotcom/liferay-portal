@@ -97,7 +97,7 @@ public interface ${entity.name}${sessionTypeName}Service
 
 	<#list methods as method>
 		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
-			${serviceBuilder.getJavadocComment(method, "service")}
+			${serviceBuilder.getJavadocComment(method)}
 
 			<#list method.annotations as annotation>
 				<#if (annotation.type != "java.lang.Override") && (annotation.type != "java.lang.SuppressWarnings")>

@@ -82,7 +82,7 @@ public class ${entity.name}ServiceSoap {
 			<#assign extendedModelName = packagePath + ".model." + entity.name>
 			<#assign soapModelName = packagePath + ".model." + entity.name + "Soap">
 
-			${serviceBuilder.getJavadocComment(method, "serviceSoap")}
+			${serviceBuilder.getJavadocComment(method)}
 
 			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
 				@Deprecated

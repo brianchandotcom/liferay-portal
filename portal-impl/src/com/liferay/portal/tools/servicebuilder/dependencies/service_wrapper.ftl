@@ -28,7 +28,7 @@ public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.
 
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
-			${serviceBuilder.getJavadocComment(method, "serviceWrapper")}
+			${serviceBuilder.getJavadocComment(method)}
 
 			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
 				@Deprecated

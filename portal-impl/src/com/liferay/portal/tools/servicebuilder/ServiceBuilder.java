@@ -1221,14 +1221,12 @@ public class ServiceBuilder {
 
 	public String getJavadocComment(JavaClass javaClass) {
 		return _formatComment(
-			javaClass.getComment(), javaClass.getTags(), StringPool.BLANK,
-			StringPool.BLANK);
+			javaClass.getComment(), javaClass.getTags(), StringPool.BLANK);
 	}
 
-	public String getJavadocComment(JavaMethod javaMethod, String classType) {
+	public String getJavadocComment(JavaMethod javaMethod) {
 		return _formatComment(
-			javaMethod.getComment(), javaMethod.getTags(), classType,
-			StringPool.TAB);
+			javaMethod.getComment(), javaMethod.getTags(), StringPool.TAB);
 	}
 
 	public String getListActualTypeArguments(Type type) {
@@ -3740,8 +3738,7 @@ public class ServiceBuilder {
 	}
 
 	private String _formatComment(
-		String comment, DocletTag[] tags, String classType,
-		String indentation) {
+		String comment, DocletTag[] tags, String indentation) {
 
 		StringBundler sb = new StringBundler();
 
@@ -3772,7 +3769,7 @@ public class ServiceBuilder {
 			sb.append(tag.getName());
 			sb.append(" ");
 
-			if (classType.equals("serviceSoap")) {
+			if (_tplName.endsWith("service_soap.ftl")) {
 				if (tagValue.startsWith(
 						"com.liferay.portal.kernel.exception.PortalException"))
 				{
@@ -5046,6 +5043,8 @@ public class ServiceBuilder {
 
 	private String _processTemplate(String name, Map<String, Object> context)
 		throws Exception {
+		
+		_tplName = name;
 
 		return StringUtil.strip(FreeMarkerUtil.process(name, context), '\r');
 	}
@@ -5268,6 +5267,7 @@ public class ServiceBuilder {
 	private String _tplModelImpl = _TPL_ROOT + "model_impl.ftl";
 	private String _tplModelSoap = _TPL_ROOT + "model_soap.ftl";
 	private String _tplModelWrapper = _TPL_ROOT + "model_wrapper.ftl";
+	private String _tplName;
 	private String _tplPersistence = _TPL_ROOT + "persistence.ftl";
 	private String _tplPersistenceImpl = _TPL_ROOT + "persistence_impl.ftl";
 	private String _tplPersistenceTest = _TPL_ROOT + "persistence_test.ftl";

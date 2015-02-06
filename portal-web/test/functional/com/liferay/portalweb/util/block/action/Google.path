@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>Google</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Google</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Google</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TITLE</td>
+	<td>title=${key_pageTitle}</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -70,6 +70,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_GITHUB</td>
+	<td>//span[contains(.,'Edit on GitHub')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ARTICLE_READ_MORE</td>
 	<td>//div[@class='kb-article-child']//a[contains(.,'Read More')]</td>
 	<td></td>

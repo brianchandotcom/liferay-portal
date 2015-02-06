@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -28,17 +29,12 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.impl.ListTypeModelImpl;
 import com.liferay.portal.model.ListType;
 import com.liferay.portal.service.persistence.ListTypePersistence;
 import com.liferay.portal.service.persistence.ListTypeUtil;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
-import com.liferay.portal.test.PersistenceTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.test.RandomTestUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -383,14 +379,14 @@ public class ListTypePersistenceTest {
 
 		_persistence.clearCache();
 
-		ListTypeModelImpl existingListTypeModelImpl = (ListTypeModelImpl)_persistence.findByPrimaryKey(newListType.getPrimaryKey());
+		ListType existingListType = _persistence.findByPrimaryKey(newListType.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingListTypeModelImpl.getName(),
-				existingListTypeModelImpl.getOriginalName()));
-		Assert.assertTrue(Validator.equals(
-				existingListTypeModelImpl.getType(),
-				existingListTypeModelImpl.getOriginalType()));
+		Assert.assertTrue(Validator.equals(existingListType.getName(),
+				ReflectionTestUtil.invoke(existingListType, "getOriginalName",
+					new Class<?>[0])));
+		Assert.assertTrue(Validator.equals(existingListType.getType(),
+				ReflectionTestUtil.invoke(existingListType, "getOriginalType",
+					new Class<?>[0])));
 	}
 
 	protected ListType addListType() throws Exception {

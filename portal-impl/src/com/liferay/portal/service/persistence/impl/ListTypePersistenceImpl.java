@@ -59,7 +59,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see ListTypePersistence
- * @see ListTypeUtil
+ * @see com.liferay.portal.service.persistence.ListTypeUtil
  * @generated
  */
 @ProviderType

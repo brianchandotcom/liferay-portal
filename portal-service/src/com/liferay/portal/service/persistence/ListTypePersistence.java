@@ -26,7 +26,7 @@ import com.liferay.portal.model.ListType;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see ListTypePersistenceImpl
+ * @see com.liferay.portal.service.persistence.impl.ListTypePersistenceImpl
  * @see ListTypeUtil
  * @generated
  */

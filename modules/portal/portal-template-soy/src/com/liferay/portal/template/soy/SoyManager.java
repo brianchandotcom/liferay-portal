@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
+import com.liferay.portal.template.TemplateContextHelper;
 
 import java.util.Map;
 
@@ -65,11 +66,12 @@ public class SoyManager extends BaseTemplateManager {
 		_builder = new SoyFileSet.Builder();
 	}
 
-	@Reference(unbind = "-")
-	public void setFreeMarkerTemplateContextHelper(
-		SoyTemplateContextHelper soyTemplateContextHelper) {
+	@Override
+	@Reference(service = SoyTemplateContextHelper.class, unbind = "-")
+	public void setTemplateContextHelper(
+		TemplateContextHelper templateContextHelper) {
 
-		templateContextHelper = soyTemplateContextHelper;
+		super.setTemplateContextHelper(templateContextHelper);
 	}
 
 	@Override

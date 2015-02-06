@@ -814,6 +814,7 @@
 
 	<macrodef name="start-app-server">
 		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="" name="testable.portal.started.marker.file" />
 
 		<sequential>
 			<if>
@@ -822,16 +823,19 @@
 					<start-app-server-cmd
 						app.server.bin.dir="${app.server.tcat.admin.bin.dir}"
 						app.server.bundle.index="@{app.server.bundle.index}"
+						testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
 					/>
 
 					<start-app-server-cmd
 						app.server.bin.dir="${app.server.tcat.agent.bin.dir}"
 						app.server.bundle.index="@{app.server.bundle.index}"
+						testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
 					/>
 				</then>
 				<else>
 					<start-app-server-cmd
 						app.server.bundle.index="@{app.server.bundle.index}"
+						testable.portal.started.marker.file="@{testable.portal.started.marker.file}"
 					/>
 				</else>
 			</if>
@@ -841,6 +845,7 @@
 	<macrodef name="start-app-server-cmd">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="" name="testable.portal.started.marker.file" />
 
 		<sequential>
 			<set-app-server-properties
@@ -878,6 +883,15 @@
 			<if>
 				<isset property="portal.not.started" />
 				<then>
+					<if>
+						<not>
+							<equals arg1="@{testable.portal.started.marker.file}" arg2="" />
+						</not>
+						<then>
+							<echo file="@{testable.portal.started.marker.file}" message="1" />
+						</then>
+					</if>
+
 					<if>
 						<equals arg1="${app.server.type}" arg2="jboss" />
 						<then>
@@ -4673,7 +4687,7 @@ if (ppstate.equals("normal")) {
 			</then>
 		</if>
 
-		<start-app-server  app.server.bundle.index="${app.server.bundle.index}" />
+		<start-app-server app.server.bundle.index="${app.server.bundle.index}" testable.portal.started.marker.file="${testable.portal.started.marker.file}" />
 	</target>
 
 	<target name="start-chrome-driver">

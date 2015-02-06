@@ -299,11 +299,12 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setFreeMarkerTemplateContextHelper(
-		TemplateContextHelper freeMarkerTemplateContextHelper) {
+	@Override
+	@Reference(service = FreeMarkerTemplateContextHelper.class, unbind = "-")
+	public void setTemplateContextHelper(
+		TemplateContextHelper templateContextHelper) {
 
-		templateContextHelper = freeMarkerTemplateContextHelper;
+		super.setTemplateContextHelper(templateContextHelper);
 	}
 
 	@Activate

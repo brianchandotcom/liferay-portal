@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>UserGroupsAdmin</title>
+<title>UserGroups</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">UserGroupsAdmin</td></tr>
+<tr><td rowspan="1" colspan="3">UserGroups</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>UserGroupsAdmin</td>
+	<td>UserGroups</td>
 </tr>
 <tr>
 	<td></td>

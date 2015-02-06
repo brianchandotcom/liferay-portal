@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>DocumentLibraryEditDocument</title>
+<title>DocumentsAndMediaEditDocument</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">DocumentLibraryEditDocument</td></tr>
+<tr><td rowspan="1" colspan="3">DocumentsAndMediaEditDocument</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>DocumentLibraryEditDocument</td>
+	<td>DocumentsAndMediaEditDocument</td>
 </tr>
 <tr>
 	<td></td>
@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>EXTEND_ACTION_PATH</td>
-	<td>DocumentLibrarySelectDocument</td>
+	<td>DocumentsAndMediaSelectDocument</td>
 	<td></td>
 </tr>
 <tr>

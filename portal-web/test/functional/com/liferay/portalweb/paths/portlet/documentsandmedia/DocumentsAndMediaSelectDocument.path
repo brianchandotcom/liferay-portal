@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>DocumentLibrarySelectDocument</title>
+<title>DocumentsAndMediaSelectDocument</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">DocumentLibrarySelectDocument</td></tr>
+<tr><td rowspan="1" colspan="3">DocumentsAndMediaSelectDocument</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>DocumentLibrarySelectDocument</td>
+	<td>DocumentsAndMediaSelectDocument</td>
 </tr>
 <tr>
 	<td></td>

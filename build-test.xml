@@ -1753,8 +1753,6 @@ ${marketplace.portlet.properties}</echo>
 				<isset property="jenkins.shared.user.content.dir" />
 			</and>
 			<then>
-				<ant target="record-git-commit-portal" />
-
 				<if>
 					<not>
 						<isset property="test.method.name" />

@@ -14,7 +14,6 @@
 
 package com.liferay.osgi.service.tracker.map.test;
 
-import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
 import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
@@ -28,6 +27,8 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;

@@ -115,8 +115,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			getGroupPortletPreferencesSettings(
 				groupId, serviceName, companyPortletPreferencesSettings);
 
-		return applyFallbackKeys(
-			serviceName, groupPortletPreferencesSettings);
+		return applyFallbackKeys(serviceName, groupPortletPreferencesSettings);
 	}
 
 	@Override
@@ -263,6 +262,12 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		return settings;
 	}
 
+	protected long getCompanyId(long groupId) throws PortalException {
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		return group.getCompanyId();
+	}
+
 	protected PortletPreferences getCompanyPortletPreferences(
 		long companyId, String settingsId) {
 
@@ -277,12 +282,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		return new PortletPreferencesSettings(
 			getCompanyPortletPreferences(companyId, settingsId),
 			parentSettings);
-	}
-
-	protected long getCompanyId(long groupId) throws PortalException {
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		return group.getCompanyId();
 	}
 
 	protected PortletPreferences getGroupPortletPreferences(

@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>CPSAMLAdminServiceProviderConnections</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSAMLAdminServiceProviderConnections</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPSAMLAdminServiceProviderConnections</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SERVICE_PROVIDER_BUTTON</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Add Service Provider')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SERVICE_PROVIDER_CONNECTIONS_TABLE-->
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_samlSPName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_ENTITY_ID</td>
+	<td>//tr[contains(.,'${key_samlSPName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_ENABLED</td>
+	<td>//tr[contains(.,'${key_samlSPName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_ACTIONS</td>
+	<td>//tr[contains(.,'${key_samlSPName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SERVICE_PROVIDER_CONNECTIONS_MENULIST-->
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

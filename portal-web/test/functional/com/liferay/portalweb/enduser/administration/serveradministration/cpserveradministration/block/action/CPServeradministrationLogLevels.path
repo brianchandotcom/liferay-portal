@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>CPServeradministrationLogLevels</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPServeradministrationLogLevels</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPServeradministrationLogLevels</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_UPDATE_CATEGORIES</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Update Categories')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_ADD_CATEGORY</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Add Category')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

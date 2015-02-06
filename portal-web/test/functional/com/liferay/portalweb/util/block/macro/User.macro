@@ -1424,6 +1424,13 @@
 		</if>
 
 		<if>
+			<isset var="loginViaDockbar" />
+			<then>
+				<execute function="AssertClick" locator1="Dockbar#USER_SIGN_IN" value1="Sign In" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${authenticationMethod}" arg2="By Screen Name" />
 			<then>
 				<execute function="Type" locator1="PGLogin#SCREEN_NAME_FIELD" value1="${userScreenName}" />
@@ -1697,6 +1704,24 @@
 				<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="USER_NAME" value1="${userFirstName} ${userLastName}" />
 			</else>
 		</if>
+	</command>
+
+	<command name="viewLoggedInPG">
+		<if>
+			<equals arg1="${authenticationMethod}" arg2="By Screen Name" />
+			<then>
+				<execute action="PGLogin#assertElementNotPresent" locator-key1="SCREEN_NAME_FIELD" />
+			</then>
+			<else>
+				<execute action="PGLogin#assertElementNotPresent" locator-key1="EMAIL_ADDRESS_FIELD" />
+			</else>
+		</if>
+
+		<execute action="PGLogin#assertElementNotPresent" locator-key1="PASSWORD_FIELD" />
+		<execute action="PGLogin#assertElementNotPresent" locator-key1="REMEMBER_ME_CHECKBOX" />
+		<execute action="PGLogin#assertElementNotPresent" locator-key1="SIGN_IN_BUTTON" />
+
+		<execute action="Dockbar#assertTextEquals" locator-key1="USER_NAME" value1="${userFirstName} ${userLastName}" />
 	</command>
 
 	<command name="viewLoginPG">

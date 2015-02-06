@@ -14,7 +14,7 @@
 
 package com.liferay.osgi.service.tracker.map.test;
 
-import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
+import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
 import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;

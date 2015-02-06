@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.security.auth.FullNameDefinition;
-import com.liferay.portal.security.auth.FullNameField;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.util.ContentUtil;
 
@@ -172,39 +170,6 @@ public class LocalizationImpl implements Localization {
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		return _getRootAttributeValue(xml, _DEFAULT_LOCALE, defaultLanguageId);
-	}
-
-	@Override
-	public FullNameDefinition getFullNameDefinition(Locale locale) {
-		FullNameDefinition fullNameDefinition = new FullNameDefinition();
-
-		String[] fieldNames = StringUtil.split(
-			LanguageUtil.get(locale, "lang.user.name.field.names"));
-
-		for (String userNameField : fieldNames) {
-			FullNameField fullNameField = new FullNameField();
-
-			fullNameField.setName(userNameField);
-
-			String[] options = StringUtil.split(
-				LanguageUtil.get(
-					locale, "lang.user.name." + userNameField + ".options",
-					StringPool.BLANK));
-
-			fullNameField.setOptions(options);
-
-			String requiredFieldNames = LanguageUtil.get(
-				locale, "lang.user.name.required.field.names");
-
-			boolean required = StringUtil.contains(
-				requiredFieldNames, userNameField);
-
-			fullNameField.setRequired(required);
-
-			fullNameDefinition.addFullNameField(fullNameField);
-		}
-
-		return fullNameDefinition;
 	}
 
 	@Override

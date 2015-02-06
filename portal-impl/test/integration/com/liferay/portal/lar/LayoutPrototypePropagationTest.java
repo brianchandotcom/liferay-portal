@@ -14,15 +14,23 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.model.LayoutFriendlyURL;
+import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
+import java.util.Locale;
+
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 
 /**
  * @author Eduardo Garcia
@@ -35,6 +43,22 @@ public class LayoutPrototypePropagationTest
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+
+	@Test
+	public void testAddLayoutFromLayoutPrototypeWithLinkDisabled()
+		throws Exception {
+
+		layout = LayoutTestUtil.addLayout(group, false, layoutPrototype, false);
+
+		Locale locale = LocaleUtil.getDefault();
+
+		LayoutFriendlyURL layoutFriendlyURL =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURL(
+				layout.getPlid(), LanguageUtil.getLanguageId(locale));
+
+		Assert.assertEquals(
+			layoutFriendlyURL.getFriendlyURL(), layout.getFriendlyURL());
+	}
 
 	@Override
 	protected void doSetUp() throws Exception {

@@ -371,6 +371,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layoutPersistence.update(layout);
 
+		// Layout friendly URLs
+
+		layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(
+			user.getUserId(), user.getCompanyId(), groupId, plid, privateLayout,
+			friendlyURLMap, serviceContext);
+
+		// Layout prototype
+
 		if (Validator.isNotNull(layoutPrototypeUuid) &&
 			!layoutPrototypeLinkEnabled) {
 
@@ -422,12 +430,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		// Group
 
 		groupLocalService.updateSite(groupId, true);
-
-		// Layout friendly URLs
-
-		layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(
-			user.getUserId(), user.getCompanyId(), groupId, plid, privateLayout,
-			friendlyURLMap, serviceContext);
 
 		// Layout set
 

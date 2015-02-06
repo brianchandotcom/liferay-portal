@@ -184,7 +184,9 @@ public class LocalizationImpl implements Localization {
 		FullNameDefinition fullNameDefinition = new FullNameDefinition();
 
 		for (String userNameField : userNameFields) {
-			FullNameField fullNameField = new FullNameField(userNameField);
+			FullNameField fullNameField = new FullNameField();
+			
+			fullNameField.setName(userNameField);
 
 			boolean required = StringUtil.contains(
 				userNameRequiredFields, userNameField);

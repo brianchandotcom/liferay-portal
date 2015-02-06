@@ -19,10 +19,6 @@ package com.liferay.portal.security.auth;
 */
 public class FullNameField {
 
-	public FullNameField(String name) {
-		_name = name;
-	}
-
 	public String getName() {
 		return _name;
 	}
@@ -35,6 +31,10 @@ public class FullNameField {
 		return _required;
 	}
 
+	public void setName(String name) {
+		_name = name;
+	}
+
 	public void setOptions(String[] options) {
 		_options = options;
 	}
@@ -43,7 +43,7 @@ public class FullNameField {
 		_required = required;
 	}
 
-	private final String _name;
+	private String _name;
 	private String[] _options;
 	private boolean _required;
 

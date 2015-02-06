@@ -22,14 +22,14 @@ import java.util.List;
  */
 public class FullNameDefinition {
 
-	public void addField(FullNameField field) {
-		_fields.add(field);
+	public void addField(FullNameField fullNameField) {
+		_fullNameFields.add(fullNameField);
 	}
 
-	public List<FullNameField> getFields() {
-		return _fields;
+	public List<FullNameField> getFullNameFields() {
+		return _fullNameFields;
 	}
 
-	private final List<FullNameField> _fields = new ArrayList<>();
+	private final List<FullNameField> _fullNameFields = new ArrayList<>();
 
 }

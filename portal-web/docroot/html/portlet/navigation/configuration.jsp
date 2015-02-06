@@ -120,7 +120,6 @@
 	<aui:col width="<%= 50 %>">
 		<liferay-portlet:preview
 			portletName="<%= portletResource %>"
-			queryString="struts_action=/navigation/view"
 			showBorders="<%= true %>"
 		/>
 	</aui:col>

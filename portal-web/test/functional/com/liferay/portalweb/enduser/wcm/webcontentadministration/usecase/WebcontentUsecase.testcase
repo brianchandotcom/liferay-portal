@@ -633,7 +633,7 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute macro="WebContentTemplates#editPGViaWCD">
+		<execute macro="WebContentDisplayPortlet#editTemplate">
 			<var name="structureName" value="Global WC Structure Name" />
 			<var name="templateName" value="Template Edit" />
 			<var name="webContentContent" value="WC WebContent Text" />
@@ -734,7 +734,6 @@
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="pageName" value="Staging Test Page" />
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>

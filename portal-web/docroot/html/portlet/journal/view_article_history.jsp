@@ -181,7 +181,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 						var form = AUI.$(document.<portlet:namespace />fm);
 
 						form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-						form.fm('groupId').val('<%= scopeGroupId %>');
+						form.fm('groupId').val('<%= String.valueOf(article.getGroupId()) %>');
 						form.fm('articleId').val('');
 						form.fm('articleIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
@@ -196,7 +196,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 						var form = AUI.$(document.<portlet:namespace />fm);
 
 						form.fm('<%= Constants.CMD %>').val('<%= Constants.EXPIRE %>');
-						form.fm('groupId').val('<%= scopeGroupId %>');
+						form.fm('groupId').val('<%= String.valueOf(article.getGroupId()) %>');
 						form.fm('articleId').val('');
 						form.fm('expireArticleIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 

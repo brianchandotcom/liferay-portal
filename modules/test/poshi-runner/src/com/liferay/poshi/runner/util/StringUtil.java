@@ -160,6 +160,16 @@ public class StringUtil {
 		return StringUtils.capitalize(s);
 	}
 
+	public static String upperCaseFirstLetter(String s) {
+		char[] chars = s.toCharArray();
+
+		if ((chars[0] >= 97) && (chars[0] <= 122)) {
+			chars[0] = (char)(chars[0] - 32);
+		}
+
+		return new String(chars);
+	}
+
 	public static String valueOf(Object obj) {
 		return String.valueOf(obj);
 	}

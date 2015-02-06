@@ -17,6 +17,7 @@ package com.liferay.poshi.runner;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,44 @@ public class PoshiRunnerContext {
 		return _commandElements.get("action#" + classCommandName);
 	}
 
+	public static int getActionLocatorCount(String classCommandName) {
+		String commandName =
+			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+				classCommandName);
+
+		return PoshiRunnerContext.getFunctionLocatorCount(
+			StringUtil.upperCaseFirstLetter(commandName));
+	}
+
 	public static Element getActionRootElement(String className) {
 		return _rootElements.get("action#" + className);
+	}
+
+	public static List<String> getClassCommandNames(String classCommandName) {
+		List<String> extendedClassNames = new ArrayList<>();
+
+		extendedClassNames.add(classCommandName);
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		String commandName =
+			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+				classCommandName);
+
+		while (_actionExtendClassName.get(className) != null) {
+			String extendClassName = _actionExtendClassName.get(className);
+
+			extendedClassNames.add(extendClassName + "#" + commandName);
+
+			className = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				extendClassName + "#" + commandName);
+		}
+
+		extendedClassNames.add("BaseLiferay#" + commandName);
+
+		return extendedClassNames;
 	}
 
 	public static Element getFunctionCommandElement(String classCommandName) {
@@ -112,6 +149,8 @@ public class PoshiRunnerContext {
 						break;
 					}
 				}
+
+				_actionExtendClassName.put(className, locator);
 			}
 
 			_pathLocators.put(className + "#" + locatorKey, locator);
@@ -240,6 +279,8 @@ public class PoshiRunnerContext {
 		PoshiRunnerGetterUtil.getCanonicalPath(
 			"../../../portal-web/test/functional/com/liferay/portalweb/");
 
+	private static final Map<String, String> _actionExtendClassName =
+		new HashMap<>();
 	private static final Map<String, Element> _commandElements =
 		new HashMap<>();
 	private static String[] _filePaths;

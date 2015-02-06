@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class FullNameDefinition {
 
-	public void addField(FullNameField fullNameField) {
+	public void addFullNameField(FullNameField fullNameField) {
 		_fullNameFields.add(fullNameField);
 	}
 

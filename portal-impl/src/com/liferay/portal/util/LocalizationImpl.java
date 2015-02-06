@@ -183,7 +183,7 @@ public class LocalizationImpl implements Localization {
 
 		for (String userNameField : fieldNames) {
 			FullNameField fullNameField = new FullNameField();
-			
+
 			fullNameField.setName(userNameField);
 
 			String[] options = StringUtil.split(
@@ -201,7 +201,7 @@ public class LocalizationImpl implements Localization {
 
 			fullNameField.setRequired(required);
 
-			fullNameDefinition.addField(fullNameField);
+			fullNameDefinition.addFullNameField(fullNameField);
 		}
 
 		return fullNameDefinition;

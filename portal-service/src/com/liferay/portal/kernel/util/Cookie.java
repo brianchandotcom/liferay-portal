@@ -24,6 +24,8 @@ public interface Cookie {
 	public boolean equals(
 		javax.servlet.http.Cookie cookie1, javax.servlet.http.Cookie cookie2);
 
+	public String getDomain(String host);
+
 	public byte[] serialize(javax.servlet.http.Cookie cookie);
 
 	public String toString(javax.servlet.http.Cookie cookie);

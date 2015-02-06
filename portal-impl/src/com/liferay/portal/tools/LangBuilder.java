@@ -313,13 +313,13 @@ public class LangBuilder {
 							translatedText =
 							"prefix,first-name,middle-name,last-name,suffix";
 						}
-						else if (key.equals("lang.user.name.prefix.options")) {
+						else if (key.equals("lang.user.name.prefix.value.options")) {
 							translatedText = "dr,mr,ms,mrs";
 						}
 						else if (key.equals("lang.user.name.required.fields")) {
 							translatedText = "last-name";
 						}
-						else if (key.equals("lang.user.name.suffix.options")) {
+						else if (key.equals("lang.user.name.suffix.value.options")) {
 							translatedText = "ii,iii,iv,jr,phd,sr";
 						}
 						else if (languageId.equals("el") &&
@@ -374,11 +374,11 @@ public class LangBuilder {
 									"Please use another IP.");
 						}
 
-						if (key.equals("lang.user.name.prefix.options") &&
+						if (key.equals("lang.user.name.prefix.value.options") &&
 							!hasPrefix) {
 							translatedText = "";
 						}
-						else if (key.equals("lang.user.name.suffix.options") &&
+						else if (key.equals("lang.user.name.suffix.value.options") &&
 							!hasSuffix) {
 							translatedText = "";
 						}

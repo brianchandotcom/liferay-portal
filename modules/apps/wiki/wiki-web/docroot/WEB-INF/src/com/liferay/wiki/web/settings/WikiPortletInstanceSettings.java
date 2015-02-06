@@ -173,14 +173,14 @@ public class WikiPortletInstanceSettings {
 			SettingsFactoryUtil.getSettingsFactory();
 
 		settingsFactory.registerSettingsMetadata(
-			WikiPortletKeys.WIKI, _getFallbackKeys(), _MULTI_VALUED_KEYS,
+			WikiPortletKeys.WIKI, _getFallbackKeys(), _MULTI_VALUED_KEYS, null,
 			_resourceManager);
 		settingsFactory.registerSettingsMetadata(
 			WikiPortletKeys.WIKI_ADMIN, _getFallbackKeys(), _MULTI_VALUED_KEYS,
-			_resourceManager);
+			null, _resourceManager);
 		settingsFactory.registerSettingsMetadata(
 			WikiPortletKeys.WIKI_DISPLAY, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS, _resourceManager);
+			_MULTI_VALUED_KEYS, null, _resourceManager);
 	}
 
 	private final TypedSettings _typedSettings;

@@ -29,7 +29,8 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.wiki.configuration.WikiServiceConfigurationValues;
+import com.liferay.wiki.configuration.WikiServiceConfiguration;
+import com.liferay.wiki.configuration.WikiServiceConfigurationProvider;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -143,8 +144,11 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		WikiServiceConfiguration wikiServiceConfiguration =
+			WikiServiceConfigurationProvider.getWikiServiceConfiguration();
+
 		WikiPage page = WikiPageLocalServiceUtil.fetchPage(
-			nodeId, WikiServiceConfigurationValues.FRONT_PAGE_NAME, 0);
+			nodeId, wikiServiceConfiguration.frontPageName(), 0);
 
 		if (page == null) {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -168,7 +172,7 @@ public class ActionUtil {
 
 				page = WikiPageLocalServiceUtil.addPage(
 					themeDisplay.getDefaultUserId(), nodeId,
-					WikiServiceConfigurationValues.FRONT_PAGE_NAME, null,
+					wikiServiceConfiguration.frontPageName(), null,
 					WikiPageConstants.NEW, true, serviceContext);
 			}
 			finally {
@@ -240,8 +244,11 @@ public class ActionUtil {
 			}
 		}
 
+		WikiServiceConfiguration wikiServiceConfiguration =
+			WikiServiceConfigurationProvider.getWikiServiceConfiguration();
+
 		if (Validator.isNull(title)) {
-			title = WikiServiceConfigurationValues.FRONT_PAGE_NAME;
+			title = wikiServiceConfiguration.frontPageName();
 		}
 
 		WikiPage page = null;
@@ -264,7 +271,7 @@ public class ActionUtil {
 			}
 		}
 		catch (NoSuchPageException nspe) {
-			if (title.equals(WikiServiceConfigurationValues.FRONT_PAGE_NAME) &&
+			if (title.equals(wikiServiceConfiguration.frontPageName()) &&
 				(version == 0)) {
 
 				page = getFirstVisiblePage(nodeId, portletRequest);

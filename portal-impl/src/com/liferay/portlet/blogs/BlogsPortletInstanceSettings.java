@@ -183,11 +183,11 @@ public class BlogsPortletInstanceSettings {
 			SettingsFactoryUtil.getSettingsFactory();
 
 		settingsFactory.registerSettingsMetadata(
-			PortletKeys.BLOGS, _getFallbackKeys(), _MULTI_VALUED_KEYS,
+			PortletKeys.BLOGS, _getFallbackKeys(), _MULTI_VALUED_KEYS, null,
 			_resourceManager);
 		settingsFactory.registerSettingsMetadata(
 			PortletKeys.BLOGS_ADMIN, _getFallbackKeys(), _MULTI_VALUED_KEYS,
-			_resourceManager);
+			null, _resourceManager);
 	}
 
 	private final TypedSettings _typedSettings;

@@ -273,7 +273,7 @@ public class MBSettings {
 
 		settingsFactory.registerSettingsMetadata(
 			MBConstants.SERVICE_NAME, _getFallbackKeys(), _MULTI_VALUED_KEYS,
-			_resourceManager);
+			null, _resourceManager);
 	}
 
 	private final TypedSettings _typedSettings;

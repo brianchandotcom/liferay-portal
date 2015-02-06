@@ -12,26 +12,21 @@
  * details.
  */
 
-package com.liferay.wiki.configuration;
+package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
 
 /**
- * @author Iván Zaera
+ * @author Ivan Zaera
  */
-public class WikiServiceConfigurationUtil {
+public interface SettingsProvider<T> {
 
-	public static String get(String key) {
-		return _configuration.get(key);
-	}
+	public T getGroupServiceSettings(long groupId) throws PortalException;
 
-	public static String[] getArray(String key) {
-		return _configuration.getArray(key);
-	}
-
-	private static final Configuration _configuration =
-		ConfigurationFactoryUtil.getConfiguration(
-			WikiServiceConfigurationUtil.class.getClassLoader(), "portlet");
+	public T getGroupServiceSettings(
+			long groupId, Map<String, String[]> parameterMap)
+		throws PortalException;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.settings.SettingsProvider;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -704,6 +705,12 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			getUserId(), nodeId, title, version, serviceContext);
 	}
 
+	public void setWikiSettingsProvider(
+		SettingsProvider<WikiSettings> wikiSettingsProvider) {
+
+		_wikiSettingsProvider = wikiSettingsProvider;
+	}
+
 	@Override
 	public void subscribePage(long nodeId, String title)
 		throws PortalException {
@@ -819,8 +826,9 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			else {
 				String value = null;
 
-				WikiSettings wikiSettings = WikiSettings.getInstance(
-					page.getGroupId());
+				WikiSettings wikiSettings =
+					_wikiSettingsProvider.getGroupServiceSettings(
+						page.getGroupId());
 
 				if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
 					value = StringUtil.shorten(
@@ -887,5 +895,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			throw new SystemException(fe);
 		}
 	}
+
+	private SettingsProvider<WikiSettings> _wikiSettingsProvider;
 
 }

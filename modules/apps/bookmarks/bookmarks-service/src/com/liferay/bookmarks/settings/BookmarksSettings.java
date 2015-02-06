@@ -204,7 +204,7 @@ public class BookmarksSettings {
 
 		settingsFactory.registerSettingsMetadata(
 			BookmarksConstants.SERVICE_NAME, _getFallbackKeys(),
-			_MULTI_VALUED_KEYS, _resourceManager);
+			_MULTI_VALUED_KEYS, null, _resourceManager);
 	}
 
 	private final TypedSettings _typedSettings;

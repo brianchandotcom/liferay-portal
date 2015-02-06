@@ -15,17 +15,11 @@
 package com.liferay.wiki.settings;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
-import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.wiki.constants.WikiConstants;
 
 import java.util.Map;
 
@@ -43,28 +37,32 @@ public class WikiSettings {
 		"rssAbstractLength",
 	};
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {WikiSettingsProvider#getGroupServiceSettings(long)}
+	 */
+	@Deprecated
 	public static WikiSettings getInstance(long groupId)
 		throws PortalException {
 
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, WikiConstants.SERVICE_NAME);
+		WikiSettingsProvider wikiSettingsProvider =
+			WikiSettingsProvider.getWikiSettingsProvider();
 
-		return new WikiSettings(settings);
+		return wikiSettingsProvider.getGroupServiceSettings(groupId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {WikiSettingsProvider#getGroupServiceSettings(long,String[])}
+	 */
+	@Deprecated
 	public static WikiSettings getInstance(
 			long groupId, Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, WikiConstants.SERVICE_NAME);
+		WikiSettingsProvider wikiSettingsProvider =
+			WikiSettingsProvider.getWikiSettingsProvider();
 
-		return new WikiSettings(
-			new ParameterMapSettings(parameterMap, settings));
-	}
-
-	public WikiSettings(Settings settings) {
-		_typedSettings = new TypedSettings(settings);
+		return wikiSettingsProvider.getGroupServiceSettings(
+			groupId, parameterMap);
 	}
 
 	public String getDefaultFormat() {
@@ -145,48 +143,21 @@ public class WikiSettings {
 		return _typedSettings.getBooleanValue("pageMinorEditSendEmail");
 	}
 
-	private static FallbackKeys _getFallbackKeys() {
+	protected static FallbackKeys getFallbackKeys() {
 		FallbackKeys fallbackKeys = new FallbackKeys();
 
-		fallbackKeys.add("defaultFormat", "formats.default");
 		fallbackKeys.add(
-			"emailFromAddress", "email.from.address",
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		fallbackKeys.add(
-			"emailFromName", "email.from.name",
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		fallbackKeys.add("emailPageAddedBody", "email.page.added.body");
-		fallbackKeys.add("emailPageAddedEnabled", "email.page.added.enabled");
-		fallbackKeys.add("emailPageAddedSubject", "email.page.added.subject");
-		fallbackKeys.add("emailPageUpdatedBody", "email.page.updated.body");
-		fallbackKeys.add(
-			"emailPageUpdatedEnabled","email.page.updated.enabled");
-		fallbackKeys.add(
-			"emailPageUpdatedSubject","email.page.updated.subject");
-		fallbackKeys.add("pageCommentsEnabled", "page.comments.enabled");
-		fallbackKeys.add(
-			"pageMinorEditAddSocialActivity",
-			"page.minor.edit.add.social.activity");
-		fallbackKeys.add(
-			"pageMinorEditSendEmail", "page.minor.edit.send.email");
-		fallbackKeys.add("rssAbstractLength", "rss.abstract.length");
+			"emailFromAddress", PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		fallbackKeys.add("emailFromName", PropsKeys.ADMIN_EMAIL_FROM_NAME);
 
 		return fallbackKeys;
 	}
 
-	private static final String[] _MULTI_VALUED_KEYS = {};
-
-	private static final ResourceManager _resourceManager =
-		new ClassLoaderResourceManager(WikiSettings.class.getClassLoader());
-
-	static {
-		SettingsFactory settingsFactory =
-			SettingsFactoryUtil.getSettingsFactory();
-
-		settingsFactory.registerSettingsMetadata(
-			WikiConstants.SERVICE_NAME, _getFallbackKeys(), _MULTI_VALUED_KEYS,
-			_resourceManager);
+	protected WikiSettings(Settings settings) {
+		_typedSettings = new TypedSettings(settings);
 	}
+
+	protected static final String[] MULTI_VALUED_KEYS = {};
 
 	private final TypedSettings _typedSettings;
 

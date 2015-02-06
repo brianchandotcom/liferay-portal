@@ -61,33 +61,61 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	@Override
 	public void clearCache() {
 		_portletPropertiesMap.clear();
-		_propertiesMap.clear();
 	}
 
 	@Override
 	public Settings getCompanyServiceSettings(
 		long companyId, String serviceName) {
 
+		Settings portalPropertiesSettings = getPortalPropertiesSettings();
+
+		Settings serviceConfigurationBeanSettings =
+			getServiceConfigurationBeanSettings(
+				serviceName, portalPropertiesSettings);
+
+		Settings portalPreferencesSettings = getPortalPreferencesSettings(
+			companyId, serviceConfigurationBeanSettings);
+
+		Settings companyPortletPreferencesSettings =
+			getCompanyPortletPreferencesSettings(
+				companyId, serviceName, portalPreferencesSettings);
+
 		return applyFallbackKeys(
-			serviceName, getCompanySettings(companyId, serviceName));
+			serviceName, companyPortletPreferencesSettings);
 	}
 
 	@Override
 	public Settings getGroupServiceCompanyDefaultSettings(
 		long companyId, String serviceName) {
 
-		return applyFallbackKeys(
-			serviceName,
-			new PortletPreferencesSettings(
-				getCompanyPortletPreferences(companyId, serviceName)));
+		return getCompanyPortletPreferencesSettings(
+			companyId, serviceName, null);
 	}
 
 	@Override
 	public Settings getGroupServiceSettings(long groupId, String serviceName)
 		throws PortalException {
 
-		return applyFallbackKeys(
-			serviceName, getGroupSettings(groupId, serviceName));
+		Settings portalPropertiesSettings = getPortalPropertiesSettings();
+
+		Settings serviceConfigurationBeanSettings =
+			getServiceConfigurationBeanSettings(
+				serviceName, portalPropertiesSettings);
+
+		long companyId = getCompanyId(groupId);
+
+		Settings portalPreferencesSettings = getPortalPreferencesSettings(
+			companyId, serviceConfigurationBeanSettings);
+
+		Settings companyPortletPreferencesSettings =
+			getCompanyPortletPreferencesSettings(
+				companyId, serviceName, portalPreferencesSettings);
+
+		Settings groupPortletPreferencesSettings =
+			getGroupPortletPreferencesSettings(
+				groupId, serviceName, companyPortletPreferencesSettings);
+
+		return applyFallbackKeys(serviceName, groupPortletPreferencesSettings);
 	}
 
 	@Override
@@ -148,10 +176,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	public Settings getPortletInstanceCompanyDefaultSettings(
 		long companyId, String portletId) {
 
-		return applyFallbackKeys(
-			PortletConstants.getRootPortletId(portletId),
-			new PortletPreferencesSettings(
-				getCompanyPortletPreferences(companyId, portletId)));
+		return getCompanyPortletPreferencesSettings(companyId, portletId, null);
 	}
 
 	@Override
@@ -159,30 +184,47 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			long groupId, String portletId)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		return applyFallbackKeys(
-			PortletConstants.getRootPortletId(portletId),
-			new PortletPreferencesSettings(
-				getGroupPortletPreferences(
-					group.getCompanyId(), groupId, portletId)));
+		return getGroupPortletPreferencesSettings(groupId, portletId, null);
 	}
 
 	@Override
 	public Settings getPortletInstanceSettings(Layout layout, String portletId)
 		throws PortalException {
 
+		Settings portalPropertiesSettings = getPortalPropertiesSettings();
+
+		Settings serviceConfigurationBeanSettings =
+			getServiceConfigurationBeanSettings(
+				portletId, portalPropertiesSettings);
+
+		long groupId = layout.getGroupId();
+
+		long companyId = getCompanyId(groupId);
+
+		Settings portalPreferencesSettings = getPortalPreferencesSettings(
+			companyId, serviceConfigurationBeanSettings);
+
+		Settings companyPortletPreferencesSettings =
+			getCompanyPortletPreferencesSettings(
+				companyId, portletId, portalPreferencesSettings);
+
+		Settings groupPortletPreferencesSettings =
+			getGroupPortletPreferencesSettings(
+				groupId, portletId, companyPortletPreferencesSettings);
+
+		Settings portletInstancePortletPreferencesSettings =
+			getPortletInstancePortletPreferencesSettings(
+				layout, portletId, groupPortletPreferencesSettings);
+
 		return applyFallbackKeys(
-			PortletConstants.getRootPortletId(portletId),
-			new PortletPreferencesSettings(
-				getPortletInstancePortletPreferences(layout, portletId),
-				getGroupSettings(layout.getGroupId(), portletId)));
+			portletId, portletInstancePortletPreferencesSettings);
 	}
 
 	@Override
 	public void registerSettingsMetadata(
 		String settingsId, FallbackKeys fallbackKeys,
-		String[] multiValuedKeysArray, ResourceManager resourceManager) {
+		String[] multiValuedKeysArray, Object serviceConfigurationBean,
+		ResourceManager resourceManager) {
 
 		settingsId = PortletConstants.getRootPortletId(settingsId);
 
@@ -196,6 +238,11 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		_multiValuedKeysMap.put(settingsId, multiValuedKeysList);
 
+		if (serviceConfigurationBean != null) {
+			_serviceConfigurationBeans.put(
+				settingsId, serviceConfigurationBean);
+		}
+
 		_resourceManagers.put(settingsId, resourceManager);
 	}
 
@@ -203,6 +250,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		if (settings instanceof FallbackKeys) {
 			return settings;
 		}
+
+		settingsId = PortletConstants.getRootPortletId(settingsId);
 
 		FallbackKeys fallbackKeys = _fallbackKeysMap.get(settingsId);
 
@@ -213,6 +262,12 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		return settings;
 	}
 
+	protected long getCompanyId(long groupId) throws PortalException {
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		return group.getCompanyId();
+	}
+
 	protected PortletPreferences getCompanyPortletPreferences(
 		long companyId, String settingsId) {
 
@@ -221,30 +276,33 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			settingsId);
 	}
 
-	protected Settings getCompanySettings(long companyId, String settingsId) {
+	protected Settings getCompanyPortletPreferencesSettings(
+		long companyId, String settingsId, Settings parentSettings) {
+
 		return new PortletPreferencesSettings(
 			getCompanyPortletPreferences(companyId, settingsId),
-			getPortalPreferencesSettings(companyId, settingsId));
+			parentSettings);
 	}
 
 	protected PortletPreferences getGroupPortletPreferences(
-		long companyId, long groupId, String settingsId) {
-
-		return PortletPreferencesLocalServiceUtil.getStrictPreferences(
-			companyId, groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
-			settingsId);
-	}
-
-	protected Settings getGroupSettings(long groupId, String settingsId)
+			long groupId, String settingsId)
 		throws PortalException {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		long companyId = group.getCompanyId();
 
+		return PortletPreferencesLocalServiceUtil.getStrictPreferences(
+			companyId, groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
+			settingsId);
+	}
+
+	protected Settings getGroupPortletPreferencesSettings(
+			long groupId, String settingsId, Settings parentSettings)
+		throws PortalException {
+
 		return new PortletPreferencesSettings(
-			getGroupPortletPreferences(companyId, groupId, settingsId),
-			getCompanySettings(companyId, settingsId));
+			getGroupPortletPreferences(groupId, settingsId), parentSettings);
 	}
 
 	protected PortletPreferences getPortalPreferences(long companyId) {
@@ -252,33 +310,20 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 	}
 
-	protected PortletPreferencesSettings getPortalPreferencesSettings(
-		long companyId, String settingsId) {
+	protected Settings getPortalPreferencesSettings(
+		long companyId, Settings parentSettings) {
 
 		return new PortletPreferencesSettings(
-			getPortalPreferences(companyId),
-			getPortletPropertiesSettings(settingsId));
+			getPortalPreferences(companyId), parentSettings);
 	}
 
-	protected Properties getPortalProperties(String settingsId) {
-		Properties portalProperties = _propertiesMap.get(settingsId);
-
-		if (portalProperties != null) {
-			return portalProperties;
-		}
-
-		portalProperties = PropsUtil.getProperties();
-
-		_propertiesMap.put(settingsId, portalProperties);
-
-		return portalProperties;
+	protected Properties getPortalProperties() {
+		return PropsUtil.getProperties();
 	}
 
-	protected PropertiesSettings getPortalPropertiesSettings(
-		String settingsId) {
-
+	protected Settings getPortalPropertiesSettings() {
 		return new PropertiesSettings(
-			getPortalProperties(settingsId),
+			getPortalProperties(),
 			new ClassLoaderResourceManager(
 				PortalClassLoaderUtil.getClassLoader()));
 	}
@@ -299,45 +344,39 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			portletId);
 	}
 
-	protected Properties getPortletProperties(
-		String settingsId, ResourceManager resourceManager) {
+	protected Settings getPortletInstancePortletPreferencesSettings(
+		Layout layout, String portletId, Settings parentSettings) {
 
-		Properties properties = _portletPropertiesMap.get(settingsId);
-
-		if (properties != null) {
-			return properties;
-		}
-
-		properties = new Properties();
-
-		if (resourceManager == null) {
-			return properties;
-		}
-
-		ResourceRetriever resourceRetriever =
-			resourceManager.getResourceRetriever("portlet.properties");
-
-		InputStream inputStream = resourceRetriever.getInputStream();
-
-		try {
-			properties.load(inputStream);
-		}
-		catch (Exception e) {
-		}
-
-		_portletPropertiesMap.put(settingsId, properties);
-
-		return properties;
+		return new PortletPreferencesSettings(
+			getPortletInstancePortletPreferences(layout, portletId),
+			parentSettings);
 	}
 
-	protected PropertiesSettings getPortletPropertiesSettings(
-		String settingsId) {
+	protected Properties getPortletProperties(String serviceName) {
+		Properties properties = _portletPropertiesMap.get(serviceName);
 
-		ResourceManager resourceManager = getResourceManager(settingsId);
+		if (properties == null) {
+			properties = new Properties();
 
-		return new PropertiesSettings(
-			getPortletProperties(settingsId, resourceManager), resourceManager,
-			getPortalPropertiesSettings(settingsId));
+			ResourceManager resourceManager = getResourceManager(serviceName);
+
+			if (resourceManager != null) {
+				ResourceRetriever resourceRetriever =
+					resourceManager.getResourceRetriever("portlet.properties");
+
+				InputStream inputStream = resourceRetriever.getInputStream();
+
+				try {
+					properties.load(inputStream);
+				}
+				catch (Exception e) {
+				}
+
+				_portletPropertiesMap.put(serviceName, properties);
+			}
+		}
+
+		return properties;
 	}
 
 	protected ResourceManager getResourceManager(String settingsId) {
@@ -346,15 +385,29 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		return _resourceManagers.get(settingsId);
 	}
 
+	private Object getServiceConfigurationBean(String settingsId) {
+		settingsId = PortletConstants.getRootPortletId(settingsId);
+
+		return _serviceConfigurationBeans.get(settingsId);
+	}
+
+	private Settings getServiceConfigurationBeanSettings(
+		String settingsId, Settings parentSettings) {
+
+		return new ServiceConfigurationBeanSettings(
+			getServiceConfigurationBean(settingsId),
+			getResourceManager(settingsId), parentSettings);
+	}
+
 	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =
 		new ConcurrentHashMap<>();
 	private final ConcurrentMap<String, List<String>> _multiValuedKeysMap =
 		new ConcurrentHashMap<>();
 	private final Map<String, Properties> _portletPropertiesMap =
 		new ConcurrentHashMap<>();
-	private final Map<String, Properties> _propertiesMap =
-		new ConcurrentHashMap<>();
 	private final ConcurrentMap<String, ResourceManager> _resourceManagers =
+		new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, Object> _serviceConfigurationBeans =
 		new ConcurrentHashMap<>();
 
 }

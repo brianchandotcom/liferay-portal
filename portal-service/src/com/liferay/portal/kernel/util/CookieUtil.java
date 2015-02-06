@@ -38,6 +38,10 @@ public class CookieUtil {
 		return _cookie;
 	}
 
+	public static String getDomain(String host) {
+		return getCookie().getDomain(host);
+	}
+
 	public static byte[] serialize(Cookie cookie) {
 		return getCookie().serialize(cookie);
 	}

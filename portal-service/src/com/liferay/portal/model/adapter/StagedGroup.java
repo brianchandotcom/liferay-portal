@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.sitesadmin.lar;
+package com.liferay.portal.model.adapter;
 
 import com.liferay.portal.model.GroupModel;
 import com.liferay.portal.model.StagedModel;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.template.velocity;
 
 import com.liferay.portal.kernel.io.ReaderInputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,8 +67,15 @@ public class LiferayResourceLoader extends ResourceLoader {
 
 	@Override
 	public void init(ExtendedProperties props) {
+		String resourceModificationCheckInterval = (String)props.get(
+			"resourceModificationCheckInterval");
+
+		if (resourceModificationCheckInterval == null) {
+			resourceModificationCheckInterval = "60";
+		}
+
 		setModificationCheckInterval(
-			PropsValues.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
+			Integer.parseInt(resourceModificationCheckInterval));
 	}
 
 	@Override

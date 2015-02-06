@@ -202,6 +202,8 @@ public class TemplateResourceLoaderUtil {
 
 			_templateResourceLoaders.remove(templateResourceLoader.getName());
 
+			templateResourceLoader.clearCache();
+			
 			templateResourceLoader.destroy();
 
 			Registry registry = RegistryUtil.getRegistry();

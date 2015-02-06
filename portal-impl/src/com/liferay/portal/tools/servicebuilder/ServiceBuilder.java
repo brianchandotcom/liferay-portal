@@ -3762,11 +3762,32 @@ public class ServiceBuilder {
 		}
 
 		for (DocletTag tag : tags) {
+			String tagValue = tag.getValue();
+
 			sb.append(indentation);
 			sb.append(" * @");
 			sb.append(tag.getName());
 			sb.append(" ");
-			sb.append(tag.getValue());
+
+			if (_tpl.equals(_tplServiceSoap)) {
+				if (tagValue.startsWith(
+						"com.liferay.portal.kernel.exception.PortalException"))
+				{
+					tagValue = tagValue.replaceFirst(
+						"com.liferay.portal.kernel.exception.PortalException",
+						"RemoteException");
+				}
+				else if (tagValue.startsWith(
+							"com.liferay.portal.security.auth.PrincipalException"))
+				{
+					tagValue = tagValue.replaceFirst(
+						"com.liferay.portal.security.auth.PrincipalException",
+						"RemoteException");
+				}
+			}
+
+			sb.append(tagValue);
+
 			sb.append("\n");
 		}
 
@@ -5023,6 +5044,8 @@ public class ServiceBuilder {
 	private String _processTemplate(String name, Map<String, Object> context)
 		throws Exception {
 
+		_tpl = name;
+
 		return StringUtil.strip(FreeMarkerUtil.process(name, context), '\r');
 	}
 
@@ -5217,6 +5240,7 @@ public class ServiceBuilder {
 	private String _targetEntityName;
 	private String _testDir;
 	private String _testOutputPath;
+	private String _tpl;
 	private String _tplActionableDynamicQuery =
 		_TPL_ROOT + "actionable_dynamic_query.ftl";
 	private String _tplBadAliasNames = _TPL_ROOT + "bad_alias_names.txt";

@@ -32,7 +32,12 @@
 
 		<execute macro="CPWebcontentStructuresAddstructure#showDetails" />
 
-		<execute action="CPWebcontentStructuresAddstructure#type" locator-key1="DESCRIPTION_FIELD" value1="${structureDescription}" />
+		<if>
+			<isset var="structureDescription" />
+			<then>
+				<execute action="CPWebcontentStructuresAddstructure#type" locator-key1="DESCRIPTION_FIELD" value1="${structureDescription}" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${substructure}" arg2="true" />

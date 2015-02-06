@@ -321,11 +321,29 @@
 				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD_LOCALIZED" value1="${webContentContent}" />
 				<execute action="PGWebcontentdisplayAddwebcontent#click" locator-key1="LOCALIZED_PUBLISH_BUTTON" />
 			</then>
+			<elseif>
+				<isset var="structureName" />
+				<then>
+					<var name="key_structureName" value="${structureName}" />
+
+					<execute action="PGWebcontentdisplay#assertClick" locator-key1="ADD_STRUCTURED_WEB_CONTENT" value1="${structureName}" />
+
+					<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
+					<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
+
+					<var name="key_fieldName" value="${structureFieldName}" />
+
+					<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TEXT_FIELD" value1="${webContentText}" />
+					<execute action="PGWebcontentdisplayAddwebcontent#click" locator-key1="PUBLISH_BUTTON" />
+
+					<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
+					<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentText}" />
+				</then>
+			</elseif>
 			<else>
 				<execute action="PGWebcontentdisplay#assertClick" locator-key1="ADD_BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
 				<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
-
 				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 				<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
 
@@ -344,6 +362,12 @@
 							<then>
 								<execute action="PGWebcontentdisplay#assertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
 							</then>
+							<elseif>
+								<equals arg1="${pageBreak}" arg2="true" />
+								<then>
+									<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="PAGINATION_PAGES" value1="Pages" />
+								</then>
+							</elseif>
 							<else>
 								<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 							</else>

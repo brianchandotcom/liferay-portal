@@ -61,6 +61,64 @@
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="editTemplate">
+		<if>
+			<equals arg1="${editTemplateButton}" arg2="true" />
+			<then>
+				<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_TEMPLATE" />
+			</then>
+			<else>
+				<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" />
+
+				<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
+				<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="STRUCTURE_NAME" value1="${structureName}" />
+				<execute action="PGWebcontentdisplayEditwebcontent#clickNoError" locator-key1="EDIT_TEMPLATE" />
+				<execute action="PGWebcontentdisplayEditwebcontent#confirm" locator-key1="CONFIRMATION" value1="Editing the current template will delete all unsaved content." />
+			</else>
+		</if>
+
+		<execute action="PGWebcontentdisplayEdittemplate#selectFrame" value1="relative=top" />
+		<execute action="PGWebcontentdisplayEdittemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+		<execute action="PGWebcontentdisplayEdittemplate#type" locator-key1="NAME_FIELD" value1="Template Edit" />
+
+		<if>
+			<isset var="templateScript" />
+			<then>
+				<execute action="PGWebcontentdisplayEdittemplate#type" locator-key1="SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
+			</then>
+		</if>
+
+		<execute action="PGWebcontentdisplayEdittemplate#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<if>
+			<equals arg1="${editTemplateButton}" arg2="true" />
+			<then>
+				<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
+			</then>
+			<else>
+				<execute action="PGWebcontentdisplayEdittemplate#pause" locator1="2000" />
+				<execute action="PGWebcontentdisplayEdittemplate#sikuliClick" locator-key1="CLOSE_BUTTON_PNG" />
+
+				<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
+				<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
+				<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="TEMPLATE_NAME" value1="${templateName}" />
+				<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+				<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="templateScript" />
+			<then>
+				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${templateScript}" />
+			</then>
+			<else>
+				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="searchWebContent">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -151,6 +209,29 @@
 		</execute>
 	</command>
 
+	<command name="toggleTemplate">
+		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" />
+
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="STRUCTURE_NAME" value1="${structureName}" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="SELECT_TEMPLATE" value1="Select" />
+
+		<execute action="PGWebcontentdisplayEdittemplate#selectFrame" value1="relative=top" />
+		<execute action="PGWebcontentdisplayEdittemplate#selectFrame" locator-key1="TEMPLATES_LIST_IFRAME" />
+
+		<var name="key_templateName" value="${templateName}" />
+
+		<execute action="PGWebcontentdisplayEdittemplate#assertClick" locator-key1="CHOOSE_BUTTON" value1="Choose" />
+		<execute action="CPWebcontentTemplates#confirm" value1="Selecting a new template will delete all unsaved content. Do you want to proceed?" />
+
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="TEMPLATE_NAME" value1="${templateName}" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="viewAllSettingsEnabledPG">
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="PRINT_WEB_CONTENT" value1="Print" />
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="NO_COMMENTS_MESSAGE" value1="No comments yet" />
@@ -185,6 +266,12 @@
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="NAVIGATION_SCOPE" value1="Scope" />
 		<execute action="PGWebcontentdisplayConfigurationScope#assertTextEquals" locator-key1="SCOPE_MENULIST" value1="${scopeSelection}" />
+	</command>
+
+	<command name="viewContentPageBreak">
+		<execute action="PGWebcontentdisplay#assertClick" locator-key1="PAGINATION_PAGE_2" value1="2" />
+		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+		<execute action="PGWebcontentdisplay#assertClick" locator-key1="PAGINATION_PREVIOUS" value1="Previous" />
 	</command>
 
 	<command name="viewDeletedArticlePGViaWCD">

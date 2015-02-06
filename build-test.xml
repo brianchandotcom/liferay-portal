@@ -678,8 +678,9 @@
 	</macrodef>
 
 	<macrodef name="setup-testable-tomcat">
+		<attribute name="property.file" />
 		<sequential>
-			<property file="${basedir}/test.run.properties" />
+			<property file="@{property.file}" />
 
 			<antcall target="prepare-portal-ext-properties" />
 
@@ -3370,7 +3371,9 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 			<else>
 				<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
 
-				<setup-testable-tomcat />
+				<setup-testable-tomcat
+					property.file="${basedir}/test.run.properties"
+				/>
 			</else>
 		</if>
 

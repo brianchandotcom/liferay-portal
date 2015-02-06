@@ -523,7 +523,7 @@ if (Validator.isNull(redirect)) {
 
 		<portlet:renderURL var="nodeURL">
 			<portlet:param name="struts_action" value="/wiki/view" />
-			<portlet:param name="title" value="<%= WikiServiceConfigurationValues.FRONT_PAGE_NAME %>" />
+			<portlet:param name="title" value="<%= wikiServiceConfiguration.frontPageName() %>" />
 			<portlet:param name="tag" value="<%= StringPool.BLANK %>" />
 		</portlet:renderURL>
 

@@ -390,7 +390,7 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 </aui:script>
 
 <%
-if ((wikiPage != null) && !wikiPage.getTitle().equals(WikiServiceConfigurationValues.FRONT_PAGE_NAME)) {
+if ((wikiPage != null) && !wikiPage.getTitle().equals(wikiServiceConfiguration.frontPageName())) {
 	if (!portletName.equals(WikiPortletKeys.WIKI_DISPLAY)) {
 		PortalUtil.setPageSubtitle(wikiPage.getTitle(), request);
 

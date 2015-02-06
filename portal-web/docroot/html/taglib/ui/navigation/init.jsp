@@ -18,7 +18,7 @@
 
 <%
 String bulletStyle = StringUtil.toLowerCase(((String)request.getAttribute("liferay-ui:navigation:bulletStyle")));
-String displayStyle = (String)request.getAttribute("liferay-ui:navigation:displayStyle");
+String[] displayStyleDefinition = (String[])request.getAttribute("liferay-ui:navigation:displayStyleDefinition");
 boolean preview = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:navigation:preview"));
 
 String headerType = null;
@@ -26,8 +26,6 @@ String includedLayouts = null;
 boolean nestedChildren = true;
 int rootLayoutLevel = 0;
 String rootLayoutType = null;
-
-String[] displayStyleDefinition = _getDisplayStyleDefinition(displayStyle);
 
 if ((displayStyleDefinition != null) && (displayStyleDefinition.length != 0)) {
 	headerType = displayStyleDefinition[0];
@@ -46,11 +44,5 @@ else {
 	nestedChildren = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:navigation:nestedChildren"));
 	rootLayoutLevel = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:navigation:rootLayoutLevel"));
 	rootLayoutType = (String)request.getAttribute("liferay-ui:navigation:rootLayoutType");
-}
-%>
-
-<%!
-private String[] _getDisplayStyleDefinition(String displayStyle) {
-	return PropsUtil.getArray("navigation.display.style", new Filter(displayStyle));
 }
 %>

@@ -4293,7 +4293,22 @@ if (ppstate.equals("normal")) {
 							/>
 						</copy>
 
-						<get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${env.BUILD_URL}/consoleText" />
+						<propertyregex
+							input="${env.BUILD_URL}"
+							property="jenkins.build.url"
+							regexp="https:\/\/([^\.]+)\.[^\/]+"
+							replace="http://\1"
+						/>
+
+						<propertyregex
+							input="${jenkins.build.url}"
+							override="true"
+							property="jenkins.build.url"
+							regexp="http:\/\/([^\/]+)\/(\d+)"
+							replace="http://\1-\2/\2"
+						/>
+
+						<get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
 					</then>
 				</if>
 			</then>

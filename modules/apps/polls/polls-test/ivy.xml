@@ -11,8 +11,6 @@
 	</info>
 
 	<dependencies defaultconf="default">
-		<dependency conf="test->default" name="arquillian-container-liferay" org="com.liferay.arquillian" rev="1.0.0.Alpha1-SNAPSHOT" />
-		<dependency conf="test->default" name="arquillian-deployment-generator-bnd" org="com.liferay.arquillian" rev="1.0.0.Alpha1-SNAPSHOT" />
-		<dependency conf="test->default" name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.6.Final" />
+		<dependency conf="test->default" name="com.liferay.arquillian.bridge" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 	</dependencies>
 </ivy-module>

@@ -29,8 +29,8 @@ public class NavigationTag extends IncludeTag {
 		_bulletStyle = bulletStyle;
 	}
 
-	public void setDisplayStyle(String displayStyle) {
-		_displayStyle = displayStyle;
+	public void setDisplayStyleDefinition(String[] displayStyleDefinition) {
+		_displayStyleDefinition = displayStyleDefinition;
 	}
 
 	public void setHeaderType(String headerType) {
@@ -60,7 +60,7 @@ public class NavigationTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_bulletStyle = "1";
-		_displayStyle = "1";
+		_displayStyleDefinition = null;
 		_headerType = "none";
 		_includedLayouts = "auto";
 		_nestedChildren = true;
@@ -78,7 +78,8 @@ public class NavigationTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:navigation:bulletStyle", _bulletStyle);
 		request.setAttribute(
-			"liferay-ui:navigation:displayStyle", _displayStyle);
+			"liferay-ui:navigation:displayStyleDefinition",
+			_displayStyleDefinition);
 		request.setAttribute("liferay-ui:navigation:headerType", _headerType);
 		request.setAttribute(
 			"liferay-ui:navigation:includedLayouts", _includedLayouts);
@@ -97,7 +98,7 @@ public class NavigationTag extends IncludeTag {
 	private static final String _PAGE = "/html/taglib/ui/navigation/page.jsp";
 
 	private String _bulletStyle = "1";
-	private String _displayStyle = "1";
+	private String[] _displayStyleDefinition;
 	private String _headerType = "none";
 	private String _includedLayouts = "auto";
 	private boolean _nestedChildren = true;

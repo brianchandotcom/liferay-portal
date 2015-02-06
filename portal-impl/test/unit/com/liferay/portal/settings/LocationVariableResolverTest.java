@@ -74,6 +74,8 @@ public class LocationVariableResolverTest {
 
 		File file = File.createTempFile("testResolveVariableForFile", "txt");
 
+		file.deleteOnExit();
+
 		FileUtil.write(file, expectedValue.getBytes());
 
 		LocationVariableResolver locationVariableResolver =

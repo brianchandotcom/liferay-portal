@@ -148,28 +148,8 @@ public class WikiSettings {
 	private static FallbackKeys _getFallbackKeys() {
 		FallbackKeys fallbackKeys = new FallbackKeys();
 
-		fallbackKeys.add("defaultFormat", "formats.default");
-		fallbackKeys.add(
-			"emailFromAddress", "email.from.address",
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		fallbackKeys.add(
-			"emailFromName", "email.from.name",
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		fallbackKeys.add("emailPageAddedBody", "email.page.added.body");
-		fallbackKeys.add("emailPageAddedEnabled", "email.page.added.enabled");
-		fallbackKeys.add("emailPageAddedSubject", "email.page.added.subject");
-		fallbackKeys.add("emailPageUpdatedBody", "email.page.updated.body");
-		fallbackKeys.add(
-			"emailPageUpdatedEnabled","email.page.updated.enabled");
-		fallbackKeys.add(
-			"emailPageUpdatedSubject","email.page.updated.subject");
-		fallbackKeys.add("pageCommentsEnabled", "page.comments.enabled");
-		fallbackKeys.add(
-			"pageMinorEditAddSocialActivity",
-			"page.minor.edit.add.social.activity");
-		fallbackKeys.add(
-			"pageMinorEditSendEmail", "page.minor.edit.send.email");
-		fallbackKeys.add("rssAbstractLength", "rss.abstract.length");
+		fallbackKeys.add("emailFromAddress",PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		fallbackKeys.add("emailFromName", PropsKeys.ADMIN_EMAIL_FROM_NAME);
 
 		return fallbackKeys;
 	}

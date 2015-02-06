@@ -177,9 +177,9 @@ public class LocalizationImpl implements Localization {
 	@Override
 	public FullNameDefinition getFullNameDefinition(Locale locale) {
 		String[] userNameFields = StringUtil.split(
-			LanguageUtil.get(locale, "lang.user.name.fields"));
+			LanguageUtil.get(locale, "lang.user.name.field.names"));
 		String userNameRequiredFields = LanguageUtil.get(
-			locale, "lang.user.name.required.fields");
+			locale, "lang.user.name.required.field.names");
 
 		FullNameDefinition fullNameDefinition = new FullNameDefinition();
 

@@ -1039,7 +1039,9 @@
 	</target>
 
 	<target name="setup-testable-tomcat">
-		<setup-testable-tomcat />
+		<setup-testable-tomcat
+			property.file="${project.dir}/test.run.properties"
+		/>
 	</target>
 
 	<target name="sort-xml-attributes">

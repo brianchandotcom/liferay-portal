@@ -60,6 +60,7 @@ import com.liferay.portal.model.PortletModel;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
@@ -1657,6 +1658,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Role " + roleName + " does not exist");
 				}
+
+				continue;
+			}
+
+			if (isPrivateLayout() &&
+				resourceName.equals(Layout.class.getName()) &&
+				roleName.equals(RoleConstants.GUEST)) {
 
 				continue;
 			}

@@ -17,15 +17,6 @@
 
 	<propertycopy from="browser.${browser.type}.version" name="browser.version" />
 
-	<propertycopy from="database.${database.type}.version.build" name="database.version.build" />
-
-	<propertycopy from="database.${database.type}${database.version.build}.host" name="database.host" />
-	<propertycopy from="database.${database.type}${database.version.build}.password" name="database.password" />
-	<propertycopy from="database.${database.type}${database.version.build}.schema" name="database.schema" />
-	<propertycopy from="database.${database.type}${database.version.build}.username" name="database.username" />
-	<propertycopy from="database.${database.type}${database.version.build}.url" name="database.url" />
-	<propertycopy from="database.${database.type}${database.version.build}.version" name="database.version" />
-
 	<propertycopy from="java.jdk.${java.jdk.type}.version" name="java.jdk.version" />
 
 	<propertycopy from="liferay.portal.${liferay.portal.branch}.bundle" name="liferay.portal.bundle" />
@@ -51,6 +42,34 @@
 			<property name="ip.address" value="${host.info.ADDR4}" />
 		</else>
 	</if>
+
+	<macrodef name="get-database-property">
+		<attribute name="property.name" />
+
+		<sequential>
+			<var name="property.name" unset="true" />
+			<var name="@{property.name}" unset="true" />
+
+			<property name="property.name" value="@{property.name}" />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					String propertyName = project.getProperty("property.name");
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("database.");
+					sb.append(project.getProperty("database.type"));
+					sb.append(".");
+					sb.append(propertyName.substring(9));
+
+					propertyValue = project.getProperty(sb.toString());
+
+					project.setProperty(propertyName, propertyValue);
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
 
 	<macrodef name="prepare-additional-bundles">
 		<sequential>

@@ -32,5 +32,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ConfigurationAction.class
 )
-public class NavigationAction extends DefaultConfigurationAction {
+public class NavigationConfigurationAction extends DefaultConfigurationAction {
 }

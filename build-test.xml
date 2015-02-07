@@ -43,10 +43,93 @@
 		</else>
 	</if>
 
+	<macrodef name="check-config">
+		<sequential>
+			<if>
+				<not>
+					<isset property="app.server.type" />
+				</not>
+				<then>
+					<property name="app.server.type" value="tomcat" />
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<or>
+						<equals arg1="${app.server.type}" arg2="geronimo" />
+						<equals arg1="${app.server.type}" arg2="glassfish" />
+						<equals arg1="${app.server.type}" arg2="jboss" />
+						<equals arg1="${app.server.type}" arg2="jetty" />
+						<equals arg1="${app.server.type}" arg2="jonas" />
+						<equals arg1="${app.server.type}" arg2="resin" />
+						<equals arg1="${app.server.type}" arg2="tcserver" />
+						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<equals arg1="${app.server.type}" arg2="weblogic" />
+						<equals arg1="${app.server.type}" arg2="websphere" />
+					</or>
+				</not>
+				<then>
+					<fail>Please set "app.server.type" to one of the following:${line.separator}geronimo, glassfish, jboss, jetty, jonas, resin, tcserver, tomcat, weblogic, or websphere.</fail>
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<isset property="browser.type" />
+				</not>
+				<then>
+					<property name="browser.type" value="firefox" />
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<or>
+						<equals arg1="${browser.type}" arg2="firefox" />
+						<equals arg1="${browser.type}" arg2="googlechrome" />
+						<equals arg1="${browser.type}" arg2="ie" />
+					</or>
+				</not>
+				<then>
+					<fail>Please set "browser.type" to one of the following:${line.separator}firefox, googlechrome, ie</fail>
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<isset property="database.type" />
+				</not>
+				<then>
+					<property name="database.type" value="mysql" />
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<or>
+						<equals arg1="${database.type}" arg2="db2" />
+						<equals arg1="${database.type}" arg2="hsql" />
+						<equals arg1="${database.type}" arg2="mysql" />
+						<equals arg1="${database.type}" arg2="oracle" />
+						<equals arg1="${database.type}" arg2="postgresql" />
+						<equals arg1="${database.type}" arg2="sql.server" />
+						<equals arg1="${database.type}" arg2="sybase" />
+					</or>
+				</not>
+				<then>
+					<fail>Please set "database.type" to one of the following:${line.separator}db2, hsql, mysql, oracle, postgresql, sql.server, sybase</fail>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-database-property">
 		<attribute name="property.name" />
 
 		<sequential>
+			<check-config />
+
 			<var name="property.name" unset="true" />
 			<var name="@{property.name}" unset="true" />
 
@@ -1281,82 +1364,7 @@ create database lportal${database.index} character set utf8;</echo>
 	</target>
 
 	<target name="check-config">
-		<if>
-			<not>
-				<isset property="app.server.type" />
-			</not>
-			<then>
-				<property name="app.server.type" value="tomcat" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<or>
-					<equals arg1="${app.server.type}" arg2="geronimo" />
-					<equals arg1="${app.server.type}" arg2="glassfish" />
-					<equals arg1="${app.server.type}" arg2="jboss" />
-					<equals arg1="${app.server.type}" arg2="jetty" />
-					<equals arg1="${app.server.type}" arg2="jonas" />
-					<equals arg1="${app.server.type}" arg2="resin" />
-					<equals arg1="${app.server.type}" arg2="tcserver" />
-					<equals arg1="${app.server.type}" arg2="tomcat" />
-					<equals arg1="${app.server.type}" arg2="weblogic" />
-					<equals arg1="${app.server.type}" arg2="websphere" />
-				</or>
-			</not>
-			<then>
-				<fail>Please set "app.server.type" to one of the following:${line.separator}geronimo, glassfish, jboss, jetty, jonas, resin, tcserver, tomcat, weblogic, or websphere.</fail>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="browser.type" />
-			</not>
-			<then>
-				<property name="browser.type" value="firefox" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<or>
-					<equals arg1="${browser.type}" arg2="firefox" />
-					<equals arg1="${browser.type}" arg2="googlechrome" />
-					<equals arg1="${browser.type}" arg2="ie" />
-				</or>
-			</not>
-			<then>
-				<fail>Please set "browser.type" to one of the following:${line.separator}firefox, googlechrome, ie</fail>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="database.type" />
-			</not>
-			<then>
-				<property name="database.type" value="mysql" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<or>
-					<equals arg1="${database.type}" arg2="db2" />
-					<equals arg1="${database.type}" arg2="hsql" />
-					<equals arg1="${database.type}" arg2="mysql" />
-					<equals arg1="${database.type}" arg2="oracle" />
-					<equals arg1="${database.type}" arg2="postgresql" />
-					<equals arg1="${database.type}" arg2="sql.server" />
-					<equals arg1="${database.type}" arg2="sybase" />
-				</or>
-			</not>
-			<then>
-				<fail>Please set "database.type" to one of the following:${line.separator}db2, hsql, mysql, oracle, postgresql, sql.server, sybase</fail>
-			</then>
-		</if>
+		<check-config />
 	</target>
 
 	<target name="check-inet-address">

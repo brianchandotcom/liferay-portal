@@ -15,9 +15,9 @@
 package com.liferay.portal.kernel.ldap;
 
 import com.liferay.portal.ldap.validator.LDAPFilterValidatorImpl;
+import com.liferay.portal.security.ldap.LDAPFilterValidator;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -25,11 +25,6 @@ import org.junit.Test;
  * @author Vilmos Papp
  */
 public class LDAPUtilTest {
-
-	@Before
-	public void setUp() {
-		setUpLDAPFilterValidator();
-	}
 
 	@Test
 	public void testIsValidFilterBalancedParentheses() {
@@ -392,15 +387,10 @@ public class LDAPUtilTest {
 	}
 
 	protected boolean isValidFilter(String filter) {
-		return LDAPUtil.isValidFilter(filter);
+		return _ldapFilterValidator.isValid(filter);
 	}
 
-	protected void setUpLDAPFilterValidator() {
-		_ldapUtil = new LDAPUtil();
-
-		_ldapUtil.setLDAPFilterValidator(new LDAPFilterValidatorImpl());
-	}
-
-	private static LDAPUtil _ldapUtil;
+	private static final LDAPFilterValidator _ldapFilterValidator =
+		new LDAPFilterValidatorImpl();
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.ldap;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -190,7 +189,7 @@ public class LDAPUtil {
 
 	public static boolean isValidFilter(String filter) {
 		final LDAPFilterValidator ldapFilterValidator =
-				_serviceTracker.getService();
+			_serviceTracker.getService();
 
 		return ldapFilterValidator.isValid(filter);
 	}

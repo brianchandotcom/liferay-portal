@@ -17,15 +17,6 @@
 
 	<propertycopy from="browser.${browser.type}.version" name="browser.version" />
 
-	<propertycopy from="database.${database.type}.version.build" name="database.version.build" />
-
-	<propertycopy from="database.${database.type}${database.version.build}.host" name="database.host" />
-	<propertycopy from="database.${database.type}${database.version.build}.password" name="database.password" />
-	<propertycopy from="database.${database.type}${database.version.build}.schema" name="database.schema" />
-	<propertycopy from="database.${database.type}${database.version.build}.username" name="database.username" />
-	<propertycopy from="database.${database.type}${database.version.build}.url" name="database.url" />
-	<propertycopy from="database.${database.type}${database.version.build}.version" name="database.version" />
-
 	<propertycopy from="java.jdk.${java.jdk.type}.version" name="java.jdk.version" />
 
 	<propertycopy from="liferay.portal.${liferay.portal.branch}.bundle" name="liferay.portal.bundle" />
@@ -51,6 +42,117 @@
 			<property name="ip.address" value="${host.info.ADDR4}" />
 		</else>
 	</if>
+
+	<macrodef name="check-config">
+		<sequential>
+			<if>
+				<not>
+					<isset property="app.server.type" />
+				</not>
+				<then>
+					<property name="app.server.type" value="tomcat" />
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<or>
+						<equals arg1="${app.server.type}" arg2="geronimo" />
+						<equals arg1="${app.server.type}" arg2="glassfish" />
+						<equals arg1="${app.server.type}" arg2="jboss" />
+						<equals arg1="${app.server.type}" arg2="jetty" />
+						<equals arg1="${app.server.type}" arg2="jonas" />
+						<equals arg1="${app.server.type}" arg2="resin" />
+						<equals arg1="${app.server.type}" arg2="tcserver" />
+						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<equals arg1="${app.server.type}" arg2="weblogic" />
+						<equals arg1="${app.server.type}" arg2="websphere" />
+					</or>
+				</not>
+				<then>
+					<fail>Please set "app.server.type" to one of the following:${line.separator}geronimo, glassfish, jboss, jetty, jonas, resin, tcserver, tomcat, weblogic, or websphere.</fail>
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<isset property="browser.type" />
+				</not>
+				<then>
+					<property name="browser.type" value="firefox" />
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<or>
+						<equals arg1="${browser.type}" arg2="firefox" />
+						<equals arg1="${browser.type}" arg2="googlechrome" />
+						<equals arg1="${browser.type}" arg2="ie" />
+					</or>
+				</not>
+				<then>
+					<fail>Please set "browser.type" to one of the following:${line.separator}firefox, googlechrome, ie</fail>
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<isset property="database.type" />
+				</not>
+				<then>
+					<property name="database.type" value="mysql" />
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<or>
+						<equals arg1="${database.type}" arg2="db2" />
+						<equals arg1="${database.type}" arg2="hsql" />
+						<equals arg1="${database.type}" arg2="mysql" />
+						<equals arg1="${database.type}" arg2="oracle" />
+						<equals arg1="${database.type}" arg2="postgresql" />
+						<equals arg1="${database.type}" arg2="sql.server" />
+						<equals arg1="${database.type}" arg2="sybase" />
+					</or>
+				</not>
+				<then>
+					<fail>Please set "database.type" to one of the following:${line.separator}db2, hsql, mysql, oracle, postgresql, sql.server, sybase</fail>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-database-property">
+		<attribute name="property.name" />
+
+		<sequential>
+			<check-config />
+
+			<var name="property.name" unset="true" />
+			<var name="@{property.name}" unset="true" />
+
+			<property name="property.name" value="@{property.name}" />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					String propertyName = project.getProperty("property.name");
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("database.");
+					sb.append(project.getProperty("database.type"));
+					sb.append(".");
+					sb.append(propertyName.substring(9));
+
+					propertyValue = project.getProperty(sb.toString());
+
+					project.setProperty(propertyName, propertyValue);
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
 
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
@@ -193,6 +295,11 @@
 					/>
 				</not>
 				<then>
+					<get-database-property property.name="database.host" />
+					<get-database-property property.name="database.password" />
+					<get-database-property property.name="database.schema" />
+					<get-database-property property.name="database.username" />
+
 					<replace file="${app.server.dir}/conf/server.xml">
 						<replacetoken><![CDATA[<GlobalNamingResources>]]></replacetoken>
 						<replacevalue expandproperties="true">
@@ -208,7 +315,7 @@
 										name="jdbc/LiferayPool"
 										password="${database.password}"
 										type="javax.sql.DataSource"
-										url="jdbc:mysql://localhost:3306/lportal?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false"
+										url="jdbc:mysql://${database.host}:3306/${database.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false"
 										username="${database.username}"
 									/>
 							]]>
@@ -408,6 +515,8 @@
 
 	<macrodef name="record-env-database">
 		<sequential>
+			<get-database-property property.name="database.version" />
+
 			<propertyregex
 				input="${database.version}"
 				override="true"
@@ -1276,82 +1385,7 @@ create database lportal${database.index} character set utf8;</echo>
 	</target>
 
 	<target name="check-config">
-		<if>
-			<not>
-				<isset property="app.server.type" />
-			</not>
-			<then>
-				<property name="app.server.type" value="tomcat" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<or>
-					<equals arg1="${app.server.type}" arg2="geronimo" />
-					<equals arg1="${app.server.type}" arg2="glassfish" />
-					<equals arg1="${app.server.type}" arg2="jboss" />
-					<equals arg1="${app.server.type}" arg2="jetty" />
-					<equals arg1="${app.server.type}" arg2="jonas" />
-					<equals arg1="${app.server.type}" arg2="resin" />
-					<equals arg1="${app.server.type}" arg2="tcserver" />
-					<equals arg1="${app.server.type}" arg2="tomcat" />
-					<equals arg1="${app.server.type}" arg2="weblogic" />
-					<equals arg1="${app.server.type}" arg2="websphere" />
-				</or>
-			</not>
-			<then>
-				<fail>Please set "app.server.type" to one of the following:${line.separator}geronimo, glassfish, jboss, jetty, jonas, resin, tcserver, tomcat, weblogic, or websphere.</fail>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="browser.type" />
-			</not>
-			<then>
-				<property name="browser.type" value="firefox" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<or>
-					<equals arg1="${browser.type}" arg2="firefox" />
-					<equals arg1="${browser.type}" arg2="googlechrome" />
-					<equals arg1="${browser.type}" arg2="ie" />
-				</or>
-			</not>
-			<then>
-				<fail>Please set "browser.type" to one of the following:${line.separator}firefox, googlechrome, ie</fail>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="database.type" />
-			</not>
-			<then>
-				<property name="database.type" value="mysql" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<or>
-					<equals arg1="${database.type}" arg2="db2" />
-					<equals arg1="${database.type}" arg2="hsql" />
-					<equals arg1="${database.type}" arg2="mysql" />
-					<equals arg1="${database.type}" arg2="oracle" />
-					<equals arg1="${database.type}" arg2="postgresql" />
-					<equals arg1="${database.type}" arg2="sql.server" />
-					<equals arg1="${database.type}" arg2="sybase" />
-				</or>
-			</not>
-			<then>
-				<fail>Please set "database.type" to one of the following:${line.separator}db2, hsql, mysql, oracle, postgresql, sql.server, sybase</fail>
-			</then>
-		</if>
+		<check-config />
 	</target>
 
 	<target name="check-inet-address">
@@ -1481,6 +1515,8 @@ create database lportal${database.index} character set utf8;</echo>
 	</target>
 
 	<target name="copy-optional-jars">
+		<get-database-property property.name="database.version" />
+
 		<if>
 			<equals arg1="${database.type}" arg2="db2" />
 			<then>
@@ -2315,6 +2351,11 @@ hw.keyboard=yes
 	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
 		<prepare-fix-pack-bundle />
 
+		<get-database-property property.name="database.driver" />
+		<get-database-property property.name="database.password" />
+		<get-database-property property.name="database.url" />
+		<get-database-property property.name="database.username" />
+
 		<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}
 
 plugin.notifications.enabled=false
@@ -2424,14 +2465,19 @@ ${custom.properties}</echo>
 				<equals arg1="${database.sharding}" arg2="true" />
 			</and>
 			<then>
+				<get-database-property property.name="database.driver" />
+				<get-database-property property.name="database.host" />
+				<get-database-property property.name="database.password" />
+				<get-database-property property.name="database.username" />
+
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 					<![CDATA[
-						jdbc.one.driverClassName=com.mysql.jdbc.Driver
+						jdbc.one.driverClassName=${database.driver}
 						jdbc.one.url=jdbc:mysql://${database.host}/lportal1?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
 						jdbc.one.username=${database.username}
 						jdbc.one.password=${database.password}
 
-						jdbc.two.driverClassName=com.mysql.jdbc.Driver
+						jdbc.two.driverClassName=${database.driver}
 						jdbc.two.url=jdbc:mysql://${database.host}/lportal2?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
 						jdbc.two.username=${database.username}
 						jdbc.two.password=${database.password}
@@ -3644,6 +3690,11 @@ plugins.includes=marketplace-portlet</echo>
 	</target>
 
 	<target name="prepare-test-properties" depends="generate-test-properties">
+		<get-database-property property.name="database.driver" />
+		<get-database-property property.name="database.password" />
+		<get-database-property property.name="database.url" />
+		<get-database-property property.name="database.username" />
+
 		<echo file="portal-impl/test/portal-test-ext.properties">
 jdbc.default.driverClassName=${database.driver}
 jdbc.default.url=${database.url}
@@ -3782,6 +3833,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						<then>
 							<var name="mysql.arg.line" unset="true" />
 
+							<get-database-property property.name="database.password" />
+							<get-database-property property.name="database.username" />
+
 							<if>
 								<and>
 									<equals arg1="${database.password}" arg2="" />
@@ -3815,6 +3869,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<elseif>
 						<equals arg1="${database.type}" arg2="oracle" />
 						<then>
+							<get-database-property property.name="database.password" />
+							<get-database-property property.name="database.username" />
+
 							<exec executable="${oracle.sqlplus.executable}">
 								<arg value="${oracle.admin.user}/${oracle.admin.password}" />
 								<arg value="@create.sql" />
@@ -3826,6 +3883,8 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<elseif>
 						<equals arg1="${database.type}" arg2="postgresql" />
 						<then>
+							<get-database-property property.name="database.username" />
+
 							<exec executable="${postgresql.executable}">
 								<arg value="-f" />
 								<arg value="create.sql" />
@@ -3837,6 +3896,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<elseif>
 						<equals arg1="${database.type}" arg2="sybase" />
 						<then>
+							<get-database-property property.name="database.password" />
+							<get-database-property property.name="database.schema" />
+							<get-database-property property.name="database.username" />
+
 							<exec executable="${sybase.executable}">
 								<arg value="-i" />
 								<arg value="create.sql" />
@@ -3888,6 +3951,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 		<if>
 			<equals arg1="${database.type}" arg2="mysql" />
 			<then>
+				<get-database-property property.name="database.password" />
+				<get-database-property property.name="database.username" />
+
 				<exec executable="mysql" input="${liferay.home}/${database.type}.sql">
 					<arg value="--database=lportal" />
 					<arg value="--password=${database.password}" />

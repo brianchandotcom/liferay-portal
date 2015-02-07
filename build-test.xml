@@ -762,7 +762,7 @@
 
 					<get
 						dest="tomcat.zip"
-						src="http://archive.apache.org/dist/tomcat/tomcat-${tomcat.major.version}/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip"
+						src="${app.server.tomcat.zip.url}"
 					/>
 
 					<unzip

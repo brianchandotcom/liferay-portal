@@ -108,7 +108,7 @@
 			<liferay-ui:error exception="<%= UserEmailAddressException.class %>" message="authentication-failed" />
 			<liferay-ui:error exception="<%= UserLockoutException.PasswordPolicyLockout.class %>" message="this-account-has-been-locked" />
 			<liferay-ui:error exception="<%= UserPasswordException.class %>" message="authentication-failed" />
-			<liferay-ui:error exception="<%= UserScreenNameException.class %>" message="authentication-failed" />
+			<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeNull.class %>" message="the-screen-name-cannot-be-blank" />
 
 			<aui:fieldset>
 

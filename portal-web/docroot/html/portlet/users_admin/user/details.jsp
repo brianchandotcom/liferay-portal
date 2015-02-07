@@ -75,11 +75,17 @@ if (selContact != null) {
 			<liferay-ui:message arguments="<%= sb.toString() %>" key="your-portal-administrator-has-disabled-the-ability-to-modify-the-following-fields" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
-		<liferay-ui:error exception="<%= UserScreenNameException.MustBeAlphaNumeric.class %>" focusField="screenName" message="please-enter-a-valid-screen-name" />
+		<liferay-ui:error exception="<%= UserScreenNameException.MustBeAlphaNumeric.class %>" focusField="screenName">
+			<liferay-ui:message arguments="<%= ((UserScreenNameException.MustBeAlphaNumeric)errorException).getValidSpecialCharsAsString() %>" key="please-enter-a-valid-alphanumeric-screen-name" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
 		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeDuplicate.class %>" focusField="screenName" message="the-screen-name-you-requested-is-already-taken" />
-		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeNumeric.class %>" focusField="screenName" message="please-enter-a-valid-screen-name" />
+		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeNull.class %>" focusField="screenName" message="the-screen-name-cannot-be-blank" />
+		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeNumeric.class %>" focusField="screenName" message="the-screen-name-cannot-contain-only-numeric-values" />
 		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeReserved.class %>" focusField="screenName" message="the-screen-name-you-requested-is-reserved" />
-		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeUsedByGroup.class %>" focusField="screenName" message="the-screen-name-you-requested-is-already-taken" />
+		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeReservedForAnonymous.class %>" focusField="screenName" message="the-screen-name-you-requested-is-reserved-for-anonymous-user" />
+		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeUsedByGroup.class %>" focusField="screenName" message="the-screen-name-you-requested-is-already-taken-by-a-site" />
+		<liferay-ui:error exception="<%= UserScreenNameException.MustProduceValidFriendlyURL.class %>" focusField="screenName" message="the-screen-name-you-requested-must-produce-a-valid-friendly-url" />
 		<liferay-ui:error exception="<%= UserScreenNameException.MustValidate.class %>" focusField="screenName" message="please-enter-a-valid-screen-name" />
 
 		<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || (selUser != null) %>">

@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Pagination</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Pagination</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Pagination</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIRST_LINK</td>
+	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li/a[contains(.,'First')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIOUS_LINK</td>
+	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li/a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_LINK</td>
+	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li/a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LAST_LINK</td>
+	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li/a[contains(.,'Last')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

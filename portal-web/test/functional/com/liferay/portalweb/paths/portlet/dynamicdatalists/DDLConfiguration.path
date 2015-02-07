@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>DDLConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DDLConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>DDLConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@src,'configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_PERMISSIONS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SHARING</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SCOPE</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Scope')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TEMPLATES-->
+<tr>
+	<td>TEMPLATES_DISPLAY_TEMPLATE_SELECT</td>
+	<td>//select[contains(@id,'displayTemplateId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATES_FORM_TEMPLATE_SELECT</td>
+	<td>//select[contains(@id,'formTemplateId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATES_EDITABLE_CHECKBOX</td>
+	<td>//input[contains(@id,'editable')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATES_SPREADSHEET_VIEW_CHECKBOX</td>
+	<td>//input[contains(@id,'spreadsheet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LIST_TABLE-->
+<tr>
+	<td>LIST_TABLE_NAME_1</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[2]/a)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_TABLE_DESCRIPTION_1</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[3]/a)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_TABLE_ACTIONS_1</td>
+	<td>xpath=//td[contains(@class,'entry-action last')]/div/a/i[contains(@class,'menu-arrow caret')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LIST_MENULIST-->
+<tr>
+	<td>LIST_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

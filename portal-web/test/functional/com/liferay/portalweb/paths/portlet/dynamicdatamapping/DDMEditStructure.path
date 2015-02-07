@@ -1,0 +1,514 @@
+<html>
+<head>
+<title>DDMEditStructure</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DDMEditStructure</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>DDMStructure</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IFRAME</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'selectDDMStructure')] | //div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'selectStructure')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK_TAB</td>
+	<td>//a[contains(@id,'TabsBack')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD_ALERT</td>
+	<td>//div[@class='required']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS</td>
+	<td>//div[@id='structureDetailsSectionPanel']/div/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<tr>
+	<td>DETAILS_DESCRIPTION_FIELD</td>
+	<td>//textarea[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_DESCRIPTION_LANGUAGE_SELECT</td>
+	<td>//select[contains(@id,'language')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PARENT_SELECT_BUTTON</td>
+	<td>//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_MODE_SELECT</td>
+	<td>//select[@id='_166_mode']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PARENT_REMOVE_BUTTON</td>
+	<td>//button[contains(@id,'removeParentStructureButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FIELDS-->
+<tr>
+	<td>FIELDS_LINK</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Fields')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_FIELD</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}' and contains(@class,'property-builder-field-draggable')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_FIELD_PNG</td>
+	<td>portal/screenshots/ddm/${key_field}_field_icon.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_FIELD_UNSELECTABLE</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}' and not(contains(@class,'property-builder-field-draggable'))]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_BOOLEAN</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Boolean']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_DATE</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Date']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_DECIMAL</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Decimal']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_DOCUMENTS_AND_MEDIA</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Documents and Media']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_FILE_UPLOAD</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='File Upload']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_HTML</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='HTML']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_INTEGER</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Integer']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_LINK_TO_PAGE</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Link to Page']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_NUMBER</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Number']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_RADIO</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Radio']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_SELECT</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Select']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_TEXT</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Text']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_TEXT_BOX</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='Text Box']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETTINGS-->
+<tr>
+	<td>SETTINGS_LINK</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_TYPE</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Type')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_FIELD_LABEL</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Field Label')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_SHOW_LABEL</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Show Label')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_READ_ONLY</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Read Only')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_REQUIRED</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Required')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_NAME</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Name')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_PREDEFINED_VALUE</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Predefined Value')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_TIP</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Tip')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_INDEXABLE</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Indexable')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_LOCALIZABLE</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Localizable')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_REPEATABLE</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Repeatable')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_OPTIONS</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Options')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_TEXT</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Text')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_STYLE</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Style')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_WIDTH</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Width')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FORM-->
+<tr>
+	<td>FORM_BUILDER</td>
+	<td>//div[@class='property-builder-drop-container']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD</td>
+	<td>//div[contains(@class,'component form-builder-field')]/div/label[.='${key_fieldFieldLabel}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_PNG</td>
+	<td>portal/screenshots/ddm/form_field_${key_formField}.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_1_NO_LABEL</td>
+	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_DELETE_ICON</td>
+	<td>xpath=(//div[contains(@class,'component') and contains(@class,'form-builder-field')]/div/label[contains(.,'${key_fieldFieldLabel}')]/../../div/div/button/span[contains (@class,'glyphicon-trash')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDSET</td>
+	<td>//legend[contains(.,'Fieldset')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_SEPARATOR</td>
+	<td>//div[contains(@class,'ddm-separator')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div/label)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_BOOLEAN_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'form-builder-checkbox-field-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_DATE_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-date-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_DECIMAL_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-decimal-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_DOCUMENTS_AND_MEDIA_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-documentlibrary-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FILE_UPLOAD_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-fileupload-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_HTML_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-text-html-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_INTEGER_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-integer-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_LINK_TO_PAGE_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-link-to-page-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_NUMBER_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-number-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_RADIO_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'form-builder-radio-field-content')]/label)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_SELECT_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'form-builder-select-field-content')]/label)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_TEXT_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'form-builder-field-content') and contains(@class,'form-builder-text-field-content') and contains(@class,'clearfix')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_TEXT_BOX_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'form-builder-textarea-field-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_SETTINGS_ICON_1</td>
+	<td>xpath=(//button/i[@class='icon-wrench'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_DUPLICATE_ICON_1</td>
+	<td>xpath=(//button/i[@class='icon-plus'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_DELETE_ICON_1</td>
+	<td>xpath=(//button/i[@class='icon-trash'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_FIELD</td>
+	<td>//input[@name='${key_fieldName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_TEXT_AREA</td>
+	<td>//textarea[@name='${key_fieldName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_RADIO_LABEL</td>
+	<td>//div[contains(@class,'component form-builder-field')]/div/label[contains(.,'${key_fieldFieldLabel}')]/../div/div/label[contains(.,'${key_fieldOptionsName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_SELECT</td>
+	<td>//select[@name='${key_fieldName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETTINGS_CELL_EDITOR-->
+<tr>
+	<td>SETTINGS_CELL_EDITOR_FIELD</td>
+	<td>//input[@name='value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_FIELD_ALERT</td>
+	<td>//div[@class='structureFieldName' and @role='alert']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_TEXT_AREA</td>
+	<td>//textarea[@name='value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_YES_RADIO</td>
+	<td>//input[(@name='value') and (@value='true') ]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_NO_RADIO</td>
+	<td>//input[(@name='value') and (@value='false') ]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_NOT_INDEXABLE_RADIO</td>
+	<td>//label[@class='radio' and contains(.,'No')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTION</td>
+	<td>//div[contains(@class,'celleditor-edit-option') and input/@value='${key_option}']/input[@title='Name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_VALUE</td>
+	<td>//div[contains(@class,'celleditor-edit-option') and input/@value='${key_value}']/input[@title='Value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_SAVE_BUTTON</td>
+	<td>//div[contains(@class,'component btn-toolbar')]//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_CANCEL_BUTTON</td>
+	<td>//div[contains(@class,'component btn-toolbar')]//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_NAME_1</td>
+	<td>//div[contains(@class,'celleditor-edit-option-row')][1]//input[contains(@class,'celleditor-edit-input-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_NAME_2</td>
+	<td>//div[contains(@class,'celleditor-edit-option-row')][2]//input[contains(@class,'celleditor-edit-input-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_NAME_3</td>
+	<td>//div[contains(@class,'celleditor-edit-option-row')][3]//input[contains(@class,'celleditor-edit-input-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_VALUE_1</td>
+	<td>xPath=(//div[contains(@class,'celleditor-edit-option-row')])[1]//input[contains(@class,'celleditor-edit-input-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_VALUE_2</td>
+	<td>xPath=(//div[contains(@class,'celleditor-edit-option-row')])[2]//input[contains(@class,'celleditor-edit-input-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_VALUE_3</td>
+	<td>xPath=(//div[contains(@class,'celleditor-edit-option-row')])[3]//input[contains(@class,'celleditor-edit-input-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_ADD_OPTIONS</td>
+	<td>//div[contains(@class,'celleditor-edit yui3-dd-drop')]//a[contains(@class,'celleditor-edit-add-option')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_REMOVE_1</td>
+	<td>//div[contains(@class,'celleditor-edit-option-row')]//a[contains(@class,'celleditor-edit-delete-option')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_WIDTH</td>
+	<td>//label/input[@value='${key_widthSize}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

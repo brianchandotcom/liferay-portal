@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>WebForm</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WebForm</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>WebForm</td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FORM_INFORMATION-->
+<tr>
+	<td>FORM_INFORMATION_TITLE</td>
+	<td>//div[@class='portlet-body']/form/fieldset/legend/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_INFORMATION_DESCRIPTION</td>
+	<td>//div[@class='portlet-body']/form/fieldset/div/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FORM_FIELDS-->
+<tr>
+	<td>FORM_FIELDS_FIELD_MANDATORY_MESSAGE</td>
+	<td>//div[contains(@id,'Errorfield')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_FIELD_HEADER</td>
+	<td>//div[contains(.,'${key_wfFieldName}')]/label[contains(@for,'webformportlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_TEXT_FIELD</td>
+	<td>//div[contains(.,'${key_wfFieldName}')]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_OPTIONS_FIELD</td>
+	<td>//div/div[contains(.,'${key_wfFieldName}')]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_CHECKBOX_FIELD</td>
+	<td>//div[contains(@class,'checkbox')]/label[contains(.,'${key_wfFieldName}')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_CHECKBOX_FIELD_HEADER</td>
+	<td>//div[contains(@class,'checkbox')]/label[contains(.,'${key_wfFieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_TEXT_BOX_FIELD</td>
+	<td>//div[contains(.,'${key_wfFieldName}')]/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_RADIO_FIELD_OPTION</td>
+	<td>//div/div[contains(.,'${key_wfFieldName}')]/label[contains(.,'${key_wfRadioFieldOption}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_RADIO_FIELD_OPTION_LABEL</td>
+	<td>//div/div[contains(.,'${key_wfFieldName}')]/label[contains(.,'${key_wfRadioFieldOption}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

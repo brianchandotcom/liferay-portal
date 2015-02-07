@@ -1,0 +1,116 @@
+<html>
+<head>
+<title>WorkflowConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>WorkflowConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_DEFINITIONS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Definitions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DEFAULT_CONFIGURATION</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Default Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SUBMISSIONS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Submissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RESOURCE_TABLE-->
+<tr>
+	<td>RESOURCE_TABLE_PAGE_REVISION</td>
+	<td>//div[contains(@id,'workflowHandlersSearchContainer')]//tr[contains(.,'Page Revision')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_PAGE_REVISION_SELECT</td>
+	<td>//select[contains(@id,'LayoutRevision')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_USER</td>
+	<td>//div[contains(@id,'workflowHandlersSearchContainer')]//tr[contains(.,'User')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_USER_SELECT</td>
+	<td>//select[contains(@id,'User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_BLOGS_ENTRY</td>
+	<td>//div[contains(@id,'workflowHandlersSearchContainer')]//tr[contains(.,'Blogs Entry')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_BLOGS_ENTRY_SELECT</td>
+	<td>//select[contains(@id,'BlogsEntry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_WEB_CONTENT</td>
+	<td>//div[contains(@id,'workflowHandlersSearchContainer')]//tr[contains(.,'Web Content')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_WEB_CONTENT_SELECT</td>
+	<td>//select[contains(@id,'JournalArticle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_COMMENTS</td>
+	<td>//div[contains(@id,'workflowHandlersSearchContainer')]//tr[contains(.,'Comments')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_COMMENTS_SELECT</td>
+	<td>//select[contains(@id,'MBDiscussion')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_MESSAGE_BOARDS_MESSAGE</td>
+	<td>//div[contains(@id,'workflowHandlersSearchContainer')]//tr[contains(.,'Message Boards Message')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_MESSAGE_BOARDS_MESSAGE_SELECT</td>
+	<td>//select[contains(@id,'MBMessage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_WIKI_PAGE</td>
+	<td>//div[contains(@id,'workflowHandlersSearchContainer')]//tr[contains(.,'Wiki Page')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_WIKI_PAGE_SELECT</td>
+	<td>//select[contains(@id,'WikiPage')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

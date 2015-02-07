@@ -745,7 +745,7 @@
 
 	<command name="ViewKBArticleWithoutConfiguration" priority="5">
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Knowledge Base Display Page" />re
+			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
 		<execute macro="KBArticle#viewDefaultViaKBDisplayPG" />

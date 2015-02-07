@@ -344,7 +344,7 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
 		</execute>
 
-		<execute macro="KBArticle#selectParentPGViaKBDisplayPG">
+		<execute macro="KBArticle#selectParentViaKBDisplayPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title Parent" />
 		</execute>
 
@@ -745,7 +745,7 @@
 
 	<command name="ViewKBArticleWithoutConfiguration" priority="5">
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Knowledge Base Display Page" />
+			<var name="pageName" value="Knowledge Base Display Page" />re
 		</execute>
 
 		<execute macro="KBArticle#viewDefaultViaKBDisplayPG" />

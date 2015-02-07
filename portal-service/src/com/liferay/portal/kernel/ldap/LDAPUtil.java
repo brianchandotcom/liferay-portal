@@ -188,14 +188,11 @@ public class LDAPUtil {
 		return baseURL + StringPool.SLASH + baseDN;
 	}
 
-	public static LDAPFilterValidator getLDAPFilterValidator() {
-		PortalRuntimePermission.checkGetBeanProperty(LDAPUtil.class);
-
-		return _serviceTracker.getService();
-	}
-
 	public static boolean isValidFilter(String filter) {
-		return getLDAPFilterValidator().isValid(filter);
+		final LDAPFilterValidator ldapFilterValidator =
+				_serviceTracker.getService();
+
+		return ldapFilterValidator.isValid(filter);
 	}
 
 	public static Date parseDate(String date) throws Exception {

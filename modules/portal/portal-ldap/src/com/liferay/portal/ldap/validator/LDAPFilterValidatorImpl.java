@@ -27,9 +27,12 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Vilmos Papp
  */
+@Component(service = LDAPFilterValidator.class)
 public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 
 	public boolean isValid(String filter) {

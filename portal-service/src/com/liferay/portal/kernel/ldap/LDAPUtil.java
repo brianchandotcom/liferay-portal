@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.LDAPFilterValidator;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.text.DateFormat;
 
@@ -188,7 +191,7 @@ public class LDAPUtil {
 	public static LDAPFilterValidator getLDAPFilterValidator() {
 		PortalRuntimePermission.checkGetBeanProperty(LDAPUtil.class);
 
-		return _ldapFilterValidator;
+		return _serviceTracker.getService();
 	}
 
 	public static boolean isValidFilter(String filter) {
@@ -242,14 +245,20 @@ public class LDAPUtil {
 		}
 	}
 
-	public void setLDAPFilterValidator(
-		LDAPFilterValidator ldapFilterValidator) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_ldapFilterValidator = ldapFilterValidator;
+	public void destroy() {
+		_serviceTracker.close();
 	}
 
-	private static LDAPFilterValidator _ldapFilterValidator;
+	private static final
+		ServiceTracker<LDAPFilterValidator, LDAPFilterValidator>
+			_serviceTracker;
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(LDAPFilterValidator.class);
+
+		_serviceTracker.open();
+	}
 
 }

@@ -295,6 +295,11 @@
 					/>
 				</not>
 				<then>
+					<get-database-property property.name="database.host" />
+					<get-database-property property.name="database.password" />
+					<get-database-property property.name="database.schema" />
+					<get-database-property property.name="database.username" />
+
 					<replace file="${app.server.dir}/conf/server.xml">
 						<replacetoken><![CDATA[<GlobalNamingResources>]]></replacetoken>
 						<replacevalue expandproperties="true">
@@ -310,7 +315,7 @@
 										name="jdbc/LiferayPool"
 										password="${database.password}"
 										type="javax.sql.DataSource"
-										url="jdbc:mysql://localhost:3306/lportal?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false"
+										url="jdbc:mysql://${database.host}:3306/${database.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false"
 										username="${database.username}"
 									/>
 							]]>
@@ -510,6 +515,8 @@
 
 	<macrodef name="record-env-database">
 		<sequential>
+			<get-database-property property.name="database.version" />
+
 			<propertyregex
 				input="${database.version}"
 				override="true"
@@ -1494,6 +1501,8 @@ create database lportal${database.index} character set utf8;</echo>
 	</target>
 
 	<target name="copy-optional-jars">
+		<get-database-property property.name="database.version" />
+
 		<if>
 			<equals arg1="${database.type}" arg2="db2" />
 			<then>
@@ -2328,6 +2337,11 @@ hw.keyboard=yes
 	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
 		<prepare-fix-pack-bundle />
 
+		<get-database-property property.name="database.driver" />
+		<get-database-property property.name="database.password" />
+		<get-database-property property.name="database.url" />
+		<get-database-property property.name="database.username" />
+
 		<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}
 
 plugin.notifications.enabled=false
@@ -2437,14 +2451,19 @@ ${custom.properties}</echo>
 				<equals arg1="${database.sharding}" arg2="true" />
 			</and>
 			<then>
+				<get-database-property property.name="database.driver" />
+				<get-database-property property.name="database.host" />
+				<get-database-property property.name="database.password" />
+				<get-database-property property.name="database.username" />
+
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 					<![CDATA[
-						jdbc.one.driverClassName=com.mysql.jdbc.Driver
+						jdbc.one.driverClassName=${database.driver}
 						jdbc.one.url=jdbc:mysql://${database.host}/lportal1?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
 						jdbc.one.username=${database.username}
 						jdbc.one.password=${database.password}
 
-						jdbc.two.driverClassName=com.mysql.jdbc.Driver
+						jdbc.two.driverClassName=${database.driver}
 						jdbc.two.url=jdbc:mysql://${database.host}/lportal2?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
 						jdbc.two.username=${database.username}
 						jdbc.two.password=${database.password}
@@ -3657,6 +3676,11 @@ plugins.includes=marketplace-portlet</echo>
 	</target>
 
 	<target name="prepare-test-properties" depends="generate-test-properties">
+		<get-database-property property.name="database.driver" />
+		<get-database-property property.name="database.password" />
+		<get-database-property property.name="database.url" />
+		<get-database-property property.name="database.username" />
+
 		<echo file="portal-impl/test/portal-test-ext.properties">
 jdbc.default.driverClassName=${database.driver}
 jdbc.default.url=${database.url}
@@ -3795,6 +3819,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						<then>
 							<var name="mysql.arg.line" unset="true" />
 
+							<get-database-property property.name="database.password" />
+							<get-database-property property.name="database.username" />
+
 							<if>
 								<and>
 									<equals arg1="${database.password}" arg2="" />
@@ -3828,6 +3855,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<elseif>
 						<equals arg1="${database.type}" arg2="oracle" />
 						<then>
+							<get-database-property property.name="database.password" />
+							<get-database-property property.name="database.username" />
+
 							<exec executable="${oracle.sqlplus.executable}">
 								<arg value="${oracle.admin.user}/${oracle.admin.password}" />
 								<arg value="@create.sql" />
@@ -3839,6 +3869,8 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<elseif>
 						<equals arg1="${database.type}" arg2="postgresql" />
 						<then>
+							<get-database-property property.name="database.username" />
+
 							<exec executable="${postgresql.executable}">
 								<arg value="-f" />
 								<arg value="create.sql" />
@@ -3850,6 +3882,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<elseif>
 						<equals arg1="${database.type}" arg2="sybase" />
 						<then>
+							<get-database-property property.name="database.password" />
+							<get-database-property property.name="database.schema" />
+							<get-database-property property.name="database.username" />
+
 							<exec executable="${sybase.executable}">
 								<arg value="-i" />
 								<arg value="create.sql" />
@@ -3901,6 +3937,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 		<if>
 			<equals arg1="${database.type}" arg2="mysql" />
 			<then>
+				<get-database-property property.name="database.password" />
+				<get-database-property property.name="database.username" />
+
 				<exec executable="mysql" input="${liferay.home}/${database.type}.sql">
 					<arg value="--database=lportal" />
 					<arg value="--password=${database.password}" />

@@ -15,7 +15,6 @@
 package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.cluster.Address;
-import com.liferay.portal.kernel.cluster.AddressSerializerUtil;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.impl.LockImpl;
@@ -40,19 +40,15 @@ import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.impl.LockLocalServiceImpl;
 import com.liferay.portal.uuid.PortalUUIDImpl;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -78,7 +74,8 @@ public class ClusterMasterExecutorImplTest {
 	}
 
 	@Test
-	public void testClusterMasterTokenClusterEventListener() {
+	public void testClusterMasterTokenClusterEventListener()
+		throws UnknownHostException {
 
 		// Test 1, cluster event listener is invoked when lock is not changed
 
@@ -87,7 +84,7 @@ public class ClusterMasterExecutorImplTest {
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
-		mockClusterExecutor.addClusterNodeAddress(_OTHER_ADDRESS);
+		mockClusterExecutor.addClusterNodeId(_OTHER_CLUSTER_NODE_ID);
 
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 
@@ -107,8 +104,7 @@ public class ClusterMasterExecutorImplTest {
 
 		// Test 2, cluster event listener is invoked when lock is changed
 
-		_mockLockLocalService.setLock(
-			AddressSerializerUtil.serialize(_OTHER_ADDRESS));
+		_mockLockLocalService.setLock(_OTHER_CLUSTER_NODE_ID);
 
 		clusterEventListener.processClusterEvent(null);
 
@@ -157,7 +153,7 @@ public class ClusterMasterExecutorImplTest {
 	}
 
 	@Test
-	public void testDestroy() {
+	public void testDestroy() throws UnknownHostException {
 
 		// Test 1, desctory when cluster link is enabled
 
@@ -358,14 +354,13 @@ public class ClusterMasterExecutorImplTest {
 		}
 		catch (SystemException se) {
 			Assert.assertEquals(
-				"Unable to execute on master " +
-					_LOCAL_ADDRESS.getDescription(),
+				"Unable to execute on master " + _LOCAL_CLUSTER_NODE_ID,
 				se.getMessage());
 		}
 	}
 
 	@Test
-	public void testGetMasterAddressString() {
+	public void testGetMasterAddressString() throws UnknownHostException {
 
 		// Test 1, master to slave
 
@@ -374,7 +369,7 @@ public class ClusterMasterExecutorImplTest {
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
-		mockClusterExecutor.addClusterNodeAddress(_OTHER_ADDRESS);
+		mockClusterExecutor.addClusterNodeId(_OTHER_CLUSTER_NODE_ID);
 
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 
@@ -389,10 +384,9 @@ public class ClusterMasterExecutorImplTest {
 		clusterMasterExecutorImpl.registerClusterMasterTokenTransitionListener(
 			mockClusterMasterTokenTransitionListener);
 
-		_mockLockLocalService.setLock(
-			AddressSerializerUtil.serialize(_OTHER_ADDRESS));
+		_mockLockLocalService.setLock(_OTHER_CLUSTER_NODE_ID);
 
-		clusterMasterExecutorImpl.getMasterAddressString();
+		clusterMasterExecutorImpl.getMasterClusterNodeId();
 
 		Assert.assertFalse(clusterMasterExecutorImpl.isMaster());
 		Assert.assertTrue(
@@ -401,10 +395,9 @@ public class ClusterMasterExecutorImplTest {
 
 		// Test 2, slave to master
 
-		_mockLockLocalService.setLock(
-			AddressSerializerUtil.serialize(_LOCAL_ADDRESS));
+		_mockLockLocalService.setLock(_LOCAL_CLUSTER_NODE_ID);
 
-		clusterMasterExecutorImpl.getMasterAddressString();
+		clusterMasterExecutorImpl.getMasterClusterNodeId();
 
 		Assert.assertTrue(clusterMasterExecutorImpl.isMaster());
 		Assert.assertTrue(
@@ -413,7 +406,8 @@ public class ClusterMasterExecutorImplTest {
 	}
 
 	@Test
-	public void testGetMasterAddressStringWithException() {
+	public void testGetMasterAddressStringWithException()
+		throws UnknownHostException {
 
 		// Test 1, current owner is not alive
 
@@ -429,14 +423,11 @@ public class ClusterMasterExecutorImplTest {
 				JDKLoggerTestUtil.configureJDKLogger(
 					ClusterMasterExecutorImpl.class.getName(), Level.INFO)) {
 
-			String otherOwner = AddressSerializerUtil.serialize(_OTHER_ADDRESS);
-
-			_mockLockLocalService.setLock(otherOwner);
+			_mockLockLocalService.setLock(_OTHER_CLUSTER_NODE_ID);
 
 			Assert.assertEquals(
-				_LOCAL_ADDRESS,
-				AddressSerializerUtil.deserialize(
-					clusterMasterExecutorImpl.getMasterAddressString()));
+				_LOCAL_CLUSTER_NODE_ID,
+				clusterMasterExecutorImpl.getMasterClusterNodeId());
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -445,7 +436,8 @@ public class ClusterMasterExecutorImplTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Lock currently held by " + otherOwner, logRecord.getMessage());
+				"Lock currently held by " + _OTHER_CLUSTER_NODE_ID,
+				logRecord.getMessage());
 
 			logRecord = logRecords.get(1);
 
@@ -463,9 +455,8 @@ public class ClusterMasterExecutorImplTest {
 			_mockLockLocalService.setLock(null);
 
 			Assert.assertEquals(
-				_LOCAL_ADDRESS,
-				AddressSerializerUtil.deserialize(
-					clusterMasterExecutorImpl.getMasterAddressString()));
+				_LOCAL_CLUSTER_NODE_ID,
+				clusterMasterExecutorImpl.getMasterClusterNodeId());
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -493,9 +484,8 @@ public class ClusterMasterExecutorImplTest {
 			_mockLockLocalService.setLock(null);
 
 			Assert.assertEquals(
-				_LOCAL_ADDRESS,
-				AddressSerializerUtil.deserialize(
-					clusterMasterExecutorImpl.getMasterAddressString()));
+				_LOCAL_CLUSTER_NODE_ID,
+				clusterMasterExecutorImpl.getMasterClusterNodeId());
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -504,7 +494,7 @@ public class ClusterMasterExecutorImplTest {
 	}
 
 	@Test
-	public void testInitialize() {
+	public void testInitialize() throws UnknownHostException {
 
 		// Test 1, initialize when cluster link is disabled
 
@@ -537,10 +527,9 @@ public class ClusterMasterExecutorImplTest {
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
-		mockClusterExecutor.addClusterNodeAddress(_OTHER_ADDRESS);
+		mockClusterExecutor.addClusterNodeId(_OTHER_CLUSTER_NODE_ID);
 
-		_mockLockLocalService.setLock(
-			AddressSerializerUtil.serialize(_OTHER_ADDRESS));
+		_mockLockLocalService.setLock(_OTHER_CLUSTER_NODE_ID);
 
 		Assert.assertNotNull(_mockLockLocalService.getLock());
 
@@ -601,94 +590,27 @@ public class ClusterMasterExecutorImplTest {
 	protected static MethodKey testMethodMethodKey = new MethodKey(
 		TestBean.class, "testMethod1", String.class);
 
-	private static final Address _LOCAL_ADDRESS = new AddressImpl(
-		new MockAddress("_LOCAL_ADDRESS"));
+	private static final String _LOCAL_CLUSTER_NODE_ID =
+		"LOCAL_CLUSTER_NODE_ID";
 
-	private static final Address _OTHER_ADDRESS = new AddressImpl(
-		new MockAddress("_OTHER_ADDRESS"));
+	private static final String _OTHER_CLUSTER_NODE_ID =
+		"OTHER_CLUSTER_NODE_ID";
 
 	private final MockLockLocalService _mockLockLocalService =
 		new MockLockLocalService();
 
-	private static class MockAddress implements org.jgroups.Address {
-
-		public MockAddress() {
-		}
-
-		public MockAddress(String name) {
-			_name = name;
-		}
-
-		@Override
-		public int compareTo(org.jgroups.Address jGroupsAddress) {
-			return 0;
-		}
-
-		@Override
-		public boolean equals(Object object) {
-			if (this == object) {
-				return true;
-			}
-
-			if (!(object instanceof MockAddress)) {
-				return false;
-			}
-
-			MockAddress mockAddress = (MockAddress)object;
-
-			if (_name.equals(mockAddress._name)) {
-				return true;
-			}
-
-			return false;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		@Override
-		public int hashCode() {
-			return _name.hashCode();
-		}
-
-		@Override
-		public void readExternal(ObjectInput objectInput) throws IOException {
-			_name = objectInput.readUTF();
-		}
-
-		@Override
-		public void readFrom(DataInput dataInput) throws IOException {
-			_name = dataInput.readUTF();
-		}
-
-		@Override
-		public int size() {
-			return 0;
-		}
-
-		@Override
-		public void writeExternal(ObjectOutput objectOutput)
-			throws IOException {
-
-			objectOutput.writeUTF(_name);
-		}
-
-		@Override
-		public void writeTo(DataOutput dataOutput) throws IOException {
-			dataOutput.writeUTF(_name);
-		}
-
-		private String _name;
-
-	}
-
 	private static class MockClusterExecutor implements ClusterExecutor {
 
-		public MockClusterExecutor(boolean enabled) {
+		public MockClusterExecutor(boolean enabled)
+			throws UnknownHostException {
+
 			_enabled = enabled;
 
-			_addresses.add(_LOCAL_ADDRESS);
+			_localInetAddress = InetAddress.getLocalHost();
+
+			_clusterNodes.put(
+				_LOCAL_CLUSTER_NODE_ID,
+				new ClusterNode(_LOCAL_CLUSTER_NODE_ID, _localInetAddress));
 		}
 
 		@Override
@@ -698,54 +620,48 @@ public class ClusterMasterExecutorImplTest {
 			_clusterEventListeners.add(clusterEventListener);
 		}
 
-		public void addClusterNodeAddress(Address address) {
-			_addresses.add(address);
+		public void addClusterNodeId(String clusterNodeId) {
+			_clusterNodes.put(
+				clusterNodeId,
+				new ClusterNode(clusterNodeId, _localInetAddress));
 		}
 
 		@Override
 		public void destroy() {
-			_addresses.clear();
+			_clusterNodes.clear();
+			_clusterEventListeners.clear();
 		}
 
 		@Override
 		public FutureClusterResponses execute(ClusterRequest clusterRequest) {
-			List<Address> addresses = new ArrayList<>();
-
-			Collection<Address> clusterNodeAddresses =
-				clusterRequest.getTargetClusterNodeAddresses();
-
-			if (clusterNodeAddresses != null) {
-				addresses.addAll(clusterNodeAddresses);
-			}
-
 			Set<String> clusterNodeIds = new HashSet<>();
 
-			for (Address address : addresses) {
-				MockAddress mockAddress = (MockAddress)address.getRealAddress();
+			if (clusterRequest.isMulticast()) {
+				clusterNodeIds.addAll(_clusterNodes.keySet());
+			}
+			else {
+				clusterNodeIds.addAll(clusterRequest.getTargetClusterNodeIds());
+			}
 
-				clusterNodeIds.add(mockAddress.getName());
+			if (clusterRequest.isSkipLocal()) {
+				clusterNodeIds.remove(_LOCAL_CLUSTER_NODE_ID);
 			}
 
 			FutureClusterResponses futureClusterResponses =
 				new FutureClusterResponses(clusterNodeIds);
 
-			for (Address address : addresses) {
+			for (String clusterNodeId : clusterNodeIds) {
 				ClusterNodeResponse clusterNodeResponse =
 					new ClusterNodeResponse();
 
-				clusterNodeResponse.setAddress(address);
 				clusterNodeResponse.setClusterMessageType(
 					ClusterMessageType.EXECUTE);
 				clusterNodeResponse.setMulticast(clusterRequest.isMulticast());
 				clusterNodeResponse.setUuid(clusterRequest.getUuid());
-
-				MockAddress mockAddress = (MockAddress)address.getRealAddress();
+				clusterNodeResponse.setClusterNode(
+					_clusterNodes.get(clusterNodeId));
 
 				try {
-					clusterNodeResponse.setClusterNode(
-						new ClusterNode(
-							mockAddress.getName(), InetAddress.getLocalHost()));
-
 					MethodHandler methodHandler =
 						clusterRequest.getMethodHandler();
 
@@ -777,22 +693,22 @@ public class ClusterMasterExecutorImplTest {
 
 		@Override
 		public List<Address> getClusterNodeAddresses() {
-			return Collections.unmodifiableList(_addresses);
-		}
-
-		@Override
-		public List<ClusterNode> getClusterNodes() {
-			return Collections.emptyList();
-		}
-
-		@Override
-		public ClusterNode getLocalClusterNode() {
 			return null;
 		}
 
 		@Override
+		public List<ClusterNode> getClusterNodes() {
+			return new ArrayList<>(_clusterNodes.values());
+		}
+
+		@Override
+		public ClusterNode getLocalClusterNode() {
+			return _clusterNodes.get(_LOCAL_CLUSTER_NODE_ID);
+		}
+
+		@Override
 		public Address getLocalClusterNodeAddress() {
-			return _LOCAL_ADDRESS;
+			return null;
 		}
 
 		@Override
@@ -801,12 +717,16 @@ public class ClusterMasterExecutorImplTest {
 
 		@Override
 		public boolean isClusterNodeAlive(Address address) {
-			return _addresses.contains(address);
+			return false;
 		}
 
 		@Override
 		public boolean isClusterNodeAlive(String clusterNodeId) {
-			return false;
+			if (Validator.isNull(clusterNodeId)) {
+				throw new NullPointerException();
+			}
+
+			return _clusterNodes.containsKey(clusterNodeId);
 		}
 
 		@Override
@@ -821,10 +741,11 @@ public class ClusterMasterExecutorImplTest {
 			_clusterEventListeners.remove(clusterEventListener);
 		}
 
-		private final List<Address> _addresses = new ArrayList<>();
 		private final List<ClusterEventListener> _clusterEventListeners =
 			new ArrayList<>();
+		private final Map<String, ClusterNode> _clusterNodes = new HashMap<>();
 		private final boolean _enabled;
+		private final InetAddress _localInetAddress;
 
 	}
 

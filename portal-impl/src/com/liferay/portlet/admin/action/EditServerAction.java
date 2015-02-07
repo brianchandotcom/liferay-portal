@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
-import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterLink;
+import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
@@ -958,7 +958,7 @@ public class EditServerAction extends PortletAction {
 	private static final MethodKey _loadIndexesFromClusterMethodKey =
 		new MethodKey(
 			LuceneClusterUtil.class, "loadIndexesFromCluster", long[].class,
-		Address.class);
+		ClusterNode.class);
 
 	private static class ClusterLoadingSyncJob implements Runnable {
 
@@ -1030,14 +1030,11 @@ public class EditServerAction extends PortletAction {
 			}
 
 			if (_master) {
-				Address localClusterNodeAddress =
-					ClusterExecutorUtil.getLocalClusterNodeAddress();
-
 				ClusterRequest clusterRequest =
 					ClusterRequest.createMulticastRequest(
 						new MethodHandler(
 							_loadIndexesFromClusterMethodKey, _companyIds,
-							localClusterNodeAddress),
+							ClusterExecutorUtil.getLocalClusterNode()),
 						true);
 
 				try {

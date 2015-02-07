@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.lucene;
 
-import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 
 import java.io.IOException;
@@ -107,7 +106,7 @@ public interface LuceneHelper {
 	public long getLastGeneration(long companyId);
 
 	public InputStream getLoadIndexesInputStreamFromCluster(
-		long companyId, Address bootupAddress);
+		long companyId, String bootupClusterNodeId);
 
 	public Set<String> getQueryTerms(Query query);
 

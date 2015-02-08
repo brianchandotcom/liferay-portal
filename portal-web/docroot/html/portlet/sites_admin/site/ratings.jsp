@@ -71,10 +71,10 @@ else {
 				<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "TypeSettingsProperties--" + propertyKey + "--" %>'>
 
 					<%
-					for (RatingsType ratingsType : RatingsType.values()) {
+					for (RatingsType curRatingsType : RatingsType.values()) {
 					%>
 
-						<aui:option label="<%= LanguageUtil.get(request, ratingsType.getValue()) %>" selected="<%= ratingsTypeString.equals(ratingsType.getValue()) %>" value="<%= ratingsType.getValue() %>" />
+						<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= ratingsTypeString.equals(curRatingsType.getValue()) %>" value="<%= curRatingsType.getValue() %>" />
 
 					<%
 					}

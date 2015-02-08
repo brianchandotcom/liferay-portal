@@ -65,21 +65,19 @@ GroupPortletRatingsDefinitionDisplayContext groupPortletRatingsDefinitionDisplay
 			RatingsType ratingsType = ratingsTypeMap.get(className);
 		%>
 
-			<div class="ratings-type-select">
-				<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "TypeSettingsProperties--" + propertyKey + "--" %>'>
+			<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "TypeSettingsProperties--" + propertyKey + "--" %>'>
 
-					<%
-					for (RatingsType curRatingsType : RatingsType.values()) {
-					%>
+				<%
+				for (RatingsType curRatingsType : RatingsType.values()) {
+				%>
 
-						<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Validator.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
+					<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Validator.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-				</aui:select>
-			</div>
+			</aui:select>
 
 	<%
 		}

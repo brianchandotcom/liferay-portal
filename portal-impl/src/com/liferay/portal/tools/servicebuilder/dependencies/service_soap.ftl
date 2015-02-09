@@ -81,8 +81,9 @@ public class ${entity.name}ServiceSoap {
 			<#assign returnTypeGenericsName = serviceBuilder.getTypeGenericsName(method.returns)>
 			<#assign extendedModelName = packagePath + ".model." + entity.name>
 			<#assign soapModelName = packagePath + ".model." + entity.name + "Soap">
+			<#assign existingImports = [packagePath + ".service." + entity.name + "ServiceUtil", "aQute.bnd.annotation.ProviderType", "com.liferay.portal.kernel.log.Log", "com.liferay.portal.kernel.log.LogFactoryUtil", "com.liferay.portal.kernel.util.ListUtil", "com.liferay.portal.kernel.util.LocaleUtil", "com.liferay.portal.kernel.util.LocalizationUtil", "java.rmi.RemoteException", "java.util.Locale", "java.util.Map"]>
 
-			${serviceBuilder.getJavadocComment(method)}
+			${serviceBuilder.getJavadocComment(method, entity.name, "", existingImports)}
 
 			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
 				@Deprecated

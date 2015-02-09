@@ -35,7 +35,9 @@ public interface ${entity.name}Persistence extends BasePersistence<${entity.name
 
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && !serviceBuilder.isBasePersistenceMethod(method)>
-			${serviceBuilder.getJavadocComment(method)}
+			<#assign existingImports = [packagePath + ".model." + entity.name, "aQute.bnd.annotation.ProviderType", "com.liferay.portal.kernel.exception.PortalException", "com.liferay.portal.kernel.transaction.Propagation", "com.liferay.portal.kernel.transaction.Transactional", "com.liferay.portal.service.persistence.BasePersistence", "java.util.Date"]>
+
+			${serviceBuilder.getJavadocComment(method, entity.name, "", existingImports)}
 
 			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
 				@Deprecated

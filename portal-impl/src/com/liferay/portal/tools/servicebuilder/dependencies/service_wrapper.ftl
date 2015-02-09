@@ -28,7 +28,9 @@ public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.
 
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
-			${serviceBuilder.getJavadocComment(method)}
+			<#assign existingImports = ["aQute.bnd.annotation.ProviderType", "com.liferay.portal.service.ServiceWrapper"]>
+
+			${serviceBuilder.getJavadocComment(method, entity.name, sessionTypeName, existingImports)}
 
 			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
 				@Deprecated

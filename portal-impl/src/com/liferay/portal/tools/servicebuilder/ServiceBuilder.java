@@ -1220,14 +1220,20 @@ public class ServiceBuilder {
 		return idType;
 	}
 
-	public String getJavadocComment(JavaClass javaClass) {
+	public String getJavadocComment(JavaClass javaClass) throws IOException {
 		return _formatComment(
-			javaClass.getComment(), javaClass.getTags(), StringPool.BLANK);
+			javaClass.getComment(), javaClass.getTags(), StringPool.BLANK,
+			StringPool.BLANK, StringPool.EMPTY_ARRAY, StringPool.BLANK);
 	}
 
-	public String getJavadocComment(JavaMethod javaMethod) {
+	public String getJavadocComment(
+			JavaMethod javaMethod, String entityName, String sessionTypeName,
+			String[] existingImports)
+		throws IOException {
+
 		return _formatComment(
-			javaMethod.getComment(), javaMethod.getTags(), StringPool.TAB);
+			javaMethod.getComment(), javaMethod.getTags(), entityName,
+			sessionTypeName, existingImports, StringPool.TAB);
 	}
 
 	public String getListActualTypeArguments(Type type) {
@@ -3739,7 +3745,9 @@ public class ServiceBuilder {
 	}
 
 	private String _formatComment(
-		String comment, DocletTag[] tags, String indentation) {
+			String comment, DocletTag[] tags, String entityName,
+			String sessionTypeName, String[] existingImports, String indentation)
+		throws IOException {
 
 		StringBundler sb = new StringBundler();
 
@@ -3749,6 +3757,9 @@ public class ServiceBuilder {
 
 		sb.append(indentation);
 		sb.append("/**\n");
+
+		String[] importedClassesFromImpl = _getImportedClassesFromImpl(
+			entityName, sessionTypeName, existingImports);
 
 		if (Validator.isNotNull(comment)) {
 			comment = comment.replaceAll("(?m)^", indentation + " * ");
@@ -4205,6 +4216,51 @@ public class ServiceBuilder {
 		return dimensions;
 	}
 
+	private String[] _getImportedClassesFromImpl(
+			String entityName, String sessionTypeName, String[] classesToExclude)
+		throws IOException {
+
+		JavaClass javaClass = null;
+		String serviceImplPath = _outputPath + "/service/impl/" + entityName;
+
+		if (Validator.isNotNull(sessionTypeName) &&
+			sessionTypeName.equals("Local")) {
+
+			javaClass = _getJavaClass(
+				serviceImplPath + "LocalServiceImpl.java");
+		}
+		else {
+			File serviceImplFile = new File(
+				serviceImplPath + "ServiceImpl.java");
+
+			if (serviceImplFile.exists()) {
+				javaClass = _getJavaClass(serviceImplPath + "ServiceImpl.java");
+			}
+			else {
+				javaClass = _getJavaClass(
+					_outputPath + "/model/impl/" + entityName + "Impl.java");
+			}
+		}
+
+		JavaSource javaSource = javaClass.getSource();
+		String[] imports = javaSource.getImports();
+
+		JavaClass parentJavaClass = _getParentJavaClass(javaClass);
+		JavaSource parentJavaSource = parentJavaClass.getSource();
+		String[] parentImports = parentJavaSource.getImports();
+
+		String[] allImports = new String[imports.length + parentImports.length];
+		ArrayUtil.combine(imports, parentImports, allImports);
+
+		for (String classToExclude : classesToExclude) {
+			if (ArrayUtil.contains(allImports, classToExclude, false)) {
+				allImports = ArrayUtil.remove(allImports, classToExclude);
+			}
+		}
+
+		return allImports;
+	}
+
 	private JavaClass _getJavaClass(String fileName) throws IOException {
 		int pos = fileName.indexOf(_implDir + "/");
 
@@ -4286,6 +4342,29 @@ public class ServiceBuilder {
 		}
 
 		return methods;
+	}
+
+	private JavaClass _getParentJavaClass(JavaClass javaClass)
+		throws IOException {
+
+		String parentJavaClassString = javaClass.getSuperJavaClass().toString();
+		int pos = parentJavaClassString.indexOf("com.");
+
+		String parentClassPath = parentJavaClassString.substring(
+			pos, parentJavaClassString.length());
+		parentClassPath = parentClassPath.replaceAll("\\.", "/");
+
+		int outputPathPos = _outputPath.indexOf("com/");
+		String parentOutputPath = _outputPath.substring(
+			outputPathPos, _outputPath.length());
+
+		String finalParentClassPath = _outputPath.replace(
+			parentOutputPath, parentClassPath);
+		finalParentClassPath = finalParentClassPath + ".java";
+
+		JavaClass parentJavaClass = _getJavaClass(finalParentClassPath);
+
+		return parentJavaClass;
 	}
 
 	private String _getSessionTypeName(int sessionType) {

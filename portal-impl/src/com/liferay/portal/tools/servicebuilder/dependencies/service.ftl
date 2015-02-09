@@ -97,7 +97,9 @@ public interface ${entity.name}${sessionTypeName}Service
 
 	<#list methods as method>
 		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
-			${serviceBuilder.getJavadocComment(method)}
+			<#assign existingImports = ["aQute.bnd.annotation.ProviderType", "com.liferay.portal.kernel.exception.PortalException", "com.liferay.portal.kernel.exception.SystemException", "com.liferay.portal.kernel.jsonwebservice.JSONWebService", "com.liferay.portal.kernel.transaction.Isolation", "com.liferay.portal.kernel.transaction.Propagation", "com.liferay.portal.kernel.transaction.Transactional", "com.liferay.portal.security.ac.AccessControlled", "com.liferay.portal.service.Base" + sessionTypeName + "Service", "com.liferay.portal.service.Invokable" + sessionTypeName + "Service", "com.liferay.portal.service.PermissionedModelLocalService", "com.liferay.portal.service.PersistedModelLocalService"]>
+
+			${serviceBuilder.getJavadocComment(method, entity.name, sessionTypeName, existingImports)}
 
 			<#list method.annotations as annotation>
 				<#if (annotation.type != "java.lang.Override") && (annotation.type != "java.lang.SuppressWarnings")>

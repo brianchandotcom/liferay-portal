@@ -318,7 +318,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 								<div class="lfr-form-row <%= cssClass %>">
 									<div class="row-fields">
-										<liferay-util:include page="/edit_query_rule.jsp" />
+										<liferay-util:include page="/edit_query_rule.jsp" servletContext="<%= application %>" />
 									</div>
 								</div>
 
@@ -358,7 +358,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			%>
 
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "assetPublisherPanelContainerSection_" + sectionId %>' persistState="<%= true %>" title="<%= section %>">
-					<liferay-util:include page='<%= "/query/" + _getSectionJsp(section) + ".jsp" %>' />
+					<liferay-util:include page='<%= "/query/" + _getSectionJsp(section) + ".jsp" %>' servletContext="<%= application %>" />
 				</liferay-ui:panel>
 
 			<%

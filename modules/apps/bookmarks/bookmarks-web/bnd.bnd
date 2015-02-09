@@ -59,6 +59,8 @@ Import-Package: \
 	\
 	javax.portlet,\
 	javax.portlet.filter,\
+	javax.servlet,\
+	javax.servlet.http,\
 	*
 Include-Resource:\
 	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\

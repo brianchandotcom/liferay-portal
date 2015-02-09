@@ -1,3 +1,4 @@
+@import "bourbon";
 @import "mixins";
 
 @import url(common_main.css);
@@ -155,7 +156,6 @@
 	}
 
 	.entry-navigation {
-		display: table;
 		margin: 40px 0;
 		width: 100%;
 
@@ -163,24 +163,25 @@
 			color: #868896;
 			font-size: 20px;
 			font-weight: 400;
+
+			@include ellipsis;
 		}
 
 		h3 {
 			font-size: 20px;
+			margin-top: 0;
 
 			a {
 				color: #2B4259;
 				font-weight: bold;
 			}
-		}
 
-		.entry-subtitle {
-			font-size: 18px;
-			font-weight: 400;
+			@include ellipsis;
 		}
 
 		.entry-content {
-			font-size: 16px;
+			font-size: 18px;
+			font-weight: 400;
 		}
 
 		.small-image-wrapper {
@@ -189,22 +190,24 @@
 			background-size: cover;
 			float: right;
 			height: 140px;
-			margin: 20px 0 0 60px;
+			margin-left: 60px;
 			width: 140px;
 		}
 
-		.previous-entry {
-			border-right: 1px solid #CCC;
-			padding-right: 5%;
+		.next-entry-wrapper {
+			padding-left: 30px;
 		}
 
-		.next-entry {
-			padding-left: 5%;
+		.previous-entry-wrapper {
+			.previous-entry {
+				border-right: 1px solid #CCC;
+				padding-right: 60px;
+			}
 		}
 
-		.previous-entry, .next-entry {
-			display: table-cell;
-			float: inherit;
+		.next-entry, .previous-entry {
+			margin-top: 5px;
+			padding-bottom: 10px;
 		}
 
 		.entry-content-wrapper {
@@ -212,16 +215,17 @@
 		}
 
 		@include respond-to(phone) {
-			display: block;
-
-			.previous-entry {
-				border-right-width: 0;
-				padding-right: inherit;
+			.next-entry-wrapper {
+				margin-top: 20px;
+				padding: 0;
 			}
 
-			.next-entry {
-				margin-top: 40px;
-				padding-left: inherit;
+			.previous-entry-wrapper {
+					padding: 0;
+
+				.previous-entry {
+					border-right-width: 0;
+				}
 			}
 		}
 	}

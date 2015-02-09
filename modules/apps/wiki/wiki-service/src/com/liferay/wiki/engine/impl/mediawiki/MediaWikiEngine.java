@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.impl.mediawiki.matchers.DirectTagMatcher;
 import com.liferay.wiki.engine.impl.mediawiki.matchers.DirectURLMatcher;
@@ -121,6 +120,12 @@ public class MediaWikiEngine implements WikiEngine {
 		return true;
 	}
 
+	protected ClassLoader getClassLoader() {
+		Class<?> clazz = getClass();
+
+		return clazz.getClassLoader();
+	}
+
 	protected ParserInput getParserInput(long nodeId, String topicName) {
 		ParserInput parserInput = new ParserInput(
 			"Special:Node:" + nodeId, topicName);
@@ -159,8 +164,7 @@ public class MediaWikiEngine implements WikiEngine {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		currentThread.setContextClassLoader(
-			ClassLoaderUtil.getPortalClassLoader());
+		currentThread.setContextClassLoader(getClassLoader());
 
 		try {
 			parserOutput = ParserUtil.parseMetadata(
@@ -181,19 +185,18 @@ public class MediaWikiEngine implements WikiEngine {
 			PortletURL editPageURL, String attachmentURLPrefix)
 		throws PageContentException {
 
-		ParserInput parserInput = getParserInput(
-			page.getNodeId(), page.getTitle());
-
 		String content = StringPool.BLANK;
 
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		currentThread.setContextClassLoader(
-			ClassLoaderUtil.getPortalClassLoader());
+		currentThread.setContextClassLoader(getClassLoader());
 
 		try {
+			ParserInput parserInput = getParserInput(
+				page.getNodeId(), page.getTitle());
+
 			content = page.getContent();
 
 			DirectTagMatcher directTagMatcher = new DirectTagMatcher(page);

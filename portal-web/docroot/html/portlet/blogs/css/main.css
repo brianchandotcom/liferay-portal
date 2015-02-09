@@ -97,21 +97,6 @@
 		padding-left: 10px;
 	}
 
-	.alloy-editor-placeholder {
-		color: #2B4256;
-		padding-left: 10px;
-
-		&:empty:not(:focus) {
-			background: transparent;
-			border-left: 2px solid #DBDDE1;
-			color: #B0B4BB;
-		}
-
-		&.readonly {
-			color: #CCC;
-		}
-	}
-
 	.edit-entry {
 		.entry-status {
 			padding-left: 30px;

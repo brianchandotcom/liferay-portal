@@ -17,6 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="concurrent" org="concurrent" rev="1.3.4" />
 		<dependency name="nekohtml" org="nekohtml" rev="0.9.5" />
 		<dependency name="org.eclipse.osgi.services" org="org.eclipse.osgi" rev="3.5.0-SNAPSHOT" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />

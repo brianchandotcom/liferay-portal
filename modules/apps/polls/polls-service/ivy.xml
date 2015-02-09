@@ -19,5 +19,9 @@
 	<dependencies defaultconf="default">
 		<dependency name="com.liferay.portal.spring.extender" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="org.freemarker" org="com.liferay" rev="2.3.17.LIFERAY-PATCHED-1" />
+		<dependency conf="test->default" name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.2.Final" />
+		<dependency conf="test->default" name="arquillian-container-liferay" org="org.arquillian.liferay" rev="1.0.0.Final-SNAPSHOT" />
+		<dependency conf="test->default" name="arquillian-deployment-generator-bnd" org="org.arquillian.liferay" rev="1.0.0.Final-SNAPSHOT" />
+		<dependency conf="test->default" name="com.liferay.arquillian.extension.remote.transactional" org="com.liferay" rev="latest.integration" transitive="true" />
 	</dependencies>
 </ivy-module>

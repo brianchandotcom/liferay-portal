@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.arquillian.extension.persistence.internal.annotation;
+package com.liferay.arquillian.extension.transactional.internal.container;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.liferay.arquillian.extension.transactional.internal.observer.TransactionalObserver;
+import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 
 /**
- * @author Cristina González
+ * @author Cristina González Castellano
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-public @interface PersistenceTest {
+public class TransactionalRemoteExtension implements RemoteLoadableExtension {
+
+	@Override
+	public void register(ExtensionBuilder builder) {
+		builder.observer(TransactionalObserver.class);
+	}
+
 }

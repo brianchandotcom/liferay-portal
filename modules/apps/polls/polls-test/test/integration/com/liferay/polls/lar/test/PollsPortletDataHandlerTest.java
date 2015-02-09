@@ -20,24 +20,21 @@ import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
+
+import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
 
 import org.jboss.arquillian.junit.Arquillian;
 
-import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  */
+@BndFile("bnd-test.bnd")
 @RunWith(Arquillian.class)
 public class PollsPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
-
-	@Rule
-	public final DeleteAfterTestRunTestRule deleteAfterTestRunTestRule =
-		new DeleteAfterTestRunTestRule();
 
 	@Override
 	protected void addStagedModels() throws Exception {

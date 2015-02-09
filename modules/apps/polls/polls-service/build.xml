@@ -17,7 +17,7 @@
 			service.hbm.file.name="module-hbm.xml"
 			service.spring.file.name="module-spring.xml"
 			service.sql.dir="src/META-INF/sql"
-			service.test.dir="../polls-test/test/integration"
+			service.test.dir="test/integration"
 		/>
 	</target>
 </project>

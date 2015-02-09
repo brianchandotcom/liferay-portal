@@ -19,9 +19,6 @@ import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.polls.util.test.PollsTestUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
-import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -30,23 +27,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
+
 import org.jboss.arquillian.junit.Arquillian;
 
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
  * @author Shinn Lok
  * @author Mate Thurzo
  */
+@BndFile("bnd-test.bnd")
 @RunWith(Arquillian.class)
 public class PollsChoiceStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
-
-	@Rule
-	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		new DeleteAfterTestRunTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

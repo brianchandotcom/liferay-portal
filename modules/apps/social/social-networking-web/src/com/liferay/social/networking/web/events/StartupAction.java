@@ -30,6 +30,8 @@ import com.liferay.portlet.expando.service.ExpandoTableLocalService;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,7 +64,7 @@ public class StartupAction extends SimpleAction {
 	}
 
 	/**
-	 * See {@link HookHotDeployListener#initEvent}
+	 * See {@link com.liferay.portal.deploy.hot.HookHotDeployListener#initEvent}
 	 */
 	@Activate
 	protected void run() throws ActionException {
@@ -94,6 +96,10 @@ public class StartupAction extends SimpleAction {
 		ExpandoTableLocalService expandoTableLocalService) {
 
 		_expandoTableLocalService = expandoTableLocalService;
+	}
+
+	@Reference(target = "(original.bean=true)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	protected void setupExpando(long companyId) throws Exception {

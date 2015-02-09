@@ -35,7 +35,7 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 %>
 
 <div class="asset-abstract <%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %>">
-	<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
+	<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
 
 	<h4 class="asset-title">
 		<c:if test="<%= Validator.isNotNull(viewURL) %>">

@@ -61,7 +61,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 <div class="asset-full-content <%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %>">
 	<c:if test="<%= !print %>">
-		<liferay-util:include page="/asset_actions.jsp" />
+		<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
 	</c:if>
 
 	<c:if test="<%= (assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible()) || (assetPublisherDisplayContext.isEnablePrint() && assetRenderer.isPrintable()) || (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable()) %>">

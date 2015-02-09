@@ -169,7 +169,7 @@ request.setAttribute("view.jsp-showIconLabel", false);
 	<c:if test="<%= !stageableGroup.hasStagingGroup() %>">
 		<td class="table-cell">
 			<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) && (editPortletURL != null) %>">
-				<liferay-util:include page="/asset_actions.jsp" />
+				<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</td>
 	</c:if>

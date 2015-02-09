@@ -235,10 +235,17 @@ public class ServiceTrackerMapFactory {
 		public void map(
 			ServiceReference<S> serviceReference, Emitter<T> emitter) {
 
-			T propertyValue = (T)serviceReference.getProperty(_propertyKey);
+			Object propertyValue = serviceReference.getProperty(_propertyKey);
 
 			if (propertyValue != null) {
-				emitter.emit(propertyValue);
+				if (propertyValue instanceof Object[]) {
+					for (T t : (T[])propertyValue) {
+						emitter.emit(t);
+					}
+				}
+				else {
+					emitter.emit((T)propertyValue);
+				}
 			}
 		}
 

@@ -1,9 +1,23 @@
 Bundle-Name: Liferay RSS Web
 Bundle-SymbolicName: com.liferay.rss.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.sun.syndication,\
+	com.sun.syndication.feed,\
+	com.sun.syndication.feed.atom,\
+	com.sun.syndication.feed.impl,\
+	com.sun.syndication.feed.module,\
+	com.sun.syndication.feed.module.impl,\
+	com.sun.syndication.feed.rss,\
+	com.sun.syndication.feed.synd,\
+	com.sun.syndication.feed.synd.impl,\
+	com.sun.syndication.io,\
+	com.sun.syndication.io.impl,\
+	*
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/META-INF/resources,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
 Require-Capability:\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
 	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\

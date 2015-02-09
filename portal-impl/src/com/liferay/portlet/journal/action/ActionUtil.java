@@ -101,8 +101,8 @@ public class ActionUtil {
 			EditArticleAction.VERSION_SEPARATOR);
 
 		if (pos == -1) {
-			JournalArticleServiceUtil.deleteArticle(groupId, articleId, articleURL,
-				serviceContext);
+			JournalArticleServiceUtil.deleteArticle(
+				groupId, articleId, articleURL, serviceContext);
 		}
 		else {
 			articleId = articleId.substring(0, pos);

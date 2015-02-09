@@ -1,0 +1,6 @@
+Bundle-Name: Liferay DDM Text Form Field Type
+Bundle-SymbolicName: com.liferay.portlet.dynamicdatamapping.type.text
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF=src/META-INF

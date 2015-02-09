@@ -1,0 +1,21 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM form text field
+ *
+ * @param dir
+ * @param fieldLabel
+ * @param fieldName
+ * @param fieldNameSuffix
+ * @param fieldValue
+ * @param fieldQualifiedName
+ */
+{template .text}
+	<div class="form-group field-wrapper" data-fieldname="{$fieldName}" data-fieldnamespace="{$fieldNameSuffix}">
+		<label class="control-fieldLabel" for="{$fieldQualifiedName}">
+			{$fieldLabel}
+		</label>
+
+		 <input class="field form-control" dir="{$dir}" id="{$fieldQualifiedName}" name="{$fieldQualifiedName}" type="text" value="{$fieldValue}"> 
+	</div> 
+{/template}

@@ -19,6 +19,7 @@ import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
@@ -38,10 +39,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Juan Fernández
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER
+	},
+	service = TemplateHandler.class
+)
 public class AssetPublisherPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
@@ -61,8 +72,11 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language");
+
 		String portletTitle = PortalUtil.getPortletTitle(
-			AssetPublisherPortletKeys.ASSET_PUBLISHER, locale);
+			AssetPublisherPortletKeys.ASSET_PUBLISHER, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));

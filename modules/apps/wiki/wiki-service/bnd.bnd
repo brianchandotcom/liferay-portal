@@ -18,6 +18,27 @@ Export-Package:\
 	com.liferay.wiki.util.comparator
 Import-Package:\
 	!com.liferay.portal.tools.sql,\
+	!javax.activation.*,\
+	!javax.crypto.*,\
+	!javax.imageio.*,\
+	!javax.mail.*,\
+	!javax.naming.*,\
+	!javax.sql,\
+	!junit.framework.*,\
+	!net.sf.akismet.*,\
+	!net.sf.ehcache.*,\
+	!net.sourceforge.stripes.*,\
+	!org.apache.commons.dbcp.*,\
+	!org.apache.commons.fileupload.*,\
+	!org.apache.commons.jrcs.*,\
+	!org.apache.commons.pool.impl.*,\
+	!org.apache.lucene.*,\
+	!org.apache.xerces.framework,\
+	!org.apache.xmlrpc.*,\
+	!org.freshcookies.test.*,\
+	!org.incava.util.diff.*,\
+	!org.intabulas.sandler.*,\
+	!org.jgroups.*,\
 	*
 Include-Resource:\
 	classes,\

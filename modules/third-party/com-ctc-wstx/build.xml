@@ -23,6 +23,7 @@
 		<antcall target="patch">
 			<param name="patch.destination" value="**/com/ctc/wstx/sw/BufferingXmlWriter.java" />
 			<param name="patch.original.lib.name" value="${original.lib.name}" />
+			<param name="patch.original.lib.source.dir" value="src/java" />
 			<param name="patch.original.lib.url" value="${original.lib.url}" />
 			<param name="patch.original.lib.version" value="${original.lib.version}" />
 			<param name="patch.source" value="patches" />

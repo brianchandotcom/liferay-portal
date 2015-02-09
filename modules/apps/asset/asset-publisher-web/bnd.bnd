@@ -1,8 +1,19 @@
 Bundle-Name: Liferay Asset Publisher Web
 Bundle-SymbolicName: com.liferay.asset.publisher.web
 Bundle-Version: 1.0.0
+Import-Package: \
+	com.liferay.portlet.documentlibrary.util,\
+	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
-	WEB-INF/tld=../../../../util-taglib/src/META-INF,\
-	@../../../../util-taglib/util-taglib.jar
+	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
+Require-Capability:\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://java.sun.com/portlet_2_0))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/aui))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/portlet))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/theme))",\
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"
+	osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))"

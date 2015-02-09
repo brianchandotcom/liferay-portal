@@ -41,7 +41,6 @@ import com.liferay.portal.model.PortletCategory;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletInfo;
 import com.liferay.portal.model.PublicRenderParameter;
-import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.security.permission.ResourceActions;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.CompanyLocalService;
@@ -303,12 +302,15 @@ public class PortletTracker
 	protected com.liferay.portal.model.Portlet buildPortletModel(
 		BundlePortletApp bundlePortletApp, String portletId) {
 
-		com.liferay.portal.model.Portlet portletModel = new PortletImpl(
-			CompanyConstants.SYSTEM, portletId);
+		com.liferay.portal.model.Portlet portletModel =
+			_portletLocalService.createPortlet(0);
 
+		portletModel.setCompanyId(CompanyConstants.SYSTEM);
 		portletModel.setPluginPackage(bundlePortletApp.getPluginPackage());
 		portletModel.setPortletApp(bundlePortletApp);
+		portletModel.setPortletId(portletId);
 		portletModel.setRoleMappers(bundlePortletApp.getRoleMappers());
+		portletModel.setStrutsPath(portletId);
 
 		return portletModel;
 	}

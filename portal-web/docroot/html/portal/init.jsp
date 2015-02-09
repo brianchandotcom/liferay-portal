@@ -20,7 +20,6 @@
 page import="com.liferay.portal.PortletActiveException" %><%@
 page import="com.liferay.portal.RequiredLayoutException" %><%@
 page import="com.liferay.portal.RequiredRoleException" %><%@
-page import="com.liferay.portal.ReservedUserEmailAddressException" %><%@
 page import="com.liferay.portal.UserActiveException" %><%@
 page import="com.liferay.portal.UserEmailAddressException" %><%@
 page import="com.liferay.portal.UserLockoutException" %><%@

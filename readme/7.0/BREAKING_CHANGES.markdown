@@ -810,3 +810,40 @@ particular, it contains the user ID, the problematic screen name, and the list
 of reserved screen names.
 
 ---------------------------------------
+
+### Replaced `ReservedUserEmailAddressException` with `UserEmailAddressException` inner classes in User Services
+- **Date:** 2015-Feb-03
+- **JIRA Ticket:** LPS-53279
+
+#### What changed?
+
+Previous to Liferay 7, several methods of `UserLocalService` and `UserService`
+could throw a `ReservedUserEmailAddressException` when a user set an email 
+address that was not allowed. That exception has been deprecated and replaced
+with `UserEmailAddressException.MustNotBeCompanyMx`,
+`UserEmailAddressException.MustNotBePOP`, and
+`UserEmailAddressException.MustNotBeReserved`.
+
+#### Who is affected?
+
+This affects developers who have written code that catches the
+`ReservedUserEmailAddressException` while calling the affected methods.
+
+#### How should I update my code?
+
+You should replace catching exception `ReservedUserEmailAddressException` with
+catching exception `UserEmailAddressException.MustNotBeCompanyMx`,
+`UserEmailAddressException.MustNotBePOP`, or
+`UserEmailAddressException.MustNotBeReserved`.
+
+#### Why was this change made?
+
+A new pattern has been defined for exceptions that provides higher expressivity
+in their names and also more information regarding why the exception was thrown.
+
+The new exception `UserEmailAddressException.MustNotBeReserved` has all the
+necessary information about why the exception was thrown and its context. In
+particular, it contains the problematic email address, and the list of reserved
+email addresses.
+
+---------------------------------------

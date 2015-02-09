@@ -15,7 +15,6 @@
 package com.liferay.portal.action;
 
 import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.ReservedUserEmailAddressException;
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -64,9 +63,7 @@ public class UpdateEmailAddressAction extends Action {
 				ActionConstants.COMMON_REFERER_JSP);
 		}
 		catch (Exception e) {
-			if (e instanceof ReservedUserEmailAddressException ||
-				e instanceof UserEmailAddressException) {
-
+			if (e instanceof UserEmailAddressException) {
 				SessionErrors.add(request, e.getClass());
 
 				return actionMapping.findForward("portal.update_email_address");

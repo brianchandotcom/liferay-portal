@@ -3431,7 +3431,6 @@
 		<exception>RequiredRole</exception>
 		<exception>RequiredUser</exception>
 		<exception>RequiredUserGroup</exception>
-		<exception>ReservedUserEmailAddress</exception>
 		<exception>ReservedUserId</exception>
 		<exception>ResourcePrimKey</exception>
 		<exception>RoleAssignment</exception>

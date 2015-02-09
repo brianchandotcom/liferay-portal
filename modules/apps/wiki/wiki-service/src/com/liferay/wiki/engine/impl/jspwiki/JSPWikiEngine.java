@@ -151,7 +151,7 @@ public class JSPWikiEngine implements WikiEngine {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/wiki/engines/impl/jspwiki/dependencies" +
+			"com/liferay/wiki/engine/impl/jspwiki/dependencies" +
 				"/jspwiki.properties");
 
 		try {

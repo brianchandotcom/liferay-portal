@@ -382,7 +382,6 @@ if (workflowEnabled) {
 	<c:if test="<%= !rootFolder %>">
 		Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeWorkflow', '<portlet:namespace />restrictionTypeWorkflowDiv', '<portlet:namespace />restrictionTypeDefinedDiv');
 	</c:if>
-
 </aui:script>
 
 <aui:script use="liferay-search-container">

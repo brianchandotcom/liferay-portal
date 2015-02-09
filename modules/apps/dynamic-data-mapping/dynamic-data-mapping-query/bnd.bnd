@@ -1,10 +1,13 @@
 Bundle-Name: Liferay DDM Query
 Bundle-SymbolicName: com.liferay.dynamicdatamapping.query
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.portlet.dynamicdatamapping.query.api
 Import-Package:\
-	!org.antlr.*,\
-	!org.stringtemplate.*,\
+	!javax.imageio.*,\
+	!javax.print.*,\
+	!javax.swing.*,\
 	*
 Include-Resource:\
 	classes,\
-	@lib/antlr-runtime.jar
+	@lib/antlr4-runtime.jar,\
+	@lib/org.abego.treelayout.core.jar

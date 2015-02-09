@@ -59,7 +59,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 	public String getLocalizedFullName(
 		String firstName, String middleName, String lastName, Locale locale,
-		int prefixId, int suffixId) {
+		long prefixId, long suffixId) {
 
 		String fullName = buildLocalizedFullName(
 			firstName, middleName, lastName, locale, prefixId, suffixId, false);
@@ -142,14 +142,14 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 	protected String buildLocalizedFullName(
 		String firstName, String middleName, String lastName, Locale locale,
-		int prefixId, int suffixId, boolean useInitials) {
+		long prefixId, long suffixId, boolean useInitials) {
 
 		StringBundler sb = new StringBundler(5);
 
 		Map<String, String> namesMap = new HashMap<>();
 
 		FullNameDefinition fullNameDefinition =
-			LocalizationUtil.getFullNameDefinition(locale);
+			FullNameDefinitionFactory.getInstance(locale);
 
 		if (Validator.isNotNull(firstName)) {
 			if (useInitials) {
@@ -213,7 +213,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 			}
 		}
 
-		for (FullNameField fullNameField : fullNameDefinition.getFields()) {
+		for (FullNameField fullNameField : fullNameDefinition.getFullNameFields()) {
 			if (namesMap.containsKey(fullNameField.getName())) {
 				sb.append(StringPool.SPACE);
 				sb.append(namesMap.get(fullNameField.getName()));

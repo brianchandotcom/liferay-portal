@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -213,7 +212,9 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 			}
 		}
 
-		for (FullNameField fullNameField : fullNameDefinition.getFullNameFields()) {
+		for (FullNameField fullNameField :
+				fullNameDefinition.getFullNameFields()) {
+
 			if (namesMap.containsKey(fullNameField.getName())) {
 				sb.append(StringPool.SPACE);
 				sb.append(namesMap.get(fullNameField.getName()));

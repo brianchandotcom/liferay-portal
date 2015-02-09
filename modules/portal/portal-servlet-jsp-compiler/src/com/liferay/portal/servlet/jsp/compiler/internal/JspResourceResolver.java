@@ -14,6 +14,8 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
+import java.io.IOException;
+
 import java.net.JarURLConnection;
 import java.net.URL;
 
@@ -22,6 +24,7 @@ import java.security.PrivilegedAction;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +38,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.wiring.BundleCapability;
+import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -120,12 +125,35 @@ public class JspResourceResolver implements ResourceResolver {
 		Map<String, List<URL>> extraPackageMap = _serviceTracker.getService();
 
 		if (extraPackageMap == null) {
+			_jspResourceCache.putResources(bundleWiring, key, resources);
+
 			return resources;
 		}
 
 		String packageName = path.replace('/', '.');
 
+		if (!exportsPackage(bundleWiring, packageName)) {
+			_jspResourceCache.putResources(bundleWiring, key, resources);
+
+			return resources;
+		}
+
 		List<URL> urls = extraPackageMap.get(packageName);
+
+		if ((urls == null) || urls.isEmpty()) {
+			ClassLoader classLoader = bundleWiring.getClassLoader();
+
+			try {
+				Enumeration<URL> resources2 = classLoader.getResources(path);
+
+				if ((resources2 != null) && resources2.hasMoreElements()) {
+					urls = Collections.list(resources2);
+				}
+			}
+			catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+		}
 
 		if ((urls == null) || urls.isEmpty()) {
 			_jspResourceCache.putResources(bundleWiring, key, resources);
@@ -166,6 +194,25 @@ public class JspResourceResolver implements ResourceResolver {
 		_jspResourceCache.putResources(bundleWiring, key, resources);
 
 		return resources;
+	}
+
+	private boolean exportsPackage(
+		BundleWiring bundleWiring, String packageName) {
+
+		List<BundleWire> providedWires = bundleWiring.getProvidedWires(
+			"osgi.wiring.package");
+
+		for (BundleWire bundleWire : providedWires) {
+			BundleCapability capability = bundleWire.getCapability();
+
+			Map<String, Object> attributes = capability.getAttributes();
+
+			if (attributes.get("osgi.wiring.package").equals(packageName)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final ClassLoader _frameworkClassLoader;

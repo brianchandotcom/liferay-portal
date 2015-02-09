@@ -180,7 +180,7 @@ public class AxisExtender {
 
 			ServiceRegistration<Servlet> axisServletServiceRegistration =
 				bundleContext.registerService(
-					Servlet.class, new AxisServlet(), properties);
+					Servlet.class, (Servlet)new AxisServlet(), properties);
 
 			return new BundleRegistrationInfo(
 				authVerifierFilterServiceRegistration,

@@ -7,6 +7,16 @@ Import-Package:\
 	!org.objectweb.asm.util,\
 	*
 Include-Resource:\
-	${replace;${libs};^;@lib/},\
-	classes
-libs: ${lsr;lib;*.jar}
+	classes,\
+	@lib/aopalliance.jar,\
+	@lib/args4j.jar,\
+	@lib/asm.jar,\
+	@lib/cglib.jar,\
+	@lib/guava.jar,\
+	@lib/guice-assistedinject.jar,\
+	@lib/guice.jar,\
+	@lib/guice-multibindings.jar,\
+	@lib/icu4j.jar,\
+	@lib/javax.inject.jar,\
+	@lib/jsr305.jar,\
+	@lib/soy.jar

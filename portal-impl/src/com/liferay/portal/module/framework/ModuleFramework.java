@@ -18,11 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.InputStream;
 
-import java.net.URL;
-
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author Raymond Augé
  * @author Miguel Pastor
@@ -34,17 +29,11 @@ public interface ModuleFramework {
 	public Object addBundle(String location, InputStream inputStream)
 		throws PortalException;
 
-	public Map<String, List<URL>> getExtraPackageMap();
-
-	public List<URL> getExtraPackageURLs();
-
 	public Object getFramework();
 
 	public String getState(long bundleId) throws PortalException;
 
 	public void registerContext(Object context);
-
-	public void registerExtraPackages();
 
 	public void setBundleStartLevel(long bundleId, int startLevel)
 		throws PortalException;

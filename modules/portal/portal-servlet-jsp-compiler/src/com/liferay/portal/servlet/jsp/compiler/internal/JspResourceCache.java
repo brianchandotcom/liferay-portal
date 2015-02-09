@@ -31,8 +31,10 @@ public class JspResourceCache implements BundleListener {
 
 	@Override
 	public void bundleChanged(BundleEvent event) {
-		if ((event.getType() & BundleEvent.UNRESOLVED) !=
-				BundleEvent.UNRESOLVED) {
+		if (((event.getType() & BundleEvent.STOPPED) !=
+				BundleEvent.STOPPED) &&
+			((event.getType() & BundleEvent.UNRESOLVED) !=
+				BundleEvent.UNRESOLVED)) {
 
 			return;
 		}
@@ -61,6 +63,8 @@ public class JspResourceCache implements BundleListener {
 
 		if (resourceMap == null) {
 			resourceMap = new HashMap<>();
+
+			_resourceMaps.put(bundleWiring.getBundle(), resourceMap);
 		}
 
 		resourceMap.put(path, resources);

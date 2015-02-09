@@ -61,6 +61,7 @@ page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePairComparator" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.MathUtil" %><%@
 page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@
@@ -110,8 +111,7 @@ page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" 
 page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
 page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
-page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.util.MathUtil" %>
+page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.DecimalFormatSymbols" %><%@
 page import="java.text.Format" %>

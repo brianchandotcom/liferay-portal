@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
+	@lib/concurrent.jar,\
 	@lib/nekohtml.jar,\
 	@lib/org.portletbridge.core.jar,\
 	@lib/org.portletbridge.portlet.jar

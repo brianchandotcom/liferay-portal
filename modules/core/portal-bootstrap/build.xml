@@ -9,4 +9,27 @@
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/core" />
+
+	<target name="jar" depends="build-common.compile">
+		<baseline-jar
+			bndRootFile="${sdk.dir}/common.bnd"
+			file="system.packages.extra.bnd"
+			outputPath="lib/system.packages.extra.jar"
+			sourcePath="${basedir}"
+		>
+			<classpath>
+				<pathelement location="${plugin.classes.dir}" />
+			</classpath>
+		</baseline-jar>
+
+		<mkdir dir="tmp" />
+
+		<unjar src="lib/system.packages.extra.jar" dest="tmp" overwrite="true">
+			<patternset includes="META-INF/MANIFEST.MF" />
+		</unjar>
+
+		<jar-macro
+			module.dir="${basedir}"
+		/>
+	</target>
 </project>

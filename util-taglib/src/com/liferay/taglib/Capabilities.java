@@ -23,6 +23,22 @@ public class Capabilities {
 
 	@ProvideCapability(
 		name = "jsp.taglib", ns = "osgi.extender",
+		value = "uri=http://alloy.liferay.com/tld/alloy",
+		version = "${@version}"
+	)
+	public class Alloy {
+	}
+
+	@ProvideCapability(
+		name = "jsp.taglib", ns = "osgi.extender",
+		value = "uri=http://alloy.liferay.com/tld/alloy_util",
+		version = "${@version}"
+	)
+	public class AlloyUtil {
+	}
+
+	@ProvideCapability(
+		name = "jsp.taglib", ns = "osgi.extender",
 		value = "uri=http://alloy.liferay.com/tld/aui", version = "${@version}"
 	)
 	public class AUI {

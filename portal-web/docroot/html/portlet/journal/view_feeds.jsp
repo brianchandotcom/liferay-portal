@@ -103,13 +103,16 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
-				name="description"
+				name="name"
 			>
 				<%= feed.getName() %>
+			</liferay-ui:search-container-column-text>
 
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="description"
+			>
 				<c:if test="<%= Validator.isNotNull(feed.getDescription()) %>">
-					<br />
-
 					<%= feed.getDescription() %>
 				</c:if>
 			</liferay-ui:search-container-column-text>

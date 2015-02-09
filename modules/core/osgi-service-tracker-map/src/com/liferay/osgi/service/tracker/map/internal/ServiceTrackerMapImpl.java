@@ -105,17 +105,59 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 	private final ServiceTrackerBucketFactory<SR, TS, R>
 		_serviceTrackerMapBucketFactory;
 
-	private class Holder<T> {
+	private class DefaultEmitter implements ServiceReferenceMapper.Emitter<K> {
 
-		public T get() {
-			return _value;
+		public DefaultEmitter(ServiceReference<SR> serviceReference) {
+			_serviceReference = serviceReference;
 		}
 
-		public void set(T value) {
-			_value = value;
+		@Override
+		public void emit(K key) {
+			if ((_serviceReferenceServiceTuple == null) &&
+				!_invokedCustomizer) {
+
+				TS service = _serviceTrackerCustomizer.addingService(
+					_serviceReference);
+
+					_invokedCustomizer = true;
+
+				if (service == null) {
+					return;
+				}
+
+				_serviceReferenceServiceTuple =
+					new ServiceReferenceServiceTuple<>(
+						_serviceReference, service);
+			}
+
+			ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket =
+				_serviceTrackerBuckets.get(key);
+
+			if (serviceTrackerBucket == null) {
+				ServiceTrackerBucket<SR, TS, R> newServiceTrackerBucket =
+					_serviceTrackerMapBucketFactory.create();
+
+				serviceTrackerBucket = _serviceTrackerBuckets.putIfAbsent(
+					key, newServiceTrackerBucket);
+
+				if (serviceTrackerBucket == null) {
+					serviceTrackerBucket = newServiceTrackerBucket;
+				}
+			}
+
+			serviceTrackerBucket.store(_serviceReferenceServiceTuple);
 		}
 
-		private T _value;
+		public ServiceReferenceServiceTuple<SR, TS>
+			getServiceReferenceServiceTuple() {
+
+			return _serviceReferenceServiceTuple;
+		}
+
+		private boolean _invokedCustomizer = false;
+		private final ServiceReference<SR> _serviceReference;
+		private ServiceReferenceServiceTuple<SR, TS>
+			_serviceReferenceServiceTuple = null;
 
 	}
 
@@ -127,54 +169,11 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 		public ServiceReferenceServiceTuple<SR, TS> addingService(
 			final ServiceReference<SR> serviceReference) {
 
-			final Holder<ServiceReferenceServiceTuple<SR, TS>> holder =
-				new Holder<>();
+			DefaultEmitter emitter = new DefaultEmitter(serviceReference);
 
-			_serviceReferenceMapper.map(
-				serviceReference,
-				new ServiceReferenceMapper.Emitter<K>() {
+			_serviceReferenceMapper.map(serviceReference, emitter);
 
-					@Override
-					public void emit(K key) {
-						ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket =
-							_serviceTrackerBuckets.get(key);
-
-						if (serviceTrackerBucket == null) {
-							ServiceTrackerBucket<SR, TS, R>
-								newServiceTrackerBucket =
-									_serviceTrackerMapBucketFactory.create();
-
-							serviceTrackerBucket =
-								_serviceTrackerBuckets.putIfAbsent(
-									key, newServiceTrackerBucket);
-
-							if (serviceTrackerBucket == null) {
-								serviceTrackerBucket = newServiceTrackerBucket;
-							}
-						}
-
-						ServiceReferenceServiceTuple<SR, TS>
-							serviceReferenceServiceTuple = holder.get();
-
-						if (serviceReferenceServiceTuple == null) {
-							TS service =
-								_serviceTrackerCustomizer.addingService(
-									serviceReference);
-
-							serviceReferenceServiceTuple =
-								new ServiceReferenceServiceTuple<>(
-									serviceReference, service);
-
-							holder.set(serviceReferenceServiceTuple);
-						}
-
-						serviceTrackerBucket.store(
-							serviceReferenceServiceTuple);
-					}
-
-				});
-
-			return holder.get();
+			return emitter.getServiceReferenceServiceTuple();
 		}
 
 		@Override

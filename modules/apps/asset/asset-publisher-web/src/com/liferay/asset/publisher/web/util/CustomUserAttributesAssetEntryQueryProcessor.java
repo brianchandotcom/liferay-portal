@@ -14,7 +14,7 @@
 
 package com.liferay.asset.publisher.web.util;
 
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -24,10 +24,18 @@ import com.liferay.portlet.asset.util.AssetEntryQueryProcessor;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  */
-@OSGiBeanProperties
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER
+	},
+	service = AssetEntryQueryProcessor.class
+)
 public class CustomUserAttributesAssetEntryQueryProcessor
 	implements AssetEntryQueryProcessor {
 

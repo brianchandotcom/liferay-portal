@@ -17,7 +17,6 @@ package com.liferay.portal.template.soy;
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.SoyFileSet.Builder;
 
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
@@ -35,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Basto
  */
 @Component(immediate = true, service = TemplateManager.class)
-@DoPrivileged
 public class SoyManager extends BaseTemplateManager {
 
 	@Override

@@ -192,7 +192,6 @@ public class DLAppLocalServiceTest {
 		@DeleteAfterTestRun
 		private Group _group;
 
-		@DeleteAfterTestRun
 		private Repository _repository;
 
 	}

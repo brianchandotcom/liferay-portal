@@ -16,7 +16,6 @@ package com.liferay.asset.publisher.web.portlet.provider;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.provider.AddPortletProvider;
@@ -26,13 +25,17 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
 		"model.class.name=" + PortletProvider.CLASS_NAME_ANY
-	}
+	},
+	service = PortletProvider.class
 )
 public class AssetPublisherPortletProvider
 	implements AddPortletProvider, ViewPortletProvider {

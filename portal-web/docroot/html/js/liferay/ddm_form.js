@@ -999,7 +999,7 @@ AUI.add(
 						if (notEmpty) {
 							altNode.val(parsedValue.alt || '');
 
-							titleNode.val(parsedValue.name || '');
+							titleNode.val(parsedValue.title || '');
 						}
 						else {
 							altNode.val('');

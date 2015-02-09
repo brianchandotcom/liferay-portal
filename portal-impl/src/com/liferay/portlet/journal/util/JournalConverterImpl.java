@@ -471,6 +471,8 @@ public class JournalConverterImpl implements JournalConverter {
 			jsonObject.put("data", dynamicContentElement.getText());
 			jsonObject.put(
 				"name", dynamicContentElement.attributeValue("name"));
+			jsonObject.put(
+				"title", dynamicContentElement.attributeValue("title"));
 
 			serializable = jsonObject.toString();
 		}
@@ -769,6 +771,8 @@ public class JournalConverterImpl implements JournalConverter {
 				"alt", jsonObject.getString("alt"));
 			dynamicContentElement.addAttribute(
 				"name", jsonObject.getString("name"));
+			dynamicContentElement.addAttribute(
+				"title", jsonObject.getString("title"));
 			dynamicContentElement.addCDATA(fieldValue);
 		}
 		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(fieldType) &&

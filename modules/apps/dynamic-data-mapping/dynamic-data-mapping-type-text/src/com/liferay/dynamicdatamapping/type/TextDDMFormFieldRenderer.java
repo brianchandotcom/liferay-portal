@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true, property = {"templatePath=/META-INF/text.soy"},
+	immediate = true, property = {"templatePath=/META-INF/resources/text.soy"},
 	service = {
 		TextDDMFormFieldRenderer.class, DDMFormFieldRenderer.class
 	}

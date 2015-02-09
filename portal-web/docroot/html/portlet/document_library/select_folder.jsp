@@ -77,11 +77,11 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
-		total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId) %>"
+		total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId, dlVisualizationHelper.isMountFolderVisible()) %>"
 	>
 
 		<liferay-ui:search-container-results
-			results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, dlVisualizationHelper.isMountFolderVisible(), searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row

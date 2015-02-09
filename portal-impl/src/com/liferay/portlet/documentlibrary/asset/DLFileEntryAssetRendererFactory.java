@@ -130,6 +130,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		portletURL.setParameter(
 			"folderId",
 			String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+		portletURL.setParameter("showMountFolder", Boolean.FALSE.toString());
 		portletURL.setParameter("showSelectFolder", Boolean.TRUE.toString());
 
 		return portletURL;

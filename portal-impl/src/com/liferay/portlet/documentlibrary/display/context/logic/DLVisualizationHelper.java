@@ -39,6 +39,11 @@ public class DLVisualizationHelper {
 		return false;
 	}
 
+	public boolean isMountFolderVisible() {
+		return ParamUtil.getBoolean(
+			_dlRequestHelper.getRequest(), "showMountFolder", true);
+	}
+
 	public boolean isShowMinimalActionsButton() {
 		String portletName = _dlRequestHelper.getPortletName();
 

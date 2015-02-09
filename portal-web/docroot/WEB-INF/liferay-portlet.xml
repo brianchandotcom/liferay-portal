@@ -234,6 +234,7 @@
 		<scopeable>true</scopeable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
+		<autopropagated-parameters>showMountFolder</autopropagated-parameters>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/document_library/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.css</header-portlet-css>

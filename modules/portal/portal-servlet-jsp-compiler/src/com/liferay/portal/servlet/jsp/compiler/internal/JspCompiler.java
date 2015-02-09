@@ -61,6 +61,7 @@ import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 
 import org.phidias.compile.BundleJavaManager;
+import org.phidias.compile.ResourceResolver;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -102,6 +103,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		_bundle = _allParticipatingBundles[0];
 
 		_bundleContext = _bundle.getBundleContext();
+		_resourceResolver = new JspResourceResolver(_bundleContext);
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
 
@@ -229,8 +231,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 				addBundleWirings(bundleJavaManager);
 
-				bundleJavaManager.setResourceResolver(
-					JspResolverFactory.getResourceResolver());
+				bundleJavaManager.setResourceResolver(_resourceResolver);
 
 				javaFileManager = bundleJavaManager;
 			}
@@ -374,6 +375,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private final List<File> _classPath = new ArrayList<>();
 	private Bundle _jspBundle;
 	private Logger _logger;
+	private ResourceResolver _resourceResolver;
 
 	private class URIHandler extends DefaultHandler {
 

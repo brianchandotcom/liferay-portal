@@ -105,20 +105,6 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 	private final ServiceTrackerBucketFactory<SR, TS, R>
 		_serviceTrackerMapBucketFactory;
 
-	private class Holder<T> {
-
-		public T get() {
-			return _value;
-		}
-
-		public void set(T value) {
-			_value = value;
-		}
-
-		private T _value;
-
-	}
-
 	private class DefaultEmitter implements ServiceReferenceMapper.Emitter<K> {
 
 		public DefaultEmitter(ServiceReference<SR> serviceReference) {

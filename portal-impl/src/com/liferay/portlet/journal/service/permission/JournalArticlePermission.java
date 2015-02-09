@@ -110,7 +110,7 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 			return hasPermission.booleanValue();
 		}
 
-		if (article.isDraft() || article.isScheduled()) {
+		if (article.isDraft()) {
 			if (actionId.equals(ActionKeys.VIEW) &&
 				!contains(permissionChecker, article, ActionKeys.UPDATE)) {
 

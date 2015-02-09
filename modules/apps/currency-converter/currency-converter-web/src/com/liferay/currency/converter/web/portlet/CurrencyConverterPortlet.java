@@ -19,8 +19,6 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration;
 import com.liferay.currency.converter.web.upgrade.CurrencyConverterWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
@@ -28,9 +26,6 @@ import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.ReadOnlyException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -77,11 +72,9 @@ public class CurrencyConverterPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		_defaultSymbols(renderRequest);
-
 		renderRequest.setAttribute(
 			CurrencyConverterConfiguration.class.getName(),
-			_CurrencyConverterConfiguration);
+			_currencyConverterConfiguration);
 
 		super.doView(renderRequest, renderResponse);
 	}
@@ -96,24 +89,6 @@ public class CurrencyConverterPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setCurrencyConverterWebUpgrade(
 		CurrencyConverterWebUpgrade currencyConverterWebUpgrade) {
-	}
-
-	private void _defaultSymbols(PortletRequest portletRequest)
-		throws ReadOnlyException {
-
-		PortletPreferences portletPreferences = portletRequest.getPreferences();
-
-		String[] symbols = StringUtil.split(
-			StringUtil.toUpperCase(
-				ParamUtil.getString(portletRequest, "symbols")));
-
-		if (symbols.length > 1) {
-			portletPreferences.setValues("symbols", symbols);
-		}
-		else {
-			portletPreferences.setValues(
-				"symbols", _CurrencyConverterConfiguration.symbols());
-		}
 	}
 
 	private volatile CurrencyConverterConfiguration

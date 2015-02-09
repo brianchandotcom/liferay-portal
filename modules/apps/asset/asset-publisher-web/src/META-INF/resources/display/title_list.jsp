@@ -51,7 +51,7 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 			url="<%= viewURL %>"
 		/>
 
-		<liferay-util:include page="/asset_actions.jsp" />
+		<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
 
 		<liferay-ui:asset-metadata
 			className="<%= assetEntry.getClassName() %>"

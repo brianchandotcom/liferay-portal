@@ -137,6 +137,69 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGetServiceInvokesCustomizerOnlyOnce()
+		throws InvalidSyntaxException {
+
+		final AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+			ServiceTrackerMapFactory.singleValueMap(
+				_bundleContext, TrackedOne.class, "(target=*)",
+				new ServiceReferenceMapper<String, TrackedOne>() {
+					@Override
+					public void map(
+						ServiceReference<TrackedOne> serviceReference,
+						Emitter<String> emitter) {
+
+						emitter.emit("one");
+						emitter.emit("two");
+					}
+				},
+				new ServiceTrackerCustomizer<TrackedOne, TrackedOne>() {
+
+					@Override
+					public TrackedOne addingService(
+						ServiceReference<TrackedOne> serviceReference) {
+
+						atomicInteger.incrementAndGet();
+
+						return _bundleContext.getService(serviceReference);
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<TrackedOne> serviceReference,
+						TrackedOne trackedTwo) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<TrackedOne> serviceReference,
+						TrackedOne trackedTwo) {
+
+						_bundleContext.ungetService(serviceReference);
+					}
+
+				});
+
+		serviceTrackerMap.open();
+
+		TrackedOne trackedOne = new TrackedOne("1");
+
+		ServiceRegistration<TrackedOne> serviceRegistration = registerService(
+			trackedOne, "one");
+
+		Assert.assertEquals(serviceTrackerMap.getService("one"), trackedOne);
+		Assert.assertEquals(serviceTrackerMap.getService("two"), trackedOne);
+
+		Assert.assertEquals(1, atomicInteger.get());
+
+		serviceRegistration.unregister();
+
+		serviceTrackerMap.close();
+	}
+
+	@Test
 	public void testGetServiceIsNullAfterDeregistration() {
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 			createServiceTrackerMap(_bundleContext);

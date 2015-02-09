@@ -23,6 +23,7 @@
 		<antcall target="patch">
 			<param name="patch.destination" value="org/apache/commons/fileupload/FileUploadBase.java,org/apache/commons/fileupload/MultipartStream.java" />
 			<param name="patch.original.lib.name" value="${original.lib.name}" />
+			<param name="patch.original.lib.source.dir" value="." />
 			<param name="patch.original.lib.url" value="${original.lib.url}" />
 			<param name="patch.original.lib.version" value="${original.lib.version}" />
 			<param name="patch.source" value="patches" />

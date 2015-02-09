@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 /**
 * @author Jorge Ferrer
 */
@@ -25,6 +27,10 @@ public class FullNameField {
 
 	public String[] getValues() {
 		return _values;
+	}
+
+	public boolean isFreeText() {
+		return ArrayUtil.isEmpty(_values);
 	}
 
 	public boolean isRequired() {

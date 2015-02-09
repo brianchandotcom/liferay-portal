@@ -32,7 +32,8 @@ public interface IFrameConfiguration {
 	public String formMethod();
 
 	@Meta.AD(
-		deflt = "var1=hello;var2=world", required = false)
+		deflt = "var1=hello;var2=world", required = false
+	)
 	public String hiddenVariables();
 
 }

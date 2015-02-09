@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
@@ -27,9 +28,18 @@ import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Zsolt Berentey
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER
+	},
+	service = PortletLayoutListener.class
+)
 public class AssetPublisherPortletLayoutListener
 	implements PortletLayoutListener {
 

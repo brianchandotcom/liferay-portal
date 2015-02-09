@@ -6,7 +6,20 @@
 
 	<!--<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />-->
 
-	<target name="start-poshi-runner" depends="compile">
+	<target name="prepare-sikuli" depends="compile">
+		<if>
+			<os family="unix" />
+			<then>
+				<get
+					dest="lib/opencv-linux-x86_64.jar"
+					skipexisting="true"
+					src="https://search.maven.org/remotecontent?filepath=org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86_64.jar"
+				/>
+			</then>
+		</if>
+	</target>
+
+	<target name="start-poshi-runner" depends="prepare-sikuli">
 		<fail message="Please set the property ${test.case.name}." unless="test.case.name" />
 
 		<mkdir dir="test-results" />

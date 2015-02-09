@@ -6,6 +6,27 @@ Import-Package:\
 	com.liferay.portal.kernel.messaging.*,\
 	com.liferay.portal.kernel.search.*,\
 	com.liferay.portal.kernel.util.*,\
+	com.liferay.registry.util,\
+	javax.servlet,\
+	javax.servlet.http,\
+	javax.xml.parsers,\
+	javax.xml.transform,\
+	javax.xml.transform.dom,\
+	javax.xml.transform.stream,\
+	org.apache.commons.lang.time,\
+	org.apache.commons.logging,\
+	org.apache.log4j,\
+	org.apache.log4j.helpers,\
+	org.apache.regexp,\
+	org.objectweb.asm.tree,\
+	org.osgi.framework,\
+	org.osgi.service.log,\
+	org.osgi.util.tracker,\
+	org.slf4j,\
+	org.w3c.dom,\
+	org.xml.sax,\
+	org.xml.sax.helpers,\
+	sun.misc,\
 	*;resolution:="optional"
 Include-Resource:\
 	${replace;${libs};^;@lib/},\

@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.query.impl;
+package com.liferay.dynamicdatamapping.query.impl;
 
+import com.liferay.dynamicdatamapping.query.api.DDMFormValuesQuery;
+import com.liferay.dynamicdatamapping.query.api.DDMFormValuesQueryFactory;
+import com.liferay.dynamicdatamapping.query.api.DDMFormValuesQuerySyntaxException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
@@ -21,9 +24,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.query.api.DDMFormValuesQuery;
-import com.liferay.portlet.dynamicdatamapping.query.api.DDMFormValuesQueryFactory;
-import com.liferay.portlet.dynamicdatamapping.query.api.DDMFormValuesQuerySyntaxException;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 

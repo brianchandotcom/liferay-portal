@@ -12,19 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.query.api;
+package com.liferay.dynamicdatamapping.query.api;
 
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-
-import java.util.List;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 /**
  * @author Adolfo Pérez
  */
-public interface DDMFormValuesQuery {
+public interface DDMFormValuesQueryFactory {
 
-	public List<DDMFormFieldValue> selectDDMFormFieldValues();
-
-	public DDMFormFieldValue selectSingleDDMFormFieldValue();
+	public DDMFormValuesQuery create(DDMFormValues ddmFormValues, String query)
+		throws DDMFormValuesQuerySyntaxException;
 
 }

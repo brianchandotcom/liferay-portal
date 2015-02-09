@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.query.impl.model;
+package com.liferay.dynamicdatamapping.query.impl.model;
 
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Pablo Carvalho
  */
-public class DDMFormFieldValueMatchesAllMatcher
+public class DDMFormFieldValueMatchesAnyMatcher
 	implements DDMFormFieldValueMatcher {
 
 	public void addDDMFormFieldValueMatcher(
@@ -36,12 +36,12 @@ public class DDMFormFieldValueMatchesAllMatcher
 		for (DDMFormFieldValueMatcher ddmFormFieldValueMatcher :
 				_ddmFormFieldValueMatchers) {
 
-			if (!ddmFormFieldValueMatcher.matches(ddmFormFieldValue)) {
-				return false;
+			if (ddmFormFieldValueMatcher.matches(ddmFormFieldValue)) {
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	private final List<DDMFormFieldValueMatcher> _ddmFormFieldValueMatchers =

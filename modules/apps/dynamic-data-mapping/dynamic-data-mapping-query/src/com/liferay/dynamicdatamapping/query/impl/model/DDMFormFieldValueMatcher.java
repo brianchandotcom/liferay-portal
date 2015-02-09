@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.query.api;
+package com.liferay.dynamicdatamapping.query.impl.model;
 
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 
 /**
- * @author Adolfo Pérez
+ * @author Pablo Carvalho
  */
-public interface DDMFormValuesQueryFactory {
+public interface DDMFormFieldValueMatcher {
 
-	public DDMFormValuesQuery create(DDMFormValues ddmFormValues, String query)
-		throws DDMFormValuesQuerySyntaxException;
+	public boolean matches(DDMFormFieldValue ddmFormFieldValue);
 
 }

@@ -19,7 +19,7 @@ options {
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.query.impl.parser;
+package com.liferay.dynamicdatamapping.query.impl.parser;
 }
 
 path

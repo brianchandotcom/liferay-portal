@@ -12,28 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.query.api;
+package com.liferay.dynamicdatamapping.query.api;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
  */
-public class DDMFormValuesQuerySyntaxException extends PortalException {
+public interface DDMFormValuesQuery {
 
-	public DDMFormValuesQuerySyntaxException() {
-	}
+	public List<DDMFormFieldValue> selectDDMFormFieldValues();
 
-	public DDMFormValuesQuerySyntaxException(String msg) {
-		super(msg);
-	}
-
-	public DDMFormValuesQuerySyntaxException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public DDMFormValuesQuerySyntaxException(Throwable cause) {
-		super(cause);
-	}
+	public DDMFormFieldValue selectSingleDDMFormFieldValue();
 
 }

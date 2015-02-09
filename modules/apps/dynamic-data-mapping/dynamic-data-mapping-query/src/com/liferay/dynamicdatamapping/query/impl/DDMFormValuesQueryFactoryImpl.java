@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.query.impl;
+package com.liferay.dynamicdatamapping.query.impl;
 
-import com.liferay.portlet.dynamicdatamapping.query.api.DDMFormValuesQuery;
-import com.liferay.portlet.dynamicdatamapping.query.api.DDMFormValuesQueryFactory;
-import com.liferay.portlet.dynamicdatamapping.query.api.DDMFormValuesQuerySyntaxException;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryLexer;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.PathContext;
+import com.liferay.dynamicdatamapping.query.api.DDMFormValuesQuery;
+import com.liferay.dynamicdatamapping.query.api.DDMFormValuesQueryFactory;
+import com.liferay.dynamicdatamapping.query.api.DDMFormValuesQuerySyntaxException;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryLexer;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.PathContext;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import org.antlr.v4.runtime.ANTLRInputStream;

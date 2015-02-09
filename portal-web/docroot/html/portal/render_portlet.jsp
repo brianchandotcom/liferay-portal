@@ -813,10 +813,6 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 		freeformStyles = sb.toString();
 	}
 
-	if ((portletVisibility != null) && !layout.isTypeControlPanel()) {
-		cssClasses += " lfr-configurator-visibility";
-	}
-
 	if (portletDisplay.isStateMin()) {
 		cssClasses += " portlet-minimized";
 	}
@@ -842,10 +838,16 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 	if (portletResourcePortlet != null) {
 		cssClasses += StringPool.SPACE + portletResourcePortlet.getCssClassWrapper();
 	}
+
+	String defaultScreenCssClasses = StringPool.BLANK;
+
+	if ((portletVisibility != null) && !layout.isTypeControlPanel()) {
+		defaultScreenCssClasses += " lfr-configurator-visibility";
+	}
 	%>
 
 	<div class="<%= cssClasses %>" id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" <%= freeformStyles %>>
-		<div id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>-defaultScreen">
+		<div class="<%= defaultScreenCssClasses %>" id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>-defaultScreen">
 </c:if>
 
 <c:choose>

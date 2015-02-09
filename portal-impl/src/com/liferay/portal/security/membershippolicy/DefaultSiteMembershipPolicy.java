@@ -15,10 +15,10 @@
 package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.events.IntervalAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -213,27 +213,37 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 	protected void verifyLimitedParentMembership(final Group group)
 		throws PortalException {
 
-		int count = UserLocalServiceUtil.getGroupUsersCount(group.getGroupId());
+		int total = UserLocalServiceUtil.getGroupUsersCount(group.getGroupId());
 
-		int pages = count / Indexer.DEFAULT_INTERVAL;
+		final IntervalAction intervalAction = new IntervalAction(total);
 
-		for (int i = 0; i <= pages; i++) {
-			int start = (i * Indexer.DEFAULT_INTERVAL);
-			int end = start + Indexer.DEFAULT_INTERVAL;
+		intervalAction.setPerformActionMethod(
+			new IntervalAction.PerformIntervalActionMethod() {
 
-			List<User> users = UserLocalServiceUtil.getGroupUsers(
-				group.getGroupId(), start, end);
+				@Override
+				public void performAction(int start, int end)
+					throws PortalException {
 
-			for (User user : users) {
-				if (!UserLocalServiceUtil.hasGroupUser(
-						group.getParentGroupId(), user.getUserId())) {
+					List<User> users = UserLocalServiceUtil.getGroupUsers(
+						group.getGroupId(), start, end);
 
-					UserLocalServiceUtil.unsetGroupUsers(
-						group.getGroupId(), new long[] {user.getUserId()},
-						null);
+					for (User user : users) {
+						if (!UserLocalServiceUtil.hasGroupUser(
+								group.getParentGroupId(), user.getUserId())) {
+
+							UserLocalServiceUtil.unsetGroupUsers(
+								group.getGroupId(),
+								new long[]{user.getUserId()}, null);
+						}
+						else {
+							intervalAction.incrementStart();
+						}
+					}
 				}
-			}
-		}
+
+			});
+
+		intervalAction.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

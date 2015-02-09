@@ -387,6 +387,13 @@ public class VerifyProperties extends VerifyProcess {
 			"cas.service.url", "service.url", "com.liferay.portal.sso.cas"
 		},
 
+		// Currency Converter
+
+		new String[] {
+			"currency.converter.symbols", "symbols",
+			"com.liferay.currency.converter.web"
+		},
+
 		// FreeMarker Engine
 
 		new String[] {
@@ -422,6 +429,22 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"journal.template.freemarker.restricted.variables",
 			"restricted.variables", "com.liferay.portal.template.freemarker"
+		},
+
+		// IFrame
+
+		new String[] {
+			"iframe.auth", "auth", "com.liferay.iframe.web"
+		},
+		new String[] {
+			"iframe.auth-type", "auth.type", "com.liferay.iframe.web"
+		},
+		new String[] {
+			"iframe.form-method", "form.method", "com.liferay.iframe.web"
+		},
+		new String[] {
+			"iframe.hidden-variables", "hidden.variables",
+			"com.liferay.iframe.web"
 		},
 
 		// Journal

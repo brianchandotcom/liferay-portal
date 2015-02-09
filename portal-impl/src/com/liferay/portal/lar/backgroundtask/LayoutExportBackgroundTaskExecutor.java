@@ -15,12 +15,9 @@
 package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -44,7 +41,7 @@ import java.util.Map;
  * @author Michael C. Han
  */
 public class LayoutExportBackgroundTaskExecutor
-	extends BaseBackgroundTaskExecutor {
+	extends BaseExportImportBackgroundTaskExecutor {
 
 	public LayoutExportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
@@ -106,14 +103,6 @@ public class LayoutExportBackgroundTaskExecutor
 		}
 
 		return BackgroundTaskResult.SUCCESS;
-	}
-
-	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
-			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
-
-		return jsonObject.toString();
 	}
 
 }

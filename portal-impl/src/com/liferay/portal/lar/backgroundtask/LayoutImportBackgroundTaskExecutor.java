@@ -16,10 +16,7 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -33,7 +30,7 @@ import java.util.Map;
  * @author Daniel Kocsis
  */
 public class LayoutImportBackgroundTaskExecutor
-	extends BaseBackgroundTaskExecutor {
+	extends BaseExportImportBackgroundTaskExecutor {
 
 	public LayoutImportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
@@ -68,14 +65,6 @@ public class LayoutImportBackgroundTaskExecutor
 		}
 
 		return BackgroundTaskResult.SUCCESS;
-	}
-
-	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
-			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
-
-		return jsonObject.toString();
 	}
 
 }

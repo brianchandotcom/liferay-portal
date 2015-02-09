@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/site_map/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 List<Layout> rootLayouts = LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), layout.isPrivateLayout(), rootLayoutId);

@@ -12,26 +12,37 @@
  * details.
  */
 
-package com.liferay.portlet.sitemap.template;
+package com.liferay.site.map.web.portlet.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.site.map.web.configuration.SiteMapWebConfigurationValues;
+import com.liferay.site.map.web.constants.SiteMapPortletKeys;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Juan Fernández
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + SiteMapPortletKeys.SITE_MAP
+	},
+	service = TemplateHandler.class
+)
 public class SiteMapPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
@@ -42,8 +53,11 @@ public class SiteMapPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language");
+
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.SITE_MAP, locale);
+			SiteMapPortletKeys.SITE_MAP, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -51,7 +65,7 @@ public class SiteMapPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return PortletKeys.SITE_MAP;
+		return SiteMapPortletKeys.SITE_MAP;
 	}
 
 	@Override
@@ -76,7 +90,7 @@ public class SiteMapPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return PropsValues.SITEMAP_DISPLAY_TEMPLATES_CONFIG;
+		return SiteMapWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

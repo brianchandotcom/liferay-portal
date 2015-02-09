@@ -338,7 +338,12 @@ public class Watcher implements Runnable {
 							return FileVisitResult.SKIP_SUBTREE;
 						}
 
-						doRegister(filePath, false);
+						try {
+							doRegister(filePath, false);
+						}
+						catch (IOException ioe) {
+							_logger.error(ioe.getMessage(), ioe);
+						}
 
 						return FileVisitResult.CONTINUE;
 					}

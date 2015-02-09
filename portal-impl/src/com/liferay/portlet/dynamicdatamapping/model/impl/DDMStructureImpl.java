@@ -124,7 +124,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldName);
 
 		if (ddmFormField == null) {
-			throw new StructureFieldException();
+			throw new StructureFieldException(
+				"Unable to find field " + fieldName);
 		}
 
 		return ddmFormField;

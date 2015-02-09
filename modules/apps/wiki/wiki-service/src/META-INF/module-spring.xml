@@ -2,7 +2,9 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 	<osgi:reference id="com.liferay.wiki.configuration.WikiServiceConfiguration" availability="mandatory" interface="com.liferay.wiki.configuration.WikiServiceConfiguration" />
-	<bean id="com.liferay.wiki.service.WikiNodeLocalService" class="com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl" />
+	<bean id="com.liferay.wiki.service.WikiNodeLocalService" class="com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl">
+		<property name="wikiServiceConfiguration" ref="com.liferay.wiki.configuration.WikiServiceConfiguration" />
+	</bean>
 	<osgi:service interface="com.liferay.wiki.service.WikiNodeLocalService" ref="com.liferay.wiki.service.WikiNodeLocalService">
 		<osgi:service-properties>
 			<entry key="json.web.service.context.name" value="wiki" />

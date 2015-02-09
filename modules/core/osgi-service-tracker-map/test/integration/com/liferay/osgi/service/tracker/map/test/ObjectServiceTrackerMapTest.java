@@ -387,6 +387,50 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGetServiceWithServiceTrackerCustomizerReturningNull()
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
+			ServiceTrackerMapFactory.singleValueMap(
+				_bundleContext, TrackedOne.class, "target",
+				new ServiceTrackerCustomizer<TrackedOne, TrackedTwo>() {
+
+					@Override
+					public TrackedTwo addingService(
+						ServiceReference<TrackedOne> serviceReference) {
+
+						return null;
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<TrackedOne> serviceReference,
+						TrackedTwo trackedTwo) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<TrackedOne> serviceReference,
+						TrackedTwo trackedTwo) {
+					}
+
+				});
+
+		serviceTrackerMap.open();
+
+		TrackedOne trackedOne = new TrackedOne("1");
+
+		ServiceRegistration<TrackedOne> serviceRegistration = registerService(
+			trackedOne, "one");
+
+		Assert.assertFalse(serviceTrackerMap.containsKey("one"));
+
+		serviceRegistration.unregister();
+
+		serviceTrackerMap.close();
+	}
+
+	@Test
 	public void testGetServiceWithSimpleRegistration() {
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 			createServiceTrackerMap(_bundleContext);

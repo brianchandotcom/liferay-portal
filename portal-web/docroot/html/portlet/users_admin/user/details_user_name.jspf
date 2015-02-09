@@ -15,7 +15,7 @@
 --%>
 
 <%
-FullNameDefinition fullNameDefinition = LocalizationUtil.getFullNameDefinition(userLocale);
+FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(userLocale);
 %>
 
 <liferay-ui:error exception="<%= ContactFirstNameException.class %>" message="please-enter-a-valid-first-name" />
@@ -24,7 +24,7 @@ FullNameDefinition fullNameDefinition = LocalizationUtil.getFullNameDefinition(u
 <div id="<portlet:namespace />userNameFields">
 
 	<%
-	for (FullNameField fullNameField: fullNameDefinition.getFields()) {
+	for (FullNameField fullNameField: fullNameDefinition.getFullNameFields()) {
 		String fieldName = CamelCaseUtil.toCamelCase(fullNameField.getName());
 	%>
 

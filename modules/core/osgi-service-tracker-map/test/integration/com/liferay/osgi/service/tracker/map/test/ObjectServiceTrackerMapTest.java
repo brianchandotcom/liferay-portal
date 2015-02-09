@@ -257,6 +257,27 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGetServiceWithMultiPropertyRegistration() {
+		try (ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+				createServiceTrackerMap(_bundleContext)) {
+
+			Dictionary<String, Object> properties = new Hashtable<>();
+
+			properties.put("service.ranking", 1);
+			properties.put("target", new String[] {"aTarget1", "aTarget2"});
+
+			ServiceRegistration<TrackedOne> serviceRegistration =
+				_bundleContext.registerService(
+					TrackedOne.class, new TrackedOne(), properties);
+
+			Assert.assertNotNull(serviceTrackerMap.getService("aTarget1"));
+			Assert.assertNotNull(serviceTrackerMap.getService("aTarget2"));
+
+			serviceRegistration.unregister();
+		}
+	}
+
+	@Test
 	public void testGetServiceWithServiceTrackerCustomizer()
 		throws InvalidSyntaxException {
 

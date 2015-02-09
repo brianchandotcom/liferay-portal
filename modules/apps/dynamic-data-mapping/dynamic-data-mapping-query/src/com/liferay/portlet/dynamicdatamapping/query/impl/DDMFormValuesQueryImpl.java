@@ -22,13 +22,10 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Adolfo Pérez
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMFormValuesQuery.class)
 public class DDMFormValuesQueryImpl implements DDMFormValuesQuery {
 
 	public DDMFormValuesQueryImpl(

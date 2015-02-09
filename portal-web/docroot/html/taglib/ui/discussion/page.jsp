@@ -401,7 +401,7 @@ int messagesCount = messages.size();
 									Util.toggleDisabled(commentButtonList, false);
 								},
 								failure: function(event, id, obj) {
-									<portlet:namespace />showStatusMessage('error', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
+									<portlet:namespace />showStatusMessage('danger', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
 								},
 								start: function() {
 									Util.toggleDisabled(commentButtonList, true);
@@ -437,7 +437,7 @@ int messagesCount = messages.size();
 											errorKey = '<%= UnicodeLanguageUtil.get(request, "you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply") %>';
 										}
 
-										<portlet:namespace />showStatusMessage('error', errorKey);
+										<portlet:namespace />showStatusMessage('danger', errorKey);
 									}
 								}
 							}
@@ -527,7 +527,7 @@ int messagesCount = messages.size();
 						var index = $('#<%= namespace %>index');
 						var rootIndexPage = $('#<%= namespace %>rootIndexPage');
 
-						A.io.request(
+						$.ajax(
 							'<%= paginationURL %>',
 							{
 								data: {
@@ -542,19 +542,15 @@ int messagesCount = messages.size();
 									'<portlet:namespace />rootIndexPage': rootIndexPage.val(),
 									'<portlet:namespace />userId': '<%= userId %>'
 								},
-								on: {
-									failure: function() {
-										alert('failure');
-									},
-									success: function(event, id, obj) {
-										var responseData = this.get('responseData');
+								error: function() {
+									<portlet:namespace />showStatusMessage('danger', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
+								},
+								success: function(data) {
+									var moreCommentsPage = A.one('#<%= namespace %>moreCommentsPage');
 
-										var moreCommentsPage = A.one('#<%= namespace %>moreCommentsPage');
+									moreCommentsPage.plug(A.Plugin.ParseContent);
 
-										moreCommentsPage.plug(A.Plugin.ParseContent);
-
-										moreCommentsPage.append(responseData);
-									}
+									moreCommentsPage.append(data);
 								}
 							}
 						);

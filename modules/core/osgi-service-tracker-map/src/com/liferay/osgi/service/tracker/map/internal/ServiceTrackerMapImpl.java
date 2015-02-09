@@ -113,12 +113,16 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 		@Override
 		public void emit(K key) {
-			if (_serviceReferenceServiceTuple == null) {
+			if ((_serviceReferenceServiceTuple == null) &&
+				!_invokedCustomizer) {
+
 				TS service = _serviceTrackerCustomizer.addingService(
 					_serviceReference);
 
+					_invokedCustomizer = true;
+
 				if (service == null) {
-					return;				
+					return;
 				}
 
 				_serviceReferenceServiceTuple =
@@ -150,6 +154,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 			return _serviceReferenceServiceTuple;
 		}
 
+		private boolean _invokedCustomizer = false;
 		private final ServiceReference<SR> _serviceReference;
 		private ServiceReferenceServiceTuple<SR, TS>
 			_serviceReferenceServiceTuple = null;

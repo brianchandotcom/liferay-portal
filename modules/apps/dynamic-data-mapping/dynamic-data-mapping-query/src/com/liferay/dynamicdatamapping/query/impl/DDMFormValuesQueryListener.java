@@ -12,30 +12,30 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.query.impl;
+package com.liferay.dynamicdatamapping.query.impl;
 
+import com.liferay.dynamicdatamapping.query.impl.model.DDMFormFieldValueMatcher;
+import com.liferay.dynamicdatamapping.query.impl.model.DDMFormFieldValueMatchesAllMatcher;
+import com.liferay.dynamicdatamapping.query.impl.model.DDMFormFieldValueMatchesAnyMatcher;
+import com.liferay.dynamicdatamapping.query.impl.model.DDMFormFieldValueNameMatcher;
+import com.liferay.dynamicdatamapping.query.impl.model.DDMFormFieldValueTypeMatcher;
+import com.liferay.dynamicdatamapping.query.impl.model.DDMFormFieldValueValueMatcher;
+import com.liferay.dynamicdatamapping.query.impl.model.DDMFormValuesFilter;
+import com.liferay.dynamicdatamapping.query.impl.model.DDMFormValuesFilterImpl;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryBaseListener;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.AttributeTypeContext;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.AttributeValueContext;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.FieldSelectorContext;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.FieldSelectorExpressionContext;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.LocaleExpressionContext;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.PredicateAndExpressionContext;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.PredicateEqualityExpressionContext;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.PredicateOrExpressionContext;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.SelectorExpressionContext;
+import com.liferay.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.StepTypeContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.dynamicdatamapping.query.impl.model.DDMFormFieldValueMatcher;
-import com.liferay.portlet.dynamicdatamapping.query.impl.model.DDMFormFieldValueMatchesAllMatcher;
-import com.liferay.portlet.dynamicdatamapping.query.impl.model.DDMFormFieldValueMatchesAnyMatcher;
-import com.liferay.portlet.dynamicdatamapping.query.impl.model.DDMFormFieldValueNameMatcher;
-import com.liferay.portlet.dynamicdatamapping.query.impl.model.DDMFormFieldValueTypeMatcher;
-import com.liferay.portlet.dynamicdatamapping.query.impl.model.DDMFormFieldValueValueMatcher;
-import com.liferay.portlet.dynamicdatamapping.query.impl.model.DDMFormValuesFilter;
-import com.liferay.portlet.dynamicdatamapping.query.impl.model.DDMFormValuesFilterImpl;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryBaseListener;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.AttributeTypeContext;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.AttributeValueContext;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.FieldSelectorContext;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.FieldSelectorExpressionContext;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.LocaleExpressionContext;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.PredicateAndExpressionContext;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.PredicateEqualityExpressionContext;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.PredicateOrExpressionContext;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.SelectorExpressionContext;
-import com.liferay.portlet.dynamicdatamapping.query.impl.parser.DDMFormValuesQueryParser.StepTypeContext;
 
 import java.util.ArrayList;
 import java.util.List;

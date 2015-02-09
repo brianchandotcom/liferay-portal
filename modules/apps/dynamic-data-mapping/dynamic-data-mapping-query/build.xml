@@ -9,7 +9,7 @@
 	<target name="build-ddm-form-values-query-parser">
 		<delete>
 			<fileset
-				dir="src/com/liferay/portlet/dynamicdatamapping/query/impl/parser"
+				dir="src/com/liferay/dynamicdatamapping/query/impl/parser"
 				excludes="*.ignore"
 				includes="*.*"
 			/>
@@ -22,7 +22,7 @@
 		<java
 			classname="org.antlr.v4.Tool"
 			classpathref="antlr.classpath"
-			dir="src/com/liferay/portlet/dynamicdatamapping/query/impl/grammar"
+			dir="src/com/liferay/dynamicdatamapping/query/impl/grammar"
 			fork="true"
 			maxmemory="1024m"
 			newenvironment="true"
@@ -35,7 +35,7 @@
 		<fixcrlf
 			includes="*.java"
 			javafiles="yes"
-			srcdir="src/com/liferay/portlet/dynamicdatamapping/query/impl/parser"
+			srcdir="src/com/liferay/dynamicdatamapping/query/impl/parser"
 			tab="add"
 		/>
 	</target>

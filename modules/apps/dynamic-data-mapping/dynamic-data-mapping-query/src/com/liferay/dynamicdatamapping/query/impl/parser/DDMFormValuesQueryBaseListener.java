@@ -14,7 +14,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.query.impl.parser;
+package com.liferay.dynamicdatamapping.query.impl.parser;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;

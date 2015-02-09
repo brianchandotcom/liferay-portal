@@ -8,23 +8,29 @@ Import-Package:\
 	!org.apache.log,\
 	!org.slf4j.spi,\
 	!org.zeroturnaround.javarebel,\
-	com.liferay.taglib,\
-	com.liferay.taglib.aui,\
-	com.liferay.taglib.aui.base,\
-	com.liferay.taglib.core,\
-	com.liferay.taglib.ddm,\
-	com.liferay.taglib.ddm.base,\
-	com.liferay.taglib.portlet,\
-	com.liferay.taglib.portletext,\
-	com.liferay.taglib.search,\
-	com.liferay.taglib.security,\
-	com.liferay.taglib.servlet,\
-	com.liferay.taglib.staging,\
-	com.liferay.taglib.theme,\
-	com.liferay.taglib.ui,\
-	com.liferay.taglib.ui.context,\
-	com.liferay.taglib.ui.util,\
-	com.liferay.taglib.util,\
+	com.liferay.alloy.taglib.alloy;version='[7.0.0,8.0)',\
+	com.liferay.alloy.taglib.alloy.base;version='[7.0.0,8.0)',\
+	com.liferay.alloy.taglib.alloy_util;version='[7.0.0,8.0)',\
+	com.liferay.alloy.taglib.alloy_util.base;version='[7.0.0,8.0)',\
+	com.liferay.alloy.taglib.liferay;version='[7.0.0,8.0)',\
+	com.liferay.alloy.taglib.liferay.base;version='[7.0.0,8.0)',\
+	com.liferay.taglib;version='[7.0.0,8.0)',\
+	com.liferay.taglib.aui;version='[7.0.0,8.0)',\
+	com.liferay.taglib.aui.base;version='[7.0.0,8.0)',\
+	com.liferay.taglib.core;version='[7.0.0,8.0)',\
+	com.liferay.taglib.ddm;version='[7.0.0,8.0)',\
+	com.liferay.taglib.ddm.base;version='[7.0.0,8.0)',\
+	com.liferay.taglib.portlet;version='[7.0.0,8.0)',\
+	com.liferay.taglib.portletext;version='[7.0.0,8.0)',\
+	com.liferay.taglib.search;version='[1.0.0,2.0)',\
+	com.liferay.taglib.security;version='[7.0.0,8.0)',\
+	com.liferay.taglib.servlet;version='[1.0.0,2.0)',\
+	com.liferay.taglib.staging;version='[1.0.0,2.0)',\
+	com.liferay.taglib.theme;version='[7.0.0,8.0)',\
+	com.liferay.taglib.ui;version='[7.0.0,8.0)',\
+	com.liferay.taglib.ui.context;version='[1.0.0,2.0)',\
+	com.liferay.taglib.ui.util;version='[1.0.0,2.0)',\
+	com.liferay.taglib.util;version='[7.0.0,8.0)',\
 	org.apache.taglibs.standard;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.extra.spath;version='[1.2.3,2.0)',\
 	org.apache.taglibs.standard.functions;version='[1.2.3,2.0)',\

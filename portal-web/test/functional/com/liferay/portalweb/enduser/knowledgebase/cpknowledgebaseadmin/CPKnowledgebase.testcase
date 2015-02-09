@@ -197,7 +197,7 @@
 
 	<command name="AddKBArticleWithSourceViaKBAdmin" priority="5">
 		<var name="kbArticleContentSource">
-			<![CDATA[<b>Knowledge Base's Article Content</b>]]>
+			<![CDATA[<b>Knowledge Base&rsquo;s Article Content</b>]]>
 		</var>
 
 		<execute macro="Page#gotoContentCP">

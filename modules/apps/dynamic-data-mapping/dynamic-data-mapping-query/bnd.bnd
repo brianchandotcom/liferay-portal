@@ -1,0 +1,7 @@
+Bundle-Name: Liferay DDM Query
+Bundle-SymbolicName: com.liferay.dynamicdatamapping.query
+Bundle-Version: 1.0.0
+Include-Resource:\
+	${replace;${libs};^;@lib/},\
+	classes
+libs: ${lsr;lib;*.jar}

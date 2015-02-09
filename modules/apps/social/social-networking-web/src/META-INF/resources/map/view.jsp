@@ -151,7 +151,7 @@ IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(SocialNetworkingWebKeys
 						<c:when test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 							var infoWindow = new google.maps.InfoWindow(
 								{
-									content: '<center><img alt="<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "user-portrait")) %>" src="<%= mapUser.getPortraitURL(themeDisplay) %>" width="65" /><br /><%= HtmlUtil.escapeJS(mapUser.getFullName()) %></center>'
+									content: '<center><img alt="<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "user-portrait")) %>" src="<%= mapUser.getPortraitURL(themeDisplay) %>" width="65" /><br /><%= HtmlUtil.escapeJS(HtmlUtil.escape(mapUser.getFullName())) %></center>'
 								}
 							);
 

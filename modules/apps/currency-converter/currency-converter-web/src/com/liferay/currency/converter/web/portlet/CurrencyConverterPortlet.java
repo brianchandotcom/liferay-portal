@@ -82,7 +82,7 @@ public class CurrencyConverterPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_CurrencyConverterConfiguration = Configurable.createConfigurable(
+		_currencyConverterConfiguration = Configurable.createConfigurable(
 			CurrencyConverterConfiguration.class, properties);
 	}
 
@@ -92,6 +92,6 @@ public class CurrencyConverterPortlet extends MVCPortlet {
 	}
 
 	private volatile CurrencyConverterConfiguration
-		_CurrencyConverterConfiguration;
+		_currencyConverterConfiguration;
 
 }

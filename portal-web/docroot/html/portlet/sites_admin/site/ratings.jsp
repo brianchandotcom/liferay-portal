@@ -68,10 +68,10 @@ GroupPortletRatingsDefinitionDisplayContext groupPortletRatingsDefinitionDisplay
 			<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "TypeSettingsProperties--" + propertyKey + "--" %>'>
 
 				<%
-				for (RatingsType curRatingsType : RatingsType.values()) {
+				for (RatingsType ratingsType : RatingsType.values()) {
 				%>
 
-					<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Validator.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
+					<aui:option label="<%= LanguageUtil.get(request, ratingsType.getValue()) %>" selected="<%= Validator.equals(ratingsType, ratingsType) %>" value="<%= ratingsType.getValue() %>" />
 
 				<%
 				}

@@ -473,7 +473,7 @@ public class UserImpl extends UserBaseImpl {
 		FullNameGenerator fullNameGenerator =
 			FullNameGeneratorFactory.getInstance();
 
-		int prefixId = 0;
+		long prefixId = 0;
 
 		try {
 			if (usePrefix) {
@@ -485,7 +485,7 @@ public class UserImpl extends UserBaseImpl {
 		catch (PortalException pe) {
 		}
 
-		int suffixId = 0;
+		long suffixId = 0;
 
 		try {
 			if (useSuffix) {

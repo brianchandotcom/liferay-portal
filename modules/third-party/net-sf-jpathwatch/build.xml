@@ -21,8 +21,9 @@
 		/>
 
 		<antcall target="patch">
-			<param name="patch.destination" value="name/pachler/nio/file/impl/BSDPathWatchService.java,name/pachler/nio/file/impl/LinuxPathWatchService.java" />
+			<param name="patch.destination" value="**/name/pachler/nio/file/impl/BSDPathWatchService.java,**/name/pachler/nio/file/impl/LinuxPathWatchService.java" />
 			<param name="patch.original.lib.name" value="${original.lib.name}" />
+			<param name="patch.original.lib.source.dir" value="jpathwatch-java/src" />
 			<param name="patch.original.lib.url" value="${original.lib.url}" />
 			<param name="patch.original.lib.version" value="${original.lib.version}" />
 			<param name="patch.source" value="patches" />

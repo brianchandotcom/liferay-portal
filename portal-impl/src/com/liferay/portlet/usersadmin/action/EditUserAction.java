@@ -69,7 +69,7 @@ import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.ListTypeServiceUtil;
+import com.liferay.portal.service.ListTypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -131,9 +131,9 @@ public class EditUserAction extends PortletAction {
 		String prefix = ParamUtil.getString(actionRequest, "prefixValue");
 		String suffix = ParamUtil.getString(actionRequest, "suffixValue");
 
-		int prefixId = ListTypeServiceUtil.addListType(
+		long prefixId = ListTypeLocalServiceUtil.addListType(
 			prefix, ListTypeConstants.CONTACT_PREFIX).getPrimaryKey();
-		int suffixId = ListTypeServiceUtil.addListType(
+		long suffixId = ListTypeLocalServiceUtil.addListType(
 			suffix, ListTypeConstants.CONTACT_SUFFIX).getPrimaryKey();
 
 		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(

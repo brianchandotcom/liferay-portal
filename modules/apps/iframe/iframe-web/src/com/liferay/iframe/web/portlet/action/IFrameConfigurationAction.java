@@ -94,7 +94,7 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 		throws Exception {
 
 		renderRequest.setAttribute(
-			IFrameConfiguration.class.getName(), _IFrameConfiguration);
+			IFrameConfiguration.class.getName(), _iFrameConfiguration);
 
 		return super.render(portletConfig, renderRequest, renderResponse);
 	}
@@ -102,10 +102,10 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_IFrameConfiguration = Configurable.createConfigurable(
+		_iFrameConfiguration = Configurable.createConfigurable(
 			IFrameConfiguration.class, properties);
 	}
 
-	private volatile IFrameConfiguration _IFrameConfiguration;
+	private volatile IFrameConfiguration _iFrameConfiguration;
 
 }

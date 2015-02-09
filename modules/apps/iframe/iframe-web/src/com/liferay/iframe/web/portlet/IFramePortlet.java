@@ -84,7 +84,7 @@ public class IFramePortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			IFrameConfiguration.class.getName(), _IFrameConfiguration);
+			IFrameConfiguration.class.getName(), _iFrameConfiguration);
 
 		String src = null;
 
@@ -110,7 +110,7 @@ public class IFramePortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_IFrameConfiguration = Configurable.createConfigurable(
+		_iFrameConfiguration = Configurable.createConfigurable(
 			IFrameConfiguration.class, properties);
 	}
 
@@ -200,6 +200,6 @@ public class IFramePortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(IFramePortlet.class);
 
-	private volatile IFrameConfiguration _IFrameConfiguration;
+	private volatile IFrameConfiguration _iFrameConfiguration;
 
 }

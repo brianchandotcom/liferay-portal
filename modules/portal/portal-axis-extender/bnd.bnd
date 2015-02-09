@@ -5,10 +5,12 @@ Import-Package:\
 	!com.ibm.*,\
 	!com.sun.*,\
 	!javax.jms.*,\
+	!javax.swing.*,\
+	!org.apache.bsf.*,\
 	!org.apache.commons.net.*,\
 	!org.exolab.castor.xml.*,\
-	!sun.*,\
-	com.liferay.portal.theme,\
+	!org.omg.*,\
+	!sun.awt.image.codec,\
 	*
 Include-Resource:\
 	classes,\

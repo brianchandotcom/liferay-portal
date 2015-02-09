@@ -336,8 +336,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 			ModuleFrameworkUtilAdapter.registerContext(applicationContext);
 
-			ModuleFrameworkUtilAdapter.registerExtraPackages();
-
 			ModuleFrameworkUtilAdapter.startRuntime();
 		}
 		catch (Exception e) {

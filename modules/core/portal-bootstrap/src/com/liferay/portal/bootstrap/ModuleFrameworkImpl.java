@@ -14,43 +14,31 @@
 
 package com.liferay.portal.bootstrap;
 
-import aQute.bnd.header.Attrs;
 import aQute.bnd.header.OSGiHeader;
 import aQute.bnd.header.Parameters;
-import aQute.bnd.osgi.Analyzer;
-import aQute.bnd.osgi.Builder;
-import aQute.bnd.osgi.Jar;
-import aQute.bnd.osgi.Resource;
-import aQute.bnd.osgi.Verifier;
 import aQute.bnd.version.Version;
 
-import com.liferay.portal.cache.key.JavaMD5CacheKeyGenerator;
-import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServiceLoader;
 import com.liferay.portal.kernel.util.ServiceLoaderCondition;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.kernel.util.URLCodec;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
@@ -59,24 +47,15 @@ import com.liferay.registry.internal.ServiceTrackerMapFactoryImpl;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 
-import java.net.JarURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 import java.security.CodeSource;
-import java.security.NoSuchAlgorithmException;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -85,14 +64,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.jar.Attributes;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 
@@ -116,10 +90,6 @@ import org.springframework.context.ApplicationContext;
  * @author Miguel Pastor
  */
 public class ModuleFrameworkImpl implements ModuleFramework {
-
-	public ModuleFrameworkImpl() {
-		_liferayLibPortalDir = _getLiferayLibPortalDir();
-	}
 
 	@Override
 	public Object addBundle(String location) throws PortalException {
@@ -240,35 +210,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	@Override
-	public Map<String, List<URL>> getExtraPackageMap() {
-		return _extraPackageMap;
-	}
-
-	@Override
-	public List<URL> getExtraPackageURLs() {
-		if (_extraPackageURLs != null) {
-			return _extraPackageURLs;
-		}
-
-		_extraPackageLock.lock();
-
-		try {
-			List<URL> extraPackageURLs = new ArrayList<>();
-
-			for (List<URL> urls : _extraPackageMap.values()) {
-				extraPackageURLs.addAll(urls);
-			}
-
-			_extraPackageURLs = Collections.unmodifiableList(extraPackageURLs);
-		}
-		finally {
-			_extraPackageLock.unlock();
-		}
-
-		return _extraPackageURLs;
-	}
-
-	@Override
 	public Framework getFramework() {
 		return _framework;
 	}
@@ -326,19 +267,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			_registerServletContext(servletContext);
 		}
-	}
-
-	@Override
-	public void registerExtraPackages() {
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		Map<String, List<URL>> extraPackageMap = getExtraPackageMap();
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("jsp.compiler.resource.map", "portal.extra.packages");
-
-		bundleContext.registerService(Map.class, extraPackageMap, properties);
 	}
 
 	@Override
@@ -621,113 +549,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return properties;
 	}
 
-	private String _calculateExportPackage(Jar jar) {
-		StringBundler sb = new StringBundler();
-
-		String delimiter = StringPool.BLANK;
-
-		Map<String, Map<String, Resource>> directories = jar.getDirectories();
-
-		for (String directory : directories.keySet()) {
-			if (directory.equals("META-INF") ||
-				directory.startsWith("META-INF/")) {
-
-				continue;
-			}
-
-			if (directory.equals("OSGI-OPT") ||
-				directory.startsWith("OSGI-OPT/")) {
-
-				continue;
-			}
-
-			if (directory.equals(StringPool.SLASH)) {
-				continue;
-			}
-
-			if (directory.endsWith(StringPool.SLASH)) {
-				directory = directory.substring(0, directory.length() - 1);
-			}
-
-			if (directory.endsWith(StringPool.SLASH)) {
-				directory = directory.substring(0, directory.length() - 1);
-			}
-
-			String className = directory.replace(
-				StringPool.SLASH, StringPool.PERIOD);
-
-			if (directories.get(directory) != null) {
-				sb.append(delimiter);
-				sb.append(className);
-
-				delimiter = StringPool.COMMA;
-			}
-		}
-
-		return sb.toString();
-	}
-
-	private Manifest _calculateManifest(URL url, Manifest manifest) {
-		Analyzer analyzer = new Analyzer();
-
-		Jar jar = null;
-
-		try {
-			File file = _getJarFile(url);
-
-			if (!file.exists() || !file.canRead()) {
-				return manifest;
-			}
-
-			String fileName = file.getName();
-
-			analyzer.setJar(new Jar(fileName, file));
-
-			jar = analyzer.getJar();
-
-			String bundleSymbolicName = fileName;
-
-			Matcher matcher = _bundleSymbolicNamePattern.matcher(
-				bundleSymbolicName);
-
-			if (matcher.matches()) {
-				bundleSymbolicName = matcher.group(1);
-			}
-
-			analyzer.setProperty(
-				Analyzer.BUNDLE_SYMBOLICNAME, bundleSymbolicName);
-
-			String exportPackage = _calculateExportPackage(jar);
-
-			analyzer.setProperty(Analyzer.EXPORT_PACKAGE, exportPackage);
-
-			analyzer.mergeManifest(manifest);
-
-			String bundleVersion = analyzer.getProperty(
-				Analyzer.BUNDLE_VERSION);
-
-			if (bundleVersion != null) {
-				bundleVersion = Builder.cleanupVersion(bundleVersion);
-
-				analyzer.setProperty(Analyzer.BUNDLE_VERSION, bundleVersion);
-			}
-
-			return analyzer.calcManifest();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return manifest;
-		}
-		finally {
-			if (jar != null) {
-				jar.close();
-			}
-
-			analyzer.close();
-		}
-	}
-
 	private void _checkPermission() throws PrincipalException {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -735,17 +556,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		if ((permissionChecker == null) || !permissionChecker.isOmniadmin()) {
 			throw new PrincipalException();
 		}
-	}
-
-	/**
-	 * @see com.liferay.portal.kernel.util.HttpUtil#decodePath
-	 */
-	private String _decodePath(String path) {
-		path = StringUtil.replace(path, StringPool.SLASH, _TEMP_SLASH);
-		path = URLCodec.decodeURL(path, StringPool.UTF8);
-		path = StringUtil.replace(path, _TEMP_SLASH, StringPool.SLASH);
-
-		return path;
 	}
 
 	private String _getFelixFileInstallDir() {
@@ -772,22 +582,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return String.valueOf(level);
 	}
 
-	private String _getHashcode(String[]... keys) {
-		try {
-			CacheKeyGenerator cacheKeyGenerator = new JavaMD5CacheKeyGenerator(
-				128);
-
-			for (String[] key : keys) {
-				cacheKeyGenerator.append(key);
-			}
-
-			return String.valueOf(cacheKeyGenerator.finish());
-		}
-		catch (NoSuchAlgorithmException nsae) {
-			throw new RuntimeException(nsae);
-		}
-	}
-
 	private Set<Class<?>> _getInterfaces(Object bean) {
 		Set<Class<?>> interfaces = new HashSet<>();
 
@@ -812,113 +606,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return interfaces;
 	}
 
-	private File _getJarFile(URL url) throws IOException {
-		URLConnection urlConnection = url.openConnection();
-
-		String fileName = url.getFile();
-
-		if (urlConnection instanceof JarURLConnection) {
-			JarURLConnection jarURLConnection = (JarURLConnection)urlConnection;
-
-			URL jarFileURL = jarURLConnection.getJarFileURL();
-
-			fileName = jarFileURL.getFile();
-		}
-		else if (Validator.equals(url.getProtocol(), "wsjar")) {
-
-			// WebSphere uses a custom wsjar protocol to represent JAR files
-
-			fileName = url.getFile();
-
-			String protocol = "file:/";
-
-			int index = fileName.indexOf(protocol);
-
-			if (index > -1) {
-				fileName = fileName.substring(protocol.length());
-			}
-
-			index = fileName.indexOf('!');
-
-			if (index > -1) {
-				fileName = fileName.substring(0, index);
-			}
-
-			fileName = _decodePath(fileName);
-		}
-		else if (Validator.equals(url.getProtocol(), "zip")) {
-
-			// Weblogic uses a custom zip protocol to represent JAR files
-
-			fileName = url.getFile();
-
-			int index = fileName.indexOf('!');
-
-			if (index > 0) {
-				fileName = fileName.substring(0, index);
-			}
-		}
-
-		return new File(fileName);
-	}
-
-	private String _getLiferayLibPortalDir() {
-		String liferayLibPortalDir = PropsValues.LIFERAY_LIB_PORTAL_DIR;
-
-		if (liferayLibPortalDir.startsWith(StringPool.SLASH)) {
-			liferayLibPortalDir = liferayLibPortalDir.substring(1);
-		}
-
-		return StringUtil.toLowerCase(liferayLibPortalDir);
-	}
-
 	private String _getSystemPackagesExtra() {
 		String[] systemPackagesExtra =
 			PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA;
-
-		String hashcode = _getHashcode(
-			systemPackagesExtra,
-			PropsValues.MODULE_FRAMEWORK_SYSTEM_BUNDLE_IGNORED_FRAGMENTS);
-
-		File coreDir = new File(
-			PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR, "osgi");
-
-		File cacheFile = new File(coreDir, "system-packages.txt");
-		File hashcodeFile = new File(coreDir, "system-packages.hash");
-
-		if (cacheFile.exists() && hashcodeFile.exists() &&
-			_hasMatchingHashcode(hashcodeFile, hashcode)) {
-
-			ObjectInputStream objectInputStream = null;
-
-			try {
-				objectInputStream = new ObjectInputStream(
-					new FileInputStream(cacheFile));
-
-				_extraPackageMap =
-					(Map<String, List<URL>>)objectInputStream.readObject();
-
-				return (String)objectInputStream.readObject();
-			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
-			}
-			catch (ClassNotFoundException cnfe) {
-				_log.error(cnfe, cnfe);
-			}
-			finally {
-				if (objectInputStream != null) {
-					try {
-						objectInputStream.close();
-					}
-					catch (IOException ioe) {
-						_log.error(ioe, ioe);
-					}
-				}
-			}
-		}
-
-		_extraPackageMap = new TreeMap<>();
 
 		StringBundler sb = new StringBundler();
 
@@ -927,43 +617,25 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			sb.append(StringPool.COMMA);
 		}
 
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
+		Class<?> clazz = getClass();
 
-		PrintStream err = System.err;
+		InputStream inputStream = clazz.getResourceAsStream(
+			"/META-INF/system.packages.extra.mf");
+
+		Manifest extraPackagesManifest = null;
 
 		try {
-			System.setErr(
-				new PrintStream(err) {
-
-					@Override
-					public void println(String string) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(string);
-						}
-					}
-
-				}
-			);
-
-			for (URL url : SetUtil.fromEnumeration(
-					classLoader.getResources("META-INF/MANIFEST.MF"))) {
-
-				_processURL(
-					sb, url,
-					PropsValues.
-						MODULE_FRAMEWORK_SYSTEM_BUNDLE_IGNORED_FRAGMENTS);
-			}
+			extraPackagesManifest = new Manifest(inputStream);
 		}
 		catch (IOException ioe) {
-			_log.error(ioe, ioe);
-		}
-		finally {
-			System.setErr(err);
+			ReflectionUtil.throwException(ioe);
 		}
 
-		_extraPackageMap = Collections.unmodifiableMap(_extraPackageMap);
+		Attributes attributes = extraPackagesManifest.getMainAttributes();
 
-		sb.setIndex(sb.index() - 1);
+		String exportedPackages = attributes.getValue("Export-Package");
+
+		sb.append(exportedPackages);
 
 		if (_log.isTraceEnabled()) {
 			String s = sb.toString();
@@ -973,35 +645,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.trace(
 				"The portal's system bundle is exporting the following " +
 					"packages:\n" +s);
-		}
-
-		if (!coreDir.exists()) {
-			coreDir.mkdir();
-		}
-
-		ObjectOutputStream objectOutputStream = null;
-
-		try {
-			objectOutputStream = new ObjectOutputStream(
-				new FileOutputStream(cacheFile));
-
-			objectOutputStream.writeObject(_extraPackageMap);
-			objectOutputStream.writeObject(sb.toString());
-
-			FileUtil.write(hashcodeFile, hashcode);
-		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
-		}
-		finally {
-			if (objectOutputStream != null) {
-				try {
-					objectOutputStream.close();
-				}
-				catch (IOException ioe) {
-					_log.error(ioe, ioe);
-				}
-			}
 		}
 
 		return sb.toString();
@@ -1027,23 +670,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		if (parameters.containsKey(Constants.ACTIVATION_LAZY)) {
 			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _hasMatchingHashcode(
-		File hashcodeFile, String expectedHashcode) {
-
-		try {
-			String actualHashcode = FileUtil.read(hashcodeFile);
-
-			if (actualHashcode.equals(expectedHashcode)) {
-				return true;
-			}
-		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
 		}
 
 		return false;
@@ -1153,106 +779,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			if (ignoredClass.equals(interfaceClassName) ||
 				(ignoredClass.endsWith(StringPool.STAR) &&
 				 interfaceClassName.startsWith(
-					 ignoredClass.substring(0, ignoredClass.length() - 1)))) {
+					ignoredClass.substring(0, ignoredClass.length() - 1)))) {
 
 				return true;
 			}
 		}
 
 		return false;
-	}
-
-	private void _processURL(
-		StringBundler sb, URL url, String[] ignoredFragments) {
-
-		Manifest manifest = null;
-
-		try {
-			manifest = new Manifest(url.openStream());
-		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
-
-			return;
-		}
-
-		Attributes attributes = manifest.getMainAttributes();
-
-		String bundleSymbolicName = attributes.getValue(
-			Constants.BUNDLE_SYMBOLICNAME);
-
-		if (Validator.isNull(bundleSymbolicName)) {
-			String urlString = _decodePath(url.toString());
-
-			urlString = StringUtil.toLowerCase(urlString);
-
-			if (urlString.contains(_liferayLibPortalDir)) {
-				manifest = _calculateManifest(url, manifest);
-
-				attributes = manifest.getMainAttributes();
-
-				bundleSymbolicName = attributes.getValue(
-					new Attributes.Name(Constants.BUNDLE_SYMBOLICNAME));
-
-				if (Validator.isNull(bundleSymbolicName)) {
-					return;
-				}
-			}
-			else {
-				return;
-			}
-		}
-
-		String rootBundleSymbolicName = bundleSymbolicName;
-
-		int index = rootBundleSymbolicName.indexOf(StringPool.SEMICOLON);
-
-		if (index != -1) {
-			rootBundleSymbolicName = rootBundleSymbolicName.substring(0, index);
-		}
-
-		for (String ignoredFragment : ignoredFragments) {
-			String ignoredFramentPrefix = ignoredFragment.substring(
-				0, ignoredFragment.length() - 1);
-
-			if (rootBundleSymbolicName.equals(ignoredFragment) ||
-				(ignoredFragment.endsWith(StringPool.STAR) &&
-				 rootBundleSymbolicName.startsWith(ignoredFramentPrefix))) {
-
-				return;
-			}
-		}
-
-		String exportPackage = GetterUtil.getString(
-			attributes.getValue(Constants.EXPORT_PACKAGE));
-
-		Parameters parameters = OSGiHeader.parseHeader(exportPackage);
-
-		for (Map.Entry<String, Attrs> entry : parameters.entrySet()) {
-			String key = entry.getKey();
-
-			List<URL> urls = _extraPackageMap.get(key);
-
-			if (urls == null) {
-				urls = new ArrayList<>();
-
-				_extraPackageMap.put(key, urls);
-			}
-
-			urls.add(url);
-
-			sb.append(key);
-
-			Attrs value = entry.getValue();
-
-			if (value.containsKey("version")) {
-				sb.append(";version=\"");
-				sb.append(value.get("version"));
-				sb.append("\"");
-			}
-
-			sb.append(StringPool.COMMA);
-		}
 	}
 
 	private void _registerApplicationContext(
@@ -1356,18 +889,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		frameworkWiring.refreshBundles(refreshBundles, frameworkListener);
 	}
 
-	private static final String _TEMP_SLASH = "_LIFERAY_TEMP_SLASH_";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);
 
-	private final Pattern _bundleSymbolicNamePattern = Pattern.compile(
-		"(" + Verifier.SYMBOLICNAME.pattern() + ")(-[0-9])?.*\\.jar");
-	private final Lock _extraPackageLock = new ReentrantLock();
-	private Map<String, List<URL>> _extraPackageMap;
-	private List<URL> _extraPackageURLs;
 	private Framework _framework;
-	private final String _liferayLibPortalDir;
 
 	private class StartupFrameworkListener implements FrameworkListener {
 

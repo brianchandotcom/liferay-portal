@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -171,6 +172,12 @@ public class JournalContentPortletLayoutListener
 		catch (Exception e) {
 			throw new PortletLayoutListenerException(e);
 		}
+	}
+
+	@Override
+	public void updatePropertiesOnRemoveFromLayout(
+			String portletId, UnicodeProperties typeSettingsProperties)
+		throws PortletLayoutListenerException {
 	}
 
 	protected String getRuntimePortletId(String xml) throws Exception {

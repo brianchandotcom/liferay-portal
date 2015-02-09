@@ -15,7 +15,9 @@
 package com.liferay.asset.publisher.web.portlet.action;
 
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -71,6 +73,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @author Juan Fernández
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER
+	},
+	service = ConfigurationAction.class
+)
 public class AssetPublisherConfigurationAction
 	extends DefaultConfigurationAction {
 

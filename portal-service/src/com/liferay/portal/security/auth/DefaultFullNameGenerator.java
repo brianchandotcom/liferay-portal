@@ -14,14 +14,20 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserConstants;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Michael C. Han
@@ -98,24 +104,39 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 		StringBundler sb = new StringBundler(5);
 
-		if (useInitials) {
-			firstName = firstName.substring(0, 1);
-		}
+		Map<String, String> namesMap = new HashMap<String, String>();
 
-		sb.append(firstName);
+		Locale locale = LocaleUtil.getDefault();
+
+		String fieldsString = LanguageUtil.get(locale, "user.name.fields");
+
+		String[] userNameFields = StringUtil.split(fieldsString);
+
+		if (Validator.isNotNull(firstName)) {
+			if (useInitials) {
+				firstName = firstName.substring(0, 1);
+			}
+
+			namesMap.put("firstName", firstName);
+		}
 
 		if (Validator.isNotNull(middleName)) {
 			if (useInitials) {
 				middleName = middleName.substring(0, 1);
 			}
 
-			sb.append(StringPool.SPACE);
-			sb.append(middleName);
+			namesMap.put("middleName", middleName);
 		}
 
 		if (Validator.isNotNull(lastName)) {
-			sb.append(StringPool.SPACE);
-			sb.append(lastName);
+			namesMap.put("lastName", lastName);
+		}
+
+		for (String userNameField: userNameFields) {
+			if (namesMap.containsKey(userNameField)) {
+				sb.append(StringPool.SPACE);
+				sb.append(namesMap.get(userNameField));
+			}
 		}
 
 		return sb.toString();

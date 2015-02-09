@@ -1,7 +1,3 @@
-Bundle-ClassPath:\
-	.,\
-	lib/axis.jar,\
-	lib/wsdl4j.jar
 Bundle-Name: Liferay Portal Axis Extender
 Bundle-SymbolicName: com.liferay.portal.axis.extender
 Bundle-Version: 1.0.0
@@ -16,5 +12,5 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	lib/axis.jar=../../../lib/portal/axis.jar,\
-	lib/wsdl4j.jar=../../../lib/portal/wsdl4j.jar
+	@../../../lib/portal/axis.jar,\
+	@../../../lib/portal/wsdl4j.jar

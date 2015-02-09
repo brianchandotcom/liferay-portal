@@ -247,10 +247,10 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 
 	<c:choose>
 		<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
-			<liferay-util:include page="/configuration_manual.jsp" />
+			<liferay-util:include page="/configuration_manual.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
-			<liferay-util:include page="/configuration_dynamic.jsp" />
+			<liferay-util:include page="/configuration_dynamic.jsp" servletContext="<%= application %>" />
 		</c:when>
 	</c:choose>
 </aui:form>

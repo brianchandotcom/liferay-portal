@@ -32,7 +32,7 @@ else {
 			String displayStyleJsp = "/display/" + TextFormatter.format(curDisplayStyle, TextFormatter.N) + ".jsp";
 %>
 
-			<liferay-util:include page="<%= displayStyleJsp %>" />
+			<liferay-util:include page="<%= displayStyleJsp %>" servletContext="<%= application %>" />
 
 <%
 			break;

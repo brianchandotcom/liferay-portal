@@ -47,6 +47,7 @@ page import="com.liferay.portal.UserScreenNameException" %><%@
 page import="com.liferay.portal.UserSmsException" %><%@
 page import="com.liferay.portal.WebsiteURLException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.CamelCaseUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyUtil" %><%@

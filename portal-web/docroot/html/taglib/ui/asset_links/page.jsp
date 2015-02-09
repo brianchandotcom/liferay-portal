@@ -83,12 +83,7 @@ if (assetEntryId > 0) {
 						assetPublisherURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 					}
 
-					if (themeDisplay.isStatePopUp()) {
-						assetPublisherURL.setWindowState(LiferayWindowState.POP_UP);
-					}
-					else {
-						assetPublisherURL.setWindowState(WindowState.MAXIMIZED);
-					}
+					assetPublisherURL.setWindowState(WindowState.MAXIMIZED);
 
 					String viewFullContentURLString = assetPublisherURL.toString();
 
@@ -97,6 +92,14 @@ if (assetEntryId > 0) {
 					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, viewFullContentURLString);
 
 					urlViewInContext = HttpUtil.setParameter(urlViewInContext, "inheritRedirect", true);
+
+					String method = null;
+					String target = "_self";
+
+					if (themeDisplay.isStatePopUp()) {
+						method = "get";
+						target = "_blank";
+					}
 			%>
 
 					<li class="asset-links-list-item">
@@ -104,6 +107,8 @@ if (assetEntryId > 0) {
 							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							label="<%= true %>"
 							message="<%= asseLinktEntryTitle %>"
+							method="<%= method %>"
+							target="<%= target %>"
 							url="<%= urlViewInContext %>"
 						/>
 					</li>

@@ -810,3 +810,33 @@ particular, it contains the user ID, the problematic screen name, and the list
 of reserved screen names.
 
 ---------------------------------------
+
+### Attribute `paginationURL' is mandatory for taglib `liferay-ui:discussion`
+- **Date:** 2015-Feb-5
+- **JIRA Ticket:** LPS-53313
+
+#### What changed?
+
+Taglib `liferay-ui:discussion` contains a new attribute that is mandatory.
+
+#### Who is affected?
+
+This affects all developers who were using this taglib in their plugins.
+
+#### How should I update my code?
+
+You should include the new attribute `paginationURL` in the taglib. This
+attribute is a URL that returns a HTML fragment containing the next comments.
+
+If  you are using Liferay `MVCPortlet` class you can use this URL:
+
+<portlet:resourceURL var="discussionPaginationURL">
+    <portlet:param name="invokeTaglibDiscussion"
+        value="<%= Boolean.TRUE.toString() %>" />
+</portlet:resourceURL>
+
+#### Why was this change made?
+
+We need this new parameter so we can paginate the comments.
+
+---------------------------------------

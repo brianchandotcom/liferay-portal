@@ -68,6 +68,8 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.RenderRequest;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
 
@@ -2046,6 +2048,15 @@ public class PortalUtil {
 
 		getPortal().invokeTaglibDiscussion(
 			portletConfig, actionRequest, actionResponse);
+	}
+
+	public static void invokeTaglibDiscussionPagination(
+			PortletConfig portletConfig, ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		getPortal().invokeTaglibDiscussionPagination(
+			portletConfig, resourceRequest, resourceResponse);
 	}
 
 	/**

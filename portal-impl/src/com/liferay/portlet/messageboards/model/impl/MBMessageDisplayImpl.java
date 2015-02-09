@@ -41,7 +41,7 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 
 		if (!threadView.equals(MBThreadConstants.THREAD_VIEW_FLAT)) {
 			_treeWalker = new MBTreeWalkerImpl(
-				message, status, messageLocalService);
+				message.getThreadId(), status, messageLocalService);
 		}
 		else {
 			_treeWalker = null;

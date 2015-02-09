@@ -48,6 +48,10 @@ public class DiscussionTag extends IncludeTag {
 		_hideControls = hideControls;
 	}
 
+	public void setPaginationURL(String paginationURL) {
+		_paginationURL = paginationURL;
+	}
+
 	public void setPermissionClassName(String permissionClassName) {
 		_permissionClassName = permissionClassName;
 	}
@@ -83,6 +87,7 @@ public class DiscussionTag extends IncludeTag {
 		_formAction = null;
 		_formName = "fm";
 		_hideControls = false;
+		_paginationURL = null;
 		_permissionClassName = null;
 		_permissionClassPK = 0;
 		_ratingsEnabled = true;
@@ -121,6 +126,8 @@ public class DiscussionTag extends IncludeTag {
 			"liferay-ui:discussion:hideControls",
 			String.valueOf(_hideControls));
 		request.setAttribute(
+			"liferay-ui:discussion:paginationURL", _paginationURL);
+		request.setAttribute(
 			"liferay-ui:discussion:permissionClassName", permissionClassName);
 		request.setAttribute(
 			"liferay-ui:discussion:permissionClassPK",
@@ -141,6 +148,7 @@ public class DiscussionTag extends IncludeTag {
 	private String _formAction;
 	private String _formName = "fm";
 	private boolean _hideControls;
+	private String _paginationURL;
 	private String _permissionClassName;
 	private long _permissionClassPK;
 	private boolean _ratingsEnabled = true;

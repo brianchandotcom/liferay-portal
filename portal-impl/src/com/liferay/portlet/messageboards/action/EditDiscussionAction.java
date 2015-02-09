@@ -37,11 +37,20 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
+import java.io.IOException;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -142,6 +151,68 @@ public class EditDiscussionAction extends PortletAction {
 		return actionMapping.findForward(
 			getForward(
 				renderRequest, "portlet.message_boards.edit_discussion"));
+	}
+
+	@Override
+	public void serveResource(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		String className = ParamUtil.getString(resourceRequest, "className");
+		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
+		boolean hideControls = ParamUtil.getBoolean(
+			resourceRequest, "hideControls");
+		String permissionClassName = ParamUtil.getString(
+			resourceRequest, "permissionClassName");
+		long permissionClassPK = ParamUtil.getLong(
+			resourceRequest, "permissionClassPK");
+		boolean ratingsEnabled = ParamUtil.getBoolean(
+			resourceRequest, "ratingsEnabled");
+		long userId = ParamUtil.getLong(resourceRequest, "userId");
+
+		HttpServletRequest servletRequest = PortalUtil.getHttpServletRequest(
+			resourceRequest);
+
+		servletRequest.setAttribute(
+			"liferay-ui:discussion:className", className);
+		servletRequest.setAttribute(
+			"liferay-ui:discussion:classPK", String.valueOf(classPK));
+		servletRequest.setAttribute(
+			"liferay-ui:discussion:hideControls", String.valueOf(hideControls));
+		servletRequest.setAttribute(
+			"liferay-ui:discussion:permissionClassName", permissionClassName);
+		servletRequest.setAttribute(
+			"liferay-ui:discussion:permissionClassPK",
+			String.valueOf(permissionClassPK));
+		servletRequest.setAttribute(
+			"liferay-ui:discussion:ratingsEnabled",
+			String.valueOf(ratingsEnabled));
+		servletRequest.setAttribute(
+			"liferay-ui:discussion:userId", String.valueOf(userId));
+
+		int index = ParamUtil.getInteger(resourceRequest, "index");
+		String randomNamespace = ParamUtil.getString(
+			resourceRequest, "randomNamespace");
+		int rootIndexPage = ParamUtil.getInteger(
+			resourceRequest, "rootIndexPage");
+
+		servletRequest.setAttribute(
+			"liferay-ui:discussion:index", String.valueOf(index));
+		servletRequest.setAttribute(
+			"liferay-ui:discussion:randomNamespace", randomNamespace);
+		servletRequest.setAttribute(
+			"liferay-ui:discussion:rootIndexPage",
+			String.valueOf(rootIndexPage));
+
+		PortletContext portletContext = portletConfig.getPortletContext();
+
+		PortletRequestDispatcher portletRequestDispatcher =
+			portletContext.getRequestDispatcher(
+				"/html/taglib/ui/discussion/page_resources.jsp");
+
+		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
 	protected void deleteMessage(ActionRequest actionRequest) throws Exception {

@@ -278,6 +278,8 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.RenderRequest;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
@@ -6105,6 +6107,16 @@ public class PortalImpl implements Portal {
 
 		_editDiscussionAction.processAction(
 			null, null, portletConfig, actionRequest, actionResponse);
+	}
+
+	@Override
+	public void invokeTaglibDiscussionPagination(
+			PortletConfig portletConfig, ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		_editDiscussionAction.serveResource(
+			null, null, portletConfig, resourceRequest, resourceResponse);
 	}
 
 	/**

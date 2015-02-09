@@ -371,12 +371,17 @@
 					<portlet:param name="struts_action" value="/trash/edit_discussion" />
 				</portlet:actionURL>
 
+				<portlet:resourceURL var="discussionPaginationURL">
+					<portlet:param name="struts_action" value="/trash/edit_discussion" />
+				</portlet:resourceURL>
+
 				<div class="asset-discussion">
 					<liferay-ui:discussion
 						className="<%= className %>"
 						classPK="<%= classPK %>"
 						formAction="<%= discussionURL %>"
 						formName='<%= "fm" + classPK %>'
+						paginationURL="<%= discussionPaginationURL %>"
 						redirect="<%= currentURL %>"
 						userId="<%= assetEntry.getUserId() %>"
 					/>

@@ -227,11 +227,16 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 			<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
 
+			<portlet:resourceURL var="discussionPaginationURL">
+				<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
+			</portlet:resourceURL>
+
 			<liferay-ui:discussion
 				className="<%= assetEntry.getClassName() %>"
 				classPK="<%= assetEntry.getClassPK() %>"
 				formAction="<%= discussionURL %>"
 				formName='<%= "fm" + assetEntry.getClassPK() %>'
+				paginationURL="<%= discussionPaginationURL %>"
 				ratingsEnabled="<%= assetPublisherDisplayContext.isEnableCommentRatings() %>"
 				redirect="<%= currentURL %>"
 				userId="<%= assetRenderer.getUserId() %>"

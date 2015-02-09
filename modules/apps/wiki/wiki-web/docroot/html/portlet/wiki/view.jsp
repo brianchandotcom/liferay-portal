@@ -361,11 +361,16 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 						<portlet:param name="struts_action" value="/wiki/edit_page_discussion" />
 					</portlet:actionURL>
 
+					<portlet:resourceURL var="discussionPaginationURL">
+						<portlet:param name="struts_action" value="/wiki/edit_page_discussion" />
+					</portlet:resourceURL>
+
 					<liferay-ui:discussion
 						className="<%= WikiPage.class.getName() %>"
 						classPK="<%= wikiPage.getResourcePrimKey() %>"
 						formAction="<%= discussionURL %>"
 						formName="fm2"
+						paginationURL="<%= discussionPaginationURL %>"
 						ratingsEnabled="<%= wikiPortletInstanceSettings.isEnableCommentRatings() %>"
 						redirect="<%= currentURL %>"
 						userId="<%= wikiPage.getUserId() %>"

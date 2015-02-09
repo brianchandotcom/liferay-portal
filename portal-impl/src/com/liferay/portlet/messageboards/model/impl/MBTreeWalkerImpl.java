@@ -31,16 +31,14 @@ import java.util.Map;
 public class MBTreeWalkerImpl implements MBTreeWalker {
 
 	public MBTreeWalkerImpl(
-		MBMessage message, int status,
-		MBMessageLocalService messageLocalService) {
+		long threadId, int status, MBMessageLocalService messageLocalService) {
 
 		_messageIdsMap = new HashMap<>();
 
 		List<MBMessage> messages = null;
 
 		try {
-			messages = messageLocalService.getThreadMessages(
-				message.getThreadId(), status);
+			messages = messageLocalService.getThreadMessages(threadId, status);
 
 			for (int i = 0; i < messages.size(); i++) {
 				MBMessage curMessage = messages.get(i);
@@ -59,6 +57,18 @@ public class MBTreeWalkerImpl implements MBTreeWalker {
 		}
 
 		_messages = messages;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #MBTreeWalkerImpl(long, int,
+	 *             MBMessageLocalService)}
+	 */
+	@Deprecated
+	public MBTreeWalkerImpl(
+		MBMessage message, int status,
+		MBMessageLocalService messageLocalService) {
+
+		this(message.getThreadId(), status, messageLocalService);
 	}
 
 	@Override

@@ -1061,6 +1061,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>paginationURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>permissionClassName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

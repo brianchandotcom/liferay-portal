@@ -398,11 +398,16 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 				<portlet:param name="struts_action" value="/shopping/edit_order_discussion" />
 			</portlet:actionURL>
 
+			<portlet:resourceURL var="discussionPaginationURL">
+				<portlet:param name="struts_action" value="/shopping/edit_order_discussion" />
+			</portlet:resourceURL>
+
 			<liferay-ui:discussion
 				className="<%= ShoppingOrder.class.getName() %>"
 				classPK="<%= order.getOrderId() %>"
 				formAction="<%= discussionURL %>"
 				formName="fm2"
+				paginationURL="<%= discussionPaginationURL %>"
 				redirect="<%= currentURL %>"
 				userId="<%= order.getUserId() %>"
 			/>

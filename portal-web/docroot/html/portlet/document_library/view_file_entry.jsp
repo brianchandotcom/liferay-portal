@@ -251,11 +251,16 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 							<portlet:param name="struts_action" value="/document_library/edit_file_entry_discussion" />
 						</portlet:actionURL>
 
+						<portlet:resourceURL var="discussionPaginationURL">
+							<portlet:param name="struts_action" value="/document_library/edit_file_entry_discussion" />
+						</portlet:resourceURL>
+
 						<liferay-ui:discussion
 							className="<%= DLFileEntryConstants.getClassName() %>"
 							classPK="<%= fileEntryId %>"
 							formAction="<%= discussionURL %>"
 							formName="fm2"
+							paginationURL="<%= discussionPaginationURL %>"
 							ratingsEnabled="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>"
 							redirect="<%= currentURL %>"
 							userId="<%= fileEntry.getUserId() %>"

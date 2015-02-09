@@ -25,20 +25,20 @@ long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discu
 String formAction = (String)request.getAttribute("liferay-ui:discussion:formAction");
 String formName = (String)request.getAttribute("liferay-ui:discussion:formName");
 boolean hideControls = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:hideControls"));
+String paginationURL = (String)request.getAttribute("liferay-ui:discussion:paginationURL");
 String permissionClassName = (String)request.getAttribute("liferay-ui:discussion:permissionClassName");
 long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:permissionClassPK"));
+boolean ratingsEnabled = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:discussion:ratingsEnabled"));
 String redirect = (String)request.getAttribute("liferay-ui:discussion:redirect");
 long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:userId"));
 
 MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, scopeGroupId, className, classPK, WorkflowConstants.STATUS_ANY);
 
-MBCategory category = messageDisplay.getCategory();
 MBThread thread = messageDisplay.getThread();
 MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 MBMessage rootMessage = treeWalker.getRoot();
 List<MBMessage> messages = treeWalker.getMessages();
 int messagesCount = messages.size();
-SearchContainer searchContainer = null;
 %>
 
 <section>
@@ -170,22 +170,9 @@ SearchContainer searchContainer = null;
 					<aui:row>
 
 						<%
-						if (messages != null) {
-							messages = ListUtil.copy(messages);
+						messages = ListUtil.copy(messages);
 
-							messages.remove(0);
-						}
-						else {
-							PortletURL currentURLObj = PortletURLUtil.getCurrent(renderRequest, renderResponse);
-
-							searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, null);
-
-							searchContainer.setTotal(messagesCount - 1);
-
-							messages = MBMessageLocalServiceUtil.getThreadRepliesMessages(message.getThreadId(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
-
-							searchContainer.setResults(messages);
-						}
+						messages.remove(0);
 
 						List<Long> classPKs = new ArrayList<Long>();
 
@@ -198,22 +185,25 @@ SearchContainer searchContainer = null;
 
 						int[] range = treeWalker.getChildrenRange(rootMessage);
 
+						int index = 0;
+						int rootIndexPage = 0;
+						boolean moreCommentsPagination = false;
+
 						for (int j = range[0] - 1; j < range[1] - 1; j++) {
-							message = (MBMessage)messages.get(j);
+							index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"), 1);
 
-							boolean lastChildNode = false;
+							rootIndexPage = j;
 
-							if ((j + 1) == range[1]) {
-								lastChildNode = true;
+							if ((index + 1) > PropsValues.DISCUSSION_DELTA_VALUE) {
+								moreCommentsPagination = true;
+
+								break;
 							}
 
+							message = (MBMessage)messages.get(j);
+
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(0));
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, rootMessage);
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
 
 							request.setAttribute("liferay-ui:discussion:randomNamespace", randomNamespace);
 							request.setAttribute("liferay-ui:discussion:ratingsEntries", ratingsEntries);
@@ -227,11 +217,15 @@ SearchContainer searchContainer = null;
 						}
 						%>
 
-					</aui:row>
+						<c:if test="<%= moreCommentsPagination %>">
+							<div id="<%= namespace %>moreCommentsPage"></div>
 
-					<c:if test="<%= (searchContainer != null) && (searchContainer.getTotal() > searchContainer.getDelta()) %>">
-						<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
-					</c:if>
+							<a class="btn btn-default" href="javascript:;" id="<%= namespace %>moreComments"><liferay-ui:message key="more-comments" /></a>
+
+							<aui:input name="rootIndexPage" type="hidden" value="<%= String.valueOf(rootIndexPage) %>" />
+							<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />
+						</c:if>
+					</aui:row>
 				</c:if>
 			</aui:form>
 		</div>
@@ -407,7 +401,7 @@ SearchContainer searchContainer = null;
 									Util.toggleDisabled(commentButtonList, false);
 								},
 								failure: function(event, id, obj) {
-									<portlet:namespace />showStatusMessage('error', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
+									<portlet:namespace />showStatusMessage('danger', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
 								},
 								start: function() {
 									Util.toggleDisabled(commentButtonList, true);
@@ -443,7 +437,7 @@ SearchContainer searchContainer = null;
 											errorKey = '<%= UnicodeLanguageUtil.get(request, "you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply") %>';
 										}
 
-										<portlet:namespace />showStatusMessage('error', errorKey);
+										<portlet:namespace />showStatusMessage('danger', errorKey);
 									}
 								}
 							}
@@ -523,6 +517,48 @@ SearchContainer searchContainer = null;
 			);
 		</aui:script>
 
+		<aui:script use="aui-base,aui-io-request,aui-parse-content">
+			var moreCommentsLink = $('#<%= namespace %>moreComments');
+
+			if (moreCommentsLink) {
+				moreCommentsLink.on(
+					'click',
+					function(event) {
+						var index = $('#<%= namespace %>index');
+						var rootIndexPage = $('#<%= namespace %>rootIndexPage');
+
+						$.ajax(
+							'<%= paginationURL %>',
+							{
+								data: {
+									'<portlet:namespace />className': '<%= className %>',
+									'<portlet:namespace />classPK': <%= classPK %>,
+									'<portlet:namespace />hideControls': '<%= hideControls %>',
+									'<portlet:namespace />index': index.val(),
+									'<portlet:namespace />permissionClassName': '<%= permissionClassName %>',
+									'<portlet:namespace />permissionClassPK': '<%= permissionClassPK %>',
+									'<portlet:namespace />randomNamespace': '<%= randomNamespace %>',
+									'<portlet:namespace />ratingsEnabled': '<%= ratingsEnabled %>',
+									'<portlet:namespace />rootIndexPage': rootIndexPage.val(),
+									'<portlet:namespace />userId': '<%= userId %>'
+								},
+								error: function() {
+									<portlet:namespace />showStatusMessage('danger', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
+								},
+								success: function(data) {
+									var moreCommentsPage = A.one('#<%= namespace %>moreCommentsPage');
+
+									moreCommentsPage.plug(A.Plugin.ParseContent);
+
+									moreCommentsPage.append(data);
+								}
+							}
+						);
+					}
+				)
+			}
+		</aui:script>
+
 		<aui:script use="aui-popover,event-outside">
 			var discussionContainer = A.one('#<portlet:namespace />discussionContainer');
 
@@ -572,24 +608,4 @@ SearchContainer searchContainer = null;
 
 <%!
 public static final String EDITOR_TEXT_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp";
-
-private RatingsEntry getRatingsEntry(List<RatingsEntry> ratingEntries, long classPK) {
-	for (RatingsEntry ratingsEntry : ratingEntries) {
-		if (ratingsEntry.getClassPK() == classPK) {
-			return ratingsEntry;
-		}
-	}
-
-	return null;
-}
-
-private RatingsStats getRatingsStats(List<RatingsStats> ratingsStatsList, long classPK) {
-	for (RatingsStats ratingsStats : ratingsStatsList) {
-		if (ratingsStats.getClassPK() == classPK) {
-			return ratingsStats;
-		}
-	}
-
-	return RatingsStatsUtil.create(0);
-}
 %>

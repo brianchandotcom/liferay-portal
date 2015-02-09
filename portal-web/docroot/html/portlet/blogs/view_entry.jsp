@@ -131,11 +131,16 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 				<portlet:param name="struts_action" value="/blogs/edit_entry_discussion" />
 			</portlet:actionURL>
 
+			<portlet:resourceURL var="discussionPaginationURL">
+				<portlet:param name="struts_action" value="/blogs/edit_entry_discussion" />
+			</portlet:resourceURL>
+
 			<liferay-ui:discussion
 				className="<%= BlogsEntry.class.getName() %>"
 				classPK="<%= entry.getEntryId() %>"
 				formAction="<%= discussionURL %>"
 				formName="fm2"
+				paginationURL="<%= discussionPaginationURL %>"
 				ratingsEnabled="<%= blogsPortletInstanceSettings.isEnableCommentRatings() %>"
 				redirect="<%= currentURL %>"
 				userId="<%= entry.getUserId() %>"

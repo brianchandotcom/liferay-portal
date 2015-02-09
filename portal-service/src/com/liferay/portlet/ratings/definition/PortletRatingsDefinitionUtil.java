@@ -68,8 +68,9 @@ public class PortletRatingsDefinitionUtil {
 		ServiceTrackerMap<String, PortletRatingsDefinitionValues>
 			_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
 				PortletRatingsDefinition.class, "model.class.name",
-				new ServiceTrackerCustomizer<PortletRatingsDefinition,
-					PortletRatingsDefinitionValues>() {
+				new ServiceTrackerCustomizer
+					<PortletRatingsDefinition,
+						PortletRatingsDefinitionValues>() {
 
 				@Override
 				public PortletRatingsDefinitionValues addingService(
@@ -78,16 +79,28 @@ public class PortletRatingsDefinitionUtil {
 
 					String portletId = (String)serviceReference.getProperty(
 						"javax.portlet.name");
-					Object property = serviceReference.getProperty(
-						"model.class.name");
+
+					if (Validator.isNull(portletId)) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"PortletRatingsDefinition must contain " +
+									"javax.portlet.name, model.class.name, " +
+										"ratings.type.default properties");
+						}
+
+						return null;
+					}
 
 					String[] classNames = null;
 
-					if (property instanceof Object[]) {
-						classNames = (String[])property;
+					Object modelClassName = serviceReference.getProperty(
+						"model.class.name");
+
+					if (modelClassName instanceof Object[]) {
+						classNames = (String[])modelClassName;
 					}
 					else {
-						classNames = new String[] {(String)property};
+						classNames = new String[] {(String)modelClassName};
 					}
 
 					RatingsType defaultRatingsType = RatingsType.parse(

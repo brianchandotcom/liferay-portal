@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.sass.compiler;
+package com.liferay.sass.compiler.libsass;
 
-import com.liferay.sass.compiler.libsass.SassLibrary;
 import com.liferay.sass.compiler.libsass.SassLibrary.Sass_File_Context;
 
 import org.junit.Assert;

@@ -58,7 +58,7 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 	<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
 </c:if>
 
-<c:if test="<%= portletName.equals(WikiPortletKeys.WIKI_ADMIN) %>">
+<c:if test="<%= wikiVisualizationHelper.isNodeNameVisible() %>">
 	<liferay-ui:header
 		backURL="<%= portletURL.toString() %>"
 		localizeTitle="<%= false %>"

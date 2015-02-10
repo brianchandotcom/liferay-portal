@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.display.context.logic;
 
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
 /**
@@ -23,6 +24,12 @@ public class WikiVisualizationHelper {
 
 	public WikiVisualizationHelper(WikiRequestHelper wikiRequestHelper) {
 		_wikiRequestHelper = wikiRequestHelper;
+	}
+
+	public boolean isNodeNameVisible() {
+		String portletId = _wikiRequestHelper.getPortletId();
+
+		return portletId.equals(WikiPortletKeys.WIKI_ADMIN);
 	}
 
 	private final WikiRequestHelper _wikiRequestHelper;

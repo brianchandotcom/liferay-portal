@@ -28,7 +28,6 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
@@ -207,9 +206,12 @@ public class BlogsUtil {
 			LanguageUtil.get(
 				themeDisplay.getLocale(),
 				"the-company-name-associated-with-the-blog"));
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		definitionTerms.put(
-			"[$PORTLET_NAME$]",
-			HtmlUtil.escape(PortalUtil.getPortletTitle(portletRequest)));
+			"[$PORTLET_NAME$]", HtmlUtil.escape(portletDisplay.getTitle()));
+
 		definitionTerms.put(
 			"[$SITE_NAME$]",
 			LanguageUtil.get(

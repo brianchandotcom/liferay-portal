@@ -6032,28 +6032,45 @@ public class JournalArticleLocalServiceImpl
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, reviewDate,
 			_previousCheckDate);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Sending review notifications for " + articles.size() +
-					" articles");
-		}
+		List<JournalArticle> latestArticles = new ArrayList<>();
 
 		for (JournalArticle article : articles) {
-			String articleURL = StringPool.BLANK;
+			long groupId = article.getGroupId();
+			String articleId = article.getArticleId();
+			double version = article.getVersion();
 
-			long ownerId = article.getGroupId();
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-			long plid = PortletKeys.PREFS_PLID_SHARED;
-			String portletId = PortletKeys.JOURNAL;
+			if (!journalArticleLocalService.isLatestVersion(
+					groupId, articleId, version)) {
 
-			PortletPreferences preferences =
-				portletPreferencesLocalService.getPreferences(
-					article.getCompanyId(), ownerId, ownerType, plid,
-					portletId);
+				article = journalArticleLocalService.getLatestArticle(
+					groupId, articleId);
+			}
 
-			sendEmail(
-				article, articleURL, preferences, "review",
-				new ServiceContext());
+			if (!latestArticles.contains(article)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Sending review notification for article " +
+							article.getId());
+				}
+
+				latestArticles.add(article);
+
+				String articleURL = StringPool.BLANK;
+
+				long ownerId = article.getGroupId();
+				int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
+				long plid = PortletKeys.PREFS_PLID_SHARED;
+				String portletId = PortletKeys.JOURNAL;
+
+				PortletPreferences preferences =
+					portletPreferencesLocalService.getPreferences(
+						article.getCompanyId(), ownerId, ownerType, plid,
+						portletId);
+
+				sendEmail(
+					article, articleURL, preferences, "review",
+					new ServiceContext());
+			}
 		}
 	}
 

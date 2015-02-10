@@ -194,6 +194,31 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="configureKBRatingTypePG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGKnowledgebasedisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGKnowledgebasedisplayConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS" value1="Display Settings" />
+
+		<if>
+			<equals arg1="${useStarRatings}" arg2="true" />
+			<then>
+				<execute action="PGKnowledgebasedisplayConfigurationDisplaysettings#assertClick" locator-key1="USE_STAR_RATINGS_RADIO" value1="Use Star Ratings" />
+			</then>
+			<elseif>
+				<equals arg1="${useThumbsRatings}" arg2="true" />
+				<then>
+					<execute action="PGKnowledgebasedisplayConfigurationDisplaysettings#assertClick" locator-key1="USE_THUMBS_RATINGS_RADIO" value1="Use Thumbs Up/Thumbs Down" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="PGKnowledgebasedisplayConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGKnowledgebasedisplayConfiguration#assertClick" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="configureKBSection">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Knowledge Base Section" />
@@ -552,6 +577,24 @@
 				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#INFO_MESSAGE" value1="No articles were found." />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewArticle5StarRatingPG">
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="AVERAGE_LABEL" value1="Average (1 Vote)" />
+
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="YOUR_RATING_STAR_1" />
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="YOUR_RATING_STAR_2" />
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="YOUR_RATING_STAR_3" />
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="YOUR_RATING_STAR_4" />
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="YOUR_RATING_STAR_5" />
+		<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_EMPTY_1" />
+
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="AVERAGE_STAR_1" />
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="AVERAGE_STAR_2" />
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="AVERAGE_STAR_3" />
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="AVERAGE_STAR_4" />
+		<execute action="PGKnowledgebasedisplay#assertElementPresent" locator-key1="AVERAGE_STAR_5" />
+		<execute action="PGKnowledgebasedisplay#assertElementNotPresent" locator-key1="AVERAGE_STAR_EMPTY_1" />
 	</command>
 
 	<command name="viewArticleHistoryPG">

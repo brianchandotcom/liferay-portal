@@ -32,6 +32,12 @@ public class WikiVisualizationHelper {
 		return portletId.equals(WikiPortletKeys.WIKI_ADMIN);
 	}
 
+	public boolean isNodeNavigationVisible() {
+		String portletId = _wikiRequestHelper.getPortletId();
+
+		return portletId.equals(WikiPortletKeys.WIKI);
+	}
+
 	private final WikiRequestHelper _wikiRequestHelper;
 
 }

@@ -133,6 +133,42 @@ public class CookieImplTest {
 	}
 
 	@Test
+	public void testGetDomain() {
+		Assert.assertNull(_cookieImpl.getDomain(null));
+
+		Assert.assertEquals("127.0.0.1", _cookieImpl.getDomain("127.0.0.1"));
+
+		Assert.assertNull(_cookieImpl.getDomain("com"));
+
+		Assert.assertEquals(
+			".liferay.com", _cookieImpl.getDomain("liferay.com"));
+
+		Assert.assertEquals(
+			".liferay.com", _cookieImpl.getDomain("www.liferay.com"));
+
+		Assert.assertEquals(
+			".cdn.liferay.com", _cookieImpl.getDomain("www.cdn.liferay.com"));
+
+		Assert.assertEquals(
+			".liferay.qld.gov.au", _cookieImpl.getDomain("liferay.qld.gov.au"));
+
+		Assert.assertEquals(
+			".liferay.qld.gov.au",
+			_cookieImpl.getDomain("www.liferay.qld.gov.au"));
+
+		Assert.assertEquals(
+			".cdn.liferay.qld.gov.au",
+			_cookieImpl.getDomain("www.cdn.liferay.qld.gov.au"));
+
+		Assert.assertNull(_cookieImpl.getDomain("localhost"));
+
+		Assert.assertEquals(".test", _cookieImpl.getDomain("liferay.test"));
+
+		Assert.assertEquals(
+			".liferay.test", _cookieImpl.getDomain("www.liferay.test"));
+	}
+
+	@Test
 	public void testSerializationAndDeserialization() {
 		Cookie cookie1 = new Cookie("name1", null);
 

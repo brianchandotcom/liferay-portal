@@ -38,7 +38,11 @@ public class WikiVisualizationHelper {
 	public boolean isNodeNavigationVisible(Collection<WikiNode> nodes) {
 		String portletId = _wikiRequestHelper.getPortletId();
 
-		return (nodes.size() > 1) && portletId.equals(WikiPortletKeys.WIKI);
+		if ((nodes.size() > 1) && portletId.equals(WikiPortletKeys.WIKI)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final WikiRequestHelper _wikiRequestHelper;

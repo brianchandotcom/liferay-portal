@@ -22,6 +22,6 @@
 			<exclude name="jna-jnaerator" />
 		</dependency>
 		<dependency name="ochafik-util" org="com.nativelibs4java" rev="0.11" />
-		<dependency conf="test->default" name="junit" org="junit" rev="4.11" />
+		<dependency conf="test->default" name="junit" org="junit" rev="4.12" />
 	</dependencies>
 </ivy-module>

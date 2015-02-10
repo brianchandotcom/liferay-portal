@@ -271,7 +271,8 @@ public class ThemeUtil {
 		templateManager.addTaglibRequest(
 			template, "Request", request, response);
 		templateManager.addTaglibTheme(
-			template, "taglibLiferay", request, response, writer);
+			template, "taglibLiferay", request,
+			new PipingServletResponse(response, writer));
 
 		template.put(TemplateConstants.WRITER, writer);
 
@@ -404,6 +405,10 @@ public class ThemeUtil {
 				"Unable to load template resource " + resourcePath);
 		}
 
+		TemplateManager templateManager =
+			TemplateManagerUtil.getTemplateManager(
+				TemplateConstants.LANG_TYPE_VM);
+
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_VM, templateResource, restricted);
 
@@ -429,14 +434,11 @@ public class ThemeUtil {
 			writer = new UnsyncStringWriter();
 		}
 
-		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
-			servletContext, request,
-			new PipingServletResponse(response, writer), template);
+		templateManager.addTaglibTheme(
+			template, "taglibLiferay", request,
+			new PipingServletResponse(response, writer));
 
 		template.put(TemplateConstants.WRITER, writer);
-		template.put("pageContext", velocityTaglib.getPageContext());
-		template.put("taglibLiferay", velocityTaglib);
-		template.put("theme", velocityTaglib);
 
 		// Merge templates
 

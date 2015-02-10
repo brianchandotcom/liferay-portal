@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,7 +50,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.DummyVelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglib;
-import com.liferay.taglib.util.VelocityTaglibImpl;
 
 import java.io.Closeable;
 
@@ -342,6 +342,10 @@ public class RuntimePageImpl implements RuntimePage {
 		TemplateProcessor processor = new TemplateProcessor(
 			request, response, portletId);
 
+		TemplateManager templateManager =
+			TemplateManagerUtil.getTemplateManager(
+				TemplateConstants.LANG_TYPE_VM);
+
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_VM, templateResource, restricted);
 
@@ -351,16 +355,11 @@ public class RuntimePageImpl implements RuntimePage {
 
 		template.prepare(request);
 
-		// liferay:include tag library
-
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
-			request.getServletContext(), request,
-			new PipingServletResponse(response, unsyncStringWriter), template);
-
-		template.put("taglibLiferay", velocityTaglib);
-		template.put("theme", velocityTaglib);
+		templateManager.addTaglibTheme(
+			template, "taglibLiferay", request,
+			new PipingServletResponse(response, unsyncStringWriter));
 
 		try {
 			template.processTemplate(unsyncStringWriter);

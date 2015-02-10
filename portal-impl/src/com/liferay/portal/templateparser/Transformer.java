@@ -55,8 +55,6 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.xsl.XSLTemplateResource;
 import com.liferay.portal.xsl.XSLURIResolver;
 import com.liferay.portlet.journal.util.JournalXSLURIResolver;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
-import com.liferay.taglib.util.VelocityTaglib;
 
 import java.io.IOException;
 
@@ -132,7 +130,8 @@ public class Transformer {
 
 	public String transform(
 			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
-			String script, String langType)
+			String script, String langType,
+			UnsyncStringWriter unsyncStringWriter)
 		throws Exception {
 
 		if (Validator.isNull(langType)) {
@@ -157,8 +156,6 @@ public class Transformer {
 			templateId, companyId, companyGroupId, scopeGroupId);
 
 		Template template = getTemplate(templateId, script, langType);
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		try {
 			prepareTemplate(themeDisplay, template);
@@ -688,13 +685,6 @@ public class Transformer {
 			Template template, UnsyncStringWriter unsyncStringWriter,
 			boolean propagateException)
 		throws Exception {
-
-		VelocityTaglib velocityTaglib = (VelocityTaglib)template.get(
-			PortletDisplayTemplateConstants.TAGLIB_LIFERAY);
-
-		if (velocityTaglib != null) {
-			velocityTaglib.setTemplate(template);
-		}
 
 		if (propagateException) {
 			template.doProcessTemplate(unsyncStringWriter);

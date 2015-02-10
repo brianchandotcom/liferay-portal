@@ -14,13 +14,13 @@
 
 package com.liferay.portal.test.rule;
 
-import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.test.rule.callback.ClearThreadLocalTestCallback;
+import com.liferay.portal.test.rule.callback.UniqueStringRandomizerBumperTestCallback;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsUtil;
 
@@ -62,25 +62,8 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 	}
 
 	private static final TestRule _clearThreadLocalTestRule =
-		new BaseTestRule<Object, Object>() {
-
-			@Override
-			protected void afterClass(Description description, Object object) {
-				CentralizedThreadLocal.clearShortLivedThreadLocals();
-			}
-
-		};
-
+		new BaseTestRule<>(ClearThreadLocalTestCallback.INSTANCE);
 	private static final TestRule _uniqueStringRandomizerBumperTestRule =
-		new BaseTestRule<Object, Object>() {
-
-			@Override
-			protected Object beforeClass(Description description) {
-				UniqueStringRandomizerBumper.reset();
-
-				return null;
-			}
-
-		};
+		new BaseTestRule<>(UniqueStringRandomizerBumperTestCallback.INSTANCE);
 
 }

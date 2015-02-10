@@ -12,23 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test.rule;
+package com.liferay.portal.test.rule.callback;
 
-import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCallback;
-import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCallback.SyncHandler;
+import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+
+import org.junit.runner.Description;
 
 /**
- * @author Miguel Pastor
  * @author Shuyang Zhou
  */
-public class SynchronousDestinationTestRule
-	extends BaseTestRule<SyncHandler, SyncHandler> {
+public class ClearThreadLocalTestCallback
+	extends BaseTestCallback<Object, Object> {
 
-	public static final SynchronousDestinationTestRule INSTANCE =
-		new SynchronousDestinationTestRule();
+	public static final ClearThreadLocalTestCallback INSTANCE =
+		new ClearThreadLocalTestCallback();
 
-	private SynchronousDestinationTestRule() {
-		super(SynchronousDestinationTestCallback.INSTANCE);
+	@Override
+	public void doAfterClass(Description description, Object object) {
+		CentralizedThreadLocal.clearShortLivedThreadLocals();
+	}
+
+	private ClearThreadLocalTestCallback() {
 	}
 
 }

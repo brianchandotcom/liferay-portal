@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `58fc0bd`.*
+*This document has been reviewed through commit `565eb12`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -914,13 +914,14 @@ email address, and the list of reserved email addresses.
 
 ---------------------------------------
 
-### Attribute `paginationURL' is mandatory for taglib `liferay-ui:discussion`
-- **Date:** 2015-Feb-5
+### Attribute `paginationURL` is Mandatory for Taglib `liferay-ui:discussion`
+- **Date:** 2015-Feb-05
 - **JIRA Ticket:** LPS-53313
 
 #### What changed?
 
-Taglib `liferay-ui:discussion` contains a new attribute that is mandatory.
+The `liferay-ui:discussion` taglib contains the new `paginationURL` attribute,
+which is required.
 
 #### Who is affected?
 
@@ -929,21 +930,22 @@ This affects all developers who were using this taglib in their plugins.
 #### How should I update my code?
 
 You should include the new attribute `paginationURL` in the taglib. This
-attribute is a URL that returns a HTML fragment containing the next comments.
+attribute is a URL that returns an HTML fragment containing the next comments
+for portlets such as Asset Publisher, Blogs, Document Library, etc.
 
-If  you are using Liferay `MVCPortlet` class you can use this URL:
+If you are using the Liferay `MVCPortlet` class, you can use the following URL:
 
-<portlet:resourceURL var="discussionPaginationURL">
-    <portlet:param name="invokeTaglibDiscussion"
-        value="<%= Boolean.TRUE.toString() %>" />
-</portlet:resourceURL>
+    <portlet:resourceURL var="discussionPaginationURL">
+        <portlet:param name="invokeTaglibDiscussion"
+            value="<%= Boolean.TRUE.toString() %>" />
+    </portlet:resourceURL>
 
 #### Why was this change made?
 
-We need this new parameter so we can paginate the comments.
+This change was made to allow for comment pagination when following the *More
+Comments* link.
 
----------------------------------------
-### Replaced `ReservedUserIdException` with `UserIdException` inner classes
+---------------------------------------### Replaced `ReservedUserIdException` with `UserIdException` inner classes
 - **Date:** 2015-Feb-10
 - **JIRA Ticket:** LPS-53487
 

@@ -179,6 +179,38 @@ public class Validator {
 		}
 	}
 
+	public static boolean isBlank(String s) {
+		if (s == null) {
+			return true;
+		}
+
+		if (s.length() == 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns <code>true</code> if the character is an upper or lower case
+	 * English letter.
+	 *
+	 * @param  c the character to check
+	 * @return <code>true</code> if the character is an upper or lower case
+	 *         English letter; <code>false</code> otherwise
+	 */
+	public static boolean isChar(char c) {
+		int x = c;
+
+		if (((x >= _CHAR_LOWER_CASE_BEGIN) && (x <= _CHAR_LOWER_CASE_END)) ||
+			((x >= _CHAR_UPPER_CASE_BEGIN) && (x <= _CHAR_UPPER_CASE_END))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Returns <code>true</code> if the character is a digit between 0 and 9
 	 * (inclusive).
@@ -256,7 +288,7 @@ public class Validator {
 	 */
 	public static boolean isNull(Object obj) {
 		if (obj instanceof Long) {
-			return isNull((Long)obj);
+			return isNull(obj);
 		}
 		else if (obj instanceof String) {
 			return isNull((String)obj);
@@ -320,6 +352,14 @@ public class Validator {
 
 		return false;
 	}
+
+	private static final int _CHAR_LOWER_CASE_BEGIN = 97;
+
+	private static final int _CHAR_LOWER_CASE_END = 122;
+
+	private static final int _CHAR_UPPER_CASE_BEGIN = 65;
+
+	private static final int _CHAR_UPPER_CASE_END = 90;
 
 	private static final int _DIGIT_BEGIN = 48;
 

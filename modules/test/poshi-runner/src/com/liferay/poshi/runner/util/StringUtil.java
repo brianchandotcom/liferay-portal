@@ -28,6 +28,76 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class StringUtil {
 
+	public static String add(String s, String add) {
+		return add(s, add, StringPool.COMMA);
+	}
+
+	public static String add(String s, String add, String delimiter) {
+		return add(s, add, delimiter, false);
+	}
+
+	public static String add(
+		String s, String add, String delimiter, boolean allowDuplicates) {
+
+		if ((add == null) || (delimiter == null)) {
+			return null;
+		}
+
+		if (s == null) {
+			s = StringPool.BLANK;
+		}
+
+		if (allowDuplicates || !contains(s, add, delimiter)) {
+			StringBuilder sb = new StringBuilder(4);
+
+			sb.append(s);
+
+			if (Validator.isNull(s) || s.endsWith(delimiter)) {
+				sb.append(add);
+				sb.append(delimiter);
+			}
+			else {
+				sb.append(delimiter);
+				sb.append(add);
+				sb.append(delimiter);
+			}
+
+			s = sb.toString();
+		}
+
+		return s;
+	}
+
+	public static boolean contains(String s, String text) {
+		return contains(s, text, StringPool.COMMA);
+	}
+
+	public static boolean contains(String s, String text, String delimiter) {
+		if ((s == null) || (text == null) || (delimiter == null)) {
+			return false;
+		}
+
+		if (!s.endsWith(delimiter)) {
+			s = s.concat(delimiter);
+		}
+
+		String dtd = delimiter.concat(text).concat(delimiter);
+
+		int pos = s.indexOf(dtd);
+
+		if (pos == -1) {
+			String td = text.concat(delimiter);
+
+			if (s.startsWith(td)) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public static int count(String s, String text) {
 		if ((s == null) || (s.length() == 0) || (text == null) ||
 			(text.length() == 0)) {
@@ -46,6 +116,243 @@ public class StringUtil {
 		}
 
 		return count;
+	}
+
+	public static boolean endsWith(String s, String end) {
+		if ((s == null) || (end == null)) {
+			return false;
+		}
+
+		if (end.length() > s.length()) {
+			return false;
+		}
+
+		String temp = s.substring(s.length() - end.length());
+
+		if (equalsIgnoreCase(temp, end)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public static boolean equalsIgnoreCase(String s1, String s2) {
+		if (s1 == s2) {
+			return true;
+		}
+
+		if ((s1 == null) || (s2 == null)) {
+			return false;
+		}
+
+		if (s1.length() != s2.length()) {
+			return false;
+		}
+
+		for (int i = 0; i < s1.length(); i++) {
+			char c1 = s1.charAt(i);
+
+			char c2 = s2.charAt(i);
+
+			if (c1 == c2) {
+				continue;
+			}
+
+			if ((c1 > 127) || (c2 > 127)) {
+
+				// Georgian alphabet needs to check both upper and lower case
+
+				if ((Character.toLowerCase(c1) == Character.toLowerCase(c2)) ||
+					(Character.toUpperCase(c1) == Character.toUpperCase(c2))) {
+
+					continue;
+				}
+
+				return false;
+			}
+
+			int delta = c1 - c2;
+
+			if ((delta != 32) && (delta != -32)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public static String extractChars(String s) {
+		if (s == null) {
+			return StringPool.BLANK;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		char[] chars = s.toCharArray();
+
+		for (char c : chars) {
+			if (Validator.isChar(c)) {
+				sb.append(c);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public static String extractDigits(String s) {
+		if (s == null) {
+			return StringPool.BLANK;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		char[] chars = s.toCharArray();
+
+		for (char c : chars) {
+			if (Validator.isDigit(c)) {
+				sb.append(c);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public static String extractFirst(String s, String delimiter) {
+		if (s == null) {
+			return null;
+		}
+
+		int index = s.indexOf(delimiter);
+
+		if (index < 0) {
+			return null;
+		}
+		else {
+			return s.substring(0, index);
+		}
+	}
+
+	public static String extractLast(String s, String delimiter) {
+		if (s == null) {
+			return null;
+		}
+
+		int index = s.lastIndexOf(delimiter);
+
+		if (index < 0) {
+			return null;
+		}
+		else {
+			return s.substring(index + delimiter.length());
+		}
+	}
+
+	public static String extractLeadingDigits(String s) {
+		if (s == null) {
+			return StringPool.BLANK;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		char[] chars = s.toCharArray();
+
+		for (char c : chars) {
+			if (Validator.isDigit(c)) {
+				sb.append(c);
+			}
+			else {
+				return sb.toString();
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public static boolean isLowerCase(String s) {
+		if (s == null) {
+			return false;
+		}
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			// Fast path for ascii code, fallback to the slow unicode detection
+
+			if (c <= 127) {
+				if ((c >= CharPool.UPPER_CASE_A) &&
+					(c <= CharPool.UPPER_CASE_Z)) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Character.isLetter(c) && Character.isUpperCase(c)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public static boolean isUpperCase(String s) {
+		if (s == null) {
+			return false;
+		}
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			// Fast path for ascii code, fallback to the slow unicode detection
+
+			if (c <= 127) {
+				if ((c >= CharPool.LOWER_CASE_A) &&
+					(c <= CharPool.LOWER_CASE_Z)) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Character.isLetter(c) && Character.isLowerCase(c)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public static String lowerCase(String s) {
+		return toLowerCase(s);
+	}
+
+	public static void lowerCase(String... array) {
+		if (array != null) {
+			for (int i = 0; i < array.length; i++) {
+				array[i] = toLowerCase(array[i]);
+			}
+		}
+	}
+
+	public static String lowerCaseFirstLetter(String s) {
+		char[] chars = s.toCharArray();
+
+		if ((chars[0] >= 65) && (chars[0] <= 90)) {
+			chars[0] = (char)(chars[0] + 32);
+		}
+
+		return new String(chars);
+	}
+
+	public static String quote(String s, String quote) {
+		if (s == null) {
+			return null;
+		}
+
+		return quote.concat(s).concat(quote);
 	}
 
 	public static String replace(String s, String oldSub, String newSub) {
@@ -132,6 +439,21 @@ public class StringUtil {
 		return s;
 	}
 
+	public static String reverse(String s) {
+		if (s == null) {
+			return null;
+		}
+
+		char[] chars = s.toCharArray();
+		char[] reverse = new char[chars.length];
+
+		for (int i = 0; i < chars.length; i++) {
+			reverse[i] = chars[chars.length - i - 1];
+		}
+
+		return new String(reverse);
+	}
+
 	public static String[] split(String s) {
 		return split(s, StringPool.COMMA);
 	}
@@ -144,12 +466,61 @@ public class StringUtil {
 		return s.split(delimiter);
 	}
 
+	public static boolean startsWith(String s, String start) {
+		if ((s == null) || (start == null)) {
+			return false;
+		}
+
+		if (start.length() > s.length()) {
+			return false;
+		}
+
+		String temp = s.substring(0, start.length());
+
+		if (equalsIgnoreCase(temp, start)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public static String stripBetween(String s, String begin, String end) {
+		if (Validator.isBlank(s) || Validator.isBlank(begin) ||
+			Validator.isBlank(end)) {
+
+			return s;
+		}
+
+		StringBuilder sb = new StringBuilder(s.length());
+
+		int pos = 0;
+
+		while (true) {
+			int x = s.indexOf(begin, pos);
+			int y = s.indexOf(end, x + begin.length());
+
+			if ((x == -1) || (y == -1)) {
+				sb.append(s.substring(pos));
+
+				break;
+			}
+			else {
+				sb.append(s.substring(pos, x));
+
+				pos = y + end.length();
+			}
+		}
+
+		return sb.toString();
+	}
+
 	public static String toLowerCase(String s) {
 		if (s == null) {
 			return null;
 		}
 
-		return StringUtils.uncapitalize(s);
+		return StringUtils.lowerCase(s);
 	}
 
 	public static String toUpperCase(String s) {
@@ -157,7 +528,72 @@ public class StringUtil {
 			return null;
 		}
 
-		return StringUtils.capitalize(s);
+		return StringUtils.upperCase(s);
+	}
+
+	public static String trim(String s) {
+		if (s == null) {
+			return null;
+		}
+
+		if (s.length() == 0) {
+			return s;
+		}
+
+		int len = s.length();
+
+		int x = len;
+
+		for (int i = 0; i < len; i++) {
+			char c = s.charAt(i);
+
+			if (!Character.isWhitespace(c)) {
+				x = i;
+
+				break;
+			}
+		}
+
+		if (x == len) {
+			return StringPool.BLANK;
+		}
+
+		int y = x + 1;
+
+		for (int i = len - 1; i > x; i--) {
+			char c = s.charAt(i);
+
+			if (!Character.isWhitespace(c)) {
+				y = i + 1;
+
+				break;
+			}
+		}
+
+		if ((x == 0) && (y == len)) {
+			return s;
+		}
+
+		return s.substring(x, y);
+	}
+
+	public static String unquote(String s) {
+		if (Validator.isNull(s)) {
+			return s;
+		}
+
+		if ((s.charAt(0) == CharPool.APOSTROPHE) &&
+			(s.charAt(s.length() - 1) == CharPool.APOSTROPHE)) {
+
+			return s.substring(1, s.length() - 1);
+		}
+		else if ((s.charAt(0) == CharPool.QUOTE) &&
+				 (s.charAt(s.length() - 1) == CharPool.QUOTE)) {
+
+			return s.substring(1, s.length() - 1);
+		}
+
+		return s;
 	}
 
 	public static String upperCaseFirstLetter(String s) {

@@ -1,5 +1,6 @@
 <definition component-name="extra-apps-content-targeting">
 	<property name="testray.main.component.name" value="Content Targeting" />
+	<property name="custom.properties" value="javascript.fast.load=false" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

@@ -17,6 +17,7 @@ package com.liferay.portal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.ScreenNameValidator;
@@ -71,6 +72,10 @@ public class UserScreenNameException extends PortalException {
 			this.userId = userId;
 			this.screenName = screenName;
 			this.validSpecialChars = validSpecialChars;
+		}
+
+		public String getValidSpecialCharsAsString() {
+			return StringUtil.merge(this.validSpecialChars, StringPool.SPACE);
 		}
 
 		public final String screenName;

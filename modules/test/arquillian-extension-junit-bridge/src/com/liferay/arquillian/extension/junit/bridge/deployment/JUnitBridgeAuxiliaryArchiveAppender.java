@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.arquillian.bridge.deployment;
+package com.liferay.arquillian.extension.junit.bridge.deployment;
 
-import com.liferay.arquillian.bridge.extension.LiferayArquillianExtension;
-import com.liferay.arquillian.bridge.junit.observer.JUnitBridgeObserver;
+import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension;
+import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
 
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
@@ -37,7 +37,8 @@ public class JUnitBridgeAuxiliaryArchiveAppender
 
 		javaArchive.add(EmptyAsset.INSTANCE, "/arquillian.remote.marker");
 		javaArchive.addAsServiceProviderAndClasses(
-			RemoteLoadableExtension.class, LiferayArquillianExtension.class);
+			RemoteLoadableExtension.class,
+			LiferayArquillianJUnitBridgeExtension.class);
 		javaArchive.addClass(JUnitBridgeObserver.class);
 
 		return javaArchive;

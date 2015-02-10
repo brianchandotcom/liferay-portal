@@ -16,7 +16,6 @@ package com.liferay.portal.velocity;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -55,8 +54,10 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 	}
 
 	@Override
-	public void prepare(Template template, HttpServletRequest request) {
-		super.prepare(template, request);
+	public void prepare(
+		Map<String, Object> contextObjects, HttpServletRequest request) {
+
+		super.prepare(contextObjects, request);
 
 		// Theme display
 
@@ -67,7 +68,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 			// Init
 
-			template.put(
+			contextObjects.put(
 				"init",
 				themeDisplay.getPathContext() +
 					TemplateConstants.SERVLET_SEPARATOR +
@@ -89,12 +90,12 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 			String servletContextName = GetterUtil.getString(
 				theme.getServletContextName());
 
-			template.put(
+			contextObjects.put(
 				"fullCssPath",
 				servletContextName + theme.getVelocityResourceListener() +
 					theme.getCssPath());
 
-			template.put(
+			contextObjects.put(
 				"fullTemplatesPath",
 				servletContextName + theme.getVelocityResourceListener() +
 					theme.getTemplatesPath());
@@ -111,7 +112,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 				Object value = entry.getValue();
 
 				if (Validator.isNotNull(key)) {
-					template.put(key, value);
+					contextObjects.put(key, value);
 				}
 			}
 		}

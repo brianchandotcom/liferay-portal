@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 
-import java.io.Writer;
-
 import java.security.AccessControlContext;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -44,19 +42,8 @@ public abstract class BaseTemplateManager implements TemplateManager {
 	}
 
 	@Override
-	public void addStaticClassSupport(
-		Template template, String variableName, Class<?> variableClass) {
-	}
-
-	@Override
 	public void addTaglibApplication(
 		Map<String, Object> contextObjects, String applicationName,
-		ServletContext servletContext) {
-	}
-
-	@Override
-	public void addTaglibApplication(
-		Template template, String applicationName,
 		ServletContext servletContext) {
 	}
 
@@ -67,27 +54,15 @@ public abstract class BaseTemplateManager implements TemplateManager {
 	}
 
 	@Override
-	public void addTaglibFactory(
-		Template template, String taglibLiferayHash,
-		ServletContext servletContext) {
-	}
-
-	@Override
 	public void addTaglibRequest(
 		Map<String, Object> contextObjects, String applicationName,
 		HttpServletRequest request, HttpServletResponse response) {
 	}
 
 	@Override
-	public void addTaglibRequest(
-		Template template, String applicationName, HttpServletRequest request,
-		HttpServletResponse response) {
-	}
-
-	@Override
 	public void addTaglibTheme(
-		Template template, String string, HttpServletRequest request,
-		HttpServletResponse response, Writer writer) {
+		Map<String, Object> contextObjects, String themeName,
+		HttpServletRequest request, HttpServletResponse response) {
 	}
 
 	@Override

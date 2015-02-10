@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
-import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;
 
@@ -52,7 +52,6 @@ import freemarker.template.TemplateModelException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Writer;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -87,6 +86,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  * @author Tina Tina
+ * @author Raymond Augé
  */
 @Component(
 	configurationPid = "com.liferay.portal.template.freemarker",
@@ -119,28 +119,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	}
 
 	@Override
-	public void addStaticClassSupport(
-		Template template, String variableName, Class<?> variableClass) {
-
-		try {
-			BeansWrapper beansWrapper = BeansWrapper.getDefaultInstance();
-
-			TemplateHashModel templateHashModel =
-				beansWrapper.getStaticModels();
-
-			TemplateModel templateModel = templateHashModel.get(
-				variableClass.getCanonicalName());
-
-			template.put(variableName, templateModel);
-		}
-		catch (TemplateModelException e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Variable " + variableName + " registration fail", e);
-			}
-		}
-	}
-
-	@Override
 	public void addTaglibApplication(
 		Map<String, Object> contextObjects, String applicationName,
 		ServletContext servletContext) {
@@ -150,29 +128,11 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	}
 
 	@Override
-	public void addTaglibApplication(
-		Template template, String applicationName,
-		ServletContext servletContext) {
-
-		template.put(
-			applicationName, getServletContextHashModel(servletContext));
-	}
-
-	@Override
 	public void addTaglibFactory(
 		Map<String, Object> contextObjects, String taglibFactoryName,
 		ServletContext servletContext) {
 
 		contextObjects.put(
-			taglibFactoryName, new TaglibFactoryWrapper(servletContext));
-	}
-
-	@Override
-	public void addTaglibFactory(
-		Template template, String taglibFactoryName,
-		ServletContext servletContext) {
-
-		template.put(
 			taglibFactoryName, new TaglibFactoryWrapper(servletContext));
 	}
 
@@ -188,30 +148,30 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	}
 
 	@Override
-	public void addTaglibRequest(
-		Template template, String applicationName, HttpServletRequest request,
-		HttpServletResponse response) {
-
-		template.put(
-			applicationName,
-			new HttpRequestHashModel(
-				request, response, ObjectWrapper.DEFAULT_WRAPPER));
-	}
-
-	@Override
 	public void addTaglibTheme(
-		Template template, String themeName, HttpServletRequest request,
-		HttpServletResponse response, Writer writer) {
+		Map<String, Object> contextObjects, String themeName,
+		HttpServletRequest request, HttpServletResponse response) {
 
 		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
-			request.getServletContext(), request,
-			new PipingServletResponse(response, writer), template);
+			request.getServletContext(), request, response, contextObjects);
 
-		template.put(themeName, velocityTaglib);
+		contextObjects.put(themeName, velocityTaglib);
+
+		try {
+			Class<?> clazz = VelocityTaglib.class;
+
+			Method method = clazz.getMethod(
+				"layoutIcon", new Class[] {Layout.class});
+
+			contextObjects.put("velocityTaglib_layoutIcon", method);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
 
 		// Legacy support
 
-		template.put("theme", velocityTaglib);
+		contextObjects.put("theme", velocityTaglib);
 	}
 
 	@Override

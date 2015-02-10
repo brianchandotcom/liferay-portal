@@ -16,12 +16,14 @@ package com.liferay.portal.kernel.template;
 
 import java.io.Writer;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Tina Tian
  */
-public interface Template {
+public interface Template extends Map<String, Object> {
 
 	public void doProcessTemplate(Writer writer) throws Exception;
 
@@ -32,7 +34,5 @@ public interface Template {
 	public void prepare(HttpServletRequest request);
 
 	public void processTemplate(Writer writer) throws TemplateException;
-
-	public void put(String key, Object value);
 
 }

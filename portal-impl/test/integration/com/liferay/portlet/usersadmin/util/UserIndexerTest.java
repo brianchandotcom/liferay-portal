@@ -114,8 +114,8 @@ public class UserIndexerTest {
 		long facebookId = 0;
 		String openId = null;
 		Locale locale = LocaleUtil.getDefault();
-		int prefixId = 0;
-		int suffixId = 0;
+		long prefixId = 0;
+		long suffixId = 0;
 		boolean male = false;
 		int birthdayMonth = Calendar.JANUARY;
 		int birthdayDay = 1;

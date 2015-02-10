@@ -30,6 +30,77 @@ import org.dom4j.Element;
  */
 public class PoshiRunnerExecutor {
 
+	public static boolean evaluateConditionalElement(Element element)
+		throws Exception {
+
+		String elementName = element.getName();
+
+		if (elementName.equals("and")) {
+			List<Element> andElements = element.elements();
+
+			for (Element andElement : andElements) {
+				if (!evaluateConditionalElement(andElement)) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+		else if (elementName.equals("contains")) {
+			String string = PoshiRunnerVariablesUtil.replaceCommandVars(
+				element.attributeValue("string"));
+			String substring = PoshiRunnerVariablesUtil.replaceCommandVars(
+				element.attributeValue("substring"));
+
+			if (string.contains(substring)) {
+				return true;
+			}
+
+			return false;
+		}
+		else if (elementName.equals("equals")) {
+			String arg1 = PoshiRunnerVariablesUtil.replaceCommandVars(
+				element.attributeValue("arg1"));
+			String arg2 = PoshiRunnerVariablesUtil.replaceCommandVars(
+				element.attributeValue("arg2"));
+
+			if (arg1.equals(arg2)) {
+				return true;
+			}
+
+			return false;
+		}
+		else if (elementName.equals("isset")) {
+			if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(
+					element.attributeValue("var"))) {
+
+				return true;
+			}
+
+			return false;
+		}
+		else if (elementName.equals("or")) {
+			List<Element> orElements = element.elements();
+
+			for (Element orElement : orElements) {
+				if (evaluateConditionalElement(orElement)) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+		else if (elementName.equals("not")) {
+			List<Element> notElements = element.elements();
+
+			Element notElement = notElements.get(0);
+
+			return !evaluateConditionalElement(notElement);
+		}
+
+		return false;
+	}
+
 	public static void parseElement(Element element) throws Exception {
 		List<Element> childElements = element.elements();
 

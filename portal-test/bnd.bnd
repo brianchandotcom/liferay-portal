@@ -14,4 +14,5 @@ Include-Resource:\
 	classes,\
 	@${project.dir}/../lib/development/dumbster.jar,\
 	@${project.dir}/../lib/development/hamcrest-core.jar,\
-	@${project.dir}/../lib/development/junit.jar
+	@${project.dir}/../lib/development/junit.jar,\
+	@${project.dir}/../lib/portal/aspectj-rt.jar

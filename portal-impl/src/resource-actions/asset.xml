@@ -30,7 +30,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.asset</model-name>
 		<portlet-ref>
-			<portlet-name>99</portlet-name>
+			<portlet-name>com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -48,7 +48,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.asset</model-name>
 		<portlet-ref>
-			<portlet-name>147</portlet-name>
+			<portlet-name>com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>1</weight>
 		<permissions>
@@ -67,7 +67,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.asset.model.AssetCategory</model-name>
 		<portlet-ref>
-			<portlet-name>147</portlet-name>
+			<portlet-name>com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>
@@ -94,7 +94,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.asset.model.AssetTag</model-name>
 		<portlet-ref>
-			<portlet-name>99</portlet-name>
+			<portlet-name>com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -118,7 +118,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.asset.model.AssetVocabulary</model-name>
 		<portlet-ref>
-			<portlet-name>147</portlet-name>
+			<portlet-name>com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

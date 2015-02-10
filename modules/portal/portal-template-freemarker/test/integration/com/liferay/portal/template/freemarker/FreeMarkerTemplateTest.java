@@ -332,10 +332,12 @@ public class FreeMarkerTemplateTest {
 		}
 
 		@Override
-		public void prepare(Template template, HttpServletRequest request) {
-			String testValue = (String)template.get(_TEST_KEY);
+		public void prepare(
+			Map<String, Object> contextObjects, HttpServletRequest request) {
 
-			template.put(testValue, testValue);
+			String testValue = (String)contextObjects.get(_TEST_KEY);
+
+			contextObjects.put(testValue, testValue);
 		}
 
 	}

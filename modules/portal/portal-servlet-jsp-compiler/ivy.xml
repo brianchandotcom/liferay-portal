@@ -19,7 +19,6 @@
 		<dependency name="javax.servlet.jsp.jstl-api" org="javax.servlet.jsp.jstl" rev="1.2.1" transitive="false" />
 		<dependency name="org.apache.felix.utils" org="org.apache.felix" rev="1.6.0" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
-		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency name="phidias" org="com.github.rotty3000" rev="0.3.2" />
 	</dependencies>
 </ivy-module>

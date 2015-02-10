@@ -15,7 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.ReservedUserEmailAddressException;
+import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -66,7 +66,7 @@ public class UserServiceTest {
 			new AggregateTestRule(
 				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
-		@Test(expected = ReservedUserEmailAddressException.class)
+		@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
 		public void shouldNotAddUser() throws Exception {
 			boolean companySecurityStrangersWithMx =
 				PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX;
@@ -91,7 +91,7 @@ public class UserServiceTest {
 			}
 		}
 
-		@Test(expected = ReservedUserEmailAddressException.class)
+		@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
 		public void shouldNotUpdateEmailAddress() throws Exception {
 			boolean companySecurityStrangersWithMx =
 				PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX;
@@ -124,7 +124,7 @@ public class UserServiceTest {
 			}
 		}
 
-		@Test(expected = ReservedUserEmailAddressException.class)
+		@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
 		public void shouldNotUpdateUser() throws Exception {
 			boolean companySecurityStrangersWithMx =
 				PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX;

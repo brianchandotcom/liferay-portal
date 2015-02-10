@@ -19,7 +19,6 @@
 	<dependencies defaultconf="default">
 		<dependency name="geoip-api" org="com.maxmind.geoip" rev="1.2.14" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
-		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency name="xz" org="org.tukaani" rev="1.5" />
 	</dependencies>
 </ivy-module>

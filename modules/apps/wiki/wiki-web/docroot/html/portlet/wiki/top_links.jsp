@@ -67,7 +67,7 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 </c:if>
 
 <c:if test="<%= !print %>">
-	<c:if test="<%= (nodes.size() > 1) && wikiVisualizationHelper.isNodeNavigationVisible() %>">
+	<c:if test="<%= wikiVisualizationHelper.isNodeNavigationVisible(nodes) %>">
 		<aui:nav cssClass="nav-tabs">
 
 			<%

@@ -15,7 +15,10 @@
 package com.liferay.wiki.web.display.context.logic;
 
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
+
+import java.util.Collection;
 
 /**
  * @author Adolfo Pérez
@@ -32,10 +35,10 @@ public class WikiVisualizationHelper {
 		return portletId.equals(WikiPortletKeys.WIKI_ADMIN);
 	}
 
-	public boolean isNodeNavigationVisible() {
+	public boolean isNodeNavigationVisible(Collection<WikiNode> nodes) {
 		String portletId = _wikiRequestHelper.getPortletId();
 
-		return portletId.equals(WikiPortletKeys.WIKI);
+		return (nodes.size() > 1) && portletId.equals(WikiPortletKeys.WIKI);
 	}
 
 	private final WikiRequestHelper _wikiRequestHelper;

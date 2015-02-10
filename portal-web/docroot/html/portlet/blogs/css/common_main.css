@@ -1,11 +1,27 @@
 .portlet-blogs {
 	.entry-subtitle {
 		color: #2B4256;
-		font-size: 27px;
+		font-size: 24px;
+		font-weight: 400;
 	}
 
 	.entry-body {
-		font-size: 21px;
+		font-size: 18px;
+
+		h1 {
+			font-size: 22px;
+			font-weight: bold;
+		}
+
+		h2 {
+			color: #868896;
+			font-size: 20px;
+			font-weight: 400;
+		}
+
+		a {
+			color: #32A8E6;
+		}
 
 		p {
 			margin-bottom: 30px;
@@ -40,7 +56,7 @@
 		color: #999;
 		display: block;
 		font-size: 14px;
-		margin-bottom: 40px;
-		margin-top: 20px;
+		margin-bottom: 32px;
+		margin-top: 24px;
 	}
 }

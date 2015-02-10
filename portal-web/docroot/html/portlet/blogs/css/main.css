@@ -117,11 +117,11 @@
 
 	.entry-title {
 		display: block;
-		font-weight: bold;
 
 		h2 {
-			font-size: 30px;
-			margin-bottom: 30px;
+			font-size: 26px;
+			font-weight: bold;
+			margin-bottom: 24px;
 
 			.alloy-editor-placeholder {
 				color: #32A8E6;
@@ -130,6 +130,10 @@
 					margin-bottom: 0;
 				}
 			}
+		}
+
+		a {
+			font-weight: bold;
 		}
 	}
 

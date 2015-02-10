@@ -29,12 +29,12 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 %>
 
 <c:if test="<%= wikiVisualizationHelper.isUndoTrashControlVisible() %>">
-	<portlet:actionURL var="undoTrashURL">
-		<portlet:param name="struts_action" value="/wiki/edit_page" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-	</portlet:actionURL>
 
-	<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+	<%
+	PortletURL undoTrashURL = wikiURLHelper.getUndoTrashURL();
+	%>
+
+	<liferay-ui:trash-undo portletURL="<%= undoTrashURL.toString() %>" />
 </c:if>
 
 <c:if test="<%= wikiVisualizationHelper.isNodeNameVisible() %>">
@@ -63,15 +63,11 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 				if (curNode.getNodeId() == node.getNodeId()) {
 					cssClass = "active";
 				}
+
+				PortletURL viewPageURL = wikiURLHelper.getViewPageURL(curNode);
 			%>
 
-				<portlet:renderURL var="viewPageURL">
-					<portlet:param name="struts_action" value="/wiki/view" />
-					<portlet:param name="nodeName" value="<%= curNode.getName() %>" />
-					<portlet:param name="title" value="<%= wikiServiceConfiguration.frontPageName() %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item cssClass="<%= cssClass %>" href="<%= viewPageURL %>" label="<%= HtmlUtil.escape(curNode.getName()) %>" />
+				<aui:nav-item cssClass="<%= cssClass %>" href="<%= viewPageURL.toString() %>" label="<%= HtmlUtil.escape(curNode.getName()) %>" />
 
 			<%
 			}
@@ -129,9 +125,9 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= viewDraftPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 		</aui:nav>
 
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="struts_action" value="/wiki/search" />
-		</liferay-portlet:renderURL>
+		<%
+		PortletURL searchURL = wikiURLHelper.getSearchURL();
+		%>
 
 		<aui:nav-bar-search>
 			<div class="form-search">

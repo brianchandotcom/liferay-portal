@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.display.context.util;
 
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.configuration.WikiServiceConfiguration;
 import com.liferay.wiki.model.WikiNode;
@@ -50,6 +51,23 @@ public class WikiURLHelper {
 		return frontPageURL;
 	}
 
+	public PortletURL getSearchURL() {
+		PortletURL searchURL = _renderResponse.createActionURL();
+
+		searchURL.setParameter("struts_action", "/wiki/search");
+
+		return searchURL;
+	}
+
+	public PortletURL getUndoTrashURL() {
+		PortletURL undoTrashURL = _renderResponse.createActionURL();
+
+		undoTrashURL.setParameter("struts_action", "/wiki/edit_page");
+		undoTrashURL.setParameter(Constants.CMD, Constants.RESTORE);
+
+		return undoTrashURL;
+	}
+
 	public PortletURL getViewAllPagesURL(WikiNode wikiNode) {
 		PortletURL viewAllPagesURL = getWikiNodeBaseURL(wikiNode);
 
@@ -74,6 +92,17 @@ public class WikiURLHelper {
 			"struts_action", "/wiki/view_orphan_pages");
 
 		return viewOrphanPagesURL;
+	}
+
+	public PortletURL getViewPageURL(WikiNode wikiNode) {
+		PortletURL viewPageURL = _renderResponse.createRenderURL();
+
+		viewPageURL.setParameter("struts_action", "/wiki/view");
+		viewPageURL.setParameter("nodeName", wikiNode.getName());
+		viewPageURL.setParameter(
+			"title", _wikiServiceConfiguration.frontPageName());
+
+		return viewPageURL;
 	}
 
 	public PortletURL getViewRecentChangesURL(WikiNode wikiNode) {

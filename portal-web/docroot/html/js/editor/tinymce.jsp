@@ -137,7 +137,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 					data = <%= HtmlUtil.escape(namespace + initMethod) %>();
 				}
 				else {
-					data = '<%= contents != null ? contents: StringPool.BLANK %>';
+					data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
 				}
 			}
 			else {

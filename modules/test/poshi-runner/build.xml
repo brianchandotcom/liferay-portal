@@ -13,7 +13,7 @@
 				<get
 					dest="lib/opencv-linux-x86_64.jar"
 					skipexisting="true"
-					src="https://search.maven.org/remotecontent?filepath=org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86_64.jar"
+					src="https://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86_64.jar"
 				/>
 			</then>
 		</if>

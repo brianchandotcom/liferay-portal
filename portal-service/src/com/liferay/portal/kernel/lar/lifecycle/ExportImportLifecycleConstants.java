@@ -73,4 +73,24 @@ public interface ExportImportLifecycleConstants {
 
 	public static final int EVENT_STAGED_MODEL_IMPORT_SUCCEEDED = 26;
 
+	public static final int PROCESS_FLAG_EXPORT_IN_PROCESS = 28;
+
+	public static final int PROCESS_FLAG_IMPORT_IN_PROCESS = 29;
+
+	public static final int PROCESS_FLAG_LAYOUT_EXPORT_IN_PROCESS = 30;
+
+	public static final int PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS = 31;
+
+	public static final int PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS = 32;
+
+	public static final int PROCESS_FLAG_LAYOUT_VALIDATION_IN_PROCESS = 33;
+
+	public static final int PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS = 34;
+
+	public static final int PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS = 35;
+
+	public static final int PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS = 36;
+
+	public static final int PROCESS_FLAG_PORTLET_VALIDATION_IN_PROCESS = 37;
+
 }

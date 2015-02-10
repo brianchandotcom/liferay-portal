@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.lar.lifecycle;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Daniel Kocsis
@@ -27,8 +28,12 @@ public interface ExportImportLifecycleEvent extends Serializable {
 
 	public int getCode();
 
+	public Map<Integer, Boolean> getProcessFlags();
+
 	public void setAttributes(Serializable... attributes);
 
 	public void setCode(int eventCode);
+
+	public void setProcessFlags(Map<Integer, Boolean> processFlags);
 
 }

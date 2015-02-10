@@ -256,31 +256,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertExpired" priority="5">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#expirePGViaWCD">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="expiredContent" value="true" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="CanAddStructuredWC" priority="5">
+	<command name="AddWithStructure" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -310,6 +286,77 @@
 			<var name="structureName" value="WC Structure Name" />
 			<var name="webContentText" value="WC WebContent Text" />
 			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
+
+	<command name="AssertExpired" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#expirePGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="expiredContent" value="true" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
+
+	<command name="ChangeTemplate" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="Basic Web Content" />
+			<var name="templateFieldNames" value="Content,Content,Content" />
+			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="Second Basic Template" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Content#addNewPG">
+			<var name="assetType" value="Basic Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaPanel">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="WC WebContent ContentWC WebContent ContentWC WebContent Content" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#changeTemplate">
+			<var name="structureName" value="Basic Web Content" />
+			<var name="templateName" value="Basic Web Content" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 	</command>
 
@@ -368,22 +415,6 @@
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
-	</command>
-
-	<command name="PaginationScriptCheck" priority="5">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaWCD">
-			<var name="pageBreak" value="true" />
-			<var name="webContentContent" value="@page_break@ Welcome @page_break@" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#viewContentPageBreak">
-			<var name="webContentContent" value="Welcome" />
 		</execute>
 	</command>
 
@@ -502,53 +533,6 @@
 
 		<execute macro="WebContent#tearDownCP">
 			<var name="siteScopeName" value="Global" />
-		</execute>
-	</command>
-
-	<command name="ToggleTemplate" priority="5">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Basic Web Content" />
-			<var name="templateFieldNames" value="Content,Content,Content" />
-			<var name="templateLanguage" value="ftl" />
-			<var name="templateName" value="Second Basic Template" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="Content#addNewPG">
-			<var name="assetType" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="WebContent#addPGViaPanel">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent ContentWC WebContent ContentWC WebContent Content" />
-		</execute>
-
-		<execute macro="WebContentDisplayPortlet#toggleTemplate">
-			<var name="structureName" value="Basic Web Content" />
-			<var name="templateName" value="Basic Web Content" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Display Page" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 	</command>
 
@@ -721,6 +705,22 @@
 
 		<execute macro="WebContentDisplayPortlet#viewDeletedArticlePGViaWCD">
 			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
+
+	<command name="ViewWithPaginationScript" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="pageBreak" value="true" />
+			<var name="webContentContent" value="@page_break@ Welcome @page_break@" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#viewContentPageBreak">
+			<var name="webContentContent" value="Welcome" />
 		</execute>
 	</command>
 </definition>

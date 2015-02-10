@@ -1,4 +1,27 @@
 <definition>
+	<command name="changeTemplate">
+		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" />
+
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="STRUCTURE_NAME" value1="${structureName}" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="SELECT_TEMPLATE" value1="Select" />
+
+		<execute action="PGWebcontentdisplayEdittemplate#selectFrame" value1="relative=top" />
+		<execute action="PGWebcontentdisplayEdittemplate#selectFrame" locator-key1="TEMPLATES_LIST_IFRAME" />
+
+		<var name="key_templateName" value="${templateName}" />
+
+		<execute action="PGWebcontentdisplayEdittemplate#assertClick" locator-key1="CHOOSE_BUTTON" value1="Choose" />
+		<execute action="CPWebcontentTemplates#confirm" value1="Selecting a new template will delete all unsaved content. Do you want to proceed?" />
+
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="TEMPLATE_NAME" value1="${templateName}" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="configureScopePG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -207,29 +230,6 @@
 		<execute macro="WebContentDisplayPortlet#configureScopePG">
 			<var name="scopeSelection" value="Liferay" />
 		</execute>
-	</command>
-
-	<command name="toggleTemplate">
-		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" />
-
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
-		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="STRUCTURE_NAME" value1="${structureName}" />
-		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="SELECT_TEMPLATE" value1="Select" />
-
-		<execute action="PGWebcontentdisplayEdittemplate#selectFrame" value1="relative=top" />
-		<execute action="PGWebcontentdisplayEdittemplate#selectFrame" locator-key1="TEMPLATES_LIST_IFRAME" />
-
-		<var name="key_templateName" value="${templateName}" />
-
-		<execute action="PGWebcontentdisplayEdittemplate#assertClick" locator-key1="CHOOSE_BUTTON" value1="Choose" />
-		<execute action="CPWebcontentTemplates#confirm" value1="Selecting a new template will delete all unsaved content. Do you want to proceed?" />
-
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
-		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="TEMPLATE_NAME" value1="${templateName}" />
-		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-
-		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewAllSettingsEnabledPG">

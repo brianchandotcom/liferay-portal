@@ -58,6 +58,6 @@ public class SassCompilerTest extends BaseTests {
 	}
 
 	private static final String _BASE_RESOURCES =
-		getBaseDir() + "/com/liferay/tools/jsc/testfiles/";
+		getBaseDir() + "/com/liferay/tools/jsc/dependencies/sass-spec/";
 
 }

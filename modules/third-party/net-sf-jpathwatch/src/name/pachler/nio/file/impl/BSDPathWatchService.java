@@ -374,7 +374,7 @@ public class BSDPathWatchService extends PathWatchService{
 						boolean eventsAdded;
 
 						// check if watch key has become invalid
-						if( (fflags & NOTE_DELETE)!=0 || (fflags & NOTE_REVOKE)!=0)
+						if((fflags & NOTE_REVOKE)!=0)
 							eventsAdded = cancelImpl(key, true);
 						else{
 							try {

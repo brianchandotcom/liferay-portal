@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
-import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
@@ -55,6 +54,7 @@ import javax.naming.Context;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
+import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
@@ -68,12 +68,38 @@ import org.springframework.mock.web.MockServletContext;
  * @author Raymond Augé
  * @author Shuyang Zhou
  */
-public class PACLTestRule extends BaseTestRule<HotDeployEvent, Object> {
+public class PACLTestRule implements TestRule {
 
 	public static final String RESOURCE_PATH =
 		"com/liferay/portal/security/pacl/test/dependencies";
 
 	@Override
+	public Statement apply(
+		final Statement statement, final Description description) {
+
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				HotDeployEvent hotDeployEvent = null;
+
+				if (description.getMethodName() != null) {
+					hotDeployEvent = beforeClass(description);
+				}
+
+				try {
+					invokeStatement(statement, description);
+				}
+				finally {
+					if (hotDeployEvent != null) {
+						afterClass(description, hotDeployEvent);
+					}
+				}
+			}
+
+		};
+	}
+
 	protected void afterClass(
 		Description description, HotDeployEvent hotDeployEvent) {
 
@@ -98,7 +124,6 @@ public class PACLTestRule extends BaseTestRule<HotDeployEvent, Object> {
 		}
 	}
 
-	@Override
 	protected HotDeployEvent beforeClass(Description description)
 		throws ReflectiveOperationException {
 
@@ -176,7 +201,6 @@ public class PACLTestRule extends BaseTestRule<HotDeployEvent, Object> {
 		}
 	}
 
-	@Override
 	protected void invokeStatement(Statement statement, Description description)
 		throws Throwable {
 

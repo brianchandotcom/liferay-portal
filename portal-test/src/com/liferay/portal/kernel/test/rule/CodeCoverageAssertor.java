@@ -28,12 +28,14 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.rules.TestRule;
 import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 
 /**
  * @author Shuyang Zhou
  */
-public class CodeCoverageAssertor extends BaseTestRule<String, Object> {
+public class CodeCoverageAssertor implements TestRule {
 
 	public static final CodeCoverageAssertor INSTANCE =
 		new CodeCoverageAssertor();
@@ -54,6 +56,30 @@ public class CodeCoverageAssertor extends BaseTestRule<String, Object> {
 	}
 
 	@Override
+	public Statement apply(
+		final Statement statement, final Description description) {
+
+		if (description.getMethodName() != null) {
+			return statement;
+		}
+
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				String className = beforeClass(description);
+
+				try {
+					statement.evaluate();
+				}
+				finally {
+					afterClass(description, className);
+				}
+			}
+
+		};
+	}
+
 	protected void afterClass(Description description, String className)
 		throws Exception {
 
@@ -74,7 +100,6 @@ public class CodeCoverageAssertor extends BaseTestRule<String, Object> {
 			assertClasses.toArray(new Class<?>[assertClasses.size()]));
 	}
 
-	@Override
 	protected String beforeClass(Description description) throws Exception {
 		String className = description.getClassName();
 

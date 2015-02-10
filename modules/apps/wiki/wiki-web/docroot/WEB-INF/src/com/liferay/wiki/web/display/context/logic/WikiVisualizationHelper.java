@@ -38,7 +38,17 @@ public class WikiVisualizationHelper {
 	}
 
 	public boolean isFrontPageNavItemSelected(WikiPage wikiPage) {
-		return (Validator.isNull(_wikiRequestHelper.getStrutsAction()) || (wikiPage != null) && wikiPage.getTitle().equals(_wikiServiceConfiguration.frontPageName()));
+		String strutsAction = _wikiRequestHelper.getStrutsAction();
+
+		String frontPageName = _wikiServiceConfiguration.frontPageName();
+
+		if (Validator.isNull(strutsAction) ||
+			(wikiPage != null) && frontPageName.equals(wikiPage.getTitle())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isNodeNameVisible() {

@@ -37,8 +37,12 @@ public class WikiURLHelper {
 		_wikiServiceConfiguration = wikiServiceConfiguration;
 	}
 
-	public PortletURL getFrontPageURL(WikiNode node) {
-		PortletURL frontPageURL = getWikiNodeBaseURL(node);
+	public PortletURL getBackToNodeURL(WikiNode wikiNode) {
+		return getWikiNodeBaseURL(wikiNode);
+	}
+
+	public PortletURL getFrontPageURL(WikiNode wikiNode) {
+		PortletURL frontPageURL = getWikiNodeBaseURL(wikiNode);
 
 		frontPageURL.setParameter("struts_action", "/wiki/view");
 		frontPageURL.setParameter(
@@ -46,6 +50,41 @@ public class WikiURLHelper {
 		frontPageURL.setParameter("tag", StringPool.BLANK);
 
 		return frontPageURL;
+	}
+
+	public PortletURL getViewAllPagesURL(WikiNode wikiNode) {
+		PortletURL viewAllPagesURL = getWikiNodeBaseURL(wikiNode);
+
+		viewAllPagesURL.setParameter("struts_action", "/wiki/view_all_pages");
+
+		return viewAllPagesURL;
+	}
+
+	public PortletURL getViewDraftPagesURL(WikiNode wikiNode) {
+		PortletURL viewDraftPagesURL = getWikiNodeBaseURL(wikiNode);
+
+		viewDraftPagesURL.setParameter(
+			"struts_action", "/wiki/view_draft_pages");
+
+		return viewDraftPagesURL;
+	}
+
+	public PortletURL getViewOrphanPagesURL(WikiNode wikiNode) {
+		PortletURL viewOrphanPagesURL = getWikiNodeBaseURL(wikiNode);
+
+		viewOrphanPagesURL.setParameter(
+			"struts_action", "/wiki/view_orphan_pages");
+
+		return viewOrphanPagesURL;
+	}
+
+	public PortletURL getViewRecentChangesURL(WikiNode wikiNode) {
+		PortletURL viewRecentChangesURL = getWikiNodeBaseURL(wikiNode);
+
+		viewRecentChangesURL.setParameter(
+			"struts_action", "/wiki/view_recent_changes");
+
+		return viewRecentChangesURL;
 	}
 
 	protected PortletURL getWikiNodeBaseURL(WikiNode node) {

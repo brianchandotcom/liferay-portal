@@ -24,16 +24,6 @@ List<WikiNode> nodes = WikiUtil.getNodes(wikiPortletInstanceSettingsHelper.getAl
 
 boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT);
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("nodeName", node.getName());
-
-long categoryId = ParamUtil.getLong(request, "categoryId");
-
-if (categoryId > 0) {
-	portletURL.setParameter("categoryId", "0");
-}
-
 WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiServiceConfiguration);
 WikiURLHelper wikiURLHelper = new WikiURLHelper(renderRequest, renderResponse, wikiServiceConfiguration);
 %>
@@ -48,8 +38,13 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(renderRequest, renderResponse, w
 </c:if>
 
 <c:if test="<%= wikiVisualizationHelper.isNodeNameVisible() %>">
+
+	<%
+	PortletURL backToNodeURL = wikiURLHelper.getBackToNodeURL(node);
+	%>
+
 	<liferay-ui:header
-		backURL="<%= portletURL.toString() %>"
+		backURL="<%= backToNodeURL.toString() %>"
 		localizeTitle="<%= false %>"
 		title="<%= node.getName() %>"
 	/>
@@ -98,40 +93,40 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(renderRequest, renderResponse, w
 			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= frontPageURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 
 			<%
+			PortletURL viewRecentChangesURL = wikiURLHelper.getViewRecentChangesURL(node);
+
 			label = "recent-changes";
 			selected = wikiVisualizationHelper.isViewRecentChangesNavItemSelected();
-
-			portletURL.setParameter("struts_action", "/wiki/view_recent_changes");
 			%>
 
-			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
+			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= viewRecentChangesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 
 			<%
+			PortletURL viewAllPagesURL = wikiURLHelper.getViewAllPagesURL(node);
+
 			label = "all-pages";
 			selected = wikiVisualizationHelper.isViewAllPagesNavItemSelected();
-
-			portletURL.setParameter("struts_action", "/wiki/view_all_pages");
 			%>
 
-			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
+			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= viewAllPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 
 			<%
+			PortletURL viewOrphanPagesURL = wikiURLHelper.getViewOrphanPagesURL(node);
+
 			label = "orphan-pages";
 			selected = wikiVisualizationHelper.isViewOrphanPagesNavItemSelected();
-
-			portletURL.setParameter("struts_action", "/wiki/view_orphan_pages");
 			%>
 
-			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
+			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= viewOrphanPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 
 			<%
+			PortletURL viewDraftPagesURL = wikiURLHelper.getViewDraftPagesURL(node);
+
 			label = "draft-pages";
 			selected = wikiVisualizationHelper.isViewDraftPagesNavItemSelected();
-
-			portletURL.setParameter("struts_action", "/wiki/view_draft_pages");
 			%>
 
-			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
+			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= viewDraftPagesURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 		</aui:nav>
 
 		<liferay-portlet:renderURL varImpl="searchURL">

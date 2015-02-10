@@ -14,21 +14,18 @@
 
 package com.liferay.portlet.dynamicdatamapping.registry;
 
-import java.util.Locale;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderingContext;
 
 /**
- * @author Marcellus Tavares
+ * @author Pablo Carvalho
  */
-public interface DDMFormFieldType {
+public interface DDMFormFieldRenderer {
 
-	public DDMFormFieldRenderer getDDMFormFieldRenderer();
-
-	public DDMFormFieldValueAccessor<?> getDDMFormFieldValueAccessor(
-		Locale locale);
-
-	public DDMFormFieldValueRendererAccessor
-		getDDMFormFieldValueRendererAccessor(Locale locale);
-
-	public String getName();
+	public String render(
+			DDMFormField ddmFormField,
+			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
+		throws PortalException;
 
 }

@@ -41,6 +41,8 @@ public interface TemplateConstants {
 
 	public static final String LANG_TYPE_XSL = "xsl";
 
+	public static final String NAMESPACE = "namespace";
+
 	public static final String SERVLET_SEPARATOR = "_SERVLET_CONTEXT_";
 
 	public static final String TEMPLATE_ID = "template_id";

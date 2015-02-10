@@ -14,6 +14,7 @@
 
 package com.liferay.portal.template.soy;
 
+import com.google.common.io.CharStreams;
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.SoyFileSet.Builder;
 import com.google.template.soy.data.SoyMapData;
@@ -30,9 +31,8 @@ import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
 
+import java.io.Reader;
 import java.io.Writer;
-
-import java.net.URL;
 
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
@@ -59,21 +59,9 @@ public class SoyTemplate extends AbstractTemplate {
 		_privileged = privileged;
 	}
 
-	protected SoyMapData getSoyContext() {
-		SoyMapData soyContext = new SoyMapData();
+	protected SoyFileSet getSoyFileSet(TemplateResource templateResource)
+		throws Exception {
 
-		for (String key : context.keySet()) {
-			if (key.equals("namespace")) {
-				continue;
-			}
-
-			soyContext.put(key, get(key));
-		}
-
-		return soyContext;
-	}
-
-	protected SoyFileSet getSoyFileSet() throws PrivilegedActionException {
 		SoyFileSet soyFileSet = null;
 
 		if (_privileged) {
@@ -81,7 +69,9 @@ public class SoyTemplate extends AbstractTemplate {
 				new TemplatePrivilegedExceptionAction(templateResource));
 		}
 		else {
-			_builder.add(getTemplateResourceURL(templateResource));
+			String templateContent = getTemplateContent(templateResource);
+
+			_builder.add(templateContent, templateResource.getTemplateId());
 
 			soyFileSet = _builder.build();
 		}
@@ -89,12 +79,26 @@ public class SoyTemplate extends AbstractTemplate {
 		return soyFileSet;
 	}
 
-	protected URL getTemplateResourceURL(TemplateResource templateResource) {
-		Class<?> clazz = getClass();
+	protected SoyMapData getSoyMapData() {
+		SoyMapData soyMapData = new SoyMapData();
 
-		ClassLoader classLoader = clazz.getClassLoader();
+		for (String key : context.keySet()) {
+			if (key.equals(TemplateConstants.NAMESPACE)) {
+				continue;
+			}
 
-		return classLoader.getResource(templateResource.getTemplateId());
+			soyMapData.put(key, get(key));
+		}
+
+		return soyMapData;
+	}
+
+	protected String getTemplateContent(TemplateResource templateResource)
+		throws Exception {
+
+		Reader reader = templateResource.getReader();
+
+		return CharStreams.toString(reader);
 	}
 
 	@Override
@@ -130,19 +134,20 @@ public class SoyTemplate extends AbstractTemplate {
 			TemplateConstants.LANG_TYPE_SOY, templateResource);
 
 		try {
-			String namespace = GetterUtil.getString(get("namespace"));
+			String namespace = GetterUtil.getString(
+				get(TemplateConstants.NAMESPACE));
 
 			if (Validator.isNull(namespace)) {
 				throw new TemplateException("No namespace specified.");
 			}
 
-			SoyFileSet soyFileSet = getSoyFileSet();
+			SoyFileSet soyFileSet = getSoyFileSet(templateResource);
 
 			SoyTofu soyTofu = soyFileSet.compileToTofu();
 
 			Renderer renderer = soyTofu.newRenderer(namespace);
 
-			renderer.setData(getSoyContext());
+			renderer.setData(getSoyMapData());
 
 			renderer.render(writer);
 		}
@@ -169,7 +174,9 @@ public class SoyTemplate extends AbstractTemplate {
 
 		@Override
 		public SoyFileSet run() throws Exception {
-			_builder.add(getTemplateResourceURL(_templateResource));
+			String templateContent = getTemplateContent(_templateResource);
+
+			_builder.add(templateContent, _templateResource.getTemplateId());
 
 			return _builder.build();
 		}

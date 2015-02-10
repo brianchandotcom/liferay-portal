@@ -459,11 +459,47 @@ public class UserImpl extends UserBaseImpl {
 	@AutoEscape
 	@Override
 	public String getFullName() {
+		return getFullName(false, false);
+	}
+
+	/**
+	 * Returns the user's full name.
+	 *
+	 * @return the user's full name
+	 */
+	@AutoEscape
+	@Override
+	public String getFullName(boolean usePrefix, boolean useSuffix) {
 		FullNameGenerator fullNameGenerator =
 			FullNameGeneratorFactory.getInstance();
 
-		return fullNameGenerator.getFullName(
-			getFirstName(), getMiddleName(), getLastName());
+		long prefixId = 0;
+
+		try {
+			if (usePrefix) {
+				Contact contact = getContact();
+
+				prefixId = contact.getPrefixId();
+			}
+		}
+		catch (PortalException pe) {
+		}
+
+		long suffixId = 0;
+
+		try {
+			if (useSuffix) {
+				Contact contact = getContact();
+
+				suffixId = contact.getSuffixId();
+			}
+		}
+		catch (PortalException pe) {
+		}
+
+		return fullNameGenerator.getLocalizedFullName(
+			getFirstName(), getMiddleName(), getLastName(), getLocale(),
+			prefixId, suffixId);
 	}
 
 	@Override

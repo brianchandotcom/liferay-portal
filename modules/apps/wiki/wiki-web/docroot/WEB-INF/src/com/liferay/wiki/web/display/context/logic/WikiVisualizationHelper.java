@@ -48,13 +48,13 @@ public class WikiVisualizationHelper {
 	public boolean isUndoTrashControlVisible() {
 		String strutsAction = _wikiRequestHelper.getStrutsAction();
 
-		if (!strutsAction.endsWith("view_page_activities") &&
-			!strutsAction.endsWith("view_page_attachments")) {
+		if (strutsAction.endsWith("view_page_activities") ||
+			strutsAction.endsWith("view_page_attachments")) {
 
-			return true;
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	private final WikiRequestHelper _wikiRequestHelper;

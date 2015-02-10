@@ -36,6 +36,8 @@ Import-Package: \
 	\
 	com.liferay.wiki.asset,\
 	com.liferay.wiki.configuration,\
+	com.liferay.wiki.constants,\
+	com.liferay.wiki.importer.impl,\
 	com.liferay.wiki.indexer,\
 	com.liferay.wiki.lar,\
 	com.liferay.wiki.model.impl,\

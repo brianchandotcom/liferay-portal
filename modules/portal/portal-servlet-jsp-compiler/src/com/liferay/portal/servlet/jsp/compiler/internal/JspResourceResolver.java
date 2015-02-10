@@ -47,8 +47,12 @@ import org.phidias.compile.ResourceResolver;
  */
 public class JspResourceResolver implements ResourceResolver {
 
-	public JspResourceResolver(BundleContext bundleContext) {
-		_logger = new Logger(bundleContext);
+	public JspResourceResolver(Bundle bundle, Bundle jspBundle, Logger logger) {
+		_bundle = bundle;
+		_jspBundle = jspBundle;
+		_logger = logger;
+
+		BundleContext bundleContext = _bundle.getBundleContext();
 
 		Filter filter = null;
 
@@ -86,15 +90,22 @@ public class JspResourceResolver implements ResourceResolver {
 		BundleWiring bundleWiring, String path, String filePattern,
 		int options) {
 
-		Collection<String> resources = bundleWiring.listResources(
-			path, filePattern, options);
+		Collection<String> resources = null;
 
 		Bundle bundle = bundleWiring.getBundle();
 
-		if (((resources == null) || resources.isEmpty()) &&
-			(bundle.getBundleId() == 0)) {
-
-			return handleSystemBundle(bundleWiring, path, filePattern, options);
+		if (bundle.equals(_bundle) || bundle.equals(_jspBundle)) {
+			resources = bundleWiring.listResources(path, filePattern, options);
+		}
+		else if (exportsPackage(bundleWiring, path.replace('/', '.'))) {
+			if (bundle.getBundleId() == 0) {
+				resources = handleSystemBundle(
+					bundleWiring, path, filePattern, options);
+			}
+			else {
+				resources = bundleWiring.listResources(
+					path, filePattern, options);
+			}
 		}
 
 		return resources;
@@ -116,12 +127,6 @@ public class JspResourceResolver implements ResourceResolver {
 
 		String packageName = path.replace('/', '.');
 
-		if (!exportsPackage(bundleWiring, packageName)) {
-			_jspResourceCache.put(key, resources);
-
-			return resources;
-		}
-
 		List<URL> urls = null;
 
 		Map<String, List<URL>> extraPackageMap = _serviceTracker.getService();
@@ -130,7 +135,9 @@ public class JspResourceResolver implements ResourceResolver {
 			urls = extraPackageMap.get(packageName);
 		}
 
-		if ((urls == null) || urls.isEmpty()) {
+		if (((urls == null) || urls.isEmpty()) &&
+			exportsPackage(bundleWiring, packageName)) {
+
 			ClassLoader classLoader = bundleWiring.getClassLoader();
 
 			try {
@@ -141,7 +148,7 @@ public class JspResourceResolver implements ResourceResolver {
 				}
 			}
 			catch (IOException ioe) {
-				ioe.printStackTrace();
+				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
 			}
 		}
 
@@ -205,6 +212,8 @@ public class JspResourceResolver implements ResourceResolver {
 		return false;
 	}
 
+	private final Bundle _bundle;
+	private final Bundle _jspBundle;
 	private final Map<String, Collection<String>> _jspResourceCache =
 		new ConcurrentHashMap<>();
 	private final Logger _logger;

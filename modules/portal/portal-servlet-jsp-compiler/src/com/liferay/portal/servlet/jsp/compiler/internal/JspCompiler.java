@@ -103,7 +103,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		_bundle = _allParticipatingBundles[0];
 
 		_bundleContext = _bundle.getBundleContext();
-		_resourceResolver = new JspResourceResolver(_bundleContext);
+		_resourceResolver = new JspResourceResolver(
+			_bundle, _jspBundle, _logger);
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
 

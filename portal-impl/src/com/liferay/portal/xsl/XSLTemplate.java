@@ -297,6 +297,7 @@ public class XSLTemplate implements Template {
 				e);
 		}
 	}
+
 	private final Map<String, Object> _context;
 	private TemplateResource _errorTemplateResource;
 	private final TemplateContextHelper _templateContextHelper;

@@ -877,7 +877,7 @@ of reserved screen names.
 
 ---------------------------------------
 
-### Replaced `ReservedUserEmailAddressException` with `UserEmailAddressException` inner classes in User Services
+### Replaced the `ReservedUserEmailAddressException` with `UserEmailAddressException` Inner Classes in User Services
 - **Date:** 2015-Feb-03
 - **JIRA Ticket:** LPS-53279
 
@@ -886,8 +886,8 @@ of reserved screen names.
 Previous to Liferay 7, several methods of `UserLocalService` and `UserService`
 could throw a `ReservedUserEmailAddressException` when a user set an email 
 address that was not allowed. That exception has been deprecated and replaced
-with `UserEmailAddressException.MustNotBeCompanyMx`,
-`UserEmailAddressException.MustNotBePOP`, and
+with `UserEmailAddressException.MustNotUseCompanyMx`,
+`UserEmailAddressException.MustNotBePOP3User`, and
 `UserEmailAddressException.MustNotBeReserved`.
 
 #### Who is affected?
@@ -898,19 +898,19 @@ This affects developers who have written code that catches the
 #### How should I update my code?
 
 You should replace catching exception `ReservedUserEmailAddressException` with
-catching exception `UserEmailAddressException.MustNotBeCompanyMx`,
-`UserEmailAddressException.MustNotBePOP`, or
-`UserEmailAddressException.MustNotBeReserved`.
+catching exception `UserEmailAddressException.MustNotUseCompanyMx`,
+`UserEmailAddressException.MustNotBePOP3User`, or
+`UserEmailAddressException.MustNotBeReserved`, depending on the context.
 
 #### Why was this change made?
 
 A new pattern has been defined for exceptions that provides higher expressivity
 in their names and also more information regarding why the exception was thrown.
 
-The new exception `UserEmailAddressException.MustNotBeReserved` has all the
-necessary information about why the exception was thrown and its context. In
-particular, it contains the problematic email address, and the list of reserved
-email addresses.
+Each new exception has all the necessary information about why the exception was
+thrown and its context. For example, the
+`UserEmailAddressException.MustNotBeReserved` exception contains the problematic
+email address, and the list of reserved email addresses.
 
 ---------------------------------------
 

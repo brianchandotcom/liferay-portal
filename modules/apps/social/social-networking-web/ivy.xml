@@ -14,6 +14,5 @@
 		<dependency name="com.liferay.ip.geocoder" org="com.liferay" rev="1.0.2" />
 		<dependency name="javax.servlet.jsp.jstl" org="org.glassfish.web" rev="1.2.3" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
-		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>

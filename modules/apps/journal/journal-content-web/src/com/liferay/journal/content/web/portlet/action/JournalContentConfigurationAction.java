@@ -63,8 +63,7 @@ public class JournalContentConfigurationAction
 
 		long articleGroupId = getArticleGroupId(actionRequest);
 
-		setPreference(
-			actionRequest, "articleGroupId", String.valueOf(articleGroupId));
+		setPreference(actionRequest, "groupId", String.valueOf(articleGroupId));
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

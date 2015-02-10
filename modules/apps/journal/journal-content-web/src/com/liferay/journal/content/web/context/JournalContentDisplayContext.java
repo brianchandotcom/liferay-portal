@@ -128,16 +128,12 @@ public class JournalContentDisplayContext {
 			return _articleGroupId;
 		}
 
-		_articleGroupId = ParamUtil.getLong(_request, "articleGroupId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		if (_articleGroupId <= 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			_articleGroupId = GetterUtil.getLong(
-				_portletPreferences.getValue(
-					"groupId", String.valueOf(themeDisplay.getScopeGroupId())));
-		}
+		_articleGroupId = PrefsParamUtil.getLong(
+			_portletPreferences, _request, "groupId",
+			themeDisplay.getScopeGroupId());
 
 		return _articleGroupId;
 	}

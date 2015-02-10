@@ -92,8 +92,7 @@ public class JournalContentPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long articleGroupId = ParamUtil.getLong(
-			renderRequest, "articleGroupId");
+		long articleGroupId = ParamUtil.getLong(renderRequest, "groupId");
 
 		if (articleGroupId <= 0) {
 			articleGroupId = GetterUtil.getLong(

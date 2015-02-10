@@ -49,7 +49,7 @@ if (categoryId > 0) {
 WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper);
 %>
 
-<c:if test='<%= !strutsAction.endsWith("view_page_activities") && !strutsAction.endsWith("view_page_attachments") %>'>
+<c:if test="<%= wikiVisualizationHelper.isUndoTrashControlVisible() %>">
 	<portlet:actionURL var="undoTrashURL">
 		<portlet:param name="struts_action" value="/wiki/edit_page" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />

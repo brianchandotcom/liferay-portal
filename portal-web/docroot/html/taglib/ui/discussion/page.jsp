@@ -261,17 +261,17 @@ int messagesCount = messages.size();
 			}
 
 			function <%= randomNamespace %>hideEditor(editorName, formId) {
-				if (window[editorName + 'Editor']) {
-					window[editorName + 'Editor'].dispose();
+				if (window[editorName]) {
+					window[editorName].dispose();
 				}
 
 				<%= randomNamespace %>hideForm(formId);
 			}
 
 			function <%= randomNamespace %>showEditor(editorName, formId) {
-				window[editorName + 'Editor'].create();
+				window[editorName].create();
 
-				var html = window[editorName + 'Editor'].getHTML();
+				var html = window[editorName].getHTML();
 
 				Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), (html === ''));
 
@@ -344,7 +344,7 @@ int messagesCount = messages.size();
 
 					var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-					var editorInstance = window['<%= namespace + randomNamespace %>postReplyBody' + i + 'Editor'];
+					var editorInstance = window['<%= namespace + randomNamespace %>postReplyBody' + i];
 
 					var parentMessageId = form.one('#<%= namespace %>parentMessageId' + i).val();
 
@@ -497,7 +497,7 @@ int messagesCount = messages.size();
 
 					var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-					var editorInstance = window['<%= namespace + randomNamespace %>editReplyBody' + i + 'Editor'];
+					var editorInstance = window['<%= namespace + randomNamespace %>editReplyBody' + i];
 
 					var messageId = form.one('#<%= namespace %>messageId' + i).val();
 

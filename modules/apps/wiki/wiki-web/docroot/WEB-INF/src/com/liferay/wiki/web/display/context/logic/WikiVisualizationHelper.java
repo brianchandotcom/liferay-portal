@@ -14,6 +14,8 @@
 
 package com.liferay.wiki.web.display.context.logic;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
@@ -57,6 +59,45 @@ public class WikiVisualizationHelper {
 		return true;
 	}
 
+	public boolean isViewAllPagesNavItemSelected() {
+		return isNavItemSelected("/view_all_pages");
+	}
+
+	public boolean isViewDraftPagesNavItemSelected() {
+		return isNavItemSelected("/view_draft_pages");
+	}
+
+	public boolean isViewOrphanPagesNavItemSelected() {
+		return isNavItemSelected("/view_orphan_pages");
+	}
+
+	public boolean isViewRecentChangesNavItemSelected() {
+		return isNavItemSelected("/view_recent_changes");
+	}
+
+	protected String getStrutsPath() {
+		if (_strutsPath == null) {
+			String strutsAction = _wikiRequestHelper.getStrutsAction();
+
+			if (Validator.isNotNull(strutsAction)) {
+				int pos = strutsAction.indexOf(StringPool.SLASH, 1);
+
+				if (pos != -1) {
+					_strutsPath = strutsAction.substring(0, pos);
+				}
+			}
+		}
+
+		return _strutsPath;
+	}
+
+	protected boolean isNavItemSelected(String navItemStrutsAction) {
+		String strutsAction = _wikiRequestHelper.getStrutsAction();
+
+		return strutsAction.equals(getStrutsPath() + navItemStrutsAction);
+	}
+
+	private String _strutsPath;
 	private final WikiRequestHelper _wikiRequestHelper;
 
 }

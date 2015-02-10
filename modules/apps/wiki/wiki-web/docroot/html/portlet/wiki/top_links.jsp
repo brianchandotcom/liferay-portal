@@ -114,7 +114,7 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 
 			<%
 			label = "recent-changes";
-			selected = strutsAction.equals(strutsPath + "/view_recent_changes");
+			selected = wikiVisualizationHelper.isViewRecentChangesNavItemSelected();
 
 			portletURL.setParameter("struts_action", "/wiki/view_recent_changes");
 			%>
@@ -123,7 +123,7 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 
 			<%
 			label = "all-pages";
-			selected = strutsAction.equals(strutsPath + "/view_all_pages");
+			selected = wikiVisualizationHelper.isViewAllPagesNavItemSelected();
 
 			portletURL.setParameter("struts_action", "/wiki/view_all_pages");
 			%>
@@ -132,7 +132,7 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 
 			<%
 			label = "orphan-pages";
-			selected = strutsAction.equals(strutsPath + "/view_orphan_pages");
+			selected = wikiVisualizationHelper.isViewOrphanPagesNavItemSelected();
 
 			portletURL.setParameter("struts_action", "/wiki/view_orphan_pages");
 			%>
@@ -141,7 +141,7 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 
 			<%
 			label = "draft-pages";
-			selected = strutsAction.equals(strutsPath + "/view_draft_pages");
+			selected = wikiVisualizationHelper.isViewDraftPagesNavItemSelected();
 
 			portletURL.setParameter("struts_action", "/wiki/view_draft_pages");
 			%>

@@ -1,14 +1,14 @@
-Bundle-Name: Java Sass Compiler
-Bundle-SymbolicName: com.liferay.tools.jsc
+Bundle-Name: Liferay Sass Compiler
+Bundle-SymbolicName: com.liferay.sass.compiler
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.tools.jsc
-Include-Resource: \
+Export-Package: com.liferay.sass.compiler
+Include-Resource:\
 	classes,\
 	@lib/jna.jar,\
 	@lib/jnaerator-runtime.jar,\
 	@lib/ochafik-util.jar
-Main-Class: com.liferay.tools.jsc.SassCompiler
-Private-Package: \
+Main-Class: com.liferay.sass.compiler.SassCompiler
+Private-Package:\
 	com.liferay.tools.jsc.libsass,\
 	com.ochafik.*,\
 	com.sun.jna

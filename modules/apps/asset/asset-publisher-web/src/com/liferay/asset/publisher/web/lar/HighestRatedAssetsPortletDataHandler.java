@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.portlet.template;
+package com.liferay.asset.publisher.web.lar;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,10 +25,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AssetPublisherPortletKeys.RECENT_CONTENT
+		"javax.portlet.name=" + AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS
 	},
-	service = TemplateHandler.class
+	service = PortletDataHandler.class
 )
-public class RecentContentPortletDisplayTemplateHandler
-	extends AssetPublisherPortletDisplayTemplateHandler {
+public class HighestRatedAssetsPortletDataHandler
+	extends AssetPublisherPortletDataHandler {
 }

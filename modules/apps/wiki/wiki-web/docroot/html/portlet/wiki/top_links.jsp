@@ -35,6 +35,7 @@ if (categoryId > 0) {
 }
 
 WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiServiceConfiguration);
+WikiURLHelper wikiURLHelper = new WikiURLHelper(renderRequest, renderResponse, wikiServiceConfiguration);
 %>
 
 <c:if test="<%= wikiVisualizationHelper.isUndoTrashControlVisible() %>">
@@ -88,14 +89,10 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 		<aui:nav cssClass="navbar-nav">
 
 			<%
-			PortletURL frontPageURL = PortletURLUtil.clone(portletURL, renderResponse);
+			PortletURL frontPageURL = wikiURLHelper.getFrontPageURL(node);
 
 			String label = wikiServiceConfiguration.frontPageName();
 			boolean selected = wikiVisualizationHelper.isFrontPageNavItemSelected(wikiPage);
-
-			frontPageURL.setParameter("struts_action", "/wiki/view");
-			frontPageURL.setParameter("title", wikiServiceConfiguration.frontPageName());
-			frontPageURL.setParameter("tag", StringPool.BLANK);
 			%>
 
 			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= frontPageURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />

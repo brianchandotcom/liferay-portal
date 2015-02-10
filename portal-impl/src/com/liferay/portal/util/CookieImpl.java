@@ -133,17 +133,12 @@ public class CookieImpl implements com.liferay.portal.kernel.util.Cookie {
 
 		InternetDomainName internetDomainName = InternetDomainName.from(host);
 
-		if (internetDomainName.hasPublicSuffix()) {
-			if (internetDomainName.isPublicSuffix()) {
-				return null;
-			}
+		if (internetDomainName.isPublicSuffix()) {
+			return null;
+		}
 
-			if (internetDomainName.isTopPrivateDomain()) {
-				String domain =
-					internetDomainName.topPrivateDomain().toString();
-
-				return StringPool.PERIOD + domain;
-			}
+		if (internetDomainName.isTopPrivateDomain()) {
+			return StringPool.PERIOD + internetDomainName.toString();
 		}
 
 		int x = host.indexOf(CharPool.PERIOD);

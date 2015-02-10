@@ -17,11 +17,11 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency org='com.nativelibs4java' name='jnaerator-runtime' rev='0.11' >
-			<exclude name='jna-jnaerator' />
+		<dependency name="jna" org="net.java.dev.jna" rev="4.1.0" />
+		<dependency name="jnaerator-runtime" org="com.nativelibs4java" rev="0.11">
+			<exclude name="jna-jnaerator" />
 		</dependency>
-		<dependency org='com.nativelibs4java' name='ochafik-util' rev='0.11' />
-		<dependency org='net.java.dev.jna' name='jna' rev='4.1.0' />
+		<dependency name="ochafik-util" org="com.nativelibs4java" rev="0.11" />
 		<dependency conf="test->default" name="junit" org="junit" rev="4.11" />
 	</dependencies>
 </ivy-module>

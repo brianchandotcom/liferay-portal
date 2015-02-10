@@ -20,6 +20,7 @@
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.bookmarks.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.portal.spring.extender.jar" />
+	<classpathentry kind="lib" path="lib/org.freemarker.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

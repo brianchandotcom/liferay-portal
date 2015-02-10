@@ -14,12 +14,22 @@
 
 package com.liferay.sync.engine.upgrade.v2_0_6;
 
+import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
 import com.liferay.sync.engine.upgrade.UpgradeProcess;
+import com.liferay.sync.engine.util.FileUtil;
+import com.liferay.sync.engine.util.OSDetector;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.util.List;
 
 /**
  * @author Dennis Ju
+ * @author Shinn Lok
  */
 public class UpgradeProcess_2_0_6 extends UpgradeProcess {
 
@@ -30,11 +40,23 @@ public class UpgradeProcess_2_0_6 extends UpgradeProcess {
 
 	@Override
 	public void upgrade() throws Exception {
+		if (OSDetector.isWindows()) {
+			return;
+		}
+
 		SyncFilePersistence syncFilePersistence =
 			SyncFileService.getSyncFilePersistence();
 
-		syncFilePersistence.updateRaw(
-			"update SyncFile set fileKey = syncFileId");
+		List<SyncFile> syncFiles = syncFilePersistence.queryForAll();
+
+		for (SyncFile syncFile : syncFiles) {
+			Path filePath = Paths.get(syncFile.getFilePathName());
+
+			if (Files.exists(filePath)) {
+				FileUtil.writeFileKey(
+					filePath, String.valueOf(syncFile.getSyncFileId()));
+			}
+		}
 	}
 
 }

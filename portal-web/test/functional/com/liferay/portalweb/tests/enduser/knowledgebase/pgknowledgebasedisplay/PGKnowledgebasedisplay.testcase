@@ -769,6 +769,55 @@
 		</execute>
 	</command>
 
+	<command name="ViewKBArticleWithStarRatings" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewViaKBDisplayPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="KBArticle#rateArticlePG">
+			<var name="articleVoteCount" value="1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="rateUp" value="true" />
+		</execute>
+
+		<execute macro="KBArticle#configureKBRatingTypePG">
+			<var name="useStarRatings" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewArticle5StarRatingPG" />
+
+		<execute macro="KBArticle#configureKBRatingTypePG">
+			<var name="useThumbsRatings" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Knowledge Base Display Page" />
+		</execute>
+
+		<execute macro="KBArticle#rateArticlePG">
+			<var name="articleVoteCount" value="1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+	</command>
+
 	<command name="ViewKBArticleWithXSSCodeInjectedTitle" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />

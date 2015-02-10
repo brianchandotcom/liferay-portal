@@ -409,7 +409,13 @@ public class FileUtil {
 				return;
 			}
 
-			xattrj.writeAttribute(filePath.toFile(), "fileKey", fileKey);
+			File file = filePath.toFile();
+
+			if (!file.canWrite()) {
+				file.setWritable(true);
+			}
+
+			xattrj.writeAttribute(file, "fileKey", fileKey);
 		}
 		else {
 			File file = filePath.toFile();

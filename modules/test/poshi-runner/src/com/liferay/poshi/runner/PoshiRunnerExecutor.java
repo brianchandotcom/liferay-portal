@@ -64,7 +64,11 @@ public class PoshiRunnerExecutor {
 
 		for (int i = 0; i < locatorCount; i++) {
 			String locator = executeElement.attributeValue("locator" + (i + 1));
-			String value = executeElement.attributeValue("value" + (i + 1));
+
+			if (locator == null) {
+				locator = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+					"locator" + (i + 1));
+			}
 
 			if (locator != null) {
 				if (locator.contains("#")) {
@@ -82,6 +86,13 @@ public class PoshiRunnerExecutor {
 
 				PoshiRunnerVariablesUtil.putIntoExecuteMap(
 					"locator" + (i + 1), locator);
+			}
+
+			String value = executeElement.attributeValue("value" + (i + 1));
+
+			if (value == null) {
+				value = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+					"value" + (i + 1));
 			}
 
 			if (value != null) {

@@ -29,35 +29,44 @@ public class SassCompilerTest extends BaseTests {
 
 	@Test
 	public void testCompile() throws Exception {
-		SassCompiler compiler = new SassCompiler();
-		assumeNotNull(compiler);
+		SassCompiler sassCompiler = new SassCompiler();
 
-		for (File testDir : new File(_BASE_RESOURCES).listFiles()) {
-			File input = new File(testDir, "input.scss");
+		assumeNotNull(sassCompiler);
+		
+		File sassSpecDir = new File(
+			getBaseDir(), "com/liferay/sass/compiler/dependencies/sass-spec");
 
-			if (input.exists()) {
-				String output = compiler.compileFile(
-					input.getCanonicalPath(), "", "");
-				assertNotNull(output);
+		for (File testDir : sassSpecDir.listFiles()) {
+			File inputFile = new File(testDir, "input.scss");
 
-				File expectedOutput = new File(testDir, "expected_output.css");
-				String expected = readFileContents(
-					expectedOutput.getCanonicalPath());
-				assertEquals(stripNewLines(expected), stripNewLines(output));
+			if (!inputFile.exists()) {
+				continue;
 			}
+
+			String actualOutput = sassCompiler.compileFile(
+				inputFile.getCanonicalPath(), "", "");
+
+			assertNotNull(actualOutput);
+
+			File expectedOutputFile = new File(
+				testDir, "expected_output.css");
+
+			String expectedOutput = readFileContents(
+				expectedOutputFile.getCanonicalPath());
+
+			assertEquals(
+				stripNewLines(expectedOutput), stripNewLines(actualOutput));
 		}
 	}
 
 	private static String getBaseDir() {
-		if (new File("bin").exists()) {
+		File binDir = new File("bin");
+
+		if (binDir.exists()) {
 			return "bin";
 		}
-		else {
-			return "test-classes/unit";
-		}
-	}
 
-	private static final String _BASE_RESOURCES =
-		getBaseDir() + "/com/liferay/sass/compiler/dependencies/sass-spec/";
+		return "test-classes/unit";
+	}
 
 }

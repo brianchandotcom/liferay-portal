@@ -27,16 +27,18 @@ import org.junit.Test;
 public class SassLibraryTest extends BaseTests {
 
 	@Test
-	public void testSassContextSharedLibraryLoading() throws Exception {
-		Sass_File_Context ctx = SassLibrary.INSTANCE.sass_make_file_context("");
-		assertNotNull(ctx);
-		assertNotNull(ctx.getPointer());
+	public void testSassFileContext() throws Exception {
+		Sass_File_Context sassFileContext =
+			SassLibrary.INSTANCE.sass_make_file_context("");
 
-		SassLibrary.INSTANCE.sass_delete_file_context(ctx);
+		assertNotNull(sassFileContext);
+		assertNotNull(sassFileContext.getPointer());
+
+		SassLibrary.INSTANCE.sass_delete_file_context(sassFileContext);
 	}
 
 	@Test
-	public void testSharedLibraryLoading() throws Exception {
+	public void testInstance() throws Exception {
 		assertNotNull(SassLibrary.INSTANCE);
 	}
 

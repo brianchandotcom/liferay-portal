@@ -73,6 +73,72 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
+### liferay-ui:logo-selector requires changes to the parameters
+- **Date:** 2013-Dec-5
+- **JIRA Ticket:** LPS-42645
+
+#### What changed?
+The Logo Selector taglib now supports uploading and image (storing it as a
+temporary file, cropping it and cancell before saving.
+The taglib now doesn't require creating a UI to include the image (this
+parameter was called editLogoURL and it has been removed). The new parameters
+supported are:
+- currentLogoURL: the URL to display the image being currently stored
+- hasUpdateLogoPermission: true if the current user can update this logo
+- maxFileSize: Limit of size to the logo to be uploaded
+- tempImageFileName: unique identifier to store the temporary image on upload
+
+
+#### Who is affected?
+Plugins or templates that were using the taglib <liferay-ui:logo-selector> will
+need to update their usage of the taglib.
+
+#### How should I update my code?
+Remove the parameter *editLogoURL* and include (if neccessary) the parameters
+*currentLogoURL*, *hasUpdateLogoPermission*, *maxFileSize*, *tempImageFileName*
+
+
+**Example**
+
+Replace:
+
+```
+<portlet:renderURL var="editUserPortraitURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
+	<portlet:param name="portrait_id" value="<%= String.valueOf(selUser.getPortraitId()) %>" />
+</portlet:renderURL>
+
+<liferay-ui:logo-selector
+	defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
+	editLogoURL="<%= editUserPortraitURL %>"
+	imageId="<%= selUser.getPortraitId() %>"
+	logoDisplaySelector=".user-logo"
+/>
+```
+
+With:
+```
+<liferay-ui:logo-selector
+	currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
+	defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
+	hasUpdateLogoPermission='<%= UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'
+	imageId="<%= selUser.getPortraitId() %>"
+	logoDisplaySelector=".user-logo"
+	maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>"
+	tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"
+/>
+```
+
+#### Why was this change made?
+This change helps keep a unified UI and consistent experience for uploading
+logos all around the portal that can be customized from a single location.
+In addition, it adds new features such as cropping and support for cancelling.
+
+
+---------------------------------------
+
 ### Merged Configured Email Signature Field into the Body of Email Messages from Message Boards and Wiki
 - **Date:** 2014-Feb-28
 - **JIRA Ticket:** LPS-44599

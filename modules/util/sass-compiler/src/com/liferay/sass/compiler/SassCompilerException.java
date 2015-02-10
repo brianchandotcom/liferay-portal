@@ -17,16 +17,16 @@ package com.liferay.sass.compiler;
 /**
  * @author Gregory Amerson
  */
-public class SassCompilationException extends Exception {
+public class SassCompilerException extends Exception {
 
-	public SassCompilationException() {
+	public SassCompilerException() {
 	}
 
-	public SassCompilationException(String message) {
+	public SassCompilerException(String message) {
 		super(message);
 	}
 
-	public SassCompilationException(Throwable throwable) {
+	public SassCompilerException(Throwable throwable) {
 		super(throwable);
 	}
 

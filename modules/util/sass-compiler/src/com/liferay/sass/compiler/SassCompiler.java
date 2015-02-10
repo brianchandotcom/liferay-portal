@@ -61,7 +61,7 @@ public class SassCompiler {
 
 	public String compileFile(
 			String inputFile, String includePath, String imgPath)
-		throws SassCompilationException {
+		throws SassCompilerException {
 
 		// NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
 
@@ -95,14 +95,14 @@ public class SassCompiler {
 			if (errorStatus != 0) {
 				String errorMsg = _libsass.sass_context_get_error_message(
 					context);
-				throw new SassCompilationException(errorMsg);
+				throw new SassCompilerException(errorMsg);
 			}
 
 			final String outputString = _libsass.sass_context_get_output_string(
 				context);
 
 			if ((outputString == null) || (outputString == null)) {
-				throw new SassCompilationException("libsass returned null");
+				throw new SassCompilerException("libsass returned null");
 			}
 
 			return outputString;
@@ -114,7 +114,7 @@ public class SassCompiler {
 				}
 			}
 			catch (Throwable t) {
-				throw new SassCompilationException(t);
+				throw new SassCompilerException(t);
 			}
 		}
 	}

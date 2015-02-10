@@ -26,8 +26,6 @@
 	<property name="plink.executable" location="${project.dir}/tools/putty/plink.exe" />
 	<property name="pscp.executable" location="${project.dir}/tools/putty/pscp.exe" />
 
-	<propertycopy from="testray.product.${testray.product.type}.version" name="testray.product.version" />
-
 	<if>
 		<os family="unix" />
 		<then>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.tools.jsc;
+package com.liferay.sass.compiler;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

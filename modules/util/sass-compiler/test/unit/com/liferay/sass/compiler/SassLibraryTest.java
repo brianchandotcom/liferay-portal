@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.tools.jsc;
+package com.liferay.sass.compiler;
 
 import static org.junit.Assert.assertNotNull;
 
-import com.liferay.tools.jsc.libsass.SassLibrary;
-import com.liferay.tools.jsc.libsass.SassLibrary.Sass_File_Context;
+import com.liferay.sass.compiler.libsass.SassLibrary;
+import com.liferay.sass.compiler.libsass.SassLibrary.Sass_File_Context;
 
 import org.junit.Test;
 

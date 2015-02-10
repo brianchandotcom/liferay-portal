@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.tools.jsc;
+package com.liferay.sass.compiler;
 
 /**
  * @author Gregory Amerson

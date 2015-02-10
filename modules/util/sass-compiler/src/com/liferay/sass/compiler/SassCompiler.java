@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.tools.jsc;
+package com.liferay.sass.compiler;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.tools.jsc.libsass.SassLibrary;
-import com.liferay.tools.jsc.libsass.SassLibrary.Sass_Context;
-import com.liferay.tools.jsc.libsass.SassLibrary.Sass_File_Context;
-import com.liferay.tools.jsc.libsass.SassLibrary.Sass_Options;
-import com.liferay.tools.jsc.libsass.SassLibrary.Sass_Output_Style;
+import com.liferay.sass.compiler.libsass.SassLibrary;
+import com.liferay.sass.compiler.libsass.SassLibrary.Sass_Context;
+import com.liferay.sass.compiler.libsass.SassLibrary.Sass_File_Context;
+import com.liferay.sass.compiler.libsass.SassLibrary.Sass_Options;
+import com.liferay.sass.compiler.libsass.SassLibrary.Sass_Output_Style;
 
 import java.io.File;
 import java.io.FileOutputStream;

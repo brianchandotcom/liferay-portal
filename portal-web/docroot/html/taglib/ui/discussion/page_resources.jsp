@@ -67,7 +67,7 @@ for (;rootIndexPage < range[1] - 1; rootIndexPage++) {
 }
 %>
 
-<aui:script use="aui-base">
+<aui:script sandbox="<%= true %>">
 	var rootIndexPage = $('#<%= namespace %>rootIndexPage');
 	var index = $('#<%= namespace %>index');
 

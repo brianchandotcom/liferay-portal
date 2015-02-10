@@ -517,7 +517,7 @@ int messagesCount = messages.size();
 			);
 		</aui:script>
 
-		<aui:script use="aui-base,aui-io-request,aui-parse-content">
+		<aui:script sandbox="<%= true %>">
 			var moreCommentsLink = $('#<%= namespace %>moreComments');
 
 			if (moreCommentsLink) {
@@ -546,9 +546,7 @@ int messagesCount = messages.size();
 									<portlet:namespace />showStatusMessage('danger', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
 								},
 								success: function(data) {
-									var moreCommentsPage = A.one('#<%= namespace %>moreCommentsPage');
-
-									moreCommentsPage.plug(A.Plugin.ParseContent);
+									var moreCommentsPage = $('#<%= namespace %>moreCommentsPage');
 
 									moreCommentsPage.append(data);
 								}

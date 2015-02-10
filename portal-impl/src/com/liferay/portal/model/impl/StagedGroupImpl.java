@@ -12,38 +12,28 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.lar;
+package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.lar.StagedModelType;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Theme;
-import com.liferay.portal.model.impl.ThemeImpl;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.StagedGroup;
 
 import java.io.Serializable;
 
 import java.util.Date;
 
 /**
- * @author Mate Thurzo
+ * @author Daniel Kocsis
  */
-public class StagedThemeImpl extends ThemeImpl implements StagedTheme {
+public class StagedGroupImpl extends GroupImpl implements StagedGroup {
 
-	public StagedThemeImpl(Theme theme) {
-		super(theme.getThemeId());
+	public StagedGroupImpl(Group group) {
+		_group = group;
 	}
 
 	@Override
 	public Object clone() {
-		ThemeImpl themeImpl = new ThemeImpl(getThemeId());
-
-		return new StagedThemeImpl(themeImpl);
-	}
-
-	@Override
-	public long getCompanyId() {
-		return CompanyThreadLocal.getCompanyId();
+		return new StagedGroupImpl(_group);
 	}
 
 	@Override
@@ -52,18 +42,13 @@ public class StagedThemeImpl extends ThemeImpl implements StagedTheme {
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return null;
-	}
-
-	@Override
 	public Class<?> getModelClass() {
-		return StagedTheme.class;
+		return StagedGroup.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return StagedTheme.class.getName();
+		return StagedGroup.class.getName();
 	}
 
 	@Override
@@ -72,18 +57,8 @@ public class StagedThemeImpl extends ThemeImpl implements StagedTheme {
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return getThemeId();
-	}
-
-	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(StagedTheme.class);
-	}
-
-	@Override
-	public String getUuid() {
-		return StringPool.BLANK;
+		return new StagedModelType(StagedGroup.class);
 	}
 
 	@Override
@@ -110,5 +85,7 @@ public class StagedThemeImpl extends ThemeImpl implements StagedTheme {
 	public void setUuid(String uuid) {
 		throw new UnsupportedOperationException();
 	}
+
+	private final Group _group;
 
 }

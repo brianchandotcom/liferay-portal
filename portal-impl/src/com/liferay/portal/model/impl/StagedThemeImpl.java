@@ -12,28 +12,38 @@
  * details.
  */
 
-package com.liferay.portlet.sitesadmin.lar;
+package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.lar.StagedModelType;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.impl.GroupImpl;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.StagedTheme;
+import com.liferay.portal.model.Theme;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
 import java.util.Date;
 
 /**
- * @author Daniel Kocsis
+ * @author Mate Thurzo
  */
-public class StagedGroupImpl extends GroupImpl implements StagedGroup {
+public class StagedThemeImpl extends ThemeImpl implements StagedTheme {
 
-	public StagedGroupImpl(Group group) {
-		_group = group;
+	public StagedThemeImpl(Theme theme) {
+		super(theme.getThemeId());
 	}
 
 	@Override
 	public Object clone() {
-		return new StagedGroupImpl(_group);
+		ThemeImpl themeImpl = new ThemeImpl(getThemeId());
+
+		return new StagedThemeImpl(themeImpl);
+	}
+
+	@Override
+	public long getCompanyId() {
+		return CompanyThreadLocal.getCompanyId();
 	}
 
 	@Override
@@ -42,13 +52,18 @@ public class StagedGroupImpl extends GroupImpl implements StagedGroup {
 	}
 
 	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return null;
+	}
+
+	@Override
 	public Class<?> getModelClass() {
-		return StagedGroup.class;
+		return StagedTheme.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return StagedGroup.class.getName();
+		return StagedTheme.class.getName();
 	}
 
 	@Override
@@ -57,8 +72,18 @@ public class StagedGroupImpl extends GroupImpl implements StagedGroup {
 	}
 
 	@Override
+	public Serializable getPrimaryKeyObj() {
+		return getThemeId();
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
-		return new StagedModelType(StagedGroup.class);
+		return new StagedModelType(StagedTheme.class);
+	}
+
+	@Override
+	public String getUuid() {
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -85,7 +110,5 @@ public class StagedGroupImpl extends GroupImpl implements StagedGroup {
 	public void setUuid(String uuid) {
 		throw new UnsupportedOperationException();
 	}
-
-	private final Group _group;
 
 }

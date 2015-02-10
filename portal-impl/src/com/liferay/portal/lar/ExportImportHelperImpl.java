@@ -1415,6 +1415,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class);
 
+		String layoutsImportMode = MapUtil.getString(
+			portletDataContext.getParameterMap(),
+			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
+			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID);
+
 		while (matcher.find()) {
 			long oldPlid = GetterUtil.getLong(matcher.group(4));
 
@@ -1446,6 +1451,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					StringPool.AT + oldPlid, String.valueOf(oldLayoutId)
 				},
 				new String[] {StringPool.BLANK, String.valueOf(newLayoutId)});
+
+			if ((layout != null) && layout.isPublicLayout() &&
+				layoutsImportMode.equals(
+					PortletDataHandlerKeys.
+						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+				newLinkToLayout = StringUtil.replace(
+					newLinkToLayout, "private-group", "public");
+			}
 
 			if ((oldGroupId != 0) && (oldGroupId != newGroupId)) {
 				newLinkToLayout = StringUtil.replaceLast(

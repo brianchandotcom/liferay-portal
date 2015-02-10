@@ -11,6 +11,7 @@
 	}
 
 	.drop-here-info {
+		font-size: 25px;
 		height: 100%;
 		min-height: 115px;
 		position: absolute;
@@ -41,6 +42,7 @@
 			}
 
 			span:nth-of-type(1) {
+				font-size: 40px;
 				height: 60px;
 				left: 50px;
 				line-height: 60px;
@@ -50,6 +52,7 @@
 			}
 
 			span:nth-of-type(2) {
+				font-size: 50px;
 				height: 80px;
 				left: 40px;
 				line-height: 80px;
@@ -72,6 +75,7 @@
 
 		.drop-text {
 			display: block;
+			font-size: 20px;
 			margin-left: 0;
 			margin-top: 20px;
 		}
@@ -114,8 +118,13 @@
 		}
 
 		p {
+			font-size: 18px;
 			margin: 0;
 			text-align: left;
+
+			&.size {
+				font-size: 14px;
+			}
 		}
 
 		.progressbar {
@@ -210,6 +219,10 @@
 		width: 100%;
 		z-index: 1;
 
+		.drag-drop-label, .browse-image {
+			font-size: 16px;
+		}
+
 		.drag-drop-label {
 			line-height: 35px;
 		}
@@ -249,34 +262,29 @@
 	}
 
 	.drop-here-info {
-		font-size: 25px;
 		opacity: 0;
 
 		.drop-icons {
 			span:nth-of-type(1) {
 				background: #E8E6E8;
 				color: #A5A6AC;
-				font-size: 40px;
 				opacity: 0;
 			}
 
 			span:nth-of-type(2) {
 				background: #00C2FF;
 				color: #FFF;
-				font-size: 50px;
 			}
 
 			span:nth-of-type(3) {
 				background: #E8E6E8;
 				color: #A5A6AC;
-				font-size: 45px;
 				opacity: 0;
 			}
 		}
 
 		.drop-text {
 			color: #FFF;
-			font-size: 20px;
 		}
 	}
 
@@ -287,14 +295,6 @@
 	}
 
 	.progress-wrapper {
-		p {
-			font-size: 18px;
-
-			&.size {
-				font-size: 14px;
-			}
-		}
-
 		.progressbar {
 			background: #B0B4BB;
 
@@ -349,9 +349,5 @@
 		.glyphicon-ok {
 			opacity: 0;
 		}
-	}
-
-	.browse-image-controls .drag-drop-label, .browse-image-controls .browse-image {
-		font-size: 16px;
 	}
 }

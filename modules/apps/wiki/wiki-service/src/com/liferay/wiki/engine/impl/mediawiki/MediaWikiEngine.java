@@ -155,9 +155,6 @@ public class MediaWikiEngine implements WikiEngine {
 	protected ParserOutput getParserOutput(WikiPage page)
 		throws PageContentException {
 
-		ParserInput parserInput = getParserInput(
-			page.getNodeId(), page.getTitle());
-
 		ParserOutput parserOutput = null;
 
 		Thread currentThread = Thread.currentThread();
@@ -167,6 +164,9 @@ public class MediaWikiEngine implements WikiEngine {
 		currentThread.setContextClassLoader(getClassLoader());
 
 		try {
+			ParserInput parserInput = getParserInput(
+				page.getNodeId(), page.getTitle());
+
 			parserOutput = ParserUtil.parseMetadata(
 				parserInput, page.getContent());
 		}

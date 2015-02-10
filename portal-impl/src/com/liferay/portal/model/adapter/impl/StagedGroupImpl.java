@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.sitesadmin.lar;
+package com.liferay.portal.model.adapter.impl;
 
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.adapter.StagedGroup;
 import com.liferay.portal.model.impl.GroupImpl;
 
 import java.io.Serializable;

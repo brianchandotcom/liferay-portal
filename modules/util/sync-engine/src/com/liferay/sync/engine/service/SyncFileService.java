@@ -118,7 +118,8 @@ public class SyncFileService {
 
 		_syncFilePersistence.create(syncFile);
 
-		updateFileKeySyncFile(syncFile);
+		FileUtil.writeFileKey(
+			Paths.get(filePathName), String.valueOf(syncFile.getSyncFileId()));
 
 		IODeltaUtil.checksums(syncFile);
 
@@ -478,30 +479,14 @@ public class SyncFileService {
 		}
 	}
 
-	public static SyncFile updateFileKeySyncFile(SyncFile syncFile) {
-		Path filePath = Paths.get(syncFile.getFilePathName());
-
-		return updateFileKeySyncFile(syncFile, filePath);
-	}
-
-	public static SyncFile updateFileKeySyncFile(
-		SyncFile syncFile, Path filePath) {
-
-		FileUtil.writeFileKey(
-			filePath, String.valueOf(syncFile.getSyncFileId()));
-
-		syncFile.setFileKey(String.valueOf(syncFile.getSyncFileId()));
-
-		return update(syncFile);
-	}
-
 	public static SyncFile updateFileSyncFile(
 			Path filePath, long syncAccountId, SyncFile syncFile)
 		throws Exception {
 
 		// Local sync file
 
-		SyncFileService.updateFileKeySyncFile(syncFile, filePath);
+		FileUtil.writeFileKey(
+			filePath, String.valueOf(syncFile.getSyncFileId()));
 
 		Path deltaFilePath = null;
 

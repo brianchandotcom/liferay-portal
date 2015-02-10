@@ -84,9 +84,9 @@ public class FileUtil {
 		}
 	}
 
-	public static String getFileKey(Path filePath) {
+	public static long getFileKey(Path filePath) {
 		if (!Files.exists(filePath)) {
-			return "";
+			return -1;
 		}
 
 		try {
@@ -94,17 +94,17 @@ public class FileUtil {
 				Xattrj xattrj = getXattrj();
 
 				if (xattrj == null) {
-					return "";
+					return -1;
 				}
 
 				String fileKey = xattrj.readAttribute(
 					filePath.toFile(), "fileKey");
 
 				if (fileKey == null) {
-					return "";
+					return -1;
 				}
 
-				return fileKey;
+				return Long.parseLong(fileKey);
 			}
 			else {
 				UserDefinedFileAttributeView userDefinedFileAttributeView =
@@ -114,7 +114,7 @@ public class FileUtil {
 				List<String> list = userDefinedFileAttributeView.list();
 
 				if (!list.contains("fileKey")) {
-					return "";
+					return -1;
 				}
 
 				ByteBuffer byteBuffer = ByteBuffer.allocate(
@@ -125,20 +125,14 @@ public class FileUtil {
 				CharBuffer charBuffer = _CHARSET.decode(
 					(ByteBuffer)byteBuffer.flip());
 
-				return charBuffer.toString();
+				return Long.parseLong(charBuffer.toString());
 			}
 		}
 		catch (Exception e) {
 			_logger.error(e.getMessage(), e);
 
-			return "";
+			return -1;
 		}
-	}
-
-	public static String getFileKey(String filePathName) {
-		Path filePath = Paths.get(filePathName);
-
-		return getFileKey(filePath);
 	}
 
 	public static Path getFilePath(String first, String... more) {
@@ -310,12 +304,10 @@ public class FileUtil {
 				modifiedTime = modifiedTime / 1000 * 1000;
 			}
 
-			if (fileTime.toMillis() == modifiedTime) {
-				String fileKey = FileUtil.getFileKey(filePath);
+			if ((fileTime.toMillis() == modifiedTime) &&
+				(getFileKey(filePath) == syncFile.getSyncFileId())) {
 
-				if (fileKey.equals(syncFile.getFileKey())) {
-					return false;
-				}
+				return false;
 			}
 		}
 		catch (IOException ioe) {

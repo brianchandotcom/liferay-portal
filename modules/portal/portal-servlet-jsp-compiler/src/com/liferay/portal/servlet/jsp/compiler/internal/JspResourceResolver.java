@@ -47,9 +47,7 @@ import org.phidias.compile.ResourceResolver;
  */
 public class JspResourceResolver implements ResourceResolver {
 
-	public JspResourceResolver(
-		Bundle bundle, Bundle jspBundle, Logger logger) {
-
+	public JspResourceResolver(Bundle bundle, Bundle jspBundle, Logger logger) {
 		_bundle = bundle;
 		_jspBundle = jspBundle;
 		_logger = logger;
@@ -97,8 +95,7 @@ public class JspResourceResolver implements ResourceResolver {
 		Bundle bundle = bundleWiring.getBundle();
 
 		if (bundle.equals(_bundle) || bundle.equals(_jspBundle)) {
-			resources = bundleWiring.listResources(
-				path, filePattern, options);
+			resources = bundleWiring.listResources(path, filePattern, options);
 		}
 		else if (exportsPackage(bundleWiring, path.replace('/', '.'))) {
 			if (bundle.getBundleId() == 0) {

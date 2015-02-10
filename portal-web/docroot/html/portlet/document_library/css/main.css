@@ -326,8 +326,12 @@
 	}
 
 	.app-view-entry-taglib.entry-display-style.display-icon {
-		.entry-thumbnail .taglib-workflow-status {
-			left: 6px;
+		.entry-thumbnail {
+			min-width: 151px;
+
+			.taglib-workflow-status {
+				left: 6px;
+			}
 		}
 
 		.entry-title {

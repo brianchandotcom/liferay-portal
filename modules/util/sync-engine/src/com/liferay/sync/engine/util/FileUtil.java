@@ -14,6 +14,8 @@
 
 package com.liferay.sync.engine.util;
 
+import ch.securityvision.xattrj.Xattrj;
+
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
 
@@ -30,7 +32,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 
@@ -83,13 +84,29 @@ public class FileUtil {
 		}
 	}
 
-	public static String getFileKey(Path filePath) {
+	public static long getFileKey(Path filePath) {
 		if (!Files.exists(filePath)) {
-			return "";
+			return -1;
 		}
 
 		try {
-			if (OSDetector.isWindows()) {
+			if (OSDetector.isApple()) {
+				Xattrj xattrj = getXattrj();
+
+				if (xattrj == null) {
+					return -1;
+				}
+
+				String fileKey = xattrj.readAttribute(
+					filePath.toFile(), "fileKey");
+
+				if (fileKey == null) {
+					return -1;
+				}
+
+				return Long.parseLong(fileKey);
+			}
+			else {
 				UserDefinedFileAttributeView userDefinedFileAttributeView =
 					Files.getFileAttributeView(
 						filePath, UserDefinedFileAttributeView.class);
@@ -97,7 +114,7 @@ public class FileUtil {
 				List<String> list = userDefinedFileAttributeView.list();
 
 				if (!list.contains("fileKey")) {
-					return "";
+					return -1;
 				}
 
 				ByteBuffer byteBuffer = ByteBuffer.allocate(
@@ -108,28 +125,14 @@ public class FileUtil {
 				CharBuffer charBuffer = _CHARSET.decode(
 					(ByteBuffer)byteBuffer.flip());
 
-				return charBuffer.toString();
-			}
-			else {
-				BasicFileAttributes basicFileAttributes = Files.readAttributes(
-					filePath, BasicFileAttributes.class);
-
-				Object fileKey = basicFileAttributes.fileKey();
-
-				return fileKey.toString();
+				return Long.parseLong(charBuffer.toString());
 			}
 		}
 		catch (Exception e) {
 			_logger.error(e.getMessage(), e);
 
-			return "";
+			return -1;
 		}
-	}
-
-	public static String getFileKey(String filePathName) {
-		Path filePath = Paths.get(filePathName);
-
-		return getFileKey(filePath);
 	}
 
 	public static Path getFilePath(String first, String... more) {
@@ -301,12 +304,10 @@ public class FileUtil {
 				modifiedTime = modifiedTime / 1000 * 1000;
 			}
 
-			if (fileTime.toMillis() == modifiedTime) {
-				String fileKey = FileUtil.getFileKey(filePath);
+			if ((fileTime.toMillis() == modifiedTime) &&
+				(getFileKey(filePath) == syncFile.getSyncFileId())) {
 
-				if (fileKey.equals(syncFile.getFileKey())) {
-					return false;
-				}
+				return false;
 			}
 		}
 		catch (IOException ioe) {
@@ -401,26 +402,39 @@ public class FileUtil {
 	}
 
 	public static void writeFileKey(Path filePath, String fileKey) {
-		if (!OSDetector.isWindows()) {
-			return;
+		if (OSDetector.isApple()) {
+			Xattrj xattrj = getXattrj();
+
+			if (xattrj == null) {
+				return;
+			}
+
+			File file = filePath.toFile();
+
+			if (!file.canWrite()) {
+				file.setWritable(true);
+			}
+
+			xattrj.writeAttribute(file, "fileKey", fileKey);
 		}
+		else {
+			File file = filePath.toFile();
 
-		File file = filePath.toFile();
+			if (!file.canWrite()) {
+				file.setWritable(true);
+			}
 
-		if (!file.canWrite()) {
-			file.setWritable(true);
-		}
+			UserDefinedFileAttributeView userDefinedFileAttributeView =
+				Files.getFileAttributeView(
+					filePath, UserDefinedFileAttributeView.class);
 
-		UserDefinedFileAttributeView userDefinedFileAttributeView =
-			Files.getFileAttributeView(
-				filePath, UserDefinedFileAttributeView.class);
-
-		try {
-			userDefinedFileAttributeView.write(
-				"fileKey", _CHARSET.encode(CharBuffer.wrap(fileKey)));
-		}
-		catch (Exception e) {
-			_logger.error(e.getMessage(), e);
+			try {
+				userDefinedFileAttributeView.write(
+					"fileKey", _CHARSET.encode(CharBuffer.wrap(fileKey)));
+			}
+			catch (Exception e) {
+				_logger.error(e.getMessage(), e);
+			}
 		}
 	}
 
@@ -448,6 +462,23 @@ public class FileUtil {
 		}
 	}
 
+	protected static Xattrj getXattrj() {
+		if (_xattrj != null) {
+			return _xattrj;
+		}
+
+		try {
+			_xattrj = new Xattrj();
+
+			return _xattrj;
+		}
+		catch (IOException ioe) {
+			_logger.error(ioe.getMessage(), ioe);
+
+			return null;
+		}
+	}
+
 	protected static boolean isOfficeTempFile(String fileName, Path filePath) {
 		if (Files.isDirectory(filePath)) {
 			return false;
@@ -469,5 +500,6 @@ public class FileUtil {
 
 	private static final Set<String> _syncFileIgnoreNames = new HashSet<>(
 		Arrays.asList(PropsValues.SYNC_FILE_IGNORE_NAMES));
+	private static Xattrj _xattrj;
 
 }

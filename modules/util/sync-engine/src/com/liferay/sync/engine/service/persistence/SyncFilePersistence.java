@@ -80,23 +80,6 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		return syncFiles.get(0);
 	}
 
-	public SyncFile fetchByFK_S(String fileKey, long syncAccountId)
-		throws SQLException {
-
-		Map<String, Object> fieldValues = new HashMap<>();
-
-		fieldValues.put("fileKey", fileKey);
-		fieldValues.put("syncAccountId", syncAccountId);
-
-		List<SyncFile> syncFiles = queryForFieldValues(fieldValues);
-
-		if ((syncFiles == null) || syncFiles.isEmpty()) {
-			return null;
-		}
-
-		return syncFiles.get(0);
-	}
-
 	public SyncFile fetchByR_S_T(
 			long repositoryId, long syncAccountId, long typePK)
 		throws SQLException {

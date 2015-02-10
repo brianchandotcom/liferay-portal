@@ -23,8 +23,13 @@ import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -33,18 +38,15 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.velocity.VelocityUtil;
 import com.liferay.util.SimpleCounter;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -360,7 +362,7 @@ public abstract class BaseDB implements DB {
 
 		if (evaluate) {
 			try {
-				template = evaluateVM(template);
+				template = evaluateVM(template.hashCode() + "", template);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -399,7 +401,7 @@ public abstract class BaseDB implements DB {
 
 					if (includeFileName.endsWith(".vm")) {
 						try {
-							include = evaluateVM(include);
+							include = evaluateVM(includeFileName, include);
 						}
 						catch (Exception e) {
 							_log.error(e, e);
@@ -618,7 +620,7 @@ public abstract class BaseDB implements DB {
 
 						if (includeFileName.endsWith(".vm")) {
 							try {
-								include = evaluateVM(include);
+								include = evaluateVM(includeFileName, include);
 							}
 							catch (Exception e) {
 								_log.error(e, e);
@@ -744,30 +746,38 @@ public abstract class BaseDB implements DB {
 		return validIndexNames;
 	}
 
-	protected String evaluateVM(String template) throws Exception {
-		Map<String, Object> variables = new HashMap<>();
-
-		variables.put("counter", new SimpleCounter());
-		variables.put("portalUUIDUtil", PortalUUIDUtil.class);
+	protected String evaluateVM(String templateID, String templateContent) throws Exception {
 
 		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
 
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+		
 		try {
 			ClassLoaderUtil.setContextClassLoader(
 				ClassLoaderUtil.getPortalClassLoader());
+		
+			StringTemplateResource stringTemplateResource = 
+				new StringTemplateResource(templateID, templateContent);
+			
+			Template template = TemplateManagerUtil.getTemplate(
+				TemplateConstants.LANG_TYPE_VM, stringTemplateResource, false);
+			
+			template.put("counter", new SimpleCounter());
+			
+			template.put("portalUUIDUtil", PortalUUIDUtil.class);
 
-			template = VelocityUtil.evaluate(template, variables);
+			template.processTemplate(unsyncStringWriter);
+			
 		}
 		finally {
 			ClassLoaderUtil.setContextClassLoader(classLoader);
 		}
 
-		// Trim insert statements because it breaks MySQL Query Browser
-
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(template))) {
+			new UnsyncBufferedReader(new UnsyncStringReader(
+				unsyncStringWriter.toString()))) {
 
 			String line = null;
 
@@ -779,10 +789,11 @@ public abstract class BaseDB implements DB {
 			}
 		}
 
-		template = sb.toString();
-		template = StringUtil.replace(template, "\n\n\n", "\n\n");
+		templateContent = sb.toString();
+		
+		templateContent = StringUtil.replace(templateContent, "\n\n\n", "\n\n");
 
-		return template;
+		return templateContent;
 	}
 
 	protected String getCreateTablesContent(String sqlDir, String suffix)

@@ -14,31 +14,15 @@
 
 package com.liferay.portal.kernel.test.rule;
 
-import com.liferay.portal.kernel.test.rule.executor.DeleteAfterTestRunExecutor;
-import com.liferay.portal.kernel.test.rule.executor.DeleteAfterTestRunExecutorImpl;
-
-import org.junit.runner.Description;
+import com.liferay.portal.kernel.test.rule.callback.DeleteAfterTestRunTestCallback;
 
 /**
  * @author Cristina González
  */
 public class DeleteAfterTestRunTestRule extends BaseTestRule<Object, Object> {
 
-	@Override
-	protected void afterMethod(Description description, Object object) {
-		Class<?> testClass = description.getTestClass();
-
-		_deleteAfterTestRunExecutor.deleteFieldsAfterTest(_instance, testClass);
+	public DeleteAfterTestRunTestRule() {
+		super(DeleteAfterTestRunTestCallback.INSTANCE);
 	}
-
-	@Override
-	protected void setInstance(Object instance) {
-		_instance = instance;
-	}
-
-	private static final DeleteAfterTestRunExecutor
-		_deleteAfterTestRunExecutor = new DeleteAfterTestRunExecutorImpl();
-
-	private Object _instance;
 
 }

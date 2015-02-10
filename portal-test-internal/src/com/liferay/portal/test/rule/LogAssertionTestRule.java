@@ -16,10 +16,7 @@ package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.rule.executor.LogAssertionExecutor;
-import com.liferay.portal.test.rule.executor.LogAssertionExecutorImpl;
-
-import org.junit.runner.Description;
+import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
 
 /**
  * @author Shuyang Zhou
@@ -30,40 +27,8 @@ public class LogAssertionTestRule
 	public static final LogAssertionTestRule INSTANCE =
 		new LogAssertionTestRule();
 
-	@Override
-	protected void afterClass(
-		Description description, CaptureAppender captureAppender) {
-
-		ExpectedLogs expectedLogs = description.getAnnotation(
-			ExpectedLogs.class);
-
-		_logAssertionExecutor.endAssert(expectedLogs, captureAppender);
-	}
-
-	@Override
-	protected void afterMethod(
-		Description description, CaptureAppender captureAppender) {
-
-		afterClass(description, captureAppender);
-	}
-
-	@Override
-	protected CaptureAppender beforeClass(Description description) {
-		ExpectedLogs expectedLogs = description.getAnnotation(
-			ExpectedLogs.class);
-
-		return _logAssertionExecutor.startAssert(expectedLogs);
-	}
-
-	@Override
-	protected CaptureAppender beforeMethod(Description description) {
-		return beforeClass(description);
-	}
-
 	private LogAssertionTestRule() {
+		super(LogAssertionTestCallback.INSTANCE);
 	}
-
-	private static final LogAssertionExecutor _logAssertionExecutor =
-		new LogAssertionExecutorImpl();
 
 }

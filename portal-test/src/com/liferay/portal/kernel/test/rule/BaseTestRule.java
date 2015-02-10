@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.test.rule;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
 
 import org.junit.internal.runners.statements.ExpectException;
 import org.junit.internal.runners.statements.FailOnTimeout;
@@ -30,6 +31,10 @@ import org.junit.runners.model.Statement;
  */
 public class BaseTestRule<C, M> implements TestRule {
 
+	public BaseTestRule(BaseTestCallback<C, M> baseTestCallback) {
+		_baseTestCallback = baseTestCallback;
+	}
+
 	@Override
 	public final Statement apply(
 		Statement statement, final Description description) {
@@ -42,14 +47,15 @@ public class BaseTestRule<C, M> implements TestRule {
 
 				C c = null;
 				M m = null;
+				Object target = null;
 
 				if (methodName == null) {
-					c = beforeClass(description);
+					c = _baseTestCallback.doBeforeClass(description);
 				}
 				else {
-					setInstance(inspectTarget(statement));
+					target = inspectTarget(statement);
 
-					m = beforeMethod(description);
+					m = _baseTestCallback.doBeforeMethod(description, target);
 				}
 
 				try {
@@ -57,10 +63,10 @@ public class BaseTestRule<C, M> implements TestRule {
 				}
 				finally {
 					if (methodName == null) {
-						afterClass(description, c);
+						_baseTestCallback.doAfterClass(description, c);
 					}
 					else {
-						afterMethod(description, m);
+						_baseTestCallback.doAfterMethod(description, m, target);
 					}
 				}
 			}
@@ -80,20 +86,6 @@ public class BaseTestRule<C, M> implements TestRule {
 
 		protected final Statement statement;
 
-	}
-
-	protected void afterClass(Description description, C c) throws Throwable {
-	}
-
-	protected void afterMethod(Description description, M m) throws Throwable {
-	}
-
-	protected C beforeClass(Description description) throws Throwable {
-		return null;
-	}
-
-	protected M beforeMethod(Description description) throws Throwable {
-		return null;
 	}
 
 	protected Object inspectTarget(Statement statement) {
@@ -122,7 +114,6 @@ public class BaseTestRule<C, M> implements TestRule {
 		throw new IllegalStateException("Unknow statement " + statement);
 	}
 
-	protected void setInstance(Object instance) {
-	}
+	private final BaseTestCallback<C, M> _baseTestCallback;
 
 }

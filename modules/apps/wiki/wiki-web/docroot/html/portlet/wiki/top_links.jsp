@@ -55,9 +55,7 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 		<aui:nav cssClass="nav-tabs">
 
 			<%
-			for (int i = 0; i < nodes.size(); i++) {
-				WikiNode curNode = nodes.get(i);
-
+			for (WikiNode curNode: nodes) {
 				String cssClass = StringPool.BLANK;
 
 				if (curNode.getNodeId() == node.getNodeId()) {

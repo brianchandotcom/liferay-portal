@@ -44,18 +44,19 @@ public class SassCompiler {
 	public SassCompiler() {
 	}
 
-	public SassCompiler(String[] args) throws Exception {
-		final SassCompiler compiler = new SassCompiler();
+	public SassCompiler(String[] fileNames) throws Exception {
+		final SassCompiler sassCompiler = new SassCompiler();
 
-		for (String arg : args) {
-			final File file = new File(arg);
+		for (String fileName : fileNames) {
+			File file = new File(fileName);
 
-			if (isValidFile(file)) {
-				final String output = compiler.compileFile(arg, "", "");
-
-				final File outputFile = getOutputFile(file);
-				write(outputFile, output);
+			if (!isValidFile(file)) {
+				continue;
 			}
+
+			write(
+				getOutputFile(file),
+				sassCompiler.compileFile(fileName, "", ""));
 		}
 	}
 
@@ -65,40 +66,41 @@ public class SassCompiler {
 
 		// NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
 
-		final byte sourceComments = (byte) 0;
+		byte sourceComments = (byte)0;
 
-		final String includePaths =
+		String includePaths =
 			includePath + File.pathSeparator + new File(inputFile).getParent();
 
 		Sass_File_Context sassFileContext = null;
 
 		try {
-			final Sass_Options opt = _libsass.sass_make_options();
-			_libsass.sass_option_set_input_path(opt, inputFile);
-			_libsass.sass_option_set_output_path(opt, "");
-			_libsass.sass_option_set_image_path(opt, imgPath);
-			_libsass.sass_option_set_output_style(
+			final Sass_Options opt = _sassLibrary.sass_make_options();
+
+			_sassLibrary.sass_option_set_input_path(opt, inputFile);
+			_sassLibrary.sass_option_set_output_path(opt, "");
+			_sassLibrary.sass_option_set_image_path(opt, imgPath);
+			_sassLibrary.sass_option_set_output_style(
 				opt, Sass_Output_Style.SASS_STYLE_COMPACT);
-			_libsass.sass_option_set_source_comments(opt, sourceComments);
-			_libsass.sass_option_set_include_path(opt, includePaths);
+			_sassLibrary.sass_option_set_source_comments(opt, sourceComments);
+			_sassLibrary.sass_option_set_include_path(opt, includePaths);
 
-			sassFileContext = _libsass.sass_make_file_context(inputFile);
-			_libsass.sass_file_context_set_options(sassFileContext, opt);
+			sassFileContext = _sassLibrary.sass_make_file_context(inputFile);
+			_sassLibrary.sass_file_context_set_options(sassFileContext, opt);
 
-			_libsass.sass_compile_file_context(sassFileContext);
+			_sassLibrary.sass_compile_file_context(sassFileContext);
 
-			final Sass_Context context = _libsass.sass_file_context_get_context(
+			final Sass_Context context = _sassLibrary.sass_file_context_get_context(
 				sassFileContext);
-			final int errorStatus = _libsass.sass_context_get_error_status(
+			final int errorStatus = _sassLibrary.sass_context_get_error_status(
 				context);
 
 			if (errorStatus != 0) {
-				String errorMsg = _libsass.sass_context_get_error_message(
+				String errorMsg = _sassLibrary.sass_context_get_error_message(
 					context);
 				throw new SassCompilerException(errorMsg);
 			}
 
-			final String outputString = _libsass.sass_context_get_output_string(
+			final String outputString = _sassLibrary.sass_context_get_output_string(
 				context);
 
 			if ((outputString == null) || (outputString == null)) {
@@ -110,7 +112,7 @@ public class SassCompiler {
 		finally {
 			try {
 				if (sassFileContext != null) {
-					_libsass.sass_delete_file_context(sassFileContext);
+					_sassLibrary.sass_delete_file_context(sassFileContext);
 				}
 			}
 			catch (Throwable t) {
@@ -128,18 +130,27 @@ public class SassCompiler {
 	}
 
 	private boolean isValidFile(File file) {
-		return file != null && file.exists() &&
-			file.getName().endsWith(".scss");
+		if (file == null) {
+			return false;
+		}
+		
+		if (!file.exists()) {
+			return false;
+		}
+	
+		String fileName = file.getName();
+
+		return fileName.endsWith(".scss");
 	}
 
-	private void write(File outputFile, String output) throws IOException {
+	private void write(File file, String string) throws IOException {
 		try (Writer writer = new OutputStreamWriter(
-			new FileOutputStream(outputFile, false), StringPool.UTF8)) {
+				new FileOutputStream(file, false), StringPool.UTF8)) {
 
-			writer.write(output);
+			writer.write(string);
 		}
 	}
 
-	private static final SassLibrary _libsass = SassLibrary.INSTANCE;
+	private static final SassLibrary _sassLibrary = SassLibrary.INSTANCE;
 
 }

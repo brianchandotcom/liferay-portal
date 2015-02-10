@@ -52,7 +52,7 @@ public class ServiceBag<V> {
 		}
 
 		Object nextTarget = ProxyUtil.newProxyInstance(
-			classLoader,
+			serviceTypeClass.getClassLoader(),
 			new Class<?>[] {serviceTypeClass, ServiceWrapper.class},
 			new ClassLoaderBeanHandler(serviceWrapper, classLoader));
 

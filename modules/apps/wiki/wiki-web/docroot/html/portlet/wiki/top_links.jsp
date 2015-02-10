@@ -46,7 +46,7 @@ if (categoryId > 0) {
 	portletURL.setParameter("categoryId", "0");
 }
 
-WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper);
+WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiServiceConfiguration);
 %>
 
 <c:if test="<%= wikiVisualizationHelper.isUndoTrashControlVisible() %>">
@@ -103,7 +103,7 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 			PortletURL frontPageURL = PortletURLUtil.clone(portletURL, renderResponse);
 
 			String label = wikiServiceConfiguration.frontPageName();
-			boolean selected = (Validator.isNull(strutsAction) || (wikiPage != null) && wikiPage.getTitle().equals(label));
+			boolean selected = wikiVisualizationHelper.isFrontPageNavItemSelected(wikiPage);
 
 			frontPageURL.setParameter("struts_action", "/wiki/view");
 			frontPageURL.setParameter("title", wikiServiceConfiguration.frontPageName());

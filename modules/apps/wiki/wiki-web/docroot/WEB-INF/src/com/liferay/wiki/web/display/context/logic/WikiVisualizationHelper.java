@@ -16,8 +16,10 @@ package com.liferay.wiki.web.display.context.logic;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.wiki.configuration.WikiServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
 import java.util.Collection;
@@ -27,8 +29,16 @@ import java.util.Collection;
  */
 public class WikiVisualizationHelper {
 
-	public WikiVisualizationHelper(WikiRequestHelper wikiRequestHelper) {
+	public WikiVisualizationHelper(
+		WikiRequestHelper wikiRequestHelper,
+		WikiServiceConfiguration wikiServiceConfiguration) {
+
 		_wikiRequestHelper = wikiRequestHelper;
+		_wikiServiceConfiguration = wikiServiceConfiguration;
+	}
+
+	public boolean isFrontPageNavItemSelected(WikiPage wikiPage) {
+		return (Validator.isNull(_wikiRequestHelper.getStrutsAction()) || (wikiPage != null) && wikiPage.getTitle().equals(_wikiServiceConfiguration.frontPageName()));
 	}
 
 	public boolean isNodeNameVisible() {
@@ -99,5 +109,6 @@ public class WikiVisualizationHelper {
 
 	private String _strutsPath;
 	private final WikiRequestHelper _wikiRequestHelper;
+	private final WikiServiceConfiguration _wikiServiceConfiguration;
 
 }

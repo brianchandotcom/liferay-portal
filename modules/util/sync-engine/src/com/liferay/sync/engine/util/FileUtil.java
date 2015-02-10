@@ -388,6 +388,18 @@ public class FileUtil {
 		}
 	}
 
+	public static void setModifiedTime(Path filePath, long modifiedTime)
+		throws IOException {
+
+		if (!Files.exists(filePath)) {
+			return;
+		}
+
+		FileTime fileTime = FileTime.fromMillis(modifiedTime);
+
+		Files.setLastModifiedTime(filePath, fileTime);
+	}
+
 	public static void writeFileKey(Path filePath, String fileKey) {
 		if (!OSDetector.isWindows()) {
 			return;

@@ -527,10 +527,7 @@ public class SyncFileService {
 
 		// Local sync file
 
-		if (OSDetector.isWindows()) {
-			FileUtil.writeFileKey(
-				filePath, String.valueOf(syncFile.getSyncFileId()));
-		}
+		SyncFileService.updateFileKeySyncFile(syncFile, filePath);
 
 		Path deltaFilePath = null;
 

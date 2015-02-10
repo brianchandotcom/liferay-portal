@@ -280,6 +280,7 @@ public class SyncWatchEventProcessor implements Runnable {
 		Path sourceFilePath = Paths.get(syncFile.getFilePathName());
 
 		if (targetFilePath.equals(sourceFilePath)) {
+			SyncFileService.updateFileKeySyncFile(syncFile);
 		}
 		else if (Files.exists(sourceFilePath)) {
 			SyncFileService.addFolderSyncFile(

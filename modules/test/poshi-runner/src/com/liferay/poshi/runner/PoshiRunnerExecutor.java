@@ -108,7 +108,10 @@ public class PoshiRunnerExecutor {
 			String childElementName = childElement.getName();
 
 			if (childElementName.equals("execute")) {
-				if (childElement.attributeValue("function") != null) {
+				if (childElement.attributeValue("action") != null) {
+					runActionElement(childElement);
+				}
+				else if (childElement.attributeValue("function") != null) {
 					runFunctionElement(childElement);
 				}
 				else if (childElement.attributeValue("macro") != null) {
@@ -117,6 +120,124 @@ public class PoshiRunnerExecutor {
 				else if (childElement.attributeValue("selenium") != null) {
 					runSeleniumElement(childElement);
 				}
+			}
+		}
+	}
+
+	public static void runActionElement(Element executeElement)
+		throws Exception {
+
+		List<Element> executeVarElements = executeElement.elements("var");
+
+		for (Element executeVarElement : executeVarElements) {
+			String name = executeVarElement.attributeValue("name");
+			String value = executeVarElement.attributeValue("value");
+
+			PoshiRunnerVariablesUtil.putIntoExecuteMap(name, value);
+		}
+
+		String actionClassCommandName = executeElement.attributeValue("action");
+
+		int locatorCount = PoshiRunnerContext.getActionLocatorCount(
+			actionClassCommandName);
+
+		for (int i = 0; i < locatorCount; i++) {
+			String locator = executeElement.attributeValue("locator" + (i + 1));
+			String locatorKey = executeElement.attributeValue(
+				"locator-key" + (i + 1));
+			String value = executeElement.attributeValue("value" + (i + 1));
+
+			if (locator != null) {
+				PoshiRunnerVariablesUtil.putIntoExecuteMap(
+					"locator" + (i + 1), locator);
+			}
+			else if (locatorKey != null) {
+				PoshiRunnerVariablesUtil.putIntoExecuteMap(
+					"locator-key" + (i + 1), locatorKey);
+
+				String pathClassName =
+					PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+						actionClassCommandName);
+
+				locator = PoshiRunnerContext.getPathLocator(
+					pathClassName + "#" + locatorKey);
+
+				PoshiRunnerVariablesUtil.putIntoExecuteMap(
+					"locator" + (i + 1), locator);
+			}
+
+			if (value != null) {
+				PoshiRunnerVariablesUtil.putIntoExecuteMap(
+					"value" + (i + 1), value);
+			}
+		}
+
+		PoshiRunnerVariablesUtil.pushCommandMap();
+
+		List<Element> caseElements = PoshiRunnerContext.getActionCaseElements(
+			actionClassCommandName);
+
+		runCaseElements(caseElements, locatorCount);
+
+		PoshiRunnerVariablesUtil.popCommandMap();
+	}
+
+	public static void runCaseElements(
+			List<Element> caseElements, int locatorCount)
+		throws Exception {
+
+		for (Element caseElement : caseElements) {
+			String elementName = caseElement.getName();
+
+			if (elementName.equals("case")) {
+				String attributeName = null;
+				String expected = null;
+
+				String[] arguments =
+					new String[]{"locator", "locator-key", "value"};
+
+				for (int i = 0; i < locatorCount; i++) {
+					for (String argument : arguments) {
+						attributeName = argument + (i + 1);
+
+						expected = caseElement.attributeValue(attributeName);
+
+						if (expected != null) {
+							break;
+						}
+					}
+				}
+
+				String actual = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+					attributeName);
+
+				if (actual == null) {
+					continue;
+				}
+
+				String comparator = caseElement.attributeValue("comparator");
+
+				if (comparator == null) {
+					comparator = "equals";
+				}
+
+				if ((comparator.equals("contains") &&
+					 actual.contains(expected)) ||
+					(comparator.equals("endsWith") &&
+					 actual.endsWith(expected)) ||
+					(comparator.equals("equals") && actual.equals(expected)) ||
+					(comparator.equals("startsWith") &&
+					 actual.startsWith(expected))) {
+
+					parseElement(caseElement);
+
+					break;
+				}
+			}
+			else if (elementName.equals("default")) {
+				parseElement(caseElement);
+
+				break;
 			}
 		}
 	}

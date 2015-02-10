@@ -61,12 +61,7 @@ public class CookieKeysTest extends PowerMockito {
 
 	@Test
 	public void testDomain2() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
 		String host = "www.liferay.com";
-
-		mockHttpServletRequest.setServerName(host);
 
 		mockStatic(CookieUtil.class);
 
@@ -75,6 +70,11 @@ public class CookieKeysTest extends PowerMockito {
 		).thenReturn(
 			new CookieImpl().getDomain(host)
 		);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setServerName(host);
 
 		String domain = CookieKeys.getDomain(mockHttpServletRequest);
 
@@ -107,10 +107,18 @@ public class CookieKeysTest extends PowerMockito {
 
 	@Test
 	public void testDomain4() throws Exception {
+		String host = "www.liferay.com";
+
+		mockStatic(CookieUtil.class);
+
+		when(
+			CookieUtil.getDomain(host)
+		).thenReturn(
+			new CookieImpl().getDomain(host)
+		);
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
-
-		String host = "www.liferay.com";
 
 		mockHttpServletRequest.setServerName(host);
 
@@ -121,14 +129,6 @@ public class CookieKeysTest extends PowerMockito {
 
 		try {
 			field.set(null, Boolean.FALSE);
-
-			mockStatic(CookieUtil.class);
-
-			when(
-				CookieUtil.getDomain(host)
-			).thenReturn(
-				new CookieImpl().getDomain(host)
-			);
 
 			String domain = CookieKeys.getDomain(mockHttpServletRequest);
 

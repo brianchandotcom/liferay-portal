@@ -45,6 +45,8 @@ long categoryId = ParamUtil.getLong(request, "categoryId");
 if (categoryId > 0) {
 	portletURL.setParameter("categoryId", "0");
 }
+
+WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper);
 %>
 
 <c:if test='<%= !strutsAction.endsWith("view_page_activities") && !strutsAction.endsWith("view_page_attachments") %>'>

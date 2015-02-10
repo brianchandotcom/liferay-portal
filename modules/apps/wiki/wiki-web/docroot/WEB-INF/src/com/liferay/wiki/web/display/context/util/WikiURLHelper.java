@@ -14,13 +14,11 @@
 
 package com.liferay.wiki.web.display.context.util;
 
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.configuration.WikiServiceConfiguration;
 import com.liferay.wiki.model.WikiNode;
 
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
@@ -29,10 +27,10 @@ import javax.portlet.RenderResponse;
 public class WikiURLHelper {
 
 	public WikiURLHelper(
-		RenderRequest renderRequest, RenderResponse renderResponse,
+		WikiRequestHelper wikiRequestHelper, RenderResponse renderResponse,
 		WikiServiceConfiguration wikiServiceConfiguration) {
 
-		_renderRequest = renderRequest;
+		_wikiRequestHelper = wikiRequestHelper;
 		_renderResponse = renderResponse;
 		_wikiServiceConfiguration = wikiServiceConfiguration;
 	}
@@ -92,7 +90,7 @@ public class WikiURLHelper {
 
 		portletURL.setParameter("nodeName", node.getName());
 
-		long categoryId = ParamUtil.getLong(_renderRequest, "categoryId", 0);
+		long categoryId = _wikiRequestHelper.getCategoryId();
 
 		if (categoryId > 0) {
 			portletURL.setParameter("categoryId", "0");
@@ -101,8 +99,8 @@ public class WikiURLHelper {
 		return portletURL;
 	}
 
-	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final WikiRequestHelper _wikiRequestHelper;
 	private final WikiServiceConfiguration _wikiServiceConfiguration;
 
 }

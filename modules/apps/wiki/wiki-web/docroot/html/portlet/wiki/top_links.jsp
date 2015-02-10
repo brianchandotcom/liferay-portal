@@ -25,7 +25,7 @@ List<WikiNode> nodes = WikiUtil.getNodes(wikiPortletInstanceSettingsHelper.getAl
 boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT);
 
 WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiServiceConfiguration);
-WikiURLHelper wikiURLHelper = new WikiURLHelper(renderRequest, renderResponse, wikiServiceConfiguration);
+WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiServiceConfiguration);
 %>
 
 <c:if test="<%= wikiVisualizationHelper.isUndoTrashControlVisible() %>">

@@ -33,6 +33,14 @@ public class WikiRequestHelper extends BaseRequestHelper {
 		super(request);
 	}
 
+	public long getCategoryId() {
+		if (_categoryId == null) {
+			_categoryId = ParamUtil.getLong(getRequest(), "categoryId", 0);
+		}
+
+		return _categoryId;
+	}
+
 	public String getStrutsAction() {
 		if (_strutsAction == null) {
 			_strutsAction = ParamUtil.getString(getRequest(), "struts_action");
@@ -87,6 +95,7 @@ public class WikiRequestHelper extends BaseRequestHelper {
 		}
 	}
 
+	private Long _categoryId;
 	private String _strutsAction;
 	private WikiPortletInstanceSettings _wikiPortletInstanceSettings;
 	private WikiSettings _wikiSettings;

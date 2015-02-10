@@ -17,18 +17,6 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "struts_action");
-
-String strutsPath = StringPool.BLANK;
-
-if (Validator.isNotNull(strutsAction)) {
-	int pos = strutsAction.indexOf(StringPool.SLASH, 1);
-
-	if (pos != -1) {
-		strutsPath = strutsAction.substring(0, pos);
-	}
-}
-
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 

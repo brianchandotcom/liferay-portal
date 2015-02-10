@@ -281,7 +281,7 @@
 <!--PUBLISH_TEMPLATES-->
 <tr>
 	<td>PUBLISH_TEMPLATES_NEW_BUTTON</td>
-	<td>//div/a[contains(.,'New')]</td>
+	<td>//a[@role='menuitem' and contains(.,'New')]</td>
 	<td></td>
 </tr>
 <tr>

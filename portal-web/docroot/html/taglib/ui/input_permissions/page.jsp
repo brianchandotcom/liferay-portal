@@ -288,7 +288,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 				var checkUserPermissions = true;
 
 				if (groupPermissionsChecked || guestPermissionsChecked) {
-					var checkUserPermissions = false;
+					checkUserPermissions = false;
 				}
 
 				form.fm('addUserPermissionsBox').prop('checked', checkUserPermissions);

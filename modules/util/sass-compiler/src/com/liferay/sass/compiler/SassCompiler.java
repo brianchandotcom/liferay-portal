@@ -79,7 +79,8 @@ public class SassCompiler {
 			Sass_Options sassOptions = _sassLibrary.sass_make_options();
 
 			_sassLibrary.sass_option_set_image_path(sassOptions, imgPath);
-			_sassLibrary.sass_option_set_include_path(sassOptions, includePaths);
+			_sassLibrary.sass_option_set_include_path(
+				sassOptions, includePaths);
 			_sassLibrary.sass_option_set_input_path(sassOptions, inputFile);
 			_sassLibrary.sass_option_set_output_path(sassOptions, "");
 			_sassLibrary.sass_option_set_output_style(
@@ -138,11 +139,11 @@ public class SassCompiler {
 		if (file == null) {
 			return false;
 		}
-		
+
 		if (!file.exists()) {
 			return false;
 		}
-	
+
 		String fileName = file.getName();
 
 		return fileName.endsWith(".scss");

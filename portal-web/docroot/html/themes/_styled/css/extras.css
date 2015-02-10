@@ -608,6 +608,10 @@ input.switch {
 /* -------- Cover Image ---------- */
 
 .taglib-image-selector {
+	.glyphicon-ok {
+		@include transition(opacity 0.2s ease-in-out);
+	}
+
 	.drop-here-info {
 		@include transition(all 0.2s ease-in-out);
 

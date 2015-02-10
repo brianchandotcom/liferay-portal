@@ -1003,6 +1003,32 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/velocity.jar</file-name>
+				<version>1.6.4</version>
+				<project-name>Velocity</project-name>
+				<project-url>http://velocity.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+						<copyright-notice>Copyright (c) 2000-2007 The Apache Software Foundation</copyright-notice>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/velocity-tools.jar</file-name>
+				<version>1.4</version>
+				<project-name>Velocity</project-name>
+				<project-url>http://velocity.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+						<copyright-notice>Copyright (c) 2000-2007 The Apache Software Foundation</copyright-notice>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/xmltask.jar</file-name>
 				<version>1.16</version>
 				<project-name>XMLTask</project-name>
@@ -3746,32 +3772,6 @@
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 						<copyright-notice>Copyright (c) 2012 Vaadin Ltd</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/velocity.jar</file-name>
-				<version>1.6.4</version>
-				<project-name>Velocity</project-name>
-				<project-url>http://velocity.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2000-2007 The Apache Software Foundation</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/velocity-tools.jar</file-name>
-				<version>1.4</version>
-				<project-name>Velocity</project-name>
-				<project-url>http://velocity.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2000-2007 The Apache Software Foundation</copyright-notice>
 					</license>
 				</licenses>
 			</library>

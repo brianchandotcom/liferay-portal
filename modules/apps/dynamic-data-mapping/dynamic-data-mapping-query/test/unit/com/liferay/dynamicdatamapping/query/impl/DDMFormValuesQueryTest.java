@@ -191,8 +191,8 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 	@Test
 	public void testSelectUsingAndExpressionAndSingleStep() throws Exception {
 		DDMFormValuesQuery ddmFormValuesQuery = createDDMFormValuesQuery(
-			"//*[@value('en_US') = 'En text22' and" +
-			"@value('pt_BR') = 'Pt text22']");
+			"//*[@value('en_US') = 'En text22' and " +
+				"@value('pt_BR') = 'Pt text22']");
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesQuery.selectDDMFormFieldValues();

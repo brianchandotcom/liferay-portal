@@ -614,7 +614,7 @@ input.switch {
 		.drop-icons {
 			@include transition(all 0.2s ease-in-out);
 
-			span{
+			span {
 				@include transition(all 0.3s ease-in-out);
 
 				border-radius: 3px;
@@ -641,7 +641,7 @@ input.switch {
 	}
 
 	&.drop-active .drop-here-info {
-		span:nth-of-type(1){
+		span:nth-of-type(1) {
 			@include transform(rotate(-20deg));
 		}
 

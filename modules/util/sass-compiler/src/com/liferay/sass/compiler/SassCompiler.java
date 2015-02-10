@@ -106,14 +106,14 @@ public class SassCompiler {
 				throw new SassCompilerException(errorMessage);
 			}
 
-			String outputString = _sassLibrary.sass_context_get_output_string(
+			String output = _sassLibrary.sass_context_get_output_string(
 				sassContext);
 
-			if ((outputString == null)) {
+			if (output == null) {
 				throw new SassCompilerException("Null output");
 			}
 
-			return outputString;
+			return output;
 		}
 		finally {
 			try {
@@ -132,7 +132,9 @@ public class SassCompiler {
 	}
 
 	private String getOutputFileName(File file) {
-		return file.getName().replaceAll("scss$", "css");
+		String fileName = file.getName();
+
+		return fileName.replaceAll("scss$", "css");
 	}
 
 	private boolean isValidFile(File file) {

@@ -14,25 +14,27 @@
 
 package com.liferay.sass.compiler;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assume.assumeNotNull;
-
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
+import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
 
 /**
  * @author Gregory Amerson
  */
-public class SassCompilerTest extends BaseTests {
+public class SassCompilerTest {
 
 	@Test
 	public void testCompile() throws Exception {
 		SassCompiler sassCompiler = new SassCompiler();
 
-		assumeNotNull(sassCompiler);
-		
+		Assume.assumeNotNull(sassCompiler);
+
 		File sassSpecDir = new File(
 			getBaseDir(), "com/liferay/sass/compiler/dependencies/sass-spec");
 
@@ -46,20 +48,18 @@ public class SassCompilerTest extends BaseTests {
 			String actualOutput = sassCompiler.compileFile(
 				inputFile.getCanonicalPath(), "", "");
 
-			assertNotNull(actualOutput);
+			Assert.assertNotNull(actualOutput);
 
-			File expectedOutputFile = new File(
-				testDir, "expected_output.css");
+			File expectedOutputFile = new File(testDir, "expected_output.css");
 
-			String expectedOutput = readFileContents(
-				expectedOutputFile.getCanonicalPath());
+			String expectedOutput = read(expectedOutputFile.getCanonicalPath());
 
-			assertEquals(
+			Assert.assertEquals(
 				stripNewLines(expectedOutput), stripNewLines(actualOutput));
 		}
 	}
 
-	private static String getBaseDir() {
+	protected String getBaseDir() {
 		File binDir = new File("bin");
 
 		if (binDir.exists()) {
@@ -67,6 +67,45 @@ public class SassCompilerTest extends BaseTests {
 		}
 
 		return "test-classes/unit";
+	}
+
+	protected String read(InputStream inputStream) throws Exception {
+		if (inputStream == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		char[] chars = new char[0x10000];
+
+		Reader reader = new InputStreamReader(inputStream, "UTF-8");
+
+		int read = 0;
+
+		do {
+			read = reader.read(chars, 0, chars.length);
+
+			if (read > 0) {
+				sb.append(chars, 0, read);
+			}
+		}
+		while (read >= 0);
+
+		inputStream.close();
+
+		return sb.toString();
+	}
+
+	protected String read(String fileName) throws Exception {
+		String content = read(new FileInputStream(new File(fileName)));
+
+		return content.replaceAll("\\r", "");
+	}
+
+	protected String stripNewLines(String string) {
+		string = string.replaceAll("\\n|\\r", "");
+
+		return string.replaceAll("\\s+", " ");
 	}
 
 }

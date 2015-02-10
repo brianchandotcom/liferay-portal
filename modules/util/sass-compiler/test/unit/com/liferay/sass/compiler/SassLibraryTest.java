@@ -14,32 +14,31 @@
 
 package com.liferay.sass.compiler;
 
-import static org.junit.Assert.assertNotNull;
-
 import com.liferay.sass.compiler.libsass.SassLibrary;
 import com.liferay.sass.compiler.libsass.SassLibrary.Sass_File_Context;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Gregory Amerson
  */
-public class SassLibraryTest extends BaseTests {
+public class SassLibraryTest {
+
+	@Test
+	public void testInstance() throws Exception {
+		Assert.assertNotNull(SassLibrary.INSTANCE);
+	}
 
 	@Test
 	public void testSassFileContext() throws Exception {
 		Sass_File_Context sassFileContext =
 			SassLibrary.INSTANCE.sass_make_file_context("");
 
-		assertNotNull(sassFileContext);
-		assertNotNull(sassFileContext.getPointer());
+		Assert.assertNotNull(sassFileContext);
+		Assert.assertNotNull(sassFileContext.getPointer());
 
 		SassLibrary.INSTANCE.sass_delete_file_context(sassFileContext);
-	}
-
-	@Test
-	public void testInstance() throws Exception {
-		assertNotNull(SassLibrary.INSTANCE);
 	}
 
 }

@@ -274,9 +274,9 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 		<input name="<%= namespace %>addGroupPermissions" type="hidden" value="<%= addGroupPermissions %>" />
 		<input name="<%= namespace %>addGuestPermissions" type="hidden" value="<%= addGuestPermissions %>" />
 
-		<input <%= addGroupPermissions ? "checked" : "" %> name="<%= namespace %>addGroupPermissionsBox" type="checkbox" onClick="<%= namespace %>checkGroupAndGuestPermissions();" /> <liferay-ui:message key="assign-default-permissions-to-site" /><br />
-		<input <%= addGuestPermissions ? "checked" : "" %> name="<%= namespace %>addGuestPermissionsBox" type="checkbox" onClick="<%= namespace %>checkGroupAndGuestPermissions();" /> <liferay-ui:message key="assign-default-permissions-to-guest" /><br />
-		<input <%= !addGroupPermissions && !addGuestPermissions ? "checked" : "" %> name="<%= namespace %>addUserPermissionsBox" type="checkbox" onClick="<%= namespace %>checkUserPermissions();" /> <liferay-ui:message key="only-assign-permissions-to-me" />
+		<input <%= addGroupPermissions ? "checked" : "" %> name="<%= namespace %>addGroupPermissionsBox" onClick="<%= namespace %>checkGroupAndGuestPermissions();" type="checkbox" /> <liferay-ui:message key="assign-default-permissions-to-site" /><br />
+		<input <%= addGuestPermissions ? "checked" : "" %> name="<%= namespace %>addGuestPermissionsBox" onClick="<%= namespace %>checkGroupAndGuestPermissions();" type="checkbox" /> <liferay-ui:message key="assign-default-permissions-to-guest" /><br />
+		<input <%= !addGroupPermissions && !addGuestPermissions ? "checked" : "" %> name="<%= namespace %>addUserPermissionsBox" onClick="<%= namespace %>checkUserPermissions();" type="checkbox" /> <liferay-ui:message key="only-assign-permissions-to-me" />
 
 		<aui:script>
 			function <%= namespace %>checkGroupAndGuestPermissions() {

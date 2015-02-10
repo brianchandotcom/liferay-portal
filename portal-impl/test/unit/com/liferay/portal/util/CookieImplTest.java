@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
@@ -24,8 +24,9 @@ import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
+ * @author Yuxing Wu
  */
-public class CookieUtilTest {
+public class CookieImplTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
@@ -33,7 +34,7 @@ public class CookieUtilTest {
 
 	@Test
 	public void testConstructor() {
-		new CookieUtil();
+		new CookieImpl();
 	}
 
 	@Test
@@ -49,7 +50,7 @@ public class CookieUtilTest {
 
 		cookie2.setComment("comment2");
 
-		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
+		Assert.assertFalse(_cookieImpl.equals(cookie1, cookie2));
 
 		cookie2.setComment("comment");
 
@@ -58,7 +59,7 @@ public class CookieUtilTest {
 		cookie1.setDomain("domain");
 		cookie2.setDomain("domain2");
 
-		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
+		Assert.assertFalse(_cookieImpl.equals(cookie1, cookie2));
 
 		cookie2.setDomain("domain");
 
@@ -67,13 +68,13 @@ public class CookieUtilTest {
 		cookie1.setMaxAge(1);
 		cookie2.setMaxAge(2);
 
-		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
+		Assert.assertFalse(_cookieImpl.equals(cookie1, cookie2));
 
 		cookie2.setMaxAge(1);
 
 		// Name
 
-		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
+		Assert.assertFalse(_cookieImpl.equals(cookie1, cookie2));
 
 		cookie2 = new Cookie("name", null);
 
@@ -86,7 +87,7 @@ public class CookieUtilTest {
 		cookie1.setPath("path");
 		cookie2.setPath("path2");
 
-		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
+		Assert.assertFalse(_cookieImpl.equals(cookie1, cookie2));
 
 		cookie2.setPath("path");
 
@@ -95,7 +96,7 @@ public class CookieUtilTest {
 		cookie1.setSecure(true);
 		cookie2.setSecure(false);
 
-		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
+		Assert.assertFalse(_cookieImpl.equals(cookie1, cookie2));
 
 		cookie2.setSecure(true);
 
@@ -104,7 +105,7 @@ public class CookieUtilTest {
 		cookie1.setValue("value");
 		cookie2.setValue("value2");
 
-		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
+		Assert.assertFalse(_cookieImpl.equals(cookie1, cookie2));
 
 		cookie2.setValue("value");
 
@@ -113,7 +114,7 @@ public class CookieUtilTest {
 		cookie1.setVersion(1);
 		cookie2.setVersion(2);
 
-		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
+		Assert.assertFalse(_cookieImpl.equals(cookie1, cookie2));
 
 		cookie2.setVersion(1);
 
@@ -122,23 +123,23 @@ public class CookieUtilTest {
 		cookie1.setHttpOnly(true);
 		cookie2.setHttpOnly(false);
 
-		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
+		Assert.assertFalse(_cookieImpl.equals(cookie1, cookie2));
 
 		cookie2.setHttpOnly(true);
 
 		// Equals
 
-		Assert.assertTrue(CookieUtil.equals(cookie1, cookie2));
+		Assert.assertTrue(_cookieImpl.equals(cookie1, cookie2));
 	}
 
 	@Test
 	public void testSerializationAndDeserialization() {
 		Cookie cookie1 = new Cookie("name1", null);
 
-		byte[] bytes = CookieUtil.serialize(cookie1);
+		byte[] bytes = _cookieImpl.serialize(cookie1);
 
 		Assert.assertTrue(
-			CookieUtil.equals(cookie1, CookieUtil.deserialize(bytes)));
+			_cookieImpl.equals(cookie1, _cookieImpl.deserialize(bytes)));
 
 		Cookie cookie2 = new Cookie("name2", "value");
 
@@ -150,10 +151,10 @@ public class CookieUtilTest {
 		cookie2.setSecure(true);
 		cookie2.setVersion(1);
 
-		bytes = CookieUtil.serialize(cookie2);
+		bytes = _cookieImpl.serialize(cookie2);
 
 		Assert.assertTrue(
-			CookieUtil.equals(cookie2, CookieUtil.deserialize(bytes)));
+			_cookieImpl.equals(cookie2, _cookieImpl.deserialize(bytes)));
 	}
 
 	@Test
@@ -171,7 +172,9 @@ public class CookieUtilTest {
 		Assert.assertEquals(
 			"{comment=comment, domain=domain, httpOnly=true, maxAge=1, " +
 				"name=name, path=path, secure=true, value=value, version=1}",
-			CookieUtil.toString(cookie));
+			_cookieImpl.toString(cookie));
 	}
+
+	private final CookieImpl _cookieImpl = new CookieImpl();
 
 }

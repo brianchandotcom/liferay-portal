@@ -26,6 +26,7 @@
 	<classpathentry kind="lib" path="lib/arquillian-core-api.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-core-impl-base.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-core-spi.jar" />
+	<classpathentry kind="lib" path="lib/arquillian-junit-core.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-test-api.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-test-spi.jar" />
 	<classpathentry kind="lib" path="lib/fest-assert.jar" />

@@ -21,6 +21,7 @@
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.bookmarks.api.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.bookmarks.service.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.portal.spring.extender.jar" />
+	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.freemarker.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.osgi.core.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

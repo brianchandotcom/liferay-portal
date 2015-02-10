@@ -21,6 +21,7 @@
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.portal.spring.extender.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.wiki.api.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.wiki.service.jar" />
+	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.freemarker.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.osgi.compendium.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.osgi.core.jar" />
 	<classpathentry kind="output" path="bin" />

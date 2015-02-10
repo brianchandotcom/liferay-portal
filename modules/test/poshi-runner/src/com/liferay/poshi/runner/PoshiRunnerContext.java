@@ -35,25 +35,25 @@ import org.dom4j.Element;
 public class PoshiRunnerContext {
 
 	public static List<Element> getActionCaseElements(String classCommandName) {
-		List<Element> relatedClassCommandElements = new ArrayList<>();
+		List<Element> actionCaseElements = new ArrayList<>();
 
-		List<String> relatedClassCommands = getRelatedActionClassCommandNames(
-			classCommandName);
+		List<String> relatedClassCommandNames =
+			_getRelatedActionClassCommandNames(classCommandName);
 
-		for (String relatedClassCommand : relatedClassCommands) {
+		for (String relatedClassCommandName : relatedClassCommandNames) {
 			Element commandElement = getActionCommandElement(
-				relatedClassCommand);
+				relatedClassCommandName);
 
 			if (commandElement != null) {
 				List<Element> caseElements = commandElement.elements();
 
 				for (Element caseElement : caseElements) {
-					relatedClassCommandElements.add(caseElement);
+					actionCaseElements.add(caseElement);
 				}
 			}
 		}
 
-		return relatedClassCommandElements;
+		return actionCaseElements;
 	}
 
 	public static Element getActionCommandElement(String classCommandName) {
@@ -107,6 +107,34 @@ public class PoshiRunnerContext {
 
 	public static Element getTestcaseRootElement(String className) {
 		return _rootElements.get("testcase#" + className);
+	}
+
+	private static List<String> _getRelatedActionClassCommandNames(
+		String classCommandName) {
+
+		List<String> relatedClassCommandNameNames = new ArrayList<>();
+
+		relatedClassCommandNameNames.add(classCommandName);
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+		String commandName =
+			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+				classCommandName);
+
+		while (_actionExtendClassName.get(className) != null) {
+			String extendClassName = _actionExtendClassName.get(className);
+
+			relatedClassCommandNameNames.add(
+				extendClassName + "#" + commandName);
+
+			className = extendClassName;
+		}
+
+		relatedClassCommandNameNames.add("BaseLiferay#" + commandName);
+
+		return relatedClassCommandNameNames;
 	}
 
 	private static void _readPathFile(String filePath, String className)
@@ -268,33 +296,6 @@ public class PoshiRunnerContext {
 		}
 
 		_seleniumParameterCounts.put("open", 1);
-	}
-
-	private static List<String> getRelatedActionClassCommandNames(
-		String classCommandName) {
-
-		List<String> relatedClassCommandNames = new ArrayList<>();
-
-		relatedClassCommandNames.add(classCommandName);
-
-		String className =
-			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-				classCommandName);
-		String commandName =
-			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
-				classCommandName);
-
-		while (_actionExtendClassName.get(className) != null) {
-			String extendClassName = _actionExtendClassName.get(className);
-
-			relatedClassCommandNames.add(extendClassName + "#" + commandName);
-
-			className = extendClassName;
-		}
-
-		relatedClassCommandNames.add("BaseLiferay#" + commandName);
-
-		return relatedClassCommandNames;
 	}
 
 	private static final String _BASE_DIR =

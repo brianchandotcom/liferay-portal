@@ -103,25 +103,24 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerVariablesUtil.pushCommandMap();
 
-		runCaseElement(actionClassCommandName);
+		List<Element> caseElements = PoshiRunnerContext.getActionCaseElements(
+			actionClassCommandName);
+
+		runCaseElements(caseElements, locatorCount);
 
 		PoshiRunnerVariablesUtil.popCommandMap();
 	}
 
-	public static void runCaseElement(String actionClassCommandName)
+	public static void runCaseElements(
+			List<Element> caseElements, int locatorCount)
 		throws Exception {
-
-		List<Element> caseElements = PoshiRunnerContext.getActionCaseElements(
-			actionClassCommandName);
 
 		for (Element caseElement : caseElements) {
 			String elementName = caseElement.getName();
 
 			if (elementName.equals("case")) {
-				int locatorCount = PoshiRunnerContext.getActionLocatorCount(
-					actionClassCommandName);
-				String argument1 = null;
 				String attributeName = null;
+				String expected = null;
 
 				String[] arguments =
 					new String[]{"locator", "locator-key", "value"};
@@ -130,58 +129,42 @@ public class PoshiRunnerExecutor {
 					for (String argument : arguments) {
 						attributeName = argument + (i + 1);
 
-						argument1 = caseElement.attributeValue(attributeName);
+						expected = caseElement.attributeValue(attributeName);
 
-						if (argument1 != null) {
+						if (expected != null) {
 							break;
 						}
 					}
 				}
 
-				String argument2 =
-					PoshiRunnerVariablesUtil.getValueFromCommandMap(
-						attributeName);
+				String actual = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+					attributeName);
 
-				String caseComparator = caseElement.attributeValue(
-					"comparator");
-
-				if ((argument2 != null) && (caseComparator != null)) {
-					if ((caseComparator.equals("contains") &&
-						 argument2.contains(argument1)) ||
-						(caseComparator.equals("endsWith") &&
-						 argument2.endsWith(argument1)) ||
-						(caseComparator.equals("startsWith") &&
-						 argument2.startsWith(argument1))) {
-
-						List<Element> elements = caseElement.elements();
-
-						for (Element element : elements) {
-							runFunctionElement(element);
-						}
-
-						break;
-					}
+				if (actual == null) {
+					continue;
 				}
-				else if ((argument2 != null) && argument2.equals(argument1)) {
-					List<Element> elements = caseElement.elements();
 
-					for (Element element : elements) {
-						runFunctionElement(element);
-					}
+				String comparator = caseElement.attributeValue("comparator");
+
+				if (comparator == null) {
+					comparator = "equals";
+				}
+
+				if ((comparator.equals("contains") &&
+					 actual.contains(expected)) ||
+					(comparator.equals("endsWith") &&
+					 actual.endsWith(expected)) ||
+					(comparator.equals("equals") && actual.equals(expected)) ||
+					(comparator.equals("startsWith") &&
+					 actual.startsWith(expected))) {
+
+					parseElement(caseElement);
 
 					break;
 				}
 			}
 			else if (elementName.equals("default")) {
-				List<Element> elements = caseElement.elements();
-
-				for (Element element : elements) {
-					String name = element.getName();
-
-					if (name.equals("execute")) {
-						runFunctionElement(element);
-					}
-				}
+				parseElement(caseElement);
 
 				break;
 			}

@@ -24,5 +24,6 @@
 		<dependency name="junit" org="junit" rev="4.12" />
 		<dependency name="net.jsourcerer.webdriver.JSErrorCollector" org="com.liferay" rev="0.5-atlassian-2" />
 		<dependency name="selenium-java" org="org.seleniumhq.selenium" rev="2.44.0" />
+		<dependency name="sikuli-api" org="org.sikuli" rev="1.2.0" />
 	</dependencies>
 </ivy-module>

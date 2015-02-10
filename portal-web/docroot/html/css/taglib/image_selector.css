@@ -290,14 +290,12 @@
 
 	.glyphicon-ok {
 		background: #FFF;
-
 		opacity: 0;
 	}
 
 	.progress-wrapper {
 		.progressbar {
 			background: #B0B4BB;
-
 			opacity: 0.7;
 		}
 	}

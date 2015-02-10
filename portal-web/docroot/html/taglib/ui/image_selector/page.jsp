@@ -72,6 +72,7 @@ if (fileEntryId != 0) {
 				<span aria-hidden="true" class="glyphicon glyphicon-picture"></span>
 				<span aria-hidden="true" class="glyphicon glyphicon-picture"></span>
 			</div>
+
 			<div class="drop-text">
 				<liferay-ui:message key="drop-files-here" />
 			</div>

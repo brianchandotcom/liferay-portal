@@ -4,6 +4,7 @@ Export-Package:\
 	com.liferay.portal.kernel.test,\
 	com.liferay.portal.kernel.test.randomizerbumpers,\
 	com.liferay.portal.kernel.test.rule,\
+	com.liferay.portal.kernel.test.rule.callback,\
 	com.liferay.portal.kernel.test.util,\
 	com.liferay.portlet.messageboards.util.test,\
 	com.liferay.portlet.ratings.util.test,\

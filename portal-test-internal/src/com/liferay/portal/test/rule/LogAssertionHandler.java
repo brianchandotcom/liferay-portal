@@ -15,8 +15,7 @@
 package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.test.rule.executor.LogAssertionExecutor;
-import com.liferay.portal.test.rule.executor.LogAssertionExecutorUtil;
+import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
 
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -52,13 +51,8 @@ public class LogAssertionHandler extends Handler {
 			sb.append(", message=");
 			sb.append(logRecord.getMessage());
 
-			LogAssertionExecutor logAssertionExecutor =
-				LogAssertionExecutorUtil.getInstance();
-
-			logAssertionExecutor.caughtFailure(
-				Thread.currentThread(),
-				new AssertionError(
-					new AssertionError(sb.toString(), logRecord.getThrown())));
+			LogAssertionTestCallback.caughtFailure(
+				new AssertionError(sb.toString(), logRecord.getThrown()));
 		}
 	}
 

@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test.rule;
+package com.liferay.portal.kernel.test.rule.callback;
 
-import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCallback;
-import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCallback.SyncHandler;
+import java.lang.reflect.Method;
 
 /**
- * @author Miguel Pastor
  * @author Shuyang Zhou
  */
-public class SynchronousDestinationTestRule
-	extends BaseTestRule<SyncHandler, SyncHandler> {
+public interface TestCallback<C, M> {
 
-	public static final SynchronousDestinationTestRule INSTANCE =
-		new SynchronousDestinationTestRule();
+	public void afterClass(Class<?> clazz, C c) throws Throwable;
 
-	private SynchronousDestinationTestRule() {
-		super(SynchronousDestinationTestCallback.INSTANCE);
-	}
+	public void afterMethod(Class<?> clazz, Method method, M m, Object target)
+		throws Throwable;
+
+	public C beforeClass(Class<?> clazz) throws Throwable;
+
+	public M beforeMethod(Class<?> clazz, Method method, Object target)
+		throws Throwable;
 
 }

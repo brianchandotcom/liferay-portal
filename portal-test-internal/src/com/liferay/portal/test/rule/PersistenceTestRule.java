@@ -15,10 +15,7 @@
 package com.liferay.portal.test.rule;
 
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
-import com.liferay.portal.kernel.test.rule.executor.PersistenceTestInitializer;
-import com.liferay.portal.test.rule.executor.PersistenceTestInitializerImpl;
-
-import org.junit.runner.Description;
+import com.liferay.portal.test.rule.callback.PersistenceTestCallback;
 
 /**
  * @author Shuyang Zhou
@@ -28,20 +25,8 @@ public class PersistenceTestRule extends BaseTestRule<Object, Object> {
 	public static final PersistenceTestRule INSTANCE =
 		new PersistenceTestRule();
 
-	@Override
-	protected void afterMethod(Description description, Object modelListeners) {
-		_persistenceTestInitializer.release(modelListeners);
-	}
-
-	@Override
-	protected Object beforeMethod(Description description) {
-		return _persistenceTestInitializer.init();
-	}
-
 	private PersistenceTestRule() {
+		super(PersistenceTestCallback.INSTANCE);
 	}
-
-	private static final PersistenceTestInitializer
-		_persistenceTestInitializer = new PersistenceTestInitializerImpl();
 
 }

@@ -4024,7 +4024,6 @@ if (ppstate.equals("normal")) {
 					directoryScanner.setExcludes(
 						new String[] {
 							"modules/apps/bookmarks/bookmarks-test/test/integration/**/*Test.java",
-							"modules/apps/polls/polls-test/test/integration/**/*Test.java",
 							"modules/apps/social/social-networking-test/test/integration/**/*Test.java",
 							"modules/apps/wiki/wiki-test/test/integration/**/*Test.java",
 							"modules/portal/portal-json-web-service-extender/test/integration/**/*Test.java",

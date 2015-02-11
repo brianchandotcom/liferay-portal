@@ -1292,11 +1292,7 @@
 
 		<action path="/my_workflow_instances/view" forward="portlet.workflow_instances.view" />
 
-		<action path="/my_workflow_instances/view_content" forward="portlet.asset_publisher.view_content" />
-
 		<!-- My Workflow Tasks -->
-
-		<action path="/my_workflow_tasks/add_asset_redirect" forward="portlet.asset_publisher.add_asset_redirect" />
 
 		<action path="/my_workflow_tasks/edit_workflow_task" type="com.liferay.portlet.workflowtasks.action.EditWorkflowTaskAction">
 			<forward name="portlet.workflow_tasks.edit_workflow_task" path="portlet.workflow_tasks.edit_workflow_task" />
@@ -1308,8 +1304,6 @@
 		</action>
 
 		<action path="/my_workflow_tasks/view" forward="portlet.workflow_tasks.view" />
-
-		<action path="/my_workflow_tasks/view_content" forward="portlet.asset_publisher.view_content" />
 
 		<!-- Navigation -->
 
@@ -1392,8 +1386,6 @@
 
 		<!-- Portlet Configuration -->
 
-		<action path="/portlet_configuration/add_asset_redirect" forward="portlet.asset_publisher.add_asset_redirect" />
-
 		<action path="/portlet_configuration/add_group_statistics_activity_counter" forward="portlet.group_statistics.add_activity_counter" />
 
 		<action path="/portlet_configuration/add_user_statistics_activity_counter" forward="portlet.user_statistics.add_activity_counter" />
@@ -1420,8 +1412,6 @@
 			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
 		</action>
 
-		<action path="/portlet_configuration/edit_query_rule" forward="portlet.asset_publisher.edit_query_rule" />
-
 		<action path="/portlet_configuration/edit_scope" type="com.liferay.portlet.portletconfiguration.action.EditScopeAction">
 			<forward name="portlet.portlet_configuration.edit_scope" path="portlet.portlet_configuration.edit_scope" />
 			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
@@ -1445,8 +1435,6 @@
 		<action path="/portlet_configuration/get_look_and_feel" type="com.liferay.portlet.portletconfiguration.action.GetLookAndFeelAction" />
 
 		<action path="/portlet_configuration/select_organization" forward="portlet.users_admin.select_organization" />
-
-		<action path="/portlet_configuration/select_structure_field" forward="portlet.asset_publisher.select_structure_field" />
 
 		<action path="/portlet_configuration/staging" type="com.liferay.portlet.portletconfiguration.action.ExportImportAction">
 			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
@@ -1939,8 +1927,6 @@
 
 		<action path="/workflow_definitions/view" forward="portlet.workflow_definitions.view" />
 
-		<action path="/workflow_definitions/view_content" forward="portlet.asset_publisher.view_content" />
-
 		<!-- Workflow Instances -->
 
 		<action path="/workflow_instances/edit_workflow_instance" type="com.liferay.portlet.workflowinstances.action.EditWorkflowInstanceAction">
@@ -1958,8 +1944,6 @@
 
 		<action path="/workflow_instances/view" forward="portlet.workflow_instances.view" />
 
-		<action path="/workflow_instances/view_content" forward="portlet.asset_publisher.view_content" />
-
 		<!-- Workflow Tasks -->
 
 		<action path="/workflow_tasks/edit_workflow_task" type="com.liferay.portlet.workflowtasks.action.EditWorkflowTaskAction">
@@ -1972,8 +1956,6 @@
 		</action>
 
 		<action path="/workflow_tasks/view" forward="portlet.workflow_tasks.view" />
-
-		<action path="/workflow_tasks/view_content" forward="portlet.asset_publisher.view_content" />
 	</action-mappings>
 
 	<!-- Custom Request Processor -->

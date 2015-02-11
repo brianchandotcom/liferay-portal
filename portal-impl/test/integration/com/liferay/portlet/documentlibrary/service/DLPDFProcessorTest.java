@@ -157,6 +157,26 @@ public class DLPDFProcessorTest {
 		Assert.assertEquals(2, count.get());
 	}
 
+	@Test
+	public void testShouldCreateNewPreviewOnCancelCheckOut() throws Exception {
+		AtomicInteger count = registerDLPDFProcessorMessageListener(
+			EventType.GENERATE_NEW);
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), _PDF_DATA.getBytes(), _serviceContext);
+
+		DLAppServiceUtil.checkOutFileEntry(
+			fileEntry.getFileEntryId(), _serviceContext);
+
+		DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+
+		Assert.assertEquals(2, count.get());
+	}
+
 	protected static AtomicInteger registerDLPDFProcessorMessageListener(
 		final EventType eventType) {
 

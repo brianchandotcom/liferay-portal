@@ -17,11 +17,13 @@ package com.liferay.portal.kernel.resiliency.spi;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.HtmlImpl;
+import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
 
 import java.util.Arrays;
@@ -46,9 +48,12 @@ public class SPIConfigurationTest {
 
 		htmlUtil.setHtml(new HtmlImpl());
 
+		PropsUtil.setProps(new PropsImpl());
+
 		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
 		saxReaderUtil.setSecureSAXReader(new SAXReaderImpl());
+		saxReaderUtil.setUnsecureSAXReader(new SAXReaderImpl());
 	}
 
 	@Test

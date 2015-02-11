@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 
@@ -33,13 +33,13 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
  * @author Julio Camarero
  * @author Daniel Kocsis
+ * @author Akos Thurzo
  */
 public class PortletStagingBackgroundTaskExecutor
 	extends BaseStagingBackgroundTaskExecutor {
@@ -53,10 +53,10 @@ public class PortletStagingBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
-		MissingReferences missingReferences = null;
+		ExportImportConfiguration exportImportConfiguration =
+			getExportImportConfiguration(backgroundTask);
 
-		HashMap<String, Serializable> serializableTaskContextMap =
-			new HashMap<>(backgroundTask.getTaskContextMap());
+		MissingReferences missingReferences = null;
 
 		try {
 			ExportImportThreadLocal.setPortletStagingInProcess(true);
@@ -64,23 +64,24 @@ public class PortletStagingBackgroundTaskExecutor
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 				ExportImportLifecycleConstants.
 					EVENT_PUBLICATION_PORTLET_LOCAL_STARTED,
-				serializableTaskContextMap);
+				exportImportConfiguration);
 
 			missingReferences = TransactionHandlerUtil.invoke(
 				transactionAttribute,
 				new PortletStagingCallable(
-					backgroundTask.getBackgroundTaskId()));
+					backgroundTask.getBackgroundTaskId(),
+					exportImportConfiguration));
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 				ExportImportLifecycleConstants.
 					EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED,
-				serializableTaskContextMap);
+				exportImportConfiguration);
 		}
 		catch (Throwable t) {
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 				ExportImportLifecycleConstants.
 					EVENT_PUBLICATION_PORTLET_LOCAL_FAILED,
-				serializableTaskContextMap);
+				exportImportConfiguration);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(t, t);
@@ -105,32 +106,30 @@ public class PortletStagingBackgroundTaskExecutor
 	private class PortletStagingCallable
 		implements Callable<MissingReferences> {
 
-		public PortletStagingCallable(long backgroundTaskId) {
+		public PortletStagingCallable(
+			long backgroundTaskId,
+			ExportImportConfiguration exportImportConfiguration) {
+
 			_backgroundTaskId = backgroundTaskId;
+			_exportImportConfiguration = exportImportConfiguration;
 		}
 
 		@Override
 		public MissingReferences call() throws PortalException {
-			BackgroundTask backgroundTask =
-				BackgroundTaskLocalServiceUtil.getBackgroundTask(
-					_backgroundTaskId);
+			Map<String, Serializable> settingsMap =
+				_exportImportConfiguration.getSettingsMap();
 
-			Map<String, Serializable> taskContextMap =
-				backgroundTask.getTaskContextMap();
-
-			long userId = MapUtil.getLong(taskContextMap, "userId");
-			long targetPlid = MapUtil.getLong(taskContextMap, "targetPlid");
-			long targetGroupId = MapUtil.getLong(
-				taskContextMap, "targetGroupId");
-			String portletId = MapUtil.getString(taskContextMap, "portletId");
+			long userId = MapUtil.getLong(settingsMap, "userId");
+			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
+			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+			String portletId = MapUtil.getString(settingsMap, "portletId");
 			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)taskContextMap.get("parameterMap");
+				(Map<String, String[]>)settingsMap.get("parameterMap");
 
-			long sourcePlid = MapUtil.getLong(taskContextMap, "sourcePlid");
-			long sourceGroupId = MapUtil.getLong(
-				taskContextMap, "sourceGroupId");
-			Date startDate = (Date)taskContextMap.get("startDate");
-			Date endDate = (Date)taskContextMap.get("endDate");
+			long sourcePlid = MapUtil.getLong(settingsMap, "sourcePlid");
+			long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+			Date startDate = (Date)settingsMap.get("startDate");
+			Date endDate = (Date)settingsMap.get("endDate");
 
 			File larFile = null;
 			MissingReferences missingReferences = null;
@@ -161,6 +160,7 @@ public class PortletStagingBackgroundTaskExecutor
 		}
 
 		private final long _backgroundTaskId;
+		private final ExportImportConfiguration _exportImportConfiguration;
 
 	}
 

@@ -1929,6 +1929,7 @@
 		<field name="content" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="type" type="String" />
 		<field name="DDMStructureKey" type="String" />
 		<field name="DDMTemplateKey" type="String" />
 		<field name="layoutUuid" type="String" />
@@ -1997,6 +1998,7 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="type" type="String" />
 		<field name="DDMStructureKey" type="String" />
 		<field name="DDMTemplateKey" type="String" />
 		<field name="DDMRendererTemplateKey" type="String" />

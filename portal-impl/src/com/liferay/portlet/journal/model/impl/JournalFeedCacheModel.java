@@ -66,7 +66,7 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -90,6 +90,8 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", DDMStructureKey=");
 		sb.append(DDMStructureKey);
 		sb.append(", DDMTemplateKey=");
@@ -173,6 +175,13 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		}
 		else {
 			journalFeedImpl.setDescription(description);
+		}
+
+		if (type == null) {
+			journalFeedImpl.setType(StringPool.BLANK);
+		}
+		else {
+			journalFeedImpl.setType(type);
 		}
 
 		if (DDMStructureKey == null) {
@@ -260,6 +269,7 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		feedId = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		type = objectInput.readUTF();
 		DDMStructureKey = objectInput.readUTF();
 		DDMTemplateKey = objectInput.readUTF();
 		DDMRendererTemplateKey = objectInput.readUTF();
@@ -317,6 +327,13 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		}
 		else {
 			objectOutput.writeUTF(description);
+		}
+
+		if (type == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(type);
 		}
 
 		if (DDMStructureKey == null) {
@@ -398,6 +415,7 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 	public String feedId;
 	public String name;
 	public String description;
+	public String type;
 	public String DDMStructureKey;
 	public String DDMTemplateKey;
 	public String DDMRendererTemplateKey;

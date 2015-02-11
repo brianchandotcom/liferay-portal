@@ -155,6 +155,8 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setContent(RandomTestUtil.randomString());
 
+		newJournalArticle.setType(RandomTestUtil.randomString());
+
 		newJournalArticle.setDDMStructureKey(RandomTestUtil.randomString());
 
 		newJournalArticle.setDDMTemplateKey(RandomTestUtil.randomString());
@@ -227,6 +229,8 @@ public class JournalArticlePersistenceTest {
 			newJournalArticle.getDescription());
 		Assert.assertEquals(existingJournalArticle.getContent(),
 			newJournalArticle.getContent());
+		Assert.assertEquals(existingJournalArticle.getType(),
+			newJournalArticle.getType());
 		Assert.assertEquals(existingJournalArticle.getDDMStructureKey(),
 			newJournalArticle.getDDMStructureKey());
 		Assert.assertEquals(existingJournalArticle.getDDMTemplateKey(),
@@ -891,11 +895,12 @@ public class JournalArticlePersistenceTest {
 			true, "modifiedDate", true, "folderId", true, "classNameId", true,
 			"classPK", true, "treePath", true, "articleId", true, "version",
 			true, "title", true, "urlTitle", true, "description", true,
-			"content", true, "DDMStructureKey", true, "DDMTemplateKey", true,
-			"layoutUuid", true, "displayDate", true, "expirationDate", true,
-			"reviewDate", true, "indexable", true, "smallImage", true,
-			"smallImageId", true, "smallImageURL", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"content", true, "type", true, "DDMStructureKey", true,
+			"DDMTemplateKey", true, "layoutUuid", true, "displayDate", true,
+			"expirationDate", true, "reviewDate", true, "indexable", true,
+			"smallImage", true, "smallImageId", true, "smallImageURL", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -1173,6 +1178,8 @@ public class JournalArticlePersistenceTest {
 		journalArticle.setDescription(RandomTestUtil.randomString());
 
 		journalArticle.setContent(RandomTestUtil.randomString());
+
+		journalArticle.setType(RandomTestUtil.randomString());
 
 		journalArticle.setDDMStructureKey(RandomTestUtil.randomString());
 

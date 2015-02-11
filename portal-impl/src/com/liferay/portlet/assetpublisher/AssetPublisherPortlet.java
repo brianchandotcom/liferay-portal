@@ -28,22 +28,23 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
-import com.liferay.portlet.assetpublisher.util.AssetRSSUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.assetpublisher.util.AssetRSSUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
+
 import java.text.DateFormat;
+
 import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -57,16 +58,101 @@ import javax.servlet.ServletException;
  */
 public class AssetPublisherPortlet extends MVCPortlet {
 
-	@Override
-	public void serveResource(
+	public void getFieldValue(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
-		if (!cmd.equals("rss")) {
-			super.serveResource(resourceRequest, resourceResponse);
+		if (!cmd.equals("getFieldValue")) {
+			return;
 		}
+
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				resourceRequest);
+
+			long structureId = ParamUtil.getLong(
+				resourceRequest, "structureId");
+
+			Fields fields = (Fields)serviceContext.getAttribute(
+				Fields.class.getName() + structureId);
+
+			if (fields == null) {
+				String fieldsNamespace = ParamUtil.getString(
+					resourceRequest, "fieldsNamespace");
+
+				fields = DDMUtil.getFields(
+					structureId, fieldsNamespace, serviceContext);
+			}
+
+			String fieldName = ParamUtil.getString(resourceRequest, "name");
+
+			Field field = fields.get(fieldName);
+
+			Serializable fieldValue = field.getValue(
+				themeDisplay.getLocale(), 0);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			if (fieldValue != null) {
+				jsonObject.put("success", true);
+			}
+			else {
+				jsonObject.put("success", false);
+
+				writeJSON(resourceRequest, resourceResponse, jsonObject);
+
+				return;
+			}
+
+			DDMStructure ddmStructure = field.getDDMStructure();
+
+			String type = ddmStructure.getFieldType(fieldName);
+
+			Serializable displayValue = DDMUtil.getDisplayFieldValue(
+				themeDisplay, fieldValue, type);
+
+			jsonObject.put("displayValue", String.valueOf(displayValue));
+
+			if (fieldValue instanceof Boolean) {
+				jsonObject.put("value", (Boolean) fieldValue);
+			}
+			else if (fieldValue instanceof Date) {
+				DateFormat dateFormat =
+					DateFormatFactoryUtil.getSimpleDateFormat(
+						"yyyyMM ddHHmmss");
+
+				jsonObject.put("value", dateFormat.format(fieldValue));
+			}
+			else if (fieldValue instanceof Double) {
+				jsonObject.put("value", (Double) fieldValue);
+			}
+			else if (fieldValue instanceof Float) {
+				jsonObject.put("value", (Float) fieldValue);
+			}
+			else if (fieldValue instanceof Integer) {
+				jsonObject.put("value", (Integer) fieldValue);
+			}
+			else if (fieldValue instanceof Number) {
+				jsonObject.put("value", String.valueOf(fieldValue));
+			}
+			else {
+				jsonObject.put("value", (String) fieldValue);
+			}
+
+			writeJSON(resourceRequest, resourceResponse, jsonObject);
+		}
+		catch (Exception e) {
+		}
+	}
+
+	public void getRSS(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException {
 
 		if (!PortalUtil.isRSSFeedsEnabled()) {
 			try {
@@ -95,89 +181,19 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 	@Override
 	public void serveResource(
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
 
 		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
-		if (!cmd.equals("getFieldValue")) {
-			return;
+		if (cmd.equals("getFieldValue")) {
+			getFieldValue(resourceRequest, resourceResponse);
+		}
+		else if (cmd.equals("rss")) {
+			getRSS(resourceRequest, resourceResponse);
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			resourceRequest);
-
-		long structureId = ParamUtil.getLong(resourceRequest, "structureId");
-
-		Fields fields = (Fields)serviceContext.getAttribute(
-			Fields.class.getName() + structureId);
-
-		if (fields == null) {
-			String fieldsNamespace = ParamUtil.getString(
-				resourceRequest, "fieldsNamespace");
-
-			fields = DDMUtil.getFields(
-				structureId, fieldsNamespace, serviceContext);
-		}
-
-		String fieldName = ParamUtil.getString(resourceRequest, "name");
-
-		Field field = fields.get(fieldName);
-
-		Serializable fieldValue = field.getValue(themeDisplay.getLocale(), 0);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (fieldValue != null) {
-			jsonObject.put("success", true);
-		}
-		else {
-			jsonObject.put("success", false);
-
-			writeJSON(resourceRequest, resourceResponse, jsonObject);
-
-			return;
-		}
-
-		DDMStructure ddmStructure = field.getDDMStructure();
-
-		String type = ddmStructure.getFieldType(fieldName);
-
-		Serializable displayValue = DDMUtil.getDisplayFieldValue(
-			themeDisplay, fieldValue, type);
-
-		jsonObject.put("displayValue", String.valueOf(displayValue));
-
-		if (fieldValue instanceof Boolean) {
-			jsonObject.put("value", (Boolean)fieldValue);
-		}
-		else if (fieldValue instanceof Date) {
-			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"yyyyMMddHHmmss");
-
-			jsonObject.put("value", dateFormat.format(fieldValue));
-		}
-		else if (fieldValue instanceof Double) {
-			jsonObject.put("value", (Double)fieldValue);
-		}
-		else if (fieldValue instanceof Float) {
-			jsonObject.put("value", (Float)fieldValue);
-		}
-		else if (fieldValue instanceof Integer) {
-			jsonObject.put("value", (Integer)fieldValue);
-		}
-		else if (fieldValue instanceof Number) {
-			jsonObject.put("value", String.valueOf(fieldValue));
-		}
-		else {
-			jsonObject.put("value", (String)fieldValue);
-		}
-
-		writeJSON(resourceRequest, resourceResponse, jsonObject);
+		super.serveResource(resourceRequest, resourceResponse);
 	}
 
 	public void subscribe(

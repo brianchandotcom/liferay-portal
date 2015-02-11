@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
-page import="com.liferay.portlet.asset.provider.PortletProvider" %><%@
-page import="com.liferay.portlet.asset.provider.PortletProviderUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.regex.Matcher" %><%@

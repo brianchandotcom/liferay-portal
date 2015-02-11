@@ -23,8 +23,6 @@ page import="com.liferay.portlet.asset.DuplicateQueryRuleException" %><%@
 page import="com.liferay.portlet.asset.model.ClassType" %><%@
 page import="com.liferay.portlet.asset.model.ClassTypeField" %><%@
 page import="com.liferay.portlet.asset.model.ClassTypeReader" %><%@
-page import="com.liferay.portlet.asset.provider.PortletProvider" %><%@
-page import="com.liferay.portlet.asset.provider.PortletProviderUtil" %><%@
 page import="com.liferay.portlet.asset.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
 page import="com.liferay.portlet.assetpublisher.context.AssetPublisherDisplayContext" %><%@
 page import="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil" %><%@
@@ -32,8 +30,7 @@ page import="com.liferay.portlet.assetpublisher.util.AssetPublisherUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMImpl" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil" %><%@
 page import="com.liferay.portlet.messageboards.model.MBDiscussion" %><%@
-page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate" %><%@
-page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants" %>
+page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate" %>
 
 <%
 AssetPublisherDisplayContext assetPublisherDisplayContext = new AssetPublisherDisplayContext(request, portletPreferences);

@@ -68,7 +68,9 @@ if (assetEntryId > 0) {
 				if (assetRenderer.hasViewPermission(permissionChecker)) {
 					String asseLinktEntryTitle = assetLinkEntry.getTitle(locale);
 
-					LiferayPortletURL assetPublisherURL = new PortletURLImpl(request, PortletKeys.ASSET_PUBLISHER, plid, PortletRequest.RENDER_PHASE);
+					String portletId = PortletProviderUtil.getPortletId(assetRenderer.getClassName(), PortletProvider.Action.VIEW);
+
+					LiferayPortletURL assetPublisherURL = new PortletURLImpl(request, portletId, plid, PortletRequest.RENDER_PHASE);
 
 					assetPublisherURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
 					assetPublisherURL.setParameter("redirect", currentURL);

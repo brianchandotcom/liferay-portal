@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerUtil;
@@ -25,14 +24,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.query.Condition;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
-import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Pablo Carvalho
@@ -89,22 +82,6 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 	}
 
 	@Override
-	protected long doCreate(
-			long companyId, long ddmStructureId, Fields fields,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		DDMStructure ddmStructure =
-			DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
-
-		DDMFormValues ddmFormValues =
-			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
-
-		return doCreate(
-			companyId, ddmStructureId, ddmFormValues, serviceContext);
-	}
-
-	@Override
 	protected void doDeleteByClass(long classPK) throws Exception {
 		DDMContentLocalServiceUtil.deleteDDMContent(classPK);
 
@@ -115,7 +92,13 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 	protected void doDeleteByDDMStructure(long ddmStructureId)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		List<DDMStorageLink> ddmStorageLinks =
+			DDMStorageLinkLocalServiceUtil.getStructureStorageLinks(
+				ddmStructureId);
+
+		for (DDMStorageLink ddmStorageLink : ddmStorageLinks) {
+			doDeleteByClass(ddmStorageLink.getClassPK());
+		}
 	}
 
 	@Override
@@ -134,106 +117,6 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 				ddmStructure.getDDMForm(), ddmContent.getData());
 
 		return ddmFormValues;
-	}
-
-	@Override
-	protected List<Fields> doGetFieldsListByClasses(
-			long ddmStructureId, long[] classPKs, List<String> fieldNames,
-			OrderByComparator<Fields> orderByComparator)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected List<Fields> doGetFieldsListByDDMStructure(
-			long ddmStructureId, List<String> fieldNames,
-			OrderByComparator<Fields> orderByComparator)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected Map<Long, Fields> doGetFieldsMapByClasses(
-			long ddmStructureId, long[] classPKs, List<String> fieldNames)
-		throws Exception {
-
-		Map<Long, Fields> fieldsMapByClasses = new HashMap<>();
-
-		for (long classPK : classPKs) {
-			fieldsMapByClasses.put(classPK, _getFields(classPK, fieldNames));
-		}
-
-		return fieldsMapByClasses;
-	}
-
-	@Override
-	protected List<Fields> doQuery(
-			long ddmStructureId, List<String> fieldNames, Condition condition,
-			OrderByComparator<Fields> orderByComparator)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected int doQueryCount(long ddmStructureId, Condition condition)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void doUpdate(
-			long classPK, Fields fields, boolean mergeFields,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		long ddmStructureId = fields.getDDMStructureId();
-
-		DDMStructure ddmStructure =
-			DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
-
-		DDMFormValues ddmFormValues =
-			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
-
-		doUpdate(classPK, ddmFormValues, serviceContext);
-	}
-
-	private Fields _getFields(long classPK) throws Exception {
-		DDMStorageLink ddmStorageLink =
-			DDMStorageLinkLocalServiceUtil.getClassStorageLink(classPK);
-
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
-			ddmStorageLink.getStructureId());
-
-		DDMFormValues ddmFormValues = getDDMFormValues(classPK);
-
-		return DDMFormValuesToFieldsConverterUtil.convert(
-			ddmStructure, ddmFormValues);
-	}
-
-	private Fields _getFields(long classPK, List<String> fieldNames)
-		throws Exception {
-
-		Fields fields = _getFields(classPK);
-
-		if (fieldNames == null) {
-			return fields;
-		}
-
-		Iterator<Field> itr = fields.iterator();
-
-		while (itr.hasNext()) {
-			Field field = itr.next();
-
-			if (!fieldNames.contains(field.getName())) {
-				itr.remove();
-			}
-		}
-
-		return fields;
 	}
 
 }

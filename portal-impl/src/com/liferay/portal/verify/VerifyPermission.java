@@ -178,6 +178,12 @@ public class VerifyPermission extends VerifyProcess {
 			long groupActions = groupResourcePermission.getActionIds();
 
 			for (Object[] actionIdToMask : _ORGANIZATION_ACTION_IDS_TO_MASKS) {
+				String actionId = (String)actionIdToMask[0];
+
+				if (!resourcePermission.hasActionId(actionId)) {
+					continue;
+				}
+
 				long organizationActionMask = (Long)actionIdToMask[1];
 				long groupActionMask = (Long)actionIdToMask[2];
 

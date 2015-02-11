@@ -104,37 +104,38 @@ parameters `currentLogoURL`, `hasUpdateLogoPermission`, `maxFileSize`, and/or
 Replace:
 ```
 <portlet:renderURL var="editUserPortraitURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
-	<portlet:param name="portrait_id" value="<%= String.valueOf(selUser.getPortraitId()) %>" />
+    <portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />
+    <portlet:param name="redirect" value="<%= currentURL %>" />
+    <portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
+    <portlet:param name="portrait_id" value="<%= String.valueOf(selUser.getPortraitId()) %>" />
 </portlet:renderURL>
 
 <liferay-ui:logo-selector
-	defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
-	editLogoURL="<%= editUserPortraitURL %>"
-	imageId="<%= selUser.getPortraitId() %>"
-	logoDisplaySelector=".user-logo"
+    defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
+    editLogoURL="<%= editUserPortraitURL %>"
+    imageId="<%= selUser.getPortraitId() %>"
+    logoDisplaySelector=".user-logo"
 />
 ```
 
 With:
 ```
 <liferay-ui:logo-selector
-	currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
-	defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
-	hasUpdateLogoPermission='<%= UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'
-	imageId="<%= selUser.getPortraitId() %>"
-	logoDisplaySelector=".user-logo"
-	maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>"
-	tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"
+    currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
+    defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
+    hasUpdateLogoPermission='<%= UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'
+    imageId="<%= selUser.getPortraitId() %>"
+    logoDisplaySelector=".user-logo"
+    maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>"
+    tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"
 />
 ```
 
 #### Why was this change made?
 This change helps keep a unified UI and consistent experience for uploading
 logos in the portal that can be customized from a single location. In addition,
-it adds new features such as cropping and support for canceling.
+it adds new features such as image cropping and support for canceling image
+upload.
 
 ---------------------------------------
 

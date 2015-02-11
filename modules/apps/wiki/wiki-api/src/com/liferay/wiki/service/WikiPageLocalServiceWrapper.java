@@ -1017,9 +1017,9 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public void setWikiServiceConfiguration(
-		com.liferay.wiki.configuration.WikiServiceConfiguration wikiServiceConfiguration) {
-		_wikiPageLocalService.setWikiServiceConfiguration(wikiServiceConfiguration);
+	public void setWikiConfiguration(
+		com.liferay.wiki.settings.WikiConfiguration wikiConfiguration) {
+		_wikiPageLocalService.setWikiConfiguration(wikiConfiguration);
 	}
 
 	@Override

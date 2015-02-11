@@ -133,7 +133,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 						<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="addScopeURL">
 							<portlet:param name="<%= Constants.CMD %>" value="add-scope" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="scopeId" value="<%= AssetPublisherUtil.getScopeId(group, scopeGroupId) %>" />
+							<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 						</liferay-portlet:actionURL>
 
 						<liferay-ui:icon

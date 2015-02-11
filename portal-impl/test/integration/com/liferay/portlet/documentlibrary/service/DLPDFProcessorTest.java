@@ -60,6 +60,29 @@ public class DLPDFProcessorTest {
 	}
 
 	@Test
+	public void testShouldCopyPreviousPreviewOnUpdateWithNoContent()
+		throws Exception {
+
+		AtomicInteger count = registerDLPDFProcessorMessageListener(
+			EventType.COPY_PREVIOUS);
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), _PDF_DATA.getBytes(), _serviceContext);
+
+		DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
+			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), true,
+			new byte[0], _serviceContext);
+
+		Assert.assertEquals(1, count.get());
+	}
+
+	@Test
 	public void testShouldCreateNewPreviewOnAdd() throws Exception {
 		AtomicInteger count = registerDLPDFProcessorMessageListener(
 			EventType.GENERATE_NEW);

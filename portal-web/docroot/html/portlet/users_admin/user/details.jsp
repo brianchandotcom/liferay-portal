@@ -49,7 +49,7 @@ else {
 	else {
 		User defaultUser = company.getDefaultUser();
 
-		LocaleUtil.fromLanguageId(defaultUser.getLanguageId());
+		userLocale = LocaleUtil.fromLanguageId(defaultUser.getLanguageId());
 	}
 }
 %>

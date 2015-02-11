@@ -14,11 +14,13 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -26,17 +28,24 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.PDFProcessorImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -60,6 +69,30 @@ public class DLPDFProcessorTest {
 		_group = GroupTestUtil.addGroup();
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
+	}
+
+	@After
+	public void tearDown() {
+		if (_cleanUpDLProcessor != null) {
+			DLProcessorRegistryUtil.unregister(_cleanUpDLProcessor);
+			DLProcessorRegistryUtil.register(_originalDLProcessor);
+		}
+	}
+
+	@Test
+	public void testShouldCleanUpProcessorsOnDelete() throws Exception {
+		AtomicBoolean cleanedUp = registerCleanUpDLProcessor();
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), _PDF_DATA.getBytes(), _serviceContext);
+
+		DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
+
+		Assert.assertTrue(cleanedUp.get());
 	}
 
 	@Test
@@ -281,6 +314,57 @@ public class DLPDFProcessorTest {
 		return counter;
 	}
 
+	protected AtomicBoolean registerCleanUpDLProcessor() {
+		_originalDLProcessor = DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.PDF_PROCESSOR);
+
+		final AtomicBoolean cleanedUp = new AtomicBoolean(false);
+
+		_cleanUpDLProcessor = new PDFProcessorImpl() {
+
+			@Override
+			public void cleanUp(FileEntry fileEntry) {
+				cleanedUp.set(true);
+			}
+
+			@Override
+			public void cleanUp(FileVersion fileVersion) {
+				cleanedUp.set(true);
+			}
+
+			@Override
+			public void copy(
+				FileVersion sourceFileVersion,
+				FileVersion destinationFileVersion) {
+			}
+
+			@Override
+			public void exportGeneratedFiles(
+					PortletDataContext portletDataContext, FileEntry fileEntry,
+					Element fileEntryElement)
+				throws Exception {
+			}
+
+			@Override
+			public void importGeneratedFiles(
+					PortletDataContext portletDataContext, FileEntry fileEntry,
+					FileEntry importedFileEntry, Element fileEntryElement)
+				throws Exception {
+			}
+
+			@Override
+			public void trigger(
+				FileVersion sourceFileVersion,
+				FileVersion destinationFileVersion) {
+			}
+
+		};
+
+		DLProcessorRegistryUtil.register(_cleanUpDLProcessor);
+
+		return cleanedUp;
+	}
+
 	protected enum EventType {
 
 		COPY_PREVIOUS {
@@ -308,9 +392,12 @@ public class DLPDFProcessorTest {
 	private static final String _PDF_DATA =
 		"%PDF-1.\ntrailer<</Root<</Pages<</Kids[<</MediaBox[0 0 3 3]>>]>>>>>>";
 
+	private DLProcessor _cleanUpDLProcessor;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private DLProcessor _originalDLProcessor;
 	private ServiceContext _serviceContext;
 
 }

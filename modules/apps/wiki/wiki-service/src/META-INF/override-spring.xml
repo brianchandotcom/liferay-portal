@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean id="com.liferay.wiki.service.WikiNodeLocalService" class="com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl">
+		<property name="wikiConfiguration" ref="com.liferay.wiki.settings.WikiConfiguration" />
+	</bean>
+	<bean id="com.liferay.wiki.service.WikiPageLocalService" class="com.liferay.wiki.service.impl.WikiPageLocalServiceImpl">
+		<property name="wikiConfiguration" ref="com.liferay.wiki.settings.WikiConfiguration" />
+		<property name="wikiSettingsProvider" ref="com.liferay.wiki.settings.WikiSettingsProvider" />
+	</bean>
+</beans>

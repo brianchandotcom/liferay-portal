@@ -72,10 +72,8 @@ public class BlogsSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected long addBaseModel(long userId, long containerModelId)
-		throws Exception {
-
-		BlogsEntry entry = BlogsTestUtil.addEntry(userId, group, true);
+	protected long addBaseModel(long containerModelId) throws Exception {
+		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
 
 		return entry.getEntryId();
 	}
@@ -89,12 +87,11 @@ public class BlogsSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(long userId, long baseModelId) throws Exception {
+	protected void updateBaseModel(long baseModelId) throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(baseModelId);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		serviceContext.setAttribute("sendEmailEntryUpdated", true);
 

@@ -47,26 +47,23 @@ public class BookmarksSubscriptionRootContainerModelTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(long userId, long containerModelId)
-		throws Exception {
+	protected long addBaseModel(long containerModelId) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			userId, containerModelId, true);
+			containerModelId, true, serviceContext);
 
 		return entry.getEntryId();
 	}
 
 	@Override
-	protected long addContainerModel(long userId, long containerModelId)
-		throws Exception {
-
+	protected long addContainerModel(long containerModelId) throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			userId, containerModelId, RandomTestUtil.randomString(),
-			serviceContext);
+			containerModelId, RandomTestUtil.randomString(), serviceContext);
 
 		return folder.getFolderId();
 	}
@@ -80,13 +77,11 @@ public class BookmarksSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(long userId, long baseModelId)
-		throws Exception {
-
+	protected void updateBaseModel(long baseModelId) throws Exception {
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
 			baseModelId);
 
-		BookmarksTestUtil.updateEntry(userId, entry);
+		BookmarksTestUtil.updateEntry(entry);
 	}
 
 }

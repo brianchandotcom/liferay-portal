@@ -34,31 +34,20 @@ public abstract class BaseSubscriptionTestCase {
 		group = GroupTestUtil.addGroup();
 
 		user = UserTestUtil.addGroupUser(group, RoleConstants.SITE_MEMBER);
-
-		contextUser = UserTestUtil.addGroupUser(
-			group, RoleConstants.SITE_MEMBER);
 	}
 
-	protected long addBaseModel(long userId, long containerModelId)
-		throws Exception {
-
+	protected long addBaseModel(long containerModelId) throws Exception {
 		return 0;
 	}
 
-	protected long addContainerModel(long userId, long containerModelId)
-		throws Exception {
-
+	protected long addContainerModel(long containerModelId) throws Exception {
 		return 0;
 	}
 
-	protected void updateBaseModel(long userId, long baseModelId)
-		throws Exception {
+	protected void updateBaseModel(long baseModelId) throws Exception {
 	}
 
 	protected static final long PARENT_CONTAINER_MODEL_ID_DEFAULT = 0;
-
-	@DeleteAfterTestRun
-	protected User contextUser;
 
 	@DeleteAfterTestRun
 	protected Group group;

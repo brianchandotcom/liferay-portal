@@ -87,23 +87,6 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticle(
-			long userId, long groupId, long folderId)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId, userId);
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return addArticle(
-			groupId, folderId, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), LocaleUtil.getSiteDefault(), false,
-			false, serviceContext);
-	}
-
-	public static JournalArticle addArticle(
 			long groupId, long folderId, long classNameId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> contentMap, Locale defaultLocale,
@@ -589,22 +572,11 @@ public class JournalTestUtil {
 	}
 
 	public static JournalFolder addFolder(
-			long userId, long groupId, long parentFolderId, String name)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId, userId);
-
-		return addFolder(parentFolderId, name, serviceContext);
-	}
-
-	public static JournalFolder addFolder(
 			long groupId, long parentFolderId, String name)
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				groupId, TestPropsValues.getUserId());
+			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return addFolder(parentFolderId, name, serviceContext);
 	}
@@ -628,7 +600,7 @@ public class JournalTestUtil {
 		}
 
 		return JournalFolderLocalServiceUtil.addFolder(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			parentFolderId, name, "This is a test folder.", serviceContext);
 	}
 
@@ -729,52 +701,6 @@ public class JournalTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return updateArticle(
-				article.getUserId(), article, titleMap, content,
-				workflowEnabled, approved, serviceContext);
-	}
-
-	public static JournalArticle updateArticle(
-			JournalArticle article, String title)
-		throws Exception {
-
-		return updateArticle(
-			article, title, article.getContent(), false, false,
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static JournalArticle updateArticle(
-			JournalArticle article, String title, String content)
-		throws Exception {
-
-		return updateArticle(
-			article, title, content, false, false,
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static JournalArticle updateArticle(
-			JournalArticle article, String title, String content,
-			boolean workflowEnabled, boolean approved,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		for (Locale locale : _locales) {
-			titleMap.put(locale, title);
-		}
-
-		return updateArticle(
-			article, titleMap, content, workflowEnabled, approved,
-			serviceContext);
-	}
-
-	public static JournalArticle updateArticle(
-			long userId, JournalArticle article, Map<Locale, String> titleMap,
-			String content, boolean workflowEnabled, boolean approved,
-			ServiceContext serviceContext)
-		throws Exception {
-
 		if (workflowEnabled) {
 			serviceContext = (ServiceContext)serviceContext.clone();
 
@@ -813,7 +739,7 @@ public class JournalTestUtil {
 		serviceContext.setLayoutFullURL("http://localhost");
 
 		return JournalArticleLocalServiceUtil.updateArticle(
-			userId, article.getGroupId(), article.getFolderId(),
+			article.getUserId(), article.getGroupId(), article.getFolderId(),
 			article.getArticleId(), article.getVersion(), titleMap,
 			article.getDescriptionMap(), content, article.getDDMStructureKey(),
 			article.getDDMTemplateKey(), article.getLayoutUuid(),
@@ -823,6 +749,41 @@ public class JournalTestUtil {
 			article.getSmallImageURL(), null, null, null, serviceContext);
 	}
 
+	public static JournalArticle updateArticle(
+			JournalArticle article, String title)
+		throws Exception {
+
+		return updateArticle(
+			article, title, article.getContent(), false, false,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static JournalArticle updateArticle(
+			JournalArticle article, String title, String content)
+		throws Exception {
+
+		return updateArticle(
+			article, title, content, false, false,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static JournalArticle updateArticle(
+			JournalArticle article, String title, String content,
+			boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		for (Locale locale : _locales) {
+			titleMap.put(locale, title);
+		}
+
+		return updateArticle(
+			article, titleMap, content, workflowEnabled, approved,
+			serviceContext);
+	}
+
 	public static JournalArticle updateArticleWithWorkflow(
 			JournalArticle article, boolean approved)
 		throws Exception {
@@ -830,19 +791,6 @@ public class JournalTestUtil {
 		return updateArticle(
 			article, RandomTestUtil.randomString(), article.getContent(), false,
 			approved, ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static JournalArticle updateArticleWithWorkflow(
-			long userId, JournalArticle article, boolean approved)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				article.getGroupId(), userId);
-
-		return updateArticle(
-			article, RandomTestUtil.randomString(), article.getContent(), false,
-			approved, serviceContext);
 	}
 
 	private static String _getFeedFriendlyURL(long groupId, long plid)

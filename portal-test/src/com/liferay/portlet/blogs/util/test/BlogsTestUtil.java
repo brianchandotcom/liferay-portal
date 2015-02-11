@@ -71,8 +71,7 @@ public class BlogsTestUtil {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
@@ -86,8 +85,7 @@ public class BlogsTestUtil {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
@@ -264,7 +262,7 @@ public class BlogsTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			entry = BlogsEntryLocalServiceUtil.updateEntry(
-				serviceContext.getUserId(), entry.getEntryId(), title,
+				entry.getUserId(), entry.getEntryId(), title,
 				entry.getSubtitle(), entry.getDescription(), entry.getContent(),
 				1, 1, 2012, 12, 00, true, true, new String[0], null, null,
 				serviceContext);
@@ -293,7 +291,7 @@ public class BlogsTestUtil {
 			WorkflowConstants.CONTEXT_USER_URL, "http://localhost");
 
 		return BlogsEntryLocalServiceUtil.updateStatus(
-			serviceContext.getUserId(), entry.getEntryId(),
+			entry.getUserId(), entry.getEntryId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 	}
 

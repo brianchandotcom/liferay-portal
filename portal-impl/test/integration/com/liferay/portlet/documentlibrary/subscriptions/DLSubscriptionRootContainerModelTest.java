@@ -19,9 +19,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -47,27 +44,17 @@ public class DLSubscriptionRootContainerModelTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(long userId, long containerModelId)
-		throws Exception {
-
+	protected long addBaseModel(long containerModelId) throws Exception {
 		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
-			userId, group.getGroupId(), group.getGroupId(), containerModelId,
-			true);
+			group.getGroupId(), group.getGroupId(), containerModelId, true);
 
 		return fileEntry.getFileEntryId();
 	}
 
 	@Override
-	protected long addContainerModel(long userId, long containerModelId)
-		throws Exception {
-
-		ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), userId);
-
+	protected long addContainerModel(long containerModelId) throws Exception {
 		Folder folder = DLAppTestUtil.addFolder(
-			userId, group.getGroupId(), containerModelId,
-			RandomTestUtil.randomString(), false, serviceContext);
+			group.getGroupId(), containerModelId);
 
 		return folder.getFolderId();
 	}
@@ -81,11 +68,9 @@ public class DLSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(long userId, long baseModelId)
-		throws Exception {
-
+	protected void updateBaseModel(long baseModelId) throws Exception {
 		DLAppTestUtil.updateFileEntryWithWorkflow(
-			userId, group.getGroupId(), baseModelId, false, true);
+			group.getGroupId(), baseModelId, false, true);
 	}
 
 }

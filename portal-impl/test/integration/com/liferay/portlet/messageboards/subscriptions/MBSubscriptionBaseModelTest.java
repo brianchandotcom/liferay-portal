@@ -17,18 +17,14 @@ package com.liferay.portlet.messageboards.subscriptions;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.subscriptions.test.BaseSubscriptionBaseModelTestCase;
@@ -51,9 +47,7 @@ public class MBSubscriptionBaseModelTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(long userId, long containerModelId)
-		throws Exception {
-
+	protected long addBaseModel(long containerModelId) throws Exception {
 		MBMessage message = MBTestUtil.addMessage(
 			group.getGroupId(), containerModelId, true);
 
@@ -61,16 +55,9 @@ public class MBSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected long addContainerModel(long userId, long containerModelId)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
-
-		_category = MBCategoryServiceUtil.addCategory(
-			userId, containerModelId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+	protected long addContainerModel(long containerModelId) throws Exception {
+		_category = MBTestUtil.addCategory(
+			group.getGroupId(), containerModelId);
 
 		return _category.getCategoryId();
 	}
@@ -97,14 +84,10 @@ public class MBSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(long userId, long baseModelId)
-		throws Exception {
-
+	protected void updateBaseModel(long baseModelId) throws Exception {
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
 
-		MBTestUtil.updateMessage(
-				userId, message, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(50), true);
+		MBTestUtil.updateMessage(message, true);
 	}
 
 	private MBCategory _category;

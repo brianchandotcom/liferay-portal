@@ -806,13 +806,13 @@ public class WikiPageLocalServiceTest {
 		}
 
 		WikiPage updatedPage1 = WikiTestUtil.updatePage(
-			TestPropsValues.getUserId(), originalPage,
+			originalPage, TestPropsValues.getUserId(),
 			originalContent + "\nAdded second line.", serviceContext);
 
 		Assert.assertNotEquals(originalContent, updatedPage1.getContent());
 
 		WikiPage updatedPage2 = WikiTestUtil.updatePage(
-			TestPropsValues.getUserId(), updatedPage1,
+			updatedPage1, TestPropsValues.getUserId(),
 			updatedPage1.getContent() + "\nAdded third line.", serviceContext);
 
 		Assert.assertNotEquals(originalContent, updatedPage2.getContent());

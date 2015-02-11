@@ -17,7 +17,6 @@ package com.liferay.wiki.subscription;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTestCase;
@@ -56,12 +55,9 @@ public class WikiSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected long addBaseModel(long userId, long containerModelId)
-		throws Exception {
-
+	protected long addBaseModel(long containerModelId) throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
-			userId, group.getGroupId(), containerModelId,
-			RandomTestUtil.randomString(), true);
+			group.getGroupId(), _node.getNodeId(), true);
 
 		return page.getResourcePrimKey();
 	}
@@ -95,12 +91,10 @@ public class WikiSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected void updateBaseModel(long userId, long baseModelId)
-		throws Exception {
-
+	protected void updateBaseModel(long baseModelId) throws Exception {
 		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
 
-		WikiTestUtil.updatePage(userId, page);
+		WikiTestUtil.updatePage(page);
 	}
 
 	private WikiNode _node;

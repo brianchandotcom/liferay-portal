@@ -165,21 +165,6 @@ public class MBTestUtil {
 	}
 
 	public static MBMessage addMessage(
-			long userId, long groupId, long categoryId, boolean approved)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId, userId);
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return addMessage(
-			userId, groupId, categoryId, StringPool.BLANK, approved,
-			serviceContext);
-	}
-
-	public static MBMessage addMessage(
 			long groupId, long categoryId, long threadId, long parentMessageId)
 		throws Exception {
 
@@ -201,30 +186,6 @@ public class MBTestUtil {
 			userId, userName, groupId, categoryId, threadId, parentMessageId,
 			subject, body, format, inputStreamOVPs, anonymous, priority,
 			allowPingbacks, serviceContext);
-	}
-
-	public static MBMessage addMessage(
-			long userId, long groupId, long categoryId, String keywords,
-			boolean approved, ServiceContext serviceContext)
-		throws Exception {
-
-		String subject = "subject";
-		String body = "body";
-
-		if (!Validator.isBlank(keywords)) {
-			subject = keywords;
-			body = keywords;
-		}
-
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			userId, RandomTestUtil.randomString(), groupId, categoryId, subject,
-			body, serviceContext);
-
-		if (!approved) {
-			message = updateStatus(userId, message, serviceContext);
-		}
-
-		return message;
 	}
 
 	public static MBMessage addMessage(
@@ -350,42 +311,6 @@ public class MBTestUtil {
 			classPK);
 	}
 
-	public static MBMessage updateMessage(
-			long userId, MBMessage message, String subject, String body,
-			boolean approved)
-		throws Exception {
-
-		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
-
-		try {
-			WorkflowThreadLocal.setEnabled(true);
-
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					message.getGroupId(), userId);
-
-			serviceContext.setCommand(Constants.UPDATE);
-			serviceContext.setLayoutFullURL("http://localhost");
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
-			message = MBMessageLocalServiceUtil.updateMessage(
-				userId, message.getMessageId(), subject, body,
-				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-				Collections.<String>emptyList(), message.getPriority(),
-				message.isAllowPingbacks(), serviceContext);
-
-			if (approved) {
-				message = updateStatus(userId, message, serviceContext);
-			}
-
-			return message;
-		}
-		finally {
-			WorkflowThreadLocal.setEnabled(workflowEnabled);
-		}
-	}
-
 	public static MBMessage updateMessage(MBMessage message, boolean approved)
 		throws Exception {
 
@@ -398,8 +323,35 @@ public class MBTestUtil {
 			MBMessage message, String subject, String body, boolean approved)
 		throws Exception {
 
-		return updateMessage(
-			TestPropsValues.getUserId(), message, subject, body, approved);
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		try {
+			WorkflowThreadLocal.setEnabled(true);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(message.getGroupId());
+
+			serviceContext.setCommand(Constants.UPDATE);
+			serviceContext.setLayoutFullURL("http://localhost");
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			message = MBMessageLocalServiceUtil.updateMessage(
+				TestPropsValues.getUserId(), message.getMessageId(), subject,
+				body,
+				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
+				Collections.<String>emptyList(), message.getPriority(),
+				message.isAllowPingbacks(), serviceContext);
+
+			if (approved) {
+				message = updateStatus(message, serviceContext);
+			}
+
+			return message;
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
 	}
 
 	protected static MBMessage addMessage(
@@ -441,21 +393,6 @@ public class MBTestUtil {
 			allowPingbacks, serviceContext);
 
 		return MBMessageLocalServiceUtil.getMessage(message.getMessageId());
-	}
-
-	protected static MBMessage updateStatus(
-			long userId, MBMessage message, ServiceContext serviceContext)
-		throws Exception {
-
-		Map<String, Serializable> workflowContext = new HashMap<>();
-
-		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
-
-		message = MBMessageLocalServiceUtil.updateStatus(
-			userId, message.getMessageId(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext, workflowContext);
-
-		return message;
 	}
 
 	protected static MBMessage updateStatus(

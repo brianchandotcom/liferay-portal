@@ -47,12 +47,6 @@ public class WikiTestUtil {
 			RandomTestUtil.randomString(50));
 	}
 
-	public static WikiNode addNode(long userId, long groupId) throws Exception {
-		return addNode(
-			userId, groupId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(50));
-	}
-
 	public static WikiNode addNode(
 			long userId, long groupId, String name, String description)
 		throws Exception {
@@ -86,7 +80,7 @@ public class WikiTestUtil {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId, userId);
+			ServiceContextTestUtil.getServiceContext(groupId);
 
 		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setLayoutFullURL("http://localhost");
@@ -444,9 +438,7 @@ public class WikiTestUtil {
 		return copyPage;
 	}
 
-	public static WikiPage updatePage(long userId, WikiPage page)
-		throws Exception {
-
+	public static WikiPage updatePage(WikiPage page) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(page.getGroupId());
 
@@ -454,21 +446,21 @@ public class WikiTestUtil {
 		serviceContext.setLayoutFullURL("http://localhost");
 
 		return updatePage(
-			userId, page, page.getTitle(), RandomTestUtil.randomString(50),
-			true, serviceContext);
+			page, page.getUserId(), page.getTitle(),
+			RandomTestUtil.randomString(50), true, serviceContext);
 	}
 
 	public static WikiPage updatePage(
-			long userId, WikiPage page, String content,
+			WikiPage page, long userId, String content,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		return updatePage(
-			userId, page, page.getTitle(), content, true, serviceContext);
+			page, userId, page.getTitle(), content, true, serviceContext);
 	}
 
 	public static WikiPage updatePage(
-			long userId, WikiPage page, String title, String content,
+			WikiPage page, long userId, String title, String content,
 			boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
@@ -488,7 +480,7 @@ public class WikiTestUtil {
 				page.getParentTitle(), page.getRedirectTitle(), serviceContext);
 
 			if (approved) {
-				page = updateStatus(userId, page, serviceContext);
+				page = updateStatus(page, serviceContext);
 			}
 
 			return page;
@@ -498,12 +490,8 @@ public class WikiTestUtil {
 		}
 	}
 
-	public static WikiPage updatePage(WikiPage page) throws Exception {
-		return updatePage(page.getUserId(), page);
-	}
-
 	protected static WikiPage updateStatus(
-			long userId, WikiPage page, ServiceContext serviceContext)
+			WikiPage page, ServiceContext serviceContext)
 		throws Exception {
 
 		Map<String, Serializable> workflowContext = new HashMap<>();
@@ -511,17 +499,10 @@ public class WikiTestUtil {
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
 
 		page = WikiPageLocalServiceUtil.updateStatus(
-			userId, page, WorkflowConstants.STATUS_APPROVED, serviceContext,
-			workflowContext);
+			page.getUserId(), page, WorkflowConstants.STATUS_APPROVED,
+			serviceContext, workflowContext);
 
 		return page;
-	}
-
-	protected static WikiPage updateStatus(
-			WikiPage page, ServiceContext serviceContext)
-		throws Exception {
-
-		return updateStatus(page.getUserId(), page, serviceContext);
 	}
 
 }

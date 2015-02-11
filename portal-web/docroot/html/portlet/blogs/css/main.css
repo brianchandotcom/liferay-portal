@@ -190,12 +190,8 @@
 			background-size: cover;
 			float: right;
 			height: 140px;
-			margin-left: 60px;
+			margin-left: 10px;
 			width: 140px;
-		}
-
-		.next-entry {
-			padding-left: 30px;
 		}
 
 		.next-entry-content, .previous-entry-content {
@@ -205,7 +201,7 @@
 
 		.previous-entry .previous-entry-content {
 			border-right: 1px solid #CCC;
-			padding-right: 60px;
+			padding-right: 15px;
 		}
 
 		.entry-content {

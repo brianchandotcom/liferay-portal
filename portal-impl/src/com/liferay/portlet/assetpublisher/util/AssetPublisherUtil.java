@@ -345,25 +345,6 @@ public class AssetPublisherUtil {
 		return assetCategoryIds;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetEntryLocalServiceUtil#getEntries(long[], long[], String,
-	 *             String, String, String, boolean, boolean, int, int, String,
-	 *             String, String, String)}
-	 */
-	@Deprecated
-	public static List<AssetEntry> getAssetEntries(
-		long[] groupIds, long[] classNameIds, String keywords, String userName,
-		String title, String description, boolean advancedSearch,
-		boolean andOperator, int start, int end, String orderByCol1,
-		String orderByCol2, String orderByType1, String orderByType2) {
-
-		return AssetEntryLocalServiceUtil.getEntries(
-			groupIds, classNameIds, keywords, userName, title, description,
-			advancedSearch, andOperator, start, end, orderByCol1, orderByCol2,
-			orderByType1, orderByType2);
-	}
-
 	public static List<AssetEntry> getAssetEntries(
 			PortletPreferences portletPreferences, Layout layout,
 			long scopeGroupId, int max, boolean checkPermission)
@@ -372,7 +353,7 @@ public class AssetPublisherUtil {
 		long[] groupIds = getGroupIds(portletPreferences, scopeGroupId, layout);
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			portletPreferences, groupIds);
+			portletPreferences, groupIds, null, null);
 
 		assetEntryQuery.setGroupIds(groupIds);
 
@@ -562,78 +543,6 @@ public class AssetPublisherUtil {
 		return assetEntries;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetPublisherUtil#getAssetEntries(PortletRequest,
-	 *             PortletPreferences, PermissionChecker, long[], long[],
-	 *             String[], boolean , boolean)}
-	 */
-	@Deprecated
-	public static List<AssetEntry> getAssetEntries(
-			PortletRequest portletRequest,
-			PortletPreferences portletPreferences,
-			PermissionChecker permissionChecker, long[] groupIds,
-			long[] allCategoryIds, String[] assetEntryXmls,
-			String[] allTagNames, boolean deleteMissingAssetEntries,
-			boolean checkPermission)
-		throws Exception {
-
-		return getAssetEntries(
-			portletRequest, portletPreferences, permissionChecker, groupIds,
-			allCategoryIds, allTagNames, deleteMissingAssetEntries,
-			checkPermission);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetPublisherUtil#getAssetEntries(PortletRequest,
-	 *             PortletPreferences, PermissionChecker, long[], boolean,
-	 *             boolean)}
-	 */
-	@Deprecated
-	public static List<AssetEntry> getAssetEntries(
-			PortletRequest portletRequest,
-			PortletPreferences portletPreferences,
-			PermissionChecker permissionChecker, long[] groupIds,
-			String[] assetEntryXmls, boolean deleteMissingAssetEntries,
-			boolean checkPermission)
-		throws Exception {
-
-		return getAssetEntries(
-			portletRequest, portletPreferences, permissionChecker, groupIds,
-			deleteMissingAssetEntries, checkPermission);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetEntryLocalServiceUtil#getEntriesCount(long[], long[],
-	 *             String, String, String, String, boolean, boolean)}
-	 */
-	@Deprecated
-	public static int getAssetEntriesCount(
-		long[] groupIds, long[] classNameIds, String keywords, String userName,
-		String title, String description, boolean advancedSearch,
-		boolean andOperator, int start, int end) {
-
-		return AssetEntryLocalServiceUtil.getEntriesCount(
-			groupIds, classNameIds, keywords, userName, title, description,
-			advancedSearch, andOperator);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetPublisherUtil#getAssetEntryQuery(PortletPreferences,
-	 *             long[], long[], String[])}
-	 */
-	@Deprecated
-	public static AssetEntryQuery getAssetEntryQuery(
-			PortletPreferences portletPreferences, long[] scopeGroupIds)
-		throws PortalException {
-
-		return getAssetEntryQuery(
-			portletPreferences, scopeGroupIds, null, null);
-	}
-
 	public static AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] scopeGroupIds,
 			long[] overrideAllAssetCategoryIds,
@@ -777,18 +686,6 @@ public class AssetPublisherUtil {
 		}
 
 		return allAssetTagNames;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetPublisherUtil#getAssetTagNames(PortletPreferences)}
-	 */
-	@Deprecated
-	public static String[] getAssetTagNames(
-			PortletPreferences portletPreferences, long scopeGroupId)
-		throws Exception {
-
-		return getAssetTagNames(portletPreferences);
 	}
 
 	public static String getClassName(

@@ -68,7 +68,7 @@ if (ratingsEntry != null) {
 <c:if test="<%= !themeDisplay.isFacebook() %>">
 	<div class="taglib-ratings <%= type %>" id="<%= randomNamespace %>ratingContainer">
 		<c:choose>
-			<c:when test="<%= type.equals(PortletRatingsDefinition.RatingsType.STARS.getValue()) %>">
+			<c:when test="<%= type.equals(RatingsType.STARS.getValue()) %>">
 				<c:if test="<%= themeDisplay.isSignedIn() && !TrashUtil.isInTrash(className, classPK) %>">
 					<div class="liferay-rating-vote" id="<%= randomNamespace %>ratingStar">
 						<div id="<%= randomNamespace %>ratingStarContent">
@@ -124,12 +124,12 @@ if (ratingsEntry != null) {
 					</div>
 				</div>
 			</c:when>
-			<c:when test="<%= type.equals(PortletRatingsDefinition.RatingsType.LIKE.getValue()) || type.equals(PortletRatingsDefinition.RatingsType.THUMBS.getValue()) %>">
+			<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) || type.equals(RatingsType.THUMBS.getValue()) %>">
 
 				<%
 				String ratingIdPrefix = "ratingThumb";
 
-				if (type.equals(PortletRatingsDefinition.RatingsType.LIKE.getValue())) {
+				if (type.equals(RatingsType.LIKE.getValue())) {
 					ratingIdPrefix = "ratingLike";
 				}
 				%>
@@ -147,14 +147,14 @@ if (ratingsEntry != null) {
 								<c:when test="<%= !themeDisplay.isSignedIn() || TrashUtil.isInTrash(className, classPK) %>">
 									<span class="icon-thumbs-up rating-element rating-thumb-up rating-<%= (yourScore > 0) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"><%= positiveVotes %></span>
 
-									<c:if test="<%= type.equals(PortletRatingsDefinition.RatingsType.THUMBS.getValue()) %>">
+									<c:if test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
 										<span class="icon-thumbs-down rating-element rating-thumb-down rating-<%= (yourScore == 0) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"><%= negativeVotes %></span>
 									</c:if>
 								</c:when>
 								<c:otherwise>
 									<a class="icon-thumbs-up rating-element rating-thumb-up rating-<%= (yourScore > 0) ? "on" : "off" %>" href="javascript:;"><%= positiveVotes %></a>
 
-									<c:if test="<%= type.equals(PortletRatingsDefinition.RatingsType.THUMBS.getValue()) %>">
+									<c:if test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
 										<a class="icon-thumbs-down rating-element rating-thumb-down rating-<%= (yourScore == 0) ? "on" : "off" %>" href="javascript:;"><%= negativeVotes %></a>
 									</c:if>
 
@@ -165,7 +165,7 @@ if (ratingsEntry != null) {
 
 										String positiveRatingMessage = null;
 
-										if (type.equals(PortletRatingsDefinition.RatingsType.THUMBS.getValue())) {
+										if (type.equals(RatingsType.THUMBS.getValue())) {
 											positiveRatingMessage = (yourScore > 0) ? "you-have-rated-this-as-good" : "rate-this-as-good";
 										}
 										else {
@@ -177,7 +177,7 @@ if (ratingsEntry != null) {
 
 										<input class="rating-input" id="<%= ratingId %>" name="<portlet:namespace /><%= ratingIdPrefix %>" type="radio" value="up">
 
-										<c:if test="<%= type.equals(PortletRatingsDefinition.RatingsType.THUMBS.getValue()) %>">
+										<c:if test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
 
 											<%
 											ratingId = PortalUtil.generateRandomKey(request, "taglib_ui_ratings_page_rating");

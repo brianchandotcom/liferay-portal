@@ -30,7 +30,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY) %>">
 				<portlet:renderURL var="addVocabularyURL">
 					<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
 				<aui:nav-item href="<%= addVocabularyURL %>" iconCssClass="icon-plus" label="add-vocabulary" />
@@ -96,7 +95,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		>
 			<portlet:renderURL var="rowURL">
 				<portlet:param name="mvcPath" value="/view_categories.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 			</portlet:renderURL>
 

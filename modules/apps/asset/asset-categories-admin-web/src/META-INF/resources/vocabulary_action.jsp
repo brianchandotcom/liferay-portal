@@ -26,7 +26,6 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 	<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editVocabularyURL">
 			<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 		</portlet:renderURL>
 
@@ -40,7 +39,6 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 	<c:if test="<%= AssetPermission.contains(permissionChecker, vocabulary.getGroupId(), ActionKeys.ADD_CATEGORY) %>">
 		<portlet:renderURL var="addCategoryURL">
 			<portlet:param name="mvcPath" value="/edit_category.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 		</portlet:renderURL>
 

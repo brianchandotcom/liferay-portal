@@ -29,6 +29,24 @@ long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
 AssetVocabulary vocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(vocabularyId);
 
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	PortletURL backURL = renderResponse.createRenderURL();
+
+	backURL.setParameter("mvcPath", "/view_categories.jsp");
+
+	if ((category != null) && !category.isRootCategory()) {
+		backURL.setParameter("categoryId", String.valueOf(category.getParentCategoryId()));
+	}
+
+	if (vocabularyId > 0) {
+		backURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
+	}
+
+	redirect = backURL.toString();
+}
+
 String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -51,6 +69,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 %>
 
 <liferay-ui:header
+	backURL="<%= redirect %>"
 	title="<%= title %>"
 />
 
@@ -62,7 +81,6 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY) %>">
 				<portlet:renderURL var="addCategoryURL">
 					<portlet:param name="mvcPath" value="/edit_category.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
 
 					<c:if test="<%= categoryId > 0 %>">
 						<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
@@ -123,7 +141,6 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 		>
 			<portlet:renderURL var="rowURL">
 				<portlet:param name="mvcPath" value="/view_categories.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="categoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 				<portlet:param name="vocabularyId" value="<%= String.valueOf(curCategory.getVocabularyId()) %>" />
 			</portlet:renderURL>

@@ -19,6 +19,12 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
+
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
 AssetVocabulary vocabulary = null;
@@ -29,6 +35,7 @@ if (vocabularyId > 0) {
 %>
 
 <liferay-ui:header
+	backURL="<%= redirect %>"
 	title='<%= (vocabulary != null) ? vocabulary.getTitle(locale) : "add-new-vocabulary" %>'
 />
 

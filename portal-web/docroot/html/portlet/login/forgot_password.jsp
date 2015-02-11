@@ -49,7 +49,16 @@ if (reminderAttempts == null) {
 	<liferay-ui:error exception="<%= UserActiveException.class %>" message="your-account-is-not-active" />
 	<liferay-ui:error exception="<%= UserEmailAddressException.class %>" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error exception="<%= UserLockoutException.LDAPLockout.class %>" message="this-account-has-been-locked" />
-	<liferay-ui:error exception="<%= UserLockoutException.PasswordPolicyLockout.class %>" message="this-account-has-been-locked" />
+
+	<liferay-ui:error exception="<%= UserLockoutException.PasswordPolicyLockout.class %>">
+
+		<%
+		UserLockoutException.PasswordPolicyLockout ule = (UserLockoutException.PasswordPolicyLockout)errorException;
+		%>
+
+		<liferay-ui:message arguments="<%= ule.getUnlockDate() %>" key="this-account-has-been-locked-until-x" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= UserReminderQueryException.class %>" message="your-answer-does-not-match-what-is-in-our-database" />
 
 	<aui:fieldset>

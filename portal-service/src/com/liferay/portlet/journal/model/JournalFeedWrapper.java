@@ -65,6 +65,7 @@ public class JournalFeedWrapper implements JournalFeed,
 		attributes.put("feedId", getFeedId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("type", getType());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("DDMTemplateKey", getDDMTemplateKey());
 		attributes.put("DDMRendererTemplateKey", getDDMRendererTemplateKey());
@@ -146,6 +147,12 @@ public class JournalFeedWrapper implements JournalFeed,
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
@@ -463,6 +470,16 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Override
 	public java.lang.String getTemplateId() {
 		return _journalFeed.getTemplateId();
+	}
+
+	/**
+	* Returns the type of this journal feed.
+	*
+	* @return the type of this journal feed
+	*/
+	@Override
+	public java.lang.String getType() {
+		return _journalFeed.getType();
 	}
 
 	/**
@@ -791,6 +808,16 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Override
 	public void setTemplateId(java.lang.String templateKey) {
 		_journalFeed.setTemplateId(templateKey);
+	}
+
+	/**
+	* Sets the type of this journal feed.
+	*
+	* @param type the type of this journal feed
+	*/
+	@Override
+	public void setType(java.lang.String type) {
+		_journalFeed.setType(type);
 	}
 
 	/**

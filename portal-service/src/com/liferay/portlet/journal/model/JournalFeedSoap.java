@@ -45,6 +45,7 @@ public class JournalFeedSoap implements Serializable {
 		soapModel.setFeedId(model.getFeedId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setType(model.getType());
 		soapModel.setDDMStructureKey(model.getDDMStructureKey());
 		soapModel.setDDMTemplateKey(model.getDDMTemplateKey());
 		soapModel.setDDMRendererTemplateKey(model.getDDMRendererTemplateKey());
@@ -196,6 +197,14 @@ public class JournalFeedSoap implements Serializable {
 		_description = description;
 	}
 
+	public String getType() {
+		return _type;
+	}
+
+	public void setType(String type) {
+		_type = type;
+	}
+
 	public String getDDMStructureKey() {
 		return _DDMStructureKey;
 	}
@@ -295,6 +304,7 @@ public class JournalFeedSoap implements Serializable {
 	private String _feedId;
 	private String _name;
 	private String _description;
+	private String _type;
 	private String _DDMStructureKey;
 	private String _DDMTemplateKey;
 	private String _DDMRendererTemplateKey;

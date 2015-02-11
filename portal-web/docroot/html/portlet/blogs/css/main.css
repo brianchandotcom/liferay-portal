@@ -198,16 +198,14 @@
 			padding-left: 30px;
 		}
 
-		.previous-entry {
-			.previous-entry-content {
-				border-right: 1px solid #CCC;
-				padding-right: 60px;
-			}
-		}
-
 		.next-entry-content, .previous-entry-content {
 			margin-top: 5px;
 			padding-bottom: 10px;
+		}
+
+		.previous-entry .previous-entry-content {
+			border-right: 1px solid #CCC;
+			padding-right: 60px;
 		}
 
 		.entry-content {
@@ -215,17 +213,16 @@
 		}
 
 		@include respond-to(phone) {
-			.next-entry {
-				margin-top: 20px;
+			.next-entry, .previous-entry {
 				padding: 0;
 			}
 
-			.previous-entry {
-				padding: 0;
+			.next-entry {
+				margin-top: 20px;
+			}
 
-				.previous-entry-content {
-					border-right-width: 0;
-				}
+			.previous-entry .previous-entry-content {
+				border-right-width: 0;
 			}
 		}
 	}

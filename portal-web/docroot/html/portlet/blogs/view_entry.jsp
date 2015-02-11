@@ -85,11 +85,11 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	<c:if test="<%= (previousEntry != null) || (nextEntry != null) %>">
 		<aui:container cssClass="entry-navigation">
 			<aui:row>
-				<aui:col cssClass="previous-entry-wrapper" md="6" sm="6">
+				<aui:col cssClass="previous-entry" md="6" sm="6">
 					<c:if test="<%= previousEntry != null %>">
 						<h2><liferay-ui:message key="previous-entry" /></h2>
 
-						<div class="previous-entry">
+						<div class="previous-entry-content">
 							<portlet:renderURL var="previousEntryURL">
 								<portlet:param name="struts_action" value="/blogs/view_entry" />
 								<portlet:param name="redirect" value="<%= redirect %>" />
@@ -101,13 +101,13 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 							%>
 
 							<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-								<div class="small-image-wrapper visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></div>
+								<div class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></div>
 							</c:if>
 
-							<div class="entry-content-wrapper">
+							<div class="entry-content">
 								<h3><a href="<%= previousEntryURL %>" title="<%= previousEntry.getTitle() %>"><%= previousEntry.getTitle() %></a></h3>
 
-								<p class="entry-content visible-lg-block">
+								<p class="entry-content-body visible-lg-block">
 									<c:choose>
 										<c:when test="<%= Validator.isNotNull(previousEntry.getSubtitle()) %>">
 											<%= StringUtil.shorten(previousEntry.getSubtitle(), 100) %>
@@ -129,11 +129,11 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 					</c:if>
 				</aui:col>
 
-				<aui:col cssClass="next-entry-wrapper" md="6" sm="6">
+				<aui:col cssClass="next-entry" md="6" sm="6">
 					<c:if test="<%= nextEntry != null %>">
 						<h2><liferay-ui:message key="next-entry" /></h2>
 
-						<div class="next-entry">
+						<div class="next-entry-content">
 							<portlet:renderURL var="nextEntryURL">
 								<portlet:param name="struts_action" value="/blogs/view_entry" />
 								<portlet:param name="redirect" value="<%= redirect %>" />
@@ -145,13 +145,13 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 							%>
 
 							<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-								<div class="small-image-wrapper visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></div>
+								<div class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></div>
 							</c:if>
 
-							<div class="entry-content-wrapper">
+							<div class="entry-content">
 								<h3><a href="<%= nextEntryURL %>" title="<%= nextEntry.getTitle() %>"><%= nextEntry.getTitle() %></a></h3>
 
-								<p class="entry-content visible-lg-block">
+								<p class="entry-content-body visible-lg-block">
 									<c:choose>
 										<c:when test="<%= Validator.isNotNull(nextEntry.getSubtitle()) %>">
 											<%= StringUtil.shorten(nextEntry.getSubtitle(), 100) %>

@@ -161,7 +161,7 @@ else {
 		</c:choose>
 
 		<%
-			String detailsLanguageStrutsAction = "/users_admin/edit_user_details";
+		String detailsLanguageStrutsAction = "/users_admin/edit_user_details";
 		%>
 
 		<%@ include file="/html/portlet/users_admin/user/details_language.jspf" %>

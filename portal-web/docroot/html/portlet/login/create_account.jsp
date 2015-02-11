@@ -134,7 +134,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 		<aui:col width="<%= 50 %>">
 
 			<%
-				Boolean autoGenerateScreenName = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE);
+			Boolean autoGenerateScreenName = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE);
 			%>
 
 			<c:if test="<%= !autoGenerateScreenName %>">
@@ -148,23 +148,23 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 			</aui:input>
 
 			<%
-				User selUser = null;
-				Contact selContact = null;
+			User selUser = null;
+			Contact selContact = null;
 
-				Locale userLocale = null;
+			Locale userLocale = null;
 
-				String languageId = request.getParameter("languageId");
+			String languageId = request.getParameter("languageId");
 
-				if (Validator.isNotNull(languageId)) {
-					userLocale = LocaleUtil.fromLanguageId(languageId);
-				}
-				else {
-					User defaultUser = company.getDefaultUser();
+			if (Validator.isNotNull(languageId)) {
+				userLocale = LocaleUtil.fromLanguageId(languageId);
+			}
+			else {
+				User defaultUser = company.getDefaultUser();
 
-					userLocale = LocaleUtil.fromLanguageId(defaultUser.getLanguageId());
-				}
+				userLocale = LocaleUtil.fromLanguageId(defaultUser.getLanguageId());
+			}
 
-				String detailsLanguageStrutsAction = "/login/create_account";
+			String detailsLanguageStrutsAction = "/login/create_account";
 			%>
 
 			<%@ include file="/html/portlet/users_admin/user/details_language.jspf" %>

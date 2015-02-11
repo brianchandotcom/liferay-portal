@@ -14,6 +14,9 @@
 
 package com.liferay.sass.compiler;
 
+import com.sun.jna.NativeLibrary;
+import com.sun.jna.Platform;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -21,7 +24,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -29,11 +32,17 @@ import org.junit.Test;
  */
 public class SassCompilerTest {
 
+	@Before
+	public void extendSearchPath() throws Exception {
+		NativeLibrary.addSearchPath(
+			"sass", new File(getLibraryPath()).getCanonicalPath());
+	}
+
 	@Test
 	public void testCompile() throws Exception {
 		SassCompiler sassCompiler = new SassCompiler();
 
-		Assume.assumeNotNull(sassCompiler);
+		Assert.assertNotNull(sassCompiler);
 
 		File sassSpecDir = new File(
 			getBaseDir(), "com/liferay/sass/compiler/dependencies/sass-spec");
@@ -67,6 +76,25 @@ public class SassCompilerTest {
 		}
 
 		return "test-classes/unit";
+	}
+
+	private String getLibraryPath() {
+		StringBuilder sb = new StringBuilder("resources/");
+
+		sb.append(
+			Platform.isLinux() ? "linux" :
+			Platform.isMac() ? "darwin" :
+			Platform.isWindows() ? "win32" : "");
+
+		if (!Platform.isMac()) {
+			sb.append("-x86");
+
+			if (Platform.is64Bit()) {
+				sb.append("-64");
+			}
+		}
+
+		return sb.toString();
 	}
 
 	protected String read(InputStream inputStream) throws Exception {

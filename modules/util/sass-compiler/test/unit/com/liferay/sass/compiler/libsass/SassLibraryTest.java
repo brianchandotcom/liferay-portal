@@ -14,15 +14,22 @@
 
 package com.liferay.sass.compiler.libsass;
 
+import com.liferay.sass.compiler.SassCompilerTest;
 import com.liferay.sass.compiler.libsass.SassLibrary.Sass_File_Context;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Gregory Amerson
  */
 public class SassLibraryTest {
+
+	@Before
+	public void extendSearchPath() throws Exception {
+		new SassCompilerTest().extendSearchPath();
+	}
 
 	@Test
 	public void testInstance() throws Exception {

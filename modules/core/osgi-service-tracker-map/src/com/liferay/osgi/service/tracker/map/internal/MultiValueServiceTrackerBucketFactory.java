@@ -66,7 +66,8 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 
 		@Override
 		public synchronized void remove(
-			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
+			ServiceReferenceServiceTuple<SR, TS, ?>
+				serviceReferenceServiceTuple) {
 
 			_serviceReferenceServiceTuples.remove(serviceReferenceServiceTuple);
 
@@ -75,7 +76,8 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 
 		@Override
 		public synchronized void store(
-			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
+			ServiceReferenceServiceTuple<SR, TS, ?>
+				serviceReferenceServiceTuple) {
 
 			_serviceReferenceServiceTuples.add(serviceReferenceServiceTuple);
 
@@ -86,7 +88,7 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 			_services = new ArrayList<>(_serviceReferenceServiceTuples.size());
 
 			for (
-				ServiceReferenceServiceTuple<SR, TS>
+				ServiceReferenceServiceTuple<SR, TS, ?>
 					serviceReferenceServiceTuple :
 						_serviceReferenceServiceTuples) {
 
@@ -105,7 +107,7 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 				serviceReferenceServiceTupleComparator);
 		}
 
-		private final Set<ServiceReferenceServiceTuple<SR, TS>>
+		private final Set<ServiceReferenceServiceTuple<SR, TS, ?>>
 			_serviceReferenceServiceTuples;
 		private List<TS> _services = new ArrayList<>();
 

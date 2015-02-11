@@ -22,7 +22,7 @@ import org.osgi.framework.ServiceReference;
  * @author Carlos Sierra Andrés
  */
 public class ServiceReferenceServiceTupleComparator<S>
-	implements Comparator<ServiceReferenceServiceTuple<S, ?>> {
+	implements Comparator<ServiceReferenceServiceTuple<S, ?, ?>> {
 
 	public ServiceReferenceServiceTupleComparator(
 		Comparator<ServiceReference<S>> comparator) {
@@ -32,8 +32,8 @@ public class ServiceReferenceServiceTupleComparator<S>
 
 	@Override
 	public int compare(
-		ServiceReferenceServiceTuple<S, ?> serviceReferenceServiceTuple1,
-		ServiceReferenceServiceTuple<S, ?> serviceReferenceServiceTuple2) {
+		ServiceReferenceServiceTuple<S, ?, ?> serviceReferenceServiceTuple1,
+		ServiceReferenceServiceTuple<S, ?, ?> serviceReferenceServiceTuple2) {
 
 		if (serviceReferenceServiceTuple1 == null) {
 			if (serviceReferenceServiceTuple2 == null) {

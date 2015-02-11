@@ -24,9 +24,9 @@ public interface ServiceTrackerBucket<SR, TS, R> {
 	public boolean isDisposable();
 
 	public void remove(
-		ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple);
+		ServiceReferenceServiceTuple<SR, TS, ?> serviceReferenceServiceTuple);
 
 	public void store(
-		ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple);
+		ServiceReferenceServiceTuple<SR, TS, ?> serviceReferenceServiceTuple);
 
 }

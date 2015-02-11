@@ -73,11 +73,12 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 
 		@Override
 		public synchronized void remove(
-			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
+			ServiceReferenceServiceTuple<SR, TS, ?>
+				serviceReferenceServiceTuple) {
 
 			_serviceReferences.remove(serviceReferenceServiceTuple);
 
-			ServiceReferenceServiceTuple<SR, TS>
+			ServiceReferenceServiceTuple<SR, TS, ?>
 				headServiceReferenceServiceTuple = _serviceReferences.peek();
 
 			if (headServiceReferenceServiceTuple != null) {
@@ -90,7 +91,8 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 
 		@Override
 		public synchronized void store(
-			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
+			ServiceReferenceServiceTuple<SR, TS, ?>
+				serviceReferenceServiceTuple) {
 
 			_serviceReferences.add(serviceReferenceServiceTuple);
 
@@ -98,7 +100,7 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 		}
 
 		private TS _service;
-		private final PriorityQueue<ServiceReferenceServiceTuple<SR, TS>>
+		private final PriorityQueue<ServiceReferenceServiceTuple<SR, TS, ?>>
 			_serviceReferences;
 
 	}

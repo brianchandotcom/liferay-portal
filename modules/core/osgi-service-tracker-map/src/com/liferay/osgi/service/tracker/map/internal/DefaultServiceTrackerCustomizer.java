@@ -36,8 +36,6 @@ public class DefaultServiceTrackerCustomizer<S>
 	@Override
 	public void modifiedService(
 		ServiceReference<S> serviceReference, S service) {
-
-		removedService(serviceReference, service);
 	}
 
 	@Override

@@ -322,6 +322,35 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGetServiceWithModifiedService() {
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+			createServiceTrackerMap(_bundleContext);
+
+		Hashtable<String, Object> properties = new Hashtable<>();
+
+		properties.put("target", new String[] {"one", "two"});
+
+		ServiceRegistration<TrackedOne> serviceRegistration =
+			_bundleContext.registerService(
+				TrackedOne.class, new TrackedOne(), properties);
+
+		Assert.assertTrue(serviceTrackerMap.containsKey("one"));
+		Assert.assertTrue(serviceTrackerMap.containsKey("two"));
+
+		properties.put("target", new String[] {"two", "three"});
+
+		serviceRegistration.setProperties(properties);
+
+		Assert.assertTrue(serviceTrackerMap.containsKey("two"));
+		Assert.assertTrue(serviceTrackerMap.containsKey("three"));
+		Assert.assertFalse(serviceTrackerMap.containsKey("one"));
+
+		serviceRegistration.unregister();
+
+		serviceTrackerMap.close();
+	}
+
+	@Test
 	public void testGetServiceWithMultiPropertyRegistration() {
 		try (ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 				createServiceTrackerMap(_bundleContext)) {

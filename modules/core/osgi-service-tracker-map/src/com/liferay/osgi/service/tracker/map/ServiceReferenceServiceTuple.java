@@ -14,24 +14,32 @@
 
 package com.liferay.osgi.service.tracker.map;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.osgi.framework.ServiceReference;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceReferenceServiceTuple<SR, TS>
-	implements Comparable<ServiceReferenceServiceTuple<SR, TS>> {
+public class ServiceReferenceServiceTuple<SR, TS, K>
+	implements Comparable<ServiceReferenceServiceTuple<SR, TS, K>> {
 
 	public ServiceReferenceServiceTuple(
 		ServiceReference<SR> serviceReference, TS service) {
 
 		_serviceReference = serviceReference;
 		_service = service;
+		_emittedKeys = new ArrayList<>();
+	}
+
+	public void addEmittedKey(K key) {
+		_emittedKeys.add(key);
 	}
 
 	@Override
 	public int compareTo(
-		ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
+		ServiceReferenceServiceTuple<SR, TS, K> serviceReferenceServiceTuple) {
 
 		return _serviceReference.compareTo(
 			serviceReferenceServiceTuple.getServiceReference());
@@ -47,11 +55,15 @@ public class ServiceReferenceServiceTuple<SR, TS>
 			return false;
 		}
 
-		ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple =
-			(ServiceReferenceServiceTuple<SR, TS>)obj;
+		ServiceReferenceServiceTuple<SR, TS, K> serviceReferenceServiceTuple =
+			(ServiceReferenceServiceTuple<SR, TS, K>)obj;
 
 		return _serviceReference.equals(
 			serviceReferenceServiceTuple.getServiceReference());
+	}
+
+	public List<K> getEmittedKeys() {
+		return _emittedKeys;
 	}
 
 	public TS getService() {
@@ -67,6 +79,7 @@ public class ServiceReferenceServiceTuple<SR, TS>
 		return _serviceReference.hashCode();
 	}
 
+	private final List<K> _emittedKeys;
 	private final TS _service;
 	private final ServiceReference<SR> _serviceReference;
 

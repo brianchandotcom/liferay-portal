@@ -179,12 +179,12 @@
 			@include ellipsis;
 		}
 
-		.entry-content {
+		.entry-content-body {
 			font-size: 18px;
 			font-weight: 400;
 		}
 
-		.small-image-wrapper {
+		.small-image {
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: cover;
@@ -194,36 +194,36 @@
 			width: 140px;
 		}
 
-		.next-entry-wrapper {
+		.next-entry {
 			padding-left: 30px;
 		}
 
-		.previous-entry-wrapper {
-			.previous-entry {
+		.previous-entry {
+			.previous-entry-content {
 				border-right: 1px solid #CCC;
 				padding-right: 60px;
 			}
 		}
 
-		.next-entry, .previous-entry {
+		.next-entry-content, .previous-entry-content {
 			margin-top: 5px;
 			padding-bottom: 10px;
 		}
 
-		.entry-content-wrapper {
+		.entry-content {
 			overflow: hidden;
 		}
 
 		@include respond-to(phone) {
-			.next-entry-wrapper {
+			.next-entry {
 				margin-top: 20px;
 				padding: 0;
 			}
 
-			.previous-entry-wrapper {
+			.previous-entry {
 				padding: 0;
 
-				.previous-entry {
+				.previous-entry-content {
 					border-right-width: 0;
 				}
 			}

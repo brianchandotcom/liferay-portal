@@ -34,6 +34,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
@@ -76,29 +77,6 @@ public class DLPDFProcessorTest {
 		DLAppServiceUtil.checkInFileEntry(
 			fileEntry.getFileEntryId(), true, StringUtil.randomString(),
 			_serviceContext);
-
-		Assert.assertEquals(1, count.get());
-	}
-
-	@Test
-	public void testShouldCopyPreviousPreviewOnUpdateWithNoContent()
-		throws Exception {
-
-		AtomicInteger count = registerDLPDFProcessorMessageListener(
-			EventType.COPY_PREVIOUS);
-
-		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
-			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), _PDF_DATA.getBytes(), _serviceContext);
-
-		DLAppServiceUtil.updateFileEntry(
-			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
-			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString(), true,
-			new byte[0], _serviceContext);
 
 		Assert.assertEquals(1, count.get());
 	}
@@ -150,26 +128,34 @@ public class DLPDFProcessorTest {
 	}
 
 	@Test
-	public void testShouldCreateNewPreviewOnAdd() throws Exception {
-		AtomicInteger count = registerDLPDFProcessorMessageListener(
-			EventType.GENERATE_NEW);
+	public void testShouldCopyPreviousPreviewOnUpdateAndCheckInWithNoContent()
+		throws Exception {
 
-		DLAppServiceUtil.addFileEntry(
+		AtomicInteger count = registerDLPDFProcessorMessageListener(
+			EventType.COPY_PREVIOUS);
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			_serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), _PDF_DATA.getBytes(), _serviceContext);
 
+		DLAppServiceUtil.updateFileEntryAndCheckIn(
+			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
+			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), true, null, 0,
+			_serviceContext);
+
 		Assert.assertEquals(1, count.get());
 	}
 
 	@Test
-	public void testShouldCreateNewPreviewOnUpdateWithContent()
+	public void testShouldCopyPreviousPreviewOnUpdateWithNoContent()
 		throws Exception {
 
 		AtomicInteger count = registerDLPDFProcessorMessageListener(
-			EventType.GENERATE_NEW);
+			EventType.COPY_PREVIOUS);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			_serviceContext.getScopeGroupId(),
@@ -182,9 +168,24 @@ public class DLPDFProcessorTest {
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), true,
-			_PDF_DATA.getBytes(), _serviceContext);
+			new byte[0], _serviceContext);
 
-		Assert.assertEquals(2, count.get());
+		Assert.assertEquals(1, count.get());
+	}
+
+	@Test
+	public void testShouldCreateNewPreviewOnAdd() throws Exception {
+		AtomicInteger count = registerDLPDFProcessorMessageListener(
+			EventType.GENERATE_NEW);
+
+		DLAppServiceUtil.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), _PDF_DATA.getBytes(), _serviceContext);
+
+		Assert.assertEquals(1, count.get());
 	}
 
 	@Test
@@ -235,11 +236,11 @@ public class DLPDFProcessorTest {
 	}
 
 	@Test
-	public void testShouldCopyPreviousPreviewOnUpdateAndCheckInWithNoContent()
+	public void testShouldCreateNewPreviewOnUpdateWithContent()
 		throws Exception {
 
 		AtomicInteger count = registerDLPDFProcessorMessageListener(
-			EventType.COPY_PREVIOUS);
+			EventType.GENERATE_NEW);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			_serviceContext.getScopeGroupId(),
@@ -248,13 +249,13 @@ public class DLPDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), _PDF_DATA.getBytes(), _serviceContext);
 
-		DLAppServiceUtil.updateFileEntryAndCheckIn(
+		DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), true,
-			null, 0, _serviceContext);
+			_PDF_DATA.getBytes(), _serviceContext);
 
-		Assert.assertEquals(1, count.get());
+		Assert.assertEquals(2, count.get());
 	}
 
 	protected static AtomicInteger registerDLPDFProcessorMessageListener(

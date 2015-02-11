@@ -148,10 +148,6 @@ public class SyncFile extends StateAwareModel {
 		return extraSettings;
 	}
 
-	public String getFileKey() {
-		return fileKey;
-	}
-
 	public String getFilePathName() {
 		return filePathName;
 	}
@@ -269,10 +265,6 @@ public class SyncFile extends StateAwareModel {
 		this.extraSettings = extraSettings;
 	}
 
-	public void setFileKey(String fileKey) {
-		this.fileKey = fileKey;
-	}
-
 	public void setFilePathName(String filePathName) {
 		this.filePathName = filePathName;
 	}
@@ -364,9 +356,6 @@ public class SyncFile extends StateAwareModel {
 
 	@DatabaseField(useGetSet = true, width = 16777216)
 	protected String extraSettings;
-
-	@DatabaseField(uniqueIndex = true, useGetSet = true)
-	protected String fileKey;
 
 	@DatabaseField(uniqueIndex = true, useGetSet = true, width = 16777216)
 	protected String filePathName;

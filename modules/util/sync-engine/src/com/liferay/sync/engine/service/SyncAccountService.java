@@ -339,11 +339,7 @@ public class SyncAccountService {
 			SyncFile syncFile = SyncFileService.fetchSyncFile(
 				syncAccount.getFilePathName());
 
-			String sourceFileKey = syncFile.getFileKey();
-
-			String targetFileKey = FileUtil.getFileKey(filePath);
-
-			if (!sourceFileKey.equals(targetFileKey)) {
+			if (syncFile.getSyncFileId() != FileUtil.getFileKey(filePath)) {
 				throw new Exception(
 					"Target folder is not the moved sync data folder");
 			}

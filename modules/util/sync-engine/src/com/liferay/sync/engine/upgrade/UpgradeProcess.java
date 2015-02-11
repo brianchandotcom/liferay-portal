@@ -19,6 +19,8 @@ package com.liferay.sync.engine.upgrade;
  */
 public abstract class UpgradeProcess {
 
+	public abstract int getThreshold();
+
 	public abstract void upgrade() throws Exception;
 
 }

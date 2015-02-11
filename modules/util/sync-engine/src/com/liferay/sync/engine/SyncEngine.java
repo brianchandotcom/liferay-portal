@@ -273,10 +273,8 @@ public class SyncEngine {
 						filePath.toString());
 
 					if (syncFile == null) {
-						String fileKey = FileUtil.getFileKey(filePath);
-
-						syncFile = SyncFileService.fetchSyncFileByFileKey(
-							fileKey, syncAccountId);
+						syncFile = SyncFileService.fetchSyncFile(
+							FileUtil.getFileKey(filePath));
 					}
 
 					if (syncFile != null) {
@@ -296,10 +294,8 @@ public class SyncEngine {
 						filePath.toString());
 
 					if (syncFile == null) {
-						String fileKey = FileUtil.getFileKey(filePath);
-
-						syncFile = SyncFileService.fetchSyncFileByFileKey(
-							fileKey, syncAccountId);
+						syncFile = SyncFileService.fetchSyncFile(
+							FileUtil.getFileKey(filePath));
 					}
 
 					if (syncFile != null) {

@@ -41,7 +41,6 @@ public class SyncFileTestUtil {
 			SyncFile.TYPE_FILE);
 
 		if (typePK == 0) {
-			syncFile.setFileKey(String.valueOf(syncFile.getSyncFileId()));
 			syncFile.setTypePK(syncFile.getSyncFileId());
 
 			SyncFileService.update(syncFile);
@@ -76,7 +75,6 @@ public class SyncFileTestUtil {
 			SyncFile.TYPE_FOLDER);
 
 		if (typePK == 0) {
-			syncFile.setFileKey(String.valueOf(syncFile.getSyncFileId()));
 			syncFile.setTypePK(syncFile.getSyncFileId());
 
 			SyncFileService.update(syncFile);

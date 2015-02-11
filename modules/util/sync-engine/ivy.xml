@@ -17,6 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="ch.securityvision.xattrj" org="com.liferay" rev="1.0" />
 		<dependency name="com.btr.proxy.vole" org="com.liferay" rev="20131209" />
 		<dependency name="com.liferay.io.delta" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="commons-codec" org="commons-codec" rev="1.9" />
@@ -32,7 +33,7 @@
 		<dependency name="jackson-core" org="com.fasterxml.jackson.core" rev="2.1.5" />
 		<dependency name="jackson-databind" org="com.fasterxml.jackson.core" rev="2.1.5" />
 		<dependency name="logback-classic" org="ch.qos.logback" rev="1.1.2" />
-		<dependency name="net.sf.jpathwatch" org="com.liferay" rev="0.95.LIFERAY-PATCHED-1" />
+		<dependency name="net.sf.jpathwatch" org="com.liferay" rev="0.95.LIFERAY-PATCHED-2" />
 		<dependency name="ormlite-core" org="com.j256.ormlite" rev="4.47" />
 		<dependency name="ormlite-jdbc" org="com.j256.ormlite" rev="4.47" />
 		<dependency name="slf4j-api" org="org.slf4j" rev="1.7.6" />

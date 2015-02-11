@@ -21,7 +21,6 @@ import com.liferay.sync.engine.model.SyncFileModelListener;
 import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
-import com.liferay.sync.engine.util.OSDetector;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -119,7 +118,8 @@ public class SyncFileService {
 
 		_syncFilePersistence.create(syncFile);
 
-		updateFileKeySyncFile(syncFile);
+		FileUtil.writeFileKey(
+			Paths.get(filePathName), String.valueOf(syncFile.getSyncFileId()));
 
 		IODeltaUtil.checksums(syncFile);
 
@@ -241,25 +241,6 @@ public class SyncFileService {
 	public static SyncFile fetchSyncFile(String filePathName) {
 		try {
 			return _syncFilePersistence.fetchByFilePathName(filePathName);
-		}
-		catch (SQLException sqle) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(sqle.getMessage(), sqle);
-			}
-
-			return null;
-		}
-	}
-
-	public static SyncFile fetchSyncFileByFileKey(
-		String fileKey, long syncAccountId) {
-
-		if ((fileKey == null) || fileKey.isEmpty()) {
-			return null;
-		}
-
-		try {
-			return _syncFilePersistence.fetchByFK_S(fileKey, syncAccountId);
 		}
 		catch (SQLException sqle) {
 			if (_logger.isDebugEnabled()) {
@@ -498,36 +479,14 @@ public class SyncFileService {
 		}
 	}
 
-	public static SyncFile updateFileKeySyncFile(SyncFile syncFile) {
-		Path filePath = Paths.get(syncFile.getFilePathName());
-
-		return updateFileKeySyncFile(syncFile, filePath);
-	}
-
-	public static SyncFile updateFileKeySyncFile(
-		SyncFile syncFile, Path filePath) {
-
-		if (OSDetector.isWindows()) {
-			FileUtil.writeFileKey(
-				filePath, String.valueOf(syncFile.getSyncFileId()));
-
-			syncFile.setFileKey(String.valueOf(syncFile.getSyncFileId()));
-		}
-		else {
-			syncFile.setFileKey(
-				FileUtil.getFileKey(syncFile.getFilePathName()));
-		}
-
-		return update(syncFile);
-	}
-
 	public static SyncFile updateFileSyncFile(
 			Path filePath, long syncAccountId, SyncFile syncFile)
 		throws Exception {
 
 		// Local sync file
 
-		SyncFileService.updateFileKeySyncFile(syncFile, filePath);
+		FileUtil.writeFileKey(
+			filePath, String.valueOf(syncFile.getSyncFileId()));
 
 		Path deltaFilePath = null;
 

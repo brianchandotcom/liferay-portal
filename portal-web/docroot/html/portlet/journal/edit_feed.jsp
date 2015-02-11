@@ -176,7 +176,7 @@ if (feed != null) {
 				<div class="form-group">
 					<aui:input name="ddmStructureKey" required="<%= true %>" type="hidden" value="<%= ddmStructureKey %>" />
 
-					<aui:input name="structure" type="resource" value="<%= ddmStructureName %>" />
+					<aui:input name="structure" required="<%= true %>" type="resource" value="<%= ddmStructureName %>" />
 
 					<aui:button name="selectStructureButton" onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
 

@@ -32,6 +32,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
@@ -203,6 +205,33 @@ public class DLPDFProcessorTest {
 		DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
 
 		Assert.assertEquals(2, count.get());
+	}
+
+	@Test
+	public void testShouldCreateNewPreviewOnUpdateAndCheckInWithContent()
+		throws Exception {
+
+		AtomicInteger newCount = registerDLPDFProcessorMessageListener(
+			EventType.GENERATE_NEW);
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), _PDF_DATA.getBytes(), _serviceContext);
+
+		byte[] bytes = _PDF_DATA.getBytes();
+
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+
+		DLAppServiceUtil.updateFileEntryAndCheckIn(
+			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
+			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), true,
+			inputStream, bytes.length, _serviceContext);
+
+		Assert.assertEquals(2, newCount.get());
 	}
 
 	protected static AtomicInteger registerDLPDFProcessorMessageListener(

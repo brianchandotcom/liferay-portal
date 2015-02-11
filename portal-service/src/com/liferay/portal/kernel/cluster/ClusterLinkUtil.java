@@ -19,11 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
-import java.net.InetAddress;
-
-import java.util.Collections;
-import java.util.List;
-
 /**
  * @author Shuyang Zhou
  * @author Raymond Augé
@@ -42,16 +37,6 @@ public class ClusterLinkUtil {
 		return (Address)message.get(_ADDRESS);
 	}
 
-	public static InetAddress getBindInetAddress() {
-		ClusterLink clusterLink = getClusterLink();
-
-		if (clusterLink == null) {
-			return null;
-		}
-
-		return clusterLink.getBindInetAddress();
-	}
-
 	public static ClusterLink getClusterLink() {
 		PortalRuntimePermission.checkGetBeanProperty(ClusterLinkUtil.class);
 
@@ -64,26 +49,6 @@ public class ClusterLinkUtil {
 		}
 
 		return _clusterLink;
-	}
-
-	public static List<Address> getLocalTransportAddresses() {
-		ClusterLink clusterLink = getClusterLink();
-
-		if (clusterLink == null) {
-			return Collections.emptyList();
-		}
-
-		return clusterLink.getLocalTransportAddresses();
-	}
-
-	public static List<Address> getTransportAddresses(Priority priority) {
-		ClusterLink clusterLink = getClusterLink();
-
-		if (clusterLink == null) {
-			return Collections.emptyList();
-		}
-
-		return clusterLink.getTransportAddresses(priority);
 	}
 
 	public static void initialize() {

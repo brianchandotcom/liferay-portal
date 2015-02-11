@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
@@ -692,11 +691,6 @@ public class ClusterMasterExecutorImplTest {
 		}
 
 		@Override
-		public List<Address> getClusterNodeAddresses() {
-			return null;
-		}
-
-		@Override
 		public List<ClusterNode> getClusterNodes() {
 			return new ArrayList<>(_clusterNodes.values());
 		}
@@ -707,17 +701,7 @@ public class ClusterMasterExecutorImplTest {
 		}
 
 		@Override
-		public Address getLocalClusterNodeAddress() {
-			return null;
-		}
-
-		@Override
 		public void initialize() {
-		}
-
-		@Override
-		public boolean isClusterNodeAlive(Address address) {
-			return false;
 		}
 
 		@Override

@@ -34,17 +34,11 @@ public interface ClusterExecutor {
 
 	public List<ClusterEventListener> getClusterEventListeners();
 
-	public List<Address> getClusterNodeAddresses();
-
 	public List<ClusterNode> getClusterNodes();
 
 	public ClusterNode getLocalClusterNode();
 
-	public Address getLocalClusterNodeAddress();
-
 	public void initialize();
-
-	public boolean isClusterNodeAlive(Address address);
 
 	public boolean isClusterNodeAlive(String clusterNodeId);
 

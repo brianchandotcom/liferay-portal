@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterEventType;
@@ -221,20 +220,24 @@ public abstract class BaseClusterExecutorImplTestCase
 
 	protected void assertFutureClusterResponsesWithException(
 			FutureClusterResponses futureClusterResponses, String expectedUUID,
-			Address expectedAddress, String expectedExceptionMessage)
+			String expectedClusterNodeId, String expectedExceptionMessage)
 		throws InterruptedException {
 
 		ClusterNodeResponses clusterNodeResponses =
 			futureClusterResponses.get();
 
 		ClusterNodeResponse clusterNodeResponse =
-			clusterNodeResponses.getClusterResponse(expectedAddress);
+			clusterNodeResponses.getClusterResponse(expectedClusterNodeId);
 
 		Exception exception = clusterNodeResponse.getException();
 
 		Assert.assertEquals(1, clusterNodeResponses.size());
 		Assert.assertEquals(expectedUUID, clusterNodeResponse.getUuid());
-		Assert.assertEquals(expectedAddress, clusterNodeResponse.getAddress());
+
+		ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
+
+		Assert.assertEquals(
+			expectedClusterNodeId, clusterNode.getClusterNodeId());
 		Assert.assertTrue(clusterNodeResponse.hasException());
 
 		if (expectedExceptionMessage != null) {
@@ -263,33 +266,22 @@ public abstract class BaseClusterExecutorImplTestCase
 
 	protected void assertFutureClusterResponsesWithoutException(
 			ClusterNodeResponses clusterNodeResponses, String expectedUUID,
-			Object exceptedResult, Address expectedAddress)
-		throws Exception {
-
-		List<Address> expectedAddresses = new ArrayList<>();
-
-		expectedAddresses.add(expectedAddress);
-
-		assertFutureClusterResponsesWithoutException(
-			clusterNodeResponses, expectedUUID, exceptedResult,
-			expectedAddresses);
-	}
-
-	protected void assertFutureClusterResponsesWithoutException(
-			ClusterNodeResponses clusterNodeResponses, String expectedUUID,
-			Object exceptedResult, List<Address> expectedAddresses)
+			Object exceptedResult, List<String> expectedClusterNodeIds)
 		throws Exception {
 
 		Assert.assertEquals(
-			expectedAddresses.size(), clusterNodeResponses.size());
+			expectedClusterNodeIds.size(), clusterNodeResponses.size());
 
-		for (Address expectedAddress : expectedAddresses) {
+		for (String expectedClusterNodeId : expectedClusterNodeIds) {
 			ClusterNodeResponse clusterNodeResponse =
-				clusterNodeResponses.getClusterResponse(expectedAddress);
+				clusterNodeResponses.getClusterResponse(expectedClusterNodeId);
 
 			Assert.assertEquals(expectedUUID, clusterNodeResponse.getUuid());
+
+			ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
+
 			Assert.assertEquals(
-				expectedAddress, clusterNodeResponse.getAddress());
+				expectedClusterNodeId, clusterNode.getClusterNodeId());
 			Assert.assertEquals(
 				exceptedResult, clusterNodeResponse.getResult());
 			Assert.assertFalse(clusterNodeResponse.hasException());

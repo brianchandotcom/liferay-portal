@@ -58,6 +58,13 @@ import javax.portlet.PortletPreferences;
 @DoPrivileged
 public class SettingsFactoryImpl implements SettingsFactory {
 
+	public SettingsFactoryImpl() {
+		registerSettingsMetadata(
+			"com.liferay.portal", null, new String[] {}, null,
+			new ClassLoaderResourceManager(
+				PortalClassLoaderUtil.getClassLoader()));
+	}
+
 	@Override
 	public void clearCache() {
 		_portletPropertiesMap.clear();
@@ -122,6 +129,14 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		}
 
 		return multiValuedKeys;
+	}
+
+	@Override
+	public Settings getPortalServiceSettings(String serviceName) {
+		Settings portalPropertiesSettings = getPortalPropertiesSettings();
+
+		return getServiceConfigurationBeanSettings(
+			serviceName, portalPropertiesSettings);
 	}
 
 	@Override
@@ -204,7 +219,9 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		settingsId = PortletConstants.getRootPortletId(settingsId);
 
-		_fallbackKeysMap.put(settingsId, fallbackKeys);
+		if (fallbackKeys != null) {
+			_fallbackKeysMap.put(settingsId, fallbackKeys);
+		}
 
 		List<String> multiValuedKeysList = new ArrayList<>();
 

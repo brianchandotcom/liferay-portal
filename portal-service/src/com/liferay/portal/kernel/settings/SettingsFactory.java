@@ -36,6 +36,8 @@ public interface SettingsFactory {
 
 	public List<String> getMultiValuedKeys(String settingsId);
 
+	public Settings getPortalServiceSettings(String serviceName);
+
 	public ArchivedSettings getPortletInstanceArchivedSettings(
 			long groupId, String portletId, String name)
 		throws PortalException;

@@ -15,6 +15,7 @@
 package com.liferay.wiki.web.wiki.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,8 +42,8 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.settings.WikiConfiguration;
+import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.util.WikiUtil;
-import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import java.util.Arrays;
@@ -71,8 +72,12 @@ public class ActionUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
+		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+			wikiPortletInstanceSettingsProvider =
+				_getWikiPortletInstanceSettingsProvider();
+
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
-			WikiPortletInstanceSettings.getInstance(
+			wikiPortletInstanceSettingsProvider.getPortletInstanceSettings(
 				themeDisplay.getLayout(), portletDisplay.getId());
 
 		String[] visibleNodeNames =
@@ -287,6 +292,15 @@ public class ActionUtil {
 			WikiWebSettingsProvider.getWikiWebSettingsProvider();
 
 		return wikiWebSettingsProvider.getWikiConfiguration();
+	}
+
+	private static PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+		_getWikiPortletInstanceSettingsProvider() {
+
+		WikiWebSettingsProvider wikiWebSettingsProvider =
+			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
+		return wikiWebSettingsProvider.getWikiPortletInstanceSettingsProvider();
 	}
 
 }

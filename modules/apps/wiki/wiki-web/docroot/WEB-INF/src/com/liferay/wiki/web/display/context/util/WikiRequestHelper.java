@@ -22,8 +22,9 @@ import com.liferay.portal.kernel.settings.SettingsProvider;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
+import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.settings.WikiSettings;
-import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,16 +61,22 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 			if (_wikiPortletInstanceSettings == null) {
 				String portletId = getPortletId();
 
+				PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+					wikiPortletInstanceSettingsProvider =
+						_getWikiPortletInstanceSettingsProvider();
+
 				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 					_wikiPortletInstanceSettings =
-						WikiPortletInstanceSettings.getInstance(
-							getLayout(), getResourcePortletId(),
-							getRequest().getParameterMap());
+						wikiPortletInstanceSettingsProvider.
+							getPortletInstanceSettings(
+								getLayout(), getResourcePortletId(),
+								getRequest().getParameterMap());
 				}
 				else {
 					_wikiPortletInstanceSettings =
-						WikiPortletInstanceSettings.getInstance(
-							getLayout(), getPortletId());
+						wikiPortletInstanceSettingsProvider.
+							getPortletInstanceSettings(
+								getLayout(), getPortletId());
 				}
 			}
 
@@ -105,6 +112,15 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 		catch (PortalException pe) {
 			throw new SystemException(pe);
 		}
+	}
+
+	private PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
+		_getWikiPortletInstanceSettingsProvider() {
+
+		WikiWebSettingsProvider wikiWebSettingsProvider =
+			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
+		return wikiWebSettingsProvider.getWikiPortletInstanceSettingsProvider();
 	}
 
 	private SettingsProvider<WikiSettings> _getWikiSettingsProvider() {

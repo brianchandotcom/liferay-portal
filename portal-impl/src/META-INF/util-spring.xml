@@ -1048,12 +1048,10 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistry" class="com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistryImpl">
-		<property name="defaultStorageType" value="xml" />
+		<property name="defaultStorageType" value="json" />
 		<property name="storageAdapters">
 			<list>
-				<bean class="com.liferay.portlet.dynamicdatamapping.storage.ExpandoStorageAdapter" />
 				<bean class="com.liferay.portlet.dynamicdatamapping.storage.JSONStorageAdapter" />
-				<bean class="com.liferay.portlet.dynamicdatamapping.storage.XMLStorageAdapter" />
 			</list>
 		</property>
 	</bean>

@@ -18,7 +18,6 @@
 
 <%
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
-WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 List<WikiNode> nodes = WikiUtil.getNodes(wikiPortletInstanceSettingsHelper.getAllNodes(), wikiPortletInstanceSettings.getHiddenNodes(), permissionChecker);
 
@@ -81,7 +80,7 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 			PortletURL frontPageURL = wikiURLHelper.getFrontPageURL(node);
 
 			String label = wikiServiceConfiguration.frontPageName();
-			boolean selected = wikiVisualizationHelper.isFrontPageNavItemSelected(wikiPage);
+			boolean selected = wikiVisualizationHelper.isFrontPageNavItemSelected();
 			%>
 
 			<aui:nav-item cssClass='<%= selected ? "active" : StringPool.BLANK %>' href="<%= frontPageURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />

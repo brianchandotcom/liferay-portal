@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.settings.WikiSettings;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
 
@@ -39,6 +41,16 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 		}
 
 		return _categoryId;
+	}
+
+	public WikiPage getWikiPage() {
+		if (_wikiPage == null) {
+			HttpServletRequest request = getRequest();
+
+			_wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
+		}
+
+		return _wikiPage;
 	}
 
 	public WikiPortletInstanceSettings getWikiPortletInstanceSettings() {
@@ -88,6 +100,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 	}
 
 	private Long _categoryId;
+	private WikiPage _wikiPage;
 	private WikiPortletInstanceSettings _wikiPortletInstanceSettings;
 	private WikiSettings _wikiSettings;
 

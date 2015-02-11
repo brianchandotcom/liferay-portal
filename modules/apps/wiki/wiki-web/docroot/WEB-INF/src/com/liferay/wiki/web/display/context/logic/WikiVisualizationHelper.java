@@ -37,7 +37,9 @@ public class WikiVisualizationHelper {
 		_wikiServiceConfiguration = wikiServiceConfiguration;
 	}
 
-	public boolean isFrontPageNavItemSelected(WikiPage wikiPage) {
+	public boolean isFrontPageNavItemSelected() {
+		WikiPage wikiPage = _wikiRequestHelper.getWikiPage();
+
 		String strutsAction = _wikiRequestHelper.getStrutsAction();
 
 		String frontPageName = _wikiServiceConfiguration.frontPageName();

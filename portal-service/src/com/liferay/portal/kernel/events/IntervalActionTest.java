@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.events;
 
-import com.liferay.portal.kernel.events.IntervalAction;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,11 +31,11 @@ public class IntervalActionTest {
 	public void testIntervalActionEndCalculation() throws Exception {
 		final IntervalAction intervalAction = new IntervalAction(125);
 
-		intervalAction.setPerformActionMethod(
+		intervalAction.setPerformIntervalActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performAction(int start, int end)
+				public void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					for (int i = start; i < end; i++) {
@@ -48,7 +47,7 @@ public class IntervalActionTest {
 
 			});
 
-		intervalAction.performActions();
+		intervalAction.performIntervalActions();
 
 		Assert.assertEquals(125, _count.get());
 	}
@@ -59,11 +58,11 @@ public class IntervalActionTest {
 
 		final IntervalAction intervalAction = new IntervalAction(125, 200);
 
-		intervalAction.setPerformActionMethod(
+		intervalAction.setPerformIntervalActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performAction(int start, int end)
+				public void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					for (int i = start; i < end; i++) {
@@ -75,7 +74,7 @@ public class IntervalActionTest {
 
 			});
 
-		intervalAction.performActions();
+		intervalAction.performIntervalActions();
 
 		Assert.assertEquals(125, _count.get());
 	}
@@ -84,11 +83,11 @@ public class IntervalActionTest {
 	public void testIntervalActionPageCalculation() throws Exception {
 		final IntervalAction intervalAction = new IntervalAction(125);
 
-		intervalAction.setPerformActionMethod(
+		intervalAction.setPerformIntervalActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performAction(int start, int end)
+				public void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					_count.incrementAndGet();
@@ -98,7 +97,7 @@ public class IntervalActionTest {
 
 			});
 
-		intervalAction.performActions();
+		intervalAction.performIntervalActions();
 
 		Assert.assertEquals(2, _count.get());
 	}
@@ -109,11 +108,11 @@ public class IntervalActionTest {
 
 		final IntervalAction intervalAction = new IntervalAction(125, 200);
 
-		intervalAction.setPerformActionMethod(
+		intervalAction.setPerformIntervalActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performAction(int start, int end)
+				public void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					_count.incrementAndGet();
@@ -123,7 +122,7 @@ public class IntervalActionTest {
 
 			});
 
-		intervalAction.performActions();
+		intervalAction.performIntervalActions();
 
 		Assert.assertEquals(1, _count.get());
 	}
@@ -134,11 +133,11 @@ public class IntervalActionTest {
 
 		final IntervalAction intervalAction = new IntervalAction(125, 200);
 
-		intervalAction.setPerformActionMethod(
+		intervalAction.setPerformIntervalActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performAction(int start, int end)
+				public void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					intervalAction.incrementStart(start - end);
@@ -146,7 +145,7 @@ public class IntervalActionTest {
 
 			});
 
-		intervalAction.performActions();
+		intervalAction.performIntervalActions();
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -173,11 +172,11 @@ public class IntervalActionTest {
 	public void testIntervalActionWithZeroTotal() throws Exception {
 		final IntervalAction intervalAction = new IntervalAction(0);
 
-		intervalAction.setPerformActionMethod(
+		intervalAction.setPerformIntervalActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performAction(int start, int end)
+				public void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					for (int i = start; i < end; i++) {
@@ -189,7 +188,7 @@ public class IntervalActionTest {
 
 			});
 
-		intervalAction.performActions();
+		intervalAction.performIntervalActions();
 
 		Assert.assertEquals(0, _count.get());
 	}

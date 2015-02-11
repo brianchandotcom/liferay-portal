@@ -55,7 +55,7 @@ public class IntervalAction {
 		_start += increment;
 	}
 
-	public void performActions() throws PortalException {
+	public void performIntervalActions() throws PortalException {
 		int pages = _total / _interval;
 
 		for (int i = 0; i <= pages; i++) {
@@ -65,25 +65,28 @@ public class IntervalAction {
 				end = _total;
 			}
 
-			performActions(_start, end);
+			performIntervalActions(_start, end);
 		}
 	}
 
-	public void setPerformActionMethod(
-		PerformIntervalActionMethod performActionMethod) {
+	public void setPerformIntervalActionMethod(
+		PerformIntervalActionMethod performIntervalActionMethod) {
 
-		_performIntervalActionMethod = performActionMethod;
+		_performIntervalActionMethod = performIntervalActionMethod;
 	}
 
 	public interface PerformIntervalActionMethod {
 
-		public void performAction(int start, int end) throws PortalException;
+		public void performIntervalAction(int start, int end)
+			throws PortalException;
 
 	}
 
-	protected void performActions(int start, int end) throws PortalException {
+	protected void performIntervalActions(int start, int end)
+		throws PortalException {
+
 		if (_performIntervalActionMethod != null) {
-			_performIntervalActionMethod.performAction(start, end);
+			_performIntervalActionMethod.performIntervalAction(start, end);
 		}
 	}
 

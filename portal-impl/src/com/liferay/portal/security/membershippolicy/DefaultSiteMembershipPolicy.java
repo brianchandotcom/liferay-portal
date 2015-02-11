@@ -217,11 +217,11 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 		final IntervalAction intervalAction = new IntervalAction(total);
 
-		intervalAction.setPerformActionMethod(
+		intervalAction.setPerformIntervalActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performAction(int start, int end)
+				public void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					List<User> users = UserLocalServiceUtil.getGroupUsers(
@@ -243,7 +243,7 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 			});
 
-		intervalAction.performActions();
+		intervalAction.performIntervalActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

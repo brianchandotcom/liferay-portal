@@ -212,4 +212,23 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 		<delete dir="${lp.plugins.dir}/dist" />
 		<mkdir dir="${lp.plugins.dir}/dist" />
 	</target>
+
+	<target name="test-plugin-group">
+		<if>
+			<not>
+				<isset property="test.plugin.group.index" />
+			</not>
+			<then>
+				<fail>Use "ant test-plugin-group -Dtest.plugin.group.index=0".</fail>
+			</then>
+		</if>
+
+		<property file="${project.dir}/test.plugin.names.properties" />
+
+		<propertycopy from="TEST_PLUGIN_GROUP_${test.plugin.group.index}" name="test.plugins" />
+
+		<antcall target="compile-plugins">
+			<param name="plugins.includes" value="${test.plugins}" />
+		</antcall>
+	</target>
 </project>

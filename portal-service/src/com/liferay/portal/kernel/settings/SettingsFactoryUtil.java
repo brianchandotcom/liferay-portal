@@ -46,6 +46,10 @@ public class SettingsFactoryUtil {
 			groupId, serviceName);
 	}
 
+	public static Settings getPortalServiceSettings(String serviceName) {
+		return getSettingsFactory().getPortalServiceSettings(serviceName);
+	}
+
 	public static ArchivedSettings getPortletInstanceArchivedSettings(
 			long groupId, String portletId, String name)
 		throws PortalException {

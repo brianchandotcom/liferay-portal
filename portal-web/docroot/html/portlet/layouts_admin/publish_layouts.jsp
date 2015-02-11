@@ -137,7 +137,7 @@ if (group.isStaged() && group.isStagedRemotely()) {
 
 portletURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
 portletURL.setParameter("closeRedirect", closeRedirect);
-portletURL.setParameter("groupId", String.valueOf(liveGroupId));
+portletURL.setParameter("groupId", String.valueOf(stagingGroupId));
 portletURL.setParameter("stagingGroupId", String.valueOf(stagingGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 

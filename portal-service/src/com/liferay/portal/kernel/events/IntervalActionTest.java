@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.kernel.events;
 
 import com.liferay.portal.kernel.events.IntervalAction;
 import com.liferay.portal.kernel.exception.PortalException;

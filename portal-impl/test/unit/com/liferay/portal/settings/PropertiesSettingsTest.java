@@ -14,18 +14,18 @@
 
 package com.liferay.portal.settings;
 
-import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
-
 import java.util.Properties;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.powermock.api.mockito.PowerMockito;
+
 /**
  * @author Iván Zaera
  */
-public class PropertiesSettingsTest {
+public class PropertiesSettingsTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
@@ -36,9 +36,10 @@ public class PropertiesSettingsTest {
 
 		Class<? extends PropertiesSettingsTest> clazz = getClass();
 
+		_mockLocationVariableResolver = mock(LocationVariableResolver.class);
+
 		_propertiesSettings = new PropertiesSettings(
-			_properties, new ClassLoaderResourceManager(clazz.getClassLoader()),
-			null);
+			_mockLocationVariableResolver, _properties);
 	}
 
 	@Test
@@ -67,11 +68,25 @@ public class PropertiesSettingsTest {
 	public void testGetValuesWithResourceValue() {
 		_properties.put(_MULTIPLE_KEY, _RESOURCE_MULTIPLE_VALUES);
 
-		String[] expectedValues =
-			{"resourceValue0", "resourceValue1", "resourceValue2"};
+		when(
+			_mockLocationVariableResolver.isLocationVariable(
+				_RESOURCE_MULTIPLE_VALUES)
+		).thenReturn(
+			true
+		);
+
+		final String expectedValue =
+			"resourceValue0,resourceValue1,resourceValue2";
+
+		when(
+			_mockLocationVariableResolver.resolve(_RESOURCE_MULTIPLE_VALUES)
+		).thenReturn(
+			expectedValue
+		);
 
 		Assert.assertArrayEquals(
-			expectedValues, _propertiesSettings.getValues(_MULTIPLE_KEY, null));
+			expectedValue.split(","),
+			_propertiesSettings.getValues(_MULTIPLE_KEY, null));
 	}
 
 	@Test
@@ -96,8 +111,23 @@ public class PropertiesSettingsTest {
 	public void testGetValueWithResourceValue() {
 		_properties.put(_SINGLE_KEY, _RESOURCE_SINGLE_VALUE);
 
+		when(
+			_mockLocationVariableResolver.isLocationVariable(
+				_RESOURCE_SINGLE_VALUE)
+		).thenReturn(
+			true
+		);
+
+		final String expectedValue = "resourceValue";
+
+		when(
+			_mockLocationVariableResolver.resolve(_RESOURCE_SINGLE_VALUE)
+		).thenReturn(
+			expectedValue
+		);
+
 		Assert.assertEquals(
-			"resourceValue", _propertiesSettings.getValue(_SINGLE_KEY, null));
+			expectedValue, _propertiesSettings.getValue(_SINGLE_KEY, null));
 	}
 
 	private static final String _MULTIPLE_KEY = "multipleKey";
@@ -105,17 +135,16 @@ public class PropertiesSettingsTest {
 	private static final String _MULTIPLE_VALUES = "value0,value1,value2";
 
 	private static final String _RESOURCE_MULTIPLE_VALUES =
-		"${resource:com/liferay/portal/settings/dependencies" +
-			"/PropertiesSettingsTestMultiple.tmpl}";
+		"${resource:multiple.txt}";
 
 	private static final String _RESOURCE_SINGLE_VALUE =
-		"${resource:com/liferay/portal/settings/dependencies" +
-			"/PropertiesSettingsTestSingle.tmpl}";
+		"${resource:single.txt}";
 
 	private static final String _SINGLE_KEY = "key";
 
 	private static final String _SINGLE_VALUE = "value";
 
+	private LocationVariableResolver _mockLocationVariableResolver;
 	private Properties _properties;
 	private PropertiesSettings _propertiesSettings;
 

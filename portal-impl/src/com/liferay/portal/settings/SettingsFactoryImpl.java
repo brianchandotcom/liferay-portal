@@ -319,10 +319,11 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	protected Settings getPortalPropertiesSettings() {
 		return new PropertiesSettings(
-			getPortalProperties(),
-			new ClassLoaderResourceManager(
-				PortalClassLoaderUtil.getClassLoader()),
-			this);
+			new LocationVariableResolver(
+				new ClassLoaderResourceManager(
+					PortalClassLoaderUtil.getClassLoader()),
+				this),
+			getPortalProperties());
 	}
 
 	protected PortletPreferences getPortletInstancePortletPreferences(

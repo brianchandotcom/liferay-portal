@@ -585,7 +585,7 @@
 						result="previous.build.number"
 					/>
 
-					<property name="previous.commit.id.dir" value="${env.JENKINS_HOME}/jobs/${env.SOURCE_JOB_NAME}/builds/${previous.build.number}" />
+					<property name="previous.commit.id.dir" value="${jenkins.shared.user.content.dir}/jobs/${env.SOURCE_JOB_NAME}/builds/${previous.build.number}" />
 
 					<loadfile failonerror="false" property="liferay.previous.plugins.git.id" srcfile="${previous.commit.id.dir}/git-commit-plugins">
 						<filterchain>
@@ -1753,8 +1753,6 @@ ${marketplace.portlet.properties}</echo>
 				<isset property="jenkins.shared.user.content.dir" />
 			</and>
 			<then>
-				<ant target="record-git-commit-portal" />
-
 				<if>
 					<not>
 						<isset property="test.method.name" />
@@ -1795,7 +1793,7 @@ ${marketplace.portlet.properties}</echo>
 
 		<property
 			name="changelog.dir"
-			value="${env.JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+			value="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
 		/>
 
 		<math
@@ -1808,7 +1806,7 @@ ${marketplace.portlet.properties}</echo>
 
 		<property
 			name="previous.changelog.dir"
-			value="${env.JENKINS_HOME}/jobs/${env.JOB_NAME}/builds/${previous.build.number}"
+			value="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${previous.build.number}"
 		/>
 
 		<if>

@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.display.context.logic;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.configuration.WikiServiceConfiguration;
@@ -31,9 +32,11 @@ public class WikiVisualizationHelper {
 
 	public WikiVisualizationHelper(
 		WikiRequestHelper wikiRequestHelper,
+		WikiPortletInstanceSettingsHelper wikiPortletInstanceSettingsHelper,
 		WikiServiceConfiguration wikiServiceConfiguration) {
 
 		_wikiRequestHelper = wikiRequestHelper;
+		_wikiPortletInstanceSettingsHelper = wikiPortletInstanceSettingsHelper;
 		_wikiServiceConfiguration = wikiServiceConfiguration;
 	}
 
@@ -59,7 +62,10 @@ public class WikiVisualizationHelper {
 		return portletId.equals(WikiPortletKeys.WIKI_ADMIN);
 	}
 
-	public boolean isNodeNavigationVisible(Collection<WikiNode> nodes) {
+	public boolean isNodeNavigationVisible() throws PortalException {
+		Collection<WikiNode> nodes =
+			_wikiPortletInstanceSettingsHelper.getAllPermittedNodes();
+
 		String portletId = _wikiRequestHelper.getPortletId();
 
 		if ((nodes.size() > 1) && portletId.equals(WikiPortletKeys.WIKI)) {
@@ -120,6 +126,8 @@ public class WikiVisualizationHelper {
 	}
 
 	private String _strutsPath;
+	private final WikiPortletInstanceSettingsHelper
+		_wikiPortletInstanceSettingsHelper;
 	private final WikiRequestHelper _wikiRequestHelper;
 	private final WikiServiceConfiguration _wikiServiceConfiguration;
 

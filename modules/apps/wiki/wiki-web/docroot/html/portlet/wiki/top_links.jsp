@@ -19,11 +19,11 @@
 <%
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
-List<WikiNode> nodes = WikiUtil.getNodes(wikiPortletInstanceSettingsHelper.getAllNodes(), wikiPortletInstanceSettings.getHiddenNodes(), permissionChecker);
+List<WikiNode> nodes = wikiPortletInstanceSettingsHelper.getAllPermittedNodes();
 
 boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT);
 
-WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiServiceConfiguration);
+WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiPortletInstanceSettingsHelper, wikiServiceConfiguration);
 WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiServiceConfiguration);
 %>
 
@@ -50,7 +50,7 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 </c:if>
 
 <c:if test="<%= !print %>">
-	<c:if test="<%= wikiVisualizationHelper.isNodeNavigationVisible(nodes) %>">
+	<c:if test="<%= wikiVisualizationHelper.isNodeNavigationVisible() %>">
 		<aui:nav cssClass="nav-tabs">
 
 			<%

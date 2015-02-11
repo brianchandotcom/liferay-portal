@@ -51,7 +51,6 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.ClassType;
 import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.util.ContentUtil;
 
@@ -199,7 +198,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String[] scopeIds = preferences.getValues(
 			"scopeIds",
 			new String[] {
-				AssetPublisher.SCOPE_ID_GROUP_PREFIX + GroupConstants.DEFAULT
+				AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
+					GroupConstants.DEFAULT
 			});
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
@@ -409,14 +409,17 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String[] scopeIds = preferences.getValues(
 			"scopeIds",
 			new String[] {
-				AssetPublisher.SCOPE_ID_GROUP_PREFIX + GroupConstants.DEFAULT
+				AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
+					GroupConstants.DEFAULT
 			});
 
 		String scopeId = ParamUtil.getString(actionRequest, "scopeId");
 
 		scopeIds = ArrayUtil.remove(scopeIds, scopeId);
 
-		if (scopeId.startsWith(AssetPublisher.SCOPE_ID_PARENT_GROUP_PREFIX)) {
+		if (scopeId.startsWith(
+				AssetPublisherUtil.SCOPE_ID_PARENT_GROUP_PREFIX)) {
+
 			scopeId = scopeId.substring("Parent".length());
 
 			scopeIds = ArrayUtil.remove(scopeIds, scopeId);

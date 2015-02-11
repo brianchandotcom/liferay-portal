@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -64,7 +65,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -110,20 +110,19 @@ import javax.portlet.PortletRequest;
  * @author Raymond Augé
  * @author Julio Camarero
  */
-public class AssetPublisherImpl implements AssetPublisher {
+public class AssetPublisherUtil {
 
-	public AssetPublisherImpl() {
-		Registry registry = RegistryUtil.getRegistry();
+	public static final String SCOPE_ID_CHILD_GROUP_PREFIX = "ChildGroup_";
 
-		_serviceTracker = registry.trackServices(
-			AssetEntryQueryProcessor.class,
-			new AssetEntryQueryServiceTrackerCustomizer());
+	public static final String SCOPE_ID_GROUP_PREFIX = "Group_";
 
-		_serviceTracker.open();
-	}
+	public static final String SCOPE_ID_LAYOUT_PREFIX = "Layout_";
 
-	@Override
-	public void addAndStoreSelection(
+	public static final String SCOPE_ID_LAYOUT_UUID_PREFIX = "LayoutUuid_";
+
+	public static final String SCOPE_ID_PARENT_GROUP_PREFIX = "ParentGroup_";
+
+	public static void addAndStoreSelection(
 			PortletRequest portletRequest, String className, long classPK,
 			int assetEntryOrder)
 		throws Exception {
@@ -167,8 +166,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		portletPreferences.store();
 	}
 
-	@Override
-	public void addSelection(
+	public static void addSelection(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences, String portletId)
 		throws Exception {
@@ -187,8 +185,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			assetEntryOrder, assetEntryType);
 	}
 
-	@Override
-	public void addSelection(
+	public static void addSelection(
 			ThemeDisplay themeDisplay, PortletPreferences portletPreferences,
 			String portletId, long assetEntryId, int assetEntryOrder,
 			String assetEntryType)
@@ -228,8 +225,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		notifySubscribers(portletPreferences, plid, portletId, assetEntries);
 	}
 
-	@Override
-	public void addUserAttributes(
+	public static void addUserAttributes(
 			User user, String[] customUserAttributeNames,
 			AssetEntryQuery assetEntryQuery)
 		throws Exception {
@@ -279,8 +275,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		assetEntryQuery.setAllCategoryIds(allCategoryIdsList.getArray());
 	}
 
-	@Override
-	public void checkAssetEntries() throws Exception {
+	public static void checkAssetEntries() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
 			PortletPreferencesLocalServiceUtil.getActionableDynamicQuery();
 
@@ -317,8 +312,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Override
-	public long[] getAssetCategoryIds(PortletPreferences portletPreferences)
+	public static long[] getAssetCategoryIds(
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		long[] assetCategoryIds = new long[0];
@@ -357,8 +352,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	 *             String, String, String)}
 	 */
 	@Deprecated
-	@Override
-	public List<AssetEntry> getAssetEntries(
+	public static List<AssetEntry> getAssetEntries(
 		long[] groupIds, long[] classNameIds, String keywords, String userName,
 		String title, String description, boolean advancedSearch,
 		boolean andOperator, int start, int end, String orderByCol1,
@@ -370,8 +364,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			orderByType1, orderByType2);
 	}
 
-	@Override
-	public List<AssetEntry> getAssetEntries(
+	public static List<AssetEntry> getAssetEntries(
 			PortletPreferences portletPreferences, Layout layout,
 			long scopeGroupId, int max, boolean checkPermission)
 		throws PortalException {
@@ -451,8 +444,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 	}
 
-	@Override
-	public List<AssetEntry> getAssetEntries(
+	public static List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
@@ -538,8 +530,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return assetEntries;
 	}
 
-	@Override
-	public List<AssetEntry> getAssetEntries(
+	public static List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
@@ -573,13 +564,12 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetPublisherImpl#getAssetEntries(PortletRequest,
+	 *             AssetPublisherUtil#getAssetEntries(PortletRequest,
 	 *             PortletPreferences, PermissionChecker, long[], long[],
 	 *             String[], boolean , boolean)}
 	 */
 	@Deprecated
-	@Override
-	public List<AssetEntry> getAssetEntries(
+	public static List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
@@ -596,13 +586,12 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetPublisherImpl#getAssetEntries(PortletRequest,
+	 *             AssetPublisherUtil#getAssetEntries(PortletRequest,
 	 *             PortletPreferences, PermissionChecker, long[], boolean,
 	 *             boolean)}
 	 */
 	@Deprecated
-	@Override
-	public List<AssetEntry> getAssetEntries(
+	public static List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
@@ -621,8 +610,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	 *             String, String, String, String, boolean, boolean)}
 	 */
 	@Deprecated
-	@Override
-	public int getAssetEntriesCount(
+	public static int getAssetEntriesCount(
 		long[] groupIds, long[] classNameIds, String keywords, String userName,
 		String title, String description, boolean advancedSearch,
 		boolean andOperator, int start, int end) {
@@ -634,12 +622,11 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetPublisherImpl#getAssetEntryQuery(PortletPreferences,
+	 *             AssetPublisherUtil#getAssetEntryQuery(PortletPreferences,
 	 *             long[], long[], String[])}
 	 */
 	@Deprecated
-	@Override
-	public AssetEntryQuery getAssetEntryQuery(
+	public static AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] scopeGroupIds)
 		throws PortalException {
 
@@ -647,8 +634,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			portletPreferences, scopeGroupIds, null, null);
 	}
 
-	@Override
-	public AssetEntryQuery getAssetEntryQuery(
+	public static AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] scopeGroupIds,
 			long[] overrideAllAssetCategoryIds,
 			String[] overrideAllAssetTagNames)
@@ -760,8 +746,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return assetEntryQuery;
 	}
 
-	@Override
-	public String[] getAssetTagNames(PortletPreferences portletPreferences)
+	public static String[] getAssetTagNames(
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		String[] allAssetTagNames = new String[0];
@@ -795,19 +781,19 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             AssetPublisherImpl#getAssetTagNames(PortletPreferences)}
+	 *             AssetPublisherUtil#getAssetTagNames(PortletPreferences)}
 	 */
 	@Deprecated
-	@Override
-	public String[] getAssetTagNames(
+	public static String[] getAssetTagNames(
 			PortletPreferences portletPreferences, long scopeGroupId)
 		throws Exception {
 
 		return getAssetTagNames(portletPreferences);
 	}
 
-	@Override
-	public String getClassName(AssetRendererFactory assetRendererFactory) {
+	public static String getClassName(
+		AssetRendererFactory assetRendererFactory) {
+
 		Class<?> clazz = assetRendererFactory.getClass();
 
 		String className = clazz.getName();
@@ -817,8 +803,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return className.substring(pos + 1);
 	}
 
-	@Override
-	public long[] getClassNameIds(
+	public static long[] getClassNameIds(
 		PortletPreferences portletPreferences, long[] availableClassNameIds) {
 
 		boolean anyAssetType = GetterUtil.getBoolean(
@@ -849,8 +834,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 	}
 
-	@Override
-	public Long[] getClassTypeIds(
+	public static Long[] getClassTypeIds(
 		PortletPreferences portletPreferences, String className,
 		List<ClassType> availableClassTypes) {
 
@@ -866,8 +850,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			portletPreferences, className, availableClassTypeIds);
 	}
 
-	@Override
-	public Long[] getClassTypeIds(
+	public static Long[] getClassTypeIds(
 		PortletPreferences portletPreferences, String className,
 		Long[] availableClassTypeIds) {
 
@@ -899,8 +882,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 	}
 
-	@Override
-	public Map<Locale, String> getEmailAssetEntryAddedBodyMap(
+	public static Map<Locale, String> getEmailAssetEntryAddedBodyMap(
 		PortletPreferences portletPreferences) {
 
 		return LocalizationUtil.getLocalizationMap(
@@ -908,8 +890,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_BODY);
 	}
 
-	@Override
-	public boolean getEmailAssetEntryAddedEnabled(
+	public static boolean getEmailAssetEntryAddedEnabled(
 		PortletPreferences portletPreferences) {
 
 		String emailAssetEntryAddedEnabled = portletPreferences.getValue(
@@ -923,8 +904,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 	}
 
-	@Override
-	public Map<Locale, String> getEmailAssetEntryAddedSubjectMap(
+	public static Map<Locale, String> getEmailAssetEntryAddedSubjectMap(
 		PortletPreferences portletPreferences) {
 
 		return LocalizationUtil.getLocalizationMap(
@@ -932,8 +912,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			PropsKeys.ASSET_PUBLISHER_EMAIL_ASSET_ENTRY_ADDED_SUBJECT);
 	}
 
-	@Override
-	public Map<String, String> getEmailDefinitionTerms(
+	public static Map<String, String> getEmailDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName) {
 
@@ -991,8 +970,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return definitionTerms;
 	}
 
-	@Override
-	public String getEmailFromAddress(
+	public static String getEmailFromAddress(
 		PortletPreferences portletPreferences, long companyId) {
 
 		return PortalUtil.getEmailFromAddress(
@@ -1000,8 +978,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			PropsValues.ASSET_PUBLISHER_EMAIL_FROM_ADDRESS);
 	}
 
-	@Override
-	public String getEmailFromName(
+	public static String getEmailFromName(
 		PortletPreferences portletPreferences, long companyId) {
 
 		return PortalUtil.getEmailFromName(
@@ -1009,8 +986,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			PropsValues.ASSET_PUBLISHER_EMAIL_FROM_NAME);
 	}
 
-	@Override
-	public long getGroupIdFromScopeId(
+	public static long getGroupIdFromScopeId(
 			String scopeId, long siteGroupId, boolean privateLayout)
 		throws PortalException {
 
@@ -1118,8 +1094,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 	}
 
-	@Override
-	public long[] getGroupIds(
+	public static long[] getGroupIds(
 		PortletPreferences portletPreferences, long scopeGroupId,
 		Layout layout) {
 
@@ -1143,8 +1118,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return ArrayUtil.toLongArray(groupIds);
 	}
 
-	@Override
-	public String getScopeId(Group group, long scopeGroupId)
+	public static String getScopeId(Group group, long scopeGroupId)
 		throws PortalException {
 
 		String key = null;
@@ -1179,8 +1153,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return key;
 	}
 
-	@Override
-	public long getSubscriptionClassPK(long plid, String portletId)
+	public static long getSubscriptionClassPK(long plid, String portletId)
 		throws PortalException {
 
 		com.liferay.portal.model.PortletPreferences portletPreferencesModel =
@@ -1191,8 +1164,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return portletPreferencesModel.getPortletPreferencesId();
 	}
 
-	@Override
-	public boolean isScopeIdSelectable(
+	public static boolean isScopeIdSelectable(
 			PermissionChecker permissionChecker, String scopeId,
 			long companyGroupId, Layout layout)
 		throws PortalException {
@@ -1239,8 +1211,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return true;
 	}
 
-	@Override
-	public boolean isSubscribed(
+	public static boolean isSubscribed(
 			long companyId, long userId, long plid, String portletId)
 		throws PortalException {
 
@@ -1250,8 +1221,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			getSubscriptionClassPK(plid, portletId));
 	}
 
-	@Override
-	public void notifySubscribers(
+	public static void notifySubscribers(
 			PortletPreferences portletPreferences, long plid, String portletId,
 			List<AssetEntry> assetEntries)
 		throws PortalException {
@@ -1297,8 +1267,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	@Override
-	public void processAssetEntryQuery(
+	public static void processAssetEntryQuery(
 			User user, PortletPreferences portletPreferences,
 			AssetEntryQuery assetEntryQuery)
 		throws Exception {
@@ -1315,14 +1284,12 @@ public class AssetPublisherImpl implements AssetPublisher {
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
-	@Override
-	public void registerAssetQueryProcessor(
+	public static void registerAssetQueryProcessor(
 		String assetQueryProcessorClassName,
 		AssetEntryQueryProcessor assetQueryProcessor) {
 	}
 
-	@Override
-	public void removeAndStoreSelection(
+	public static void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -1358,8 +1325,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		portletPreferences.store();
 	}
 
-	@Override
-	public void subscribe(
+	public static void subscribe(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			String portletId)
 		throws PortalException {
@@ -1377,13 +1343,11 @@ public class AssetPublisherImpl implements AssetPublisher {
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
-	@Override
-	public void unregisterAssetQueryProcessor(
+	public static void unregisterAssetQueryProcessor(
 		String assetQueryProcessorClassName) {
 	}
 
-	@Override
-	public void unsubscribe(
+	public static void unsubscribe(
 			PermissionChecker permissionChecker, long plid, String portletId)
 		throws PortalException {
 
@@ -1396,7 +1360,9 @@ public class AssetPublisherImpl implements AssetPublisher {
 			getSubscriptionClassPK(plid, portletId));
 	}
 
-	protected long[] getSiteGroupIds(long[] groupIds) throws PortalException {
+	protected static long[] getSiteGroupIds(long[] groupIds)
+		throws PortalException {
+
 		Set<Long> siteGroupIds = new HashSet<>();
 
 		for (long groupId : groupIds) {
@@ -1406,7 +1372,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return ArrayUtil.toLongArray(siteGroupIds);
 	}
 
-	private void _checkAssetEntries(
+	private static void _checkAssetEntries(
 			com.liferay.portal.model.PortletPreferences
 				portletPreferencesModel)
 		throws PortalException {
@@ -1470,7 +1436,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 	}
 
-	private List<AssetEntry> _filterAssetCategoriesAssetEntries(
+	private static List<AssetEntry> _filterAssetCategoriesAssetEntries(
 			List<AssetEntry> assetEntries, long[] assetCategoryIds)
 		throws Exception {
 
@@ -1487,7 +1453,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return filteredAssetEntries;
 	}
 
-	private List<AssetEntry> _filterAssetTagNamesAssetEntries(
+	private static List<AssetEntry> _filterAssetTagNamesAssetEntries(
 			List<AssetEntry> assetEntries, String[] assetTagNames)
 		throws Exception {
 
@@ -1512,7 +1478,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return filteredAssetEntries;
 	}
 
-	private String _getAssetEntryXml(
+	private static String _getAssetEntryXml(
 		String assetEntryType, String assetEntryUuid) {
 
 		String xml = null;
@@ -1544,14 +1510,14 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AssetPublisherImpl.class);
+		AssetPublisherUtil.class);
 
-	private final List<AssetEntryQueryProcessor>
+	private static final List<AssetEntryQueryProcessor>
 		_assetEntryQueryProcessors = new CopyOnWriteArrayList<>();
-	private final ServiceTracker
+	private static final ServiceTracker
 		<AssetEntryQueryProcessor, AssetEntryQueryProcessor> _serviceTracker;
 
-	private final Accessor<AssetEntry, String> _titleAccessor =
+	private static final Accessor<AssetEntry, String> _titleAccessor =
 		new Accessor<AssetEntry, String>() {
 
 			@Override
@@ -1571,7 +1537,17 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 		};
 
-	private class AssetEntryQueryServiceTrackerCustomizer
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			AssetEntryQueryProcessor.class,
+			new AssetEntryQueryServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	private static class AssetEntryQueryServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<AssetEntryQueryProcessor, AssetEntryQueryProcessor> {
 

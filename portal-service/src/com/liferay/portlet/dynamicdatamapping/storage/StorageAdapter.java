@@ -14,13 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.StorageException;
-import com.liferay.portlet.dynamicdatamapping.storage.query.Condition;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eduardo Lundgren
@@ -34,11 +29,6 @@ public interface StorageAdapter {
 			ServiceContext serviceContext)
 		throws StorageException;
 
-	public long create(
-			long companyId, long ddmStructureId, Fields fields,
-			ServiceContext serviceContext)
-		throws StorageException;
-
 	public void deleteByClass(long classPK) throws StorageException;
 
 	public void deleteByDDMStructure(long ddmStructureId)
@@ -46,59 +36,11 @@ public interface StorageAdapter {
 
 	public DDMFormValues getDDMFormValues(long classPK) throws StorageException;
 
-	public Fields getFields(long classPK) throws StorageException;
-
-	public Fields getFields(long classPK, List<String> fieldNames)
-		throws StorageException;
-
-	public List<Fields> getFieldsList(
-			long ddmStructureId, List<String> fieldNames)
-		throws StorageException;
-
-	public List<Fields> getFieldsList(
-			long ddmStructureId, List<String> fieldNames,
-			OrderByComparator<Fields> orderByComparator)
-		throws StorageException;
-
-	public List<Fields> getFieldsList(
-			long ddmStructureId, long[] classPKs, List<String> fieldNames,
-			OrderByComparator<Fields> orderByComparator)
-		throws StorageException;
-
-	public List<Fields> getFieldsList(
-			long ddmStructureId, long[] classPKs,
-			OrderByComparator<Fields> orderByComparator)
-		throws StorageException;
-
-	public Map<Long, Fields> getFieldsMap(long ddmStructureId, long[] classPKs)
-		throws StorageException;
-
-	public Map<Long, Fields> getFieldsMap(
-			long ddmStructureId, long[] classPKs, List<String> fieldNames)
-		throws StorageException;
-
 	public String getStorageType();
-
-	public List<Fields> query(
-			long ddmStructureId, List<String> fieldNames, Condition condition,
-			OrderByComparator<Fields> orderByComparator)
-		throws StorageException;
-
-	public int queryCount(long ddmStructureId, Condition condition)
-		throws StorageException;
 
 	public void update(
 			long classPK, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
-		throws StorageException;
-
-	public void update(
-			long classPK, Fields fields, boolean mergeFields,
-			ServiceContext serviceContext)
-		throws StorageException;
-
-	public void update(
-			long classPK, Fields fields, ServiceContext serviceContext)
 		throws StorageException;
 
 }

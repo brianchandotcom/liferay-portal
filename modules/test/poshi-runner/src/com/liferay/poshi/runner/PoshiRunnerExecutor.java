@@ -139,6 +139,9 @@ public class PoshiRunnerExecutor {
 
 				throw new Exception();
 			}
+			else if (childElementName.equals("var")) {
+				runVarElement(childElement);
+			}
 		}
 	}
 
@@ -420,6 +423,19 @@ public class PoshiRunnerExecutor {
 
 		method.invoke(
 			_liferaySelenium, arguments.toArray(new String[arguments.size()]));
+	}
+
+	public static void runVarElement(Element element) throws Exception {
+		String varName = element.attributeValue("name");
+		String varValue = element.attributeValue("value");
+
+		if (varValue == null) {
+			varValue = element.elementText("var");
+		}
+
+		varValue = PoshiRunnerVariablesUtil.replaceCommandVars(varValue);
+
+		PoshiRunnerVariablesUtil.putIntoCommandMap(varName, varValue);
 	}
 
 	private static final LiferaySelenium _liferaySelenium =

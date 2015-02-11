@@ -40,6 +40,11 @@ public class ExportImportLifecycleEventImpl
 	}
 
 	@Override
+	public boolean getProcessFlag(int processFlag) {
+		return _processFlags.get(processFlag);
+	}
+
+	@Override
 	public Map<Integer, Boolean> getProcessFlags() {
 		return _processFlags;
 	}

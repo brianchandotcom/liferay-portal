@@ -28,6 +28,8 @@ public interface ExportImportLifecycleEvent extends Serializable {
 
 	public int getCode();
 
+	public boolean getProcessFlag(int processFlag);
+
 	public Map<Integer, Boolean> getProcessFlags();
 
 	public void setAttributes(Serializable... attributes);

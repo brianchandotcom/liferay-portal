@@ -568,6 +568,14 @@ public interface LayoutLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long exportPortletInfoAsFileInBackground(long userId,
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public long exportPortletInfoAsFileInBackground(long userId,
+		long exportImportConfigurationId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public long exportPortletInfoAsFileInBackground(long userId,
 		java.lang.String taskName, long plid, long groupId,
 		java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
@@ -1066,6 +1074,15 @@ public interface LayoutLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long importLayoutsInBackground(long userId,
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public long importLayoutsInBackground(long userId,
+		long exportImportConfigurationId, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public long importLayoutsInBackground(long userId,
 		java.lang.String taskName, long groupId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file)
@@ -1129,6 +1146,15 @@ public interface LayoutLocalService extends BaseLocalService,
 	public void importPortletInfo(long userId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public long importPortletInfoInBackground(long userId,
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public long importPortletInfoInBackground(long userId,
+		long exportImportConfigurationId, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long importPortletInfoInBackground(long userId,

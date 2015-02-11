@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/message_boards/init.jsp" %>
 
 <%
-int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH);
+int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_ABSTRACT_LENGTH), AssetUtil.ASSET_ABSTRACT_LENGTH);
 
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 

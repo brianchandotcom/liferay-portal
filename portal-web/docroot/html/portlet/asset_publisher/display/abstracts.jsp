@@ -97,8 +97,8 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 				String path = assetRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_ABSTRACT);
 
 				request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
-				request.setAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH, assetPublisherDisplayContext.getAbstractLength());
-				request.setAttribute(WebKeys.ASSET_PUBLISHER_VIEW_URL, viewURL);
+				request.setAttribute(WebKeys.ASSET_ABSTRACT_LENGTH, assetPublisherDisplayContext.getAbstractLength());
+				request.setAttribute(WebKeys.ASSET_VIEW_URL, viewURL);
 				%>
 
 				<c:choose>

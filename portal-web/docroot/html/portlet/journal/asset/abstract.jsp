@@ -17,9 +17,9 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH);
+int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_ABSTRACT_LENGTH), AssetUtil.ASSET_ABSTRACT_LENGTH);
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
-String viewURL = (String)request.getAttribute(WebKeys.ASSET_PUBLISHER_VIEW_URL);
+String viewURL = (String)request.getAttribute(WebKeys.ASSET_VIEW_URL);
 
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 JournalArticleResource articleResource = JournalArticleResourceLocalServiceUtil.getArticleResource(article.getResourcePrimKey());

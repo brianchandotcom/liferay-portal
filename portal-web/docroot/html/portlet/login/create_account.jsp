@@ -147,8 +147,14 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 				</c:if>
 			</aui:input>
 
-			<%@ include file="/html/portlet/login/create_account_locale.jspf" %>
-			<%@ include file="/html/portlet/login/create_account_user_name.jspf" %>
+			<%
+				Locale userLocale = locale;
+				User selUser = null;
+				Contact selContact = null;
+			%>
+
+			<%@ include file="/html/portlet/users_admin/user/details_language.jspf" %>
+			<%@ include file="/html/portlet/users_admin/user/details_user_name.jspf" %>
 		</aui:col>
 
 		<aui:col width="<%= 50 %>">

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_0_0.dtd">
+
+<routes>
+	<route>
+		<pattern>/vocabulary/{vocabularyId:\d+}/category/{parentCategoryId:\d+}/new</pattern>
+		<implicit-parameter name="mvcPath">/edit_category.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/vocabulary/{vocabularyId:\d+}/category/{categoryId:\d+}/edit</pattern>
+		<implicit-parameter name="mvcPath">/edit_category.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/vocabulary/{vocabularyId:\d+}/category/{categoryId:\d+}/move</pattern>
+		<implicit-parameter name="mvcPath">/move_category.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/vocabulary/{vocabularyId:\d+}/category/{categoryId:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/view_categories.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/vocabulary/{vocabularyId:\d+}/categories/new</pattern>
+		<implicit-parameter name="mvcPath">/edit_category.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/vocabulary/{vocabularyId:\d+}/edit</pattern>
+		<implicit-parameter name="mvcPath">/edit_vocabulary.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/vocabulary/{vocabularyId:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/view_categories.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/vocabularies/new</pattern>
+		<implicit-parameter name="mvcPath">/edit_vocabulary.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/vocabularies</pattern>
+		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern></pattern>
+		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+</routes>

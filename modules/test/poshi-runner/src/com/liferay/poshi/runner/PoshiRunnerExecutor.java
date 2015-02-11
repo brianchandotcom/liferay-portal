@@ -107,7 +107,15 @@ public class PoshiRunnerExecutor {
 		for (Element childElement : childElements) {
 			String childElementName = childElement.getName();
 
-			if (childElementName.equals("execute")) {
+			if (childElementName.equals("echo") ||
+				childElementName.equals("description")) {
+
+				String message = childElement.attributeValue("message");
+
+				System.out.println(
+					PoshiRunnerVariablesUtil.replaceCommandVars(message));
+			}
+			else if (childElementName.equals("execute")) {
 				if (childElement.attributeValue("action") != null) {
 					runActionElement(childElement);
 				}
@@ -120,6 +128,16 @@ public class PoshiRunnerExecutor {
 				else if (childElement.attributeValue("selenium") != null) {
 					runSeleniumElement(childElement);
 				}
+			}
+			else if (childElementName.equals("fail")) {
+				String message = childElement.attributeValue("message");
+
+				if (message != null) {
+					throw new Exception(
+						PoshiRunnerVariablesUtil.replaceCommandVars(message));
+				}
+
+				throw new Exception();
 			}
 		}
 	}

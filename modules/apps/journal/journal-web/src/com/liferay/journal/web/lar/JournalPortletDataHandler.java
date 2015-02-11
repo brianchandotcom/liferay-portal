@@ -56,7 +56,11 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the Journal portlet export and import functionality, which is to
@@ -101,7 +105,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "journal";
 
-	public JournalPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataLocalized(true);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(DDMStructure.class, JournalArticle.class),
@@ -523,6 +528,10 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				DDMTemplate.class.getName(), DDMStructure.class.getName()));
 
 		return exportActionableDynamicQuery;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 }

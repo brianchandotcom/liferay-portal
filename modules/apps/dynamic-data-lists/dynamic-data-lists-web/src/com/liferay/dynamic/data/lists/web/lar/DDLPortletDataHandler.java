@@ -54,7 +54,11 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -67,7 +71,8 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "dynamic_data_lists";
 
-	public DDLPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataLocalized(true);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(DDLRecord.class),
@@ -355,6 +360,10 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			});
 
 		return actionableDynamicQuery;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 }

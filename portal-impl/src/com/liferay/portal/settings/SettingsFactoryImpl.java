@@ -393,8 +393,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		String settingsId, Settings parentSettings) {
 
 		return new ServiceConfigurationBeanSettings(
-			getServiceConfigurationBean(settingsId),
-			getResourceManager(settingsId), this, parentSettings);
+			new LocationVariableResolver(getResourceManager(settingsId), this),
+			getServiceConfigurationBean(settingsId), parentSettings);
 	}
 
 	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =

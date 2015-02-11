@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `565eb12`.*
+*This document has been reviewed through commit `ad419fe`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -945,13 +945,15 @@ If you are using the Liferay `MVCPortlet` class, you can use the following URL:
 This change was made to allow for comment pagination when following the *More
 Comments* link.
 
----------------------------------------### Replaced `ReservedUserIdException` with `UserIdException` inner classes
+---------------------------------------
+
+### Replaced `ReservedUserIdException` with `UserIdException` Inner Classes
 - **Date:** 2015-Feb-10
 - **JIRA Ticket:** LPS-53487
 
 #### What changed?
 
-`ReservedUserIdException` has been deprecated and replaced with
+The `ReservedUserIdException` has been deprecated and replaced with
 `UserIdException.MustNotBeReserved`.
 
 #### Who is affected?

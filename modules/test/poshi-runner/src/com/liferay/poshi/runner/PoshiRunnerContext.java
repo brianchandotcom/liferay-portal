@@ -112,9 +112,9 @@ public class PoshiRunnerContext {
 	private static List<String> _getRelatedActionClassCommandNames(
 		String classCommandName) {
 
-		List<String> relatedClassCommandNameNames = new ArrayList<>();
+		List<String> relatedClassCommandNames = new ArrayList<>();
 
-		relatedClassCommandNameNames.add(classCommandName);
+		relatedClassCommandNames.add(classCommandName);
 
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
@@ -126,15 +126,14 @@ public class PoshiRunnerContext {
 		while (_actionExtendClassName.get(className) != null) {
 			String extendClassName = _actionExtendClassName.get(className);
 
-			relatedClassCommandNameNames.add(
-				extendClassName + "#" + commandName);
+			relatedClassCommandNames.add(extendClassName + "#" + commandName);
 
 			className = extendClassName;
 		}
 
-		relatedClassCommandNameNames.add("BaseLiferay#" + commandName);
+		relatedClassCommandNames.add("BaseLiferay#" + commandName);
 
-		return relatedClassCommandNameNames;
+		return relatedClassCommandNames;
 	}
 
 	private static void _readPathFile(String filePath, String className)

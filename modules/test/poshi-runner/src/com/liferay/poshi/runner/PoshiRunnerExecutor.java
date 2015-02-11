@@ -142,6 +142,9 @@ public class PoshiRunnerExecutor {
 
 				throw new Exception();
 			}
+			else if (childElementName.equals("for")) {
+				runForElement(childElement);
+			}
 			else if (childElementName.equals("var")) {
 				runVarElement(childElement);
 			}
@@ -262,6 +265,23 @@ public class PoshiRunnerExecutor {
 				parseElement(caseElement);
 
 				break;
+			}
+		}
+	}
+
+	public static void runForElement(Element element) throws Exception {
+		String list = PoshiRunnerVariablesUtil.replaceCommandVars(
+			element.attributeValue("list"));
+		String param = PoshiRunnerVariablesUtil.replaceCommandVars(
+			element.attributeValue("param"));
+
+		if (!list.isEmpty()) {
+			String[] listArray = list.split(",");
+
+			for (String item : listArray) {
+				PoshiRunnerVariablesUtil.putIntoCommandMap(param, item);
+
+				parseElement(element);
 			}
 		}
 	}

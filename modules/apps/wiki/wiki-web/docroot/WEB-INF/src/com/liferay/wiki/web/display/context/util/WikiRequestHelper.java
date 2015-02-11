@@ -18,11 +18,13 @@ import com.liferay.portal.kernel.display.context.util.BaseStrutsRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.settings.SettingsProvider;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.settings.WikiSettings;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
+import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -83,12 +85,18 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 			if (_wikiSettings == null) {
 				String portletId = getPortletId();
 
+				SettingsProvider<WikiSettings> wikiSettingsProvider =
+					_getWikiSettingsProvider();
+
 				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-					_wikiSettings = WikiSettings.getInstance(
-						getSiteGroupId(), getRequest().getParameterMap());
+					_wikiSettings =
+						wikiSettingsProvider.getGroupServiceSettings(
+							getSiteGroupId(), getRequest().getParameterMap());
 				}
 				else {
-					_wikiSettings = WikiSettings.getInstance(getSiteGroupId());
+					_wikiSettings =
+						wikiSettingsProvider.getGroupServiceSettings(
+							getSiteGroupId());
 				}
 			}
 
@@ -97,6 +105,13 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 		catch (PortalException pe) {
 			throw new SystemException(pe);
 		}
+	}
+
+	private SettingsProvider<WikiSettings> _getWikiSettingsProvider() {
+		WikiWebSettingsProvider wikiWebSettingsProvider =
+			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
+		return wikiWebSettingsProvider.getWikiSettingsProvider();
 	}
 
 	private Long _categoryId;

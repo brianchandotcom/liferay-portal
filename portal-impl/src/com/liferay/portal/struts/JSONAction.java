@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ac.AccessControlUtil;
@@ -77,7 +78,14 @@ public abstract class JSONAction extends Action {
 			json = getJSON(actionMapping, actionForm, request, response);
 
 			if (Validator.isNotNull(callback)) {
-				json = "/**/" + callback + "(" + json + ");";
+				StringBundler sb = new StringBundler(5);
+				sb.append("/**/");
+				sb.append(callback);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(json);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				json = sb.toString();
 			}
 		}
 		catch (SecurityException se) {

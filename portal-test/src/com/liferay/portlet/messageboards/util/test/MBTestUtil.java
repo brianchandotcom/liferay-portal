@@ -89,17 +89,6 @@ public class MBTestUtil {
 			RandomTestUtil.randomString(), parentCategoryId, serviceContext);
 	}
 
-	public static MBCategory addCategory(
-			long userId, long groupId, long parentCategoryId)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId, userId);
-
-		return addCategory(
-			RandomTestUtil.randomString(), parentCategoryId, serviceContext);
-	}
-
 	public static MBCategory addCategory(ServiceContext serviceContext)
 		throws Exception {
 
@@ -114,7 +103,7 @@ public class MBTestUtil {
 		throws Exception {
 
 		return MBCategoryServiceUtil.addCategory(
-			serviceContext.getUserId(), parentCategoryId, name,
+			TestPropsValues.getUserId(), parentCategoryId, name,
 			RandomTestUtil.randomString(), serviceContext);
 	}
 

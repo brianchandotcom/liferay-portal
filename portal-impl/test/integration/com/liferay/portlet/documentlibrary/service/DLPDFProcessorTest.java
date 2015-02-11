@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -71,6 +72,29 @@ public class DLPDFProcessorTest {
 			StringUtil.randomString(), _PDF_DATA.getBytes(), _serviceContext);
 
 		Assert.assertEquals(1, count.get());
+	}
+
+	@Test
+	public void testShouldCreateNewPreviewOnUpdateWithContent()
+		throws Exception {
+
+		AtomicInteger count = registerDLPDFProcessorMessageListener(
+			EventType.GENERATE_NEW);
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), _PDF_DATA.getBytes(), _serviceContext);
+
+		DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
+			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), true,
+			_PDF_DATA.getBytes(), _serviceContext);
+
+		Assert.assertEquals(2, count.get());
 	}
 
 	protected static AtomicInteger registerDLPDFProcessorMessageListener(

@@ -49,8 +49,8 @@ page import="com.liferay.portal.kernel.facebook.FacebookConnectUtil" %><%@
 page import="com.liferay.portal.kernel.util.CamelCaseUtil" %><%@
 page import="com.liferay.portal.security.auth.AuthException" %><%@
 page import="com.liferay.portal.security.auth.FullNameDefinition" %><%@
-page import="com.liferay.portal.security.auth.FullNameField" %><%@
 page import="com.liferay.portal.security.auth.FullNameDefinitionFactory" %><%@
+page import="com.liferay.portal.security.auth.FullNameField" %><%@
 page import="com.liferay.portal.util.OpenIdUtil" %><%@
 page import="com.liferay.portlet.login.util.LoginUtil" %>
 

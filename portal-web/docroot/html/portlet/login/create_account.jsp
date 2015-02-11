@@ -151,10 +151,9 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 				User selUser = null;
 				Contact selContact = null;
 
-				String detailsLanguageStrutsAction = "/login/create_account";
+				Locale userLocale = null;
 
 				String languageId = request.getParameter("languageId");
-				Locale userLocale = null;
 
 				if (Validator.isNotNull(languageId)) {
 					userLocale = LocaleUtil.fromLanguageId(languageId);
@@ -164,6 +163,8 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 
 					userLocale = LocaleUtil.fromLanguageId(defaultUser.getLanguageId());
 				}
+
+				String detailsLanguageStrutsAction = "/login/create_account";
 			%>
 
 			<%@ include file="/html/portlet/users_admin/user/details_language.jspf" %>

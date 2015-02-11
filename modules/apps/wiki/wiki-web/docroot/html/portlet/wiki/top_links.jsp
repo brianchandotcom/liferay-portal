@@ -79,7 +79,7 @@ WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wi
 			<%
 			PortletURL frontPageURL = wikiURLHelper.getFrontPageURL(node);
 
-			String label = wikiServiceConfiguration.frontPageName();
+			String label = wikiConfiguration.frontPageName();
 			boolean selected = wikiVisualizationHelper.isFrontPageNavItemSelected();
 			%>
 

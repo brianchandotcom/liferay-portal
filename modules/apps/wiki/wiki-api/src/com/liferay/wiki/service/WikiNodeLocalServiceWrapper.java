@@ -500,9 +500,9 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public void setWikiServiceConfiguration(
-		com.liferay.wiki.configuration.WikiServiceConfiguration wikiServiceConfiguration) {
-		_wikiNodeLocalService.setWikiServiceConfiguration(wikiServiceConfiguration);
+	public void setWikiConfiguration(
+		com.liferay.wiki.settings.WikiConfiguration wikiConfiguration) {
+		_wikiNodeLocalService.setWikiConfiguration(wikiConfiguration);
 	}
 
 	@Override

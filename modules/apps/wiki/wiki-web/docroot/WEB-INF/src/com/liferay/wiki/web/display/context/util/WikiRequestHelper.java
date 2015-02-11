@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.web.display.context.util;
 
-import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
+import com.liferay.portal.kernel.display.context.util.BaseStrutsRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera
  */
-public class WikiRequestHelper extends BaseRequestHelper {
+public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
 	public WikiRequestHelper(HttpServletRequest request) {
 		super(request);
@@ -39,14 +39,6 @@ public class WikiRequestHelper extends BaseRequestHelper {
 		}
 
 		return _categoryId;
-	}
-
-	public String getStrutsAction() {
-		if (_strutsAction == null) {
-			_strutsAction = ParamUtil.getString(getRequest(), "struts_action");
-		}
-
-		return _strutsAction;
 	}
 
 	public WikiPortletInstanceSettings getWikiPortletInstanceSettings() {
@@ -96,7 +88,6 @@ public class WikiRequestHelper extends BaseRequestHelper {
 	}
 
 	private Long _categoryId;
-	private String _strutsAction;
 	private WikiPortletInstanceSettings _wikiPortletInstanceSettings;
 	private WikiSettings _wikiSettings;
 

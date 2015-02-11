@@ -100,6 +100,25 @@ public class DLPDFProcessorTest {
 	}
 
 	@Test
+	public void testShouldCleanUpProcessorsOnCancelCheckOut() throws Exception {
+		AtomicBoolean cleanedUp = registerCleanUpDLProcessor();
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), _PDF_DATA.getBytes(), _serviceContext);
+
+		DLAppServiceUtil.checkOutFileEntry(
+			fileEntry.getFileEntryId(), _serviceContext);
+
+		DLAppServiceUtil.cancelCheckOut(fileEntry.getFileEntryId());
+
+		Assert.assertTrue(cleanedUp.get());
+	}
+
+	@Test
 	public void testShouldCleanUpProcessorsOnDelete() throws Exception {
 		AtomicBoolean cleanedUp = registerCleanUpDLProcessor();
 

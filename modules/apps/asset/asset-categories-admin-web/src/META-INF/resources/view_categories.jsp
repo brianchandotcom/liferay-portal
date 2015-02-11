@@ -63,7 +63,11 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 				<portlet:renderURL var="addCategoryURL">
 					<portlet:param name="mvcPath" value="/edit_category.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
+
+					<c:if test="<%= categoryId > 0 %>">
+						<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
+					</c:if>
+
 					<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
 				</portlet:renderURL>
 

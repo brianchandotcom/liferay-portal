@@ -14,6 +14,10 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 
+		<case locator-key1="PAGINATION_PAGES">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
 		<case locator-key1="PRINT_WEB_CONTENT">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>

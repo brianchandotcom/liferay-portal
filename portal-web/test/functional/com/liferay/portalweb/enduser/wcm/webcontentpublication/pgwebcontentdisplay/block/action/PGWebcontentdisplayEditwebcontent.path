@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_TEMPLATE</td>
+	<td>//a[@id='_15_selectTemplate']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_TRANSLATION_MENULIST</td>
 	<td>//div[contains(@class,'lfr-translation-manager-icon-menu')]/a</td>
 	<td></td>

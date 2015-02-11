@@ -24,6 +24,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEMPLATES_LIST_IFRAME</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'scopeTitle=Templates')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BUTTON</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//span[@class='nav-item-label' and contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_templateName}')]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLOSE_BUTTON_PNG</td>
 	<td>portal/buttons/close_button.png</td>
 	<td></td>
@@ -81,7 +96,7 @@
 <!--SCRIPT-->
 <tr>
 	<td>SCRIPT_CONTENT_FIELD</td>
-	<td>//div[@id='_166_richEditor']/div/div/div[3]/div[7]/div/span[@class='ace_string']</td>
+	<td>//div[@id='_166_richEditor']/textarea</td>
 	<td></td>
 </tr>
 <tr>

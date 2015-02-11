@@ -32,7 +32,12 @@
 
 		<execute macro="CPWebcontentTemplatesAddtemplate#showDetails" />
 
-		<execute action="CPWebcontentTemplatesAddtemplate#type" locator-key1="DESCRIPTION_FIELD" value1="${templateDescription}" />
+		<if>
+			<isset var="templateDescription" />
+			<then>
+				<execute action="CPWebcontentTemplatesAddtemplate#type" locator-key1="DESCRIPTION_FIELD" value1="${templateDescription}" />
+			</then>
+		</if>
 
 		<if>
 			<isset var="structureName" />
@@ -193,30 +198,6 @@
 				<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
 		</if>
-	</command>
-
-	<command name="editPGViaWCD">
-		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" />
-
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
-		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="STRUCTURE_NAME" value1="${structureName}" />
-		<execute action="PGWebcontentdisplayEditwebcontent#clickNoError" locator-key1="EDIT_TEMPLATE" />
-		<execute action="PGWebcontentdisplayEditwebcontent#confirm" locator-key1="CONFIRMATION" value1="Editing the current template will delete all unsaved content." />
-
-		<execute action="PGWebcontentdisplayEdittemplate#selectFrame" value1="relative=top" />
-		<execute action="PGWebcontentdisplayEdittemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
-		<execute action="PGWebcontentdisplayEdittemplate#type" locator-key1="NAME_FIELD" value1="Template Edit" />
-		<execute action="PGWebcontentdisplayEdittemplate#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGWebcontentdisplayEdittemplate#pause" locator1="2000" />
-		<execute action="PGWebcontentdisplayEdittemplate#sikuliClick" locator-key1="CLOSE_BUTTON_PNG" />
-
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_EDIT_IFRAME" />
-		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="TEMPLATE_NAME" value1="${templateName}" />
-		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-
-		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 	</command>
 
 	<command name="tearDownCP">

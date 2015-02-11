@@ -107,38 +107,3 @@ boolean viewInContext = GetterUtil.getBoolean(portletPreferences.getValue("viewI
 %>
 
 <%@ include file="/html/portlet/search/init-ext.jsp" %>
-
-<%!
-private String _buildAssetCategoryPath(AssetCategory assetCategory, Locale locale) throws Exception {
-	List<AssetCategory> assetCategories = assetCategory.getAncestors();
-
-	if (assetCategories.isEmpty()) {
-		return HtmlUtil.escape(assetCategory.getTitle(locale));
-	}
-
-	Collections.reverse(assetCategories);
-
-	StringBundler sb = new StringBundler(assetCategories.size() * 2 + 1);
-
-	for (AssetCategory curAssetCategory : assetCategories) {
-		sb.append(HtmlUtil.escape(curAssetCategory.getTitle(locale)));
-		sb.append(" &raquo; ");
-	}
-
-	sb.append(HtmlUtil.escape(assetCategory.getTitle(locale)));
-
-	return sb.toString();
-}
-
-private String _checkViewURL(ThemeDisplay themeDisplay, String viewURL, String currentURL, boolean inheritRedirect) {
-	if (Validator.isNotNull(viewURL) && viewURL.startsWith(themeDisplay.getURLPortal())) {
-		viewURL = HttpUtil.setParameter(viewURL, "inheritRedirect", inheritRedirect);
-
-		if (!inheritRedirect) {
-			viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
-		}
-	}
-
-	return viewURL;
-}
-%>

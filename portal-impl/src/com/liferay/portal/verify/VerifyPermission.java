@@ -38,6 +38,7 @@ import com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortletKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -174,38 +175,21 @@ public class VerifyPermission extends VerifyProcess {
 						resourcePermission.getRoleId());
 			}
 
-			long organizationActions = resourcePermission.getActionIds();
-			long groupActions = groupResourcePermission.getActionIds();
+			for (String actionId : _DEPRECATED_ORGANIZATION_ACTION_IDS) {
+				if (resourcePermission.hasActionId(actionId)) {
+					resourcePermission.removeResourceAction(actionId);
 
-			for (Object[] actionIdToMask : _ORGANIZATION_ACTION_IDS_TO_MASKS) {
-				String actionId = (String)actionIdToMask[0];
-
-				if (!resourcePermission.hasActionId(actionId)) {
-					continue;
-				}
-
-				long organizationActionMask = (Long)actionIdToMask[1];
-				long groupActionMask = (Long)actionIdToMask[2];
-
-				if ((organizationActions & organizationActionMask) ==
-						organizationActionMask) {
-
-					organizationActions =
-						organizationActions & (~organizationActionMask);
-					groupActions = groupActions | groupActionMask;
+					groupResourcePermission.addResourceAction(actionId);
 				}
 			}
 
 			try {
 				resourcePermission.resetOriginalValues();
 
-				resourcePermission.setActionIds(organizationActions);
-
 				ResourcePermissionLocalServiceUtil.updateResourcePermission(
 					resourcePermission);
 
 				groupResourcePermission.resetOriginalValues();
-				groupResourcePermission.setActionIds(groupActions);
 
 				ResourcePermissionLocalServiceUtil.updateResourcePermission(
 					groupResourcePermission);
@@ -236,18 +220,21 @@ public class VerifyPermission extends VerifyProcess {
 		return true;
 	}
 
-	private static final Object[][] _ORGANIZATION_ACTION_IDS_TO_MASKS =
-		new Object[][] {
-			new Object[] {"APPROVE_PROPOSAL", 2L, 0L},
-			new Object[] {"ASSIGN_REVIEWER", 8L, 0L},
-			new Object[] {ActionKeys.MANAGE_ARCHIVED_SETUPS, 128L, 128L},
-			new Object[] {ActionKeys.MANAGE_LAYOUTS, 256L, 256L},
-			new Object[] {ActionKeys.MANAGE_STAGING, 512L, 512L},
-			new Object[] {ActionKeys.MANAGE_TEAMS, 2048L, 1024L},
-			new Object[] {ActionKeys.PUBLISH_STAGING, 16384L, 4096L}
-		};
+	private static final List<String> _DEPRECATED_ORGANIZATION_ACTION_IDS =
+		new ArrayList<>();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyPermission.class);
+
+	static {
+		_DEPRECATED_ORGANIZATION_ACTION_IDS.add("APPROVE_PROPOSAL");
+		_DEPRECATED_ORGANIZATION_ACTION_IDS.add("ASSIGN_REVIEWER");
+		_DEPRECATED_ORGANIZATION_ACTION_IDS.add(
+			ActionKeys.MANAGE_ARCHIVED_SETUPS);
+		_DEPRECATED_ORGANIZATION_ACTION_IDS.add(ActionKeys.MANAGE_LAYOUTS);
+		_DEPRECATED_ORGANIZATION_ACTION_IDS.add(ActionKeys.MANAGE_STAGING);
+		_DEPRECATED_ORGANIZATION_ACTION_IDS.add(ActionKeys.MANAGE_TEAMS);
+		_DEPRECATED_ORGANIZATION_ACTION_IDS.add(ActionKeys.PUBLISH_STAGING);
+	}
 
 }

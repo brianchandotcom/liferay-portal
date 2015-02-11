@@ -4120,9 +4120,25 @@ if (ppstate.equals("normal")) {
 			<![CDATA[
 				import org.apache.tools.ant.DirectoryScanner;
 
-				Set getPluginNames() {
-					Set pluginNames = new TreeSet();
+				List getPluginGroups(List pluginNames, int groupsSize) {
+					List pluginNameGroups = new ArrayList(groupsSize);
 
+					for (int i = 0; i < groupsSize; i++) {
+						pluginNameGroups.add(new ArrayList());
+					}
+
+					int i = 0;
+
+					for (String pluginName : pluginNames) {
+						List pluginNameGroup = pluginNameGroups.get(i++ % groupsSize);
+
+						pluginNameGroup.add(pluginName);
+					}
+
+					return pluginNameGroups;
+				}
+
+				List getPluginNames() {
 					DirectoryScanner directoryScanner = new DirectoryScanner();
 
 					directoryScanner.setBasedir(project.getProperty("lp.plugins.dir"));
@@ -4132,7 +4148,7 @@ if (ppstate.equals("normal")) {
 
 					String[] fileNames = directoryScanner.getIncludedFiles();
 
-					Arrays.sort(fileNames);
+					List pluginNames = new ArrayList();
 
 					for (String fileName : fileNames) {
 						int x = fileName.indexOf("/");
@@ -4148,25 +4164,43 @@ if (ppstate.equals("normal")) {
 						pluginNames.add(pluginName);
 					}
 
+					Collections.sort(pluginNames);
+
 					return pluginNames;
 				}
 
 				StringBuilder sb = new StringBuilder();
 
-				Set pluginNames = getPluginNames();
+				int allTestPluginGroupsSize = Integer.parseInt(project.getProperty("test.plugin.groups.size"));
 
-				sb.append("TEST_PLUGIN_NAMES=");
+				List pluginNames = getPluginNames();
 
-				Iterator iterator = pluginNames.iterator();
+				List testPluginGroups = getPluginGroups(pluginNames, allTestPluginGroupsSize);
 
-				while (iterator.hasNext()) {
-					String pluginName = iterator.next();
+				for (i = 0; i < allTestPluginGroupsSize; i++) {
+					List testPluginGroup = testPluginGroups.get(i);
 
-					sb.append(pluginName);
+					sb.append("TEST_PLUGIN_GROUP_");
+					sb.append(i);
+					sb.append("=");
 
-					if (iterator.hasNext()) {
-						sb.append(" ");
+					for (String testPlugin : testPluginGroup) {
+						sb.append(testPlugin);
+						sb.append(",");
 					}
+
+					sb.append("\n\n");
+				}
+
+				sb.append("TEST_PLUGIN_GROUPS=");
+
+				for (int i = 0; i < allTestPluginGroupsSize; i++) {
+					sb.append(i);
+					sb.append(" ");
+				}
+
+				if (allTestPluginGroupsSize > 0) {
+					sb.setLength(sb.length() - 1);
 				}
 
 				project.setProperty("test.plugin.names.properties.content", sb.toString());

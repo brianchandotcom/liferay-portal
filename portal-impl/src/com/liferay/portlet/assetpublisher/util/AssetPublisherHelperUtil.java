@@ -16,23 +16,30 @@ package com.liferay.portlet.assetpublisher.util;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.util.AssetUtil;
+
+import javax.portlet.PortletURL;
 
 /**
  * @author Juan Fernández
  */
 public class AssetPublisherHelperUtil {
 
-	public static AssetPublisherHelper getAssetPublisherHelper() {
-		return _assetPublisherHelper;
-	}
-
 	public static String getAssetViewURL(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry) {
 
-		return getAssetPublisherHelper().getAssetViewURL(
-			liferayPortletRequest, liferayPortletResponse, assetEntry);
+		return getAssetViewURL(
+			liferayPortletRequest, liferayPortletResponse, assetEntry, false);
 	}
 
 	public static String getAssetViewURL(
@@ -40,17 +47,69 @@ public class AssetPublisherHelperUtil {
 		LiferayPortletResponse liferayPortletResponse, AssetEntry assetEntry,
 		boolean viewInContext) {
 
-		return getAssetPublisherHelper().getAssetViewURL(
-			liferayPortletRequest, liferayPortletResponse, assetEntry,
-			viewInContext);
+		PortletURL viewFullContentURL =
+			liferayPortletResponse.createRenderURL();
+
+		viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
+		viewFullContentURL.setParameter(
+			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
+
+		AssetRendererFactory assetRendererFactory =
+			assetEntry.getAssetRendererFactory();
+
+		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
+
+		viewFullContentURL.setParameter("type", assetRendererFactory.getType());
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
+			if (assetRenderer.getGroupId() != themeDisplay.getScopeGroupId()) {
+				viewFullContentURL.setParameter(
+					"groupId", String.valueOf(assetRenderer.getGroupId()));
+			}
+
+			viewFullContentURL.setParameter(
+				"urlTitle", assetRenderer.getUrlTitle());
+		}
+
+		String viewURL = null;
+
+		String currentURL = null;
+
+		if (viewInContext) {
+			currentURL = PortalUtil.getCurrentURL(liferayPortletRequest);
+
+			String viewFullContentURLString = viewFullContentURL.toString();
+
+			viewFullContentURLString = HttpUtil.setParameter(
+				viewFullContentURLString, "redirect", currentURL);
+
+			try {
+				viewURL = assetRenderer.getURLViewInContext(
+					liferayPortletRequest, liferayPortletResponse,
+					viewFullContentURLString);
+			}
+			catch (Exception e) {
+			}
+		}
+		else {
+			PortletURL currentURLObj = PortletURLUtil.getCurrent(
+				liferayPortletRequest, liferayPortletResponse);
+
+			currentURL = currentURLObj.toString();
+		}
+
+		if (Validator.isNull(viewURL)) {
+			viewURL = viewFullContentURL.toString();
+		}
+
+		viewURL = AssetUtil.checkViewURL(
+			assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
+
+		return viewURL;
 	}
-
-	public void setAssetPublisherHelper(
-		AssetPublisherHelper assetPublisherHelper) {
-
-		_assetPublisherHelper = assetPublisherHelper;
-	}
-
-	private static AssetPublisherHelper _assetPublisherHelper;
 
 }

@@ -31,7 +31,6 @@ import com.liferay.portlet.asset.service.AssetTagService;
 import com.liferay.portlet.asset.service.AssetTagStatsLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyService;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherHelper;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
@@ -57,7 +56,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 		contextObjects.put(
 			PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER,
-			AssetPublisherHelperUtil.getAssetPublisherHelper());
+			AssetPublisherHelperUtil.class);
 
 		return contextObjects;
 	}
@@ -91,7 +90,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 				"asset-publisher-util", restrictedVariables);
 
 		assetPublisherUtilTemplateVariableGroup.addVariable(
-			"asset-publisher-helper", AssetPublisherHelper.class,
+			"asset-publisher-helper", AssetPublisherHelperUtil.class,
 			PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER);
 
 		templateVariableGroups.put(

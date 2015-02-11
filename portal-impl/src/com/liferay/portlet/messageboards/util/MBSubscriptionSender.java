@@ -15,10 +15,13 @@
 package com.liferay.portlet.messageboards.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.Account;
 import com.liferay.portal.kernel.mail.SMTPAccount;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.User;
 import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portlet.messageboards.NoSuchMailingListException;
 import com.liferay.portlet.messageboards.model.MBMailingList;
@@ -90,6 +93,26 @@ public class MBSubscriptionSender
 
 		return subject.concat(StringPool.SPACE).concat(mailId);
 	}
+
+	@Override
+	protected void sendNotification(User user) throws Exception {
+		sendEmailNotification(user);
+
+		if (contextUserId == user.getUserId() ) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skip user notification for current user in context: " +
+						contextUserId);
+			}
+
+			return;
+		}
+
+		sendUserNotification(user);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MBSubscriptionSender.class);
 
 	private boolean _calledAddMailingListSubscriber;
 

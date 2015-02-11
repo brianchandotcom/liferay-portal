@@ -9,50 +9,28 @@ app.server.type=${app.server.type}
 
 auto.deploy.dir=${liferay.home}/deploy
 
-plugins.includes=${plugins.includes}</echo>
+plugins.includes=${plugin}</echo>
 
-		<for list="${plugins.includes}" param="plugin">
-			<sequential>
-				<if>
-					<contains string="@{plugin}" substring="layouttpl" />
-					<then>
-						<var name="select" value="\2" />
-					</then>
-					<else>
-						<var name="select" value="\2s" />
-					</else>
-				</if>
+		<ant-execute
+			ant.dir="${lp.plugins.dir}/${plugin.type}/${plugin}"
+			ant.target="clean"
+		/>
 
-				<propertyregex
-					input="@{plugin}"
-					override="true"
-					property="plugin.type"
-					regexp="(\w+-)+(\w+)"
-					select="${select}"
-				/>
-
+		<if>
+			<contains string="${plugin}" substring="portlet" />
+			<then>
 				<ant-execute
-					ant.dir="${lp.plugins.dir}/${plugin.type}/@{plugin}"
-					ant.target="clean"
+					ant.dir="${lp.plugins.dir}/${plugin.type}/${plugin}"
+					ant.target="compile-jsp"
 				/>
-
-				<if>
-					<contains string="@{plugin}" substring="portlet" />
-					<then>
-						<ant-execute
-							ant.dir="${lp.plugins.dir}/${plugin.type}/@{plugin}"
-							ant.target="compile-jsp"
-						/>
-					</then>
-					<else>
-						<ant-execute
-							ant.dir="${lp.plugins.dir}/${plugin.type}/@{plugin}"
-							ant.target="compile"
-						/>
-					</else>
-				</if>
-			</sequential>
-		</for>
+			</then>
+			<else>
+				<ant-execute
+					ant.dir="${lp.plugins.dir}/${plugin.type}/${plugin}"
+					ant.target="compile"
+				/>
+			</else>
+		</if>
 	</target>
 
 	<target name="deploy-extra-apps">
@@ -227,8 +205,31 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 
 		<propertycopy from="TEST_PLUGIN_GROUP_${test.plugin.group.index}" name="test.plugins" />
 
-		<antcall target="compile-plugins">
-			<param name="plugins.includes" value="${test.plugins}" />
-		</antcall>
+		<for list="${test.plugins}" param="test.plugin">
+			<sequential>
+				<if>
+					<contains string="@{test.plugin}" substring="layouttpl" />
+					<then>
+						<var name="select" value="\2" />
+					</then>
+					<else>
+						<var name="select" value="\2s" />
+					</else>
+				</if>
+
+				<propertyregex
+					input="@{test.plugin}"
+					override="true"
+					property="test.plugin.type"
+					regexp="(\w+-)+(\w+)"
+					select="${select}"
+				/>
+
+				<antcall target="compile-plugins">
+					<param name="plugin" value="@{test.plugin}" />
+					<param name="plugin.type" value="${test.plugin.type}" />
+				</antcall>
+			</sequential>
+		</for>
 	</target>
 </project>

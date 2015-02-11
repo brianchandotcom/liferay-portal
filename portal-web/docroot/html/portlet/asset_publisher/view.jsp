@@ -47,6 +47,15 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	%>
 
 	<c:if test="<%= groupIds.length > 0 %>">
+
+		<%
+		PortletURL redirectURL = renderResponse.createRenderURL();
+
+		redirectURL.setParameter("mvcPath", "/html/portlet/asset_publisher/add_asset_redirect.jsp");
+		redirectURL.setParameter("redirect", currentURL);
+		redirectURL.setWindowState(LiferayWindowState.POP_UP);
+		%>
+
 		<aui:nav-bar cssClass='<%= "add-asset-selector lfr-meta-actions" + ((groupIds.length == 1) ? " single-item-button" : StringPool.BLANK) %>'>
 			<liferay-ui:asset-add-button
 				addDisplayPageParameter="<%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) %>"
@@ -55,6 +64,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 				classNameIds="<%= assetPublisherDisplayContext.getClassNameIds() %>"
 				classTypeIds="<%= assetPublisherDisplayContext.getClassTypeIds() %>"
 				groupIds="<%= groupIds %>"
+				redirect="<%= redirectURL.toString() %>"
 			/>
 		</aui:nav-bar>
 	</c:if>

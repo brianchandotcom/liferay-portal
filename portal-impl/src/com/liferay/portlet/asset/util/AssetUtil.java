@@ -458,23 +458,6 @@ public class AssetUtil {
 		Map<String, PortletURL> addPortletURLs = new TreeMap<>(
 			new ModelResourceComparator(themeDisplay.getLocale()));
 
-		if (Validator.isNull(redirect)) {
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			PortletURL redirectURL =
-				liferayPortletResponse.createLiferayPortletURL(
-					themeDisplay.getPlid(), portletDisplay.getId(),
-					PortletRequest.RENDER_PHASE, false);
-
-			redirectURL.setParameter(
-				"mvcPath",
-				"/html/portlet/asset_publisher/add_asset_redirect.jsp");
-			redirectURL.setParameter("redirect", themeDisplay.getURLCurrent());
-			redirectURL.setWindowState(LiferayWindowState.POP_UP);
-
-			redirect = redirectURL.toString();
-		}
-
 		for (long classNameId : classNameIds) {
 			String className = PortalUtil.getClassName(classNameId);
 

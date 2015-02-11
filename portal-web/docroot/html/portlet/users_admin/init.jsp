@@ -37,7 +37,6 @@ page import="com.liferay.portal.OrganizationParentException" %><%@
 page import="com.liferay.portal.PhoneNumberException" %><%@
 page import="com.liferay.portal.RequiredOrganizationException" %><%@
 page import="com.liferay.portal.RequiredUserException" %><%@
-page import="com.liferay.portal.ReservedUserIdException" %><%@
 page import="com.liferay.portal.UserEmailAddressException" %><%@
 page import="com.liferay.portal.UserFieldException" %><%@
 page import="com.liferay.portal.UserIdException" %><%@

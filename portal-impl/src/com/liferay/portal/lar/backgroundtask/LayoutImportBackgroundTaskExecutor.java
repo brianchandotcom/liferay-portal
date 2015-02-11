@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 import java.io.Serializable;
@@ -28,6 +29,7 @@ import java.util.Map;
 
 /**
  * @author Daniel Kocsis
+ * @author Akos Thurzo
  */
 public class LayoutImportBackgroundTaskExecutor
 	extends BaseExportImportBackgroundTaskExecutor {
@@ -45,15 +47,18 @@ public class LayoutImportBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
+		ExportImportConfiguration exportImportConfiguration =
+			getExportImportConfiguration(backgroundTask);
 
-		long userId = MapUtil.getLong(taskContextMap, "userId");
-		long groupId = MapUtil.getLong(taskContextMap, "groupId");
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long userId = MapUtil.getLong(settingsMap, "userId");
+		long groupId = MapUtil.getLong(settingsMap, "groupId");
 		boolean privateLayout = MapUtil.getBoolean(
-			taskContextMap, "privateLayout");
+			settingsMap, "privateLayout");
 		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)taskContextMap.get("parameterMap");
+			(Map<String, String[]>)settingsMap.get("parameterMap");
 
 		List<FileEntry> attachmentsFileEntries =
 			backgroundTask.getAttachmentsFileEntries();

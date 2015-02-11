@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.lar.backgroundtask.BackgroundTaskContextMapFactory;
 import com.liferay.portal.lar.backgroundtask.LayoutRemoteStagingBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.PortletStagingBackgroundTaskExecutor;
@@ -279,22 +278,34 @@ public class StagingImpl implements Staging {
 			portletRequest, sourceGroupId, false, sourcePlid, portletId,
 			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
-		Map<String, Serializable> taskContextMap =
-			BackgroundTaskContextMapFactory.buildTaskContextMap(
-				userId, sourceGroupId, false, null, parameterMap,
-				Constants.PUBLISH_TO_LIVE, dateRange.getStartDate(),
-				dateRange.getEndDate(), StringPool.BLANK);
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				userId, sourceGroupId, sourcePlid, targetGroupId, targetPlid,
+				portletId, parameterMap, Constants.PUBLISH_TO_LIVE,
+				dateRange.getStartDate(), dateRange.getEndDate());
 
-		taskContextMap.put("sourceGroupId", sourceGroupId);
-		taskContextMap.put("sourcePlid", sourcePlid);
-		taskContextMap.put("portletId", portletId);
-		taskContextMap.put("targetGroupId", targetGroupId);
-		taskContextMap.put("targetPlid", targetPlid);
+		ServiceContext serviceContext = new ServiceContext();
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					userId, sourceGroupId, portletId, StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
+					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					serviceContext);
+
+		Map<String, Serializable> taskContextMap = new HashMap<>();
+
+		taskContextMap.put(Constants.CMD, Constants.PUBLISH_TO_LIVE);
+		taskContextMap.put(
+			"exportImportConfigurationId",
+			exportImportConfiguration.getExportImportConfigurationId());
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTask(
-			userId, sourceGroupId, portletId, null,
+			userId, exportImportConfiguration.getGroupId(),
+			exportImportConfiguration.getName(), null,
 			PortletStagingBackgroundTaskExecutor.class, taskContextMap,
-			new ServiceContext());
+			serviceContext);
 	}
 
 	@Override

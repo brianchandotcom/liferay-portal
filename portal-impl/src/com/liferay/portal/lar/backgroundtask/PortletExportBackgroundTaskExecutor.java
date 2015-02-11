@@ -17,6 +17,7 @@ package com.liferay.portal.lar.backgroundtask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
@@ -29,6 +30,7 @@ import java.util.Map;
 /**
  * @author Daniel Kocsis
  * @author Michael C. Han
+ * @author Akos Thurzo
  */
 public class PortletExportBackgroundTaskExecutor
 	extends BaseExportImportBackgroundTaskExecutor {
@@ -42,19 +44,22 @@ public class PortletExportBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
+		ExportImportConfiguration exportImportConfiguration =
+			getExportImportConfiguration(backgroundTask);
 
-		long userId = MapUtil.getLong(taskContextMap, "userId");
-		String fileName = MapUtil.getString(taskContextMap, "fileName");
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
 
-		long plid = MapUtil.getLong(taskContextMap, "plid");
-		long groupId = MapUtil.getLong(taskContextMap, "groupId");
-		String portletId = MapUtil.getString(taskContextMap, "portletId");
+		long userId = MapUtil.getLong(settingsMap, "userId");
+		String fileName = MapUtil.getString(settingsMap, "fileName");
+
+		long plid = MapUtil.getLong(settingsMap, "plid");
+		long groupId = MapUtil.getLong(settingsMap, "groupId");
+		String portletId = MapUtil.getString(settingsMap, "portletId");
 		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)taskContextMap.get("parameterMap");
-		Date startDate = (Date)taskContextMap.get("startDate");
-		Date endDate = (Date)taskContextMap.get("endDate");
+			(Map<String, String[]>)settingsMap.get("parameterMap");
+		Date startDate = (Date)settingsMap.get("startDate");
+		Date endDate = (Date)settingsMap.get("endDate");
 
 		File larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
 			plid, groupId, portletId, parameterMap, startDate, endDate);

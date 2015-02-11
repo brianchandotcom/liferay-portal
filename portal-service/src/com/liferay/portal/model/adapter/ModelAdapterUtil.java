@@ -31,6 +31,7 @@ public class ModelAdapterUtil {
 		return doAdapt(adapteeModel, adapteeModelClass, adaptedModelClass);
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T, V> V adapt(T adapteeModel, Class<V> adaptedModelClass) {
 		Class<T> adapteeModelClass = (Class<T>)adapteeModel.getClass();
 
@@ -49,7 +50,7 @@ public class ModelAdapterUtil {
 		}
 
 		ModelAdapterBuilder<T, V> modelAdapterBuilder =
-			(ModelAdapterBuilder<T, V>)modelAdapterBuilderLocator.locate(
+			modelAdapterBuilderLocator.locate(
 				adapteeModelClass, adaptedModelClass);
 
 		return modelAdapterBuilder.build(adapteeModel);

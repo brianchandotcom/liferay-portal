@@ -17,9 +17,9 @@ package com.liferay.portal.model.adapter.builder;
 /**
  * @author Carlos Sierra Andrés
  */
-public interface ModelAdapterBuilderLocator<T, V> {
+public interface ModelAdapterBuilderLocator {
 
-	public ModelAdapterBuilder<T, V> locate(
+	public <T, V> ModelAdapterBuilder<T, V> locate(
 		Class<T> adapteeModelClass, Class<V> adaptedModelClass);
 
 }

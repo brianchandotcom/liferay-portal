@@ -32,8 +32,8 @@ import java.lang.reflect.Type;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceTrackerMapModelAdapterBuilderLocator<T, V>
-	implements ModelAdapterBuilderLocator<T, V>, Closeable {
+public class ServiceTrackerMapModelAdapterBuilderLocator
+	implements ModelAdapterBuilderLocator, Closeable {
 
 	public ServiceTrackerMapModelAdapterBuilderLocator() {
 		_modelAdapterBuildersMap.open();
@@ -45,19 +45,21 @@ public class ServiceTrackerMapModelAdapterBuilderLocator<T, V>
 	}
 
 	@Override
-	public ModelAdapterBuilder<T, V> locate(
+	@SuppressWarnings("unchecked")
+	public <T, V> ModelAdapterBuilder<T, V> locate(
 		Class<T> adapteeModelClass, Class<V> adaptedModelClass) {
 
 		return _modelAdapterBuildersMap.getService(
 			getKey(adapteeModelClass, adaptedModelClass));
 	}
 
-	private String getKey(
+	private <T, V> String getKey(
 		Class<T> adapteeModelClass, Class<V> adaptedModelClass) {
 
 		return adapteeModelClass.getName() + "->" + adaptedModelClass.getName();
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	private final ServiceTrackerMap<String, ModelAdapterBuilder>
 		_modelAdapterBuildersMap =
 			ServiceTrackerCollections.singleValueMap(

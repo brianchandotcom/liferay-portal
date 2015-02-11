@@ -3,36 +3,6 @@
 <project name="portal-test-plugins" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<target name="test-plugin">
-		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
-app.server.type=${app.server.type}
-
-auto.deploy.dir=${liferay.home}/deploy
-
-plugins.includes=${plugin}</echo>
-
-		<ant-execute
-			ant.dir="${lp.plugins.dir}/${plugin.type}/${plugin}"
-			ant.target="clean"
-		/>
-
-		<if>
-			<contains string="${plugin}" substring="portlet" />
-			<then>
-				<ant-execute
-					ant.dir="${lp.plugins.dir}/${plugin.type}/${plugin}"
-					ant.target="compile-jsp"
-				/>
-			</then>
-			<else>
-				<ant-execute
-					ant.dir="${lp.plugins.dir}/${plugin.type}/${plugin}"
-					ant.target="compile"
-				/>
-			</else>
-		</if>
-	</target>
-
 	<target name="deploy-extra-apps">
 		<fail message="Please set the property ${extra.apps.zip.file.name}" unless="extra.apps.zip.file.name" />
 
@@ -189,6 +159,36 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 
 		<delete dir="${lp.plugins.dir}/dist" />
 		<mkdir dir="${lp.plugins.dir}/dist" />
+	</target>
+
+	<target name="test-plugin">
+		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
+app.server.type=${app.server.type}
+
+auto.deploy.dir=${liferay.home}/deploy
+
+plugins.includes=${plugin}</echo>
+
+		<ant-execute
+			ant.dir="${lp.plugins.dir}/${plugin.type}/${plugin}"
+			ant.target="clean"
+		/>
+
+		<if>
+			<contains string="${plugin}" substring="portlet" />
+			<then>
+				<ant-execute
+					ant.dir="${lp.plugins.dir}/${plugin.type}/${plugin}"
+					ant.target="compile-jsp"
+				/>
+			</then>
+			<else>
+				<ant-execute
+					ant.dir="${lp.plugins.dir}/${plugin.type}/${plugin}"
+					ant.target="compile"
+				/>
+			</else>
+		</if>
 	</target>
 
 	<target name="test-plugin-group">

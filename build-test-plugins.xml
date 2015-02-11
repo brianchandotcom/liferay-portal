@@ -3,7 +3,7 @@
 <project name="portal-test-plugins" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<target name="compile-plugins">
+	<target name="test-plugin">
 		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
 app.server.type=${app.server.type}
 
@@ -225,7 +225,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 					select="${select}"
 				/>
 
-				<antcall target="compile-plugins">
+				<antcall target="test-plugin">
 					<param name="plugin" value="@{test.plugin}" />
 					<param name="plugin.type" value="${test.plugin.type}" />
 				</antcall>

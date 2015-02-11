@@ -24,8 +24,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" +
-			AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN},
+		"javax.portlet.name=" + AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN
+	},
 	service = FriendlyURLMapper.class
 )
 public class AssetCategoryAdminFriendlyURLMapper

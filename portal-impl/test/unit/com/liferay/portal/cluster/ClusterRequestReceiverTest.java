@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
+import java.util.Collections;
 import java.util.logging.Level;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -83,7 +84,7 @@ public class ClusterRequestReceiverTest
 
 			assertFutureClusterResponsesWithoutException(
 				futureClusterResponses.get(), clusterRequest.getUuid(), null,
-				clusterNodeId);
+				Collections.singletonList(clusterNodeId));
 
 			// Test 2, return value is not null
 
@@ -98,7 +99,7 @@ public class ClusterRequestReceiverTest
 
 			assertFutureClusterResponsesWithoutException(
 				futureClusterResponses.get(), clusterRequest.getUuid(),
-				timestamp, clusterNodeId);
+				timestamp, Collections.singletonList(clusterNodeId));
 
 			// Test 3, return value is not serializable
 
@@ -185,7 +186,7 @@ public class ClusterRequestReceiverTest
 
 			assertFutureClusterResponsesWithoutException(
 				futureClusterResponses1.get(), clusterRequest1.getUuid(), value,
-				clusterNodeId);
+				Collections.singletonList(clusterNodeId));
 
 			ClusterRequest clusterRequest2 =
 				ClusterRequest.createUnicastRequest(
@@ -197,7 +198,7 @@ public class ClusterRequestReceiverTest
 
 			assertFutureClusterResponsesWithoutException(
 				futureClusterResponses2.get(), clusterRequest2.getUuid(), null,
-				clusterNodeId);
+				Collections.singletonList(clusterNodeId));
 		}
 		finally {
 			clusterExecutorImpl1.destroy();

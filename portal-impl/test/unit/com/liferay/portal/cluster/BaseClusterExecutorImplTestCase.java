@@ -229,12 +229,13 @@ public abstract class BaseClusterExecutorImplTestCase
 		ClusterNodeResponse clusterNodeResponse =
 			clusterNodeResponses.getClusterResponse(expectedClusterNodeId);
 
-		ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
-
 		Exception exception = clusterNodeResponse.getException();
 
 		Assert.assertEquals(1, clusterNodeResponses.size());
 		Assert.assertEquals(expectedUUID, clusterNodeResponse.getUuid());
+
+		ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
+
 		Assert.assertEquals(
 			expectedClusterNodeId, clusterNode.getClusterNodeId());
 		Assert.assertTrue(clusterNodeResponse.hasException());
@@ -275,9 +276,10 @@ public abstract class BaseClusterExecutorImplTestCase
 			ClusterNodeResponse clusterNodeResponse =
 				clusterNodeResponses.getClusterResponse(expectedClusterNodeId);
 
+			Assert.assertEquals(expectedUUID, clusterNodeResponse.getUuid());
+
 			ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
 
-			Assert.assertEquals(expectedUUID, clusterNodeResponse.getUuid());
 			Assert.assertEquals(
 				expectedClusterNodeId, clusterNode.getClusterNodeId());
 			Assert.assertEquals(
@@ -285,20 +287,6 @@ public abstract class BaseClusterExecutorImplTestCase
 			Assert.assertFalse(clusterNodeResponse.hasException());
 			Assert.assertNull(clusterNodeResponse.getException());
 		}
-	}
-
-	protected void assertFutureClusterResponsesWithoutException(
-			ClusterNodeResponses clusterNodeResponses, String expectedUUID,
-			Object exceptedResult, String expectedClusterNodeId)
-		throws Exception {
-
-		List<String> expectedClusterNodeIds = new ArrayList<>();
-
-		expectedClusterNodeIds.add(expectedClusterNodeId);
-
-		assertFutureClusterResponsesWithoutException(
-			clusterNodeResponses, expectedUUID, exceptedResult,
-			expectedClusterNodeIds);
 	}
 
 	protected ClusterExecutorImpl getClusterExecutorImpl() {

@@ -43,6 +43,7 @@ import com.liferay.portal.uuid.PortalUUIDImpl;
 import java.net.InetAddress;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -398,7 +399,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			assertFutureClusterResponsesWithoutException(
 				futureClusterResponses.get(), clusterRequest.getUuid(), null,
-				clusterNodeId);
+				Collections.singletonList(clusterNodeId));
 
 			// Test 2, execute when return value is not serializable
 
@@ -488,7 +489,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			assertFutureClusterResponsesWithoutException(
 				futureClusterResponses.get(), clusterRequest.getUuid(),
-				timestamp, clusterNodeId);
+				timestamp, Collections.singletonList(clusterNodeId));
 		}
 		finally {
 			clusterExecutorImpl.destroy();
@@ -528,7 +529,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 
 			assertFutureClusterResponsesWithoutException(
 				futureClusterResponses.get(), clusterRequest.getUuid(),
-				timestamp, clusterNodeId);
+				timestamp, Collections.singletonList(clusterNodeId));
 
 			// Test 2, execute with skip local enabled
 

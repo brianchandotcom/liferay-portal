@@ -325,13 +325,13 @@ public class PoshiRunnerExecutor {
 	}
 
 	public static void runIfElement(Element element) throws Exception {
-		List<Element> ifElements = element.elements();
+		List<Element> ifChildElements = element.elements();
 
-		Element ifConditionElement = ifElements.get(0);
+		Element ifConditionElement = ifChildElements.get(0);
 
-		boolean bool = evaluateConditionalElement(ifConditionElement);
+		boolean condition = evaluateConditionalElement(ifConditionElement);
 
-		if (bool) {
+		if (condition) {
 			Element ifThenElement = element.element("then");
 
 			parseElement(ifThenElement);
@@ -340,24 +340,23 @@ public class PoshiRunnerExecutor {
 			List<Element> elseIfElements = element.elements("elseif");
 
 			for (Element elseIfElement : elseIfElements) {
-				List<Element> elseIfConditionElements =
-					elseIfElement.elements();
+				List<Element> elseIfChildElements = elseIfElement.elements();
 
-				Element elseIfConditionElement = elseIfConditionElements.get(0);
+				Element elseIfConditionElement = elseIfChildElements.get(0);
 
-				bool = evaluateConditionalElement(elseIfConditionElement);
+				condition = evaluateConditionalElement(elseIfConditionElement);
 
-				if (bool) {
-					Element elseThenElement = elseIfElement.element("then");
+				if (condition) {
+					Element elseIfThenElement = elseIfElement.element("then");
 
-					parseElement(elseThenElement);
+					parseElement(elseIfThenElement);
 
 					break;
 				}
 			}
 		}
 
-		if ((element.element("else") != null) && (bool == false)) {
+		if ((element.element("else") != null) && (condition == false)) {
 			Element elseElement = element.element("else");
 
 			parseElement(elseElement);

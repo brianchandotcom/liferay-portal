@@ -15,7 +15,7 @@
 --%>
 
 <div class="search-suggested-spelling">
-	<c:if test="<%= collatedSpellCheckResultEnabled && Validator.isNotNull(hits.getCollatedSpellCheckResult()) && !Validator.equals(hits.getCollatedSpellCheckResult(), searchContext.getKeywords()) %>">
+	<c:if test="<%= searchDisplayContext.isCollatedSpellCheckResultEnabled() && Validator.isNotNull(hits.getCollatedSpellCheckResult()) && !Validator.equals(hits.getCollatedSpellCheckResult(), searchContext.getKeywords()) %>">
 		<ul class="list-inline suggested-keywords">
 			<li class="label label-default">
 				<liferay-ui:message key="did-you-mean" />:
@@ -47,7 +47,7 @@
 		</ul>
 	</c:if>
 
-	<c:if test="<%= querySuggestionsEnabled && Validator.isNotNull(hits.getQuerySuggestions()) %>">
+	<c:if test="<%= searchDisplayContext.isQuerySuggestionsEnabled() && Validator.isNotNull(hits.getQuerySuggestions()) %>">
 		<ul class="list-inline related-queries">
 			<li class="label label-default">
 				<liferay-ui:message key="related-queries" />:

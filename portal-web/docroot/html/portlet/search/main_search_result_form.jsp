@@ -58,7 +58,7 @@ if (assetRendererFactory != null) {
 	viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
 	viewFullContentURL.setParameter("type", assetRendererFactory.getType());
 
-	if (viewInContext || !assetEntry.isVisible()) {
+	if (searchDisplayContext.isViewInContext() || !assetEntry.isVisible()) {
 		inheritRedirect = true;
 
 		String viewFullContentURLString = viewFullContentURL.toString();
@@ -67,7 +67,7 @@ if (assetRendererFactory != null) {
 
 		viewURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString);
 
-		viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
+		viewURL = AssetUtil.checkViewURL(assetEntry, searchDisplayContext.isViewInContext(), viewURL, currentURL, themeDisplay);
 	}
 	else {
 		viewURL = viewFullContentURL.toString();
@@ -91,11 +91,11 @@ else if (assetRenderer != null) {
 }
 
 if (summary != null) {
-	if ((assetRendererFactory == null) && viewInContext) {
+	if ((assetRendererFactory == null) && searchDisplayContext.isViewInContext()) {
 		viewURL = viewFullContentURL.toString();
 	}
 
-	viewURL = _checkViewURL(themeDisplay, viewURL, currentURL, inheritRedirect);
+	viewURL = searchDisplayContext.checkViewURL(viewURL, currentURL, inheritRedirect);
 
 	boolean highlightEnabled = (Boolean)request.getAttribute("search.jsp-highlightEnabled");
 	String[] queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");
@@ -232,7 +232,7 @@ if (summary != null) {
 								%>
 
 									<a class="asset-category" href="<%= assetCategoryURL.toString() %>">
-										<%= _buildAssetCategoryPath(assetCategory, assetCategoryLocale) %>
+										<%= searchDisplayContext.buildAssetCategoryPath(assetCategory, assetCategoryLocale) %>
 									</a>
 
 							<%

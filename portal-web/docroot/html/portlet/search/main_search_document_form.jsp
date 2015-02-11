@@ -136,7 +136,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 						</c:if>
 
 						<a class="asset-category" href="<%= categoryURL.toString() %>">
-							<%= _buildAssetCategoryPath(assetCategory, locale) %>
+							<%= searchDisplayContext.buildAssetCategoryPath(assetCategory, locale) %>
 						</a>
 
 						<c:if test="<%= (i + 1) == assetCategoryIds.length %>">

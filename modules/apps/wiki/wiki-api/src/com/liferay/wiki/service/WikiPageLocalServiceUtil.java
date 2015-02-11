@@ -913,9 +913,9 @@ public class WikiPageLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void setWikiServiceConfiguration(
-		com.liferay.wiki.configuration.WikiServiceConfiguration wikiServiceConfiguration) {
-		getService().setWikiServiceConfiguration(wikiServiceConfiguration);
+	public static void setWikiConfiguration(
+		com.liferay.wiki.settings.WikiConfiguration wikiConfiguration) {
+		getService().setWikiConfiguration(wikiConfiguration);
 	}
 
 	public static void setWikiSettingsProvider(

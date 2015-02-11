@@ -62,9 +62,11 @@ if ((assetRenderer != null) && assetRenderer.isPreviewInContext()) {
 	viewFullContentURLString = assetRenderer.getURLViewInContext((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, null);
 }
 else {
-	PortletURL viewFullContentURL = renderResponse.createRenderURL();
+	String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.VIEW);
 
-	viewFullContentURL.setParameter("struts_action", "/workflow_tasks/view_content");
+	PortletURL viewFullContentURL = PortletURLFactoryUtil.create(request, portletId, plid, PortletRequest.RENDER_PHASE);
+
+	viewFullContentURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp");
 	viewFullContentURL.setParameter("redirect", currentURL);
 
 	if (assetEntry != null) {

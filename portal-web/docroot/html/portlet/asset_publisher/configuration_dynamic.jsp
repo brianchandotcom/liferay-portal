@@ -180,6 +180,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							<div class="asset-subtypefields-wrapper hide" id="<portlet:namespace /><%= className %>subtypeFieldsWrapper">
 
 								<%
+								String eventName = renderResponse.getNamespace() + "selectDDMStructureField";
+
 								for (ClassType classType: classTypes) {
 									if (classType.getClassTypeFieldsCount() == 0) {
 										continue;
@@ -187,12 +189,13 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								%>
 
 									<span class="asset-subtypefields hide" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>Options">
-										<portlet:renderURL var="selectStructureFieldURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-											<portlet:param name="struts_action" value="/portlet_configuration/select_structure_field" />
+										<liferay-portlet:renderURL portletName="<%= PortletKeys.ASSET_PUBLISHER %>" var="selectStructureFieldURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+											<portlet:param name="mvcPath" value="/html/portlet/asset_publisher/select_structure_field.jsp" />
 											<portlet:param name="portletResource" value="<%= assetPublisherDisplayContext.getPortletResource() %>" />
 											<portlet:param name="className" value="<%= assetRendererFactory.getClassName() %>" />
 											<portlet:param name="classTypeId" value="<%= String.valueOf(classType.getClassTypeId()) %>" />
-										</portlet:renderURL>
+											<portlet:param name="eventName" value="<%= eventName %>" />
+										</liferay-portlet:renderURL>
 
 										<span class="asset-subtypefields-popup" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>PopUpButton">
 											<aui:button data-href="<%= selectStructureFieldURL.toString() %>" disabled="<%= !assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" value="select" />
@@ -339,7 +342,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							contentBox: '#<portlet:namespace />queryRules > fieldset',
 							fieldIndexes: '<portlet:namespace />queryLogicIndexes',
 							namespace: '<portlet:namespace />',
-							url: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/portlet_configuration/edit_query_rule" /></portlet:renderURL>'
+							url: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ASSET_PUBLISHER %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/asset_publisher/edit_query_rule.jsp" /></liferay-portlet:renderURL>'
 						}
 					).render();
 				</aui:script>

@@ -28,12 +28,12 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.assetpublisher.util.AssetRSSUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
-import com.liferay.portlet.assetpublisher.util.AssetRSSUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;

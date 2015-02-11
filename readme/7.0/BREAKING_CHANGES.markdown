@@ -968,8 +968,36 @@ catching exception `UserIdException.MustNotBeReserved`.
 A new pattern has been defined for exceptions that provides higher expressivity
 in their names and also more information regarding why the exception was thrown.
 
-The new exception `UserIdException.MustNotBeReserved` has all the necessary 
+The new exception `UserIdException.MustNotBeReserved` has all the necessary
 information about why the exception was thrown and its context. In particular,
 it contains the problematic user ID and the list of reserved user IDs.
+
+------------------------------------------------------------------------------
+
+### Removal of methods and change of location of AssetPublisherUtil
+- **Date:** 2015-Feb-11
+- **JIRA Ticket:** LPS-52744
+
+#### What changed?
+
+The class AssetPublisherUtil from portal-service module has been moved to the
+module AssetPublisher and it is not exposed as part of the public API.
+
+
+#### Who is affected?
+
+This affects developers who have written code that uses the AssetPublisherUtil
+class.
+
+#### How should I update my code?
+
+This class is not supposed to be used from other modules anymore since it
+contains utility methods for the Asset Publisher portlet. If needed, you can
+define a dependency with the Asset Publisher module and use the new class.
+
+#### Why was this change made?
+
+This change has been made as part of the modularization efforts to decouple the
+different parts of the portal.
 
 ---------------------------------------

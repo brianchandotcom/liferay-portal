@@ -39,7 +39,6 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -238,7 +237,7 @@ public class AssetPublisherPortletDataHandler
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 		String companyGroupScopeId =
-			AssetPublisher.SCOPE_ID_GROUP_PREFIX +
+			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
 				portletDataContext.getCompanyGroupId();
 
 		String[] newValues = new String[oldValues.length];
@@ -246,18 +245,18 @@ public class AssetPublisherPortletDataHandler
 		for (int i = 0; i < oldValues.length; i++) {
 			String oldValue = oldValues[i];
 
-			if (oldValue.startsWith(AssetPublisher.SCOPE_ID_GROUP_PREFIX)) {
+			if (oldValue.startsWith(AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX)) {
 				newValues[i] = StringUtil.replace(
 					oldValue, companyGroupScopeId,
 					"[$COMPANY_GROUP_SCOPE_ID$]");
 			}
 			else if (oldValue.startsWith(
-						AssetPublisher.SCOPE_ID_LAYOUT_PREFIX)) {
+						AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX)) {
 
 				// Legacy preferences
 
 				String scopeIdSuffix = oldValue.substring(
-					AssetPublisher.SCOPE_ID_LAYOUT_PREFIX.length());
+					AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX.length());
 
 				long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
 
@@ -266,7 +265,7 @@ public class AssetPublisherPortletDataHandler
 					scopeIdLayoutId);
 
 				newValues[i] =
-					AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX +
+					AssetPublisherUtil.SCOPE_ID_LAYOUT_UUID_PREFIX +
 						scopeIdLayout.getUuid();
 			}
 			else {
@@ -410,7 +409,7 @@ public class AssetPublisherPortletDataHandler
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 		String companyGroupScopeId =
-			AssetPublisher.SCOPE_ID_GROUP_PREFIX + companyGroupId;
+			AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX + companyGroupId;
 
 		List<String> newValues = new ArrayList<>(oldValues.length);
 

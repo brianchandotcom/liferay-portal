@@ -129,6 +129,9 @@ public class PoshiRunnerExecutor {
 					runSeleniumElement(childElement);
 				}
 			}
+			else if (childElementName.equals("if")) {
+				runIfElement(childElement);
+			}
 			else if (childElementName.equals("fail")) {
 				String message = childElement.attributeValue("message");
 
@@ -319,6 +322,46 @@ public class PoshiRunnerExecutor {
 		parseElement(commandElement);
 
 		PoshiRunnerVariablesUtil.popCommandMap();
+	}
+
+	public static void runIfElement(Element element) throws Exception {
+		List<Element> ifElements = element.elements();
+
+		Element ifConditionElement = ifElements.get(0);
+
+		boolean bool = evaluateConditionalElement(ifConditionElement);
+
+		if (bool) {
+			Element ifThenElement = element.element("then");
+
+			parseElement(ifThenElement);
+		}
+		else if (element.element("elseif") != null) {
+			List<Element> elseIfElements = element.elements("elseif");
+
+			for (Element elseIfElement : elseIfElements) {
+				List<Element> elseIfConditionElements =
+					elseIfElement.elements();
+
+				Element elseIfConditionElement = elseIfConditionElements.get(0);
+
+				bool = evaluateConditionalElement(elseIfConditionElement);
+
+				if (bool) {
+					Element elseThenElement = elseIfElement.element("then");
+
+					parseElement(elseThenElement);
+
+					break;
+				}
+			}
+		}
+
+		if ((element.element("else") != null) && (bool == false)) {
+			Element elseElement = element.element("else");
+
+			parseElement(elseElement);
+		}
 	}
 
 	public static void runMacroElement(Element executeElement)

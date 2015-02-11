@@ -73,35 +73,35 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
-### liferay-ui:logo-selector requires changes to the parameters
-- **Date:** 2013-Dec-5
+### The `liferay-ui:logo-selector` Taglib Requires Parameter Changes
+- **Date:** 2013-Dec-05
 - **JIRA Ticket:** LPS-42645
 
 #### What changed?
-The Logo Selector taglib now supports uploading and image (storing it as a
-temporary file, cropping it and cancell before saving.
-The taglib now doesn't require creating a UI to include the image (this
-parameter was called editLogoURL and it has been removed). The new parameters
-supported are:
-- currentLogoURL: the URL to display the image being currently stored
-- hasUpdateLogoPermission: true if the current user can update this logo
-- maxFileSize: Limit of size to the logo to be uploaded
-- tempImageFileName: unique identifier to store the temporary image on upload
+The Logo Selector taglib now supports uploading an image, storing it as a
+temporary file, cropping it, and canceling before saving. The taglib no longer
+requires creating a UI to include the image, which used the `editLogoURL`
+parameter. This parameter has been removed and the taglib now supports the
+following parameters:
 
+- `currentLogoURL`: the URL to display the image being stored
+- `hasUpdateLogoPermission`: `true` if the current user can update the logo
+- `maxFileSize`: the size limit for the logo to be uploaded
+- `tempImageFileName`: the unique identifier to store the temporary image on
+upload
 
 #### Who is affected?
-Plugins or templates that were using the taglib <liferay-ui:logo-selector> will
-need to update their usage of the taglib.
+Plugins or templates that are using the `liferay-ui:logo-selector` taglib need
+to update their usage of the taglib.
 
 #### How should I update my code?
-Remove the parameter *editLogoURL* and include (if neccessary) the parameters
-*currentLogoURL*, *hasUpdateLogoPermission*, *maxFileSize*, *tempImageFileName*
-
+You should remove the parameter `editLogoURL` and include (if neccessary) the
+parameters `currentLogoURL`, `hasUpdateLogoPermission`, `maxFileSize`, and/or
+`tempImageFileName`.
 
 **Example**
 
 Replace:
-
 ```
 <portlet:renderURL var="editUserPortraitURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />
@@ -133,9 +133,8 @@ With:
 
 #### Why was this change made?
 This change helps keep a unified UI and consistent experience for uploading
-logos all around the portal that can be customized from a single location.
-In addition, it adds new features such as cropping and support for cancelling.
-
+logos in the portal that can be customized from a single location. In addition,
+it adds new features such as cropping and support for canceling.
 
 ---------------------------------------
 

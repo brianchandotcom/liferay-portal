@@ -29,8 +29,6 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.wiki.configuration.WikiServiceConfiguration;
-import com.liferay.wiki.configuration.WikiServiceConfigurationProvider;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -42,8 +40,10 @@ import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermission;
+import com.liferay.wiki.settings.WikiConfiguration;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
+import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import java.util.Arrays;
 import java.util.List;
@@ -144,11 +144,10 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		WikiServiceConfiguration wikiServiceConfiguration =
-			WikiServiceConfigurationProvider.getWikiServiceConfiguration();
+		WikiConfiguration wikiConfiguration = _getWikiConfiguration();
 
 		WikiPage page = WikiPageLocalServiceUtil.fetchPage(
-			nodeId, wikiServiceConfiguration.frontPageName(), 0);
+			nodeId, wikiConfiguration.frontPageName(), 0);
 
 		if (page == null) {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -172,7 +171,7 @@ public class ActionUtil {
 
 				page = WikiPageLocalServiceUtil.addPage(
 					themeDisplay.getDefaultUserId(), nodeId,
-					wikiServiceConfiguration.frontPageName(), null,
+					wikiConfiguration.frontPageName(), null,
 					WikiPageConstants.NEW, true, serviceContext);
 			}
 			finally {
@@ -244,11 +243,10 @@ public class ActionUtil {
 			}
 		}
 
-		WikiServiceConfiguration wikiServiceConfiguration =
-			WikiServiceConfigurationProvider.getWikiServiceConfiguration();
+		WikiConfiguration wikiConfiguration = _getWikiConfiguration();
 
 		if (Validator.isNull(title)) {
-			title = wikiServiceConfiguration.frontPageName();
+			title = wikiConfiguration.frontPageName();
 		}
 
 		WikiPage page = null;
@@ -271,7 +269,7 @@ public class ActionUtil {
 			}
 		}
 		catch (NoSuchPageException nspe) {
-			if (title.equals(wikiServiceConfiguration.frontPageName()) &&
+			if (title.equals(wikiConfiguration.frontPageName()) &&
 				(version == 0)) {
 
 				page = getFirstVisiblePage(nodeId, portletRequest);
@@ -282,6 +280,13 @@ public class ActionUtil {
 		}
 
 		request.setAttribute(WikiWebKeys.WIKI_PAGE, page);
+	}
+
+	private static WikiConfiguration _getWikiConfiguration() {
+		WikiWebSettingsProvider wikiWebSettingsProvider =
+			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
+		return wikiWebSettingsProvider.getWikiConfiguration();
 	}
 
 }

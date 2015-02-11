@@ -73,7 +73,6 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.wiki.configuration.WikiServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -89,6 +88,7 @@ import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.model.impl.WikiPageDisplayImpl;
 import com.liferay.wiki.model.impl.WikiPageImpl;
 import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
+import com.liferay.wiki.settings.WikiConfiguration;
 import com.liferay.wiki.settings.WikiSettings;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
@@ -1852,10 +1852,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			oldPage.getRedirectTitle(), serviceContext);
 	}
 
-	public void setWikiServiceConfiguration(
-		WikiServiceConfiguration wikiServiceConfiguration) {
-
-		_wikiServiceConfiguration = wikiServiceConfiguration;
+	public void setWikiConfiguration(WikiConfiguration wikiConfiguration) {
+		_wikiConfiguration = wikiConfiguration;
 	}
 
 	public void setWikiSettingsProvider(
@@ -2194,9 +2192,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			throw new PageTitleException(title + " is reserved");
 		}
 
-		if (Validator.isNotNull(_wikiServiceConfiguration.pageTitlesRegexp())) {
+		if (Validator.isNotNull(_wikiConfiguration.pageTitlesRegexp())) {
 			Pattern pattern = Pattern.compile(
-				_wikiServiceConfiguration.pageTitlesRegexp());
+				_wikiConfiguration.pageTitlesRegexp());
 
 			Matcher matcher = pattern.matcher(title);
 
@@ -3360,7 +3358,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		validate(nodeId, content, format);
 	}
 
-	private WikiServiceConfiguration _wikiServiceConfiguration;
+	private WikiConfiguration _wikiConfiguration;
 	private SettingsProvider<WikiSettings> _wikiSettingsProvider;
 
 }

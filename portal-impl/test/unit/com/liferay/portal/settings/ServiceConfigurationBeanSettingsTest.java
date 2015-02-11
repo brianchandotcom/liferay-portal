@@ -14,28 +14,28 @@
 
 package com.liferay.portal.settings;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.powermock.api.mockito.PowerMockito;
+
 /**
  * @author Iván Zaera
  */
-public class ServiceConfigurationBeanSettingsTest {
+public class ServiceConfigurationBeanSettingsTest extends PowerMockito {
 
-	public static final String TEMPLATE_CONTENT = "Template Content";
+//	public static final String TEMPLATE_CONTENT = "Template Content";
 
 	@Before
 	public void setUp() {
 		_serviceConfigurationBean = new ServiceConfigurationBean();
 
-		_mockResourceManager = new MockResourceManager(TEMPLATE_CONTENT);
+		_mockLocationVariableResolver = mock(LocationVariableResolver.class);
 
 		_serviceConfigurationBeanSettings =
 			new ServiceConfigurationBeanSettings(
-				_serviceConfigurationBean, _mockResourceManager, null);
+				_mockLocationVariableResolver, _serviceConfigurationBean, null);
 	}
 
 	@Test
@@ -74,16 +74,26 @@ public class ServiceConfigurationBeanSettingsTest {
 
 	@Test
 	public void testGetValueWithLocationVariable() {
+		when(
+			_mockLocationVariableResolver.isLocationVariable(
+				_serviceConfigurationBean.locationVariableValue())
+		).thenReturn(
+			true
+		);
+
+		final String expectedValue = "Once upon a time...";
+
+		when(
+			_mockLocationVariableResolver.resolve(
+				_serviceConfigurationBean.locationVariableValue())
+		).thenReturn(
+			expectedValue
+		);
+
 		Assert.assertEquals(
-			TEMPLATE_CONTENT,
+			expectedValue,
 			_serviceConfigurationBeanSettings.getValue(
 				"locationVariableValue", "defaultValue"));
-
-		List<String> requestedLocations =
-			_mockResourceManager.getRequestedLocations();
-
-		Assert.assertEquals(1, requestedLocations.size());
-		Assert.assertEquals("template.ftl", requestedLocations.get(0));
 	}
 
 	@Test
@@ -105,7 +115,7 @@ public class ServiceConfigurationBeanSettingsTest {
 				"anyKey", "defaultValue"));
 	}
 
-	private MockResourceManager _mockResourceManager;
+	private LocationVariableResolver _mockLocationVariableResolver;
 	private ServiceConfigurationBean _serviceConfigurationBean;
 	private ServiceConfigurationBeanSettings _serviceConfigurationBeanSettings;
 

@@ -14,10 +14,13 @@
 
 package com.liferay.wiki.web.display.context.util;
 
-import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
+import com.liferay.portal.kernel.display.context.util.BaseStrutsRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.settings.WikiSettings;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
 
@@ -26,10 +29,28 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera
  */
-public class WikiRequestHelper extends BaseRequestHelper {
+public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
 	public WikiRequestHelper(HttpServletRequest request) {
 		super(request);
+	}
+
+	public long getCategoryId() {
+		if (_categoryId == null) {
+			_categoryId = ParamUtil.getLong(getRequest(), "categoryId", 0);
+		}
+
+		return _categoryId;
+	}
+
+	public WikiPage getWikiPage() {
+		if (_wikiPage == null) {
+			HttpServletRequest request = getRequest();
+
+			_wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
+		}
+
+		return _wikiPage;
 	}
 
 	public WikiPortletInstanceSettings getWikiPortletInstanceSettings() {
@@ -78,6 +99,8 @@ public class WikiRequestHelper extends BaseRequestHelper {
 		}
 	}
 
+	private Long _categoryId;
+	private WikiPage _wikiPage;
 	private WikiPortletInstanceSettings _wikiPortletInstanceSettings;
 	private WikiSettings _wikiSettings;
 

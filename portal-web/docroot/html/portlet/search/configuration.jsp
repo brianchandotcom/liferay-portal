@@ -27,31 +27,31 @@
 	<aui:fieldset label="display-settings">
 		<div class="configuration-style" id="<portlet:namespace />configurationStyle">
 			<aui:field-wrapper>
-				<aui:input checked="<%= !advancedConfiguration %>" id="basic" label="basic" name="preferences--advancedConfiguration--" type="radio" value="false" />
-				<aui:input checked="<%= advancedConfiguration %>" id="advanced" label="advanced" name="preferences--advancedConfiguration--" type="radio" value="true" />
+				<aui:input checked="<%= !searchDisplayContext.isAdvancedConfiguration() %>" id="basic" label="basic" name="preferences--advancedConfiguration--" type="radio" value="false" />
+				<aui:input checked="<%= searchDisplayContext.isAdvancedConfiguration() %>" id="advanced" label="advanced" name="preferences--advancedConfiguration--" type="radio" value="true" />
 			</aui:field-wrapper>
 		</div>
 
-		<div class="basic-configuration <%= (advancedConfiguration ? "hide" : StringPool.BLANK) %>" id="<portlet:namespace />basicConfiguration">
-			<aui:input name="preferences--displayScopeFacet--" type="checkbox" value="<%= displayScopeFacet %>" />
+		<div class="basic-configuration <%= (searchDisplayContext.isAdvancedConfiguration() ? "hide" : StringPool.BLANK) %>" id="<portlet:namespace />basicConfiguration">
+			<aui:input name="preferences--displayScopeFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayScopeFacet() %>" />
 
-			<aui:input name="preferences--displayAssetTypeFacet--" type="checkbox" value="<%= displayAssetTypeFacet %>" />
+			<aui:input name="preferences--displayAssetTypeFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayAssetTypeFacet() %>" />
 
-			<aui:input name="preferences--displayAssetTagsFacet--" type="checkbox" value="<%= displayAssetTagsFacet %>" />
+			<aui:input name="preferences--displayAssetTagsFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayAssetTagsFacet() %>" />
 
-			<aui:input name="preferences--displayAssetCategoriesFacet--" type="checkbox" value="<%= displayAssetCategoriesFacet %>" />
+			<aui:input name="preferences--displayAssetCategoriesFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayAssetCategoriesFacet() %>" />
 
-			<aui:input name="preferences--displayFolderFacet--" type="checkbox" value="<%= displayFolderFacet %>" />
+			<aui:input name="preferences--displayFolderFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayFolderFacet() %>" />
 
-			<aui:input name="preferences--displayUserFacet--" type="checkbox" value="<%= displayUserFacet %>" />
+			<aui:input name="preferences--displayUserFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayUserFacet() %>" />
 
-			<aui:input name="preferences--displayModifiedRangeFacet--" type="checkbox" value="<%= displayModifiedRangeFacet %>" />
+			<aui:input name="preferences--displayModifiedRangeFacet--" type="checkbox" value="<%= searchDisplayContext.isDisplayModifiedRangeFacet() %>" />
 		</div>
 
-		<div class="advanced-configuration <%= (!advancedConfiguration ? "hide" : StringPool.BLANK) %>" id="<portlet:namespace />advancedConfiguration">
+		<div class="advanced-configuration <%= (!searchDisplayContext.isAdvancedConfiguration() ? "hide" : StringPool.BLANK) %>" id="<portlet:namespace />advancedConfiguration">
 
 			<%
-			JSONObject searchConfigurationJSONObject = JSONFactoryUtil.createJSONObject(searchConfiguration);
+			JSONObject searchConfigurationJSONObject = JSONFactoryUtil.createJSONObject(searchDisplayContext.getSearchConfiguration());
 			%>
 
 			<aui:input cssClass="search-configuration-text" helpMessage="search-configuration-help" name="preferences--searchConfiguration--" type="textarea" value="<%= searchConfigurationJSONObject.toString(4) %>" />
@@ -61,29 +61,29 @@
 	<br />
 
 	<aui:fieldset label="spell-check-settings">
-		<aui:input helpMessage="collated-spell-check-result-enabled-help" id="collatedSpellCheckResultEnabled" label="display-did-you-mean-if-the-number-of-search-results-does-not-meet-the-threshold" name="preferences--collatedSpellCheckResultEnabled--" type="checkbox" value="<%= collatedSpellCheckResultEnabled %>" />
+		<aui:input helpMessage="collated-spell-check-result-enabled-help" id="collatedSpellCheckResultEnabled" label="display-did-you-mean-if-the-number-of-search-results-does-not-meet-the-threshold" name="preferences--collatedSpellCheckResultEnabled--" type="checkbox" value="<%= searchDisplayContext.isCollatedSpellCheckResultEnabled() %>" />
 
-		<div class="options-container <%= !collatedSpellCheckResultEnabled ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />collatedSpellCheckResultOptionsContainer">
-			<liferay-ui:toggle-area align="none" defaultShowContent="<%= collatedSpellCheckResultEnabled %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>' id="toggle_id_search_configuration_collated_spell_check_result" showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'>
-				<aui:input disabled="<%= !collatedSpellCheckResultEnabled %>" helpMessage="collated-spell-check-result-display-threshold-help" label="threshold-for-displaying-did-you-mean" name="preferences--collatedSpellCheckResultDisplayThreshold--" size="10" type="text" value="<%= collatedSpellCheckResultDisplayThreshold %>" />
+		<div class="options-container <%= !searchDisplayContext.isCollatedSpellCheckResultEnabled() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />collatedSpellCheckResultOptionsContainer">
+			<liferay-ui:toggle-area align="none" defaultShowContent="<%= searchDisplayContext.isCollatedSpellCheckResultEnabled() %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>' id="toggle_id_search_configuration_collated_spell_check_result" showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'>
+				<aui:input disabled="<%= !searchDisplayContext.isCollatedSpellCheckResultEnabled() %>" helpMessage="collated-spell-check-result-display-threshold-help" label="threshold-for-displaying-did-you-mean" name="preferences--collatedSpellCheckResultDisplayThreshold--" size="10" type="text" value="<%= searchDisplayContext.getCollatedSpellCheckResultDisplayThreshold() %>" />
 			</liferay-ui:toggle-area>
 		</div>
 
-		<aui:input helpMessage="query-suggestions-enabled-help" id="querySuggestionsEnabled" label="display-related-queries" name="preferences--querySuggestionsEnabled--" type="checkbox" value="<%= querySuggestionsEnabled %>" />
+		<aui:input helpMessage="query-suggestions-enabled-help" id="querySuggestionsEnabled" label="display-related-queries" name="preferences--querySuggestionsEnabled--" type="checkbox" value="<%= searchDisplayContext.isQuerySuggestionsEnabled() %>" />
 
-		<div class="options-container <%= !querySuggestionsEnabled ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />querySuggestionsOptionsContainer">
-			<liferay-ui:toggle-area align="none" defaultShowContent="<%= querySuggestionsEnabled %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>' id="toggle_id_search_configuration_query_suggestions" showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'>
-				<aui:input disabled="<%= !querySuggestionsEnabled %>" label="maximum-number-of-related-queries" name="preferences--querySuggestionsMax--" size="10" type="text" value="<%= querySuggestionsMax %>" />
+		<div class="options-container <%= !searchDisplayContext.isQuerySuggestionsEnabled() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />querySuggestionsOptionsContainer">
+			<liferay-ui:toggle-area align="none" defaultShowContent="<%= searchDisplayContext.isQuerySuggestionsEnabled() %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>' id="toggle_id_search_configuration_query_suggestions" showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'>
+				<aui:input disabled="<%= !searchDisplayContext.isQuerySuggestionsEnabled() %>" label="maximum-number-of-related-queries" name="preferences--querySuggestionsMax--" size="10" type="text" value="<%= searchDisplayContext.getQuerySuggestionsMax() %>" />
 
-				<aui:input disabled="<%= !querySuggestionsEnabled %>" helpMessage="query-suggestions-display-threshold-help" label="threshold-for-displaying-related-queries" name="preferences--querySuggestionsDisplayThreshold--" size="10" type="text" value="<%= querySuggestionsDisplayThreshold %>" />
+				<aui:input disabled="<%= !searchDisplayContext.isQuerySuggestionsEnabled() %>" helpMessage="query-suggestions-display-threshold-help" label="threshold-for-displaying-related-queries" name="preferences--querySuggestionsDisplayThreshold--" size="10" type="text" value="<%= searchDisplayContext.getQuerySuggestionsDisplayThreshold() %>" />
 			</liferay-ui:toggle-area>
 		</div>
 
-		<aui:input helpMessage="query-indexing-enabled-help" id="queryIndexingEnabled" label="add-new-related-queries-based-on-successful-queries" name="preferences--queryIndexingEnabled--" type="checkbox" value="<%= queryIndexingEnabled %>" />
+		<aui:input helpMessage="query-indexing-enabled-help" id="queryIndexingEnabled" label="add-new-related-queries-based-on-successful-queries" name="preferences--queryIndexingEnabled--" type="checkbox" value="<%= searchDisplayContext.isQueryIndexingEnabled() %>" />
 
-		<div class="options-container <%= !queryIndexingEnabled ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />queryIndexingOptionsContainer">
-			<liferay-ui:toggle-area align="none" defaultShowContent="<%= queryIndexingEnabled %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>' id="toggle_id_search_configuration_query_indexing" showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'>
-				<aui:input disabled="<%= !queryIndexingEnabled %>" helpMessage="query-indexing-threshold-help" name="preferences--queryIndexingThreshold--" size="10" type="text" value="<%= queryIndexingThreshold %>" />
+		<div class="options-container <%= !searchDisplayContext.isQueryIndexingEnabled() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />queryIndexingOptionsContainer">
+			<liferay-ui:toggle-area align="none" defaultShowContent="<%= searchDisplayContext.isQueryIndexingEnabled() %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(request, "hide-options") %>' id="toggle_id_search_configuration_query_indexing" showMessage='<%= LanguageUtil.get(request, "show-options") + " &raquo;" %>'>
+				<aui:input disabled="<%= !searchDisplayContext.isQueryIndexingEnabled() %>" helpMessage="query-indexing-threshold-help" name="preferences--queryIndexingThreshold--" size="10" type="text" value="<%= searchDisplayContext.getQueryIndexingThreshold() %>" />
 			</liferay-ui:toggle-area>
 		</div>
 	</aui:fieldset>
@@ -92,14 +92,14 @@
 
 	<aui:fieldset label="other-settings">
 		<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
-			<aui:input helpMessage="display-results-in-document-form-help" name="preferences--displayResultsInDocumentForm--" type="checkbox" value="<%= displayResultsInDocumentForm %>" />
+			<aui:input helpMessage="display-results-in-document-form-help" name="preferences--displayResultsInDocumentForm--" type="checkbox" value="<%= searchDisplayContext.isDisplayResultsInDocumentForm() %>" />
 		</c:if>
 
-		<aui:input name="preferences--viewInContext--" type="checkbox" value="<%= viewInContext %>" />
+		<aui:input name="preferences--viewInContext--" type="checkbox" value="<%= searchDisplayContext.isViewInContext() %>" />
 
-		<aui:input helpMessage="display-main-query-help" name="preferences--displayMainQuery--" type="checkbox" value="<%= displayMainQuery %>" />
+		<aui:input helpMessage="display-main-query-help" name="preferences--displayMainQuery--" type="checkbox" value="<%= searchDisplayContext.isDisplayMainQuery() %>" />
 
-		<aui:input helpMessage="display-open-search-results-help" name="preferences--displayOpenSearchResults--" type="checkbox" value="<%= displayOpenSearchResults %>" />
+		<aui:input helpMessage="display-open-search-results-help" name="preferences--displayOpenSearchResults--" type="checkbox" value="<%= searchDisplayContext.isDisplayOpenSearchResults() %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

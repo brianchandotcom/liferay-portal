@@ -154,10 +154,15 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 				String detailsLanguageStrutsAction = "/login/create_account";
 
 				String languageId = request.getParameter("languageId");
-				Locale userLocale = locale;
+				Locale userLocale = null;
 
 				if (Validator.isNotNull(languageId)) {
 					userLocale = LocaleUtil.fromLanguageId(languageId);
+				}
+				else {
+					User defaultUser = company.getDefaultUser();
+
+					userLocale = LocaleUtil.fromLanguageId(defaultUser.getLanguageId());
 				}
 			%>
 

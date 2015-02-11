@@ -19,10 +19,10 @@
 
 	<#assign entryTitle = htmlUtil.escape(assetRenderer.getTitle(locale)) />
 
-	<#assign viewURL = assetPublisherHelperUtil.getAssetViewURL(renderRequest, renderResponse, entry) />
+	<#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry) />
 
 	<#if assetLinkBehavior != "showFullContent">
-		<#assign viewURL = assetPublisherHelperUtil.getAssetViewURL(renderRequest, renderResponse, entry, true) />
+		<#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry, true) />
 	</#if>
 
 	<div class="asset-abstract">

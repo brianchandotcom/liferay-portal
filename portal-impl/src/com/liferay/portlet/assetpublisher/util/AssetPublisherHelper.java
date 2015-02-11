@@ -32,7 +32,7 @@ import javax.portlet.PortletURL;
 /**
  * @author Juan Fernández
  */
-public class AssetPublisherHelperUtil {
+public class AssetPublisherHelper {
 
 	public static String getAssetViewURL(
 		LiferayPortletRequest liferayPortletRequest,

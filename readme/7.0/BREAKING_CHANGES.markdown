@@ -1006,3 +1006,28 @@ This change has been made as part of the modularization efforts to decouple the
 different parts of the portal.
 
 ---------------------------------------
+
+### Removed operations that have Fields class as reference from the StorageAdapter interface
+- **Date:** 2015-Feb-11
+- **JIRA Ticket:** LPS-53021
+
+#### What changed?
+
+All operations that used to have Fields class as reference were removed from 
+StorageAdapter interface.
+
+#### Who is affected?
+
+This affects developers who have written code that calls directly those 
+operations. 
+
+#### How should I update my code?
+
+You should replace your code to use DDMFormValues class instead of the Fields 
+class.
+
+#### Why was this change made?
+
+This change was made due deprecation of the Fields class. 
+
+---------------------------------------

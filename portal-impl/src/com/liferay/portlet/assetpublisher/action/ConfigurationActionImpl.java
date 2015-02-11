@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.assetpublisher.action;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -23,7 +21,6 @@ import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -41,8 +38,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -58,18 +53,9 @@ import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisher;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.util.ContentUtil;
 
-import java.io.Serializable;
-
-import java.text.DateFormat;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -77,8 +63,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -203,93 +187,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				actionResponse.sendRedirect(redirect);
 			}
 		}
-	}
-
-	@Override
-	public void serveResource(
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
-
-		if (!cmd.equals("getFieldValue")) {
-			return;
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			resourceRequest);
-
-		long structureId = ParamUtil.getLong(resourceRequest, "structureId");
-
-		Fields fields = (Fields)serviceContext.getAttribute(
-			Fields.class.getName() + structureId);
-
-		if (fields == null) {
-			String fieldsNamespace = ParamUtil.getString(
-				resourceRequest, "fieldsNamespace");
-
-			fields = DDMUtil.getFields(
-				structureId, fieldsNamespace, serviceContext);
-		}
-
-		String fieldName = ParamUtil.getString(resourceRequest, "name");
-
-		Field field = fields.get(fieldName);
-
-		Serializable fieldValue = field.getValue(themeDisplay.getLocale(), 0);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (fieldValue != null) {
-			jsonObject.put("success", true);
-		}
-		else {
-			jsonObject.put("success", false);
-
-			writeJSON(resourceRequest, resourceResponse, jsonObject);
-
-			return;
-		}
-
-		DDMStructure ddmStructure = field.getDDMStructure();
-
-		String type = ddmStructure.getFieldType(fieldName);
-
-		Serializable displayValue = DDMUtil.getDisplayFieldValue(
-			themeDisplay, fieldValue, type);
-
-		jsonObject.put("displayValue", String.valueOf(displayValue));
-
-		if (fieldValue instanceof Boolean) {
-			jsonObject.put("value", (Boolean)fieldValue);
-		}
-		else if (fieldValue instanceof Date) {
-			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"yyyyMMddHHmmss");
-
-			jsonObject.put("value", dateFormat.format(fieldValue));
-		}
-		else if (fieldValue instanceof Double) {
-			jsonObject.put("value", (Double)fieldValue);
-		}
-		else if (fieldValue instanceof Float) {
-			jsonObject.put("value", (Float)fieldValue);
-		}
-		else if (fieldValue instanceof Integer) {
-			jsonObject.put("value", (Integer)fieldValue);
-		}
-		else if (fieldValue instanceof Number) {
-			jsonObject.put("value", String.valueOf(fieldValue));
-		}
-		else {
-			jsonObject.put("value", (String)fieldValue);
-		}
-
-		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
 	protected void addScope(

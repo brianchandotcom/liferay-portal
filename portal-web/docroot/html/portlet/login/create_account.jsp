@@ -148,12 +148,21 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 			</aui:input>
 
 			<%
-				Locale userLocale = locale;
 				User selUser = null;
 				Contact selContact = null;
+
+				String detailsLanguageStrutsAction = "/login/create_account";
+
+				String languageId = request.getParameter("languageId");
+				Locale userLocale = locale;
+
+				if (Validator.isNotNull(languageId)) {
+					userLocale = LocaleUtil.fromLanguageId(languageId);
+				}
 			%>
 
 			<%@ include file="/html/portlet/users_admin/user/details_language.jspf" %>
+
 			<%@ include file="/html/portlet/users_admin/user/details_user_name.jspf" %>
 		</aui:col>
 

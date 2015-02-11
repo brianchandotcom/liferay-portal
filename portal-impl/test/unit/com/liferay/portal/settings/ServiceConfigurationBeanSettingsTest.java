@@ -35,7 +35,7 @@ public class ServiceConfigurationBeanSettingsTest {
 
 		_serviceConfigurationBeanSettings =
 			new ServiceConfigurationBeanSettings(
-				_serviceConfigurationBean, _mockResourceManager, null);
+				_serviceConfigurationBean, _mockResourceManager, null, null);
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class ServiceConfigurationBeanSettingsTest {
 	@Test
 	public void testGetValueWithNullServiceConfigurationBean() {
 		_serviceConfigurationBeanSettings =
-			new ServiceConfigurationBeanSettings(null, null, null);
+			new ServiceConfigurationBeanSettings(null, null, null, null);
 
 		Assert.assertEquals(
 			"defaultValue",

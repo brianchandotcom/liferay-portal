@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.BaseSettings;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -30,14 +31,14 @@ public class ServiceConfigurationBeanSettings extends BaseSettings
 
 	public ServiceConfigurationBeanSettings(
 		Object serviceConfigurationBean, ResourceManager resourceManager,
-		Settings parentSettings) {
+		SettingsFactory settingsFactory, Settings parentSettings) {
 
 		super(parentSettings);
 
 		_serviceConfigurationBean = serviceConfigurationBean;
 
 		_locationVariableResolver = new LocationVariableResolver(
-			resourceManager);
+			resourceManager, settingsFactory);
 	}
 
 	@Override

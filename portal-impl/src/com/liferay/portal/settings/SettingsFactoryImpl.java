@@ -321,7 +321,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		return new PropertiesSettings(
 			getPortalProperties(),
 			new ClassLoaderResourceManager(
-				PortalClassLoaderUtil.getClassLoader()));
+				PortalClassLoaderUtil.getClassLoader()),
+			this);
 	}
 
 	protected PortletPreferences getPortletInstancePortletPreferences(
@@ -392,7 +393,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		return new ServiceConfigurationBeanSettings(
 			getServiceConfigurationBean(settingsId),
-			getResourceManager(settingsId), parentSettings);
+			getResourceManager(settingsId), this, parentSettings);
 	}
 
 	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =

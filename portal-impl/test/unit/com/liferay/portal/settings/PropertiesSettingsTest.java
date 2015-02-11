@@ -37,8 +37,8 @@ public class PropertiesSettingsTest {
 		Class<? extends PropertiesSettingsTest> clazz = getClass();
 
 		_propertiesSettings = new PropertiesSettings(
-			_properties,
-			new ClassLoaderResourceManager(clazz.getClassLoader()));
+			_properties, new ClassLoaderResourceManager(clazz.getClassLoader()),
+			null);
 	}
 
 	@Test

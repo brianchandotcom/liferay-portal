@@ -17,6 +17,8 @@ package com.liferay.portal.settings;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.resource.ResourceRetriever;
 import com.liferay.portal.kernel.resource.manager.ResourceManager;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.FileInputStream;
@@ -27,8 +29,11 @@ import java.io.IOException;
  */
 public class LocationVariableResolver {
 
-	public LocationVariableResolver(ResourceManager resourceManager) {
+	public LocationVariableResolver(
+		ResourceManager resourceManager, SettingsFactory settingsFactory) {
+
 		_resourceManager = resourceManager;
+		_settingsFactory = settingsFactory;
 	}
 
 	public boolean isLocationVariable(String value) {
@@ -55,6 +60,9 @@ public class LocationVariableResolver {
 		}
 		else if (protocol.equals("file")) {
 			return _resolveFile(location);
+		}
+		else if (protocol.equals("server-property")) {
+			return _resolveServerProperty(location);
 		}
 
 		throw new UnsupportedOperationException(
@@ -101,6 +109,30 @@ public class LocationVariableResolver {
 		}
 	}
 
+	private String _resolveServerProperty(String location) {
+		if (!location.startsWith("//")) {
+			throw new IllegalArgumentException(
+				"Invalid server property location " + location);
+		}
+
+		location = location.substring(2);
+
+		int i = location.indexOf("/");
+
+		if (i == -1) {
+			throw new IllegalArgumentException(
+				"Invalid server property location " + location);
+		}
+
+		String serviceName = location.substring(0, i);
+
+		Settings settings = _settingsFactory.getServerSettings(serviceName);
+
+		String property = location.substring(i+1);
+
+		return settings.getValue(property, null);
+	}
+
 	private static final String _LOCATION_VARIABLE_END = "}";
 
 	private static final String _LOCATION_VARIABLE_PROTOCOL_SEPARATOR = ":";
@@ -108,5 +140,6 @@ public class LocationVariableResolver {
 	private static final String _LOCATION_VARIABLE_START = "${";
 
 	private final ResourceManager _resourceManager;
+	private final SettingsFactory _settingsFactory;
 
 }

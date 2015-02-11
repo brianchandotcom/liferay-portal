@@ -14,6 +14,8 @@
 
 package com.liferay.portal.settings;
 
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.FileImpl;
 
@@ -26,46 +28,42 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.Matchers;
+
+import org.powermock.api.mockito.PowerMockito;
+
 /**
  * @author Iván Zaera
  */
-public class LocationVariableResolverTest {
+public class LocationVariableResolverTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
 		FileUtil fileUtil = new FileUtil();
 
 		fileUtil.setFile(new FileImpl());
-	}
 
-	@Test
-	public void testIsLocationVariableWithFile() {
-		LocationVariableResolver locationVariableResolver =
-			new LocationVariableResolver(null);
+		_mockResourceManager = new MockResourceManager(
+			"En un lugar de la Mancha...");
 
-		Assert.assertTrue(
-			locationVariableResolver.isLocationVariable(
-				"${file:///template.ftl}"));
+		_mockSettingsFactory = mock(SettingsFactory.class);
+
+		_locationVariableResolver = new LocationVariableResolver(
+			_mockResourceManager, _mockSettingsFactory);
 	}
 
 	@Test
 	public void testIsLocationVariableWithNonVariable() {
-		LocationVariableResolver locationVariableResolver =
-			new LocationVariableResolver(null);
-
 		Assert.assertFalse(
-			locationVariableResolver.isLocationVariable(
+			_locationVariableResolver.isLocationVariable(
 				"this is obviously not a location variable"));
 	}
 
 	@Test
-	public void testIsLocationVariableWithResource() {
-		LocationVariableResolver locationVariableResolver =
-			new LocationVariableResolver(null);
-
+	public void testIsLocationVariableWithVariable() {
 		Assert.assertTrue(
-			locationVariableResolver.isLocationVariable(
-				"${resource:template.ftl}"));
+			_locationVariableResolver.isLocationVariable(
+				"${protocol:location}"));
 	}
 
 	@Test
@@ -78,10 +76,7 @@ public class LocationVariableResolverTest {
 
 		FileUtil.write(file, expectedValue.getBytes());
 
-		LocationVariableResolver locationVariableResolver =
-			new LocationVariableResolver(null);
-
-		String value = locationVariableResolver.resolve(
+		String value = _locationVariableResolver.resolve(
 			"${file://" + file.getAbsolutePath() + "}");
 
 		Assert.assertEquals(expectedValue, value);
@@ -89,33 +84,52 @@ public class LocationVariableResolverTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testResolveVariableWithInvalidFile() {
-		LocationVariableResolver locationVariableResolver =
-			new LocationVariableResolver(null);
-
-		locationVariableResolver.resolve(
+		_locationVariableResolver.resolve(
 			"${file:bad_file_uri_without_slashes.txt}");
 	}
 
 	@Test
+	public void testResolveVariableWithServerProperty() {
+		Settings mockSettings = mock(Settings.class);
+
+		final String expectedValue = "test@liferay.com";
+
+		when(
+			mockSettings.getValue(
+				Matchers.eq("admin.email.from.address"), Matchers.anyString())
+		).thenReturn(
+			expectedValue
+		);
+
+		when(
+			_mockSettingsFactory.getServerSettings("com.liferay.portal")
+		).thenReturn(
+			mockSettings
+		);
+
+		Assert.assertEquals(
+			expectedValue,
+			_locationVariableResolver.resolve(
+				"${server-property://com.liferay.portal/" +
+					"admin.email.from.address}"));
+	}
+
+	@Test
 	public void testResolveVariableWithResource() {
-		String expectedValue = "Lorem ipsum";
-
-		MockResourceManager mockResourceManager = new MockResourceManager(
-			expectedValue);
-
-		LocationVariableResolver locationVariableResolver =
-			new LocationVariableResolver(mockResourceManager);
-
-		String value = locationVariableResolver.resolve(
+		String value = _locationVariableResolver.resolve(
 			"${resource:template.ftl}");
 
-		Assert.assertEquals(expectedValue, value);
+		Assert.assertEquals(_mockResourceManager.getContent(), value);
 
 		List<String> requestedLocations =
-			mockResourceManager.getRequestedLocations();
+			_mockResourceManager.getRequestedLocations();
 
 		Assert.assertEquals(1, requestedLocations.size());
 		Assert.assertEquals("template.ftl", requestedLocations.get(0));
 	}
+
+	private LocationVariableResolver _locationVariableResolver;
+	private MockResourceManager _mockResourceManager;
+	private SettingsFactory _mockSettingsFactory;
 
 }

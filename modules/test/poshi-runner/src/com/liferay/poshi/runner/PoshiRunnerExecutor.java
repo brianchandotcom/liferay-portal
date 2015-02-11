@@ -272,17 +272,15 @@ public class PoshiRunnerExecutor {
 	public static void runForElement(Element element) throws Exception {
 		String list = PoshiRunnerVariablesUtil.replaceCommandVars(
 			element.attributeValue("list"));
-		String param = PoshiRunnerVariablesUtil.replaceCommandVars(
+		String paramName = PoshiRunnerVariablesUtil.replaceCommandVars(
 			element.attributeValue("param"));
 
-		if (!list.isEmpty()) {
-			String[] listArray = list.split(",");
+		String[] paramValues = list.split(",");
 
-			for (String item : listArray) {
-				PoshiRunnerVariablesUtil.putIntoCommandMap(param, item);
+		for (String paramValue : paramValues) {
+			PoshiRunnerVariablesUtil.putIntoCommandMap(paramName, paramValue);
 
-				parseElement(element);
-			}
+			parseElement(element);
 		}
 	}
 

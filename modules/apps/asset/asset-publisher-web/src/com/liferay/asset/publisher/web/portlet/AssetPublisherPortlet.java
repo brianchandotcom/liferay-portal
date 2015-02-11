@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.portlet;
 
+import com.liferay.asset.publisher.web.upgrade.AssetPublisherWebUpgrade;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.asset.publisher.web.util.AssetRSSUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -55,6 +56,7 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.ServletException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -279,6 +281,11 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetPublisherWebUpgrade(
+		AssetPublisherWebUpgrade assetPublisherWebUpgrade) {
 	}
 
 }

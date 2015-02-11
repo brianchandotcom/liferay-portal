@@ -32,8 +32,10 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -103,8 +105,13 @@ public class DDLRecordStagedModelDataHandler
 
 		DDLRecordVersion recordVersion = record.getRecordVersion();
 
-		Fields fields = StorageEngineUtil.getFields(
+		DDLRecordSet recordSet = record.getRecordSet();
+
+		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
 			recordVersion.getDDMStorageId());
+
+		Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+			recordSet.getDDMStructure(), ddmFormValues);
 
 		String fieldsPath = ExportImportPathUtil.getModelPath(
 			record, "fields.xml");

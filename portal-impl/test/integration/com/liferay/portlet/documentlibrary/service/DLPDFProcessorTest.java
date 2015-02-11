@@ -234,6 +234,29 @@ public class DLPDFProcessorTest {
 		Assert.assertEquals(2, newCount.get());
 	}
 
+	@Test
+	public void testShouldCopyPreviousPreviewOnUpdateAndCheckInWithNoContent()
+		throws Exception {
+
+		AtomicInteger count = registerDLPDFProcessorMessageListener(
+			EventType.COPY_PREVIOUS);
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			_serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), _PDF_DATA.getBytes(), _serviceContext);
+
+		DLAppServiceUtil.updateFileEntryAndCheckIn(
+			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
+			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), true,
+			null, 0, _serviceContext);
+
+		Assert.assertEquals(1, count.get());
+	}
+
 	protected static AtomicInteger registerDLPDFProcessorMessageListener(
 		final EventType eventType) {
 

@@ -683,6 +683,8 @@ public abstract class BaseIndexer implements Indexer {
 
 		document.addNumber(Field.VIEW_COUNT, assetEntry.getViewCount());
 
+		// Use a complete title map in order to sort properly on each locale
+
 		Map<Locale, String> titleMap = assetEntry.getTitleMap();
 
 		Locale[] availableLocales = LanguageUtil.getAvailableLocales(

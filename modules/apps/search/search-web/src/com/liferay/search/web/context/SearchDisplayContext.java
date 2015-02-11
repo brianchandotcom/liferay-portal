@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.search.context;
+package com.liferay.search.web.context;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;

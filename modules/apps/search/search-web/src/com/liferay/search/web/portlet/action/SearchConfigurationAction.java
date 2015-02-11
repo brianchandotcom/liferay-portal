@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.search.action;
+package com.liferay.search.web.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -31,7 +31,7 @@ import javax.portlet.PortletConfig;
 /**
  * @author Alexander Chow
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+public class SearchConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
 	public void processAction(
@@ -116,6 +116,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ConfigurationActionImpl.class);
+		SearchConfigurationAction.class);
 
 }

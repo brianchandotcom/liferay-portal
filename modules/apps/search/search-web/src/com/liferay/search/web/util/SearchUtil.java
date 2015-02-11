@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.search.util;
+package com.liferay.search.web.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -52,12 +52,10 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
-import org.apache.struts.action.Action;
-
 /**
  * @author Eudaldo Alonso
  */
-public class SearchUtil extends Action {
+public class SearchUtil {
 
 	public static Tuple getElements(
 		String xml, String className, int inactiveGroupsCount) {
@@ -165,8 +163,7 @@ public class SearchUtil extends Action {
 
 		PortletURL viewContentURL = renderResponse.createRenderURL();
 
-		viewContentURL.setParameter(
-			"mvcPath", "/html/portlet/search/view_content.jsp");
+		viewContentURL.setParameter("mvcPath", "/view_content.jsp");
 		viewContentURL.setParameter("redirect", currentURL);
 		viewContentURL.setPortletMode(PortletMode.VIEW);
 		viewContentURL.setWindowState(WindowState.MAXIMIZED);

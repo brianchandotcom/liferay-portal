@@ -38,7 +38,7 @@ if (assetRendererFactory != null) {
 	assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 }
 
-String viewURL = com.liferay.portlet.search.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, className, classPK, searchDisplayContext.isViewInContext(), currentURL);
+String viewURL = com.liferay.search.web.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, className, classPK, searchDisplayContext.isViewInContext(), currentURL);
 
 Indexer indexer = IndexerRegistryUtil.getIndexer(className);
 

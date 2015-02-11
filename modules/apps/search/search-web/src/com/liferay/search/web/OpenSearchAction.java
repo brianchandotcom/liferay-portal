@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.search.action;
+package com.liferay.search.web;
 
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;

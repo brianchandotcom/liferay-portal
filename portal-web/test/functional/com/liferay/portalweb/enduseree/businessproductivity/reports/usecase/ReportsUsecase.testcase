@@ -114,16 +114,18 @@
 
 		<var name="emailAddress1" property-value="email.address.1" />
 		<var name="emailAddress2" property-value="email.address.2" />
+		<var name="emailAddress3" property-value="email.address.3" />
 		<var name="emailPassword1" property-value="email.password.1" />
 		<var name="emailPassword2" property-value="email.password.2" />
+		<var name="emailPassword3" property-value="email.password.3" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="userName" value="liferay.qa@gmail.com" />
-			<var name="userPassword" value="loveispatient1" />
+			<var name="userName" value="${emailAddress1}" />
+			<var name="userPassword" value="${emailPassword1}" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -133,7 +135,7 @@
 		<execute macro="ReportsAdmin#gotoConfiguration" />
 
 		<execute macro="ReportsAdmin#configureEmailFrom">
-			<var name="emailFromAddress" value="qa@liferay.com" />
+			<var name="emailFromAddress" value="${emailAddress1}" />
 			<var name="emailFromName" value="Liferay QA" />
 		</execute>
 
@@ -175,7 +177,7 @@ Thanks,<br/>
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="${emailAddress1}" />
+			<var name="emailNotificationsAddress" value="${emailAddress3}" />
 			<var name="emailRecipientAddress" value="${emailAddress2}" />
 			<var name="reportFormat" value="pdf" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
@@ -184,8 +186,8 @@ Thanks,<br/>
 		<execute action="BaseLiferay#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
-			<var name="userEmailAddress" value="${emailAddress1}" />
-			<var name="userPassword" value="${emailPassword1}" />
+			<var name="userEmailAddress" value="${emailAddress3}" />
+			<var name="userPassword" value="${emailPassword3}" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -195,14 +197,14 @@ Thanks,<br/>
 			<var name="gmailAssetType" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMailTableMessageTitle" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMessageBody" value="You have a new report from your friends in QA." />
-			<var name="gmailMessageBodyClosing" value="Thanks, Liferay QA qa@liferay.com" />
+			<var name="gmailMessageBodyClosing" value="Thanks, Liferay QA ${emailAddress1}" />
 			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress1}," />
 			<var name="gmailMessageTitle" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
 		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" value="${emailAddress1}" />
-			<var name="userPassword" value="${emailPassword1}" />
+			<var name="userEmailAddress" value="${emailAddress3}" />
+			<var name="userPassword" value="${emailPassword3}" />
 		</execute>
 
 		<execute macro="Gmail#logoutAndLogin">
@@ -217,7 +219,7 @@ Thanks,<br/>
 			<var name="gmailAssetType" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMailTableMessageTitle" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMessageBody" value="Please review the attached report from your friends in QA!" />
-			<var name="gmailMessageBodyClosing" value="Thank You, Liferay QA qa@liferay.com" />
+			<var name="gmailMessageBodyClosing" value="Thank You, Liferay QA ${emailAddress1}" />
 			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress2}," />
 			<var name="gmailMessageTitle" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMesssageAttachment" value="reports_admin_template_source_sample_class_name.pdf" />

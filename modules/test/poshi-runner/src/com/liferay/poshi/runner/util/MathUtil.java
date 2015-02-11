@@ -29,18 +29,6 @@ public class MathUtil {
 		return difference;
 	}
 
-	public static boolean isEven(int x) {
-		if ((x % 2) == 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public static boolean isOdd(int x) {
-		return !isEven(x);
-	}
-
 	public static int product(Integer... values) {
 		int product = 1;
 

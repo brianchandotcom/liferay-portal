@@ -29,6 +29,8 @@ public abstract class BaseMobileDriverImpl
 
 		super(mobileDriver);
 
+		System.setProperty("java.awt.headless", "false");
+
 		_projectDirName = projectDirName;
 	}
 

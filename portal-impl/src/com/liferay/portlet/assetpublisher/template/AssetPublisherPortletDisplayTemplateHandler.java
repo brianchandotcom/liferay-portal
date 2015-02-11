@@ -32,8 +32,10 @@ import com.liferay.portlet.asset.service.AssetTagStatsLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyService;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherHelper;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,6 +49,17 @@ public class AssetPublisherPortletDisplayTemplateHandler
 	@Override
 	public String getClassName() {
 		return AssetEntry.class.getName();
+	}
+
+	@Override
+	public Map<String, Object> getCustomContextObjects() {
+		Map<String, Object> contextObjects = new HashMap<String, Object>(1);
+
+		contextObjects.put(
+			PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER,
+			AssetPublisherHelperUtil.getAssetPublisherHelper());
+
+		return contextObjects;
 	}
 
 	@Override

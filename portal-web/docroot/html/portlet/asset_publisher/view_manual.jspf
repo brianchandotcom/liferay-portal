@@ -26,7 +26,7 @@ searchContainer.setResults(assetEntries);
 request.setAttribute("view.jsp-results", assetEntries);
 %>
 
-<liferay-ui:ddm-template-renderer contextObjects="<%= contextObjects %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetEntries %>">
+<liferay-ui:ddm-template-renderer displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetEntries %>">
 
 	<%
 	for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryIndex++) {

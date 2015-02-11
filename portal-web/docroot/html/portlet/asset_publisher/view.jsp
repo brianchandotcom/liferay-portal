@@ -132,10 +132,6 @@ if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
 </c:if>
 
 <%
-Map<String, Object> contextObjects = new HashMap<String, Object>();
-
-contextObjects.put(PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER, AssetPublisherHelperUtil.getAssetPublisherHelper());
-
 request.setAttribute("view.jsp-viewInContext", assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
 %>
 

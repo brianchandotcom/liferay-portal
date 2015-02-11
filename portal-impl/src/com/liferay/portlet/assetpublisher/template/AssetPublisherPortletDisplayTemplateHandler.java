@@ -55,8 +55,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 		Map<String, Object> contextObjects = new HashMap<String, Object>(1);
 
 		contextObjects.put(
-			PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER,
-			AssetPublisherHelperUtil.class);
+			"assetPublisherHelperUtil", AssetPublisherHelperUtil.class);
 
 		return contextObjects;
 	}
@@ -91,7 +90,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 		assetPublisherUtilTemplateVariableGroup.addVariable(
 			"asset-publisher-helper", AssetPublisherHelperUtil.class,
-			PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER);
+			"assetPublisherHelperUtil");
 
 		templateVariableGroups.put(
 			"asset-publisher-util", assetPublisherUtilTemplateVariableGroup);

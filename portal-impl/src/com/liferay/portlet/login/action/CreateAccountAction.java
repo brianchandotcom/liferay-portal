@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
@@ -242,6 +243,7 @@ public class CreateAccountAction extends PortletAction {
 			actionRequest, "emailAddress");
 		long facebookId = ParamUtil.getLong(actionRequest, "facebookId");
 		String openId = ParamUtil.getString(actionRequest, "openId");
+		String languageId = ParamUtil.getString(actionRequest, "languageId");
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String middleName = ParamUtil.getString(actionRequest, "middleName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
@@ -284,7 +286,7 @@ public class CreateAccountAction extends PortletAction {
 		User user = UserServiceUtil.addUserWithWorkflow(
 			company.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			themeDisplay.getLocale(), firstName, middleName, lastName, prefixId,
+			LocaleUtil.fromLanguageId(languageId), firstName, middleName, lastName, prefixId,
 			suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
 			groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
 			serviceContext);

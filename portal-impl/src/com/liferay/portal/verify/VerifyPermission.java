@@ -233,7 +233,6 @@ public class VerifyPermission extends VerifyProcess {
 	private static final Object[][] _ORGANIZATION_ACTION_IDS_TO_MASKS =
 		new Object[][] {
 			new Object[] {"APPROVE_PROPOSAL", 2L, 0L},
-			new Object[] {ActionKeys.ASSIGN_MEMBERS, 4L, 4L},
 			new Object[] {"ASSIGN_REVIEWER", 8L, 0L},
 			new Object[] {ActionKeys.MANAGE_ARCHIVED_SETUPS, 128L, 128L},
 			new Object[] {ActionKeys.MANAGE_LAYOUTS, 256L, 256L},

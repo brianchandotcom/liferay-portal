@@ -154,6 +154,281 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-env-app-server">
+		<sequential>
+			<propertyregex
+				input="${app.server.version}"
+				override="true"
+				property="app.server.major.version"
+				regexp="(\d+\.\d+).*"
+				replace="\1"
+			/>
+
+			<propertyregex
+				defaultValue="${app.server.major.version}"
+				global="true"
+				input="${app.server.major.version}"
+				override="true"
+				property="app.server.major.version.build"
+				regexp="\."
+				replace=""
+			/>
+
+			<propertycopy
+				from="env.option.app.server.${app.server.type}${app.server.major.version.build}"
+				name="env.option.app.server"
+				override="true"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-env-browser">
+		<sequential>
+			<propertyregex
+				input="${browser.version}"
+				override="true"
+				property="browser.major.version"
+				regexp="(\d+\.\d+).*"
+				replace="\1"
+			/>
+
+			<propertyregex
+				defaultValue="${browser.major.version}"
+				global="true"
+				input="${browser.major.version}"
+				override="true"
+				property="browser.major.version.build"
+				regexp="\."
+				replace=""
+			/>
+
+			<propertycopy
+				from="env.option.browser.${browser.type}${browser.major.version.build}"
+				name="env.option.browser"
+				override="true"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-env-database">
+		<sequential>
+			<get-database-property property.name="database.version" />
+
+			<propertyregex
+				input="${database.version}"
+				override="true"
+				property="database.major.version"
+				regexp="(\d+\.?\d+?).*"
+				replace="\1"
+			/>
+
+			<propertyregex
+				defaultValue="${database.major.version}"
+				global="true"
+				input="${database.major.version}"
+				override="true"
+				property="database.major.version.build"
+				regexp="\."
+				replace=""
+			/>
+
+			<propertycopy
+				from="env.option.database.${database.type}${database.major.version.build}"
+				name="env.option.database"
+				override="true"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-env-java-jdk">
+		<sequential>
+			<propertycopy
+				from="env.option.java.jdk.${java.jdk.type}.${java.jdk.version}"
+				name="env.option.java.jdk"
+				override="true"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-env-liferay-portal">
+		<sequential>
+			<loadfile
+				property="liferay.plugins.git.id"
+				srcfile="git-commit-plugins"
+			/>
+
+			<loadfile
+				property="liferay.portal.git.id"
+				srcfile="git-commit-portal"
+			/>
+
+			<if>
+				<or>
+					<not>
+						<isset property="env.SOURCE_JOB_BUILD_NUMBER" />
+					</not>
+					<equals arg1="${env.SOURCE_JOB_BUILD_NUMBER}" arg2="1" />
+				</or>
+				<then>
+					<property name="liferay.previous.plugins.git.id" value="${liferay.plugins.git.id}" />
+					<property name="liferay.previous.portal.git.id" value="${liferay.portal.git.id}" />
+				</then>
+				<else>
+					<math
+						datatype="int"
+						operand1="${env.SOURCE_JOB_BUILD_NUMBER}"
+						operand2="1"
+						operation="-"
+						result="previous.build.number"
+					/>
+
+					<property name="previous.commit.id.dir" value="${jenkins.shared.user.content.dir}/jobs/${env.SOURCE_JOB_NAME}/builds/${previous.build.number}" />
+
+					<loadfile failonerror="false" property="liferay.previous.plugins.git.id" srcfile="${previous.commit.id.dir}/git-commit-plugins">
+						<filterchain>
+							<striplinebreaks/>
+						</filterchain>
+					</loadfile>
+
+					<loadfile failonerror="false" property="liferay.previous.portal.git.id" srcfile="${previous.commit.id.dir}/git-commit-portal">
+						<filterchain>
+							<striplinebreaks/>
+						</filterchain>
+					</loadfile>
+				</else>
+			</if>
+
+			<property name="liferay.compare.urls" value="https://github.com/liferay/liferay-plugins-ee/compare/${liferay.previous.plugins.git.id}...${liferay.plugins.git.id},https://github.com/liferay/liferay-portal-ee/compare/${liferay.previous.portal.git.id}...${liferay.portal.git.id}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-env-operating-system">
+		<sequential>
+			<propertyregex
+				defaultValue="${operating.system.version}"
+				global="true"
+				input="${operating.system.version}"
+				override="true"
+				property="operating.system.version.build"
+				regexp="\."
+				replace=""
+			/>
+
+			<propertycopy
+				from="env.option.operating.system.${operating.system.type}${operating.system.version.build}"
+				name="env.option.operating.system"
+				override="true"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-components">
+		<sequential>
+			<property file="${basedir}/test.run.properties" />
+
+			<if>
+				<not>
+					<isset property="testray.main.component.name" />
+				</not>
+				<then>
+					<property name="testray.main.component.name" value="" />
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<isset property="testray.component.names" />
+				</not>
+				<then>
+					<property name="testray.component.names" value="${testray.main.component.name}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-logs">
+		<sequential>
+			<if>
+				<isset property="jenkins.testray.results.dir" />
+				<then>
+					<antelope:stringutil property="job.name" string="${env.JOB_NAME}">
+						<antelope:replace regex="," replacement="_" />
+					</antelope:stringutil>
+
+					<property name="testray.logs.dir" value="${jenkins.testray.results.dir}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
+
+					<property name="testray.logs.console" value="${testray.logs.dir}/console.txt" />
+					<property name="testray.logs.report" value="${testray.logs.dir}/report.html" />
+				</then>
+				<else>
+					<property name="testray.logs.console" value="" />
+					<property name="testray.logs.report" value="" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-project-name">
+		<sequential>
+			<propertyregex
+				input="${testray.product.version}"
+				override="true"
+				property="testray.product.major.version"
+				regexp="(\d+\.?\d+?).*"
+				replace="\1"
+			/>
+
+			<propertyregex
+				defaultValue="${testray.product.major.version}"
+				global="true"
+				input="${testray.product.major.version}"
+				override="true"
+				property="testray.product.major.version.build"
+				regexp="\."
+				replace=""
+			/>
+
+			<propertycopy
+				from="testray.project.${testray.product.type}${testray.product.major.version.build}.name"
+				name="testray.project.name"
+				override="true"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-team-name">
+		<sequential>
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					import org.apache.commons.lang.WordUtils;
+
+					String testrayMainComponentName = project.getProperty("testray.main.component.name");
+					String testrayTeamNamesString = project.getProperty("testray.team.names");
+
+					String[] testrayTeamNames = testrayTeamNamesString.split(",");
+
+					for (String testrayTeamName : testrayTeamNames) {
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("testray.team.");
+						sb.append(testrayTeamName);
+						sb.append(".component.names");
+
+						String testrayTeamComponentNamesString = project.getProperty(sb.toString());
+
+						Set testrayTeamComponentNames = new HashSet(Arrays.asList(testrayTeamComponentNamesString.split(",")));
+
+						if (testrayTeamComponentNames.contains(testrayMainComponentName)) {
+							project.setProperty("testray.team.name", WordUtils.capitalize(testrayTeamName.replace('-', ' ')));
+
+							break;
+						}
+					}
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
 			<if>
@@ -454,281 +729,6 @@
 					<var name="app.server.bundle.index" unset="true" />
 				</then>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="record-env-app-server">
-		<sequential>
-			<propertyregex
-				input="${app.server.version}"
-				override="true"
-				property="app.server.major.version"
-				regexp="(\d+\.\d+).*"
-				replace="\1"
-			/>
-
-			<propertyregex
-				defaultValue="${app.server.major.version}"
-				global="true"
-				input="${app.server.major.version}"
-				override="true"
-				property="app.server.major.version.build"
-				regexp="\."
-				replace=""
-			/>
-
-			<propertycopy
-				from="env.option.app.server.${app.server.type}${app.server.major.version.build}"
-				name="env.option.app.server"
-				override="true"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="record-env-browser">
-		<sequential>
-			<propertyregex
-				input="${browser.version}"
-				override="true"
-				property="browser.major.version"
-				regexp="(\d+\.\d+).*"
-				replace="\1"
-			/>
-
-			<propertyregex
-				defaultValue="${browser.major.version}"
-				global="true"
-				input="${browser.major.version}"
-				override="true"
-				property="browser.major.version.build"
-				regexp="\."
-				replace=""
-			/>
-
-			<propertycopy
-				from="env.option.browser.${browser.type}${browser.major.version.build}"
-				name="env.option.browser"
-				override="true"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="record-env-database">
-		<sequential>
-			<get-database-property property.name="database.version" />
-
-			<propertyregex
-				input="${database.version}"
-				override="true"
-				property="database.major.version"
-				regexp="(\d+\.?\d+?).*"
-				replace="\1"
-			/>
-
-			<propertyregex
-				defaultValue="${database.major.version}"
-				global="true"
-				input="${database.major.version}"
-				override="true"
-				property="database.major.version.build"
-				regexp="\."
-				replace=""
-			/>
-
-			<propertycopy
-				from="env.option.database.${database.type}${database.major.version.build}"
-				name="env.option.database"
-				override="true"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="record-env-java-jdk">
-		<sequential>
-			<propertycopy
-				from="env.option.java.jdk.${java.jdk.type}.${java.jdk.version}"
-				name="env.option.java.jdk"
-				override="true"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="record-env-liferay-portal">
-		<sequential>
-			<loadfile
-				property="liferay.plugins.git.id"
-				srcfile="git-commit-plugins"
-			/>
-
-			<loadfile
-				property="liferay.portal.git.id"
-				srcfile="git-commit-portal"
-			/>
-
-			<if>
-				<or>
-					<not>
-						<isset property="env.SOURCE_JOB_BUILD_NUMBER" />
-					</not>
-					<equals arg1="${env.SOURCE_JOB_BUILD_NUMBER}" arg2="1" />
-				</or>
-				<then>
-					<property name="liferay.previous.plugins.git.id" value="${liferay.plugins.git.id}" />
-					<property name="liferay.previous.portal.git.id" value="${liferay.portal.git.id}" />
-				</then>
-				<else>
-					<math
-						datatype="int"
-						operand1="${env.SOURCE_JOB_BUILD_NUMBER}"
-						operand2="1"
-						operation="-"
-						result="previous.build.number"
-					/>
-
-					<property name="previous.commit.id.dir" value="${jenkins.shared.user.content.dir}/jobs/${env.SOURCE_JOB_NAME}/builds/${previous.build.number}" />
-
-					<loadfile failonerror="false" property="liferay.previous.plugins.git.id" srcfile="${previous.commit.id.dir}/git-commit-plugins">
-						<filterchain>
-							<striplinebreaks/>
-						</filterchain>
-					</loadfile>
-
-					<loadfile failonerror="false" property="liferay.previous.portal.git.id" srcfile="${previous.commit.id.dir}/git-commit-portal">
-						<filterchain>
-							<striplinebreaks/>
-						</filterchain>
-					</loadfile>
-				</else>
-			</if>
-
-			<property name="liferay.compare.urls" value="https://github.com/liferay/liferay-plugins-ee/compare/${liferay.previous.plugins.git.id}...${liferay.plugins.git.id},https://github.com/liferay/liferay-portal-ee/compare/${liferay.previous.portal.git.id}...${liferay.portal.git.id}" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="record-env-operating-system">
-		<sequential>
-			<propertyregex
-				defaultValue="${operating.system.version}"
-				global="true"
-				input="${operating.system.version}"
-				override="true"
-				property="operating.system.version.build"
-				regexp="\."
-				replace=""
-			/>
-
-			<propertycopy
-				from="env.option.operating.system.${operating.system.type}${operating.system.version.build}"
-				name="env.option.operating.system"
-				override="true"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="record-testray-components">
-		<sequential>
-			<property file="${basedir}/test.run.properties" />
-
-			<if>
-				<not>
-					<isset property="testray.main.component.name" />
-				</not>
-				<then>
-					<property name="testray.main.component.name" value="" />
-				</then>
-			</if>
-
-			<if>
-				<not>
-					<isset property="testray.component.names" />
-				</not>
-				<then>
-					<property name="testray.component.names" value="${testray.main.component.name}" />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="record-testray-logs">
-		<sequential>
-			<if>
-				<isset property="jenkins.testray.results.dir" />
-				<then>
-					<antelope:stringutil property="job.name" string="${env.JOB_NAME}">
-						<antelope:replace regex="," replacement="_" />
-					</antelope:stringutil>
-
-					<property name="testray.logs.dir" value="${jenkins.testray.results.dir}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
-
-					<property name="testray.logs.console" value="${testray.logs.dir}/console.txt" />
-					<property name="testray.logs.report" value="${testray.logs.dir}/report.html" />
-				</then>
-				<else>
-					<property name="testray.logs.console" value="" />
-					<property name="testray.logs.report" value="" />
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="record-testray-project-name">
-		<sequential>
-			<propertyregex
-				input="${testray.product.version}"
-				override="true"
-				property="testray.product.major.version"
-				regexp="(\d+\.?\d+?).*"
-				replace="\1"
-			/>
-
-			<propertyregex
-				defaultValue="${testray.product.major.version}"
-				global="true"
-				input="${testray.product.major.version}"
-				override="true"
-				property="testray.product.major.version.build"
-				regexp="\."
-				replace=""
-			/>
-
-			<propertycopy
-				from="testray.project.${testray.product.type}${testray.product.major.version.build}.name"
-				name="testray.project.name"
-				override="true"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="record-testray-team-name">
-		<sequential>
-			<script classpathref="project.classpath" language="beanshell">
-				<![CDATA[
-					import org.apache.commons.lang.WordUtils;
-
-					String testrayMainComponentName = project.getProperty("testray.main.component.name");
-					String testrayTeamNamesString = project.getProperty("testray.team.names");
-
-					String[] testrayTeamNames = testrayTeamNamesString.split(",");
-
-					for (String testrayTeamName : testrayTeamNames) {
-						StringBuilder sb = new StringBuilder();
-
-						sb.append("testray.team.");
-						sb.append(testrayTeamName);
-						sb.append(".component.names");
-
-						String testrayTeamComponentNamesString = project.getProperty(sb.toString());
-
-						Set testrayTeamComponentNames = new HashSet(Arrays.asList(testrayTeamComponentNamesString.split(",")));
-
-						if (testrayTeamComponentNames.contains(testrayMainComponentName)) {
-							project.setProperty("testray.team.name", WordUtils.capitalize(testrayTeamName.replace('-', ' ')));
-
-							break;
-						}
-					}
-				]]>
-			</script>
 		</sequential>
 	</macrodef>
 
@@ -1269,16 +1269,16 @@ create database lportal${database.index} character set utf8;</echo>
 	</target>
 
 	<target name="build-test-results-xml" depends="generate-test-properties">
-		<record-env-app-server />
-		<record-env-browser />
-		<record-env-database />
-		<record-env-java-jdk />
-		<record-env-liferay-portal />
-		<record-env-operating-system />
-		<record-testray-components />
-		<record-testray-logs />
-		<record-testray-project-name />
-		<record-testray-team-name />
+		<get-env-app-server />
+		<get-env-browser />
+		<get-env-database />
+		<get-env-java-jdk />
+		<get-env-liferay-portal />
+		<get-env-operating-system />
+		<get-testray-components />
+		<get-testray-logs />
+		<get-testray-project-name />
+		<get-testray-team-name />
 
 		<property name="test.case.properties">
 			<![CDATA[

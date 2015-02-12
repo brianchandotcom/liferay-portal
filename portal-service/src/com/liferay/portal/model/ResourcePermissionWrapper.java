@@ -122,6 +122,12 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
+	public void addResourceAction(java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermission.addResourceAction(actionId);
+	}
+
+	@Override
 	public java.lang.Object clone() {
 		return new ResourcePermissionWrapper((ResourcePermission)_resourcePermission.clone());
 	}
@@ -270,6 +276,12 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	@Override
 	public void persist() {
 		_resourcePermission.persist();
+	}
+
+	@Override
+	public void removeResourceAction(java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermission.removeResourceAction(actionId);
 	}
 
 	/**

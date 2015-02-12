@@ -50,6 +50,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -224,7 +225,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
 
-		Fields fields = StorageEngineUtil.getFields(record.getDDMStorageId());
+		DDLRecordSet recordSet = record.getRecordSet();
+
+		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
+			record.getDDMStorageId());
+
+		Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+			recordSet.getDDMStructure(), ddmFormValues);
 
 		for (Field field : fields) {
 			Map<Locale, List<Serializable>> valuesMap = field.getValuesMap();
@@ -390,14 +397,14 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			return;
 		}
 
-		Fields fields = StorageEngineUtil.getFields(
+		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
 			recordVersion.getDDMStorageId());
 
 		serviceContext.setCommand(Constants.REVERT);
 
 		ddlRecordLocalService.updateRecord(
-			userId, recordId, true, recordVersion.getDisplayIndex(), fields,
-			false, serviceContext);
+			userId, recordId, true, recordVersion.getDisplayIndex(),
+			ddmFormValues, serviceContext);
 	}
 
 	/**
@@ -585,8 +592,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		DDLRecordVersion recordVersion = record.getLatestRecordVersion();
 
 		if (mergeFields) {
-			Fields existingFields = StorageEngineUtil.getFields(
-				recordVersion.getDDMStorageId());
+			DDMFormValues existingDDMFormValues =
+				StorageEngineUtil.getDDMFormValues(
+					recordVersion.getDDMStorageId());
+
+			Fields existingFields = DDMFormValuesToFieldsConverterUtil.convert(
+				recordSet.getDDMStructure(), existingDDMFormValues);
 
 			fields = DDMUtil.mergeFields(fields, existingFields);
 		}
@@ -777,12 +788,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			return false;
 		}
 
-		Fields lastFields = StorageEngineUtil.getFields(
+		DDMFormValues lastDDMFormValues = StorageEngineUtil.getDDMFormValues(
 			lastRecordVersion.getDDMStorageId());
-		Fields latestFields = StorageEngineUtil.getFields(
+		DDMFormValues latestDDMFormValues = StorageEngineUtil.getDDMFormValues(
 			latestRecordVersion.getDDMStorageId());
 
-		if (!lastFields.equals(latestFields, false)) {
+		if (!lastDDMFormValues.equals(latestDDMFormValues)) {
 			return false;
 		}
 

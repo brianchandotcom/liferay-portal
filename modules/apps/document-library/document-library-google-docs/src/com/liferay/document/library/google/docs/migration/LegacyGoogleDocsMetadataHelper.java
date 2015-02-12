@@ -23,9 +23,11 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
 
 import java.io.Serializable;
 
@@ -119,8 +121,11 @@ public class LegacyGoogleDocsMetadataHelper {
 					_ddmStructure.getStructureId(),
 					_dlFileVersion.getFileVersionId());
 
-			Fields fields = _storageEngine.getFields(
+			DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
 				_dlFileEntryMetadata.getDDMStorageId());
+
+			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+				_ddmStructure, ddmFormValues);
 
 			for (Field field : fields) {
 				_fields.put(field.getName(), field);

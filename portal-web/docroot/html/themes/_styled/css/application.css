@@ -904,7 +904,7 @@ input.switch {
 		height: 100%;
 	}
 
-	.splitter {
+	.content-splitter {
 		border: 1px solid #CCC;
 	}
 
@@ -914,7 +914,7 @@ input.switch {
 	}
 
 	&.vertical {
-		.content-html, .splitter, .content-preview  {
+		.content-html, .content-splitter, .content-preview  {
 			float: left;
 			height: 100%;
 		}
@@ -923,7 +923,7 @@ input.switch {
 			width: 50%;
 		}
 
-		.splitter {
+		.content-splitter {
 			width: 1px;
 		}
 
@@ -933,7 +933,7 @@ input.switch {
 	}
 
 	&.horizontal {
-		.content-html, .splitter, .content-preview  {
+		.content-html, .content-splitter, .content-preview  {
 			width: 100%;
 		}
 
@@ -942,7 +942,7 @@ input.switch {
 			margin-bottom: 5px;
 		}
 
-		.splitter {
+		.content-splitter {
 			height: 1px;
 		}
 
@@ -957,7 +957,7 @@ input.switch {
 			width: 100%;
 		}
 
-		.splitter, .content-preview  {
+		.content-splitter, .content-preview  {
 			display: none;
 		}
 	}

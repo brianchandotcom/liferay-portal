@@ -33,6 +33,8 @@ AUI.add(
 
 		var STR_DOT = '.';
 
+		var STR_EMPTY = '';
+
 		var STR_THEMES = 'themes';
 
 		var STR_TOOLBAR = 'toolbar';
@@ -51,32 +53,23 @@ AUI.add(
 		'</div>' +
 		'<div class="' + CSS_SOURCE_EDITOR_FULLSCREEN + ' vertical">' +
 			'<div class="' + CSS_CONTENT_HTML +' {cssPrefix}"> <div id="{sourceCodeId}" class="{cssCode}"></div> </div>' +
-			'<div class="splitter"></div>' +
-			'<div class="alloy-editor alloy-editor-placeholder ' + CSS_CONTENT_PREVIEW + '"> {preview} </div>'+
+			'<div class="content-splitter"></div>' +
+			'<div class="alloy-editor alloy-editor-placeholder ' + CSS_CONTENT_PREVIEW + '"> {preview} </div>' +
 		'</div>';
 
 		var TPL_THEME_BUTTON = '<li data-action="{action}"><button type="button" class="btn btn-default btn-lg"><i class="{iconCssClass}"></i></button></li>';
 
 		var TPL_TOOLBAR = '<ul class="{cssClass}">{buttons}</ul>';
 
+		var aceDefaultOptions = {
+			fontSize: 13,
+			showInvisibles: false,
+			showPrintMargin: false
+		};
+
 		var LiferaySourceEditor = A.Component.create(
 			{
 				ATTRS: {
-					aceFullScreenOptions: {
-						validator: Lang.isObject,
-						valueFn: function() {
-							var instance = this;
-
-							var aceEditor = instance.getEditor();
-
-							return {
-								fontSize: 13,
-								showInvisibles: false,
-								showPrintMargin: false
-							};
-						}
-					},
-
 					aceOptions: {
 						validator: Lang.isObject,
 						valueFn: function() {
@@ -85,11 +78,14 @@ AUI.add(
 							var aceEditor = instance.getEditor();
 
 							return {
-								fontSize: 13,
-								maxLines: Math.floor(A.DOM.winHeight() / aceEditor.renderer.lineHeight) - 15,
-								minLines: 10,
-								showInvisibles: false,
-								showPrintMargin: false
+								defaultMode: A.merge(
+									aceDefaultOptions,
+									{
+										maxLines: Math.floor(A.DOM.winHeight() / aceEditor.renderer.lineHeight) - 15,
+										minLines: 10
+									}
+								),
+								fullScreenMode: aceDefaultOptions
 							};
 						}
 					},
@@ -115,7 +111,7 @@ AUI.add(
 						validator: Lang.isArray,
 						value: [
 							{
-								cssClass: '',
+								cssClass: STR_EMPTY,
 								iconCssClass: 'icon-sun'
 							},
 							{
@@ -147,7 +143,7 @@ AUI.add(
 
 						var aceEditor = instance.getEditor();
 
-						aceEditor.setOptions(instance.get('aceOptions'));
+						aceEditor.setOptions(instance.get('aceOptions').defaultMode);
 
 						instance._currentEditor = instance.getEditor();
 
@@ -358,7 +354,7 @@ AUI.add(
 					_getButtonsMarkup: function() {
 						var instance = this;
 
-						var toolbarButtons = '';
+						var toolbarButtons = STR_EMPTY;
 
 						var themes = instance.get(STR_THEMES);
 
@@ -451,7 +447,7 @@ AUI.add(
 						var instance = this;
 
 						var options = A.merge(
-							instance.get('aceFullScreenOptions'),
+							instance.get('aceOptions').fullScreenMode,
 							{
 								mode: instance.get('mode').$id
 							}

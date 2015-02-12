@@ -12,23 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.xsl;
+package com.liferay.portal.template.xsl;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+
+import org.apache.xml.utils.SAXSourceLocator;
+import org.apache.xml.utils.WrappedRuntimeException;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import java.util.Locale;
 
 import javax.xml.transform.ErrorListener;
 import javax.xml.transform.SourceLocator;
 import javax.xml.transform.TransformerException;
-
-import org.apache.xml.utils.SAXSourceLocator;
-import org.apache.xml.utils.WrappedRuntimeException;
-
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 /**
  * @author Raymond Augé

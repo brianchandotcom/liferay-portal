@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.xsl;
+package com.liferay.portal.template.xsl;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;

@@ -12,20 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.xsl;
+package com.liferay.portal.template.xsl;
 
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.BaseTemplateManager;
+import com.liferay.portal.template.TemplateContextHelper;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 import java.util.Map;
 
 /**
  * @author Tina Tian
  */
-@DoPrivileged
+@Component(
+		configurationPid = "com.liferay.portal.template.xsl",
+		configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+		service = TemplateManager.class
+)
 public class XSLManager extends BaseTemplateManager {
 
 	@Override
@@ -51,6 +59,7 @@ public class XSLManager extends BaseTemplateManager {
 
 	@Override
 	public void init() {
+		templateContextHelper = new TemplateContextHelper();
 	}
 
 	@Override

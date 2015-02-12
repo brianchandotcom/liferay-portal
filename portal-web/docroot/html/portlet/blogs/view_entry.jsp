@@ -85,8 +85,8 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	<c:if test="<%= (previousEntry != null) || (nextEntry != null) %>">
 		<aui:container cssClass="entry-navigation">
 			<aui:row>
-				<aui:col cssClass="previous-entry" md="6" sm="6">
-					<c:if test="<%= previousEntry != null %>">
+				<c:if test="<%= previousEntry != null %>">
+					<aui:col cssClass="previous-entry" md="6" sm="6">
 						<h2><liferay-ui:message key="previous-entry" /></h2>
 
 						<div class="previous-entry-content">
@@ -131,11 +131,11 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 								</liferay-ui:user-display>
 							</div>
 						</div>
-					</c:if>
-				</aui:col>
+					</aui:col>
+				</c:if>
 
-				<aui:col cssClass="next-entry" md="6" sm="6">
-					<c:if test="<%= nextEntry != null %>">
+				<c:if test="<%= nextEntry != null %>">
+					<aui:col cssClass="next-entry" md="6" sm="6">
 						<h2><liferay-ui:message key="next-entry" /></h2>
 
 						<div class="next-entry-content">
@@ -180,8 +180,8 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 								</liferay-ui:user-display>
 							</div>
 						</div>
-					</c:if>
-				</aui:col>
+					</aui:col>
+				</c:if>
 			</aui:row>
 		</aui:container>
 	</c:if>

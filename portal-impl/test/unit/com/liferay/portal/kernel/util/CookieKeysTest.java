@@ -22,20 +22,13 @@ import java.lang.reflect.Field;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Raymond Augé
  */
-@PrepareForTest({CookieUtil.class})
-@RunWith(PowerMockRunner.class)
-public class CookieKeysTest extends PowerMockito {
+public class CookieKeysTest {
 
 	@Before
 	public void setUp() {
@@ -44,37 +37,25 @@ public class CookieKeysTest extends PowerMockito {
 
 	@Test
 	public void testDomain1() throws Exception {
-		String host = "www.liferay.com";
+		CookieUtil cookieUtil = new CookieUtil();
 
-		mockStatic(CookieUtil.class);
+		cookieUtil.setCookie(new CookieImpl());
 
-		when(
-			CookieUtil.getDomain(host)
-		).thenReturn(
-			new CookieImpl().getDomain(host)
-		);
-
-		String domain = CookieKeys.getDomain(host);
+		String domain = CookieKeys.getDomain("www.liferay.com");
 
 		Assert.assertEquals(".liferay.com", domain);
 	}
 
 	@Test
 	public void testDomain2() throws Exception {
-		String host = "www.liferay.com";
-
-		mockStatic(CookieUtil.class);
-
-		when(
-			CookieUtil.getDomain(host)
-		).thenReturn(
-			new CookieImpl().getDomain(host)
-		);
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setServerName(host);
+		mockHttpServletRequest.setServerName("www.liferay.com");
+
+		CookieUtil cookieUtil = new CookieUtil();
+
+		cookieUtil.setCookie(new CookieImpl());
 
 		String domain = CookieKeys.getDomain(mockHttpServletRequest);
 
@@ -107,20 +88,10 @@ public class CookieKeysTest extends PowerMockito {
 
 	@Test
 	public void testDomain4() throws Exception {
-		String host = "www.liferay.com";
-
-		mockStatic(CookieUtil.class);
-
-		when(
-			CookieUtil.getDomain(host)
-		).thenReturn(
-			new CookieImpl().getDomain(host)
-		);
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setServerName(host);
+		mockHttpServletRequest.setServerName("www.liferay.com");
 
 		Field field = ReflectionUtil.getDeclaredField(
 			CookieKeys.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME");
@@ -129,6 +100,10 @@ public class CookieKeysTest extends PowerMockito {
 
 		try {
 			field.set(null, Boolean.FALSE);
+
+			CookieUtil cookieUtil = new CookieUtil();
+
+			cookieUtil.setCookie(new CookieImpl());
 
 			String domain = CookieKeys.getDomain(mockHttpServletRequest);
 

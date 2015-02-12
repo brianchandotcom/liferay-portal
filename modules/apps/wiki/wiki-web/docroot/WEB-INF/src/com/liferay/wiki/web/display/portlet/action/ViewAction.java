@@ -23,8 +23,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.wiki.configuration.WikiServiceConfiguration;
-import com.liferay.wiki.configuration.WikiServiceConfigurationProvider;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -32,6 +30,8 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.settings.WikiConfiguration;
+import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
@@ -61,13 +61,12 @@ public class ViewAction extends PortletAction {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			WikiServiceConfiguration wikiServiceConfiguration =
-				WikiServiceConfigurationProvider.getWikiServiceConfiguration();
+			WikiConfiguration wikiConfiguration = _getWikiConfiguration();
 
 			String title = ParamUtil.getString(
 				renderRequest, "title",
 				portletPreferences.getValue(
-					"title", wikiServiceConfiguration.frontPageName()));
+					"title", wikiConfiguration.frontPageName()));
 			double version = ParamUtil.getDouble(renderRequest, "version");
 
 			WikiNode node = getNode(renderRequest);
@@ -82,7 +81,7 @@ public class ViewAction extends PortletAction {
 
 			if ((page == null) || page.isInTrash()) {
 				page = WikiPageServiceUtil.getPage(
-					node.getNodeId(), wikiServiceConfiguration.frontPageName());
+					node.getNodeId(), wikiConfiguration.frontPageName());
 			}
 
 			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
@@ -123,6 +122,13 @@ public class ViewAction extends PortletAction {
 
 			return WikiNodeServiceUtil.getNode(nodeId);
 		}
+	}
+
+	private static WikiConfiguration _getWikiConfiguration() {
+		WikiWebSettingsProvider wikiWebSettingsProvider =
+			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+
+		return wikiWebSettingsProvider.getWikiConfiguration();
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,7 +36,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.wiki.configuration.WikiServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicateNodeNameException;
 import com.liferay.wiki.exception.NodeNameException;
@@ -43,6 +43,7 @@ import com.liferay.wiki.importer.WikiImporter;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.base.WikiNodeLocalServiceBaseImpl;
+import com.liferay.wiki.settings.WikiConfiguration;
 import com.liferay.wiki.util.WikiUtil;
 
 import java.io.InputStream;
@@ -67,8 +68,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		throws PortalException {
 
 		return addNode(
-			userId, _wikiServiceConfiguration.initialNodeName(),
-			StringPool.BLANK, serviceContext);
+			userId, _wikiConfiguration.initialNodeName(), StringPool.BLANK,
+			serviceContext);
 	}
 
 	@Override
@@ -427,12 +428,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		trashEntryLocalService.deleteEntry(trashEntry);
 	}
 
-	public void setWikiServiceConfiguration(
-		WikiServiceConfiguration wikiServiceConfiguration) {
-
-		_wikiServiceConfiguration = wikiServiceConfiguration;
-	}
-
 	@Override
 	public void subscribeNode(long userId, long nodeId) throws PortalException {
 		WikiNode node = getNode(nodeId);
@@ -570,6 +565,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeLocalServiceImpl.class);
 
-	private WikiServiceConfiguration _wikiServiceConfiguration;
+	@BeanReference(type = WikiConfiguration.class)
+	private WikiConfiguration _wikiConfiguration;
 
 }

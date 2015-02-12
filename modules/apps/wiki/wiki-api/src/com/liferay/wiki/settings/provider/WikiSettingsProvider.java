@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.settings;
-
-import aQute.bnd.annotation.metatype.Configurable;
+package com.liferay.wiki.settings.provider;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
@@ -22,22 +20,20 @@ import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsProvider;
-import com.liferay.wiki.configuration.WikiServiceConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
+import com.liferay.wiki.settings.WikiConfiguration;
+import com.liferay.wiki.settings.WikiSettings;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
  */
 @Component(
-	configurationPid = "com.liferay.wiki.service", immediate = true,
+	immediate = true,
 	property = {
 		"class.name=com.liferay.wiki.settings.WikiSettings"
 	},
@@ -67,43 +63,32 @@ public class WikiSettingsProvider implements SettingsProvider<WikiSettings> {
 			new ParameterMapSettings(parameterMap, settings));
 	}
 
-	protected static WikiSettingsProvider getWikiSettingsProvider() {
-		if (_wikiSettingsProvider == null) {
-			throw new IllegalStateException(
-				"Wiki settings provider is not available");
-		}
-
-		return _wikiSettingsProvider;
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		WikiServiceConfiguration wikiServiceConfiguration =
-			Configurable.createConfigurable(
-				WikiServiceConfiguration.class, properties);
-
-		_settingsFactory.registerSettingsMetadata(
-			WikiConstants.SERVICE_NAME, WikiSettings.getFallbackKeys(),
-			WikiSettings.MULTI_VALUED_KEYS, wikiServiceConfiguration,
-			new ClassLoaderResourceManager(
-				WikiSettings.class.getClassLoader()));
-
-		_wikiSettingsProvider = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_wikiSettingsProvider = null;
-	}
-
 	@Reference
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
 	}
 
-	private static WikiSettingsProvider _wikiSettingsProvider;
+	@Reference(unbind = "unsetWikiConfiguration")
+	protected void setWikiConfiguration(WikiConfiguration wikiConfiguration) {
+		_wikiConfiguration = wikiConfiguration;
+
+		_registerSettingsMetadata();
+	}
+
+	protected void unsetWikiConfiguration(WikiConfiguration wikiConfiguration) {
+		_wikiConfiguration = null;
+
+		_registerSettingsMetadata();
+	}
+
+	private void _registerSettingsMetadata() {
+		_settingsFactory.registerSettingsMetadata(
+			WikiConstants.SERVICE_NAME, null, WikiSettings.MULTI_VALUED_KEYS,
+			_wikiConfiguration,
+			new ClassLoaderResourceManager(getClass().getClassLoader()));
+	}
 
 	private SettingsFactory _settingsFactory;
+	private WikiConfiguration _wikiConfiguration;
 
 }

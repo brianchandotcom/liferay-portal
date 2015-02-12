@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.wiki.configuration;
+package com.liferay.wiki.settings;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 /**
  * @author Iván Zaera
  */
-@Meta.OCD(id = "com.liferay.wiki.service")
-public interface WikiServiceConfiguration {
+@Meta.OCD(id = "com.liferay.wiki")
+public interface WikiConfiguration {
 
 	/**
 	 * Set the default wiki format.
@@ -35,24 +35,32 @@ public interface WikiServiceConfiguration {
 	 * default display templates for the Wiki portlet.
 	 */
 	@Meta.AD(
-		deflt = "com/liferay/wiki/dependencies/portlet-display-templates.xml",
+		deflt =
+			"com/liferay/wiki/settings/dependencies/" +
+				"portlet-display-templates.xml",
 		required = false
 	)
 	public String displayTemplatesConfig();
 
 	@Meta.AD(
-		deflt = "", required = false
+		deflt =
+			"${portal-service-property://com.liferay.portal/" +
+				"admin.email.from.address}",
+		required = false
 	)
 	public String emailFromAddress();
 
 	@Meta.AD(
-		deflt = "", required = false
+		deflt =
+			"${portal-service-property://com.liferay.portal/" +
+				"admin.email.from.name}",
+		required = false
 	)
 	public String emailFromName();
 
 	@Meta.AD(
 		deflt =
-			"${resource:com/liferay/wiki/dependencies" +
+			"${resource:com/liferay/wiki/settings/dependencies" +
 				"/email_page_added_body.tmpl}",
 		required = false
 	)
@@ -61,11 +69,11 @@ public interface WikiServiceConfiguration {
 	@Meta.AD(
 		deflt = "true", required = false
 	)
-	public boolean emailPageAddedEnabled();
+	public String emailPageAddedEnabled();
 
 	@Meta.AD(
 		deflt =
-			"${resource:com/liferay/wiki/dependencies" +
+			"${resource:com/liferay/wiki/settings/dependencies" +
 				"/email_page_added_subject.tmpl}",
 		required = false
 	)
@@ -73,7 +81,7 @@ public interface WikiServiceConfiguration {
 
 	@Meta.AD(
 		deflt =
-			"${resource:com/liferay/wiki/dependencies" +
+			"${resource:com/liferay/wiki/settings/dependencies" +
 				"/email_page_updated_body.tmpl}",
 		required = false
 	)
@@ -82,11 +90,11 @@ public interface WikiServiceConfiguration {
 	@Meta.AD(
 		deflt = "true", required = false
 	)
-	public boolean emailPageUpdatedEnabled();
+	public String emailPageUpdatedEnabled();
 
 	@Meta.AD(
 		deflt =
-			"${resource:com/liferay/wiki/dependencies" +
+			"${resource:com/liferay/wiki/settings/dependencies" +
 				"/email_page_updated_subject.tmpl}",
 		required = false
 	)
@@ -117,7 +125,7 @@ public interface WikiServiceConfiguration {
 	@Meta.AD(
 		deflt = "false", required = false
 	)
-	public boolean pageCommentsEnabled();
+	public String pageCommentsEnabled();
 
 	/**
 	 * Set this to true to enable social activity notifications on minor edits
@@ -126,7 +134,7 @@ public interface WikiServiceConfiguration {
 	@Meta.AD(
 		deflt = "true", required = false
 	)
-	public boolean pageMinorEditAddSocialActivity();
+	public String pageMinorEditAddSocialActivity();
 
 	/**
 	 * Set this to true to enable email notifications on minor edits of a wiki
@@ -135,7 +143,7 @@ public interface WikiServiceConfiguration {
 	@Meta.AD(
 		deflt = "false", required = false
 	)
-	public boolean pageMinorEditSendEmail();
+	public String pageMinorEditSendEmail();
 
 	/**
 	 * Specify the requirements for the names of wiki pages. By default only a
@@ -169,6 +177,6 @@ public interface WikiServiceConfiguration {
 	@Meta.AD(
 		deflt = "200", required = false
 	)
-	public int rssAbstractLength();
+	public String rssAbstractLength();
 
 }

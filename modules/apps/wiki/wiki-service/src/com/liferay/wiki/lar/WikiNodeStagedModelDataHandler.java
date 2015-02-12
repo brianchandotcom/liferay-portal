@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.wiki.configuration.WikiServiceConfiguration;
-import com.liferay.wiki.configuration.WikiServiceConfigurationProvider;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
+import com.liferay.wiki.settings.WikiConfiguration;
 
 import java.util.List;
 import java.util.Map;
@@ -117,14 +117,13 @@ public class WikiNodeStagedModelDataHandler
 
 		WikiNode importedNode = null;
 
-		WikiServiceConfiguration wikiServiceConfiguration =
-			WikiServiceConfigurationProvider.getWikiServiceConfiguration();
+		WikiConfiguration wikiConfiguration = _getWikiConfiguration();
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			WikiNode existingNode = fetchStagedModelByUuidAndGroupId(
 				node.getUuid(), portletDataContext.getScopeGroupId());
 
-			String initialNodeName = wikiServiceConfiguration.initialNodeName();
+			String initialNodeName = wikiConfiguration.initialNodeName();
 
 			if ((existingNode == null) &&
 				initialNodeName.equals(node.getName())) {
@@ -151,7 +150,7 @@ public class WikiNodeStagedModelDataHandler
 			}
 		}
 		else {
-			String initialNodeName = wikiServiceConfiguration.initialNodeName();
+			String initialNodeName = wikiConfiguration.initialNodeName();
 
 			if (initialNodeName.equals(node.getName())) {
 				WikiNode initialNode = WikiNodeLocalServiceUtil.fetchNode(
@@ -211,6 +210,13 @@ public class WikiNodeStagedModelDataHandler
 			portletDataContext, node,
 			nodeName.concat(StringPool.SPACE).concat(String.valueOf(count)),
 			++count);
+	}
+
+	private WikiConfiguration _getWikiConfiguration() {
+		WikiServiceSettingsProvider wikiServiceSettingsProvider =
+			WikiServiceSettingsProvider.getWikiServiceSettingsProvider();
+
+		return wikiServiceSettingsProvider.getWikiConfiguration();
 	}
 
 }

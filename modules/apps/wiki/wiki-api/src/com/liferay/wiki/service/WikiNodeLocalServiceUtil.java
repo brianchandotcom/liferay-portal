@@ -452,11 +452,6 @@ public class WikiNodeLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void setWikiServiceConfiguration(
-		com.liferay.wiki.configuration.WikiServiceConfiguration wikiServiceConfiguration) {
-		getService().setWikiServiceConfiguration(wikiServiceConfiguration);
-	}
-
 	public static void subscribeNode(long userId, long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().subscribeNode(userId, nodeId);

@@ -524,8 +524,10 @@
 	</bean>
 	<bean id="com.liferay.portal.model.ModelHintsUtil" class="com.liferay.portal.model.ModelHintsUtil">
 		<property name="modelHints">
-			<bean class="com.liferay.portal.model.ModelHintsImpl">
-				<property name="SAXReader" ref="#{com.liferay.portal.kernel.xml.SAXReaderUtil.secureSAXReader}" />
+			<bean class="com.liferay.portal.model.ModelHintsImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil">
+				<property name="sAXReader">
+					<bean class="com.liferay.portal.kernel.xml.SAXReaderUtil" factory-method="getSecureSAXReader" />
+				</property>
 			</bean>
 		</property>
 	</bean>

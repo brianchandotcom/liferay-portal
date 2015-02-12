@@ -103,13 +103,22 @@ public class PortletRatingsDefinitionUtil {
 						classNames = new String[] {(String)modelClassName};
 					}
 
+					if (ArrayUtil.isEmpty(classNames)) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"PortletRatingsDefinition must contain " +
+									"javax.portlet.name, model.class.name, " +
+									"ratings.type.default properties");
+						}
+
+						return null;
+					}
+
 					RatingsType defaultRatingsType = RatingsType.parse(
 						(String)serviceReference.getProperty(
 							"ratings.type.default"));
 
-					if (ArrayUtil.isEmpty(classNames) ||
-						(defaultRatingsType == null)) {
-
+					if (defaultRatingsType == null) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"PortletRatingsDefinition must contain " +

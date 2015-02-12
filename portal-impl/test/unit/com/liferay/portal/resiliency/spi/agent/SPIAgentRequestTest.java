@@ -41,6 +41,7 @@ import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.resiliency.spi.agent.SPIAgentRequest.AgentHttpServletRequestWrapper;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
+import com.liferay.portal.util.CookieImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -471,6 +472,10 @@ public class SPIAgentRequestTest {
 		Assert.assertNull(populatedHttpServletRequest.getCookies());
 
 		_mockHttpServletRequest.setCookies(_cookie1, _cookie2);
+
+		CookieUtil cookieUtil = new CookieUtil();
+
+		cookieUtil.setCookie(new CookieImpl());
 
 		spiAgentRequest = new SPIAgentRequest(_mockHttpServletRequest);
 

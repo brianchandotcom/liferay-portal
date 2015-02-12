@@ -500,12 +500,6 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public void setWikiConfiguration(
-		com.liferay.wiki.settings.WikiConfiguration wikiConfiguration) {
-		_wikiNodeLocalService.setWikiConfiguration(wikiConfiguration);
-	}
-
-	@Override
 	public void subscribeNode(long userId, long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.subscribeNode(userId, nodeId);

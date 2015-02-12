@@ -16,10 +16,12 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.CookieUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.CookieImpl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -105,6 +107,10 @@ public class MetaInfoCacheServletResponseTest {
 		Assert.assertTrue(cookieHeaders.contains(cookieHeader1));
 		Assert.assertEquals(1, cookies.size());
 		Assert.assertEquals(cookie1, cookies.get(0));
+
+		CookieUtil cookieUtil = new CookieUtil();
+
+		cookieUtil.setCookie(new CookieImpl());
 
 		setCookieHeaders = metaInfoCacheServletResponse.getHeaders(
 			HttpHeaders.SET_COOKIE);

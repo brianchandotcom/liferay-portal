@@ -73,7 +73,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	<liferay-util:include page="/html/portlet/blogs/view_entry_content.jsp" />
 </aui:form>
 
-<c:if test="<%= PropsValues.BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED %>">
+<c:if test="<%= !portletId.equals(PortletKeys.BLOGS_ADMIN) && PropsValues.BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED %>">
 
 	<%
 	BlogsEntry[] prevAndNext = BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(entryId);

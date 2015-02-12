@@ -162,7 +162,7 @@ public class BeanLocatorTest {
 	@Test
 	public void testPortal4() throws Exception {
 		try {
-			PortalBeanLocatorUtil.locate(SAXReader.class);
+			PortalBeanLocatorUtil.locate(SAXReaderUtil.class);
 		}
 		catch (SecurityException se) {
 			Assert.fail();

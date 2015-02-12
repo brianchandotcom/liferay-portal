@@ -50,16 +50,14 @@ public class GroupPortletRatingsDefinitionDisplayContext {
 			new CompanyPortletRatingsDefinitionDisplayContext(
 				companyPortletPreferences, request);
 
-		_populatePortletRatingsDefinitionMaps(groupTypeSettings, request);
+		_populateRatingsTypeMaps(groupTypeSettings, request);
 	}
 
-	public Map<String, Map<String, RatingsType>>
-		getGroupPortletRatingsDefinitionMap() {
-
-		return Collections.unmodifiableMap(_groupPortletRatingsDefinitionMap);
+	public Map<String, Map<String, RatingsType>> getGroupRatingsTypeMaps() {
+		return Collections.unmodifiableMap(_groupRatingsTypeMaps);
 	}
 
-	private void _populatePortletRatingsDefinitionMaps(
+	private void _populateRatingsTypeMaps(
 		UnicodeProperties groupTypeSettings, HttpServletRequest request) {
 
 		Map<String, PortletRatingsDefinitionValues>
@@ -80,15 +78,14 @@ public class GroupPortletRatingsDefinitionDisplayContext {
 
 			Map<String, RatingsType> ratingsTypeMap = new HashMap<>();
 
-			Map<String, Map<String, RatingsType>>
-				companyPortletRatingsDefinitionMap =
-					_companyPortletRatingsDefinitionDisplayContext.
-						getCompanyPortletRatingsDefinitionMap();
+			Map<String, Map<String, RatingsType>> companyRatingsTypeMaps =
+				_companyPortletRatingsDefinitionDisplayContext.
+					getCompanyRatingsTypeMaps();
 
 			String portletId = portletRatingsDefinitionValues.getPortletId();
 
 			Map<String, RatingsType> companyRatingsTypeMap =
-				companyPortletRatingsDefinitionMap.get(portletId);
+				companyRatingsTypeMaps.get(portletId);
 
 			String groupRatingsTypeString = PropertiesParamUtil.getString(
 				groupTypeSettings, request, propertyKey,
@@ -97,13 +94,13 @@ public class GroupPortletRatingsDefinitionDisplayContext {
 			ratingsTypeMap.put(
 				className, RatingsType.parse(groupRatingsTypeString));
 
-			_groupPortletRatingsDefinitionMap.put(portletId, ratingsTypeMap);
+			_groupRatingsTypeMaps.put(portletId, ratingsTypeMap);
 		}
 	}
 
 	private final CompanyPortletRatingsDefinitionDisplayContext
 		_companyPortletRatingsDefinitionDisplayContext;
 	private final Map<String, Map<String, RatingsType>>
-		_groupPortletRatingsDefinitionMap = new HashMap<>();
+		_groupRatingsTypeMaps = new HashMap<>();
 
 }

@@ -44,9 +44,9 @@ GroupPortletRatingsDefinitionDisplayContext groupPortletRatingsDefinitionDisplay
 <aui:fieldset>
 
 	<%
-	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = groupPortletRatingsDefinitionDisplayContext.getGroupPortletRatingsDefinitionMap();
+	Map<String, Map<String, RatingsType>> groupRatingsTypeMaps = groupPortletRatingsDefinitionDisplayContext.getGroupRatingsTypeMaps();
 
-	for (String portletId : portletRatingsDefinitionMap.keySet()) {
+	for (String portletId : groupRatingsTypeMaps.keySet()) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 	%>
 
@@ -55,7 +55,7 @@ GroupPortletRatingsDefinitionDisplayContext groupPortletRatingsDefinitionDisplay
 		</p>
 
 		<%
-		Map<String, RatingsType> ratingsTypeMap = portletRatingsDefinitionMap.get(portletId);
+		Map<String, RatingsType> ratingsTypeMap = groupRatingsTypeMaps.get(portletId);
 
 		Set<String> classNames = ratingsTypeMap.keySet();
 

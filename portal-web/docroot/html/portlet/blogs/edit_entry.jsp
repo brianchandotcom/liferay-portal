@@ -110,6 +110,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			type="pills"
 		>
 			<div class="<%= (entry != null) ? "entry-status " + WorkflowConstants.getStatusLabel(entry.getStatus()) : StringPool.BLANK %>">
+
 				<%
 					Map<String, Object> dataTextEditor = new HashMap<String, Object>();
 
@@ -125,6 +126,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					dataTextEditor.put("editorConfig", editorConfig);
 					dataTextEditor.put("editorOptions", editorOptions);
 				%>
+
 				<liferay-ui:section>
 					<c:if test="<%= entry != null %>">
 						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />

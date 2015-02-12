@@ -142,6 +142,7 @@ int messagesCount = messages.size();
 									</div>
 
 									<div class="lfr-discussion-body">
+
 										<%
 											Map<String, Object> dataTextEditor = new HashMap<String, Object>();
 
@@ -156,6 +157,7 @@ int messagesCount = messages.size();
 											dataTextEditor.put("editorConfig", editorConfig);
 											dataTextEditor.put("editorOptions", editorOptions);
 										%>
+
 										<liferay-ui:input-editor contents="" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
 
 										<aui:input name="postReplyBody0" type="hidden" />

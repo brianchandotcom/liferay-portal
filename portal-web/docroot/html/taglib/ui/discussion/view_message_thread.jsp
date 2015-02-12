@@ -227,6 +227,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		</div>
 
 		<div class="lfr-discussion-form-container">
+
 			<%
 				Map<String, Object> dataTextEditor = new HashMap<String, Object>();
 
@@ -241,6 +242,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				dataTextEditor.put("editorConfig", editorConfig);
 				dataTextEditor.put("editorOptions", editorOptions);
 			%>
+
 			<div class="lfr-discussion lfr-discussion-form-reply" id='<portlet:namespace /><%= randomNamespace + "postReplyForm" + index %>' style="display: none;">
 				<div class="lfr-discussion-details">
 					<liferay-ui:user-display

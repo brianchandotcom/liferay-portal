@@ -158,6 +158,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 </div>
 
 <aui:script use="aui-base,alloy-editor,liferay-editor-image-uploader">
+
 	<%
 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 

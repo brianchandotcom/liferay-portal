@@ -333,9 +333,8 @@
 		.entry-title {
 			@include ellipsis;
 
-			overflow: hidden;
+			display: block;
 			position: relative;
-			white-space: nowrap;
 		}
 
 		.entry-title-text {

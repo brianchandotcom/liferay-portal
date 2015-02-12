@@ -152,7 +152,7 @@
 	<#if getterUtil.getBoolean(enablePrint)>
 		<#assign printURL = renderResponse.createRenderURL() />
 
-		${printURL.setParameter("struts_action", "/asset_publisher/view_content")}
+		${printURL.setParameter("mvcPath", "/html/portlet/asset_publisher/view_content.jsp")}
 		${printURL.setParameter("assetEntryId", entry.getEntryId()?string)}
 		${printURL.setParameter("viewMode", "print")}
 		${printURL.setParameter("type", entry.getAssetRendererFactory().getType())}

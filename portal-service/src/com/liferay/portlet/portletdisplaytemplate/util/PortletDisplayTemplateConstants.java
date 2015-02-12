@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.template.TemplateConstants;
  */
 public class PortletDisplayTemplateConstants {
 
-	public static final String ASSET_PUBLISHER_HELPER = "assetPublisherHelper";
-
 	public static final String CURRENT_URL = "currentURL";
 
 	public static final String ENTRIES = "entries";

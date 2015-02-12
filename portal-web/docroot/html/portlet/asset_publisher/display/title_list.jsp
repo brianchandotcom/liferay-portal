@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.portlet.assetpublisher.util.AssetPublisherHelper" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -35,7 +37,7 @@ request.setAttribute("view.jsp-showIconLabel", false);
 
 boolean viewInContext = ((Boolean)request.getAttribute("view.jsp-viewInContext")).booleanValue();
 
-String viewURL = AssetPublisherHelperUtil.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetEntry, viewInContext);
+String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetEntry, viewInContext);
 %>
 
 	<c:if test="<%= assetEntryIndex == 0 %>">

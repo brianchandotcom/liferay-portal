@@ -25,9 +25,7 @@
 			<entry key="json.web.service.context.path" value="WikiPage" />
 		</osgi:service-properties>
 	</osgi:service>
-	<bean id="com.liferay.wiki.service.WikiPageService" class="com.liferay.wiki.service.impl.WikiPageServiceImpl">
-		<property name="wikiSettingsProvider" ref="com.liferay.wiki.settings.WikiSettingsProvider" />
-	</bean>
+	<bean id="com.liferay.wiki.service.WikiPageService" class="com.liferay.wiki.service.impl.WikiPageServiceImpl" />
 	<osgi:service interface="com.liferay.wiki.service.WikiPageService" ref="com.liferay.wiki.service.WikiPageService">
 		<osgi:service-properties>
 			<entry key="json.web.service.context.name" value="wiki" />

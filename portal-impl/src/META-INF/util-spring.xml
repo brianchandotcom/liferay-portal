@@ -524,7 +524,7 @@
 		<property name="modelHints">
 			<bean class="com.liferay.portal.model.ModelHintsImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil">
 				<property name="sAXReader">
-					<bean class="com.liferay.portal.kernel.xml.SAXReaderUtil" factory-method="getSecureSAXReader" />
+					<bean class="com.liferay.portal.kernel.xml.SAXReaderUtil" factory-method="getUnsecureSAXReader" />
 				</property>
 			</bean>
 		</property>

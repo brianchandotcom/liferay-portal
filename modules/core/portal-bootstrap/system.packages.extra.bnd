@@ -88,6 +88,7 @@ Export-Package:\
 	javax.xml.stream.*;version='1.0',\
 	javax.xml.transform.*;version='1.4',\
 	javax.xml.validation.*;version='1.4',\
+	javax.xml.ws.*;version='2.2.11',\
 	javax.xml.xpath.*;version='1.4',\
 	org.aopalliance.*;version='1.0',\
 	org.apache.bcel.*;version='2.7.1',\
@@ -203,6 +204,7 @@ Include-Resource:\
 	@../../../lib/portal/hibernate-core.jar,\
 	@../../../lib/portal/jaxen.jar,\
 	@../../../lib/portal/jaxrpc.jar,\
+	@../../../lib/portal/jaxws-api.jar,\
 	@../../../lib/portal/jdom.jar!/org/**,\
 	@../../../lib/portal/json-java.jar,\
 	@../../../lib/portal/liferay-icu4j.jar,\

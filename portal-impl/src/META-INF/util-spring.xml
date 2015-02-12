@@ -857,11 +857,6 @@
 			</bean>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.xsl.XSLManager" class="com.liferay.portal.xsl.XSLManager">
-		<property name="templateContextHelper">
-			<bean class="com.liferay.portal.template.TemplateContextHelper" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portlet.DefaultControlPanelEntry" class="com.liferay.portlet.DefaultControlPanelEntry" />
 	<bean id="com.liferay.portlet.DefaultControlPanelEntryFactory" class="com.liferay.portlet.DefaultControlPanelEntryFactory" />
 	<bean id="com.liferay.portlet.PortletContainerImpl" class="com.liferay.portlet.PortletContainerImpl">

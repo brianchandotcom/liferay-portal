@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -90,6 +91,7 @@ import com.liferay.wiki.model.impl.WikiPageImpl;
 import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
 import com.liferay.wiki.settings.WikiConfiguration;
 import com.liferay.wiki.settings.WikiSettings;
+import com.liferay.wiki.settings.provider.WikiSettingsProvider;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
@@ -1852,16 +1854,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			oldPage.getRedirectTitle(), serviceContext);
 	}
 
-	public void setWikiConfiguration(WikiConfiguration wikiConfiguration) {
-		_wikiConfiguration = wikiConfiguration;
-	}
-
-	public void setWikiSettingsProvider(
-		SettingsProvider<WikiSettings> wikiSettingsProvider) {
-
-		_wikiSettingsProvider = wikiSettingsProvider;
-	}
-
 	@Override
 	public void subscribePage(long userId, long nodeId, String title)
 		throws PortalException {
@@ -3358,7 +3350,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		validate(nodeId, content, format);
 	}
 
+	@BeanReference(type = WikiConfiguration.class)
 	private WikiConfiguration _wikiConfiguration;
+
+	@BeanReference(type = WikiSettingsProvider.class)
 	private SettingsProvider<WikiSettings> _wikiSettingsProvider;
 
 }

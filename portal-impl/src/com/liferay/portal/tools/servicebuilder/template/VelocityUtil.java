@@ -17,11 +17,11 @@ package com.liferay.portal.tools.servicebuilder.template;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Map;
+
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
-
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,10 +38,12 @@ public class VelocityUtil {
 		VelocityEngine velocityEngine = new VelocityEngine();
 
 		velocityEngine.setProperty(
-			RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, "org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
+			RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
+			"org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
 
 		velocityEngine.setProperty(
-			RuntimeConstants.RUNTIME_LOG_LOGSYSTEM + ".log4j.category", "org.apache.velocity");
+			RuntimeConstants.RUNTIME_LOG_LOGSYSTEM + ".log4j.category",
+			"org.apache.velocity");
 
 		velocityEngine.init();
 

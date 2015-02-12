@@ -404,7 +404,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			window['<%= name %>']._setStyles();
 
 			<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
-				window['<%= HtmlUtil.escapeJS(namespace + onInitMethod) %>']();
+				window['<%= HtmlUtil.escapeJS(onInitMethod) %>']();
 			</c:if>
 
 			window['<%= name %>'].instanceReady = true;

@@ -124,13 +124,13 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					</div>
 
 					<div class="entry-title">
-						<h2><liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="title" placeholder="title" /></h2>
+						<h2><liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="titleEditor" placeholder="title" /></h2>
 					</div>
 
 					<aui:input name="title" type="hidden" />
 
 					<div class="entry-subtitle">
-						<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="subtitle" placeholder="subtitle" />
+						<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="subtitleEditor" placeholder="subtitle" />
 					</div>
 
 					<aui:input name="subtitle" type="hidden" />
@@ -146,7 +146,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						data.put("uploadURL", uploadEditorImageURL);
 						%>
 
-						<liferay-ui:input-editor contents="<%= content %>" data="<%= data %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" onChangeMethod="OnChangeEditor" placeholder="content" />
+						<liferay-ui:input-editor contents="<%= content %>" data="<%= data %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
 					</div>
 
 					<aui:input name="content" type="hidden" />
@@ -195,7 +195,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 							</div>
 
 							<div class="entry-description">
-								<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="description" onInitMethod="OnDescriptionEditorInit" placeholder="description" />
+								<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" />
 							</div>
 
 							<aui:input name="description" type="hidden" />

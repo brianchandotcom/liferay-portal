@@ -211,7 +211,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			}
 
 			<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
-				window['<%= HtmlUtil.escapeJS(namespace + onInitMethod) %>']();
+				window['<%= HtmlUtil.escapeJS(onInitMethod) %>']();
 			</c:if>
 
 			window['<%= name %>'].instanceReady = true;

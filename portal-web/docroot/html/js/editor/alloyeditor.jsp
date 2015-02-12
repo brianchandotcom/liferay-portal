@@ -34,7 +34,7 @@ String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
 Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");
-String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name")) + "Editor";
+String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
 
 String onBlurMethod = (String)request.getAttribute("liferay-ui:input-editor:onBlurMethod");

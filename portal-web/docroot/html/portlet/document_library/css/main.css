@@ -331,12 +331,10 @@
 		}
 
 		.entry-title {
+			@include ellipsis;
+
 			display: block;
-			max-width: 100%;
-			overflow: hidden;
 			position: relative;
-			text-overflow: ellipsis;
-			white-space: nowrap;
 		}
 
 		.entry-title-text {

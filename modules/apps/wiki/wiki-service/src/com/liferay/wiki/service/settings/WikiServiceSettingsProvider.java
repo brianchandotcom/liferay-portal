@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component
+@Component(immediate = true)
 public class WikiServiceSettingsProvider {
 
 	public static WikiServiceSettingsProvider getWikiServiceSettingsProvider() {

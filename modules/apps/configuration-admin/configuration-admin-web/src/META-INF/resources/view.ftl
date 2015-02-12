@@ -106,7 +106,7 @@
 						url="${viewFactoryInstancesURL}"
 					/>
 
-					<@portlet["renderURL"] varImpl="creatFactoryConfigURL">
+					<@portlet["renderURL"] varImpl="createFactoryConfigURL">
 						<@portlet["param"] name="mvcPath" value="/edit_configuration.ftl" />
 						<@portlet["param"] name="factoryPid" value="${configurationModel.getID()}" />
 					</@>
@@ -116,7 +116,7 @@
 						label=true
 						message="add"
 						method="post"
-						url="${creatFactoryConfigURL}"
+						url="${createFactoryConfigURL}"
 					/>
 				<#else>
 					<@liferay_ui["icon"]

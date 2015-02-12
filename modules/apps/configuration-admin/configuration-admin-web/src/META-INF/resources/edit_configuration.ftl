@@ -35,29 +35,27 @@
 	<@aui["input"] name="pid" type="hidden" value="${configurationModel.getID()}" />
 	<@aui["input"] name="factoryPid" type="hidden" value="${configurationModel.getFactoryPid()}" />
 
-	<div class="lfr-ddm-container" id="xyz">
+	<div class="lfr-ddm-container" id="lfr-ddm-container">
 		${configurationHelper.render(renderRequest, renderResponse, configurationModel)}
 
-		<#assign configFieldJSON = Request["configFieldJSON"] />
+		<#assign definition = Request["definition"] />
 		<#assign plId = Request["plId"] />
 		<#assign scopeGroupId = Request["scopeGroupId"] />
 
-		<@aui["input"] name="configFields" type="hidden" />
+		<@aui["input"] name="serializedDDMFormValues" type="hidden" />
 
 		<@aui["script"] use="liferay-ddm-form">
-			var isRepeatable = true;
-
 			new Liferay.DDM.Form(
 				{
-					container: '#xyz',
-					ddmFormValuesInput: '#<@portlet["namespace"]/>configFields',
-					definition: ${configFieldJSON},
+					container: '#lfr-ddm-container',
+					ddmFormValuesInput: '#<@portlet["namespace"]/>serializedDDMFormValues',
+					definition: ${definition},
 					doAsGroupId: ${scopeGroupId},
 					fieldsNamespace: "",
 					mode: "edit",
 					p_l_id: ${plId},
 					portletNamespace: "<@portlet["namespace"]/>",
-					repeatable: isRepeatable
+					repeatable: true
 				}
 			);
 		</@>

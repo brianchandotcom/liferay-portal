@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `ad419fe`.*
+*This document has been reviewed through commit `6e73e36`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -979,26 +979,26 @@ IDs.
 
 ------------------------------------------------------------------------------
 
-### Removal of methods and change of location of AssetPublisherUtil
+### Moved the `AssetPublisherUtil` class and removed it from the public API 
 - **Date:** 2015-Feb-11
 - **JIRA Ticket:** LPS-52744
 
 #### What changed?
 
-The class AssetPublisherUtil from portal-service module has been moved to the
-module AssetPublisher and it is not exposed as part of the public API.
-
+The class `AssetPublisherUtil` from the `portal-service` module has been moved
+to the module `AssetPublisher` and it is no longer a part of the public API.
 
 #### Who is affected?
 
-This affects developers who have written code that uses the AssetPublisherUtil
+This affects developers who have written code that uses the `AssetPublisherUtil`
 class.
 
 #### How should I update my code?
 
-This class is not supposed to be used from other modules anymore since it
-contains utility methods for the Asset Publisher portlet. If needed, you can
-define a dependency with the Asset Publisher module and use the new class.
+This `AssetPublisherUtil` class should no longer be used from other modules
+since it contains utility methods for the Asset Publisher portlet. If needed,
+you can define a dependency with the Asset Publisher module and use the new
+class.
 
 #### Why was this change made?
 

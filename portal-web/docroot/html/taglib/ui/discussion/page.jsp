@@ -569,7 +569,7 @@ int messagesCount = messages.size();
 							}
 						);
 					}
-				)
+				);
 			}
 		</aui:script>
 

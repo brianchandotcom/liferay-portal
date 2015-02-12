@@ -162,6 +162,24 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 	</target>
 
 	<target name="test-plugin">
+		<if>
+			<contains string="${plugin}" substring="layouttpl" />
+			<then>
+				<var name="select" value="\2" />
+			</then>
+			<else>
+				<var name="select" value="\2s" />
+			</else>
+		</if>
+
+		<propertyregex
+			input="${plugin}"
+			override="true"
+			property="plugin.type"
+			regexp="(\w+-)+(\w+)"
+			select="${select}"
+		/>
+
 		<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
 app.server.type=${app.server.type}
 
@@ -207,27 +225,8 @@ plugins.includes=${plugin}</echo>
 
 		<for list="${test.plugins}" param="test.plugin">
 			<sequential>
-				<if>
-					<contains string="@{test.plugin}" substring="layouttpl" />
-					<then>
-						<var name="select" value="\2" />
-					</then>
-					<else>
-						<var name="select" value="\2s" />
-					</else>
-				</if>
-
-				<propertyregex
-					input="@{test.plugin}"
-					override="true"
-					property="test.plugin.type"
-					regexp="(\w+-)+(\w+)"
-					select="${select}"
-				/>
-
 				<antcall target="test-plugin">
 					<param name="plugin" value="@{test.plugin}" />
-					<param name="plugin.type" value="${test.plugin.type}" />
 				</antcall>
 			</sequential>
 		</for>

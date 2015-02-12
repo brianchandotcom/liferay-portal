@@ -44,9 +44,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -746,38 +748,40 @@ public abstract class BaseDB implements DB {
 		return validIndexNames;
 	}
 
-	protected String evaluateVM(String templateID, String templateContent) throws Exception {
+	protected String evaluateVM(String templateID, String templateContent)
+		throws Exception {
 
 		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-		
+
 		try {
 			ClassLoaderUtil.setContextClassLoader(
 				ClassLoaderUtil.getPortalClassLoader());
-		
-			StringTemplateResource stringTemplateResource = 
+
+			StringTemplateResource stringTemplateResource =
 				new StringTemplateResource(templateID, templateContent);
-			
+
 			Template template = TemplateManagerUtil.getTemplate(
 				TemplateConstants.LANG_TYPE_VM, stringTemplateResource, false);
-			
+
 			template.put("counter", new SimpleCounter());
-			
+
 			template.put("portalUUIDUtil", PortalUUIDUtil.class);
 
 			template.processTemplate(unsyncStringWriter);
-			
 		}
 		finally {
 			ClassLoaderUtil.setContextClassLoader(classLoader);
 		}
 
+		// Trim insert statements because it breaks MySQL Query Browser
+
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
-			new UnsyncBufferedReader(new UnsyncStringReader(
-				unsyncStringWriter.toString()))) {
+			new UnsyncBufferedReader(
+				new UnsyncStringReader(unsyncStringWriter.toString()))) {
 
 			String line = null;
 
@@ -790,7 +794,6 @@ public abstract class BaseDB implements DB {
 		}
 
 		templateContent = sb.toString();
-		
 		templateContent = StringUtil.replace(templateContent, "\n\n\n", "\n\n");
 
 		return templateContent;

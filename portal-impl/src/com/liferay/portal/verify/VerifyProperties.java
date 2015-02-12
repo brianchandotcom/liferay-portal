@@ -595,52 +595,45 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"translator.languages", "language.ids", "com.liferay.translator.web"
 		},
-		
+
 		// Velocity Engine
 
-		new String[] {"velocity.engine.directive.if.to.string.null.check", 
-			"directive.if.to.string.null.check", 
+		new String[] {
+			"velocity.engine.directive.if.to.string.null.check",
+			"directive.if.to.string.null.check",
 			"com.liferay.portal.template.velocity"
 		},
-		
 		new String[] {
 			"velocity.engine.resource.parsers", "resource.parsers",
 			"com.liferay.portal.template.velocity"
 		},
-		
 		new String[] {
 			"velocity.engine.resource.modification.check.interval",
 			"resource.modification.check.interval",
 			"com.liferay.portal.template.velocity"
 		},
-		
 		new String[] {
 			"velocity.engine.restricted.classes", "restricted.classes",
 			"com.liferay.portal.template.velocity"
 		},
-		
 		new String[] {
 			"velocity.engine.restricted.packages", "restricted.packages",
 			"com.liferay.portal.template.velocity"
 		},
-		
 		new String[] {
 			"velocity.engine.restricted.variables", "restricted.variables",
 			"com.liferay.portal.template.velocity"
 		},
-		
 		new String[] {
-			"velocity.engine.velocimacro.library", "velocimacro.library",
+			"velocity.engine.velocimacro.library", "macro.library",
 			"com.liferay.portal.template.velocity"
 		},
-		
 		new String[] {
 			"velocity.engine.logger", "logger",
 			"com.liferay.portal.template.velocity"
 		},
-		
 		new String[] {
-			"velocity.engine.logger.category", "logger.category", 
+			"velocity.engine.logger.category", "logger.category",
 			"com.liferay.portal.template.velocity"
 		},
 

@@ -1774,8 +1774,6 @@ ${marketplace.portlet.properties}</echo>
 	<system-err></system-err>
 </testsuite>]]></echo>
 
-				<record-testray-components />
-
 				<antcall target="build-test-results-xml" />
 
 				<copy

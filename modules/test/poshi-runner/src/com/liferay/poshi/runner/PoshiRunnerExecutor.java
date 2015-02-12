@@ -271,29 +271,15 @@ public class PoshiRunnerExecutor {
 
 		String classCommandName = executeElement.attributeValue("function");
 
-		int locatorCount = 0;
-
-		Element commandElement = null;
+		String className = classCommandName;
 
 		if (classCommandName.contains("#")) {
-			String className =
-				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-					classCommandName);
-
-			locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
-				className);
-
-			commandElement = PoshiRunnerContext.getFunctionCommandElement(
+			className = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 				classCommandName);
 		}
-		else {
-			locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
-				classCommandName);
 
-			commandElement =
-				PoshiRunnerContext.getFunctionDefaultCommandElement(
-					classCommandName);
-		}
+		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
+			className);
 
 		for (int i = 0; i < locatorCount; i++) {
 			String locator = executeElement.attributeValue("locator" + (i + 1));
@@ -335,6 +321,9 @@ public class PoshiRunnerExecutor {
 		}
 
 		PoshiRunnerVariablesUtil.pushCommandMap();
+
+		Element commandElement = PoshiRunnerContext.getFunctionCommandElement(
+			classCommandName);
 
 		parseElement(commandElement);
 

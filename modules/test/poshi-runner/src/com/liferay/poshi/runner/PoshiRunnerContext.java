@@ -77,10 +77,6 @@ public class PoshiRunnerContext {
 		return _commandElements.get("function#" + classCommandName);
 	}
 
-	public static Element getFunctionDefaultCommandElement(String className) {
-		return _commandElements.get("function#" + className);
-	}
-
 	public static int getFunctionLocatorCount(String className) {
 		return _functionLocatorCounts.get(className);
 	}
@@ -244,7 +240,7 @@ public class PoshiRunnerContext {
 				if (classType.equals("function")) {
 					Element defaultCommandElement = getFunctionCommandElement(
 						className + "#" +
-						rootElement.attributeValue("default"));
+							rootElement.attributeValue("default"));
 
 					_commandElements.put(
 						classType + "#" + className, defaultCommandElement);

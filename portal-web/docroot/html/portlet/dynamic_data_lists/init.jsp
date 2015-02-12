@@ -43,6 +43,7 @@ page import="com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalS
 page import="com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %>
 
 <%@ include file="/html/portlet/dynamic_data_lists/init-ext.jsp" %>

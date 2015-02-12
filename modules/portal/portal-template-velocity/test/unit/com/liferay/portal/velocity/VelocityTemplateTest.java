@@ -14,24 +14,40 @@
 
 package com.liferay.portal.velocity;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.cache.MultiVMPoolImpl;
+import com.liferay.portal.cache.SingleVMPoolImpl;
+import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.template.TemplateResourceLoader;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.velocity.FastExtendedProperties;
+import com.liferay.portal.template.velocity.LiferayMethodExceptionEventHandler;
+import com.liferay.portal.template.velocity.LiferayResourceLoader;
 import com.liferay.portal.template.velocity.LiferayResourceManager;
 import com.liferay.portal.template.velocity.VelocityTemplate;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.template.velocity.VelocityTemplateResourceLoader;
+import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.StringReader;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,39 +58,127 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.util.introspection.SecureUberspector;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Tina Tian
+ * @author Raymond Augé
  */
 public class VelocityTemplateTest {
 
-	@ClassRule
-	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+
+		MultiVMPoolUtil multiVMPoolUtil = new MultiVMPoolUtil();
+		MultiVMPoolImpl multiVMPoolImpl = new MultiVMPoolImpl();
+
+		multiVMPoolImpl.setPortalCacheManager(
+			MemoryPortalCacheManager.
+				<Serializable, Serializable>createMemoryPortalCacheManager(
+					"multi.vm.pool"));
+
+		multiVMPoolUtil.setMultiVMPool(multiVMPoolImpl);
+
+		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
+		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();
+
+		singleVMPoolImpl.setPortalCacheManager(
+			MemoryPortalCacheManager.createMemoryPortalCacheManager(
+				"single.vm.pool"));
+
+		singleVMPoolUtil.setSingleVMPool(singleVMPoolImpl);
+
+		MockTemplateResourceLoader templateResourceLoader =
+			new MockTemplateResourceLoader();
+
+		templateResourceLoader.activate(Collections.<String, Object>emptyMap());
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistration = registry.registerService(
+			TemplateResourceLoader.class, templateResourceLoader);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceRegistration.unregister();
+	}
 
 	@Before
 	public void setUp() throws Exception {
+		VelocityEngineConfiguration _velocityEngineConfiguration =
+			Configurable.createConfigurable(
+				VelocityEngineConfiguration.class, Collections.emptyMap());
+
 		_templateContextHelper = new MockTemplateContextHelper();
 
 		_velocityEngine = new VelocityEngine();
 
+		boolean cacheEnabled = false;
+
 		ExtendedProperties extendedProperties = new FastExtendedProperties();
 
+		extendedProperties.setProperty(
+			VelocityEngine.DIRECTIVE_IF_TOSTRING_NULLCHECK,
+			String.valueOf(
+				_velocityEngineConfiguration.directiveIfToStringNullCheck()));
+		extendedProperties.setProperty(
+			VelocityEngine.EVENTHANDLER_METHODEXCEPTION,
+			LiferayMethodExceptionEventHandler.class.getName());
+		extendedProperties.setProperty(
+			RuntimeConstants.INTROSPECTOR_RESTRICT_CLASSES,
+			StringUtil.merge(_velocityEngineConfiguration.restrictedClasses()));
+		extendedProperties.setProperty(
+			RuntimeConstants.INTROSPECTOR_RESTRICT_PACKAGES,
+			StringUtil.merge(
+				_velocityEngineConfiguration.restrictedPackages()));
+		extendedProperties.setProperty(
+			VelocityEngine.RESOURCE_LOADER, "liferay");
+		extendedProperties.setProperty(
+			"liferay." + VelocityEngine.RESOURCE_LOADER + ".cache",
+			String.valueOf(cacheEnabled));
+		extendedProperties.setProperty(
+			"liferay." + VelocityEngine.RESOURCE_LOADER +
+			".resourceModificationCheckInterval",
+			_velocityEngineConfiguration.resourceModificationCheckInterval() +
+			"");
+		extendedProperties.setProperty(
+			"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
+			LiferayResourceLoader.class.getName());
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_MANAGER_CLASS,
 			LiferayResourceManager.class.getName());
 		extendedProperties.setProperty(
+			"liferay." + VelocityEngine.RESOURCE_MANAGER_CLASS +
+			".resourceModificationCheckInterval",
+			_velocityEngineConfiguration.resourceModificationCheckInterval() +
+			"");
+		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER));
+			_velocityEngineConfiguration.logger());
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM + ".log4j.category",
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER_CATEGORY));
+			_velocityEngineConfiguration.loggerCategory());
+		extendedProperties.setProperty(
+			RuntimeConstants.UBERSPECT_CLASSNAME,
+			SecureUberspector.class.getName());
+		extendedProperties.setProperty(
+			VelocityEngine.VM_LIBRARY,
+			_velocityEngineConfiguration.velocimacroLibrary());
+		extendedProperties.setProperty(
+			VelocityEngine.VM_LIBRARY_AUTORELOAD,
+			String.valueOf(!cacheEnabled));
+		extendedProperties.setProperty(
+			VelocityEngine.VM_PERM_ALLOW_INLINE_REPLACE_GLOBAL,
+			String.valueOf(!cacheEnabled));
 
 		_velocityEngine.setExtendedProperties(extendedProperties);
 
@@ -300,8 +404,21 @@ public class VelocityTemplateTest {
 
 	private static final String _WRONG_TEMPLATE_ID = "WRONG_TEMPLATE_ID";
 
+	private static ServiceRegistration<TemplateResourceLoader>
+		_serviceRegistration;
+
 	private TemplateContextHelper _templateContextHelper;
 	private VelocityEngine _velocityEngine;
+
+	private static class MockTemplateResourceLoader
+		extends VelocityTemplateResourceLoader {
+
+		@Override
+		protected void activate(Map<String, Object> properties) {
+			super.activate(properties);
+		}
+
+	}
 
 	private class MockTemplateContextHelper extends TemplateContextHelper {
 

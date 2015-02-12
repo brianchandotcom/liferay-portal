@@ -326,19 +326,16 @@
 	}
 
 	.app-view-entry-taglib.entry-display-style.display-icon {
-		.entry-thumbnail {
-			min-width: 151px;
-
-			.taglib-workflow-status {
-				left: 6px;
-			}
+		.entry-thumbnail .taglib-workflow-status {
+			left: 6px;
 		}
 
 		.entry-title {
-			@include ellipsis;
-
+			display: block;
+			max-width: 100%;
 			overflow: hidden;
 			position: relative;
+			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
 

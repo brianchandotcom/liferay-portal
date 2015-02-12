@@ -875,7 +875,7 @@ input.switch {
 
 .alloy-editor {
 	&.alloy-editor-placeholder {
-		color: #2B4256;
+		color: #2B4259;
 		padding-left: 10px;
 
 		&:empty:not(:focus) {

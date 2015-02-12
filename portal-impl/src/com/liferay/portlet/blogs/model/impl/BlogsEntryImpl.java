@@ -51,6 +51,11 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 			StringPool.BLANK);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSmallImageURL(
+	 *             ThemeDisplay)}
+	 */
+	@Deprecated
 	@Override
 	public String getEntryImageURL(ThemeDisplay themeDisplay) {
 		if (!isSmallImage()) {
@@ -77,6 +82,37 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 		}
 
 		return _smallImageType;
+	}
+
+	@Override
+	public String getSmallImageURL(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (Validator.isNotNull(getSmallImageURL())) {
+			return getSmallImageURL();
+		}
+
+		long smallImageFileEntryId = getSmallImageFileEntryId();
+
+		if (smallImageFileEntryId != 0) {
+			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+				smallImageFileEntryId);
+
+			return DLUtil.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), themeDisplay,
+				StringPool.BLANK);
+		}
+
+		long smallImageId = getSmallImageId();
+
+		if (smallImageId != 0) {
+			return
+				themeDisplay.getPathImage() + "/blogs/entry?img_id=" +
+					getSmallImageId() + "&t=" +
+					WebServerServletTokenUtil.getToken(getSmallImageId());
+		}
+
+		return getCoverImageURL(themeDisplay);
 	}
 
 	@Override

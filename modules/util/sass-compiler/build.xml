@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="../../../lib/development/" />
+
+	<target name="compile">
+		<if>
+			<not>
+				<available file="src/com/liferay/sass/compiler/libsass/SassLibrary.java" />
+			</not>
+			<then>
+				<get
+					dest="libsass-3.1.0.zip"
+					src="https://github.com/sass/libsass/archive/3.1.0.zip"
+				/>
+
+				<unzip
+					dest="tmp"
+					src="libsass-3.1.0.zip"
+				/>
+
+				<delete file="libsass-3.1.0.zip" />
+
+				<get
+					dest="jnaerator-0.11-shaded.jar"
+					src="https://oss.sonatype.org/content/groups/public/com/nativelibs4java/jnaerator/0.11/jnaerator-0.11-shaded.jar"
+				/>
+
+				<java
+					dir="tmp/libsass-3.1.0"
+					jar="jnaerator-0.11-shaded.jar"
+					fork="true"
+					failonerror="true"
+				>
+					<arg line="-f -library sass -mode Directory -o ../src -package com.liferay.sass.compiler.libsass -runtime JNAerator sass_context.h" />
+				</java>
+
+				<delete file="jnaerator-0.11-shaded.jar" />
+
+				<concat destfile="src/com/liferay/sass/compiler/libsass/SassLibrary.java">
+					<header>/* @generated */</header>
+					<fileset file="tmp/src/com/liferay/sass/compiler/libsass/SassLibrary.java" />
+				</concat>
+
+				<delete dir="tmp" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<available file="test/unit/com/liferay/sass/compiler/dependencies/sass-spec" />
+			</not>
+			<then>
+				<mkdir dir="test/unit/com/liferay/sass/compiler/dependencies/sass-spec" />
+
+				<get
+					dest="sass-spec.zip"
+					src="https://github.com/sass/sass-spec/archive/3818b9d686765461add05e996d990b085e15a348.zip"
+				/>
+
+				<unzip
+					dest="test/unit/com/liferay/sass/compiler/dependencies/sass-spec"
+					src="sass-spec.zip"
+				>
+					<patternset>
+						<include name="**/spec/basic/**" />
+					</patternset>
+					<cutdirsmapper dirs="3" />
+				</unzip>
+
+				<delete file="sass-spec.zip" />
+			</then>
+		</if>
+
+		<compile
+			module.dir="${basedir}"
+		/>
+	</target>
+
+	<target name="build-darwin">
+		<antcall target="native-lib">
+			<param name="libname" value="libsass.dylib" />
+			<param name="make" value="make" />
+			<param name="resourceloc" value="darwin" />
+		</antcall>
+	</target>
+
+	<target name="build-linux-x86">
+		<antcall target="native-lib">
+			<param name="libname" value="libsass.so" />
+			<param name="make" value="make" />
+			<param name="resourceloc" value="linux-x86" />
+		</antcall>
+	</target>
+
+	<target name="build-linux-x86-64">
+		<antcall target="native-lib">
+			<param name="libname" value="libsass.so" />
+			<param name="make" value="make" />
+			<param name="resourceloc" value="linux-x86-64" />
+		</antcall>
+	</target>
+
+	<target name="build-win32-x86">
+		<antcall target="native-lib">
+			<param name="libname" value="sass.dll" />
+			<param name="make" value="mingw32-make.exe" />
+			<param name="resourceloc" value="win32-x86" />
+		</antcall>
+	</target>
+
+	<target name="build-win32-x86-64">
+		<antcall target="native-lib">
+			<param name="libname" value="sass.dll" />
+			<param name="make" value="mingw32-make.exe" />
+			<param name="resourceloc" value="win32-x86-64" />
+		</antcall>
+	</target>
+
+	<target name="native-lib">
+		<if>
+			<not>
+				<available file="libsass-3.1.0.zip" />
+			</not>
+			<then>
+				<get
+					dest="libsass-3.1.0.zip"
+					src="https://github.com/sass/libsass/archive/3.1.0.zip"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="tmp"
+			src="libsass-3.1.0.zip"
+		/>
+
+		<patch dir="tmp/libsass-3.1.0" patchfile="patches/LPS-52961.patch" />
+
+		<exec dir="tmp/libsass-3.1.0" command="${make} shared" />
+
+		<copy todir="resources/${resourceloc}">
+			<fileset dir="tmp/libsass-3.1.0/lib">
+				<filename name="${libname}" />
+			</fileset>
+		</copy>
+
+		<delete dir="tmp" />
+	</target>
+</project>

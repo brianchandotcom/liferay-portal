@@ -916,13 +916,13 @@ email address and the list of reserved email addresses.
 
 ---------------------------------------
 
-### Attribute `paginationURL` is Mandatory for the Tag `liferay-ui:discussion`
+### Added Required Attribute `paginationURL` to the Tag `liferay-ui:discussion`
 - **Date:** 2015-Feb-05
 - **JIRA Ticket:** LPS-53313
 
 #### What changed?
 
-The `liferay-ui:discussion` tag contains a new required attribute
+The `liferay-ui:discussion` tag now contains a new required attribute
 `paginationURL`.
 
 #### Who is affected?

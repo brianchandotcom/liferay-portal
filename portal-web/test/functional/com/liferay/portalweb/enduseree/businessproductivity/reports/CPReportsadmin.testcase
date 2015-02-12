@@ -157,7 +157,9 @@
 	<command name="DeliverReportToEmail" priority="5">
 		<property name="test.assert.javascript.errors" value="false" />
 
+		<var name="emailAddress1" property-value="email.address.1" />
 		<var name="emailAddress3" property-value="email.address.3" />
+		<var name="emailPassword1" property-value="email.password.1" />
 		<var name="emailPassword3" property-value="email.password.3" />
 
 		<execute macro="Page#gotoCP">
@@ -165,8 +167,8 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="userName" value="liferay.qa@gmail.com" />
-			<var name="userPassword" value="loveispatient1" />
+			<var name="userName" value="${emailAddress1}" />
+			<var name="userPassword" value="${emailPassword1}" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -558,15 +560,17 @@
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="emailAddress1" property-value="email.address.1" />
+		<var name="emailAddress2" property-value="email.address.2" />
 		<var name="emailPassword1" property-value="email.password.1" />
+		<var name="emailPassword2" property-value="email.password.2" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="userName" value="liferay.qa@gmail.com" />
-			<var name="userPassword" value="loveispatient1" />
+			<var name="userName" value="${emailAddress1}" />
+			<var name="userPassword" value="${emailPassword1}" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -583,7 +587,7 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="${emailAddress1}" />
+			<var name="emailNotificationsAddress" value="${emailAddress2}" />
 			<var name="emailRecipientAddress" value="test@liferay.com" />
 			<var name="reportFormat" value="pdf" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
@@ -592,8 +596,8 @@
 		<execute action="BaseLiferay#pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
-			<var name="userEmailAddress" value="${emailAddress1}" />
-			<var name="userPassword" value="${emailPassword1}" />
+			<var name="userEmailAddress" value="${emailAddress2}" />
+			<var name="userPassword" value="${emailPassword2}" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -604,7 +608,7 @@
 			<var name="gmailMailTableMessageTitle" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 			<var name="gmailMessageBody" value="You have a new report." />
 			<var name="gmailMessageBodyClosing" value="Sincerly, Joe Bloggs test@liferay.com" />
-			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress1}," />
+			<var name="gmailMessageBodyGreeting" value="Dear ${emailAddress2}," />
 			<var name="gmailMessageTitle" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
@@ -624,8 +628,8 @@
 		</execute>
 
 		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" value="${emailAddress1}" />
-			<var name="userPassword" value="${emailPassword1}" />
+			<var name="userEmailAddress" value="${emailAddress2}" />
+			<var name="userPassword" value="${emailPassword2}" />
 		</execute>
 
 		<execute action="Home#open" locator1="http://localhost:8080" />
@@ -634,7 +638,9 @@
 	<command name="ViewEmailRecipientDelivery" priority="5">
 		<property name="test.assert.javascript.errors" value="false" />
 
+		<var name="emailAddress1" property-value="email.address.1" />
 		<var name="emailAddress2" property-value="email.address.2" />
+		<var name="emailPassword1" property-value="email.password.1" />
 		<var name="emailPassword2" property-value="email.password.2" />
 
 		<execute macro="Page#gotoCP">
@@ -642,8 +648,8 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="userName" value="liferay.qa@gmail.com" />
-			<var name="userPassword" value="loveispatient1" />
+			<var name="userName" value="${emailAddress1}" />
+			<var name="userPassword" value="${emailPassword1}" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">

@@ -47,7 +47,6 @@ Export-Package:\
 	!content,\
 	!custom-sql,\
 	!ehcache,\
-	!intermap.txt,\
 	!jamwiki-configuration.xml,\
 	!license,\
 	!license.html,\

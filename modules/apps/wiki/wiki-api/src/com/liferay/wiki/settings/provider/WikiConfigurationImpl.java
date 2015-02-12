@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.wiki", immediate = true,
 	service = WikiConfiguration.class
 )
-public class WikiConfigurationProvider implements WikiConfiguration {
+public class WikiConfigurationImpl implements WikiConfiguration {
 
 	public String defaultFormat() {
 		return _wikiConfiguration.defaultFormat();

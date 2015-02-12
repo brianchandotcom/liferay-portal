@@ -32,7 +32,10 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.BaseDDMServiceTestCase;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
+import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
 
 import java.io.Serializable;
 
@@ -456,8 +459,14 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 			StorageAdapter storageAdapter, long ddmStructureId, Fields fields)
 		throws Exception {
 
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStructureId);
+
+		DDMFormValues ddmFormValues =
+			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
+
 		return storageAdapter.create(
-			TestPropsValues.getCompanyId(), ddmStructureId, fields,
+			TestPropsValues.getCompanyId(), ddmStructureId, ddmFormValues,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
@@ -506,7 +515,14 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		long classPK = create(_jsonStorageAdapater, ddmStructureId, fields);
 
-		Fields actualFields = _jsonStorageAdapater.getFields(classPK);
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStructureId);
+
+		DDMFormValues actualDDMFormValues =
+			_jsonStorageAdapater.getDDMFormValues(classPK);
+
+		Fields actualFields = DDMFormValuesToFieldsConverterUtil.convert(
+			ddmStructure, actualDDMFormValues);
 
 		Assert.assertEquals(
 			expectedFieldsString, jsonSerializer.serializeDeep(actualFields));

@@ -397,6 +397,18 @@ public class ListUtil {
 		return list;
 	}
 
+	public static <T, A> List<A> toList(
+		Collection<T> list, Function<T, A> function) {
+
+		List<A> aList = new ArrayList<>(list.size());
+
+		for (T t : list) {
+			aList.add(function.apply(t));
+		}
+
+		return aList;
+	}
+
 	public static List<Double> toList(double[] array) {
 		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<>();

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -26,7 +28,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsConstants;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTestCase;
 
 import org.junit.ClassRule;
@@ -48,7 +49,14 @@ public class BlogsSubscriptionLocalizedContentTest
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		BlogsEntry entry =
+			BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), "Title", "Content",
+				serviceContext);
 
 		return entry.getEntryId();
 	}
@@ -83,15 +91,16 @@ public class BlogsSubscriptionLocalizedContentTest
 
 	@Override
 	protected void updateBaseModel(long baseModelId) throws Exception {
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(baseModelId);
-
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
 		serviceContext.setAttribute("sendEmailEntryUpdated", true);
 
-		BlogsTestUtil.updateEntry(
-			entry, RandomTestUtil.randomString(), true, serviceContext);
+		BlogsEntryLocalServiceUtil.updateEntry(
+			TestPropsValues.getUserId(), baseModelId,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 }

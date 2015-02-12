@@ -31,7 +31,7 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -89,9 +89,10 @@ public class AssetCategoryLocalServiceTest {
 		serviceContext.setAssetCategoryIds(
 			new long[] {assetCategory.getCategoryId()});
 
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
-			serviceContext);
+		BlogsEntry blogsEntry =
+			BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		AssetTestIndexer assetTestIndexer = new AssetTestIndexer();
 

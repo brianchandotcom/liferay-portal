@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.Group;
@@ -28,7 +29,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Before;
@@ -71,8 +72,10 @@ public class AssetTagLocalServiceTest {
 
 		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
 
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), "Test", true, serviceContext);
+		BlogsEntry blogsEntry =
+				BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), "Test",
+				RandomTestUtil.randomString(), serviceContext);
 
 		AssetTestIndexer assetTestIndexer = new AssetTestIndexer();
 

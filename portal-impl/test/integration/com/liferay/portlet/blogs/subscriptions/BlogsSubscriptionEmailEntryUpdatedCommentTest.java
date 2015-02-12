@@ -15,7 +15,6 @@
 package com.liferay.portlet.blogs.subscriptions;
 
 import com.dumbster.smtp.MailMessage;
-
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
@@ -26,7 +25,9 @@ import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.MailServiceTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -40,7 +41,6 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsConstants;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -70,19 +70,25 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 	@Test
 	public void testEmailEntryUpdatedNotSentIfNotSpecified() throws Exception {
-		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		BlogsEntry entry =
+			BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), "Title", "Content",
+				serviceContext);
 
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
-
 		serviceContext.setAttribute(
 			"emailEntryUpdatedComment", "This entry was updated.");
 
-		BlogsTestUtil.updateEntry(
-			entry, StringUtil.randomString(), true, serviceContext);
+		BlogsEntryLocalServiceUtil.updateEntry(
+			TestPropsValues.getUserId(), entry.getEntryId(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			serviceContext);
 
 		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 	}
@@ -93,21 +99,27 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 		setUpBlogsSettings();
 
-		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		BlogsEntry entry =
+			BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), "Title", "Content",
+				serviceContext);
 
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
 
 		serviceContext.setAttribute(
 			"emailEntryUpdatedComment", "This entry was updated.");
 		serviceContext.setAttribute(
 			"sendEmailEntryUpdated", Boolean.TRUE.toString());
 
-		BlogsTestUtil.updateEntry(
-			entry, StringUtil.randomString(), true, serviceContext);
+		BlogsEntryLocalServiceUtil.updateEntry(
+			TestPropsValues.getUserId(), entry.getEntryId(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			serviceContext);
 
 		MailMessage message = MailServiceTestUtil.getLastMailMessage();
 
@@ -120,19 +132,25 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 
 		setUpBlogsSettings();
 
-		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		BlogsEntry entry =
+			BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), "Title", "Content",
+				serviceContext);
 
 		BlogsEntryLocalServiceUtil.subscribe(
 			_user.getUserId(), _group.getGroupId());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
-
 		serviceContext.setAttribute(
 			"sendEmailEntryUpdated", Boolean.TRUE.toString());
 
-		BlogsTestUtil.updateEntry(
-			entry, StringUtil.randomString(), true, serviceContext);
+		BlogsEntryLocalServiceUtil.updateEntry(
+			TestPropsValues.getUserId(), entry.getEntryId(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			serviceContext);
 
 		MailMessage message = MailServiceTestUtil.getLastMailMessage();
 

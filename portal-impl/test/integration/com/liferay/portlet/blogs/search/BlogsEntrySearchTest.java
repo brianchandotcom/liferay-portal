@@ -17,6 +17,7 @@ package com.liferay.portlet.blogs.search;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.search.test.BaseSearchTestCase;
@@ -156,9 +157,9 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 
 		BlogsEntry entry = (BlogsEntry)baseModel;
 
-		entry.setTitle(keywords);
-
-		return BlogsTestUtil.updateEntry(entry, keywords, true);
+		return BlogsEntryLocalServiceUtil.updateEntry(
+			serviceContext.getUserId(), entry.getEntryId(), keywords,
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -26,7 +27,6 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
 
 import org.junit.ClassRule;
@@ -48,7 +48,16 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
-		return BlogsTestUtil.addEntry(group, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		BlogsEntry entry =
+			BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), "Title", "Content",
+				serviceContext);
+
+		return entry;
 	}
 
 	@Override
@@ -67,12 +76,14 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
 		serviceContext.setAttribute("sendEmailEntryUpdated", true);
 
-		return BlogsTestUtil.updateEntry(
-			(BlogsEntry)baseModel, RandomTestUtil.randomString(), true,
+		return BlogsEntryLocalServiceUtil.updateEntry(
+			TestPropsValues.getUserId(), ((BlogsEntry)baseModel).getEntryId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 	}
 

@@ -55,7 +55,6 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -203,8 +202,10 @@ public class GroupServiceTest {
 		User user = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), group.getGroupId());
 
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
-			user.getUserId(), group, true);
+		BlogsEntry blogsEntry =
+			BlogsEntryLocalServiceUtil.addEntry(
+				user.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), serviceContext);
 
 		Assert.assertNotNull(
 			BlogsEntryLocalServiceUtil.fetchBlogsEntry(

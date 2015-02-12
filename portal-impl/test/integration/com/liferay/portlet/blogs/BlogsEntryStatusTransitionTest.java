@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -37,7 +39,6 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 
 import java.io.Serializable;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -69,7 +70,14 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 		user = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), group.getGroupId());
 
-		entry = BlogsTestUtil.addEntry(user.getUserId(), group, false);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		entry =
+			BlogsTestUtil.addEntry(
+				user.getUserId(), RandomTestUtil.randomString(), false, false,
+				serviceContext);
 	}
 
 	@Test

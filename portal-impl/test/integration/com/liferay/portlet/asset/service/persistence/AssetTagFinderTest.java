@@ -42,7 +42,7 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -219,13 +219,13 @@ public class AssetTagFinderTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+			ServiceContextTestUtil.getServiceContext(groupId,TestPropsValues.getUserId());
 
 		serviceContext.setAssetTagNames(new String[] {assetTagName});
 
-		BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
-			serviceContext);
+		BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), serviceContext);
 	}
 
 	protected Group addScopeGroup() throws Exception {

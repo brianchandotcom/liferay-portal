@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.lar.test.BasePortletExportImportTestCase;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
@@ -30,7 +29,6 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 
 import java.util.Date;
 import java.util.Map;
@@ -63,9 +61,16 @@ public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {
-		return BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
-			true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
+
+		BlogsEntry entry =
+			BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		return entry;
 	}
 
 	@Override
@@ -73,16 +78,17 @@ public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId());
 
-		serviceContext.setCommand(Constants.ADD);
 		serviceContext.setCreateDate(createdDate);
-		serviceContext.setLayoutFullURL("http://localhost");
 		serviceContext.setModifiedDate(createdDate);
 
-		return BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
-			serviceContext);
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		return entry;
 	}
 
 	@Override

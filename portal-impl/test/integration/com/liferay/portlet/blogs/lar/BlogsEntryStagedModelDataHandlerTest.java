@@ -16,9 +16,13 @@ package com.liferay.portlet.blogs.lar;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -45,13 +49,32 @@ public class BlogsEntryStagedModelDataHandlerTest
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			TransactionalTestRule.INSTANCE);
 
+
+	protected BlogsEntry addEntry(Group group, boolean approved)
+			throws Exception {
+
+		ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					group, TestPropsValues.getUserId());
+
+		if (approved) {
+			return BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), serviceContext);
+		}
+
+		return BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), false,
+			false, serviceContext);
+	}
+
 	@Override
 	protected StagedModel addStagedModel(
 			Group group,
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		return BlogsTestUtil.addEntry(group, true);
+		return addEntry(group, true);
 	}
 
 	@Override
@@ -60,8 +83,8 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		List<StagedModel> stagedModels = new ArrayList<>();
 
-		stagedModels.add(BlogsTestUtil.addEntry(group, true));
-		stagedModels.add(BlogsTestUtil.addEntry(group, false));
+		stagedModels.add(addEntry(group, true));
+		stagedModels.add(addEntry(group, false));
 
 		return stagedModels;
 	}

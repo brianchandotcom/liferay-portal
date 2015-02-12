@@ -48,6 +48,7 @@ import com.liferay.portlet.ratings.service.RatingsEntryServiceUtil;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -828,8 +829,17 @@ public class AssetEntryQueryTest {
 
 		threadLocalCache.removeAll();
 
+		ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId());
+
+		Date now = new Date();
+
 		for (int i = 0; i < scores.length; i++) {
-			BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
+			BlogsEntry entry =
+				BlogsEntryLocalServiceUtil.addEntry(
+					TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), now, serviceContext);
 
 			RatingsEntryServiceUtil.updateEntry(
 				BlogsEntry.class.getName(), entry.getEntryId(), scores[i]);
@@ -867,8 +877,18 @@ public class AssetEntryQueryTest {
 
 		threadLocalCache.removeAll();
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Date now = new Date();
+
 		for (int i = 0; i < viewCounts.length; i++) {
-			BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
+
+			BlogsEntry entry =
+				BlogsEntryLocalServiceUtil.addEntry(
+					TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), now, serviceContext);
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 				BlogsEntry.class.getName(), entry.getEntryId());

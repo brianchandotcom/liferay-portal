@@ -103,7 +103,7 @@
 			<var name="campaignPriorityField" value="3" />
 			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
-			<var name="userSegmentSelect" value="User Segment Name Age" />
+			<var name="userSegmentSelect" value="User Segment Name Gender" />
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#addTrackingActionPageCP">

@@ -260,8 +260,8 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 					%>
 
 					<liferay-ui:asset-metadata
-						className="<%= className %>"
-						classPK="<%= classPK %>"
+						className="<%= assetEntry.getClassName() %>"
+						classPK="<%= assetEntry.getClassPK() %>"
 						metadataFields="<%= metadataFields %>"
 					/>
 				</liferay-ui:panel>

@@ -73,16 +73,15 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
-### The `liferay-ui:logo-selector` Taglib Requires Parameter Changes
+### The `liferay-ui:logo-selector` Tag Requires Parameter Changes
 - **Date:** 2013-Dec-05
 - **JIRA Ticket:** LPS-42645
 
 #### What changed?
-The Logo Selector taglib now supports uploading an image, storing it as a
-temporary file, cropping it, and canceling edits. The taglib no longer requires
-creating a UI to include the image. Consequently, the `editLogoURL` parameter
-is no longer needed and has been removed. The taglib now uses the following
-parameters to support the new features:
+The Logo Selector tag now supports uploading an image, storing it as a temporary
+file, cropping it, and canceling before saving. The tag no longer requires
+creating a UI to include the image, which used the `editLogoURL` parameter. This
+parameter has been removed and the tag now supports the following parameters:
 
 - `currentLogoURL`: the URL to display the image being stored
 - `hasUpdateLogoPermission`: `true` if the current user can update the logo
@@ -91,8 +90,8 @@ parameters to support the new features:
 upload
 
 #### Who is affected?
-Plugins or templates that are using the `liferay-ui:logo-selector` taglib need
-to update their usage of the taglib.
+Plugins or templates that are using the `liferay-ui:logo-selector` tag need
+to update their usage of the tag.
 
 #### How should I update my code?
 You should remove the parameter `editLogoURL` and include (if neccessary) the
@@ -133,9 +132,9 @@ With:
 
 #### Why was this change made?
 This change helps keep a unified UI and consistent experience for uploading
-logos in the portal. The logos can be customized from a single location and used
-throughout the portal. In addition, the change adds new features such as image
-cropping and support for canceling image upload.
+logos in the portal that can be customized from a single location. In addition,
+it adds new features such as image cropping and support for canceling image
+upload.
 
 ---------------------------------------
 
@@ -359,12 +358,12 @@ of data.
 
 ---------------------------------------
 
-### The `aui:input` Taglib for Type `checkbox` No Longer Creates a Hidden Input
+### The `aui:input` Tag for Type `checkbox` No Longer Creates a Hidden Input
 - **Date:** 2014-Jun-16
 - **JIRA Ticket:** LPS-44228
 
 #### What changed?
-Whenever the aui:input taglib is used to generate an input of type checkbox,
+Whenever the aui:input tag is used to generate an input of type checkbox,
 only an input tag will be generated, instead of the checkbox and hidden field it
 was generating before.
 
@@ -914,22 +913,22 @@ email address, and the list of reserved email addresses.
 
 ---------------------------------------
 
-### Attribute `paginationURL` is Mandatory for Taglib `liferay-ui:discussion`
+### Attribute `paginationURL` is Mandatory for the Tag `liferay-ui:discussion`
 - **Date:** 2015-Feb-05
 - **JIRA Ticket:** LPS-53313
 
 #### What changed?
 
-The `liferay-ui:discussion` taglib contains the new `paginationURL` attribute,
+The `liferay-ui:discussion` tag contains the new `paginationURL` attribute,
 which is required.
 
 #### Who is affected?
 
-This affects all developers who were using this taglib in their plugins.
+This affects all developers who were using this tag in their plugins.
 
 #### How should I update my code?
 
-You should include the new attribute `paginationURL` in the taglib. This
+You should include the new attribute `paginationURL` in the tag. This
 attribute is a URL that returns an HTML fragment containing the next comments
 for portlets such as Asset Publisher, Blogs, Document Library, etc.
 

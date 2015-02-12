@@ -29,7 +29,7 @@ birthdayCalendar.set(Calendar.DATE, 1);
 birthdayCalendar.set(Calendar.YEAR, 1970);
 %>
 
-<portlet:actionURL secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccountURL">
+<portlet:actionURL secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccountURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
 	<portlet:param name="struts_action" value="/login/create_account" />
 </portlet:actionURL>
 
@@ -132,17 +132,44 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 
 	<aui:fieldset column="<%= true %>">
 		<aui:col width="<%= 50 %>">
-			<%@ include file="/html/portlet/login/create_account_user_name.jspf" %>
 
-			<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) %>">
-				<aui:input model="<%= User.class %>" name="screenName" />
+			<%
+			Boolean autoGenerateScreenName = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE);
+			%>
+
+			<c:if test="<%= !autoGenerateScreenName %>">
+				<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="screenName" />
 			</c:if>
 
-			<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="emailAddress">
+			<aui:input autoFocus="<%= autoGenerateScreenName %>" model="<%= User.class %>" name="emailAddress">
 				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
 					<aui:validator name="required" />
 				</c:if>
 			</aui:input>
+
+			<%
+			User selUser = null;
+			Contact selContact = null;
+
+			Locale userLocale = null;
+
+			String languageId = request.getParameter("languageId");
+
+			if (Validator.isNotNull(languageId)) {
+				userLocale = LocaleUtil.fromLanguageId(languageId);
+			}
+			else {
+				User defaultUser = company.getDefaultUser();
+
+				userLocale = LocaleUtil.fromLanguageId(defaultUser.getLanguageId());
+			}
+
+			String detailsLanguageStrutsAction = "/login/create_account";
+			%>
+
+			<%@ include file="/html/portlet/users_admin/user/details_language.jspf" %>
+
+			<%@ include file="/html/portlet/users_admin/user/details_user_name.jspf" %>
 		</aui:col>
 
 		<aui:col width="<%= 50 %>">

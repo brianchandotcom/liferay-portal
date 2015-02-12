@@ -364,11 +364,11 @@ AUI.add(
 
 							var structureField;
 
-							label = A.Escape.html(label);
-
 							if (required) {
 								label += ' (' + Liferay.Language.get('required') + ')';
 							}
+
+							label = A.Escape.html(label);
 
 							item.label = label;
 

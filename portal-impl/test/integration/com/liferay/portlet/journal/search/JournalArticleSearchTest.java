@@ -80,6 +80,24 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	public BaseModel<?> addBaseModel(
+			BaseModel<?> parentBaseModel, String keywords,
+			DDMStructure ddmStructure, DDMTemplate ddmTemplate,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		_ddmStructure = ddmStructure;
+
+		JournalFolder folder = (JournalFolder)parentBaseModel;
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			"name", keywords);
+
+		return JournalTestUtil.addArticleWithXMLContent(
+			folder.getFolderId(), content, ddmStructure.getStructureKey(),
+			ddmTemplate.getTemplateKey(), serviceContext);
+	}
+
 	@Test
 	public void testMatchNotOnlyCompanyIdButAlsoQueryTerms() throws Exception {
 		SearchContext searchContext = new SearchContext();
@@ -105,24 +123,19 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JournalFolder folder = (JournalFolder)parentBaseModel;
-
 		String definition = DDMStructureTestUtil.getSampleStructureDefinition(
 			"name");
 
-		_ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			serviceContext.getScopeGroupId(), JournalArticle.class.getName(),
 			definition);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			serviceContext.getScopeGroupId(), _ddmStructure.getStructureId());
+			serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent(
-			"name", getSearchKeywords());
-
-		return JournalTestUtil.addArticleWithXMLContent(
-			folder.getFolderId(), content, _ddmStructure.getStructureKey(),
-			ddmTemplate.getTemplateKey(), serviceContext);
+		return addBaseModel(
+			parentBaseModel, keywords, ddmStructure, ddmTemplate,
+			serviceContext);
 	}
 
 	@Override

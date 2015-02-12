@@ -82,6 +82,48 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	public BaseModel<?> addBaseModel(
+			String keywords, DDMStructure ddmStructure,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		_ddmStructure = ddmStructure;
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+				"Structure", StringPool.BLANK,
+				new long[] {ddmStructure.getStructureId()}, serviceContext);
+
+		String content = "Content: Enterprise. Open Source. For Life.";
+
+		Fields fields = new Fields();
+
+		Field textField = new Field(
+			ddmStructure.getStructureId(), "name", keywords);
+
+		textField.setDefaultLocale(LocaleUtil.US);
+
+		fields.put(textField);
+
+		DDMFormValues ddmFormValues =
+			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
+
+		serviceContext.setAttribute(
+			"fileEntryTypeId",dlFileEntryType.getFileEntryTypeId());
+		serviceContext.setAttribute(
+			DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+			ddmFormValues);
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt",
+			ContentTypes.TEXT_PLAIN, "Title", content.getBytes(),
+			WorkflowConstants.ACTION_PUBLISH, serviceContext);
+
+		return (DLFileEntry)fileEntry.getModel();
+	}
+
 	@Ignore()
 	@Override
 	@Test
@@ -143,43 +185,11 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		String definition = DDMStructureTestUtil.getSampleStructureDefinition(
 			"name");
 
-		_ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			serviceContext.getScopeGroupId(), DLFileEntry.class.getName(),
 			definition);
 
-		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-				"Structure", StringPool.BLANK,
-				new long[] {_ddmStructure.getStructureId()}, serviceContext);
-
-		String content = "Content: Enterprise. Open Source. For Life.";
-
-		Fields fields = new Fields();
-
-		Field textField = new Field(
-			_ddmStructure.getStructureId(), "name", getSearchKeywords());
-
-		textField.setDefaultLocale(LocaleUtil.US);
-
-		fields.put(textField);
-
-		DDMFormValues ddmFormValues =
-			FieldsToDDMFormValuesConverterUtil.convert(_ddmStructure, fields);
-
-		serviceContext.setAttribute(
-			"fileEntryTypeId",dlFileEntryType.getFileEntryTypeId());
-		serviceContext.setAttribute(
-			DDMFormValues.class.getName() + _ddmStructure.getStructureId(),
-			ddmFormValues);
-
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt",
-			ContentTypes.TEXT_PLAIN, "Title", content.getBytes(),
-			WorkflowConstants.ACTION_PUBLISH, serviceContext);
-
-		return (DLFileEntry)fileEntry.getModel();
+		return addBaseModel(keywords, ddmStructure, serviceContext);
 	}
 
 	@Override

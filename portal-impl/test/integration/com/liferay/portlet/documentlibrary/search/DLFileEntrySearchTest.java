@@ -35,10 +35,12 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.search.test.BaseSearchTestCase;
+import com.liferay.portal.search.test.OrderTestHelper;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -51,6 +53,7 @@ import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
@@ -73,7 +76,8 @@ import org.junit.Test;
  * @author Eudaldo Alonso
  */
 @Sync
-public class DLFileEntrySearchTest extends BaseSearchTestCase {
+public class DLFileEntrySearchTest extends BaseSearchTestCase
+	implements OrderTestHelper.TestCase {
 
 	@ClassRule
 	@Rule
@@ -82,8 +86,10 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Override
 	public BaseModel<?> addBaseModel(
-			String keywords, DDMStructure ddmStructure,
+			BaseModel<?> parentBaseModel, String keywords,
+			DDMStructure ddmStructure, DDMTemplate ddmTemplate,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -110,18 +116,40 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
 
 		serviceContext.setAttribute(
-			"fileEntryTypeId",dlFileEntryType.getFileEntryTypeId());
+			"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
 		serviceContext.setAttribute(
 			DDMFormValues.class.getName() + ddmStructure.getStructureId(),
 			ddmFormValues);
 
+		long repositoryId = serviceContext.getScopeGroupId();
+		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		String sourceFileName = "Text.txt";
+		String mimeType = ContentTypes.TEXT_PLAIN;
+		String title = RandomTestUtil.randomString();
+		byte[] bytes = content.getBytes();
+		int workflowAction = WorkflowConstants.ACTION_PUBLISH;
+
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt",
-			ContentTypes.TEXT_PLAIN, "Title", content.getBytes(),
-			WorkflowConstants.ACTION_PUBLISH, serviceContext);
+			repositoryId, folderId, sourceFileName, mimeType, title, bytes,
+			workflowAction, serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
+	}
+
+	@Override
+	public String getAssetEntryQueryOrderByCol1() {
+		return DDMIndexerUtil.encodeName(
+			_ddmStructure.getStructureId(), "name");
+	}
+
+	@Override
+	public String getBaseModelClassName() {
+		return super.getBaseModelClassName();
+	}
+
+	@Override
+	public String getBaseModelStructureClassName() {
+		return DLFileEntryMetadata.class.getName();
 	}
 
 	@Override
@@ -141,6 +169,37 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	@Override
 	@Test
 	public void testLocalizedSearch() throws Exception {
+	}
+
+	@Ignore
+	@Test
+	public void testOrderByDDMBooleanField() throws Exception {
+		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
+
+		orderTestHelper.testOrderByDDMBooleanField();
+	}
+
+	@Test
+	public void testOrderByDDMIntegerField() throws Exception {
+		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
+
+		orderTestHelper.testOrderByDDMIntegerField();
+	}
+
+	@Ignore
+	@Test
+	public void testOrderByDDMNumberField() throws Exception {
+		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
+
+		orderTestHelper.testOrderByDDMNumberField();
+	}
+
+	@Ignore
+	@Test
+	public void testOrderByDDMTextField() throws Exception {
+		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
+
+		orderTestHelper.testOrderByDDMTextField();
 	}
 
 	@Ignore()
@@ -202,7 +261,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			serviceContext.getScopeGroupId(), DLFileEntry.class.getName(),
 			definition);
 
-		return addBaseModel(keywords, ddmStructure, serviceContext);
+		return addBaseModel(null, keywords, ddmStructure, null, serviceContext);
 	}
 
 	@Override

@@ -32,6 +32,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.search.test.BaseSearchTestCase;
+import com.liferay.portal.search.test.OrderTestHelper;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -71,7 +72,8 @@ import org.junit.Test;
  * @author Tibor Lipusz
  */
 @Sync
-public class JournalArticleSearchTest extends BaseSearchTestCase {
+public class JournalArticleSearchTest extends BaseSearchTestCase
+	implements OrderTestHelper.TestCase {
 
 	@ClassRule
 	@Rule
@@ -80,6 +82,7 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Override
 	public BaseModel<?> addBaseModel(
 			BaseModel<?> parentBaseModel, String keywords,
 			DDMStructure ddmStructure, DDMTemplate ddmTemplate,
@@ -96,6 +99,22 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		return JournalTestUtil.addArticleWithXMLContent(
 			folder.getFolderId(), content, ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey(), serviceContext);
+	}
+
+	@Override
+	public String getAssetEntryQueryOrderByCol1() {
+		return DDMIndexerUtil.encodeName(
+			_ddmStructure.getStructureId(), "name");
+	}
+
+	@Override
+	public String getBaseModelClassName() {
+		return super.getBaseModelClassName();
+	}
+
+	@Override
+	public String getBaseModelStructureClassName() {
+		return getBaseModelClassName();
 	}
 
 	@Override
@@ -119,6 +138,37 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		query.addTerm("title", RandomTestUtil.randomString());
 
 		assertEquals(0, query, searchContext);
+	}
+
+	@Ignore
+	@Test
+	public void testOrderByDDMBooleanField() throws Exception {
+		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
+
+		orderTestHelper.testOrderByDDMBooleanField();
+	}
+
+	@Test
+	public void testOrderByDDMIntegerField() throws Exception {
+		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
+
+		orderTestHelper.testOrderByDDMIntegerField();
+	}
+
+	@Ignore
+	@Test
+	public void testOrderByDDMNumberField() throws Exception {
+		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
+
+		orderTestHelper.testOrderByDDMNumberField();
+	}
+
+	@Ignore
+	@Test
+	public void testOrderByDDMTextField() throws Exception {
+		OrderTestHelper orderTestHelper = new OrderTestHelper(group, this);
+
+		orderTestHelper.testOrderByDDMTextField();
 	}
 
 	@Ignore()

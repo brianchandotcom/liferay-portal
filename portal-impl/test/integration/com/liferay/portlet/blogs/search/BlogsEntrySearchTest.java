@@ -124,8 +124,9 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), keywords, approved, serviceContext);
+		return BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), keywords, approved, false,
+			serviceContext);
 	}
 
 	@Override

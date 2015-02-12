@@ -63,7 +63,7 @@ public class BlogsEntryStagedModelDataHandlerTest
 				RandomTestUtil.randomString(), serviceContext);
 		}
 
-		return BlogsTestUtil.addEntry(
+		return BlogsTestUtil.addEntryWithWorkflow(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(), false,
 			false, serviceContext);
 	}

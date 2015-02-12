@@ -909,8 +909,8 @@ A new pattern has been defined for exceptions. This pattern requires using
 higher expressivity in exception names and requires that each exception provide
 more information regarding why it was thrown.
 
-Each new exception provides context and has all the necessary information about
-why the exception was thrown. For example, the
+Each new exception provides its context and has all the necessary information
+about why the exception was thrown. For example, the
 `UserEmailAddressException.MustNotBeReserved` exception contains the problematic
 email address and the list of reserved email addresses.
 
@@ -972,9 +972,10 @@ catching exception `UserIdException.MustNotBeReserved`.
 A new pattern has been defined for exceptions that provides higher expressivity
 in their names and also more information regarding why the exception was thrown.
 
-The new exception `UserIdException.MustNotBeReserved` has all the necessary
-information about why the exception was thrown and its context. In particular,
-it contains the problematic user ID and the list of reserved user IDs.
+The new exception `UserIdException.MustNotBeReserved` provides its context and
+has all the necessary information about why the exception was thrown. In
+particular, it contains the problematic user ID and the list of reserved user
+IDs.
 
 ------------------------------------------------------------------------------
 

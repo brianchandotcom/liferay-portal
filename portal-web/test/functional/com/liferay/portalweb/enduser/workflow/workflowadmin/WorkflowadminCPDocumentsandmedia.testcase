@@ -47,7 +47,7 @@
 		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
 	</command>
 
-	<command name="ApproveDMDocumentCP" priority="5">
+	<command known-issues="LPS-53334" name="ApproveDMDocumentCP" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -104,7 +104,7 @@
 		</execute>
 	</command>
 
-	<command name="ApproveInDMFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="4">
+	<command known-issues="LPS-53334" name="ApproveInDMFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -431,7 +431,7 @@
 		</execute>
 	</command>
 
-	<command name="ApproveInDMFolderWithParentFolderSingleApproverWorkflowCP" priority="4">
+	<command known-issues="LPS-53334" name="ApproveInDMFolderWithParentFolderSingleApproverWorkflowCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -572,7 +572,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectDMDocumentCP" priority="5">
+	<command known-issues="LPS-53334" name="RejectDMDocumentCP" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -635,7 +635,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectInDMFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="4">
+	<command known-issues="LPS-53334" name="RejectInDMFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -982,7 +982,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectInDMFolderWithParentFolderSingleApproverWorkflowCP" priority="4">
+	<command known-issues="LPS-53334" name="RejectInDMFolderWithParentFolderSingleApproverWorkflowCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>

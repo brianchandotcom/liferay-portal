@@ -8,7 +8,7 @@
 
 	<macrodef name="build-libsass">
 		<attribute name="libsass.lib.file" />
-		<attribute name="libsass.make.file" />
+		<attribute name="libsass.make.exe" />
 		<attribute name="libsass.resources.dir" />
 
 		<sequential>
@@ -35,7 +35,7 @@
 			/>
 
 			<exec
-				command="@{libsass.make.file} shared"
+				command="@{libsass.make.exe} shared"
 				dir="tmp/libsass-3.1.0"
 			/>
 
@@ -52,7 +52,7 @@
 	<target name="build-libsass-darwin">
 		<build-libsass
 			libsass.lib.file="libsass.dylib"
-			libsass.make.file="make"
+			libsass.make.exe="make"
 			libsass.resources.dir="darwin"
 		/>
 	</target>
@@ -60,7 +60,7 @@
 	<target name="build-libsass-linux-x86">
 		<build-libsass
 			libsass.lib.file="libsass.so"
-			libsass.make.file="make"
+			libsass.make.exe="make"
 			libsass.resources.dir="linux-x86"
 		/>
 	</target>
@@ -68,7 +68,7 @@
 	<target name="build-libsass-linux-x86-64">
 		<build-libsass
 			libsass.lib.file="libsass.so"
-			libsass.make.file="make"
+			libsass.make.exe="make"
 			libsass.resources.dir="linux-x86-64"
 		/>
 	</target>
@@ -76,7 +76,7 @@
 	<target name="build-libsass-win32-x86">
 		<build-libsass
 			libsass.lib.file="sass.dll"
-			libsass.make.file="mingw32-make.exe"
+			libsass.make.exe="mingw32-make.exe"
 			libsass.resources.dir="win32-x86"
 		/>
 	</target>
@@ -84,7 +84,7 @@
 	<target name="build-libsass-win32-x86-64">
 		<build-libsass
 			libsass.lib.file="sass.dll"
-			libsass.make.file="mingw32-make.exe"
+			libsass.make.exe="mingw32-make.exe"
 			libsass.resources.dir="win32-x86-64"
 		/>
 	</target>

@@ -609,7 +609,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	protected void setUpSAXReaderUtil() {
 		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
-		saxReaderUtil.setSecureSAXReader(SAXReaderImpl.getInstance());
+		saxReaderUtil.setSecureSAXReader(new SAXReaderImpl());
 	}
 
 	protected void whenLanguageGet(

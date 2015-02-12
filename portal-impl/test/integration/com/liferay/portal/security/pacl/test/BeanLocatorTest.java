@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.test.rule.PACLTestRule;
 
@@ -171,7 +172,7 @@ public class BeanLocatorTest {
 	@Test
 	public void testPortal5() throws Exception {
 		try {
-			PortalBeanLocatorUtil.locate(SAXReader.class.getName());
+			PortalBeanLocatorUtil.locate(SAXReaderUtil.class.getName());
 		}
 		catch (SecurityException se) {
 			Assert.fail();

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xml.SAXReaderImpl;
@@ -206,7 +207,7 @@ public class PluginsEnvironmentBuilder {
 				".xml";
 
 		if (_fileUtil.exists(ivyFileName)) {
-			Document document = _saxReaderUtil.read(new File(ivyFileName));
+			Document document = _saxReader.read(new File(ivyFileName));
 
 			Element rootElement = document.getRootElement();
 
@@ -287,7 +288,7 @@ public class PluginsEnvironmentBuilder {
 			StringBundler sb, String content, String ivyDirName)
 		throws Exception {
 
-		Document document = _saxReaderUtil.read(content);
+		Document document = _saxReader.read(content);
 
 		Element rootElement = document.getRootElement();
 
@@ -886,7 +887,6 @@ public class PluginsEnvironmentBuilder {
 	private static final String[] _TEST_TYPES = {"integration", "unit"};
 
 	private static final FileImpl _fileUtil = FileImpl.getInstance();
-	private static final SAXReaderImpl _saxReaderUtil =
-		SAXReaderImpl.getInstance();
+	private static final SAXReader _saxReader = new SAXReaderImpl();
 
 }

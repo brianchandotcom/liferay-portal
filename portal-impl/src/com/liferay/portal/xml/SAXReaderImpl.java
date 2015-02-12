@@ -57,26 +57,6 @@ import org.dom4j.DocumentFactory;
 @DoPrivileged
 public class SAXReaderImpl implements SAXReader {
 
-	public static SAXReaderImpl getInstance() {
-		if (_instance != null) {
-			return _instance;
-		}
-
-		synchronized (SAXReaderImpl.class) {
-			if (_instance != null) {
-				return _instance;
-			}
-
-			_instance = new SAXReaderImpl();
-
-			_instance.setSecure(false);
-			_instance.setSecureXMLFactoryProvider(
-				new SecureXMLFactoryProviderImpl());
-		}
-
-		return _instance;
-	}
-
 	public static List<Attribute> toNewAttributes(
 		List<org.dom4j.Attribute> oldAttributes) {
 
@@ -664,11 +644,10 @@ public class SAXReaderImpl implements SAXReader {
 
 	private static final Log _log = LogFactoryUtil.getLog(SAXReaderImpl.class);
 
-	private static SAXReaderImpl _instance;
-
 	private final DocumentFactory _documentFactory =
 		DocumentFactory.getInstance();
 	private boolean _secure;
-	private SecureXMLFactoryProvider _secureXMLFactoryProvider;
+	private SecureXMLFactoryProvider _secureXMLFactoryProvider =
+		new SecureXMLFactoryProviderImpl();
 
 }

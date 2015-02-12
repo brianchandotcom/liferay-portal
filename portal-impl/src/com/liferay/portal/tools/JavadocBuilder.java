@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
 import com.liferay.util.xml.DocUtil;
@@ -390,9 +391,9 @@ public class JavadocBuilder {
 	}
 
 	private String _getJavadocXml(JavaClass javaClass) throws Exception {
-		Element rootElement = _saxReaderUtil.createElement("javadoc");
+		Element rootElement = _saxReader.createElement("javadoc");
 
-		Document document = _saxReaderUtil.createDocument(rootElement);
+		Document document = _saxReader.createDocument(rootElement);
 
 		DocUtil.add(rootElement, "name", javaClass.getName());
 		DocUtil.add(rootElement, "type", javaClass.getFullyQualifiedName());
@@ -775,7 +776,7 @@ public class JavadocBuilder {
 		JavaClass javaClass = _getJavaClass(
 			fileName, new UnsyncStringReader(oldContent));
 
-		Document document = _saxReaderUtil.read(javadocFile);
+		Document document = _saxReader.read(javadocFile);
 
 		Element rootElement = document.getRootElement();
 
@@ -855,7 +856,6 @@ public class JavadocBuilder {
 	private static final String _BASEDIR = "./";
 
 	private static final FileImpl _fileUtil = FileImpl.getInstance();
-	private static final SAXReaderImpl _saxReaderUtil =
-		SAXReaderImpl.getInstance();
+	private static final SAXReader _saxReader = new SAXReaderImpl();
 
 }

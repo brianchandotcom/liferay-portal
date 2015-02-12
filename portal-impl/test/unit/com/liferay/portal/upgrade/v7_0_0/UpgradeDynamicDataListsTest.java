@@ -236,7 +236,7 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 	protected void setUpSAXReaderUtil() {
 		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
-		saxReaderUtil.setSecureSAXReader(SAXReaderImpl.getInstance());
+		saxReaderUtil.setSecureSAXReader(new SAXReaderImpl());
 	}
 
 	protected void setUpSecureXMLFactoryProviderUtil() {

@@ -54,7 +54,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 	public Map<String, Object> getCustomContextObjects() {
 		Map<String, Object> contextObjects = new HashMap<String, Object>(1);
 
-		contextObjects.put("assetPublisherHelper", AssetPublisherHelper.class);
+		contextObjects.put("assetPublisherHelper", new AssetPublisherHelper());
 
 		return contextObjects;
 	}

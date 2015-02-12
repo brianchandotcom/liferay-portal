@@ -897,20 +897,22 @@ This affects developers who have written code that catches the
 
 #### How should I update my code?
 
-You should replace catching exception `ReservedUserEmailAddressException` with
-catching exception `UserEmailAddressException.MustNotUseCompanyMx`,
+Depending on the method you're calling and the context in which you're calling
+it, you should replace catching exception `ReservedUserEmailAddressException`
+with catching exception `UserEmailAddressException.MustNotUseCompanyMx`,
 `UserEmailAddressException.MustNotBePOP3User`, or
-`UserEmailAddressException.MustNotBeReserved`, depending on the context.
+`UserEmailAddressException.MustNotBeReserved`.
 
 #### Why was this change made?
 
-A new pattern has been defined for exceptions that provides higher expressivity
-in their names and also more information regarding why the exception was thrown.
+A new pattern has been defined for exceptions. This pattern requires using
+higher expressivity in exception names and requires that each exception provide
+more information regarding why it was thrown.
 
-Each new exception has all the necessary information about why the exception was
-thrown and its context. For example, the
+Each new exception provides context and has all the necessary information about
+why the exception was thrown. For example, the
 `UserEmailAddressException.MustNotBeReserved` exception contains the problematic
-email address, and the list of reserved email addresses.
+email address and the list of reserved email addresses.
 
 ---------------------------------------
 

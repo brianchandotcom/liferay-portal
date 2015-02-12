@@ -1299,6 +1299,12 @@ public class PortletImpl extends PortletBaseImpl {
 	public PortletDataHandler getPortletDataHandlerInstance() {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
+		if (portletBag == null) {
+			_log.error("No portlet bag for " + toString());
+
+			throw new IllegalStateException("No portlet bag for " + toString());
+		}
+
 		List<PortletDataHandler> portletDataHandlerInstances =
 			portletBag.getPortletDataHandlerInstances();
 

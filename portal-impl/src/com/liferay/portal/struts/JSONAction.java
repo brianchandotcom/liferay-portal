@@ -79,6 +79,7 @@ public abstract class JSONAction extends Action {
 
 			if (Validator.isNotNull(callback)) {
 				StringBundler sb = new StringBundler(5);
+
 				sb.append("/**/");
 				sb.append(callback);
 				sb.append(StringPool.OPEN_PARENTHESIS);

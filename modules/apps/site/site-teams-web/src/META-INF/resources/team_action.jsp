@@ -52,9 +52,9 @@ Team team = (Team)row.getObject();
 		%>
 
 		<liferay-security:permissionsURL
-			modelResource="<%= Role.class.getName() %>"
+			modelResource="<%= Team.class.getName() %>"
 			modelResourceDescription="<%= team.getName() %>"
-			resourcePrimKey="<%= String.valueOf(role.getRoleId()) %>"
+			resourcePrimKey="<%= String.valueOf(team.getTeamId()) %>"
 			roleTypes="<%= roleTypes %>"
 			var="permissionsURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"

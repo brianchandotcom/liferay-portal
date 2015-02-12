@@ -71,7 +71,7 @@
 <!--CAMPAIGN_TABLE-->
 <tr>
 	<td>CAMPAIGN_TABLE_CHECKBOX_ALL</td>
-	<td>//th[contains(@id,'campaigns')]/input[@title='Select All']</td>
+	<td>//th[contains(@id,'campaigns')]/input[@title='Select All'] | //th[contains(@id,'campaigns')]/input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -138,7 +138,7 @@
 <!--USER_SEGMENT_TABLE-->
 <tr>
 	<td>USER_SEGMENT_TABLE_CHECKBOX_ALL</td>
-	<td>//th[contains(@id,'userSegments')]/input[@title='Select All']</td>
+	<td>//th[contains(@id,'userSegments')]/input[@title='Select All'] | //th[contains(@id,'userSegments')]/input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

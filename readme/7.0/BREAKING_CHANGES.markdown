@@ -79,10 +79,10 @@ in ascending chronological order.
 
 #### What changed?
 The Logo Selector taglib now supports uploading an image, storing it as a
-temporary file, cropping it, and canceling before saving. The taglib no longer
-requires creating a UI to include the image, which used the `editLogoURL`
-parameter. This parameter has been removed and the taglib now supports the
-following parameters:
+temporary file, cropping it, and canceling edits. The taglib no longer requires
+creating a UI to include the image. Consequently, the `editLogoURL` parameter
+is no longer needed and has been removed. The taglib now uses the following
+parameters to support the new features:
 
 - `currentLogoURL`: the URL to display the image being stored
 - `hasUpdateLogoPermission`: `true` if the current user can update the logo
@@ -133,9 +133,9 @@ With:
 
 #### Why was this change made?
 This change helps keep a unified UI and consistent experience for uploading
-logos in the portal that can be customized from a single location. In addition,
-it adds new features such as image cropping and support for canceling image
-upload.
+logos in the portal. The logos can be customized from a single location and used
+throughout the portal. In addition, the change adds new features such as image
+cropping and support for canceling image upload.
 
 ---------------------------------------
 

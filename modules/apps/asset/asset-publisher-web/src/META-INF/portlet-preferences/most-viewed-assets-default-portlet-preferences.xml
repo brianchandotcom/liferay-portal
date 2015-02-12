@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<portlet-preferences>
+	<preference>
+		<name>orderByColumn1</name>
+		<value>viewCount</value>
+	</preference>
+	<preference>
+		<name>orderByType1</name>
+		<value>DESC</value>
+	</preference>
+</portlet-preferences>

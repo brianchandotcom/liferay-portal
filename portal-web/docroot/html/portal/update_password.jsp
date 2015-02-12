@@ -40,7 +40,7 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 		<div class="alert alert-danger">
 
 			<%
-			UserLockoutException.PasswordPolicyLockout ule = (UserLockoutException.PasswordPolicyLockout)errorException;
+			UserLockoutException.PasswordPolicyLockout ule = (UserLockoutException.PasswordPolicyLockout)SessionErrors.get(request, UserLockoutException.PasswordPolicyLockout.class.getName());
 			%>
 
 			<liferay-ui:message arguments="<%= ule.getUnlockDate() %>" key="this-account-has-been-locked-until-x" translateArguments="<%= false %>" />

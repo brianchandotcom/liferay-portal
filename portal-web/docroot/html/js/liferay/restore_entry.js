@@ -79,6 +79,7 @@ AUI.add(
 								{
 									duplicateEntryId: responseData.duplicateEntryId,
 									oldName: responseData.oldName,
+									overridable: responseData.overridable,
 									overrideMessage: instance.get('overrideMessage'),
 									renameMessage: instance.get('renameMessage'),
 									trashEntryId: responseData.trashEntryId

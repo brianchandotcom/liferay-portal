@@ -55,6 +55,7 @@ public class ActionUtil {
 		catch (RestoreEntryException ree) {
 			jsonObject.put("duplicateEntryId", ree.getDuplicateEntryId());
 			jsonObject.put("oldName", ree.getOldName());
+			jsonObject.put("overridable", ree.isOverridable());
 			jsonObject.put("success", false);
 			jsonObject.put("trashEntryId", ree.getTrashEntryId());
 		}

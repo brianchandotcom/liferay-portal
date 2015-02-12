@@ -42,6 +42,7 @@ if (entry != null) {
 
 String duplicateEntryId = ParamUtil.getString(request, "duplicateEntryId");
 String oldName = ParamUtil.getString(request, "oldName");
+boolean overridable = ParamUtil.getBoolean(request, "overridable");
 
 String overrideMessage = ParamUtil.getString(request, "overrideMessage");
 String renameMessage = ParamUtil.getString(request, "renameMessage");
@@ -62,11 +63,18 @@ String renameMessage = ParamUtil.getString(request, "renameMessage");
 	<aui:input name="oldName" type="hidden" value="<%= oldName %>" />
 
 	<aui:fieldset>
-		<aui:input checked="<%= true %>" id="override" label="<%= HtmlUtil.escape(overrideMessage) %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
+		<c:choose>
+			<c:when test="<%= overridable %>">
+				<aui:input checked="<%= true %>" id="override" label="<%= HtmlUtil.escape(overrideMessage) %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
 
-		<aui:input id="rename" label="<%= HtmlUtil.escape(renameMessage) %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
+				<aui:input id="rename" label="<%= HtmlUtil.escape(renameMessage) %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
+			</c:when>
+			<c:otherwise>
+				<aui:input id="rename" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.RENAME %>" />
+			</c:otherwise>
+		</c:choose>
 
-		<aui:input cssClass="new-file-name" label="" name="newName" title="<%= HtmlUtil.escapeAttribute(renameMessage) %>" value="<%= TrashUtil.getNewName(themeDisplay, className, classPK, oldName) %>" />
+		<aui:input cssClass="new-file-name" label='<%= overridable ? "" : HtmlUtil.escape(renameMessage) %>' name="newName" title="<%= HtmlUtil.escapeAttribute(renameMessage) %>" value="<%= TrashUtil.getNewName(themeDisplay, className, classPK, oldName) %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

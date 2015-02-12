@@ -309,6 +309,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 			ree.setDuplicateEntryId(duplicateDLFolder.getFolderId());
 			ree.setOldName(duplicateDLFolder.getName());
+			ree.setOverridable(false);
 			ree.setTrashEntryId(entryId);
 
 			throw ree;

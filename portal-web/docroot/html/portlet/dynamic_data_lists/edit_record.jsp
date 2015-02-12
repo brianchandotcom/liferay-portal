@@ -41,7 +41,9 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 Fields fields = null;
 
 if (recordVersion != null) {
-	fields = StorageEngineUtil.getFields(recordVersion.getDDMStorageId());
+	DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
+
+	fields = DDMFormValuesToFieldsConverterUtil.convert(ddmStructure, ddmFormValues);
 }
 
 String defaultLanguageId = ParamUtil.getString(request, "defaultLanguageId");

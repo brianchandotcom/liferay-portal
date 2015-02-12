@@ -81,7 +81,7 @@
 	</target>
 
 	<target name="build-darwin">
-		<antcall target="build-native-lib">
+		<antcall target="native-lib">
 			<param name="libname" value="libsass.dylib" />
 			<param name="make" value="make" />
 			<param name="resourceloc" value="darwin" />
@@ -89,7 +89,7 @@
 	</target>
 
 	<target name="build-linux-x86">
-		<antcall target="build-native-lib">
+		<antcall target="native-lib">
 			<param name="libname" value="libsass.so" />
 			<param name="make" value="make" />
 			<param name="resourceloc" value="linux-x86" />
@@ -97,7 +97,7 @@
 	</target>
 
 	<target name="build-linux-x86-64">
-		<antcall target="build-native-lib">
+		<antcall target="native-lib">
 			<param name="libname" value="libsass.so" />
 			<param name="make" value="make" />
 			<param name="resourceloc" value="linux-x86-64" />
@@ -105,7 +105,7 @@
 	</target>
 
 	<target name="build-win32-x86">
-		<antcall target="build-native-lib">
+		<antcall target="native-lib">
 			<param name="libname" value="sass.dll" />
 			<param name="make" value="mingw32-make.exe" />
 			<param name="resourceloc" value="win32-x86" />
@@ -113,14 +113,14 @@
 	</target>
 
 	<target name="build-win32-x86-64">
-		<antcall target="build-native-lib">
+		<antcall target="native-lib">
 			<param name="libname" value="sass.dll" />
 			<param name="make" value="mingw32-make.exe" />
 			<param name="resourceloc" value="win32-x86-64" />
 		</antcall>
 	</target>
 
-	<target name="build-native-lib">
+	<target name="native-lib">
 		<if>
 			<not>
 				<available file="libsass-3.1.0.zip" />

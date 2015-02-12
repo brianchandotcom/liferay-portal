@@ -76,7 +76,6 @@ import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateControlContext;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.xsl.XSLTemplate;
 import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.PortletResponseImpl;
 import com.liferay.portlet.PortletURLImpl;
@@ -429,7 +428,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initClass(URLWrapper.class);
 		initClass(
 			com.liferay.portal.kernel.util.WeakValueConcurrentHashMap.class);
-		initClass(XSLTemplate.class);
 	}
 
 	protected void initInitialContextFactoryBuilder() throws Exception {

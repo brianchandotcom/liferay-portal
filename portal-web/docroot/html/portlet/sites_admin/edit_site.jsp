@@ -105,7 +105,9 @@ if (!trashEnabled && ArrayUtil.contains(advancedSections, "recycle-bin")) {
 	advancedSections = ArrayUtil.remove(advancedSections, "recycle-bin");
 }
 
-if (ArrayUtil.isEmpty(PortletRatingsDefinitionUtil.getPortletIds()) && ArrayUtil.contains(miscellaneousSections, "ratings")) {
+PortletRatingsDefinitionDisplayContextHelper portletRatingsDefinitionDisplayContextHelper = new PortletRatingsDefinitionDisplayContextHelper();
+
+if (!portletRatingsDefinitionDisplayContextHelper.showRatingsSection(miscellaneousSections)) {
 	miscellaneousSections = ArrayUtil.remove(miscellaneousSections, "ratings");
 }
 

@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `58fc0bd`.*
+*This document has been reviewed through commit `6e73e36`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -73,69 +73,69 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
-### liferay-ui:logo-selector requires changes to the parameters
-- **Date:** 2013-Dec-5
+### The `liferay-ui:logo-selector` Tag Requires Parameter Changes
+- **Date:** 2013-Dec-05
 - **JIRA Ticket:** LPS-42645
 
 #### What changed?
-The Logo Selector taglib now supports uploading and image (storing it as a
-temporary file, cropping it and cancell before saving.
-The taglib now doesn't require creating a UI to include the image (this
-parameter was called editLogoURL and it has been removed). The new parameters
-supported are:
-- currentLogoURL: the URL to display the image being currently stored
-- hasUpdateLogoPermission: true if the current user can update this logo
-- maxFileSize: Limit of size to the logo to be uploaded
-- tempImageFileName: unique identifier to store the temporary image on upload
+The Logo Selector tag now supports uploading an image, storing it as a temporary
+file, cropping it, and canceling edits. The tag no longer requires creating a UI
+to include the image. Consequently, the `editLogoURL` parameter is no longer
+needed and has been removed. The tag now uses the following parameters to
+support the new features:
 
+- `currentLogoURL`: the URL to display the image being stored
+- `hasUpdateLogoPermission`: `true` if the current user can update the logo
+- `maxFileSize`: the size limit for the logo to be uploaded
+- `tempImageFileName`: the unique identifier to store the temporary image on
+upload
 
 #### Who is affected?
-Plugins or templates that were using the taglib <liferay-ui:logo-selector> will
-need to update their usage of the taglib.
+Plugins or templates that are using the `liferay-ui:logo-selector` tag need
+to update their usage of the tag.
 
 #### How should I update my code?
-Remove the parameter *editLogoURL* and include (if neccessary) the parameters
-*currentLogoURL*, *hasUpdateLogoPermission*, *maxFileSize*, *tempImageFileName*
-
+You should remove the parameter `editLogoURL` and include (if neccessary) the
+parameters `currentLogoURL`, `hasUpdateLogoPermission`, `maxFileSize`, and/or
+`tempImageFileName`.
 
 **Example**
 
 Replace:
-
 ```
 <portlet:renderURL var="editUserPortraitURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
-	<portlet:param name="portrait_id" value="<%= String.valueOf(selUser.getPortraitId()) %>" />
+    <portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />
+    <portlet:param name="redirect" value="<%= currentURL %>" />
+    <portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
+    <portlet:param name="portrait_id" value="<%= String.valueOf(selUser.getPortraitId()) %>" />
 </portlet:renderURL>
 
 <liferay-ui:logo-selector
-	defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
-	editLogoURL="<%= editUserPortraitURL %>"
-	imageId="<%= selUser.getPortraitId() %>"
-	logoDisplaySelector=".user-logo"
+    defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
+    editLogoURL="<%= editUserPortraitURL %>"
+    imageId="<%= selUser.getPortraitId() %>"
+    logoDisplaySelector=".user-logo"
 />
 ```
 
 With:
 ```
 <liferay-ui:logo-selector
-	currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
-	defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
-	hasUpdateLogoPermission='<%= UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'
-	imageId="<%= selUser.getPortraitId() %>"
-	logoDisplaySelector=".user-logo"
-	maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>"
-	tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"
+    currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
+    defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
+    hasUpdateLogoPermission='<%= UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'
+    imageId="<%= selUser.getPortraitId() %>"
+    logoDisplaySelector=".user-logo"
+    maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>"
+    tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"
 />
 ```
 
 #### Why was this change made?
 This change helps keep a unified UI and consistent experience for uploading
-logos all around the portal that can be customized from a single location.
-In addition, it adds new features such as cropping and support for cancelling.
-
+logos in the portal. The logos can be customized from a single location and used
+throughout the portal. In addition, the change adds new features such as image
+cropping and support for canceling image upload.
 
 ---------------------------------------
 
@@ -359,12 +359,12 @@ of data.
 
 ---------------------------------------
 
-### The `aui:input` Taglib for Type `checkbox` No Longer Creates a Hidden Input
+### The `aui:input` Tag for Type `checkbox` No Longer Creates a Hidden Input
 - **Date:** 2014-Jun-16
 - **JIRA Ticket:** LPS-44228
 
 #### What changed?
-Whenever the aui:input taglib is used to generate an input of type checkbox,
+Whenever the aui:input tag is used to generate an input of type checkbox,
 only an input tag will be generated, instead of the checkbox and hidden field it
 was generating before.
 
@@ -877,37 +877,7 @@ of reserved screen names.
 
 ---------------------------------------
 
-### Attribute `paginationURL' is mandatory for taglib `liferay-ui:discussion`
-- **Date:** 2015-Feb-5
-- **JIRA Ticket:** LPS-53313
-
-#### What changed?
-
-Taglib `liferay-ui:discussion` contains a new attribute that is mandatory.
-
-#### Who is affected?
-
-This affects all developers who were using this taglib in their plugins.
-
-#### How should I update my code?
-
-You should include the new attribute `paginationURL` in the taglib. This
-attribute is a URL that returns a HTML fragment containing the next comments.
-
-If  you are using Liferay `MVCPortlet` class you can use this URL:
-
-<portlet:resourceURL var="discussionPaginationURL">
-    <portlet:param name="invokeTaglibDiscussion"
-        value="<%= Boolean.TRUE.toString() %>" />
-</portlet:resourceURL>
-
-#### Why was this change made?
-
-We need this new parameter so we can paginate the comments.
-
----------------------------------------
-
-### Replaced `ReservedUserEmailAddressException` with `UserEmailAddressException` inner classes in User Services
+### Replaced the `ReservedUserEmailAddressException` with `UserEmailAddressException` Inner Classes in User Services
 - **Date:** 2015-Feb-03
 - **JIRA Ticket:** LPS-53279
 
@@ -916,8 +886,8 @@ We need this new parameter so we can paginate the comments.
 Previous to Liferay 7, several methods of `UserLocalService` and `UserService`
 could throw a `ReservedUserEmailAddressException` when a user set an email 
 address that was not allowed. That exception has been deprecated and replaced
-with `UserEmailAddressException.MustNotBeCompanyMx`,
-`UserEmailAddressException.MustNotBePOP`, and
+with `UserEmailAddressException.MustNotUseCompanyMx`,
+`UserEmailAddressException.MustNotBePOP3User`, and
 `UserEmailAddressException.MustNotBeReserved`.
 
 #### Who is affected?
@@ -927,30 +897,64 @@ This affects developers who have written code that catches the
 
 #### How should I update my code?
 
-You should replace catching exception `ReservedUserEmailAddressException` with
-catching exception `UserEmailAddressException.MustNotBeCompanyMx`,
-`UserEmailAddressException.MustNotBePOP`, or
+Depending on the method you're calling and the context in which you're calling
+it, you should replace catching exception `ReservedUserEmailAddressException`
+with catching exception `UserEmailAddressException.MustNotUseCompanyMx`,
+`UserEmailAddressException.MustNotBePOP3User`, or
 `UserEmailAddressException.MustNotBeReserved`.
 
 #### Why was this change made?
 
-A new pattern has been defined for exceptions that provides higher expressivity
-in their names and also more information regarding why the exception was thrown.
+A new pattern has been defined for exceptions. This pattern requires using
+higher expressivity in exception names and requires that each exception provide
+more information regarding why it was thrown.
 
-The new exception `UserEmailAddressException.MustNotBeReserved` has all the
-necessary information about why the exception was thrown and its context. In
-particular, it contains the problematic email address, and the list of reserved
-email addresses.
+Each new exception provides its context and has all the necessary information
+about why the exception was thrown. For example, the
+`UserEmailAddressException.MustNotBeReserved` exception contains the problematic
+email address and the list of reserved email addresses.
 
 ---------------------------------------
 
-### Replaced `ReservedUserIdException` with `UserIdException` inner classes
+### Added Required Attribute `paginationURL` to the Tag `liferay-ui:discussion`
+- **Date:** 2015-Feb-05
+- **JIRA Ticket:** LPS-53313
+
+#### What changed?
+
+The `liferay-ui:discussion` tag now contains a new required attribute
+`paginationURL`.
+
+#### Who is affected?
+
+This affects all developers who are using this tag in their plugins.
+
+#### How should I update my code?
+
+You should include the new attribute `paginationURL` in the tag. This attribute
+holds a URL that returns an HTML fragment containing the next comments for
+portlets such as Asset Publisher, Blogs, Document Library, etc.
+
+If you are using the Liferay `MVCPortlet` class, you can use the following URL:
+
+    <portlet:resourceURL var="discussionPaginationURL">
+        <portlet:param name="invokeTaglibDiscussion"
+            value="<%= Boolean.TRUE.toString() %>" />
+    </portlet:resourceURL>
+
+#### Why was this change made?
+
+This change was made to support comment pagination.
+
+---------------------------------------
+
+### Replaced `ReservedUserIdException` with `UserIdException` Inner Classes
 - **Date:** 2015-Feb-10
 - **JIRA Ticket:** LPS-53487
 
 #### What changed?
 
-`ReservedUserIdException` has been deprecated and replaced with
+The `ReservedUserIdException` has been deprecated and replaced with
 `UserIdException.MustNotBeReserved`.
 
 #### Who is affected?
@@ -968,32 +972,33 @@ catching exception `UserIdException.MustNotBeReserved`.
 A new pattern has been defined for exceptions that provides higher expressivity
 in their names and also more information regarding why the exception was thrown.
 
-The new exception `UserIdException.MustNotBeReserved` has all the necessary
-information about why the exception was thrown and its context. In particular,
-it contains the problematic user ID and the list of reserved user IDs.
+The new exception `UserIdException.MustNotBeReserved` provides its context and
+has all the necessary information about why the exception was thrown. In
+particular, it contains the problematic user ID and the list of reserved user
+IDs.
 
 ------------------------------------------------------------------------------
 
-### Removal of methods and change of location of AssetPublisherUtil
+### Moved the `AssetPublisherUtil` class and removed it from the public API 
 - **Date:** 2015-Feb-11
 - **JIRA Ticket:** LPS-52744
 
 #### What changed?
 
-The class AssetPublisherUtil from portal-service module has been moved to the
-module AssetPublisher and it is not exposed as part of the public API.
-
+The class `AssetPublisherUtil` from the `portal-service` module has been moved
+to the module `AssetPublisher` and it is no longer a part of the public API.
 
 #### Who is affected?
 
-This affects developers who have written code that uses the AssetPublisherUtil
+This affects developers who have written code that uses the `AssetPublisherUtil`
 class.
 
 #### How should I update my code?
 
-This class is not supposed to be used from other modules anymore since it
-contains utility methods for the Asset Publisher portlet. If needed, you can
-define a dependency with the Asset Publisher module and use the new class.
+This `AssetPublisherUtil` class should no longer be used from other modules
+since it contains utility methods for the Asset Publisher portlet. If needed,
+you can define a dependency with the Asset Publisher module and use the new
+class.
 
 #### Why was this change made?
 

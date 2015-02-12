@@ -839,14 +839,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public Map<String, Portlet> loadGetPortletsPool(long companyId) {
 		Map<String, Portlet> portletsPool = new ConcurrentHashMap<>();
 
-		if (_portletsPool == null) {
-
-			// The Upgrade scripts sometimes try to access portlet preferences
-			// before the portal's been initialized. Return an empty pool.
-
-			return portletsPool;
-		}
-
 		for (Portlet portlet : _portletsPool.values()) {
 			portlet = (Portlet)portlet.clone();
 

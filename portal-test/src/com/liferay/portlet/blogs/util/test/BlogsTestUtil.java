@@ -212,6 +212,20 @@ public class BlogsTestUtil {
 			expectedEntry.isSmallImage(), actualEntry.isSmallImage());
 	}
 
+	public static ServiceContext getServiceContext(
+			String command, long groupId, long userId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId, userId);
+
+		serviceContext.setAttribute("entryURL", "http://localhost");
+		serviceContext.setCommand(command);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return serviceContext;
+	}
+
 	public static String getTempBlogsEntryAttachmentFileEntryImgTag(
 		long dataImageId, String url) {
 

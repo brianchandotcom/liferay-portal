@@ -28,6 +28,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsConstants;
+import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTestCase;
 
 import org.junit.ClassRule;
@@ -50,8 +51,8 @@ public class BlogsSubscriptionLocalizedContentTest
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
+			BlogsTestUtil.getServiceContext(
+				Constants.ADD, group.getGroupId(), TestPropsValues.getUserId());
 
 		BlogsEntry entry =
 			BlogsEntryLocalServiceUtil.addEntry(
@@ -92,8 +93,9 @@ public class BlogsSubscriptionLocalizedContentTest
 	@Override
 	protected void updateBaseModel(long baseModelId) throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
+			BlogsTestUtil.getServiceContext(
+				Constants.UPDATE, group.getGroupId(),
+				TestPropsValues.getUserId());
 
 		serviceContext.setAttribute("sendEmailEntryUpdated", true);
 

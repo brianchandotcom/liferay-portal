@@ -1646,6 +1646,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
+		if (Validator.isNotNull(serviceContext.getAttribute("entryURL"))) {
+			return (String) serviceContext.getAttribute("entryURL");
+		}
+
 		HttpServletRequest request = serviceContext.getRequest();
 
 		if (request == null) {

@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"clusteredWrite=false", "luceneBased=true",
+		"clusteredWrite=false", "luceneBased=false",
 		"search.engine.id=SYSTEM_ENGINE", "vendor=Elasticsearch"
 	},
 	service = {ElasticsearchSearchEngine.class, SearchEngine.class}

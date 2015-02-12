@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -427,10 +428,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		trashEntryLocalService.deleteEntry(trashEntry);
 	}
 
-	public void setWikiConfiguration(WikiConfiguration wikiConfiguration) {
-		_wikiConfiguration = wikiConfiguration;
-	}
-
 	@Override
 	public void subscribeNode(long userId, long nodeId) throws PortalException {
 		WikiNode node = getNode(nodeId);
@@ -568,6 +565,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeLocalServiceImpl.class);
 
+	@BeanReference(type = WikiConfiguration.class)
 	private WikiConfiguration _wikiConfiguration;
 
 }

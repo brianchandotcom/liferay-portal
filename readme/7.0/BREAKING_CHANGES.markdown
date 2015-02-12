@@ -920,18 +920,18 @@ email address, and the list of reserved email addresses.
 
 #### What changed?
 
-The `liferay-ui:discussion` tag contains the new `paginationURL` attribute,
-which is required.
+The `liferay-ui:discussion` tag contains a new required attribute
+`paginationURL`.
 
 #### Who is affected?
 
-This affects all developers who were using this tag in their plugins.
+This affects all developers who are using this tag in their plugins.
 
 #### How should I update my code?
 
-You should include the new attribute `paginationURL` in the tag. This
-attribute is a URL that returns an HTML fragment containing the next comments
-for portlets such as Asset Publisher, Blogs, Document Library, etc.
+You should include the new attribute `paginationURL` in the tag. This attribute
+holds a URL that returns an HTML fragment containing the next comments for
+portlets such as Asset Publisher, Blogs, Document Library, etc.
 
 If you are using the Liferay `MVCPortlet` class, you can use the following URL:
 
@@ -942,8 +942,7 @@ If you are using the Liferay `MVCPortlet` class, you can use the following URL:
 
 #### Why was this change made?
 
-This change was made to allow for comment pagination when following the *More
-Comments* link.
+This change was made to support comment pagination.
 
 ---------------------------------------
 

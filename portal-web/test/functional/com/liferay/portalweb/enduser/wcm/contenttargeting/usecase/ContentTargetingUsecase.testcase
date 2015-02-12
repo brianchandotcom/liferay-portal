@@ -46,8 +46,8 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#addCP">
-			<var name="userSegmentDescription" value="User Segment Description Age" />
-			<var name="userSegmentName" value="User Segment Name Age" />
+			<var name="userSegmentDescription" value="User Segment Description Gender" />
+			<var name="userSegmentName" value="User Segment Name Gender" />
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
@@ -933,7 +933,7 @@
 		</execute>
 	</command>
 
-	<command name="ClusteringWithContentTargeting" priority="5">
+	<command known-issues="LIFERAYQA-13031" name="ClusteringWithContentTargeting" priority="5">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
 
@@ -1016,7 +1016,7 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="belongsTo" value="true" />
-			<var name="userSegmentName" value="Male Users" />
+			<var name="viewUserSegmentSelected" value="Male Users" />
 		</execute>
 	</command>
 

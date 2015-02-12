@@ -104,7 +104,7 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="belongsTo" value="true" />
-			<var name="userSegmentName" value="Male Users" />
+			<var name="viewUserSegmentSelected" value="Male Users" />
 		</execute>
 	</command>
 
@@ -206,7 +206,7 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="belongsTo" value="true" />
-			<var name="userSegmentName" value="Male Users" />
+			<var name="viewUserSegmentSelected" value="Male Users" />
 		</execute>
 	</command>
 

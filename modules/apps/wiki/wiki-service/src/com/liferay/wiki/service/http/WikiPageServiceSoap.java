@@ -706,19 +706,6 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static void setWikiSettingsProvider(
-		com.liferay.portal.kernel.settings.SettingsProvider<com.liferay.wiki.settings.WikiSettings> wikiSettingsProvider)
-		throws RemoteException {
-		try {
-			WikiPageServiceUtil.setWikiSettingsProvider(wikiSettingsProvider);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void subscribePage(long nodeId, java.lang.String title)
 		throws RemoteException {
 		try {

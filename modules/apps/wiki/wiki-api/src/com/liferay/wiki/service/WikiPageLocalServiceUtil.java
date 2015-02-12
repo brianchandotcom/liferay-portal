@@ -913,16 +913,6 @@ public class WikiPageLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void setWikiConfiguration(
-		com.liferay.wiki.settings.WikiConfiguration wikiConfiguration) {
-		getService().setWikiConfiguration(wikiConfiguration);
-	}
-
-	public static void setWikiSettingsProvider(
-		com.liferay.portal.kernel.settings.SettingsProvider<com.liferay.wiki.settings.WikiSettings> wikiSettingsProvider) {
-		getService().setWikiSettingsProvider(wikiSettingsProvider);
-	}
-
 	public static void subscribePage(long userId, long nodeId,
 		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {

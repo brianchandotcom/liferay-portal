@@ -132,14 +132,6 @@ public class TemplateResourceLoaderUtil {
 
 		TemplateResourceLoader templateResourceLoader =
 			_templateResourceLoaders.get(templateResourceLoaderName);
-		
-		/** Possible loading wait, wait for all dependencies to be in place **/
-		if (templateResourceLoader == null) {
-			sleep();
-			
-			templateResourceLoader = 
-				_templateResourceLoaders.get(templateResourceLoaderName);
-		}
 
 		if (templateResourceLoader == null) {
 			throw new TemplateException(
@@ -148,14 +140,6 @@ public class TemplateResourceLoaderUtil {
 		}
 
 		return templateResourceLoader;
-	}
-	
-	private void sleep(){
-		try {
-		    Thread.sleep(1000);
-		} catch(InterruptedException ex) {
-		    Thread.currentThread().interrupt();
-		}
 	}
 
 	private Set<String> _getTemplateResourceLoaderNames() {
@@ -219,7 +203,7 @@ public class TemplateResourceLoaderUtil {
 			_templateResourceLoaders.remove(templateResourceLoader.getName());
 
 			templateResourceLoader.clearCache();
-			
+
 			templateResourceLoader.destroy();
 
 			Registry registry = RegistryUtil.getRegistry();

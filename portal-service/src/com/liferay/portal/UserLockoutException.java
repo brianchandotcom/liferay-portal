@@ -89,6 +89,12 @@ public class UserLockoutException extends PortalException {
 			this.passwordPolicy = passwordPolicy;
 		}
 
+		public String getUnlockDate() {
+			return DateUtil.newDate(
+				this.user.getLockoutDate().getTime() +
+					this.passwordPolicy.getLockoutDuration() * 1000).toString();
+		}
+
 		public final PasswordPolicy passwordPolicy;
 		public final User user;
 

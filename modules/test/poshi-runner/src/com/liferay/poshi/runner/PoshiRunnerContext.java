@@ -207,24 +207,6 @@ public class PoshiRunnerContext {
 				Element rootElement =
 					PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
 
-				if (classType.equals("function")) {
-					String xml = rootElement.asXML();
-
-					for (int i = 1;; i++) {
-						if (xml.contains("${locator" + i + "}")) {
-							continue;
-						}
-
-						if (i > 1) {
-							i--;
-						}
-
-						_functionLocatorCounts.put(className, i);
-
-						break;
-					}
-				}
-
 				_rootElements.put(classType + "#" + className, rootElement);
 
 				if (rootElement.element("set-up") != null) {
@@ -253,6 +235,31 @@ public class PoshiRunnerContext {
 
 					_commandElements.put(
 						classType + "#" + classCommandName, commandElement);
+				}
+
+				if (classType.equals("function")) {
+					Element defaultCommandElement = getFunctionCommandElement(
+						className + "#" +
+							rootElement.attributeValue("default"));
+
+					_commandElements.put(
+						classType + "#" + className, defaultCommandElement);
+
+					String xml = rootElement.asXML();
+
+					for (int i = 1;; i++) {
+						if (xml.contains("${locator" + i + "}")) {
+							continue;
+						}
+
+						if (i > 1) {
+							i--;
+						}
+
+						_functionLocatorCounts.put(className, i);
+
+						break;
+					}
 				}
 			}
 			else if (classType.equals("path")) {

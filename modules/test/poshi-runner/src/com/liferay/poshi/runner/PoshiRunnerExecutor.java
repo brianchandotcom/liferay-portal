@@ -290,9 +290,12 @@ public class PoshiRunnerExecutor {
 
 		String classCommandName = executeElement.attributeValue("function");
 
-		String className =
-			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+		String className = classCommandName;
+
+		if (classCommandName.contains("#")) {
+			className = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 				classCommandName);
+		}
 
 		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
 			className);

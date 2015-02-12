@@ -25,7 +25,7 @@ resources/linux-x86-64/libsass.so
 	- ant build-linux-x86-64
 
 resources/win32-x86/sass.dll
-	- install Windows 7 64bit
+	- install Windows 7 32bit
 	- download tdm-gcc 32bit toolchain
 	- http://sourceforge.net/projects/tdm-gcc/files/TDM-GCC%20Installer/tdm-gcc-4.9.2.exe/download
 	- click "Create"

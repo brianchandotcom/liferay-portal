@@ -382,9 +382,6 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void setWikiConfiguration(
-		com.liferay.wiki.settings.WikiConfiguration wikiConfiguration);
-
 	public void subscribeNode(long userId, long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

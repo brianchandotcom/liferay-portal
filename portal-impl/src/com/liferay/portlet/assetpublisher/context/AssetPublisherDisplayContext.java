@@ -651,6 +651,16 @@ public class AssetPublisherDisplayContext {
 		return _enableRSS;
 	}
 
+	public boolean isEnableSetAsDefualtAssetPublisher() {
+		String portletName = getPortletName();
+
+		if (portletName.equals(AssetPublisherPortletKeys.ASSET_PUBLISHER)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isEnableSocialBookmarks() {
 		if (_enableSocialBookmarks == null) {
 			_enableSocialBookmarks = GetterUtil.getBoolean(
@@ -1033,6 +1043,7 @@ public class AssetPublisherDisplayContext {
 	private Boolean _enableRatings;
 	private Boolean _enableRelatedAssets;
 	private Boolean _enableRSS;
+	private boolean _enableSetAsDefualtAssetPublisher;
 	private Boolean _enableSocialBookmarks;
 	private Boolean _enableTagBasedNavigation;
 	private Boolean _excludeZeroViewCount;

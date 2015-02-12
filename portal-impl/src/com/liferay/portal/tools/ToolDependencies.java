@@ -113,9 +113,7 @@ public class ToolDependencies {
 
 		ModelHintsImpl modelHintsImpl = new ModelHintsImpl();
 
-		SAXReaderImpl saxReaderImpl = new SAXReaderImpl();
-
-		modelHintsImpl.setSAXReader(saxReaderImpl);
+		modelHintsImpl.setSAXReader(SAXReaderImpl.getInstance());
 
 		modelHintsImpl.afterPropertiesSet();
 
@@ -130,7 +128,7 @@ public class ToolDependencies {
 
 		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
-		saxReaderUtil.setSecureSAXReader(saxReaderImpl);
+		saxReaderUtil.setSecureSAXReader(SAXReaderImpl.getInstance());
 
 		SecureXMLFactoryProviderUtil secureXMLFactoryProviderUtil =
 			new SecureXMLFactoryProviderUtil();

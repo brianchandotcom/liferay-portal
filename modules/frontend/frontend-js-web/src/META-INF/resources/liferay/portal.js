@@ -136,8 +136,13 @@
 				text = instance._getText(obj.guid());
 			}
 
+			var prevTrigger = cached.get(TRIGGER);
+
+			if (!prevTrigger || !prevTrigger.compareTo(obj)) {
+				cached.set(TRIGGER, obj);
+			}
+
 			cached.set(BODY_CONTENT, text);
-			cached.set(TRIGGER, obj);
 
 			obj.detach('hover');
 

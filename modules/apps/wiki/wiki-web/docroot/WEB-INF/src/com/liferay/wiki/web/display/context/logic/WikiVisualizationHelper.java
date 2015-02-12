@@ -126,9 +126,9 @@ public class WikiVisualizationHelper {
 	}
 
 	private String _strutsPath;
+	private final WikiConfiguration _wikiConfiguration;
 	private final WikiPortletInstanceSettingsHelper
 		_wikiPortletInstanceSettingsHelper;
 	private final WikiRequestHelper _wikiRequestHelper;
-	private final WikiConfiguration _wikiConfiguration;
 
 }

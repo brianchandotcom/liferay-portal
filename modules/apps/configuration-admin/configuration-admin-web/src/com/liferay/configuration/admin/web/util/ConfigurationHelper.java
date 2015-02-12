@@ -141,9 +141,12 @@ public class ConfigurationHelper {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		DDMForm ddmForm = ConfigurationConverter.convert(
-			configurationModel, configurationModel.getConfiguration(),
-			themeDisplay.getLocale());
+		ConfigurationModelToDDMFormConverter
+			configurationModelToDDMFormConverter =
+				new ConfigurationModelToDDMFormConverter(
+					configurationModel, themeDisplay.getLocale());
+
+		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
@@ -157,13 +160,13 @@ public class ConfigurationHelper {
 			portletResponse.getNamespace());
 		ddmFormFieldRenderingContext.setReadOnly(false);
 
-		String configFieldJSON = DDMFormJSONSerializerUtil.serialize(ddmForm);
+		String definition = DDMFormJSONSerializerUtil.serialize(ddmForm);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("DDMForm: " + configFieldJSON);
+			_log.debug("DDMForm definition: " + definition);
 		}
 
-		portletRequest.setAttribute("configFieldJSON", configFieldJSON);
+		portletRequest.setAttribute("definition", definition);
 		portletRequest.setAttribute(
 			"scopeGroupId", themeDisplay.getScopeGroupId());
 		portletRequest.setAttribute("plId", themeDisplay.getPlid());

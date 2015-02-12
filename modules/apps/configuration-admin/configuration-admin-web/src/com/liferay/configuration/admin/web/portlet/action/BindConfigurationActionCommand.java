@@ -15,9 +15,9 @@
 package com.liferay.configuration.admin.web.portlet.action;
 
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
-import com.liferay.configuration.admin.web.util.ConfigurationConverter;
 import com.liferay.configuration.admin.web.util.ConfigurationHelper;
-import com.liferay.configuration.admin.web.util.ConfigurationProperties;
+import com.liferay.configuration.admin.web.util.ConfigurationModelToDDMFormConverter;
+import com.liferay.configuration.admin.web.util.DDMFormValuesToPropertiesConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.IOException;
@@ -37,9 +36,6 @@ import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -53,7 +49,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.MetaTypeService;
-import org.osgi.service.metatype.ObjectClassDefinition;
 
 /**
  * @author Kamesh Sampath
@@ -94,16 +89,21 @@ public class BindConfigurationActionCommand implements ActionCommand {
 
 		Configuration configuration = configurationHelper.getConfiguration(pid);
 
-		DDMFormValues ddmFormValues = getDDMFormValues(
-			portletRequest, configurationModel, configuration, pid,
-			themeDisplay.getLocale());
+		ConfigurationModelToDDMFormConverter
+			configurationModelToDDMFormConverter =
+				new ConfigurationModelToDDMFormConverter(
+					configurationModel, themeDisplay.getLocale());
 
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-			ddmFormValues.getDDMFormFieldValuesMap();
+		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
 
-		Dictionary<String, Object> properties = ConfigurationProperties.load(
-			configurationModel, ddmFormFieldValuesMap,
-			themeDisplay.getLocale());
+		DDMFormValues ddmFormValues = getDDMFormValues(portletRequest, ddmForm);
+
+		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
+			new DDMFormValuesToPropertiesConverter(
+				configurationModel, ddmFormValues, themeDisplay.getLocale());
+
+		Dictionary<String, Object> properties =
+			ddmFormValuesToPropertiesConverter.getProperties();
 
 		properties.put(Constants.SERVICE_PID, pid);
 
@@ -182,15 +182,10 @@ public class BindConfigurationActionCommand implements ActionCommand {
 	}
 
 	protected DDMFormValues getDDMFormValues(
-		PortletRequest portletRequest,
-		ObjectClassDefinition objectClassDefinition,
-		Configuration configuration, String pid, Locale locale) {
-
-		DDMForm ddmForm = ConfigurationConverter.convert(
-			objectClassDefinition, configuration, locale);
+		PortletRequest portletRequest, DDMForm ddmForm) {
 
 		String serializedDDMFormValues = ParamUtil.getString(
-			portletRequest, "configFields");
+			portletRequest, "serializedDDMFormValues");
 
 		try {
 			return DDMFormValuesJSONDeserializerUtil.deserialize(

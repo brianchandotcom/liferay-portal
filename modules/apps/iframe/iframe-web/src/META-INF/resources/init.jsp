@@ -58,7 +58,7 @@ String src = portletPreferences.getValue("src", StringPool.BLANK);
 
 boolean relative = GetterUtil.getBoolean(portletPreferences.getValue("relative", StringPool.BLANK));
 
-boolean auth = GetterUtil.getBoolean(portletPreferences.getValue("auth", iFrameConfiguration.auth()));
+boolean auth = GetterUtil.getBoolean(portletPreferences.getValue("auth", null), iFrameConfiguration.auth());
 String authType = portletPreferences.getValue("authType", iFrameConfiguration.authType());
 String formMethod = portletPreferences.getValue("formMethod", iFrameConfiguration.formMethod());
 String userNameField = portletPreferences.getValue("userNameField", StringPool.BLANK);
@@ -76,7 +76,7 @@ else {
 	password = portletPreferences.getValue("formPassword", StringPool.BLANK);
 }
 
-String hiddenVariables = portletPreferences.getValue("hiddenVariables", iFrameConfiguration.hiddenVariables());
+String hiddenVariables = portletPreferences.getValue("hiddenVariables", StringUtil.merge(iFrameConfiguration.hiddenVariables(), StringPool.SEMICOLON));
 boolean resizeAutomatically = GetterUtil.getBoolean(portletPreferences.getValue("resizeAutomatically", StringPool.TRUE));
 String heightMaximized = GetterUtil.getString(portletPreferences.getValue("heightMaximized", "600"));
 String heightNormal = GetterUtil.getString(portletPreferences.getValue("heightNormal", "600"));

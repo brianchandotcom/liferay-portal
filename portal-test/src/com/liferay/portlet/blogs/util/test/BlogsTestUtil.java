@@ -15,21 +15,18 @@
 package com.liferay.portlet.blogs.util.test;
 
 import com.liferay.portal.kernel.editor.EditorConstants;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
-import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +38,7 @@ import org.junit.Assert;
 public class BlogsTestUtil {
 
 	public static BlogsEntry addEntryWithWorkflow(
-			long userId, String title, boolean approved, boolean smallImage,
+			long userId, String title, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -50,57 +47,20 @@ public class BlogsTestUtil {
 		try {
 			WorkflowThreadLocal.setEnabled(true);
 
-			String subtitle = StringPool.BLANK;
-			String description = "Description";
-			String content = "Content";
-			int displayDateMonth = 1;
-			int displayDateDay = 1;
-			int displayDateYear = 2012;
-			int displayDateHour = 12;
-			int displayDateMinute = 0;
-			boolean allowPingbacks = true;
-			boolean allowTrackbacks = true;
-			String[] trackbacks = new String[0];
-
-			ImageSelector coverImageSelector = null;
-			ImageSelector smallImageSelector = null;
-
-			if (smallImage) {
-				Class<?> clazz = BlogsTestUtil.class;
-
-				ClassLoader classLoader = clazz.getClassLoader();
-
-				InputStream inputStream = classLoader.getResourceAsStream(
-					"com/liferay/portal/util/dependencies/test.jpg");
-
-				FileEntry fileEntry = null;
-
-				try {
-					fileEntry = TempFileEntryUtil.getTempFileEntry(
-						serviceContext.getScopeGroupId(), userId,
-						BlogsEntry.class.getName(), "image.jpg");
-				}
-				catch (Exception e) {
-					fileEntry = TempFileEntryUtil.addTempFileEntry(
-						serviceContext.getScopeGroupId(), userId,
-						BlogsEntry.class.getName(), "image.jpg", inputStream,
-						MimeTypesUtil.getContentType("image.jpg"));
-				}
-
-				smallImageSelector = new ImageSelector(
-					fileEntry.getFileEntryId(), StringPool.BLANK, null);
-			}
+			Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
+				2012, 1, 1);
 
 			serviceContext = (ServiceContext)serviceContext.clone();
 
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
-			BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-				userId, title, subtitle, description, content, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				coverImageSelector, smallImageSelector, serviceContext);
+			BlogsEntry entry =
+				BlogsEntryLocalServiceUtil.addEntry(
+					userId, title, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), displayCalendar.getTime(),
+					true, true, new String[0], null, null, serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);

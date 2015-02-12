@@ -65,7 +65,7 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		return BlogsTestUtil.addEntryWithWorkflow(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(), false,
-			false, serviceContext);
+			serviceContext);
 	}
 
 	@Override

@@ -107,8 +107,7 @@ public class PortletRatingsDefinitionUtil {
 						(String)serviceReference.getProperty(
 							"ratings.type.default"));
 
-					if (Validator.isNull(portletId) ||
-						ArrayUtil.isEmpty(classNames) ||
+					if (ArrayUtil.isEmpty(classNames) ||
 						(defaultRatingsType == null)) {
 
 						if (_log.isWarnEnabled()) {

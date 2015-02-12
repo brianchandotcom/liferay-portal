@@ -86,10 +86,9 @@ public class SyncSitePersistence extends BasePersistenceImpl<SyncSite, Long> {
 		Where<SyncSite, Long> where = queryBuilder.where();
 
 		where.eq("active", active);
-
-		where.and();
-
 		where.eq("syncAccountId", syncAccountId);
+
+		where.and(2);
 
 		GenericRawResults<Long> genericRawResults = queryRaw(
 			queryBuilder.prepareStatementString(),

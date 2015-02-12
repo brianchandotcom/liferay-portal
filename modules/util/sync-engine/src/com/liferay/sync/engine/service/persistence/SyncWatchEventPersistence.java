@@ -64,14 +64,10 @@ public class SyncWatchEventPersistence
 		Where<SyncWatchEvent, Long> where = queryBuilder.where();
 
 		where.eq("eventType", eventType);
-
-		where.and();
-
 		where.eq("filePathName", new SelectArg(filePathName));
-
-		where.and();
-
 		where.between("timestamp", timestamp - 1000, timestamp + 1000);
+
+		where.and(3);
 
 		List<SyncWatchEvent> syncWatchEvents = query(queryBuilder.prepare());
 

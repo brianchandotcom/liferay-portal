@@ -73,6 +73,8 @@ public class SyncWatchEventProcessor implements Runnable {
 						return;
 					}
 
+					_pendingTypePKSyncFileIds.remove(syncFile.getSyncFileId());
+
 					for (SyncWatchEvent syncWatchEvent : syncWatchEvents) {
 						try {
 							processSyncWatchEvent(syncWatchEvent);

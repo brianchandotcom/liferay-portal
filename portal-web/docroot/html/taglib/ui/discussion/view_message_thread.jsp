@@ -229,18 +229,18 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		<div class="lfr-discussion-form-container">
 
 			<%
-				Map<String, Object> dataTextEditor = new HashMap<String, Object>();
+			Map<String, Object> dataTextEditor = new HashMap<String, Object>();
 
-				JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
-				editorConfig.put("allowedContent", "p strong em u");
-				editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
+			JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
+			editorConfig.put("allowedContent", "p strong em u");
+			editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
 
-				JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
-				editorOptions.put("textMode", Boolean.FALSE);
-				editorOptions.put("showSource", Boolean.FALSE);
+			JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
+			editorOptions.put("textMode", Boolean.FALSE);
+			editorOptions.put("showSource", Boolean.FALSE);
 
-				dataTextEditor.put("editorConfig", editorConfig);
-				dataTextEditor.put("editorOptions", editorOptions);
+			dataTextEditor.put("editorConfig", editorConfig);
+			dataTextEditor.put("editorOptions", editorOptions);
 			%>
 
 			<div class="lfr-discussion lfr-discussion-form-reply" id='<portlet:namespace /><%= randomNamespace + "postReplyForm" + index %>' style="display: none;">

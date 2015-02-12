@@ -144,18 +144,18 @@ int messagesCount = messages.size();
 									<div class="lfr-discussion-body">
 
 										<%
-											Map<String, Object> dataTextEditor = new HashMap<String, Object>();
+										Map<String, Object> dataTextEditor = new HashMap<String, Object>();
 
-											JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
-											editorConfig.put("allowedContent", "p strong em u");
-											editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
+										JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
+										editorConfig.put("allowedContent", "p strong em u");
+										editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
 
-											JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
-											editorOptions.put("textMode", Boolean.FALSE);
-											editorOptions.put("showSource", Boolean.FALSE);
+										JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
+										editorOptions.put("textMode", Boolean.FALSE);
+										editorOptions.put("showSource", Boolean.FALSE);
 
-											dataTextEditor.put("editorConfig", editorConfig);
-											dataTextEditor.put("editorOptions", editorOptions);
+										dataTextEditor.put("editorConfig", editorConfig);
+										dataTextEditor.put("editorOptions", editorOptions);
 										%>
 
 										<liferay-ui:input-editor contents="" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
@@ -569,7 +569,7 @@ int messagesCount = messages.size();
 							}
 						);
 					}
-				)
+				);
 			}
 		</aui:script>
 

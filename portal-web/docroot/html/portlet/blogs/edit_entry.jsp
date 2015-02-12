@@ -112,19 +112,19 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			<div class="<%= (entry != null) ? "entry-status " + WorkflowConstants.getStatusLabel(entry.getStatus()) : StringPool.BLANK %>">
 
 				<%
-					Map<String, Object> dataTextEditor = new HashMap<String, Object>();
+				Map<String, Object> dataTextEditor = new HashMap<String, Object>();
 
-					JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
-					editorConfig.put("allowedContent", "p");
-					editorConfig.put("disallowedContent", "br");
-					editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
+				JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
+				editorConfig.put("allowedContent", "p");
+				editorConfig.put("disallowedContent", "br");
+				editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
 
-					JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
-					editorOptions.put("textMode", Boolean.TRUE);
-					editorOptions.put("showSource", Boolean.FALSE);
+				JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
+				editorOptions.put("textMode", Boolean.TRUE);
+				editorOptions.put("showSource", Boolean.FALSE);
 
-					dataTextEditor.put("editorConfig", editorConfig);
-					dataTextEditor.put("editorOptions", editorOptions);
+				dataTextEditor.put("editorConfig", editorConfig);
+				dataTextEditor.put("editorOptions", editorOptions);
 				%>
 
 				<liferay-ui:section>

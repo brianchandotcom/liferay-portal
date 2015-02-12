@@ -176,16 +176,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 			contentsLanguage: '<%= contentsLanguageId.replace("iw_", "he_") %>',
 
-			language: '<%= languageId.replace("iw_", "he_") %>',
-
-			srcNode: '#<%= name %>',
-
-			toolbars: {
-				add: ['imageselector'],
-				image: ['left', 'right'],
-				styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
-			},
-
 			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/document_selector/view" />
 				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
@@ -204,7 +194,17 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			filebrowserBrowseUrl: '<%= documentSelectorURL %>',
 			filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
 			filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
-			filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image'
+			filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image',
+
+			language: '<%= languageId.replace("iw_", "he_") %>',
+
+			srcNode: '#<%= name %>',
+
+			toolbars: {
+				add: ['imageselector'],
+				image: ['left', 'right'],
+				styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
+			}
 		};
 
 		var customConfig = (<%= Validator.isNotNull(editorConfig) %> ) ? <%= editorConfig %> : {};
@@ -383,7 +383,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 	window['<%= name %>'] = {
 		create: function() {
-			if (! window['<%= name %>'].instanceReady) {
+			if (!window['<%= name %>'].instanceReady) {
 				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
 
 				var editorContainer = A.one('#<%= name %>Container');

@@ -100,7 +100,7 @@ public class ForgotPasswordAction extends PortletAction {
 					sendRedirect(actionRequest, actionResponse);
 				}
 				else {
-					SessionErrors.add(actionRequest, e.getClass());
+					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
 			}
 			else {

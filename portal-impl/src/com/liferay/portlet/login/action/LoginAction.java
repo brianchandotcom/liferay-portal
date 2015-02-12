@@ -106,7 +106,7 @@ public class LoginAction extends PortletAction {
 				if (cause instanceof PasswordExpiredException ||
 					cause instanceof UserLockoutException) {
 
-					SessionErrors.add(actionRequest, cause.getClass());
+					SessionErrors.add(actionRequest, cause.getClass(), cause);
 				}
 				else {
 					if (_log.isInfoEnabled()) {
@@ -126,7 +126,7 @@ public class LoginAction extends PortletAction {
 					 e instanceof UserPasswordException ||
 					 e instanceof UserScreenNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {
 				_log.error(e, e);

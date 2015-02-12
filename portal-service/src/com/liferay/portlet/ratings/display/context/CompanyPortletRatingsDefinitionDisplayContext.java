@@ -37,17 +37,14 @@ public class CompanyPortletRatingsDefinitionDisplayContext {
 		PortletPreferences companyPortletPreferences,
 		HttpServletRequest request) {
 
-		_populatePortletRatingsDefinitionMaps(
-			companyPortletPreferences, request);
+		_populateRatingsTypeMaps(companyPortletPreferences, request);
 	}
 
-	public Map<String, Map<String, RatingsType>>
-		getCompanyPortletRatingsDefinitionMap() {
-
-		return Collections.unmodifiableMap(_companyPortletRatingsDefinitionMap);
+	public Map<String, Map<String, RatingsType>> getCompanyRatingsTypeMaps() {
+		return Collections.unmodifiableMap(_companyRatingsTypeMaps);
 	}
 
-	private void _populatePortletRatingsDefinitionMaps(
+	private void _populateRatingsTypeMaps(
 		PortletPreferences companyPortletPreferences,
 		HttpServletRequest request) {
 
@@ -81,11 +78,11 @@ public class CompanyPortletRatingsDefinitionDisplayContext {
 
 			String portletId = portletRatingsDefinitionValues.getPortletId();
 
-			_companyPortletRatingsDefinitionMap.put(portletId, ratingsTypeMap);
+			_companyRatingsTypeMaps.put(portletId, ratingsTypeMap);
 		}
 	}
 
 	private final Map<String, Map<String, RatingsType>>
-		_companyPortletRatingsDefinitionMap = new HashMap<>();
+		_companyRatingsTypeMaps = new HashMap<>();
 
 }

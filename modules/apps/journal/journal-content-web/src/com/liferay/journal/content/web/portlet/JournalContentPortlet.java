@@ -19,7 +19,6 @@ import com.liferay.journal.content.web.portlet.upgrade.JournalContentUpgrade;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -92,13 +91,9 @@ public class JournalContentPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long articleGroupId = ParamUtil.getLong(renderRequest, "groupId");
-
-		if (articleGroupId <= 0) {
-			articleGroupId = GetterUtil.getLong(
-				portletPreferences.getValue(
-					"groupId", String.valueOf(themeDisplay.getScopeGroupId())));
-		}
+		long articleGroupId = PrefsParamUtil.getLong(
+			portletPreferences, renderRequest, "groupId",
+			themeDisplay.getScopeGroupId());
 
 		String articleId = PrefsParamUtil.getString(
 			portletPreferences, renderRequest, "articleId");

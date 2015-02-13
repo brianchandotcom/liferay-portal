@@ -5,6 +5,7 @@
 	<classpathentry kind="src" path="/portal-master" />
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" />
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="test/integration" />
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="test/unit" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/junit.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/mockito.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/development/powermock-api-mockito.jar" />
@@ -70,5 +71,7 @@
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-container/jars/arquillian-junit-container-1.1.3.Final.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.apache.felix/org.apache.felix.framework/bundles/org.apache.felix.framework-4.4.0.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.apache.felix/org.apache.felix.main/bundles/org.apache.felix.main-4.4.0.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/junit/junit/jars/junit-4.11.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

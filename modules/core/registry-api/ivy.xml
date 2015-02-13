@@ -18,6 +18,5 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="aQute.bnd" org="com.liferay" rev="2.3.0" />
-		<dependency conf="test->default" name="junit" org="junit" rev="4.11" />
 	</dependencies>
 </ivy-module>

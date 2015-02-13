@@ -14,8 +14,8 @@
 
 package com.liferay.wiki.parser.creole.ast;
 
+import com.liferay.wiki.configuration.WikiConfiguration;
 import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
-import com.liferay.wiki.settings.WikiConfiguration;
 
 /**
  * @author Miguel Pastor

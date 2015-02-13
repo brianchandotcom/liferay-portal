@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.settings;
+package com.liferay.wiki.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

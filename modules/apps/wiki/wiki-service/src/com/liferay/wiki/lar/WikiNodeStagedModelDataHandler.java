@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.wiki.configuration.WikiConfiguration;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
-import com.liferay.wiki.settings.WikiConfiguration;
 
 import java.util.List;
 import java.util.Map;

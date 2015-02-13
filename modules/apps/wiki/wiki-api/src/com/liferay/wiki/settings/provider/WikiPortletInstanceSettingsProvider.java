@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.model.Layout;
+import com.liferay.wiki.configuration.WikiPortletInstanceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.settings.WikiPortletInstanceConfiguration;
 import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 
 import java.util.Map;

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
+import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -37,6 +37,7 @@ import java.util.Vector;
 
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.Template;
+import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.RuntimeInstance;
@@ -126,6 +127,9 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 					".resourceModificationCheckInterval"),
 			60);
 
+		_templateResourceLoader =
+			(TemplateResourceLoader)extendedProperties.get(
+				VelocityTemplateResourceLoader.class.getName());
 
 		super.initialize(runtimeServices);
 	}
@@ -163,8 +167,8 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 				TemplateConstants.LANG_TYPE_VM);
 		}
 		else {
-			templateResource = TemplateResourceLoaderUtil.getTemplateResource(
-				TemplateConstants.LANG_TYPE_VM, resourceName);
+			templateResource = _templateResourceLoader.getTemplateResource(
+				resourceName);
 		}
 
 		if (templateResource == null) {
@@ -190,6 +194,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 	private Vector<String> _macroTemplateIds;
 	private final PortalCache<TemplateResource, Object> _portalCache;
 	private int _resourceModificationCheckInterval = 60;
+	private TemplateResourceLoader _templateResourceLoader;
 
 	private class LiferayTemplate extends Template {
 

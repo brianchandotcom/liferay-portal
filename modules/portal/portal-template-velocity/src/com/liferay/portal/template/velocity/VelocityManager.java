@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
+import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.VelocityTaglib;
@@ -179,6 +181,10 @@ public class VelocityManager extends BaseTemplateManager {
 			"");
 
 		extendedProperties.setProperty(
+			VelocityTemplateResourceLoader.class.getName(),
+			templateResourceLoader);
+
+		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
 			_velocityEngineConfiguration.logger());
 
@@ -213,18 +219,20 @@ public class VelocityManager extends BaseTemplateManager {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setVelocityTemplateContextHelper(
-		VelocityTemplateContextHelper velocityTemplateContextHelper) {
+	@Override
+	@Reference(service = VelocityTemplateContextHelper.class, unbind = "-")
+	public void setTemplateContextHelper(
+		TemplateContextHelper templateContextHelper) {
 
-		templateContextHelper = velocityTemplateContextHelper;
+		super.setTemplateContextHelper(templateContextHelper);
 	}
 
-	@Reference(unbind = "-")
-	public void setVelocityTemplateResourceLoader(
-		VelocityTemplateResourceLoader velocityTemplateResourceLoader) {
+	@Override
+	@Reference(service = VelocityTemplateResourceLoader.class, unbind = "-")
+	public void setTemplateResourceLoader(
+		TemplateResourceLoader templateResourceLoader) {
 
-		templateResourceLoader = velocityTemplateResourceLoader;
+		super.setTemplateResourceLoader(templateResourceLoader);
 	}
 
 	@Activate
